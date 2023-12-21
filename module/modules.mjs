@@ -17,9 +17,9 @@ export function initializeModuleIntegration() {
       class Pf1SpeedProvider extends SpeedProvider {
         get colors() {
           return [
-            { id: "walk", default: 0x00ff00, name: "SETTINGS.pf1DragRulerWalk" },
-            { id: "dash", default: 0xffff00, name: "SETTINGS.pf1DragRulerDash" },
-            { id: "run", default: 0xff8000, name: "SETTINGS.pf1DragRulerRun" },
+            { id: "walk", default: 0x00ff00, name: "PF1.SETTINGS.DragRulerWalk" },
+            { id: "dash", default: 0xffff00, name: "PF1.SETTINGS.DragRulerDash" },
+            { id: "run", default: 0xff8000, name: "PF1.SETTINGS.DragRulerRun" },
           ];
         }
 
@@ -74,8 +74,8 @@ export function initializeModuleIntegration() {
           return [
             {
               id: "useElevation",
-              name: "SETTINGS.pf1DragRulerUseElevationName",
-              hint: "SETTINGS.pf1DragRulerUseElevationHint",
+              name: "PF1.SETTINGS.DragRulerUseElevationName",
+              hint: "PF1.SETTINGS.DragRulerUseElevationHint",
               scope: "world",
               type: Boolean,
               default: true,

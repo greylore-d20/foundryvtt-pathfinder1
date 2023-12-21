@@ -54,7 +54,7 @@ export class HealthConfig extends FormApplication {
     const options = super.defaultOptions;
     return {
       ...options,
-      title: game.i18n.localize("SETTINGS.pf1HealthConfigName"),
+      title: game.i18n.localize("PF1.SETTINGS.Health.Title"),
       id: "health-config",
       template: "systems/pf1/templates/settings/health.hbs",
       classes: [...options.classes, "pf1", "health-config"],

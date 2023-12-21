@@ -209,11 +209,11 @@ export class ItemChange {
 
     // Ensure application of script changes creates a warning
     if (this.operator === "script") {
-      ui.notifications?.warn(game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.name }), {
+      ui.notifications?.warn(game.i18n.format("PF1.SETTINGS.AllowScriptChangesF", { parent: this.parent?.name }), {
         console: false,
       });
       console.warn(
-        game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.uuid || this.parent?.name }),
+        game.i18n.format("PF1.SETTINGS.AllowScriptChangesF", { parent: this.parent?.uuid || this.parent?.name }),
         {
           change: this,
           item: this.parent,

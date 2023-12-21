@@ -81,11 +81,6 @@
     "ExperienceConfigName": "Experience Configuration",
     "ExperienceConfigLabel": "Configure Experience",
     "ExperienceConfigHint": "Configure aspects about leveling up.",
-    "XPTrackSlow": "Slow",
-    "XPTrackMedium": "Medium",
-    "XPTrackFast": "Fast",
-    "XPTrackCustomFormula": "Custom (Formula)",
-    "XPTrackCustomFormulaHint": "e.g. '@level * 1000'",
 
     "AccessibilityConfigName": "Accessibility Configuration",
     "AccessibilityConfigLabel": "Accessibility",
@@ -2237,153 +2232,186 @@
 
     "Help": {
       "Label": "Help"
+    },
+
+    "SETTINGS": {
+      "DiagonalRule": {
+        "Label": "Diagonal Movement Rule",
+        "Hint": "Configure which diagonal movement rule should be used for games within this system.",
+        "Options": {
+          "Core": "5/10/5",
+          "Simple": "5/5/5"
+        }
+      },
+      "InitTiebreaker": {
+        "Label": "Initiative Tiebreaker",
+        "Hint": "Append total initiative divided by 100 to break ties in Initiative."
+      },
+      "Experience": {
+        "Track": {
+          "Label": "Experience Track",
+          "Hint": "The rate at which characters advance in levels",
+          "Options": {
+            "Slow": "Slow",
+            "Medium": "Medium",
+            "Fast": "Fast",
+            "Custom": "Custom"
+          },
+          "CustomPlaceholder": "e.g. '@level * 1000'"
+        },
+        "Disable": "Disable Experience Tracking",
+        "DisableHint": "Disables experience tracking features from the system, such as experience bars, level-up detection, XP thresholds, etc.",
+        "Distributor": "Open XP Distributor",
+        "DistributorHint": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed"
+      },
+      "Vision": {
+        "Sharing": "Shared Vision",
+        "SharingHint": "How to handle Shared Vision between players.",
+        "SharingWithoutSelection": "Without selected token",
+        "SharingWithSelection": "Always",
+        "PCDefault": "Player character vision",
+        "PCDefaultHint": "Player Characters by default have token vision, regardless of default token setup.",
+        "SystemControl": "System Controlled Vision",
+        "SystemControlHint": "Use creature's vision configuration to determine vision, supporting PF specific concepts such as low-light vision. If disabled, vision is determined in Foundry's token settings alone.",
+        "RequiresSelection": "Special vision requires selection",
+        "RequiresSelectionHint": "When checked, players who have no token selected will NOT benefit from any of their tokens' low-light vision or darkvision."
+      },
+      "VariantRules": {
+        "BackgroundSkills": "Use Background Skills",
+        "BackgroundSkillsHint": "Use the Background Skills optional ruleset",
+        "FractionalBaseBonuses": "Use Fractional Base Bonuses",
+        "FractionalBaseBonusesHint": "Use the Fractional Base Bonuses optional ruleset"
+      },
+      "Token": {
+        "PCDisposition": "Player character disposition",
+        "PCDispositionHint": "Override to default token disposition for player characters.",
+        "NPCDisposition": "Non-player character disposition",
+        "NPCDispositionHint": "Override to default token disposition for non-player characters"
+      },
+      "Canvas": {
+        "MeasureStyle": "Use Pathfinder measure style",
+        "MeasureStyleHint": "Whether to use Pathfinder's measurement style instead of FoundryVTT's default style"
+      },
+      "AllowScriptChangesN": "Enable Script Changes",
+      "AllowScriptChangesH": "Allows the use of \"Script\"-type changes in the world",
+      "AllowScriptChangesW": "<b>This settings would allow players to execute arbitrary code as the GM.</b><br><br>Are you absolutely sure you want to enable this?",
+      "AllowScriptChangesD": "Script Changes have been deprecated. Replace them and disable their setting to remove this warning.",
+      "AllowScriptChangesF": "A Change of the deprecated type \"Script\" has been found on {parent}. Please use another operator. Details have been logged to the console.",
+      "HideTokenConditionsN": "Hide Token Buffs",
+      "HideTokenConditionsH": "Whether buffs should hide their icons from token status effects",
+      "CoreEffectsN": "Default Token Conditions",
+      "CoreEffectsH": "Displays only PF1 conditions on tokens (unchecked) or core icons as well (checked)",
+      "UnchainedActionEconomyN": "Unchained Action Economy",
+      "UnchainedActionEconomyH": "Whether to use the Unchained Action Economy optional ruleset.",
+      "SkipActionDialogsN": "Skip Action Prompts",
+      "SkipActionDialogsH": "Skips action prompts (such as those from attacks and saving throws) unless you Shift-click them",
+      "MeasureOnQuickUse": "Measure Template on quick use",
+      "MeasureOnQuickUseHint": "Enables the placement of measure templates when skipping the action prompt.",
+      "Sheet": {
+        "InvertFilters": "Invert inventory filter behaviour",
+        "InvertFiltersHint": "Inverts shift-click behaviour on type filters in (item) sections."
+      },
+
+      "Houserules": {
+        "CoinDivisor": "Coin Weight Divisor",
+        "CoinDivisorHint": "How many coins weigh 1 lbs. Set to zero (0) to disable coin weight. Default is 50.",
+        "SpellPointCost": "Spellpoint default cost",
+        "SpellPointCostHint": "Default cost spellpoint using spells use if not configured per spell.",
+        "AltReach": "Alternative Reach Rule",
+        "AltReachHint": "Hides the outer corners from 10-ft reach measurements",
+        "NPCProficiencies": "NPC proficiencies",
+        "NPCProficienciesHint": "NPC actors also use proficiencies. With this disabled (default), they are considered proficienct with everything they have as per RAW."
+      },
+
+      "Chat": {
+        "ObscureInlineRolls": "Obscure inline rolls",
+        "ObscureInlineRollsHint": "Hide inline rolls from those without at least observer permission.",
+        "ObscureSaveDCs": "Obscure save DCs",
+        "ObscureSaveDCsHint": "Hide DC values from chat cards from players.",
+        "AutoCollapse": "Collapse Item Cards in Chat",
+        "AutoCollapseHint": "Automatically collapse Item Card descriptions in the Chat Log",
+        "HideButtons": "Hide Chat Card Buttons",
+        "HideButtonsHint": "Whether to hide chat card buttons, such as those found on attack rolls.",
+        "NoTargets": "Disable Attack Targets",
+        "NoTargetsHint": "Disables targeted actors from showing up on attack cards",
+        "ClearTargets": "Clear targets after attack",
+        "ClearTargetsHint": "Whether to untarget everything after an attack roll."
+      },
+
+      "Health": {
+        "Title": "Health Configuration",
+        "Button": "Configure Health",
+        "Hint": "Configure health computations for actors.",
+        "TabBase": "Base",
+        "TabVariant": "Variant Rules",
+
+        "Instructions": "Configure the health computation parameters for the various types of actors.  For reference, Pathfinder Society uses the following configuration for player characters: automatic computation, 0.5 rate, one hitdie maximized, round up, discrete continuity.",
+        "Compute": "Compute",
+        "Rate": "Rate",
+        "Maximized": "Maximized",
+        "ComputeAuto": "Auto",
+        "ComputeManual": "Manual",
+
+        "Rounding": "Health Rounding",
+        "RoundingHint": "Health values must be whole numbers. Which way to round them?",
+        "RoundingUp": "Up",
+        "RoundingDown": "Down",
+        "RoundingNearest": "Nearest",
+
+        "Continuity": "Health Continuity",
+        "ContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
+        "Continuous": "Continuous",
+        "Discrete": "Discrete",
+
+        "WoundsAndVigor": {
+          "PC": "Wounds and Vigor for PCs",
+          "PCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
+          "NPC": "Wounds and Vigor for NPCs",
+          "NPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters."
+        },
+        "WoundThresholds": {
+          "PC": "Wound thresholds for PCs",
+          "PCHint": "Use wound threshold optional ruleset for player characters.",
+          "NPC": "Wound thresholds for NPCs",
+          "NPCHint": "Use wound threshold optional ruleset for nonplayer characters.",
+          "PCOverride": "Allow wound threshold override for PCs",
+          "PCOverrideHint": "Allows per character override modification of wound threshold rule for player characters in character ",
+          "NPCOverride": "Allow wound threshold override for NPCs",
+          "NPCOverrideHint": "Allows per character override modification of wound threshold rule for nonplayer characters in character ",
+          "Disabled": "Disabled",
+          "Normal": "Normal",
+          "Gritty": "Gritty"
+        }
+      },
+
+      "DragRulerWalk": "walk",
+      "DragRulerDash": "dash",
+      "DragRulerRun": "run",
+      "DragRulerUseElevationName": "Use elevation to determine movement type",
+      "DragRulerUseElevationHint": "Use a token's elevation to determine whether it is flying or burrowing",
+
+      "Units": {
+        "System": "System of units",
+        "SystemHint": "System of units to be used in the world",
+
+        "Imperial": "Imperial (feet, lbs)",
+        "ImperialDistance": "Imperial (feet)",
+        "ImperialWeight": "Imperial (lbs)",
+        "Metric": "Metric (meters, kg)",
+        "MetricDistance": "Metric (meters)",
+        "MetricWeight": "Metric (kg)",
+
+        "Distance": "System of units for distances",
+        "DistanceHint": "Override system of units to be used with distances.",
+        "Weight": "System of units for weights",
+        "WeightHint": "Override system of units to be used with weights."
+      },
+
+      "OverlandVariantN": "Overland speed variant",
+      "OverlandVariantL": "Variant of how overland speed is calculated with metric distances.",
+      "OverlandMetricRounded": "Rounded (German & French)",
+      "OverlandMetricExact": "Exact (Spanish)"
     }
-  },
-
-  "SETTINGS": {
-    "pf1DiagN": "Diagonal Movement Rule",
-    "pf1DiagL": "Configure which diagonal movement rule should be used for games within this system.",
-    "pf1InitTiebreakerN": "Initiative Tiebreaker",
-    "pf1InitTiebreakerH": "Append total initiative divided by 100 to break ties in Initiative.",
-    "pf1CurWtN": "Apply Currency Weight",
-    "pf1CurWtL": "Carried currency affects character encumbrance.",
-    "pf1DiagPHB": "5/5/5",
-    "pf1DiagDMG": "5/10/5",
-    "pf1ExpRateN": "Experience Track",
-    "pf1ExpRateL": "The rate at which characters advance in levels",
-    "pf1NoExpN": "Disable Experience Tracking",
-    "pf1NoExpL": "Remove experience bars from character sheets.",
-    "pf1OpenXPDistributorN": "Open XP Distributor",
-    "pf1OpenXPDistributorL": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed",
-    "pf1BackgroundSkillsN": "Use Background Skills",
-    "pf1BackgroundSkillsH": "Use the Background Skills optional ruleset",
-    "pf1FractionalBaseBonusesN": "Use Fractional Base Bonuses",
-    "pf1FractionalBaseBonusesH": "Use the Fractional Base Bonuses optional ruleset",
-    "pf1PCWoundsAndVigorN": "Wounds and Vigor for PCs",
-    "pf1PCWoundsAndVigorH": "Use the Wounds and Vigor optional ruleset for player characters.",
-    "pf1NPCWoundsAndVigorN": "Wounds and Vigor for NPCs",
-    "pf1NPCWoundsAndVigorH": "Use the Wounds and Vigor optional ruleset for nonplayer characters.",
-    "pf1AutoCollapseCardN": "Collapse Item Cards in Chat",
-    "pf1AutoCollapseCardL": "Automatically collapse Item Card descriptions in the Chat Log",
-    "pf1MeasureStyleN": "Use Pathfinder measure style",
-    "pf1MeasureStyleL": "Whether to use Pathfinder's measurement style instead of FoundryVTT's default style",
-    "pf1LowLightVisionModeN": "Low-light Vision requires selection",
-    "pf1LowLightVisionModeH": "When checked, players who have no token selected will not benefit from any of their tokens' low-light vision (this also applies to darkvision)",
-    "pf1CoinWeightN": "Coin Weight Divisor",
-    "pf1CoinWeightH": "How many coins weigh 1 lbs. Set to zero (0) to disable coin weight.",
-    "pf1SpellPointCostN": "Spellpoint default cost",
-    "pf1SpellPointCostH": "Default cost spellpoint using spells use if not configured per spell.",
-    "pf1SharedVisionModeN": "Shared Vision Mode",
-    "pf1SharedVisionModeH": "How to handle Shared Vision between players.",
-    "pf1characterVisionN": "Player character vision",
-    "pf1characterVisionH": "Player Characters by default have token vision, regardless of default token setup.",
-    "pf1pcDispositionN": "Player character disposition",
-    "pf1pcDispositionH": "Override to default token disposition for player characters.",
-    "pf1npcDispositionN": "Non-player character disposition",
-    "pf1npcDispositionH": "Override to default token disposition for non-player characters",
-    "pf1systemVisionN": "System Controlled Vision",
-    "pf1systemVisionH": "Use creature's vision configuration to determine vision, supporting PF specific concepts such as low-light vision. If disabled, vision is determined in Foundry's token settings alone.",
-    "pf1SharedVisionWithoutSelection": "Without selected token",
-    "pf1SharedVisionWithSelection": "Always",
-    "pf1AllowScriptChangesN": "Enable Script Changes",
-    "pf1AllowScriptChangesH": "Allows the use of \"Script\"-type changes in the world",
-    "pf1AllowScriptChangesW": "<b>This settings would allow players to execute arbitrary code as the GM.</b><br><br>Are you absolutely sure you want to enable this?",
-    "pf1AllowScriptChangesD": "Script Changes have been deprecated. Replace them and disable their setting to remove this warning.",
-    "pf1AllowScriptChangesF": "A Change of the deprecated type \"Script\" has been found on {parent}. Please use another operator. Details have been logged to the console.",
-    "pf1HideTokenConditionsN": "Hide Token Buffs",
-    "pf1HideTokenConditionsH": "Whether buffs should hide their icons from token status effects",
-    "pf1obscureInlineRollsN": "Obscure inline rolls",
-    "pf1obscureInlineRollsH": "Hide inline rolls from those without at least observer permission.",
-    "pf1obscureSaveDCsN": "Obscure save DCs",
-    "pf1obscureSaveDCsH": "Hide DC values from chat cards from players.",
-    "pf1CoreEffectsN": "Default Token Conditions",
-    "pf1CoreEffectsH": "Displays only PF1 conditions on tokens (unchecked) or core icons as well (checked)",
-    "pf1HideChatButtonsN": "Hide Chat Card Buttons",
-    "pf1HideChatButtonsH": "Whether to hide chat card buttons, such as those found on attack rolls.",
-    "pf1AttackChatCardTemplateN": "Attack Chat Card style",
-    "pf1AttackChatCardTemplateH": "Select the style of attack type chat cards",
-    "pf1UnchainedActionEconomyN": "Unchained Action Economy",
-    "pf1UnchainedActionEconomyH": "Whether to use the Unchained Action Economy optional ruleset.",
-    "pf1SkipActionDialogsN": "Skip Action Prompts",
-    "pf1SkipActionDialogsH": "Skips action prompts (such as those from attacks and saving throws) unless you Shift-click them",
-    "placeMeasureTemplateOnQuickRollsN": "Measure Template on Quickrolls",
-    "placeMeasureTemplateOnQuickRollsH": "Enables the placement of measure templates when skipping the action prompt.",
-    "pf1InvertSectionFilterBehaviourN": "Invert inventory filter behaviour",
-    "pf1InvertSectionFilterBehaviourH": "Inverts shift-click behaviour on type filters in (item) sections.",
-    "pf1DisplayIterativesN": "Display iteratives",
-    "pf1DisplayIterativesH": "Breaks down BAB display to iteratives instead of only the total bonus",
-    "pf1AlternativeReachCornerRuleN": "Alternative Reach Rule",
-    "pf1AlternativeReachCornerRuleH": "Hides the outer corners from 10-ft reach measurements",
-    "pf1NPCProficienciesN": "NPC proficiencies",
-    "pf1NPCProficienciesH": "NPC actors also use proficiencies. With this disabled (default), they are considered proficienct with everything they have as per RAW.",
-    "pf1DisableAttackCardTargetsN": "Disable Attack Targets",
-    "pf1DisableAttackCardTargetsH": "Disables targeted actors from showing up on attack cards",
-    "pf1ClearTargetsAfterAttackN": "Clear targets after attack",
-    "pf1ClearTargetsAfterAttackH": "Whether to untarget everything after an attack roll.",
-
-    "pf1HealthConfigName": "Health Configuration",
-    "pf1HealthConfigLabel": "Configure Health",
-    "pf1HealthConfigHint": "Configure health computations for actors.",
-    "pf1HealthConfigTabBase": "Base",
-    "pf1HealthConfigTabVariant": "Variant Rules",
-    "pf1HealthConfigInstructions": "Configure the health computation parameters for the various types of actors.  For reference, Pathfinder Society uses the following configuration for player characters: automatic computation, 0.5 rate, one hitdie maximized, round up, discrete continuity.",
-    "pf1HealthCompute": "Compute",
-    "pf1HealthRate": "Rate",
-    "pf1HealthMaximized": "Maximized",
-    "pf1HealthComputeAuto": "Auto",
-    "pf1HealthComputeManual": "Manual",
-    "pf1HealthRoundingName": "Health Rounding",
-    "pf1HealthRoundingHint": "Health values must be whole numbers. Which way to round them?",
-    "pf1HealthContinuityName": "Health Continuity",
-    "pf1HealthContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
-    "pf1HealthContinuityContinuous": "Continuous",
-    "pf1HealthContinuityDiscrete": "Discrete",
-    "pf1HealthRoundingUp": "Up",
-    "pf1HealthRoundingDown": "Down",
-    "pf1HealthRoundingNearest": "Nearest",
-    "pf1HealthConfigWoundsAndVigorPCName": "Wounds and Vigor for PCs",
-    "pf1HealthConfigWoundsAndVigorPCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
-    "pf1HealthConfigWoundsAndVigorNPCName": "Wounds and Vigor for NPCs",
-    "pf1HealthConfigWoundsAndVigorNPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters.",
-
-    "pf1HealthConfigWoundThresholdsPCName": "Wound thresholds for PCs",
-    "pf1HealthConfigWoundsThresholdsPCHint": "Use wound threshold optional ruleset for player characters.",
-    "pf1HealthConfigWoundThresholdsNPCName": "Wound thresholds for NPCs",
-    "pf1HealthConfigWoundsThresholdsNPCHint": "Use wound threshold optional rulset for nonplayer characters.",
-    "pf1HealthConfigWoundThresholdsPCOverrideName": "Allow wound threshold override for PCs",
-    "pf1HealthConfigWoundThresholdsPCOverrideHint": "Allows per character override modification of wound threshold rule for player characters in character ",
-    "pf1HealthConfigWoundThresholdsNPCOverrideName": "Allow wound threshold override for NPCs",
-    "pf1HealthConfigWoundThresholdsNPCOverrideHint": "Allows per character override modification of wound threshold rule for nonplayer characters in character ",
-    "pf1HealthConfigWoundThresholdDisabled": "Disabled",
-    "pf1HealthConfigWoundThresholdNormal": "Normal",
-    "pf1HealthConfigWoundThresholdGritty": "Gritty",
-
-    "pf1DragRulerWalk": "walk",
-    "pf1DragRulerDash": "dash",
-    "pf1DragRulerRun": "run",
-    "pf1DragRulerUseElevationName": "Use elevation to determine movement type",
-    "pf1DragRulerUseElevationHint": "Use a token's elevation to determine whether it is flying or burrowing",
-
-    "pf1UnitsN": "System of units",
-    "pf1UnitsL": "System of units to be used in the world",
-
-    "pf1ImperialUnits": "Imperial (feet, lbs)",
-    "pf1ImperialDistanceUnits": "Imperial (feet)",
-    "pf1ImperialWeightUnits": "Imperial (lbs)",
-    "pf1MetricUnits": "Metric (meters, kg)",
-    "pf1MetricDistanceUnits": "Metric (meters)",
-    "pf1MetricWeightUnits": "Metric (kg)",
-
-    "pf1DistanceUnitsN": "System of units for distances",
-    "pf1DistanceUnitsL": "Override system of units to be used with distances.",
-
-    "pf1OverlandVariantN": "Overland speed variant",
-    "pf1OverlandVariantL": "Variant of how overland speed is calculated with metric distances.",
-    "pf1OverlandMetricRounded": "Rounded (German & French)",
-    "pf1OverlandMetricExact": "Exact (Spanish)",
-
-    "pf1WeightUnitsN": "System of units for weights",
-    "pf1WeightUnitsL": "Override system of units to be used with weights."
   },
 
   "TOKEN": {

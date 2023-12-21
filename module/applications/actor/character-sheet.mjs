@@ -56,13 +56,10 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     data.woundThresholds = hpSettings.variants.pc;
 
     // BAB iteratives
-    const iteratives = game.settings.get("pf1", "displayIteratives");
     const bab = data.rollData.attributes.bab.total;
-    if (iteratives) {
-      const iters = [bab];
-      for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
-      data.iteratives = `+${iters.join(" / +")}`;
-    }
+    const iters = [bab];
+    for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
+    data.iteratives = `+${iters.join(" / +")}`;
 
     // Add level up buttons to classes
     if (xpSettings.disable !== true && data.hasClasses) {

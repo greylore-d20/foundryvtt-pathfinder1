@@ -49,15 +49,14 @@ export const registerSystemSettings = function () {
 
   // Health configuration
   game.settings.registerMenu("pf1", "healthConfig", {
-    name: "SETTINGS.pf1HealthConfigName",
-    label: "SETTINGS.pf1HealthConfigLabel",
-    hint: "SETTINGS.pf1HealthConfigHint",
+    name: "PF1.SETTINGS.Health.Title",
+    label: "PF1.SETTINGS.Health.Button",
+    hint: "PF1.SETTINGS.Health.Hint",
     icon: "fas fa-heartbeat",
     type: HealthConfig,
     restricted: true,
   });
   game.settings.register("pf1", "healthConfig", {
-    name: "SETTINGS.pf1HealthConfigName",
     scope: "world",
     default: new HealthConfigModel(),
     type: HealthConfigModel,
@@ -185,8 +184,8 @@ export const registerSystemSettings = function () {
    * Option to change measure style
    */
   game.settings.register("pf1", "measureStyle", {
-    name: "SETTINGS.pf1MeasureStyleN",
-    hint: "SETTINGS.pf1MeasureStyleL",
+    name: "PF1.SETTINGS.Canvas.MeasureStyle",
+    hint: "PF1.SETTINGS.Canvas.MeasureStyleHint",
     scope: "world",
     config: true,
     default: true,
@@ -197,15 +196,15 @@ export const registerSystemSettings = function () {
    * Register diagonal movement rule setting
    */
   game.settings.register("pf1", "diagonalMovement", {
-    name: "SETTINGS.pf1DiagN",
-    hint: "SETTINGS.pf1DiagL",
+    name: "PF1.SETTINGS.DiagonalRule.Label",
+    hint: "PF1.SETTINGS.DiagonalRule.Hint",
     scope: "world",
     config: true,
     default: "5105",
     type: String,
     choices: {
-      555: "SETTINGS.pf1DiagPHB",
-      5105: "SETTINGS.pf1DiagDMG",
+      5105: "PF1.SETTINGS.DiagonalRule.Options.Core",
+      555: "PF1.SETTINGS.DiagonalRule.Options.Simple",
     },
   });
 
@@ -213,15 +212,15 @@ export const registerSystemSettings = function () {
    * System of Units
    */
   game.settings.register("pf1", "units", {
-    name: "SETTINGS.pf1UnitsN",
-    hint: "SETTINGS.pf1UnitsL",
+    name: "PF1.SETTINGS.Units.System",
+    hint: "PF1.SETTINGS.Units.SystemHint",
     scope: "world",
     config: true,
     default: "imperial",
     type: String,
     choices: {
-      imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
-      metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
+      imperial: "PF1.SETTINGS.Units.Imperial",
+      metric: "PF1.SETTINGS.Units.Metric",
     },
     onChange: () => {
       pf1.utils.refreshActors();
@@ -233,16 +232,16 @@ export const registerSystemSettings = function () {
    * System of units override for distances.
    */
   game.settings.register("pf1", "distanceUnits", {
-    name: "SETTINGS.pf1DistanceUnitsN",
-    hint: "SETTINGS.pf1DistanceUnitsL",
+    name: "PF1.SETTINGS.Units.Distance",
+    hint: "PF1.SETTINGS.Units.DistanceHint",
     scope: "world",
     config: true,
     default: "default",
     type: String,
     choices: {
-      default: game.i18n.localize("PF1.Default"),
-      imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
-      metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
+      default: "PF1.Default",
+      imperial: "PF1.SETTINGS.Units.ImperialDistance",
+      metric: "PF1.SETTINGS.Units.MetricDistance",
     },
     onChange: () => {
       pf1.utils.refreshActors({ renderOnly: true });
@@ -254,16 +253,16 @@ export const registerSystemSettings = function () {
    * System of units override for weights.
    */
   game.settings.register("pf1", "weightUnits", {
-    name: "SETTINGS.pf1WeightUnitsN",
-    hint: "SETTINGS.pf1WeightUnitsL",
+    name: "PF1.SETTINGS.Units.Weight",
+    hint: "PF1.SETTINGS.Units.WeightHint",
     scope: "world",
     config: true,
     default: "default",
     type: String,
     choices: {
-      default: game.i18n.localize("PF1.Default"),
-      imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
-      metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
+      default: "PF1.Default",
+      imperial: "PF1.SETTINGS.Units.ImperialWeight",
+      metric: "PF1.SETTINGS.Units.MetricWeight",
     },
     onChange: () => pf1.utils.refreshActors(),
   });
@@ -272,14 +271,14 @@ export const registerSystemSettings = function () {
    * Overland speed variant for metric.
    */
   game.settings.register("pf1", "overlandMetricVariant", {
-    name: "SETTINGS.pf1OverlandVariantN",
-    hint: "SETTINGS.pf1OverlandVariantL",
+    name: "PF1.SETTINGS.OverlandVariantN",
+    hint: "PF1.SETTINGS.OverlandVariantL",
     scope: "world",
     config: true,
     default: "rounded",
     choices: {
-      rounded: "SETTINGS.pf1OverlandMetricRounded",
-      exact: "SETTINGS.pf1OverlandMetricExact",
+      rounded: "PF1.SETTINGS.OverlandMetricRounded",
+      exact: "PF1.SETTINGS.OverlandMetricExact",
     },
   });
 
@@ -289,8 +288,8 @@ export const registerSystemSettings = function () {
    * Option to allow the background skills optional ruleset.
    */
   game.settings.register("pf1", "allowBackgroundSkills", {
-    name: "SETTINGS.pf1BackgroundSkillsN",
-    hint: "SETTINGS.pf1BackgroundSkillsH",
+    name: "PF1.SETTINGS.VariantRules.BackgroundSkills",
+    hint: "PF1.SETTINGS.VariantRules.BackgroundSkillsHint",
     scope: "world",
     config: true,
     default: false,
@@ -302,8 +301,8 @@ export const registerSystemSettings = function () {
    * Option to use the Fractional Base Bonuses optional ruleset.
    */
   game.settings.register("pf1", "useFractionalBaseBonuses", {
-    name: "SETTINGS.pf1FractionalBaseBonusesN",
-    hint: "SETTINGS.pf1FractionalBaseBonusesH",
+    name: "PF1.SETTINGS.VariantRules.FractionalBaseBonuses",
+    hint: "PF1.SETTINGS.VariantRules.FractionalBaseBonusesHint",
     scope: "world",
     config: true,
     default: false,
@@ -315,8 +314,8 @@ export const registerSystemSettings = function () {
    * Unchained action economy
    */
   game.settings.register("pf1", "unchainedActionEconomy", {
-    name: "SETTINGS.pf1UnchainedActionEconomyN",
-    hint: "SETTINGS.pf1UnchainedActionEconomyH",
+    name: "PF1.SETTINGS.UnchainedActionEconomyN",
+    hint: "PF1.SETTINGS.UnchainedActionEconomyH",
     scope: "world",
     config: true,
     default: false,
@@ -330,8 +329,8 @@ export const registerSystemSettings = function () {
    * Low-light Vision Mode
    */
   game.settings.register("pf1", "lowLightVisionMode", {
-    name: "SETTINGS.pf1LowLightVisionModeN",
-    hint: "SETTINGS.pf1LowLightVisionModeH",
+    name: "PF1.SETTINGS.Vision.RequiresSelection",
+    hint: "PF1.SETTINGS.Vision.RequiresSelectionHint",
     scope: "world",
     config: true,
     default: false,
@@ -349,15 +348,15 @@ export const registerSystemSettings = function () {
    * Shared Vision sharing style.
    */
   game.settings.register("pf1", "sharedVisionMode", {
-    name: "SETTINGS.pf1SharedVisionModeN",
-    hint: "SETTINGS.pf1SharedVisionModeH",
+    name: "PF1.SETTINGS.Vision.Sharing",
+    hint: "PF1.SETTINGS.Vision.SharingHint",
     scope: "world",
     config: false, // Hidden as it is unused; TODO: Re-implement #187's setting usage or remove setting/feature completely
-    default: "0",
-    type: String,
+    default: 0,
+    type: Number,
     choices: {
-      0: "SETTINGS.pf1SharedVisionWithoutSelection",
-      1: "SETTINGS.pf1SharedVisionWithSelection",
+      0: "PF1.SETTINGS.Vision.SharingWithoutSelection",
+      1: "PF1.SETTINGS.Vision.SharingWithSelection",
     },
     onChange: () => canvas.perception.update({ refreshLighting: true, refreshVision: true }, true),
   });
@@ -366,8 +365,8 @@ export const registerSystemSettings = function () {
    * Enable vision for player characters by default.
    */
   game.settings.register("pf1", "characterVision", {
-    name: "SETTINGS.pf1characterVisionN",
-    hint: "SETTINGS.pf1characterVisionH",
+    name: "PF1.SETTINGS.Vision.PCDefault",
+    hint: "PF1.SETTINGS.Vision.PCDefaultHint",
     scope: "world",
     config: true,
     default: true,
@@ -375,8 +374,8 @@ export const registerSystemSettings = function () {
   });
 
   game.settings.register("pf1", "pcDisposition", {
-    name: "SETTINGS.pf1pcDispositionN",
-    hint: "SETTINGS.pf1pcDispositionH",
+    name: "PF1.SETTINGS.Token.PCDisposition",
+    hint: "PF1.SETTINGS.Token.PCDispositionHint",
     type: String,
     choices: {
       NONE: "PF1.NoOverride",
@@ -389,8 +388,8 @@ export const registerSystemSettings = function () {
   });
 
   game.settings.register("pf1", "npcDisposition", {
-    name: "SETTINGS.pf1npcDispositionN",
-    hint: "SETTINGS.pf1npcDispositionH",
+    name: "PF1.SETTINGS.Token.NPCDisposition",
+    hint: "PF1.SETTINGS.Token.NPCDispositionHint",
     type: String,
     choices: {
       NONE: "PF1.NoOverride",
@@ -403,8 +402,8 @@ export const registerSystemSettings = function () {
   });
 
   game.settings.register("pf1", "systemVision", {
-    name: "SETTINGS.pf1systemVisionN",
-    hint: "SETTINGS.pf1systemVisionH",
+    name: "PF1.SETTINGS.Vision.SystemControl",
+    hint: "PF1.SETTINGS.Vision.SystemControlHint",
     scope: "world",
     config: true,
     default: true,
@@ -425,8 +424,8 @@ export const registerSystemSettings = function () {
    * Option to automatically collapse Item Card descriptions
    */
   game.settings.register("pf1", "autoCollapseItemCards", {
-    name: "SETTINGS.pf1AutoCollapseCardN",
-    hint: "SETTINGS.pf1AutoCollapseCardL",
+    name: "PF1.SETTINGS.Chat.AutoCollapse",
+    hint: "PF1.SETTINGS.Chat.AutoCollapseHint",
     scope: "client",
     config: true,
     default: false,
@@ -438,8 +437,8 @@ export const registerSystemSettings = function () {
    * Option to hide chat buttons
    */
   game.settings.register("pf1", "hideChatButtons", {
-    name: "SETTINGS.pf1HideChatButtonsN",
-    hint: "SETTINGS.pf1HideChatButtonsH",
+    name: "PF1.SETTINGS.Chat.HideButtons",
+    hint: "PF1.SETTINGS.Chat.HideButtonsHint",
     scope: "client",
     config: true,
     default: false,
@@ -453,8 +452,8 @@ export const registerSystemSettings = function () {
    * Set coin weight
    */
   game.settings.register("pf1", "coinWeight", {
-    name: "SETTINGS.pf1CoinWeightN",
-    hint: "SETTINGS.pf1CoinWeightH",
+    name: "PF1.SETTINGS.Houserules.CoinDivisor",
+    hint: "PF1.SETTINGS.Houserules.CoinDivisorHint",
     scope: "world",
     config: true,
     default: 50,
@@ -466,8 +465,8 @@ export const registerSystemSettings = function () {
    * Default spellpoint cost
    */
   game.settings.register("pf1", "spellPointCost", {
-    name: "SETTINGS.pf1SpellPointCostN",
-    hint: "SETTINGS.pf1SpellPointCostH",
+    name: "PF1.SETTINGS.Houserules.SpellPointCost",
+    hint: "PF1.SETTINGS.Houserules.SpellPointCostHint",
     scope: "world",
     config: true,
     default: "1 + @sl",
@@ -479,8 +478,8 @@ export const registerSystemSettings = function () {
    * Alternative reach corner rule
    */
   game.settings.register("pf1", "alternativeReachCornerRule", {
-    name: "SETTINGS.pf1AlternativeReachCornerRuleN",
-    hint: "SETTINGS.pf1AlternativeReachCornerRuleH",
+    name: "PF1.SETTINGS.Houserules.AltReach",
+    hint: "PF1.SETTINGS.Houserules.AltReachHint",
     scope: "world",
     config: true,
     default: false,
@@ -491,8 +490,8 @@ export const registerSystemSettings = function () {
    * Allow proficiencies on NPCs.
    */
   game.settings.register("pf1", "npcProficiencies", {
-    name: "SETTINGS.pf1NPCProficienciesN",
-    hint: "SETTINGS.pf1NPCProficienciesH",
+    name: "PF1.SETTINGS.Houserules.NPCProficiencies",
+    hint: "PF1.SETTINGS.Houserules.NPCProficienciesHint",
     scope: "world",
     config: true,
     default: false,
@@ -506,8 +505,8 @@ export const registerSystemSettings = function () {
    * Display default token conditions alongside system ones
    */
   game.settings.register("pf1", "coreEffects", {
-    name: "SETTINGS.pf1CoreEffectsN",
-    hint: "SETTINGS.pf1CoreEffectsH",
+    name: "PF1.SETTINGS.CoreEffectsN",
+    hint: "PF1.SETTINGS.CoreEffectsH",
     scope: "world",
     config: true,
     default: false,
@@ -519,8 +518,8 @@ export const registerSystemSettings = function () {
    * Hide token conditions
    */
   game.settings.register("pf1", "hideTokenConditions", {
-    name: "SETTINGS.pf1HideTokenConditionsN",
-    hint: "SETTINGS.pf1HideTokenConditionsH",
+    name: "PF1.SETTINGS.HideTokenConditionsN",
+    hint: "PF1.SETTINGS.HideTokenConditionsH",
     scope: "world",
     config: true,
     default: false,
@@ -534,8 +533,8 @@ export const registerSystemSettings = function () {
    * Hide inline rolls from non-observers.
    */
   game.settings.register("pf1", "obscureInlineRolls", {
-    name: "SETTINGS.pf1obscureInlineRollsN",
-    hint: "SETTINGS.pf1obscureInlineRollsH",
+    name: "PF1.SETTINGS.Chat.ObscureInlineRolls",
+    hint: "PF1.SETTINGS.Chat.ObscureInlineRollsHint",
     scope: "world",
     config: true,
     default: false,
@@ -547,8 +546,8 @@ export const registerSystemSettings = function () {
    * Hide save DCs.
    */
   game.settings.register("pf1", "obscureSaveDCs", {
-    name: "SETTINGS.pf1obscureSaveDCsN",
-    hint: "SETTINGS.pf1obscureSaveDCsH",
+    name: "PF1.SETTINGS.Chat.ObscureSaveDCs",
+    hint: "PF1.SETTINGS.Chat.ObscureSaveDCsHint",
     scope: "world",
     config: true,
     default: true,
@@ -559,8 +558,8 @@ export const registerSystemSettings = function () {
   // COMBAT
 
   game.settings.register("pf1", "initiativeTiebreaker", {
-    name: "SETTINGS.pf1InitTiebreakerN",
-    hint: "SETTINGS.pf1InitTiebreakerH",
+    name: "PF1.SETTINGS.InitTiebreaker.Label",
+    hint: "PF1.SETTINGS.InitTiebreaker.Hint",
     scope: "world",
     config: true,
     default: true,
@@ -574,8 +573,8 @@ export const registerSystemSettings = function () {
    * Skip action dialog prompts
    */
   game.settings.register("pf1", "skipActionDialogs", {
-    name: "SETTINGS.pf1SkipActionDialogsN",
-    hint: "SETTINGS.pf1SkipActionDialogsH",
+    name: "PF1.SETTINGS.SkipActionDialogsN",
+    hint: "PF1.SETTINGS.SkipActionDialogsH",
     scope: "client",
     config: true,
     default: false,
@@ -586,8 +585,8 @@ export const registerSystemSettings = function () {
    * When skipping an action dialog prompt still place the template if one is configured
    */
   game.settings.register("pf1", "placeMeasureTemplateOnQuickRolls", {
-    name: "SETTINGS.placeMeasureTemplateOnQuickRollsN",
-    hint: "SETTINGS.placeMeasureTemplateOnQuickRollsH",
+    name: "PF1.SETTINGS.MeasureOnQuickUse",
+    hint: "PF1.SETTINGS.MeasureOnQuickUseHint",
     scope: "client",
     config: true,
     default: true,
@@ -598,20 +597,8 @@ export const registerSystemSettings = function () {
    * Invert filter Shift-clicking
    */
   game.settings.register("pf1", "invertSectionFilterShiftBehaviour", {
-    name: "SETTINGS.pf1InvertSectionFilterBehaviourN",
-    hint: "SETTINGS.pf1InvertSectionFilterBehaviourH",
-    scope: "client",
-    config: true,
-    default: false,
-    type: Boolean,
-  });
-
-  /**
-   * Display BAB iteratives instead of simply total
-   */
-  game.settings.register("pf1", "displayIteratives", {
-    name: "SETTINGS.pf1DisplayIterativesN",
-    hint: "SETTINGS.pf1DisplayIterativesH",
+    name: "PF1.SETTINGS.Sheet.InvertFilters",
+    hint: "PF1.SETTINGS.Sheet.InvertFiltersHint",
     scope: "client",
     config: true,
     default: false,
@@ -624,8 +611,8 @@ export const registerSystemSettings = function () {
    * Disable targets for attack cards
    */
   game.settings.register("pf1", "disableAttackCardTargets", {
-    name: "SETTINGS.pf1DisableAttackCardTargetsN",
-    hint: "SETTINGS.pf1DisableAttackCardTargetsH",
+    name: "PF1.SETTINGS.Chat.NoTargets",
+    hint: "PF1.SETTINGS.Chat.NoTargetsHint",
     scope: "world",
     config: true,
     default: false,
@@ -636,8 +623,8 @@ export const registerSystemSettings = function () {
    * Clear targets after attack
    */
   game.settings.register("pf1", "clearTargetsAfterAttack", {
-    name: "SETTINGS.pf1ClearTargetsAfterAttackN",
-    hint: "SETTINGS.pf1ClearTargetsAfterAttackH",
+    name: "PF1.SETTINGS.Chat.ClearTargets",
+    hint: "PF1.SETTINGS.Chat.ClearTargetsHint",
     scope: "client",
     config: true,
     default: false,
@@ -650,8 +637,8 @@ export const registerSystemSettings = function () {
    * Allow Script type Changes.
    */
   game.settings.register("pf1", "allowScriptChanges", {
-    name: "SETTINGS.pf1AllowScriptChangesN",
-    hint: "SETTINGS.pf1AllowScriptChangesH",
+    name: "PF1.SETTINGS.AllowScriptChangesN",
+    hint: "PF1.SETTINGS.AllowScriptChangesH",
     scope: "world",
     config: true,
     default: false,
@@ -660,8 +647,8 @@ export const registerSystemSettings = function () {
       if (!value || !game.user.isGM) return;
       // Flash scare message and confirmation
       const d = Dialog.confirm({
-        title: game.i18n.localize("SETTINGS.pf1AllowScriptChangesN"),
-        content: game.i18n.localize("SETTINGS.pf1AllowScriptChangesW"),
+        title: game.i18n.localize("PF1.SETTINGS.AllowScriptChangesN"),
+        content: game.i18n.localize("PF1.SETTINGS.AllowScriptChangesW"),
         defaultYes: false,
       });
       d.then((result) => {

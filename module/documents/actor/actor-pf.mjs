@@ -4468,42 +4468,82 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @typedef MaxAndValue
+   * @typedef FeatCounts
    * @type {object}
-   * @property {number} max - The maximum value.
-   * @property {number} value - The current value.
-   * @returns {MaxAndValue} An object with a property `value` which refers to the current used feats, and `max` which refers to the maximum available feats.
+   * @property {number} max - The maximum allowed feats.
+   * @property {number} active - The current number of active feats.
+   * @property {number} owned - The current number of feats, active or not.
+   * @property {number} levels - Feats gained by levels specifically
+   * @property {number} formula - Feats gained by custom formula on the feats tab
+   * @property {number} changes - Feats gained via Changes
+   * @property {number} disabled - Disabled feats
+   * @property {number} excess - Feats over maximum allowed
+   * @property {number} missing - Feats under maximum allowed
+   * @returns {FeatCounts} An object with a property `value` which refers to the current used feats, and `max` which refers to the maximum available feats.
    */
   getFeatCount() {
-    const result = { max: 0, value: 0 };
-    result.value = this.itemTypes.feat.filter((o) => o.subType === "feat" && o.isActive).length;
+    const feats = this.itemTypes.feat.filter((o) => o.subType === "feat");
+
+    const result = {
+      max: 0,
+      active: feats.filter((o) => o.isActive).length,
+      owned: feats.length,
+      levels: 0,
+      formula: 0,
+      changes: 0,
+      disabled: 0,
+      excess: 0,
+      missing: 0,
+    };
+
+    Object.defineProperty(result, "value", {
+      get() {
+        foundry.utils.logCompatibilityWarning("getFeatCount().value is deprecated in favor of getFeatCount().active", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+
+        return this.active;
+      },
+    });
 
     // Add feat count by level
     const totalLevels = this.itemTypes.class
       .filter((cls) => ["base", "npc", "prestige", "racial"].includes(cls.subType))
       .reduce((cur, cls) => cur + cls.hitDice, 0);
-    result.max += Math.ceil(totalLevels / 2);
+    result.levels = Math.ceil(totalLevels / 2);
+    result.max += result.levels;
 
     // Bonus feat formula
-    const featCountRoll = RollPF.safeRoll(this.system.details.bonusFeatFormula || "0", this.getRollData());
-    result.max += featCountRoll.total;
-    if (featCountRoll.err) {
-      ui.notifications.error(
+    const bonusRoll = RollPF.safeRoll(this.system.details.bonusFeatFormula || "0", this.getRollData());
+    result.formula = bonusRoll.total;
+    result.max += result.formula;
+    if (bonusRoll.err) {
+      console.error(
         game.i18n.format("PF1.ErrorActorFormula", {
           context: game.i18n.localize("PF1.BonusFeatFormula"),
           name: this.actor.name,
-        })
+        }),
+        bonusRoll.formula,
+        this
       );
     }
 
-    // Changes
-    this.changes
-      .filter((o) => o.subTarget === "bonusFeats")
-      .forEach((o) => {
-        if (!o.value) return;
+    // Bonuses from changes
+    result.changes = getHighestChanges(
+      this.changes.filter((c) => {
+        if (c.subTarget !== "bonusFeats") return false;
+        return !["set", "="].includes(c.operator);
+      }),
+      { ignoreTarget: true }
+    ).reduce((cur, c) => cur + c.value, 0);
+    result.max += result.changes;
 
-        result.max += o.value;
-      });
+    // Count totals
+    const diff = result.max - result.active;
+    result.missing = Math.max(0, diff);
+    result.excess = Math.max(0, -diff);
+    result.disabled = result.owned - result.active;
 
     return result;
   }

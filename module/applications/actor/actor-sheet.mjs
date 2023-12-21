@@ -482,61 +482,33 @@ export class ActorSheetPF extends ActorSheet {
       data.sourceData.bonusFeats = sourceData;
 
       // Feat count
-      // By level
-      const feats = {};
+      const feats = this.actor.getFeatCount();
+      // Additional values
+      feats.bonus = feats.formula + feats.changes;
+      feats.issues = 0;
+      if (feats.missing > 0 || feats.excess) feats.issues += 1;
+      if (feats.disabled > 0) feats.issues += 1;
+      data.featCount = feats;
 
-      const allFeats = this.actor.itemTypes.feat.filter((feat) => feat.subType === "feat");
-      feats.owned = allFeats.length;
-      feats.active = allFeats.filter((i) => i.isActive).length;
-      const totalLevels = this.actor.itemTypes.class
-        .filter((cls) => ["base", "npc", "prestige", "racial"].includes(cls.subType))
-        .reduce((cur, cls) => cur + cls.hitDice, 0);
-      feats.byLevel = Math.ceil(totalLevels / 2);
-      sourceData.push({
-        name: game.i18n.localize("PF1.Level"),
-        value: feats.byLevel,
-      });
-
-      // Bonus feat formula
-      const featCountRoll = RollPF.safeRoll(this.document.system.details.bonusFeatFormula || "0", rollData);
-      const changes = this.document.changes.filter((c) => c.subTarget === "bonusFeats");
-      const changeBonus = getHighestChanges(
-        changes.filter((c) => {
-          c.applyChange(this.document);
+      // Generate fake sources for feats
+      // TODO: Move this to the real source info generation
+      this.actor.changes
+        .filter((c) => c.subTarget === "bonusFeats")
+        .forEach((c) => {
           if (c.parent || c.flavor) {
             sourceData.push({
               name: c.parent?.name ?? c.flavor,
               value: c.value,
             });
           }
-          return !["set", "="].includes(c.operator);
-        }),
-        { ignoreTarget: true }
-      ).reduce((cur, c) => cur + c.value, 0);
-      feats.byFormula = featCountRoll.total + changeBonus;
-      if (featCountRoll.err) {
-        ui.notifications.error(
-          game.i18n.format("PF1.ErrorActorFormula", {
-            error: game.i18n.localize("PF1.BonusFeatFormula"),
-            name: this.document.name,
-          })
-        );
-      }
-      if (featCountRoll.total !== 0) {
+        });
+
+      if (feats.formula !== 0) {
         sourceData.push({
           name: game.i18n.localize("PF1.BonusFeatFormula"),
-          value: featCountRoll.total,
+          value: feats.formula,
         });
       }
-
-      // Count totals
-      feats.total = feats.byLevel + feats.byFormula;
-      const diff = feats.total - feats.active;
-      feats.missing = Math.max(0, diff);
-      feats.excess = Math.max(0, -diff);
-      feats.disabled = feats.owned - feats.active;
-      feats.issues = (diff != 0 ? 1 : 0) + (feats.disabled > 0 ? 1 : 0);
-      data.featCount = feats;
     }
 
     // Fetch the game settings relevant to sheet rendering.

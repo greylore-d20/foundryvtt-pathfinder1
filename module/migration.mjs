@@ -1579,18 +1579,18 @@ const _migrateItemChanges = function (itemData, updateData) {
   if (Array.isArray(notes)) {
     const newNotes = [];
     for (const n of notes) {
+      let newNote = n;
       if (Array.isArray(n)) {
-        newNotes.push(
-          foundry.utils.mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false })
-        );
-      } else {
-        newNotes.push(foundry.utils.deepClone(n));
+        // Transform old tuple. Target is no longer used but is needed for the spellEffect below
+        newNote = { text: n[0], target: n[1], subTarget: n[2] };
       }
 
       // Migrate old note targets
-      if (n.target === "spell" && n.subTarget === "effect") {
-        n.subTarget = "spellEffect";
+      if (newNote.target === "spell" && newNote.subTarget === "effect") {
+        newNote.subTarget = "spellEffect";
       }
+
+      newNotes.push(new pf1.components.ContextNote(newNote).toObject());
     }
 
     // Alter the context note list, but only if changes actually occurred. Bidirectional to detect deletions.

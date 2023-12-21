@@ -560,10 +560,12 @@ export class ItemPF extends ItemBasePF {
   }
 
   static get defaultContextNote() {
-    return {
-      text: "",
-      subTarget: "",
-    };
+    foundry.utils.logCompatibilityWarning(
+      "ItemPF#defaultContextNote is deprecated in favor of pf1.components.ContextNote",
+      { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+    );
+
+    return new pf1.components.ContextNote().toObject();
   }
 
   /**

@@ -1839,7 +1839,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add new note
     if (a.classList.contains("add-note")) {
       const contextNotes = foundry.utils.deepClone(this.item.system.contextNotes || []);
-      contextNotes.push(ItemPF.defaultContextNote);
+      contextNotes.push(new pf1.components.ContextNote().toObject());
       await this._onSubmit(event, { updateData: { "system.contextNotes": contextNotes } });
     }
 

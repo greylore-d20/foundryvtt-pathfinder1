@@ -166,7 +166,7 @@ export function registerD20RollTests() {
               {
                 rollMode: "selfroll",
                 subject: { test: true },
-                chatTemplateData: { hasProperties: true, properties: ["foo"] },
+                chatTemplateData: { properties: [{ header: "Tprops", value: ["proptest"] }] },
                 noSound: true,
               }
             );
@@ -181,11 +181,13 @@ export function registerD20RollTests() {
             // HTML
             const element = document.createElement("div");
             element.innerHTML = message.content;
+            console.log(element);
             expect(element.querySelector(".flavor-text").textContent).to.include("Test");
             expect(element.querySelector(".flavor-text i.abnormal.take-x")).to.exist;
             expect(element.querySelector(".flavor-text i.abnormal.take-x").dataset.tooltip).to.equal(
               game.i18n.format("PF1.TakeX", { number: 12 })
             );
+            expect(element.querySelector(".tag-list .tag").textContent).to.include("proptest");
           });
         });
       });

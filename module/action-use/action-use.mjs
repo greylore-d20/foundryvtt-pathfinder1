@@ -916,7 +916,6 @@ export class ActionUse {
         actionDescription: itemChatData.actionDescription,
         hasExtraText: extraText.length > 0,
         properties: props,
-        hasProperties: props.length > 0,
         item: this.item.toObject(),
         actor,
         token,

@@ -2551,7 +2551,7 @@ export class ActorPF extends ActorBasePF {
       parts,
       rollData,
       flavor: game.i18n.format("PF1.SkillCheck", { skill: skl.name }),
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      chatTemplateData: { properties: props },
       compendium: { entry: pf1.config.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
@@ -2709,7 +2709,7 @@ export class ActorPF extends ActorBasePF {
       rollData,
       subject: { core: "cl", spellbook: bookId },
       flavor: game.i18n.localize("PF1.CasterLevelCheck"),
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      chatTemplateData: { properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollCl", this, rollOptions, bookId) === false) return;
@@ -2768,7 +2768,7 @@ export class ActorPF extends ActorBasePF {
       rollData,
       subject: { core: "concentration", spellbook: bookId },
       flavor: game.i18n.localize("PF1.ConcentrationCheck"),
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      chatTemplateData: { properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, bookId) === false) return;
@@ -3004,7 +3004,7 @@ export class ActorPF extends ActorBasePF {
       rollData,
       flavor: game.i18n.format("PF1.SavingThrowRoll", { save: label }),
       subject: { save: savingThrowId },
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      chatTemplateData: { properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollSave", this, rollOptions, savingThrowId) === false) return;
@@ -3066,7 +3066,7 @@ export class ActorPF extends ActorBasePF {
       rollData,
       flavor: game.i18n.format("PF1.AbilityTest", { ability: label }),
       subject: { ability: abilityId },
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      chatTemplateData: { properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollAbility", this, rollOptions, abilityId) === false) return;
@@ -3951,6 +3951,13 @@ export class ActorPF extends ActorBasePF {
     }, []);
   }
 
+  /**
+   * @param notes
+   * @param rollData
+   * @param root0
+   * @param root0.roll
+   * @returns {Array<string>}
+   */
   formatContextNotes(notes, rollData, { roll = true } = {}) {
     const result = [];
     rollData ??= this.getRollData();

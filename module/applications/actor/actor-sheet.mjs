@@ -648,7 +648,7 @@ export class ActorSheetPF extends ActorSheet {
 
     result.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
     result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-    if (result.hasAction) {
+    if (firstAction) {
       result.hasAttack = firstAction.hasAttack;
       result.hasMultiAttack = firstAction.hasMultiAttack;
       result.hasDamage = firstAction.hasDamage;

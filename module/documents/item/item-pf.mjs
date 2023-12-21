@@ -273,6 +273,7 @@ export class ItemPF extends ItemBasePF {
     return this.system.alignments ?? null;
   }
 
+  /** @type {pf1.components.ItemAction|undefined} */
   get firstAction() {
     return this.actions?.get(this.system.actions?.[0]?._id);
   }
@@ -627,6 +628,7 @@ export class ItemPF extends ItemBasePF {
 
     // Update actions
     if (itemData.actions instanceof Array) {
+      /** @type {Map<string,pf1.components.ItemAction>} */
       this.actions = this._prepareActions(itemData.actions);
     }
 

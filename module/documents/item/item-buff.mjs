@@ -214,20 +214,6 @@ export class ItemBuffPF extends ItemPF {
     itemData.duration.totalSeconds = seconds;
   }
 
-  // Creates a simple ActiveEffect from a buff item. Returns the effect
-  async toEffect({ noCreate = false } = {}) {
-    const actor = this.actor;
-    if (!actor) return;
-
-    const existing = actor.effects.find((e) => e.origin == this.uuid);
-    if (existing || noCreate) return existing;
-
-    // Add a new effect
-    const createData = this.getRawEffectData();
-
-    return ActiveEffect.implementation.create(createData, { parent: actor });
-  }
-
   // Determines the starting data for an ActiveEffect based off this item
   getRawEffectData() {
     const createData = super.getRawEffectData();

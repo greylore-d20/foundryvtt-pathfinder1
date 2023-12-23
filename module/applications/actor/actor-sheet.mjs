@@ -3196,7 +3196,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   calculateTotalItemValue({ inLowestDenomination = false, recursive = false } = {}) {
-    const items = this.document.items.filter((o) => o.system.price != null);
+    const items = this.actor.items.filter((item) => item.isPhysical && item.system.price != null);
     const total = items.reduce((cur, i) => {
       return cur + i.getValue({ recursive, sellValue: 1, inLowestDenomination: true });
     }, 0);

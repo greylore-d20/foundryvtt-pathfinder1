@@ -1105,10 +1105,8 @@ export const addDefaultChanges = function (changes) {
     );
   }
   // Add armor bonuses from equipment
-  this.items
-    .filter((obj) => {
-      return obj.type === "equipment" && obj.system.equipped;
-    })
+  this.itemTypes.equipment
+    .filter((item) => item.system.equipped)
     .forEach((item) => {
       let armorTarget = "aac";
       if (item.system.subType === "shield") armorTarget = "sac";

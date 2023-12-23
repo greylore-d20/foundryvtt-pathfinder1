@@ -269,9 +269,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Hit point sources
-    if (this.document.sourceDetails != null)
-      data.sourceDetails = foundry.utils.expandObject(this.document.sourceDetails);
-    else data.sourceDetails = null;
+    data.sourceDetails = foundry.utils.expandObject(this.actor.sourceDetails);
 
     // Ability Scores
     for (const [a, abl] of Object.entries(data.system.abilities)) {
@@ -279,22 +277,22 @@ export class ActorSheetPF extends ActorSheet {
       abl.totalLabel = abl.total == null ? "-" : abl.total;
 
       abl.sourceDetails = [
-        ...(data.sourceDetails?.system?.abilities?.[a]?.total ?? []),
-        ...(data.sourceDetails?.system?.abilities?.[a]?.penalty ?? []),
+        ...(data.sourceDetails.system.abilities?.[a]?.total ?? []),
+        ...(data.sourceDetails.system.abilities?.[a]?.penalty ?? []),
       ];
     }
 
     // Armor Class
     for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
       ac.label = pf1.config.ac[a];
-      ac.sourceDetails = data.sourceDetails != null ? data.sourceDetails.system.attributes.ac[a].total : [];
+      ac.sourceDetails = data.sourceDetails.system.attributes.ac[a].total ?? [];
+      console.log(ac);
     }
 
     // Saving Throws
     for (const [a, savingThrow] of Object.entries(data.system.attributes.savingThrows)) {
       savingThrow.label = pf1.config.savingThrows[a];
-      savingThrow.sourceDetails =
-        data.sourceDetails != null ? data.sourceDetails.system.attributes.savingThrows[a].total : [];
+      savingThrow.sourceDetails = data.sourceDetails.system.attributes.savingThrows[a].total ?? [];
     }
 
     // Update skill labels
@@ -329,7 +327,7 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       // Add misc skill bonus source
-      if (data.sourceDetails != null && data.sourceDetails.system.skills[s] != null) {
+      if (data.sourceDetails.system.skills[s]) {
         skl.sourceDetails.push(...data.sourceDetails.system.skills[s].changeBonus);
       }
 
@@ -348,12 +346,7 @@ export class ActorSheetPF extends ActorSheet {
             name: pf1.config.abilities[skl2.ability],
             value: data.system.abilities[skl2.ability]?.mod ?? 0,
           });
-          if (
-            data.sourceDetails != null &&
-            data.sourceDetails.system.skills[s] != null &&
-            data.sourceDetails.system.skills[s].subSkills != null &&
-            data.sourceDetails.system.skills[s].subSkills[s2] != null
-          ) {
+          if (data.sourceDetails.system.skills[s]?.subSkills[s2]) {
             skl2.sourceDetails.push(...data.sourceDetails.system.skills[s].subSkills[s2].changeBonus);
           }
           skl2.untrained = skl2.rt === true && skl2.rank <= 0;

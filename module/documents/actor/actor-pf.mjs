@@ -1562,10 +1562,8 @@ export class ActorPF extends ActorBasePF {
     const broken = { armor: { value: 0, item: null }, shield: { value: 0, item: null } };
     const mdex = { armor: null, shield: null };
 
-    this.items
-      .filter((item) => {
-        return item.type === "equipment" && item.system.equipped;
-      })
+    this.itemTypes.equipment
+      .filter((item) => item.system.equipped)
       .forEach((item) => {
         const eqType = item.system.subType;
         const isShieldOrArmor = ["armor", "shield"].includes(eqType);

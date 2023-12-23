@@ -104,6 +104,7 @@ export class AttackDialog extends Application {
     return {
       data: this.rollData,
       item,
+      action,
       config: pf1.config,
       rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.Dice.rollModes,

@@ -840,7 +840,7 @@ export class ItemAction {
     getHighestChanges(
       changes.filter((c) => {
         c.applyChange(this.actor);
-        return !["set", "="].includes(c.operator);
+        return c.operator !== "set";
       }),
       { ignoreTarget: true }
     )
@@ -1070,7 +1070,7 @@ export class ItemAction {
       getHighestChanges(
         changes.filter((c) => {
           c.applyChange(this.actor);
-          return !["set", "="].includes(c.operator);
+          return c.operator !== "set";
         }),
         { ignoreTarget: true }
       ).forEach((c) => {

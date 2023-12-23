@@ -2955,7 +2955,7 @@ export class ActorPF extends ActorBasePF {
       // Get damage bonus
       changeBonus = getHighestChanges(
         changes.filter((c) => {
-          return !["set", "="].includes(c.operator);
+          return c.operator !== "set";
         }),
         { ignoreTarget: true }
       ).reduce((cur, c) => {
@@ -4531,7 +4531,7 @@ export class ActorPF extends ActorBasePF {
     result.changes = getHighestChanges(
       this.changes.filter((c) => {
         if (c.subTarget !== "bonusFeats") return false;
-        return !["set", "="].includes(c.operator);
+        return c.operator !== "set";
       }),
       { ignoreTarget: true }
     ).reduce((cur, c) => cur + c.value, 0);

@@ -1500,13 +1500,13 @@ const _migrateCR = function (ent, updateData) {
   }
 };
 
-const _migrateItemChanges = function (ent, updateData) {
+const _migrateItemChanges = function (itemData, updateData) {
   // Migrate changes
-  const changes = foundry.utils.getProperty(ent, "system.changes");
-  if (changes != null && changes instanceof Array) {
+  const changes = itemData.system.changes;
+  if (Array.isArray(changes)) {
     const newChanges = [];
     for (const c of changes) {
-      if (c instanceof Array) {
+      if (Array.isArray(c)) {
         const newChange = new ItemChange(
           {
             formula: c[0],
@@ -1519,9 +1519,13 @@ const _migrateItemChanges = function (ent, updateData) {
         );
         newChanges.push(newChange.data);
       } else {
-        c._id ||= foundry.utils.randomID(8); // Fill in missing ID
-        const newChange = new ItemChange(c, null);
-        newChanges.push(newChange.data);
+        const cd = foundry.utils.deepClone(c); // Avoid mutating source data so diff works properly
+        // Transform legacy operators
+        if (cd.operator === "=") cd.operator = "set";
+        if (cd.operator === "+") cd.operator = "add";
+        const newChange = new ItemChange(cd, null).data;
+        newChange._id ||= foundry.utils.randomID(8); // Fill in missing ID
+        newChanges.push(newChange);
       }
     }
 
@@ -1535,11 +1539,11 @@ const _migrateItemChanges = function (ent, updateData) {
   }
 
   // Migrate context notes
-  const notes = foundry.utils.getProperty(ent, "system.contextNotes");
-  if (notes != null && notes instanceof Array) {
+  const notes = itemData.system.contextNotes;
+  if (Array.isArray(notes)) {
     const newNotes = [];
     for (const n of notes) {
-      if (n instanceof Array) {
+      if (Array.isArray(n)) {
         newNotes.push(
           foundry.utils.mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false })
         );

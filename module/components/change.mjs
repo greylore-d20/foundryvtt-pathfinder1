@@ -228,8 +228,6 @@ export class ItemChange {
     for (const t of targets) {
       const override = overrides[t];
       let operator = this.operator;
-      if (operator === "+") operator = "add";
-      if (operator === "=") operator = "set";
 
       // HACK: Data prep change application creates overrides; only changes meant for manual comparison lack them,
       // and those do not have to be applied to the actor.

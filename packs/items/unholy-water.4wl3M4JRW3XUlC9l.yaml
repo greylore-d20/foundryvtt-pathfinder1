@@ -1,0 +1,74 @@
+name: Unholy water
+type: weapon
+img: systems/pf1/icons/items/potions/grand-violet.jpg
+system:
+  description:
+    value: >-
+      <p>Category Alchemical Weapons</p><h3>Description</h3><p>Unholy water
+      damages good outsiders almost as if it were acid. A flask of unholy water
+      can be thrown as a splash weapon.</p><p>Treat this attack as a ranged
+      touch attack with a range increment of 10 feet. A flask breaks if thrown
+      against the body of a corporeal creature, but to use it against an
+      incorporeal creature, you must open the flask and pour the holy water out
+      onto the target. Thus, you can douse an incorporeal creature with holy
+      water only if you are adjacent to it. Doing so is a ranged touch attack
+      that does not provoke attacks of opportunity.</p><p>A direct hit by a
+      flask of unholy water deals 2d4 points of damage to a good outsider. Each
+      such creature within 5 feet of the point where the flask hits takes 1
+      point of damage from the splash.</p><p><span style="font-family:Signika,
+      sans-serif">Unholy water is made using </span>the
+      @UUID[Compendium.pf1.spells.Item.c0hvjnqzry149ugs]{curse water} spell.</p>
+  weight:
+    value: 1
+  price: 25
+  actions:
+    - _id: Fw0IRIgJPiqt3Ozf
+      name: Attack
+      img: systems/pf1/icons/items/potions/grand-violet.jpg
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '10'
+        units: ft
+        maxIncrements: 5
+      measureTemplate:
+        type: circle
+        size: '5'
+      actionType: twak
+      damage:
+        parts:
+          - formula: 2d4
+            type:
+              values:
+                - untyped
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: dex
+      touch: true
+      ammoType: none
+  uses:
+    per: single
+  material:
+    base:
+      value: ''
+    normal:
+      value: ''
+    addon:
+      - null
+      - null
+  subType: misc
+  weaponSubtype: splash
+  source:
+    id: PZO1123
+    pages: '107'
+  ammo:
+    type: ''
+_id: 4wl3M4JRW3XUlC9l
+_key: '!items!4wl3M4JRW3XUlC9l'
+

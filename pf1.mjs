@@ -17,8 +17,8 @@ import { measureDistances, getConditions } from "./module/utils/canvas.mjs";
 import { getFirstActiveGM, moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
 import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
-import * as chat from "./module/utils/chat.mjs";
 import * as macros from "./module/documents/macros.mjs";
+import * as chatUtils from "./module/utils/chat.mjs";
 import { initializeModuleIntegration } from "./module/modules.mjs";
 import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ItemPFProxy } from "@item/item-proxy.mjs";
@@ -29,6 +29,7 @@ import * as PF1CONST from "./module/const.mjs";
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
 import * as actionUse from "./module/action-use/_module.mjs";
+import * as chat from "./module/chat/_module.mjs";
 import * as _canvas from "./module/canvas/_module.mjs";
 import * as dice from "./module/dice/_module.mjs";
 import * as components from "./module/components/_module.mjs";
@@ -50,6 +51,7 @@ export {
   migrations,
   registry,
   utils,
+  chat,
 };
 
 globalThis.pf1 = moduleToObject({
@@ -66,6 +68,7 @@ globalThis.pf1 = moduleToObject({
   /** @type {TooltipPF|null} */
   tooltip: null,
   utils,
+  chat,
   // Initialize skip confirm prompt value
   skipConfirmPrompt: false,
 });
@@ -579,19 +582,19 @@ Hooks.on(
    */
   (cm, jq, options) => {
     // Hide roll info
-    chat.hideRollInfo(cm, jq, options);
+    chatUtils.hideRollInfo(cm, jq, options);
 
     // Hide GM sensitive info
-    chat.hideGMSensitiveInfo(cm, jq, options);
+    chatUtils.hideGMSensitiveInfo(cm, jq, options);
 
     // Hide non-visible targets for players
-    if (!game.user.isGM) chat.hideInvisibleTargets(cm, jq);
+    if (!game.user.isGM) chatUtils.hideInvisibleTargets(cm, jq);
 
     // Create target callbacks
-    chat.addTargetCallbacks(cm, jq);
+    chatUtils.addTargetCallbacks(cm, jq);
 
     // Alter target defense options
-    chat.alterTargetDefense(cm, jq);
+    chatUtils.alterTargetDefense(cm, jq);
 
     // Optionally collapse the content
     if (game.settings.get("pf1", "autoCollapseItemCards")) jq.find(".card-content").hide();
@@ -600,10 +603,10 @@ Hooks.on(
     if (game.settings.get("pf1", "hideChatButtons")) jq.find(".card-buttons").hide();
 
     // Apply accessibility settings to chat message
-    chat.applyAccessibilitySettings(cm, jq, options, game.settings.get("pf1", "accessibilityConfig"));
+    chatUtils.applyAccessibilitySettings(cm, jq, options, game.settings.get("pf1", "accessibilityConfig"));
 
     // Alter ammo recovery options
-    chat.alterAmmoRecovery(cm, jq);
+    chatUtils.alterAmmoRecovery(cm, jq);
   }
 );
 

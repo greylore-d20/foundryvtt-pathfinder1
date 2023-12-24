@@ -185,7 +185,7 @@ export class ItemPhysicalPF extends ItemPF {
     let result = getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
 
     // Modify sell value
-    if (!(this.type === "loot" && this.system.subType === "tradeGoods")) result *= sellValue;
+    if (!(this.type === "loot" && ["tradeGoods", "treasure"].includes(this.subType))) result *= sellValue;
 
     return result;
   }

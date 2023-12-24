@@ -2541,7 +2541,36 @@ export class ActorSheetPF extends ActorSheet {
       const subType = i.type === "loot" ? i.subType || "gear" : i.subType;
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       // Only loot has subType specific sections
-      if (i.type === "loot") inventory[subType]?.items.push(i);
+      if (i.type === "loot") {
+        const subType = i.subType || "gear";
+        let subsectionId = subType;
+        switch (subType) {
+          case "adventuring":
+          case "tool":
+          case "reagent":
+          case "remedy":
+          case "herb":
+          case "animalGear":
+            subsectionId = "gear";
+            break;
+          case "treasure":
+            subsectionId = "tradeGoods";
+            break;
+          case "food":
+          case "entertainment":
+          case "vehicle":
+            subsectionId = "misc";
+            break;
+          case "ammo":
+          case "tradeGoods":
+          case "misc":
+          default:
+            subsectionId = subType;
+            break;
+        }
+        const subsection = inventory[subsectionId];
+        subsection?.items.push(i);
+      }
     }
 
     // Organize Features

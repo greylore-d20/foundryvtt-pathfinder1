@@ -845,8 +845,18 @@ export const equipmentSlots = {
  */
 export const lootTypes = {
   gear: "PF1.Subtypes.Item.loot.gear.Plural",
+  tool: "PF1.Subtypes.Item.loot.tool.Plural",
   ammo: "PF1.Subtypes.Item.loot.ammo.Plural",
+  food: "PF1.Subtypes.Item.loot.food.Plural",
+  herb: "PF1.Subtypes.Item.loot.herb.Plural",
+  adventuring: "PF1.Subtypes.Item.loot.adventuring.Plural",
+  animalGear: "PF1.Subtypes.Item.loot.animalGear.Plural",
+  reagent: "PF1.Subtypes.Item.loot.reagent.Plural",
+  remedy: "PF1.Subtypes.Item.loot.remedy.Plural",
+  treasure: "PF1.Subtypes.Item.loot.treasure.Plural",
   tradeGoods: "PF1.Subtypes.Item.loot.tradeGoods.Plural",
+  vehicle: "PF1.Subtypes.Item.loot.vehicle.Plural",
+  entertainment: "PF1.Subtypes.Item.loot.entertainment.Plural",
   misc: "PF1.Subtypes.Item.loot.misc.Plural",
 };
 

@@ -286,7 +286,6 @@ export class ActorSheetPF extends ActorSheet {
     for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
       ac.label = pf1.config.ac[a];
       ac.sourceDetails = data.sourceDetails.system.attributes.ac[a].total ?? [];
-      console.log(ac);
     }
 
     // Saving Throws

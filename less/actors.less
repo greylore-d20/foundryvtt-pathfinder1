@@ -217,24 +217,25 @@
         }
       }
     }
+
+    // Note: Only used by alignment selection
+    .controls {
+      .control {
+        flex: 0;
+        visibility: hidden;
+        margin-right: 4px;
+      }
+
+      &:hover {
+        .control {
+          visibility: visible;
+        }
+      }
+    }
   }
 
   .alignment {
     color: black;
-  }
-
-  .controls {
-    .control {
-      flex: 0;
-      visibility: hidden;
-      margin-right: 4px;
-    }
-
-    &:hover {
-      .control {
-        visibility: visible;
-      }
-    }
   }
 
   .attributes {

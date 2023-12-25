@@ -1,123 +1,129 @@
 .pf1.sheet {
-ul.skills-list {
-  overflow-y: auto;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: @borderGroove;
-  border-radius: 3px;
+  ul.skills-list {
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: @borderGroove;
+    border-radius: 3px;
 
-  .skill-controls {
-    // Add skill button
-    margin-left: 0.5em;
-  }
+    .skill {
+      padding-left: 0.3em;
 
-  .skill {
-    padding-left: 0.3em;
-  }
-
-  .sub-skill {
-    padding-left: 2.2em;
-  }
-
-  li.skill,
-  li.sub-skill {
-    display: grid;
-    grid-template-columns: auto 24px 3em repeat(5, 4em) 40px;
-    height: 2em;
-
-    .itemBackground();
-
-    &.untrained {
-      .skill-name {
-        color: rgba(0, 0, 0, 0.6);
+      &.sub-skill {
+        padding-left: 2em;
       }
+    }
 
-      .action.roll {
-        > i {
-          opacity: 60%;
+    li {
+      &.skill {
+        display: grid;
+        grid-template-columns: auto 24px 3em repeat(5, 4em) 40px;
+        height: 2em;
 
-          &:hover {
-            animation: 0;
+        .itemBackground();
+
+        .controls {
+          display: inline-flex;
+
+          // Custom skill controls
+          &.custom {
+            margin-left: 0.3em;
           }
         }
-      }
-    }
 
-    .skill-name {
-      display: inline-flex;
-      font-size: @fontSizeEnlarged;
+        &.untrained {
+          .skill-name {
+            color: rgba(0, 0, 0, 0.6);
+          }
 
-      h4,
-      input[type="text"] {
-        display: inline-block;
-        margin: 0;
-        white-space: nowrap;
-        overflow: hidden;
-      }
+          .action.roll {
+            >i {
+              opacity: 60%;
 
-      h4 {
-        // Remove inherited borders
-        border: unset;
-      }
+              &:hover {
+                animation: 0;
+              }
+            }
+          }
+        }
 
-      .compendium-entry > h4 {
-        border-bottom: 1px #111 dotted;
-      }
+        .skill-name {
+          display: inline-flex;
+          font-size: @fontSizeEnlarged;
+          align-items: center;
+          gap: 0.3em;
 
-      .compendium-entry:hover .compendium-icon {
-        visibility: visible;
-      }
+          h4,
+          input[type="text"] {
+            display: inline-block;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+          }
 
-      .compendium-icon {
-        visibility: hidden;
-        flex: 0 0 24px;
-        margin-left: 5px;
-        position: relative;
-        top: -4px;
-      }
+          h4 {
+            flex: 1;
 
-      .skill-control {
-        display: inline-flex;
-        align-items: center;
+            // Remove inherited borders
+            border: unset;
+          }
 
-        .fas {
-          display: inline-block;
+          .compendium-icon {
+            visibility: hidden;
+            flex: 0 0 16px;
+          }
+        }
+
+        &.compendium:hover {
+          .compendium-icon {
+            visibility: visible;
+          }
+        }
+
+        .checkbox {
+          font-size: @fontSizeNormal;
+        }
+
+        .skill-ability {}
+
+        .skill-mod {
+          line-height: 1.5;
+          font-weight: bold;
           text-align: center;
-          width: 24px;
+          border: 1px dotted #111;
+          cursor: initial;
+        }
+
+        .skill-rank {
+          border-bottom: @borderGroove;
+        }
+
+        input[type="text"] {
+          height: auto;
         }
       }
+
+      // Special case
+      .control.skill-create {
+        width: 1.5em;
+        text-align: center;
+      }
     }
 
-    .checkbox {
-      font-size: @fontSizeNormal;
+    > .controls {
+      // Mimic skill line stylings
+      display: flex;
+      height: 2em;
+      padding-left: 0.3em;
     }
 
-    .skill-ability {
-    }
+    .controls {
+      align-items: center;
 
-    .skill-mod {
-      line-height: 1.5;
-      font-weight: bold;
-      text-align: center;
-      border: 1px dotted #111;
-      cursor: initial;
-    }
-
-    .skill-rank {
-      border-bottom: @borderGroove;
-    }
-
-    .skill-controls {
-    }
-
-    input[type="text"] {
-      height: auto;
+      .fas {
+        width: 1.25em;
+      }
     }
   }
-
-  li.sub-skill .skill-name input[type="text"] {
-    padding-left: 8px;
-  }
-}
 }

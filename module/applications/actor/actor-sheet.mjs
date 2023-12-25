@@ -1019,26 +1019,21 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Add arbitrary skill
-    html.find(".skill.arbitrary .skill-create").click((ev) => this._onArbitrarySkillCreate(ev));
-
-    // Delete arbitrary skill
-    html.find(".sub-skill > .skill-controls > .skill-delete").click((ev) => this._onArbitrarySkillDelete(ev));
+    html.find(".skills .skill.arbitrary .skill-create").click((ev) => this._onArbitrarySkillCreate(ev));
 
     // Add custom skill
-    html.find(".skill-controls.skills .skill-create").click((ev) => this._onSkillCreate(ev));
+    html.find(".skills .controls > .skill-create").click((ev) => this._onSkillCreate(ev));
 
     // Edit skill
-    html.find(".sub-skill > .skill-controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
-    html.find(".skill > .skill-controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
+    html.find(".skills .skill > .controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
     // Delete custom skill
-    html.find(".skill > .skill-controls > .skill-delete").click((ev) => this._onSkillDelete(ev));
+    html.find(".skills .skill > .controls > .skill-delete").click((ev) => this._onSkillDelete(ev));
 
     // Item Action control
     html.find(".item-actions a.item-action").click(this._itemActivationControl.bind(this));
 
     // Roll Skill Checks
-    html.find(".skill > .action.roll").click(this._onRollSkillCheck.bind(this));
-    html.find(".sub-skill > .action.roll").click(this._onRollSubSkillCheck.bind(this));
+    html.find(".tab.skills .skill > .action.roll").click(this._onRollSkillCheck.bind(this));
 
     // Open skill compendium entry
     html.find("a.compendium-entry").click(this._onOpenCompendiumEntry.bind(this));
@@ -1365,22 +1360,9 @@ export class ActorSheetPF extends ActorSheet {
 
   _onDragSkillStart(event) {
     const elem = event.currentTarget;
-    let skillElem = elem.closest(".sub-skill");
-    let mainSkill = null;
-    let subSkill = null;
-    let isSubSkill = true;
-    if (!skillElem) {
-      skillElem = elem.closest(".skill");
-      isSubSkill = false;
-    }
-    if (!skillElem) return;
-
-    if (isSubSkill) {
-      mainSkill = skillElem.dataset.mainSkill;
-      subSkill = skillElem.dataset.skill;
-    } else {
-      mainSkill = skillElem.dataset.skill;
-    }
+    const skillElem = elem.closest(".skill");
+    const mainSkill = skillElem.dataset.skill;
+    const subSkill = skillElem.dataset.subSkill;
 
     const result = {
       type: "skill",
@@ -1898,7 +1880,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`system.skills.${tag}`] = skillData;
-    if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
+    await this.document.update(updateData);
 
     return this._editSkill(tag);
   }
@@ -1920,66 +1902,40 @@ export class ActorSheetPF extends ActorSheet {
 
   _onSkillEdit(event) {
     event.preventDefault();
-    const mainSkillId =
-      $(event.currentTarget).parents(".sub-skill").attr("data-main-skill") ??
-      $(event.currentTarget).parents(".skill").attr("data-skill");
-    const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
+    const el = event.target.closest(".skill");
+    const mainSkillId = el.dataset.skill;
+    const subSkillId = el.dataset.subSkill;
 
     return this._editSkill(mainSkillId, subSkillId);
-  }
-
-  _onArbitrarySkillDelete(event) {
-    event.preventDefault();
-    const mainSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-main-skill");
-    const skill = this.document.system.skills[mainSkillId];
-    const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
-    const subSkill = skill?.subSkills?.[subSkillId];
-    const skillName = `${pf1.config.skills[mainSkillId] ?? skill.name} (${subSkill.name})`;
-
-    const deleteSkill = () => {
-      const updateData = {};
-      updateData[`system.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
-      this.document.update(updateData);
-    };
-
-    if (getSkipActionPrompt()) {
-      deleteSkill();
-    } else {
-      const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
-      Dialog.confirm({
-        title: game.i18n.format("PF1.DeleteSkillTitle", { name: skillName }),
-        content: msg,
-        yes: () => {
-          deleteSkill();
-        },
-        rejectClose: true,
-      });
-    }
   }
 
   _onSkillDelete(event) {
     event.preventDefault();
     if (!this.document.testUserPermission(game.user, "OWNER")) return;
-    const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
-    const skill = this.document.system.skills[skillId];
-    const skillName = pf1.config.skills[skillId] ?? skill.name;
+
+    const el = event.target.closest(".skill");
+    const mainSkillId = el.dataset.skill;
+    const subSkillId = el.dataset.subSkill;
+    const skillId = subSkillId ? `${mainSkillId}.subSkills.${subSkillId}` : mainSkillId;
+
+    const info = this.actor.getSkillInfo(skillId);
 
     const deleteSkill = () => {
       const updateData = {};
-      updateData[`system.skills.-=${skillId}`] = null;
+      // Delete subskill
+      if (subSkillId) updateData[`system.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
+      // Delete main skill
+      else updateData[`system.skills.-=${mainSkillId}`] = null;
       this.document.update(updateData);
     };
 
     if (getSkipActionPrompt()) {
       deleteSkill();
     } else {
-      const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.format("PF1.DeleteSkillTitle", { name: skillName }),
-        content: msg,
-        yes: () => {
-          deleteSkill();
-        },
+        title: game.i18n.format("PF1.DeleteSkillTitle", { name: info.name }),
+        content: `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`,
+        yes: () => deleteSkill(),
         rejectClose: true,
       });
     }
@@ -2724,15 +2680,12 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onRollSkillCheck(event) {
     event.preventDefault();
-    const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(skill, { token: this.token });
-  }
+    const el = event.target;
+    const skill = el.dataset.skill;
+    const subSkill = el.dataset.subSkill;
+    const skillId = subSkill ? `${skill}.subSkills.${subSkill}` : skill;
 
-  _onRollSubSkillCheck(event) {
-    event.preventDefault();
-    const mainSkill = event.currentTarget.parentElement.dataset.mainSkill;
-    const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`, { token: this.token });
+    this.document.rollSkill(skillId, { token: this.token });
   }
 
   /**

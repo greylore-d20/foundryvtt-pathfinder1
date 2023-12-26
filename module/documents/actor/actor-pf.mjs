@@ -502,7 +502,9 @@ export class ActorPF extends ActorBasePF {
 
     this._prepareNaturalReach();
 
-    Hooks.callAll("pf1PrepareBaseActorData", this);
+    if (Hooks.events.pf1PrepareBaseActorData?.length) {
+      Hooks.callAll("pf1PrepareBaseActorData", this);
+    }
 
     // Update total level and mythic tier
     const classes = this.itemTypes.class;
@@ -1332,7 +1334,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   prepareSpecificDerivedData() {
-    Hooks.callAll("pf1PrepareDerivedActorData", this);
+    if (Hooks.events.pf1PrepareDerivedActorData?.length) {
+      Hooks.callAll("pf1PrepareDerivedActorData", this);
+    }
 
     this.refreshDerivedData();
 

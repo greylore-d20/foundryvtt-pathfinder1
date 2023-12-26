@@ -595,7 +595,9 @@ export const getChangeFlat = function (target, modifierType, value) {
   }
 
   // Call hooks to enable modules to add or adjust the result array
-  Hooks.callAll("pf1GetChangeFlat", result, target, modifierType, value, this);
+  if (Hooks.events.pf1GetChangeFlat?.length) {
+    Hooks.callAll("pf1GetChangeFlat", result, target, modifierType, value, this);
+  }
 
   // Return results directly when deprecation is removed
   return result;
@@ -740,7 +742,9 @@ export const addDefaultChanges = function (changes) {
   const actorData = this.system;
   // Call hook
   const tempChanges = [];
-  Hooks.callAll("pf1AddDefaultChanges", this, tempChanges);
+  if (Hooks.events.pf1AddDefaultChanges?.length) {
+    Hooks.callAll("pf1AddDefaultChanges", this, tempChanges);
+  }
   changes.push(...tempChanges.filter((c) => c instanceof pf1.components.ItemChange));
 
   const allClasses = this.itemTypes.class.sort((a, b) => a.sort - b.sort);

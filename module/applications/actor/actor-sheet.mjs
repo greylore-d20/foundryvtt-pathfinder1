@@ -1142,7 +1142,9 @@ export class ActorSheetPF extends ActorSheet {
             const quantity = item.system.quantity ?? 1;
             contents.push(game.i18n.format("PF1.WeightDetails.Base", { value: weight.value }));
             if (quantity > 1)
-              contents.push(game.i18n.format("PF1.WeightDetails.Stack", { value: weight.value * quantity }));
+              contents.push(
+                game.i18n.format("PF1.WeightDetails.Stack", { value: Math.floor(weight.value * 100 * quantity) / 100 })
+              );
             if (weight.contents > 0) {
               contents.push(game.i18n.format("PF1.WeightDetails.Contents", { value: weight.contents }));
               contents.push(game.i18n.format("PF1.WeightDetails.Total", { value: weight.total }));

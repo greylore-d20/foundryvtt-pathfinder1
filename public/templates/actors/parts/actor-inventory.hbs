@@ -113,7 +113,7 @@
 
         <div class="item-detail item-weight">
           {{#if isPhysical}}
-          <span>{{item.weight.converted.total}} {{@root.units.weight}}</span>
+          <span>{{numberFormatAlt item.weight.converted.total decimals=2}} {{@root.units.weight}}</span>
           {{/if}}
         </div>
 

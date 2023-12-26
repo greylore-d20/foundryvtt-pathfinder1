@@ -183,4 +183,14 @@ export const registerHandlebarsHelpers = function () {
     const value = options.hash["value"];
     return array.includes(value);
   });
+
+  // Alt numberFormat helper
+  Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) => {
+    const { decimals } = hash;
+    if (decimals !== undefined) {
+      // Show up to X decimals but don't insist on it
+      const mult = Math.pow(10, decimals);
+      return Math.floor(number * mult) / mult;
+    }
+  });
 };

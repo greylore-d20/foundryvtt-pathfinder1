@@ -23,6 +23,15 @@ export class ActorBasePF extends Actor {
   }
 
   /**
+   * @override
+   */
+  prepareData() {
+    this._initializing = true; // For initialization detection to deal with Foundry's out-of-order preparation bug
+    super.prepareData();
+    delete this._initializing;
+  }
+
+  /**
    * Cached result of .itemTypes
    *
    * @internal

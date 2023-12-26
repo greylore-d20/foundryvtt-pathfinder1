@@ -15,4 +15,14 @@ export class ItemBasePF extends Item {
   static async createDialog(data = {}, { parent = null, pack = null, ...options } = {}) {
     return pf1.applications.item.CreateDialog.waitPrompt(data, { parent, pack, options });
   }
+
+  /**
+   * @override
+   */
+  prepareData() {
+    // To combat Foundry's weird out-of-order initialization bug
+    if (this.actor && !this.actor._initializing) return;
+
+    super.prepareData();
+  }
 }

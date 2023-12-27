@@ -23,6 +23,13 @@ export class ScriptEditor extends FormApplication {
     return `script-call-${this.parent.uuid.replaceAll(".", "-")}-id-${this.script}`;
   }
 
+  get isEditable() {
+    const item = this.parent;
+    let editable = this.options.editable && item.isOwner;
+    if (item.pack && game.packs.get(item.pack)?.locked) editable = false;
+    return editable;
+  }
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "script-editor"],

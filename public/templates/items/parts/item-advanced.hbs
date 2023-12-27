@@ -105,7 +105,9 @@
 
                     <div class="item-controls">
                         <a class="item-control item-edit" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
+                        {{#if @root.owner}}
                         <a class="item-control item-delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
+                        {{/if}}
                     </div>
                 </li>
                 {{/each}}

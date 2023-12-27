@@ -138,13 +138,13 @@ export class ItemScriptCall {
   }
 
   // Opens up the editor for this script call
-  async edit() {
+  async edit({ editable = true } = {}) {
     // For Macros
     if (this.type === "macro") {
       const macro = await fromUuid(this.value);
       if (!macro) return void ui.notifications.error(game.i18n.format("PF1.ErrorNoMacroID", { id: this.value }));
 
-      macro.sheet.render(true, { focus: true });
+      macro.sheet.render(true, { focus: true, editable });
     }
     // For regular script calls
     else {
@@ -154,7 +154,7 @@ export class ItemScriptCall {
         parent: this.parent,
         script: this.id,
         scriptCall: true,
-      }).render(true);
+      }).render(true, { editable });
 
       const result = await scriptEditor.awaitResult();
       if (result) {

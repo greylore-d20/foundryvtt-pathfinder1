@@ -856,9 +856,6 @@ export class ItemSheetPF extends ItemSheet {
   async _prepareScriptCalls(data) {
     data.scriptCalls = null;
 
-    // Don't show the Script Calls section if players are not allowed to edit script macros
-    if (!game.user.can("MACRO_SCRIPT")) return;
-
     const categories = pf1.registry.scriptCalls.filter((category) => {
       if (!category.itemTypes.includes(this.document.type)) return false;
       return !(category.hidden === true && !game.user.isGM);
@@ -1112,6 +1109,10 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Allow editing and viewing visible scripts
+    html.find(".script-calls .item-list .item").contextmenu(this._onScriptCallEdit.bind(this));
+    html.find(".script-calls .item-control").click(this._onScriptCallControl.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -1194,10 +1195,6 @@ export class ItemSheetPF extends ItemSheet {
     /* -------------------------------------------- */
     /*  Script Calls
     /* -------------------------------------------- */
-
-    html.find(".script-calls .item-control").click(this._onScriptCallControl.bind(this));
-
-    html.find(".script-calls .item-list .item").contextmenu(this._onScriptCallEdit.bind(this));
 
     html.find(".script-calls .item-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
   }
@@ -1385,8 +1382,8 @@ export class ItemSheetPF extends ItemSheet {
     const el = event.currentTarget;
 
     /** @type {pf1.components.ItemScriptCall} */
-    const script = this.document.scriptCalls?.get(el.dataset.itemId);
-    script?.edit();
+    const script = this.item.scriptCalls?.get(el.dataset.itemId);
+    script?.edit({ editable: this.isEditable });
   }
 
   _moveTooltips(event) {

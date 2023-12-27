@@ -746,11 +746,13 @@ export class ItemSpellPF extends ItemPF {
    * @inheritdoc
    */
   getDescription({ chatcard = false, data = {} } = {}) {
-    return renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
-      ...data,
-      ...this.spellDescriptionData,
-      chatcard: chatcard === true,
-    });
+    return (
+      renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
+        ...data,
+        ...this.spellDescriptionData,
+        chatcard: chatcard === true,
+      }) + this.system.description.value
+    );
   }
 
   get spellDescriptionData() {

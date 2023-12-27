@@ -1296,10 +1296,10 @@ const _migrateWeaponImprovised = function (ent, updateData) {
 const _migrateItemSpellDescription = function (itemData, updateData) {
   if (itemData.type !== "spell") return;
 
-  if (!itemData.system.shortDescription) return;
+  if (itemData.system.shortDescription) {
+    updateData["system.-=shortDescription"] = null;
 
-  updateData["system.-=shortDescription"] = null;
-  if (!itemData.system.description?.value) {
+    // If description.value exists, it's the older oversized pre-rendered version that is unwanted
     updateData["system.description.value"] = itemData.system.shortDescription;
   }
 };

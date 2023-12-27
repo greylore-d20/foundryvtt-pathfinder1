@@ -395,7 +395,6 @@
 
     .tab {
       height: 100%;
-      overflow: hidden;
       gap: 2px;
 
       &.active {
@@ -432,8 +431,7 @@
 
         // Links, description and changes tabs use different scrolling
         &[data-group="description"],
-        &[data-tab="links"],
-        &[data-tab="changes"] {
+        &[data-tab="links"] {
           overflow: hidden;
         }
 

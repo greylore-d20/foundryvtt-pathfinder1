@@ -1,4 +1,4 @@
-<ol class="item-groups-list changes-list">
+<ol class="item-groups-list changeflags-list">
   {{!-- Flags --}}
   <li class="item-list-header flexrow">
     <div class="item-name flag-name flexrow">
@@ -39,8 +39,10 @@
       <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.loseDexToAC" {{checked system.changeFlags.loseDexToAC}}></div>
     </li>
   </ol>
+</ol>
 
-  {{!-- Changes --}}
+{{!-- Changes --}}
+<ol class="item-groups-list changes-list">
   <li class="item-list-header change-header flexrow">
     <div class="item-name">
       <h3>{{localize "PF1.Changes"}}</h3>
@@ -104,7 +106,10 @@
     </li>
   {{/each}}
   </ol>
+</ol>
 
+{{! Context Notes }}
+<ol class="item-groups-list contextnotes-list">
   <li class="item-list-header change-header flexrow">
     <div class="item-name">
       <h3>{{localize "PF1.ContextNotes"}}</h3>

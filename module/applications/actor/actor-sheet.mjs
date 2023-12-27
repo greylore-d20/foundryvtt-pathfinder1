@@ -708,6 +708,7 @@ export class ActorSheetPF extends ActorSheet {
       // Prefer total over value for dynamically collected proficiencies
       const customSource = trait.customTotal ? trait.customTotal : trait.custom;
       customSource?.split(pf1.config.re.traitSeparator).forEach((c) => custom.add(c.trim()));
+      custom.delete("");
       custom.forEach((c, i) => (trait.selected[`custom${i + 1}`] = c));
 
       trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
@@ -725,9 +726,11 @@ export class ActorSheetPF extends ActorSheet {
         result[key] = pf1.config.senses[key];
       } else if (key === "custom") {
         if (value.length) {
-          value.split(pf1.config.re.traitSeparator).forEach((svalue, idx) => {
-            result[`custom${idx + 1}`] = svalue.trim();
-          });
+          value
+            .split(pf1.config.re.traitSeparator)
+            .map((c) => c.trim())
+            .filter((c) => c)
+            .forEach((svalue, idx) => (result[`custom${idx + 1}`] = svalue));
         }
       } else if (value === true) {
         result[key] = pf1.config.senses[key];

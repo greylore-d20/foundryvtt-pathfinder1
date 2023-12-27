@@ -565,7 +565,9 @@ export class ItemSheetPF extends ItemSheet {
       if (trait.custom) {
         trait.custom
           .split(pf1.config.re.traitSeparator)
-          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+          .map((c) => c.trim())
+          .filter((c) => c)
+          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c));
       }
       trait.active = !foundry.utils.isEmpty(trait.selected);
     }

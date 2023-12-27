@@ -4831,10 +4831,6 @@ export class ActorPF extends ActorBasePF {
     return allowed !== false ? doc.update(updates) : this;
   }
 
-  getItemByTag(tag) {
-    return this.items.find((o) => o.system.tag === tag);
-  }
-
   /**
    * The VisionPermissionSheet instance for this actor
    *

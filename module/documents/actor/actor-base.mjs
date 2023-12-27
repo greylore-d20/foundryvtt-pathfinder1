@@ -22,6 +22,10 @@ export class ActorBasePF extends Actor {
     this._itemTypes = null;
   }
 
+  getItemByTag(tag) {
+    return this.items.find((o) => o.system.tag === tag);
+  }
+
   /**
    * @override
    */
@@ -46,7 +50,25 @@ export class ActorBasePF extends Actor {
    * @type {ItemTypesMap}
    */
   get itemTypes() {
-    this._itemTypes ??= super.itemTypes;
+    if (!this._itemTypes) {
+      this._itemTypes = super.itemTypes;
+
+      // Enrich the arrays with getName() and getId()
+      for (const items of Object.values(this._itemTypes)) {
+        Object.defineProperties(items, {
+          getName: {
+            value: function (name) {
+              return this.find((i) => i.name === name);
+            },
+          },
+          getId: {
+            value: function (identifier) {
+              return this.find((i) => i.system.tag === identifier);
+            },
+          },
+        });
+      }
+    }
     return this._itemTypes;
   }
 

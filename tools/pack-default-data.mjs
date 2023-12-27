@@ -49,7 +49,7 @@ export function getActionDefaultData() {
       customTexture: "",
     },
     attackName: "",
-    actionType: null,
+    actionType: "other",
     attackBonus: "",
     critConfirmBonus: "",
     damage: {

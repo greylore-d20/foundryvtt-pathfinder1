@@ -3,486 +3,511 @@
   min-height: 620px;
   max-height: calc(100% - 24px);
 
-  /* ----------------------------------------- */
-  /*  Sheet Header                             */
-  /* ----------------------------------------- */
+  form {
+    /* ----------------------------------------- */
+    /*  Sheet Header                             */
+    /* ----------------------------------------- */
 
-  .sheet-header {
-    img.profile {
-      border: 1px solid #000;
-    }
-
-    .item-subtitle {
-      flex: 0 0 auto;
-      height: 60px;
-      margin: 0;
-      padding: 5px;
-      text-align: right;
-      color: @colorTan;
-
-      .item-type {
-        font-size: @fontSizeSubHeader;
-        line-height: 1.1;
-        margin: 0;
+    .sheet-header {
+      img.profile {
+        border: 1px solid #000;
       }
 
-      .item-status {
-        font-size: @fontSizeLarge;
-        line-height: 1.1;
-      }
-    }
-  }
-
-  .primary-body {
-    .tab {
-      padding: 0 5px;
-    }
-
-    .item-properties {
-      flex: 0 0 120px;
-      margin: 5px 5px 5px 0;
-      padding-right: 5px;
-      border-right: @borderGroove;
-
-      .form-group {
+      .item-subtitle {
+        flex: 0 0 auto;
+        height: 60px;
         margin: 0;
-        justify-content: space-between;
+        padding: 5px;
+        text-align: right;
+        color: @colorTan;
 
-        label {
-          line-height: 20px;
-          flex: 0;
+        .item-type {
+          font-size: @fontSizeSubHeader;
+          line-height: 1.1;
+          margin: 0;
         }
-        input {
-          text-align: right;
+
+        .item-status {
+          font-size: @fontSizeLarge;
+          line-height: 1.1;
         }
       }
+    }
 
-      .properties-list {
+    .primary-body {
+      .tab {
+        padding: 0 5px;
+      }
+
+      .item-properties {
+        flex: 0 0 120px;
+        margin: 5px 5px 5px 0;
+        padding-right: 5px;
+        border-right: @borderGroove;
+
+        .form-group {
+          margin: 0;
+          justify-content: space-between;
+
+          label {
+            line-height: 20px;
+            flex: 0;
+          }
+
+          input {
+            text-align: right;
+          }
+        }
+
+        .properties-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            margin: 3px 0;
+            padding: 0 2px;
+            background: var(--pf1-bg-dark-0);
+            border: @borderGroove;
+            text-align: center;
+            font-size: @fontSizeNormal;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
+
+    // General
+
+    .entry-selector,
+    .speed-editor,
+    .trait-selector,
+    .item-selector {
+      flex: 0 0 16px;
+      color: var(--color-text-dark-5);
+      font-size: @fontSizeNormal;
+    }
+
+    /* ----------------------------------------- */
+    /*  Item Details Form                        */
+    /* ----------------------------------------- */
+
+    .details {
+      // Item Sheet form fields
+      input[type="text"],
+      input[type="number"],
+      select {
+        border: 1px solid @colorTan;
+        background: var(--pf1-bg-dark-0);
+      }
+
+      .traits-list {
         list-style: none;
         margin: 0;
         padding: 0;
+        text-align: right;
+      }
 
-        li {
-          margin: 3px 0;
-          padding: 0 2px;
-          background: var(--pf1-bg-dark-0);
-          border: @borderGroove;
+      .form-group.input-select {
+        select {
+          flex: 1.8;
+        }
+      }
+
+      .form-group.input-select-select {
+        select {
+          flex: 1.5;
+        }
+      }
+
+      .form-group.uses-per {
+        input {
+          flex: 1;
+        }
+
+        span {
           text-align: center;
+          flex: 0 0 16px;
+          line-height: 24px;
+        }
+
+        select {
+          flex: 3;
+        }
+      }
+
+      .item-link {
+        .image {
+          flex: 0 24px;
+        }
+
+        .item-name {
+          flex: 1;
+          text-align: left;
+          padding: 0; // Override Foundry padding
+        }
+
+        [data-item-id]:hover {
+          .item-name {
+            color: var(--pf1-item-hover-text);
+            text-shadow: var(--pf1-item-hover-shadow);
+            cursor: pointer;
+          }
+        }
+      }
+
+      span.sep {
+        flex: 0 0 8px;
+        line-height: 24px;
+        text-align: center;
+      }
+
+      .prepared {
+        flex: 1.3 !important;
+        text-align: right;
+        padding-right: 10px;
+      }
+
+      // Spell Materials
+      .spell-materials {
+        flex: 0 0 100%;
+        margin: 0.25em 0;
+        justify-content: flex-end;
+
+        label {
+          flex: 0 0 64px;
+          text-align: right;
+          margin-right: 5px;
           font-size: @fontSizeNormal;
-          line-height: 1.5;
+          line-height: 2;
+        }
+
+        input[type="text"] {
+          flex: 0 0 48px;
+          margin-right: 10px;
+        }
+      }
+
+      .item-list {
+        .item {
+          line-height: 24px;
+          border-bottom: 1px solid @colorFaint;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .checkbox {
+            flex: 0;
+          }
+
+          .skill-cs {
+            height: 24px;
+          }
         }
       }
     }
-  }
 
-  // General
+    .tab {
+      // Item list header
+      .item-list-header {
+        margin: 2px 0;
+        padding: 0;
+        background: var(--pf1-bg-dark-0);
+        border: @borderGroove;
+        font-weight: bold;
+        line-height: 24px;
 
-  .entry-selector,
-  .speed-editor,
-  .trait-selector,
-  .item-selector {
-    flex: 0 0 16px;
-    color: var(--color-text-dark-5);
-    font-size: @fontSizeNormal;
-  }
+        h3 {
+          padding-left: 5px;
+          font-size: @fontSizeNormal;
+          font-weight: bold;
+        }
 
-  /* ----------------------------------------- */
-  /*  Item Details Form                        */
-  /* ----------------------------------------- */
+        // .item-controls a.item-create {
+        //   flex: 0 0 100%;
+        // }
+      }
 
-  .details {
-    // Item Sheet form fields
-    input[type="text"],
-    input[type="number"],
-    select {
-      border: 1px solid @colorTan;
-      background: var(--pf1-bg-dark-0);
+      .item-weight {
+        flex: 0 0 60px;
+        border-left: 1px solid @colorFaint;
+        border-right: 1px solid @colorFaint;
+      }
+
+      .item-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      // Item Dropdown Summary in containers
+      .item-summary {
+        flex: 0 0 100%;
+        font-size: @fontSizeNormal;
+        line-height: 1.3;
+        padding: 0.25em 0.5em;
+        border-top: 1px solid @colorFaint;
+      }
     }
 
-    .traits-list {
+    /* ----------------------------------------- */
+    /*  Item Actions                             */
+    /* ----------------------------------------- */
+
+    h4 {
+      &:is(.damage-header, .change-header, .context-notes-header, .attack-header, .conditional-header) {
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+        line-height: 24px;
+        color: @colorOlive;
+        border: unset;
+      }
+    }
+
+    .damage-parts,
+    .attack-parts {
       list-style: none;
       margin: 0;
       padding: 0;
-      text-align: right;
-    }
 
-    .form-group.input-select {
-      select {
-        flex: 1.8;
-      }
-    }
+      .damage-part,
+      .attack-part {
+        flex: 0 0 100%;
+        padding: 2px;
 
-    .form-group.input-select-select {
-      select {
-        flex: 1.5;
-      }
-    }
+        input {
+          flex: 3;
+          margin-right: 3px;
+        }
 
-    .form-group.uses-per {
-      input {
-        flex: 1;
-      }
-      span {
-        text-align: center;
-        flex: 0 0 16px;
-        line-height: 24px;
-      }
-      select {
-        flex: 3;
-      }
-    }
+        input:not(:first-child) {
+          margin-left: 5px;
+        }
 
-    .item-link {
-      .image {
-        flex: 0 24px;
-      }
-
-      .item-name {
-        flex: 1;
-        text-align: left;
-        padding: 0; // Override Foundry padding
-      }
-
-      [data-item-id]:hover {
-        .item-name {
-          color: var(--pf1-item-hover-text);
-          text-shadow: var(--pf1-item-hover-shadow);
-          cursor: pointer;
+        select {
+          margin-left: 5px;
+          flex: 1;
         }
       }
     }
 
-    span.sep {
-      flex: 0 0 8px;
-      line-height: 24px;
-      text-align: center;
-    }
+    .changes,
+    .context-notes {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: block;
 
-    .prepared {
-      flex: 1.3 !important;
-      text-align: right;
-      padding-right: 10px;
-    }
+      .change,
+      .context-note {
+        flex: 0 0 100%;
+        padding: 1px;
 
-    // Spell Materials
-    .spell-materials {
-      flex: 0 0 100%;
-      margin: 0.25em 0;
-      justify-content: flex-end;
-      label {
-        flex: 0 0 64px;
-        text-align: right;
-        margin-right: 5px;
-        font-size: @fontSizeNormal;
-        line-height: 2;
-      }
-      input[type="text"] {
-        flex: 0 0 48px;
-        margin-right: 10px;
-      }
-    }
-
-    .item-list {
-      .item {
-        line-height: 24px;
-        border-bottom: 1px solid @colorFaint;
-
-        &:last-child {
-          border-bottom: none;
-        }
-
-        .checkbox {
-          flex: 0;
-        }
-
-        .skill-cs {
+        input {
+          flex: 3;
+          border: 1px solid @colorTan;
+          background: var(--pf1-bg-dark-0);
           height: 24px;
         }
-      }
-    }
-  }
 
-  .tab {
-    // Item list header
-    .item-list-header {
-      margin: 2px 0;
-      padding: 0;
-      background: var(--pf1-bg-dark-0);
-      border: @borderGroove;
-      font-weight: bold;
-      line-height: 24px;
-
-      h3 {
-        padding-left: 5px;
-        font-size: @fontSizeNormal;
-        font-weight: bold;
-      }
-
-      // .item-controls a.item-create {
-      //   flex: 0 0 100%;
-      // }
-    }
-
-    .item-weight {
-      flex: 0 0 60px;
-      border-left: 1px solid @colorFaint;
-      border-right: 1px solid @colorFaint;
-    }
-
-    .item-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    // Item Dropdown Summary in containers
-    .item-summary {
-      flex: 0 0 100%;
-      font-size: @fontSizeNormal;
-      line-height: 1.3;
-      padding: 0.25em 0.5em;
-      border-top: 1px solid @colorFaint;
-    }
-  }
-
-  /* ----------------------------------------- */
-  /*  Item Actions                             */
-  /* ----------------------------------------- */
-
-  h4.damage-header,
-  h4.change-header,
-  h4.context-notes-header,
-  h4.attack-header,
-  h4.conditional-header {
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-    line-height: 24px;
-    color: @colorOlive;
-  }
-
-  .damage-parts,
-  .attack-parts {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    .damage-part,
-    .attack-part {
-      flex: 0 0 100%;
-      padding: 2px;
-
-      input {
-        flex: 3;
-        margin-right: 3px;
-      }
-      input:not(:first-child) {
-        margin-left: 5px;
-      }
-      select {
-        margin-left: 5px;
-        flex: 1;
-      }
-    }
-  }
-
-  .changes,
-  .context-notes {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: block;
-
-    .change,
-    .context-note {
-      flex: 0 0 100%;
-      padding: 1px;
-      input {
-        flex: 3;
-        border: 1px solid @colorTan;
-        background: var(--pf1-bg-dark-0);
-        height: 24px;
-      }
-      input[type="text"]:invalid {
-        border: 2px solid @colorRust;
-        background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
-      }
-      select {
-        background: var(--pf1-bg-dark-0);
-      }
-      select:invalid {
-        border: 2px solid @colorRust;
-        background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
-      }
-      input[type="text"]:not(:first-child),
-      select:not(:first-child),
-      span:not(:first-child),
-      button:not(:first-child) {
-        margin-left: 5px;
-      }
-
-      button.edit-change-contents {
-        height: 24px;
-        line-height: 24px;
-      }
-
-      .change-priority {
-        flex: 0 0 24px;
-      }
-      .change-operator {
-        flex: 0 0 24px;
-      }
-      .change-target,
-      .context-note-target {
-        border: 1px solid @colorTan;
-        background: var(--pf1-bg-dark-0);
-        white-space: nowrap;
-        overflow: hidden;
-        height: 24px;
-        line-height: 24px;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
-        font-size: @fontSizeNormal;
-
-        &:hover {
-          box-shadow: 0 0 8px @colorRed;
-        }
-
-        &.invalid {
+        input[type="text"]:invalid {
           border: 2px solid @colorRust;
           background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
         }
+
+        select {
+          background: var(--pf1-bg-dark-0);
+        }
+
+        select:invalid {
+          border: 2px solid @colorRust;
+          background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
+        }
+
+        input[type="text"]:not(:first-child),
+        select:not(:first-child),
+        span:not(:first-child),
+        button:not(:first-child) {
+          margin-left: 5px;
+        }
+
+        button.edit-change-contents {
+          height: 24px;
+          line-height: 24px;
+        }
+
+        .change-priority {
+          flex: 0 0 24px;
+        }
+
+        .change-operator {
+          flex: 0 0 24px;
+        }
+
+        .change-target,
+        .context-note-target {
+          border: 1px solid @colorTan;
+          background: var(--pf1-bg-dark-0);
+          white-space: nowrap;
+          overflow: hidden;
+          height: 24px;
+          line-height: 24px;
+          border-radius: 4px;
+          text-align: center;
+          cursor: pointer;
+          font-size: @fontSizeNormal;
+
+          &:hover {
+            box-shadow: 0 0 8px @colorRed;
+          }
+
+          &.invalid {
+            border: 2px solid @colorRust;
+            background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
+          }
+        }
       }
     }
-  }
 
-  .conditionals {
-    .conditional,
-    .conditional-modifier {
-      padding: 1px;
+    .conditionals {
+      .conditional,
+      .conditional-modifier {
+        padding: 1px;
 
-      select {
-        max-width: max-content;
-        min-width: 80px;
-        flex: 1;
-        border: 1px solid @colorTan;
-        background: var(--pf1-bg-dark-0);
-      }
-      select:not(:first-child) {
-        margin-left: 5px;
-      }
-      select:invalid {
-        border: 2px solid @colorRust;
-        background: url(icons/misc/hazard-sign.svg) no-repeat 80% 50% var(--pf1-bg-dark-0);
-      }
-      input[type="text"] {
-        height: 24px;
-        border: 1px solid @colorTan;
-        background: var(--pf1-bg-dark-0);
-      }
-      input[type="text"]:invalid {
-        border: 2px solid @colorRust;
-        background: url(icons/misc/hazard-sign.svg) no-repeat 100% 50% var(--pf1-bg-dark-0);
-      }
-      input[type="text"]:not(:first-child) {
-        margin-left: 5px;
-      }
-      input[class*="conditional-name"]:not(:first-child) {
-        margin-left: 0;
-      }
-      .conditional-name,
-      .conditional-formula {
-        min-width: 140px;
-      }
-      .conditional-damage-type {
-        min-width: 90px;
-        max-width: 200px;
-      }
-      .form-group {
-        padding-left: 30px;
+        select {
+          max-width: max-content;
+          min-width: 80px;
+          flex: 1;
+          border: 1px solid @colorTan;
+          background: var(--pf1-bg-dark-0);
+        }
+
+        select:not(:first-child) {
+          margin-left: 5px;
+        }
+
+        select:invalid {
+          border: 2px solid @colorRust;
+          background: url(icons/misc/hazard-sign.svg) no-repeat 80% 50% var(--pf1-bg-dark-0);
+        }
+
+        input[type="text"] {
+          height: 24px;
+          border: 1px solid @colorTan;
+          background: var(--pf1-bg-dark-0);
+        }
+
+        input[type="text"]:invalid {
+          border: 2px solid @colorRust;
+          background: url(icons/misc/hazard-sign.svg) no-repeat 100% 50% var(--pf1-bg-dark-0);
+        }
+
+        input[type="text"]:not(:first-child) {
+          margin-left: 5px;
+        }
+
+        input[class*="conditional-name"]:not(:first-child) {
+          margin-left: 0;
+        }
+
+        .conditional-name,
+        .conditional-formula {
+          min-width: 140px;
+        }
+
+        .conditional-damage-type {
+          min-width: 90px;
+          max-width: 200px;
+        }
+
+        .form-group {
+          padding-left: 30px;
+        }
       }
     }
-  }
 
-  h4.change-header,
-  h4.context-notes-header {
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-    line-height: 24px;
-    color: @colorOlive;
-  }
-
-  .delete-change,
-  .delete-note {
-    width: 18px;
-    flex: 0 0 18px;
-    line-height: 24px;
-    text-align: right;
-    color: @colorTan;
-  }
-
-  .add-change,
-  .add-note {
-    flex: 0 0 auto;
-    line-height: 24px;
-    color: @colorTan;
-    margin-left: 2px;
-  }
-
-  .recharge {
-    span {
+    h4.change-header,
+    h4.context-notes-header {
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
       line-height: 24px;
-      flex: 0 0 80px;
+      color: @colorOlive;
     }
-    label.checkbox {
-      flex: 0 0 80px;
+
+    .delete-change,
+    .delete-note {
+      width: 18px;
+      flex: 0 0 18px;
+      line-height: 24px;
       text-align: right;
+      color: @colorTan;
     }
-  }
 
-  .formula {
-    flex: 10 0 80px;
+    .add-change,
+    .add-note {
+      flex: 0 0 auto;
+      line-height: 24px;
+      color: @colorTan;
+      margin-left: 2px;
+    }
 
-    .result {
-      .small {
-        flex: 0 10 20px;
+    .recharge {
+      span {
+        line-height: 24px;
+        flex: 0 0 80px;
+      }
+
+      label.checkbox {
+        flex: 0 0 80px;
+        text-align: right;
       }
     }
-  }
 
-  .weapon-properties label.checkbox {
-    flex: 0 0 98px;
-  }
+    .formula {
+      flex: 10 0 80px;
 
-  /* ----------------------------------------- */
-  /*  Loot Sheet (No Tabs)                     */
-  /* ----------------------------------------- */
+      .result {
+        .small {
+          flex: 0 10 20px;
+        }
+      }
+    }
 
-  .loot-header {
-    margin-bottom: 10px;
-  }
+    .weapon-properties label.checkbox {
+      flex: 0 0 98px;
+    }
 
-  div[data-tab="description"][data-group="primary"] {
-    nav {
+    /* ----------------------------------------- */
+    /*  Loot Sheet (No Tabs)                     */
+    /* ----------------------------------------- */
+
+    .loot-header {
+      margin-bottom: 10px;
+    }
+
+    div[data-tab="description"][data-group="primary"] {
+      nav {
+        flex: 0;
+      }
+
+      .description-container {
+        flex: 1;
+        height: 100%;
+      }
+    }
+
+    footer {
       flex: 0;
     }
 
-    .description-container {
-      flex: 1;
-      height: 100%;
-    }
-  }
-
-  footer {
-    flex: 0;
-  }
-
-  .tab[data-tab="advanced"] {
-    .tags {
-      .form-group {
-        align-items: flex-start;
+    .tab[data-tab="advanced"] {
+      .tags {
+        .form-group {
+          align-items: flex-start;
+        }
       }
     }
   }

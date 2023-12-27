@@ -628,8 +628,17 @@ export class ItemPF extends ItemBasePF {
 
     // Update actions
     if (itemData.actions instanceof Array) {
+      const oldActions = this.actions ?? [];
       /** @type {Map<string,pf1.components.ItemAction>} */
       this.actions = this._prepareActions(itemData.actions);
+
+      for (const action of oldActions) {
+        if (this.actions.get(action.id) !== action) {
+          Object.values(action.apps).forEach((app) =>
+            app.close({ pf1: { action: "delete" }, submit: false, force: true })
+          );
+        }
+      }
     }
 
     // Update script calls

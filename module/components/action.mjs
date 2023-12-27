@@ -14,6 +14,7 @@ export class ItemAction {
   _sheet = null;
   /** @type {pf1.documents.item.ItemPF} */
   parent = null;
+  /** @type {Record<number,Application>} */
   apps = {};
 
   constructor(data, parent) {
@@ -611,10 +612,10 @@ export class ItemAction {
     const actions = foundry.utils.deepClone(this.item.system.actions);
     actions.findSplice((a) => a._id == this.id);
 
-    // Close applications
+    // Pre-emptively close applications
     const promises = [];
     for (const app of Object.values(this.apps)) {
-      promises.push(app.close());
+      promises.push(app.close({ pf1: { action: "delete" }, submit: false, force: true }));
     }
     await Promise.all(promises);
 

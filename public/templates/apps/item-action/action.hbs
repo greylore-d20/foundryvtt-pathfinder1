@@ -42,7 +42,7 @@
   <label>{{localize "PF1.ActionType"}}</label>
   <div class="form-fields">
     <select name="actionType">
-      {{selectOptions config.itemActionTypes selected=data.actionType blank=""}}
+      {{selectOptions config.itemActionTypes selected=data.actionType}}
     </select>
   </div>
 </div>
@@ -59,7 +59,6 @@
 </div>
 {{/if}}
 
-{{#if data.actionType}}
 {{#if hasAttackRoll}}
 {{!-- Attack Name --}}
 <h3 class="form-header">{{localize "PF1.Attack"}}</h3>
@@ -319,4 +318,3 @@
 
 {{!-- Effect Notes --}}
 {{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="effectNotes" title="PF1.EffectNotes" notes=data.effectNotes css="effect"}}
-{{/if}}

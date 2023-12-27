@@ -18,6 +18,7 @@ export class ItemAction {
 
   constructor(data, parent) {
     this.data = foundry.utils.mergeObject(ItemAction.defaultData, data);
+    this.data.actionType ||= "other"; // Default to other
 
     this.parent = parent;
 
@@ -493,7 +494,7 @@ export class ItemAction {
         customTexture: "",
       },
       attackName: "",
-      actionType: null,
+      actionType: "other",
       attackBonus: "",
       critConfirmBonus: "",
       damage: {

@@ -3,6 +3,22 @@ name: Entangle
 type: spell
 img: icons/magic/nature/root-vine-entangled-hands.webp
 system:
+  description:
+    value: >-
+      <p>This spell causes tall grass, weeds, and other plants to wrap around
+      creatures in the area of effect or those that enter the area. Creatures
+      that fail their save gain the <i>entangle</i>d condition. Creatures that
+      make their save can move as normal, but those that remain in the area must
+      save again at the end of your turn. Creatures that move into the area must
+      save immediately. Those that fail must end their movement and gain the
+      <i>entangle</i>d condition. Entangled creatures can attempt to break free
+      as a move action, making a Strength or Escape Artist check. The DC for
+      this check is equal to the DC of the spell. The entire area of effect is
+      considered difficult terrain while the effect lasts.</p><p>If the plants
+      in the area are covered in thorns, those in the area take 1 point of
+      damage each time they fail a save against the <i>entangle</i> or fail a
+      check made to break free. Other effects, depending on the local plants,
+      might be possible at GM discretion.</p>
   actions:
     - _id: 4o4tl11xzxxqeera
       name: Use
@@ -26,8 +42,6 @@ system:
         type: ref
         description: Reflex partial; see text
       area: plants in a 40-ft.-radius spread
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       druid: 1
@@ -45,20 +59,5 @@ system:
     somatic: true
     divineFocus: 1
   sr: false
-  shortDescription: >-
-    <p>This spell causes tall grass, weeds, and other plants to wrap around
-    creatures in the area of effect or those that enter the area. Creatures that
-    fail their save gain the <i>entangle</i>d condition. Creatures that make
-    their save can move as normal, but those that remain in the area must save
-    again at the end of your turn. Creatures that move into the area must save
-    immediately. Those that fail must end their movement and gain the
-    <i>entangle</i>d condition. Entangled creatures can attempt to break free as
-    a move action, making a Strength or Escape Artist check. The DC for this
-    check is equal to the DC of the spell. The entire area of effect is
-    considered difficult terrain while the effect lasts.</p><p>If the plants in
-    the area are covered in thorns, those in the area take 1 point of damage
-    each time they fail a save against the <i>entangle</i> or fail a check made
-    to break free. Other effects, depending on the local plants, might be
-    possible at GM discretion.</p>
 _key: '!items!2nn2tshkn4p7k25l'
 

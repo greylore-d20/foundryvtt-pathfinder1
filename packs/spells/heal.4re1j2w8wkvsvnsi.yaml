@@ -3,6 +3,19 @@ name: Heal
 type: spell
 img: icons/magic/life/heart-cross-strong-green.webp
 system:
+  description:
+    value: >-
+      <p><em>Heal</em> enables you to channel positive energy into a creature to
+      wipe away injury and afflictions. It immediately ends any and all of the
+      following adverse conditions affecting the target: ability damage,
+      blinded, confused, dazed, dazzled, deafened, diseased, exhausted,
+      fatigued, feebleminded, insanity, nauseated, poisoned, sickened, and
+      stunned. It also cures 10 hit points of damage per level of the caster, to
+      a maximum of 150 points at 15th level.</p><p><em>Heal</em> does not remove
+      negative levels or restore permanently drained ability score
+      points.</p><p>If used against an undead creature, <em>heal</em> instead
+      acts like
+      <em>@UUID[Compendium.pf1.spells.dvwyzofd0yifs1ac]{harm}.</em></p>
   actions:
     - _id: mj6kc8l17hp5foa3
       name: Use
@@ -31,8 +44,6 @@ system:
         description: Will negates
         harmless: true
       touch: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 6
@@ -54,16 +65,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p><em>Heal</em> enables you to channel positive energy into a creature to
-    wipe away injury and afflictions. It immediately ends any and all of the
-    following adverse conditions affecting the target: ability damage, blinded,
-    confused, dazed, dazzled, deafened, diseased, exhausted, fatigued,
-    feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also
-    cures 10 hit points of damage per level of the caster, to a maximum of 150
-    points at 15th level.</p><p><em>Heal</em> does not remove negative levels or
-    restore permanently drained ability score points.</p><p>If used against an
-    undead creature, <em>heal</em> instead acts like
-    <em>@UUID[Compendium.pf1.spells.dvwyzofd0yifs1ac]{harm}.</em></p>
 _key: '!items!4re1j2w8wkvsvnsi'
 

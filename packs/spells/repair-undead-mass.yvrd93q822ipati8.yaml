@@ -3,6 +3,11 @@ name: Repair Undead, Mass
 type: spell
 img: icons/magic/death/undead-skeleton-fire-green.webp
 system:
+  description:
+    value: >-
+      <p>This spell functions as <i>repair undead</i>, except as noted above,
+      and it cures 1d8 points of damage + 1 point per caster level (maximum +20)
+      on each selected creature.</p>
   actions:
     - _id: otmvls0j11ej40fp
       name: Use
@@ -25,8 +30,6 @@ system:
         type: will
         description: Will half
         harmless: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 5
@@ -37,9 +40,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This spell functions as <i>repair undead</i>, except as noted above, and
-    it cures 1d8 points of damage + 1 point per caster level (maximum +20) on
-    each selected creature.</p>
 _key: '!items!yvrd93q822ipati8'
 

@@ -3,6 +3,12 @@ name: Foe to Friend
 type: spell
 img: icons/skills/social/diplomacy-handshake-yellow.webp
 system:
+  description:
+    value: >-
+      <p>Cast this spell when an enemy is about to make an attack against an
+      ally. The creature makes the attack against a valid target of your choice
+      instead or the attack is negated.</p><p>In addition, the target is
+      considered an ally for determining flanking for 1 round.</p>
   actions:
     - _id: xuy7dwdg2zh9od63
       name: Use
@@ -21,8 +27,6 @@ system:
       save:
         type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       bard: 5
@@ -35,10 +39,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>Cast this spell when an enemy is about to make an attack against an ally.
-    The creature makes the attack against a valid target of your choice instead
-    or the attack is negated.</p><p>In addition, the target is considered an
-    ally for determining flanking for 1 round.</p>
 _key: '!items!82z60xtalr9fzkwb'
 

@@ -3,6 +3,14 @@ name: Harm
 type: spell
 img: icons/magic/unholy/hand-claw-fog-green.webp
 system:
+  description:
+    value: >-
+      <p><em>Harm</em> charges a subject with negative energy that deals 10
+      points of damage per caster level (to a maximum of 150 points at 15th
+      level). If the creature successfully saves, <em>harm</em> deals half this
+      amount. <em>Harm</em> cannot reduce the target's hit points to less than
+      1.</p><p>If used on an undead creature, <em>harm</em> acts like
+      @UUID[Compendium.pf1.spells.4re1j2w8wkvsvnsi]{heal}.</p>
   actions:
     - _id: ftpjo5ucu3gr4v4w
       name: Use
@@ -34,8 +42,6 @@ system:
         type: will
         description: Will half; see text
       touch: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 6
@@ -55,12 +61,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p><em>Harm</em> charges a subject with negative energy that deals 10 points
-    of damage per caster level (to a maximum of 150 points at 15th level). If
-    the creature successfully saves, <em>harm</em> deals half this amount.
-    <em>Harm</em> cannot reduce the target's hit points to less than 1.</p><p>If
-    used on an undead creature, <em>harm</em> acts like
-    @UUID[Compendium.pf1.spells.4re1j2w8wkvsvnsi]{heal}.</p>
 _key: '!items!dvwyzofd0yifs1ac'
 

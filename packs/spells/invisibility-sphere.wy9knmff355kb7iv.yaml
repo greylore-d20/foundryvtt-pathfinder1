@@ -3,6 +3,18 @@ name: Invisibility Sphere
 type: spell
 img: systems/pf1/icons/misc/magic-swirl.png
 system:
+  description:
+    value: >-
+      <p>This spell functions like <i>invisibility</i>, except that this spell
+      confers <i>invisibility</i> upon all creatures within 10 feet of the
+      recipient at the time the spell is cast. The center of the effect is
+      mobile with the recipient.</p><p>Those affected by this spell can see each
+      other and themselves as if unaffected by the spell. Any affected creature
+      moving out of the area becomes visible, but creatures moving into the area
+      after the spell is cast do not become invisible.</p><p>Affected creatures
+      (other than the recipient) who attack negate the <i>invisibility</i> only
+      for themselves. If the spell recipient attacks, the <i>invisibility</i>
+      sphere ends.</p>
   actions:
     - _id: 410ctaqtghuho9at
       name: Use
@@ -26,8 +38,6 @@ system:
         description: Will negates
         harmless: true
       area: 10-ft.-radius emanation around the creature
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 3
@@ -43,16 +53,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This spell functions like <i>invisibility</i>, except that this spell
-    confers <i>invisibility</i> upon all creatures within 10 feet of the
-    recipient at the time the spell is cast. The center of the effect is mobile
-    with the recipient.</p><p>Those affected by this spell can see each other
-    and themselves as if unaffected by the spell. Any affected creature moving
-    out of the area becomes visible, but creatures moving into the area after
-    the spell is cast do not become invisible.</p><p>Affected creatures (other
-    than the recipient) who attack negate the <i>invisibility</i> only for
-    themselves. If the spell recipient attacks, the <i>invisibility</i> sphere
-    ends.</p>
 _key: '!items!wy9knmff355kb7iv'
 

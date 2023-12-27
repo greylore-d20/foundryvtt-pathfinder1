@@ -3,6 +3,15 @@ name: Destroy Robot
 type: spell
 img: icons/commodities/metal/barstock-broken-steel.webp
 system:
+  description:
+    value: >-
+      <p>You attempt to destroy any one robot in range. When you cast this
+      spell, your hand crackles with electricity. You must succeed at a ranged
+      touch attack to affect the target.</p><p>The target takes 12d6 points of
+      damage + 1 point per caster level, or 3d6 points of damage + 1 point per
+      caster level on a successful saving throw. A cyborg or android can be
+      damaged by this spell, but takes half damage and gains a +4 bonus on the
+      saving throw to resist the spell's effects.</p>
   actions:
     - _id: u35n90zqf091snqo
       name: Use
@@ -22,8 +31,6 @@ system:
       save:
         type: fort
         description: Fortitude partial
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 6
@@ -35,13 +42,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>You attempt to destroy any one robot in range. When you cast this spell,
-    your hand crackles with electricity. You must succeed at a ranged touch
-    attack to affect the target.</p><p>The target takes 12d6 points of damage +
-    1 point per caster level, or 3d6 points of damage + 1 point per caster level
-    on a successful saving throw. A cyborg or android can be damaged by this
-    spell, but takes half damage and gains a +4 bonus on the saving throw to
-    resist the spell's effects.</p>
 _key: '!items!wph6xwqvqekl7ph9'
 

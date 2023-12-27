@@ -3,6 +3,14 @@ name: Bolt of Glory
 type: spell
 img: icons/magic/light/beam-rays-orange.webp
 system:
+  description:
+    value: >-
+      <p>You fire a ray of positive energy. A creature struck takes varying
+      damage, depending on its nature and home plane of existence. Neutral
+      outsiders and creatures native to the Material Plane and Elemental Planes
+      take 1d6 points of damage per 2 levels (maximum 7d6). Evil outsiders,
+      undead, and natives of the Negative Energy Plane take 1d6 points of damage
+      per level (maximum 15d6). All other creatures take no damage.</p>
   actions:
     - _id: pd3r75n0a4gqqder
       name: Use
@@ -25,8 +33,6 @@ system:
         - 'Low damage: [[(min(7, ceil(@cl / 2)))d6]]'
         - 'High damage: [[(min(15, @cl))d6]]'
       spellEffect: ray
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     domain:
       Glory: 6
@@ -37,12 +43,5 @@ system:
     verbal: true
     somatic: true
     divineFocus: 1
-  shortDescription: >-
-    <p>You fire a ray of positive energy. A creature struck takes varying
-    damage, depending on its nature and home plane of existence. Neutral
-    outsiders and creatures native to the Material Plane and Elemental Planes
-    take 1d6 points of damage per 2 levels (maximum 7d6). Evil outsiders,
-    undead, and natives of the Negative Energy Plane take 1d6 points of damage
-    per level (maximum 15d6). All other creatures take no damage.</p>
 _key: '!items!81QcPhgRcHxjpScn'
 

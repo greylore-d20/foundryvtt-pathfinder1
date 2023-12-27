@@ -3,6 +3,13 @@ name: Break, Greater
 type: spell
 img: icons/skills/melee/sword-damaged-broken-orange.webp
 system:
+  description:
+    value: >-
+      <p>You release a burst of destructive energy. Each Medium or smaller
+      object in the area gains the broken condition unless it succeeds at a
+      Fortitude saving throw. If a broken object fails this save, it is instead
+      destroyed. Magic items can be broken by this spell, but not destroyed.
+      Objects in your possession are not immune.</p>
   actions:
     - _id: ti05g62shccew0ah
       name: Use
@@ -21,8 +28,6 @@ system:
         units: ft
         maxIncrements: '1'
       actionType: ''
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 6
@@ -41,11 +46,5 @@ system:
     gpValue: 100
   preparation:
     spontaneousPrepared: false
-  shortDescription: >-
-    <p>You release a burst of destructive energy. Each Medium or smaller object
-    in the area gains the broken condition unless it succeeds at a Fortitude
-    saving throw. If a broken object fails this save, it is instead destroyed.
-    Magic items can be broken by this spell, but not destroyed. Objects in your
-    possession are not immune.</p>
 _key: '!items!w76u0zl4b5e5ir3e'
 

@@ -3,6 +3,13 @@ name: Burst of Force
 type: spell
 img: systems/pf1/icons/misc/magic-swirl.png
 system:
+  description:
+    value: >-
+      <p>With a burst of telekinetic force, you deal 1d6 points of force damage
+      per caster level (maximum 15d6 points of damage) to all other creatures in
+      the affected area. A successful Fortitude save reduces the damage taken by
+      half. A creature that fails its Fortitude save must also succeed at a
+      Reflex save or be knocked prone.</p>
   actions:
     - _id: rqd9bnnt80hon95t
       name: Use
@@ -25,8 +32,6 @@ system:
         type: fort
         description: Fortitude half (see text)
       area: 20-ft.-radius burst centered on you
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 5
@@ -37,11 +42,5 @@ system:
   types: force
   components:
     verbal: true
-  shortDescription: >-
-    <p>With a burst of telekinetic force, you deal 1d6 points of force damage
-    per caster level (maximum 15d6 points of damage) to all other creatures in
-    the affected area. A successful Fortitude save reduces the damage taken by
-    half. A creature that fails its Fortitude save must also succeed at a Reflex
-    save or be knocked prone.</p>
 _key: '!items!jmuqks5ympffxg7c'
 

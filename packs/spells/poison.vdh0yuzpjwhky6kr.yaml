@@ -3,6 +3,13 @@ name: Poison
 type: spell
 img: icons/magic/acid/dissolve-drip-droplet-smoke.webp
 system:
+  description:
+    value: >-
+      <p>Calling upon the venomous powers of natural predators, you infect the
+      subject with a horrible poison by making a successful melee touch attack.
+      This poison deals 1d3 Constitution damage per round for 6 rounds. Poisoned
+      creatures can make a Fortitude save each round to negate the damage and
+      end the affliction.</p>
   actions:
     - _id: a7ziwhcxmluhphh1
       name: Use
@@ -22,8 +29,6 @@ system:
       save:
         type: fort
         description: Fortitude negates; see text
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 4
@@ -50,11 +55,5 @@ system:
     verbal: true
     somatic: true
     divineFocus: 1
-  shortDescription: >-
-    <p>Calling upon the venomous powers of natural predators, you infect the
-    subject with a horrible poison by making a successful melee touch attack.
-    This poison deals 1d3 Constitution damage per round for 6 rounds. Poisoned
-    creatures can make a Fortitude save each round to negate the damage and end
-    the affliction.</p>
 _key: '!items!vdh0yuzpjwhky6kr'
 

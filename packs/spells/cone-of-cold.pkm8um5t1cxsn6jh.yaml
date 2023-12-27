@@ -3,6 +3,11 @@ name: Cone of Cold
 type: spell
 img: icons/magic/water/projectiles-ice-explosion.webp
 system:
+  description:
+    value: >-
+      <p><i>Cone of cold</i> creates an area of extreme cold, originating at
+      your hand and extending outward in a cone. It drains heat, dealing 1d6
+      points of cold damage per caster level (maximum 15d6).</p>
   actions:
     - _id: 757xeokjecpvvyhz
       name: Use
@@ -32,8 +37,6 @@ system:
         type: ref
         description: Reflex half
       area: cone-shaped burst
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 5
@@ -56,9 +59,5 @@ system:
     material: true
   materials:
     value: a small crystal or glass cone
-  shortDescription: >-
-    <p><i>Cone of cold</i> creates an area of extreme cold, originating at your
-    hand and extending outward in a cone. It drains heat, dealing 1d6 points of
-    cold damage per caster level (maximum 15d6).</p>
 _key: '!items!pkm8um5t1cxsn6jh'
 

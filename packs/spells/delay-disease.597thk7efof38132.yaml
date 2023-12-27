@@ -3,6 +3,15 @@ name: Delay Disease
 type: spell
 img: icons/magic/life/cross-embers-glow-yellow-purple.webp
 system:
+  description:
+    value: >-
+      <p>The target becomes temporarily immune to disease. Any disease to which
+      it is exposed during the spell's duration does not affect the target until
+      the spell's duration has expired. If the target is currently infected with
+      a disease, you must make a caster level check against the disease's DC to
+      suspend it for the duration of the spell; otherwise, that disease affects
+      the target normally. <i>Delay disease</i> does not cure any damage a
+      disease may have already done.</p>
   actions:
     - _id: gpbuad8wi7rk3owt
       name: Use
@@ -23,8 +32,6 @@ system:
         type: fort
         description: Fortitude negates
         harmless: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 2
@@ -45,13 +52,5 @@ system:
     verbal: true
     somatic: true
     divineFocus: 1
-  shortDescription: >-
-    <p>The target becomes temporarily immune to disease. Any disease to which it
-    is exposed during the spell's duration does not affect the target until the
-    spell's duration has expired. If the target is currently infected with a
-    disease, you must make a caster level check against the disease's DC to
-    suspend it for the duration of the spell; otherwise, that disease affects
-    the target normally. <i>Delay disease</i> does not cure any damage a disease
-    may have already done.</p>
 _key: '!items!597thk7efof38132'
 

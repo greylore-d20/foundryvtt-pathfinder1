@@ -3,6 +3,17 @@ name: Invisibility Bubble, Mass
 type: spell
 img: systems/pf1/icons/misc/magic-swirl.png
 system:
+  description:
+    value: >-
+      <p>This functions as per <i>invisibility bubble</i>, but the spell affects
+      the areas of each target creature, regardless of the creature's size. The
+      effect moves with the group and is broken when anyone in the group
+      attacks. Individuals in separate bubbles can't see each other. The spell
+      is broken for any individual who moves more than 180 feet from the nearest
+      member of the group. If only two individuals are affected, the one moving
+      away from the other one loses its invisibility. If both are moving away
+      from each other simultaneously, they both become visible when the distance
+      between them exceeds 180 feet.</p>
   actions:
     - _id: nq6m4p8r7a8x13gv
       name: Use
@@ -29,8 +40,6 @@ system:
         description: Will negates
         harmless: true
       area: 10-ft.-radius emanation centered on the touched creature's space
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 7
@@ -48,15 +57,5 @@ system:
     material: true
   materials:
     value: a needle from a sea urchin
-  shortDescription: >-
-    <p>This functions as per <i>invisibility bubble</i>, but the spell affects
-    the areas of each target creature, regardless of the creature's size. The
-    effect moves with the group and is broken when anyone in the group attacks.
-    Individuals in separate bubbles can't see each other. The spell is broken
-    for any individual who moves more than 180 feet from the nearest member of
-    the group. If only two individuals are affected, the one moving away from
-    the other one loses its invisibility. If both are moving away from each
-    other simultaneously, they both become visible when the distance between
-    them exceeds 180 feet.</p>
 _key: '!items!eb1hp9kwcz8r8btk'
 

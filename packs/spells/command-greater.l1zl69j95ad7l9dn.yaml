@@ -3,6 +3,14 @@ name: Command, Greater
 type: spell
 img: icons/magic/sonic/scream-wail-shout-teal.webp
 system:
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.2p6fzj5t03oivndd]{command}, except that up to one
+      creature per level may be affected, and the activities continue beyond 1
+      round. At the start of each commanded creature's action after the first,
+      it gets another Will save to attempt to break free from the spell. Each
+      creature must receive the same command.</p>
   actions:
     - _id: 9qe6qpo7xfqs9319
       name: Use
@@ -25,8 +33,6 @@ system:
       save:
         type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 5
@@ -51,12 +57,5 @@ system:
   types: language-dependent, mind-affecting
   components:
     verbal: true
-  shortDescription: >-
-    <p>This spell functions like
-    @Compendium[pf1.spells.2p6fzj5t03oivndd]{command}, except that up to one
-    creature per level may be affected, and the activities continue beyond 1
-    round. At the start of each commanded creature's action after the first, it
-    gets another Will save to attempt to break free from the spell. Each
-    creature must receive the same command.</p>
 _key: '!items!l1zl69j95ad7l9dn'
 

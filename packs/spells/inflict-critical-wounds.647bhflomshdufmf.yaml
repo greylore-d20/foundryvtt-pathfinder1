@@ -3,6 +3,12 @@ name: Inflict Critical Wounds
 type: spell
 img: icons/magic/unholy/strike-beam-blood-large-red-green.webp
 system:
+  description:
+    value: >-
+      <p>This spell functions like
+      @UUID[Compendium.pf1.spells.Item.qooag8g9dxck4lik]{inflict light wounds},
+      except that you deal 4d8 points of damage + 1 point per caster level
+      (maximum +20).</p>
   actions:
     - _id: xlp92ps5peixnhui
       name: Use
@@ -29,8 +35,6 @@ system:
       save:
         type: will
         description: Will half
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 4
@@ -48,10 +52,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This spell functions like
-    @UUID[Compendium.pf1.spells.Item.qooag8g9dxck4lik]{inflict light wounds},
-    except that you deal 4d8 points of damage + 1 point per caster level
-    (maximum +20).</p>
 _key: '!items!647bhflomshdufmf'
 

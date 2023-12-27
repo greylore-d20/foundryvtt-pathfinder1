@@ -3,6 +3,10 @@ name: Charm Monster
 type: spell
 img: icons/magic/control/mouth-smile-deception-purple.webp
 system:
+  description:
+    value: >-
+      <p>This spell functions like <i>charm person</i>, except that the effect
+      is not restricted by creature type or size.</p>
   actions:
     - _id: c9d7wx6tazvwbrfq
       name: Use
@@ -22,8 +26,6 @@ system:
       save:
         type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 4
@@ -47,8 +49,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This spell functions like <i>charm person</i>, except that the effect is
-    not restricted by creature type or size.</p>
 _key: '!items!smbkd2yobhshbpqf'
 

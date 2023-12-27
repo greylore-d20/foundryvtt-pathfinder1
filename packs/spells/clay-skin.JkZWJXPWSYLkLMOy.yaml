@@ -3,6 +3,12 @@ name: Clay Skin
 type: spell
 img: icons/magic/earth/strike-fist-stone.webp
 system:
+  description:
+    value: >-
+      <p>The target's skin becomes as thick and tough as clay, granting the
+      target DR 5/adamantine. Once the spell has prevented a total of 5 points
+      of damage per caster level (maximum 50 points), it is discharged and the
+      spell ends.</p>
   actions:
     - _id: ifxkcbmeqkpdy8fl
       name: Use
@@ -23,8 +29,6 @@ system:
         type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       alchemist: 3
@@ -45,10 +49,5 @@ system:
     material: true
   materials:
     value: clay and iron fillings
-  shortDescription: >-
-    <p>The target's skin becomes as thick and tough as clay, granting the target
-    DR 5/adamantine. Once the spell has prevented a total of 5 points of damage
-    per caster level (maximum 50 points), it is discharged and the spell
-    ends.</p>
 _key: '!items!JkZWJXPWSYLkLMOy'
 

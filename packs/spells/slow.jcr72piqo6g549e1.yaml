@@ -3,6 +3,17 @@ name: Slow
 type: spell
 img: icons/magic/time/hourglass-brown-orange.webp
 system:
+  description:
+    value: >-
+      <p>An affected creature moves and attacks at a drastically
+      <i><i>slow</i>ed</i> rate. Creatures affected by this spell are staggered
+      and can take only a single move action or standard action each turn, but
+      not both (nor may it take full-round actions). Additionally, it takes a -1
+      penalty on attack rolls, AC, and Reflex saves. A <i><i>slow</i>ed</i>
+      creature moves at half its normal speed (round down to the next 5-foot
+      increment), which affects the creature's jumping distance as normal for
+      decreased speed.</p><p>Multiple <i>slow</i> effects don't stack.
+      <i>Slow</i> counters and dispels <i>haste</i>.</p>
   actions:
     - _id: 57te51vria9nnas9
       name: Use
@@ -25,8 +36,6 @@ system:
       save:
         type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 3
@@ -48,15 +57,5 @@ system:
     material: true
   materials:
     value: a drop of molasses
-  shortDescription: >-
-    <p>An affected creature moves and attacks at a drastically
-    <i><i>slow</i>ed</i> rate. Creatures affected by this spell are staggered
-    and can take only a single move action or standard action each turn, but not
-    both (nor may it take full-round actions). Additionally, it takes a -1
-    penalty on attack rolls, AC, and Reflex saves. A <i><i>slow</i>ed</i>
-    creature moves at half its normal speed (round down to the next 5-foot
-    increment), which affects the creature's jumping distance as normal for
-    decreased speed.</p><p>Multiple <i>slow</i> effects don't stack. <i>Slow</i>
-    counters and dispels <i>haste</i>.</p>
 _key: '!items!jcr72piqo6g549e1'
 

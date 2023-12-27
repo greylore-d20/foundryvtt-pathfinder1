@@ -3,6 +3,11 @@ name: Malfunction
 type: spell
 img: icons/creatures/magical/construct-stone-earth-gray.webp
 system:
+  description:
+    value: >-
+      <p>This functions as <i>confusion</i>, except it only affects constructs,
+      and instead of babbling incoherently, the construct takes no actions on
+      its turn (but may still make attacks of opportunity).</p>
   actions:
     - _id: 1zv55bu2qb3uutqt
       name: Use
@@ -21,8 +26,6 @@ system:
         type: fort
         description: Fortitude negates
       area: one construct
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 4
@@ -33,9 +36,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This functions as <i>confusion</i>, except it only affects constructs,
-    and instead of babbling incoherently, the construct takes no actions on its
-    turn (but may still make attacks of opportunity).</p>
 _key: '!items!1yt3bidqyhkdf6a1'
 

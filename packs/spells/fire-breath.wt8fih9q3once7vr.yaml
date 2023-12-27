@@ -3,6 +3,15 @@ name: Fire Breath
 type: spell
 img: icons/creatures/abilities/dragon-fire-breath-orange.webp
 system:
+  description:
+    value: >-
+      <p>Up to thrice during this spell's duration, you can belch forth a cone
+      of fire as a standard action. The first cone deals 4d6 points of fire
+      damage to every creature in the area. The second cone of flame deals 2d6
+      points of fire damage to every creature in the area. The third cone of
+      flame deals 1d6 points of fire damage to every creature in the area. A
+      successful Reflex save halves this damage. After the third cone of flame,
+      the spell ends.</p>
   actions:
     - _id: sjj46fdflnvkkon3
       name: Use
@@ -25,8 +34,6 @@ system:
         type: ref
         description: Reflex half; see text
       area: cone-shaped burst
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 2
@@ -43,12 +50,5 @@ system:
     material: true
   materials:
     value: a chili pepper
-  shortDescription: >-
-    <p>Up to thrice during this spell's duration, you can belch forth a cone of
-    fire as a standard action. The first cone deals 4d6 points of fire damage to
-    every creature in the area. The second cone of flame deals 2d6 points of
-    fire damage to every creature in the area. The third cone of flame deals 1d6
-    points of fire damage to every creature in the area. A successful Reflex
-    save halves this damage. After the third cone of flame, the spell ends.</p>
 _key: '!items!wt8fih9q3once7vr'
 

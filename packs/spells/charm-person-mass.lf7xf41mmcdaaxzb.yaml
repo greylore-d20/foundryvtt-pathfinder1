@@ -3,6 +3,14 @@ name: Charm Person, Mass
 type: spell
 img: icons/skills/social/diplomacy-handshake.webp
 system:
+  description:
+    value: >-
+      <p>This spell functions like <i>charm person</i>, except that mass
+      <i>charm person</i> affects a number of humanoid creatures whose combined
+      Hit Dice don't exceed twice your level. If there are more potential
+      targets than you can affect, you choose them one at a time until you reach
+      the limit of HD you can affect. If you cast mass <i>charm person</i> on
+      only one creature, you ignore the spell's HD limit.</p>
   actions:
     - _id: 23dj8xnmffr032ia
       name: Use
@@ -24,8 +32,6 @@ system:
       save:
         type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 5
@@ -43,12 +49,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This spell functions like <i>charm person</i>, except that mass <i>charm
-    person</i> affects a number of humanoid creatures whose combined Hit Dice
-    don't exceed twice your level. If there are more potential targets than you
-    can affect, you choose them one at a time until you reach the limit of HD
-    you can affect. If you cast mass <i>charm person</i> on only one creature,
-    you ignore the spell's HD limit.</p>
 _key: '!items!lf7xf41mmcdaaxzb'
 

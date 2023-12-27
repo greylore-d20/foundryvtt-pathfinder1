@@ -3,6 +3,16 @@ name: Invisibility, Mass
 type: spell
 img: icons/magic/perception/silhouette-stealth-shadow.webp
 system:
+  description:
+    value: >-
+      <p>This spell functions like <i>invisibility,</i> except that the effect
+      moves with the group and is broken when anyone in the group
+      attacks.</p><p>Individuals in the group cannot see each other. The spell
+      is broken for any individual who moves more than 180 feet from the nearest
+      member of the group. If only two individuals are affected, the one moving
+      away from the other one loses its invisibility. If both are moving away
+      from each other, they both become visible when the distance between them
+      exceeds 180 feet.</p>
   actions:
     - _id: eh1m4b34m8kboro2
       name: Use
@@ -25,8 +35,6 @@ system:
         type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 7
@@ -43,14 +51,5 @@ system:
   components:
     verbal: true
     somatic: true
-  shortDescription: >-
-    <p>This spell functions like <i>invisibility,</i> except that the effect
-    moves with the group and is broken when anyone in the group
-    attacks.</p><p>Individuals in the group cannot see each other. The spell is
-    broken for any individual who moves more than 180 feet from the nearest
-    member of the group. If only two individuals are affected, the one moving
-    away from the other one loses its invisibility. If both are moving away from
-    each other, they both become visible when the distance between them exceeds
-    180 feet.</p>
 _key: '!items!j2y1uga5fwg8deqq'
 

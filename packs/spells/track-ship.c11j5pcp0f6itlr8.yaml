@@ -3,6 +3,16 @@ name: Track Ship
 type: spell
 img: icons/tools/navigation/map-marked-red.webp
 system:
+  description:
+    value: >-
+      <p>In order to cast this spell, you must have a piece of the ship you wish
+      to track. Merchants often preserve slivers from their trade ships
+      specifically for this purpose. You also need a nautical chart.</p><p>When
+      you cast this spell, an icon of the targeted ship appears on the nautical
+      chart. The icon moves as the ship moves for the duration of this spell. If
+      the ship is not within the area delineated by the chart, the spell fails.
+      If the ship is reduced to 0 or fewer hit points, its icon changes from a
+      ship to a skull and crossbones.</p>
   actions:
     - _id: ydikyrs3ahce82k2
       name: Use
@@ -21,8 +31,6 @@ system:
         type: will
         description: Will negates (object)
       spellEffect: magical icon
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 2
@@ -40,14 +48,5 @@ system:
     focus: true
   materials:
     focus: piece of ship
-  shortDescription: >-
-    <p>In order to cast this spell, you must have a piece of the ship you wish
-    to track. Merchants often preserve slivers from their trade ships
-    specifically for this purpose. You also need a nautical chart.</p><p>When
-    you cast this spell, an icon of the targeted ship appears on the nautical
-    chart. The icon moves as the ship moves for the duration of this spell. If
-    the ship is not within the area delineated by the chart, the spell fails. If
-    the ship is reduced to 0 or fewer hit points, its icon changes from a ship
-    to a skull and crossbones.</p>
 _key: '!items!c11j5pcp0f6itlr8'
 

@@ -3,6 +3,19 @@ name: Break Enchantment
 type: spell
 img: icons/magic/symbols/runes-star-pentagon-blue.webp
 system:
+  description:
+    value: >-
+      <p>This spell frees victims from enchantments, transmutations, and curses.
+      <i>Break enchantment</i> can reverse even an instantaneous effect. For
+      each such effect, you make a caster level check (1d20 + caster level,
+      maximum +15) against a DC of 11 + caster level of the effect. Success
+      means that the creature is free of the spell, curse, or effect. For a
+      cursed magic item, the DC is equal to the DC of the curse.</p><p>If the
+      spell is one that cannot be dispelled by <i>dispel magic</i> or <i>stone
+      to flesh</i>, <i>break enchantment</i> works only if that spell is 5th
+      level or lower.</p><p>If the effect comes from a permanent magic item,
+      <i>break enchantment</i> does not remove the curse from the item, but it
+      does free the victim from the item's effects.</p>
   actions:
     - _id: kcm88cwzfrfd3opa
       name: Use
@@ -20,8 +33,6 @@ system:
       actionType: spellsave
       save:
         description: see text
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 5
@@ -53,17 +64,5 @@ system:
     verbal: true
     somatic: true
   sr: false
-  shortDescription: >-
-    <p>This spell frees victims from enchantments, transmutations, and curses.
-    <i>Break enchantment</i> can reverse even an instantaneous effect. For each
-    such effect, you make a caster level check (1d20 + caster level, maximum
-    +15) against a DC of 11 + caster level of the effect. Success means that the
-    creature is free of the spell, curse, or effect. For a cursed magic item,
-    the DC is equal to the DC of the curse.</p><p>If the spell is one that
-    cannot be dispelled by <i>dispel magic</i> or <i>stone to flesh</i>,
-    <i>break enchantment</i> works only if that spell is 5th level or
-    lower.</p><p>If the effect comes from a permanent magic item, <i>break
-    enchantment</i> does not remove the curse from the item, but it does free
-    the victim from the item's effects.</p>
 _key: '!items!myg2b9ww43nnlbr2'
 

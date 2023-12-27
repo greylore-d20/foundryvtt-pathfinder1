@@ -3,6 +3,14 @@ name: Magic Weapon
 type: spell
 img: icons/weapons/swords/sword-runed-glowing.webp
 system:
+  description:
+    value: >-
+      <p><i>Magic weapon</i> gives a weapon a +1 enhancement bonus on attack and
+      damage rolls. An enhancement bonus does not stack with a masterwork
+      weapon's +1 bonus on attack rolls.</p><p>You can't cast this spell on a
+      natural weapon, such as an unarmed strike (instead, see magic fang). A
+      monk's unarmed strike is considered a weapon, and thus it can be enhanced
+      by this spell.</p>
   actions:
     - _id: g1k20srmb3mod0p8
       name: Use
@@ -23,8 +31,6 @@ system:
         type: will
         description: Will negates (object)
         harmless: true
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 1
@@ -46,11 +52,5 @@ system:
     verbal: true
     somatic: true
     divineFocus: 1
-  shortDescription: >-
-    <p><i>Magic weapon</i> gives a weapon a +1 enhancement bonus on attack and
-    damage rolls. An enhancement bonus does not stack with a masterwork weapon's
-    +1 bonus on attack rolls.</p><p>You can't cast this spell on a natural
-    weapon, such as an unarmed strike (instead, see magic fang). A monk's
-    unarmed strike is considered a weapon, and thus it can be enhanced by this
-    spell.</p>
 _key: '!items!cvv6oimqks9n62vy'
+

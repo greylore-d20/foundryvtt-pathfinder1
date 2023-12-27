@@ -3,6 +3,20 @@ name: Suggestion
 type: spell
 img: icons/magic/control/control-influence-puppet.webp
 system:
+  description:
+    value: >-
+      <p>You influence the actions of the target creature by suggesting a course
+      of activity (limited to a sentence or two). The <i>suggestion</i> must be
+      worded in such a manner as to make the activity sound reasonable. Asking
+      the creature to do some obviously harmful act automatically negates the
+      effect of the spell.</p><p>The suggested course of activity can continue
+      for the entire duration. If the suggested activity can be completed in a
+      shorter time, the spell ends when the subject finishes what it was asked
+      to do. You can instead specify conditions that will trigger a special
+      activity during the duration. If the condition is not met before the spell
+      duration expires, the activity is not performed.</p><p>A very reasonable
+      <i>suggestion</i> causes the save to be made with a penalty (such as -1 or
+      -2).</p>
   actions:
     - _id: n123vv3al2ozrui4
       name: Use
@@ -22,8 +36,6 @@ system:
       save:
         type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 3
@@ -53,18 +65,6 @@ system:
     material: true
   materials:
     value: a snake's tongue and a honeycomb
-  shortDescription: >-
-    <p>You influence the actions of the target creature by suggesting a course
-    of activity (limited to a sentence or two). The <i>suggestion</i> must be
-    worded in such a manner as to make the activity sound reasonable. Asking the
-    creature to do some obviously harmful act automatically negates the effect
-    of the spell.</p><p>The suggested course of activity can continue for the
-    entire duration. If the suggested activity can be completed in a shorter
-    time, the spell ends when the subject finishes what it was asked to do. You
-    can instead specify conditions that will trigger a special activity during
-    the duration. If the condition is not met before the spell duration expires,
-    the activity is not performed.</p><p>A very reasonable <i>suggestion</i>
-    causes the save to be made with a penalty (such as -1 or -2).</p>
   source:
     id: PZO1110
     pages: 350

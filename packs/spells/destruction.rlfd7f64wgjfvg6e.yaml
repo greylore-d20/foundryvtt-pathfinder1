@@ -3,6 +3,16 @@ name: Destruction
 type: spell
 img: icons/magic/unholy/beam-impact-green.webp
 system:
+  description:
+    value: >-
+      <p>This spell instantly delivers 10 points of damage per caster level. If
+      the spell slays the target, it consumes the remains utterly in holy (or
+      unholy) fire (but not its equipment or possessions). If the target's
+      Fortitude saving throw succeeds, it instead takes 10d6 points of damage.
+      The only way to restore life to a character who has failed to save against
+      this spell (and was slain) is to use <i>true resurrection</i>, a carefully
+      worded <i>wish</i> spell followed by <i>resurrection</i>, or
+      <i>miracle</i>.</p>
   actions:
     - _id: 8grthh8nxv61vt42
       name: Use
@@ -22,8 +32,6 @@ system:
       save:
         type: fort
         description: Fortitude partial
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       cleric: 7
@@ -44,13 +52,5 @@ system:
     focus: true
   materials:
     focus: holy or unholy symbol costing 500 gp
-  shortDescription: >-
-    <p>This spell instantly delivers 10 points of damage per caster level. If
-    the spell slays the target, it consumes the remains utterly in holy (or
-    unholy) fire (but not its equipment or possessions). If the target's
-    Fortitude saving throw succeeds, it instead takes 10d6 points of damage. The
-    only way to restore life to a character who has failed to save against this
-    spell (and was slain) is to use <i>true resurrection</i>, a carefully worded
-    <i>wish</i> spell followed by <i>resurrection</i>, or <i>miracle</i>.</p>
 _key: '!items!rlfd7f64wgjfvg6e'
 

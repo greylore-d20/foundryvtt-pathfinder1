@@ -3,6 +3,32 @@ name: Heat Metal
 type: spell
 img: icons/commodities/metal/barstock-heated-steel.webp
 system:
+  description:
+    value: >-
+      <p><i>Heat metal</i> causes metal objects to become
+      red-hot.</p><p>Unattended, nonmagical metal gets no saving throw. Magical
+      metal is allowed a saving throw against the spell. An item in a creature's
+      possession uses the creature's saving throw bonus unless its own is
+      higher.</p><p>A creature takes fire damage if its equipment is heated. It
+      takes full damage if its armor, shield, or weapon is affected. The
+      creature takes minimum damage (1 point or 2 points; see the table) if it's
+      not wearing or wielding such an item.</p><p>On the first round of the
+      spell, the metal becomes warm and uncomfortable to touch but deals no
+      damage. The same effect also occurs on the last round of the spell's
+      duration. During the second (and also the next-to-last) round, intense
+      heat causes pain and damage. In the third, fourth, and fifth rounds, the
+      metal is searing hot, and causes more damage, as shown on the table
+      presented on the following page.</p> <table
+      border="1"><tbody><tr><th>Round</th><th>Metal Temperature
+      Damage</th></tr><tr><td>1</td><td>Warm None</td></tr><tr><td>2</td><td>Hot
+      1d4 points</td></tr><tr><td>3-5</td><td>Searing 2d4
+      points</td></tr><tr><td>6</td><td>Hot 1d4
+      points</td></tr><tr><td>7</td><td>Warm None</td></tr></tbody></table> Any
+      cold intense enough to damage the creature negates fire damage from the
+      spell (and vice versa) on a point-for-point basis.<p></p><p>If cast
+      underwater, <i>heat metal</i> deals half damage and boils the surrounding
+      water.</p><p><i>Heat metal</i> counters and dispels <i>chill
+      metal</i>.</p>
   actions:
     - _id: gxkw15hz8oq6z0vy
       name: Use
@@ -25,8 +51,6 @@ system:
       save:
         type: will
         description: Will negates (object)
-  uses:
-    autoDeductChargesCost: ''
   learnedAt:
     class:
       druid: 2
@@ -44,28 +68,5 @@ system:
     verbal: true
     somatic: true
     divineFocus: 1
-  shortDescription: >-
-    <p><i>Heat metal</i> causes metal objects to become
-    red-hot.</p><p>Unattended, nonmagical metal gets no saving throw. Magical
-    metal is allowed a saving throw against the spell. An item in a creature's
-    possession uses the creature's saving throw bonus unless its own is
-    higher.</p><p>A creature takes fire damage if its equipment is heated. It
-    takes full damage if its armor, shield, or weapon is affected. The creature
-    takes minimum damage (1 point or 2 points; see the table) if it's not
-    wearing or wielding such an item.</p><p>On the first round of the spell, the
-    metal becomes warm and uncomfortable to touch but deals no damage. The same
-    effect also occurs on the last round of the spell's duration. During the
-    second (and also the next-to-last) round, intense heat causes pain and
-    damage. In the third, fourth, and fifth rounds, the metal is searing hot,
-    and causes more damage, as shown on the table presented on the following
-    page.</p> <table border ='1'><tr><th>Round</th><th>Metal Temperature
-    Damage</th></tr><tr><td>1</td><td>Warm None</td></tr><tr><td>2</td><td>Hot
-    1d4 points</td></tr><tr><td>3-5</td><td>Searing 2d4
-    points</td></tr><tr><td>6</td><td>Hot 1d4
-    points</td></tr><tr><td>7</td><td>Warm None</td></tr></table> Any cold
-    intense enough to damage the creature negates fire damage from the spell
-    (and vice versa) on a point-for-point basis.</p><p>If cast underwater,
-    <i>heat metal</i> deals half damage and boils the surrounding
-    water.</p><p><i>Heat metal</i> counters and dispels <i>chill metal</i>.</p>
 _key: '!items!3b1x69kfhnsa2d54'
 

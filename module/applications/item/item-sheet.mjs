@@ -1453,11 +1453,21 @@ export class ItemSheetPF extends ItemSheet {
     script?.edit({ editable: this.isEditable });
   }
 
+  /**
+   * @protected
+   * @param {Event} event
+   */
   _moveTooltips(event) {
-    const elem = $(event.currentTarget);
-    const x = event.clientX;
-    const y = event.clientY + 24;
-    elem.find(".tooltip:hover .tooltipcontent").css("left", `${x}px`).css("top", `${y}px`);
+    let elem = event.target;
+    if (!elem.matches(".tooltip")) elem = elem.closest(".tooltip");
+    if (elem) {
+      const tip = elem.querySelector(".tooltipcontent");
+      if (tip) {
+        const x = event.clientX;
+        const y = event.clientY + 24;
+        tip.style.cssText += `left:${x}px;top:${y}px;`;
+      }
+    }
   }
 
   async _onTextAreaDrop(event) {

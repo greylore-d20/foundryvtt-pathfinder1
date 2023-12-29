@@ -265,10 +265,12 @@ export class ItemSpellPF extends ItemPF {
     return this.getDefaultChargeCost() > 0;
   }
 
+  /** @type {number} - Remaining charges */
   get charges() {
     return this.getSpellUses();
   }
 
+  /** @type {number} - Maximum possible charges */
   get maxCharges() {
     return this.getSpellUses(true);
   }
@@ -722,14 +724,16 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * @returns true if the spell is prepared to cast in any manner.
+   * @type {boolean} - true if the default action is prepared to cast
    */
   get canCast() {
     if (this.system.atWill) return true;
     const charges = this.charges; // Cache
+    const cost = this.getDefaultChargeCost();
+    if (cost <= 0) return true;
     return (
-      (this.isCharged && charges > 0) ||
-      (this.spellbook?.spontaneous && this.system.preparation.spontaneousPrepared && charges > 0)
+      (this.isCharged && charges >= cost) ||
+      (this.spellbook?.spontaneous && this.system.preparation.spontaneousPrepared && charges >= cost)
     );
   }
 

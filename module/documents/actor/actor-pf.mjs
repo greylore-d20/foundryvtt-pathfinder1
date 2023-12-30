@@ -922,15 +922,15 @@ export class ActorPF extends ActorBasePF {
         const spellsForLevel =
           (level === 0 && isSpontaneous
             ? pf1.config.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
-            : castsForLevels[classLevel - 1][level]) ?? 0;
-        levelData.base = spellsForLevel;
+            : castsForLevels[classLevel - 1][level]) ?? NaN;
+        levelData.base = spellsForLevel || 0;
 
         const offsetFormula = levelData[isSpontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
 
         const max =
-          level === 0 && book.hasCantrips
+          (level === 0 && book.hasCantrips) || Number.isFinite(spellsForLevel)
             ? spellsForLevel + getAbilityBonus(level) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
-            : null;
+            : NaN;
 
         levelData.max = max;
         if (!Number.isFinite(levelData.value)) levelData.value = max;
@@ -938,7 +938,7 @@ export class ActorPF extends ActorBasePF {
     } else {
       for (let level = book.hasCantrips ? 0 : 1; level < 10; level++) {
         const spellLevel = book.spells[`spell${level}`];
-        let base = parseInt(spellLevel.base);
+        let base = spellLevel.base;
         if (Number.isNaN(base)) {
           spellLevel.base = null;
           spellLevel.max = 0;

@@ -119,9 +119,6 @@ export class ItemAction {
     return this.data.tag || createTag(this.name);
   }
 
-  get hasAction() {
-    return !!this.data.actionType;
-  }
   get hasAttack() {
     return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
   }

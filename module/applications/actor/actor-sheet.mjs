@@ -1587,7 +1587,7 @@ export class ActorSheetPF extends ActorSheet {
     let value = el.dataset.dtype === "String" ? rawValue : Number(rawValue);
 
     // Adjust value if needed
-    const name = el.name;
+    const name = el.getAttribute("name"); // .name is not available on non-inputs
     if (name.match(/^system\.abilities\.([a-zA-Z0-9]+)\.value$/)) {
       if (Number.isNaN(parseInt(value))) value = null;
       else value = parseInt(value);

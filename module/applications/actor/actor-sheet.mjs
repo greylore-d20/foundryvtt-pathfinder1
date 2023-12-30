@@ -1594,7 +1594,10 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     let updateData;
-    if (name) updateData = { [name]: value };
+    if (name) {
+      if (value === getProperty(this.actor, name)) return;
+      updateData = { [name]: value };
+    }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {

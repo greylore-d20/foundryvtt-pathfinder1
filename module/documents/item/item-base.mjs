@@ -25,4 +25,24 @@ export class ItemBasePF extends Item {
 
     super.prepareData();
   }
+
+  /**
+   * Is the item functional.
+   *
+   * @abstract
+   * @type {boolean}
+   */
+  get isActive() {
+    return true;
+  }
+
+  /**
+   * Is this item usable at base level, disregarding per-action details.
+   *
+   * @abstract
+   * @type {boolean}
+   */
+  get canUse() {
+    return this.isActive;
+  }
 }

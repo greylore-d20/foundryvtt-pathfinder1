@@ -119,6 +119,49 @@ export class ItemAction {
     return this.data.tag || createTag(this.name);
   }
 
+  /**
+   * Can this action be used?
+   *
+   * Returns false if any known criteria for use limitation fails. Calls owning item's canUse functinality also.
+   *
+   * @see {@link pf1.documents.item.ItemBasePF.canUse}
+   *
+   * @type {boolean}
+   */
+  get canUse() {
+    const item = this.item;
+    if (!item.canUse) return false;
+
+    if (this.isSelfCharged) {
+      if ((this.data.uses.self?.value ?? 0) <= 0) return false;
+    }
+
+    if (item.isPhysical) {
+      if (item.system.quantity <= 0) return false;
+    }
+
+    if (this.isCharged) {
+      const cost = this.getChargeCost();
+      const charges = item.charges;
+      if (cost > 0) {
+        if (cost > charges) return false;
+      }
+    }
+
+    const ammo = this.ammoType;
+    if (ammo) {
+      // Check if actor has any relevant ammo, regardless if they're set to default
+      if (
+        this.actor?.itemTypes.loot.filter(
+          (i) => i.subType === "ammo" && i.system.extraType === ammo && i.system.quantity > 0
+        ).length === 0
+      )
+        return false;
+    }
+
+    return true;
+  }
+
   get hasAttack() {
     return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
   }

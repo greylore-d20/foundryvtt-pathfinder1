@@ -727,14 +727,29 @@ export class ItemSpellPF extends ItemPF {
    * @type {boolean} - true if the default action is prepared to cast
    */
   get canCast() {
-    if (this.system.atWill) return true;
-    const charges = this.charges; // Cache
-    const cost = this.getDefaultChargeCost();
-    if (cost <= 0) return true;
-    return (
-      (this.isCharged && charges >= cost) ||
-      (this.spellbook?.spontaneous && this.system.preparation.spontaneousPrepared && charges >= cost)
+    foundry.utils.logCompatibilityWarning(
+      "ItemSpellPF.canCast is deprecated in favor of ItemBasePF.canUse and ItemAction.canUse",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
     );
+
+    return this.canUse && (this.firstAction?.canUse ?? true);
+  }
+
+  /**
+   * @remarks
+   * Checks for at-will and preparation status.
+   * @inheritDoc
+   */
+  get canUse() {
+    if (this.system.atWill) return true;
+
+    const book = this.spellbook;
+    const prep = this.system.preparation;
+    if (book?.spontaneous) return prep?.spontaneousPrepared ?? true;
+    else return (prep?.preparedAmount ?? 0) > 0;
   }
 
   /**

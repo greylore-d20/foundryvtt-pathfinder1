@@ -191,6 +191,15 @@ export class ItemPhysicalPF extends ItemPF {
   }
 
   /**
+   * @remarks
+   * Checks if the item is equipped and has quantity.
+   * @inheritDoc
+   */
+  get canUse() {
+    return this.system.equipped && this.system.quantity > 0;
+  }
+
+  /**
    * @type {boolean} - Broken state
    */
   get isBroken() {

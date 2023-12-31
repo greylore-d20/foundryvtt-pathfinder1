@@ -321,11 +321,6 @@ export class ItemPF extends ItemBasePF {
     return super.isOwned || this.parentItem != null;
   }
 
-  // Overriden by more specific implementations where necessary
-  get isActive() {
-    return true;
-  }
-
   get hasAction() {
     return this.system.actions?.length > 0;
   }

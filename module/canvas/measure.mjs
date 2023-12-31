@@ -20,59 +20,21 @@ const withinRect = (point, rect) => {
 
 /**
  * Applies patches to core functions to integrate Pathfinder specific measurements.
+ *
+ * Replacement for `CONFIG.Canvas.layers.templates.layerClass`
  */
 export class TemplateLayerPF extends TemplateLayer {
-  // Foundry does not respect CONFIG.MeasuredTemplate.documentClass and CONFIG.MeasuredTemplate.objectClass
-  async _onDragLeftStart(event) {
-    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
-
-    const interaction = event.interactionData;
-
-    // Call placeables layer super instead of templatelayer
-    await PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
-
-    const { origin } = interaction;
-
-    // Snap to grid
-    if (!event.shiftKey) {
-      const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, this.gridPrecision);
-      origin.x = pos.x;
-      origin.y = pos.y;
-    }
-
-    // Create a pending MeasuredTemplateDocument
-    const tool = game.activeTool;
-    const previewData = {
-      t: tool,
-      x: origin.x,
-      y: origin.y,
-      distance: 1,
-      direction: 0,
-      fillColor: game.user.color || "#FF0000",
-      hidden: event.altKey,
-    };
-
-    // Apply some type-specific defaults
-    const defaults = CONFIG.MeasuredTemplate.defaults;
-    if (tool === "cone") previewData.angle = defaults.angle;
-    else if (tool === "ray") previewData.width = defaults.width * canvas.dimensions.distance;
-
-    const cls = getDocumentClass("MeasuredTemplate");
-    const doc = new cls(previewData, { parent: canvas.scene });
-
-    // Create a preview template
-    const template = new CONFIG.MeasuredTemplate.objectClass(doc);
-    interaction.preview = this.preview.addChild(template);
-    return template.draw();
-  }
-
+  /**
+   * Foundry does not allow snapping template drag.
+   *
+   * @override
+   * @param {Event} event
+   */
   _onDragLeftMove(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 
     const interaction = event.interactionData;
-    const { destination, preview, origin } = interaction;
-    const layerDragState = interaction.layerDragState;
-
+    const { destination, layerDragState, preview, origin } = interaction;
     if (layerDragState === 0) return;
 
     // Snap the destination to the grid
@@ -87,24 +49,20 @@ export class TemplateLayerPF extends TemplateLayer {
     const ratio = canvas.dimensions.size / dist;
 
     // Update the preview object
-    const type = preview.document.t;
-    const cellSize = canvas.dimensions.distance;
-    // Set direction
-    const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
-    if (snapToGrid && ["cone", "circle"].includes(type)) {
-      const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
-      preview.document.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
-    } else if (snapToGrid && type === "ray") {
-      preview.document.direction = Math.floor((baseDirection + cellSize / 2) / cellSize) * cellSize;
-    } else {
-      preview.document.direction = baseDirection;
-    }
-    // Set distance
     const baseDistance = ray.distance / ratio;
-    if (snapToGrid && ["cone", "circle", "ray"].includes(type)) {
-      preview.document.distance = Math.floor(baseDistance / dist) * dist;
-    } else {
-      preview.document.distance = baseDistance;
+    preview.document.distance = baseDistance;
+
+    const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+    preview.document.direction = baseDirection;
+
+    if (snapToGrid) {
+      switch (preview.document.t) {
+        case "cone": {
+          const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
+          preview.document.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
+          break;
+        }
+      }
     }
 
     preview.renderFlags.set({ refreshShape: true });

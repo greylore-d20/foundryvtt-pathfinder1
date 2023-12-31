@@ -74,10 +74,15 @@ export const radtodeg = function (radians) {
 };
 
 /**
+ * @deprecated - Use `item.actor` instead
  * @param {object} item Item data
  * @returns {User|null}
  */
 export const getItemOwner = function (item) {
+  foundry.utils.logCompatibilityWarning("pf1.utils.getItemOwner() is deprecated with no replacement", {
+    since: "PF1 vNEXT",
+    until: "PF1 vNEXT+1",
+  });
   if (item.actor) return item.actor;
   if (item.id) return game.actors.find((o) => o.items.get(item.id));
   return null;
@@ -124,7 +129,16 @@ export const CR = {
   },
 };
 
+/**
+ * @deprecated - Use `game.actors.get(id)` instead
+ * @param {*} id
+ * @returns
+ */
 export const getActorFromId = function (id) {
+  foundry.utils.logCompatibilityWarning("pf1.utils.getActorFromId() is deprecated with no replacement", {
+    since: "PF1 vNEXT",
+    until: "PF1 vNEXT+1",
+  });
   const speaker = ChatMessage.getSpeaker();
   let actor = null;
   if (id) {

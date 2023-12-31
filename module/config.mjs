@@ -412,6 +412,8 @@ export const divineFocus = {
  * The measure template types available for actions.
  *
  * They're the same as Foundry's measure templates, so it's copy of CONFIG.MeasuredTemplate.types.
+ *
+ * @deprecated - Use `CONFIG.MeasuredTemplate.types` instead.
  */
 export const measureTemplateTypes = CONFIG.MeasuredTemplate.types;
 

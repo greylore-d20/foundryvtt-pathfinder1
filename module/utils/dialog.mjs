@@ -1,5 +1,13 @@
 import { ItemSelector } from "module/applications/item-selector.mjs";
 
+/**
+ * @deprecated - Use {@link pf1.utils.dialog.getNumber} instead
+ * @param options
+ * @param options.title
+ * @param options.initial
+ * @param options.min
+ * @param options.max
+ */
 export async function dialogGetNumber({
   title = "Input Number",
   initial = null,

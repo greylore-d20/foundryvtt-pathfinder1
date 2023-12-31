@@ -1,4 +1,5 @@
 /**
+ * @internal
  * @typedef {RollTerm|FormulaPart} AnyTerm
  */
 

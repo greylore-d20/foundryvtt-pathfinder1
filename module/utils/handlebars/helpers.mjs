@@ -1,6 +1,9 @@
 import { convertDistance, calculateRange } from "../lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
+/**
+ * @internal
+ */
 export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
   Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);

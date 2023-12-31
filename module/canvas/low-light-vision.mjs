@@ -19,6 +19,9 @@ export const addLowLightVisionToLightConfig = function (app, html) {
   html.find('div.tab[data-tab="basic"]').append(checkbox);
 };
 
+/**
+ * Override `LightSource` initialization and add `getRadius` to support LLV.
+ */
 export const patchCore = function () {
   // Low-light vision light radius initialization (v10 & v11)
   const LightSource_initialize = LightSource.prototype.initialize;

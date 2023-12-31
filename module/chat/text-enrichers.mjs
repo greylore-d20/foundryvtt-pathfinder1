@@ -2,7 +2,7 @@ import { RollPF } from "module/dice/roll.mjs";
 import { openJournal } from "@utils";
 
 /**
- * Helper class for making CONFIG.TextEditor.enrichers usage easier.
+ * Helper class for making `CONFIG.TextEditor.enrichers` usage easier.
  */
 export class PF1TextEnricher {
   id;
@@ -179,6 +179,7 @@ export function generateTooltip(el) {
 /**
  * Break down options string into dataset properties.
  *
+ * @internal
  * @param {Element} el Target element
  * @param {string} options Options string
  */

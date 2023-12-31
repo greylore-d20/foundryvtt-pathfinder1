@@ -3698,4 +3698,7 @@ export class Sources extends Registry {
   ];
 }
 
+/**
+ * @type {Sources}
+ */
 export let sources;

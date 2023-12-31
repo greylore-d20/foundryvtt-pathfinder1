@@ -446,7 +446,7 @@
     </li>
 
     {{#each section.items as |item i|}}
-    <li class="item flexrow {{#if item.document.canCast}}prepared{{else}}unprepared{{/if}} {{#if item.domain}}domain{{/if}}" data-item-id="{{item.id}}">
+    <li class="item flexrow {{#if item.document.canUse}}prepared{{else}}unprepared{{/if}} {{#if item.domain}}domain{{/if}}" data-item-id="{{item.id}}">
       <div class="item-name rollable">
         <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
         <h4>{{item.name}}</h4>

@@ -10,7 +10,7 @@ system:
       must make a successful Fortitude save or be blinded for 1d6 rounds. The DC
       of this save is equal to 10 + 1/2 your total Hit Dice + your Constitution
       modifier. You can use this ability once per day plus one additional time
-      per day for every three Hit Dice you have.</p><h3>combat trick</h3><p>When
+      per day for every three Hit Dice you have.</p><h3>Combat Trick</h3><p>When
       you spit poison, you can spend up to 5 stamina points. For each stamina
       point spent, you can increase the range of the attack by 5 feet.</p>
   tags:
@@ -33,12 +33,6 @@ system:
         units: ft
         maxIncrements: 5
       actionType: rwak
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values: []
-              custom: Rounds blinded
       formulaicAttacks:
         label: ''
       ability:
@@ -49,6 +43,8 @@ system:
         description: Fortitude negates
       touch: true
       ammoType: none
+      effectNotes:
+        - Target is blinded for [[1d6]] rounds.
   uses:
     per: charges
     maxFormula: 1 + floor(@attributes.hd.total / 3)

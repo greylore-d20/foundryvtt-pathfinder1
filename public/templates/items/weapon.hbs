@@ -91,13 +91,13 @@
 
       {{!-- Material Addon --}}
       {{> "systems/pf1/templates/items/parts/item-materials-addon.hbs" reference="system.material.addon" value=system.material.addon}}
-      
+
       {{#unless showUnidentifiedData}}
       {{!-- Enhancement Bonus --}}
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0">
+          <input type="number" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0">
         </div>
       </div>
       {{/unless}}

@@ -296,59 +296,67 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update skill labels
     const acp = this.document.system.attributes?.acp?.total;
-    for (const [s, skl] of Object.entries(data.system.skills ?? {})) {
-      skl.label = pf1.config.skills[s];
-      skl.arbitrary = pf1.config.arbitrarySkills.includes(s);
-      skl.sourceDetails = [];
-      skl.compendiumEntry = pf1.config.skillCompendiumEntries[s] ?? skl.journal ?? null;
+    for (const [skillId, skill] of Object.entries(data.system.skills ?? {})) {
+      skill.label = pf1.config.skills[skillId];
+      skill.skillId = skillId;
+      skill.key = skillId;
+      skill.label ||= skill.name;
+      skill.arbitrary = pf1.config.arbitrarySkills.includes(skillId);
+      skill.sourceDetails = [];
+      skill.compendiumEntry = pf1.config.skillCompendiumEntries[skillId] ?? skill.journal ?? null;
 
       // Add skill rank source
-      if (skl.rank > 0) {
-        skl.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skl.rank });
+      if (skill.rank > 0) {
+        skill.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skill.rank });
 
         // Add class skill bonus source
-        if (skl.cs) {
-          skl.sourceDetails.push({ name: game.i18n.localize("PF1.CSTooltip"), value: 3 });
+        if (skill.cs) {
+          skill.sourceDetails.push({ name: game.i18n.localize("PF1.CSTooltip"), value: 3 });
         }
       }
 
       // Add ACP source
-      if (skl.acp && acp > 0) {
-        skl.sourceDetails.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
+      if (skill.acp && acp > 0) {
+        skill.sourceDetails.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
       }
 
       // Add ability modifier source
-      if (skl.ability) {
-        skl.sourceDetails.push({
-          name: pf1.config.abilities[skl.ability],
-          value: data.rollData.abilities[skl.ability]?.mod ?? 0,
+      if (skill.ability) {
+        skill.sourceDetails.push({
+          name: pf1.config.abilities[skill.ability],
+          value: data.rollData.abilities[skill.ability]?.mod ?? 0,
         });
       }
 
       // Add misc skill bonus source
-      if (data.sourceDetails.system.skills[s]) {
-        skl.sourceDetails.push(...data.sourceDetails.system.skills[s].changeBonus);
+      if (data.sourceDetails.system.skills[skillId]) {
+        skill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].changeBonus);
       }
 
-      skl.untrained = skl.rt === true && skl.rank <= 0;
-      if (skl.subSkills != null) {
-        for (const [s2, skl2] of Object.entries(skl.subSkills)) {
-          skl2.compendiumEntry = skl2.journal ?? null;
-          skl2.sourceDetails = [];
-          if (skl2.rank > 0) {
-            skl2.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skl2.rank });
-            if (skl2.cs) {
-              skl2.sourceDetails.push({ name: game.i18n.localize("PF1.CSTooltip"), value: 3 });
+      skill.untrained = skill.rt === true && !(skill.rank > 0);
+      if (skill.subSkills != null) {
+        for (const [subSkillId, subSkill] of Object.entries(skill.subSkills)) {
+          subSkill.compendiumEntry = subSkill.journal ?? null;
+          subSkill.key = `${skillId}.subSkills.${subSkillId}`;
+          subSkill.skillId = skillId;
+          subSkill.subSkillId = subSkillId;
+          subSkill.label ||= subSkill.name;
+          subSkill.custom = true; // All subskills are custom
+          subSkill.sourceDetails = [];
+          if (subSkill.rank > 0) {
+            subSkill.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: subSkill.rank });
+            if (subSkill.cs) {
+              subSkill.sourceDetails.push({ name: game.i18n.localize("PF1.CSTooltip"), value: 3 });
             }
           }
-          skl2.sourceDetails.push({
-            name: pf1.config.abilities[skl2.ability],
-            value: data.system.abilities[skl2.ability]?.mod ?? 0,
+          subSkill.sourceDetails.push({
+            name: pf1.config.abilities[subSkill.ability],
+            value: data.system.abilities[subSkill.ability]?.mod ?? 0,
           });
-          if (data.sourceDetails.system.skills[s]?.subSkills[s2]) {
-            skl2.sourceDetails.push(...data.sourceDetails.system.skills[s].subSkills[s2].changeBonus);
+          if (data.sourceDetails.system.skills[skillId]?.subSkills[subSkillId]) {
+            subSkill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].subSkills[subSkillId].changeBonus);
           }
-          skl2.untrained = skl2.rt === true && skl2.rank <= 0;
+          subSkill.untrained = subSkill.rt === true && !(subSkill.rank > 0);
         }
       }
     }

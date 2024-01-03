@@ -945,7 +945,7 @@ export function refreshActors({ renderOnly = false, renderForEveryone = false } 
   const resetOrRender = async (actor) => {
     if (!actor) return;
     if (!renderOnly) actor.reset();
-    else actor.render();
+    actor.render();
   };
 
   game.actors.forEach(resetOrRender);

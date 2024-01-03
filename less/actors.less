@@ -119,15 +119,6 @@
       .sub-header {
         background: var(--pf1-bg-dark-3);
       }
-      &.maneuverability-details {
-        height: 100%;
-        .value {
-          flex: 1;
-          line-height: 3;
-          text-align: center;
-          text-align-last: center;
-        }
-      }
     }
 
     .attributes > .attribute {
@@ -166,30 +157,48 @@
     }
 
     .attributes {
+      display: flex;
+      flex-flow: row;
+      gap: 3px;
+
       flex: 0;
-      border-bottom: @borderGroove;
 
-      .health-details,
-      .speed-details {
+      .wounds-vigor {
+        display: flex;
+        flex-flow: row;
+        gap: 3px;
+      }
+
+      .health-details {
         flex: 4;
-        border-right: 1px solid black;
-        margin-right: 1px;
 
-        .vigor,
         .wounds {
           flex: 2;
         }
         .vigor {
-          border-right: 1px solid black;
-          margin-right: 1px;
           flex: 3;
         }
         .speed-details {
           flex: 3.5;
         }
       }
-      .maneuverability-details {
-        flex: 1;
+
+      .speed-details {
+        flex: 5;
+
+        .fly-details {
+          flex: 3;
+
+          .maneuverability-details {
+            flex: 2;
+          }
+        }
+      }
+
+      .health-details {
+        &.wounds-vigor {
+          flex: 5;
+        }
       }
 
       li {

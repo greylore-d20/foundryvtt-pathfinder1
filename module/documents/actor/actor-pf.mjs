@@ -3459,7 +3459,7 @@ export class ActorPF extends ActorBasePF {
    * @returns {Promise}
    */
   static async applyDamage(
-    value,
+    value = 0,
     {
       forceDialog = false,
       reductionDefault = "",
@@ -3469,6 +3469,8 @@ export class ActorPF extends ActorBasePF {
       asWounds = false,
     } = {}
   ) {
+    if (value == 0 || !Number.isFinite(value)) return;
+
     const promises = [];
     let controlled = canvas.tokens.controlled,
       healingInvert = 1;
@@ -3532,7 +3534,6 @@ export class ActorPF extends ActorBasePF {
 
           // Nonlethal damage
           if (asNonlethal && value > 0) {
-            // Wounds & Vigor
             if (currentHealth > 0) {
               value = Math.min(currentHealth, value);
             } else {
@@ -3544,23 +3545,18 @@ export class ActorPF extends ActorBasePF {
           // Create update data
           if (dt != 0) update["system.attributes.vigor.temp"] = tmp - dt;
           if (value != 0) {
-            let newHP = Math.min(hp.value - value, hp.max);
+            let newHP = Math.min(currentHealth - value, hp.max);
             if (value > 0) {
-              if (hp.value > 0) {
-                if (newHP < 0) {
-                  if (critMult > 0) {
-                    woundAdjust -= -newHP;
-                    woundAdjust -= critMult;
-                  }
-                  newHP = 0;
-                }
-              } else {
-                woundAdjust -= value;
+              if (newHP < 0) {
+                woundAdjust -= -newHP;
+                if (critMult > 0) woundAdjust -= critMult;
+                newHP = 0;
               }
             }
 
             if (newHP != hp.value) update["system.attributes.vigor.value"] = newHP;
           }
+
           if (woundAdjust != 0) {
             const wounds = a.system.attributes.wounds;
             update["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);

@@ -6,17 +6,28 @@ system:
   description:
     value: >-
       <p>Ninjas can act as bodyguards as well as assassins or spies; some
-      mystically emulate the relationship between <em>kami</em> and their wards
-      when protecting their charges. A ninja with this trick gains
-      @UUID[Compendium.pf1.feats.Item.JSPFo2fBkNlrtVqi]{Bodyguard} and as bonus
-      feats, ignoring their prerequisites. When using In Harm’s Way to intercept
-      an attack, the ninja can spend 1 ki point to gains DR 10/cold iron and
-      resistance 10 to acid, electricity, and fire for that attack.</p>
+      mystically emulate the relationship between kami and their wards when
+      protecting their charges. A ninja with this trick gains
+      @UUID[Compendium.pf1.feats.Item.JSPFo2fBkNlrtVqi]{Bodyguard} and <em>In
+      Harm’s Way</em> as bonus feats, ignoring their prerequisites. When using
+      In Harm’s Way to intercept an attack, the ninja can spend 1 ki point to
+      gains DR 10/cold iron and resistance 10 to acid, electricity, and fire for
+      that attack.</p>
+  tags:
+    - Master Trick
+  changes:
+    - _id: xPsMZ9xk
+      formula: '2'
+      subTarget: bonusFeats
+      modifier: untyped
   tag: classFeat_kamiWarden
   subType: classFeat
   associations:
     classes:
       - Ninja
   abilityType: su
+  source:
+    id: PZO9496
+    pages: '6'
 _key: '!items!BSKuZmqXxinAFOiT'
 

@@ -2483,7 +2483,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {string} skillId      The skill id (e.g. "per", or "prf.subSkills.prf1")
    * @param {ActorRollOptions} [options={}]      Options which configure how the skill check is rolled
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollSkill(skillId, options = {}) {
     if (!this.isOwner) {
@@ -2584,7 +2584,7 @@ export class ActorPF extends ActorBasePF {
    * Roll a 1d20 adding the actor's BAB
    *
    * @param {ActorRollOptions} [options]
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollBAB(options = {}) {
     if (!this.isOwner) {
@@ -2611,7 +2611,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @deprecated
    * @param {ActorRollOptions & {ranged: boolean, ability: string | null}} [options={}]
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollCMB(options = {}) {
     foundry.utils.logCompatibilityWarning(
@@ -2632,7 +2632,7 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} [options.maneuver=false] - Whether this is weapon or maneuver check.
    * @param {boolean} [options.ranged=false] - Melee or ranged.
    * @param {boolean} [options.ability=null] - Attack ability. If not defined, appropriate one is chosen based on the ranged option.
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollAttack({ maneuver = false, ranged = false, ability = null, ...options } = {}) {
     if (!this.isOwner) {
@@ -2693,7 +2693,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {string} bookId Spellbook identifier
    * @param {ActorRollOptions} [options={}] Roll options
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollCL(bookId, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
@@ -2739,7 +2739,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {string} bookId Spellbook identifier
    * @param {ActorRollOptions} [options={}] Roll options
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollConcentration(bookId, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
@@ -2956,7 +2956,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {"ref"|"fort"|"will"} savingThrowId Identifier for saving throw type.
    * @param {ActorRollOptions} [options={}] Roll options.
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollSavingThrow(savingThrowId, options = {}) {
     if (!this.isOwner) {
@@ -3037,7 +3037,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {string} abilityId    The ability ID (e.g. "str")
    * @param {object} [options={}]      Options which configure how ability tests are rolled
-   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollAbilityTest(abilityId, options = {}) {
     if (!this.isOwner) {

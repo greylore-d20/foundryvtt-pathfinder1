@@ -217,6 +217,19 @@ export async function hideInvisibleTargets(cm, jq) {
 const getTokenByUuid = (uuid) => fromUuidSync(uuid)?.object;
 
 /**
+ * Pan to defined token
+ *
+ * Provided here to allow overriding the behaviour.
+ *
+ * @internal
+ * @param {Token} token - Token to pan to
+ * @param {number} [duration=250] - Animation duration
+ */
+export function panToToken(token, duration = 250) {
+  canvas.animatePan({ ...token.center, duration });
+}
+
+/**
  * @param {ChatMessage} cm - Chat message instance
  * @param {JQuery<HTMLElement>} jq - JQuery instance
  */
@@ -251,12 +264,19 @@ export function addTargetCallbacks(cm, jq) {
 
   function _imageClickCallback(event, uuid) {
     event.preventDefault();
-    const t = getTokenByUuid(uuid);
-    if (t?.actor.testUserPermission(game.user, "OWNER")) {
-      if (t._controlled) {
-        if (event.shiftKey) t.release();
+
+    const token = getTokenByUuid(uuid);
+    if (!token?.actor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) return;
+
+    const toggle = event.shiftKey;
+
+    if (!toggle || (!token.controlled && toggle)) pf1.utils.chat.panToToken(token);
+
+    if (token.actor.isOwner) {
+      if (token.controlled) {
+        if (toggle) token.release();
       } else {
-        t.control({ releaseOthers: !event.shiftKey });
+        token.control({ releaseOthers: !toggle });
       }
     }
   }

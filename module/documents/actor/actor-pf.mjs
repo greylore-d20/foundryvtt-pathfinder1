@@ -4071,15 +4071,15 @@ export class ActorPF extends ActorBasePF {
       for (const supplement of allSupplements) {
         const { item, count, parent } = supplement;
         const parentUuid = parent?.uuid ?? parent?.flags?.core?.sourceId;
+        const itemData = game.items.fromCompendium(item);
         if (parentUuid) {
-          item.updateSource({ "flags.pf1.source": parentUuid });
+          setProperty(itemData, "flags.pf1.source", parentUuid);
         }
-        const data = game.items.fromCompendium(item);
         // Adjust quantity of physical items if more than one was added of the same item
-        if (item.isPhysical && data.system.quantity > 0) {
-          data.system.quantity *= count;
+        if (item.isPhysical && itemData.system.quantity > 0) {
+          itemData.system.quantity *= count;
         }
-        items.push(data);
+        items.push(itemData);
       }
     }
 

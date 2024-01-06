@@ -18,6 +18,16 @@ export class ItemAttackPF extends ItemPF {
     }
   }
 
+  /** @type {boolean} - This attack pretends to be physical item. */
+  get isQuasiPhysical() {
+    return ["weapon", "item"].includes(this.subType);
+  }
+
+  get isBroken() {
+    if (!this.isQuasiPhysical) return false;
+    return this.system.broken === true;
+  }
+
   /**
    * @inheritDoc
    */

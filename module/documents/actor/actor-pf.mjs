@@ -1994,15 +1994,19 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
+    if (context.diff === false) return; // Don't diff if we were told not to diff
+
     // Make certain variables absolute
     const abilities = changed.system.abilities;
     if (abilities) {
       const absoluteKeys = ["userPenalty", "damage", "drain"];
       const keys = Object.keys(abilities);
       for (const abl of keys) {
+        const ablData = abilities[abl];
+        if (!ablData) continue; // e.g. if null from being deleted for homebrew
         for (const absKey of absoluteKeys) {
-          if (abilities[abl][absKey] !== undefined) {
-            abilities[abl][absKey] = Math.abs(abilities[abl][absKey]);
+          if (ablData[absKey] !== undefined) {
+            ablData[absKey] = Math.abs(ablData[absKey]);
           }
         }
       }
@@ -2015,8 +2019,11 @@ export class ActorPF extends ActorBasePF {
 
     // Backwards compatibility
     const conditions = changed.system.attributes?.conditions;
-    // Never allow updates to the new location
-    delete changed.system.conditions;
+
+    // Never allow updates to the new condtions location
+    if (changed.system.conditions !== undefined) {
+      delete changed.system.conditions;
+    }
 
     if (conditions) {
       foundry.utils.logCompatibilityWarning(

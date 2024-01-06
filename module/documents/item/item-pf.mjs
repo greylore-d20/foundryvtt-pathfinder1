@@ -1986,6 +1986,7 @@ export class ItemPF extends ItemBasePF {
     rollData ??= action.getRollData();
 
     const describePart = (value, name, modifier, sort = 0) => {
+      if (value == 0) return;
       sources.push({ value, name, modifier, sort });
     };
 

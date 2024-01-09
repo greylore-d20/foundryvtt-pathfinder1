@@ -408,26 +408,27 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<this|object|undefined>} Promise for the update, update data object, or undefined (no update needed).
    */
   async recharge({ value, period = "day", exact = false, maximize = false, commit = true, rollData, context } = {}) {
-    const itemData = this.system;
-    if (!itemData.uses?.per) return;
+    const uses = this.system.uses ?? {};
+    if (!uses.per) return; // Unlimited uses, recharging meaningless
 
     // Cancel if charges are managed by different item.
     if (this.links.charges) return;
 
     // No update when period does not match usage
-    if (period === "week" && !exact) {
+    if (["charges", "single"].includes(uses.per)) {
+      // Ignore, no constraints
+    } else if (period === "week" && !exact) {
       // Recharge "day" with "week" with inexact recharging
-      if (!["day", "week"].includes(itemData.uses.per)) return;
+      if (!["day", "week"].includes(uses.per)) return;
     }
     // Otherwise test if "any" period is used
-    else if (itemData.uses.per !== period && period !== "any") return;
+    else if (uses.per !== period && period !== "any") return;
 
-    const updateData = { system: { uses: {} } };
     const staticValue = value !== undefined;
 
     // No specific value given
     if (!staticValue) {
-      const formula = itemData.uses?.rechargeFormula || "";
+      const formula = uses.rechargeFormula || "";
       // Default to maximizing value
       if (!formula) maximize = true;
       else {
@@ -436,20 +437,21 @@ export class ItemPF extends ItemBasePF {
         value = roll.total;
 
         // Cancel if formula produced invalid value
-        if (!Number.isFinite(value)) return;
+        if (!Number.isFinite(value))
+          return void console.warn(`Formula "${formula}" produced non-numeric value "${value}"`);
       }
     }
 
     // Maximize value regardless what value is
-    if (maximize) value = itemData.uses.max;
+    if (maximize) value = uses.max;
 
     // Clamp charge value to
-    value = Math.clamped(value, 0, itemData.uses.max);
+    value = Math.clamped(value, 0, uses.max);
 
     // Cancel pointless update
-    if (value === itemData.uses.value) return;
+    if (value === uses.value) return;
 
-    updateData.system.uses.value = value;
+    const updateData = { system: { uses: { value } } };
 
     if (commit) return this.update(updateData, context);
     return updateData;

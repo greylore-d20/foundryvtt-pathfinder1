@@ -3,12 +3,13 @@ import { getSkipActionPrompt } from "../documents/settings.mjs";
 export class ActionChooser extends Application {
   /**
    * @param {ItemPF} item - The item for which to choose an attack
-   * @param {any} [options]
+   * @param {object} [options={}] - Application options
+   * @param {object} [useOptions={}] - Use options
    */
-  constructor(item, options = {}) {
+  constructor(item, options = {}, useOptions = {}) {
     super(options);
 
-    this.useOptions = {};
+    this.useOptions = useOptions;
     this.item = item;
   }
 
@@ -46,7 +47,27 @@ export class ActionChooser extends Application {
     event.preventDefault();
 
     const actionId = event.currentTarget.dataset?.action;
-    this.item.use({ ...this.useOptions, actionId, skipDialog: getSkipActionPrompt() });
+    const result = this.item.use({ ...this.useOptions, actionId, skipDialog: getSkipActionPrompt() });
+    this.resolve?.(result);
     this.close();
+  }
+
+  close(...args) {
+    this.resolve?.();
+    super.close(...args);
+  }
+
+  /**
+   * @param {ItemPF} item
+   * @param {object} options
+   * @param {object} renderOptions - Options passed to application rendering
+   * @returns {ActionChooser}
+   */
+  static async open(item, options = {}, renderOptions = {}) {
+    return new Promise((resolve) => {
+      const selector = new this(item, undefined, options);
+      selector.resolve = resolve;
+      selector.render(true, { focus: true, ...renderOptions });
+    });
   }
 }

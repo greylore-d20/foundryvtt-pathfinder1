@@ -1148,7 +1148,7 @@ export class ItemPF extends ItemBasePF {
    * @param {string} [rollMode] - The roll mode to use for the chat message
    * @param {TokenDocument} [token] Token this action is for, if any.
    * @throws {Error} - On some invalid inputs.
-   * @returns {Promise<SharedActionData | void | ChatMessage | *>}
+   * @returns {Promise<SharedActionData | void | ChatMessage>}
    */
   async use({
     actionId = "",
@@ -1210,11 +1210,9 @@ export class ItemPF extends ItemBasePF {
     if (this.system.actions.length > 0) {
       if (actionId) {
         action = this.actions.get(actionId);
+        if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
       } else if (this.system.actions.length > 1 && skipDialog !== true) {
-        const selector = new pf1.applications.ActionChooser(this);
-        selector.useOptions = { ev, chatMessage, dice, rollMode, token };
-        selector.render(true, { focus: true });
-        return;
+        return pf1.applications.ActionChooser.open(this, { ev, chatMessage, dice, rollMode, token });
       } else {
         action = this.firstAction;
       }

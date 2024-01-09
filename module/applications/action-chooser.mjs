@@ -61,7 +61,7 @@ export class ActionChooser extends Application {
    * @param {ItemPF} item
    * @param {object} options
    * @param {object} renderOptions - Options passed to application rendering
-   * @returns {ActionChooser}
+   * @returns {Promise<ChatMessage|object|undefined>} - Result of ItemPF.use() for selected action
    */
   static async open(item, options = {}, renderOptions = {}) {
     return new Promise((resolve) => {

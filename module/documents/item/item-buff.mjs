@@ -283,12 +283,4 @@ export class ItemBuffPF extends ItemPF {
   async setActive(active, context) {
     return this.update({ "system.active": active }, context);
   }
-
-  /**
-   * @remarks This item type can not be recharged.
-   * @override
-   */
-  recharge() {
-    return;
-  }
 }

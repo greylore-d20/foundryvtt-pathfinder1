@@ -363,7 +363,19 @@ declare global {
       // ------------------------- //
       /**
        * A hook event fired by the system when an action is to be used.
-       * This hook fires before any updates are applied to the actor/item, like ammo or spell slots.
+       * This hook fires before any updates are applied to the actor/item, like ammo or spell slots, and before
+       * any attacks are rolled.
+       *
+       * @group Actions
+       * @remarks Called by {@link Hooks.callAll}
+       * @param actionUse - The {@link ActionUse} instance containing all data relevant to the action use.
+       */
+      pf1CreateActionUse: (actionUse: ActionUse) => void;
+
+      /**
+       * A hook event fired by the system when an action is to be used.
+       * This hook fires before any updates are applied to the actor/item, like ammo or spell slots and includes
+       * all of the action's rolled attacks.
        *
        * @group Actions
        * @remarks Called by {@link Hooks.call}
@@ -381,6 +393,17 @@ declare global {
        * @returns Explicitly return `false` to prevent the action's usage chat card being displayed.
        */
       pf1PreDisplayActionUse: (actionUse: ActionUse) => boolean;
+
+      /**
+       * A hook event fired by the system when an action has been successfully used.
+       * This hook fires after the action has been used and after any chat .
+       *
+       * @group Actions
+       * @remarks Called by {@link Hooks.callAll}
+       * @param actionUse - The {@link ActionUse} instance containing all data relevant to the action use.
+       * @param chatMessage - The {@link ChatMessage | null} created by using the action, or null if no message was created.
+       */
+      pf1PostActionUse: (actionUse: ActionUse, chatMessage: ChatMessage?) => void;
 
       // ------------------------- //
       //          Changes          //
@@ -623,6 +646,8 @@ export declare const pf1ClassLevelChange: Hooks.StaticCallbacks["pf1ClassLevelCh
 export declare const pf1DisplayCard: Hooks.StaticCallbacks["pf1DisplayCard"];
 
 // Action
+export declare const pf1CreateActionUse: Hooks.StaticCallbacks["pf1CreateActionUse"];
+export declare const pf1PostActionUse: Hooks.StaticCallbacks["pf1PostActionUse"];
 export declare const pf1PreActionUse: Hooks.StaticCallbacks["pf1PreActionUse"];
 export declare const pf1PreDisplayActionUse: Hooks.StaticCallbacks["pf1PreDisplayActionUse"];
 

@@ -109,7 +109,7 @@ export class ActionUse {
   }
 
   /**
-   * @returns {object} The roll data object for this attack.
+   * @returns {Promise<object>} The roll data object for this attack.
    */
   getRollData() {
     const rollData = foundry.utils.deepClone(this.shared.action.getRollData());
@@ -121,7 +121,7 @@ export class ActionUse {
   /**
    * Creates and renders an attack roll dialog, and returns a result.
    *
-   * @returns {ItemAttack_Dialog_Result|boolean}
+   * @returns {Promise<ItemAttack_Dialog_Result|boolean>}
    */
   createAttackDialog() {
     const dialog = new pf1.applications.AttackDialog(this.shared.action, this.shared.rollData, this.shared);
@@ -132,6 +132,7 @@ export class ActionUse {
    * Alters roll (and shared) data based on user input during the attack's dialog.
    *
    * @param {JQuery | object} form - The attack dialog's jQuery form data or FormData object
+   * @returns {Promise}
    */
   alterRollData(form = {}) {
     let formData;
@@ -1243,6 +1244,8 @@ export class ActionUse {
 
   /**
    * Posts the attack's chat card.
+   *
+   * @returns {Promise<ChatMessage | SharedActionData | { descriptionOnly: boolean }> }
    */
   async postMessage() {
     // Old hook data + callAll
@@ -1312,6 +1315,9 @@ export class ActionUse {
 
     // Get new roll data
     shared.rollData = this.getRollData();
+
+    // let modules modify the ActionUse before attacks are rolled
+    Hooks.callAll("pf1CreateActionUse", this);
 
     // Show attack dialog, if appropriate
     if (!skipDialog) {
@@ -1402,6 +1408,8 @@ export class ActionUse {
       // Above does not communicate targets to other users, so..
       game.user.broadcastActivity({ targets: [] });
     }
+
+    Hooks.callAll("pf1PostActionUse", this, result instanceof pf1.documents.ChatMessagePF ? result : null);
 
     return result;
   }

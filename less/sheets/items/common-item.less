@@ -13,6 +13,12 @@
 
     .header-details {
       align-self: flex-start;
+
+      :is(h1, h2, h3) {
+        > input {
+          font: inherit;
+        }
+      }
     }
   }
 }

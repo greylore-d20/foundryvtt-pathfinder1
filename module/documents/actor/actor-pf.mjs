@@ -4494,6 +4494,7 @@ export class ActorPF extends ActorBasePF {
    * @property {number} active - The current number of active feats.
    * @property {number} owned - The current number of feats, active or not.
    * @property {number} levels - Feats gained by levels specifically
+   * @property {number} mythic - Mythic feats
    * @property {number} formula - Feats gained by custom formula on the feats tab
    * @property {number} changes - Feats gained via Changes
    * @property {number} disabled - Disabled feats
@@ -4528,11 +4529,14 @@ export class ActorPF extends ActorBasePF {
     });
 
     // Add feat count by level
-    const totalLevels = this.itemTypes.class
-      .filter((cls) => ["base", "npc", "prestige", "racial"].includes(cls.subType))
-      .reduce((cur, cls) => cur + cls.hitDice, 0);
-    result.levels = Math.ceil(totalLevels / 2);
+    result.levels = Math.ceil(this.system.attributes.hd.total / 2);
     result.max += result.levels;
+
+    // Mythic feats
+    // https://aonprd.com/Rules.aspx?Name=Mythic%20Heroes&Category=Mythic%20Rules
+    // Gained at 1, 3, 5, etc.
+    result.mythic = Math.ceil(this.system.details.mythicTier / 2);
+    result.max += result.mythic;
 
     // Bonus feat formula
     const bonusRoll = RollPF.safeRoll(this.system.details.bonusFeatFormula || "0", this.getRollData());

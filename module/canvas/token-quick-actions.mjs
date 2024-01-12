@@ -21,11 +21,7 @@ export class TokenQuickActions {
     items.forEach(({ item }) => {
       const action = item.firstAction;
       const icon = item.img ?? CONST.DEFAULT_TOKEN;
-      let title = "";
-      if (["attack", "weapon"].includes(item.type)) title = game.i18n.format("PF1.AttackWith", { name: item.name });
-      else if (item.type === "spell") title = game.i18n.format("PF1.AttackWithSpell", { name: item.name });
-      else if (item.type === "feat") title = game.i18n.format("PF1.AttackWithFeat", { name: item.name });
-      else title = game.i18n.format("PF1.QuickActionUseAny", { name: item.name });
+      const title = item.name;
       const type = item.type;
 
       const actionHTML = [];

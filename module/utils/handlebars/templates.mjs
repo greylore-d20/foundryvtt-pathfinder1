@@ -96,6 +96,8 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/hud/tooltip.hbs",
   "systems/pf1/templates/hud/tooltip_actor.hbs",
 
+  "systems/pf1/templates/hud/quick-actions.hbs",
+
   // Level Up sections
   "systems/pf1/templates/apps/level-up/fc_alt.hbs",
   "systems/pf1/templates/apps/level-up/fc_hp.hbs",

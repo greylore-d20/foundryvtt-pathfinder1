@@ -1,5 +1,6 @@
 import { clearHighlight, showAttackReach } from "./attack-reach.mjs";
 import { getSkipActionPrompt } from "module/documents/settings.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 export class TokenQuickActions {
   /**
@@ -13,93 +14,68 @@ export class TokenQuickActions {
     const actor = token.actor;
 
     const items = actor?.getQuickActions?.();
-    if (!items) return;
+    if (!items?.length) return;
 
-    const quickActions = $('<div class="col actions">');
-    const quickActionsList = $('<div class="below">');
+    const quickActions = [];
+    for (const qi of items) {
+      qi.id = qi.item.id;
+      qi.name = qi.item.name;
+      qi.img = qi.item.img;
+      qi.max = qi.maxCharge;
+      qi.type = qi.item.type;
 
-    items.forEach(({ item }) => {
-      const action = item.firstAction;
-      const icon = item.img ?? CONST.DEFAULT_TOKEN;
-      const title = item.name;
-      const type = item.type;
+      qi.isCharged = qi.haveAnyCharges;
+      if (qi.isCharged) {
+        qi.uses = qi.charges;
 
-      const actionHTML = [];
-      actionHTML.push(
-        `<div data-item-id="${item.id}" data-item-type="${type}" class="control-icon token-quick-action type-${type}">`,
-        `<img src="${icon}" width="36" height="36" data-tooltip="${title}">`
-      );
-      if (action && (item.isCharged || !!action?.ammoType)) {
-        actionHTML.push(this.createChargeElement(action));
+        let chargeCost = qi.item.firstAction.getChargeCost();
+        if (chargeCost == 0) qi.isCharged = false;
+        qi.recharging = chargeCost < 0;
+        chargeCost = Math.abs(chargeCost);
+
+        qi.max = qi.maxCharge;
+
+        if (chargeCost != 0) {
+          // Maximum charging
+          if (qi.recharging) {
+            qi.uses = Math.ceil((qi.max - qi.uses) / chargeCost);
+            qi.max = Math.ceil(qi.max / chargeCost);
+          }
+          // Actual uses
+          else {
+            qi.uses = Math.floor(qi.uses / chargeCost);
+            qi.max = Math.floor(qi.max / chargeCost);
+          }
+        }
       }
-      actionHTML.push("</div>");
 
-      const actionEl = document.createElement("div");
-      actionEl.innerHTML = actionHTML.join("");
-      const el = actionEl.firstChild;
-
-      this.activateElementListeners(el, item, action, token);
-
-      quickActionsList.append(el);
-    });
-
-    quickActions.append(quickActionsList);
-
-    html.find(".col.middle").after(quickActions);
-  }
-
-  /**
-   * Generate charge display element for an action.
-   *
-   * @param {pf1.components.ItemAction} action Action
-   * @returns {Element} HTML element with charge information.
-   */
-  static createChargeElement(action) {
-    const item = action.item,
-      usesAmmo = !!action.ammoType,
-      chargeCost = action.getChargeCost(),
-      isSingleUse = item.isSingleUse;
-
-    const actualChargeCost = (action) => Math.floor(item.charges / chargeCost),
-      actualMaxCharge = (action) => Math.floor(item.maxCharges / chargeCost);
-
-    // TODO: Move HTML generation to a precompiled HBS partial
-    const htmlparts = ["<charges>"],
-      isCharged = action.isCharged,
-      max = isSingleUse ? 0 : isCharged ? actualMaxCharge(action) : 0,
-      recharging = isCharged && chargeCost < 0;
-
-    let uses = 0;
-    if (usesAmmo) {
-      uses = item.defaultAmmo?.system.quantity ?? 0;
-    } else if (isSingleUse) {
-      uses = item.system.quantity;
-    } else if (isCharged) {
-      if (!recharging) {
-        uses = actualChargeCost(action);
-      } else {
-        uses = -chargeCost;
-      }
+      quickActions.push(qi);
     }
 
-    if (!recharging) htmlparts.push(`<span class='remaining'>${uses}</span >`);
-    else htmlparts.push(`<span class='recharge'>+${uses}</span>`);
-    if (!recharging && max !== 0) htmlparts.push(`<span class='delimiter' >/</span ><span class='max'>${max}</span>`);
-    htmlparts.push("</charges>");
-    return htmlparts.join("");
+    const templateData = {
+      actions: quickActions,
+    };
+
+    const div = document.createElement("div");
+    div.innerHTML = renderCachedTemplate("systems/pf1/templates/hud/quick-actions.hbs", templateData);
+
+    this.activateElementListeners(div.firstChild, actor, token);
+
+    html[0].querySelector(".col.middle").after(div.firstChild);
   }
 
   /**
    * Add listeners to token HUD quick action element.
    *
    * @param {Element} el Quick action element
-   * @param {Item} item
-   * @param {pf1.components.ItemAction} action
-   * @param {Token} token
+   * @param {Actor} actor - Associated actor
+   * @param {Token} token - Associated token
    */
-  static activateElementListeners(el, item, action, token) {
+  static activateElementListeners(el, actor, token) {
     el.addEventListener("click", (event) => {
       event.preventDefault();
+      const itemId = event.target.dataset.itemId;
+      const item = actor.items.get(itemId);
       if (!event.ctrlKey) {
         item.use({ ev: event, token: token.document, skipDialog: getSkipActionPrompt() });
       } else {
@@ -109,13 +85,20 @@ export class TokenQuickActions {
 
     el.addEventListener("contextmenu", (event) => {
       event.preventDefault();
+      const itemId = event.target.dataset.itemId;
+      const item = actor.items.get(itemId);
       item.sheet.render(true, { focus: true });
     });
 
     // Reach highlight on mouse hover
     if (game.settings.get("pf1", "performance").reachLimit >= 10) {
-      el.addEventListener("mouseenter", () => showAttackReach(token, action), { passive: true });
-      el.addEventListener("mouseleave", () => clearHighlight(), { passive: true });
+      el.querySelectorAll(".token-quick-action").forEach((el) => {
+        const itemId = el.dataset.itemId;
+        const item = actor.items.get(itemId);
+        const action = item.firstAction;
+        el.addEventListener("mouseenter", () => showAttackReach(token, action), { passive: true });
+        el.addEventListener("mouseleave", () => clearHighlight(), { passive: true });
+      });
     }
   }
 }

@@ -1330,9 +1330,11 @@ function resetSkills() {
 function finalizeSkills() {
   const actorData = this.system;
   const skills = actorData.skills;
+  if (!skills) return; // Vehicles, Traps and Haunts have no skills
+
   const abilities = actorData.abilities;
 
-  const acpPenaltyValue = actorData.attributes.acp.total ?? 0;
+  const acpPenaltyValue = actorData.attributes?.acp?.total ?? 0;
 
   const finalizeSkill = (skill) => {
     const acpPenalty = skill.acp ? acpPenaltyValue : 0;

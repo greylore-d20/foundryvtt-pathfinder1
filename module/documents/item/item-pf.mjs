@@ -867,32 +867,33 @@ export class ItemPF extends ItemBasePF {
   }
 
   _updateMaxUses() {
+    const per = this.system.uses?.per;
+
     // No charges? No charges!
-    if (!["day", "week", "charges"].includes(this.system.uses?.per)) return;
+    if (!per) return;
 
-    const rollData = this.getRollData();
-
-    if (this.system.uses) {
-      const maxFormula = this.system.uses.maxFormula;
-      if (!maxFormula) {
-        this.system.uses.max = 0;
-      } else {
-        try {
-          const isDeterministic = Roll.parse(maxFormula).every((t) => t.isDeterministic);
-          if (isDeterministic) {
-            const roll = RollPF.safeRoll(maxFormula, rollData, [this], { suppressError: !this.isOwner });
-            this.system.uses.max = roll.total;
-          } else {
-            const msg = game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
-              formula: maxFormula,
-              context: game.i18n.localize("PF1.ChargePlural"),
-            });
-            ui.notifications.warn(msg, { console: false });
-            console.warn(msg, this);
-          }
-        } catch (err) {
-          console.error(err);
+    const maxFormula = this.system.uses.maxFormula;
+    if (per === "single") {
+      this.system.uses.max = 1;
+    } else if (!maxFormula) {
+      this.system.uses.max = 0;
+    } else {
+      try {
+        const isDeterministic = Roll.parse(maxFormula).every((t) => t.isDeterministic);
+        if (isDeterministic) {
+          const rollData = this.getRollData();
+          const roll = RollPF.safeRoll(maxFormula, rollData, [this], { suppressError: !this.isOwner });
+          this.system.uses.max = roll.total;
+        } else {
+          const msg = game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
+            formula: maxFormula,
+            context: game.i18n.localize("PF1.ChargePlural"),
+          });
+          ui.notifications.warn(msg, { console: false });
+          console.warn(msg, this);
         }
+      } catch (err) {
+        console.error(err);
       }
     }
   }

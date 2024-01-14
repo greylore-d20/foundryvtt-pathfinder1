@@ -3058,6 +3058,14 @@ export class ActorSheetPF extends ActorSheet {
     for (const itemData of itemDatas) {
       delete itemData._id;
 
+      // Assign associated class if actor has only one class
+      // TODO: Query which class if multiple classes exist
+      if (itemData.type === "feat" && itemData.system?.subType === "classFeat") {
+        if (this.actor.itemTypes.class?.length === 1) {
+          itemData.system.class = this.actor.itemTypes.class[0].system.tag;
+        }
+      }
+
       // Import spell as consumable
       if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
         const spellType =

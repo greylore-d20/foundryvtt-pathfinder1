@@ -19,7 +19,6 @@ export class ItemAction {
 
   constructor(data, parent) {
     this.data = foundry.utils.mergeObject(ItemAction.defaultData, data);
-    this.data.actionType ||= "other"; // Default to other
 
     this.parent = parent;
 
@@ -601,6 +600,10 @@ export class ItemAction {
   }
 
   prepareData() {
+    // Default action type to other if undefined.
+    // Optimally this would be in constructor only, but item action handling can cause that to be lost
+    this.data.actionType ||= "other";
+
     const rollData = this.getRollData();
     // Parse formulaic attacks
     if (this.hasAttack) {

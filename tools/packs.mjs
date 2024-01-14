@@ -26,6 +26,7 @@ const TEMPLATE_EXCEPTION_PATHS = {
     "classSkills",
     "uses.autoDeductChargesCost",
     "uses.rechargeFormula",
+    "links.supplements",
     "flags",
     "casting",
     "learnedAt",

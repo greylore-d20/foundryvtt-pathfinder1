@@ -28,6 +28,8 @@ export class ItemContainerPF extends ItemPhysicalPF {
     // No system updates
     if (!changed.system) return;
 
+    if (context.recursive === false || context.diff === false) return;
+
     // Ensure contained item updates adhere to reason
     const items = changed.system.items;
     if (items) {

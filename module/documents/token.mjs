@@ -20,6 +20,8 @@ export class TokenDocumentPF extends TokenDocument {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (context.recursive === false) return;
+
     const flags = changed.flags?.pf1;
     if (flags) {
       // Delete flags instead of turning them false

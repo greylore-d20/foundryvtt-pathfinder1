@@ -75,7 +75,9 @@ export class ActiveEffectPF extends ActiveEffect {
     if (this.isSuppressed) return;
 
     if (changed.disabled !== undefined) {
-      this.parent.setActive(!this.disabled, context);
+      if (this.parent instanceof Item) {
+        this.parent.setActive?.(!this.disabled, context);
+      }
     }
   }
 

@@ -1981,6 +1981,8 @@ export class ActorPF extends ActorBasePF {
 
     const oldData = this.system;
 
+    this._syncProtoTokenSize(changed);
+
     // Offset HP values
     const attributes = changed.system.attributes;
     if (this._initialized && attributes != undefined) {
@@ -2058,6 +2060,34 @@ export class ActorPF extends ActorBasePF {
     if (this.img !== this.prototypeToken.texture.src) return;
 
     foundry.utils.setProperty(changed, "prototypeToken.texture.src", changed.img);
+  }
+
+  /**
+   * Synchronize prototype token sizing with actor size.
+   *
+   * @protected
+   * @param {object} changed - Pre-uppdate data
+   */
+  _syncProtoTokenSize(changed) {
+    const sizeKey = changed.system.traits?.size;
+    if (!sizeKey) return;
+
+    if (this.token) return;
+
+    const staticSize =
+      changed.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
+    if (staticSize) return;
+
+    const size = pf1.config.tokenSizes[sizeKey];
+    if (!size) return;
+
+    changed.prototypeToken ??= {};
+    if (changed.prototypeToken?.width === undefined) {
+      changed.prototypeToken.width = size.w;
+    }
+    if (changed.prototypeToken?.height === undefined) {
+      changed.prototypeToken.height = size.h;
+    }
   }
 
   /**

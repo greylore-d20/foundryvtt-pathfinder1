@@ -499,7 +499,16 @@ export const sizeChart = {
 };
 
 /**
+ * @typedef {object} TokenSize
+ * @property {number} w - Width, in cells
+ * @property {number} h - Height, in cells
+ * @property {number} scale - Scale ratio
+ */
+
+/**
  * The size values for Tokens according to the creature's size
+ *
+ * @type {Record<string,TokenSize>}
  */
 export const tokenSizes = {
   fine: { w: 1, h: 1, scale: 0.45 },

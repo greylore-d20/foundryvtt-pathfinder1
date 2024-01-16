@@ -5,20 +5,48 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>When a rogue with this talent hits a creature with a melee attack that
-      deals sneak attack damage, any nonmagical light sources worn or carried by
-      the creature (such as lit torches, lanterns, or sunrods) are automatically
-      extinguished. Once per day, the rogue can use this ability to also attempt
-      a dispel check (as per dispel magic) against any magical sources of light
-      a target carries, using her rogue level as the caster level.</p>
+      <p>When a character with this talent hits a creature with a melee attack
+      that deals sneak attack damage, any nonmagical light sources worn or
+      carried by the creature (such as lit torches, lanterns, or sunrods) are
+      automatically extinguished. Once per day, the character can use this
+      ability to also attempt a dispel check (as per
+      @UUID[Compendium.pf1.spells.Item.gmgwyjfpeuuc4t4o]{dispel magic}) against
+      any magical sources of light a target carries, using her character level
+      as the caster level.</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
+    - Sneak Attack
+  actions:
+    - _id: ysQ2r3Dl1tNVYvB2
+      name: Dispel magical light
+      img: icons/magic/symbols/runes-star-orange-purple.webp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: one magical light
+      ammoType: none
+  uses:
+    per: day
+    value: 1
+    maxFormula: '1'
   tag: classFeat_extinguishingStrike
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+      - Ninja
   abilityType: ex
+  source:
+    id: PZO9466
+    pages: '8'
 _key: '!items!ZnsVy1qx87EjvYYz'
 

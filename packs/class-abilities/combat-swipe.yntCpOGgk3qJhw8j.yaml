@@ -5,15 +5,29 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>A rogue who selects this talent gains Improved Steal as a bonus
-      feat.</p>
+      <p>A character who selects this talent gains
+      @UUID[Compendium.pf1.feats.Item.Kbuy0bkPlOYz5yaO]{Improved Steal} as a
+      bonus feat.</p>
   tags:
     - Rogue Talent
+    - Investigator Talent
+    - Ninja Trick
+  changes:
+    - _id: gTzBpTLK
+      formula: '1'
+      subTarget: bonusFeats
+      modifier: untyped
+  links:
+    supplements:
+      - name: Improved Steal
+        uuid: Compendium.pf1.feats.Item.Kbuy0bkPlOYz5yaO
   tag: classFeat_combatSwipe
   subType: classFeat
   associations:
     classes:
       - Rogue
+      - Investigator
+      - Ninja
   abilityType: ex
 _key: '!items!yntCpOGgk3qJhw8j'
 

@@ -5,22 +5,26 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>As a standard action while in an area of dim light or darkness, a rogue
-      with this talent can coalesce wisps of shadow into a quasi-real,
-      functional item. The rogue must choose whether to make a crowbar, 50 feet
-      of silk rope, a glass cutter, a light melee weapon with which she is
+      <p>As a standard action while in an area of dim light or darkness, a
+      character with this talent can coalesce wisps of shadow into a quasi-real,
+      functional item. The character must choose whether to make a crowbar, 50
+      feet of silk rope, a glass cutter, a light melee weapon with which she is
       proficient, a reversible cloak, thieves’ tools, or a wire saw; the GM may
-      allow other similar items. The rogue can use such items for a number of
-      minutes per day equal to 10 plus her rogue level. This duration does not
-      need to be consecutive, but it must be used in 1-minute increments.<p>An
-      item created with this ability remains until the rogue is no longer
-      touching it, or until the rogue runs out of duration for this talent, at
-      which time it dissolves. A rogue can select this talent more than once,
-      gaining an additional 10 minutes of duration each time this talent is
-      selected. If a rogue has selected this talent at least twice, she adds 50
-      feet of silk rope with a grappling hook, a masterwork light melee weapon
-      with which she is proficient, and masterwork thieves’ tools to the list of
-      things she can create.</p>
+      allow other similar items. The character can use such items for a number
+      of minutes per day equal to 10 plus her character’s class level. This
+      duration does not need to be consecutive, but it must be used in 1-minute
+      increments.</p><p>An item created with this ability remains until the
+      character is no longer touching it, or until the character runs out of
+      duration for this talent, at which time it dissolves. A character can
+      select this talent more than once, gaining an additional 10 minutes of
+      duration each time this talent is selected. If a character has selected
+      this talent at least twice, she adds 50 feet of silk rope with a grappling
+      hook, a masterwork light melee weapon with which she is proficient, and
+      masterwork thieves’ tools to the list of things she can create.</p>
+  tags:
+    - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
   actions:
     - _id: 7ujhtsl25050ypa2
       name: Use
@@ -37,16 +41,29 @@ system:
         value: self
       range:
         units: personal
-      actionType: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        critRange: null
+        critMult: null
+      powerAttack:
+        damageBonus: null
+        critMultiplier: null
+      ammoType: none
   uses:
     per: day
-    maxFormula: 10 + @classes.rogue.level
+    maxFormula: 10 + @class.level
   tag: classFeat_umbralGear
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+      - Ninja
   abilityType: su
+  source:
+    id: PZO9466
+    pages: '8'
 _key: '!items!4TJMm8I6U2vPPeIR'
 

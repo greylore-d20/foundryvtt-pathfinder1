@@ -1,0 +1,57 @@
+_id: 6pjr8jMFSKqXkBKk
+name: Sneak Attack
+type: feat
+img: systems/pf1/icons/skills/red_13.jpg
+system:
+  description:
+    value: >-
+      <p>If a character can catch an opponent when he is unable to defend
+      himself effectively from her attack, she can strike a vital spot for extra
+      damage.</p><p>The character’s attack deals extra damage anytime her target
+      would be denied a <em>Dexterity</em> bonus to <em>AC</em> (whether the
+      target actually has a <em>Dexterity</em> bonus or not), or when the
+      character flanks her target. This extra damage is 1d6 at 1st level, and
+      increases by 1d6 every two class levels thereafter. Should the character
+      score a <em>critical hit</em> with a sneak attack, this extra damage is
+      not multiplied. Ranged attacks can count as sneak attacks only if the
+      target is within 30 feet.</p><p>With a weapon that deals nonlethal damage
+      (like a sap, whip, or an unarmed strike), a character can make a sneak
+      attack that deals nonlethal damage instead of lethal damage. She cannot
+      use a weapon that deals lethal damage to deal nonlethal damage in a sneak
+      attack, not even with the usual –4 penalty.</p><p>The character must be
+      able to see the target well enough to pick out a vital spot and must be
+      able to reach such a spot. A character cannot sneak attack while striking
+      a creature with concealment.</p>
+  actions:
+    - _id: 3121tfns5ck508lz
+      name: Use
+      img: systems/pf1/icons/skills/red_13.jpg
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: ceil(@class.level / 2)d6
+            type:
+              values:
+                - precision
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        critRange: null
+        critMult: null
+      powerAttack:
+        damageBonus: null
+        critMultiplier: null
+      ammoType: none
+  tag: classFeat_sneakAttack
+  subType: classFeat
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Ninja
+_key: '!items!6pjr8jMFSKqXkBKk'
+

@@ -5,20 +5,38 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>A rogue who selects this talent gains Improved Dirty Trick as a bonus
-      feat, even if she does not meet the prerequisites. At 6th level, she is
-      treated as if she meets all the prerequisites for Greater Dirty Trick
+      <p>A character who selects this talent gains
+      @UUID[Compendium.pf1.feats.Item.LUOETW7Fm0oPKKWj]{Improved Dirty Trick} as
+      a bonus feat, even if she does not meet the prerequisites. At 6th level,
+      she is treated as if she meets all the prerequisites for
+      @UUID[Compendium.pf1.feats.Item.mY29nl8eCF5GjchB]{Greater Dirty Trick}
       (although she must take the feat as normal). If she succeeds in giving her
       target the blinded condition, the target cannot remove the condition
       during the first round of blindness.</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
+  changes:
+    - _id: 5Hk72Pcw
+      formula: '1'
+      subTarget: bonusFeats
+      modifier: untyped
+  links:
+    supplements:
+      - name: Improved Dirty Trick
+        uuid: Compendium.pf1.feats.Item.LUOETW7Fm0oPKKWj
   tag: classFeat_underhandedTrick
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+      - Ninja
   abilityType: ex
+  source:
+    id: PZO9466
+    pages: '8'
 _key: '!items!5nt6CAITIC4LEF4t'
 

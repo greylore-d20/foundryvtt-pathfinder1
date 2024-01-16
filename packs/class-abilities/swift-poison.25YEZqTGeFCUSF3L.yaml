@@ -5,16 +5,29 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>A rogue with this talent can apply poison to a weapon as a move action,
-      instead of a standard action.</p>
+      <p>A character with this talent can apply poison to a weapon as a move
+      action, instead of a standard action.</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
+  actions:
+    - _id: uUtkaig9O3dojRfV
+      name: Apply poison
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      activation:
+        type: move
+        unchained:
+          type: action
+      ammoType: none
   tag: classFeat_swiftPoison
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+      - Ninja
   abilityType: ex
 _key: '!items!25YEZqTGeFCUSF3L'
 

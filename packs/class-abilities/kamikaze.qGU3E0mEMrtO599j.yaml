@@ -5,12 +5,14 @@ img: systems/pf1/icons/items/weapons/kunai.png
 system:
   description:
     value: >-
-      <p>A ninja with this ability strikes without concern for her own
-      well-being. The ninja can spend 1 point from her ki pool to give her
+      <p>A character with this ability strikes without concern for her own
+      well-being. The character can spend 1 point from her ki pool to give her
       unarmed strikes and any weapons she wields the vicious weapon special
-      ability for 1 round per level.</p>
-
-      <p>The ninja can spend 1 ki point to dismiss this effect.</p>
+      ability for 1 round per level.</p><p>The character can spend 1 ki point to
+      dismiss this effect.</p>
+  tags:
+    - Ninja Trick
+    - Rogue Talent
   actions:
     - _id: 2729kptvz4k16dje
       name: Use
@@ -20,14 +22,16 @@ system:
         unchained:
           type: free
       duration:
-        value: '@classes.ninja.level'
+        value: '@class.level'
         units: round
-      actionType: ''
+      ammoType: none
   tag: classFeat_kamikaze
   subType: classFeat
   associations:
     classes:
       - Ninja
+      - Rogue
+      - Rogue (Unchained)
   abilityType: su
 _key: '!items!qGU3E0mEMrtO599j'
 

@@ -5,17 +5,29 @@ img: systems/pf1/icons/items/weapons/kunai.png
 system:
   description:
     value: >-
-      <p>A ninja who selects this ninja trick gains the
+      <p>A character who selects this ninja trick gains the
       @Compendium[pf1.feats.ACEQfonKVqh0fwkK]{Deflect Arrows} feat as a bonus
-      feat. The ninja must have the
+      feat. The character must have the
       @Compendium[pf1.feats.2aTFNMs3pW6nUBlr]{Improved Unarmed Strike} combat
-      feat before taking this trick.</p>
+      feat before taking this trick/talent.</p>
   tags:
     - Ninja Trick
+    - Rogue Talent
+  changes:
+    - _id: xhrotymw
+      formula: '1'
+      subTarget: bonusFeats
+      modifier: untyped
+  links:
+    supplements:
+      - name: Deflect Arrows
+        uuid: Compendium.pf1.feats.Item.ACEQfonKVqh0fwkK
   tag: classFeat_deflectArrows
   subType: classFeat
   associations:
     classes:
       - Ninja
+      - Rogue
+      - Rogue (Unchained)
 _key: '!items!EiDhmv4BnQAq2xRw'
 

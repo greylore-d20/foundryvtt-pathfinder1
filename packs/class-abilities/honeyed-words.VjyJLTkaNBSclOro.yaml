@@ -5,12 +5,14 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>Once per day, the rogue can roll two dice while making a Bluff check,
-      and take the better result. She must choose to use this talent before
-      making the Bluff check. A rogue can use this ability one additional time
-      per day for every five rogue levels she possesses.</p>
+      <p>Once per day, the character can roll two dice while making a Bluff
+      check, and take the better result. She must choose to use this talent
+      before making the Bluff check. A character can use this ability one
+      additional time per day for every five class levels she possesses.</p>
   tags:
     - Rogue Talent
+    - Investigator Talent
+    - Ninja Trick
   actions:
     - _id: rgb9ruqthago3qlo
       name: Use
@@ -22,7 +24,7 @@ system:
       actionType: ''
   uses:
     per: day
-    maxFormula: ceil(@classes.rogue.level / 5)
+    maxFormula: ceil(@classe.level / 5)
   contextNotes:
     - subTarget: skill.blf
       text: 'Honeyed Words: roll two dice and take the better result.'
@@ -31,6 +33,8 @@ system:
   associations:
     classes:
       - Rogue
+      - Investigator
+      - Ninja
   abilityType: ex
 _key: '!items!VjyJLTkaNBSclOro'
 

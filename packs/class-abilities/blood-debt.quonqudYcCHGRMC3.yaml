@@ -5,25 +5,35 @@ img: systems/pf1/icons/items/weapons/kunai.png
 system:
   description:
     value: >-
-      <p>A ninja with this ability gains In Harm’s Way as a bonus feat, even if
-      she doesn’t meet the prerequisites. When the ninja intercepts an attack
-      using this feat, she can spend 1 ki point to impose a blood debt on the
-      aided ally. The ninja’s ki pool is reduced by 1 until she ends this
-      effect, which she may do as an immediate action. If the ninja ends the
-      blood debt in response to a successful attack against her by a creature
-      the indebted ally threatens, the ally (who must be willing) takes full
-      damage from that attack and any associated effects instead of the
-      ninja.</p>
+      <p>A character with this ability gains
+      @UUID[Compendium.pf1.feats.Item.nW2GUYlGhZ2bmgdz]{In Harm’s Way} as a
+      bonus feat, even if she doesn’t meet the prerequisites. When the character
+      intercepts an attack using this feat, she can spend 1 ki point to impose a
+      blood debt on the aided ally. The character’s ki pool is reduced by 1 until
+      she ends this effect, which she may do as an immediate action. If the
+      character ends the blood debt in response to a successful attack against her
+      by a creature the indebted ally threatens, the ally (who must be willing)
+      takes full damage from that attack and any associated effects instead of
+      the character.</p>
+  tags:
+    - Ninja Trick
+    - Rogue Talent
   changes:
-    - _id: DWkQgkLh
+    - _id: 7PCA8wig
       formula: '1'
       subTarget: bonusFeats
       modifier: untyped
+  links:
+    supplements:
+      - name: In Harm’s Way
+        uuid: Compendium.pf1.feats.Item.nW2GUYlGhZ2bmgdz
   tag: classFeat_bloodDebt
   subType: classFeat
   associations:
     classes:
       - Ninja
+      - Rogue
+      - Rogue (Unchained)
   abilityType: su
 _key: '!items!quonqudYcCHGRMC3'
 

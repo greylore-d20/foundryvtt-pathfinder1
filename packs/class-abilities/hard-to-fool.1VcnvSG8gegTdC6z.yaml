@@ -5,18 +5,36 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>Once per day, a rogue with this talent can roll two dice while making a
-      Sense Motive check, and take the better result. She must choose to use
-      this talent before making the Sense Motive check. A rogue can use this
-      ability one additional time per day for every 5 rogue levels she
+      <p>Once per day, a character with this talent can roll two dice while
+      making a Sense Motive check, and take the better result. She must choose
+      to use this talent before making the Sense Motive check. A character can
+      use this ability one additional time per day for every 5 class levels she
       possesses.</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Investigator Talent
+    - Ninja Trick
+  actions:
+    - _id: BIXgmUFXNZ4PNDcY
+      name: Use
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+  uses:
+    per: day
+    maxFormula: 1+ floor(@class.level / 5)
   tag: classFeat_hardToFool
   subType: classFeat
   associations:
     classes:
       - Rogue
+      - Slayer
+      - Investigator
+      - Ninja
   abilityType: ex
 _key: '!items!1VcnvSG8gegTdC6z'
 

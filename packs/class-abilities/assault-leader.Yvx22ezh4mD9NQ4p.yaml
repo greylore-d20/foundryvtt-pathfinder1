@@ -5,18 +5,34 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>Once per day, when the rogue misses with an attack on a flanked
+      <p>Once per day, when the character misses with an attack on a flanked
       opponent, she can designate a single ally who is also flanking the target
       that her attack missed. That ally can make a single melee attack against
       the opponent as an immediate action.</p>
   tags:
     - Rogue Talent
+    - Investigator Talent
+    - Ninja Trick
+  actions:
+    - _id: 0DXZuF1hYXRrC04f
+      name: Use
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+  uses:
+    per: charges
+    maxFormula: '1'
   tag: classFeat_assaultLeader
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Investigator
+      - Ninja
   abilityType: ex
 _key: '!items!Yvx22ezh4mD9NQ4p'
 

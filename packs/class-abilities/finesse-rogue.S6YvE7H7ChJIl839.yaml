@@ -5,16 +5,29 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>A rogue that selects this talent gains
+      <p>A character that selects this talent gains
       @Compendium[pf1.feats.vWiTqHC4Y3Xn1Pme]{Weapon Finesse} as a bonus
       feat.</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
+  changes:
+    - _id: gett7cs3
+      formula: '1'
+      subTarget: bonusFeats
+      modifier: untyped
+  links:
+    supplements:
+      - name: Weapon Finesse
+        uuid: Compendium.pf1.feats.Item.vWiTqHC4Y3Xn1Pme
   tag: classFeat_finesseRogue
   subType: classFeat
   associations:
     classes:
       - Rogue
+      - Slayer
+      - Ninja
   abilityType: ex
 _key: '!items!S6YvE7H7ChJIl839'
 

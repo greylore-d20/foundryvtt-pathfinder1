@@ -5,17 +5,33 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>A rogue with this talent gains
+      <p>A character with this talent gains
       @Compendium[pf1.feats.BJBC4lbo7xGWPsKJ]{Exotic Weapon Proficiency}
       (firearms).</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Investigator Talent
+    - Ninja Trick
+  changes:
+    - _id: WC88NB4F
+      formula: '1'
+      subTarget: bonusFeats
+      modifier: untyped
+      priority: null
+  links:
+    supplements:
+      - name: Exotic Weapon Proficiency
+        uuid: Compendium.pf1.feats.Item.BJBC4lbo7xGWPsKJ
   tag: classFeat_firearmTraining
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+      - Investigator
+      - Ninja
   abilityType: ex
 _key: '!items!QjWHNYX9az2Aydxz'
 

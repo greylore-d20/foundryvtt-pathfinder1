@@ -5,18 +5,33 @@ img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
 system:
   description:
     value: >-
-      <p>A rogue who selects this talent gains
+      <p>A character who selects this talent gains
       @Compendium[pf1.feats.2Gd0V8lDe6BkG7nl]{Blinding Critical} as a bonus
-      feat, even if she doesn’t meet the prerequisites. The rogue must have the
-      obscuring blow rogue talent and be at least 15th level before choosing
-      this talent.</p>
+      feat, even if she doesn’t meet the prerequisites. The character must have
+      the @UUID[Compendium.pf1.class-abilities.Item.yBOFy9fcg6WOqwAB]{obscuring
+      blow} talent and be at least 15th level before choosing this talent.</p>
   tags:
     - Rogue Talent, Advanced
+    - Slayer Talent, Advanced
+    - Ninja Trick, Master
+  changes:
+    - _id: Y2SSUvrk
+      formula: '1'
+      subTarget: bonusFeats
+      modifier: untyped
+  links:
+    supplements:
+      - name: Blinding Critical
+        uuid: Compendium.pf1.feats.Item.2Gd0V8lDe6BkG7nl
   tag: classFeat_blindingStrike
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+  source:
+    id: PZO9466
+    pages: '9'
 _key: '!items!t6KPQVoBSt3gbe5T'
 

@@ -5,20 +5,26 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>A rogue that selects this talent gains a bonus combat feat (see
-      Feats).</p>
+      <p>A character that selects this talent/trick gains a bonus combat
+      feat.</p>
   tags:
     - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
   changes:
     - _id: caqlmh1h
       formula: '1'
       subTarget: bonusFeats
       modifier: untyped
+      priority: null
   tag: classFeat_combatTrick
   subType: classFeat
   associations:
     classes:
       - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
   abilityType: ex
 _key: '!items!9xyzev79oryBTbbu'
 

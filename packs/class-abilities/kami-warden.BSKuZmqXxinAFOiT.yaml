@@ -5,26 +5,35 @@ img: systems/pf1/icons/items/weapons/kunai.png
 system:
   description:
     value: >-
-      <p>Ninjas can act as bodyguards as well as assassins or spies; some
+      <p>Characters can act as bodyguards as well as assassins or spies; some
       mystically emulate the relationship between kami and their wards when
-      protecting their charges. A ninja with this trick gains
-      @UUID[Compendium.pf1.feats.Item.JSPFo2fBkNlrtVqi]{Bodyguard} and <em>In
-      Harm’s Way</em> as bonus feats, ignoring their prerequisites. When using
-      In Harm’s Way to intercept an attack, the ninja can spend 1 ki point to
-      gains DR 10/cold iron and resistance 10 to acid, electricity, and fire for
-      that attack.</p>
+      protecting their charges. A character with this trick gains
+      @UUID[Compendium.pf1.feats.Item.JSPFo2fBkNlrtVqi]{Bodyguard} and
+      @UUID[Compendium.pf1.feats.Item.nW2GUYlGhZ2bmgdz]{In Harm’s Way} as bonus
+      feats, ignoring their prerequisites. When using In Harm’s Way to intercept
+      an attack, the character can spend 1 ki point to gains DR 10/cold iron and
+      resistance 10 to acid, electricity, and fire for that attack.</p>
   tags:
-    - Master Trick
+    - Ninja Trick, Master
+    - Rogue Talent, Advanced
   changes:
     - _id: xPsMZ9xk
       formula: '2'
       subTarget: bonusFeats
       modifier: untyped
+      priority: null
+  links:
+    supplements:
+      - name: In Harm's Way
+        uuid: Compendium.pf-content.pf-feats.Item.8gAQC3rzEZI8lHRY
+      - name: Bodyguard
+        uuid: Compendium.pf1.feats.Item.JSPFo2fBkNlrtVqi
   tag: classFeat_kamiWarden
   subType: classFeat
   associations:
     classes:
       - Ninja
+      - Rogue
   abilityType: su
   source:
     id: PZO9496

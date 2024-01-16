@@ -5,15 +5,20 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>Once per day as an immediate action when the rogue is hit, the rogue
-      can create a single shadow duplicate of herself, as per
+      <p>Once per day as an immediate action when the character is hit, the
+      character can create a single shadow duplicate of herself, as per
       @Compendium[pf1.spells.4jsss37x0pplib8f]{Mirror Image}. The GM randomly
-      determines whether the attack hit the rogue or the shadow duplicate. The
-      shadow duplicate lasts for a number of rounds equal to the rogue’s level,
-      or until the shadow duplicate is dispelled or destroyed. This ability does
-      not stack with the mirror image spell. The caster level for this ability
-      is equal to the rogue’s level. A rogue can use this ability one additional
-      time per day for every 5 rogue levels she has.</p>
+      determines whether the attack hit the character or the shadow duplicate.
+      The shadow duplicate lasts for a number of rounds equal to the character's
+      class level, or until the shadow duplicate is dispelled or destroyed. This
+      ability does not stack with the mirror image spell. The caster level for
+      this ability is equal to the character's class level. A character can use
+      this ability one additional time per day for every 5 class levels she
+      has.</p>
+  tags:
+    - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
   actions:
     - _id: dq9oqddg2ii474v3
       name: Use
@@ -28,16 +33,29 @@ system:
         value: self
       range:
         units: personal
-      actionType: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        critRange: null
+        critMult: null
+      powerAttack:
+        damageBonus: null
+        critMultiplier: null
+      ammoType: none
   uses:
     per: day
-    maxFormula: floor(@classes.rogue.level / 5) + 1
+    maxFormula: 1 + floor(@class.level / 5)
   tag: classFeat_shadowDuplicate
   subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
+      - Slayer
+      - Ninja
   abilityType: sp
+  source:
+    id: PZO9466
+    pages: '8'
 _key: '!items!xbLuFZKTgsk61SRq'
 

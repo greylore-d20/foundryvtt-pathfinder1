@@ -112,7 +112,7 @@ export class LookupTerm extends FunctionTerm {
   }
 
   async _evaluate({ minimize = false, maximize = false } = {}) {
-    const rollOpts = { minimize, maximize, async: true };
+    const rollOpts = { minimize, maximize };
     const evalOffset = async (i) => {
       const term = this.terms[i];
       if (!term._evaluated) await term.evaluate(rollOpts);

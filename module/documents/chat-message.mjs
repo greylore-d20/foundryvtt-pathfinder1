@@ -110,7 +110,7 @@ export const customRolls = function (message, speaker, rollData) {
       case "H":
       case "HEAL": {
         rollData = rollData ?? actor?.getRollData() ?? {};
-        const roll = new Roll(value, rollData).evaluate({ async: true });
+        const roll = new Roll(value, rollData).evaluate();
 
         return roll.then(async (roll) => {
           const total = roll.total;

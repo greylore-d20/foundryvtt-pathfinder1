@@ -92,7 +92,7 @@ export class SizeReachTerm extends FunctionTerm {
 
   /** @inheritDoc */
   async _evaluate({ minimize = false, maximize = false } = {}) {
-    const rollOpts = { minimize, maximize, async: true };
+    const rollOpts = { minimize, maximize };
 
     const terms = [];
     for (let term of this.terms) {

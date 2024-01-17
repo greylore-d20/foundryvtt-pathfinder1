@@ -282,7 +282,7 @@ export class D20RollPF extends RollPF {
    * @returns {Promise<ChatMessage | object>} The created ChatMessage document, or the object of data that would be used to create one
    */
   async toMessage(messageData = {}, options = {}) {
-    if (!this._evaluated) await this.evaluate({ async: true });
+    if (!this._evaluated) await this.evaluate();
 
     const chatTemplate = options.chatTemplate || this.constructor.CHAT_TEMPLATE;
     const chatTemplateData = foundry.utils.mergeObject(

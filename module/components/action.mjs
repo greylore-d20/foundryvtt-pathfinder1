@@ -966,7 +966,7 @@ export class ItemAction {
       {
         critical: this.critRange,
       }
-    ).evaluate({ async: true });
+    ).evaluate();
     return roll;
   }
 
@@ -1160,9 +1160,7 @@ export class ItemAction {
         const roll = await new DamageRoll(formula, rollData, {
           damageType: part.damageType,
           type: part.type,
-        }).evaluate({
-          async: true,
-        });
+        }).evaluate();
         // Add to result
         rolls.push(roll);
       } catch (err) {

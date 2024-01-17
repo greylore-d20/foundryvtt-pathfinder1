@@ -8,7 +8,7 @@ import { D20RollPF } from "../dice/d20roll.mjs";
 async function rollD20(formula, options = {}) {
   const { rollData = {}, ...rollOptions } = options;
   const roll = new D20RollPF(formula, rollData ?? {}, rollOptions);
-  await roll.evaluate({ async: true });
+  await roll.evaluate();
   return roll;
 }
 

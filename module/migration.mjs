@@ -1092,10 +1092,10 @@ const _migrateActorSpeed = function (ent, updateData) {
 
 const _migrateActorSpellbookSlots = function (ent, updateData) {
   for (const spellbookSlot of Object.keys(
-    foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {}
+    foundry.utils.getProperty(ent.system, "attributes.spells.spellbooks") || {}
   )) {
     if (
-      foundry.utils.getProperty(ent, `system.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null
+      foundry.utils.getProperty(ent.system, `attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null
     ) {
       updateData[`system.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
     }
@@ -1177,12 +1177,12 @@ const _migrateActorBaseStats = function (ent, updateData) {
 };
 
 const _migrateUnusedActorCreatureType = function (ent, updateData) {
-  const type = foundry.utils.getProperty(ent, "system.attributes.creatureType");
+  const type = foundry.utils.getProperty(ent.system, "attributes.creatureType");
   if (type != undefined) updateData["system.attributes.-=creatureType"] = null;
 };
 
 const _migrateActorSpellbookDCFormula = function (ent, updateData) {
-  const spellbooks = Object.keys(foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.keys(foundry.utils.getProperty(ent.system, "attributes.spells.spellbooks") || {});
 
   for (const k of spellbooks) {
     const key = `system.attributes.spells.spellbooks.${k}.baseDCFormula`;
@@ -1192,7 +1192,7 @@ const _migrateActorSpellbookDCFormula = function (ent, updateData) {
 };
 
 const _migrateActorSpellbookName = function (ent, updateData) {
-  const spellbooks = Object.entries(foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.entries(foundry.utils.getProperty(ent.system, "attributes.spells.spellbooks") || {});
   for (const [bookId, book] of spellbooks) {
     if (book.altName !== undefined) {
       const key = `system.attributes.spells.spellbooks.${bookId}`;
@@ -1203,7 +1203,7 @@ const _migrateActorSpellbookName = function (ent, updateData) {
 };
 
 const _migrateActorSpellbookCL = function (ent, updateData) {
-  const spellbooks = Object.keys(foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.keys(foundry.utils.getProperty(ent.system, "attributes.spells.spellbooks") || {});
 
   for (const k of spellbooks) {
     const key = `system.attributes.spells.spellbooks.${k}.cl`;
@@ -1218,7 +1218,7 @@ const _migrateActorSpellbookCL = function (ent, updateData) {
 };
 
 const _migrateActorConcentration = function (ent, updateData) {
-  const spellbooks = Object.keys(foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.keys(foundry.utils.getProperty(ent.system, "attributes.spells.spellbooks") || {});
   for (const k of spellbooks) {
     // Delete unused .concentration from old actors
     const key = `system.attributes.spells.spellbooks.${k}`;
@@ -1237,33 +1237,33 @@ const _migrateActorConcentration = function (ent, updateData) {
 
 const _migrateActorHPAbility = function (ent, updateData) {
   // Set HP ability
-  if (foundry.utils.getProperty(ent, "system.attributes.hpAbility") === undefined) {
+  if (foundry.utils.getProperty(ent.system, "attributes.hpAbility") === undefined) {
     updateData["system.attributes.hpAbility"] = "con";
   }
 
   // Set Fortitude save ability
-  if (foundry.utils.getProperty(ent, "system.attributes.savingThrows.fort.ability") === undefined) {
+  if (foundry.utils.getProperty(ent.system, "attributes.savingThrows.fort.ability") === undefined) {
     updateData["system.attributes.savingThrows.fort.ability"] = "con";
   }
 
   // Set Reflex save ability
-  if (foundry.utils.getProperty(ent, "system.attributes.savingThrows.ref.ability") === undefined) {
+  if (foundry.utils.getProperty(ent.system, "attributes.savingThrows.ref.ability") === undefined) {
     updateData["system.attributes.savingThrows.ref.ability"] = "dex";
   }
 
   // Set Will save ability
-  if (foundry.utils.getProperty(ent, "system.attributes.savingThrows.will.ability") === undefined) {
+  if (foundry.utils.getProperty(ent.system, "attributes.savingThrows.will.ability") === undefined) {
     updateData["system.attributes.savingThrows.will.ability"] = "wis";
   }
 };
 
 const _migrateItemArrayTypes = function (ent, updateData) {
-  const conditionals = foundry.utils.getProperty(ent, "system.conditionals");
+  const conditionals = ent.system.conditionals;
   if (conditionals != null && !(conditionals instanceof Array)) {
     updateData["system.conditionals"] = [];
   }
 
-  const contextNotes = foundry.utils.getProperty(ent, "system.contextNotes");
+  const contextNotes = ent.system.contextNotes;
   if (contextNotes != null && !(contextNotes instanceof Array)) {
     if (contextNotes instanceof Object) updateData["system.contextNotes"] = Object.values(contextNotes);
     else updateData["system.contextNotes"] = [];
@@ -1310,7 +1310,7 @@ const _migrateSpellDivineFocus = function (item, updateData) {
 const _migrateClassDynamics = function (ent, updateData) {
   if (ent.type !== "class") return;
 
-  const bab = foundry.utils.getProperty(ent, "system.bab");
+  const bab = ent.system.bab;
   if (typeof bab === "number") updateData["system.bab"] = "low";
 
   const stKeys = ["system.savingThrows.fort.value", "system.savingThrows.ref.value", "system.savingThrows.will.value"];
@@ -1349,7 +1349,7 @@ const _migrateWeaponCategories = function (ent, updateData) {
   if (ent.type !== "weapon") return;
 
   // Change category
-  const type = foundry.utils.getProperty(ent, "system.weaponType");
+  const type = ent.system.weaponType;
   if (type === "misc") {
     updateData["system.weaponType"] = "misc";
     updateData["system.weaponSubtype"] = "other";
@@ -1359,12 +1359,12 @@ const _migrateWeaponCategories = function (ent, updateData) {
   }
 
   const changeProp = ["simple", "martial", "exotic"].includes(type);
-  if (changeProp && foundry.utils.getProperty(ent, "system.weaponSubtype") == null) {
+  if (changeProp && ent.system.weaponSubtype == null) {
     updateData["system.weaponSubtype"] = "1h";
   }
 
   // Change light property
-  const lgt = foundry.utils.getProperty(ent, "system.properties.lgt");
+  const lgt = foundry.utils.getProperty(ent.system, "properties.lgt");
   if (lgt != null) {
     updateData["system.properties.-=lgt"] = null;
     if (lgt === true && changeProp) {
@@ -1373,7 +1373,7 @@ const _migrateWeaponCategories = function (ent, updateData) {
   }
 
   // Change two-handed property
-  const two = foundry.utils.getProperty(ent, "system.properties.two");
+  const two = foundry.utils.getProperty(ent.system, "properties.two");
   if (two != null) {
     updateData["system.properties.-=two"] = null;
     if (two === true && changeProp) {
@@ -1382,7 +1382,7 @@ const _migrateWeaponCategories = function (ent, updateData) {
   }
 
   // Change melee property
-  const melee = foundry.utils.getProperty(ent, "system.weaponData.isMelee");
+  const melee = foundry.utils.getProperty(ent.system, "weaponData.isMelee");
   if (melee != null) {
     updateData["system.weaponData.-=isMelee"] = null;
     if (melee === false && changeProp) {
@@ -1394,7 +1394,7 @@ const _migrateWeaponCategories = function (ent, updateData) {
 const _migrateArmorCategories = function (ent, updateData) {
   if (ent.type !== "equipment") return;
 
-  const oldType = foundry.utils.getProperty(ent, "system.armor.type");
+  const oldType = foundry.utils.getProperty(ent.system, "armor.type");
   if (oldType == null) return;
 
   if (oldType === "clothing") {
@@ -1466,7 +1466,7 @@ const _migrateEquipmentCategories = (item, updateData) => {
 const _migrateItemSize = function (ent, updateData) {
   // Convert custom sizing in weapons
   if (ent.type === "weapon") {
-    const wdSize = foundry.utils.getProperty(ent, "system.weaponData.size");
+    const wdSize = foundry.utils.getProperty(ent.system, "weaponData.size");
     if (wdSize) {
       // Move old
       updateData["system.size"] = wdSize;
@@ -1475,7 +1475,7 @@ const _migrateItemSize = function (ent, updateData) {
     }
   }
 
-  const oldSize = foundry.utils.getProperty(ent, "system.size");
+  const oldSize = ent.system.size;
   if (["spell", "class", "buff", "feat"].includes(ent.type)) {
     // Remove size from abstract items
     if (oldSize !== undefined) {
@@ -1501,8 +1501,8 @@ const _migrateItemFeatAbilityTypes = function (itemData, updateData) {
 };
 
 const _migrateClassLevels = function (ent, updateData) {
-  const level = foundry.utils.getProperty(ent, "system.levels");
-  if (typeof level === "number" && foundry.utils.getProperty(ent, "system.level") == null) {
+  const level = ent.system.levels;
+  if (typeof level === "number" && ent.system.level == null) {
     updateData["system.level"] = level;
     updateData["system.-=levels"] = null;
   }
@@ -1510,10 +1510,10 @@ const _migrateClassLevels = function (ent, updateData) {
 
 const _migrateSavingThrowTypes = function (ent, updateData) {
   if (
-    foundry.utils.getProperty(ent, "system.save.type") == null &&
-    typeof foundry.utils.getProperty(ent, "system.save.description") === "string"
+    foundry.utils.getProperty(ent.system, "save.type") == null &&
+    typeof foundry.utils.getProperty(ent.system, "save.description") === "string"
   ) {
-    const desc = foundry.utils.getProperty(ent, "system.save.description");
+    const desc = foundry.utils.getProperty(ent.system, "save.description");
     if (desc.match(/REF/i)) updateData["system.save.type"] = "ref";
     else if (desc.match(/FORT/i)) updateData["system.save.type"] = "fort";
     else if (desc.match(/WILL/i)) updateData["system.save.type"] = "will";
@@ -1522,7 +1522,7 @@ const _migrateSavingThrowTypes = function (ent, updateData) {
 
 const _migrateCR = function (ent, updateData) {
   // Migrate CR offset
-  const crOffset = foundry.utils.getProperty(ent, "system.crOffset");
+  const crOffset = ent.system.crOffset;
   if (typeof crOffset === "number") {
     updateData["system.crOffset"] = crOffset.toString();
   }
@@ -1612,7 +1612,7 @@ const _migrateItemChangeFlags = (item, updateData) => {
 const _migrateEquipmentSize = function (ent, updateData) {
   if (ent.type !== "equipment") return;
 
-  const size = foundry.utils.getProperty(ent, "system.size");
+  const size = ent.system.size;
   if (!size) {
     updateData["system.size"] = "med";
   }
@@ -1621,8 +1621,8 @@ const _migrateEquipmentSize = function (ent, updateData) {
 // Migrate .weight number to .weight.value
 // Migrate .baseWeight that was briefly introduced in 0.81
 const _migrateItemWeight = function (ent, updateData) {
-  const baseWeight = foundry.utils.getProperty(ent, "system.baseWeight"),
-    weight = foundry.utils.getProperty(ent, "system.weight");
+  const baseWeight = ent.system.baseWeight,
+    weight = ent.system.weight;
 
   // Skip items of inappropriate type
   if (!game.system.template.Item[ent.type].templates.includes("physicalItem")) {
@@ -1671,12 +1671,12 @@ const _migrateItemHealth = function (item, updateData) {
 const _migrateSpellCosts = function (ent, updateData) {
   if (ent.type !== "spell") return;
 
-  const spellPointCost = foundry.utils.getProperty(ent, "system.spellPoints.cost");
+  const spellPointCost = foundry.utils.getProperty(ent.system, "spellPoints.cost");
   if (spellPointCost == null) {
     updateData["system.spellPoints.cost"] = "1 + @sl";
   }
 
-  const slotCost = foundry.utils.getProperty(ent, "system.slotCost");
+  const slotCost = ent.system.slotCost;
   if (slotCost == null) {
     updateData["system.slotCost"] = 1;
   }
@@ -1691,7 +1691,7 @@ const _migrateSpellCosts = function (ent, updateData) {
 };
 
 const _migrateLootEquip = function (ent, updateData) {
-  if (ent.type === "loot" && !foundry.utils.hasProperty(ent, "system.equipped")) {
+  if (ent.type === "loot" && !ent.system.equipped) {
     updateData["system.equipped"] = false;
   }
 };
@@ -1708,7 +1708,7 @@ const _migrateUnchainedActionEconomy = (action, item) => {
 const _migrateItemLinks = function (ent, updateData) {
   if (
     ["attack", "consumable", "equipment"].includes(ent.type) &&
-    !foundry.utils.hasProperty(ent, "system.links.charges")
+    !foundry.utils.hasProperty(ent.system, "links.charges")
   ) {
     updateData["system.links.charges"] = [];
   }
@@ -2132,7 +2132,7 @@ const _migrateActionPrimaryAttack = function (action, itemData) {
 
 const _migrateActorCR = function (ent, updateData) {
   // Migrate base CR
-  const cr = foundry.utils.getProperty(ent, "system.details.cr");
+  const cr = foundry.utils.getProperty(ent.system, "details.cr");
   if (typeof cr === "number") {
     updateData["system.details.cr.base"] = cr;
   } else if (cr == null) {
@@ -2140,24 +2140,24 @@ const _migrateActorCR = function (ent, updateData) {
   }
 
   // Remove derived data if present
-  if (foundry.utils.getProperty(ent, "system.details.cr.total") !== undefined) {
+  if (foundry.utils.getProperty(ent.system, "details.cr.total") !== undefined) {
     updateData["system.details.cr.-=total"] = null;
   }
 };
 
 const _migrateAttackAbility = function (ent, updateData) {
-  const cmbAbl = foundry.utils.getProperty(ent, "system.attributes.cmbAbility");
+  const cmbAbl = foundry.utils.getProperty(ent.system, "attributes.cmbAbility");
   if (cmbAbl === undefined) updateData["system.attributes.cmbAbility"] = "str";
 
-  const meleeAbl = foundry.utils.getProperty(ent, "system.attributes.attack.meleeAbility");
+  const meleeAbl = foundry.utils.getProperty(ent.system, "attributes.attack.meleeAbility");
   if (meleeAbl === undefined) updateData["system.attributes.attack.meleeAbility"] = "str";
 
-  const rangedAbl = foundry.utils.getProperty(ent, "system.attributes.attack.rangedAbility");
+  const rangedAbl = foundry.utils.getProperty(ent.system, "attributes.attack.rangedAbility");
   if (rangedAbl === undefined) updateData["system.attributes.attack.rangedAbility"] = "dex";
 };
 
 const _migrateActorSpellbookUsage = function (ent, updateData) {
-  const spellbookUsage = foundry.utils.getProperty(ent, "system.attributes.spells.usedSpellbooks");
+  const spellbookUsage = foundry.utils.getProperty(ent.system, "attributes.spells.usedSpellbooks");
   if (spellbookUsage !== undefined) {
     updateData["system.attributes.spells.-=usedSpellbooks"] = null;
   }
@@ -2165,8 +2165,8 @@ const _migrateActorSpellbookUsage = function (ent, updateData) {
 
 const _migrateActorNullValues = function (ent, updateData) {
   // Prepare test data
-  const entries = { "system.attributes.energyDrain": foundry.utils.getProperty(ent, "system.attributes.energyDrain") };
-  for (const [k, a] of Object.entries(foundry.utils.getProperty(ent, "system.abilities") || {})) {
+  const entries = { "system.attributes.energyDrain": foundry.utils.getProperty(ent.system, "attributes.energyDrain") };
+  for (const [k, a] of Object.entries(ent.system.abilities || {})) {
     entries[`system.abilities.${k}.damage`] = a.damage;
     entries[`system.abilities.${k}.drain`] = a.drain;
     entries[`system.abilities.${k}.penalty`] = a.penalty;
@@ -2181,7 +2181,7 @@ const _migrateActorNullValues = function (ent, updateData) {
 };
 
 const _migrateActorSpellbookDomainSlots = function (ent, updateData) {
-  const spellbooks = foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {};
+  const spellbooks = foundry.utils.getProperty(ent.system, "attributes.spells.spellbooks") || {};
 
   for (const [k, b] of Object.entries(spellbooks)) {
     if (b.domainSlotValue !== undefined) continue;
@@ -2191,7 +2191,7 @@ const _migrateActorSpellbookDomainSlots = function (ent, updateData) {
 };
 
 const _migrateActorStatures = function (ent, updateData) {
-  const stature = foundry.utils.getProperty(ent, "system.traits.stature");
+  const stature = foundry.utils.getProperty(ent.system, "traits.stature");
 
   if (stature === undefined) {
     updateData["system.traits.stature"] = "tall";
@@ -2220,20 +2220,20 @@ const _migrateActorProficiencies = (actorData, updateData, { actor = null } = {}
 };
 
 const _migrateActorDefenseAbility = function (ent, updateData) {
-  const normalACAbl = foundry.utils.getProperty(ent, "system.attributes.ac.normal.ability");
+  const normalACAbl = foundry.utils.getProperty(ent.system, "attributes.ac.normal.ability");
   if (normalACAbl === undefined) updateData["system.attributes.ac.normal.ability"] = "dex";
-  const touchACAbl = foundry.utils.getProperty(ent, "system.attributes.ac.touch.ability");
+  const touchACAbl = foundry.utils.getProperty(ent.system, "attributes.ac.touch.ability");
   if (touchACAbl === undefined) updateData["system.attributes.ac.touch.ability"] = "dex";
 
   // CMD
-  const cmdDexAbl = foundry.utils.getProperty(ent, "system.attributes.cmd.dexAbility");
+  const cmdDexAbl = foundry.utils.getProperty(ent.system, "attributes.cmd.dexAbility");
   if (cmdDexAbl === undefined) updateData["system.attributes.cmd.dexAbility"] = "dex";
-  const cmdStrAbl = foundry.utils.getProperty(ent, "system.attributes.cmd.strAbility");
+  const cmdStrAbl = foundry.utils.getProperty(ent.system, "attributes.cmd.strAbility");
   if (cmdStrAbl === undefined) updateData["system.attributes.cmd.strAbility"] = "str";
 };
 
 const _migrateActorInitAbility = function (ent, updateData) {
-  const abl = foundry.utils.getProperty(ent, "system.attributes.init.ability");
+  const abl = foundry.utils.getProperty(ent.system, "attributes.init.ability");
 
   if (abl === undefined) {
     updateData["system.attributes.init.ability"] = "dex";
@@ -2241,14 +2241,14 @@ const _migrateActorInitAbility = function (ent, updateData) {
 };
 
 const _migrateActorCMBRevamp = function (ent, updateData) {
-  if (foundry.utils.getProperty(ent, "system.attributes.cmb.total") !== undefined) {
+  if (foundry.utils.getProperty(ent.system, "attributes.cmb.total") !== undefined) {
     updateData["system.attributes.cmb.-=total"] = null;
   }
 };
 
 const _migrateActorChangeRevamp = function (ent, updateData) {
   // Skills
-  Object.keys(foundry.utils.getProperty(ent, "system.skills") ?? {}).forEach((s) => {
+  Object.keys(ent.system.skills ?? {}).forEach((s) => {
     const path = `system.skills.${s}.`;
     if (foundry.utils.getProperty(ent, path + "changeBonus") !== undefined) {
       updateData[path + "-=changeBonus"] = null;
@@ -2306,7 +2306,7 @@ const _migrateActorInvaliddSkills = (actor, updateData) => {
  * @param updateData
  */
 const _migrateActorSkillRanks = function (ent, updateData) {
-  const skills = foundry.utils.getProperty(ent, "system.skills");
+  const skills = ent.system.skills;
   if (!skills) return; // Unlinked with no skill overrides of any kind
   for (const [key, sklData] of Object.entries(skills)) {
     if (!sklData) continue;
@@ -2319,16 +2319,16 @@ const _migrateActorSkillRanks = function (ent, updateData) {
 };
 
 const _migrateCarryBonus = function (ent, updateData) {
-  if (foundry.utils.getProperty(ent, "system.details.carryCapacity.bonus.user") === undefined) {
-    let bonus = foundry.utils.getProperty(ent, "system.abilities.str.carryBonus");
+  if (foundry.utils.getProperty(ent.system, "details.carryCapacity.bonus.user") === undefined) {
+    let bonus = foundry.utils.getProperty(ent.system, "abilities.str.carryBonus");
     if (bonus !== undefined) {
       bonus = bonus || 0;
       updateData["system.details.carryCapacity.bonus.user"] = bonus;
     }
     updateData["system.abilities.str.-=carryBonus"] = null;
   }
-  if (foundry.utils.getProperty(ent, "system.details.carryCapacity.multiplier.user") === undefined) {
-    let mult = foundry.utils.getProperty(ent, "system.abilities.str.carryMultiplier");
+  if (foundry.utils.getProperty(ent.system, "details.carryCapacity.multiplier.user") === undefined) {
+    let mult = foundry.utils.getProperty(ent.system, "abilities.str.carryMultiplier");
     if (mult !== undefined) {
       mult = mult || 1;
       updateData["system.details.carryCapacity.multiplier.user"] = mult - 1;

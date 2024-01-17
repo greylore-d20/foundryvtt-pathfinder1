@@ -173,8 +173,7 @@ export class CurrencyTransfer extends FormApplication {
       ? game.items.get(docDestId)
       : game.actors.get(docDestId);
 
-    let sourceActor = await fromUuid(data.actorUuid || "");
-    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+    const sourceActor = await fromUuid(data.actorUuid || "");
 
     if (data.currency && sourceActor) {
       return new CurrencyTransfer(

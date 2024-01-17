@@ -550,8 +550,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _onDropCurrency(event, data) {
-    let sourceActor = await fromUuid(data.actorUuid || "");
-    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+    const sourceActor = await fromUuid(data.actorUuid || "");
 
     return new CurrencyTransfer(
       { actor: sourceActor, container: data.containerId, alt: data.alt },
@@ -567,11 +566,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (!this.item.isOwner) return false;
 
     const { actorUuid, containerId } = data;
-    let sourceActor = await fromUuid(actorUuid || "");
-    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
-
     const item = await Item.implementation.fromDropData(data);
-    sourceActor ??= item.actor;
+    const sourceActor = (await fromUuid(actorUuid || "")) ?? item.actor;
 
     const itemData = item.toObject();
 

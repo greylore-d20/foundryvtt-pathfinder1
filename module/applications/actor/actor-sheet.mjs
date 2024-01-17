@@ -2946,8 +2946,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   async _onDropCurrency(event, data) {
-    let sourceActor = await fromUuid(data.actorUuid || "");
-    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+    const sourceActor = await fromUuid(data.actorUuid || "");
 
     const { currency, amount, containerId, alt } = data;
 
@@ -2966,8 +2965,7 @@ export class ActorSheetPF extends ActorSheet {
     const sourceItem = await Item.implementation.fromDropData(data);
     const itemData = sourceItem.toObject();
 
-    let sourceActor = await fromUuid(data.actorUuid || "");
-    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+    const sourceActor = await fromUuid(data.actorUuid || "");
 
     // Handle item sorting within the same actor
     const sameActor = sourceItem.actor === this.actor && !data.containerId;

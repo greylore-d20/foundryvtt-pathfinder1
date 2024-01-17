@@ -627,38 +627,38 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   if (!game.system.template.Actor.types.includes(actorData.type)) return {};
 
   const updateData = {};
-  const linked = token?.isLinked ?? true;
-  _migrateCharacterLevel(actorData, updateData, linked);
-  _migrateActorEncumbrance(actorData, updateData, linked);
+
+  _migrateCharacterLevel(actorData, updateData);
+  _migrateActorEncumbrance(actorData, updateData);
   _migrateActorNoteArrays(actorData, updateData);
-  _migrateActorSpeed(actorData, updateData, linked);
+  _migrateActorSpeed(actorData, updateData);
   _migrateActorSpellbookCL(actorData, updateData);
-  _migrateActorSpellbookSlots(actorData, updateData, linked);
+  _migrateActorSpellbookSlots(actorData, updateData);
   _migrateActorSpellbookKind(actorData, updateData, actor);
   _migrateActorConcentration(actorData, updateData);
   _migrateActorBaseStats(actorData, updateData);
   _migrateUnusedActorCreatureType(actorData, updateData);
-  _migrateActorSpellbookDCFormula(actorData, updateData, linked);
+  _migrateActorSpellbookDCFormula(actorData, updateData);
   _migrateActorHPAbility(actorData, updateData);
-  _migrateActorCR(actorData, updateData, linked);
-  _migrateAttackAbility(actorData, updateData, linked);
+  _migrateActorCR(actorData, updateData);
+  _migrateAttackAbility(actorData, updateData);
   _migrateActorDefenseAbility(actorData, updateData);
-  _migrateActorSpellbookUsage(actorData, updateData, linked);
+  _migrateActorSpellbookUsage(actorData, updateData);
   _migrateActorNullValues(actorData, updateData);
   _migrateActorSpellbookDomainSlots(actorData, updateData);
-  _migrateActorStatures(actorData, updateData, linked);
+  _migrateActorStatures(actorData, updateData);
   _migrateActorProficiencies(actorData, updateData, { actor });
-  _migrateActorInitAbility(actorData, updateData, linked);
-  _migrateActorChangeRevamp(actorData, updateData, linked);
-  _migrateActorCMBRevamp(actorData, updateData, linked);
-  _migrateCarryBonus(actorData, updateData, linked);
-  _migrateBuggedValues(actorData, updateData, linked);
-  _migrateSpellbookUsage(actorData, updateData, linked);
-  _migrateActorHP(actorData, updateData, linked);
-  _migrateActorSenses(actorData, updateData, linked, token);
-  _migrateActorInvaliddSkills(actorData, updateData, linked);
-  _migrateActorSkillRanks(actorData, updateData, linked);
-  _migrateActorSkillJournals(actorData, updateData, linked);
+  _migrateActorInitAbility(actorData, updateData);
+  _migrateActorChangeRevamp(actorData, updateData);
+  _migrateActorCMBRevamp(actorData, updateData);
+  _migrateCarryBonus(actorData, updateData);
+  _migrateBuggedValues(actorData, updateData);
+  _migrateSpellbookUsage(actorData, updateData);
+  _migrateActorHP(actorData, updateData);
+  _migrateActorSenses(actorData, updateData, token);
+  _migrateActorInvaliddSkills(actorData, updateData);
+  _migrateActorSkillRanks(actorData, updateData);
+  _migrateActorSkillJournals(actorData, updateData);
   _migrateActorSubskillData(actorData, updateData);
   _migrateActorUnusedData(actorData, updateData);
   _migrateActorDRandER(actorData, updateData);
@@ -995,9 +995,9 @@ export async function migrateSceneActors(scene, { state = null, tracker = null }
 
 /* -------------------------------------------- */
 
-const _migrateCharacterLevel = function (ent, updateData, linked) {
+const _migrateCharacterLevel = function (ent, updateData) {
   const arr = ["details.level.value", "details.level.min", "details.level.max", "details.mythicTier"];
-  if (!linked) return; // skip unlinked tokens
+
   for (const k of arr) {
     const value = foundry.utils.getProperty(ent.system, k);
     if (value == null) {
@@ -1006,7 +1006,7 @@ const _migrateCharacterLevel = function (ent, updateData, linked) {
   }
 };
 
-const _migrateActorEncumbrance = function (ent, updateData, linked) {
+const _migrateActorEncumbrance = function (ent, updateData) {
   const arr = {
     "system.attributes.encumbrance.level": "attributes.encumbrance.-=level",
     "system.attributes.encumbrance.levels.light": "attributes.encumbrance.levels.-=light",
@@ -1029,7 +1029,6 @@ const _migrateActorEncumbrance = function (ent, updateData, linked) {
  *
  * @param ent
  * @param updateData
- * @param linked
  */
 const _migrateFlagsArrayToObject = function (ent, updateData) {
   const flags = ent.system.flags;
@@ -1064,7 +1063,7 @@ const _migrateActorNoteArrays = function (ent, updateData) {
   }
 };
 
-const _migrateActorSpeed = function (ent, updateData, linked) {
+const _migrateActorSpeed = function (ent, updateData) {
   const arr = [
     "attributes.speed.land",
     "attributes.speed.climb",
@@ -1074,7 +1073,6 @@ const _migrateActorSpeed = function (ent, updateData, linked) {
   ];
   for (const k of arr) {
     let value = foundry.utils.getProperty(ent.system, k);
-    if (!linked && value === undefined) continue; // skip with unlinked tokens
     if (typeof value === "string") value = parseInt(value);
     if (typeof value === "number") {
       updateData[`system.${k}.base`] = value;
@@ -1092,7 +1090,7 @@ const _migrateActorSpeed = function (ent, updateData, linked) {
   }
 };
 
-const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
+const _migrateActorSpellbookSlots = function (ent, updateData) {
   for (const spellbookSlot of Object.keys(
     foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {}
   )) {
@@ -1109,7 +1107,6 @@ const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
       const max = foundry.utils.getProperty(ent, maxKey);
 
       if (base === undefined) {
-        if (!linked) continue; // skip with unlinked tokens
         if (typeof max === "number" && max > 0) {
           updateData[baseKey] = max.toString();
         }
@@ -1184,14 +1181,13 @@ const _migrateUnusedActorCreatureType = function (ent, updateData) {
   if (type != undefined) updateData["system.attributes.-=creatureType"] = null;
 };
 
-const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
+const _migrateActorSpellbookDCFormula = function (ent, updateData) {
   const spellbooks = Object.keys(foundry.utils.getProperty(ent, "system.attributes.spells.spellbooks") || {});
 
   for (const k of spellbooks) {
     const key = `system.attributes.spells.spellbooks.${k}.baseDCFormula`;
     const curFormula = foundry.utils.getProperty(ent, key);
-    if (!linked && curFormula === undefined) continue; // skip with unlinked tokens
-    if (curFormula == null) updateData[key] = "10 + @sl + @ablMod";
+    if (!curFormula) updateData[key] = "10 + @sl + @ablMod";
   }
 };
 
@@ -1467,7 +1463,7 @@ const _migrateEquipmentCategories = (item, updateData) => {
   }
 };
 
-const _migrateItemSize = function (ent, updateData, linked) {
+const _migrateItemSize = function (ent, updateData) {
   // Convert custom sizing in weapons
   if (ent.type === "weapon") {
     const wdSize = foundry.utils.getProperty(ent, "system.weaponData.size");
@@ -2134,10 +2130,9 @@ const _migrateActionPrimaryAttack = function (action, itemData) {
   }
 };
 
-const _migrateActorCR = function (ent, updateData, linked) {
+const _migrateActorCR = function (ent, updateData) {
   // Migrate base CR
   const cr = foundry.utils.getProperty(ent, "system.details.cr");
-  if (!linked && cr === undefined) return; // skip with unlinked tokens
   if (typeof cr === "number") {
     updateData["system.details.cr.base"] = cr;
   } else if (cr == null) {
@@ -2150,18 +2145,18 @@ const _migrateActorCR = function (ent, updateData, linked) {
   }
 };
 
-const _migrateAttackAbility = function (ent, updateData, linked) {
+const _migrateAttackAbility = function (ent, updateData) {
   const cmbAbl = foundry.utils.getProperty(ent, "system.attributes.cmbAbility");
-  if (cmbAbl === undefined && linked) updateData["system.attributes.cmbAbility"] = "str";
+  if (cmbAbl === undefined) updateData["system.attributes.cmbAbility"] = "str";
 
   const meleeAbl = foundry.utils.getProperty(ent, "system.attributes.attack.meleeAbility");
-  if (meleeAbl === undefined && linked) updateData["system.attributes.attack.meleeAbility"] = "str";
+  if (meleeAbl === undefined) updateData["system.attributes.attack.meleeAbility"] = "str";
 
   const rangedAbl = foundry.utils.getProperty(ent, "system.attributes.attack.rangedAbility");
-  if (rangedAbl === undefined && linked) updateData["system.attributes.attack.rangedAbility"] = "dex";
+  if (rangedAbl === undefined) updateData["system.attributes.attack.rangedAbility"] = "dex";
 };
 
-const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
+const _migrateActorSpellbookUsage = function (ent, updateData) {
   const spellbookUsage = foundry.utils.getProperty(ent, "system.attributes.spells.usedSpellbooks");
   if (spellbookUsage !== undefined) {
     updateData["system.attributes.spells.-=usedSpellbooks"] = null;
@@ -2245,7 +2240,7 @@ const _migrateActorInitAbility = function (ent, updateData) {
   }
 };
 
-const _migrateActorCMBRevamp = function (ent, updateData, linked) {
+const _migrateActorCMBRevamp = function (ent, updateData) {
   if (foundry.utils.getProperty(ent, "system.attributes.cmb.total") !== undefined) {
     updateData["system.attributes.cmb.-=total"] = null;
   }
@@ -2309,27 +2304,24 @@ const _migrateActorInvaliddSkills = (actor, updateData) => {
  *
  * @param ent
  * @param updateData
- * @param linked
  */
-const _migrateActorSkillRanks = function (ent, updateData, linked) {
+const _migrateActorSkillRanks = function (ent, updateData) {
   const skills = foundry.utils.getProperty(ent, "system.skills");
   if (!skills) return; // Unlinked with no skill overrides of any kind
   for (const [key, sklData] of Object.entries(skills)) {
     if (!sklData) continue;
-    if (!linked && sklData.rank === undefined) continue; // Unlinked with no override
     if (!Number.isFinite(sklData.rank)) updateData[`system.skills.${key}.rank`] = 0;
     for (const [subKey, subSklData] of Object.entries(sklData.subSkills ?? {})) {
       if (!subSklData) continue;
-      if (!linked && subSklData.rank === undefined) continue; // Unlinked with no override
       if (!Number.isFinite(subSklData.rank)) updateData[`system.skills.${key}.subSkills.${subKey}.rank`] = 0;
     }
   }
 };
 
-const _migrateCarryBonus = function (ent, updateData, linked) {
+const _migrateCarryBonus = function (ent, updateData) {
   if (foundry.utils.getProperty(ent, "system.details.carryCapacity.bonus.user") === undefined) {
     let bonus = foundry.utils.getProperty(ent, "system.abilities.str.carryBonus");
-    if (bonus !== undefined || linked) {
+    if (bonus !== undefined) {
       bonus = bonus || 0;
       updateData["system.details.carryCapacity.bonus.user"] = bonus;
     }
@@ -2337,7 +2329,7 @@ const _migrateCarryBonus = function (ent, updateData, linked) {
   }
   if (foundry.utils.getProperty(ent, "system.details.carryCapacity.multiplier.user") === undefined) {
     let mult = foundry.utils.getProperty(ent, "system.abilities.str.carryMultiplier");
-    if (mult !== undefined || linked) {
+    if (mult !== undefined) {
       mult = mult || 1;
       updateData["system.details.carryCapacity.multiplier.user"] = mult - 1;
     }
@@ -2345,7 +2337,7 @@ const _migrateCarryBonus = function (ent, updateData, linked) {
   }
 };
 
-const _migrateBuggedValues = function (ent, updateData, linked) {
+const _migrateBuggedValues = function (ent, updateData) {
   // Convert to integers
   const convertToInt = [
     "system.details.xp.value",
@@ -2367,7 +2359,7 @@ const _migrateBuggedValues = function (ent, updateData, linked) {
   }
 };
 
-const _migrateSpellbookUsage = function (ent, updateData, linked) {
+const _migrateSpellbookUsage = function (ent, updateData) {
   const usedSpellbooks = ent.items
     .filter((i) => i.type === "spell")
     .reduce((cur, i) => {
@@ -2385,7 +2377,7 @@ const _migrateSpellbookUsage = function (ent, updateData, linked) {
   }
 };
 
-const _migrateActorHP = function (ent, updateData, linked) {
+const _migrateActorHP = function (ent, updateData) {
   // Migrate HP, Wounds and Vigor values from absolutes to relatives, which is a change in 0.80.16
   for (const k of ["system.attributes.hp", "system.attributes.wounds", "system.attributes.vigor"]) {
     if (foundry.utils.getProperty(ent, `${k}.offset`) == null) {
@@ -2396,7 +2388,7 @@ const _migrateActorHP = function (ent, updateData, linked) {
   }
 };
 
-const _migrateActorSenses = function (ent, updateData, linked, token) {
+const _migrateActorSenses = function (ent, updateData, token) {
   const oldSenses = ent.system.traits?.senses;
   if (typeof oldSenses === "string") {
     const tokenData = token ?? ent.prototypeToken;
@@ -2427,7 +2419,7 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
   }
 };
 
-const _migrateActorSkillJournals = function (ent, updateData, linked) {
+const _migrateActorSkillJournals = function (ent, updateData) {
   const reOldJournalFormat = /^[a-zA-Z0-9]+$/;
   for (const [skillKey, sklData] of Object.entries(ent.system.skills ?? {})) {
     if (!sklData) continue;

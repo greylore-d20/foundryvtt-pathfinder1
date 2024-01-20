@@ -24,18 +24,13 @@ export class AttackDialog extends Application {
     };
 
     const isNaturalAttack = action.item.subType === "natural",
-      isPrimaryAttack = action.data.naturalAttack.primaryAttack !== false;
+      isPrimaryAttack = isNaturalAttack ? action.data.naturalAttack.primaryAttack !== false : true;
 
     this.flags = {
       "primary-attack": isPrimaryAttack,
       "cl-check": action.clCheck === true,
       "measure-template": true,
     };
-
-    let damageMult = this.rollData.action?.ability?.damageMult ?? 1;
-    if (isNaturalAttack && !isPrimaryAttack) {
-      damageMult = this.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
-    }
 
     this.attributes = {
       d20: this.rollData.d20 ?? "",
@@ -44,7 +39,7 @@ export class AttackDialog extends Application {
       "cl-offset": "0",
       "sl-offset": "0",
       rollMode: shared.rollMode || game.settings.get("core", "rollMode"),
-      "damage-ability-multiplier": damageMult,
+      "damage-ability-multiplier": this.damageMult,
       held: this.rollData.action?.held || this.rollData.item?.held || "normal",
     };
 
@@ -58,6 +53,17 @@ export class AttackDialog extends Application {
       resolve: null,
       reject: null,
     };
+  }
+
+  get damageMult() {
+    let damageMult = this.rollData.action?.ability?.damageMult ?? 1;
+
+    const isPrimaryAttack = this.flags["primary-attack"];
+    if (!isPrimaryAttack) {
+      damageMult = this.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+    }
+
+    return damageMult;
   }
 
   /** @type {pf1.components.ItemAction} */
@@ -202,30 +208,39 @@ export class AttackDialog extends Application {
     this.flags[elem.name] = elem.checked === true;
 
     // Add or remove haste, rapid-shot or manyshot attack
-    if (["haste-attack", "rapid-shot", "manyshot"].includes(elem.name)) {
-      if (elem.checked) {
-        const translationString = {
-          "haste-attack": "PF1.Haste",
-          "rapid-shot": "PF1.RapidShot",
-          manyshot: "PF1.Manyshot",
-        };
+    switch (elem.name) {
+      case "haste-attack":
+      case "rapid-shot":
+      case "manyshot": {
+        if (elem.checked) {
+          const translationString = {
+            "haste-attack": "PF1.Haste",
+            "rapid-shot": "PF1.RapidShot",
+            manyshot: "PF1.Manyshot",
+          };
 
-        // Correlate manyshot with the first attack, add the others at the end
-        const place = elem.name === "manyshot" ? 1 : this.attacks.length;
+          // Correlate manyshot with the first attack, add the others at the end
+          const place = elem.name === "manyshot" ? 1 : this.attacks.length;
 
-        this.attacks.splice(
-          place,
-          0,
-          foundry.utils.mergeObject(this.constructor.defaultAttack, {
-            id: elem.name,
-            label: game.i18n.localize(translationString[elem.name]),
-            attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
-          })
-        );
-        this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
-      } else {
-        this.attacks = this.attacks.filter((o) => o.id !== elem.name);
+          this.attacks.splice(
+            place,
+            0,
+            foundry.utils.mergeObject(this.constructor.defaultAttack, {
+              id: elem.name,
+              label: game.i18n.localize(translationString[elem.name]),
+              attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
+            })
+          );
+          this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
+        } else {
+          this.attacks = this.attacks.filter((o) => o.id !== elem.name);
+        }
+        break;
       }
+      case "primary-attack":
+        // Update damage mult to match primary/secondary default
+        this.attributes["damage-ability-multiplier"] = this.damageMult;
+        break;
     }
 
     this.render();

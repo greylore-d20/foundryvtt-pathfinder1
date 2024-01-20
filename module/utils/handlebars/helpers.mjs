@@ -82,9 +82,16 @@ export const registerHandlebarsHelpers = function () {
     // Normal damage parts
     handleParts(actionData.damage.parts);
 
+    const isNatural = action.item.subType === "natural";
+
     // Include ability score only if the string isn't too long yet
     const dmgAbl = actionData.ability.damage;
-    const dmgAblMod = Math.floor((actorData?.abilities[dmgAbl]?.mod ?? 0) * (actionData.ability.damageMult || 1));
+    const dmgAblBaseMod = actorData?.abilities[dmgAbl]?.mod ?? 0;
+    let dmgMult = actionData.ability.damageMult || 1;
+    if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
+      dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
+    }
+    const dmgAblMod = Math.floor(dmgAblBaseMod * dmgMult);
     if (dmgAblMod != 0) parts.push(dmgAblMod);
 
     // Include damage parts that don't happen on crits

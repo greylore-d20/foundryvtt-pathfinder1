@@ -27,6 +27,16 @@ export class ItemBasePF extends Item {
   }
 
   /**
+   * Fetch item name
+   *
+   * @param {boolean} [forcePlayerPerspective=false] - If true, return value players see.
+   * @returns {string}
+   */
+  getName(forcePlayerPerspective = false) {
+    return this.name;
+  }
+
+  /**
    * Is the item functional.
    *
    * @abstract

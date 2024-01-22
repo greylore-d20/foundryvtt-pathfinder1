@@ -246,6 +246,12 @@ export class ItemPhysicalPF extends ItemPF {
     return labels;
   }
 
+  /**
+   * @remarks
+   * Identified state is the only thing that can alter the result.
+   * @override
+   * @inheritDoc
+   */
   getName(forcePlayerPerspective = false) {
     if (game.user.isGM && forcePlayerPerspective) {
       if (this.system.identified === false) return this.system.unidentified?.name || this.name;

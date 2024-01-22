@@ -506,10 +506,6 @@ export class ItemPF extends ItemBasePF {
     return super.uuid;
   }
 
-  getName(forcePlayerPerspective = false) {
-    return this.name;
-  }
-
   testUserPermission(user, permission, { exact = false } = {}) {
     if (this.actor) return this.actor.testUserPermission(user, permission, { exact });
     if (this.parentItem) return this.parentItem.testUserPermission(user, permission, { exact });

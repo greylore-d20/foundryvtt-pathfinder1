@@ -2536,19 +2536,6 @@ const _Action_ConvertDamageType = function (damageTypeString) {
   return [];
 };
 
-/**
- * Filters out actions during migration.
- *
- * @param {object} action - The data of the action in question.
- * @returns {boolean} `true` to keep action, `false` to discard action.
- */
-export const filterItemActions = function (action) {
-  if (action.activation?.type) return true;
-  if (action.actionType) return true;
-
-  return false;
-};
-
 const _migrateContainerPrice = (item, updateData) => {
   if (item.type !== "container") return;
 

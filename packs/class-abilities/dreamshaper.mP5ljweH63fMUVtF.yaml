@@ -25,13 +25,11 @@ system:
         unchained:
           cost: 2
           type: action
-      actionType: ''
   uses:
     per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-    autoDeductChargesCost: ''
   tag: classFeat_dreamshaper
   subType: classFeat
   associations:

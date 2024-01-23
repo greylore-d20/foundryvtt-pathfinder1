@@ -21,12 +21,10 @@ system:
           type: action
       target:
         value: Creature touched
-      actionType: other
       touch: true
   uses:
     per: day
     maxFormula: 3 + @abilities.int.mod
-    autoDeductChargesCost: ''
   subType: classFeat
   associations:
     classes:

@@ -27,13 +27,11 @@ system:
         value: One weapon of 50 pieces of ammunition
       range:
         units: touch
-      actionType: ''
   uses:
     per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-    autoDeductChargesCost: ''
   tag: classFeat_crystalShard
   subType: classFeat
   associations:

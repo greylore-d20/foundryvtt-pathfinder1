@@ -32,10 +32,16 @@ system:
           type: attack
       duration:
         units: inst
+      target:
+        value: all creatures and objects
       range:
         value: '60'
         units: ft
+      measureTemplate:
+        type: cone
+        size: '60'
       actionType: rwak
+      attackBonus: '-2'
       damage:
         parts:
           - formula: sizeRoll(3, 8, @size)
@@ -47,12 +53,6 @@ system:
         attack: dex
         damage: str
         critRange: 19
-      target:
-        value: all creatures and objects
-      measureTemplate:
-        type: cone
-        size: '60'
-      attackBonus: '-2'
       ammoType: none
       area: 60-foot cone
   baseTypes:

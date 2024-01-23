@@ -29,13 +29,11 @@ system:
         value: 10-ft. radius burst
       range:
         units: personal
-      actionType: ''
   uses:
     per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-    autoDeductChargesCost: ''
   tag: classFeat_hellfire
   subType: classFeat
   associations:

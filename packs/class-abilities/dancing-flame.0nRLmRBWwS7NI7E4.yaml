@@ -26,7 +26,6 @@ system:
         unchained:
           cost: 2
           type: action
-      actionType: ''
     - _id: l3XCeCHmAOsmLbCX
       name: Alter Fire Spell
       img: icons/magic/fire/barrier-wall-explosion-orange.webp
@@ -34,11 +33,9 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      actionType: ''
   uses:
     per: day
     maxFormula: floor(@classes.wizard.level / 2)
-    autoDeductChargesCost: ''
   subType: classFeat
   associations:
     classes:

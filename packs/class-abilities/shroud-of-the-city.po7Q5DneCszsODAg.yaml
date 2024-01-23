@@ -32,13 +32,11 @@ system:
         value: self and one willing ally per level
       range:
         units: close
-      actionType: ''
   uses:
     per: day
     maxFormula: >-
       @classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level < 15 &&
       @classes.oracle.level > 6) ? 2 : 1)
-    autoDeductChargesCost: ''
   tag: classFeat_shroudOfTheCity
   subType: classFeat
   associations:

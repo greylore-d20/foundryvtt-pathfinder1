@@ -29,13 +29,11 @@ system:
       range:
         value: '20'
         units: spec
-      actionType: ''
   uses:
     per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-    autoDeductChargesCost: ''
   tag: classFeat_elementalBlast
   subType: classFeat
   associations:

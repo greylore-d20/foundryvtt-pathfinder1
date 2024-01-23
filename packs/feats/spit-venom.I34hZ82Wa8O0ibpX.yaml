@@ -41,10 +41,10 @@ system:
         dc: 10 + floor(@attributes.hd.total / 2) + @abilities.con.mod
         type: fort
         description: Fortitude negates
-      touch: true
-      ammoType: none
       effectNotes:
         - Target is blinded for [[1d6]] rounds.
+      touch: true
+      ammoType: none
   uses:
     per: charges
     maxFormula: 1 + floor(@attributes.hd.total / 3)

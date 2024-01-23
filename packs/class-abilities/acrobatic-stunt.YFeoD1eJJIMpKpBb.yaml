@@ -5,18 +5,19 @@ img: systems/pf1/icons/items/weapons/dagger.PNG
 system:
   description:
     value: >-
-      <p>Once per day, when flanked by at least two opponents, a character with this
-      talent can, as an immediate action when any of the threatening opponents
-      attacks her, attempt an Acrobatics check against the highest CMD of the
-      threatening creatures plus 2 per threatening creature beyond the second.
-      If successful, the character may take a 5-foot step in any direction, so long
-      as she remains within the reach of the attacker triggering the movement.
-      The character’s final position is used to determine whether the attacker
-      benefits from flanking. On a failed check, the character falls prone in her
-      original position and the attack resolves as normal (the opponent gains a
-      +4 bonus for attacking a prone target). A character may use this ability one
-      additional time per day for every 5 class levels she possesses. A rogue
-      must be trained in Acrobatics to select this talent.</p>
+      <p>Once per day, when flanked by at least two opponents, a character with
+      this talent can, as an immediate action when any of the threatening
+      opponents attacks her, attempt an Acrobatics check against the highest CMD
+      of the threatening creatures plus 2 per threatening creature beyond the
+      second. If successful, the character may take a 5-foot step in any
+      direction, so long as she remains within the reach of the attacker
+      triggering the movement. The character’s final position is used to
+      determine whether the attacker benefits from flanking. On a failed check,
+      the character falls prone in her original position and the attack resolves
+      as normal (the opponent gains a +4 bonus for attacking a prone target). A
+      character may use this ability one additional time per day for every 5
+      class levels she possesses. A rogue must be trained in Acrobatics to
+      select this talent.</p>
   tags:
     - Rogue Talent
     - Ninja Trick
@@ -28,7 +29,6 @@ system:
         type: immediate
         unchained:
           type: reaction
-      actionType: ''
   uses:
     per: day
     maxFormula: 1 + (floor(@classes.rogue.level / 5))

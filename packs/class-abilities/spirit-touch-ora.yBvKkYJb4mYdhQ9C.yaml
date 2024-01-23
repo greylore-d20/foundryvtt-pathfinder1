@@ -24,7 +24,6 @@ system:
         value: ''
       range:
         units: touch
-      actionType: ''
       touch: true
     - _id: HmTVlhZbSieMCFE6
       name: Ghost Touch + Undead Bane
@@ -40,12 +39,10 @@ system:
         units: touch
       uses:
         autoDeductChargesCost: '2'
-      actionType: ''
       touch: true
   uses:
     per: day
     maxFormula: 3 + @abilities.cha.mod
-    autoDeductChargesCost: ''
   subType: classFeat
   associations:
     classes:

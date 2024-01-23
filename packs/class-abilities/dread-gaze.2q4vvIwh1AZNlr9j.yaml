@@ -25,13 +25,11 @@ system:
       duration:
         value: floor(@classes.sorcerer.level / 2)
         units: round
-      actionType: ''
   uses:
     per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-    autoDeductChargesCost: ''
   tag: classFeat_dreadGaze
   subType: classFeat
   associations:

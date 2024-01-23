@@ -1,22 +1,22 @@
 _id: J0CtwXcv94eGCSaW
-name: Unholy Resilience
-type: feat
+_key: '!items!J0CtwXcv94eGCSaW'
 img: systems/pf1/icons/skills/yellow_08.jpg
+name: Unholy Resilience
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Antipaladin
+  changes:
+    - _id: p8o94rga
+      formula: max(0, @abilities.cha.mod)
+      modifier: untyped
+      subTarget: allSavingThrows
   description:
     value: >-
       <p>At 2nd level, an antipaladin gains a bonus equal to his Charisma bonus
       (if any) on all saving throws.</p>
-  changes:
-    - _id: p8o94rga
-      formula: max(0, @abilities.cha.mod)
-      subTarget: allSavingThrows
-      modifier: untyped
-  tag: classFeat_unholyResilience
   subType: classFeat
-  associations:
-    classes:
-      - Antipaladin
-  abilityType: su
-_key: '!items!J0CtwXcv94eGCSaW'
+  tag: classFeat_unholyResilience
+type: feat
 

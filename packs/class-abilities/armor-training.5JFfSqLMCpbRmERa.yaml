@@ -1,8 +1,25 @@
 _id: 5JFfSqLMCpbRmERa
-name: Armor Training
-type: feat
+_key: '!items!5JFfSqLMCpbRmERa'
 img: systems/pf1/icons/items/armor/field-plate.png
+name: Armor Training
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Fighter
+  changeFlags:
+    mediumArmorFullSpeed: true
+  changes:
+    - _id: pv0gclyb
+      formula: '-clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)'
+      modifier: untyped
+      priority: null
+      subTarget: acpA
+    - _id: e0zzcqzk
+      formula: clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)
+      modifier: untyped
+      priority: null
+      subTarget: mDexA
   description:
     value: >-
       <p>Starting at 3rd level, a fighter learns to be more maneuverable while
@@ -13,27 +30,10 @@ system:
       reduction of the armor check penalty and a +4 increase of the maximum
       <em>Dexterity</em> bonus allowed.</p><p>In addition, a fighter can also
       move at his normal speed while wearing medium armor.</p>
-  changes:
-    - _id: pv0gclyb
-      formula: '-clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)'
-      subTarget: acpA
-      modifier: untyped
-      priority: null
-    - _id: e0zzcqzk
-      formula: clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)
-      subTarget: mDexA
-      modifier: untyped
-      priority: null
-  changeFlags:
-    mediumArmorFullSpeed: true
-  tag: classFeat_armorTraining
-  subType: classFeat
-  associations:
-    classes:
-      - Fighter
-  abilityType: ex
   source:
     id: PZO1110
     pages: 55-56
-_key: '!items!5JFfSqLMCpbRmERa'
+  subType: classFeat
+  tag: classFeat_armorTraining
+type: feat
 

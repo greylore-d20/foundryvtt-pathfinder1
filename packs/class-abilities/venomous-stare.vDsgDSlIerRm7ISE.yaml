@@ -1,8 +1,39 @@
 _id: vDsgDSlIerRm7ISE
-name: Venomous Stare
-type: feat
+_key: '!items!vDsgDSlIerRm7ISE'
 img: systems/pf1/icons/skills/green_29.jpg
+name: Venomous Stare
 system:
+  abilityType: sp
+  actions:
+    - _id: rl9rumjg9s25uq65
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.cleric.level / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_29.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can activate a gaze attack with a 30-foot
@@ -13,41 +44,10 @@ system:
       levels you possess and are fascinated until the beginning of your next
       turn. You can use this ability a number of times per day equal to 3 + your
       Wisdom modifier. This is a mind-affecting effect.</p>
-  actions:
-    - _id: rl9rumjg9s25uq65
-      name: Use
-      img: systems/pf1/icons/skills/green_29.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.cleric.level / 2)
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: will
-        description: Will negates
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_venomousStare
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
-_key: '!items!vDsgDSlIerRm7ISE'
+  tag: classFeat_venomousStare
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

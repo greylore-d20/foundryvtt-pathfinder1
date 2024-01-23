@@ -1,8 +1,32 @@
 _id: t8vu39x75ygqxgh4
-name: Sea Stallion
-type: spell
+_key: '!items!t8vu39x75ygqxgh4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sea Stallion
 system:
+  actions:
+    - _id: bqhb5n0izfkuipr0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: a creature you are mounted upon
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>sea steed</i>, but as long as you stay
@@ -12,38 +36,14 @@ system:
       effects. If you dismount from the target, you retain the amphibious
       quality for up to 1 minute, but not the other benefits. You regain all of
       the benefits once you mount the target creature again.</p>
-  actions:
-    - _id: bqhb5n0izfkuipr0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: a creature you are mounted upon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       druid: 4
-      ranger: 4
-      paladin: 4
       hunter: 4
+      paladin: 4
+      ranger: 4
   level: 4
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!t8vu39x75ygqxgh4'
+type: spell
 

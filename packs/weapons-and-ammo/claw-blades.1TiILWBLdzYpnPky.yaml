@@ -1,8 +1,40 @@
 _id: 1TiILWBLdzYpnPky
-name: Claw Blades
-type: weapon
+_key: '!items!1TiILWBLdzYpnPky'
 img: systems/pf1/icons/items/weapons/claw-blades.PNG
+name: Claw Blades
 system:
+  actions:
+    - _id: pi9mxeuaukdd30ej
+      ability:
+        attack: str
+        critMult: 0
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 'NULL'
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/claw-blades.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Claw Blades
   description:
     value: >-
       <p>These subtle blades can only be used by catfolk with the cat's claws
@@ -13,52 +45,20 @@ system:
       trait are proficient with this weapon. The claw blades can be enhanced
       like a masterwork weapon for the normal costs. The listed cost of the item
       is for one set of five claws for one hand.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 305
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: pi9mxeuaukdd30ej
-      name: Attack
-      img: systems/pf1/icons/items/weapons/claw-blades.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: 'NULL'
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critMult: 0
-  baseTypes:
-    - Claw Blades
-  subType: exotic
+  price: 305
   properties:
     spc: true
   source:
     id: PZO1121
     pages: '93'
-_key: '!items!1TiILWBLdzYpnPky'
+  subType: exotic
+  tags:
+    - PFS
+  weight:
+    value: 2
+type: weapon
 

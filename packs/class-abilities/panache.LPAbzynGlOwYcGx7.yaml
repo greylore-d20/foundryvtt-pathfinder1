@@ -1,8 +1,20 @@
 _id: LPAbzynGlOwYcGx7
-name: Panache
-type: feat
+_key: '!items!LPAbzynGlOwYcGx7'
 img: systems/pf1/icons/skills/blue_10.jpg
+name: Panache
 system:
+  abilityType: ex
+  actions:
+    - _id: 4njwtccr6qa23tbh
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/blue_10.jpg
+      name: Use
+  associations:
+    classes:
+      - Swashbuckler
   description:
     value: >-
       <p>More than just a lightly armored warrior, a swashbuckler is a daring
@@ -26,22 +38,10 @@ system:
       hit points, or reducing a creature that has fewer Hit Dice than half the
       swashbuckler’s character level to 0 or fewer hit points doesn’t restore
       any panache.</p>
-  actions:
-    - _id: 4njwtccr6qa23tbh
-      name: Use
-      img: systems/pf1/icons/skills/blue_10.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '@abilities.cha.mod'
-  tag: classFeat_panache
   subType: classFeat
-  associations:
-    classes:
-      - Swashbuckler
-  abilityType: ex
-_key: '!items!LPAbzynGlOwYcGx7'
+  tag: classFeat_panache
+  uses:
+    maxFormula: '@abilities.cha.mod'
+    per: day
+type: feat
 

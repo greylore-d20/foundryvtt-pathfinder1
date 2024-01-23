@@ -1,8 +1,41 @@
 _id: yTLMgvXmYIAL205P
-name: Summer's Heat
-type: feat
+_key: '!items!yTLMgvXmYIAL205P'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Summer's Heat
 system:
+  abilityType: su
+  actions:
+    - _id: kwjdkceys1u9dqdg
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: '@classes.witch.level'
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      nonlethal: true
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Fortitude halves damage and negates fatigue
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch surrounds her target with oppressive heat, dealing a number
@@ -13,42 +46,9 @@ system:
 
       <p>Whether or not the target succeeds at this save, it can’t be the target
       of this hex again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_summersHeat
   tags:
     - Hex
-  actions:
-    - _id: kwjdkceys1u9dqdg
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: '@classes.witch.level'
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: fort
-        description: Fortitude halves damage and negates fatigue
-      nonlethal: true
-  tag: classFeat_summersHeat
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!yTLMgvXmYIAL205P'
+type: feat
 

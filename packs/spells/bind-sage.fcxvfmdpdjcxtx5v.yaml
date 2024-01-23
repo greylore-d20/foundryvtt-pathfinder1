@@ -1,8 +1,31 @@
 _id: fcxvfmdpdjcxtx5v
-name: Bind Sage
-type: spell
+_key: '!items!fcxvfmdpdjcxtx5v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bind Sage
 system:
+  actions:
+    - _id: yhxmg4n0tunwsykz
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one caulborn (Pathfinder RPG Bestiary 3 48)
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This variant of <i>planar binding</i> is specifically used to call one
@@ -18,42 +41,19 @@ system:
       nearly impossible to discover, as they are not inherently individualistic,
       but certain reclusive scholar communities in Kaer Maga may know titles by
       which specific caulborn can be called.</p>
-  actions:
-    - _id: yhxmg4n0tunwsykz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one caulborn (Pathfinder RPG Bestiary 3 48)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      summoner: 4
-      witch: 5
-      shaman: 5
-      psychic: 5
       occultist: 5
+      psychic: 5
+      shaman: 5
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 5
+      wizard: 4
   level: 4
   school: con
-  subschool: calling
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!fcxvfmdpdjcxtx5v'
+  subschool: calling
+type: spell
 

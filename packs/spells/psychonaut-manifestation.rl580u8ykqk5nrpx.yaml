@@ -1,8 +1,30 @@
 _id: rl580u8ykqk5nrpx
-name: Psychonaut Manifestation
-type: spell
+_key: '!items!rl580u8ykqk5nrpx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychonaut Manifestation
 system:
+  actions:
+    - _id: w1cwb3tje8osujhh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You take a mental journey through the doors of perception to enter an
@@ -19,37 +41,15 @@ system:
       another ability score and change the alchemical bonus and associated
       penalty accordingly. If you fail, you are dazed for 1 round instead as
       your mind reels from learning unexpected truths about yourself.</p>
-  actions:
-    - _id: w1cwb3tje8osujhh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
       psychic: 2
   level: 2
-  school: enc
-  subschool: compulsion
-  types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small piece of psychoactive cactus
+  school: enc
   sr: false
-_key: '!items!rl580u8ykqk5nrpx'
+  subschool: compulsion
+  types: emotion, mind-affecting
+type: spell
 

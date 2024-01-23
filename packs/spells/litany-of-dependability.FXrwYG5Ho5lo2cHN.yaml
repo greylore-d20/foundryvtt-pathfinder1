@@ -1,31 +1,36 @@
-name: Litany of Dependability
-type: spell
+_id: FXrwYG5Ho5lo2cHN
+_key: '!items!FXrwYG5Ho5lo2cHN'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Dependability
 system:
-  description:
-    value: >-
-      <p>By uttering this litany, you cause one creature to take the average
-      result of its next attack roll, saving throw, skill check, or ability
-      check. While subject to this spell, the target cannot be the target of
-      another spell that has the word “litany” in the title.</p>
   actions:
     - _id: lTcwa1a0UruhxOnD
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         value: 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>By uttering this litany, you cause one creature to take the average
+      result of its next attack roll, saving throw, skill check, or ability
+      check. While subject to this spell, the target cannot be the target of
+      another spell that has the word “litany” in the title.</p>
   learnedAt:
     class:
       inquisitor: 4
@@ -33,10 +38,5 @@ system:
   level: 3
   school: enc
   subschool: compulsion
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_id: FXrwYG5Ho5lo2cHN
-_key: '!items!FXrwYG5Ho5lo2cHN'
+type: spell
 

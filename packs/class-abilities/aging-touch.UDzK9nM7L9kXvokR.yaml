@@ -1,8 +1,26 @@
 _id: UDzK9nM7L9kXvokR
-name: Aging Touch
-type: feat
+_key: '!items!UDzK9nM7L9kXvokR'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Aging Touch
 system:
+  abilityType: su
+  actions:
+    - _id: b8o4u6coahvvfhoa
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your touch ages living creatures and objects. As a melee touch attack,
@@ -14,31 +32,13 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       for every five oracle levels you possess.</p>
+  subType: classFeat
+  tag: classFeat_agingTouch
   tags:
     - Revelation
     - Time Mystery
-  actions:
-    - _id: b8o4u6coahvvfhoa
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
   uses:
-    per: day
     maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_agingTouch
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!UDzK9nM7L9kXvokR'
+    per: day
+type: feat
 

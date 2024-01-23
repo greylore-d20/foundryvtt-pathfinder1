@@ -1,8 +1,25 @@
 _id: ev9q7axlr6molalk
-name: Visualization of the Body
-type: spell
+_key: '!items!ev9q7axlr6molalk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Visualization of the Body
 system:
+  actions:
+    - _id: pi3w8dqjn4n7rkwg
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You focus your mind on one aspect of your body, aligning the energies
@@ -20,41 +37,24 @@ system:
       Armor Class for 3 rounds. <br /><b>Strength</b>: You gain a +6 bonus on
       all Strength checks to break objects and on checks to escape or establish
       grapples for 1 minute.</p>
-  actions:
-    - _id: pi3w8dqjn4n7rkwg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      ranger: 2
-      magus: 2
-      shaman: 2
       hunter: 2
+      magus: 2
+      oracle: 2
+      ranger: 2
+      shaman: 2
+      warpriest: 2
   level: 2
-  school: trs
-  types: meditative
-  components:
-    verbal: true
-    material: true
   materials:
-    value: soothing incense worth 200 gp
     gpValue: 200
+    value: soothing incense worth 200 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!ev9q7axlr6molalk'
+  types: meditative
+type: spell
 

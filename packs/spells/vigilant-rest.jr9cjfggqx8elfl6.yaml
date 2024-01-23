@@ -1,8 +1,32 @@
 _id: jr9cjfggqx8elfl6
-name: Vigilant Rest
-type: spell
+_key: '!items!jr9cjfggqx8elfl6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vigilant Rest
 system:
+  actions:
+    - _id: k4rhi13wicfqesbc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 8 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will
+        harmless: true
+        type: will
+      target:
+        value: 1 living creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>While the target of this spell is asleep, she retains some of her
@@ -15,47 +39,23 @@ system:
       sleep during the spell's duration, she falls asleep immediately and does
       not count as having her sleep interrupted, even if she engaged in combat
       while she was awake.</p>
-  actions:
-    - _id: k4rhi13wicfqesbc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 8 hours (D)
-      target:
-        value: 1 living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will
-        harmless: true
   learnedAt:
     class:
-      ranger: 3
-      bard: 4
-      paladin: 3
-      witch: 4
       antipaladin: 3
-      shaman: 4
-      psychic: 4
+      bard: 4
+      hunter: 3
       medium: 3
       mesmerist: 4
       occultist: 3
+      paladin: 3
+      psychic: 4
+      ranger: 3
+      shaman: 4
       spiritualist: 4
-      hunter: 3
+      witch: 4
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of crushed glass
-_key: '!items!jr9cjfggqx8elfl6'
+  school: abj
+type: spell
 

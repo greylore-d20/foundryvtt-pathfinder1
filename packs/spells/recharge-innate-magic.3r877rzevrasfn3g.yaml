@@ -1,17 +1,10 @@
 _id: 3r877rzevrasfn3g
-name: Recharge Innate Magic
-type: spell
+_key: '!items!3r877rzevrasfn3g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Recharge Innate Magic
 system:
-  description:
-    value: >-
-      <p>You channel magic energy into your own aura, recharging your innate
-      magic abilities. You regain one use of all 0-level and 1st-level
-      spell-like abilities you can use as a result of a racial trait.</p>
   actions:
     - _id: odv1qqcrcwlucdie
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,30 +12,37 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You channel magic energy into your own aura, recharging your innate
+      magic abilities. You regain one use of all 0-level and 1st-level
+      spell-like abilities you can use as a result of a racial trait.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      bard: 1
       alchemist: 1
-      witch: 1
+      bard: 1
+      cleric: 1
+      druid: 1
+      hunter: 1
       inquisitor: 1
       magus: 1
-      psychic: 1
       mesmerist: 1
-      hunter: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!3r877rzevrasfn3g'
+type: spell
 

@@ -1,8 +1,41 @@
 _id: YKcajjA5GMqbG9Zg
-name: Fluid Mastery
-type: feat
+_key: '!items!YKcajjA5GMqbG9Zg'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Fluid Mastery
 system:
+  abilityType: su
+  actions:
+    - _id: v8e8br8naode4y8c
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.shaman.level / 2))d4
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      save:
+        description: Reflex halves and negates pushback
+        type: ref
+      target:
+        value: 15-ft. cone
+  associations:
+    classes:
+      - Shaman
+  changes:
+    - _id: xzf6e83n
+      formula: '@attributes.speed.land.base'
+      modifier: base
+      subTarget: swimSpeed
   description:
     value: >-
       <p>The shaman gains a swim speed equal to her base land speed, as well as
@@ -17,43 +50,10 @@ system:
 
       <p>The shaman can use this ability three times per day, but she must wait
       1d4 rounds between each use.</p>
-  actions:
-    - _id: v8e8br8naode4y8c
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: 15-ft. cone
-      actionType: save
-      damage:
-        parts:
-          - formula: (floor(@classes.shaman.level / 2))d4
-            type:
-              values:
-                - cold
-              custom: ''
-      save:
-        type: ref
-        description: Reflex halves and negates pushback
-  uses:
-    per: day
-    maxFormula: '3'
-  changes:
-    - _id: xzf6e83n
-      formula: '@attributes.speed.land.base'
-      subTarget: swimSpeed
-      modifier: base
-  tag: classFeat_fluidMastery
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!YKcajjA5GMqbG9Zg'
+  tag: classFeat_fluidMastery
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

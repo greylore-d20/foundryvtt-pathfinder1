@@ -1,8 +1,38 @@
 _id: 8KCwDN3vuwoF6erS
-name: Grappling Hook
-type: weapon
+_key: '!items!8KCwDN3vuwoF6erS'
 img: systems/pf1/icons/items/weapons/grappling-hook.png
+name: Grappling Hook
 system:
+  actions:
+    - _id: fc0gaj7vzr849tbj
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/grappling-hook.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Grappling Hook
   description:
     value: >-
       <p>A grappling hook is usually thought of as a climbing instrument, but is
@@ -24,57 +54,27 @@ system:
       grapple. If you move far enough away to be out of the weapon's reach, the
       grapple ends.</p><p>A grappling hook's weight includes the weight of 50
       feet of hemp rope. It can be reduced by using shorter or lighter rope.</p>
-  weight:
-    value: 14
-  price: 6
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: fc0gaj7vzr849tbj
-      name: Throw
-      img: systems/pf1/icons/items/weapons/grappling-hook.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  baseTypes:
-    - Grappling Hook
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 6
   properties:
     grp: true
   source:
     id: PZO9422
     pages: '19'
-_key: '!items!8KCwDN3vuwoF6erS'
+  subType: exotic
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 14
+type: weapon
 

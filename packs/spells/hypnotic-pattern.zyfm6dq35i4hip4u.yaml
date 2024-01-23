@@ -1,8 +1,29 @@
 _id: zyfm6dq35i4hip4u
-name: Hypnotic Pattern
-type: spell
+_key: '!items!zyfm6dq35i4hip4u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hypnotic Pattern
 system:
+  actions:
+    - _id: pr3pt14v9ml2n5mj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 2 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      spellEffect: colorful lights in a 10-ft.-radius spread
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>A twisting pattern of subtle, shifting colors weaves through the air,
@@ -15,41 +36,20 @@ system:
       Sightless creatures are not affected.</p><p>A wizard or sorcerer need not
       utter a sound to cast this spell, but a bard must perform as a verbal
       component.</p>
-  actions:
-    - _id: pr3pt14v9ml2n5mj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 2 rounds
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: colorful lights in a 10-ft.-radius spread
   learnedAt:
     class:
+      bard: 2
+      mesmerist: 2
+      psychic: 2
       sorcerer: 2
       wizard: 2
-      bard: 2
-      psychic: 2
-      mesmerist: 2
     subDomain:
       Stars: 2
   level: 2
+  materials:
+    value: a stick of incense or a crystal rod
   school: ill
   subschool: pattern
   types: mind-affecting
-  components:
-    somatic: true
-    material: true
-  materials:
-    value: a stick of incense or a crystal rod
-_key: '!items!zyfm6dq35i4hip4u'
+type: spell
 

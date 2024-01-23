@@ -1,18 +1,10 @@
-name: Phase Step
-type: spell
+_id: 9pCd1KUeaQsiB6n6
+_key: '!items!9pCd1KUeaQsiB6n6'
 img: systems/pf1/icons/skills/armor_01.jpg
+name: Phase Step
 system:
-  description:
-    value: >-
-      <p>You instantly transfer the touched creature to a point you designate
-      within range. This otherwise functions as the spell
-      @Compendium[pf1.spells.ojwg1ki98tq8xyh9]{dimension door}, except that you
-      must have line of sight and line of effect to the target’s destination for
-      this spell’s effects to properly function.</p>
   actions:
     - _id: pqwl0WgVzg2eHMIr
-      name: Use
-      img: systems/pf1/icons/skills/armor_01.jpg
       activation:
         type: standard
         unchained:
@@ -20,11 +12,23 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one willing creature touched
+      img: systems/pf1/icons/skills/armor_01.jpg
+      name: Use
       range:
         units: close
+      target:
+        value: one willing creature touched
       touch: true
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You instantly transfer the touched creature to a point you designate
+      within range. This otherwise functions as the spell
+      @Compendium[pf1.spells.ojwg1ki98tq8xyh9]{dimension door}, except that you
+      must have line of sight and line of effect to the target’s destination for
+      this spell’s effects to properly function.</p>
   learnedAt:
     class:
       alchemist: 3
@@ -41,9 +45,5 @@ system:
   level: 3
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-_id: 9pCd1KUeaQsiB6n6
-_key: '!items!9pCd1KUeaQsiB6n6'
+type: spell
 

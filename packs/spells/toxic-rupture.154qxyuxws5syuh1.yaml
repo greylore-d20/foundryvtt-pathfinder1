@@ -1,8 +1,32 @@
 _id: 154qxyuxws5syuh1
-name: Toxic Rupture
-type: spell
+_key: '!items!154qxyuxws5syuh1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Toxic Rupture
 system:
+  actions:
+    - _id: j51p3xmakw10z4xn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates; see text
+        type: fort
+      target:
+        value: one poisonous creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>With a squeezing hand gesture, you cause internal bleeding in the
@@ -11,42 +35,18 @@ system:
       fails, the creature is poisoned and suffers the full effect of its poison.
       Any subsequent saving throws that the target must attempt against the
       poison use the normal DC for the poison rather than this spell's DC.</p>
-  actions:
-    - _id: j51p3xmakw10z4xn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one poisonous creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates; see text
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
-      witch: 3
-      shaman: 3
       hunter: 3
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: nec
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a viper's fang
-_key: '!items!154qxyuxws5syuh1'
+  school: nec
+  types: poison
+type: spell
 

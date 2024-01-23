@@ -1,8 +1,20 @@
 _id: 5bMdPLDLTci3Ybgu
-name: Redirect Primal Magic
-type: feat
+_key: '!items!5bMdPLDLTci3Ybgu'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Redirect Primal Magic
 system:
+  abilityType: su
+  actions:
+    - _id: 5lhv6mw8km95cneb
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>If the arcanist triggers a primal magic event, she can spend 1 point
@@ -10,21 +22,9 @@ system:
       The event occurs at a location of the arcanist’s choosing within a 20-foot
       radius. This radius expands by 5 feet for every 2 arcanist levels she
       has.</p>
+  subType: classFeat
+  tag: classFeat_redirectPrimalMagic
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 5lhv6mw8km95cneb
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_redirectPrimalMagic
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!5bMdPLDLTci3Ybgu'
+type: feat
 

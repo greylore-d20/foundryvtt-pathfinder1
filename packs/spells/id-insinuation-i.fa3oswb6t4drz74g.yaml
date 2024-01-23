@@ -1,18 +1,11 @@
 _id: fa3oswb6t4drz74g
-name: Id Insinuation I
-type: spell
+_key: '!items!fa3oswb6t4drz74g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Id Insinuation I
 system:
-  description:
-    value: >-
-      <p>By invading the mind of a creature with your psychic presence, you can
-      isolate parts of its mind, preventing the target from functioning in a
-      coherent manner. The target is confused as long as you concentrate on it
-      plus 1 additional round. A successful Will save negates this effect.</p>
   actions:
     - _id: 6gj4vr2bisokehv8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,24 +13,31 @@ system:
           type: action
       duration:
         value: concentration + 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>By invading the mind of a creature with your psychic presence, you can
+      isolate parts of its mind, preventing the target from functioning in a
+      coherent manner. The target is confused as long as you concentrate on it
+      plus 1 additional round. A successful Will save negates this effect.</p>
   learnedAt:
-    class:
-      psychic: 2
     bloodline:
       Psychic: 2
+    class:
+      psychic: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!fa3oswb6t4drz74g'
+type: spell
 

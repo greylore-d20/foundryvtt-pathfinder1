@@ -1,8 +1,26 @@
 _id: UWpRwOiI32tm20mh
-name: Steely Resolve
-type: feat
+_key: '!items!UWpRwOiI32tm20mh'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Steely Resolve
 system:
+  abilityType: ex
+  actions:
+    - _id: yu35w8hp4ktmwbzq
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/deceitful.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>Three times per day, as an immediate action when the vigilante fails a
@@ -11,28 +29,10 @@ system:
       level, after which the vigilante is affected as normal by the entire
       effect. Rounds spent delaying the effect do not count toward the effect’s
       duration.</p>
-  actions:
-    - _id: yu35w8hp4ktmwbzq
-      name: Use
-      img: systems/pf1/icons/feats/deceitful.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '3'
-  tag: classFeat_steelyResolve
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!UWpRwOiI32tm20mh'
+  tag: classFeat_steelyResolve
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

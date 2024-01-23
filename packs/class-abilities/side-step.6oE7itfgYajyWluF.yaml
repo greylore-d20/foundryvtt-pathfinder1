@@ -1,8 +1,20 @@
 _id: 6oE7itfgYajyWluF
-name: Side Step
-type: feat
+_key: '!items!6oE7itfgYajyWluF'
 img: systems/pf1/icons/items/inventory/lantern.jpg
+name: Side Step
 system:
+  abilityType: sp
+  actions:
+    - _id: yai72zd236b8g1ci
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/items/inventory/lantern.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>You can create a temporary fissure in space by expending 1 point of
@@ -14,19 +26,7 @@ system:
       opportunity. This otherwise functions as teleport.</p>
 
       <p>You must be at least 7th level to select this focus power.</p>
-  actions:
-    - _id: yai72zd236b8g1ci
-      name: Use
-      img: systems/pf1/icons/items/inventory/lantern.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_sideStep
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!6oE7itfgYajyWluF'
+  tag: classFeat_sideStep
+type: feat
 

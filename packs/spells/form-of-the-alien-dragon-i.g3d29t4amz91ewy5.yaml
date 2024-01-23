@@ -1,8 +1,30 @@
 _id: g3d29t4amz91ewy5
-name: Form of the Alien Dragon I
-type: spell
+_key: '!items!g3d29t4amz91ewy5'
 img: icons/creatures/abilities/dragon-ice-breath-blue.webp
+name: Form of the Alien Dragon I
 system:
+  actions:
+    - _id: bm7jo4qbugmbv278
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You become a Medium esoteric or outer dragon. Psychics can choose from
@@ -35,40 +57,18 @@ system:
       30-foot cone of cold, cold resistance 20, +4 bonus on saves vs. emotion
       spells and effects. <br /><b>Vortex Dragon</b>: 30-foot cone of fire, fire
       resistance 30, vulnerability to cold.</p>
-  actions:
-    - _id: bm7jo4qbugmbv278
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       alchemist: 6
       magus: 6
       psychic: 7
+      sorcerer: 6
+      wizard: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a scale of the dragon type you plan to assume
+  school: trs
   sr: false
-_key: '!items!g3d29t4amz91ewy5'
+  subschool: polymorph
+type: spell
 

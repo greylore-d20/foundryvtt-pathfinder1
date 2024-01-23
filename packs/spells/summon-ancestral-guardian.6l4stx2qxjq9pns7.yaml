@@ -1,8 +1,27 @@
 _id: 6l4stx2qxjq9pns7
-name: Summon Ancestral Guardian
-type: spell
+_key: '!items!6l4stx2qxjq9pns7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Ancestral Guardian
 system:
+  actions:
+    - _id: n294g65fhp24145x
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: two summoned ancestor spirits
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call the spirits of two ancestors to manifest in the mortal world
@@ -14,35 +33,16 @@ system:
       according to the weapon the spirit wields) instead of force damage. Like
       creatures conjured with a <i>summon monster</i> spell, your ancestors are
       not harmed if these manifestations are destroyed.</p>
-  actions:
-    - _id: n294g65fhp24145x
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      spellEffect: two summoned ancestor spirits
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
+      oracle: 3
+      warpriest: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: stone or metal image of your ancestor
-_key: '!items!6l4stx2qxjq9pns7'
+  school: con
+  subschool: summoning
+type: spell
 

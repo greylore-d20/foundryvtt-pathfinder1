@@ -1,8 +1,26 @@
 _id: r92vusqkffsspf4a
-name: Ropeweave
-type: spell
+_key: '!items!r92vusqkffsspf4a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ropeweave
 system:
+  actions:
+    - _id: dcx1ftg4sha3nupp
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one rope
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the target rope to grow in length and weave itself into one
@@ -54,33 +72,15 @@ system:
       creature that fails by 5 or more falls prone. A creature larger than
       Medium gains a +2 bonus on its Acrobatics check for every size category
       larger than Medium it is.</p>
-  actions:
-    - _id: dcx1ftg4sha3nupp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one rope
-      range:
-        units: touch
   learnedAt:
     class:
-      ranger: 2
-      occultist: 2
       hunter: 2
+      occultist: 2
+      ranger: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a rope
+  school: trs
   sr: false
-_key: '!items!r92vusqkffsspf4a'
+type: spell
 

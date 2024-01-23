@@ -1,8 +1,27 @@
 _id: WSqWT9ZIshtC5vlV
-name: Rage
-type: feat
+_key: '!items!WSqWT9ZIshtC5vlV'
 img: systems/pf1/icons/feats/extra-rage.jpg
+name: Rage
 system:
+  abilityType: ex
+  actions:
+    - _id: 5bvc8dz7vtyunhph
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: ''
+      img: systems/pf1/icons/feats/extra-rage.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: Self
+  associations:
+    classes:
+      - Barbarian
   description:
     value: >-
       <p>A barbarian can call upon inner reserves of strength and ferocity,
@@ -34,32 +53,13 @@ system:
       multiple times during a single encounter or combat. If a barbarian falls
       <em>unconscious</em>, her rage immediately ends, placing her in peril of
       death.</p>
-  actions:
-    - _id: 5bvc8dz7vtyunhph
-      name: Use
-      img: systems/pf1/icons/feats/extra-rage.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: ''
-        units: round
-      target:
-        value: Self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 4 + @abilities.con.mod + (2 * (@classes.barbarian.level - 1))
-  tag: classFeat_rage
-  subType: classFeat
-  associations:
-    classes:
-      - Barbarian
-  abilityType: ex
   source:
     id: PZO1110
     pages: '32'
-_key: '!items!WSqWT9ZIshtC5vlV'
+  subType: classFeat
+  tag: classFeat_rage
+  uses:
+    maxFormula: 4 + @abilities.con.mod + (2 * (@classes.barbarian.level - 1))
+    per: day
+type: feat
 

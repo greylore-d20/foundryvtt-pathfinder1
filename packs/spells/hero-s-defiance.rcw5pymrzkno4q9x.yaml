@@ -1,8 +1,25 @@
 _id: rcw5pymrzkno4q9x
-name: Hero's Defiance
-type: spell
+_key: '!items!rcw5pymrzkno4q9x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hero's Defiance
 system:
+  actions:
+    - _id: troiay87q1ftskrj
+      actionType: heal
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>The instant before you are reduced to 0 or fewer hit points, you can
@@ -11,28 +28,11 @@ system:
       healing brings your hit point total above 0 hit points, you do not fall,
       and may continue to act. If you have no more uses of lay on hands this
       spell has no effect.</p>
-  actions:
-    - _id: troiay87q1ftskrj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: heal
   learnedAt:
     class:
       paladin: 1
   school: con
-  subschool: healing
-  components:
-    verbal: true
   sr: false
-_key: '!items!rcw5pymrzkno4q9x'
+  subschool: healing
+type: spell
 

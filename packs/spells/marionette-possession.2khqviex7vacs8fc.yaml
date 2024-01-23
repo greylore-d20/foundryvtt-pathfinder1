@@ -1,8 +1,31 @@
 _id: 2khqviex7vacs8fc
-name: Marionette Possession
-type: spell
+_key: '!items!2khqviex7vacs8fc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Marionette Possession
 system:
+  actions:
+    - _id: oigktlzbqck8r90l
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until you return to your body
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one willing creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You project your soul out of your body and into the body of a willing
@@ -23,42 +46,19 @@ system:
       slain). If the host body is slain beyond the range of the spell, both you
       and the host die. Any life force with nowhere to go is treated as
       slain.</p>
-  actions:
-    - _id: oigktlzbqck8r90l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level or until you return to your body
-      target:
-        value: one willing creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       alchemist: 3
-      summoner: 3
-      witch: 3
-      psychic: 3
       mesmerist: 3
+      psychic: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a piece of paper with the target's name
-_key: '!items!2khqviex7vacs8fc'
+  school: nec
+type: spell
 

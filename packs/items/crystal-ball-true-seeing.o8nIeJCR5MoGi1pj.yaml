@@ -1,8 +1,30 @@
 _id: o8nIeJCR5MoGi1pj
-name: Crystal Ball (True Seeing)
-type: consumable
+_key: '!items!o8nIeJCR5MoGi1pj'
 img: icons/commodities/gems/pearl-glass-purple.webp
+name: Crystal Ball (True Seeing)
 system:
+  actions:
+    - _id: iii4o9y0saoidwsh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@item.cl'
+      img: icons/commodities/gems/pearl-glass-purple.webp
+      name: Use
+      range:
+        units: seeText
+      save:
+        dc: 10[Base] + 4[SL] + 2[CAM]
+        description: Will negates
+        type: will
+  aura:
+    school: div
+  cl: 10
   description:
     value: >-
       <p>This is the most common form of scrying device, a crystal sphere about
@@ -19,33 +41,11 @@ system:
 
       <p>While looking through the crystal ball, you see things as if affected
       by @Compendium[pf1.spells.jbqo4o2b2tmdz7wv]{True Seeing}.</p>
-  weight:
-    value: 7
   price: 80000
+  subType: misc
   unidentified:
     name: Crystal Ball
-  cl: 10
-  aura:
-    school: div
-  actions:
-    - _id: iii4o9y0saoidwsh
-      name: Use
-      img: icons/commodities/gems/pearl-glass-purple.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@item.cl'
-        units: minute
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        dc: 10[Base] + 4[SL] + 2[CAM]
-        type: will
-        description: Will negates
-  subType: misc
-_key: '!items!o8nIeJCR5MoGi1pj'
+  weight:
+    value: 7
+type: consumable
 

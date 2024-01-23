@@ -1,8 +1,26 @@
 _id: btccs4sjo2nog1a0
-name: Ethereal Jaunt
-type: spell
+_key: '!items!btccs4sjo2nog1a0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ethereal Jaunt
 system:
+  actions:
+    - _id: i036l8sitz9ksl1t
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You become ethereal, along with your equipment. For the duration of the
@@ -23,39 +41,21 @@ system:
       you end the spell and become material while inside a material object (such
       as a solid wall), you are shunted off to the nearest open space and take
       1d6 points of damage per 5 feet that you so travel.</p>
-  actions:
-    - _id: i036l8sitz9ksl1t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 7
-      oracle: 7
-      summoner: 5
-      psychic: 6
-      summonerUnchained: 6
-    subDomain:
-      Thievery: 7
     bloodline:
       Ectoplasm: 6
+    class:
+      cleric: 7
+      oracle: 7
+      psychic: 6
+      sorcerer: 7
+      summoner: 5
+      summonerUnchained: 6
+      wizard: 7
+    subDomain:
+      Thievery: 7
   level: 7
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!btccs4sjo2nog1a0'
+type: spell
 

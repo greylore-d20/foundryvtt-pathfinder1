@@ -1,8 +1,23 @@
 _id: yLKDInB7B2NCwcpv
-name: Weighing Infusion
-type: feat
+_key: '!items!yLKDInB7B2NCwcpv'
 img: systems/pf1/icons/spells/rip-sky-1.jpg
+name: Weighing Infusion
 system:
+  actions:
+    - _id: pa5suxkb78p20e2p
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/rip-sky-1.jpg
+      name: Use
+      save:
+        description: Reflex negates
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> void; <b>Type</b> substance infusion; <b>Level</b> 2;
@@ -12,22 +27,7 @@ system:
       <p>This infusion functions as entangling infusion, except it entangles and
       immobilizes a foe by increasing its weight, rather than surrounding it in
       elemental matter.</p>
-  actions:
-    - _id: pa5suxkb78p20e2p
-      name: Use
-      img: systems/pf1/icons/spells/rip-sky-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex negates
-  tag: classFeat_weighingInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!yLKDInB7B2NCwcpv'
+  tag: classFeat_weighingInfusion
+type: feat
 

@@ -1,8 +1,30 @@
 _id: zrg6zgoc5l2zjo5k
-name: Siphon Might
-type: spell
+_key: '!items!zrg6zgoc5l2zjo5k'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Siphon Might
 system:
+  actions:
+    - _id: c4pfr5ekuxuy8bwq
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude half
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You drain the might of the target and transfer that power to another
@@ -13,39 +35,17 @@ system:
       from <i>Ray of Enfeeblement</i>.  You can grant any one creature adjacent
       to you (including yourself) an enhancement bonus to Strength equal to the
       Strength penalty imposed by this spell.</p>
-  actions:
-    - _id: c4pfr5ekuxuy8bwq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude half
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
-      summoner: 3
-      witch: 3
-      magus: 3
       hunter: 3
+      magus: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zrg6zgoc5l2zjo5k'
+type: spell
 

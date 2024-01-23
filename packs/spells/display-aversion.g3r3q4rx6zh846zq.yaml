@@ -1,8 +1,27 @@
 _id: g3r3q4rx6zh846zq
-name: Display Aversion
-type: spell
+_key: '!items!g3r3q4rx6zh846zq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Display Aversion
 system:
+  actions:
+    - _id: dc420xl89yb1uet2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1d4 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>minor image</i>, except it always creates
@@ -14,40 +33,21 @@ system:
       save against the illusion's DC (instead of the normal DC 25 to overcome
       its revulsion). The illusion is only quasi-real and cannot otherwise
       affect creatures.</p>
-  actions:
-    - _id: dc420xl89yb1uet2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1d4 rounds
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      witch: 2
+      cleric: 2
       inquisitor: 2
+      oracle: 2
+      sorcerer: 3
+      warpriest: 2
+      witch: 2
+      wizard: 3
   level: 3
-  school: ill
-  subschool: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of holy water
+  school: ill
   sr: false
-_key: '!items!g3r3q4rx6zh846zq'
+  subschool: shadow
+type: spell
 

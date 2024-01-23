@@ -1,8 +1,26 @@
 _id: kkavl1iwfjhuurl9
-name: Free Spirit
-type: spell
+_key: '!items!kkavl1iwfjhuurl9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Free Spirit
 system:
+  actions:
+    - _id: 5d19xaazaer3mkqz
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to channel the essence of Cayden Cailean's
@@ -12,38 +30,20 @@ system:
       penalty on attack rolls, ability checks, skill checks, and concentration
       checks. If you somehow remove or avoid these penalties, the spell's
       duration ends.</p>
-  actions:
-    - _id: 5d19xaazaer3mkqz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
       bard: 3
-      witch: 3
-      shaman: 3
-      medium: 3
-      spiritualist: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      medium: 3
+      oracle: 3
+      shaman: 3
+      spiritualist: 3
+      warpriest: 3
+      witch: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!kkavl1iwfjhuurl9'
+type: spell
 

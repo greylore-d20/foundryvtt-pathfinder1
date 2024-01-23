@@ -1,8 +1,31 @@
 _id: 7vamkma4y88ek4q6
-name: Magic Mouth
-type: spell
+_key: '!items!7vamkma4y88ek4q6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magic Mouth
 system:
+  actions:
+    - _id: xaqp5xuo8uk8zr7b
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one creature or object
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell imbues the chosen object or creature with an enchanted mouth
@@ -30,52 +53,29 @@ system:
       respond only to visible or audible triggers and actions in line of sight
       or within hearing distance.</p><p><i>Magic mouth</i> can be made permanent
       with a <i>permanency</i> spell.</p>
-  actions:
-    - _id: xaqp5xuo8uk8zr7b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent until discharged
-      target:
-        value: one creature or object
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 1
-      summoner: 1
-      psychic: 2
       medium: 2
       mesmerist: 1
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      summoner: 1
       summonerUnchained: 1
+      wizard: 2
     domain:
       Magic: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a small bit of honeycomb and jade dust worth 10 gp
     gpValue: 10
+    value: a small bit of honeycomb and jade dust worth 10 gp
   preparation:
     spontaneousPrepared: false
+  school: ill
   source:
     id: PZO1110
     pages: '310'
-_key: '!items!7vamkma4y88ek4q6'
+  subschool: glamer
+type: spell
 

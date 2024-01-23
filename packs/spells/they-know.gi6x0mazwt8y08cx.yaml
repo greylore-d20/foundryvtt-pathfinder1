@@ -1,8 +1,31 @@
 _id: gi6x0mazwt8y08cx
-name: They Know
-type: spell
+_key: '!items!gi6x0mazwt8y08cx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: They Know
 system:
+  actions:
+    - _id: 837s1fb7mkih6mc8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one intelligent creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You instill a target with the fear that the nearest other intelligent
@@ -21,43 +44,20 @@ system:
       attack the other creature to silence it, or offer the other creature a
       bribe.  The spell fails if the target truly feels she has nothing to
       hide.</p>
-  actions:
-    - _id: 837s1fb7mkih6mc8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one intelligent creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 3
-      paladin: 3
-      witch: 4
       inquisitor: 3
-      shaman: 4
-      psychic: 4
       mesmerist: 3
+      paladin: 3
+      psychic: 4
+      shaman: 4
+      witch: 4
   level: 3
+  materials:
+    value: a drop of black ink
   school: enc
   subschool: compulsion
   types: emotion, fear
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a drop of black ink
-_key: '!items!gi6x0mazwt8y08cx'
+type: spell
 

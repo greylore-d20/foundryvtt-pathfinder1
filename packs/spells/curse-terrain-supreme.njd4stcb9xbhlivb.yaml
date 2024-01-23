@@ -1,51 +1,51 @@
 _id: njd4stcb9xbhlivb
-name: Curse Terrain, Supreme
-type: spell
+_key: '!items!njd4stcb9xbhlivb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Curse Terrain, Supreme
 system:
-  description:
-    value: >-
-      <p>By touching the ground, you curse the land with seven unnatural
-      hazards. This functions as <i>lesser curse terrain</i>, but with the
-      effects of the grand perilous demesne curse (see page 144).</p>
   actions:
     - _id: 5y9acz2yssawkcii
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
         unchained:
           cost: 10
           type: minute
+      area: 5-mile radius emanating from the touched point
       duration:
         value: 1 day (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      area: 5-mile radius emanating from the touched point
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>By touching the ground, you curse the land with seven unnatural
+      hazards. This functions as <i>lesser curse terrain</i>, but with the
+      effects of the grand perilous demesne curse (see page 144).</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
-      oracle: 8
       druid: 8
-      witch: 8
+      oracle: 8
       shaman: 8
+      sorcerer: 8
+      witch: 8
+      wizard: 8
   level: 8
-  school: nec
-  types: curse, evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 4000
     value: >-
       the heart of a creature that dwelled in the area and powdered onyx worth
       4,000 gp
-    gpValue: 4000
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!njd4stcb9xbhlivb'
+  types: curse, evil
+type: spell
 

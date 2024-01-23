@@ -1,8 +1,20 @@
 _id: rBrwiirykAPnPfkQ
-name: It Came from Beyond
-type: feat
+_key: '!items!rBrwiirykAPnPfkQ'
 img: systems/pf1/icons/skills/yellow_18.jpg
+name: It Came from Beyond
 system:
+  abilityType: su
+  actions:
+    - _id: awykkxvf1yr4vbso
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/yellow_18.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Once per day when you cast a summoning spell, any one creature you
@@ -16,22 +28,10 @@ system:
       might have.</p>
 
       <p>This power replaces the Guarded Mind power of the Void Domain.</p>
-  actions:
-    - _id: awykkxvf1yr4vbso
-      name: Use
-      img: systems/pf1/icons/skills/yellow_18.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_itCameFromBeyond
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!rBrwiirykAPnPfkQ'
+  tag: classFeat_itCameFromBeyond
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

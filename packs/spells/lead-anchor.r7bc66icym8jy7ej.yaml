@@ -1,8 +1,32 @@
 _id: r7bc66icym8jy7ej
-name: Lead Anchor
-type: spell
+_key: '!items!r7bc66icym8jy7ej'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lead Anchor
 system:
+  actions:
+    - _id: se46rev7fmf3iqcg
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target's buoyancy becomes and stays swiftly sinking, regardless of
@@ -11,45 +35,21 @@ system:
       swim towards the surface and to stay above the bottom (see Buoyancy on
       page 43). This makes <i>lead anchor</i> a useful spell both for exploring
       the sea floor and for drowning an air-breathing foe in the water.</p>
-  actions:
-    - _id: se46rev7fmf3iqcg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      druid: 2
-      ranger: 2
-      bard: 2
       alchemist: 2
-      witch: 2
-      shaman: 2
-      psychic: 2
+      bard: 2
+      druid: 2
+      hunter: 2
       medium: 2
       occultist: 2
-      hunter: 2
+      psychic: 2
+      ranger: 2
+      shaman: 2
+      witch: 2
   level: 2
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
     value: a bag of air
-_key: '!items!r7bc66icym8jy7ej'
+  school: evo
+type: spell
 

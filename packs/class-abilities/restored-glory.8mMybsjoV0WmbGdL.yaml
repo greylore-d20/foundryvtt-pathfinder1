@@ -1,8 +1,20 @@
 _id: 8mMybsjoV0WmbGdL
-name: Restored Glory
-type: feat
+_key: '!items!8mMybsjoV0WmbGdL'
 img: systems/pf1/icons/items/inventory/badge-hammer.jpg
+name: Restored Glory
 system:
+  abilityType: su
+  actions:
+    - _id: pejwi9pl23evcome
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/inventory/badge-hammer.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 3rd level, objects in your possession with the <em>broken</em>
@@ -18,19 +30,7 @@ system:
       objects must have physical pieces left to be affected by this ability.
       Objects that leave your possession are affected normally by these
       conditions. This ability does not affect artifacts.</p>
-  actions:
-    - _id: pejwi9pl23evcome
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-hammer.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_restoredGlory
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!8mMybsjoV0WmbGdL'
+  tag: classFeat_restoredGlory
+type: feat
 

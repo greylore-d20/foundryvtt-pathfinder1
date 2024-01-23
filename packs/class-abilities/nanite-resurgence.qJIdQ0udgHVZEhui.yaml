@@ -1,8 +1,26 @@
 _id: qJIdQ0udgHVZEhui
-name: Nanite Resurgence
-type: feat
+_key: '!items!qJIdQ0udgHVZEhui'
 img: systems/pf1/icons/skills/violet_06.jpg
+name: Nanite Resurgence
 system:
+  abilityType: ex
+  actions:
+    - _id: k3fmvnun6knmgri2
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_06.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: Self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, once per day as an <em>immediate action</em> upon being
@@ -19,28 +37,10 @@ system:
 
       <p>At 20th level, you never die of system shock from using this
       ability.</p>
-  actions:
-    - _id: k3fmvnun6knmgri2
-      name: Use
-      img: systems/pf1/icons/skills/violet_06.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: Self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level >= 17 ? 2 : 1'
-  tag: classFeat_naniteResurgence
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!qJIdQ0udgHVZEhui'
+  tag: classFeat_naniteResurgence
+  uses:
+    maxFormula: '@classes.sorcerer.level >= 17 ? 2 : 1'
+    per: day
+type: feat
 

@@ -1,8 +1,33 @@
 _id: a1jn7g374wcrb9mz
-name: Stone to Flesh
-type: spell
+_key: '!items!a1jn7g374wcrb9mz'
 img: icons/magic/defensive/armor-stone-skin.webp
+name: Stone to Flesh
 system:
+  actions:
+    - _id: ragj40gex4hq0e3n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates (object); see text
+        type: fort
+      target:
+        value: >-
+          one petrified creature or a cylinder of stone from 1 ft. to 3 ft. in
+          diameter and up to 10 ft. long
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell restores a petrified creature to its normal state, restoring
@@ -16,41 +41,16 @@ system:
       can affect an object that fits within a cylinder from 1 foot to 3 feet in
       diameter and up to 10 feet long or a cylinder of up to those dimensions in
       a larger mass of stone.</p>
-  actions:
-    - _id: ragj40gex4hq0e3n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: >-
-          one petrified creature or a cylinder of stone from 1 ft. to 3 ft. in
-          diameter and up to 10 ft. long
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object); see text
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      witch: 6
       magus: 6
       shaman: 6
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of blood mixed with earth
-_key: '!items!a1jn7g374wcrb9mz'
+  school: trs
+type: spell
 

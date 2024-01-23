@@ -1,8 +1,25 @@
 _id: oplskt3tgws8ujv8
-name: Spectral Hand
-type: spell
+_key: '!items!oplskt3tgws8ujv8'
 img: icons/magic/unholy/hand-claw-fire-blue.webp
+name: Spectral Hand
 system:
+  actions:
+    - _id: hfa60l0bf17jlc76
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: one spectral hand
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A ghostly hand shaped from your life force materializes and moves as
@@ -23,34 +40,17 @@ system:
       applies to the hand's AC as if it were the hand's Dexterity modifier. The
       hand has 1 to 4 hit points, the same number that you lost in creating
       it.</p>
-  actions:
-    - _id: hfa60l0bf17jlc76
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: medium
-      spellEffect: one spectral hand
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
-      psychic: 2
       medium: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
       spiritualist: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!oplskt3tgws8ujv8'
+type: spell
 

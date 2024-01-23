@@ -1,8 +1,30 @@
 _id: 48nw971qka3wgeui
-name: Mirror Polish
-type: spell
+_key: '!items!48nw971qka3wgeui'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mirror Polish
 system:
+  actions:
+    - _id: hlqzxtwdsjezj5sq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: yes (object)
+      target:
+        value: one metal item of up to 1 sq. ft.
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You polish a metal item until it is reflective enough to be used as a
@@ -11,36 +33,14 @@ system:
       metal item with a fairly smooth and contiguous surface, such as a
       breastplate, a helm, a shield, or a sword, but not a mace, chainmail, or
       scale mail.</p>
-  actions:
-    - _id: hlqzxtwdsjezj5sq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one metal item of up to 1 sq. ft.
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: yes (object)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
       occultist: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a soft cloth
-_key: '!items!48nw971qka3wgeui'
+  school: trs
+type: spell
 

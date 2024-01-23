@@ -1,8 +1,23 @@
 _id: 3p34GJemfcLdKckV
-name: Inspire Courage
-type: buff
+_key: '!items!3p34GJemfcLdKckV'
 img: systems/pf1/icons/skills/red_01.jpg
+name: Inspire Courage
 system:
+  changes:
+    - _id: o7gbtdbn
+      formula: 1 + max(0, floor((@item.level + 1) / 6))
+      modifier: competence
+      subTarget: attack
+    - _id: rf8izhuw
+      formula: 1 + max(0, floor((@item.level + 1) / 6))
+      modifier: competence
+      subTarget: wdamage
+  contextNotes:
+    - subTarget: allSavingThrows
+      target: savingThrows
+      text: >-
+        +[[1 + max(0, floor((@item.level + 1) / 6))]] Morale vs Fear and Charm
+        effects
   description:
     value: >-
       <p>Someone is inspiring you with courage. You gain a morale bonus on saves
@@ -11,21 +26,6 @@ system:
 
       <p><b>Usage</b>: Set the buff's level to the bard level of the person
       using Inspire Courage.</p>
-  changes:
-    - _id: o7gbtdbn
-      formula: 1 + max(0, floor((@item.level + 1) / 6))
-      subTarget: attack
-      modifier: competence
-    - _id: rf8izhuw
-      formula: 1 + max(0, floor((@item.level + 1) / 6))
-      subTarget: wdamage
-      modifier: competence
-  contextNotes:
-    - text: >-
-        +[[1 + max(0, floor((@item.level + 1) / 6))]] Morale vs Fear and Charm
-        effects
-      target: savingThrows
-      subTarget: allSavingThrows
   level: '1'
-_key: '!items!3p34GJemfcLdKckV'
+type: buff
 

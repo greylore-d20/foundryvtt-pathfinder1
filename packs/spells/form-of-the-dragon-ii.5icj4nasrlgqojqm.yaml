@@ -1,8 +1,30 @@
 _id: 5icj4nasrlgqojqm
-name: Form of the Dragon II
-type: spell
+_key: '!items!5icj4nasrlgqojqm'
 img: icons/creatures/abilities/dragon-fire-breath-orange.webp
+name: Form of the Dragon II
 system:
+  actions:
+    - _id: dkczuok75q53rp3m
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see below
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>form of the dragon I</i> except that it also
@@ -16,42 +38,20 @@ system:
       rounds between uses. All breath weapons deal 8d8 points of damage and
       allow a Reflex save for half damage. Line breath weapons increase to
       80-foot lines and cones increase to 40-foot cones.</p>
-  actions:
-    - _id: dkczuok75q53rp3m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see below
   learnedAt:
+    bloodline:
+      Draconic: 7
     class:
       sorcerer: 7
       wizard: 7
-    bloodline:
-      Draconic: 7
   level: 7
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a scale of the dragon type you plan to assume
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '286'
-_key: '!items!5icj4nasrlgqojqm'
+  sr: false
+  subschool: polymorph
+type: spell
 

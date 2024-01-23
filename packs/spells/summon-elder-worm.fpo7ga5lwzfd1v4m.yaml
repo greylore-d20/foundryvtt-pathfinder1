@@ -1,17 +1,10 @@
 _id: fpo7ga5lwzfd1v4m
-name: Summon Elder Worm
-type: spell
+_key: '!items!fpo7ga5lwzfd1v4m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Elder Worm
 system:
-  description:
-    value: >-
-      <p>This spell functions as summon nature's ally VIII, except you summon a
-      purple worm with the giant creature simple template (<i>Bestiary</i>
-      295).</p>
   actions:
     - _id: 26sai2vmqehin32f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -19,18 +12,25 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as summon nature's ally VIII, except you summon a
+      purple worm with the giant creature simple template (<i>Bestiary</i>
+      295).</p>
   learnedAt:
     class:
       druid: 9
   level: 9
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!fpo7ga5lwzfd1v4m'
+  subschool: summoning
+type: spell
 

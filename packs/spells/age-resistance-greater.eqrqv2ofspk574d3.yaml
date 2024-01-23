@@ -1,18 +1,10 @@
 _id: eqrqv2ofspk574d3
-name: Age Resistance, Greater
-type: spell
+_key: '!items!eqrqv2ofspk574d3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Age Resistance, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.w8v617tw8wjlcl53]{lesser
-      age resistance}, except you ignore all Strength, Dexterity, and
-      Constitution penalties gained from middle age, old age, and venerable
-      age.</p>
   actions:
     - _id: g75tzlkkge42jeyx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,26 +12,34 @@ system:
           type: action
       duration:
         value: 24 hours
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.w8v617tw8wjlcl53]{lesser
+      age resistance}, except you ignore all Strength, Dexterity, and
+      Constitution penalties gained from middle age, old age, and venerable
+      age.</p>
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      druid: 7
-      alchemist: 5
-      witch: 7
-      psychic: 7
-      occultist: 5
     bloodline:
       Imperious: 7
+    class:
+      alchemist: 5
+      druid: 7
+      occultist: 5
+      psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!eqrqv2ofspk574d3'
+type: spell
 

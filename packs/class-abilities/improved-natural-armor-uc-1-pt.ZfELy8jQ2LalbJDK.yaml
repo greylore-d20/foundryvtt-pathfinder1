@@ -1,8 +1,17 @@
 _id: ZfELy8jQ2LalbJDK
-name: Improved Natural Armor (UC) (1 pt)
-type: feat
+_key: '!items!ZfELy8jQ2LalbJDK'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Improved Natural Armor (UC) (1 pt)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Eidolon (Unchained)
+  changes:
+    - _id: 21tm8kma
+      formula: '2'
+      modifier: racial
+      subTarget: nac
   description:
     value: >-
       <p>The eidolon’s hide grows thick fur, rigid scales, or bony plates,
@@ -11,16 +20,7 @@ system:
       <p>This evolution can be taken once, plus one additional time for every 5
       levels the summoner possesses. Each additional time it’s taken, the bonus
       increases by 2.</p>
-  changes:
-    - _id: 21tm8kma
-      formula: '2'
-      subTarget: nac
-      modifier: racial
-  tag: classFeat_improvedNaturalArmorUc1Pt
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon (Unchained)
-  abilityType: ex
-_key: '!items!ZfELy8jQ2LalbJDK'
+  tag: classFeat_improvedNaturalArmorUc1Pt
+type: feat
 

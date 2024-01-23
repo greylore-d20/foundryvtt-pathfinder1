@@ -1,8 +1,20 @@
 _id: UWpceouqXmN8MOTE
-name: Blessed Surgery
-type: feat
+_key: '!items!UWpceouqXmN8MOTE'
 img: systems/pf1/icons/items/weapons/knife-switchblade.png
+name: Blessed Surgery
 system:
+  abilityType: su
+  actions:
+    - _id: 1qm923fh08816w2l
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/knife-switchblade.png
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Your divine patron guides your healing hands, allowing you to perform
@@ -13,22 +25,10 @@ system:
       ability a number of times per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Rebuke Death power of the Healing Domain.</p>
-  actions:
-    - _id: 1qm923fh08816w2l
-      name: Use
-      img: systems/pf1/icons/items/weapons/knife-switchblade.png
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_blessedSurgery
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!UWpceouqXmN8MOTE'
+  tag: classFeat_blessedSurgery
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

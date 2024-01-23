@@ -1,39 +1,39 @@
 _id: ehQflQB4BXvEdHYh
-name: Slumber
-type: feat
+_key: '!items!ehQflQB4BXvEdHYh'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Slumber
 system:
-  description:
-    value: "<p>A witch can cause a creature within 30 feet to fall into a deep, magical sleep, as per the spell\_@UUID[Compendium.pf1.spells.3plb67e51webutdz]{sleep}.</p><p>The creature receives a Will save to negate the effect. If the save fails, the creature falls asleep for a number of rounds equal to the witch's level. This hex can affect a creature of any HD. The creature will not wake due to noise or light, but others can rouse it with a standard action. This hex ends immediately if the creature takes damage.</p><p>Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
-  tags:
-    - Hex
+  abilityType: su
   actions:
     - _id: yhlapre6iyfni4w8
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
+      actionType: save
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '@classes.witch.level'
         units: round
-      target:
-        value: one creature
+        value: '@classes.witch.level'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
       range:
-        value: '30'
         units: ft
-      actionType: save
+        value: '30'
       save:
         dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
         description: Will negates
-  tag: classFeat_slumber
-  subType: classFeat
+        type: will
+      target:
+        value: one creature
   associations:
     classes:
       - Witch
-  abilityType: su
-_key: '!items!ehQflQB4BXvEdHYh'
+  description:
+    value: "<p>A witch can cause a creature within 30 feet to fall into a deep, magical sleep, as per the spell\_@UUID[Compendium.pf1.spells.3plb67e51webutdz]{sleep}.</p><p>The creature receives a Will save to negate the effect. If the save fails, the creature falls asleep for a number of rounds equal to the witch's level. This hex can affect a creature of any HD. The creature will not wake due to noise or light, but others can rouse it with a standard action. This hex ends immediately if the creature takes damage.</p><p>Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
+  subType: classFeat
+  tag: classFeat_slumber
+  tags:
+    - Hex
+type: feat
 

@@ -1,8 +1,28 @@
 _id: dav4npTr6UXGQUmH
-name: Beast Speech
-type: feat
+_key: '!items!dav4npTr6UXGQUmH'
 img: systems/pf1/icons/feats/persuasive.jpg
+name: Beast Speech
 system:
+  abilityType: su
+  actions:
+    - _id: dmxw7iuneko527e2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.vigilante.level'
+      img: systems/pf1/icons/feats/persuasive.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>The vigilante can cast @Compendium[pf1.spells.ct9fhh8uawn8e4md]{Speak
@@ -10,30 +30,10 @@ system:
       equal to his character level.</p>
 
       <p>The vigilante must have the songbird talent to select this talent.</p>
-  actions:
-    - _id: dmxw7iuneko527e2
-      name: Use
-      img: systems/pf1/icons/feats/persuasive.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.vigilante.level'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_beastSpeech
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: su
-_key: '!items!dav4npTr6UXGQUmH'
+  tag: classFeat_beastSpeech
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

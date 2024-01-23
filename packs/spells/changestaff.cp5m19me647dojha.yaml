@@ -1,8 +1,27 @@
 _id: cp5m19me647dojha
-name: Changestaff
-type: spell
+_key: '!items!cp5m19me647dojha'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Changestaff
 system:
+  actions:
+    - _id: eqjk4lvtbak6tioj
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: your touched staff
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You change a specially prepared quarterstaff into a Huge treant-like
@@ -18,32 +37,13 @@ system:
       spell is dismissed), and it can be used as the focus for another casting
       of the spell. The staff-treant is always at full strength when created,
       despite any wounds it may have incurred the last time it appeared.</p>
-  actions:
-    - _id: eqjk4lvtbak6tioj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: your touched staff
-      range:
-        units: touch
   learnedAt:
     class:
       druid: 7
   level: 7
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a quarterstaff that has been carved and polished for 28 days
+  school: trs
   sr: false
-_key: '!items!cp5m19me647dojha'
+type: spell
 

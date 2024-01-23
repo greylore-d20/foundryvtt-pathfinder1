@@ -1,8 +1,32 @@
 _id: o7rog6vdmxwn94v8
-name: Discern Next of Kin
-type: spell
+_key: '!items!o7rog6vdmxwn94v8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Discern Next of Kin
 system:
+  actions:
+    - _id: nv0ix7brl6bif93m
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration, up to 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can scan the thoughts of one individual and learn the names and
@@ -13,45 +37,21 @@ system:
       nearby farm, and the target and his father don't get along.</p><p>Since
       this spell reads the target's mind, you can learn only what the target
       knows or believes.</p>
-  actions:
-    - _id: nv0ix7brl6bif93m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level (D)
-      target:
-        value: one creature
-      range:
-        value: '60'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      witch: 1
-      shaman: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
-  school: div
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      witch: 1
+      wizard: 1
   materials:
     focus: a copper piece
-_key: '!items!o7rog6vdmxwn94v8'
+  school: div
+  types: mind-affecting
+type: spell
 

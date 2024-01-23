@@ -1,58 +1,58 @@
 _id: ytyr7ttgr5xyk92t
-name: False Life, Greater
-type: spell
+_key: '!items!ytyr7ttgr5xyk92t'
 img: icons/magic/life/heart-shadow-red.webp
+name: False Life, Greater
 system:
+  actions:
+    - _id: qo76t3tkknjzo7bw
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 2d10 + min(20, @cl)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        value: 1 hour/level or until discharged; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as @Compendium[pf1.spells.3ze0kso9hxff5u2f]{false
       life}, except you gain temporary hit points equal to 2d10 + 1 point per
       caster level (maximum +20). The effects of this spell do not stack with
       those of <em>false life</em>.</p>
-  actions:
-    - _id: qo76t3tkknjzo7bw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level or until discharged; see text
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: heal
-      damage:
-        parts:
-          - formula: 2d10 + min(20, @cl)
-            type:
-              values:
-                - untyped
-              custom: ''
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       alchemist: 4
-      witch: 4
       bloodrager: 4
-      shaman: 4
-      psychic: 4
       medium: 3
       mesmerist: 3
       occultist: 4
+      psychic: 4
+      shaman: 4
+      sorcerer: 4
       spiritualist: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of blood
+  school: nec
   sr: false
-_key: '!items!ytyr7ttgr5xyk92t'
+type: spell
 

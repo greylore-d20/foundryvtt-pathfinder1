@@ -1,8 +1,27 @@
 _id: pa6mgkl4caihdrhm
-name: Giant Vermin
-type: spell
+_key: '!items!pa6mgkl4caihdrhm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Giant Vermin
 system:
+  actions:
+    - _id: v5kdgbnqgxlp9qz3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: 1 or more vermin, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You turn a number of normal-sized centipedes, scorpions, or spiders
@@ -21,34 +40,15 @@ system:
       or
       lower</td><td>3</td><td>1</td><td>2</td></tr><tr><td>10th-13th</td><td>4</td><td>2</td><td>3</td></tr><tr><td>14th-17th</td><td>6</td><td>3</td><td>4</td></tr><tr><td>18th-19th</td><td>8</td><td>4</td><td>5</td></tr><tr><td>20th
       or higher</td><td>12</td><td>6</td><td>8</td></tr></tbody></table>
-  actions:
-    - _id: v5kdgbnqgxlp9qz3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: 1 or more vermin, no two of which can be more than 30 ft. apart
-      range:
-        units: close
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      shaman: 4
       hunter: 4
+      oracle: 4
+      shaman: 4
+      warpriest: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!pa6mgkl4caihdrhm'
+type: spell
 

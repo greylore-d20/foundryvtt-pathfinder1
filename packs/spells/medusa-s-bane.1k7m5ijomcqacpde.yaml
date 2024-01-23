@@ -1,8 +1,27 @@
 _id: 1k7m5ijomcqacpde
-name: Medusa's Bane
-type: spell
+_key: '!items!1k7m5ijomcqacpde'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Medusa's Bane
 system:
+  actions:
+    - _id: vn08keslthikk1pz
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes your eyes to take on a silvery mirror-like quality,
@@ -16,34 +35,15 @@ system:
       not bypass any other resistances or immunities the creature might have.
       Once you choose to reflect a gaze attack in this manner, the effect of
       medusa's bane immediately ends.</p>
-  actions:
-    - _id: vn08keslthikk1pz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 4
-      wizard: 4
       witch: 4
+      wizard: 4
   level: 4
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: tiny fragment of a mirror
+  school: abj
   sr: false
-_key: '!items!1k7m5ijomcqacpde'
+type: spell
 

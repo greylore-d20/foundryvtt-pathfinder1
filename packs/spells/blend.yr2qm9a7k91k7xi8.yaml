@@ -1,8 +1,25 @@
 _id: yr2qm9a7k91k7xi8
-name: Blend
-type: spell
+_key: '!items!yr2qm9a7k91k7xi8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blend
 system:
+  actions:
+    - _id: tzk2vf4a5caxz5nq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>You draw upon your elven link to the wilderness to change the
@@ -13,38 +30,21 @@ system:
       more than half your base speed on your turn, you gain no benefit from this
       spell until the start of your next turn. If you make an attack, this spell
       ends (as invisibility).</p>
-  actions:
-    - _id: tzk2vf4a5caxz5nq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
-      ranger: 1
       alchemist: 1
-      witch: 1
-      magus: 1
-      shaman: 1
-      psychic: 1
-      mesmerist: 1
+      druid: 1
       hunter: 1
+      magus: 1
+      mesmerist: 1
+      psychic: 1
+      ranger: 1
+      shaman: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: ill
-  subschool: glamer
-  components:
-    somatic: true
   sr: false
-_key: '!items!yr2qm9a7k91k7xi8'
+  subschool: glamer
+type: spell
 

@@ -1,19 +1,11 @@
 _id: wsbkqtbvovp47kzi
-name: Hunger for Flesh, Mass
-type: spell
+_key: '!items!wsbkqtbvovp47kzi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hunger for Flesh, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Hunger for Flesh</i>, except that it
-      affects multiple targets. When forced to feed by the spell, affected
-      creatures attack creatures not affected by this spell if there are any
-      such appropriate creatures nearby, but otherwise they attack other
-      affected creatures.</p>
   actions:
     - _id: s55i69ifa5e8prmm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,35 +13,43 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           one humanoid, magical beast, or monstrous humanoid/ level, no two of
           which can be more than 30 feet apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Hunger for Flesh</i>, except that it
+      affects multiple targets. When forced to feed by the spell, affected
+      creatures attack creatures not affected by this spell if there are any
+      such appropriate creatures nearby, but otherwise they attack other
+      affected creatures.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
       oracle: 7
-      witch: 7
-      shaman: 7
       psychic: 7
+      shaman: 7
+      sorcerer: 7
       spiritualist: 6
+      witch: 7
+      wizard: 7
   level: 7
-  school: nec
-  types: evil, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a ghoul fang
-_key: '!items!wsbkqtbvovp47kzi'
+  school: nec
+  types: evil, mind-affecting
+type: spell
 

@@ -1,8 +1,26 @@
 _id: 4sqpli43uba4sh4k
-name: Blade Tutor's Spirit
-type: spell
+_key: '!items!4sqpli43uba4sh4k'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blade Tutor's Spirit
 system:
+  actions:
+    - _id: bgywgkjgcfbrf7gr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon an insubstantial spirit of force that resembles a cloudy
@@ -19,36 +37,18 @@ system:
       <i>disintegrate</i>, <i>dispel magic</i>, a <i>rod of cancellation</i>, or
       a <i>sphere of annihilation</i> can affect it. A protective spirit's AC
       against touch attacks is equal to 10 + your Dexterity modifier.</p>
-  actions:
-    - _id: bgywgkjgcfbrf7gr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      paladin: 2
-      summoner: 2
       antipaladin: 2
       magus: 1
+      paladin: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!4sqpli43uba4sh4k'
+  subschool: creation
+type: spell
 

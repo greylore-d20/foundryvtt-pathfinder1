@@ -1,8 +1,30 @@
 _id: laz5zb1cdfb9jzit
-name: Dream Travel
-type: spell
+_key: '!items!laz5zb1cdfb9jzit'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Travel
 system:
+  actions:
+    - _id: 2b07tktftggy141d
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: you and one creature/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You and the other targets of the spell are physically drawn from the
@@ -97,35 +119,13 @@ system:
       creature begins sleeping. For each hour that passes during this wait, each
       <i><i>dream</i> travel</i>er must attempt a Will save as if it were
       traveling to reach another plane.<p></p>
-  actions:
-    - _id: 2b07tktftggy141d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: you and one creature/level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      psychic: 6
       mesmerist: 6
+      psychic: 6
   level: 6
   school: con
   subschool: teleportation
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!laz5zb1cdfb9jzit'
+type: spell
 

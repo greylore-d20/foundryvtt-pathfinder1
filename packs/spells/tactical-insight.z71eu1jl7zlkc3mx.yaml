@@ -1,17 +1,10 @@
 _id: z71eu1jl7zlkc3mx
-name: Tactical Insight
-type: spell
+_key: '!items!z71eu1jl7zlkc3mx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tactical Insight
 system:
-  description:
-    value: >-
-      <p>Choose a single army tactic. You grant mastery of this tactic to the
-      target army for the spell's duration. This tactic may bring an army's
-      total known tactics to a number greater than normally allowed.</p>
   actions:
     - _id: vp8mdm244chqjfjt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,20 +12,27 @@ system:
           type: action
       duration:
         value: 1 battle
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: spec
+        value: 1 hex
       target:
         value: one army
-      range:
-        value: 1 hex
-        units: spec
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Choose a single army tactic. You grant mastery of this tactic to the
+      target army for the spell's duration. This tactic may bring an army's
+      total known tactics to a number greater than normally allowed.</p>
   learnedAt:
     class:
       bard: 6
       inquisitor: 6
   level: 6
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!z71eu1jl7zlkc3mx'
+type: spell
 

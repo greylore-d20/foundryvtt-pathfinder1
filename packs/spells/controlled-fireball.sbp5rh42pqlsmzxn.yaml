@@ -1,8 +1,42 @@
 _id: sbp5rh42pqlsmzxn
-name: Controlled Fireball
-type: spell
+_key: '!items!sbp5rh42pqlsmzxn'
 img: icons/magic/fire/projectile-fireball-sparks-orange.webp
+name: Controlled Fireball
 system:
+  actions:
+    - _id: tsych5dmp4k9xf9o
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-foot-radius spread
+      damage:
+        parts:
+          - formula: (min(10, @cl))d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        value: instantaneous
+      effectNotes:
+        - '[[min(10, @cl)]] Minimum Damage'
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex half
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <em>fireball</em> except you can cause the bead
@@ -13,51 +47,17 @@ system:
       deals minimum damage in those squares. Attempts to identify controlled
       <em>fireball</em> with a skill check incorrectly identify it as
       <em>fireball</em> (see the ruse descriptor on page 192).</p>
-  actions:
-    - _id: tsych5dmp4k9xf9o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (min(10, @cl))d6
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half
-      effectNotes:
-        - '[[min(10, @cl)]] Minimum Damage'
-      area: 20-foot-radius spread
   learnedAt:
     class:
+      bloodrager: 4
+      magus: 4
+      occultist: 4
       sorcerer: 4
       wizard: 4
-      magus: 4
-      bloodrager: 4
-      occultist: 4
   level: 4
-  school: evo
-  types: fire, ruse
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a ball of bat guano and sulfur
-_key: '!items!sbp5rh42pqlsmzxn'
+  school: evo
+  types: fire, ruse
+type: spell
 

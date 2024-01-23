@@ -1,8 +1,19 @@
 _id: qb7Jq4kfbL0qDP2l
-name: 'Knowledge Blessing: Monster Lore'
-type: feat
+_key: '!items!qb7Jq4kfbL0qDP2l'
 img: systems/pf1/icons/spells/runes-royal-3.jpg
+name: 'Knowledge Blessing: Monster Lore'
 system:
+  actions:
+    - _id: cr24neoaup5k2uwb
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/runes-royal-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, when you succeed at a Knowledge check against an
@@ -11,18 +22,7 @@ system:
       gain a +2 insight bonus on attacks, saving throws, and ability and skill
       checks, as well as to your AC against that creature. This effect lasts for
       1 minute.</p>
-  actions:
-    - _id: cr24neoaup5k2uwb
-      name: Use
-      img: systems/pf1/icons/spells/runes-royal-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_knowledgeBlessingMonsterLore
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!qb7Jq4kfbL0qDP2l'
+  tag: classFeat_knowledgeBlessingMonsterLore
+type: feat
 

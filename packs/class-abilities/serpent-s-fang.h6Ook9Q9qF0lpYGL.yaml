@@ -1,8 +1,27 @@
 _id: h6Ook9Q9qF0lpYGL
-name: Serpent's Fang
-type: feat
+_key: '!items!h6Ook9Q9qF0lpYGL'
 img: systems/pf1/icons/skills/beast_03.jpg
+name: Serpent's Fang
 system:
+  abilityType: ex
+  actions:
+    - _id: u4iuph4z1haet8ys
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/beast_03.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can grow fangs as a <em>free action</em>. These fangs
@@ -16,29 +35,10 @@ system:
       requires 2 successful saves to cure. At 11th level, your poison damage
       increases to 1d4 <em>Con</em>. You can use your fangs for a number of
       rounds per day equal to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: u4iuph4z1haet8ys
-      name: Use
-      img: systems/pf1/icons/skills/beast_03.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_serpentsFang
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!h6Ook9Q9qF0lpYGL'
+  tag: classFeat_serpentsFang
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,27 @@
 _id: 9BDg29hecpIqySP1
-name: Act as One
-type: feat
+_key: '!items!9BDg29hecpIqySP1'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Act as One
 system:
+  abilityType: ex
+  actions:
+    - _id: 10nuia5efzkde6md
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, the cavalier can spend a standard action to move up to
@@ -12,26 +31,7 @@ system:
       attacks are made at a +2 bonus (this stacks with the bonus from a charge)
       and all participants receive a +2 dodge bonus to their AC for 1 round. A
       cavalier can use this ability once per combat.</p>
-  actions:
-    - _id: 10nuia5efzkde6md
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_actAsOne
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!9BDg29hecpIqySP1'
+  tag: classFeat_actAsOne
+type: feat
 

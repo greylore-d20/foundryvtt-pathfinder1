@@ -1,8 +1,26 @@
 _id: sfkg0szik18z0wrb
-name: Arcana Theft
-type: spell
+_key: '!items!sfkg0szik18z0wrb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Arcana Theft
 system:
+  actions:
+    - _id: bfty1e3qt2c72gwy
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as a targeted <i>dispel magic</i> spell, except it
@@ -17,29 +35,11 @@ system:
       duration of permanent, its duration continues for 1 hour per caster level
       of the original caster, after which it ends. The stolen spell does not
       revert to the original target.</p>
-  actions:
-    - _id: bfty1e3qt2c72gwy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
   learnedAt:
     class:
       magus: 4
       psychic: 5
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!sfkg0szik18z0wrb'
+type: spell
 

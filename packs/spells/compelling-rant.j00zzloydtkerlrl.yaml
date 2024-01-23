@@ -1,8 +1,31 @@
 _id: j00zzloydtkerlrl
-name: Compelling Rant
-type: spell
+_key: '!items!j00zzloydtkerlrl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Compelling Rant
 system:
+  actions:
+    - _id: sa6h9eibrcctous0
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: concentration plus 1 round/level, up to 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: any number of creatures
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You deliver a confusing but fascinating monologue, relaying
@@ -34,45 +57,22 @@ system:
       Wisdom damage. The targets might actually change alignment and beliefs if
       their loss of sanity afflicts them with an appropriate madness, in which
       case those effects last even after the spell's duration has ended.</p>
-  actions:
-    - _id: sa6h9eibrcctous0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: concentration plus 1 round/level, up to 1 hour/level
-      target:
-        value: any number of creatures
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 5
+      cleric: 5
       inquisitor: 5
-      psychic: 5
       mesmerist: 5
+      oracle: 5
+      psychic: 5
+      sorcerer: 5
+      warpriest: 5
+      wizard: 5
   level: 5
-  school: enc
-  subschool: charm
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a handwritten sheet of notes
+  school: enc
   sr: false
-_key: '!items!j00zzloydtkerlrl'
+  subschool: charm
+type: spell
 

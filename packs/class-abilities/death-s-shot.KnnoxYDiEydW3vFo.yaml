@@ -1,8 +1,20 @@
 _id: KnnoxYDiEydW3vFo
-name: Death's Shot
-type: feat
+_key: '!items!KnnoxYDiEydW3vFo'
 img: systems/pf1/icons/skills/weapon_44.jpg
+name: Death's Shot
 system:
+  abilityType: ex
+  actions:
+    - _id: 3FG6M1jJ23g9U2ez
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/skills/weapon_44.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 19th level, when the gunslinger scores a critical hit, she can spend
@@ -12,21 +24,9 @@ system:
       target dies. This is a death attack. Performing this deed does not allow
       the gunslinger to regain grit from confirming a critical hit or making a
       killing blow.</p>
+  subType: classFeat
+  tag: classFeat_deathsShot
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: 3FG6M1jJ23g9U2ez
-      name: Use
-      img: systems/pf1/icons/skills/weapon_44.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-  tag: classFeat_deathsShot
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!KnnoxYDiEydW3vFo'
+type: feat
 

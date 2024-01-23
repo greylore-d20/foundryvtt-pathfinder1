@@ -1,8 +1,42 @@
 _id: aji2yHRoqFAHHfm6
-name: Dwarven Urgrosh
-type: weapon
+_key: '!items!aji2yHRoqFAHHfm6'
 img: systems/pf1/icons/items/weapons/dwarven-urgrosh.PNG
+name: Dwarven Urgrosh
 system:
+  actions:
+    - _id: 90nl31kraar7k5bh
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/dwarven-urgrosh.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Dwarven Urgrosh
   description:
     value: >-
       <p>A dwarven urgrosh is a double weapon- an axe head and a spear point on
@@ -12,58 +46,24 @@ system:
       the other becomes the off-hand weapon. If you use an urgrosh against a
       charging character, the spear head is the part of the weapon that deals
       damage. Dwarves treat dwarven urgroshes as martial weapons.</p>
-  tags:
-    - PFS
-    - Dwarven
-  weight:
-    value: 12
-  price: 50
   hardness: 10
-  actions:
-    - _id: 90nl31kraar7k5bh
-      name: Attack
-      img: systems/pf1/icons/items/weapons/dwarven-urgrosh.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Dwarven Urgrosh
-  weaponGroups:
-    value:
-      - double
-  subType: exotic
-  weaponSubtype: 2h
+  price: 50
   properties:
     brc: true
     dbl: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!aji2yHRoqFAHHfm6'
+  subType: exotic
+  tags:
+    - PFS
+    - Dwarven
+  weaponGroups:
+    value:
+      - double
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

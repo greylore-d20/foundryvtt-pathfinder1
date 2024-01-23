@@ -1,49 +1,49 @@
 _id: 6kn3xjxysd4b3t6a
-name: Contact Entity IV
-type: spell
+_key: '!items!6kn3xjxysd4b3t6a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contact Entity IV
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>contact entity III</i>, except that you
-      can contact creatures from the <i>contact entity IV</i> list, and as noted
-      above.</p>
   actions:
     - _id: gtkyn6pu9tvli98h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '500'
       target:
         value: up to 20 entities of 24 HD or fewer
-      range:
-        value: '500'
-        units: mi
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>contact entity III</i>, except that you
+      can contact creatures from the <i>contact entity IV</i> list, and as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
-      summoner: 6
-      witch: 7
-      shaman: 7
-      psychic: 7
       medium: 4
       occultist: 6
+      oracle: 7
+      psychic: 7
+      shaman: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see text
+  school: evo
   sr: false
-_key: '!items!6kn3xjxysd4b3t6a'
+type: spell
 

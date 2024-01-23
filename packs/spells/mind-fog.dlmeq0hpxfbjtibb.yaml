@@ -1,8 +1,29 @@
 _id: dlmeq0hpxfbjtibb
-name: Mind Fog
-type: spell
+_key: '!items!dlmeq0hpxfbjtibb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mind Fog
 system:
+  actions:
+    - _id: 8d0rpdaupdieconb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 30 minutes and 2d6 rounds; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      spellEffect: fog spreads in 20-ft. radius, 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Mind fog</i> produces a bank of thin mist that weakens the mental
@@ -15,43 +36,22 @@ system:
       moderate wind (11+ mph) disperses the fog in 4 rounds; a strong wind (21+
       mph) disperses the fog in 1 round.</p><p>The fog is thin and does not
       significantly hamper vision.</p>
-  actions:
-    - _id: 8d0rpdaupdieconb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 30 minutes and 2d6 rounds; see text
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: fog spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 5
-      witch: 5
-      psychic: 5
       mesmerist: 5
       occultist: 5
+      psychic: 5
+      sorcerer: 5
       spiritualist: 5
+      witch: 5
+      wizard: 5
   level: 5
   school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '313'
-_key: '!items!dlmeq0hpxfbjtibb'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

@@ -1,8 +1,30 @@
 _id: RUxd9Jm0DXTUsNZR
-name: Animus Shade
-type: feat
+_key: '!items!RUxd9Jm0DXTUsNZR'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Animus Shade
 system:
+  changes:
+    - _id: 1e7gm9uk
+      formula: '30'
+      modifier: untyped
+      subTarget: flySpeed
+    - _id: fhebigus
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+    - _id: gonae9gj
+      formula: '8'
+      modifier: untyped
+      subTarget: skill.int
+    - _id: 019g9izf
+      formula: '8'
+      modifier: untyped
+      subTarget: skill.per
+    - _id: f0hb9axm
+      formula: '@abilities.cha.mod'
+      modifier: deflection
+      subTarget: ac
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -126,28 +148,6 @@ system:
       (arcana), Knowledge (religion), Perception, Sense Motive, Spellcraft, and
       Stealth as class skills. Otherwise, its skills are the same as those of
       the base creature.</p>
-  changes:
-    - _id: 1e7gm9uk
-      formula: '30'
-      subTarget: flySpeed
-      modifier: untyped
-    - _id: fhebigus
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
-    - _id: gonae9gj
-      formula: '8'
-      subTarget: skill.int
-      modifier: untyped
-    - _id: 019g9izf
-      formula: '8'
-      subTarget: skill.per
-      modifier: untyped
-    - _id: f0hb9axm
-      formula: '@abilities.cha.mod'
-      subTarget: ac
-      modifier: deflection
   subType: template
-  crOffset: '2'
-_key: '!items!RUxd9Jm0DXTUsNZR'
+type: feat
 

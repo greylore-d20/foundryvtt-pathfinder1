@@ -1,8 +1,29 @@
 _id: b2y7l4cronnp5zls
-name: Betraying Sting
-type: spell
+_key: '!items!b2y7l4cronnp5zls'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Betraying Sting
 system:
+  actions:
+    - _id: xgymigugaqj9tey4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>You unleash divine power to smite those who wrongly trusted you. The
@@ -11,37 +32,16 @@ system:
       creatures that have an attitude toward you of indifferent, friendly, or
       helpful. The spell deals 1d8 points of damage per 2 caster levels you
       have.</p>
-  actions:
-    - _id: xgymigugaqj9tey4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
-      shaman: 6
-      psychic: 6
       occultist: 6
+      oracle: 6
+      psychic: 6
+      shaman: 6
+      warpriest: 6
+      witch: 6
   level: 6
   school: evo
-  components:
-    verbal: true
-_key: '!items!b2y7l4cronnp5zls'
+type: spell
 

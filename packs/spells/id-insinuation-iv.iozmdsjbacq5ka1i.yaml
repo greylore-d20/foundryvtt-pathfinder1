@@ -1,8 +1,29 @@
 _id: iozmdsjbacq5ka1i
-name: Id Insinuation IV
-type: spell
+_key: '!items!iozmdsjbacq5ka1i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Id Insinuation IV
 system:
+  actions:
+    - _id: g9c7lxu37gu6fc4x
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: four creatures
+  components:
+    somatic: true
   description:
     value: >-
       <p>This functions as <i>id insinuation I</i>, except as noted above. In
@@ -12,25 +33,6 @@ system:
       On the following rounds of the effect, the targets of this spell must roll
       twice to determine their confused effect. You select which roll is used.
       This spell can be undercast.</p>
-  actions:
-    - _id: g9c7lxu37gu6fc4x
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round
-      target:
-        value: four creatures
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       psychic: 5
@@ -38,7 +40,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!iozmdsjbacq5ka1i'
+type: spell
 

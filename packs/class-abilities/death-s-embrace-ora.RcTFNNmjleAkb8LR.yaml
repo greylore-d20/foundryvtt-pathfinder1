@@ -1,7 +1,17 @@
-name: Death's Embrace (ORA)
-type: feat
+_id: RcTFNNmjleAkb8LR
+_key: '!items!RcTFNNmjleAkb8LR'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Death's Embrace (ORA)
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 2JFuC5Gg
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>You gain @UUID[Compendium.pf1.feats.ZmQkRk93nbHxsQSt]{Improved Grapple}
@@ -10,25 +20,15 @@ system:
       points of negative energy damage to the target of your grapple. This
       damage increases by 1d6 at 5th level and every 5 levels thereafter, to a
       maximum of 5d6 at 20th level.</p>
-  tags:
-    - Reaper Mystery
-  changes:
-    - _id: 2JFuC5Gg
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Improved Grapple
         uuid: Compendium.pf1.feats.Item.ZmQkRk93nbHxsQSt
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO90139
     pages: '66'
-_id: RcTFNNmjleAkb8LR
-_key: '!items!RcTFNNmjleAkb8LR'
+  subType: classFeat
+  tags:
+    - Reaper Mystery
+type: feat
 

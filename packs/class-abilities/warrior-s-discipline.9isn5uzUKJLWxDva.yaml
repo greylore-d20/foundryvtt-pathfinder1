@@ -1,8 +1,23 @@
 _id: 9isn5uzUKJLWxDva
-name: Warrior's Discipline
-type: feat
+_key: '!items!9isn5uzUKJLWxDva'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Warrior's Discipline
 system:
+  abilityType: su
+  actions:
+    - _id: z69f1kig8wruzeb2
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 1st level, you tap into untold generations of battle experience to
@@ -10,22 +25,7 @@ system:
       bonuses gained from bloodrage to be able to use Intelligence- or
       Charisma-based skills, or any abilities requiring patience or
       concentration. This effect lasts for 1 round.</p>
-  actions:
-    - _id: z69f1kig8wruzeb2
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  tag: classFeat_warriorsDiscipline
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!9isn5uzUKJLWxDva'
+  tag: classFeat_warriorsDiscipline
+type: feat
 

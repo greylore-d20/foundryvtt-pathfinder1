@@ -1,8 +1,23 @@
 _id: 5j1SHTidyOQXfUJt
-name: Blood Tears
-type: feat
+_key: '!items!5j1SHTidyOQXfUJt'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Blood Tears
 system:
+  abilityType: su
+  actions:
+    - _id: ir5sjql17inhkide
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@classes.arcanist.level'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>As a move action, the arcanist can expend 1 point from his arcane
@@ -18,24 +33,9 @@ system:
       anguish for 1 round. If the arcanist doesn’t wipe his bleeding tears away,
       the effects of this exploit can persist for a maximum duration of 1 minute
       per arcanist level.</p>
+  subType: classFeat
+  tag: classFeat_bloodTears
   tags:
     - Arcanist Exploit, Outer Rift
-  actions:
-    - _id: ir5sjql17inhkide
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@classes.arcanist.level'
-        units: minute
-  tag: classFeat_bloodTears
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!5j1SHTidyOQXfUJt'
+type: feat
 

@@ -1,8 +1,20 @@
 _id: XW0kBaUMVklwlS0x
-name: Nature Spirit Manifestation
-type: feat
+_key: '!items!XW0kBaUMVklwlS0x'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Nature Spirit Manifestation
 system:
+  actions:
+    - _id: dw52ltfc96ggdw2d
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>Upon reaching 20th level, the shaman becomes a spirit of nature. Once
@@ -17,22 +29,10 @@ system:
       until the shaman chooses to transform again. Each time the transformation
       is made, the shaman is cleansed of all poisons or diseases, restored to
       full hit points, and healed of all ability damage.</p>
-  actions:
-    - _id: dw52ltfc96ggdw2d
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_natureSpiritManifestation
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-_key: '!items!XW0kBaUMVklwlS0x'
+  tag: classFeat_natureSpiritManifestation
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,8 +1,29 @@
 _id: YYdaFefBey2TOHlM
-name: Rallying Cry
-type: feat
+_key: '!items!YYdaFefBey2TOHlM'
 img: systems/pf1/icons/skills/affliction_24.jpg
+name: Rallying Cry
 system:
+  abilityType: su
+  actions:
+    - _id: 6jsmfhq0hcr0xspj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.sorcerer.level / 2))
+      img: systems/pf1/icons/skills/affliction_24.jpg
+      name: Use
+      range:
+        units: spec
+        value: '30'
+      target:
+        value: allies
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 3rd level, as a <em>standard action</em> once per day, you can shout
@@ -12,31 +33,10 @@ system:
       <em>sorcerer</em> level (minimum 1). At 7th level and every four levels
       thereafter, this bonus increases by +1, to a maximum of +5 at 19th
       level.</p>
-  actions:
-    - _id: 6jsmfhq0hcr0xspj
-      name: Use
-      img: systems/pf1/icons/skills/affliction_24.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.sorcerer.level / 2))
-        units: round
-      target:
-        value: allies
-      range:
-        value: '30'
-        units: spec
-  uses:
-    per: day
-    maxFormula: floor((@classes.sorcerer.level + 1) / 4)
-  tag: classFeat_rallyingCry
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!YYdaFefBey2TOHlM'
+  tag: classFeat_rallyingCry
+  uses:
+    maxFormula: floor((@classes.sorcerer.level + 1) / 4)
+    per: day
+type: feat
 

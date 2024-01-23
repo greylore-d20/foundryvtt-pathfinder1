@@ -1,8 +1,32 @@
 _id: rfp8y4lq5bdzriyp
-name: Cosmic Ray
-type: spell
+_key: '!items!rfp8y4lq5bdzriyp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cosmic Ray
 system:
+  actions:
+    - _id: wl1jhocnangkzcqc
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous and 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial
+        type: fort
+      spellEffect: ray
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fling a ray of deadly cosmic energy at the target creature. If you
@@ -13,38 +37,14 @@ system:
       that comes within 5 feet of the affected target must succeed at a
       Fortitude save (DC = spell's DC) or become sickened for 1 round per 2
       caster levels.</p>
-  actions:
-    - _id: wl1jhocnangkzcqc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous and 1 round/level (see text)
-      range:
-        units: close
-      actionType: rsak
-      ability:
-        attack: dex
-      save:
-        type: fort
-        description: Fortitude partial
-      spellEffect: ray
   learnedAt:
     class:
+      magus: 5
       sorcerer: 6
       wizard: 6
-      magus: 5
   level: 6
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of meteorite
-_key: '!items!rfp8y4lq5bdzriyp'
+  school: evo
+type: spell
 

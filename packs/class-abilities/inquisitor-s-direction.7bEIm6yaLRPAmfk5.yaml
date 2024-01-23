@@ -1,8 +1,29 @@
 _id: 7bEIm6yaLRPAmfk5
-name: Inquisitor's Direction
-type: feat
+_key: '!items!7bEIm6yaLRPAmfk5'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Inquisitor's Direction
 system:
+  abilityType: su
+  actions:
+    - _id: i60an6ah5iotiqcs
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one ally
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At the start of your turn, you can choose to enter a tranquil,
@@ -11,31 +32,10 @@ system:
       ally of your choice within 30 feet gains the benefit of haste for 1 round.
       You can use this ability a number of times per day equal to your 3 +
       Wisdom bonus (minimum 1).</p>
-  actions:
-    - _id: i60an6ah5iotiqcs
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one ally
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_inquisitorsDirection
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!7bEIm6yaLRPAmfk5'
+  tag: classFeat_inquisitorsDirection
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

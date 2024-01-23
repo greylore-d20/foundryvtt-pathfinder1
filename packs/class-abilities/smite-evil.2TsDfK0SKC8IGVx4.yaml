@@ -1,8 +1,24 @@
 _id: 2TsDfK0SKC8IGVx4
-name: Smite Evil
-type: feat
+_key: '!items!2TsDfK0SKC8IGVx4'
 img: systems/pf1/icons/feats/greater-weapon-focus.jpg
+name: Smite Evil
 system:
+  abilityType: su
+  actions:
+    - _id: rp3my4fea7xog21f
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/greater-weapon-focus.jpg
+      name: Use
+      range:
+        units: seeText
+  associations:
+    classes:
+      - Paladin
   description:
     value: >-
       <p>Once per day, a paladin can call out to the powers of good to aid her
@@ -27,26 +43,10 @@ system:
       4th level, and at every three levels thereafter, the paladin may smite
       evil one additional time per day, as indicated on Table: Paladin, to a
       maximum of seven times per day at 19th level.</p>
-  actions:
-    - _id: rp3my4fea7xog21f
-      name: Use
-      img: systems/pf1/icons/feats/greater-weapon-focus.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: floor((@attributes.hd.total - 1) / 3) + 1
-  tag: classFeat_smiteEvil
   subType: classFeat
-  associations:
-    classes:
-      - Paladin
-  abilityType: su
-_key: '!items!2TsDfK0SKC8IGVx4'
+  tag: classFeat_smiteEvil
+  uses:
+    maxFormula: floor((@attributes.hd.total - 1) / 3) + 1
+    per: day
+type: feat
 

@@ -1,19 +1,11 @@
 _id: hv1vqeuh5eji28rz
-name: Contagion, Greater
-type: spell
+_key: '!items!hv1vqeuh5eji28rz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contagion, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as
-      @Compendium[pf1.spells.ppeb97nxg1rmdpme]{contagion}, except the victim
-      cannot overcome the disease without magic-making the required number of
-      saves does not cure it. The DC to remove the disease with magic is equal
-      to the save DC + 5.</p>
   actions:
     - _id: sd6nyuqtbdk8szys
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,29 +13,37 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as
+      @Compendium[pf1.spells.ppeb97nxg1rmdpme]{contagion}, except the victim
+      cannot overcome the disease without magic-making the required number of
+      saves does not cure it. The DC to remove the disease with magic is equal
+      to the save DC + 5.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 5
-      warpriest: 5
-      oracle: 5
       druid: 5
-      witch: 5
       hunter: 5
+      oracle: 5
+      sorcerer: 6
+      warpriest: 5
+      witch: 5
+      wizard: 6
   level: 6
   school: nec
   types: disease, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!hv1vqeuh5eji28rz'
+type: spell
 

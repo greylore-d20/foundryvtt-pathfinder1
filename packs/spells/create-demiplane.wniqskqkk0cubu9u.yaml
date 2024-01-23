@@ -1,8 +1,28 @@
 _id: wniqskqkk0cubu9u
-name: Create Demiplane
-type: spell
+_key: '!items!wniqskqkk0cubu9u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Demiplane
 system:
+  actions:
+    - _id: zxvlbau9w1tzy576
+      activation:
+        cost: 4
+        type: hour
+        unchained:
+          cost: 4
+          type: hour
+      duration:
+        value: 1 day/level or instantaneous (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: extradimensional demiplane, up to 10 10-ft. cubes/level (S)
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>create lesser demiplane</i>, except the area
@@ -52,49 +72,29 @@ system:
       gp. If you have cast <i>create demiplane</i> multiple times to enlarge the
       demiplane, each casting's area requires its own <i>permanency</i>
       spell.</p>
-  actions:
-    - _id: zxvlbau9w1tzy576
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 4
-        type: hour
-        unchained:
-          cost: 4
-          type: hour
-      duration:
-        value: 1 day/level or instantaneous (see text)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: extradimensional demiplane, up to 10 10-ft. cubes/level (S)
   learnedAt:
-    class:
-      sorcerer: 8
-      wizard: 8
-      cleric: 8
-      oracle: 8
-      summoner: 6
-      witch: 8
-      psychic: 8
-      occultist: 6
-      summonerUnchained: 6
-    subDomain:
-      Greed: 8
     bloodline:
       Ectoplasm: 8
+    class:
+      cleric: 8
+      occultist: 6
+      oracle: 8
+      psychic: 8
+      sorcerer: 8
+      summoner: 6
+      summonerUnchained: 6
+      witch: 8
+      wizard: 8
+    subDomain:
+      Greed: 8
   level: 8
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a forked metal rod worth at least 500 gp
-  sr: false
+  school: con
   source:
     id: PZO1117
     pages: '214'
-_key: '!items!wniqskqkk0cubu9u'
+  sr: false
+  subschool: creation
+type: spell
 

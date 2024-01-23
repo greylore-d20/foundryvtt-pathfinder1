@@ -1,16 +1,11 @@
 _id: d8hypv6zdyan3rzr
-name: Hold Monster
-type: spell
+_key: '!items!d8hypv6zdyan3rzr'
 img: icons/magic/control/silhouette-hold-beam-blue.webp
+name: Hold Monster
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>hold person,</i> except that it affects
-      any living creature that fails its Will save.</p>
   actions:
     - _id: rdn8rg7z62nou53q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,44 +13,49 @@ system:
           type: action
       duration:
         value: 1 round/level; see text
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates; see text
+        type: will
+      target:
+        value: one living creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>hold person,</i> except that it affects
+      any living creature that fails its Will save.</p>
   learnedAt:
+    bloodline:
+      Serpentine: 5
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 4
-      summoner: 4
-      witch: 5
       inquisitor: 4
-      psychic: 5
       medium: 4
       mesmerist: 4
       occultist: 4
+      psychic: 5
+      sorcerer: 5
+      summoner: 4
       summonerUnchained: 5
+      witch: 5
+      wizard: 5
     domain:
       Law: 6
-    bloodline:
-      Serpentine: 5
   level: 5
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: one hard metal bar or rod, which can be as small as a three-penny nail
+  school: enc
   source:
     id: PZO1110
     pages: '296'
-_key: '!items!d8hypv6zdyan3rzr'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

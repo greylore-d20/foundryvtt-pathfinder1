@@ -1,8 +1,30 @@
 _id: 6lebv7569xsypp8u
-name: Rainbow Pattern
-type: spell
+_key: '!items!6lebv7569xsypp8u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rainbow Pattern
 system:
+  actions:
+    - _id: ep5bwl8efop9ek8s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      spellEffect: colorful lights with a 20-ft.-radius spread
+  components:
+    focus: true
+    material: true
+    somatic: true
   description:
     value: >-
       <p>A glowing, rainbow-hued pattern of interweaving colors fascinates those
@@ -19,40 +41,18 @@ system:
       each fascinated creature gets a second save. If the view of the lights is
       completely blocked, creatures who can't see them are no longer
       affected.</p><p>The spell does not affect sightless creatures.</p>
-  actions:
-    - _id: ep5bwl8efop9ek8s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: colorful lights with a 20-ft.-radius spread
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
       psychic: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
+  materials:
+    focus: a crystal prism
+    value: a piece of phosphor
   school: ill
   subschool: pattern
   types: mind-affecting
-  components:
-    somatic: true
-    material: true
-    focus: true
-  materials:
-    value: a piece of phosphor
-    focus: a crystal prism
-_key: '!items!6lebv7569xsypp8u'
+type: spell
 

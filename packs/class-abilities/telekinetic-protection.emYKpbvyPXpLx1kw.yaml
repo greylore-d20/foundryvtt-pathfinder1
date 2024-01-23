@@ -1,37 +1,37 @@
-name: Telekinetic Protection
-type: feat
+_id: emYKpbvyPXpLx1kw
+_key: '!items!emYKpbvyPXpLx1kw'
 img: icons/magic/unholy/orb-colllecting-energy-green.webp
+name: Telekinetic Protection
 system:
+  abilityType: su
+  actions:
+    - _id: yQhbG7pv6L89kOGG
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: icons/magic/unholy/orb-colllecting-energy-green.webp
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a swift action, you can grant yourself protection against nonmagical
       attacks by forming a field to telekinetically deflect them. You gain DR
       5/magic for 1 round. You can use this ability a number of times per day
       equal to 3 + your Intelligence modifier.</p>
-  tags:
-    - Aether School
-  actions:
-    - _id: yQhbG7pv6L89kOGG
-      name: Use
-      img: icons/magic/unholy/orb-colllecting-energy-green.webp
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9483
     pages: '20'
-_id: emYKpbvyPXpLx1kw
-_key: '!items!emYKpbvyPXpLx1kw'
+  subType: classFeat
+  tags:
+    - Aether School
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,8 +1,38 @@
 _id: xQegVPdAOD8rq2Rl
-name: Traveling Kettle
-type: weapon
+_key: '!items!xQegVPdAOD8rq2Rl'
 img: systems/pf1/icons/items/weapons/travelling-kettle.png
+name: Traveling Kettle
 system:
+  actions:
+    - _id: he3xayj9zs9bbxzh
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/travelling-kettle.png
+      name: Attack
+      range:
+        units: melee
+  baseTypes:
+    - Traveling Kettle
   description:
     value: >-
       <p>These small tea kettles are made with clamping lids and heavily
@@ -10,60 +40,30 @@ system:
       kettle with boiling water inside deals an additional 1 point of fire
       damage on a hit. Boiling water cools to a nondamaging temperature after 5
       minutes.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 5
+  hardness: 5
   hp:
     max: 2
     value: 2
-  hardness: 5
-  actions:
-    - _id: he3xayj9zs9bbxzh
-      name: Attack
-      img: systems/pf1/icons/items/weapons/travelling-kettle.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Traveling Kettle
-  weaponGroups:
-    value:
-      - monk
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
+    normal:
+      value: ''
+  price: 5
   properties:
+    fin: true
     mnk: true
     spc: true
-    fin: true
   source:
     id: PZO9493
     pages: '30'
-_key: '!items!xQegVPdAOD8rq2Rl'
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - monk
+  weight:
+    value: 2
+type: weapon
 

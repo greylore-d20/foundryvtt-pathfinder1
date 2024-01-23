@@ -1,8 +1,13 @@
 _id: RFAtJOSYWpDwJHU4
-name: Dispelling Attack
-type: feat
+_key: '!items!RFAtJOSYWpDwJHU4'
 img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+name: Dispelling Attack
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Rogue
+      - Ninja
   description:
     value: >-
       <p>Opponents that are dealt sneak attack damage by a character with this
@@ -12,16 +17,11 @@ system:
       ability is equal to the rogue's level. A character must have the
       @UUID[Compendium.pf1.class-abilities.Item.XjdctYm8hBkALI2K]{major magic}
       rogue talent before choosing dispelling attack.</p>
+  subType: classFeat
+  tag: classFeat_dispellingAttack
   tags:
     - Rogue Talent, Advanced
     - Sneak Attack
     - Ninja Trick, Master
-  tag: classFeat_dispellingAttack
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Ninja
-  abilityType: su
-_key: '!items!RFAtJOSYWpDwJHU4'
+type: feat
 

@@ -1,8 +1,31 @@
 _id: oaf0050z2ll76wj8
-name: Spell Gauge
-type: spell
+_key: '!items!oaf0050z2ll76wj8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Gauge
 system:
+  actions:
+    - _id: 770g60hue84r065t
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You immediately discover some of the spells that the target knows or
@@ -16,43 +39,20 @@ system:
       spells or spells of 4th level or higher prepared, that has expended all of
       its spells, or that has not prepared any spells that day, the spell has no
       effect.</p>
-  actions:
-    - _id: 770g60hue84r065t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      witch: 2
+      cleric: 2
       inquisitor: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: div
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a silver piece
-_key: '!items!oaf0050z2ll76wj8'
+  school: div
+  types: mind-affecting
+type: spell
 

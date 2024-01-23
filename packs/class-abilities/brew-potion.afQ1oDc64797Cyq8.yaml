@@ -1,8 +1,18 @@
 _id: afQ1oDc64797Cyq8
-name: Brew Potion
-type: feat
+_key: '!items!afQ1oDc64797Cyq8'
 img: systems/pf1/icons/items/potions/minor-red.jpg
+name: Brew Potion
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Alchemist
+  changes:
+    - _id: s3b9i25m
+      formula: '1'
+      modifier: untyped
+      priority: null
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 1st level, alchemists receive
@@ -11,24 +21,14 @@ system:
       using his alchemist level as his caster level. The spell must be one that
       can be made into a potion. The alchemist does not need to meet the
       prerequisites for this feat.</p>
-  changes:
-    - _id: s3b9i25m
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-      priority: null
   links:
     supplements:
       - name: Brew Potion
         uuid: Compendium.pf1.feats.Item.nNVFVFRBCT4O2ab9
-  tag: classFeat_brewPotion
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-  abilityType: ex
   source:
     id: PZO1115
     pages: '28'
-_key: '!items!afQ1oDc64797Cyq8'
+  subType: classFeat
+  tag: classFeat_brewPotion
+type: feat
 

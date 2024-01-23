@@ -1,8 +1,30 @@
 _id: 5iztb4bo8ybh1wzo
-name: Arrow of Law
-type: spell
+_key: '!items!5iztb4bo8ybh1wzo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Arrow of Law
 system:
+  actions:
+    - _id: shbvja62nmgtfqf9
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous (1 round); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial (see text)
+        type: will
+      spellEffect: arrow-shaped projectile of lawful energy
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fire a shimmering arrow of pure order from your holy symbol at any
@@ -14,38 +36,16 @@ system:
       effect.</p><p>This spell deals only half damage to creatures that are
       neither chaotic nor lawful, and they are not dazed. The arrow has no
       effect on lawful creatures.</p>
-  actions:
-    - _id: shbvja62nmgtfqf9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous (1 round); see text
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial (see text)
-      spellEffect: arrow-shaped projectile of lawful energy
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
       paladin: 2
+      warpriest: 2
   level: 2
-  school: evo
-  types: lawful
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a holy symbol
-_key: '!items!5iztb4bo8ybh1wzo'
+  school: evo
+  types: lawful
+type: spell
 

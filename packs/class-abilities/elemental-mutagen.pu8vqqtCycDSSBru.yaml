@@ -1,8 +1,11 @@
 _id: pu8vqqtCycDSSBru
-name: Elemental Mutagen
-type: feat
+_key: '!items!pu8vqqtCycDSSBru'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Elemental Mutagen
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>The alchemist chooses an element (air, earth, fire, or water). Whenever
@@ -16,12 +19,9 @@ system:
       discovery up to four times, but must choose a different element each time.
       An alchemist can gain the benefits of only one elemental mutagen at a
       time, selected when he imbibes the mutagen.</p>
+  subType: classFeat
+  tag: classFeat_elementalMutagen
   tags:
     - Alchemist Discovery
-  tag: classFeat_elementalMutagen
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!pu8vqqtCycDSSBru'
+type: feat
 

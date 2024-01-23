@@ -1,8 +1,25 @@
 _id: 7c8nufdm0pj4bgep
-name: Glibness
-type: spell
+_key: '!items!7c8nufdm0pj4bgep'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Glibness
 system:
+  actions:
+    - _id: iu5t01xh37yiamck
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>Your speech becomes fluent and more believable, causing those who hear
@@ -15,32 +32,15 @@ system:
       succeed on a caster level check (1d20 + caster level) against a DC of 15 +
       your caster level to succeed. Failure means the effect does not detect
       your lies or force you to speak only the truth.</p>
-  actions:
-    - _id: iu5t01xh37yiamck
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bard: 3
       mesmerist: 3
   level: 3
   school: trs
-  components:
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '290'
-_key: '!items!7c8nufdm0pj4bgep'
+  sr: false
+type: spell
 

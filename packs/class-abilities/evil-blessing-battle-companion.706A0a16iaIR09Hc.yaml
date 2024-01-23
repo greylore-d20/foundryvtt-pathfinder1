@@ -1,8 +1,23 @@
 _id: 706A0a16iaIR09Hc
-name: 'Evil Blessing: Battle Companion'
-type: feat
+_key: '!items!706A0a16iaIR09Hc'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: 'Evil Blessing: Battle Companion'
 system:
+  actions:
+    - _id: yzvw4uf4ppg5xdwb
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can summon a battle companion. This ability
@@ -15,22 +30,7 @@ system:
       increases by 1 (to a maximum of
       @Compendium[pf1.spells.mi52crelhwuy6bmp]{Summon Monster IX} at 20th
       level).</p>
-  actions:
-    - _id: yzvw4uf4ppg5xdwb
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '1'
-        units: minute
-  tag: classFeat_evilBlessingBattleCompanion
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!706A0a16iaIR09Hc'
+  tag: classFeat_evilBlessingBattleCompanion
+type: feat
 

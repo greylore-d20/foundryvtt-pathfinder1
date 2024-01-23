@@ -1,8 +1,47 @@
 _id: dWmTFPAUcYqU9s1I
-name: Life Leach
-type: feat
+_key: '!items!dWmTFPAUcYqU9s1I'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Life Leach
 system:
+  abilityType: su
+  actions:
+    - _id: dvzp9slz568hhmyx
+      ability:
+        attack: dex
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (min(floor(@classes.oracle.level / 2),10))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: hour
+        value: max(@abilities.cha.mod, 0)
+      effectNotes:
+        - >-
+          Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]]
+          hours
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        description: Fortitude half
+        type: fort
+      target:
+        value: living target
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can draw life force from the bodies of enemies and channel it into
@@ -19,49 +58,10 @@ system:
       time per day for every 4 levels you possess beyond 7th.</p>
 
       <p>You must be at least 7th level before selecting this revelation.</p>
-  actions:
-    - _id: dvzp9slz568hhmyx
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(@abilities.cha.mod, 0)
-        units: hour
-      target:
-        value: living target
-      range:
-        value: '30'
-        units: ft
-      actionType: msak
-      damage:
-        parts:
-          - formula: (min(floor(@classes.oracle.level / 2),10))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: dex
-      save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
-        type: fort
-        description: Fortitude half
-      effectNotes:
-        - >-
-          Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]]
-          hours
-  uses:
-    per: day
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_lifeLeach
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!dWmTFPAUcYqU9s1I'
+  tag: classFeat_lifeLeach
+  uses:
+    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    per: day
+type: feat
 

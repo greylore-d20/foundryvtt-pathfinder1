@@ -1,8 +1,27 @@
 _id: oRHnlhP9YFKrKqUm
-name: Ectoplasmic Form
-type: feat
+_key: '!items!oRHnlhP9YFKrKqUm'
 img: systems/pf1/icons/skills/green_25.jpg
+name: Ectoplasmic Form
 system:
+  abilityType: sp
+  actions:
+    - _id: dbzg4usx9r9xh1n2
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/green_25.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: Self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can transform into a cloud of ectoplasm. Treat this
@@ -14,29 +33,10 @@ system:
 
       <p>These minutes need not be consecutive, but must be used in 1-minute
       increments.</p>
-  actions:
-    - _id: dbzg4usx9r9xh1n2
-      name: Use
-      img: systems/pf1/icons/skills/green_25.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: Self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level'
-  tag: classFeat_ectoplasmicForm
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!oRHnlhP9YFKrKqUm'
+  tag: classFeat_ectoplasmicForm
+  uses:
+    maxFormula: '@classes.sorcerer.level'
+    per: day
+type: feat
 

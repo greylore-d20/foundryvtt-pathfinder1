@@ -1,8 +1,31 @@
 _id: v58v451n6dj73wvc
-name: Teleport Trap
-type: spell
+_key: '!items!v58v451n6dj73wvc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Teleport Trap
 system:
+  actions:
+    - _id: fwqbh1h6xxgut1l4
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: one 40-ft. cube/level (S)
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Teleport trap</i> wards an area, redirecting all
@@ -36,25 +59,6 @@ system:
       crypt of the Whispering Tyrant makes use of the spell as well, trapping
       grave robbers in coffin-sized stone cysts, there to die a slow and
       agonizing death from thirst and starvation.</p>
-  actions:
-    - _id: fwqbh1h6xxgut1l4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: one 40-ft. cube/level (S)
   learnedAt:
     class:
       sorcerer: 7
@@ -62,15 +66,11 @@ system:
     subDomain:
       Trap: 7
   level: 7
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered lodestone and silver worth 100 gp per 40-ft. cube
     gpValue: 100
+    value: powdered lodestone and silver worth 100 gp per 40-ft. cube
   preparation:
     spontaneousPrepared: false
-_key: '!items!v58v451n6dj73wvc'
+  school: abj
+type: spell
 

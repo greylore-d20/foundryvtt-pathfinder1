@@ -1,8 +1,30 @@
 _id: mtxqp85izkb20djq
-name: Ghost Sound
-type: spell
+_key: '!items!mtxqp85izkb20djq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ghost Sound
 system:
+  actions:
+    - _id: ntjzkkur5i3jkn76
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will disbelief
+        type: will
+      spellEffect: illusory sounds
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Ghost sound</i> allows you to create a volume of sound that rises,
@@ -20,46 +42,24 @@ system:
       to disbelieve.</p><p><i>Ghost sound</i> can enhance the effectiveness of a
       <i>silent image</i> spell.</p><p><i>Ghost sound</i> can be made permanent
       with a <i>permanency</i> spell.</p>
-  actions:
-    - _id: ntjzkkur5i3jkn76
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief
-      spellEffect: illusory sounds
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
+      adept: 0
       bard: 0
       magus: 0
-      adept: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      psychic: 0
+      sorcerer: 0
+      wizard: 0
   level: 0
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a bit of wool or a small lump of wax
+  school: ill
   sr: false
-_key: '!items!mtxqp85izkb20djq'
+  subschool: figment
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: tfml9xp8w3xdq0e8
-name: Blood Biography
-type: spell
+_key: '!items!tfml9xp8w3xdq0e8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Biography
 system:
+  actions:
+    - _id: 9pkeufhool8juyr6
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one creature's blood or one bloodstain
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You learn the answers to a specific set of questions about a creature
@@ -18,46 +41,23 @@ system:
       knowledge) </li><li> When was your blood shed?</li></ul> These answers
       always appear in a language you can read even if the creature cannot speak
       that or any language.<p></p>
-  actions:
-    - _id: 9pkeufhool8juyr6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one creature's blood or one bloodstain
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
-      inquisitor: 3
       bloodrager: 3
-      psychic: 3
+      cleric: 3
+      inquisitor: 3
       medium: 2
       occultist: 2
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a scrap of parchment
+  school: div
   sr: false
-_key: '!items!tfml9xp8w3xdq0e8'
+type: spell
 

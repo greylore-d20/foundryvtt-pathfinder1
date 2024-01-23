@@ -1,8 +1,20 @@
 _id: GH57XmJVGC97z6hM
-name: Magic Circles
-type: feat
+_key: '!items!GH57XmJVGC97z6hM'
 img: systems/pf1/icons/spells/runes-orange-1.jpg
+name: Magic Circles
 system:
+  abilityType: su
+  actions:
+    - _id: b6vsp7g7a496i3vq
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/spells/runes-orange-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>At 8th level, an occultist learns how to draw magic circles. To draw a
@@ -23,19 +35,7 @@ system:
       he creates a second circle, the first one loses all its magic powers. This
       type of magic circle can’t normally be focused inward to bind an
       outsider.</p>
-  actions:
-    - _id: b6vsp7g7a496i3vq
-      name: Use
-      img: systems/pf1/icons/spells/runes-orange-1.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-  tag: classFeat_magicCircles
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: su
-_key: '!items!GH57XmJVGC97z6hM'
+  tag: classFeat_magicCircles
+type: feat
 

@@ -1,8 +1,26 @@
 _id: ymtxb4jujoosabrh
-name: Create Treasure Map
-type: spell
+_key: '!items!ymtxb4jujoosabrh'
 img: icons/tools/navigation/map-marked-green.webp
+name: Create Treasure Map
 system:
+  actions:
+    - _id: p3sr44gcu6cr8z46
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one dead creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can take a piece from a dead creature's body and use it to create a
@@ -23,42 +41,24 @@ system:
       deemed most valuable within its area. Depending on the creature, the map
       might reveal a source of tasty food, suitable mates, or even your own
       treasure vault.</p>
-  actions:
-    - _id: p3sr44gcu6cr8z46
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: one dead creature
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 3
-      ranger: 2
       bard: 2
-      psychic: 2
+      druid: 3
+      hunter: 2
       medium: 2
       occultist: 2
-      hunter: 2
+      psychic: 2
+      ranger: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered metal and rare inks worth 100 gp
     gpValue: 100
+    value: powdered metal and rare inks worth 100 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!ymtxb4jujoosabrh'
+type: spell
 

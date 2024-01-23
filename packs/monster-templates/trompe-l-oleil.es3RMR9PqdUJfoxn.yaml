@@ -1,8 +1,20 @@
 _id: es3RMR9PqdUJfoxn
-name: Trompe l'Oleil
-type: feat
+_key: '!items!es3RMR9PqdUJfoxn'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Trompe l'Oleil
 system:
+  changes:
+    - _id: d4pzl47v
+      formula: max(0, ceil(@attributes.hd.total/4 - 1))
+      modifier: untyped
+      subTarget: aac
+    - _id: 19d9kfhn
+      formula: >-
+        (@attributes.hd.total >= 17) ? 2 : ((@attributes.hd.total >= 9 &&
+        @attributes.hd.total < 17) ? 1 : 0)
+      modifier: untyped
+      subTarget: sac
+  crOffset: '1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Inherited<br><b>Simple Template</b>
@@ -285,18 +297,6 @@ system:
       immediately reverts to the appearance it had before the trompe l’oeil
       entered. If someone destroys or damages the painting, the trompe l’oeil is
       unharmed, but exits the image.</p>
-  changes:
-    - _id: d4pzl47v
-      formula: max(0, ceil(@attributes.hd.total/4 - 1))
-      subTarget: aac
-      modifier: untyped
-    - _id: 19d9kfhn
-      formula: >-
-        (@attributes.hd.total >= 17) ? 2 : ((@attributes.hd.total >= 9 &&
-        @attributes.hd.total < 17) ? 1 : 0)
-      subTarget: sac
-      modifier: untyped
   subType: template
-  crOffset: '1'
-_key: '!items!es3RMR9PqdUJfoxn'
+type: feat
 

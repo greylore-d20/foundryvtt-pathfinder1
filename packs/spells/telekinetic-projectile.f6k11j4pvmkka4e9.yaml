@@ -1,8 +1,27 @@
 _id: f6k11j4pvmkka4e9
-name: Telekinetic Projectile
-type: spell
+_key: '!items!f6k11j4pvmkka4e9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Telekinetic Projectile
 system:
+  actions:
+    - _id: bppkhqtbvrt8cbrj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: 'no'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fling an object weighing up to 5 pounds at the target. You must
@@ -11,34 +30,15 @@ system:
       and the object. The type of object thrown doesn't change the damage type
       or any other properties of the attack, even if you throw a weapon or magic
       item in this way.</p>
-  actions:
-    - _id: bppkhqtbvrt8cbrj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: 'no'
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      psychic: 0
       occultist: 0
+      psychic: 0
       spiritualist: 0
   level: 0
   school: evo
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!f6k11j4pvmkka4e9'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

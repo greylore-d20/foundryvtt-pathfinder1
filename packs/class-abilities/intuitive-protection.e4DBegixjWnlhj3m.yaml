@@ -1,8 +1,27 @@
 _id: e4DBegixjWnlhj3m
-name: Intuitive Protection
-type: feat
+_key: '!items!e4DBegixjWnlhj3m'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Intuitive Protection
 system:
+  abilityType: sp
+  actions:
+    - _id: w9vp3ah8ujeksrqp
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '@cl'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>When a conjuration (summoning) spell is cast by an opponent and the
@@ -14,26 +33,7 @@ system:
       when using this ability.</p>
 
       <p>The magus must be at least 3rd level before selecting this arcana.</p>
-  actions:
-    - _id: w9vp3ah8ujeksrqp
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '@cl'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_intuitiveProtection
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: sp
-_key: '!items!e4DBegixjWnlhj3m'
+  tag: classFeat_intuitiveProtection
+type: feat
 

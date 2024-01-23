@@ -1,8 +1,27 @@
 _id: mpe3JHJMINddqLWr
-name: Arcane Pool
-type: feat
+_key: '!items!mpe3JHJMINddqLWr'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Arcane Pool
 system:
+  abilityType: su
+  actions:
+    - _id: t72hyk24l7zc4o1m
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>At 1st level, the magus gains a reservoir of mystical arcane energy
@@ -29,29 +48,10 @@ system:
       other than the magus.<p>A magus can only enhance one weapon in this way at
       one time. If he uses this ability again, the first use immediately
       ends.</p>
-  actions:
-    - _id: t72hyk24l7zc4o1m
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: max(1, floor(@classes.magus.level / 2)) + @abilities.int.mod
-  tag: classFeat_arcanePool
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!mpe3JHJMINddqLWr'
+  tag: classFeat_arcanePool
+  uses:
+    maxFormula: max(1, floor(@classes.magus.level / 2)) + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,23 +1,23 @@
 _id: c1DXh24tF5vQFLaI
-name: Bonus Feats (GUN)
-type: feat
+_key: '!items!c1DXh24tF5vQFLaI'
 img: systems/pf1/icons/skills/weapon_44.jpg
+name: Bonus Feats (GUN)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Gunslinger
+  changes:
+    - _id: v70np67b
+      formula: floor(@classes.gunslinger.level / 4)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 4th level, and every four levels thereafter, a gunslinger gains a
       bonus feat in addition to those gained by normal advancement. These bonus
       feats must be combat or grit feats.</p>
-  changes:
-    - _id: v70np67b
-      formula: floor(@classes.gunslinger.level / 4)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_bonusFeatsGun
   subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!c1DXh24tF5vQFLaI'
+  tag: classFeat_bonusFeatsGun
+type: feat
 

@@ -1,8 +1,24 @@
 _id: OAAX4cpPffPoFDSq
-name: Emotional Bond
-type: feat
+_key: '!items!OAAX4cpPffPoFDSq'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Emotional Bond
 system:
+  abilityType: su
+  actions:
+    - _id: lskfdncuyk3ukzis
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>You can create an empathic link between yourself and your allies,
@@ -25,23 +41,7 @@ system:
 
       <p>At 4th level, the bond also gives you the benefits of the status spell
       with all subjects of the emotional bond.</p>
-  actions:
-    - _id: lskfdncuyk3ukzis
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_emotionalBond
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!OAAX4cpPffPoFDSq'
+  tag: classFeat_emotionalBond
+type: feat
 

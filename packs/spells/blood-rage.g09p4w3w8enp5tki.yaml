@@ -1,8 +1,34 @@
 _id: g09p4w3w8enp5tki
-name: Blood Rage
-type: spell
+_key: '!items!g09p4w3w8enp5tki'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Rage
 system:
+  actions:
+    - _id: 9c0fths1ffvzvypr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one willing living creature per 2 levels, no two of which may be more
+          than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The targets of this spell become angrier as they fight, the pain of
@@ -11,45 +37,19 @@ system:
       for every 5 points of damage it takes (maximum +10 Strength, -5 AC) for
       the duration of the spell. These bonuses last until the spell expires or
       the target falls unconscious.</p>
-  actions:
-    - _id: 9c0fths1ffvzvypr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: >-
-          one willing living creature per 2 levels, no two of which may be more
-          than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
+  materials:
+    value: a drop of blood from each creature to be affected
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a drop of blood from each creature to be affected
-_key: '!items!g09p4w3w8enp5tki'
+type: spell
 

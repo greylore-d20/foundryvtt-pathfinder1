@@ -1,8 +1,25 @@
 _id: 4rcae3wehy2juylt
-name: Sealed Life
-type: spell
+_key: '!items!4rcae3wehy2juylt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sealed Life
 system:
+  actions:
+    - _id: 8osvysuzm3oro0ha
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  components:
+    somatic: true
   description:
     value: >-
       <p>You seal the life force within the target, preventing it from sharing
@@ -11,28 +28,11 @@ system:
       bond, or a summoner's life link. Effects such as <i>vampiric touch</i>
       that steal vitality from others deal damage normally, but provide no
       benefits.</p>
-  actions:
-    - _id: 8osvysuzm3oro0ha
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
   learnedAt:
     class:
       medium: 2
       spiritualist: 3
   level: 2
   school: abj
-  components:
-    somatic: true
-_key: '!items!4rcae3wehy2juylt'
+type: spell
 

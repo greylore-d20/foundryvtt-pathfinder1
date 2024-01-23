@@ -1,8 +1,33 @@
 _id: 722g8ssc6f2rm3r8
-name: Memorize Page
-type: spell
+_key: '!items!722g8ssc6f2rm3r8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Memorize Page
 system:
+  actions:
+    - _id: 4umo9xf7jtm34ne5
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one living creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target gains a perfect memory of the page you used as a focus
@@ -22,43 +47,18 @@ system:
       writing. However, this would allow a wizard to copy a spell into his
       spellbook so he could prepare the spell from his book (assuming the spell
       takes up only one page in a spellbook).</p>
-  actions:
-    - _id: 4umo9xf7jtm34ne5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one living creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      witch: 1
-      psychic: 1
       mesmerist: 1
       occultist: 1
-  school: enc
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   materials:
     focus: the page to be memorized
-_key: '!items!722g8ssc6f2rm3r8'
+  school: enc
+  types: mind-affecting
+type: spell
 

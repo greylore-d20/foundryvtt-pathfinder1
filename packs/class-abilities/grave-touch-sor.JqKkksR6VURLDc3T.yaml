@@ -1,8 +1,28 @@
 _id: JqKkksR6VURLDc3T
-name: Grave Touch (SOR)
-type: feat
+_key: '!items!JqKkksR6VURLDc3T'
 img: systems/pf1/icons/skills/affliction_07.jpg
+name: Grave Touch (SOR)
 system:
+  abilityType: sp
+  actions:
+    - _id: 5koaictbg4bpx9lt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, (floor(@classes.sorcerer.level / 2)))
+      img: systems/pf1/icons/skills/affliction_07.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>Starting at 1st level, you can make a melee touch attack as a standard
@@ -12,33 +32,13 @@ system:
       <em>frightened</em> for 1 round if it has fewer Hit Dice than your
       sorcerer level. You can use this ability a number of times per day equal
       to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: 5koaictbg4bpx9lt
-      name: Use
-      img: systems/pf1/icons/skills/affliction_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, (floor(@classes.sorcerer.level / 2)))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_graveTouchSor
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
   source:
     id: PZO1110
     pages: '77'
-_key: '!items!JqKkksR6VURLDc3T'
+  subType: classFeat
+  tag: classFeat_graveTouchSor
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

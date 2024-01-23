@@ -1,8 +1,30 @@
 _id: dg3mrasygkm83c3e
-name: Slay Living
-type: spell
+_key: '!items!dg3mrasygkm83c3e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Slay Living
 system:
+  actions:
+    - _id: g9muv57yfawuyadc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can attempt to slay any one living creature. When you cast this
@@ -11,45 +33,23 @@ system:
       1 point per caster level. If the target's Fortitude saving throw succeeds,
       it instead takes 3d6 points of damage + 1 point per caster level. The
       subject might die from damage even if it succeeds on its saving throw.</p>
-  actions:
-    - _id: g9muv57yfawuyadc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 6
       antipaladin: 4
+      cleric: 5
+      oracle: 5
       shaman: 6
       spiritualist: 5
+      warpriest: 5
+      witch: 6
     domain:
       Death: 5
       Repose: 5
   level: 5
   school: nec
-  types: death
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '344'
-_key: '!items!dg3mrasygkm83c3e'
+  types: death
+type: spell
 

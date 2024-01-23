@@ -1,8 +1,30 @@
 _id: jdsvncnna6oy189a
-name: Deeper Darkness
-type: spell
+_key: '!items!jdsvncnna6oy189a'
 img: icons/magic/unholy/barrier-shield-glowing-pink.webp
+name: Deeper Darkness
 system:
+  actions:
+    - _id: x33gjl1dr683gqf4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: circle
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  components:
+    divineFocus: 2
+    material: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as
@@ -15,49 +37,27 @@ system:
       confines.</p><p>This spell does not stack with itself. <em>Deeper
       darkness</em> can be used to counter or dispel any light spell of equal or
       lower spell level.</p>
-  actions:
-    - _id: x33gjl1dr683gqf4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level (D)
-      target:
-        value: object touched
-      range:
-        units: touch
-      measureTemplate:
-        type: circle
-        size: '60'
   learnedAt:
+    bloodline:
+      Div: 3
+      Shadow: 3
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       adept: 3
-      shaman: 3
+      cleric: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      warpriest: 3
     domain:
       Darkness: 3
-    bloodline:
-      Shadow: 3
-      Div: 3
   level: 3
-  school: evo
-  types: darkness
-  components:
-    verbal: true
-    material: true
-    divineFocus: 2
   materials:
     value: bat fur and a piece of coal
-  sr: false
+  school: evo
   source:
     id: PZO1110
     pages: '265'
-_key: '!items!jdsvncnna6oy189a'
+  sr: false
+  types: darkness
+type: spell
 

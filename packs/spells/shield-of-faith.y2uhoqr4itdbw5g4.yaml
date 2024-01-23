@@ -1,18 +1,11 @@
 _id: y2uhoqr4itdbw5g4
-name: Shield of Faith
-type: spell
+_key: '!items!y2uhoqr4itdbw5g4'
 img: icons/magic/holy/barrier-shield-winged-cross.webp
+name: Shield of Faith
 system:
-  description:
-    value: >-
-      <p>This spell creates a shimmering, magical field around the target that
-      averts and deflects attacks. The spell grants the subject a +2 deflection
-      bonus to AC, with an additional +1 to the bonus for every six levels you
-      have (maximum +5 deflection bonus at 18th level).</p>
   actions:
     - _id: y0arso8n6lab3fap
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,34 +13,41 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell creates a shimmering, magical field around the target that
+      averts and deflects attacks. The spell grants the subject a +2 deflection
+      bonus to AC, with an additional +1 to the bonus for every six levels you
+      have (maximum +5 deflection bonus at 18th level).</p>
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       inquisitor: 1
+      oracle: 1
+      warpriest: 1
     domain:
       Glory: 1
     subDomain:
       Agathion: 1
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: parchment with a holy text written on it
+  school: abj
   source:
     id: PZO1110
     pages: '342'
-_key: '!items!y2uhoqr4itdbw5g4'
+type: spell
 

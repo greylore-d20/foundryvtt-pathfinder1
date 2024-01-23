@@ -1,8 +1,29 @@
 _id: JCvA2H8VpYMK3LiA
-name: Beast Ride
-type: feat
+_key: '!items!JCvA2H8VpYMK3LiA'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Beast Ride
 system:
+  abilityType: su
+  actions:
+    - _id: mvcbtfb397pvcy4t
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@cl'
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one animal
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 4th level, once per day as a standard action, you can vacate your
@@ -14,31 +35,10 @@ system:
       time. If the animal or your body takes damage, or you attempt to make the
       animal attack or do anything out of character, the effect immediately ends
       and you return to your own body.</p>
-  actions:
-    - _id: mvcbtfb397pvcy4t
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@cl'
-        units: round
-      target:
-        value: one animal
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_beastRide
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!JCvA2H8VpYMK3LiA'
+  tag: classFeat_beastRide
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,7 +1,21 @@
-name: Earth Glide (WIZ)
-type: feat
+_id: 0BZYhHw4PbbWJuhP
+_key: '!items!0BZYhHw4PbbWJuhP'
 img: icons/environment/wilderness/terrain-rocky-ground.webp
+name: Earth Glide (WIZ)
 system:
+  abilityType: su
+  actions:
+    - _id: xxbvV5nGZImXRBox
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: icons/environment/wilderness/terrain-rocky-ground.webp
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you gain the ability to move through earth, dirt, and
@@ -13,28 +27,14 @@ system:
       hole, nor does it give any sign of your presence (although you can be
       detected by creatures with tremorsense). These rounds do not need to be
       consecutive.</p>
-  tags:
-    - Earth School
-  actions:
-    - _id: xxbvV5nGZImXRBox
-      name: Use
-      img: icons/environment/wilderness/terrain-rocky-ground.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '@classes.wizard.level'
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1115
     pages: '142'
-_id: 0BZYhHw4PbbWJuhP
-_key: '!items!0BZYhHw4PbbWJuhP'
+  subType: classFeat
+  tags:
+    - Earth School
+  uses:
+    maxFormula: '@classes.wizard.level'
+    per: day
+type: feat
 

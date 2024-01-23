@@ -1,40 +1,40 @@
 _id: 0lQssaLmEX0UgSda
-name: Sacred Council
-type: feat
+_key: '!items!0lQssaLmEX0UgSda'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Sacred Council
 system:
+  abilityType: su
+  actions:
+    - _id: z2b398m2zcj0w8s5
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a move action, you can call upon your ancestors to provide council.
       This advice grants you a +2 bonus on any one d20 roll. This effect lasts
       for 1 round. You can use this ability a number of times per day equal to
       your Charisma bonus.</p>
+  subType: classFeat
+  tag: classFeat_sacredCouncil
   tags:
     - Revelation
     - Ancestor Mystery
-  actions:
-    - _id: z2b398m2zcj0w8s5
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: '@abilities.cha.mod'
-  tag: classFeat_sacredCouncil
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!0lQssaLmEX0UgSda'
+    per: day
+type: feat
 

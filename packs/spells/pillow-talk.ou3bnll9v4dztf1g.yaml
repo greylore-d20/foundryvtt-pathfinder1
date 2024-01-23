@@ -1,8 +1,30 @@
 _id: ou3bnll9v4dztf1g
-name: Pillow Talk
-type: spell
+_key: '!items!ou3bnll9v4dztf1g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pillow Talk
 system:
+  actions:
+    - _id: 02987hhsjpgz4ovo
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: sleeping, living creature touched
+  components:
+    somatic: true
   description:
     value: >-
       <p>This spell can be cast only on a sleeping creature, which must be
@@ -21,40 +43,18 @@ system:
       the spell has no memory of it taking place, but a target who awakens
       before the spell ends remembers every question asked and what answers it
       gave.</p>
-  actions:
-    - _id: 02987hhsjpgz4ovo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 minute/level
-      target:
-        value: sleeping, living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      witch: 3
       inquisitor: 3
-      psychic: 3
       mesmerist: 3
+      psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: language-dependent, mind-affecting
-  components:
-    somatic: true
-_key: '!items!ou3bnll9v4dztf1g'
+type: spell
 

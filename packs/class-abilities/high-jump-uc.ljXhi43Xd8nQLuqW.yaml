@@ -1,8 +1,20 @@
 _id: ljXhi43Xd8nQLuqW
-name: High Jump (UC)
-type: feat
+_key: '!items!ljXhi43Xd8nQLuqW'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: High Jump (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: k0rdxehbsjlmrod4
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ki power adds his level as a bonus on all Acrobatics
@@ -12,19 +24,7 @@ system:
 
       <p>By spending 1 point from his ki pool as a swift action, the monk gains
       a +20 bonus on Acrobatics checks to jump for 1 round.</p>
-  actions:
-    - _id: k0rdxehbsjlmrod4
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_highJumpUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!ljXhi43Xd8nQLuqW'
+  tag: classFeat_highJumpUc
+type: feat
 

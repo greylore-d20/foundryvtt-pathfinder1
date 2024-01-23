@@ -1,8 +1,21 @@
 _id: EAVNzT8lSiOIgTJx
-name: Stampede
-type: feat
+_key: '!items!EAVNzT8lSiOIgTJx'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Stampede
 system:
+  abilityType: ex
+  actions:
+    - _id: r0jsjzjufp0mjn37
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, as a standard action, the cavalier can incite any
@@ -15,20 +28,7 @@ system:
       creatures attack whatever targets the cavalier directs them to unless
       commanded otherwise by a bonded master (in the case of a familiar or
       animal companion).</p>
-  actions:
-    - _id: r0jsjzjufp0mjn37
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_stampede
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!EAVNzT8lSiOIgTJx'
+  tag: classFeat_stampede
+type: feat
 

@@ -1,8 +1,30 @@
 _id: vkv6qeltzup0vvn6
-name: Blinding Ray
-type: spell
+_key: '!items!vkv6qeltzup0vvn6'
 img: icons/magic/light/beam-rays-orange-large.webp
+name: Blinding Ray
 system:
+  actions:
+    - _id: 8db07738a12edll1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      spellEffect: one or more rays of light
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You blast your enemies with blinding rays of sunlight. You may fire one
@@ -17,37 +39,15 @@ system:
       rays may be fired at the same or different targets, but all rays must be
       aimed at targets within 30 feet of each other and fired
       simultaneously.</p>
-  actions:
-    - _id: 8db07738a12edll1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous (see text)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      spellEffect: one or more rays of light
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
+      inquisitor: 3
       oracle: 2
       paladin: 2
-      inquisitor: 3
+      warpriest: 2
   level: 2
   school: evo
   types: good, light
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!vkv6qeltzup0vvn6'
+type: spell
 

@@ -1,8 +1,33 @@
 _id: 1chgf910tzsusmzv
-name: Hoodwink
-type: spell
+_key: '!items!1chgf910tzsusmzv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hoodwink
 system:
+  actions:
+    - _id: gs8wppv8wlsrb3ea
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: >-
+          up to one creature/level, no two of which can be more than 30 ft.
+          apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You befuddle the targets' senses, preventing the targets from clearly
@@ -21,45 +46,20 @@ system:
       target is attacked or physically harmed by any creature other than another
       target of <i>hoodwink</i>, the spell's effect ends immediately for that
       target only.</p>
-  actions:
-    - _id: gs8wppv8wlsrb3ea
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: >-
-          up to one creature/level, no two of which can be more than 30 ft.
-          apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
+  materials:
+    value: small piece of black cloth
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: small piece of black cloth
-_key: '!items!1chgf910tzsusmzv'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: rjflmqy4hyp6g061
-name: Allfood
-type: spell
+_key: '!items!rjflmqy4hyp6g061'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Allfood
 system:
+  actions:
+    - _id: 2h747ho4ycwwjtog
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: object touched, weighing up to 5 lbs./level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can transform one object, weighing up to 5 lbs. per caster level,
@@ -20,36 +43,13 @@ system:
       such as hot coals or a burning torch continue to produce energy even after
       you transform them into allfood and if a creature attempts to eat such an
       object, it takes damage accordingly.</p>
-  actions:
-    - _id: 2h747ho4ycwwjtog
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: object touched, weighing up to 5 lbs./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      ranger: 2
       hunter: 2
+      ranger: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of salt and pepper
-_key: '!items!rjflmqy4hyp6g061'
+  school: trs
+type: spell
 

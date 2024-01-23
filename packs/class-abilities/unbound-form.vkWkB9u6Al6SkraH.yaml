@@ -1,8 +1,28 @@
 _id: vkWkB9u6Al6SkraH
-name: Unbound Form
-type: feat
+_key: '!items!vkWkB9u6Al6SkraH'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Unbound Form
 system:
+  abilityType: su
+  actions:
+    - _id: kbkkqyo6dmtlz4cr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can assume a variety of forms, as per
@@ -13,30 +33,10 @@ system:
       <p>When she assumes these forms, some element of the new shape always sets
       it apart from a typical specimen, such as strangely colored eyes, limbs
       that bend in unusual ways, or a slimy coating of mucus over the flesh.</p>
-  actions:
-    - _id: kbkkqyo6dmtlz4cr
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.shaman.level'
-  tag: classFeat_unboundForm
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!vkWkB9u6Al6SkraH'
+  tag: classFeat_unboundForm
+  uses:
+    maxFormula: '@classes.shaman.level'
+    per: day
+type: feat
 

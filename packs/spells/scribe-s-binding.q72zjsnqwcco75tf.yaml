@@ -1,8 +1,31 @@
 _id: q72zjsnqwcco75tf
-name: Scribe's Binding
-type: spell
+_key: '!items!q72zjsnqwcco75tf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scribe's Binding
 system:
+  actions:
+    - _id: xmnrv5jsfygrs3tw
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Hermea's benevolent Council of Enlightenment uses this spell to
@@ -33,41 +56,18 @@ system:
       binding makes the imprisoning tome supernaturally durable (hardness 20, 10
       hp per HD the imprisoned creature had). Destroying the tome immediately
       slays the creature imprisoned within.</p>
-  actions:
-    - _id: xmnrv5jsfygrs3tw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
-      witch: 9
       occultist: 6
+      sorcerer: 9
+      witch: 9
+      wizard: 9
   level: 9
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: >-
       a book bound in precious metals and treated with rare oils, worth 1,000 gp
       per HD of the target
-_key: '!items!q72zjsnqwcco75tf'
+  school: trs
+  subschool: polymorph
+type: spell
 

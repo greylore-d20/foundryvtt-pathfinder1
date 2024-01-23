@@ -1,31 +1,31 @@
 _id: FvcDu5fIjym65YS8
-name: Wisdom of the Ages
-type: feat
+_key: '!items!FvcDu5fIjym65YS8'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Wisdom of the Ages
 system:
+  abilityType: su
+  actions:
+    - _id: n2tmbhcb7tuogj59
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
+  changes:
+    - _id: a3e502qq
+      formula: '@abilities.wis.mod - @abilities.int.mod'
+      modifier: untyped
+      subTarget: intSkills
   description:
     value: >-
       <p>The shaman can call upon her ancestors for lore and guidance. She can
       use her Wisdom modifier instead of her Intelligence modifier on all
       Intelligence-based skill checks.</p>
-  actions:
-    - _id: n2tmbhcb7tuogj59
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: a3e502qq
-      formula: '@abilities.wis.mod - @abilities.int.mod'
-      subTarget: intSkills
-      modifier: untyped
-  tag: classFeat_wisdomOfTheAges
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!FvcDu5fIjym65YS8'
+  tag: classFeat_wisdomOfTheAges
+type: feat
 

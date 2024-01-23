@@ -1,19 +1,11 @@
 _id: vurxdi6fkx3ll2gz
-name: Steal Size
-type: spell
+_key: '!items!vurxdi6fkx3ll2gz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Steal Size
 system:
-  description:
-    value: >-
-      <p>This spell reduces the target's size by one size category, as if it
-      were affected by <i>reduce person</i>. You grow in size by one category,
-      as if affected by <i>enlarge person</i> ( if y ou c an b e targeted by
-      that spell). If the spell is dispelled or otherwise ends for either you or
-      the target, both you and the target return to your normal sizes.</p>
   actions:
     - _id: tjw19x0eyt4berdr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,30 +13,38 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: one humanoid creature larger than you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one humanoid creature larger than you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell reduces the target's size by one size category, as if it
+      were affected by <i>reduce person</i>. You grow in size by one category,
+      as if affected by <i>enlarge person</i> ( if y ou c an b e targeted by
+      that spell). If the spell is dispelled or otherwise ends for either you or
+      the target, both you and the target return to your normal sizes.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 3
-      witch: 2
-      magus: 3
       bloodrager: 2
+      druid: 3
       hunter: 3
+      magus: 3
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of iron shaped like a scale tray
-_key: '!items!vurxdi6fkx3ll2gz'
+  school: trs
+type: spell
 

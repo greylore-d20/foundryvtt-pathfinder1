@@ -1,18 +1,10 @@
 _id: slz09tk8r1uijwua
-name: Fabricate Bullets
-type: spell
+_key: '!items!slz09tk8r1uijwua'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fabricate Bullets
 system:
-  description:
-    value: >-
-      <p>You convert 1 pound of lead into bullets. When you cast this spell, you
-      decide whether you create normal sling bullets, firearm bullets, or
-      firearm pellets. The spell creates two sling bullets, 30 firearm bullets,
-      or 10 uses of pellets.</p>
   actions:
     - _id: vxvl678i19izdgd0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -20,24 +12,32 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: 1 pound of soft metal
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: 1 pound of soft metal
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You convert 1 pound of lead into bullets. When you cast this spell, you
+      decide whether you create normal sling bullets, firearm bullets, or
+      firearm pellets. The spell creates two sling bullets, 30 firearm bullets,
+      or 10 uses of pellets.</p>
   learnedAt:
     class:
       sorcerer: 1
       wizard: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: 1 pound of lead or other soft metal worth 2 gp
     gpValue: 2
+    value: 1 pound of lead or other soft metal worth 2 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!slz09tk8r1uijwua'
+type: spell
 

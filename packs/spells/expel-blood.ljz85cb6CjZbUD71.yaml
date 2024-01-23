@@ -1,8 +1,32 @@
 _id: ljz85cb6CjZbUD71
-name: Expel Blood
-type: spell
+_key: '!items!ljz85cb6CjZbUD71'
 img: icons/skills/wounds/blood-cells-red.webp
+name: Expel Blood
 system:
+  actions:
+    - _id: 7raqomho36gtm2vu
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous and 1 round/level; see text
+      img: icons/skills/wounds/blood-cells-red.webp
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      spellEffect: '[[2d4]] Constitution damage'
+      target:
+        value: one Small or larger living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You animate a portion of the target's blood, causing it to force itself
@@ -25,42 +49,18 @@ system:
 
       <p>This spell does not affect creatures that are Small or smaller or those
       that don't have blood or some analogous internal fluid.</p>
-  actions:
-    - _id: 7raqomho36gtm2vu
-      name: Use
-      img: icons/skills/wounds/blood-cells-red.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous and 1 round/level; see text
-      target:
-        value: one Small or larger living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      spellEffect: '[[2d4]] Constitution damage'
   learnedAt:
     class:
       arcanist: 7
       sorcerer: 7
-      wizard: 7
       summoner: 6
       summonerUnchained: 6
       witch: 7
+      wizard: 7
   level: 7
-  school: con
-  types: evil, water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of blood from each of three different creatures
-_key: '!items!ljz85cb6CjZbUD71'
+  school: con
+  types: evil, water
+type: spell
 

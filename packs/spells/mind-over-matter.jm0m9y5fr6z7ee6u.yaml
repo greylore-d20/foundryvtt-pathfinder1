@@ -1,8 +1,30 @@
 _id: jm0m9y5fr6z7ee6u
-name: Mind Over Matter
-type: spell
+_key: '!items!jm0m9y5fr6z7ee6u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mind Over Matter
 system:
+  actions:
+    - _id: b7pzvgfsbla88jvi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fort negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You blur the lines between mind and body, reassigning ability damage or
@@ -15,34 +37,12 @@ system:
       points of damage or drain in a single casting, though only from one
       ability score to the corresponding ability score. You cannot transfer
       enough ability damage or drain to reduce an ability score to 0.<p></p>
-  actions:
-    - _id: b7pzvgfsbla88jvi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fort negates
   learnedAt:
     class:
-      psychic: 2
       mesmerist: 2
+      psychic: 2
       spiritualist: 2
   level: 2
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!jm0m9y5fr6z7ee6u'
+type: spell
 

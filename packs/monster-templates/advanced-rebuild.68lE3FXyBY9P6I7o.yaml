@@ -1,8 +1,38 @@
 _id: 68lE3FXyBY9P6I7o
-name: Advanced (Rebuild)
-type: feat
+_key: '!items!68lE3FXyBY9P6I7o'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Advanced (Rebuild)
 system:
+  changes:
+    - _id: guj5108e
+      formula: '2'
+      modifier: untypedPerm
+      subTarget: nac
+    - _id: uhg21xnq
+      formula: '@abilities.str.total > 0 ? 4 : 0'
+      modifier: untypedPerm
+      subTarget: str
+    - _id: zzxxz9rv
+      formula: '@abilities.dex.total > 0 ? 4 : 0'
+      modifier: untypedPerm
+      subTarget: dex
+    - _id: xzfdoozh
+      formula: '@abilities.con.total > 0 ? 4 : 0'
+      modifier: untypedPerm
+      subTarget: con
+    - _id: ub0w5h5m
+      formula: '@abilities.int.total > 2 ? 4 : 0'
+      modifier: untypedPerm
+      subTarget: int
+    - _id: xmmu6br9
+      formula: '@abilities.wis.total > 0 ? 4 : 0'
+      modifier: untypedPerm
+      subTarget: wis
+    - _id: 3cs5sd5j
+      formula: '@abilities.cha.total > 0 ? 4 : 0'
+      modifier: untypedPerm
+      subTarget: cha
+  crOffset: '1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -12,36 +42,6 @@ system:
       and special ability DCs; +4 to AC and CMD; +2 hp/HD.<p><b>Rebuild
       Rules</b>: <b>AC</b> increase natural armor by +2; <b>Ability Scores</b>
       +4 to all ability scores (except Int scores of 2 or less).</p>
-  changes:
-    - _id: guj5108e
-      formula: '2'
-      subTarget: nac
-      modifier: untypedPerm
-    - _id: uhg21xnq
-      formula: '@abilities.str.total > 0 ? 4 : 0'
-      subTarget: str
-      modifier: untypedPerm
-    - _id: zzxxz9rv
-      formula: '@abilities.dex.total > 0 ? 4 : 0'
-      subTarget: dex
-      modifier: untypedPerm
-    - _id: xzfdoozh
-      formula: '@abilities.con.total > 0 ? 4 : 0'
-      subTarget: con
-      modifier: untypedPerm
-    - _id: ub0w5h5m
-      formula: '@abilities.int.total > 2 ? 4 : 0'
-      subTarget: int
-      modifier: untypedPerm
-    - _id: xmmu6br9
-      formula: '@abilities.wis.total > 0 ? 4 : 0'
-      subTarget: wis
-      modifier: untypedPerm
-    - _id: 3cs5sd5j
-      formula: '@abilities.cha.total > 0 ? 4 : 0'
-      subTarget: cha
-      modifier: untypedPerm
   subType: template
-  crOffset: '1'
-_key: '!items!68lE3FXyBY9P6I7o'
+type: feat
 

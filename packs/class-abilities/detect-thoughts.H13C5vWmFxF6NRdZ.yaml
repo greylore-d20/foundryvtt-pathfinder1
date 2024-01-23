@@ -1,8 +1,21 @@
 _id: H13C5vWmFxF6NRdZ
-name: Detect Thoughts
-type: feat
+_key: '!items!H13C5vWmFxF6NRdZ'
 img: systems/pf1/icons/skills/shadow_12.jpg
+name: Detect Thoughts
 system:
+  abilityType: sp
+  actions:
+    - _id: hueojhl66s39zcsn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/shadow_12.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 2nd level, a psychic can use
@@ -14,23 +27,10 @@ system:
       <p>When a psychic gains this ability, if she knows detect thoughts, she
       can learn a different 1st-level spell in place of detect thoughts, losing
       the old spell in exchange for the new one.</p>
-  actions:
-    - _id: hueojhl66s39zcsn
-      name: Use
-      img: systems/pf1/icons/skills/shadow_12.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_detectThoughts
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: sp
-_key: '!items!H13C5vWmFxF6NRdZ'
+  tag: classFeat_detectThoughts
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

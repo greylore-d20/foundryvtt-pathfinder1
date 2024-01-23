@@ -1,16 +1,10 @@
 _id: qieqx88wbae5wgpx
-name: Summon Cacodaemon
-type: spell
+_key: '!items!qieqx88wbae5wgpx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Cacodaemon
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster</i>, except it summons a
-      single cacodaemon.</p>
   actions:
     - _id: zx6hkew3rc6gumhk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -18,29 +12,35 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster</i>, except it summons a
+      single cacodaemon.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
       oracle: 2
+      sorcerer: 2
       summoner: 2
-      witch: 2
       summonerUnchained: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: summoning
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a silver hook
+  school: con
   sr: false
-_key: '!items!qieqx88wbae5wgpx'
+  subschool: summoning
+  types: evil
+type: spell
 

@@ -1,8 +1,21 @@
 _id: oRac7XDHBN0JzuyY
-name: Improved Quarry
-type: feat
+_key: '!items!oRac7XDHBN0JzuyY'
 img: systems/pf1/icons/skills/emerald_10.jpg
+name: Improved Quarry
 system:
+  abilityType: ex
+  actions:
+    - _id: 4xkesqu0gmbi5stq
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/emerald_10.jpg
+      name: Use
+  associations:
+    classes:
+      - Ranger
+      - Slayer
   description:
     value: >-
       <p>At 19th level, the character's ability to hunt his quarry improves. He
@@ -11,23 +24,10 @@ system:
       speed without penalty. His <em>insight bonus</em> to attack his quarry
       increases to +4. If his quarry is killed or dismissed, he can select a new
       one after 10 minutes have passed.</p>
-  actions:
-    - _id: 4xkesqu0gmbi5stq
-      name: Use
-      img: systems/pf1/icons/skills/emerald_10.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_improvedQuarry
-  subType: classFeat
-  associations:
-    classes:
-      - Ranger
-      - Slayer
-  abilityType: ex
   source:
     id: PZO1110
     pages: '67'
-_key: '!items!oRac7XDHBN0JzuyY'
+  subType: classFeat
+  tag: classFeat_improvedQuarry
+type: feat
 

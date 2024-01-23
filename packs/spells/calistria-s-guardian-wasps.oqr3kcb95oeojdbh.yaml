@@ -1,8 +1,27 @@
 _id: oqr3kcb95oeojdbh
-name: Calistria's Guardian Wasps
-type: spell
+_key: '!items!oqr3kcb95oeojdbh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Calistria's Guardian Wasps
 system:
+  actions:
+    - _id: bq7um8ziymvf54wi
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: swarm of wasps that builds a nest; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon a wasp swarm (<i>Pathfinder RPG Bestiary</i> 275) that
@@ -18,38 +37,19 @@ system:
       as best it can. Once the swarm attacks an intruder, you have no control
       over its target or direction of travel. When the spell ends, if the wasps
       have not left their nest, they and their nest disappear.</p>
-  actions:
-    - _id: bq7um8ziymvf54wi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level
-      range:
-        units: close
-      spellEffect: swarm of wasps that builds a nest; see text
   learnedAt:
     class:
+      druid: 3
+      hunter: 3
+      psychic: 3
+      ranger: 3
       sorcerer: 3
       wizard: 3
-      druid: 3
-      ranger: 3
-      psychic: 3
-      hunter: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a glob of spiced honey
+  school: con
   sr: false
-_key: '!items!oqr3kcb95oeojdbh'
+  subschool: summoning
+type: spell
 

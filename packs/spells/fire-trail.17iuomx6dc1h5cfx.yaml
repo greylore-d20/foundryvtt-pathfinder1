@@ -1,8 +1,25 @@
 _id: 17iuomx6dc1h5cfx
-name: Fire Trail
-type: spell
+_key: '!items!17iuomx6dc1h5cfx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fire Trail
 system:
+  actions:
+    - _id: xnbumcysujnes6gs
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      spellEffect: trail of flame that follows the caster's movements; see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, flammable liquid oozes from your pores,
@@ -23,32 +40,15 @@ system:
       moves into an area of the flame trail multiple times in a round, it takes
       this damage each time it enters the area of the flame trail. Flammable
       objects in or adjacent to the fire trail catch fire.</p>
-  actions:
-    - _id: xnbumcysujnes6gs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: personal
-      spellEffect: trail of flame that follows the caster's movements; see text
   learnedAt:
     class:
+      alchemist: 3
+      bloodrager: 3
+      magus: 3
       sorcerer: 3
       wizard: 3
-      alchemist: 3
-      magus: 3
-      bloodrager: 3
   level: 3
   school: trs
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!17iuomx6dc1h5cfx'
+type: spell
 

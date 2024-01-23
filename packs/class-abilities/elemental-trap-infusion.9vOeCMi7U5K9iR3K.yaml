@@ -1,8 +1,23 @@
 _id: 9vOeCMi7U5K9iR3K
-name: Elemental Trap Infusion
-type: feat
+_key: '!items!9vOeCMi7U5K9iR3K'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Elemental Trap Infusion
 system:
+  actions:
+    - _id: q3k8c85paly7ux88
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      save:
+        description: Reflex half; see text
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> universal; <b>Type</b> form infusion; <b>Level</b> 3;
@@ -23,22 +38,7 @@ system:
       <p>You can accept 2 points of burn, which cannot be reduced with gather
       power, to make a new trap without dismissing any previous traps. If you
       do, the trap lasts until the next time you recover burn.</p>
-  actions:
-    - _id: q3k8c85paly7ux88
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex half; see text
-  tag: classFeat_elementalTrapInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!9vOeCMi7U5K9iR3K'
+  tag: classFeat_elementalTrapInfusion
+type: feat
 

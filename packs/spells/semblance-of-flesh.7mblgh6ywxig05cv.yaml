@@ -1,8 +1,26 @@
 _id: 7mblgh6ywxig05cv
-name: Semblance of Flesh
-type: spell
+_key: '!items!7mblgh6ywxig05cv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Semblance of Flesh
 system:
+  actions:
+    - _id: pxochpekqtqgh7ti
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: construct touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make the target construct appear to be a living creature of flesh
@@ -17,34 +35,16 @@ system:
       the construct gains a +10 bonus on the Disguise check. A creature that
       interacts with the glamer receives a Will save to recognize it as an
       illusion.</p>
-  actions:
-    - _id: pxochpekqtqgh7ti
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: construct touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
       oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!7mblgh6ywxig05cv'
+  subschool: glamer
+type: spell
 

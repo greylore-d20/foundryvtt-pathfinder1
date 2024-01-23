@@ -1,7 +1,37 @@
-name: Pincers
-type: attack
+_id: iMix2jm1eh8V6cCN
+_key: '!items!iMix2jm1eh8V6cCN'
 img: icons/commodities/claws/claw-pincer-grey.webp
+name: Pincers
 system:
+  actions:
+    - _id: lyysy62a9hqkvo9c
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      formulaicAttacks:
+        label: ''
+      img: icons/commodities/claws/claw-pincer-grey.webp
+      name: Attack
+      naturalAttack:
+        primaryAttack: false
+      range:
+        units: melee
+        value: 'null'
+      tag: slam
+  baseTypes:
+    - Pincers
   description:
     value: >-
       <p>A secondary natural attack where you crush with a pincer.</p><p>It
@@ -10,39 +40,9 @@ system:
       natural attacks, see:
       @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
       Attacks} (UMR).</p>
-  actions:
-    - _id: lyysy62a9hqkvo9c
-      name: Attack
-      img: icons/commodities/claws/claw-pincer-grey.webp
-      tag: slam
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        value: 'null'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-        damage: str
-      naturalAttack:
-        primaryAttack: false
   subType: natural
-  baseTypes:
-    - Pincers
   weaponGroups:
     value:
       - natural
-_id: iMix2jm1eh8V6cCN
-_key: '!items!iMix2jm1eh8V6cCN'
+type: attack
 

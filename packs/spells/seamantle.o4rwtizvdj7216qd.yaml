@@ -1,8 +1,27 @@
 _id: o4rwtizvdj7216qd
-name: Seamantle
-type: spell
+_key: '!items!o4rwtizvdj7216qd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Seamantle
 system:
+  actions:
+    - _id: 9lhrredzmckjg64o
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You sheathe yourself within a churning column of pure elemental water
@@ -32,38 +51,19 @@ system:
       not harmed by it. A <i>flaming</i> or <i>flaming</i> burst weapon that
       strikes you has its power suppressed for 1d4 rounds if the wielder fails a
       Fortitude save.</p>
-  actions:
-    - _id: 9lhrredzmckjg64o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 8
-      wizard: 8
-      druid: 8
     bloodline:
       Aquatic: 8
+    class:
+      druid: 8
+      sorcerer: 8
+      wizard: 8
   level: 8
-  school: con
-  subschool: creation
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a cup of water
+  school: con
   sr: false
-_key: '!items!o4rwtizvdj7216qd'
+  subschool: creation
+  types: water
+type: spell
 

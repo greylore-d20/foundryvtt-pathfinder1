@@ -1,48 +1,48 @@
 _id: c0hvjnqzry149ugs
-name: Curse Water
-type: spell
+_key: '!items!c0hvjnqzry149ugs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Curse Water
 system:
-  description:
-    value: >-
-      <p>This spell imbues a flask (1 pint) of water with negative energy,
-      turning it into unholy water (see Equipment). Unholy water damages good
-      outsiders the way holy water damages undead and evil outsiders.</p>
   actions:
     - _id: s0hdvd583lgjibu4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         value: instantaneous
-      target:
-        value: flask of water touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
+        type: will
+      target:
+        value: flask of water touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell imbues a flask (1 pint) of water with negative energy,
+      turning it into unholy water (see Equipment). Unholy water damages good
+      outsiders the way holy water damages undead and evil outsiders.</p>
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      inquisitor: 1
       antipaladin: 1
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      cleric: 1
+      inquisitor: 1
+      oracle: 1
+      warpriest: 1
   materials:
-    value: 5 lbs. of powdered silver worth 25 gp
     gpValue: 25
+    value: 5 lbs. of powdered silver worth 25 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!c0hvjnqzry149ugs'
+  school: nec
+  types: evil
+type: spell
 

@@ -1,8 +1,32 @@
 _id: oa2hmlla5maks5pg
-name: Voluminous Vocabulary
-type: spell
+_key: '!items!oa2hmlla5maks5pg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Voluminous Vocabulary
 system:
+  actions:
+    - _id: z9uysrxv98v64tti
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 8 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You choose any language (except for secret languages, such as Druidic).
@@ -20,50 +44,26 @@ system:
       spell endows the target merely with a temporarily enhanced vocabulary, the
       person offering instructions to nonsentient creatures must take care to
       avoid metaphors or any other ambiguity.</p>
-  actions:
-    - _id: z9uysrxv98v64tti
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 8 hours (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      bard: 2
       alchemist: 3
-      witch: 3
+      bard: 2
+      cleric: 3
       inquisitor: 2
-      shaman: 4
-      psychic: 3
       medium: 2
       mesmerist: 2
       occultist: 2
+      oracle: 3
+      psychic: 3
+      shaman: 4
+      sorcerer: 3
       spiritualist: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a quill
-_key: '!items!oa2hmlla5maks5pg'
+  school: div
+type: spell
 

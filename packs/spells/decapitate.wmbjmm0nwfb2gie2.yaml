@@ -1,8 +1,30 @@
 _id: wmbjmm0nwfb2gie2
-name: Decapitate
-type: spell
+_key: '!items!wmbjmm0nwfb2gie2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Decapitate
 system:
+  actions:
+    - _id: 8lm7tprybc52jmvn
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial (see text)
+        type: fort
+      target:
+        value: one creature (see text)
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can cast this spell only as a response to a confirmed critical hit
@@ -13,38 +35,16 @@ system:
       the target is instantly decapitated and dies unless it can survive
       decapitation. Even on a successful saving throw, the critical hit deals an
       extra 4d6 points of damage.</p>
-  actions:
-    - _id: 8lm7tprybc52jmvn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one creature (see text)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial (see text)
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       inquisitor: 5
       magus: 6
       psychic: 6
+      sorcerer: 6
+      wizard: 6
   level: 6
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a sliver from a guillotine blade
-_key: '!items!wmbjmm0nwfb2gie2'
+  school: evo
+type: spell
 

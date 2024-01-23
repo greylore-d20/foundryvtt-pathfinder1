@@ -1,8 +1,27 @@
 _id: d1wxnax51cecplm4
-name: Augury
-type: spell
+_key: '!items!d1wxnax51cecplm4'
 img: icons/magic/perception/orb-crystal-ball-scrying-blue.webp
+name: Augury
 system:
+  actions:
+    - _id: iuf4kmdfc0g7jegl
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An <i>augury</i> can tell you whether a particular action will bring
@@ -22,49 +41,30 @@ system:
       might not take into account the long-term consequences of a contemplated
       action. All <i>auguries</i> cast by the same person about the same topic
       use the same die result as the first casting.</p>
-  actions:
-    - _id: iuf4kmdfc0g7jegl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      shaman: 2
-      psychic: 2
-      medium: 2
-      occultist: 2
-      spiritualist: 2
-    subDomain:
-      Fate: 2
     bloodline:
       Dreamspun: 2
       Harrow: 2
+    class:
+      cleric: 2
+      medium: 2
+      occultist: 2
+      oracle: 2
+      psychic: 2
+      shaman: 2
+      spiritualist: 2
+      warpriest: 2
+      witch: 2
+    subDomain:
+      Fate: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth at least 25 gp
     focus: a set of marked sticks or bones worth at least 25 gp
     gpValue: 25
+    value: incense worth at least 25 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!d1wxnax51cecplm4'
+type: spell
 

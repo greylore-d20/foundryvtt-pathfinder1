@@ -1,17 +1,11 @@
 _id: x9vmgwv0cumqzqqm
-name: Ego Whip III
-type: spell
+_key: '!items!x9vmgwv0cumqzqqm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ego Whip III
 system:
-  description:
-    value: >-
-      <p>This functions as <i>ego whip I</i>, but the target takes a -6 penalty
-      to the chosen ability score and is staggered for 1d6 rounds on a failed
-      Will save. This spell can be undercast.</p>
   actions:
     - _id: pae3r457xmrm63qz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,14 +13,22 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>This functions as <i>ego whip I</i>, but the target takes a -6 penalty
+      to the chosen ability score and is staggered for 1d6 rounds on a failed
+      Will save. This spell can be undercast.</p>
   learnedAt:
     class:
       psychic: 5
@@ -34,7 +36,5 @@ system:
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    somatic: true
-_key: '!items!x9vmgwv0cumqzqqm'
+type: spell
 

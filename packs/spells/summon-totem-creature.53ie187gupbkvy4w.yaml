@@ -1,8 +1,28 @@
 _id: 53ie187gupbkvy4w
-name: Summon Totem Creature
-type: spell
+_key: '!items!53ie187gupbkvy4w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Totem Creature
 system:
+  actions:
+    - _id: 75d5thu3j9fjr7s7
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one summoned creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The Shoanti revere more than the deities of distant planes, but also
@@ -23,43 +43,23 @@ system:
       (Skull Clan</b>): 1d3+1 eagles (vultures), 1d3 fire beetles, 1d3 giant
       centipedes.</p><p><b>Tamiir-Quah (Wind Clan</b>): air elemental (small),
       1d3 eagles, earth elemental (small).</p>
-  actions:
-    - _id: 75d5thu3j9fjr7s7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour (D)
-      range:
-        units: close
-      spellEffect: one summoned creature
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      ranger: 3
-      summoner: 3
       hunter: 3
+      oracle: 3
+      ranger: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a piece of bone from any one of your totem animals
+  school: con
   sr: false
-_key: '!items!53ie187gupbkvy4w'
+  subschool: summoning
+type: spell
 

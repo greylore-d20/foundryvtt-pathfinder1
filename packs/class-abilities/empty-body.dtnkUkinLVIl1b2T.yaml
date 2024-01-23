@@ -1,8 +1,25 @@
 _id: dtnkUkinLVIl1b2T
-name: Empty Body
-type: feat
+_key: '!items!dtnkUkinLVIl1b2T'
 img: systems/pf1/icons/feats/blinding-critical.jpg
+name: Empty Body
 system:
+  abilityType: su
+  actions:
+    - _id: ffoo0lybgs7shykr
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@attributes.hd.total'
+      img: systems/pf1/icons/feats/blinding-critical.jpg
+      name: Use
+      range:
+        units: personal
+  associations:
+    classes:
+      - Monk
   description:
     value: >-
       <p>At 19th level, a monk gains the ability to assume an ethereal state for
@@ -11,27 +28,10 @@ system:
       is a <em>move action</em> that consumes 3 points from his ki pool. This
       ability only affects the monk and cannot be used to make other creatures
       ethereal.</p>
-  actions:
-    - _id: ffoo0lybgs7shykr
-      name: Use
-      img: systems/pf1/icons/feats/blinding-critical.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@attributes.hd.total'
-        units: minute
-      range:
-        units: personal
-  tag: classFeat_emptyBody
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-  abilityType: su
   source:
     id: PZO1110
     pages: '60'
-_key: '!items!dtnkUkinLVIl1b2T'
+  subType: classFeat
+  tag: classFeat_emptyBody
+type: feat
 

@@ -1,8 +1,29 @@
 _id: ykj10itw14elj55j
-name: Timely Inspiration
-type: spell
+_key: '!items!ykj10itw14elj55j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Timely Inspiration
 system:
+  actions:
+    - _id: k19j32t4z9l4d6z6
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>A word of arcane-empowered inspiration can snatch victory from seeming
@@ -10,30 +31,9 @@ system:
       check. The target gains a +1 competence bonus per five caster levels
       (maximum +3 bonus) on the attack roll or skill check retroactively. If the
       bonus is enough to make the failure a success, the roll succeeds.</p>
-  actions:
-    - _id: k19j32t4z9l4d6z6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       bard: 1
   school: div
-  components:
-    verbal: true
-_key: '!items!ykj10itw14elj55j'
+type: spell
 

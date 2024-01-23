@@ -1,8 +1,31 @@
 _id: tqzc06pqmzajk1mn
-name: Thunder Fire
-type: spell
+_key: '!items!tqzc06pqmzajk1mn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thunder Fire
 system:
+  actions:
+    - _id: beakxci1qyghjsst
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object), see text
+        type: will
+      target:
+        value: 1 loaded firearm
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The firearm targeted creates a thunderous report, even if the firearm
@@ -12,38 +35,15 @@ system:
       on this saving throw, and his misfire range increases by 1 for 1d4 rounds.
       If the firearm was loaded when it was targeted by this spell, that
       ammunition is wasted.</p>
-  actions:
-    - _id: beakxci1qyghjsst
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 loaded firearm
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object), see text
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
+      sorcerer: 2
       witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of spent thunderstone
-_key: '!items!tqzc06pqmzajk1mn'
+  school: trs
+type: spell
 

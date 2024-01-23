@@ -1,8 +1,20 @@
 _id: FkxPunrLLOgjtK1j
-name: Hellbound Curse
-type: feat
+_key: '!items!FkxPunrLLOgjtK1j'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Hellbound Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: zskn032g
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.blf
+    - _id: qj4lzkpt
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.int
   description:
     value: >-
       <p>Infernal influence grants you profane insight and weighs on your soul.
@@ -19,19 +31,7 @@ system:
 
       <p>At 15th level, any weapon you wield is treated as lawful and evil for
       the purposes of overcoming damage reduction.</p>
-  changes:
-    - _id: zskn032g
-      formula: '2'
-      subTarget: skill.blf
-      modifier: untyped
-    - _id: qj4lzkpt
-      formula: '2'
-      subTarget: skill.int
-      modifier: untyped
-  tag: classFeat_hellboundCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!FkxPunrLLOgjtK1j'
+  tag: classFeat_hellboundCurse
+type: feat
 

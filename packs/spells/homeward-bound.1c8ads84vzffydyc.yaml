@@ -1,40 +1,40 @@
 _id: 1c8ads84vzffydyc
-name: Homeward Bound
-type: spell
+_key: '!items!1c8ads84vzffydyc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Homeward Bound
 system:
-  description:
-    value: <p>This spell functions as <i>dismissal</i>, except as noted above.</p>
   actions:
     - _id: mqitbbx2ducut5aj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         value: instantaneous
-      target:
-        value: one willing extraplanar creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one willing extraplanar creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: <p>This spell functions as <i>dismissal</i>, except as noted above.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 3
-      warpriest: 3
       oracle: 3
+      sorcerer: 4
+      warpriest: 3
+      wizard: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1c8ads84vzffydyc'
+type: spell
 

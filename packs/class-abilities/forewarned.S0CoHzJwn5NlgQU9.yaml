@@ -1,8 +1,17 @@
 _id: S0CoHzJwn5NlgQU9
-name: Forewarned
-type: feat
+_key: '!items!S0CoHzJwn5NlgQU9'
 img: systems/pf1/icons/spells/enchant-acid-2.jpg
+name: Forewarned
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: xia1jsup
+      formula: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
+      modifier: untyped
+      subTarget: init
   description:
     value: >-
       <p>You can always act in the surprise round even if you fail to make a
@@ -11,16 +20,7 @@ system:
       initiative checks equal to 1/2 your wizard level (minimum +1). At 20th
       level, anytime you roll initiative, assume the roll resulted in a natural
       20.</p>
-  changes:
-    - _id: xia1jsup
-      formula: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
-      subTarget: init
-      modifier: untyped
-  tag: classFeat_forewarned
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!S0CoHzJwn5NlgQU9'
+  tag: classFeat_forewarned
+type: feat
 

@@ -1,8 +1,41 @@
 _id: RYGdmT9D0wqFL8F3
-name: Colossal Ram
-type: weapon
+_key: '!items!RYGdmT9D0wqFL8F3'
 img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
+name: Colossal Ram
 system:
+  actions:
+    - _id: ipdweogg4bbx139p
+      ability:
+        attack: str
+        critMult: '3'
+        critRange: ''
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(10, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Ram
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> 10d6; <b>Critical</b> x3; <b>Range</b>
@@ -36,48 +69,15 @@ system:
       in using the ram.</p><p><em>Hit Points</em>: Rams have a hardness of 5 and
       hit points based on their size. A Colossal one has 625 hit points.
       Improvised rams have half the normal hit points.</p>
-  price: 5000
+  hardness: 5
   hp:
     max: 625
     value: 625
-  hardness: 5
-  actions:
-    - _id: ipdweogg4bbx139p
-      name: Attack
-      img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(10, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: ''
-        critMult: '3'
-  baseTypes:
-    - Ram
-  subType: misc
-  weaponSubtype: other
+  price: 5000
   source:
     id: PZO1118
     pages: '166'
-_key: '!items!RYGdmT9D0wqFL8F3'
+  subType: misc
+  weaponSubtype: other
+type: weapon
 

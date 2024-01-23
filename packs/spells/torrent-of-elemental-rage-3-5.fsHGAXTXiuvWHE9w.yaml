@@ -1,7 +1,56 @@
-name: Torrent of Elemental Rage (3.5)
-type: spell
+_id: fsHGAXTXiuvWHE9w
+_key: '!items!fsHGAXTXiuvWHE9w'
 img: icons/magic/air/wind-tornado-cyclone-purple-pink.webp
+name: Torrent of Elemental Rage (3.5)
 system:
+  actions:
+    - _id: OXGRm1t5Oxk7awqP
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - fire
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - cold
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - sonic
+          - formula: 2d6
+            type:
+              custom: Adamantine
+              values:
+                - slashing
+      duration:
+        value: concentration, 1 round/3 levels (see below)
+      img: icons/magic/air/wind-tornado-cyclone-purple-pink.webp
+      measureTemplate:
+        size: '30'
+        type: ray
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Reflex half
+        type: ref
+      spellEffect: persistent line of elements 30 ft. long
+  components:
+    divineFocus: 2
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A shimmering torrent of raw elemental power springs into existence,
@@ -19,50 +68,6 @@ system:
       you please. Moving the line does not cause it to sweep through
       intermediary squares but only affects creatures in its new area of
       effect.</p>
-  actions:
-    - _id: OXGRm1t5Oxk7awqP
-      name: Use
-      img: icons/magic/air/wind-tornado-cyclone-purple-pink.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, 1 round/3 levels (see below)
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: ray
-        size: '30'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 2d6
-            type:
-              values:
-                - fire
-              custom: ''
-          - formula: 2d6
-            type:
-              values:
-                - cold
-              custom: ''
-          - formula: 2d6
-            type:
-              values:
-                - sonic
-              custom: ''
-          - formula: 2d6
-            type:
-              values:
-                - slashing
-              custom: Adamantine
-      save:
-        type: ref
-        description: Reflex half
-      spellEffect: persistent line of elements 30 ft. long
   learnedAt:
     class:
       arcanist: 6
@@ -71,10 +76,5 @@ system:
   level: 6
   school: evo
   types: air, earth, fire, water
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 2
-_id: fsHGAXTXiuvWHE9w
-_key: '!items!fsHGAXTXiuvWHE9w'
+type: spell
 

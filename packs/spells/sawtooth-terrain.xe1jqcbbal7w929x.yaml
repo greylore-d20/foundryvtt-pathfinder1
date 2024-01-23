@@ -1,8 +1,30 @@
 _id: xe1jqcbbal7w929x
-name: Sawtooth Terrain
-type: spell
+_key: '!items!xe1jqcbbal7w929x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sawtooth Terrain
 system:
+  actions:
+    - _id: 8hbvqa4if52wxu2m
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex negates
+        type: ref
+      spellEffect: one 10-foot square of difficult and damaging terrain
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell targets an area of earth, metal, stone, or wood, causing
@@ -20,40 +42,18 @@ system:
       piercing damage. The transformed area can be located on any visible
       surface within range, including floors, walls, doors, ceilings, or other
       generally flat surfaces.</p>
-  actions:
-    - _id: 8hbvqa4if52wxu2m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      spellEffect: one 10-foot square of difficult and damaging terrain
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
-      oracle: 5
       druid: 5
-      witch: 5
       hunter: 5
+      oracle: 5
+      sorcerer: 5
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
   school: trs
   types: earth
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!xe1jqcbbal7w929x'
+type: spell
 

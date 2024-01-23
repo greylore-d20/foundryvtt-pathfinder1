@@ -1,8 +1,32 @@
 _id: 1hcddadfd9cqwbri
-name: Necromantic Burden
-type: spell
+_key: '!items!1hcddadfd9cqwbri'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Necromantic Burden
 system:
+  actions:
+    - _id: 4xk3cvggrlinj05j
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one undead creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make an undead creature more difficult for necromancers and clerics
@@ -23,41 +47,17 @@ system:
       over other creatures until its HD limit is no longer exceeded (or the
       former controller can wait until the spell's duration expires to attempt
       this at the target's normal HD).</p>
-  actions:
-    - _id: 4xk3cvggrlinj05j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one undead creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 2
-      warpriest: 2
       oracle: 2
+      sorcerer: 3
+      warpriest: 2
       witch: 3
+      wizard: 3
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a handful of knucklebones
-_key: '!items!1hcddadfd9cqwbri'
+  school: nec
+type: spell
 

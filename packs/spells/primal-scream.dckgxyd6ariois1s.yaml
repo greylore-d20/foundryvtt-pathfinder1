@@ -1,8 +1,25 @@
 _id: dckgxyd6ariois1s
-name: Primal Scream
-type: spell
+_key: '!items!dckgxyd6ariois1s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Primal Scream
 system:
+  actions:
+    - _id: dtcbk0n52bevrjuq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You voice a mighty yell from the depths of your soul, invigorating
@@ -16,30 +33,13 @@ system:
       to speak for reasons other than enchantments or paralysis (for example, if
       you are gagged), or if cast in an environment where speaking is not
       possible.</p>
-  actions:
-    - _id: dtcbk0n52bevrjuq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bard: 4
       mesmerist: 4
   level: 4
   school: abj
-  types: mind-affecting, sonic
-  components:
-    verbal: true
   sr: false
-_key: '!items!dckgxyd6ariois1s'
+  types: mind-affecting, sonic
+type: spell
 

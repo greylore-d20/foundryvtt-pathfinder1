@@ -1,8 +1,29 @@
 _id: wtw123wqg2eej75w
-name: Psychic Crush IV
-type: spell
+_key: '!items!wtw123wqg2eej75w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychic Crush IV
 system:
+  actions:
+    - _id: a1fg6ulyhxfunb6v
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial and Fortitude partial; see text
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
   description:
     value: >-
       <p>This functions as <i>psychic crush I</i>, but the target takes 9d6
@@ -12,32 +33,11 @@ system:
       points, it doesn't gain a Fortitude save to resist this spell but instead
       proceeds as if it had automatically failed its Fortitude save. This spell
       can be undercast.</p>
-  actions:
-    - _id: a1fg6ulyhxfunb6v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will partial and Fortitude partial; see text
   learnedAt:
     class:
       psychic: 8
   level: 8
   school: nec
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!wtw123wqg2eej75w'
+type: spell
 

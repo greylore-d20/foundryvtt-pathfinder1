@@ -1,8 +1,27 @@
 _id: imDXS79zqcY3g6Af
-name: Greater Gift of Consumption
-type: feat
+_key: '!items!imDXS79zqcY3g6Af'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Greater Gift of Consumption
 system:
+  abilityType: su
+  actions:
+    - _id: xeb4za6g8y814nq5
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can more effectively redirect effects to her proxy chosen by
@@ -18,28 +37,9 @@ system:
       hours.</p>
 
       <p>The witch must have the gift of consumption hex to select this hex.</p>
+  subType: classFeat
+  tag: classFeat_greaterGiftOfConsumption
   tags:
     - Hex
-  actions:
-    - _id: xeb4za6g8y814nq5
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_greaterGiftOfConsumption
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!imDXS79zqcY3g6Af'
+type: feat
 

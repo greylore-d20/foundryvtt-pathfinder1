@@ -1,16 +1,11 @@
 _id: yarcdn0xxlarbii5
-name: Protection from Chaos, Communal
-type: spell
+_key: '!items!yarcdn0xxlarbii5'
 img: icons/magic/defensive/barrier-shield-dome-deflect-teal.webp
+name: Protection from Chaos, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Protection from Chaos</i>, except you
-      divide the duration in 1-minute intervals among the creatures touched.</p>
   actions:
     - _id: mnn8l0q4uwowidvv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,35 +13,40 @@ system:
           type: action
       duration:
         value: 1 min./level (D)
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Protection from Chaos</i>, except you
+      divide the duration in 1-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
+      inquisitor: 2
       oracle: 2
       paladin: 2
+      sorcerer: 2
       summoner: 2
-      inquisitor: 2
       summonerUnchained: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: abj
-  types: lawful
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1118
     pages: '240'
-_key: '!items!yarcdn0xxlarbii5'
+  sr: false
+  types: lawful
+type: spell
 

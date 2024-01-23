@@ -1,8 +1,26 @@
 _id: w1tgjxkeaumatp9c
-name: Read Weather
-type: spell
+_key: '!items!w1tgjxkeaumatp9c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Read Weather
 system:
+  actions:
+    - _id: g75pnt26velc03rt
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to forecast the weather at your location for the
@@ -10,37 +28,19 @@ system:
       and so on. This forecast reveals only the weather that would arise
       naturally, and does not take into account any magical occurrences that
       might change the weather.</p>
-  actions:
-    - _id: g75pnt26velc03rt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      ranger: 1
       bard: 1
-      witch: 1
+      cleric: 1
+      druid: 1
       hunter: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      oracle: 1
+      ranger: 1
+      warpriest: 1
+      witch: 1
   materials:
     focus: a set of marked sticks or bones worth at least 25 gp
+  school: div
   sr: false
-_key: '!items!w1tgjxkeaumatp9c'
+type: spell
 

@@ -1,38 +1,38 @@
 _id: GRfwR4nZHTx7JifZ
-name: See Invisibility
-type: feat
+_key: '!items!GRfwR4nZHTx7JifZ'
 img: systems/pf1/icons/skills/shadow_12.jpg
+name: See Invisibility
 system:
-  description:
-    value: >-
-      <p>At 9th level, a spiritualist gains the ability to see many things
-      normally hidden from sight. She gains the ability to use
-      @Compendium[pf1.spells.nokru6mxk9p3r513]{See Invisibility} as a spell-like
-      ability once per day, with a duration of 10 minutes.</p>
+  abilityType: sp
   actions:
     - _id: 6icbvm6cxhvj1typ
-      name: Use
-      img: systems/pf1/icons/skills/shadow_12.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '10'
         units: minute
-      target:
-        value: self
+        value: '10'
+      img: systems/pf1/icons/skills/shadow_12.jpg
+      name: Use
       range:
         units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_seeInvisibility
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Spiritualist
-  abilityType: sp
-_key: '!items!GRfwR4nZHTx7JifZ'
+  description:
+    value: >-
+      <p>At 9th level, a spiritualist gains the ability to see many things
+      normally hidden from sight. She gains the ability to use
+      @Compendium[pf1.spells.nokru6mxk9p3r513]{See Invisibility} as a spell-like
+      ability once per day, with a duration of 10 minutes.</p>
+  subType: classFeat
+  tag: classFeat_seeInvisibility
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

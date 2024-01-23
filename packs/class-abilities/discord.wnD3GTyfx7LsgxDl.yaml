@@ -1,8 +1,29 @@
 _id: wnD3GTyfx7LsgxDl
-name: Discord
-type: feat
+_key: '!items!wnD3GTyfx7LsgxDl'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Discord
 system:
+  abilityType: su
+  actions:
+    - _id: faew5txc7fbh05ar
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can make an animal or humanoid within 30 feet distrust
@@ -15,30 +36,9 @@ system:
 
       <p>At 8th level, this effect decreases the attitude of the target creature
       by two steps. This is a mind-affecting charm effect.</p>
+  subType: classFeat
+  tag: classFeat_discord
   tags:
     - Hex
-  actions:
-    - _id: faew5txc7fbh05ar
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_discord
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!wnD3GTyfx7LsgxDl'
+type: feat
 

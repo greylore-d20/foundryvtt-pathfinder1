@@ -1,14 +1,12 @@
-name: Trap Sense (INV)
-type: feat
+_id: KbhRBQE5ZyYedJo6
+_key: '!items!KbhRBQE5ZyYedJo6'
 img: systems/pf1/icons/items/inventory/hook-hand.jpg
+name: Trap Sense (INV)
 system:
-  description:
-    value: >-
-      <p>At 3rd level, an investigator gains an intuitive sense that alerts him
-      to danger from traps, granting him a +1 bonus on <em>Reflex</em> saving
-      throws to avoid traps and a +1 <em>dodge bonus</em> to AC against attacks
-      by traps. At 6th level and every 3 levels thereafter, these bonuses
-      increase by 1 (to a maximum of +6 at 18th level).</p>
+  abilityType: ex
+  associations:
+    classes:
+      - Investigator
   contextNotes:
     - subTarget: ref
       target: savingThrows
@@ -16,12 +14,14 @@ system:
     - subTarget: ac
       target: misc
       text: +[[floor(@classes.investigator.level / 3)]] dodge vs. traps
-  tag: classFeat_trapSense
+  description:
+    value: >-
+      <p>At 3rd level, an investigator gains an intuitive sense that alerts him
+      to danger from traps, granting him a +1 bonus on <em>Reflex</em> saving
+      throws to avoid traps and a +1 <em>dodge bonus</em> to AC against attacks
+      by traps. At 6th level and every 3 levels thereafter, these bonuses
+      increase by 1 (to a maximum of +6 at 18th level).</p>
   subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_id: KbhRBQE5ZyYedJo6
-_key: '!items!KbhRBQE5ZyYedJo6'
+  tag: classFeat_trapSense
+type: feat
 

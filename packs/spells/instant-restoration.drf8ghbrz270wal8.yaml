@@ -1,8 +1,28 @@
 _id: drf8ghbrz270wal8
-name: Instant Restoration
-type: spell
+_key: '!items!drf8ghbrz270wal8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instant Restoration
 system:
+  actions:
+    - _id: ryvbfk9a0vx7906y
+      actionType: heal
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one summoned creature you control
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Instant restoration</i> channels planar energy into a summoned
@@ -14,42 +34,22 @@ system:
       if its hit points had never dropped to 0 or fewer. Creatures slain by
       death effects cannot be saved by <i>instant restoration</i>. A summoner
       can target his eidolon with this spell.</p>
-  actions:
-    - _id: ryvbfk9a0vx7906y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one summoned creature you control
-      range:
-        units: close
-      actionType: heal
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      summoner: 4
-      witch: 4
-      shaman: 4
       hunter: 4
+      oracle: 4
+      shaman: 4
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 4
+      witch: 4
   level: 4
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a thimble of water and a seed
+  school: con
   sr: false
-_key: '!items!drf8ghbrz270wal8'
+  subschool: healing
+type: spell
 

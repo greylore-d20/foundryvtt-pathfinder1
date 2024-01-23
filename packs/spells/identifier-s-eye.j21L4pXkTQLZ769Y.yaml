@@ -1,7 +1,37 @@
-name: Identifier's Eye
-type: spell
+_id: j21L4pXkTQLZ769Y
+_key: '!items!j21L4pXkTQLZ769Y'
 img: systems/pf1/icons/skills/light_02.jpg
+name: Identifier's Eye
 system:
+  actions:
+    - _id: RZp8kOV5hVoAd4ag
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 3 rounds + 1 round/level (D)
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/light_02.jpg
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+      touch: true
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell infuses a spark of magical energy into the veins of the
@@ -15,31 +45,6 @@ system:
       Further, the target can attempt such checks untrained while under the
       effects of this spell. This ability does not allow the target to identify
       artifacts.</p>
-  actions:
-    - _id: RZp8kOV5hVoAd4ag
-      name: Use
-      img: systems/pf1/icons/skills/light_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 rounds + 1 round/level (D)
-      target:
-        value: creature touched
-      range:
-        units: close
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      touch: true
   learnedAt:
     class:
       alchemist: 2
@@ -52,13 +57,8 @@ system:
       summonerUnchained: 2
       wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a wine-stained pearl
-_id: j21L4pXkTQLZ769Y
-_key: '!items!j21L4pXkTQLZ769Y'
+  school: abj
+type: spell
 

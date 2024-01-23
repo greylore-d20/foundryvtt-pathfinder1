@@ -1,8 +1,24 @@
 _id: tXxoEZm8gHDgcm81
-name: Telekinetic Globe
-type: feat
+_key: '!items!tXxoEZm8gHDgcm81'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Telekinetic Globe
 system:
+  abilityType: sp
+  actions:
+    - _id: 4jfquoqymyov62wo
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.kineticist.level'
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> utility (Sp); <b>Level</b> 8;
@@ -15,23 +31,7 @@ system:
 
       <p>You can accept 1 point of burn to increase the duration to 1 minute per
       level and eliminate the need to concentrate to maintain the globe.</p>
-  actions:
-    - _id: 4jfquoqymyov62wo
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.kineticist.level'
-        units: minute
-  tag: classFeat_telekineticGlobe
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!tXxoEZm8gHDgcm81'
+  tag: classFeat_telekineticGlobe
+type: feat
 

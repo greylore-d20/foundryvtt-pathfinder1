@@ -1,8 +1,27 @@
 _id: m0q7u2z421ja82oz
-name: Monstrous Physique I
-type: spell
+_key: '!items!m0q7u2z421ja82oz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Monstrous Physique I
 system:
+  actions:
+    - _id: lz86eyc6pokrf92p
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you can assume the form of any Small or
@@ -16,37 +35,18 @@ system:
       +1 natural armor bonus. <br /><i>Medium monstrous humanoid</i>: If the
       form you take is that of a <i>Medium monstrous humanoid</i>, you gain a +2
       size bonus to your Strength and a +2 natural armor bonus.</p>
-  actions:
-    - _id: lz86eyc6pokrf92p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 3
+      bloodrager: 3
+      magus: 3
       sorcerer: 3
       wizard: 3
-      alchemist: 3
-      magus: 3
-      bloodrager: 3
   level: 3
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!m0q7u2z421ja82oz'
+  subschool: polymorph
+type: spell
 

@@ -1,8 +1,24 @@
 _id: wa0hpftmcx9k6fli
-name: Grasp
-type: spell
+_key: '!items!wa0hpftmcx9k6fli'
 img: icons/skills/melee/hand-grip-staff-teal.webp
+name: Grasp
 system:
+  actions:
+    - _id: 6965go3we8muifgj
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You can cast this spell as an immediate action when you fail a Climb
@@ -10,39 +26,23 @@ system:
       free action at a -2 penalty. Each successive use of this spell in a
       particular situation increases the penalty by 2. If successful, you don't
       fall, but you don't progress at climbing.</p>
-  actions:
-    - _id: 6965go3we8muifgj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      cleric: 0
-      oracle: 0
-      druid: 0
       bard: 0
-      witch: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
       magus: 0
+      oracle: 0
       psychic: 0
       skald: 0
-      hunter: 0
+      sorcerer: 0
+      witch: 0
+      wizard: 0
   level: 0
   school: div
-  components:
-    verbal: true
   sr: false
-_key: '!items!wa0hpftmcx9k6fli'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

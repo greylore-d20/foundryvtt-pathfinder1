@@ -1,31 +1,31 @@
 _id: CnjrUVKnjFlIF67g
-name: Elemental Movement (Water)
-type: feat
+_key: '!items!CnjrUVKnjFlIF67g'
 img: systems/pf1/icons/skills/blue_20.jpg
+name: Elemental Movement (Water)
 system:
-  description:
-    value: <p>At 15th level, you gain a swim speed of 60 feet.</p>
+  abilityType: su
   actions:
     - _id: 470qmlfg5vj8hrk6
-      name: Use
-      img: systems/pf1/icons/skills/blue_20.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: wtlr2u79
-      formula: '60'
-      subTarget: swimSpeed
-      modifier: base
-  tag: classFeat_elementalMovementWater
-  subType: classFeat
+      img: systems/pf1/icons/skills/blue_20.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
-  abilityType: su
+  changes:
+    - _id: wtlr2u79
+      formula: '60'
+      modifier: base
+      subTarget: swimSpeed
+  description:
+    value: <p>At 15th level, you gain a swim speed of 60 feet.</p>
   source:
     id: PZO1110
     pages: '76'
-_key: '!items!CnjrUVKnjFlIF67g'
+  subType: classFeat
+  tag: classFeat_elementalMovementWater
+type: feat
 

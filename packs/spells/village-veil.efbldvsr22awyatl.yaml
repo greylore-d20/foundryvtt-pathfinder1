@@ -1,8 +1,29 @@
 _id: efbldvsr22awyatl
-name: Village Veil
-type: spell
+_key: '!items!efbldvsr22awyatl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Village Veil
 system:
+  actions:
+    - _id: 3zxuaw8cps8z3c9k
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 10-ft. cube per level
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You throw an illusion over an area to make creatures that view or
@@ -26,41 +47,20 @@ system:
       the spell to the existing area by using the same disaster and granting the
       same sorts of creatures immunity to its effects. If you fail to do this,
       the entire illusion, no matter how large, disappears.</p>
-  actions:
-    - _id: 3zxuaw8cps8z3c9k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief
-      area: one 10-ft. cube per level
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 5
-      witch: 5
-      psychic: 5
+      cleric: 5
       mesmerist: 5
+      oracle: 5
+      psychic: 5
+      sorcerer: 5
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
   school: ill
   subschool: figment
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!efbldvsr22awyatl'
+type: spell
 

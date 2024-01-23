@@ -1,36 +1,36 @@
 _id: Ut4J7E2Ay2anav5T
-name: 'Plant Blessing: Creeping Vines'
-type: feat
+_key: '!items!Ut4J7E2Ay2anav5T'
 img: systems/pf1/icons/spells/vines-jade-2.jpg
+name: 'Plant Blessing: Creeping Vines'
 system:
-  description:
-    value: >-
-      <p>At 1st level, upon hitting with a melee attack, as a swift action you
-      cause the creature you hit to sprout entangling vines that attempt to hold
-      it in place, entangling it for 1 round (Reflex negates).</p>
   actions:
     - _id: opssvz1d5fyh3212
-      name: Use
-      img: systems/pf1/icons/spells/vines-jade-2.jpg
+      actionType: save
       activation:
         type: swift
         unchained:
           type: action
       duration:
-        value: '1'
         units: round
-      target:
-        value: creature struck
+        value: '1'
+      img: systems/pf1/icons/spells/vines-jade-2.jpg
+      name: Use
       range:
         units: touch
-      actionType: save
       save:
-        type: ref
         description: Reflex negates
-  tag: classFeat_plantBlessingCreepingVines
-  subType: classFeat
+        type: ref
+      target:
+        value: creature struck
   associations:
     classes:
       - Warpriest
-_key: '!items!Ut4J7E2Ay2anav5T'
+  description:
+    value: >-
+      <p>At 1st level, upon hitting with a melee attack, as a swift action you
+      cause the creature you hit to sprout entangling vines that attempt to hold
+      it in place, entangling it for 1 round (Reflex negates).</p>
+  subType: classFeat
+  tag: classFeat_plantBlessingCreepingVines
+type: feat
 

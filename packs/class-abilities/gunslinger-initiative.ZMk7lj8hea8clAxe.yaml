@@ -1,8 +1,29 @@
 _id: ZMk7lj8hea8clAxe
-name: Gunslinger Initiative
-type: feat
+_key: '!items!ZMk7lj8hea8clAxe'
 img: systems/pf1/icons/feats/improved-initiative.jpg
+name: Gunslinger Initiative
 system:
+  abilityType: ex
+  actions:
+    - _id: l4ejn4hvg9kyh6pj
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      duration:
+        units: perm
+      img: systems/pf1/icons/feats/improved-initiative.jpg
+      name: Use
+      range:
+        minUnits: none
+        units: personal
+      uses:
+        autoDeductChargesCost: '0'
+  changes:
+    - _id: s57us5lv
+      formula: '(@resources.classFeat_gritGun.value > 0 ? 1 : 0)'
+      modifier: untypedPerm
+      subTarget: init
   description:
     value: >-
       <p>At 3rd level, as long as the gunslinger has at least 1 grit point, she
@@ -11,30 +32,9 @@ system:
       Draw</em> feat, her hands are free and unrestrained, and the firearm is
       not hidden, she can draw a single firearm as part of the
       <em>initiative</em> check.</p>
+  subType: classFeat
+  tag: classFeat_gunslingerInitiative
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: l4ejn4hvg9kyh6pj
-      name: Use
-      img: systems/pf1/icons/feats/improved-initiative.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      duration:
-        units: perm
-      range:
-        units: personal
-        minUnits: none
-      uses:
-        autoDeductChargesCost: '0'
-  changes:
-    - _id: s57us5lv
-      formula: '(@resources.classFeat_gritGun.value > 0 ? 1 : 0)'
-      subTarget: init
-      modifier: untypedPerm
-  tag: classFeat_gunslingerInitiative
-  subType: classFeat
-  abilityType: ex
-_key: '!items!ZMk7lj8hea8clAxe'
+type: feat
 

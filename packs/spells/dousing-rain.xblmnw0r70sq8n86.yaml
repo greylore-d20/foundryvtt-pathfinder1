@@ -1,8 +1,30 @@
 _id: xblmnw0r70sq8n86
-name: Dousing Rain
-type: spell
+_key: '!items!xblmnw0r70sq8n86'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dousing Rain
 system:
+  actions:
+    - _id: pq4sim74uwg7i79h
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cylinder (10-ft. radius, 40 ft. high)
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>With a beckoning gesture, you call forth a downpour of rain. For the
@@ -13,40 +35,18 @@ system:
       takes 1 additional point of electricity damage. At 6th, 12th, and 18th
       levels, the fire resistance increases by 5 and the additional electricity
       damage increases by 1 point.</p>
-  actions:
-    - _id: pq4sim74uwg7i79h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '10'
-      area: cylinder (10-ft. radius, 40 ft. high)
   learnedAt:
     class:
-      druid: 2
       bard: 2
-      witch: 2
-      shaman: 2
+      druid: 2
       hunter: 2
+      shaman: 2
+      witch: 2
   level: 2
-  school: evo
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a drop of water
+  school: evo
   sr: false
-_key: '!items!xblmnw0r70sq8n86'
+  types: water
+type: spell
 

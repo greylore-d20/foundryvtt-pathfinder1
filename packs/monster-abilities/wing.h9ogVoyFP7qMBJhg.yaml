@@ -1,7 +1,37 @@
-name: Wing
-type: attack
+_id: h9ogVoyFP7qMBJhg
+_key: '!items!h9ogVoyFP7qMBJhg'
 img: icons/commodities/biological/wing-lizard-brown.webp
+name: Wing
 system:
+  actions:
+    - _id: 4z61o2ool2te0ork
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      formulaicAttacks:
+        label: ''
+      img: icons/commodities/biological/wing-lizard-brown.webp
+      name: Attack
+      naturalAttack:
+        primaryAttack: false
+      range:
+        units: melee
+        value: 'null'
+      tag: wing
+  baseTypes:
+    - Wing
   description:
     value: >-
       <p>A secondary natural attack with your wing, slapping or buffeting with
@@ -9,39 +39,9 @@ system:
       natural attacks, see:
       @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
       Attacks} (UMR).</p>
-  actions:
-    - _id: 4z61o2ool2te0ork
-      name: Attack
-      img: icons/commodities/biological/wing-lizard-brown.webp
-      tag: wing
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        value: 'null'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-        damage: str
-      naturalAttack:
-        primaryAttack: false
   subType: natural
-  baseTypes:
-    - Wing
   weaponGroups:
     value:
       - natural
-_id: h9ogVoyFP7qMBJhg
-_key: '!items!h9ogVoyFP7qMBJhg'
+type: attack
 

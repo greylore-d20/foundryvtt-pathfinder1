@@ -1,8 +1,26 @@
 _id: Ho30lqNDAwpOvH9T
-name: 'Liberation Blessing: Liberation'
-type: feat
+_key: '!items!Ho30lqNDAwpOvH9T'
 img: systems/pf1/icons/spells/wind-grasp-sky-1.jpg
+name: 'Liberation Blessing: Liberation'
 system:
+  actions:
+    - _id: d139nv11u2hkpcjg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/wind-grasp-sky-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, for 1 round as a swift action, you can ignore impediments
@@ -10,25 +28,7 @@ system:
       @Compendium[pf1.spells.lvzq2mwkqmozolpl]{Freedom of Movement}). You can
       activate this blessing even if you’re otherwise unable to take actions,
       but not if you’re unconscious.</p>
-  actions:
-    - _id: d139nv11u2hkpcjg
-      name: Use
-      img: systems/pf1/icons/spells/wind-grasp-sky-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_liberationBlessingLiberation
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!Ho30lqNDAwpOvH9T'
+  tag: classFeat_liberationBlessingLiberation
+type: feat
 

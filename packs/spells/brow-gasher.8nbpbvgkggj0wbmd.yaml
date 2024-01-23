@@ -1,8 +1,30 @@
 _id: 8nbpbvgkggj0wbmd
-name: Brow Gasher
-type: spell
+_key: '!items!8nbpbvgkggj0wbmd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Brow Gasher
 system:
+  actions:
+    - _id: oyvwnnt418qp4w87
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one slashing melee weapon touched
+      duration:
+        value: 1 round/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue a slashing melee weapon with the ability to deal a gruesome
@@ -16,39 +38,17 @@ system:
       penalty reaches -5, the target is blinded. Stopping the bleed damage ends
       the effects this spell imposes on the bleeding creature. A target that is
       immune to bleed damage is also immune to all this spell's effects.</p>
-  actions:
-    - _id: oyvwnnt418qp4w87
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
-      area: one slashing melee weapon touched
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      ranger: 2
+      bloodrager: 2
+      hunter: 2
       inquisitor: 2
       magus: 2
-      bloodrager: 2
       occultist: 2
-      hunter: 2
+      ranger: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!8nbpbvgkggj0wbmd'
+type: spell
 

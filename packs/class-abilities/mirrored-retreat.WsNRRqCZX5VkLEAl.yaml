@@ -1,8 +1,28 @@
 _id: WsNRRqCZX5VkLEAl
-name: Mirrored Retreat
-type: feat
+_key: '!items!WsNRRqCZX5VkLEAl'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Mirrored Retreat
 system:
+  abilityType: su
+  actions:
+    - _id: cq3j86g0zbwd7ieo
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: minute
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day as a full-round action, your form ripples and releases
@@ -19,30 +39,10 @@ system:
       effect.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: cq3j86g0zbwd7ieo
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_mirroredRetreat
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!WsNRRqCZX5VkLEAl'
+  tag: classFeat_mirroredRetreat
+  uses:
+    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    per: day
+type: feat
 

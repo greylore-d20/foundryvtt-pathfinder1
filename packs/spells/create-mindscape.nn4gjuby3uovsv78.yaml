@@ -1,8 +1,30 @@
 _id: nn4gjuby3uovsv78
-name: Create Mindscape
-type: spell
+_key: '!items!nn4gjuby3uovsv78'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Mindscape
 system:
+  actions:
+    - _id: sogqsfnyzvai9u0m
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief; see text
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an immersive mindscape (see page 235) that the minds of both
@@ -55,38 +77,16 @@ system:
       level or higher at a cost of 10,000 gp. You and other creatures aware of a
       permanent mindscape can come and go using the <i>mindscape door</i>
       spell.</p>
-  actions:
-    - _id: sogqsfnyzvai9u0m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: one creature
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief; see text
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      psychic: 4
       medium: 4
       mesmerist: 4
+      psychic: 4
+      sorcerer: 5
+      wizard: 5
   level: 5
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!nn4gjuby3uovsv78'
+type: spell
 

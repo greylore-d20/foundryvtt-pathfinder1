@@ -1,8 +1,35 @@
 _id: gUIzLmnJVLDmhnvB
-name: Energy Font
-type: feat
+_key: '!items!gUIzLmnJVLDmhnvB'
 img: systems/pf1/icons/skills/light_04.jpg
+name: Energy Font
 system:
+  abilityType: su
+  actions:
+    - _id: xulml2dqe7a7xk5j
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.medium.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/light_04.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: 30-ft. radius burst
+  associations:
+    classes:
+      - Medium
   description:
     value: >-
       <p>You can channel energy a number of times per day equal to 1 + your
@@ -14,37 +41,10 @@ system:
       cast from the cleric list to your medium spell list and spells known.
       Otherwise, add inflict spells in the same way. These spells count as
       divine, as in the divine surge spirit power.</p>
-  actions:
-    - _id: xulml2dqe7a7xk5j
-      name: Use
-      img: systems/pf1/icons/skills/light_04.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: 30-ft. radius burst
-      range:
-        units: personal
-      actionType: heal
-      damage:
-        parts:
-          - formula: (ceil(@classes.medium.level / 2))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 1 + @abilities.cha.mod
-  tag: classFeat_energyFont
   subType: classFeat
-  associations:
-    classes:
-      - Medium
-  abilityType: su
-_key: '!items!gUIzLmnJVLDmhnvB'
+  tag: classFeat_energyFont
+  uses:
+    maxFormula: 1 + @abilities.cha.mod
+    per: day
+type: feat
 

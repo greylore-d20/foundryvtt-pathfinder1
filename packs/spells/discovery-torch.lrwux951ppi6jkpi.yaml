@@ -1,8 +1,26 @@
 _id: lrwux951ppi6jkpi
-name: Discovery Torch
-type: spell
+_key: '!items!lrwux951ppi6jkpi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Discovery Torch
 system:
+  actions:
+    - _id: qru1tfy6273c43xw
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An object you touch emanates a 20-foot radius of bright light. The
@@ -14,34 +32,16 @@ system:
       emanation doubles (40-ft.-radius emanation) while that inquisitor has a
       judgment active.  Light spells counter and dispel darkness spells of an
       equal or lower level.</p>
-  actions:
-    - _id: qru1tfy6273c43xw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: object touched
-      range:
-        units: touch
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
       inquisitor: 2
+      oracle: 3
+      warpriest: 3
   level: 3
   school: evo
-  types: light
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lrwux951ppi6jkpi'
+  types: light
+type: spell
 

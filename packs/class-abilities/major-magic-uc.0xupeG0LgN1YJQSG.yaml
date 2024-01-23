@@ -1,8 +1,20 @@
 _id: 0xupeG0LgN1YJQSG
-name: Major Magic (UC)
-type: feat
+_key: '!items!0xupeG0LgN1YJQSG'
 img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+name: Major Magic (UC)
 system:
+  abilityType: sp
+  actions:
+    - _id: hstah0u6z1a9x449
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue (Unchained)
   description:
     value: >-
       <p>A rogue with this talent gains the ability to cast a 1st-level spell
@@ -13,24 +25,12 @@ system:
 
       <p>A rogue must have the minor magic rogue talent and an Intelligence
       score of at least 11 to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_majorMagicUc
   tags:
     - Rogue Talent
-  actions:
-    - _id: hstah0u6z1a9x449
-      name: Use
-      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
-      activation:
-        type: special
-        unchained:
-          type: special
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_majorMagicUc
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue (Unchained)
-  abilityType: sp
-_key: '!items!0xupeG0LgN1YJQSG'
+    per: day
+type: feat
 

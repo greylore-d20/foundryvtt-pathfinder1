@@ -1,8 +1,27 @@
 _id: hrlql4cdfkppfblb
-name: Rope Trick
-type: spell
+_key: '!items!hrlql4cdfkppfblb'
 img: icons/sundries/survival/rope-coiled-tan.webp
+name: Rope Trick
 system:
+  actions:
+    - _id: t2omb2uuwffo1ku5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one touched piece of rope from 5 ft. to 30 ft. long
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When this spell is cast upon a piece of rope from 5 to 30 feet long,
@@ -23,36 +42,17 @@ system:
       climbed by only one person at a time. The <i>rope trick</i> spell enables
       climbers to reach a normal place if they do not climb all the way to the
       extradimensional space.</p>
-  actions:
-    - _id: t2omb2uuwffo1ku5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one touched piece of rope from 5 ft. to 30 ft. long
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      psychic: 2
       medium: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: powdered corn and a twisted loop of parchment
+  school: trs
   sr: false
-_key: '!items!hrlql4cdfkppfblb'
+type: spell
 

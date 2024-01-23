@@ -1,8 +1,28 @@
 _id: Ba5ZM3i1csfOo4on
-name: Pure Whimsy
-type: feat
+_key: '!items!Ba5ZM3i1csfOo4on'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Pure Whimsy
 system:
+  abilityType: su
+  actions:
+    - _id: 3ebrfaqsh56my293
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '90'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, you can release a stream of errant chaos from the First
@@ -16,30 +36,10 @@ system:
       <p>You can use this ability once per day at 7th level and one additional
       time per day for every 4 levels beyond 7th. You must be at least 7th level
       to select this revelation.</p>
-  actions:
-    - _id: 3ebrfaqsh56my293
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '90'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_pureWhimsy
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!Ba5ZM3i1csfOo4on'
+  tag: classFeat_pureWhimsy
+  uses:
+    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    per: day
+type: feat
 

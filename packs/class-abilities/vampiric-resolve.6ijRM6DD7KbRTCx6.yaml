@@ -1,8 +1,20 @@
 _id: 6ijRM6DD7KbRTCx6
-name: Vampiric Resolve
-type: feat
+_key: '!items!6ijRM6DD7KbRTCx6'
 img: systems/pf1/icons/skills/beast_02.jpg
+name: Vampiric Resolve
 system:
+  abilityType: su
+  actions:
+    - _id: 2w9lrqjrpmwtpqi8
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/beast_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>The vampire hunter gains a +2 bonus on <em>Will</em> saving throws
@@ -11,19 +23,7 @@ system:
       immediately reroll his saving throw against that effect with a bonus equal
       to half his vampire hunter level. At 16th level, he is immune to
       mindaffecting effects.</p>
-  actions:
-    - _id: 2w9lrqjrpmwtpqi8
-      name: Use
-      img: systems/pf1/icons/skills/beast_02.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_vampiricResolve
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!6ijRM6DD7KbRTCx6'
+  tag: classFeat_vampiricResolve
+type: feat
 

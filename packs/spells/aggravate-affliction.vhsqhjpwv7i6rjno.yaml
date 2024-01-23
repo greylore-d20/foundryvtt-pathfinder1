@@ -1,8 +1,29 @@
 _id: vhsqhjpwv7i6rjno
-name: Aggravate Affliction
-type: spell
+_key: '!items!vhsqhjpwv7i6rjno'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aggravate Affliction
 system:
+  actions:
+    - _id: 832ptb9kabks4r9a
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>All recurring afflictions (those with a frequency,including curses,
@@ -12,38 +33,17 @@ system:
       does not count toward ending the affliction, and this extra save does not
       change the timing of the next save against the affliction. Afflictions
       without a frequency are unaffected by this spell.</p>
-  actions:
-    - _id: 832ptb9kabks4r9a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      witch: 3
       hunter: 3
+      oracle: 3
+      sorcerer: 4
+      warpriest: 3
+      witch: 3
+      wizard: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vhsqhjpwv7i6rjno'
+type: spell
 

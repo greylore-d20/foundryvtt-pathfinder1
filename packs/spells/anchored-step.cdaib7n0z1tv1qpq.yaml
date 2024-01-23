@@ -1,8 +1,27 @@
 _id: cdaib7n0z1tv1qpq
-name: Anchored Step
-type: spell
+_key: '!items!cdaib7n0z1tv1qpq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Anchored Step
 system:
+  actions:
+    - _id: ogmusnxqtj1x2nwo
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Powerful tendrils grow out of the bottom of your feet or footwear,
@@ -15,39 +34,20 @@ system:
       tendrils slow your movement, however; your speed is reduced by 10 feet (to
       a minimum of 5 feet). This spell has no effect if you are moving without
       touching the ground (climbing, flying, swimming, and so on).</p>
-  actions:
-    - _id: ogmusnxqtj1x2nwo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       alchemist: 3
-      witch: 3
-      shaman: 3
-      psychic: 3
+      druid: 3
       hunter: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a bit of oak root
+  school: trs
   sr: false
-_key: '!items!cdaib7n0z1tv1qpq'
+type: spell
 

@@ -1,8 +1,34 @@
 _id: 29b03n30uyprze11
-name: Cauterizing Weapon
-type: spell
+_key: '!items!29b03n30uyprze11'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cauterizing Weapon
 system:
+  actions:
+    - _id: w8fytanwu0oft3lv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one weapon or 50 projectiles, all of which must be together at the
+          time of casting
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You infuse a weapon with faint but pernicious energy that stymies
@@ -11,43 +37,17 @@ system:
       a creature's regeneration. The weapon is also treated as silver and cold
       iron at 8th level and is treated as chaotic, evil, good, and lawful at
       11th level for the purpose of negating regeneration.</p>
-  actions:
-    - _id: w8fytanwu0oft3lv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: >-
-          one weapon or 50 projectiles, all of which must be together at the
-          time of casting
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
+      bard: 2
+      hunter: 2
+      magus: 2
+      ranger: 2
       sorcerer: 3
       wizard: 3
-      ranger: 2
-      bard: 2
-      magus: 2
-      hunter: 2
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a gobbet of melted wax
-_key: '!items!29b03n30uyprze11'
+  school: trs
+type: spell
 

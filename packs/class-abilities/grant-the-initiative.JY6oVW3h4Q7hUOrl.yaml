@@ -1,30 +1,30 @@
 _id: JY6oVW3h4Q7hUOrl
-name: Grant the Initiative
-type: feat
+_key: '!items!JY6oVW3h4Q7hUOrl'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Grant the Initiative
 system:
-  description:
-    value: >-
-      <p>At 8th level, you and all allies within 30 feet may add your Wisdom
-      bonus to your initiative checks.</p>
+  abilityType: ex
   actions:
     - _id: oom7z6omjgf7f3py
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: ixz1iz66
-      formula: '@abilities.wis.mod'
-      subTarget: init
-      modifier: untyped
-  tag: classFeat_grantTheInitiative
-  subType: classFeat
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
   associations:
     classes:
       - Inquisitor
-  abilityType: ex
-_key: '!items!JY6oVW3h4Q7hUOrl'
+  changes:
+    - _id: ixz1iz66
+      formula: '@abilities.wis.mod'
+      modifier: untyped
+      subTarget: init
+  description:
+    value: >-
+      <p>At 8th level, you and all allies within 30 feet may add your Wisdom
+      bonus to your initiative checks.</p>
+  subType: classFeat
+  tag: classFeat_grantTheInitiative
+type: feat
 

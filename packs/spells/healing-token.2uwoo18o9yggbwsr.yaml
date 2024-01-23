@@ -1,8 +1,31 @@
 _id: 2uwoo18o9yggbwsr
-name: Healing Token
-type: spell
+_key: '!items!2uwoo18o9yggbwsr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Healing Token
 system:
+  actions:
+    - _id: vsu4dlputnvkqngc
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one touched holy symbol per 3 caster levels
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue one touched holy symbol per 3 caster levels with a connection
@@ -30,42 +53,19 @@ system:
       creature per level that is also holding a token (no two of which can be
       more than 30 feet apart). However, the <i>mass cure light wounds</i> spell
       would heal only creatures within range that are holding tokens.</p>
-  actions:
-    - _id: vsu4dlputnvkqngc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: one touched holy symbol per 3 caster levels
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      ranger: 2
-      paladin: 2
-      inquisitor: 2
-      shaman: 2
       hunter: 2
+      inquisitor: 2
+      oracle: 2
+      paladin: 2
+      ranger: 2
+      shaman: 2
+      warpriest: 2
   level: 2
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!2uwoo18o9yggbwsr'
+type: spell
 

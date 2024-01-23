@@ -1,8 +1,30 @@
 _id: 5gm3icgpwhkcaccf
-name: Vine Strike
-type: spell
+_key: '!items!5gm3icgpwhkcaccf'
 img: icons/magic/nature/root-vine-entangled-hand.webp
+name: Vine Strike
 system:
+  actions:
+    - _id: fpxtbykqfmevwp7e
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex negates (see text)
+        type: ref
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Bristles burst from your body, lodging in your opponent and blossoming
@@ -14,41 +36,19 @@ system:
       to the entangled effect for 1 round. A creature entangled by this spell
       can spend a standard action to remove the vines, but can be entangled
       again by further unarmed strikes.</p>
-  actions:
-    - _id: fpxtbykqfmevwp7e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (see text)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 2
       alchemist: 2
       antipaladin: 2
       bloodrager: 2
-      shaman: 2
+      druid: 2
       hunter: 2
+      ranger: 2
+      shaman: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: con
   subschool: creation
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!5gm3icgpwhkcaccf'
+type: spell
 

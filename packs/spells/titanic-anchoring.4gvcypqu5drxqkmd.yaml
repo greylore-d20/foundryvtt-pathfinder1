@@ -1,19 +1,10 @@
 _id: 4gvcypqu5drxqkmd
-name: Titanic Anchoring
-type: spell
+_key: '!items!4gvcypqu5drxqkmd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Titanic Anchoring
 system:
-  description:
-    value: >-
-      <p>You become grounded and nearly immovable. You are immune to the pull
-      and push special abilities, and all bull rush, grapple, overrun,
-      reposition, and trip combat maneuvers made by creatures your size or
-      smaller always fail. You gain a +10 bonus to your CMD against those combat
-      maneuver checks made by creatures larger than you.</p>
   actions:
     - _id: jedx7ualw3ophbfr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,29 +12,38 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You become grounded and nearly immovable. You are immune to the pull
+      and push special abilities, and all bull rush, grapple, overrun,
+      reposition, and trip combat maneuvers made by creatures your size or
+      smaller always fail. You gain a +10 bonus to your CMD against those combat
+      maneuver checks made by creatures larger than you.</p>
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      ranger: 3
-      paladin: 3
       antipaladin: 3
-      magus: 3
       bloodrager: 3
+      cleric: 3
       hunter: 3
+      magus: 3
+      oracle: 3
+      paladin: 3
+      ranger: 3
+      warpriest: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a shaving of oak root
+  school: trs
   sr: false
-_key: '!items!4gvcypqu5drxqkmd'
+type: spell
 

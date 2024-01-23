@@ -1,8 +1,26 @@
 _id: rczytkwh8xn1btvx
-name: Shadow Jaunt
-type: spell
+_key: '!items!rczytkwh8xn1btvx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Jaunt
 system:
+  actions:
+    - _id: e53z4an2afgm9jdm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous and 1 round; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You instantly travel between shadows to a point within range, though
@@ -21,37 +39,19 @@ system:
       the shadow closest to your destination that's within the spell's range
       (this could be your starting location if there are no other shadows within
       the spell's range).</p>
-  actions:
-    - _id: e53z4an2afgm9jdm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous and 1 round; see text
-      target:
-        value: you
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      bard: 4
-      summoner: 4
       antipaladin: 3
+      bard: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 4
       summonerUnchained: 4
+      wizard: 4
   level: 4
   school: ill
+  sr: false
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!rczytkwh8xn1btvx'
+type: spell
 

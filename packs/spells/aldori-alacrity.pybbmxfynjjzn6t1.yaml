@@ -1,19 +1,10 @@
 _id: pybbmxfynjjzn6t1
-name: Aldori Alacrity
-type: spell
+_key: '!items!pybbmxfynjjzn6t1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aldori Alacrity
 system:
-  description:
-    value: >-
-      <p>This spell's energy quickens your steps, allowing fancy footwork. You
-      gain a +10-foot enhancement bonus to your speed and a +1 dodge bonus to
-      your AC. These bonuses do not stack with those granted by <i>haste</i> or
-      similar effects. While under the effects of <i>Aldori alacrity</i>, you
-      can take 5-foot steps in difficult terrain.</p>
   actions:
     - _id: 97kci17z14gpsi93
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,23 +12,32 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell's energy quickens your steps, allowing fancy footwork. You
+      gain a +10-foot enhancement bonus to your speed and a +1 dodge bonus to
+      your AC. These bonuses do not stack with those granted by <i>haste</i> or
+      similar effects. While under the effects of <i>Aldori alacrity</i>, you
+      can take 5-foot steps in difficult terrain.</p>
   learnedAt:
     class:
-      bard: 2
       alchemist: 2
+      bard: 2
       magus: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: ginger root shavings
+  school: trs
   sr: false
-_key: '!items!pybbmxfynjjzn6t1'
+type: spell
 

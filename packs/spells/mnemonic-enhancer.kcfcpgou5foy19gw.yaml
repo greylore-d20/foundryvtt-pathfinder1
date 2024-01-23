@@ -1,8 +1,29 @@
 _id: kcfcpgou5foy19gw
-name: Mnemonic Enhancer
-type: spell
+_key: '!items!kcfcpgou5foy19gw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mnemonic Enhancer
 system:
+  actions:
+    - _id: iynux9qsb3raxw5b
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Casting this spell allows you to prepare additional spells or retain
@@ -14,34 +35,13 @@ system:
       casting the <i>mnemonic enhancer</i>.</p><p>This restores the previously
       cast spell to your mind.</p><p>In either event, the spell or spells
       prepared or retained fade after 24 hours (if not cast).</p>
-  actions:
-    - _id: iynux9qsb3raxw5b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
+    focus: an ivory plaque worth 50 gp
     value: >-
       a piece of string, and ink consisting of squid secretion mixed with black
       dragon's blood
-    focus: an ivory plaque worth 50 gp
+  school: trs
   sr: false
-_key: '!items!kcfcpgou5foy19gw'
+type: spell
 

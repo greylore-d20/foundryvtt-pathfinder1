@@ -1,8 +1,26 @@
 _id: K5ODcIH3UVny1bDU
-name: Silver Tongue
-type: feat
+_key: '!items!K5ODcIH3UVny1bDU'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Silver Tongue
 system:
+  abilityType: su
+  actions:
+    - _id: z462ob5x1ro9hvtf
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can draw upon your <em>outsider</em> heritage to spin
@@ -15,28 +33,10 @@ system:
       level) to succeed. Failure means the effect does not detect your lies or
       force you to speak only the truth. You can use this ability a number of
       times per day equal to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: z462ob5x1ro9hvtf
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_silverTongue
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!K5ODcIH3UVny1bDU'
+  tag: classFeat_silverTongue
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

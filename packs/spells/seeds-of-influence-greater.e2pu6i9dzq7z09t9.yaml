@@ -1,8 +1,30 @@
 _id: e2pu6i9dzq7z09t9
-name: Seeds of Influence, Greater
-type: spell
+_key: '!items!e2pu6i9dzq7z09t9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Seeds of Influence, Greater
 system:
+  actions:
+    - _id: x6ezvuczai68uspn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>This spell functions as <i>Seeds of Influence</i>, except that if the
@@ -14,42 +36,20 @@ system:
       the effect's caster level. Such spells cast on the target while greater
       <i>Seeds of Influence</i> is active grant no protection against greater
       <i>Seeds of Influence</i>.</p>
-  actions:
-    - _id: x6ezvuczai68uspn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 5
-      witch: 7
-      psychic: 7
       medium: 4
       mesmerist: 5
+      psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
+  materials:
+    value: a rose
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    somatic: true
-    material: true
-  materials:
-    value: a rose
-_key: '!items!e2pu6i9dzq7z09t9'
+type: spell
 

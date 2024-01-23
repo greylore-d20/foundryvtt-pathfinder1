@@ -1,8 +1,21 @@
 _id: OWWDDPpcBLyZAXAr
-name: Subtle Misdirection
-type: feat
+_key: '!items!OWWDDPpcBLyZAXAr'
 img: systems/pf1/icons/feats/greater-feint.png
+name: Subtle Misdirection
 system:
+  abilityType: sp
+  actions:
+    - _id: 8pjbmbh7gntwmim1
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/feats/greater-feint.png
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a <em>standard action</em>, you can <em>touch</em> a creature or an
@@ -14,23 +27,10 @@ system:
       1, plus 1 for every 5 <em>wizard</em> levels you have. You can use this
       ability a number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: 8pjbmbh7gntwmim1
-      name: Use
-      img: systems/pf1/icons/feats/greater-feint.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_subtleMisdirection
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!OWWDDPpcBLyZAXAr'
+  tag: classFeat_subtleMisdirection
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

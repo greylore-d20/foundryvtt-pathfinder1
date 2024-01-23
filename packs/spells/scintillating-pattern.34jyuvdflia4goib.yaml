@@ -1,8 +1,26 @@
 _id: 34jyuvdflia4goib
-name: Scintillating Pattern
-type: spell
+_key: '!items!34jyuvdflia4goib'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scintillating Pattern
 system:
+  actions:
+    - _id: 1v2rf7an5rti0p44
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 2 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: colorful lights in a 20-ft.-radius spread
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A twisting pattern of coruscating colors weaves through the air,
@@ -18,39 +36,21 @@ system:
       additional 1d4 rounds.</p><p>13 or more: Confused for 1d4
       rounds.</p><p>Sightless creatures are not affected by scintillating
       pattern.</p>
-  actions:
-    - _id: 1v2rf7an5rti0p44
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 2 rounds
-      range:
-        units: close
-      spellEffect: colorful lights in a 20-ft.-radius spread
   learnedAt:
     class:
+      psychic: 8
       sorcerer: 8
       wizard: 8
-      psychic: 8
     domain:
       Madness: 8
   level: 8
-  school: ill
-  subschool: pattern
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a crystal prism
+  school: ill
   source:
     id: PZO1110
     pages: '336'
-_key: '!items!34jyuvdflia4goib'
+  subschool: pattern
+  types: mind-affecting
+type: spell
 

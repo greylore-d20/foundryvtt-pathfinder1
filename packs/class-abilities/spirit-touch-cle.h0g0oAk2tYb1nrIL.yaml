@@ -1,8 +1,27 @@
 _id: h0g0oAk2tYb1nrIL
-name: Spirit Touch (CLE)
-type: feat
+_key: '!items!h0g0oAk2tYb1nrIL'
 img: systems/pf1/icons/skills/light_05.jpg
+name: Spirit Touch (CLE)
 system:
+  abilityType: su
+  actions:
+    - _id: gdzm05de67dsypbs
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/light_05.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: held weapon
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 6th level, as a swift action, you can give your natural weapons or
@@ -12,29 +31,10 @@ system:
 
       <p>This power replaces the Death's Embrace power of the Death Domain or
       the Ward Against Death power of the Repose Domain.</p>
-  actions:
-    - _id: gdzm05de67dsypbs
-      name: Use
-      img: systems/pf1/icons/skills/light_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: held weapon
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_spiritTouch
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!h0g0oAk2tYb1nrIL'
+  tag: classFeat_spiritTouch
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

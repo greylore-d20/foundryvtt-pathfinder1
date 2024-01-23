@@ -1,16 +1,11 @@
 _id: gquzbutzeh5ezxap
-name: Debilitating Pain
-type: spell
+_key: '!items!gquzbutzeh5ezxap'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Debilitating Pain
 system:
-  description:
-    value: >-
-      <p>The target is overcome with intense pain, causing it to be stunned on a
-      failed save or dazed for 1 round on a successful save.</p>
   actions:
     - _id: avzbjpc1uxupsjda
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,24 +13,29 @@ system:
           type: action
       duration:
         value: 1 round/3 levels
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will partial (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target is overcome with intense pain, causing it to be stunned on a
+      failed save or dazed for 1 round on a successful save.</p>
   learnedAt:
     class:
-      witch: 3
       psychic: 3
+      witch: 3
   level: 3
   school: enc
   subschool: compulsion
   types: mind-affecting, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!gquzbutzeh5ezxap'
+type: spell
 

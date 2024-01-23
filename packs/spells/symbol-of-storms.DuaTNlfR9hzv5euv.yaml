@@ -1,7 +1,39 @@
-name: Symbol of Storms
-type: spell
+_id: DuaTNlfR9hzv5euv
+_key: '!items!DuaTNlfR9hzv5euv'
 img: icons/commodities/treasure/stone-cracked-lightning-blue.webp
+name: Symbol of Storms
 system:
+  actions:
+    - _id: 9wWErlUG6rJOLG0F
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      damage:
+        parts:
+          - formula: 10d6
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        value: see text
+      img: icons/commodities/treasure/stone-cracked-lightning-blue.webp
+      name: Use
+      range:
+        units: spec
+        value: 0 ft.; see text
+      save:
+        description: Reflex half; see text
+        type: ref
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as @Compendium[pf1.spells.g0x2fnktg1553wv1]{symbol
@@ -15,33 +47,6 @@ system:
       if it meets one or more of the triggering conditions, such as reading the
       rune). Once triggered, a symbol of storms remains active for 1 minute per
       caster level.</p>
-  actions:
-    - _id: 9wWErlUG6rJOLG0F
-      name: Use
-      img: icons/commodities/treasure/stone-cracked-lightning-blue.webp
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      range:
-        value: 0 ft.; see text
-        units: spec
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 10d6
-            type:
-              values:
-                - electric
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half; see text
-      spellEffect: one symbol
   learnedAt:
     class:
       arcanist: 6
@@ -55,15 +60,10 @@ system:
       witch: 6
       wizard: 6
   level: 6
+  materials:
+    gpValue: 1500
+    value: powdered copper and pumice worth a total of 1,500 gp
   school: evo
   types: air, electricity
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: powdered copper and pumice worth a total of 1,500 gp
-    gpValue: 1500
-_id: DuaTNlfR9hzv5euv
-_key: '!items!DuaTNlfR9hzv5euv'
+type: spell
 

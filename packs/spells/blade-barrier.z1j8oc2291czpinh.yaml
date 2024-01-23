@@ -1,8 +1,32 @@
 _id: z1j8oc2291czpinh
-name: Blade Barrier
-type: spell
+_key: '!items!z1j8oc2291czpinh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blade Barrier
 system:
+  actions:
+    - _id: pv61obeu2ayq1b4k
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex half or Reflex negates; see text
+        type: ref
+      spellEffect: >-
+        wall of whirling blades up to 20 ft. long/level, or a ringed wall of
+        whirling blades with a radius of up to 5 ft. per two levels; either form
+        is 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An immobile, vertical curtain of whirling blades shaped of pure force
@@ -14,46 +38,22 @@ system:
       of its choice) and thus take no damage by making a successful Reflex
       save.</p><p>A <i>blade barrier</i> provides cover (+4 bonus to AC, +2
       bonus on Reflex saves) against attacks made through it.</p>
-  actions:
-    - _id: pv61obeu2ayq1b4k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half or Reflex negates; see text
-      spellEffect: >-
-        wall of whirling blades up to 20 ft. long/level, or a ringed wall of
-        whirling blades with a radius of up to 5 ft. per two levels; either form
-        is 20 ft. high
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
-      oracle: 6
       inquisitor: 6
-      psychic: 6
       occultist: 6
+      oracle: 6
+      psychic: 6
+      warpriest: 6
     domain:
       Good: 6
       War: 6
   level: 6
   school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '249'
-_key: '!items!z1j8oc2291czpinh'
+  types: force
+type: spell
 

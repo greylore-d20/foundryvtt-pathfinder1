@@ -1,40 +1,40 @@
 _id: IcChR6pf8RMqs4yK
-name: Wings of Heaven
-type: feat
+_key: '!items!IcChR6pf8RMqs4yK'
 img: systems/pf1/icons/spells/haste-royal-2.jpg
+name: Wings of Heaven
 system:
+  abilityType: su
+  actions:
+    - _id: u5pazts9h7e6wlpa
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/haste-royal-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can sprout feathery wings and fly for a number of
       minutes per day equal to your sorcerer level, with a speed of 60 feet and
       good maneuverability. This duration does not need to be consecutive, but
       it must be used in 1 minute increments.</p>
-  actions:
-    - _id: u5pazts9h7e6wlpa
-      name: Use
-      img: systems/pf1/icons/spells/haste-royal-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level'
-  tag: classFeat_wingsOfHeaven
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
   source:
     id: PZO1110
     pages: '74'
-_key: '!items!IcChR6pf8RMqs4yK'
+  subType: classFeat
+  tag: classFeat_wingsOfHeaven
+  uses:
+    maxFormula: '@classes.sorcerer.level'
+    per: day
+type: feat
 

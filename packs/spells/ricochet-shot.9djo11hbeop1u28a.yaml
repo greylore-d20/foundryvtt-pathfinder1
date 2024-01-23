@@ -1,8 +1,32 @@
 _id: 9djo11hbeop1u28a
-name: Ricochet Shot
-type: spell
+_key: '!items!9djo11hbeop1u28a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ricochet Shot
 system:
+  actions:
+    - _id: jg3o7o8gsy9apsbo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: one projectile weapon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue a projectile weapon with the ability to ricochet any
@@ -20,39 +44,15 @@ system:
       that many shots, the spell is discharged. If the weapon's wielder fails to
       use all the ricochets before the spell end, those ricochets are
       wasted.</p>
-  actions:
-    - _id: jg3o7o8gsy9apsbo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged
-      target:
-        value: one projectile weapon
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
+      hunter: 2
+      ranger: 2
       sorcerer: 2
       wizard: 2
-      ranger: 2
-      hunter: 2
   level: 2
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a wishbone
-_key: '!items!9djo11hbeop1u28a'
+  school: evo
+type: spell
 

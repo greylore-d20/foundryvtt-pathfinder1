@@ -1,8 +1,20 @@
 _id: efDNvQHwNrW4kk2d
-name: Numerical Strike, Greater
-type: feat
+_key: '!items!efDNvQHwNrW4kk2d'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Numerical Strike, Greater
 system:
+  abilityType: ex
+  actions:
+    - _id: 913bmhweyen5nmjt
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>Once per day, when the investigator has confirmed a critical hit with a
@@ -14,24 +26,12 @@ system:
 
       <p>The investigator must have the numerical strike talent and be at least
       13th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_numericalStrikeGreater
   tags:
     - Investigator Talent
-  actions:
-    - _id: 913bmhweyen5nmjt
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: special
-        unchained:
-          type: special
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_numericalStrikeGreater
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!efDNvQHwNrW4kk2d'
+    per: day
+type: feat
 

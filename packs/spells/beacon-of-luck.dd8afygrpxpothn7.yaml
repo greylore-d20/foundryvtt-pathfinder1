@@ -1,8 +1,28 @@
 _id: dd8afygrpxpothn7
-name: Beacon of Luck
-type: spell
+_key: '!items!dd8afygrpxpothn7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Beacon of Luck
 system:
+  actions:
+    - _id: 0r0pvv8j1ip0viqu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You send out a burst of luck with a 30-foot radius centered around you.
@@ -12,38 +32,18 @@ system:
       twice for a saving throw and taking the better result. Once a creature
       benefits from the <i>Beacon of Luck</i> in this way, it cannot gain the
       benefit of this spell for 24 hours.</p>
-  actions:
-    - _id: 0r0pvv8j1ip0viqu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
-      paladin: 4
+      cleric: 3
       inquisitor: 4
+      oracle: 3
+      paladin: 4
+      warpriest: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a tuft of rabbit fur
+  school: div
   sr: false
-_key: '!items!dd8afygrpxpothn7'
+type: spell
 

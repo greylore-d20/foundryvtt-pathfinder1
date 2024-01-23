@@ -1,8 +1,28 @@
 _id: tv6idm3k5h3wulmc
-name: Recorporeal Incarnation
-type: spell
+_key: '!items!tv6idm3k5h3wulmc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Recorporeal Incarnation
 system:
+  actions:
+    - _id: px9ngrg1grizv3lb
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 week/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one willing living creature and one humanoid corpse
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Recorporeal incarnation</i> effectively replaces the target living
@@ -41,35 +61,15 @@ system:
       <i>resurrection</i>, or <i>wish</i>. <i>Recorporeal incarnation</i> can be
       made permanent by a 15th-level caster using <i>permanency</i> with a
       material component worth 17,500 gp.</p>
-  actions:
-    - _id: px9ngrg1grizv3lb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 week/level
-      target:
-        value: one willing living creature and one humanoid corpse
-      range:
-        units: touch
   learnedAt:
     class:
       sorcerer: 7
-      wizard: 7
       witch: 7
+      wizard: 7
   level: 7
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a gem worth at least 250 gp
+  school: nec
   sr: false
-_key: '!items!tv6idm3k5h3wulmc'
+type: spell
 

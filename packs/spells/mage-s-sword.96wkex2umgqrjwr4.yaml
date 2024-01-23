@@ -1,8 +1,26 @@
 _id: 96wkex2umgqrjwr4
-name: Mage's Sword
-type: spell
+_key: '!items!96wkex2umgqrjwr4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mage's Sword
 system:
+  actions:
+    - _id: 37dn7skixf5fmd04
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one sword
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell brings into being a shimmering, sword-like plane of force.
@@ -27,33 +45,15 @@ system:
       first time mage's sword strikes it. If the sword is successfully resisted,
       the spell is dispelled. If not, the sword has its normal full effect on
       that creature for the duration of the spell.</p>
-  actions:
-    - _id: 37dn7skixf5fmd04
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      spellEffect: one sword
   learnedAt:
     class:
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
   level: 7
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a miniature platinum sword worth 250 gp
-_key: '!items!96wkex2umgqrjwr4'
+  school: evo
+  types: force
+type: spell
 

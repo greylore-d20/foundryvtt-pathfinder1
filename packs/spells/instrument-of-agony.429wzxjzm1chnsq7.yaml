@@ -1,8 +1,31 @@
 _id: 429wzxjzm1chnsq7
-name: Instrument of Agony
-type: spell
+_key: '!items!429wzxjzm1chnsq7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instrument of Agony
 system:
+  actions:
+    - _id: cem8vlwgji7vho68
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object), see text
+        harmless: true
+        type: will
+      target:
+        value: weapon touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a weapon to exude a palpable aura of divine fury. While
@@ -14,38 +37,15 @@ system:
       for 1d4+1 rounds. If it succeeds at the saving throw, the creature is
       instead sickened for 1 round. The sickened condition created by the
       instrument is a mind-affecting effect.</p>
-  actions:
-    - _id: cem8vlwgji7vho68
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minutes/level
-      target:
-        value: weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object), see text
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       inquisitor: 2
+      oracle: 2
+      warpriest: 2
     subDomain:
       Kyton: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!429wzxjzm1chnsq7'
+type: spell
 

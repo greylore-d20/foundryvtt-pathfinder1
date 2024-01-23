@@ -1,17 +1,11 @@
 _id: gavdmur6ozd5cbig
-name: Itching Curse
-type: spell
+_key: '!items!gavdmur6ozd5cbig'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Itching Curse
 system:
-  description:
-    value: >-
-      <p>You curse the target with a distracting, unbearable itch. Unless the
-      target scratches as a move action, it takes a -1 penalty on attack rolls,
-      saving throws, skill checks, and ability checks.</p>
   actions:
     - _id: uwg805guut4t94eg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,30 +13,36 @@ system:
           type: action
       duration:
         value: 1 hour/level (D)
-      target:
-        value: one living creature with 5 HD or fewer
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature with 5 HD or fewer
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You curse the target with a distracting, unbearable itch. Unless the
+      target scratches as a move action, it takes a -1 penalty on attack rolls,
+      saving throws, skill checks, and ability checks.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
-      bard: 1
-      witch: 1
-      inquisitor: 1
       antipaladin: 1
-      shaman: 1
-      occultist: 1
+      bard: 1
+      druid: 1
       hunter: 1
+      inquisitor: 1
+      occultist: 1
+      shaman: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: nec
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!gavdmur6ozd5cbig'
+type: spell
 

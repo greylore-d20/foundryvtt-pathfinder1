@@ -1,18 +1,11 @@
 _id: d4mp0m5xfnu9hbhn
-name: Mad Hallucination
-type: spell
+_key: '!items!d4mp0m5xfnu9hbhn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mad Hallucination
 system:
-  description:
-    value: >-
-      <p>This spell induces a hallucinogenic reality in the mind of your target.
-      Surfaces seem to swim, and movement constantly distracts the eye. The
-      target takes a -2 penalty on Will saving throws, caster level checks,
-      Intelligence-based skill checks, and Wisdom-based skill checks.</p>
   actions:
     - _id: 7yf72aa0cw5xoeyu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,27 +13,34 @@ system:
           type: action
       duration:
         value: 5 minute/level (maximum 1 hour)
-      target:
-        value: one humanoid creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one humanoid creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell induces a hallucinogenic reality in the mind of your target.
+      Surfaces seem to swim, and movement constantly distracts the eye. The
+      target takes a -2 penalty on Will saving throws, caster level checks,
+      Intelligence-based skill checks, and Wisdom-based skill checks.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: ill
   subschool: phantasm
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!d4mp0m5xfnu9hbhn'
+type: spell
 

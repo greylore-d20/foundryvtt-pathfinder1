@@ -1,8 +1,40 @@
 _id: 4TJMm8I6U2vPPeIR
-name: Umbral Gear
-type: feat
+_key: '!items!4TJMm8I6U2vPPeIR'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Umbral Gear
 system:
+  abilityType: su
+  actions:
+    - _id: 7ujhtsl25050ypa2
+      ability:
+        critMult: null
+        critRange: null
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      duration:
+        units: minute
+        value: '1'
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+      powerAttack:
+        critMultiplier: null
+        damageBonus: null
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
   description:
     value: >-
       <p>As a standard action while in an area of dim light or darkness, a
@@ -21,49 +53,17 @@ system:
       this talent at least twice, she adds 50 feet of silk rope with a grappling
       hook, a masterwork light melee weapon with which she is proficient, and
       masterwork thieves’ tools to the list of things she can create.</p>
+  source:
+    id: PZO9466
+    pages: '8'
+  subType: classFeat
+  tag: classFeat_umbralGear
   tags:
     - Rogue Talent
     - Slayer Talent
     - Ninja Trick
-  actions:
-    - _id: 7ujhtsl25050ypa2
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-      formulaicAttacks:
-        label: ''
-      ability:
-        critRange: null
-        critMult: null
-      powerAttack:
-        damageBonus: null
-        critMultiplier: null
-      ammoType: none
   uses:
-    per: day
     maxFormula: 10 + @class.level
-  tag: classFeat_umbralGear
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Slayer
-      - Ninja
-  abilityType: su
-  source:
-    id: PZO9466
-    pages: '8'
-_key: '!items!4TJMm8I6U2vPPeIR'
+    per: day
+type: feat
 

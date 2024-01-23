@@ -1,8 +1,38 @@
 _id: DXrLofakB68e8Y4Z
-name: Wood Healer
-type: feat
+_key: '!items!DXrLofakB68e8Y4Z'
 img: systems/pf1/icons/spells/vines-jade-3.jpg
+name: Wood Healer
 system:
+  abilityType: sp
+  actions:
+    - _id: 36225g0yuggo4x1o
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: >-
+              (ceil(@classes.kineticist.level / 2))d6 + floor(@abilities.con.mod
+              / 2) + min(@resources.classFeat_burn.value,
+              floor(@classes.kineticist.level / 3)) * 2
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> wood; <b>Type</b> utility (Sp); <b>Level</b> 1;
@@ -18,37 +48,7 @@ system:
 
       <p>This wild talent counts as kinetic healer for prerequisites for
       selecting other kineticist wild talents.</p>
-  actions:
-    - _id: 36225g0yuggo4x1o
-      name: Use
-      img: systems/pf1/icons/spells/vines-jade-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      damage:
-        parts:
-          - formula: >-
-              (ceil(@classes.kineticist.level / 2))d6 + floor(@abilities.con.mod
-              / 2) + min(@resources.classFeat_burn.value,
-              floor(@classes.kineticist.level / 3)) * 2
-            type:
-              values:
-                - positive
-              custom: ''
-  tag: classFeat_woodHealer
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!DXrLofakB68e8Y4Z'
+  tag: classFeat_woodHealer
+type: feat
 

@@ -1,8 +1,26 @@
 _id: 3wdb34u6m64ctji7
-name: Lay of the Land
-type: spell
+_key: '!items!3wdb34u6m64ctji7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lay of the Land
 system:
+  actions:
+    - _id: m8u6m7csl3ei7ppi
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>In a flash of recognition, you learn about the geography of your
@@ -13,40 +31,22 @@ system:
       Additionally, for the duration of the spell you can make Knowledge
       (geography) checks regarding the affected area as though you were trained
       in that skill.</p>
-  actions:
-    - _id: m8u6m7csl3ei7ppi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
       bard: 2
-      witch: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      oracle: 2
+      ranger: 2
+      warpriest: 2
+      witch: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of soil from the land to be memorized
+  school: div
   source:
     id: PZO9436
     pages: '29'
-_key: '!items!3wdb34u6m64ctji7'
+type: spell
 

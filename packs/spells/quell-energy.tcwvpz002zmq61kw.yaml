@@ -1,8 +1,30 @@
 _id: tcwvpz002zmq61kw
-name: Quell Energy
-type: spell
+_key: '!items!tcwvpz002zmq61kw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Quell Energy
 system:
+  actions:
+    - _id: atdek7ppjifhra58
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You reduce the target creature's ability to tap into a single energy
@@ -17,40 +39,18 @@ system:
       reduce the target's damage by 20 points, and at 19th level, you reduce the
       target's damage by 30 points.  If the target succeeds on its saving throw,
       the spell's duration is reduced to 1 round.</p>
-  actions:
-    - _id: atdek7ppjifhra58
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
-      witch: 3
-      inquisitor: 3
-      shaman: 3
-      psychic: 3
-      occultist: 3
       hunter: 3
+      inquisitor: 3
+      occultist: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!tcwvpz002zmq61kw'
+type: spell
 

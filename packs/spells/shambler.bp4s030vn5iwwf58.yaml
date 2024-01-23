@@ -1,8 +1,27 @@
 _id: bp4s030vn5iwwf58
-name: Shambler
-type: spell
+_key: '!items!bp4s030vn5iwwf58'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shambler
 system:
+  actions:
+    - _id: a2mfu9f00nn7o6xw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 7 days or 7 months; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: >-
+        three or more shambling mounds, no two of which can be more than 30 ft.
+        apart; see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The <i>shambler</i> spell creates 1d4+2 shambling mounds with the
@@ -19,39 +38,20 @@ system:
       dispelled. The <i>shambler</i>s have resistance to fire as normal
       shambling mounds do only if the terrain where they are summoned is rainy,
       marshy, or damp.</p>
-  actions:
-    - _id: a2mfu9f00nn7o6xw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 7 days or 7 months; see text
-      range:
-        units: medium
-      spellEffect: >-
-        three or more shambling mounds, no two of which can be more than 30 ft.
-        apart; see text
   learnedAt:
+    bloodline:
+      Verdant: 9
     class:
       druid: 9
       shaman: 9
     domain:
       Plant: 9
-    bloodline:
-      Verdant: 9
   level: 9
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '341'
-_key: '!items!bp4s030vn5iwwf58'
+  sr: false
+  subschool: creation
+type: spell
 

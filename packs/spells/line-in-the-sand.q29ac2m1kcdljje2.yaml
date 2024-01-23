@@ -1,8 +1,29 @@
 _id: q29ac2m1kcdljje2
-name: Line in the Sand
-type: spell
+_key: '!items!q29ac2m1kcdljje2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Line in the Sand
 system:
+  actions:
+    - _id: uaexii1vxdqnhux3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 5-ft. burst centered on you
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '5'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a glowing crimson line around the area. Against creatures in
@@ -11,34 +32,13 @@ system:
       for magi and wizards, Charisma for bloodragers and sorcerers). The spell
       does not allow you to make more than one attack against a creature for
       each action it takes that provokes such attacks.</p>
-  actions:
-    - _id: uaexii1vxdqnhux3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        value: '5'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '5'
-      area: 5-ft. burst centered on you
   learnedAt:
     class:
+      bloodrager: 1
+      magus: 1
       sorcerer: 1
       wizard: 1
-      magus: 1
-      bloodrager: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!q29ac2m1kcdljje2'
+type: spell
 

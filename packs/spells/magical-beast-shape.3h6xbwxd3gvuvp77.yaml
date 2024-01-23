@@ -1,8 +1,27 @@
 _id: 3h6xbwxd3gvuvp77
-name: Magical Beast Shape
-type: spell
+_key: '!items!3h6xbwxd3gvuvp77'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magical Beast Shape
 system:
+  actions:
+    - _id: 0sq66fjbxtqpmhb2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>beast shape IV</i> except you can assume the
@@ -25,34 +44,15 @@ system:
       a +8 size bonus to your Strength score, take a -4 penalty on your
       Dexterity score, a +2 size bonus to your Constitution score, and gain a +7
       natural armor bonus.</p>
-  actions:
-    - _id: 0sq66fjbxtqpmhb2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 7
       wizard: 7
   level: 7
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!3h6xbwxd3gvuvp77'
+  subschool: polymorph
+type: spell
 

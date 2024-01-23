@@ -1,8 +1,33 @@
 _id: u0qadkpm7dglk6kz
-name: Magnetic Field
-type: spell
+_key: '!items!u0qadkpm7dglk6kz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magnetic Field
 system:
+  actions:
+    - _id: vozegmsw1y4zm9ai
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft.-radius emanation
+      duration:
+        value: 1 round/2 levels (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Reflex negates (object; see text)
+        type: ref
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a spherical magnetic field that surrounds you to a range of
@@ -26,45 +51,20 @@ system:
       mostly of metal take a -2 penalty on their Reflex saves. Creatures that
       fail their saves by 5 or more are pulled an additional 5 feet closer for
       every increment of 5 by which they failed their saves.</p>
-  actions:
-    - _id: vozegmsw1y4zm9ai
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/2 levels (D)
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (object; see text)
-      area: 30-ft.-radius emanation
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 7
-      oracle: 7
-      alchemist: 6
-      summoner: 6
-      witch: 7
-      magus: 6
-      summonerUnchained: 6
     bloodline:
       Nanite: 7
+    class:
+      alchemist: 6
+      cleric: 7
+      magus: 6
+      oracle: 7
+      sorcerer: 7
+      summoner: 6
+      summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!u0qadkpm7dglk6kz'
+type: spell
 

@@ -1,8 +1,25 @@
 _id: jtqieggxovrfju34
-name: Hanspur's Flotsam Vessel
-type: spell
+_key: '!items!jtqieggxovrfju34'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hanspur's Flotsam Vessel
 system:
+  actions:
+    - _id: vgwwaz6susouhmyo
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: raft large enough for caster and one passenger/2 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell assembles a sturdy raft and oars from driftwood, reeds, and
@@ -14,38 +31,21 @@ system:
       rapids or shallows, and it is always considered to be traveling downstream
       for the purpose of calculating travel speed, regardless of its actual
       direction.</p>
-  actions:
-    - _id: vgwwaz6susouhmyo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: close
-      spellEffect: raft large enough for caster and one passenger/2 levels
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
+      hunter: 1
+      oracle: 2
       ranger: 1
       summoner: 1
-      hunter: 1
       summonerUnchained: 1
+      warpriest: 2
   level: 2
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: driftwood branch or river rat's tail
+  school: con
   sr: false
-_key: '!items!jtqieggxovrfju34'
+  subschool: creation
+type: spell
 

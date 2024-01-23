@@ -1,8 +1,25 @@
 _id: mkn0jklea8knq1lz
-name: Dance of a Hundred Cuts
-type: spell
+_key: '!items!mkn0jklea8knq1lz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dance of a Hundred Cuts
 system:
+  actions:
+    - _id: j19dqz0ozck6nwkt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You become a lethal combat dancer, swirling and spinning with grace and
@@ -13,21 +30,6 @@ system:
       to AC. You must remain moving for the spell to stay in effect. If in any
       round you do not either move at least 10 feet or make a melee attack, the
       spell's duration ends.</p>
-  actions:
-    - _id: j19dqz0ozck6nwkt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bard: 4
@@ -35,8 +37,6 @@ system:
       Duels: 5
   level: 4
   school: trs
-  components:
-    verbal: true
   sr: false
-_key: '!items!mkn0jklea8knq1lz'
+type: spell
 

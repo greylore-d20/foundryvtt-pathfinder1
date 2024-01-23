@@ -1,8 +1,24 @@
 _id: 3bw76h8kazudq45e
-name: Mental Barrier III
-type: spell
+_key: '!items!3bw76h8kazudq45e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mental Barrier III
 system:
+  actions:
+    - _id: 56fon8zj1m61eob3
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>mental barrier I</i>, but the shield bonus
@@ -10,27 +26,11 @@ system:
       I</i>, and you take half damage from <i>mind thrust II</i>, <i>III</i>,
       and <i>IV</i> (reduced to one-quarter on a successful Will save). This
       spell can be undercast.</p>
-  actions:
-    - _id: 56fon8zj1m61eob3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       psychic: 4
   level: 4
   school: abj
-  components:
-    verbal: true
   sr: false
-_key: '!items!3bw76h8kazudq45e'
+type: spell
 

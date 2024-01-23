@@ -1,8 +1,20 @@
 _id: b8B2htuq5I6HX767
-name: Lingering Spirits
-type: feat
+_key: '!items!b8B2htuq5I6HX767'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Lingering Spirits
 system:
+  abilityType: sp
+  actions:
+    - _id: w2kdew0e6gt5yqcf
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>Numerous minor spirits find themselves attracted to you. Your
@@ -23,22 +35,10 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  actions:
-    - _id: w2kdew0e6gt5yqcf
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_lingeringSpirits
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: sp
-_key: '!items!b8B2htuq5I6HX767'
+  tag: classFeat_lingeringSpirits
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,33 @@
 _id: 2aspbuzo0ysh0m94
-name: Accept Affliction
-type: spell
+_key: '!items!2aspbuzo0ysh0m94'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Accept Affliction
 system:
+  actions:
+    - _id: 7y601356jnihp2kr
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The caster can transfer the effects of afflictions such as curses,
@@ -13,46 +38,21 @@ system:
       affect the caster instead of the original target. After transferring the
       affliction or condition, the caster is free to cure it in any way he
       can.</p>
-  actions:
-    - _id: 7y601356jnihp2kr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
       bard: 3
-      paladin: 3
-      witch: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      oracle: 3
+      paladin: 3
+      warpriest: 3
+      witch: 3
   level: 3
+  materials:
+    value: dove's heart
   school: con
   subschool: healing
   types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: dove's heart
-_key: '!items!2aspbuzo0ysh0m94'
+type: spell
 

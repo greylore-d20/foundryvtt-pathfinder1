@@ -1,62 +1,62 @@
 _id: 3ze0kso9hxff5u2f
-name: False Life
-type: spell
+_key: '!items!3ze0kso9hxff5u2f'
 img: icons/magic/life/heart-shadow-red.webp
+name: False Life
 system:
-  description:
-    value: >-
-      <p>You harness the power of unlife to grant yourself a limited ability to
-      avoid death. While this spell is in effect, you gain temporary hit points
-      equal to 1d10 + 1 per caster level (maximum +10).</p>
   actions:
     - _id: r7hedq5kywfyniuq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
-      duration:
-        value: 1 hour/level or until discharged; see text
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: heal
       damage:
         parts:
           - formula: 1d10 + min(10, @cl)
             type:
+              custom: ''
               values:
                 - untyped
-              custom: ''
+      duration:
+        value: 1 hour/level or until discharged; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You harness the power of unlife to grant yourself a limited ability to
+      avoid death. While this spell is in effect, you gain temporary hit points
+      equal to 1d10 + 1 per caster level (maximum +10).</p>
   learnedAt:
+    bloodline:
+      Undead: 2
     class:
-      sorcerer: 2
-      wizard: 2
       alchemist: 2
-      witch: 2
       bloodrager: 2
-      shaman: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
       spiritualist: 2
-    bloodline:
-      Undead: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of blood
-  sr: false
+  school: nec
   source:
     id: PZO1110
     pages: '280'
-_key: '!items!3ze0kso9hxff5u2f'
+  sr: false
+type: spell
 

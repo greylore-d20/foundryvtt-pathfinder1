@@ -1,8 +1,32 @@
 _id: qsp4i9nbi7jv1wb9
-name: Clarion Call
-type: spell
+_key: '!items!qsp4i9nbi7jv1wb9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Clarion Call
 system:
+  actions:
+    - _id: rb3rsksmsdr4clvv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject of this spell gains two benefits. First, the affected
@@ -13,41 +37,17 @@ system:
       spell is particularly prized by battlefield commanders and champions who
       wish to make themselves clearly heard or gain the attention of their
       allies or foes.</p>
-  actions:
-    - _id: rb3rsksmsdr4clvv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
       magus: 1
-  school: ill
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      oracle: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   materials:
     value: a piece of brass
-_key: '!items!qsp4i9nbi7jv1wb9'
+  school: ill
+type: spell
 

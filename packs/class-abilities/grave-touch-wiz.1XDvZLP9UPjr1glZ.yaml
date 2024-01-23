@@ -1,8 +1,33 @@
 _id: 1XDvZLP9UPjr1glZ
-name: Grave Touch (WIZ)
-type: feat
+_key: '!items!1XDvZLP9UPjr1glZ'
 img: systems/pf1/icons/skills/affliction_04.jpg
+name: Grave Touch (WIZ)
 system:
+  abilityType: sp
+  actions:
+    - _id: tk3c5xk9ctfd55ya
+      ability:
+        attack: dex
+      actionType: mwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.wizard.leve < 4 ? 1 : floor(@classes.wizard.level / 2)'
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/affliction_04.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: Creature touched
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a standard action, you can make a melee touch attack that causes a
@@ -11,35 +36,10 @@ system:
       with this ability, it becomes <em>frightened</em> for 1 round if it has
       fewer Hit Dice than your wizard level. You can use this ability a number
       of times per day equal to 3 + your <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: tk3c5xk9ctfd55ya
-      name: Use
-      img: systems/pf1/icons/skills/affliction_04.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.wizard.leve < 4 ? 1 : floor(@classes.wizard.level / 2)'
-        units: round
-      target:
-        value: Creature touched
-      range:
-        units: touch
-      actionType: mwak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_graveTouchWiz
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!1XDvZLP9UPjr1glZ'
+  tag: classFeat_graveTouchWiz
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

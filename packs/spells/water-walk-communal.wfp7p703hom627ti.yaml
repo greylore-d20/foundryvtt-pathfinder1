@@ -1,16 +1,11 @@
 _id: wfp7p703hom627ti
-name: Water Walk, Communal
-type: spell
+_key: '!items!wfp7p703hom627ti'
 img: icons/skills/movement/figure-running-gray.webp
+name: Water Walk, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>water walk</i>, except you divide the
-      duration in 10-minute intervals among the creatures touched.</p>
   actions:
     - _id: af7z5j8e7q1543h2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,29 +13,34 @@ system:
           type: action
       duration:
         value: 10 min./level (D)
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>water walk</i>, except you divide the
+      duration in 10-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      ranger: 2
-      psychic: 4
       hunter: 2
+      oracle: 2
+      psychic: 4
+      ranger: 2
+      warpriest: 2
   level: 2
   school: trs
   types: water
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!wfp7p703hom627ti'
+type: spell
 

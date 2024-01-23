@@ -1,8 +1,18 @@
 _id: JuIM2J4m5c2hsmAk
-name: Bard (Quick)
-type: feat
+_key: '!items!JuIM2J4m5c2hsmAk'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Bard (Quick)
 system:
+  changes:
+    - _id: lzyyypb4
+      formula: '2'
+      modifier: untyped
+      subTarget: chaSkills
+    - _id: syjyha9m
+      formula: '2'
+      modifier: untyped
+      subTarget: chaChecks
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -172,16 +182,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: lzyyypb4
-      formula: '2'
-      subTarget: chaSkills
-      modifier: untyped
-    - _id: syjyha9m
-      formula: '2'
-      subTarget: chaChecks
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!JuIM2J4m5c2hsmAk'
+type: feat
 

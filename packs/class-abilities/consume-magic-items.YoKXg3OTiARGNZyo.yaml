@@ -1,8 +1,20 @@
 _id: YoKXg3OTiARGNZyo
-name: Consume Magic Items
-type: feat
+_key: '!items!YoKXg3OTiARGNZyo'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Consume Magic Items
 system:
+  abilityType: su
+  actions:
+    - _id: v4kq17c0zidffvrb
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can consume the power of potions, scrolls, staves, and
@@ -23,21 +35,9 @@ system:
 
       <p>This exploit has no effect on magic armor, weapons, rings, rods,
       wondrous items, or other magic items besides those noted above.</p>
+  subType: classFeat
+  tag: classFeat_consumeMagicItems
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: v4kq17c0zidffvrb
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_consumeMagicItems
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!YoKXg3OTiARGNZyo'
+type: feat
 

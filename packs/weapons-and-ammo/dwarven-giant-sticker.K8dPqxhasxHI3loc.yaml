@@ -1,64 +1,64 @@
 _id: K8dPqxhasxHI3loc
-name: Dwarven Giant-Sticker
-type: weapon
+_key: '!items!K8dPqxhasxHI3loc'
 img: systems/pf1/icons/items/weapons/dwarven-giant-sticker.PNG
+name: Dwarven Giant-Sticker
 system:
+  actions:
+    - _id: 1vtp9fdst6oyk00o
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/dwarven-giant-sticker.PNG
+      name: Attack
+      range:
+        units: reach
+        value: '0'
+  baseTypes:
+    - Dwarven Giant-Sticker
   description:
     value: >-
       <p>This heavy bladed spear is specifically designed for use against
       giants, who have long reach and the ability to soak up large amounts of
       damage.</p>
-  tags:
-    - Dwarven
-  weight:
-    value: 12
-  price: 25
   hardness: 10
-  actions:
-    - _id: 1vtp9fdst6oyk00o
-      name: Attack
-      img: systems/pf1/icons/items/weapons/dwarven-giant-sticker.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: reach
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(2, 6, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Dwarven Giant-Sticker
-  weaponGroups:
-    value:
-      - polearms
-  subType: exotic
-  weaponSubtype: 2h
+  price: 25
   properties:
     brc: true
     rch: true
   source:
     id: PZO9491
     pages: '8'
-_key: '!items!K8dPqxhasxHI3loc'
+  subType: exotic
+  tags:
+    - Dwarven
+  weaponGroups:
+    value:
+      - polearms
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

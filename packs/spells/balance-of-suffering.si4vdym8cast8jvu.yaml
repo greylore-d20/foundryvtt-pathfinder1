@@ -1,8 +1,31 @@
 _id: si4vdym8cast8jvu
-name: Balance of Suffering
-type: spell
+_key: '!items!si4vdym8cast8jvu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Balance of Suffering
 system:
+  actions:
+    - _id: auez8wd1zrm15vwf
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will half; see text
+        type: will
+      target:
+        value: one living creature and another single living or undead creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You borrow life force from a living creature and infuse it into another
@@ -25,42 +48,19 @@ system:
       effect. If it does not penetrate the secondary target's spell resistance,
       the initial target is still harmed as described, but the secondary target
       is not healed or harmed.</p>
-  actions:
-    - _id: auez8wd1zrm15vwf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one living creature and another single living or undead creature
-      range:
-        units: close
-      actionType: heal
-      save:
-        type: will
-        description: Will half; see text
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
       inquisitor: 6
-      shaman: 6
       occultist: 6
+      oracle: 6
+      shaman: 6
       spiritualist: 6
+      warpriest: 6
+      witch: 6
   level: 6
   school: con
   subschool: healing
   types: death
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!si4vdym8cast8jvu'
+type: spell
 

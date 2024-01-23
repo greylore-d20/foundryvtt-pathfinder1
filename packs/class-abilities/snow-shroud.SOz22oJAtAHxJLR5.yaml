@@ -1,8 +1,26 @@
 _id: SOz22oJAtAHxJLR5
-name: Snow Shroud
-type: feat
+_key: '!items!SOz22oJAtAHxJLR5'
 img: systems/pf1/icons/skills/ice_02.jpg
+name: Snow Shroud
 system:
+  abilityType: su
+  actions:
+    - _id: zz198r834wcir49n
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        value: ''
+      img: systems/pf1/icons/skills/ice_02.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you ignore <em>concealment</em> and <em>Perception</em>
@@ -15,30 +33,12 @@ system:
       and grants a bonus on <em>Stealth</em> checks equal to 1/2 your sorcerer
       level in snowy or icy areas. You can use this ability once per day at 9th
       level, twice per day at 17th, and three times per day at 20th.</p>
-  actions:
-    - _id: zz198r834wcir49n
-      name: Use
-      img: systems/pf1/icons/skills/ice_02.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: ''
-      target:
-        value: self
-      range:
-        units: personal
+  subType: classFeat
+  tag: classFeat_snowShroud
   uses:
-    per: day
     maxFormula: >-
       @classes.sorcerer.level >= 20 ? 3 : (@classes.sorcerer.level < 20 &&
       @classes.sorcerer.level > 16 ? 2 : 1)
-  tag: classFeat_snowShroud
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!SOz22oJAtAHxJLR5'
+    per: day
+type: feat
 

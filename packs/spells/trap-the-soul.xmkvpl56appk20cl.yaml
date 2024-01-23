@@ -1,8 +1,30 @@
 _id: xmkvpl56appk20cl
-name: Trap the Soul
-type: spell
+_key: '!items!xmkvpl56appk20cl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Trap the Soul
 system:
+  actions:
+    - _id: ck217jxu2kht4epc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Trap the soul</i> forces a creature's life force (and its material
@@ -27,43 +49,21 @@ system:
       object. As soon as the subject picks up or accepts the trigger object, its
       life force is automatically transferred to the gem without the benefit of
       spell resistance or a save.</p>
-  actions:
-    - _id: ck217jxu2kht4epc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent; see text
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
-    class:
-      sorcerer: 8
-      wizard: 8
-      witch: 8
-      psychic: 8
-    subDomain:
-      Souls: 9
-      Psychopomp: 8
     bloodline:
       Oni: 8
+    class:
+      psychic: 8
+      sorcerer: 8
+      witch: 8
+      wizard: 8
+    subDomain:
+      Psychopomp: 8
+      Souls: 9
   level: 8
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: gem worth 1,000 gp per HD of the trapped creature
-_key: '!items!xmkvpl56appk20cl'
+  school: con
+  subschool: summoning
+type: spell
 

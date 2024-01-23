@@ -1,8 +1,41 @@
 _id: x17MaJlLIAkOkfxa
-name: Sonic Blast
-type: feat
+_key: '!items!x17MaJlLIAkOkfxa'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Sonic Blast
 system:
+  abilityType: su
+  actions:
+    - _id: wqp315z8nz8buro8
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - sonic
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude negates deafness
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can loose a deafening blast of sonic energy by expending 1
@@ -13,40 +46,7 @@ system:
       10d6 at 19th level). The target is also deafened for 1 minute. The target
       can attempt a Fortitude save to halve the damage and negate the
       deafness.</p>
-  actions:
-    - _id: wqp315z8nz8buro8
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
-            type:
-              values:
-                - sonic
-              custom: ''
-      ability:
-        attack: dex
-      save:
-        type: fort
-        description: Fortitude negates deafness
-  tag: classFeat_sonicBlast
   subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!x17MaJlLIAkOkfxa'
+  tag: classFeat_sonicBlast
+type: feat
 

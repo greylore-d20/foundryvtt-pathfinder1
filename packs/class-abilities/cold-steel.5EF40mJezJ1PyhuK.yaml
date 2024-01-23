@@ -1,8 +1,24 @@
 _id: 5EF40mJezJ1PyhuK
-name: Cold Steel
-type: feat
+_key: '!items!5EF40mJezJ1PyhuK'
 img: systems/pf1/icons/skills/ice_01.jpg
+name: Cold Steel
 system:
+  abilityType: sp
+  actions:
+    - _id: v9ko5152j9yxk6ia
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.sorcerer.level < 4 ? 1 : (floor(@classes.sorcerer.level / 2))'
+      img: systems/pf1/icons/skills/ice_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can touch a weapon or up to 50 pieces of ammunition
@@ -11,26 +27,10 @@ system:
       level, you can confer the <em>icy burst</em> property instead, but the
       duration of the power is halved. You can use this ability a number of
       times per day equal to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: v9ko5152j9yxk6ia
-      name: Use
-      img: systems/pf1/icons/skills/ice_01.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.sorcerer.level < 4 ? 1 : (floor(@classes.sorcerer.level / 2))'
-        units: round
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_coldSteel
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!5EF40mJezJ1PyhuK'
+  tag: classFeat_coldSteel
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

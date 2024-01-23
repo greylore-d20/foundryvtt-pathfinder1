@@ -1,8 +1,42 @@
 _id: royN1TrSR8rN2Qgu
-name: Prana Ghost
-type: feat
+_key: '!items!royN1TrSR8rN2Qgu'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Prana Ghost
 system:
+  changes:
+    - _id: yv84bph1
+      formula: '@abilities.wis.mod'
+      modifier: deflection
+      subTarget: ac
+    - _id: 8358bo7i
+      formula: '30'
+      modifier: base
+      subTarget: flySpeed
+    - _id: trwfg8nu
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+    - _id: cwuxu52m
+      formula: '4'
+      modifier: untyped
+      subTarget: con
+    - _id: 46cq3cj8
+      formula: '2'
+      modifier: untyped
+      subTarget: wis
+    - _id: cj7qs0qp
+      formula: '8'
+      modifier: racial
+      subTarget: skill.per
+    - _id: 5j61enlw
+      formula: '8'
+      modifier: racial
+      subTarget: skill.sen
+    - _id: fj7dtgro
+      formula: '8'
+      modifier: racial
+      subTarget: skill.ste
+  crOffset: '1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -115,40 +149,6 @@ system:
       Otherwise, class skills are the same as the base creature.<p><b>Feats:</b>
       Prana ghosts gain Alertness, Improved Initiative, and Toughness as bonus
       feats.</p>
-  changes:
-    - _id: yv84bph1
-      formula: '@abilities.wis.mod'
-      subTarget: ac
-      modifier: deflection
-    - _id: 8358bo7i
-      formula: '30'
-      subTarget: flySpeed
-      modifier: base
-    - _id: trwfg8nu
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
-    - _id: cwuxu52m
-      formula: '4'
-      subTarget: con
-      modifier: untyped
-    - _id: 46cq3cj8
-      formula: '2'
-      subTarget: wis
-      modifier: untyped
-    - _id: cj7qs0qp
-      formula: '8'
-      subTarget: skill.per
-      modifier: racial
-    - _id: 5j61enlw
-      formula: '8'
-      subTarget: skill.sen
-      modifier: racial
-    - _id: fj7dtgro
-      formula: '8'
-      subTarget: skill.ste
-      modifier: racial
   subType: template
-  crOffset: '1'
-_key: '!items!royN1TrSR8rN2Qgu'
+type: feat
 

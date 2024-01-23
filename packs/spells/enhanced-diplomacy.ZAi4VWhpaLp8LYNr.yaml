@@ -1,17 +1,11 @@
 _id: ZAi4VWhpaLp8LYNr
-name: Enhanced Diplomacy
-type: spell
+_key: '!items!ZAi4VWhpaLp8LYNr'
 img: icons/skills/social/diplomacy-handshake.webp
+name: Enhanced Diplomacy
 system:
-  description:
-    value: >-
-      <p>You imbue the subject with divine diplomacy skills. The creature gets a
-      +2 competence bonus on a single Diplomacy or Intimidate check. It must
-      choose to use the bonus before making the roll to which it applies.</p>
   actions:
     - _id: jquo0obufod5h9ld
-      name: Use
-      img: icons/skills/social/diplomacy-handshake.webp
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,28 +13,34 @@ system:
           type: action
       duration:
         value: 1 minute or until discharged
-      target:
-        value: creature touched
+      img: icons/skills/social/diplomacy-handshake.webp
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You imbue the subject with divine diplomacy skills. The creature gets a
+      +2 competence bonus on a single Diplomacy or Intimidate check. It must
+      choose to use the bonus before making the roll to which it applies.</p>
   learnedAt:
     class:
       cleric: 0
-      oracle: 0
       druid: 0
       hunter: 0
+      oracle: 0
       warpriest: 0
   level: 0
   school: div
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ZAi4VWhpaLp8LYNr'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

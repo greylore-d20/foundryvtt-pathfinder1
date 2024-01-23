@@ -1,8 +1,16 @@
 _id: Rh0LztkmetWVC6jk
-name: Teamwork Feat (HUN)
-type: feat
+_key: '!items!Rh0LztkmetWVC6jk'
 img: systems/pf1/icons/skills/violet_03.jpg
+name: Teamwork Feat (HUN)
 system:
+  associations:
+    classes:
+      - Hunter
+  changes:
+    - _id: 0eh5ngtp
+      formula: floor(@classes.hunter.level / 3)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 3rd level and every 3 levels thereafter, the hunter gains a bonus
@@ -16,15 +24,7 @@ system:
       change her most recent teamwork feat a number of times per day equal to
       her Wisdom modifier (minimum 1). Whenever she gains a new teamwork feat,
       her previous teamwork feats become permanent.</p>
-  changes:
-    - _id: 0eh5ngtp
-      formula: floor(@classes.hunter.level / 3)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_teamworkFeatHun
   subType: classFeat
-  associations:
-    classes:
-      - Hunter
-_key: '!items!Rh0LztkmetWVC6jk'
+  tag: classFeat_teamworkFeatHun
+type: feat
 

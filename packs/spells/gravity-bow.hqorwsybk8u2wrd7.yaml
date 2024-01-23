@@ -1,8 +1,26 @@
 _id: hqorwsybk8u2wrd7
-name: Gravity Bow
-type: spell
+_key: '!items!hqorwsybk8u2wrd7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gravity Bow
 system:
+  actions:
+    - _id: imdd8djw83vmynl0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Gravity bow</i> significantly increases the weight and density of
@@ -15,35 +33,17 @@ system:
       bow</i> (see page 145 of the <i>Core Rulebook</i> for more information).
       Only you can benefit from this spell. If anyone else uses your bow to make
       an attack the arrows deal damage as normal for their size.</p>
-  actions:
-    - _id: imdd8djw83vmynl0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      hunter: 1
+      occultist: 1
+      ranger: 1
       sorcerer: 1
       wizard: 1
-      ranger: 1
-      occultist: 1
-      hunter: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1115
     pages: '226'
-_key: '!items!hqorwsybk8u2wrd7'
+  sr: false
+type: spell
 

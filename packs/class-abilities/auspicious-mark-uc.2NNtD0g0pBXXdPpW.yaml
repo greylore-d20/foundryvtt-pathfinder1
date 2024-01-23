@@ -1,8 +1,28 @@
 _id: 2NNtD0g0pBXXdPpW
-name: Auspicious Mark (UC)
-type: feat
+_key: '!items!2NNtD0g0pBXXdPpW'
 img: systems/pf1/icons/feats/deafening-critical.jpg
+name: Auspicious Mark (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: tmpp5r16f11q2sxh
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Barbarian (Unchained)
   description:
     value: >-
       <p>The barbarian has been marked by the spirits, as indicated by an
@@ -12,30 +32,10 @@ system:
       for every 4 levels she has. She can call on the auspicious mark after
       seeing the result of the d20 roll. This ability can be used only once per
       day.</p>
-  actions:
-    - _id: tmpp5r16f11q2sxh
-      name: Use
-      img: systems/pf1/icons/feats/deafening-critical.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-      uses:
-        autoDeductChargesCost: '0'
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_auspiciousMarkUc
   subType: classFeat
-  associations:
-    classes:
-      - Barbarian (Unchained)
-  abilityType: ex
-_key: '!items!2NNtD0g0pBXXdPpW'
+  tag: classFeat_auspiciousMarkUc
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,8 +1,13 @@
 _id: JreaiTHdyWFNj3Tb
-name: Dodge
-type: feat
+_key: '!items!JreaiTHdyWFNj3Tb'
 img: systems/pf1/icons/feats/dodge.jpg
+name: Dodge
 system:
+  changes:
+    - _id: 9onhsept
+      formula: '1'
+      modifier: dodge
+      subTarget: ac
   description:
     value: >-
       <i>Your training and reflexes allow you to react swiftly to avoid an
@@ -10,17 +15,12 @@ system:
       13.</p><p><strong>Benefits</strong>: You gain a +1 dodge bonus to your AC.
       A condition that makes you lose your Dex bonus to AC also makes you lose
       the benefits of this feat.</p>
-  tags:
-    - Combat
-    - Defensive
-  changes:
-    - _id: 9onhsept
-      formula: '1'
-      subTarget: ac
-      modifier: dodge
-  tag: feat_dodge
   source:
     id: PZO1110
     pages: 114, 122
-_key: '!items!JreaiTHdyWFNj3Tb'
+  tag: feat_dodge
+  tags:
+    - Combat
+    - Defensive
+type: feat
 

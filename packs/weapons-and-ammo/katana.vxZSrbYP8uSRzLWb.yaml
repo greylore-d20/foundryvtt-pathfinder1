@@ -1,8 +1,40 @@
 _id: vxZSrbYP8uSRzLWb
-name: Katana
-type: weapon
+_key: '!items!vxZSrbYP8uSRzLWb'
 img: icons/weapons/swords/sword-katana.webp
+name: Katana
 system:
+  actions:
+    - _id: lgmmqypkmwoxp2ts
+      ability:
+        attack: str
+        critRange: 18
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/swords/sword-katana.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Katana
   description:
     value: >-
       <p>Specifically constructed for samurai, katanas employ multiple types of
@@ -12,56 +44,24 @@ system:
       limbs. Though finely balanced, these blades are difficult to master.
       Characters can use a katana two-handed as a martial weapon, but must take
       the Exotic Weapon Proficiency (katana) feat to use it one-handed.</p>
-  tags:
-    - PFS
-  weight:
-    value: 6
-  price: 50
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: lgmmqypkmwoxp2ts
-      name: Attack
-      img: icons/weapons/swords/sword-katana.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 18
-  baseTypes:
-    - Katana
-  weaponGroups:
-    value:
-      - bladesHeavy
-  subType: exotic
-  weaponSubtype: 1h
+  price: 50
   properties:
     dea: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!vxZSrbYP8uSRzLWb'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 1h
+  weight:
+    value: 6
+type: weapon
 

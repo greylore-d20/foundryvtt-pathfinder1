@@ -1,8 +1,27 @@
 _id: dy0cm6pn7nme74be
-name: Bit of Luck
-type: spell
+_key: '!items!dy0cm6pn7nme74be'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bit of Luck
 system:
+  actions:
+    - _id: 8u61fue5oxl1azjs
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>For the spell's duration, the caster gains a reservoir of luck with a
@@ -16,41 +35,22 @@ system:
       caster can instead spend 4 points to add a +2d8 luck bonus, and a
       16th-level caster can spend 8 luck points to instead add a +3d8 luck
       bonus.</p>
-  actions:
-    - _id: 8u61fue5oxl1azjs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      bard: 3
       alchemist: 4
-      witch: 4
-      shaman: 4
+      bard: 3
+      cleric: 4
+      oracle: 4
       psychic: 4
+      shaman: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a four-leaf clover
+  school: evo
   sr: false
-_key: '!items!dy0cm6pn7nme74be'
+type: spell
 

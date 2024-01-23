@@ -1,8 +1,28 @@
 _id: Bw3GiobZvSJb8dGI
-name: Resistant Touch
-type: feat
+_key: '!items!Bw3GiobZvSJb8dGI'
 img: systems/pf1/icons/skills/shadow_21.jpg
+name: Resistant Touch
 system:
+  abilityType: sp
+  actions:
+    - _id: e4x7tfc4vbdkz0g2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/shadow_21.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ally touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can touch an ally to grant him your
@@ -10,33 +30,13 @@ system:
       resistance bonus granted by the Protection domain for 1 minute. You can
       use this ability a number of times per day equal to 3 + your Wisdom
       modifier.</p>
-  actions:
-    - _id: e4x7tfc4vbdkz0g2
-      name: Use
-      img: systems/pf1/icons/skills/shadow_21.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: ally touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_resistantTouch
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '46'
-_key: '!items!Bw3GiobZvSJb8dGI'
+  subType: classFeat
+  tag: classFeat_resistantTouch
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

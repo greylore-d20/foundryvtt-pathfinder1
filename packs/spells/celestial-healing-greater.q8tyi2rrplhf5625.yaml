@@ -1,17 +1,11 @@
 _id: q8tyi2rrplhf5625
-name: Celestial Healing, Greater
-type: spell
+_key: '!items!q8tyi2rrplhf5625'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Celestial Healing, Greater
 system:
-  description:
-    value: >-
-      <p>As per @Compendium[pf1.spells.6d6bgiakwmwiu7qv]{celestial healing},
-      except the target gains fast healing 4 and the target radiates the aura of
-      a good cleric.</p>
   actions:
     - _id: jclj7fk03nl4ovxx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: round
         unchained:
@@ -19,36 +13,42 @@ system:
           type: action
       duration:
         value: 1 round/2 levels
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: heal
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>As per @Compendium[pf1.spells.6d6bgiakwmwiu7qv]{celestial healing},
+      except the target gains fast healing 4 and the target radiates the aura of
+      a good cleric.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 4
-      witch: 4
-      magus: 4
       bloodrager: 4
+      cleric: 4
+      magus: 4
+      oracle: 4
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
+  materials:
+    value: 1 drop of blood from a good outsider or 1 dose of holy water
   school: con
   subschool: healing
   types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: 1 drop of blood from a good outsider or 1 dose of holy water
-_key: '!items!q8tyi2rrplhf5625'
+type: spell
 

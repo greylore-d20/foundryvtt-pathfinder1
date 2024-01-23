@@ -1,8 +1,27 @@
 _id: 3zggJMxuipE68IkT
-name: Perfected Form
-type: feat
+_key: '!items!3zggJMxuipE68IkT'
 img: systems/pf1/icons/skills/yellow_14.jpg
+name: Perfected Form
 system:
+  abilityType: su
+  actions:
+    - _id: 8td188oq7wa4ao4l
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/yellow_14.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You maintain an unshakable sense of who you are, and no force can
@@ -18,29 +37,10 @@ system:
 
       <p>This power replaces the Liberation power of the Liberation Domain or
       the Strength Surge power of the Strength Domain.</p>
-  actions:
-    - _id: 8td188oq7wa4ao4l
-      name: Use
-      img: systems/pf1/icons/skills/yellow_14.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_perfectedForm
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!3zggJMxuipE68IkT'
+  tag: classFeat_perfectedForm
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

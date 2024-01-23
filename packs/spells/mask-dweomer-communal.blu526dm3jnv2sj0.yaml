@@ -1,17 +1,11 @@
 _id: blu526dm3jnv2sj0
-name: Mask Dweomer, Communal
-type: spell
+_key: '!items!blu526dm3jnv2sj0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mask Dweomer, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>mask dweomer</i> (Advanced Player's Guide
-      232), except you divide the duration in 1-day increments among the
-      creatures or objects touched.</p>
   actions:
     - _id: pdln97luqs58nxge
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,27 +13,33 @@ system:
           type: action
       duration:
         value: 1 day/level (D)
-      target:
-        value: creatures or objects touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
         description: none; see text
+      target:
+        value: creatures or objects touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>mask dweomer</i> (Advanced Player's Guide
+      232), except you divide the duration in 1-day increments among the
+      creatures or objects touched.</p>
   learnedAt:
     class:
-      witch: 2
-      psychic: 2
       occultist: 2
+      psychic: 2
+      witch: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of gauze
+  school: ill
   sr: false
-_key: '!items!blu526dm3jnv2sj0'
+  subschool: glamer
+type: spell
 

@@ -1,8 +1,20 @@
 _id: cLqsnBTsXr56lNIY
-name: Arcane Ambush
-type: feat
+_key: '!items!cLqsnBTsXr56lNIY'
 img: systems/pf1/icons/spells/enchant-orange-2.jpg
+name: Arcane Ambush
 system:
+  abilityType: su
+  actions:
+    - _id: mexn0t94nhf816p3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/enchant-orange-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, as a <em>swift action</em>, you can expend a spell slot
@@ -14,19 +26,7 @@ system:
       levels you possess (to a maximum of five allies at 20th level). The allies
       must be within 30 feet of you and you must have line of effect to each
       affected ally.</p>
-  actions:
-    - _id: mexn0t94nhf816p3
-      name: Use
-      img: systems/pf1/icons/spells/enchant-orange-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_arcaneAmbush
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!cLqsnBTsXr56lNIY'
+  tag: classFeat_arcaneAmbush
+type: feat
 

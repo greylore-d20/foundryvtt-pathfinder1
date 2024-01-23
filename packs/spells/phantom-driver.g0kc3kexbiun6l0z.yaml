@@ -1,8 +1,27 @@
 _id: g0kc3kexbiun6l0z
-name: Phantom Driver
-type: spell
+_key: '!items!g0kc3kexbiun6l0z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantom Driver
 system:
+  actions:
+    - _id: 1dcv8iiajde9lfwz
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      spellEffect: one quasi-real, humanlike creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a Small or Medium, quasi-real, humanlike creature (the
@@ -17,35 +36,16 @@ system:
       disappears. A phantom driver has a land speed of 30 feet, and makes all
       driver skill checks (no matter what skills are needed to drive the
       vehicle) as your caster level + your Intelligence modifier.</p>
-  actions:
-    - _id: 1dcv8iiajde9lfwz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        value: '10'
-        units: ft
-      spellEffect: one quasi-real, humanlike creature
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
       occultist: 3
+      sorcerer: 3
       spiritualist: 3
+      wizard: 3
   level: 3
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!g0kc3kexbiun6l0z'
+  subschool: creation
+type: spell
 

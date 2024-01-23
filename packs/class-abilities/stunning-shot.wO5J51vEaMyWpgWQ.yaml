@@ -1,8 +1,20 @@
 _id: wO5J51vEaMyWpgWQ
-name: Stunning Shot
-type: feat
+_key: '!items!wO5J51vEaMyWpgWQ'
 img: systems/pf1/icons/skills/yellow_34.jpg
+name: Stunning Shot
 system:
+  abilityType: ex
+  actions:
+    - _id: m7b8vXeE08nQvsai
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/skills/yellow_34.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 19th level, when a gunslinger hits a creature, she can spend 2 grit
@@ -11,21 +23,9 @@ system:
       gunslinger’s Wisdom modifier). If the creature fails, it is stunned for 1
       round. Creatures that are immune to critical hits are also immune to this
       effect.</p>
+  subType: classFeat
+  tag: classFeat_stunningShot
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: m7b8vXeE08nQvsai
-      name: Use
-      img: systems/pf1/icons/skills/yellow_34.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-  tag: classFeat_stunningShot
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!wO5J51vEaMyWpgWQ'
+type: feat
 

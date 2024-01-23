@@ -1,8 +1,28 @@
 _id: y2byo50vj2hrltl4
-name: Hungry Earth
-type: spell
+_key: '!items!y2byo50vj2hrltl4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hungry Earth
 system:
+  actions:
+    - _id: 5z6req9wycv61yv4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-foot-radius spread
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The ground attempts to pull creatures beneath its surface as if hungry
@@ -27,37 +47,17 @@ system:
       can't attempt to escape unless the effect ends or it breaks the grapple.
       The DC to escape the grapple increases to 25 for a creature that has been
       pulled beneath the earth.</p>
-  actions:
-    - _id: 5z6req9wycv61yv4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: 20-foot-radius spread
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      druid: 5
-      witch: 5
-      hunter: 5
     bloodline:
       Ghoul: 5
+    class:
+      druid: 5
+      hunter: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!y2byo50vj2hrltl4'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: 319ubos76z392xah
-name: Liquefy
-type: spell
+_key: '!items!319ubos76z392xah'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Liquefy
 system:
+  actions:
+    - _id: 3x2rcscckiqjfhvq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: 1 object weighing up to 1 pound/level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The object you target becomes a liquid version of itself and drips or
@@ -24,41 +47,18 @@ system:
       object to gain the broken condition. If the item is already broken, it is
       instead destroyed on a failed save. <i>Liquefy</i> has no effect on
       artifacts, constructs, or intelligent magic items.</p>
-  actions:
-    - _id: 3x2rcscckiqjfhvq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: 1 object weighing up to 1 pound/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
+      alchemist: 3
+      bard: 3
+      druid: 4
+      hunter: 4
       sorcerer: 4
       wizard: 4
-      druid: 4
-      bard: 3
-      alchemist: 3
-      hunter: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a specially prepared glass bottle
+  school: trs
   sr: false
-_key: '!items!319ubos76z392xah'
+type: spell
 

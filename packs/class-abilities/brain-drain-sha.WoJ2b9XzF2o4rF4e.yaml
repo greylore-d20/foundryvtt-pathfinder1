@@ -1,8 +1,39 @@
 _id: WoJ2b9XzF2o4rF4e
-name: Brain Drain (SHA)
-type: feat
+_key: '!items!WoJ2b9XzF2o4rF4e'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Brain Drain (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: iz3a7aby1z7odpyz
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.shaman.level / 2))d4
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman violently probes the mind of a single
@@ -20,38 +51,7 @@ system:
 
       <p>Once she successfully affects a creature, she cannot use this hex on
       that creature again for 24 hours.</p>
-  actions:
-    - _id: iz3a7aby1z7odpyz
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: (floor(@classes.shaman.level / 2))d4
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_brainDrainSha
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!WoJ2b9XzF2o4rF4e'
+  tag: classFeat_brainDrainSha
+type: feat
 

@@ -1,8 +1,32 @@
 _id: p2swk1h5l88uff3z
-name: Infuse Decay
-type: spell
+_key: '!items!p2swk1h5l88uff3z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Infuse Decay
 system:
+  actions:
+    - _id: 11454nos671mv439
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: corporeal undead touched; see text
+      duration:
+        value: permanent until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as per <i>imbue with spell ability</i>, except it
@@ -25,39 +49,15 @@ system:
       undead triggers a random spell when it hits with a natural weapon. Only
       one spell can be triggered per round, regardless of the number of attacks
       the undead makes.<p></p>
-  actions:
-    - _id: 11454nos671mv439
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged (D)
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: corporeal undead touched; see text
   learnedAt:
     class:
       sorcerer: 4
-      wizard: 4
       witch: 4
+      wizard: 4
   level: 4
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a set of fine mortician's tools worth 100 gp
-_key: '!items!p2swk1h5l88uff3z'
+  school: nec
+  types: evil
+type: spell
 

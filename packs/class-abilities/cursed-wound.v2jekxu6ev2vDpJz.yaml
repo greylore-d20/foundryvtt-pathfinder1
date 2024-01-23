@@ -1,8 +1,25 @@
 _id: v2jekxu6ev2vDpJz
-name: Cursed Wound
-type: feat
+_key: '!items!v2jekxu6ev2vDpJz'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Cursed Wound
 system:
+  actions:
+    - _id: oelb5s38540m3rtk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: day
+        value: 3 + @abilities.int.mod
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can curse a living creature, preventing it from healing
@@ -21,26 +38,9 @@ system:
       Fortitude saving throws to avoid contracting a disease or poison from an
       injury. This is a curse effect and can be removed by
       @Compendium[pf1.spells.o87h8gjxevcbztgd]{Remove Curse}.</p>
+  subType: classFeat
+  tag: classFeat_cursedWound
   tags:
     - Hex
-  actions:
-    - _id: oelb5s38540m3rtk
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 + @abilities.int.mod
-        units: day
-      target:
-        value: one creature
-  tag: classFeat_cursedWound
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-_key: '!items!v2jekxu6ev2vDpJz'
+type: feat
 

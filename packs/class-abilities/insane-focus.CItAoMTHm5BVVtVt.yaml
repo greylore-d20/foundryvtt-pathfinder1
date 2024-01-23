@@ -1,8 +1,28 @@
 _id: CItAoMTHm5BVVtVt
-name: Insane Focus
-type: feat
+_key: '!items!CItAoMTHm5BVVtVt'
 img: systems/pf1/icons/spells/evil-eye-red-1.jpg
+name: Insane Focus
 system:
+  abilityType: su
+  actions:
+    - _id: 2szqc0fu1rtaiei0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/evil-eye-red-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can touch a willing creature as a standard action, granting it a +4
@@ -15,30 +35,10 @@ system:
 
       <p>This power replaces the Visions of Madness power of the Madness
       Domain.</p>
-  actions:
-    - _id: 2szqc0fu1rtaiei0
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-red-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_insaneFocus
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!CItAoMTHm5BVVtVt'
+  tag: classFeat_insaneFocus
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

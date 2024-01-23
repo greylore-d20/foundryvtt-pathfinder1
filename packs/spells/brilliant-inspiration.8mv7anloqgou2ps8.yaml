@@ -1,19 +1,11 @@
 _id: 8mv7anloqgou2ps8
-name: Brilliant Inspiration
-type: spell
+_key: '!items!8mv7anloqgou2ps8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Brilliant Inspiration
 system:
-  description:
-    value: >-
-      <p>You open a link between your mind and the subject's mind, giving advice
-      and encouragement for as long as the spell is in effect. Each time the
-      subject of the spell makes an attack roll, ability check, or skill check,
-      it rolls two d20s and takes the better result. If any roll is a natural
-      20, the spell's effect ends-your brilliant advice is spent.</p>
   actions:
     - _id: sj78e6pi93csdgve
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,15 +13,25 @@ system:
           type: action
       duration:
         value: 1 round/level and special (see below)
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one living creature
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>You open a link between your mind and the subject's mind, giving advice
+      and encouragement for as long as the spell is in effect. Each time the
+      subject of the spell makes an attack roll, ability check, or skill check,
+      it rolls two d20s and takes the better result. If any roll is a natural
+      20, the spell's effect ends-your brilliant advice is spent.</p>
   learnedAt:
     class:
       bard: 6
@@ -39,7 +41,5 @@ system:
   level: 6
   school: evo
   types: language-dependent
-  components:
-    verbal: true
-_key: '!items!8mv7anloqgou2ps8'
+type: spell
 

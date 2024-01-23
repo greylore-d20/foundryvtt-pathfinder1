@@ -1,8 +1,11 @@
 _id: PBjOMYMPRPnjbPXF
-name: Directed Bomb
-type: feat
+_key: '!items!PBjOMYMPRPnjbPXF'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Directed Bomb
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>The alchemist can cause his bombs to splash in a 15-foot cone instead
@@ -10,12 +13,9 @@ system:
       If the attack misses, roll an additional 1d8 to determine the direction of
       the blast from where the bomb lands. This discovery can't be combined with
       the explosive bomb discovery.</p>
+  subType: classFeat
+  tag: classFeat_directedBomb
   tags:
     - Alchemist Discovery
-  tag: classFeat_directedBomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!PBjOMYMPRPnjbPXF'
+type: feat
 

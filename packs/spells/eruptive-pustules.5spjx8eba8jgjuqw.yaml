@@ -1,8 +1,30 @@
 _id: 5spjx8eba8jgjuqw
-name: Eruptive Pustules
-type: spell
+_key: '!items!5spjx8eba8jgjuqw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Eruptive Pustules
 system:
+  actions:
+    - _id: azia2qvqaj872z6s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Fortitude partial (see text)
+        type: fort
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your skin erupts in swollen, pus-filled bumps that burst open if you
@@ -11,37 +33,15 @@ system:
       points of acid damage and must save or be sickened for 1 round. If the
       attack against you is a critical hit, the attacker must save or be
       nauseated instead of sickened. This damage can harm a swarm.</p>
-  actions:
-    - _id: azia2qvqaj872z6s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       alchemist: 3
-      witch: 3
       bloodrager: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
   types: acid
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!5spjx8eba8jgjuqw'
+type: spell
 

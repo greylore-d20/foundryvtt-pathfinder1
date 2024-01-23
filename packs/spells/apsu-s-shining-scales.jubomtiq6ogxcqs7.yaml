@@ -1,8 +1,32 @@
 _id: jubomtiq6ogxcqs7
-name: Apsu's Shining Scales
-type: spell
+_key: '!items!jubomtiq6ogxcqs7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Apsu's Shining Scales
 system:
+  actions:
+    - _id: bnagq67m2rqddvsp
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You envelop your body with silver radiance that manifests as scales
@@ -20,42 +44,18 @@ system:
       against this breath weapon attack.  Clerics, inquisitors, oracles,
       paladins, and warpriests who worship Apsu add Apsu's shining scales to
       their class spell lists as a 3rd-level spell.</p>
-  actions:
-    - _id: bnagq67m2rqddvsp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       alchemist: 3
       bloodrager: 3
       medium: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
-  school: evo
-  types: draconic, good
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of mercury
+  school: evo
   sr: false
-_key: '!items!jubomtiq6ogxcqs7'
+  types: draconic, good
+type: spell
 

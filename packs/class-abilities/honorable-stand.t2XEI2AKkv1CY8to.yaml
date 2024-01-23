@@ -1,8 +1,20 @@
 _id: t2XEI2AKkv1CY8to
-name: Honorable Stand
-type: feat
+_key: '!items!t2XEI2AKkv1CY8to'
 img: systems/pf1/icons/skills/red_01.jpg
+name: Honorable Stand
 system:
+  abilityType: ex
+  actions:
+    - _id: ny6gdwsorf3vrw5m
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/red_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Samurai
   description:
     value: >-
       <p>At 11th level, a samurai can make an honorable stand, deciding to fight
@@ -17,22 +29,10 @@ system:
       must take the result of the second roll, even if it is worse. If a samurai
       making an honorable stand ever retreats from battle against his challenged
       foe, he loses the ability to make a challenge for 24 hours.</p>
-  actions:
-    - _id: ny6gdwsorf3vrw5m
-      name: Use
-      img: systems/pf1/icons/skills/red_01.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: '@classes.samurai.level >= 16 ? 2 : 1'
-  tag: classFeat_honorableStand
   subType: classFeat
-  associations:
-    classes:
-      - Samurai
-  abilityType: ex
-_key: '!items!t2XEI2AKkv1CY8to'
+  tag: classFeat_honorableStand
+  uses:
+    maxFormula: '@classes.samurai.level >= 16 ? 2 : 1'
+    per: day
+type: feat
 

@@ -1,7 +1,36 @@
-name: Unarmed Strike
-type: attack
+_id: 1sU57tRb1My6XZMC
+_key: '!items!1sU57tRb1My6XZMC'
 img: icons/skills/melee/unarmed-punch-fist.webp
+name: Unarmed Strike
 system:
+  actions:
+    - _id: h1prw1ahiomk0bs5
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      formulaicAttacks:
+        label: ''
+      img: icons/skills/melee/unarmed-punch-fist.webp
+      name: Attack
+      nonlethal: true
+      range:
+        units: melee
+        value: 'null'
+      tag: unarmedStrike
+  baseTypes:
+    - Unarmed Strike
   description:
     value: >-
       <p>The damage from an unarmed strike is considered weapon damage for the
@@ -10,41 +39,12 @@ system:
       the Weapon Finesse feat to apply your Dexterity modifier instead of your
       Strength modifier to attack rolls with an unarmed strike.</p><p>Unarmed
       strikes do not count as natural weapons (see Combat in core rulebook).</p>
-  actions:
-    - _id: h1prw1ahiomk0bs5
-      name: Attack
-      img: icons/skills/melee/unarmed-punch-fist.webp
-      tag: unarmedStrike
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        value: 'null'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-        damage: str
-      nonlethal: true
   subType: weapon
-  baseTypes:
-    - Unarmed Strike
   weaponGroups:
     value:
       - close
       - monk
       - natural
       - tribal
-_id: 1sU57tRb1My6XZMC
-_key: '!items!1sU57tRb1My6XZMC'
+type: attack
 

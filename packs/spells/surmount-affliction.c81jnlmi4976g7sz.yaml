@@ -1,19 +1,10 @@
 _id: c81jnlmi4976g7sz
-name: Surmount Affliction
-type: spell
+_key: '!items!c81jnlmi4976g7sz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Surmount Affliction
 system:
-  description:
-    value: >-
-      <p>You temporarily overcome one harmful condition. This does not end the
-      effect causing the condition; it just suspends that condition's effect for
-      the duration of the spell. You can surmount any one of the following
-      conditions: blinded, confused, dazed, dazzled, deafened, fatigued,
-      frightened, paralyzed, shaken, or sickened.</p>
   actions:
     - _id: nd2xc0ilk7rbgymw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,24 +12,33 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You temporarily overcome one harmful condition. This does not end the
+      effect causing the condition; it just suspends that condition's effect for
+      the duration of the spell. You can surmount any one of the following
+      conditions: blinded, confused, dazed, dazzled, deafened, fatigued,
+      frightened, paralyzed, shaken, or sickened.</p>
   learnedAt:
-    class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      inquisitor: 2
-      spiritualist: 2
     bloodline:
       Martyred: 2
+    class:
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
+      spiritualist: 2
+      warpriest: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!c81jnlmi4976g7sz'
+type: spell
 

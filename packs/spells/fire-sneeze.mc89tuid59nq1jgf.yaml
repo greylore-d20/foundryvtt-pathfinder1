@@ -1,8 +1,31 @@
 _id: mc89tuid59nq1jgf
-name: Fire Sneeze
-type: spell
+_key: '!items!mc89tuid59nq1jgf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fire Sneeze
 system:
+  actions:
+    - _id: 5yxp402mqjtxtusu
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round + 1 round/2 levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes you to begin sneezing gouts of fire that can not only
@@ -15,40 +38,17 @@ system:
       creature that fails to resist this spell with a Reflex save must
       immediately make a DC 12 Fortitude save or be knocked prone by the blast
       of wind associated with the sneeze.</p>
-  actions:
-    - _id: 5yxp402mqjtxtusu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round + 1 round/2 levels
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
   learnedAt:
     class:
+      alchemist: 2
+      druid: 2
+      hunter: 2
       sorcerer: 2
       wizard: 2
-      druid: 2
-      alchemist: 2
-      hunter: 2
   level: 2
-  school: evo
-  types: air, fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: hot pepper soaked in oil
-_key: '!items!mc89tuid59nq1jgf'
+  school: evo
+  types: air, fire
+type: spell
 

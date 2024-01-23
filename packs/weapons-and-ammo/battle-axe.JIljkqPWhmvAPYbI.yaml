@@ -1,8 +1,40 @@
 _id: JIljkqPWhmvAPYbI
-name: Battle Axe
-type: weapon
+_key: '!items!JIljkqPWhmvAPYbI'
 img: systems/pf1/icons/items/weapons/battleaxe.PNG
+name: Battle Axe
 system:
+  actions:
+    - _id: 19zgpmrxx14jpf78
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/battleaxe.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Battle Axe
   description:
     value: >-
       <p>The handle of this axe is long enough that you can wield it one-handed
@@ -10,54 +42,22 @@ system:
       ranging from half-moons to squared edges like narrower versions of
       woodcutting axes. The wooden haft may be protected and strengthened with
       metal bands called langets.</p>
-  tags:
-    - PFS
-  weight:
-    value: 6
-  price: 10
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 19zgpmrxx14jpf78
-      name: Attack
-      img: systems/pf1/icons/items/weapons/battleaxe.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critMult: 3
-  baseTypes:
-    - Battle Axe
-  weaponGroups:
-    value:
-      - axes
-  subType: martial
-  weaponSubtype: 1h
+  price: 10
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!JIljkqPWhmvAPYbI'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - axes
+  weaponSubtype: 1h
+  weight:
+    value: 6
+type: weapon
 

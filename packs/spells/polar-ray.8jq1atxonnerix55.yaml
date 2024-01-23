@@ -1,57 +1,57 @@
 _id: 8jq1atxonnerix55
-name: Polar Ray
-type: spell
+_key: '!items!8jq1atxonnerix55'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Polar Ray
 system:
+  actions:
+    - _id: 97nvnmjz1hveboeb
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (min(25, @cl))d6
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        value: instantaneous
+      effectNotes:
+        - '[[1d4]] Dexterity Drain'
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: ray
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A blue-white ray of freezing air and ice springs from your
       hand.</p><p>You must succeed on a ranged touch attack with the ray to deal
       damage to a target. The ray deals 1d6 points of cold damage per caster
       level (maximum 25d6) and 1d4 points of Dexterity drain.</p>
-  actions:
-    - _id: 97nvnmjz1hveboeb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (min(25, @cl))d6
-            type:
-              values:
-                - cold
-              custom: ''
-      ability:
-        attack: dex
-      effectNotes:
-        - '[[1d4]] Dexterity Drain'
-      spellEffect: ray
   learnedAt:
+    bloodline:
+      Boreal: 8
+      Marid: 8
     class:
       sorcerer: 8
       wizard: 8
     subDomain:
       Ice: 9
-    bloodline:
-      Boreal: 8
-      Marid: 8
   level: 8
-  school: evo
-  types: cold
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a white ceramic cone or prism
-_key: '!items!8jq1atxonnerix55'
+  school: evo
+  types: cold
+type: spell
 

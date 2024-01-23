@@ -1,8 +1,25 @@
 _id: 7hakpmv7enojm4jg
-name: Scouring Winds
-type: spell
+_key: '!items!7hakpmv7enojm4jg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scouring Winds
 system:
+  actions:
+    - _id: civutg2lv7vlow0l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: sandstorm in 20-ft. radius, 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell brings forth a windstorm of stinging sand that blocks all
@@ -12,31 +29,14 @@ system:
       <i>Core Rulebook</i> 439).  If a creature with spell resistance
       successfully resists this spell, it is unaffected by the winds and sand,
       but still unable to see within the area of the spell.</p>
-  actions:
-    - _id: civutg2lv7vlow0l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      spellEffect: sandstorm in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       druid: 7
+      sorcerer: 7
       witch: 7
+      wizard: 7
   level: 7
   school: evo
   types: air, earth
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!7hakpmv7enojm4jg'
+type: spell
 

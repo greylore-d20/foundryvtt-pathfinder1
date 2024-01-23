@@ -1,8 +1,27 @@
 _id: 2UoAjbdNzZJEjCq2
-name: Vanishing Trick
-type: feat
+_key: '!items!2UoAjbdNzZJEjCq2'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Vanishing Trick
 system:
+  abilityType: su
+  actions:
+    - _id: 3v98ic1sa3wukpqe
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.ninja.level'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>As a swift action, the ninja can disappear for 1 round per level. This
@@ -10,28 +29,9 @@ system:
       @Compendium[pf1.spells.oylikodnyku2zewu]{Invisibility}.</p>
 
       <p>Using this ability uses up 1 ki point.</p>
+  subType: classFeat
+  tag: classFeat_vanishingTrick
   tags:
     - Ninja Trick
-  actions:
-    - _id: 3v98ic1sa3wukpqe
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.ninja.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_vanishingTrick
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: su
-_key: '!items!2UoAjbdNzZJEjCq2'
+type: feat
 

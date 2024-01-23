@@ -1,8 +1,30 @@
 _id: g0akb0o9nkn217tg
-name: Dream Council
-type: spell
+_key: '!items!g0akb0o9nkn217tg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Council
 system:
+  actions:
+    - _id: mb9spo5yyzne64p3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one or more living creatures
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>dream</i>, but you and the target of your
@@ -26,39 +48,17 @@ system:
       those involved in the council can interact with one another and that
       <i>dream</i>scape for 10 minutes for each message remaining. When that
       time elapses, the spell ends.</p>
-  actions:
-    - _id: mb9spo5yyzne64p3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one or more living creatures
-      range:
-        units: unlimited
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 6
-      psychic: 6
       medium: 4
       mesmerist: 5
+      psychic: 6
+      sorcerer: 7
+      wizard: 7
   level: 7
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!g0akb0o9nkn217tg'
+type: spell
 

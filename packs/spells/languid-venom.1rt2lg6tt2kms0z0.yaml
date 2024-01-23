@@ -1,8 +1,31 @@
 _id: 1rt2lg6tt2kms0z0
-name: Languid Venom
-type: spell
+_key: '!items!1rt2lg6tt2kms0z0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Languid Venom
 system:
+  actions:
+    - _id: qp8kjp677ujo325t
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one dose of poison or one venomous creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You greatly extend the time it takes for the poison you touch to take
@@ -26,42 +49,19 @@ system:
       check to identify the poison by the higher of the two.  If cast upon a
       venomous creature, <i>languid venom</i> delays the onset of that
       creature's poison when the creature next delivers its natural poison.</p>
-  actions:
-    - _id: qp8kjp677ujo325t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent until discharged (D)
-      target:
-        value: one dose of poison or one venomous creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       alchemist: 2
       shaman: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: nec
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: herbs used in antitoxins worth 25 gp
     gpValue: 25
+    value: herbs used in antitoxins worth 25 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!1rt2lg6tt2kms0z0'
+  school: nec
+  types: poison
+type: spell
 

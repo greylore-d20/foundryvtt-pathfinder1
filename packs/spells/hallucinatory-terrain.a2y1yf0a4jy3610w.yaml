@@ -1,48 +1,48 @@
 _id: a2y1yf0a4jy3610w
-name: Hallucinatory Terrain
-type: spell
+_key: '!items!a2y1yf0a4jy3610w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hallucinatory Terrain
 system:
-  description:
-    value: >-
-      <p>You make natural terrain look, sound, and smell like some other sort of
-      natural terrain. Structures, equipment, and creatures within the area are
-      not hidden or changed in appearance.</p>
   actions:
     - _id: vxpnika50divv7bo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
         unchained:
           cost: 10
           type: minute
+      area: one 30-ft. cube/level
       duration:
         value: 2 hours/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: long
-      actionType: spellsave
       save:
-        type: will
         description: Will disbelief (if interacted with)
-      area: one 30-ft. cube/level
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You make natural terrain look, sound, and smell like some other sort of
+      natural terrain. Structures, equipment, and creatures within the area are
+      not hidden or changed in appearance.</p>
   learnedAt:
     class:
+      bard: 4
+      mesmerist: 4
+      psychic: 4
       sorcerer: 4
       wizard: 4
-      bard: 4
-      psychic: 4
-      mesmerist: 4
   level: 4
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a stone, a twig, and a green leaf
+  school: ill
   sr: false
-_key: '!items!a2y1yf0a4jy3610w'
+  subschool: glamer
+type: spell
 

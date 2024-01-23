@@ -1,69 +1,69 @@
 _id: P3gUxPKX72ZnojXx
-name: Sica
-type: weapon
+_key: '!items!P3gUxPKX72ZnojXx'
 img: systems/pf1/icons/items/weapons/sica.png
+name: Sica
 system:
+  actions:
+    - _id: r1p2qed240q7nn2f
+      ability:
+        attack: str
+        critRange: null
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/sica.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Sica
   description:
     value: >-
       <p>This blade is a smaller, lighter version of the shotel. You gain a +1
       bonus on attack rolls with a sica against opponents using bucklers, light
       shields, or heavy shields.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 10
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: r1p2qed240q7nn2f
-      name: Attack
-      img: systems/pf1/icons/items/weapons/sica.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: null
-  baseTypes:
-    - Sica
-  weaponGroups:
-    value:
-      - bladesLight
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 10
   properties:
-    prf: true
     fin: true
+    prf: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!P3gUxPKX72ZnojXx'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesLight
+  weight:
+    value: 2
+type: weapon
 

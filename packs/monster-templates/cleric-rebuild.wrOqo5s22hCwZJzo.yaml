@@ -1,8 +1,16 @@
 _id: wrOqo5s22hCwZJzo
-name: Cleric (Rebuild)
-type: feat
+_key: '!items!wrOqo5s22hCwZJzo'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Cleric (Rebuild)
 system:
+  changes:
+    - _id: 1n8uok0t
+      formula: '4'
+      modifier: untyped
+      subTarget: wis
+  crOffset: >-
+    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
+    @attributes.hd.total < 13) ? 2 : 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -296,14 +304,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: 1n8uok0t
-      formula: '4'
-      subTarget: wis
-      modifier: untyped
   subType: template
-  crOffset: >-
-    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
-    @attributes.hd.total < 13) ? 2 : 1)
-_key: '!items!wrOqo5s22hCwZJzo'
+type: feat
 

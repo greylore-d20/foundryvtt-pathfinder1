@@ -1,8 +1,28 @@
 _id: 19Fh7slWwEfavrod
-name: Plague's Caress
-type: feat
+_key: '!items!19Fh7slWwEfavrod'
 img: systems/pf1/icons/skills/green_15.jpg
+name: Plague's Caress
 system:
+  abilityType: sp
+  actions:
+    - _id: ymmp2agvn5nmklee
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, (floor(@classes.sorcerer.level / 2)))
+      img: systems/pf1/icons/skills/green_15.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can make a melee <em>touch attack</em> as a
@@ -12,30 +32,10 @@ system:
       the victim to become <em>sickened</em> for the duration of the effect;
       this is a <em>disease</em> effect. You can use this ability a number of
       times per day equal to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: ymmp2agvn5nmklee
-      name: Use
-      img: systems/pf1/icons/skills/green_15.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, (floor(@classes.sorcerer.level / 2)))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_plaguesCaress
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!19Fh7slWwEfavrod'
+  tag: classFeat_plaguesCaress
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

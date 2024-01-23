@@ -1,8 +1,25 @@
 _id: xrh33cwr9hrvda6l
-name: Transmute Potion to Poison
-type: spell
+_key: '!items!xrh33cwr9hrvda6l'
 img: icons/consumables/potions/potion-jar-corked-labeled-poison-skull-green.webp
+name: Transmute Potion to Poison
 system:
+  actions:
+    - _id: iferk7lnppj7mavt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round then 1 minute/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>This extract causes you to take on a pale, sickly pallor for 1 round.
@@ -13,29 +30,12 @@ system:
       in the potion consumed (see sidebar). If the poison is not used within 1
       minute per caster level it becomes inert. You can only create one dose of
       poison in this way per casting of this spell.</p>
-  actions:
-    - _id: iferk7lnppj7mavt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round then 1 minute/level; see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       alchemist: 2
   level: 2
   school: trs
-  types: poison
-  components:
-    somatic: true
   sr: false
-_key: '!items!xrh33cwr9hrvda6l'
+  types: poison
+type: spell
 

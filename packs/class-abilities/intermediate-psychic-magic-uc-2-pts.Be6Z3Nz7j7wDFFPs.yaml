@@ -1,8 +1,19 @@
 _id: Be6Z3Nz7j7wDFFPs
-name: Intermediate Psychic Magic (UC) (2 pts)
-type: feat
+_key: '!items!Be6Z3Nz7j7wDFFPs'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Intermediate Psychic Magic (UC) (2 pts)
 system:
+  actions:
+    - _id: rxlwcegmuz1lgqic
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/blue_26.jpg
+      name: Use
+  associations:
+    classes:
+      - Eidolon (Unchained)
   description:
     value: >-
       <p><b>Requirements:</b> Aberrant subtype; basic psychic magic evolution;
@@ -33,21 +44,10 @@ system:
       spell each time. The eidolon’s amount of psychic energy available to spend
       each day does not stack—it uses only the highest number of points granted
       by its most powerful psychic magic evolution.</p>
-  actions:
-    - _id: rxlwcegmuz1lgqic
-      name: Use
-      img: systems/pf1/icons/skills/blue_26.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '2'
-  tag: classFeat_intermediatePsychicMagicUc2Pts
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon (Unchained)
-_key: '!items!Be6Z3Nz7j7wDFFPs'
+  tag: classFeat_intermediatePsychicMagicUc2Pts
+  uses:
+    maxFormula: '2'
+    per: day
+type: feat
 

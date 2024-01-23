@@ -1,8 +1,20 @@
 _id: V4rFQp52p7nzcijL
-name: Ki Pool (NIN)
-type: feat
+_key: '!items!V4rFQp52p7nzcijL'
 img: systems/pf1/icons/skills/emerald_11.jpg
+name: Ki Pool (NIN)
 system:
+  abilityType: su
+  actions:
+    - _id: dgahkijy1qhz9y5d
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/emerald_11.jpg
+      name: Use
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>At 2nd level, a ninja gains a pool of ki points, supernatural energy
@@ -28,22 +40,10 @@ system:
       second class ability is gained, and once made, the choice is set. The
       ninja can now use ki points from this pool to power the abilities of every
       class she possesses that grants a ki pool.</p>
-  actions:
-    - _id: dgahkijy1qhz9y5d
-      name: Use
-      img: systems/pf1/icons/skills/emerald_11.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: floor(@classes.ninja.level / 2) + @abilities.cha.mod
-  tag: classFeat_kiPoolNin
   subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: su
-_key: '!items!V4rFQp52p7nzcijL'
+  tag: classFeat_kiPoolNin
+  uses:
+    maxFormula: floor(@classes.ninja.level / 2) + @abilities.cha.mod
+    per: day
+type: feat
 

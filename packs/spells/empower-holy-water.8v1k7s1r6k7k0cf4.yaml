@@ -1,8 +1,29 @@
 _id: 8v1k7s1r6k7k0cf4
-name: Empower Holy Water
-type: spell
+_key: '!items!8v1k7s1r6k7k0cf4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Empower Holy Water
 system:
+  actions:
+    - _id: hcslfyggb2cq8xev
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none (object)
+      target:
+        value: one or more vials of holy water
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You empower a vial of holy water to deal additional damage to undead
@@ -13,35 +34,14 @@ system:
       bonus damage (maximum +5) to creatures caught in the splash area. This
       additional damage is positive energy damage, and has no effect on living
       creatures.</p>
-  actions:
-    - _id: hcslfyggb2cq8xev
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one or more vials of holy water
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none (object)
   learnedAt:
     class:
+      alchemist: 2
       bard: 2
       paladin: 1
-      alchemist: 2
   level: 2
   school: trs
-  types: good
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!8v1k7s1r6k7k0cf4'
+  types: good
+type: spell
 

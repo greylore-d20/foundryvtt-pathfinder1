@@ -1,8 +1,34 @@
 _id: 2szDdUmKabhOViHY
-name: Retribution Hex
-type: feat
+_key: '!items!2szDdUmKabhOViHY'
 img: systems/pf1/icons/skills/violet_11.jpg
+name: Retribution Hex
 system:
+  abilityType: su
+  actions:
+    - _id: UOmwicuI5yOgKGWz
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.int.mod'
+      img: systems/pf1/icons/skills/violet_11.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>A witch can place a retribution hex on a creature within 60 feet,
@@ -13,36 +39,10 @@ system:
       reduction the creature possesses.</p><p>This effect lasts for a number of
       rounds equal to the witch’s Intelligence modifier.</p><p>A Will save
       negates this effect.</p>
+  subType: classFeat
+  tag: classFeat_retributionHex
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: UOmwicuI5yOgKGWz
-      name: Use
-      img: systems/pf1/icons/skills/violet_11.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.int.mod'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '60'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-  tag: classFeat_retributionHex
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!2szDdUmKabhOViHY'
+type: feat
 

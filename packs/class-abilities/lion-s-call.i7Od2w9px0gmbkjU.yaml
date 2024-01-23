@@ -1,8 +1,29 @@
 _id: i7Od2w9px0gmbkjU
-name: Lion's Call
-type: feat
+_key: '!items!i7Od2w9px0gmbkjU'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Lion's Call
 system:
+  abilityType: ex
+  actions:
+    - _id: 7lqpull3fywhmce5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.cavalier.level'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 2nd level, an order of the lion cavalier gains the ability to rally
@@ -13,28 +34,7 @@ system:
       ally within range is under the effect of a spell or ability that causes
       him to be frightened or panicked, he can immediately make another saving
       throw to resist the effect (if allowed).</p>
-  actions:
-    - _id: 7lqpull3fywhmce5
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.cavalier.level'
-        units: round
-      target:
-        value: allies within range
-      range:
-        value: '60'
-        units: ft
-  tag: classFeat_lionsCall
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!i7Od2w9px0gmbkjU'
+  tag: classFeat_lionsCall
+type: feat
 

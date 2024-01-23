@@ -1,8 +1,31 @@
 _id: ztg59cklsxxtuodl
-name: Shroud of Innocuity
-type: spell
+_key: '!items!ztg59cklsxxtuodl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shroud of Innocuity
 system:
+  actions:
+    - _id: bxr8y2iiu6o9d9fb
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none; see text
+        harmless: true
+      target:
+        value: >-
+          one willing creature plus one/2 caster levels, no two of which can be
+          more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>All affected creatures are veiled with a commonplace appearance. This
@@ -12,42 +35,19 @@ system:
       not affected by the spell.  Creatures with an attitude of unfriendly or
       hostile toward an affected target can attempt a Will save to disbelieve
       the effect the first time they encounter that target.</p>
-  actions:
-    - _id: bxr8y2iiu6o9d9fb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: >-
-          one willing creature plus one/2 caster levels, no two of which can be
-          more than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: none; see text
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      witch: 3
-      shaman: 3
-      psychic: 3
       medium: 3
       mesmerist: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ztg59cklsxxtuodl'
+  subschool: glamer
+type: spell
 

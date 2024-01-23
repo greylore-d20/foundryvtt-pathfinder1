@@ -1,14 +1,11 @@
 _id: nvy1z3w70ghhlel9
-name: Share Skin, Greater
-type: spell
+_key: '!items!nvy1z3w70ghhlel9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Share Skin, Greater
 system:
-  description:
-    value: <p>This spell functions like <i>share skin</i>, except as noted here.</p>
   actions:
     - _id: ka13e4qm2cs7j2t1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -16,21 +13,24 @@ system:
           type: action
       duration:
         value: 1 hour/level or until you return to your body
-      target:
-        value: one creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates; see text
+        type: will
+      target:
+        value: one creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: <p>This spell functions like <i>share skin</i>, except as noted here.</p>
   learnedAt:
     class:
       witch: 8
   level: 8
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!nvy1z3w70ghhlel9'
+type: spell
 

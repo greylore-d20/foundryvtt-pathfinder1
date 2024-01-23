@@ -1,8 +1,25 @@
 _id: MAX14onx1EqjCj0a
-name: Oneiromancy
-type: feat
+_key: '!items!MAX14onx1EqjCj0a'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Oneiromancy
 system:
+  abilityType: su
+  actions:
+    - _id: tr41d6vuh0er1s52
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      target:
+        value: sleeping creature
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>As a standard action, you can tamper with the minds of sleeping
@@ -26,27 +43,10 @@ system:
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier. Creatures that don’t dream are immune to this
       effect.</p>
-  actions:
-    - _id: tr41d6vuh0er1s52
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: sleeping creature
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_oneiromancy
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!MAX14onx1EqjCj0a'
+  tag: classFeat_oneiromancy
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

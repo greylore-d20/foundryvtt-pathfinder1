@@ -1,8 +1,32 @@
 _id: 6oevs2mE3QqqQEAK
-name: Net
-type: weapon
+_key: '!items!6oevs2mE3QqqQEAK'
 img: systems/pf1/icons/items/weapons/net.png
+name: Net
 system:
+  actions:
+    - _id: apr414c66hp6i8i7
+      ability:
+        attack: dex
+        critMult: null
+        critRange: null
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/net.png
+      name: Throw
+      range:
+        units: ft
+        value: '10'
+      touch: true
+  baseTypes:
+    - Net
   description:
     value: >-
       <p>A net is used to entangle enemies. When you throw a net, you make a
@@ -23,55 +47,31 @@ system:
       roll. After the net is unfolded, you take a -4 penalty on attack rolls
       with it. It takes 2 rounds for a proficient user to fold a net and twice
       that long for a nonproficient one to do so.</p>
-  tags:
-    - PFS
-  weight:
-    value: 6
-  price: 20
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: apr414c66hp6i8i7
-      name: Throw
-      img: systems/pf1/icons/items/weapons/net.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-      actionType: twak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        critRange: null
-        critMult: null
-      touch: true
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Net
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 20
   properties:
     spc: true
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!6oevs2mE3QqqQEAK'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 6
+type: weapon
 

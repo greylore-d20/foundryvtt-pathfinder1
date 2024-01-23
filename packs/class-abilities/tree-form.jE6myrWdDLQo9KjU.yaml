@@ -1,8 +1,28 @@
 _id: jE6myrWdDLQo9KjU
-name: Tree Form
-type: feat
+_key: '!items!jE6myrWdDLQo9KjU'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Tree Form
 system:
+  abilityType: sp
+  actions:
+    - _id: 3ycatkemvadkh5a4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can assume the form of a Large living or dead
@@ -22,35 +42,15 @@ system:
       hour/level.</p>
 
       <p>You must be at least 3rd level to select this revelation.</p>
-  tags:
-    - Wood Mystery
-  actions:
-    - _id: 3ycatkemvadkh5a4
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_treeForm
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
   source:
     id: PZO1117
     pages: '57'
-_key: '!items!jE6myrWdDLQo9KjU'
+  subType: classFeat
+  tag: classFeat_treeForm
+  tags:
+    - Wood Mystery
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

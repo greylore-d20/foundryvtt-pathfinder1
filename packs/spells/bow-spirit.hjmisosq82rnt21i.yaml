@@ -1,8 +1,27 @@
 _id: hjmisosq82rnt21i
-name: Bow Spirit
-type: spell
+_key: '!items!hjmisosq82rnt21i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bow Spirit
 system:
+  actions:
+    - _id: 41giexm5g1jtppb3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A <i>bow spirit</i> is a shapeless force that hovers about you, taking
@@ -21,32 +40,13 @@ system:
       sphere of annihilation</i>, or a <i>rod of cancellation</i> affects it. A
       <i>bow spirit</i>'s AC against touch attacks is 10 + your Dexterity
       modifier.</p>
-  actions:
-    - _id: 41giexm5g1jtppb3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      ranger: 4
       hunter: 4
+      ranger: 4
   level: 4
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!hjmisosq82rnt21i'
+  subschool: creation
+type: spell
 

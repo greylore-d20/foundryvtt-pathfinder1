@@ -1,8 +1,28 @@
 _id: dcCZW51UewXFLLGo
-name: Bolster
-type: feat
+_key: '!items!dcCZW51UewXFLLGo'
 img: systems/pf1/icons/skills/affliction_21.jpg
+name: Bolster
 system:
+  abilityType: sp
+  actions:
+    - _id: 199b6ksbzcluwn41
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.wizard.level < 4 ? 1 : floor(@classes.wizard.level / 2)'
+      img: systems/pf1/icons/skills/affliction_21.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: Undead touched
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a <em>standard action</em>, you can touch an <em>undead</em>
@@ -16,30 +36,10 @@ system:
       creature is within the area of a <em>consecrate</em> spell. You can use
       this ability a number of times per day equal to 3 + your
       <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: 199b6ksbzcluwn41
-      name: Use
-      img: systems/pf1/icons/skills/affliction_21.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.wizard.level < 4 ? 1 : floor(@classes.wizard.level / 2)'
-        units: round
-      target:
-        value: Undead touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_bolster
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!dcCZW51UewXFLLGo'
+  tag: classFeat_bolster
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,8 +1,26 @@
 _id: xo5yzqobt2ozkyn6
-name: Familiar Figment
-type: spell
+_key: '!items!xo5yzqobt2ozkyn6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Familiar Figment
 system:
+  actions:
+    - _id: 5pxk7iwchffxj9zt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: your familiar
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an illusory duplicate of your familiar that moves
@@ -18,32 +36,14 @@ system:
       using your base attack bonus and the familiar's Dexterity modifier. If
       this attack hits, your familiar (but not other creatures) treats that
       target as flanked until the end of its turn.</p>
-  actions:
-    - _id: 5pxk7iwchffxj9zt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: your familiar
-      range:
-        units: touch
   learnedAt:
     class:
       sorcerer: 2
-      wizard: 2
       witch: 2
+      wizard: 2
   level: 2
   school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!xo5yzqobt2ozkyn6'
+  subschool: figment
+type: spell
 

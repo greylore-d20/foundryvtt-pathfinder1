@@ -1,8 +1,31 @@
 _id: eefd95mtv1nhe5pj
-name: Create Soul Gem
-type: spell
+_key: '!items!eefd95mtv1nhe5pj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Soul Gem
 system:
+  actions:
+    - _id: 0oc5nlgv2t2c7p3h
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one dying or recently dead creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You draw forth the ebbing life force of a dying creature or one that
@@ -23,44 +46,21 @@ system:
       of this check increases by 2.  If you are a souldrinker (see page 212),
       you can cast this spell and expend 5 soul points to fill the gem with the
       equivalent of one basic soul.</p>
-  actions:
-    - _id: 0oc5nlgv2t2c7p3h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one dying or recently dead creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
-      shaman: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      sorcerer: 3
       spiritualist: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: nec
-  types: death, evil
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: crystal lens worth 500 gp
-_key: '!items!eefd95mtv1nhe5pj'
+  school: nec
+  types: death, evil
+type: spell
 

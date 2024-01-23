@@ -1,8 +1,25 @@
 _id: yq2pz65es5it8cqd
-name: Spiritual Squire
-type: spell
+_key: '!items!yq2pz65es5it8cqd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spiritual Squire
 system:
+  actions:
+    - _id: z8zy76gs5scowj2q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes an ally made of pure force to appear in a single
@@ -24,36 +41,19 @@ system:
       <i>disintegrate</i>, <i>dispel magic</i>, a <i>rod of cancellation</i>, or
       a <i>sphere of annihilation</i> affects it. A spiritual ally's AC against
       touch attacks is 10.</p>
-  actions:
-    - _id: z8zy76gs5scowj2q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: medium
   learnedAt:
     class:
+      antipaladin: 2
       cleric: 2
-      warpriest: 2
+      inquisitor: 2
       oracle: 2
       paladin: 2
-      inquisitor: 2
-      antipaladin: 2
       shaman: 2
       spiritualist: 2
+      warpriest: 2
   level: 2
   school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!yq2pz65es5it8cqd'
+  types: force
+type: spell
 

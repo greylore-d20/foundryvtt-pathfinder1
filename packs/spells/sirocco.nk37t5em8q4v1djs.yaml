@@ -1,8 +1,34 @@
 _id: nk37t5em8q4v1djs
-name: Sirocco
-type: spell
+_key: '!items!nk37t5em8q4v1djs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sirocco
 system:
+  actions:
+    - _id: n8sttd4vhvcf0ahy
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cylinder (20-ft. radius, 60 ft. high)
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude partial, see text
+        type: fort
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A blast of furnace-hot wind blasts downward, inflicting 4d6 fire damage
@@ -16,46 +42,20 @@ system:
       to a <i>sirocco</i> spell). Creatures with the water subtype take a -4
       penalty on all saving throws against this spell and take double normal
       damage.</p>
-  actions:
-    - _id: n8sttd4vhvcf0ahy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial, see text
-      area: cylinder (20-ft. radius, 60 ft. high)
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       druid: 6
+      hunter: 6
       magus: 6
       occultist: 6
-      hunter: 6
+      sorcerer: 6
+      wizard: 6
     subDomain:
       Storms: 6
   level: 6
-  school: evo
-  types: air, fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: handful of fine sand cast into the air
-_key: '!items!nk37t5em8q4v1djs'
+  school: evo
+  types: air, fire
+type: spell
 

@@ -1,8 +1,27 @@
 _id: UpeasYXOlT5nWAHp
-name: Vampiric Call
-type: feat
+_key: '!items!UpeasYXOlT5nWAHp'
 img: systems/pf1/icons/skills/beast_02.jpg
+name: Vampiric Call
 system:
+  abilityType: su
+  actions:
+    - _id: xfjrh6i14dgczv4p
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/beast_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Vampire Hunter
+  changes:
+    - _id: ltdmlj0m
+      formula: >-
+        @classes.vampirehunter.level >= 16 ? 4 : ((@classes.vampirehunter.level
+        < 16 && @classes.vampirehunter.level > 7) ? 2 : 0)
+      modifier: deflection
+      subTarget: ac
   description:
     value: >-
       <p>The vampire hunter summons base creatures of the night—bats, rats,
@@ -11,26 +30,7 @@ system:
       <em>temporary hit points</em> equal to his level. At 8th level, he also
       gains a +2 <em>deflection bonus</em> to AC. At 16th level, the
       <em>deflection bonus</em> increases to +4.</p>
-  actions:
-    - _id: xfjrh6i14dgczv4p
-      name: Use
-      img: systems/pf1/icons/skills/beast_02.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: ltdmlj0m
-      formula: >-
-        @classes.vampirehunter.level >= 16 ? 4 : ((@classes.vampirehunter.level
-        < 16 && @classes.vampirehunter.level > 7) ? 2 : 0)
-      subTarget: ac
-      modifier: deflection
-  tag: classFeat_vampiricCall
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!UpeasYXOlT5nWAHp'
+  tag: classFeat_vampiricCall
+type: feat
 

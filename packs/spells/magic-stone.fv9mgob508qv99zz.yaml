@@ -1,8 +1,32 @@
 _id: fv9mgob508qv99zz
-name: Magic Stone
-type: spell
+_key: '!items!fv9mgob508qv99zz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magic Stone
 system:
+  actions:
+    - _id: g1zbzfyolbwl5kwj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 30 minutes or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: up to three pebbles touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transmute as many as three pebbles, which can be no larger than
@@ -13,44 +37,20 @@ system:
       a normal ranged attack. Each stone that hits deals 1d6+1 points of damage
       (including the spell's enhancement bonus), or 2d6+2 points against
       undead.</p>
-  actions:
-    - _id: g1zbzfyolbwl5kwj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 30 minutes or until discharged
-      target:
-        value: up to three pebbles touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      shaman: 1
       hunter: 1
+      oracle: 1
+      shaman: 1
+      warpriest: 1
     domain:
       Earth: 1
       Ruins: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '310'
-_key: '!items!fv9mgob508qv99zz'
+type: spell
 

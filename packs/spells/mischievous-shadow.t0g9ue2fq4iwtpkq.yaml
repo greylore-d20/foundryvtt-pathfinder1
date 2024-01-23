@@ -1,8 +1,30 @@
 _id: t0g9ue2fq4iwtpkq
-name: Mischievous Shadow
-type: spell
+_key: '!items!t0g9ue2fq4iwtpkq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mischievous Shadow
 system:
+  actions:
+    - _id: rkei16oblrbt29ge
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-ft. cube/level (S)
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You direct spirits into the shadows of creatures. The shadows of
@@ -23,45 +45,23 @@ system:
       needed, typically manifesting during important or crucial roles. Each time
       a <i>mischievous shadow</i> makes such a disruption, the spell's
       haunt-like manifestation occurs during that round.</p>
-  actions:
-    - _id: rkei16oblrbt29ge
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: one 5-ft. cube/level (S)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      summoner: 4
-      witch: 4
       magus: 4
-      shaman: 4
       medium: 3
+      shaman: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
+  materials:
+    value: a black candle
   school: nec
   subschool: haunted
   types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a black candle
-_key: '!items!t0g9ue2fq4iwtpkq'
+type: spell
 

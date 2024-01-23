@@ -1,8 +1,27 @@
 _id: icjrw9y6pa1uatlz
-name: Commune with Nature
-type: spell
+_key: '!items!icjrw9y6pa1uatlz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Commune with Nature
 system:
+  actions:
+    - _id: ezu9ibcdh5akh8gx
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You become one with nature, attaining knowledge of the surrounding
@@ -16,36 +35,17 @@ system:
       its radius is limited to 100 feet per caster level. The spell does not
       function where nature has been replaced by construction or settlement,
       such as in dungeons and towns.</p>
-  actions:
-    - _id: ezu9ibcdh5akh8gx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       druid: 5
+      hunter: 4
+      psychic: 5
       ranger: 4
       shaman: 5
-      psychic: 5
-      hunter: 4
     domain:
       Ruins: 5
   level: 5
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!icjrw9y6pa1uatlz'
+type: spell
 

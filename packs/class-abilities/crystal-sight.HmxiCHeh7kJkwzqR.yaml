@@ -1,8 +1,28 @@
 _id: HmxiCHeh7kJkwzqR
-name: Crystal Sight
-type: feat
+_key: '!items!HmxiCHeh7kJkwzqR'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Crystal Sight
 system:
+  abilityType: ex
+  actions:
+    - _id: 6ztwbnmv0hiy88qr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can see through stone, earth, or sand as easily as if it were
@@ -11,30 +31,10 @@ system:
 
       <p>You can use this ability a number of rounds per day equal to your
       oracle level, but these rounds do not need to be consecutive.</p>
-  actions:
-    - _id: 6ztwbnmv0hiy88qr
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_crystalSight
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!HmxiCHeh7kJkwzqR'
+  tag: classFeat_crystalSight
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

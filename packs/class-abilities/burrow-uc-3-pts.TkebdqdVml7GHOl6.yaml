@@ -1,8 +1,17 @@
 _id: TkebdqdVml7GHOl6
-name: Burrow (UC) (3 pts)
-type: feat
+_key: '!items!TkebdqdVml7GHOl6'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Burrow (UC) (3 pts)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Eidolon (Unchained)
+  changes:
+    - _id: mirdwwof
+      formula: floor(@attributes.speed.land.base / 2)
+      modifier: base
+      subTarget: burrowSpeed
   description:
     value: >-
       <p><b>Requirements:</b> Summoner level 9th.</p>
@@ -11,16 +20,7 @@ system:
       the earth. The eidolon gains a burrow speed equal to 1/2 its base speed.
       It can use this speed to move through clay, dirt, earth, and sand. It does
       not leave a hole behind, nor is its passage marked on the surface.</p>
-  changes:
-    - _id: mirdwwof
-      formula: floor(@attributes.speed.land.base / 2)
-      subTarget: burrowSpeed
-      modifier: base
-  tag: classFeat_burrowUc3Pts
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon (Unchained)
-  abilityType: ex
-_key: '!items!TkebdqdVml7GHOl6'
+  tag: classFeat_burrowUc3Pts
+type: feat
 

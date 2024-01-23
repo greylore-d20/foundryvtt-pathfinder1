@@ -1,17 +1,11 @@
 _id: cxgi0ub77t6aink1
-name: Invisibility, Greater
-type: spell
+_key: '!items!cxgi0ub77t6aink1'
 img: icons/magic/perception/silhouette-stealth-shadow.webp
+name: Invisibility, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.oylikodnyku2zewu]{Invisibility}<em>,</em> except
-      that it doesn't end if the subject attacks.</p>
   actions:
     - _id: tm1azx9hxpigsa3o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,38 +13,44 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you or creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: you or creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.oylikodnyku2zewu]{Invisibility}<em>,</em> except
+      that it doesn't end if the subject attacks.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      bard: 4
       alchemist: 4
-      summoner: 3
-      inquisitor: 4
       antipaladin: 4
-      psychic: 4
+      bard: 4
+      inquisitor: 4
       medium: 3
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 3
       summonerUnchained: 4
+      wizard: 4
   level: 4
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '302'
-_key: '!items!cxgi0ub77t6aink1'
+  subschool: glamer
+type: spell
 

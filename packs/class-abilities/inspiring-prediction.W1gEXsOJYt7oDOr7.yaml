@@ -1,8 +1,26 @@
 _id: W1gEXsOJYt7oDOr7
-name: Inspiring Prediction
-type: feat
+_key: '!items!W1gEXsOJYt7oDOr7'
 img: systems/pf1/icons/spells/fog-blue-2.jpg
+name: Inspiring Prediction
 system:
+  abilityType: su
+  actions:
+    - _id: 9aauq6fgxabjb12q
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/fog-blue-2.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: target ally
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>A number of times per day equal to 3 + your <em>Intelligence</em>
@@ -11,28 +29,10 @@ system:
       granting each ally within 50 feet who can hear you a +4 <em>luck
       bonus</em> on her next <em>attack roll</em>, saving throw, or skill
       check.</p>
-  actions:
-    - _id: 9aauq6fgxabjb12q
-      name: Use
-      img: systems/pf1/icons/spells/fog-blue-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: target ally
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_inspiringPrediction
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!W1gEXsOJYt7oDOr7'
+  tag: classFeat_inspiringPrediction
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

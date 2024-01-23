@@ -1,8 +1,20 @@
 _id: lXDbwzWyNovGX1uW
-name: Self-Assurance
-type: feat
+_key: '!items!lXDbwzWyNovGX1uW'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Self-Assurance
 system:
+  abilityType: su
+  actions:
+    - _id: 5x2balz6m2o2nvyb
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>Overwhelming confidence in your success brings you closer to your
@@ -15,22 +27,10 @@ system:
 
       <p>You can use this ability a number of times per day equal to your
       Charisma modifier.</p>
-  actions:
-    - _id: 5x2balz6m2o2nvyb
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: '@abilities.cha.mod'
-  tag: classFeat_selfassurance
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!lXDbwzWyNovGX1uW'
+  tag: classFeat_selfassurance
+  uses:
+    maxFormula: '@abilities.cha.mod'
+    per: day
+type: feat
 

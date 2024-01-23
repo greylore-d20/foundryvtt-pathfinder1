@@ -1,8 +1,31 @@
 _id: 2fex71vszfumoseb
-name: Artificer's Curse
-type: spell
+_key: '!items!2fex71vszfumoseb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Artificer's Curse
 system:
+  actions:
+    - _id: qvrnpy4qg0d67gxh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: 1 magical item
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You temporarily suppress the most powerful qualities of a magical item.
@@ -15,43 +38,20 @@ system:
       loses. If the item's caster level is reduced to 0, all its magic qualities
       are suppressed (as if dispelled) for the duration of the spell. This spell
       has no effect on artifacts.</p>
-  actions:
-    - _id: qvrnpy4qg0d67gxh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: 1 magical item
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 7
-      oracle: 7
       bard: 6
-      witch: 7
+      cleric: 7
       inquisitor: 6
-      shaman: 7
       occultist: 6
+      oracle: 7
+      shaman: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a blank scroll or page from a spellbook
-_key: '!items!2fex71vszfumoseb'
+  school: trs
+type: spell
 

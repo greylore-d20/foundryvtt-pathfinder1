@@ -1,8 +1,20 @@
 _id: D4DzcLyRQABhgIKt
-name: Suffering Knowledge
-type: feat
+_key: '!items!D4DzcLyRQABhgIKt'
 img: systems/pf1/icons/spells/runes-blue-3.jpg
+name: Suffering Knowledge
 system:
+  abilityType: su
+  actions:
+    - _id: saq6643m4p7ca5gj
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/runes-blue-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can learn to cast a spell by suffering from its effects.
@@ -15,21 +27,9 @@ system:
 
       <p>The ability to cast this spell remains for a number of rounds equal to
       the arcanist’s Charisma modif ier (minimum 1).</p>
+  subType: classFeat
+  tag: classFeat_sufferingKnowledge
   tags:
     - Arcanist Exploit, Greater
-  actions:
-    - _id: saq6643m4p7ca5gj
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_sufferingKnowledge
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!D4DzcLyRQABhgIKt'
+type: feat
 

@@ -1,8 +1,27 @@
 _id: hd32fuc6e7j4isbn
-name: Elemental Body III
-type: spell
+_key: '!items!hd32fuc6e7j4isbn'
 img: icons/magic/fire/elemental-fire-flying.webp
+name: Elemental Body III
 system:
+  actions:
+    - _id: ty1y107g4rhaxvbk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>elemental body II</i>, except that it also
@@ -21,42 +40,23 @@ system:
       I</i> except that you gain a +2 size bonus to your Strength, a -2 penalty
       on your Dexterity, a +6 size bonus to your Constitution, and a +6 natural
       armor bonus.</p>
-  actions:
-    - _id: ty1y107g4rhaxvbk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      alchemist: 6
-      magus: 6
     bloodline:
       Elemental: 6
       Marid: 6
+    class:
+      alchemist: 6
+      magus: 6
+      sorcerer: 6
+      wizard: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: the element you plan to assume
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '276'
-_key: '!items!hd32fuc6e7j4isbn'
+  sr: false
+  subschool: polymorph
+type: spell
 

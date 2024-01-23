@@ -1,8 +1,39 @@
 _id: fAPOyysPtvZ1reD0
-name: Renewed Vigor (UC)
-type: feat
+_key: '!items!fAPOyysPtvZ1reD0'
 img: systems/pf1/icons/feats/deafening-critical.jpg
+name: Renewed Vigor (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: 6k7ovkkg20lzer42
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: >-
+              (floor(@classes.barbarianUnchained.level / 4))d8 +
+              @abilities.con.mod
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Barbarian (Unchained)
   description:
     value: >-
       <p>As a standard action, the barbarian heals 1d8 points of damage + her
@@ -13,41 +44,10 @@ system:
       <p>This ability can be used only once per day.</p>
 
       <p>The barbarian must be at least 4th level to select this rage power.</p>
-  actions:
-    - _id: 6k7ovkkg20lzer42
-      name: Use
-      img: systems/pf1/icons/feats/deafening-critical.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: heal
-      damage:
-        parts:
-          - formula: >-
-              (floor(@classes.barbarianUnchained.level / 4))d8 +
-              @abilities.con.mod
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_renewedVigorUc
   subType: classFeat
-  associations:
-    classes:
-      - Barbarian (Unchained)
-  abilityType: ex
-_key: '!items!fAPOyysPtvZ1reD0'
+  tag: classFeat_renewedVigorUc
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

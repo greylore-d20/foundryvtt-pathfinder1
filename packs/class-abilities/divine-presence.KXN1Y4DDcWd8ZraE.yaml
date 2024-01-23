@@ -1,8 +1,28 @@
 _id: KXN1Y4DDcWd8ZraE
-name: Divine Presence
-type: feat
+_key: '!items!KXN1Y4DDcWd8ZraE'
 img: systems/pf1/icons/skills/yellow_10.jpg
+name: Divine Presence
 system:
+  abilityType: su
+  actions:
+    - _id: 9eyc92zdcmhsboet
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/yellow_10.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura of divine presence for a
@@ -13,33 +33,13 @@ system:
       standard action. If an ally leaves the area or makes an attack, the effect
       ends for that ally. If you make an attack, the effect ends for you and
       your allies.</p>
-  actions:
-    - _id: 9eyc92zdcmhsboet
-      name: Use
-      img: systems/pf1/icons/skills/yellow_10.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_divinePresence
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '44'
-_key: '!items!KXN1Y4DDcWd8ZraE'
+  subType: classFeat
+  tag: classFeat_divinePresence
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

@@ -1,8 +1,27 @@
 _id: sa41tn0uytsypu6q
-name: Hedging Weapons
-type: spell
+_key: '!items!sa41tn0uytsypu6q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hedging Weapons
 system:
+  actions:
+    - _id: wm6mb0wenuy3ktua
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A weapon made from divine force appears and floats near you. This
@@ -22,35 +41,16 @@ system:
       deflection bonus to your AC by 1 as it disappears immediately after the
       attack action. The spell immediately ends once you throw all the
       weapons.</p>
-  actions:
-    - _id: wm6mb0wenuy3ktua
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      antipaladin: 1
       cleric: 1
-      warpriest: 1
+      inquisitor: 1
       oracle: 1
       paladin: 1
-      inquisitor: 1
-      antipaladin: 1
+      warpriest: 1
   school: abj
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!sa41tn0uytsypu6q'
+  types: force
+type: spell
 

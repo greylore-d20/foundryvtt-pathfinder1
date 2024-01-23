@@ -1,19 +1,11 @@
 _id: dxRGdxINH1msURhZ
-name: Intimidating Display
-type: feat
+_key: '!items!dxRGdxINH1msURhZ'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Intimidating Display
 system:
-  description:
-    value: >-
-      <p>The shaman can call upon some of the majesty and power of dragons to
-      cow her enemies. The shaman gains
-      @Compendium[pf1.feats.3cq9YbgcMrAXC76j]{Dazzling Display} as a bonus feat,
-      even if she does not meet the prerequisites, and she can use it even when
-      not wielding a weapon.</p>
+  abilityType: ex
   actions:
     - _id: i7y4y28pprglgu3r
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
       activation:
         type: full
         unchained:
@@ -21,16 +13,24 @@ system:
           type: action
       duration:
         units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
       target:
         value: all foes within range
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_intimidatingDisplay
-  subType: classFeat
   associations:
     classes:
       - Shaman
-  abilityType: ex
-_key: '!items!dxRGdxINH1msURhZ'
+  description:
+    value: >-
+      <p>The shaman can call upon some of the majesty and power of dragons to
+      cow her enemies. The shaman gains
+      @Compendium[pf1.feats.3cq9YbgcMrAXC76j]{Dazzling Display} as a bonus feat,
+      even if she does not meet the prerequisites, and she can use it even when
+      not wielding a weapon.</p>
+  subType: classFeat
+  tag: classFeat_intimidatingDisplay
+type: feat
 

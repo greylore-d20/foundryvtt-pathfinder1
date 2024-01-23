@@ -1,8 +1,29 @@
 _id: xsaOYwxzVjMtOEOI
-name: Sparking Aura
-type: feat
+_key: '!items!xsaOYwxzVjMtOEOI'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Sparking Aura
 system:
+  abilityType: su
+  actions:
+    - _id: 8adpxzvp4rwbt6pw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.shaman.level / 2)
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman causes a creature within 30 feet to spark and shimmer with
@@ -17,28 +38,7 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
-  actions:
-    - _id: 8adpxzvp4rwbt6pw
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.shaman.level / 2)
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_sparkingAura
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!xsaOYwxzVjMtOEOI'
+  tag: classFeat_sparkingAura
+type: feat
 

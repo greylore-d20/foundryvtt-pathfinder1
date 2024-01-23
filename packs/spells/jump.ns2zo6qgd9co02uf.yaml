@@ -1,17 +1,11 @@
 _id: ns2zo6qgd9co02uf
-name: Jump
-type: spell
+_key: '!items!ns2zo6qgd9co02uf'
 img: icons/skills/movement/feet-winged-boots-brown.webp
+name: Jump
 system:
-  description:
-    value: >-
-      <p>The subject gets a +10 enhancement bonus on Acrobatics checks made to
-      attempt high jumps or long jumps. The enhancement bonus increases to +20
-      at caster level 5th, and to +30 (the maximum) at caster level 9th.</p>
   actions:
     - _id: cgdnz57phn91uadx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,41 +13,47 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The subject gets a +10 enhancement bonus on Acrobatics checks made to
+      attempt high jumps or long jumps. The enhancement bonus increases to +20
+      at caster level 5th, and to +30 (the maximum) at caster level 9th.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
-      ranger: 1
       alchemist: 1
-      summoner: 1
-      magus: 1
       bloodrager: 1
-      psychic: 1
+      druid: 1
       hunter: 1
+      magus: 1
+      psychic: 1
+      ranger: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      wizard: 1
     domain:
       Vermin: 1
     subDomain:
       Competition: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a grasshopper's hind leg
+  school: trs
   source:
     id: PZO1110
     pages: '303'
-_key: '!items!ns2zo6qgd9co02uf'
+type: spell
 

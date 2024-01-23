@@ -1,8 +1,30 @@
 _id: p76d7elycoau7edn
-name: Alaznist's Jinx
-type: spell
+_key: '!items!p76d7elycoau7edn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Alaznist's Jinx
 system:
+  actions:
+    - _id: n568ej10j19x5ntm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You inflict a curse similar to the spell burn spellblight
@@ -15,44 +37,22 @@ system:
       and is staggered for a round.  Unlike with the spell burn spellblight, the
       burning sensation is a tangible effect, visible during the act of
       spellcasting as an incorporeal, violet flame surrounding the caster.</p>
-  actions:
-    - _id: n568ej10j19x5ntm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      bard: 4
-      witch: 5
-      inquisitor: 5
       antipaladin: 4
-      shaman: 5
-      psychic: 6
+      bard: 4
+      cleric: 6
+      inquisitor: 5
       occultist: 5
+      oracle: 6
+      psychic: 6
+      shaman: 5
+      sorcerer: 6
+      warpriest: 6
+      witch: 5
+      wizard: 6
   level: 6
   school: evo
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!p76d7elycoau7edn'
+type: spell
 

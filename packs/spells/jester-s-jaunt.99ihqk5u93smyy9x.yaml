@@ -1,18 +1,11 @@
 _id: 99ihqk5u93smyy9x
-name: Jester's Jaunt
-type: spell
+_key: '!items!99ihqk5u93smyy9x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Jester's Jaunt
 system:
-  description:
-    value: >-
-      <p>You teleport the target to a space you can see within 30 feet of the
-      target. The destination must be on solid ground, and the teleportation
-      cannot end in a space that is by nature hazardous to the creature you are
-      teleporting.</p>
   actions:
     - _id: x1xzeh1pmqifhlfe
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,14 +13,24 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You teleport the target to a space you can see within 30 feet of the
+      target. The destination must be on solid ground, and the teleportation
+      cannot end in a space that is by nature hazardous to the creature you are
+      teleporting.</p>
   learnedAt:
     class:
       bard: 3
@@ -35,8 +38,5 @@ system:
   level: 3
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!99ihqk5u93smyy9x'
+type: spell
 

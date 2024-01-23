@@ -1,16 +1,11 @@
 _id: wb5pvfm2hc43crln
-name: Spellcrash
-type: spell
+_key: '!items!wb5pvfm2hc43crln'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spellcrash
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>lesser spellcrash</i>, except it affects
-      5th-level or lower prepared spells or spell slots.</p>
   actions:
     - _id: pakxuwvttsc0ocx4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,27 +13,32 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates; see text
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>lesser spellcrash</i>, except it affects
+      5th-level or lower prepared spells or spell slots.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
-      witch: 6
       psychic: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wb5pvfm2hc43crln'
+type: spell
 

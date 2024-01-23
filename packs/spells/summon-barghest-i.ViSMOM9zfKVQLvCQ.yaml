@@ -1,7 +1,26 @@
-name: Summon Barghest I
-type: spell
+_id: ViSMOM9zfKVQLvCQ
+_key: '!items!ViSMOM9zfKVQLvCQ'
 img: icons/creatures/abilities/mouth-teeth-long-red.webp
+name: Summon Barghest I
 system:
+  actions:
+    - _id: KSvA8aSL0RAlxYod
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: icons/creatures/abilities/mouth-teeth-long-red.webp
+      name: Use
+      range:
+        units: close
+      spellEffect: one summoned barghest
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons a barghest from the Abyssal realm of Basalfeyst to
@@ -12,20 +31,6 @@ system:
       summoned barghest appears with 2 growth points (and with it the
       appropriate bonuses to its attacks, CMB, saves, skill checks, hit points,
       and caster level).</p>
-  actions:
-    - _id: KSvA8aSL0RAlxYod
-      name: Use
-      img: icons/creatures/abilities/mouth-teeth-long-red.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: one summoned barghest
   learnedAt:
     class:
       cleric: 4
@@ -33,13 +38,8 @@ system:
       warpriest: 4
   level: 4
   school: con
+  sr: false
   subschool: summoning
   types: evil
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_id: ViSMOM9zfKVQLvCQ
-_key: '!items!ViSMOM9zfKVQLvCQ'
+type: spell
 

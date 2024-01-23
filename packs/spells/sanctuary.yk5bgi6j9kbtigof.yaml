@@ -1,8 +1,31 @@
 _id: yk5bgi6j9kbtigof
-name: Sanctuary
-type: spell
+_key: '!items!yk5bgi6j9kbtigof'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sanctuary
 system:
+  actions:
+    - _id: f0uosjm0f9lb3mmd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Any opponent attempting to directly attack the warded creature, even
@@ -15,45 +38,22 @@ system:
       warded creature from being attacked or affected by area of effect spells.
       The subject cannot attack without breaking the spell but may use nonattack
       spells or otherwise act.</p>
-  actions:
-    - _id: f0uosjm0f9lb3mmd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       inquisitor: 1
+      oracle: 1
       spiritualist: 1
+      warpriest: 1
     domain:
       Protection: 1
     subDomain:
-      Freedom: 1
       Aeon: 1
+      Freedom: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '336'
-_key: '!items!yk5bgi6j9kbtigof'
+  sr: false
+type: spell
 

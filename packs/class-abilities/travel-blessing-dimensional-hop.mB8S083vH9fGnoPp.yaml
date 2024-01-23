@@ -1,8 +1,26 @@
 _id: mB8S083vH9fGnoPp
-name: 'Travel Blessing: Dimensional Hop'
-type: feat
+_key: '!items!mB8S083vH9fGnoPp'
 img: systems/pf1/icons/spells/wind-grasp-eerie-2.jpg
+name: 'Travel Blessing: Dimensional Hop'
 system:
+  actions:
+    - _id: 8nh3gl9i6iwuy64n
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/wind-grasp-eerie-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can teleport up to 20 feet as a move action. You can
@@ -14,25 +32,7 @@ system:
       distance traveled. (For example, transporting yourself 40 feet costs 2
       uses of your blessing, and transporting an additional person this distance
       costs 1 more use.)</p>
-  actions:
-    - _id: 8nh3gl9i6iwuy64n
-      name: Use
-      img: systems/pf1/icons/spells/wind-grasp-eerie-2.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        value: '20'
-        units: ft
-  tag: classFeat_travelBlessingDimensionalHop
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!mB8S083vH9fGnoPp'
+  tag: classFeat_travelBlessingDimensionalHop
+type: feat
 

@@ -1,18 +1,11 @@
 _id: o8ds5jtvf0hf92dw
-name: Guidance
-type: spell
+_key: '!items!o8ds5jtvf0hf92dw'
 img: icons/magic/holy/prayer-hands-glowing-yellow.webp
+name: Guidance
 system:
-  description:
-    value: >-
-      <p>This spell imbues the subject with a touch of divine
-      guidance.</p><p>The creature gets a +1 competence bonus on a single attack
-      roll, saving throw, or skill check. It must choose to use the bonus before
-      making the roll to which it applies.</p>
   actions:
     - _id: dhqbeeasitjcmmyn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,39 +13,46 @@ system:
           type: action
       duration:
         value: 1 minute or until discharged
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell imbues the subject with a touch of divine
+      guidance.</p><p>The creature gets a +1 competence bonus on a single attack
+      roll, saving throw, or skill check. It must choose to use the bonus before
+      making the roll to which it applies.</p>
   learnedAt:
     class:
-      cleric: 0
-      oracle: 0
-      druid: 0
-      summoner: 0
-      witch: 0
-      inquisitor: 0
       adept: 0
-      shaman: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
+      inquisitor: 0
       medium: 0
       occultist: 0
+      oracle: 0
+      shaman: 0
       spiritualist: 0
-      hunter: 0
+      summoner: 0
       summonerUnchained: 0
+      witch: 0
   level: 0
   school: div
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '292'
-_key: '!items!o8ds5jtvf0hf92dw'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

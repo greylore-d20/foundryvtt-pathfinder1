@@ -1,8 +1,31 @@
 _id: c547al5speg9dvoj
-name: Animal Ambassador
-type: spell
+_key: '!items!c547al5speg9dvoj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Animal Ambassador
 system:
+  actions:
+    - _id: kdi305ck051ctzbz
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level or until message is delivered
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none (see text)
+      target:
+        value: one Medium or smaller animal
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You compel a single animal to travel to a spot you designate and
@@ -38,42 +61,19 @@ system:
       has located its target and delivered its message (and object, if desired),
       its enhanced mental abilities fade within 2d6 minutes. The spell then
       ends, even if its duration hasn't elapsed.</p>
-  actions:
-    - _id: kdi305ck051ctzbz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level or until message is delivered
-      target:
-        value: one Medium or smaller animal
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: none (see text)
   learnedAt:
     class:
-      druid: 4
-      ranger: 3
       bard: 4
-      shaman: 4
+      druid: 4
       hunter: 3
+      ranger: 3
+      shaman: 4
   level: 4
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a morsel of food the animal likes
+  school: enc
   sr: false
-_key: '!items!c547al5speg9dvoj'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

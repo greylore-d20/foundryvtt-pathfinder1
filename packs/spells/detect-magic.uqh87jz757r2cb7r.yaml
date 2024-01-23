@@ -1,8 +1,29 @@
 _id: uqh87jz757r2cb7r
-name: Detect Magic
-type: spell
+_key: '!items!uqh87jz757r2cb7r'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Magic
 system:
+  actions:
+    - _id: b9fblxel4232b8ll
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You detect magical auras. The amount of information revealed depends on
@@ -43,55 +64,34 @@ system:
       inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt
       blocks it.<p></p><p><i>Detect magic</i> can be made permanent with a
       <i>permanency</i> spell.</p>
-  actions:
-    - _id: b9fblxel4232b8ll
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 min./level
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      cleric: 0
-      oracle: 0
-      druid: 0
+      adept: 0
       bard: 0
-      summoner: 0
-      witch: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
       inquisitor: 0
       magus: 0
-      adept: 0
-      shaman: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      oracle: 0
+      psychic: 0
+      shaman: 0
+      sorcerer: 0
       spiritualist: 0
-      hunter: 0
+      summoner: 0
       summonerUnchained: 0
+      witch: 0
+      wizard: 0
   level: 0
   school: div
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '267'
-_key: '!items!uqh87jz757r2cb7r'
+  sr: false
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

@@ -1,8 +1,23 @@
 _id: dw7bed4J5DALgmFR
-name: Foe Throw Infusion
-type: feat
+_key: '!items!dw7bed4J5DALgmFR'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Foe Throw Infusion
 system:
+  actions:
+    - _id: qstrdvjkclg20000
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+      save:
+        description: Fortitude negates; see text
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> form infusion; <b>Level</b> 3;
@@ -20,22 +35,7 @@ system:
       target, it doesn’t fall prone, and it takes half the normal amount of
       damage from your blast. The movement doesn’t provoke attacks of
       opportunity.</p>
-  actions:
-    - _id: qstrdvjkclg20000
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates; see text
-  tag: classFeat_foeThrowInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!dw7bed4J5DALgmFR'
+  tag: classFeat_foeThrowInfusion
+type: feat
 

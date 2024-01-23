@@ -1,30 +1,30 @@
 _id: zBiQUaT9D4mILpJv
-name: 'Flood Blessing: Tsunami Burst'
-type: feat
+_key: '!items!zBiQUaT9D4mILpJv'
 img: systems/pf1/icons/spells/beam-blue-3.jpg
+name: 'Flood Blessing: Tsunami Burst'
 system:
-  description:
-    value: >-
-      <p>At 10th level, when you are hit by a melee attack, you can invoke this
-      blessing as an immediate action. A wave of water blasts out from you at
-      your attacker, attempting a bull rush combat maneuver check using your CMB
-      but adding your Wisdom modifier instead of your Strength modifier.</p>
   actions:
     - _id: xuubko1c2bdmuba5
-      name: Use
-      img: systems/pf1/icons/spells/beam-blue-3.jpg
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         units: inst
+      img: systems/pf1/icons/spells/beam-blue-3.jpg
+      name: Use
       target:
         value: attacking creature
-  tag: classFeat_floodBlessingTsunamiBurst
-  subType: classFeat
   associations:
     classes:
       - Warpriest
-_key: '!items!zBiQUaT9D4mILpJv'
+  description:
+    value: >-
+      <p>At 10th level, when you are hit by a melee attack, you can invoke this
+      blessing as an immediate action. A wave of water blasts out from you at
+      your attacker, attempting a bull rush combat maneuver check using your CMB
+      but adding your Wisdom modifier instead of your Strength modifier.</p>
+  subType: classFeat
+  tag: classFeat_floodBlessingTsunamiBurst
+type: feat
 

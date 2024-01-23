@@ -1,8 +1,27 @@
 _id: UtKwkdHtjjYnhAk1
-name: Elemental Fury (UC)
-type: feat
+_key: '!items!UtKwkdHtjjYnhAk1'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Elemental Fury (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: jy480svc4wgjscb3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.monkUnchained.level / 2)
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk who selects this ki power must select one type of energy: acid,
@@ -15,26 +34,7 @@ system:
       level.</p>
 
       <p>A monk must be at least 6th level before selecting this ki power.</p>
-  actions:
-    - _id: jy480svc4wgjscb3
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: floor(@classes.monkUnchained.level / 2)
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_elementalFuryUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!UtKwkdHtjjYnhAk1'
+  tag: classFeat_elementalFuryUc
+type: feat
 

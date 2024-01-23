@@ -1,8 +1,11 @@
 _id: U7WoBCEG5FBftSnI
-name: Enlightened Construct
-type: feat
+_key: '!items!U7WoBCEG5FBftSnI'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Enlightened Construct
 system:
+  crOffset: >-
+    (@attributes.hd.total >= 11) ? 3 : ((@attributes.hd.total > 4 &&
+    @attributes.hd.total < 11) ? 2 : 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -278,8 +281,5 @@ system:
       personality and memories of the previous enlightened construct are lost. A
       phrenic stone has hardness 10, 20 hit points, and a break DC of 30.</p>
   subType: template
-  crOffset: >-
-    (@attributes.hd.total >= 11) ? 3 : ((@attributes.hd.total > 4 &&
-    @attributes.hd.total < 11) ? 2 : 1)
-_key: '!items!U7WoBCEG5FBftSnI'
+type: feat
 

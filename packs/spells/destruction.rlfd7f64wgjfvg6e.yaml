@@ -1,8 +1,31 @@
 _id: rlfd7f64wgjfvg6e
-name: Destruction
-type: spell
+_key: '!items!rlfd7f64wgjfvg6e'
 img: icons/magic/unholy/beam-impact-green.webp
+name: Destruction
 system:
+  actions:
+    - _id: 8grthh8nxv61vt42
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell instantly delivers 10 points of damage per caster level. If
@@ -13,47 +36,24 @@ system:
       this spell (and was slain) is to use <i>true resurrection</i>, a carefully
       worded <i>wish</i> spell followed by <i>resurrection</i>, or
       <i>miracle</i>.</p>
-  actions:
-    - _id: 8grthh8nxv61vt42
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
       cleric: 7
       oracle: 7
-      witch: 8
       shaman: 8
+      witch: 8
     domain:
       Death: 7
       Repose: 7
     subDomain:
       Entropy: 7
   level: 7
-  school: nec
-  types: death
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: holy or unholy symbol costing 500 gp
+  school: nec
   source:
     id: PZO1110
     pages: '266'
-_key: '!items!rlfd7f64wgjfvg6e'
+  types: death
+type: spell
 

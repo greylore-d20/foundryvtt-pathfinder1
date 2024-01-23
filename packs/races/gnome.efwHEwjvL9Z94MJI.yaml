@@ -1,8 +1,55 @@
 _id: efwHEwjvL9Z94MJI
-name: Gnome
-type: race
+_key: '!items!efwHEwjvL9Z94MJI'
+folder: RWSoA7Fj9yqo0y9U
 img: systems/pf1/icons/races/gnome.png
+name: Gnome
 system:
+  changes:
+    - _id: kezkn3k4
+      formula: '2'
+      modifier: racial
+      priority: null
+      subTarget: con
+    - _id: 1yu39n9h
+      formula: '2'
+      modifier: racial
+      priority: null
+      subTarget: cha
+    - _id: pi8lg4y1
+      formula: '-2'
+      modifier: racial
+      priority: null
+      subTarget: str
+    - _id: cssv57sq
+      formula: '2'
+      modifier: racial
+      priority: null
+      subTarget: skill.per
+  contextNotes:
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: ac
+      target: misc
+      text: +[[4]] Dodge vs Giants
+      value: 0
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: allSavingThrows
+      target: savingThrows
+      text: +[[2]] Racial vs Illusion Effects
+      value: 0
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: attack
+      target: attacks
+      text: +[[1]] Racial vs Humanoids (Reptillian, Goblinoid)
+      value: 0
   description:
     value: >-
       <h2>Starting
@@ -71,65 +118,18 @@ system:
       name as a martial weapon.</li></ul><h3>Senses Racial
       Traits</h3><ul><li><strong>Low-Light Vision</strong>: Gnomes can see twice
       as far as <em>humans</em> in conditions of dim light.</li></ul>
-  tags:
-    - Core
-  changes:
-    - _id: kezkn3k4
-      formula: '2'
-      subTarget: con
-      modifier: racial
-      priority: null
-    - _id: 1yu39n9h
-      formula: '2'
-      subTarget: cha
-      modifier: racial
-      priority: null
-    - _id: pi8lg4y1
-      formula: '-2'
-      subTarget: str
-      modifier: racial
-      priority: null
-    - _id: cssv57sq
-      formula: '2'
-      subTarget: skill.per
-      modifier: racial
-      priority: null
-  contextNotes:
-    - formula: ''
-      operator: add
-      target: misc
-      subTarget: ac
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[4]] Dodge vs Giants
-    - formula: ''
-      operator: add
-      target: savingThrows
-      subTarget: allSavingThrows
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[2]] Racial vs Illusion Effects
-    - formula: ''
-      operator: add
-      target: attacks
-      subTarget: attack
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[1]] Racial vs Humanoids (Reptillian, Goblinoid)
   languages:
     value:
       - common
       - gnome
       - sylvan
   size: sm
-  subTypes:
-    - Gnome
   source:
     id: PZO1110
     pages: '23'
-folder: RWSoA7Fj9yqo0y9U
-_key: '!items!efwHEwjvL9Z94MJI'
+  subTypes:
+    - Gnome
+  tags:
+    - Core
+type: race
 

@@ -1,8 +1,27 @@
 _id: 0yvwyclhkf76veo1
-name: Divine Power
-type: spell
+_key: '!items!0yvwyclhkf76veo1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Divine Power
 system:
+  actions:
+    - _id: 1hien23tvlpn1grr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Calling upon the divine power of your patron, you imbue yourself with
@@ -14,39 +33,20 @@ system:
       appropriate modifiers. This additional attack is not cumulative with
       similar effects, such as <i>haste</i> or weapons with the speed special
       ability.</p>
-  actions:
-    - _id: 1hien23tvlpn1grr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
       inquisitor: 4
+      oracle: 4
       shaman: 4
+      warpriest: 4
     domain:
       War: 4
   level: 4
   school: evo
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '273'
-_key: '!items!0yvwyclhkf76veo1'
+  sr: false
+type: spell
 

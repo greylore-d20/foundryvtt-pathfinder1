@@ -1,18 +1,11 @@
 _id: l0hv73qsjg7cvsh5
-name: Bungle
-type: spell
+_key: '!items!l0hv73qsjg7cvsh5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bungle
 system:
-  description:
-    value: >-
-      <p>The target takes a -20 penalty on its next attack roll or check that
-      requires a d20 roll. The action must be one deliberately taken by the
-      target on its turn. Creatures with more than 10 HD are unaffected by this
-      spell.</p>
   actions:
     - _id: y3xj8u67msapx7af
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,25 +13,32 @@ system:
           type: action
       duration:
         value: concentration + 2 rounds or until triggered
-      target:
-        value: one humanoid
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one humanoid
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target takes a -20 penalty on its next attack roll or check that
+      requires a d20 roll. The action must be one deliberately taken by the
+      target on its turn. Creatures with more than 10 HD are unaffected by this
+      spell.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
-      psychic: 1
       mesmerist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: enc
   subschool: compulsion
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!l0hv73qsjg7cvsh5'
+type: spell
 

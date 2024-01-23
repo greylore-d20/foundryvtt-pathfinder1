@@ -1,19 +1,11 @@
 _id: 2cenpvloizn0by91
-name: Drench
-type: spell
+_key: '!items!2cenpvloizn0by91'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Drench
 system:
-  description:
-    value: >-
-      <p>A sudden downpour soaks the target creature or object. The rain follows
-      the subject up to the range of the spell, soaking the target with water.
-      If the target is on fire, the flames are automatically extinguished. Fires
-      smaller than campfires (such as lanterns and torches) are automatically
-      extinguished by this spell.</p>
   actions:
     - _id: q55ykd6xrmidb1gf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,16 +13,25 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one creature or object of size Large or smaller
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: ref
         description: Reflex negates (object)
-  uses:
-    autoDeductChargesCost: '0'
+        type: ref
+      target:
+        value: one creature or object of size Large or smaller
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>A sudden downpour soaks the target creature or object. The rain follows
+      the subject up to the range of the spell, soaking the target with water.
+      If the target is on fire, the flames are automatically extinguished. Fires
+      smaller than campfires (such as lanterns and torches) are automatically
+      extinguished by this spell.</p>
   learnedAt:
     class:
       sorcerer: 0
@@ -39,8 +40,7 @@ system:
   school: con
   subschool: creation
   types: water
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!2cenpvloizn0by91'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

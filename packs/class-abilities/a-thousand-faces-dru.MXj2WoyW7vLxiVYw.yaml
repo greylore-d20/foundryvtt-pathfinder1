@@ -1,39 +1,39 @@
 _id: MXj2WoyW7vLxiVYw
-name: A Thousand Faces (DRU)
-type: feat
+_key: '!items!MXj2WoyW7vLxiVYw'
 img: systems/pf1/icons/skills/water_07.jpg
+name: A Thousand Faces (DRU)
 system:
+  abilityType: su
+  actions:
+    - _id: z9wh0ov1bfi5v52q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      duration:
+        units: minute
+        value: '@cl'
+      img: systems/pf1/icons/skills/water_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: Self
+  associations:
+    classes:
+      - Druid
   description:
     value: >-
       <p>At 13th level, a druid gains the ability to change her appearance at
       will, as if using the
       @UUID[Compendium.pf1.spells.Item.kouqz0pm1xl8xilm]{alter self} spell, but
       only while in her normal form.</p>
-  actions:
-    - _id: z9wh0ov1bfi5v52q
-      name: Use
-      img: systems/pf1/icons/skills/water_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@cl'
-        units: minute
-      target:
-        value: Self
-      range:
-        units: personal
-      ammoType: none
-  tag: classFeat_aThousandFacesDru
-  subType: classFeat
-  associations:
-    classes:
-      - Druid
-  abilityType: su
   source:
     id: PZO1110
     pages: '51'
-_key: '!items!MXj2WoyW7vLxiVYw'
+  subType: classFeat
+  tag: classFeat_aThousandFacesDru
+type: feat
 

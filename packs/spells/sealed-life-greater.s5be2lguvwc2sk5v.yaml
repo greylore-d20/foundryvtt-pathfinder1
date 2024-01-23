@@ -1,19 +1,10 @@
 _id: s5be2lguvwc2sk5v
-name: Sealed Life, Greater
-type: spell
+_key: '!items!s5be2lguvwc2sk5v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sealed Life, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>sealed life</i>, except it additionally
-      provides the benefits of <i>death ward</i> and renders its targets immune
-      to effects that extract or transfer its soul, such as <i>possession</i>
-      and <i>trap the soul</i>. This spell prevents a soul from returning to its
-      body if it has already departed, until the spell's duration expires.</p>
   actions:
     - _id: vawyoffe0arg64vm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,16 +12,25 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
+      target:
+        value: one creature
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>This spell functions as <i>sealed life</i>, except it additionally
+      provides the benefits of <i>death ward</i> and renders its targets immune
+      to effects that extract or transfer its soul, such as <i>possession</i>
+      and <i>trap the soul</i>. This spell prevents a soul from returning to its
+      body if it has already departed, until the spell's duration expires.</p>
   learnedAt:
     class:
       spiritualist: 6
   level: 6
   school: abj
-  components:
-    somatic: true
-_key: '!items!s5be2lguvwc2sk5v'
+type: spell
 

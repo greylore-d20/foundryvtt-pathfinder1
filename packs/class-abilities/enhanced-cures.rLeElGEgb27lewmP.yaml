@@ -1,8 +1,20 @@
 _id: rLeElGEgb27lewmP
-name: Enhanced Cures
-type: feat
+_key: '!items!rLeElGEgb27lewmP'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Enhanced Cures
 system:
+  abilityType: su
+  actions:
+    - _id: wpgmeco99c8woajx
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Whenever you cast a cure spell, the maximum number of hit points healed
@@ -10,19 +22,7 @@ system:
       example, an 11th-level oracle of life with this revelation may cast cure
       light wounds to heal 1d8+11 hit points instead of the normal 1d8+5
       maximum.</p>
-  actions:
-    - _id: wpgmeco99c8woajx
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_enhancedCures
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!rLeElGEgb27lewmP'
+  tag: classFeat_enhancedCures
+type: feat
 

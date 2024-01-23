@@ -1,18 +1,11 @@
 _id: 94eh4e3QqQ5SbfDi
-name: Vermilion Wings
-type: feat
+_key: '!items!94eh4e3QqQ5SbfDi'
 img: systems/pf1/icons/skills/red_20.jpg
+name: Vermilion Wings
 system:
-  description:
-    value: >-
-      <p>At 9th level, you gain the ability to grow a pair of <em>phoenix</em>
-      wings from your back as a <em>standard action</em>. The wings grant you a
-      fly speed of 60 feet with good maneuverability. You can dismiss the wings
-      as a <em>free action</em>.</p>
+  abilityType: su
   actions:
     - _id: j9enlbb8mkcfspbw
-      name: Use
-      img: systems/pf1/icons/skills/red_20.jpg
       activation:
         type: standard
         unchained:
@@ -20,20 +13,27 @@ system:
           type: action
       duration:
         units: seeText
-      target:
-        value: Self
+      img: systems/pf1/icons/skills/red_20.jpg
+      name: Use
       range:
         units: personal
-  changes:
-    - _id: hfxycw6u
-      formula: '60'
-      subTarget: flySpeed
-      modifier: base
-  tag: classFeat_vermilionWings
-  subType: classFeat
+      target:
+        value: Self
   associations:
     classes:
       - Sorcerer
-  abilityType: su
-_key: '!items!94eh4e3QqQ5SbfDi'
+  changes:
+    - _id: hfxycw6u
+      formula: '60'
+      modifier: base
+      subTarget: flySpeed
+  description:
+    value: >-
+      <p>At 9th level, you gain the ability to grow a pair of <em>phoenix</em>
+      wings from your back as a <em>standard action</em>. The wings grant you a
+      fly speed of 60 feet with good maneuverability. You can dismiss the wings
+      as a <em>free action</em>.</p>
+  subType: classFeat
+  tag: classFeat_vermilionWings
+type: feat
 

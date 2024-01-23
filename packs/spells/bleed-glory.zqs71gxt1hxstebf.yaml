@@ -1,16 +1,11 @@
 _id: zqs71gxt1hxstebf
-name: Bleed Glory
-type: spell
+_key: '!items!zqs71gxt1hxstebf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bleed Glory
 system:
-  description:
-    value: >-
-      <p>The mythic power cost for all path abilities, feats, spells, and other
-      effects used by the target increases by 1.</p>
   actions:
     - _id: hga9ott1h0o950b2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one mythic creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one mythic creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The mythic power cost for all path abilities, feats, spells, and other
+      effects used by the target increases by 1.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
-      psychic: 3
       medium: 1
       mesmerist: 3
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: nec
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zqs71gxt1hxstebf'
+type: spell
 

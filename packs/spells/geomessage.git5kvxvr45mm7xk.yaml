@@ -1,8 +1,26 @@
 _id: git5kvxvr45mm7xk
-name: Geomessage
-type: spell
+_key: '!items!git5kvxvr45mm7xk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Geomessage
 system:
+  actions:
+    - _id: 77ml486qy0ux6g9g
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: surface touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a written message of 50 words or fewer, or else an image, a
@@ -19,38 +37,20 @@ system:
       those who cast <i>geomessage</i>. Detection methods like <i>detect
       magic</i> and <i>see invisibility</i> indicate the message's presence but
       do not reveal its contents.</p>
-  actions:
-    - _id: 77ml486qy0ux6g9g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level
-      target:
-        value: surface touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      ranger: 3
       bard: 3
+      hunter: 3
       medium: 3
       occultist: 3
-      hunter: 3
+      ranger: 3
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a scrap of vellum
+  school: ill
   sr: false
-_key: '!items!git5kvxvr45mm7xk'
+  subschool: figment
+type: spell
 

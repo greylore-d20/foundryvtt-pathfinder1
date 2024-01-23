@@ -1,30 +1,35 @@
-name: Litany of Admonition
-type: spell
+_id: LrY6Qc1hzRO2ZG8x
+_key: '!items!LrY6Qc1hzRO2ZG8x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Admonition
 system:
-  description:
-    value: >-
-      <p>You point out your target’s faults and failures, staggering the target
-      for 1 round. While subject to this spell, the target cannot be the target
-      of another spell that has the word “litany” in the title.</p>
   actions:
     - _id: lTcwa1a0UruhxOnD
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You point out your target’s faults and failures, staggering the target
+      for 1 round. While subject to this spell, the target cannot be the target
+      of another spell that has the word “litany” in the title.</p>
   learnedAt:
     class:
       antipaladin: 3
@@ -33,10 +38,5 @@ system:
   level: 3
   school: nec
   types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_id: LrY6Qc1hzRO2ZG8x
-_key: '!items!LrY6Qc1hzRO2ZG8x'
+type: spell
 

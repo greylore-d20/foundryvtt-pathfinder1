@@ -1,19 +1,10 @@
 _id: zlff9cmygw2tf3jo
-name: True Prognostication
-type: spell
+_key: '!items!zlff9cmygw2tf3jo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: True Prognostication
 system:
-  description:
-    value: >-
-      <p><i>True prognostication</i> functions as <i>divination</i> except that
-      the spell can see up to 100 years into the future. Because of the extreme
-      unpredictability of the far-distant future, <i>true prognostication</i> is
-      incredibly cryptic when used to learn about events on such large a
-      scale.</p>
   actions:
     - _id: I5L85tP2j4GAQzpL
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,26 +12,35 @@ system:
           type: action
       duration:
         value: ''
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p><i>True prognostication</i> functions as <i>divination</i> except that
+      the spell can see up to 100 years into the future. Because of the extreme
+      unpredictability of the far-distant future, <i>true prognostication</i> is
+      incredibly cryptic when used to learn about events on such large a
+      scale.</p>
   learnedAt:
     class:
       cleric: 8
       oracle: 8
-      witch: 8
-      shaman: 8
       psychic: 8
+      shaman: 8
+      witch: 8
   level: 8
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: rare incense and tonics worth 1,000 gp
     gpValue: 1000
+    value: rare incense and tonics worth 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!zlff9cmygw2tf3jo'
+type: spell
 

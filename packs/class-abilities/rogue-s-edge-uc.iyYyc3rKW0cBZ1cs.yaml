@@ -1,8 +1,17 @@
 _id: iyYyc3rKW0cBZ1cs
-name: Rogue's Edge (UC)
-type: feat
+_key: '!items!iyYyc3rKW0cBZ1cs'
 img: systems/pf1/icons/feats/exotic-weapon-proficiency.jpg
+name: Rogue's Edge (UC)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Rogue (Unchained)
+  changes:
+    - _id: O9KZUahO
+      formula: floor(@classes.rogueUnchained.level / 5)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 5th level, a rogue has mastered a single skill beyond that skill’s
@@ -12,16 +21,7 @@ system:
 
       <p>At 10th, 15th, and 20th levels, she chooses an additional skill and
       gains skill unlock powers for that skill as well.</p>
-  changes:
-    - _id: O9KZUahO
-      formula: floor(@classes.rogueUnchained.level / 5)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_roguesEdgeUc
   subType: classFeat
-  associations:
-    classes:
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!iyYyc3rKW0cBZ1cs'
+  tag: classFeat_roguesEdgeUc
+type: feat
 

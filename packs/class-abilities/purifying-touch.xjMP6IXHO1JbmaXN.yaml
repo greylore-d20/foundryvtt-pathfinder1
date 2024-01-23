@@ -1,8 +1,27 @@
 _id: xjMP6IXHO1JbmaXN
-name: Purifying Touch
-type: feat
+_key: '!items!xjMP6IXHO1JbmaXN'
 img: systems/pf1/icons/skills/ice_16.jpg
+name: Purifying Touch
 system:
+  abilityType: su
+  actions:
+    - _id: k82n4lqaa8utjtbk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/ice_16.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can touch a willing creature with divine power,
@@ -14,29 +33,10 @@ system:
 
       <p>This power replaces the Aura of Protection power of the Protection
       Domain.</p>
-  actions:
-    - _id: k82n4lqaa8utjtbk
-      name: Use
-      img: systems/pf1/icons/skills/ice_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 2) / 6)
-  tag: classFeat_purifyingTouch
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!xjMP6IXHO1JbmaXN'
+  tag: classFeat_purifyingTouch
+  uses:
+    maxFormula: floor((@classes.cleric.level - 2) / 6)
+    per: day
+type: feat
 

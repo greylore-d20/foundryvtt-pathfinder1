@@ -1,8 +1,23 @@
 _id: SPqECRUSSKrGGe1n
-name: Ancestral Strikes
-type: feat
+_key: '!items!SPqECRUSSKrGGe1n'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Ancestral Strikes
 system:
+  abilityType: su
+  actions:
+    - _id: yhg56ou6zb899rc6
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 1st level, three times per day as a swift action, you can imbue your
@@ -17,25 +32,10 @@ system:
 
       <p>At 20th level, all your melee attacks deal this additional damage, and
       you don’t need to activate this ability.</p>
-  actions:
-    - _id: yhg56ou6zb899rc6
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.bloodrager.level >= 8 ? 5 : 3'
-  tag: classFeat_ancestralStrikes
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!SPqECRUSSKrGGe1n'
+  tag: classFeat_ancestralStrikes
+  uses:
+    maxFormula: '@classes.bloodrager.level >= 8 ? 5 : 3'
+    per: day
+type: feat
 

@@ -1,8 +1,32 @@
 _id: 6zga3pc0rqrj24to
-name: Speak Local Language
-type: spell
+_key: '!items!6zga3pc0rqrj24to'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Speak Local Language
 system:
+  actions:
+    - _id: ftip6c2p4qu6b1a1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>tongues</i>, except the creature touched
@@ -14,45 +38,21 @@ system:
       language with a native accent, but the spell doesn't impart knowledge
       about any culture associated with the language, nor does it change the
       target's appearance.</p>
-  actions:
-    - _id: ftip6c2p4qu6b1a1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
+      bard: 1
       cleric: 1
-      warpriest: 1
+      hunter: 1
+      inquisitor: 1
       oracle: 1
       ranger: 1
-      bard: 1
+      sorcerer: 1
+      warpriest: 1
       witch: 1
-      inquisitor: 1
-      hunter: 1
-  school: div
-  components:
-    verbal: true
-    material: true
-    divineFocus: 2
+      wizard: 1
   materials:
     value: a worn-out coin
+  school: div
   sr: false
-_key: '!items!6zga3pc0rqrj24to'
+type: spell
 

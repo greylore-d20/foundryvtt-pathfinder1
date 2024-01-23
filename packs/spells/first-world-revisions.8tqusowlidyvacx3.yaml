@@ -1,8 +1,31 @@
 _id: 8tqusowlidyvacx3
-name: First World Revisions
-type: spell
+_key: '!items!8tqusowlidyvacx3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: First World Revisions
 system:
+  actions:
+    - _id: xqrk2tnrc4gyw5pw
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: willing wayang touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>ancestral</i> regressionARG, except as noted
@@ -15,43 +38,20 @@ system:
       gnomish analog of herself, the differences between gnomes and wayangs are
       great enough that she cannot be mistaken for a gnome by other wayangs who
       know her.</p>
-  actions:
-    - _id: xqrk2tnrc4gyw5pw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours (D)
-      target:
-        value: willing wayang touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       alchemist: 2
-      witch: 2
       antipaladin: 3
-      psychic: 2
+      cleric: 2
       medium: 2
+      oracle: 2
+      psychic: 2
+      sorcerer: 3
+      warpriest: 2
+      witch: 2
+      wizard: 3
   level: 3
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!8tqusowlidyvacx3'
+type: spell
 

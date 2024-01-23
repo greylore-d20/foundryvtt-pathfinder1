@@ -1,8 +1,21 @@
 _id: xEEHMHvLhh6w4FdX
-name: Planar Infusion
-type: feat
+_key: '!items!xEEHMHvLhh6w4FdX'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Planar Infusion
 system:
+  abilityType: su
+  actions:
+    - _id: v57e5uwfc9iffve8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action once per day, you can cause a 20-foot-spread to
@@ -20,23 +33,10 @@ system:
       <p>You must be chaotic or evil to select this revelation, and you can only
       infuse an area with an alignment that matches a component of your own
       alignment.</p>
-  actions:
-    - _id: v57e5uwfc9iffve8
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_planarInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!xEEHMHvLhh6w4FdX'
+  tag: classFeat_planarInfusion
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

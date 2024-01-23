@@ -1,8 +1,29 @@
 _id: YKyAQ2o5Yzox79B8
-name: Tactician
-type: feat
+_key: '!items!YKyAQ2o5Yzox79B8'
 img: systems/pf1/icons/feats/strike-back.jpg
+name: Tactician
 system:
+  abilityType: ex
+  actions:
+    - _id: di9rwlddtwhr7g9c
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 3 + floor(@classes.cavalier.level / 2)
+      img: systems/pf1/icons/feats/strike-back.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: all allies within 30 ft
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 1st level, a cavalier receives a <a
@@ -15,31 +36,10 @@ system:
       cavalier can use this ability once per day at 1st level, plus one
       additional time per day at 5th level and for every 5 levels
       thereafter.</p>
-  actions:
-    - _id: di9rwlddtwhr7g9c
-      name: Use
-      img: systems/pf1/icons/feats/strike-back.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 + floor(@classes.cavalier.level / 2)
-        units: round
-      target:
-        value: all allies within 30 ft
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.cavalier.level / 5)
-  tag: classFeat_tactician
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!YKyAQ2o5Yzox79B8'
+  tag: classFeat_tactician
+  uses:
+    maxFormula: 1 + floor(@classes.cavalier.level / 5)
+    per: day
+type: feat
 

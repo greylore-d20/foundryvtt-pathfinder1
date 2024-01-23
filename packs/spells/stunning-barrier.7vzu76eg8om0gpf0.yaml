@@ -1,19 +1,11 @@
 _id: 7vzu76eg8om0gpf0
-name: Stunning Barrier
-type: spell
+_key: '!items!7vzu76eg8om0gpf0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stunning Barrier
 system:
-  description:
-    value: >-
-      <p>You are closely surrounded by a barely visible magical field.</p><p>The
-      field provides a +1 deflection bonus to AC and a +1 resistance bonus on
-      saves. Any creature that strikes you with a melee attack is stunned for 1
-      round (Will negates). Once the field has stunned an opponent, the spell is
-      discharged.</p>
   actions:
     - _id: gnz837p2ymmf5cnk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,31 +13,39 @@ system:
           type: action
       duration:
         value: 1 round/level or until discharged
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
-        type: will
         description: none and Will negates (see text)
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You are closely surrounded by a barely visible magical field.</p><p>The
+      field provides a +1 deflection bonus to AC and a +1 resistance bonus on
+      saves. Any creature that strikes you with a melee attack is stunned for 1
+      round (Will negates). Once the field has stunned an opponent, the spell is
+      discharged.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       cleric: 1
-      warpriest: 1
+      inquisitor: 1
       oracle: 1
       paladin: 1
-      inquisitor: 1
       psychic: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1129
     pages: '194'
-_key: '!items!7vzu76eg8om0gpf0'
+  sr: false
+type: spell
 

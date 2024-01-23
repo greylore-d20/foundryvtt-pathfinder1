@@ -1,22 +1,22 @@
 _id: iMZTa86xlmGO77x1
-name: Shadow's Speed
-type: feat
+_key: '!items!iMZTa86xlmGO77x1'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Shadow's Speed
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Vigilante
+  changes:
+    - _id: an4f9gvm
+      formula: '@classes.vigilante.level >= 10 ? 20 : 10'
+      modifier: base
+      subTarget: landSpeed
   description:
     value: |-
       <p>The vigilante’s base speed increases by 10 feet.</p>
       <p>At 10th level, it increases by an additional 10 feet.</p>
-  changes:
-    - _id: an4f9gvm
-      formula: '@classes.vigilante.level >= 10 ? 20 : 10'
-      subTarget: landSpeed
-      modifier: base
-  tag: classFeat_shadowsSpeed
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!iMZTa86xlmGO77x1'
+  tag: classFeat_shadowsSpeed
+type: feat
 

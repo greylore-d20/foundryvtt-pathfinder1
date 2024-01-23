@@ -1,8 +1,26 @@
 _id: WhKhWQbcos4rl5vR
-name: Automatic Writing
-type: feat
+_key: '!items!WhKhWQbcos4rl5vR'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Automatic Writing
 system:
+  abilityType: su
+  actions:
+    - _id: i3qo71scpuik49de
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, you can spend a full hour in uninterrupted meditation.
@@ -18,28 +36,10 @@ system:
       <p>At 8th level, the writing manifests as a casting of
       @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune} with no material
       component required.</p>
-  actions:
-    - _id: i3qo71scpuik49de
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_automaticWriting
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!WhKhWQbcos4rl5vR'
+  tag: classFeat_automaticWriting
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,43 +1,43 @@
 _id: 82z60xtalr9fzkwb
-name: Foe to Friend
-type: spell
+_key: '!items!82z60xtalr9fzkwb'
 img: icons/skills/social/diplomacy-handshake-yellow.webp
+name: Foe to Friend
 system:
-  description:
-    value: >-
-      <p>Cast this spell when an enemy is about to make an attack against an
-      ally. The creature makes the attack against a valid target of your choice
-      instead or the attack is negated.</p><p>In addition, the target is
-      considered an ally for determining flanking for 1 round.</p>
   actions:
     - _id: xuy7dwdg2zh9od63
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         value: 1 round
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Cast this spell when an enemy is about to make an attack against an
+      ally. The creature makes the attack against a valid target of your choice
+      instead or the attack is negated.</p><p>In addition, the target is
+      considered an ally for determining flanking for 1 round.</p>
   learnedAt:
     class:
       bard: 5
-      psychic: 7
       mesmerist: 5
+      psychic: 7
   level: 5
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!82z60xtalr9fzkwb'
+type: spell
 

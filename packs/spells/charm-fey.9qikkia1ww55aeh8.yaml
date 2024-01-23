@@ -1,16 +1,11 @@
 _id: 9qikkia1ww55aeh8
-name: Charm Fey
-type: spell
+_key: '!items!9qikkia1ww55aeh8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Charm Fey
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>charm person</i>, except it affects a fey
-      instead of a humanoid.</p>
   actions:
     - _id: q3vdpvez75h1y9z3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,24 +13,29 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: one fey creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one fey creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>charm person</i>, except it affects a fey
+      instead of a humanoid.</p>
   learnedAt:
     class:
+      bard: 1
       sorcerer: 1
       wizard: 1
-      bard: 1
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!9qikkia1ww55aeh8'
+type: spell
 

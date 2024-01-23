@@ -1,8 +1,32 @@
 _id: kfn6zv75qwgc0cwy
-name: Soul Vault
-type: spell
+_key: '!items!kfn6zv75qwgc0cwy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Soul Vault
 system:
+  actions:
+    - _id: 6i7o95721482xe6w
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell protects the target's soul by briefly enveloping the target
@@ -19,45 +43,21 @@ system:
       isn't normally on her class spell list. <i>Soul vault</i> can be made
       permanent with the <i>permanency</i> spell at a cost of 7,500 gp and a
       minimum caster level of 11th.</p>
-  actions:
-    - _id: 6i7o95721482xe6w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 4
-      witch: 4
-      inquisitor: 3
-      shaman: 3
-      psychic: 5
-      spiritualist: 2
       hunter: 4
+      inquisitor: 3
+      oracle: 3
+      psychic: 5
+      shaman: 3
+      sorcerer: 4
+      spiritualist: 2
+      warpriest: 3
+      witch: 4
+      wizard: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!kfn6zv75qwgc0cwy'
+type: spell
 

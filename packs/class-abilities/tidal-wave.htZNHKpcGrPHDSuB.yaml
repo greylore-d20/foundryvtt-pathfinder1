@@ -1,8 +1,26 @@
 _id: htZNHKpcGrPHDSuB
-name: Tidal Wave
-type: feat
+_key: '!items!htZNHKpcGrPHDSuB'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: Tidal Wave
 system:
+  abilityType: sp
+  actions:
+    - _id: 575c1w74pvjdqjzd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '5'
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      name: Use
+      range:
+        units: long
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 9;
@@ -10,25 +28,7 @@ system:
 
       <p>You call forth a powerful tidal wave, as
       @Compendium[pf1.spells.ltda70etgwje43x6]{Tsunami}.</p>
-  actions:
-    - _id: 575c1w74pvjdqjzd
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '5'
-        units: round
-      range:
-        units: long
-  tag: classFeat_tidalWave
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!htZNHKpcGrPHDSuB'
+  tag: classFeat_tidalWave
+type: feat
 

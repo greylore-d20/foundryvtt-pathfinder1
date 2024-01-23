@@ -1,8 +1,20 @@
 _id: NdpTtQ6CnnDiRtTO
-name: Enveloping Darkness
-type: feat
+_key: '!items!NdpTtQ6CnnDiRtTO'
 img: systems/pf1/icons/skills/shadow_10.jpg
+name: Enveloping Darkness
 system:
+  abilityType: sp
+  actions:
+    - _id: 7ed9sz5mssal2zf8
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/shadow_10.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you may create an area of
@@ -11,22 +23,10 @@ system:
       within this darkness unless using
       @Compendium[pf1.spells.lvzq2mwkqmozolpl]{Freedom of Movement} or a similar
       effect. You may use this ability once per day.</p>
-  actions:
-    - _id: 7ed9sz5mssal2zf8
-      name: Use
-      img: systems/pf1/icons/skills/shadow_10.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_envelopingDarkness
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!NdpTtQ6CnnDiRtTO'
+  tag: classFeat_envelopingDarkness
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

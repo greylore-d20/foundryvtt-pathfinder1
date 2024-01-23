@@ -1,8 +1,26 @@
 _id: jvjem7KJudSxt6yR
-name: Den of Vipers
-type: feat
+_key: '!items!jvjem7KJudSxt6yR'
 img: systems/pf1/icons/skills/green_02.jpg
+name: Den of Vipers
 system:
+  abilityType: sp
+  actions:
+    - _id: uy73g44bsselmcc3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@cl'
+      img: systems/pf1/icons/skills/green_02.jpg
+      name: Use
+      range:
+        units: close
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you may summon a host of writhing serpents. This power
@@ -10,28 +28,10 @@ system:
       swarms’ poison inflicts <em>Con</em> damage and any creature other than
       you sharing a space with a <em>swarm</em> is <em>entangled</em>. You may
       use this ability once per day.</p>
-  actions:
-    - _id: uy73g44bsselmcc3
-      name: Use
-      img: systems/pf1/icons/skills/green_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@cl'
-        units: round
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_denOfVipers
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!jvjem7KJudSxt6yR'
+  tag: classFeat_denOfVipers
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

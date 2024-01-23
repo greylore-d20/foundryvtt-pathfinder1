@@ -1,7 +1,41 @@
-name: Flash Flood
-type: spell
+_id: jYq1EDQjqjBaz6xN
+_key: '!items!jYq1EDQjqjBaz6xN'
 img: icons/magic/water/wave-water-blue.webp
+name: Flash Flood
 system:
+  actions:
+    - _id: HmFR7z0KZ1vjYUjm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      damage:
+        parts:
+          - formula: (floor(@cl / 2))d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        value: instantaneous and 1 round per level; see text
+      img: icons/magic/water/wave-water-blue.webp
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        description: Reflex partial, see text
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call forth a fast-moving wave that batters all creatures in its
@@ -17,35 +51,6 @@ system:
       round per caster level. If cast on land, treat the area as a <em>deep
       bog</em>. If cast on water, the water level within the affected area rises
       by 5 feet.</p>
-  actions:
-    - _id: HmFR7z0KZ1vjYUjm
-      name: Use
-      img: icons/magic/water/wave-water-blue.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous and 1 round per level; see text
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (floor(@cl / 2))d6
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      save:
-        type: ref
-        description: Reflex partial, see text
-      area: cone-shaped burst
   learnedAt:
     class:
       arcanist: 6
@@ -55,16 +60,11 @@ system:
       sorcerer: 6
       wizard: 6
   level: 6
-  school: con
-  subschool: creation
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: water-smoothed pebble
+  school: con
   sr: false
-_id: jYq1EDQjqjBaz6xN
-_key: '!items!jYq1EDQjqjBaz6xN'
+  subschool: creation
+  types: water
+type: spell
 

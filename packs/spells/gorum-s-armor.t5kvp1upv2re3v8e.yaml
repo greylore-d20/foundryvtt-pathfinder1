@@ -1,8 +1,32 @@
 _id: t5kvp1upv2re3v8e
-name: Gorum's Armor
-type: spell
+_key: '!items!t5kvp1upv2re3v8e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gorum's Armor
 system:
+  actions:
+    - _id: ekaoho3kg1a7o05z
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: 1 suit of metal armor or 1 metal shield
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The targeted suit of armor or shield sprouts thousands of tiny iron
@@ -14,39 +38,15 @@ system:
       +1 enhancement bonus on attack and damage rolls; this bonus increases to
       +2 at 10th level. At 15th level, the spikes also gain the <i>anarchic</i>
       weapon quality.</p>
-  actions:
-    - _id: ekaoho3kg1a7o05z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: 1 suit of metal armor or 1 metal shield
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       inquisitor: 1
       magus: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      oracle: 1
+      warpriest: 1
   materials:
     value: 1 iron spike
-_key: '!items!t5kvp1upv2re3v8e'
+  school: trs
+type: spell
 

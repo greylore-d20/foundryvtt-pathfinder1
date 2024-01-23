@@ -1,8 +1,32 @@
 _id: sg3eq6xpsum65fgm
-name: Dispel Evil
-type: spell
+_key: '!items!sg3eq6xpsum65fgm'
 img: icons/magic/symbols/runes-star-magenta.webp
+name: Dispel Evil
 system:
+  actions:
+    - _id: nhpuvpyor5s12ww8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged, whichever comes first
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: see text
+      target:
+        value: >-
+          you and a touched evil creature from another plane, or you and an
+          enchantment or evil spell on a touched creature or object
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Shimmering, white holy energy surrounds you. This energy has three
@@ -16,46 +40,22 @@ system:
       Spells that can't be dispelled by <i>dispel magic</i> also can't be
       dispelled by <i>dispel evil</i>. Saving throws and spell resistance do not
       apply to this effect. This use discharges and ends the spell.</p>
-  actions:
-    - _id: nhpuvpyor5s12ww8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged, whichever comes first
-      target:
-        value: >-
-          you and a touched evil creature from another plane, or you and an
-          enchantment or evil spell on a touched creature or object
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
+      inquisitor: 5
       oracle: 5
       paladin: 4
-      inquisitor: 5
       shaman: 5
+      warpriest: 5
     domain:
       Good: 5
   level: 5
   school: abj
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '271'
-_key: '!items!sg3eq6xpsum65fgm'
+  sr: false
+  types: good
+type: spell
 

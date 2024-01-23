@@ -1,18 +1,11 @@
 _id: kxatj4b6zi1dtd9z
-name: Heroic Finale
-type: spell
+_key: '!items!kxatj4b6zi1dtd9z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Heroic Finale
 system:
-  description:
-    value: >-
-      <p>You must have a bardic performance in effect to cast this spell. With a
-      flourish, you immediately end the performance, and one creature within
-      range affected by your bardic performance can make a move action or a
-      standard action of their choice.</p>
   actions:
     - _id: 8jqipfzj3aulfnxo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,15 +13,25 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You must have a bardic performance in effect to cast this spell. With a
+      flourish, you immediately end the performance, and one creature within
+      range affected by your bardic performance can make a move action or a
+      standard action of their choice.</p>
   learnedAt:
     class:
       bard: 4
@@ -36,8 +39,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kxatj4b6zi1dtd9z'
+type: spell
 

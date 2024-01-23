@@ -1,19 +1,10 @@
 _id: 0wamdkl9gp19l55w
-name: Planar Ally, Greater
-type: spell
+_key: '!items!0wamdkl9gp19l55w'
 img: icons/creatures/magical/spirit-undead-ghost-blue.webp
+name: Planar Ally, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.c3vws58yy0pk47gs]{Lesser Planar Ally}, except that
-      you may call a single creature of 18 HD or less, or up to three creatures
-      of the same kind whose Hit Dice total no more than 18. The creatures agree
-      to help you and request your return payment together.</p>
   actions:
     - _id: ne7n8ususcgy9y81
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
@@ -22,33 +13,42 @@ system:
           type: minute
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: >-
         up to three called outsiders, totaling no more than 18 HD, no two of
         which can be more than 30 ft. apart when they appear.
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.c3vws58yy0pk47gs]{Lesser Planar Ally}, except that
+      you may call a single creature of 18 HD or less, or up to three creatures
+      of the same kind whose Hit Dice total no more than 18. The creatures agree
+      to help you and request your return payment together.</p>
   learnedAt:
     class:
       cleric: 8
       oracle: 8
-      shaman: 8
       psychic: 8
+      shaman: 8
     subDomain:
       Tactics: 8
   level: 8
-  school: con
-  subschool: calling
-  types: see text for lesser planar ally
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: offerings worth 2,500 gp plus payment
     gpValue: 2500
+    value: offerings worth 2,500 gp plus payment
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!0wamdkl9gp19l55w'
+  subschool: calling
+  types: see text for lesser planar ally
+type: spell
 

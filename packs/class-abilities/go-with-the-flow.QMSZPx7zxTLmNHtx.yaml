@@ -1,8 +1,28 @@
 _id: QMSZPx7zxTLmNHtx
-name: Go with the Flow
-type: feat
+_key: '!items!QMSZPx7zxTLmNHtx'
 img: systems/pf1/icons/skills/blue_20.jpg
+name: Go with the Flow
 system:
+  abilityType: su
+  actions:
+    - _id: uijvlk6h74pkar7r
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/blue_20.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can touch a creature as a standard action to suppress its strong
@@ -13,30 +33,10 @@ system:
       equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Icicle power of the Water Domain.</p>
-  actions:
-    - _id: uijvlk6h74pkar7r
-      name: Use
-      img: systems/pf1/icons/skills/blue_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_goWithTheFlow
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!QMSZPx7zxTLmNHtx'
+  tag: classFeat_goWithTheFlow
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

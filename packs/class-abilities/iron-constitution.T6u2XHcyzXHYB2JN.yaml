@@ -1,25 +1,25 @@
 _id: T6u2XHcyzXHYB2JN
-name: Iron Constitution
-type: feat
+_key: '!items!T6u2XHcyzXHYB2JN'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Iron Constitution
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: qvjvr1jw
+      formula: 1 + floor(@classes.oracle.level / 7)
+      modifier: untyped
+      subTarget: fort
   description:
     value: |-
       <p>You gain a +1 bonus on Fortitude saves.</p>
       <p>At 7th level, and again at 14th level, this bonus increases by +1.</p>
+  subType: classFeat
+  tag: classFeat_ironConstitution
   tags:
     - Revelation
     - Metal Mystery
-  changes:
-    - _id: qvjvr1jw
-      formula: 1 + floor(@classes.oracle.level / 7)
-      subTarget: fort
-      modifier: untyped
-  tag: classFeat_ironConstitution
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!T6u2XHcyzXHYB2JN'
+type: feat
 

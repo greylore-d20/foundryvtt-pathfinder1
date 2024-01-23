@@ -1,8 +1,26 @@
 _id: 8ikma6e6wqrx1dh7
-name: Murderous Crow
-type: spell
+_key: '!items!8ikma6e6wqrx1dh7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Murderous Crow
 system:
+  actions:
+    - _id: lwnln7tsb4vtljt1
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: one crow
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a supernaturally vicious and clever crow to watch over you
@@ -16,41 +34,23 @@ system:
       tears at the foe's eyes. The blindness lasts for 1d4 days or until healed
       with <i>remove blindness</i>.  If the focus leaves your possession, the
       crow vanishes and the spell ends.</p>
-  actions:
-    - _id: lwnln7tsb4vtljt1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      spellEffect: one crow
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
+      antipaladin: 1
       cleric: 1
-      warpriest: 1
       oracle: 1
       paladin: 1
+      sorcerer: 1
       summoner: 1
-      witch: 1
-      antipaladin: 1
       summonerUnchained: 1
-  school: con
-  subschool: summoning
-  types: see text
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     focus: a crow's feather
+  school: con
   sr: false
-_key: '!items!8ikma6e6wqrx1dh7'
+  subschool: summoning
+  types: see text
+type: spell
 

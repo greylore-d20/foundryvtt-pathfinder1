@@ -1,8 +1,30 @@
 _id: 2skh3v9ksklvojx4
-name: Hallucinogenic Smoke
-type: spell
+_key: '!items!2skh3v9ksklvojx4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hallucinogenic Smoke
 system:
+  actions:
+    - _id: dix1qz55mgcs3jzo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 3 rounds/level or until discharged; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>Dark gray smoke seeps from your eyes, ears, and mouth for the spell's
@@ -19,38 +41,16 @@ system:
       determining the chance for a meaningful reply. Additionally, you know
       whether a result of "nothing" resulted from a failed or successful
       <i>augury</i>.</p>
-  actions:
-    - _id: dix1qz55mgcs3jzo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 rounds/level or until discharged; see text
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
+      warpriest: 4
       witch: 4
   level: 4
-  school: con
-  types: poison
-  components:
-    somatic: true
-    material: true
   materials:
     value: tobacco leaves, ingested
-_key: '!items!2skh3v9ksklvojx4'
+  school: con
+  types: poison
+type: spell
 

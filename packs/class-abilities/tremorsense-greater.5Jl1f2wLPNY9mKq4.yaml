@@ -1,8 +1,24 @@
 _id: 5Jl1f2wLPNY9mKq4
-name: Tremorsense, Greater
-type: feat
+_key: '!items!5Jl1f2wLPNY9mKq4'
 img: systems/pf1/icons/spells/rock-sky-3.jpg
+name: Tremorsense, Greater
 system:
+  abilityType: su
+  actions:
+    - _id: e4fr6t1f0fajcq6z
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> earth; <b>Type</b> utility (Su); <b>Level</b> 5; Burn
@@ -13,23 +29,7 @@ system:
       @Compendium[pf1.spells.icjrw9y6pa1uatlz]{Commune with Nature}, except your
       tremorsense can’t tell if a creature is a woodland creature or a powerful
       unnatural creature.</p>
-  actions:
-    - _id: e4fr6t1f0fajcq6z
-      name: Use
-      img: systems/pf1/icons/spells/rock-sky-3.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_tremorsenseGreater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-_key: '!items!5Jl1f2wLPNY9mKq4'
+  tag: classFeat_tremorsenseGreater
+type: feat
 

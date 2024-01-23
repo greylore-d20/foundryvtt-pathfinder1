@@ -1,18 +1,10 @@
 _id: 73g4cu26ed551wn0
-name: Sculpted Cape
-type: spell
+_key: '!items!73g4cu26ed551wn0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sculpted Cape
 system:
-  description:
-    value: >-
-      <p>Your cape, cloak, or shawl stiffens and maintains its shape even if
-      removed. A <i>sculpted cape</i> has hardness 2 and a number of hit points
-      equal to your caster level, and it can support 1 pound of weight per
-      caster level. An unworn <i>sculpted cape</i> can provide cover.</p>
   actions:
     - _id: zoik45msm9asdu86
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,27 +12,35 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your cape, cloak, or shawl stiffens and maintains its shape even if
+      removed. A <i>sculpted cape</i> has hardness 2 and a number of hit points
+      equal to your caster level, and it can support 1 pound of weight per
+      caster level. An unworn <i>sculpted cape</i> can provide cover.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      ranger: 1
       bard: 1
-      witch: 1
-      shaman: 1
-      occultist: 1
       hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      occultist: 1
+      ranger: 1
+      shaman: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   materials:
     focus: cape or loose outer garment
+  school: trs
   sr: false
-_key: '!items!73g4cu26ed551wn0'
+type: spell
 

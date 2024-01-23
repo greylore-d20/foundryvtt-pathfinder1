@@ -1,8 +1,32 @@
 _id: ts50hpvkdgerfp1a
-name: Touch of the Sea
-type: spell
+_key: '!items!ts50hpvkdgerfp1a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Touch of the Sea
 system:
+  actions:
+    - _id: cusa9wigymg1rb0p
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause webs to grow between the target's fingers and its feet to
@@ -13,43 +37,19 @@ system:
       or gloves the target is wearing to meld into its form (although magic
       items with a continuous effect continue to function). This spell does not
       grant the target any ability to breathe water.</p>
-  actions:
-    - _id: cusa9wigymg1rb0p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
       alchemist: 1
       bloodrager: 1
+      druid: 1
       hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      sorcerer: 1
+      wizard: 1
   materials:
     value: a fish scale
+  school: trs
   source:
     id: PZO1115
     pages: '250'
-_key: '!items!ts50hpvkdgerfp1a'
+type: spell
 

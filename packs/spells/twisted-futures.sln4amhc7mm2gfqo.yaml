@@ -1,8 +1,34 @@
 _id: sln4amhc7mm2gfqo
-name: Twisted Futures
-type: spell
+_key: '!items!sln4amhc7mm2gfqo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Twisted Futures
 system:
+  actions:
+    - _id: 7ufpeaqn1thjv2sx
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By rearranging the threads of fate, you disrupt fortunate outcomes for
@@ -15,47 +41,21 @@ system:
       <i>ill omen</i> or a pugwampi's unluck aura (<i>Pathfinder RPG Bestiary
       2</i> 144). A cyclops can't use its flash of insight ability to save
       against this spell.</p>
-  actions:
-    - _id: 7ufpeaqn1thjv2sx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 1
       bard: 1
-      witch: 1
-      shaman: 1
+      cleric: 2
+      druid: 1
       hunter: 1
+      oracle: 2
+      shaman: 1
+      sorcerer: 2
+      warpriest: 2
+      witch: 1
+      wizard: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small die with the faces scratched off
-_key: '!items!sln4amhc7mm2gfqo'
+  school: div
+type: spell
 

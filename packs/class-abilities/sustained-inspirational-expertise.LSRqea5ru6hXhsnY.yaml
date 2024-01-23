@@ -1,8 +1,20 @@
 _id: LSRqea5ru6hXhsnY
-name: Sustained Inspirational Expertise
-type: feat
+_key: '!items!LSRqea5ru6hXhsnY'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Sustained Inspirational Expertise
 system:
+  abilityType: ex
+  actions:
+    - _id: 8gkq7my0qitknbzi
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When granting a bonus to allies via the inspirational expertise
@@ -14,21 +26,9 @@ system:
 
       <p>The investigator must be at least 11th level and have the inspirational
       expertise talent to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_sustainedInspirationalExpertise
   tags:
     - Investigator Talent
-  actions:
-    - _id: 8gkq7my0qitknbzi
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_sustainedInspirationalExpertise
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!LSRqea5ru6hXhsnY'
+type: feat
 

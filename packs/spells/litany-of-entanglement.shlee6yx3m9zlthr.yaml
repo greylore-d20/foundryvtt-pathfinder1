@@ -1,8 +1,30 @@
 _id: shlee6yx3m9zlthr
-name: Litany of Entanglement
-type: spell
+_key: '!items!shlee6yx3m9zlthr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Entanglement
 system:
+  actions:
+    - _id: 7z80vun09knsxxtj
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your litany conjures chains of energy that lash upward from the ground
@@ -10,36 +32,14 @@ system:
       no effect on flying creatures, or creatures not standing upon solid
       ground.  While subject to this spell, the target cannot be the target of
       another spell that has the word "litany" in the title.</p>
-  actions:
-    - _id: 7z80vun09knsxxtj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      paladin: 2
-      inquisitor: 3
       antipaladin: 2
+      inquisitor: 3
+      paladin: 2
   level: 2
   school: con
   subschool: calling
   types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!shlee6yx3m9zlthr'
+type: spell
 

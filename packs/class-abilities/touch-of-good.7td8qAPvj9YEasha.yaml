@@ -1,41 +1,41 @@
 _id: 7td8qAPvj9YEasha
-name: Touch of Good
-type: feat
+_key: '!items!7td8qAPvj9YEasha'
 img: systems/pf1/icons/skills/light_08.jpg
+name: Touch of Good
 system:
-  description:
-    value: >-
-      <p>You can touch a creature as a standard action, granting a sacred bonus
-      on attack rolls, skill checks, ability checks, and saving throws equal to
-      half your cleric level (minimum 1) for 1 round. You can use this ability a
-      number of times per day equal to 3 + your Wisdom modifier.</p>
+  abilityType: sp
   actions:
     - _id: im2kn7mnr3fvswjj
-      name: Use
-      img: systems/pf1/icons/skills/light_08.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: round
-      target:
-        value: creature touched
+        value: '1'
+      img: systems/pf1/icons/skills/light_08.jpg
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_touchOfGood
-  subType: classFeat
+      target:
+        value: creature touched
   associations:
     classes:
       - Cleric
-  abilityType: sp
+  description:
+    value: >-
+      <p>You can touch a creature as a standard action, granting a sacred bonus
+      on attack rolls, skill checks, ability checks, and saving throws equal to
+      half your cleric level (minimum 1) for 1 round. You can use this ability a
+      number of times per day equal to 3 + your Wisdom modifier.</p>
   source:
     id: PZO1110
     pages: '44'
-_key: '!items!7td8qAPvj9YEasha'
+  subType: classFeat
+  tag: classFeat_touchOfGood
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

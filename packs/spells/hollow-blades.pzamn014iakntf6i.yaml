@@ -1,8 +1,30 @@
 _id: pzamn014iakntf6i
-name: Hollow Blades
-type: spell
+_key: '!items!pzamn014iakntf6i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hollow Blades
 system:
+  actions:
+    - _id: t0ez5bp31tw15dfp
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>All melee and natural attacks from the target deal damage as if the
@@ -11,38 +33,16 @@ system:
       function normally for other creatures, while any melee weapons picked up
       by the target deal damage as if one size smaller. <b>Range</b>d attacks
       and weapons are unaffected by this spell.</p>
-  actions:
-    - _id: t0ez5bp31tw15dfp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      ranger: 1
-      witch: 3
-      magus: 2
-      shaman: 3
       hunter: 1
+      magus: 2
+      ranger: 1
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!pzamn014iakntf6i'
+type: spell
 

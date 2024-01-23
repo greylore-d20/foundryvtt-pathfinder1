@@ -1,8 +1,32 @@
 _id: zfzmj7qvu3ib9nph
-name: Lost Legacy
-type: spell
+_key: '!items!zfzmj7qvu3ib9nph'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lost Legacy
 system:
+  actions:
+    - _id: hype104kl9py2uue
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You inflict a powerful curse on a touched creature that causes others
@@ -16,47 +40,23 @@ system:
       regain their pleasant memories of it. If their attitudes toward the target
       have not been reduced from indifferent, their original attitudes are
       restored.</p>
-  actions:
-    - _id: hype104kl9py2uue
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 7
-      oracle: 7
       bard: 6
-      witch: 6
+      cleric: 7
       inquisitor: 6
-      psychic: 7
       occultist: 6
+      oracle: 7
+      psychic: 7
+      sorcerer: 7
+      witch: 6
+      wizard: 7
   level: 7
-  school: enc
-  types: curse, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: >-
       a holy symbol of a dead or forgotten deity, or flag of a fallen or
       forgotten nation
-_key: '!items!zfzmj7qvu3ib9nph'
+  school: enc
+  types: curse, mind-affecting
+type: spell
 

@@ -1,8 +1,34 @@
 _id: j5zghtreigbaqmx5
-name: Funereal Weapon
-type: spell
+_key: '!items!j5zghtreigbaqmx5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Funereal Weapon
 system:
+  actions:
+    - _id: tz7ceigmp0ltbw4i
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: >-
+          weapon touched or 50 projectiles (all of which must be together at the
+          time of casting)
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue a weapon with a faint silvery glow that dimly illuminates a
@@ -14,40 +40,14 @@ system:
       10/bludgeoning and magic.  You can't cast this spell on a natural weapon,
       such as an unarmed strike. <i>Funereal weapon</i> affects the DR of only
       undead creatures.</p>
-  actions:
-    - _id: tz7ceigmp0ltbw4i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: >-
-          weapon touched or 50 projectiles (all of which must be together at the
-          time of casting)
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
-      paladin: 1
       inquisitor: 1
       occultist: 1
+      oracle: 1
+      paladin: 1
+      warpriest: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!j5zghtreigbaqmx5'
+type: spell
 

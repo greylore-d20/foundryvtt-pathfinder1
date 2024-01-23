@@ -1,8 +1,30 @@
 _id: 3b92cl654o8lg4n2
-name: Spell Scourge
-type: spell
+_key: '!items!3b92cl654o8lg4n2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Scourge
 system:
+  actions:
+    - _id: 3jaekd2dg0h4a5fg
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 1d4 rounds; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A whip of cracking magical might appears in your hand, allowing you
@@ -14,36 +36,14 @@ system:
       benefit of those spells. If the target is not currently under the effect
       of least one harmless spell, the target is instead confused for 1d4
       rounds.</p>
-  actions:
-    - _id: 3jaekd2dg0h4a5fg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 1d4 rounds; see text
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
       oracle: 7
+      sorcerer: 7
       witch: 7
+      wizard: 7
   level: 7
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3b92cl654o8lg4n2'
+type: spell
 

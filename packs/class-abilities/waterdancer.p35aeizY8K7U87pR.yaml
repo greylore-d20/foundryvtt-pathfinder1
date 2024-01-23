@@ -1,8 +1,18 @@
 _id: p35aeizY8K7U87pR
-name: Waterdancer
-type: feat
+_key: '!items!p35aeizY8K7U87pR'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: Waterdancer
 system:
+  abilityType: sp
+  associations:
+    classes:
+      - Kineticist
+  changes:
+    - _id: 42rdnik7
+      formula: '20'
+      modifier: base
+      priority: '0'
+      subTarget: swimSpeed
   description:
     value: >-
       <p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 3;
@@ -12,17 +22,7 @@ system:
       to swim with ease, as if under the effects of
       @Compendium[pf1.spells.7fvsn0gbv6ynlp63]{Slipstream} with unlimited
       duration.</p>
-  changes:
-    - _id: 42rdnik7
-      formula: '20'
-      subTarget: swimSpeed
-      modifier: base
-      priority: '0'
-  tag: classFeat_waterdancer
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!p35aeizY8K7U87pR'
+  tag: classFeat_waterdancer
+type: feat
 

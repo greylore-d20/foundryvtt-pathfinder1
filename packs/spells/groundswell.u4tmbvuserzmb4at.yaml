@@ -1,8 +1,31 @@
 _id: u4tmbvuserzmb4at
-name: Groundswell
-type: spell
+_key: '!items!u4tmbvuserzmb4at'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Groundswell
 system:
+  actions:
+    - _id: i54f282sbxdoowt2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows the target to cause the ground to rise up beneath
@@ -15,40 +38,17 @@ system:
       until the target moves or uses a swift action to return the ground to
       normal. A <i>groundswell</i> cannot increase elevation of the ground
       beyond 5 feet.</p>
-  actions:
-    - _id: i54f282sbxdoowt2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      ranger: 2
-      magus: 2
       hunter: 2
+      magus: 2
+      oracle: 2
+      ranger: 2
+      warpriest: 2
   level: 2
   school: trs
   types: earth
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!u4tmbvuserzmb4at'
+type: spell
 

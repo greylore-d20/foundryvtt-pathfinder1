@@ -1,8 +1,31 @@
 _id: N4K65zqLyifKsDdg
-name: Flame Curse
-type: feat
+_key: '!items!N4K65zqLyifKsDdg'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Flame Curse
 system:
+  abilityType: su
+  actions:
+    - _id: bdlzvylkjku2lvfq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: >-
+          @classes.shaman.level <= 16 ? 3 : ((@classes.shaman.level >= 8 &&
+          @classes.shaman.level < 16) ? 2 : 1)
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman causes a creature within 30 feet to become vulnerable to
@@ -17,30 +40,7 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
-  actions:
-    - _id: bdlzvylkjku2lvfq
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: >-
-          @classes.shaman.level <= 16 ? 3 : ((@classes.shaman.level >= 8 &&
-          @classes.shaman.level < 16) ? 2 : 1)
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_flameCurse
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!N4K65zqLyifKsDdg'
+  tag: classFeat_flameCurse
+type: feat
 

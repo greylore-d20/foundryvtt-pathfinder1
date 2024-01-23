@@ -1,8 +1,34 @@
 _id: Chcpb0g6K7PsF2Xt
-name: Lay to Rest
-type: feat
+_key: '!items!Chcpb0g6K7PsF2Xt'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Lay to Rest
 system:
+  abilityType: sp
+  actions:
+    - _id: vbo5dgvtwaoaro6m
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      description: <p>Slays [[/r (@classes.witch.level)d4]] HD undead creature.</p>
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one undead creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch may target a single undead creature with this hex as if with
@@ -11,36 +37,10 @@ system:
 
       <p>Whether or not the save is successful, a creature cannot be the target
       of this hex again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_layToRest
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: vbo5dgvtwaoaro6m
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      description: <p>Slays [[/r (@classes.witch.level)d4]] HD undead creature.</p>
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one undead creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-  tag: classFeat_layToRest
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: sp
-_key: '!items!Chcpb0g6K7PsF2Xt'
+type: feat
 

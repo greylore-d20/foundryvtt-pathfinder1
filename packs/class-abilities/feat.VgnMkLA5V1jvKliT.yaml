@@ -1,29 +1,29 @@
 _id: VgnMkLA5V1jvKliT
-name: Feat
-type: feat
+_key: '!items!VgnMkLA5V1jvKliT'
 img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+name: Feat
 system:
-  description:
-    value: >-
-      <p>A character with this talent/trick may gain any feat that she qualifies
-      for in place of a class talent or ninja trick.</p>
-  tags:
-    - Rogue Talent, Advanced
-    - Slayer Talent, Advanced
-    - Ninja Trick, Master
-  changes:
-    - _id: m4p6f46o
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-      priority: null
-  tag: classFeat_feat
-  subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
       - Slayer
       - Ninja
-_key: '!items!VgnMkLA5V1jvKliT'
+  changes:
+    - _id: m4p6f46o
+      formula: '1'
+      modifier: untyped
+      priority: null
+      subTarget: bonusFeats
+  description:
+    value: >-
+      <p>A character with this talent/trick may gain any feat that she qualifies
+      for in place of a class talent or ninja trick.</p>
+  subType: classFeat
+  tag: classFeat_feat
+  tags:
+    - Rogue Talent, Advanced
+    - Slayer Talent, Advanced
+    - Ninja Trick, Master
+type: feat
 

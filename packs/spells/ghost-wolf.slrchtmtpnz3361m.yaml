@@ -1,8 +1,32 @@
 _id: slrchtmtpnz3361m
-name: Ghost Wolf
-type: spell
+_key: '!items!slrchtmtpnz3361m'
 img: icons/creatures/mammals/wolf-howl-moon-forest-blue.webp
+name: Ghost Wolf
 system:
+  actions:
+    - _id: 0m2pkw1oq6c97f3e
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D) or 1 round/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: none (see description)
+      target:
+        value: one quasi-real wolflike creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell conjures a Large, quasi-real, wolflike creature made of
@@ -17,43 +41,19 @@ system:
       unlike an animal mount, this does not require a Ride check or any
       training. Once the ghost wolf attacks, it lasts for only 1 round per level
       thereafter.</p>
-  actions:
-    - _id: 0m2pkw1oq6c97f3e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D) or 1 round/level; see text
-      target:
-        value: one quasi-real wolflike creature
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        description: none (see description)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      summoner: 2
       bloodrager: 4
       psychic: 4
+      sorcerer: 4
+      summoner: 2
       summonerUnchained: 2
+      wizard: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: dire wolf tooth
+  school: con
   sr: false
-_key: '!items!slrchtmtpnz3361m'
+  subschool: creation
+type: spell
 

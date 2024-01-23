@@ -1,8 +1,28 @@
 _id: omgxrbzwyma7v2zh
-name: Dust Ward
-type: spell
+_key: '!items!omgxrbzwyma7v2zh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dust Ward
 system:
+  actions:
+    - _id: 92f0uveb85s4pgu8
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one magic item
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You ward a magic item against other creatures who try to learn to use
@@ -20,38 +40,18 @@ system:
       for less than 1 hour and passes it to a different creature, the countdown
       to the item's destruction starts over.  The spell cannot affect a magic
       item with a caster level greater than half your caster level.</p>
-  actions:
-    - _id: 92f0uveb85s4pgu8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent
-      target:
-        value: one magic item
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 6
+      warpriest: 6
       witch: 6
+      wizard: 6
   level: 6
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of pumice
+  school: abj
   sr: false
-_key: '!items!omgxrbzwyma7v2zh'
+type: spell
 

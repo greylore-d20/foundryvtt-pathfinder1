@@ -1,8 +1,20 @@
 _id: hSdQz5FUqScMHpEy
-name: Slow Fall (UC)
-type: feat
+_key: '!items!hSdQz5FUqScMHpEy'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Slow Fall (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: jknac3o0w4qt5kbk
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk within arm’s reach of a wall can use it to slow his descent by
@@ -10,19 +22,7 @@ system:
       damage from the fall (as if using feather fall), but he must be adjacent
       to a wall for the length of the fall (although this can be used to reduce
       the damage from a fall if only part of it is adjacent to a wall).</p>
-  actions:
-    - _id: jknac3o0w4qt5kbk
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_slowFallUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!hSdQz5FUqScMHpEy'
+  tag: classFeat_slowFallUc
+type: feat
 

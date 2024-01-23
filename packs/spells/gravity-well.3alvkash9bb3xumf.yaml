@@ -1,8 +1,31 @@
 _id: 3alvkash9bb3xumf
-name: Gravity Well
-type: spell
+_key: '!items!3alvkash9bb3xumf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gravity Well
 system:
+  actions:
+    - _id: lnbv3wdd57sz2g61
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You bring into being a localized region of increased gravity that
@@ -14,39 +37,16 @@ system:
       Fly check to remain in the air. <i>Freedom of movement</i> negates the
       effects of this spell. A creature targeted by <i>gravity well</i> behaves
       normally in the area of a <i>reverse gravity</i> spell.</p>
-  actions:
-    - _id: lnbv3wdd57sz2g61
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       druid: 6
       hunter: 6
+      sorcerer: 5
+      wizard: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small lead weight
+  school: trs
   sr: false
-_key: '!items!3alvkash9bb3xumf'
+type: spell
 

@@ -1,8 +1,30 @@
 _id: 4spxwz9fa4yy6lee
-name: Haunting Reminder
-type: spell
+_key: '!items!4spxwz9fa4yy6lee'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Haunting Reminder
 system:
+  actions:
+    - _id: tenf09qj6ck02v3i
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 12 hours + 2 hours/level or until triggered, then 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>As part of casting this spell, you can attempt a single Intimidate
@@ -16,39 +38,17 @@ system:
       creature for 1 day per caster level; during this time, the creature takes
       a -2 penalty on saving throws against spells you cast with the fear
       descriptor.</p>
-  actions:
-    - _id: tenf09qj6ck02v3i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 12 hours + 2 hours/level or until triggered, then 1 day/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
+      antipaladin: 1
       bard: 2
       inquisitor: 2
-      antipaladin: 1
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: enc
   types: fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!4spxwz9fa4yy6lee'
+type: spell
 

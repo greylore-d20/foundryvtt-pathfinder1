@@ -1,8 +1,27 @@
 _id: i50aazkiLMO0TXVK
-name: 'Shadow Blessing: Flicker of Shadows'
-type: feat
+_key: '!items!i50aazkiLMO0TXVK'
 img: systems/pf1/icons/skills/shadow_03.jpg
+name: 'Shadow Blessing: Flicker of Shadows'
 system:
+  actions:
+    - _id: gplyvs593fcym6d5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/shadow_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can cause a weapon you touch to warp and become
@@ -12,26 +31,7 @@ system:
       benefit.</p>
 
       <p>This effect lasts for 1 minute.</p>
-  actions:
-    - _id: gplyvs593fcym6d5
-      name: Use
-      img: systems/pf1/icons/skills/shadow_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  tag: classFeat_shadowBlessingFlickerOfShadows
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!i50aazkiLMO0TXVK'
+  tag: classFeat_shadowBlessingFlickerOfShadows
+type: feat
 

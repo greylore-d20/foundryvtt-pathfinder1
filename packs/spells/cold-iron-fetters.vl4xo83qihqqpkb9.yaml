@@ -1,8 +1,32 @@
 _id: vl4xo83qihqqpkb9
-name: Cold Iron Fetters
-type: spell
+_key: '!items!vl4xo83qihqqpkb9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cold Iron Fetters
 system:
+  actions:
+    - _id: id68m8f1f8c6f92n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      target:
+        value: one creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Cold iron shackles materialize around the target's limbs, reducing each
@@ -12,50 +36,26 @@ system:
       DR/cold iron or DR/cold iron and magic, it is unable to use supernatural
       or spell-like means of movement (such as <i>dimension door</i>,
       <i>teleport</i>, or tree meld) for the duration of the spell.</p>
-  actions:
-    - _id: id68m8f1f8c6f92n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
+      hunter: 3
+      inquisitor: 4
+      occultist: 5
       oracle: 5
       ranger: 3
-      summoner: 4
-      witch: 5
-      inquisitor: 4
       shaman: 5
-      occultist: 5
-      hunter: 3
+      sorcerer: 5
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: miniature cold iron shackle
+  school: con
   sr: false
-_key: '!items!vl4xo83qihqqpkb9'
+  subschool: creation
+type: spell
 

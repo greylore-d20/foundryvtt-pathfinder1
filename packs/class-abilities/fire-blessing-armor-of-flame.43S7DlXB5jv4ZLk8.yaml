@@ -1,33 +1,33 @@
 _id: 43S7DlXB5jv4ZLk8
-name: 'Fire Blessing: Armor of Flame'
-type: feat
+_key: '!items!43S7DlXB5jv4ZLk8'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: 'Fire Blessing: Armor of Flame'
 system:
-  description:
-    value: >-
-      <p>At 10th level, you can touch an ally to wreath it in flames. This works
-      as @Compendium[pf1.spells.nfm6i9z9r3n2fku7]{Fire Shield} (warm shield
-      only) with a duration of 1 minute.</p>
   actions:
     - _id: 04k5rnwp4mqbwxhe
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: creature touched
+        value: '1'
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
       range:
         units: touch
-  tag: classFeat_fireBlessingArmorOfFlame
-  subType: classFeat
+      target:
+        value: creature touched
   associations:
     classes:
       - Warpriest
-_key: '!items!43S7DlXB5jv4ZLk8'
+  description:
+    value: >-
+      <p>At 10th level, you can touch an ally to wreath it in flames. This works
+      as @Compendium[pf1.spells.nfm6i9z9r3n2fku7]{Fire Shield} (warm shield
+      only) with a duration of 1 minute.</p>
+  subType: classFeat
+  tag: classFeat_fireBlessingArmorOfFlame
+type: feat
 

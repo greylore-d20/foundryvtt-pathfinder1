@@ -1,8 +1,19 @@
 _id: XAFGCIT6r7lRw9yN
-name: Greater Metamagic Knowledge
-type: feat
+_key: '!items!XAFGCIT6r7lRw9yN'
 img: systems/pf1/icons/spells/runes-blue-3.jpg
+name: Greater Metamagic Knowledge
 system:
+  actions:
+    - _id: dmrkarzobcnwu3dz
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/runes-blue-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can select a metamagic feat as a bonus feat. She must meet
@@ -13,20 +24,9 @@ system:
 
       <p>The arcanist must have the metamagic knowledge exploit to select this
       exploit.</p>
+  subType: classFeat
+  tag: classFeat_greaterMetamagicKnowledge
   tags:
     - Arcanist Exploit, Greater
-  actions:
-    - _id: dmrkarzobcnwu3dz
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  tag: classFeat_greaterMetamagicKnowledge
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-_key: '!items!XAFGCIT6r7lRw9yN'
+type: feat
 

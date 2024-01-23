@@ -1,8 +1,32 @@
 _id: lvdtkp2dlzp09187
-name: Stave Off Corruption
-type: spell
+_key: '!items!lvdtkp2dlzp09187'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stave Off Corruption
 system:
+  actions:
+    - _id: jr60wtomopfcyiw0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/2 levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You ward the target to slow the advancement of its corruption. The
@@ -15,39 +39,15 @@ system:
       garlic is used for a vampirism corruption, a sprig of wolfsbane is used
       for a lycanthropy corruption, and so on. The GM can determine appropriate
       material components, but the components should cost at least 25 gp.</p>
-  actions:
-    - _id: jr60wtomopfcyiw0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/2 levels
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
       paladin: 2
+      warpriest: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see text
-_key: '!items!lvdtkp2dlzp09187'
+  school: abj
+type: spell
 

@@ -1,8 +1,30 @@
 _id: lvjf5jwefk0eebrm
-name: Lipstitch
-type: spell
+_key: '!items!lvjf5jwefk0eebrm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lipstitch
 system:
+  actions:
+    - _id: ey2umeceisdzzfne
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>A rare spell without verbal components, <i>lipstitch</i> sews the
@@ -25,36 +47,14 @@ system:
       are unaffected by <i>lipstitch</i>. Creatures with multiple mouths lose
       the use of only one mouth per casting-the particular mouth is chosen by
       the caster.</p>
-  actions:
-    - _id: ey2umeceisdzzfne
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       sorcerer: 2
-      wizard: 2
       witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  components:
-    somatic: true
-    material: true
   materials:
     value: a bone needle and sinew thread
-_key: '!items!lvjf5jwefk0eebrm'
+  school: nec
+type: spell
 

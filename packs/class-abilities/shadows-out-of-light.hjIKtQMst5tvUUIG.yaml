@@ -1,8 +1,28 @@
 _id: hjIKtQMst5tvUUIG
-name: Shadows Out of Light
-type: feat
+_key: '!items!hjIKtQMst5tvUUIG'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Shadows Out of Light
 system:
+  abilityType: su
+  actions:
+    - _id: f9lqv32qw748pl9h
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(floor(@classes.arcanist.level/2), 1)
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can spend 1 point from his arcane reservoir to pull
@@ -23,29 +43,9 @@ system:
       attacks of opportunity with his shadow. The shadows cannot be compelled to
       make normal attacks—they lash out in this way only as a reaction to being
       provoked.</p>
+  subType: classFeat
+  tag: classFeat_shadowsOutOfLight
   tags:
     - Arcanist Exploit, Outer Rift
-  actions:
-    - _id: f9lqv32qw748pl9h
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(floor(@classes.arcanist.level/2), 1)
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_shadowsOutOfLight
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!hjIKtQMst5tvUUIG'
+type: feat
 

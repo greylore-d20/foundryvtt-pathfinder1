@@ -1,8 +1,31 @@
 _id: 8r1zlyqstw6arker
-name: Malicious Spite
-type: spell
+_key: '!items!8r1zlyqstw6arker'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Malicious Spite
 system:
+  actions:
+    - _id: 9sirgdj0ls7l4jna
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You invoke feelings of a driving malicious intent. The target's malice
@@ -23,44 +46,21 @@ system:
       extorting or blackmailing the target, or arranging for others to
       physically harm the target.</p><p>When the spell ends, the target
       remembers the spiteful behavior, but not the motivation for it.</p>
-  actions:
-    - _id: 9sirgdj0ls7l4jna
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      bard: 3
+      mesmerist: 3
+      psychic: 4
       sorcerer: 4
       wizard: 4
-      bard: 3
-      psychic: 4
-      mesmerist: 3
   level: 4
+  materials:
+    gpValue: 150
+    value: powdered turquoise worth 150 gp
+  preparation:
+    spontaneousPrepared: false
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: powdered turquoise worth 150 gp
-    gpValue: 150
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!8r1zlyqstw6arker'
+type: spell
 

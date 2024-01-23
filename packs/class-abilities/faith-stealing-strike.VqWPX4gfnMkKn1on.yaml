@@ -1,8 +1,28 @@
 _id: VqWPX4gfnMkKn1on
-name: Faith-Stealing Strike
-type: feat
+_key: '!items!VqWPX4gfnMkKn1on'
 img: systems/pf1/icons/spells/enchant-eerie-2.jpg
+name: Faith-Stealing Strike
 system:
+  abilityType: su
+  actions:
+    - _id: qx3zw28gcthfzvj8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-eerie-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature within melee range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can make a single melee attack using your highest base attack bonus
@@ -12,30 +32,10 @@ system:
       round. If you do not damage your target with the attack, this ability is
       expended with no effect. You can use this ability a number of times per
       day equal to 3 + your Wisdom modifier.</p>
-  actions:
-    - _id: qx3zw28gcthfzvj8
-      name: Use
-      img: systems/pf1/icons/spells/enchant-eerie-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: creature within melee range
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_faithstealingStrike
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!VqWPX4gfnMkKn1on'
+  tag: classFeat_faithstealingStrike
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

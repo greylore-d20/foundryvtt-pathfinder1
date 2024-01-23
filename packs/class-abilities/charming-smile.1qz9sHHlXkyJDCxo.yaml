@@ -1,8 +1,27 @@
 _id: 1qz9sHHlXkyJDCxo
-name: Charming Smile
-type: feat
+_key: '!items!1qz9sHHlXkyJDCxo'
 img: systems/pf1/icons/skills/shadow_20.jpg
+name: Charming Smile
 system:
+  abilityType: sp
+  actions:
+    - _id: yvkk3kakg9jmx3zu
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/shadow_20.jpg
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can cast
@@ -14,32 +33,13 @@ system:
       free action. Each attempt to use this ability consumes 1 round of its
       duration, whether or not the creature succeeds on its save to resist the
       effect.</p>
-  actions:
-    - _id: yvkk3kakg9jmx3zu
-      name: Use
-      img: systems/pf1/icons/skills/shadow_20.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one creature
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_charmingSmile
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '42'
-_key: '!items!1qz9sHHlXkyJDCxo'
+  subType: classFeat
+  tag: classFeat_charmingSmile
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

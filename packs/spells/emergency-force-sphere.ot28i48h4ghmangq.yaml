@@ -1,8 +1,24 @@
 _id: ot28i48h4ghmangq
-name: Emergency Force Sphere
-type: spell
+_key: '!items!ot28i48h4ghmangq'
 img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
+name: Emergency Force Sphere
 system:
+  actions:
+    - _id: g4dz0n0nz3t69x34
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '5'
+      spellEffect: 5-ft.-radius hemisphere of force centered on you
+  components:
+    verbal: true
   description:
     value: >-
       <p>As <i>Wall of Force</i>, except you create a hemispherical dome of
@@ -16,29 +32,13 @@ system:
       configuration when the spell ends, otherwise it collapses.</p><p>Normally
       this spell is used to buy time for dealing with avalanches, floods, and
       rockslides, though it is also handy in dealing with ambushes.</p>
-  actions:
-    - _id: g4dz0n0nz3t69x34
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round/level
-      range:
-        value: '5'
-        units: ft
-      spellEffect: 5-ft.-radius hemisphere of force centered on you
   learnedAt:
     class:
       sorcerer: 4
       wizard: 4
   level: 4
   school: evo
-  types: force
-  components:
-    verbal: true
   sr: false
-_key: '!items!ot28i48h4ghmangq'
+  types: force
+type: spell
 

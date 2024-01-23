@@ -1,8 +1,27 @@
 _id: EzaxOfsIpvtJJOFK
-name: Wings of Fire
-type: feat
+_key: '!items!EzaxOfsIpvtJJOFK'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wings of Fire
 system:
+  abilityType: su
+  actions:
+    - _id: 48mwjnmztymm73kd
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you can manifest a pair of fiery wings that grant
@@ -11,29 +30,10 @@ system:
       to be consecutive, but it must be spent in 1 minute increments.</p>
 
       <p>You must be at least 7th level before selecting this revelation.</p>
-  actions:
-    - _id: 48mwjnmztymm73kd
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_wingsOfFire
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!EzaxOfsIpvtJJOFK'
+  tag: classFeat_wingsOfFire
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

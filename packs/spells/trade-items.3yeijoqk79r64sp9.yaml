@@ -1,8 +1,30 @@
 _id: 3yeijoqk79r64sp9
-name: Trade Items
-type: spell
+_key: '!items!3yeijoqk79r64sp9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Trade Items
 system:
+  actions:
+    - _id: a82v2j1as4ci75hw
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one object weighing no more than 5 lbs./level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the target object and the object used as a focus for the
@@ -17,38 +39,16 @@ system:
       or made +2 in the exact same mold  The target object has a higher gp value
       than the focus item -2  The target object is tied its holder, such as a
       bonded item -2</p>
-  actions:
-    - _id: a82v2j1as4ci75hw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one object weighing no more than 5 lbs./level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
-      summoner: 3
       mesmerist: 3
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 3
+      wizard: 4
   level: 4
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3yeijoqk79r64sp9'
+type: spell
 

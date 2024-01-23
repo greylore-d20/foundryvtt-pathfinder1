@@ -1,8 +1,23 @@
 _id: eHjzuPl8Q8RA8xoc
-name: Delayed Spells
-type: feat
+_key: '!items!eHjzuPl8Q8RA8xoc'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Delayed Spells
 system:
+  abilityType: su
+  actions:
+    - _id: nq5rbpk2prh7npd2
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '@classes.inquisitor.level'
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, you can delay the effects of a spell you cast by up to 1
@@ -11,25 +26,10 @@ system:
       the period of delay by concentrating as a standard action. You can use
       this ability once per day plus an additional time per day for every 4
       inquisitor levels you have beyond 8th.</p>
-  actions:
-    - _id: nq5rbpk2prh7npd2
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '@classes.inquisitor.level'
-        units: round
-  uses:
-    per: day
-    maxFormula: floor((@classes.inquisitor.level - 4) / 4)
-  tag: classFeat_delayedSpells
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!eHjzuPl8Q8RA8xoc'
+  tag: classFeat_delayedSpells
+  uses:
+    maxFormula: floor((@classes.inquisitor.level - 4) / 4)
+    per: day
+type: feat
 

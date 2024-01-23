@@ -1,8 +1,28 @@
 _id: aolo0gxn1zvzy1hr
-name: Minor Reversion
-type: spell
+_key: '!items!aolo0gxn1zvzy1hr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Minor Reversion
 system:
+  actions:
+    - _id: 2pas03drmbwh5x6g
+      actionType: heal
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an imperfect replica of yourself within the Akashic Record
@@ -13,37 +33,17 @@ system:
       action to absorb strength from your replica and immediately regain a
       number of hit points equal to 1d8 plus 1 point per caster level (maximum
       +5).</p>
-  actions:
-    - _id: 2pas03drmbwh5x6g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 24 hours
-      target:
-        value: self
-      range:
-        units: personal
-      actionType: heal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
       oracle: 3
       psychic: 2
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!aolo0gxn1zvzy1hr'
+  subschool: healing
+type: spell
 

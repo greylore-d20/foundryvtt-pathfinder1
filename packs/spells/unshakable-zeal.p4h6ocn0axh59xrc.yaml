@@ -1,8 +1,31 @@
 _id: p4h6ocn0axh59xrc
-name: Unshakable Zeal
-type: spell
+_key: '!items!p4h6ocn0axh59xrc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unshakable Zeal
 system:
+  actions:
+    - _id: yq4k2ksxebrwbmtf
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    focus: true
+    somatic: true
   description:
     value: >-
       <p>You fill the target with boundless enthusiasm and faith in its ultimate
@@ -14,26 +37,6 @@ system:
       be affected by a fear or emotion effect, it can instead dismiss
       <i>unshakable zeal</i> without spending an action to negate the effect on
       itself.</p>
-  actions:
-    - _id: yq4k2ksxebrwbmtf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       bard: 5
@@ -41,13 +44,10 @@ system:
       psychic: 7
       spiritualist: 6
   level: 5
+  materials:
+    focus: a silver circlet
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    somatic: true
-    focus: true
-  materials:
-    focus: a silver circlet
-_key: '!items!p4h6ocn0axh59xrc'
+type: spell
 

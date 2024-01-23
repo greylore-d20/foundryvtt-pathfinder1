@@ -1,7 +1,7 @@
 _id: cKxfEL5XOWuzLhfO
-name: Improved Iron Will
-type: feat
+_key: '!items!cKxfEL5XOWuzLhfO'
 img: systems/pf1/icons/feats/improved-iron-will.jpg
+name: Improved Iron Will
 system:
   description:
     value: >-
@@ -11,21 +11,21 @@ system:
       Will}.</p><p><strong>Benefits</strong>: Once per day, you may reroll a
       Will save. You must decide to use this ability before the results are
       revealed. You must take the second roll, even if it is worse.</p>
+  scriptCalls:
+    - _id: sP1zwT8P2BFl8Z9O
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Reroll will
+      type: script
+      value: actor.rollSavingThrow("will");
+  tag: feat_improvedIronWill
   tags:
     - General
     - Saving Throw
   uses:
+    maxFormula: '1'
     per: day
     value: 1
-    maxFormula: '1'
-  tag: feat_improvedIronWill
-  scriptCalls:
-    - _id: sP1zwT8P2BFl8Z9O
-      name: Reroll will
-      img: icons/svg/dice-target.svg
-      type: script
-      value: actor.rollSavingThrow("will");
-      category: use
-      hidden: false
-_key: '!items!cKxfEL5XOWuzLhfO'
+type: feat
 

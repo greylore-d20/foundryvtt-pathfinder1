@@ -1,8 +1,27 @@
 _id: 2PdDTBiOuBlZ1YgE
-name: Terror
-type: feat
+_key: '!items!2PdDTBiOuBlZ1YgE'
 img: systems/pf1/icons/spells/horror-acid-2.jpg
+name: Terror
 system:
+  abilityType: su
+  actions:
+    - _id: j74bakms139yf20b
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/horror-acid-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a <em>standard action</em>, you can make a melee <em>touch
@@ -12,29 +31,10 @@ system:
       wizard level are unaffected. This is a mind-affecting fear effect. You can
       use this ability a number of times per day equal to 3 + your
       <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: j74bakms139yf20b
-      name: Use
-      img: systems/pf1/icons/spells/horror-acid-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_terror
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!2PdDTBiOuBlZ1YgE'
+  tag: classFeat_terror
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

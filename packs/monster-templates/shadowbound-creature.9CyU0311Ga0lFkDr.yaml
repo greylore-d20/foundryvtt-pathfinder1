@@ -1,8 +1,18 @@
 _id: 9CyU0311Ga0lFkDr
-name: Shadowbound Creature
-type: feat
+_key: '!items!9CyU0311Ga0lFkDr'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Shadowbound Creature
 system:
+  changes:
+    - _id: us3qj1su
+      formula: max(1, floor(@details.cr.total / 4))
+      modifier: deflection
+      subTarget: ac
+    - _id: 5ab9w1cd
+      formula: '4'
+      modifier: untyped
+      subTarget: con
+  crOffset: '1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -27,16 +37,6 @@ system:
       rolls, saving throws, and skill checks for 1 round;</p>
 
       <p><b>Ability Scores</b> +4 Con.</p>
-  changes:
-    - _id: us3qj1su
-      formula: max(1, floor(@details.cr.total / 4))
-      subTarget: ac
-      modifier: deflection
-    - _id: 5ab9w1cd
-      formula: '4'
-      subTarget: con
-      modifier: untyped
   subType: template
-  crOffset: '1'
-_key: '!items!9CyU0311Ga0lFkDr'
+type: feat
 

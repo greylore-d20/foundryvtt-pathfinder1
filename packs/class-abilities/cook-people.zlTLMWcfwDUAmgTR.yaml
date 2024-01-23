@@ -1,8 +1,23 @@
 _id: zlTLMWcfwDUAmgTR
-name: Cook People
-type: feat
+_key: '!items!zlTLMWcfwDUAmgTR'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Cook People
 system:
+  abilityType: su
+  actions:
+    - _id: pjq5xdout3ko6npc
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can create fabulous spells by cooking an intelligent humanoid
@@ -23,26 +38,11 @@ system:
       Small, humanlike creature, animating it as a homunculus for 1
       hour.</p><p>The witch must have the <em>cauldron</em> hex to select this
       hex. Using this hex or knowingly eating its food is an evil act.</p>
+  subType: classFeat
+  tag: classFeat_cookPeople
   tags:
     - Hex
     - Major Hex
     - Evil
-  actions:
-    - _id: pjq5xdout3ko6npc
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: '1'
-        units: hour
-  tag: classFeat_cookPeople
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!zlTLMWcfwDUAmgTR'
+type: feat
 

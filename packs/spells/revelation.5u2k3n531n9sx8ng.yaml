@@ -1,8 +1,26 @@
 _id: 5u2k3n531n9sx8ng
-name: Revelation
-type: spell
+_key: '!items!5u2k3n531n9sx8ng'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Revelation
 system:
+  actions:
+    - _id: m71ofjsqqip0tz53
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain a brief understanding of the workings of a single puzzle,
@@ -13,34 +31,16 @@ system:
       give you a clue or other piece of useful information. In this case you may
       communicate the clue to others and retain knowledge of it after the
       spell's duration has expired.</p>
-  actions:
-    - _id: m71ofjsqqip0tz53
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level; see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!5u2k3n531n9sx8ng'
+type: spell
 

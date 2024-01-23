@@ -1,8 +1,22 @@
 _id: YuS12cerNITbROvO
-name: Telepathic Targeting
-type: feat
+_key: '!items!YuS12cerNITbROvO'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Telepathic Targeting
 system:
+  abilityType: su
+  actions:
+    - _id: z2f7c2g81abrlq6h
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>By spending 2 points from her phrenic pool, the psychic can target any
@@ -13,21 +27,7 @@ system:
 
       <p>The linked spell must have the mind-affecting descriptor and must have
       a range of touch or greater.</p>
-  actions:
-    - _id: z2f7c2g81abrlq6h
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_telepathicTargeting
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!YuS12cerNITbROvO'
+  tag: classFeat_telepathicTargeting
+type: feat
 

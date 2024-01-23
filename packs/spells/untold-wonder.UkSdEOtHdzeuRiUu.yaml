@@ -1,7 +1,32 @@
-name: Untold Wonder
-type: spell
+_id: UkSdEOtHdzeuRiUu
+_key: '!items!UkSdEOtHdzeuRiUu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Untold Wonder
 system:
+  actions:
+    - _id: 9lQDQBCz6t2VnnwI
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fill the target’s mind with childlike wonder, allowing that
@@ -17,27 +42,6 @@ system:
       to resist spells of the pattern subschool, as her childlike wonder allows
       her to marvel at the beauty of such effects without being overwhelmed by
       them.</p>
-  actions:
-    - _id: 9lQDQBCz6t2VnnwI
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      formulaicAttacks:
-        label: ''
-      save:
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       arcanist: 5
@@ -55,9 +59,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_id: UkSdEOtHdzeuRiUu
-_key: '!items!UkSdEOtHdzeuRiUu'
+type: spell
 

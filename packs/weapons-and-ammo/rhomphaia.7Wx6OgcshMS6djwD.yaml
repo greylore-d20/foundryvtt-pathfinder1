@@ -1,56 +1,50 @@
 _id: 7Wx6OgcshMS6djwD
-name: Rhomphaia
-type: weapon
+_key: '!items!7Wx6OgcshMS6djwD'
 img: icons/weapons/polearms/glaive-simple.webp
+name: Rhomphaia
 system:
+  actions:
+    - _id: jfjzfkyqumccnrx9
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/polearms/glaive-simple.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Rhomphaia
   description:
     value: >-
       <p>This Bronze Age weapon is an early polearm consisting of a long,
       single-edged blade attached to a sturdy staff, sometimes slightly curved.
       It serves as both a cutting and a thrusting weapon.</p>
-  tags:
-    - PFS
-  weight:
-    value: 10
-  price: 15
   hardness: 10
-  actions:
-    - _id: jfjzfkyqumccnrx9
-      name: Attack
-      img: icons/weapons/polearms/glaive-simple.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(2, 4, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Rhomphaia
-  subType: martial
-  weaponSubtype: 2h
+  price: 15
   properties:
     brc: true
     frg: true
@@ -58,5 +52,11 @@ system:
   source:
     id: PZO1123
     pages: '19'
-_key: '!items!7Wx6OgcshMS6djwD'
+  subType: martial
+  tags:
+    - PFS
+  weaponSubtype: 2h
+  weight:
+    value: 10
+type: weapon
 

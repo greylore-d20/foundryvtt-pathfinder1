@@ -1,8 +1,27 @@
 _id: 83suv15a15s4dn1m
-name: Ancestral Gift
-type: spell
+_key: '!items!83suv15a15s4dn1m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ancestral Gift
 system:
+  actions:
+    - _id: 54k5eiix4aqam45o
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      spellEffect: magical weapon
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A ghostly manifestation of one of your ancestors appears before you
@@ -18,36 +37,17 @@ system:
       immediately.</p><p>If you conjure a weapon with the flaming, frost, shock,
       or <i>thundering</i> property, this spell has the fire, cold, electricity,
       or sonic descriptor (respectively).</p>
-  actions:
-    - _id: 54k5eiix4aqam45o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: personal
-      spellEffect: magical weapon
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       bard: 4
+      cleric: 4
+      oracle: 4
+      warpriest: 4
   level: 4
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: stone or metal image of your ancestor
+  school: con
   sr: false
-_key: '!items!83suv15a15s4dn1m'
+  subschool: summoning
+type: spell
 

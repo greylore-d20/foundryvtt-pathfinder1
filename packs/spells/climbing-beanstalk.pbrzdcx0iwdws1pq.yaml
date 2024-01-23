@@ -1,8 +1,26 @@
 _id: pbrzdcx0iwdws1pq
-name: Climbing Beanstalk
-type: spell
+_key: '!items!pbrzdcx0iwdws1pq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Climbing Beanstalk
 system:
+  actions:
+    - _id: zwf64ei1b1lrguov
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 5-ft. square of climbable beanstalks
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a thick, sturdy beanstalk to sprout from the ground and grow
@@ -19,32 +37,14 @@ system:
       beanstalk continues to live as a normal plant, and it produces nutritious
       (if unappetizing) beans. Otherwise, the plant dies after 1d6 hours; its
       husk remains as durable as a small tree.</p>
-  actions:
-    - _id: zwf64ei1b1lrguov
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      spellEffect: 5-ft. square of climbable beanstalks
   learnedAt:
     class:
       druid: 2
-      witch: 2
       hunter: 2
+      witch: 2
   level: 2
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!pbrzdcx0iwdws1pq'
+  subschool: creation
+type: spell
 

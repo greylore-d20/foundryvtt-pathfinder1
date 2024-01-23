@@ -1,8 +1,31 @@
 _id: tiibhd5q6k3q7vzm
-name: Mark of Blood
-type: spell
+_key: '!items!tiibhd5q6k3q7vzm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mark of Blood
 system:
+  actions:
+    - _id: 794iy2pwnzoi3b6o
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute and permanent (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one weapon touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You place a drop of your blood on a weapon and charge it with magic so
@@ -13,40 +36,17 @@ system:
       a creature within 1 minute of casting this spell or the magic is wasted,
       but once the Mark of Blood takes effect it is permanent until dispelled or
       removed via an effect like <i>remove curse</i>.</p>
-  actions:
-    - _id: 794iy2pwnzoi3b6o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute and permanent (see text)
-      target:
-        value: one weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
-      inquisitor: 2
       bloodrager: 2
+      inquisitor: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  types: curse
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of your blood
-_key: '!items!tiibhd5q6k3q7vzm'
+  school: trs
+  types: curse
+type: spell
 

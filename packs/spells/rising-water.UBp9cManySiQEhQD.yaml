@@ -1,7 +1,29 @@
-name: Rising Water
-type: spell
+_id: UBp9cManySiQEhQD
+_key: '!items!UBp9cManySiQEhQD'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rising Water
 system:
+  actions:
+    - _id: di2R4BLNas41AahC
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cylinder (20-ft. radius, 10 ft. high)
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a cylinder of calm water on an area of solid ground or on
@@ -18,23 +40,6 @@ system:
       as easily as stepping into or out of a pool of ordinary water. The water
       disappears at the end of the spell’s duration, so creatures swimming in
       the water immediately fall to the ground.</p>
-  actions:
-    - _id: di2R4BLNas41AahC
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: cylinder (20-ft. radius, 10 ft. high)
   learnedAt:
     class:
       arcanist: 4
@@ -51,15 +56,10 @@ system:
       summonerUnchained: 4
       wizard: 4
   level: 4
-  school: con
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a lily pad
+  school: con
   sr: false
-_id: UBp9cManySiQEhQD
-_key: '!items!UBp9cManySiQEhQD'
+  types: water
+type: spell
 

@@ -1,47 +1,47 @@
 _id: koSRGjgWYiGBpFMH
-name: Sand Whirlwind, Greater
-type: spell
+_key: '!items!koSRGjgWYiGBpFMH'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sand Whirlwind, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.xX5Xwkv4hrdbRZV3]{sand
-      whirlwind} except as noted above.</p>
   actions:
     - _id: uWUq52yRcn6jgqbD
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      area: 10-ft.-radius spread
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
       range:
         units: medium
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (blinding only)
-      area: 10-ft.-radius spread
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.xX5Xwkv4hrdbRZV3]{sand
+      whirlwind} except as noted above.</p>
   learnedAt:
     class:
       cleric: 5
       oracle: 5
       warpriest: 5
   level: 5
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of sand, dust, or fine powder
+  school: con
   sr: false
-_key: '!items!koSRGjgWYiGBpFMH'
+  subschool: creation
+type: spell
 

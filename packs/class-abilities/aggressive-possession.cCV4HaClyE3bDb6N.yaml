@@ -1,8 +1,28 @@
 _id: cCV4HaClyE3bDb6N
-name: Aggressive Possession
-type: feat
+_key: '!items!cCV4HaClyE3bDb6N'
 img: systems/pf1/icons/skills/affliction_08.jpg
+name: Aggressive Possession
 system:
+  abilityType: sp
+  actions:
+    - _id: ik16ndxkwzn3wh9o
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_08.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can make a melee <em>touch attack</em> as a
@@ -11,30 +31,10 @@ system:
       <em>sorcerer</em> level + your <em>Charisma</em> modifier. You can use
       this ability a number of times per day equal to 3 + your <em>Charisma</em>
       modifier.</p>
-  actions:
-    - _id: ik16ndxkwzn3wh9o
-      name: Use
-      img: systems/pf1/icons/skills/affliction_08.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_aggressivePossession
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!cCV4HaClyE3bDb6N'
+  tag: classFeat_aggressivePossession
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

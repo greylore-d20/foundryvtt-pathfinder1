@@ -1,44 +1,44 @@
 _id: wy8c3at9nrhjfavm
-name: Simulacrum, Lesser
-type: spell
+_key: '!items!wy8c3at9nrhjfavm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Simulacrum, Lesser
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>simulacrum</i>, except you can't create a
-      <i>simulacrum</i> of a creature whose HD or levels exceed your caster
-      level, and it has no magical abilities. The creature is not under your
-      control, though it recognizes you are its creator.</p>
   actions:
     - _id: pj1qxu1g3g9g36ut
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: hour
         unchained:
           type: hour
       duration:
         value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '0'
         units: ft
+        value: '0'
       spellEffect: one duplicate creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>simulacrum</i>, except you can't create a
+      <i>simulacrum</i> of a creature whose HD or levels exceed your caster
+      level, and it has no magical abilities. The creature is not under your
+      control, though it recognizes you are its creator.</p>
   learnedAt:
     class:
+      psychic: 4
       sorcerer: 4
       wizard: 4
-      psychic: 4
   level: 4
-  school: ill
-  subschool: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       an ice sculpture of the target plus powdered rubies worth 50 gp per HD of
       the simulacrum
+  school: ill
   sr: false
-_key: '!items!wy8c3at9nrhjfavm'
+  subschool: shadow
+type: spell
 

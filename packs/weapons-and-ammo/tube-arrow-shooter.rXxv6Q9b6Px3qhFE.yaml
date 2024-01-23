@@ -1,8 +1,39 @@
 _id: rXxv6Q9b6Px3qhFE
-name: Tube Arrow Shooter
-type: weapon
+_key: '!items!rXxv6Q9b6Px3qhFE'
 img: icons/weapons/thrown/dagger-simple-wood.webp
+name: Tube Arrow Shooter
 system:
+  actions:
+    - _id: 7egw5f3vnzwhmo3t
+      ability:
+        attack: dex
+        damage: str
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/weapons/thrown/dagger-simple-wood.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '40'
+  ammo:
+    type: arrow
+  baseTypes:
+    - Tube Arrow Shooter
   description:
     value: >-
       <p>This weapon consists of a small metal tube hidden within a sleeve; the
@@ -12,53 +43,22 @@ system:
       shaft is fired, the tube must be reloaded before it can be used again.
       Reloading a tube is a full-round action, or a standard action if the
       wielder has the Rapid Reload feat.</p>
-  tags:
-    - PFS
-  weight:
-    value: 0.5
-  price: 3
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 7egw5f3vnzwhmo3t
-      name: Attack
-      img: icons/weapons/thrown/dagger-simple-wood.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '40'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-  baseTypes:
-    - Tube Arrow Shooter
-  weaponGroups:
-    value:
-      - crossbows
-  subType: martial
-  weaponSubtype: ranged
+  price: 3
   source:
     id: PZO9452
     pages: '0'
-  ammo:
-    type: arrow
-_key: '!items!rXxv6Q9b6Px3qhFE'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - crossbows
+  weaponSubtype: ranged
+  weight:
+    value: 0.5
+type: weapon
 

@@ -1,8 +1,23 @@
 _id: 23m7J15MrtkjBqO6
-name: Dazzling Infusion
-type: feat
+_key: '!items!23m7J15MrtkjBqO6'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Dazzling Infusion
 system:
+  actions:
+    - _id: c0f4wcfugkq36e1z
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire, wood; <b>Type</b> substance infusion; <b>Level</b>
@@ -14,22 +29,7 @@ system:
       must succeed at a Will save or be dazzled for 1 minute, whether or not it
       takes damage from the blast. You can reduce the blast’s damage by half to
       increase the DC of this save by 2.</p>
-  actions:
-    - _id: c0f4wcfugkq36e1z
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_dazzlingInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!23m7J15MrtkjBqO6'
+  tag: classFeat_dazzlingInfusion
+type: feat
 

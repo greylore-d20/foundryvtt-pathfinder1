@@ -1,17 +1,11 @@
 _id: g8j278xcu2s1zlwy
-name: Resistance
-type: spell
+_key: '!items!g8j278xcu2s1zlwy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Resistance
 system:
-  description:
-    value: >-
-      <p>You imbue the subject with magical energy that protects it from harm,
-      granting it a +1 resistance bonus on saves.</p><p><i>Resistance</i> can be
-      made permanent with a <i>permanency</i> spell.</p>
   actions:
     - _id: 5ufh87xg8fh8h377
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,44 +13,50 @@ system:
           type: action
       duration:
         value: 1 minute
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You imbue the subject with magical energy that protects it from harm,
+      granting it a +1 resistance bonus on saves.</p><p><i>Resistance</i> can be
+      made permanent with a <i>permanency</i> spell.</p>
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      cleric: 0
-      oracle: 0
-      druid: 0
       bard: 0
-      paladin: 1
-      summoner: 0
-      witch: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
       inquisitor: 0
-      shaman: 0
-      psychic: 0
       medium: 0
       occultist: 0
+      oracle: 0
+      paladin: 1
+      psychic: 0
+      shaman: 0
+      sorcerer: 0
       spiritualist: 0
-      hunter: 0
+      summoner: 0
       summonerUnchained: 0
+      witch: 0
+      wizard: 0
   level: 0
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a miniature cloak
-_key: '!items!g8j278xcu2s1zlwy'
+  school: abj
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

@@ -1,8 +1,23 @@
 _id: DzAOKrNemfm4mT1R
-name: Grasping Chains
-type: feat
+_key: '!items!DzAOKrNemfm4mT1R'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Grasping Chains
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Bloodrager
+  changes:
+    - _id: 8c5qur3o
+      formula: '@classes.bloodrager.level >= 9 ? 8 : 4'
+      modifier: untyped
+      subTarget: skill.clm
+    - _id: ow8gnugm
+      formula: >-
+        @classes.bloodrager.level >= 9 ? (floor(@attributes.speed.land.base /
+        2)) : 0
+      modifier: base
+      subTarget: climbSpeed
   description:
     value: >-
       <p>At 4th level, chains cover your body and extend from your arms,
@@ -11,22 +26,7 @@ system:
 
       <p>At 9th level, this bonus increases to +8 and you gain a Climb speed
       equal to 1/2 your base speed.</p>
-  changes:
-    - _id: 8c5qur3o
-      formula: '@classes.bloodrager.level >= 9 ? 8 : 4'
-      subTarget: skill.clm
-      modifier: untyped
-    - _id: ow8gnugm
-      formula: >-
-        @classes.bloodrager.level >= 9 ? (floor(@attributes.speed.land.base /
-        2)) : 0
-      subTarget: climbSpeed
-      modifier: base
-  tag: classFeat_graspingChains
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!DzAOKrNemfm4mT1R'
+  tag: classFeat_graspingChains
+type: feat
 

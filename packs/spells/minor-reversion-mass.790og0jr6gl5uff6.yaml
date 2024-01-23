@@ -1,8 +1,31 @@
 _id: 790og0jr6gl5uff6
-name: Minor Reversion, Mass
-type: spell
+_key: '!items!790og0jr6gl5uff6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Minor Reversion, Mass
 system:
+  actions:
+    - _id: 0xzmdpn8yao34r0f
+      actionType: heal
+      activation:
+        cost: 30
+        type: minute
+        unchained:
+          cost: 30
+          type: minute
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a replica within the Akashic Record of each target at the
@@ -12,40 +35,17 @@ system:
       the spell on herself as an immediate action to absorb strength from her
       replica and immediately regain a number of hit points equal to 1d8 plus 1
       point per caster level (maximum +25).</p>
-  actions:
-    - _id: 0xzmdpn8yao34r0f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 30
-        type: minute
-        unchained:
-          cost: 30
-          type: minute
-      duration:
-        value: 24 hours
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: heal
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
       psychic: 5
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!790og0jr6gl5uff6'
+  subschool: healing
+type: spell
 

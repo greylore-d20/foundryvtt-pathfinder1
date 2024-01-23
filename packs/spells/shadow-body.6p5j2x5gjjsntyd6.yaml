@@ -1,8 +1,26 @@
 _id: 6p5j2x5gjjsntyd6
-name: Shadow Body
-type: spell
+_key: '!items!6p5j2x5gjjsntyd6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Body
 system:
+  actions:
+    - _id: sr92oaqazbn61d66
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You exchange the crude matter of your material body with the
@@ -20,33 +38,15 @@ system:
       effects as if making an incorporeal touch attack. Your equipment merges
       with your <i>shadow body</i>, so you can't cast spells with a material
       component unless those spells are prepared with Eschew Materials.</p>
-  actions:
-    - _id: sr92oaqazbn61d66
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 7
-      wizard: 7
-      witch: 7
       spiritualist: 5
+      witch: 7
+      wizard: 7
   level: 7
   school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!6p5j2x5gjjsntyd6'
+  subschool: polymorph
+type: spell
 

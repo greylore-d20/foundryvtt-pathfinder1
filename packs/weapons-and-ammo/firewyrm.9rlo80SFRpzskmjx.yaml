@@ -1,8 +1,97 @@
 _id: 9rlo80SFRpzskmjx
-name: Firewyrm
-type: weapon
+_key: '!items!9rlo80SFRpzskmjx'
 img: icons/commodities/treasure/statue-carved-figurehead.webp
+name: Firewyrm
 system:
+  actions:
+    - _id: gxisf84d5f906tt9
+      actionType: save
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      measureTemplate:
+        size: '120'
+        type: ray
+      name: Line
+      range:
+        units: ft
+        value: '120'
+      save:
+        dc: '20'
+        description: Reflex half
+        type: ref
+    - _id: NgL0XsQ4XS1UXXRK
+      actionType: save
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Cone
+      range:
+        units: ft
+        value: '60'
+      save:
+        dc: '20'
+        description: Reflex half
+        type: ref
+    - _id: GWVpwnyNTo0DuBHP
+      actionType: save
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      area: 30 ft blast
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Explode
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: '20'
+        description: Reflex halves
+        type: ref
+      target:
+        value: all creatures within 30 ft
+  ammo:
+    type: siege
+  baseTypes:
+    - Firewyrm
   description:
     value: >-
       <h3>Statistics</h3><p><strong>Weight</strong>
@@ -22,104 +111,15 @@ system:
       its damage to all creatures within a 30-foot blast (DC 20 Reflex save
       halves).</p><p>One use of firewyrm ammunition costs 400 gp and weighs 40
       pounds.</p>
-  price: 6000
+  hardness: 10
   hp:
     max: 140
     value: 140
-  hardness: 10
-  actions:
-    - _id: gxisf84d5f906tt9
-      name: Line
-      img: icons/commodities/treasure/statue-carved-figurehead.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '120'
-        units: ft
-      measureTemplate:
-        type: ray
-        size: '120'
-      actionType: save
-      damage:
-        parts:
-          - formula: sizeRoll(6, 6, @size)
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        dc: '20'
-        type: ref
-        description: Reflex half
-    - _id: NgL0XsQ4XS1UXXRK
-      name: Cone
-      img: icons/commodities/treasure/statue-carved-figurehead.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      actionType: save
-      damage:
-        parts:
-          - formula: sizeRoll(6, 6, @size)
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        dc: '20'
-        type: ref
-        description: Reflex half
-    - _id: GWVpwnyNTo0DuBHP
-      name: Explode
-      img: icons/commodities/treasure/statue-carved-figurehead.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      target:
-        value: all creatures within 30 ft
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: save
-      damage:
-        parts:
-          - formula: sizeRoll(6, 6, @size)
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        dc: '20'
-        type: ref
-        description: Reflex halves
-      area: 30 ft blast
-  baseTypes:
-    - Firewyrm
-  subType: exotic
-  weaponSubtype: ranged
+  price: 6000
   source:
     id: PZO1118
     pages: '163'
-  ammo:
-    type: siege
-_key: '!items!9rlo80SFRpzskmjx'
+  subType: exotic
+  weaponSubtype: ranged
+type: weapon
 

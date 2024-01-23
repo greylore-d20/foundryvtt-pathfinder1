@@ -1,8 +1,24 @@
 _id: pu62cifv5lpkvfyz
-name: Cheetah's Sprint
-type: spell
+_key: '!items!pu62cifv5lpkvfyz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cheetah's Sprint
 system:
+  actions:
+    - _id: tfqg537mtzob6mn0
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>A wild surge of energy courses through your body and propels you into a
@@ -11,31 +27,15 @@ system:
       adjustment is an enhancement bonus. There is no effect on other modes of
       movement, such as burrow, climb, fly, or swim. As with other effects that
       increase your speed, this spell affects your jumping distance.</p>
-  actions:
-    - _id: tfqg537mtzob6mn0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      druid: 1
-      ranger: 1
-      witch: 1
       bloodrager: 1
-      shaman: 1
+      druid: 1
       hunter: 1
+      ranger: 1
+      shaman: 1
+      witch: 1
   school: trs
-  components:
-    verbal: true
   sr: false
-_key: '!items!pu62cifv5lpkvfyz'
+type: spell
 

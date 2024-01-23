@@ -1,17 +1,10 @@
 _id: brw5fsblcj8snqo2
-name: Perceive Cues
-type: spell
+_key: '!items!brw5fsblcj8snqo2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Perceive Cues
 system:
-  description:
-    value: >-
-      <p>Your senses become preternaturally keen, and you gain insight into
-      subtle behavioral cues. For the duration of the spell, you receive a +5
-      competence bonus on Perception and Sense Motive checks.</p>
   actions:
     - _id: ir0yafzdnifik9w9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,31 +12,38 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your senses become preternaturally keen, and you gain insight into
+      subtle behavioral cues. For the duration of the spell, you receive a +5
+      competence bonus on Perception and Sense Motive checks.</p>
   learnedAt:
     class:
-      ranger: 2
       alchemist: 2
-      witch: 2
+      hunter: 2
       inquisitor: 2
-      psychic: 2
       mesmerist: 2
       occultist: 2
-      hunter: 2
+      psychic: 2
+      ranger: 2
+      witch: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of water
-  sr: false
+  school: trs
   source:
     id: PZO1115
     pages: '235'
-_key: '!items!brw5fsblcj8snqo2'
+  sr: false
+type: spell
 

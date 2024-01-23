@@ -1,16 +1,11 @@
 _id: c8jk0q8v39uvzsxx
-name: Delay Poison, Communal
-type: spell
+_key: '!items!c8jk0q8v39uvzsxx'
 img: icons/magic/life/cross-worn-green.webp
+name: Delay Poison, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>delay poison</i>, except you divide the
-      duration in 1-hour intervals among the creatures touched.</p>
   actions:
     - _id: g3s1pdw6zy9bldsz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
@@ -18,34 +13,39 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: heal
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creatures touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>delay poison</i>, except you divide the
+      duration in 1-hour intervals among the creatures touched.</p>
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      ranger: 3
-      bard: 3
-      paladin: 3
       alchemist: 3
-      witch: 3
-      inquisitor: 3
+      bard: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      inquisitor: 3
+      oracle: 3
+      paladin: 3
+      ranger: 3
+      warpriest: 3
+      witch: 3
   level: 3
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!c8jk0q8v39uvzsxx'
+type: spell
 

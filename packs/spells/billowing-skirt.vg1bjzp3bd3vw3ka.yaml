@@ -1,18 +1,10 @@
 _id: vg1bjzp3bd3vw3ka
-name: Billowing Skirt
-type: spell
+_key: '!items!vg1bjzp3bd3vw3ka'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Billowing Skirt
 system:
-  description:
-    value: >-
-      <p>A skirt, kilt, or gown you are wearing enables you to control your
-      falls through the air. A creature wearing the enchanted item of clothing
-      falls slowly as if affected by <i>feather fall</i> and can attempt a DC 15
-      Fly skill check as a move action to hover in place for 1 round.</p>
   actions:
     - _id: qu7i8foag181z6mf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,27 +12,35 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>A skirt, kilt, or gown you are wearing enables you to control your
+      falls through the air. A creature wearing the enchanted item of clothing
+      falls slowly as if affected by <i>feather fall</i> and can attempt a DC 15
+      Fly skill check as a move action to hover in place for 1 round.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
       inquisitor: 2
-      shaman: 2
       occultist: 2
+      shaman: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a skirt, kilt, or gown
+  school: trs
   sr: false
-_key: '!items!vg1bjzp3bd3vw3ka'
+type: spell
 

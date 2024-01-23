@@ -1,8 +1,27 @@
 _id: CEjHiIRIDWGrJjMX
-name: Draconic Claws
-type: feat
+_key: '!items!CEjHiIRIDWGrJjMX'
 img: systems/pf1/icons/skills/blood_06.jpg
+name: Draconic Claws
 system:
+  abilityType: su
+  actions:
+    - _id: kzesw24fzwcq0puo
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/blood_06.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>Starting at 1st level, you can grow claws as a free action. These claws
@@ -16,32 +35,13 @@ system:
       of your energy type on a successful hit. You can use your claws for a
       number of rounds per day equal to 3 + your <em>Charisma</em> modifier.
       These rounds do not need to be consecutive.</p>
-  actions:
-    - _id: kzesw24fzwcq0puo
-      name: Use
-      img: systems/pf1/icons/skills/blood_06.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_draconicClaws
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
   source:
     id: PZO1110
     pages: '75'
-_key: '!items!CEjHiIRIDWGrJjMX'
+  subType: classFeat
+  tag: classFeat_draconicClaws
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

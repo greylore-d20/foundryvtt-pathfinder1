@@ -1,17 +1,11 @@
 _id: mh42f68xv26jo42m
-name: Evolution Surge
-type: spell
+_key: '!items!mh42f68xv26jo42m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Evolution Surge
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.c5ipv2mivkdb03sb]{lesser
-      evolution surge}, except that you can grant any evolution whose total cost
-      does not exceed 4 evolution points.</p>
   actions:
     - _id: ybuatz5zwub3l1x5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,27 +13,33 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: your eidolon
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: your eidolon
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.c5ipv2mivkdb03sb]{lesser
+      evolution surge}, except that you can grant any evolution whose total cost
+      does not exceed 4 evolution points.</p>
   learnedAt:
     class:
       summoner: 3
       summonerUnchained: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chameleon scale
+  school: trs
   sr: false
-_key: '!items!mh42f68xv26jo42m'
+type: spell
 

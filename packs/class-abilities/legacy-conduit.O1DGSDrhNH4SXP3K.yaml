@@ -1,8 +1,27 @@
 _id: O1DGSDrhNH4SXP3K
-name: Legacy Conduit
-type: feat
+_key: '!items!O1DGSDrhNH4SXP3K'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Legacy Conduit
 system:
+  abilityType: su
+  actions:
+    - _id: d99zm4wvg6j1u77b
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 16th level, when using the legacy style bloodline power, you can
@@ -10,26 +29,7 @@ system:
       selected style feat with all allies within 30 feet. The benefits last for
       1 round per level of the spell slot expended. Allies must still enter the
       style’s stance as a swift action.</p>
-  actions:
-    - _id: d99zm4wvg6j1u77b
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: allies
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_legacyConduit
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!O1DGSDrhNH4SXP3K'
+  tag: classFeat_legacyConduit
+type: feat
 

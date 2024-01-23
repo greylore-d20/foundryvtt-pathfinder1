@@ -1,8 +1,27 @@
 _id: r76fXJMsBbBASg4R
-name: Rooting
-type: feat
+_key: '!items!r76fXJMsBbBASg4R'
 img: systems/pf1/icons/skills/green_31.jpg
+name: Rooting
 system:
+  abilityType: ex
+  actions:
+    - _id: xvvtkmwzkgnkfh46
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/green_31.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, as a <em>move action</em>, you can extend roots into the
@@ -13,29 +32,10 @@ system:
       healing</em> 1. You can use this power for a number of minutes per day
       equal to your sorcerer level. This duration need not be consecutive, but
       it must be used in 1-minute increments.</p>
-  actions:
-    - _id: xvvtkmwzkgnkfh46
-      name: Use
-      img: systems/pf1/icons/skills/green_31.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level'
-  tag: classFeat_rooting
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!r76fXJMsBbBASg4R'
+  tag: classFeat_rooting
+  uses:
+    maxFormula: '@classes.sorcerer.level'
+    per: day
+type: feat
 

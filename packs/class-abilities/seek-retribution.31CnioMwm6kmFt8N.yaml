@@ -1,8 +1,27 @@
 _id: 31CnioMwm6kmFt8N
-name: Seek Retribution
-type: feat
+_key: '!items!31CnioMwm6kmFt8N'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Seek Retribution
 system:
+  abilityType: ex
+  actions:
+    - _id: 3jrxtrz9v6106m6g
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.cavalier.level'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, once per day after receiving a request for aid from a
@@ -12,26 +31,7 @@ system:
       himself a competence bonus equal to his Charisma modifier on all attack
       rolls, weapon damage rolls, and opposed checks against the oathbreaking
       creature. These bonuses last for 1 round per level.</p>
-  actions:
-    - _id: 3jrxtrz9v6106m6g
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.cavalier.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_seekRetribution
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!31CnioMwm6kmFt8N'
+  tag: classFeat_seekRetribution
+type: feat
 

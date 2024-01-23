@@ -1,8 +1,26 @@
 _id: dgzukaz1zeadr8q2
-name: Escaping Ward
-type: spell
+_key: '!items!dgzukaz1zeadr8q2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Escaping Ward
 system:
+  actions:
+    - _id: h3fxz2n6tgrbgdfu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This ward grants you extra maneuverability when you avoid attacks
@@ -11,35 +29,17 @@ system:
       you, you can, as an immediate action, move up to 5 feet away from the
       attacking creature. You can increase this movement by 5 feet for every 5
       caster levels. This movement does not provoke attacks of opportunity.</p>
-  actions:
-    - _id: h3fxz2n6tgrbgdfu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      ranger: 2
       bard: 2
+      hunter: 2
       inquisitor: 2
       magus: 2
-      hunter: 2
+      ranger: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!dgzukaz1zeadr8q2'
+type: spell
 

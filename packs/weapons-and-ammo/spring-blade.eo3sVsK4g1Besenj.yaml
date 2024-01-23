@@ -1,8 +1,40 @@
 _id: eo3sVsK4g1Besenj
-name: Spring Blade
-type: weapon
+_key: '!items!eo3sVsK4g1Besenj'
 img: systems/pf1/icons/items/weapons/spring-blade.png
+name: Spring Blade
 system:
+  actions:
+    - _id: jthuv98cyzm7ugp6
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/spring-blade.png
+      name: Attack
+      range:
+        units: melee
+        value: '10'
+  baseTypes:
+    - Spring Blade
   description:
     value: >-
       <p>This 4-inch blade is attached via a hinge to a wooden handle with a
@@ -15,55 +47,23 @@ system:
       succeed at a DC 20 Perception check to notice the blade hidden within the
       wooden handle, and you gain a +4 bonus on Sleight of Hand checks to
       conceal a spring blade on your body.</p>
-  weight:
-    value: 1
-  price: 70
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: jthuv98cyzm7ugp6
-      name: Attack
-      img: systems/pf1/icons/items/weapons/spring-blade.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Spring Blade
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
+    normal:
+      value: ''
+  price: 70
   properties:
     fin: true
   source:
     id: PZO1134
     pages: '232'
-_key: '!items!eo3sVsK4g1Besenj'
+  weight:
+    value: 1
+type: weapon
 

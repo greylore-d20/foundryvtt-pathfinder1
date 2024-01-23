@@ -1,8 +1,27 @@
 _id: zeLaBkwTp9wlzZJv
-name: Artificer's Touch
-type: feat
+_key: '!items!zeLaBkwTp9wlzZJv'
 img: systems/pf1/icons/items/inventory/pickaxe.jpg
+name: Artificer's Touch
 system:
+  abilityType: sp
+  actions:
+    - _id: iic5rot6ntiyw170
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/pickaxe.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can cast @Compendium[pf1.spells.24zg8a05hqum3e6j]{Mending} at will,
@@ -13,32 +32,13 @@ system:
       bypasses an amount of damage reduction and hardness equal to your cleric
       level. You can use this ability a number of times per day equal to 3 +
       your Wisdom modifier.</p>
-  actions:
-    - _id: iic5rot6ntiyw170
-      name: Use
-      img: systems/pf1/icons/items/inventory/pickaxe.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: object touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_artificersTouch
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '41'
-_key: '!items!zeLaBkwTp9wlzZJv'
+  subType: classFeat
+  tag: classFeat_artificersTouch
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

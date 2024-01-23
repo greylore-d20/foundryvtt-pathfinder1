@@ -1,8 +1,40 @@
 _id: QigjqjvJ8j6f62Mo
-name: Tailblade
-type: weapon
+_key: '!items!QigjqjvJ8j6f62Mo'
 img: systems/pf1/icons/items/weapons/ratfolk-tail-blade.png
+name: Tailblade
 system:
+  actions:
+    - _id: hc5k3gdx0de6a8sh
+      ability:
+        attack: str
+        critMult: '2'
+        critRange: '20'
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/ratfolk-tail-blade.png
+      name: Attack
+      range:
+        units: melee
+  baseTypes:
+    - Tailblade
   description:
     value: >-
       <p><em>A tailblade is a small, sharp knife designed to be strapped to the
@@ -23,56 +55,24 @@ system:
       rolls</em> made with the weapon, and other creatures get a +4 bonus on
       <em>disarm</em> <em>combat maneuver</em> checks to <em>disarm</em> the
       tailblade.</p>
-  weight:
-    value: 0.5
-  price: 11
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: hc5k3gdx0de6a8sh
-      name: Attack
-      img: systems/pf1/icons/items/weapons/ratfolk-tail-blade.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: '20'
-        critMult: '2'
-  baseTypes:
-    - Tailblade
-  weaponGroups:
-    value:
-      - bladesLight
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 11
   properties:
     fin: true
-_key: '!items!QigjqjvJ8j6f62Mo'
+  subType: martial
+  weaponGroups:
+    value:
+      - bladesLight
+  weight:
+    value: 0.5
+type: weapon
 

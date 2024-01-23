@@ -1,8 +1,30 @@
 _id: ud5u5qqbfzwjg3w1
-name: Full Pouch
-type: spell
+_key: '!items!ud5u5qqbfzwjg3w1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Full Pouch
 system:
+  actions:
+    - _id: 229fmj91pedy4bv1
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: 1 object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cast this spell as you draw out a consumable alchemical item to
@@ -13,46 +35,24 @@ system:
       all ways except the copied item suffers a slight reduction in quality.
       Saves against the new alchemical item's affects use the original item's
       save DC or the save DC of this spell, whichever is higher.</p>
-  actions:
-    - _id: 229fmj91pedy4bv1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 3
-      bard: 2
       alchemist: 2
+      bard: 2
+      druid: 2
+      hunter: 2
       inquisitor: 3
       occultist: 3
-      hunter: 2
+      ranger: 3
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: alchemical reagents or herbs worth 1 gp
     gpValue: 1
+    value: alchemical reagents or herbs worth 1 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!ud5u5qqbfzwjg3w1'
+type: spell
 

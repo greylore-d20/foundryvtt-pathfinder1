@@ -1,8 +1,29 @@
 _id: brgaeQN3tTBK2TLT
-name: Charm
-type: feat
+_key: '!items!brgaeQN3tTBK2TLT'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Charm
 system:
+  abilityType: su
+  actions:
+    - _id: ixwtzluvjroy0kj6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.witch.level'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one animal or humanoid
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>A witch can charm an animal or humanoid creature within 30 feet by
@@ -15,30 +36,9 @@ system:
 
       <p>At 8th level, this effect improves the attitude of the target creature
       by 2 steps. This is a mind-affecting charm effect.</p>
+  subType: classFeat
+  tag: classFeat_charm
   tags:
     - Hex
-  actions:
-    - _id: ixwtzluvjroy0kj6
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.witch.level'
-        units: round
-      target:
-        value: one animal or humanoid
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_charm
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!brgaeQN3tTBK2TLT'
+type: feat
 

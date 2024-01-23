@@ -1,18 +1,10 @@
-name: Seed Spies
-type: spell
+_id: IBAUx9cS2R5nsVrU
+_key: '!items!IBAUx9cS2R5nsVrU'
 img: icons/magic/nature/plant-seed-hands-glow-yellow.webp
+name: Seed Spies
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.25bv1s6jwr8imm1o]{insect
-      spies}, except it creates wafting seeds with magical intellect instead of
-      insects. The seeds can hear but not see. They fly at a speed of 10 feet
-      (good maneuverability), but they can’t crawl or climb, although they can
-      cling to rough, soft, or sticky creatures or surfaces.</p>
   actions:
     - _id: aFi9LAUEXCnBxxKX
-      name: Use
-      img: icons/magic/nature/plant-seed-hands-glow-yellow.webp
       activation:
         type: round
         unchained:
@@ -20,9 +12,22 @@ system:
           type: action
       duration:
         value: 10 minutes/level (D)
+      img: icons/magic/nature/plant-seed-hands-glow-yellow.webp
+      name: Use
       range:
         units: close
       spellEffect: up to one insect spy/4 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.25bv1s6jwr8imm1o]{insect
+      spies}, except it creates wafting seeds with magical intellect instead of
+      insects. The seeds can hear but not see. They fly at a speed of 10 feet
+      (good maneuverability), but they can’t crawl or climb, although they can
+      cling to rough, soft, or sticky creatures or surfaces.</p>
   learnedAt:
     class:
       arcanist: 3
@@ -35,14 +40,9 @@ system:
       witch: 3
       wizard: 3
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of honey
+  school: div
   sr: false
-_id: IBAUx9cS2R5nsVrU
-_key: '!items!IBAUx9cS2R5nsVrU'
+type: spell
 

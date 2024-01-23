@@ -1,66 +1,66 @@
 _id: 7zvBqNNlc5i5EtFd
-name: Wooden Stake
-type: weapon
+_key: '!items!7zvBqNNlc5i5EtFd'
 img: systems/pf1/icons/items/weapons/wooden-stake.png
+name: Wooden Stake
 system:
-  description:
-    value: >-
-      <p>This close combat weapon is just a sharpened piece of wood. Iron spikes
-      that are used as weapons deal damage as wooden stakes.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  hp:
-    max: 2
-    value: 2
-  hardness: 10
   actions:
     - _id: zye4zhg9qsamhdqz
-      name: Attack
-      img: systems/pf1/icons/items/weapons/wooden-stake.png
+      ability:
+        attack: str
+        critMult: '2'
+        critRange: ''
+        damage: str
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 4, @size)
             type:
+              custom: ''
               values:
                 - piercing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: ''
-        critMult: '2'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/wooden-stake.png
+      name: Attack
+      range:
+        units: melee
+        value: '10'
   baseTypes:
     - Wooden Stake
-  weaponGroups:
-    value:
-      - close
+  description:
+    value: >-
+      <p>This close combat weapon is just a sharpened piece of wood. Iron spikes
+      that are used as weapons deal damage as wooden stakes.</p>
+  hardness: 10
+  hp:
+    max: 2
+    value: 2
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
+    normal:
+      value: ''
   properties:
     fin: true
   source:
     id: PZO1123
     pages: '17'
-_key: '!items!7zvBqNNlc5i5EtFd'
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - close
+  weight:
+    value: 1
+type: weapon
 

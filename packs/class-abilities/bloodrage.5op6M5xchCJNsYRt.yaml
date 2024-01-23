@@ -1,8 +1,27 @@
 _id: 5op6M5xchCJNsYRt
-name: Bloodrage
-type: feat
+_key: '!items!5op6M5xchCJNsYRt'
 img: systems/pf1/icons/skills/red_12.jpg
+name: Bloodrage
 system:
+  abilityType: su
+  actions:
+    - _id: 81r2gyv54eqja3ag
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_12.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>The bloodrager’s source of internal power grants him the ability to
@@ -31,29 +50,10 @@ system:
       placing him in peril of death.<p>Bloodrage counts as the barbarian’s rage
       class feature for the purpose of feat prerequisites, feat abilities, magic
       item abilities, and spell effects.</p>
-  actions:
-    - _id: 81r2gyv54eqja3ag
-      name: Use
-      img: systems/pf1/icons/skills/red_12.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 4 + @abilities.con.mod + ((@classes.bloodrager.level - 1) * 2)
-  tag: classFeat_bloodrage
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!5op6M5xchCJNsYRt'
+  tag: classFeat_bloodrage
+  uses:
+    maxFormula: 4 + @abilities.con.mod + ((@classes.bloodrager.level - 1) * 2)
+    per: day
+type: feat
 

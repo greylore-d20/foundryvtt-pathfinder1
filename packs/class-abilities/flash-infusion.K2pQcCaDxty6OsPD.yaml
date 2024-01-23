@@ -1,8 +1,26 @@
 _id: K2pQcCaDxty6OsPD
-name: Flash Infusion
-type: feat
+_key: '!items!K2pQcCaDxty6OsPD'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Flash Infusion
 system:
+  actions:
+    - _id: 35h1oydg6sf2qjva
+      actionType: save
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> substance infusion; <b>Level</b> 4;
@@ -14,25 +32,7 @@ system:
       must succeed at a Will save or be blinded for 1 round, regardless of
       whether it takes damage from the blast. You can reduce the blast’s damage
       by half to increase the DC of this save by 2.</p>
-  actions:
-    - _id: 35h1oydg6sf2qjva
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        value: '1'
-        units: round
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_flashInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!K2pQcCaDxty6OsPD'
+  tag: classFeat_flashInfusion
+type: feat
 

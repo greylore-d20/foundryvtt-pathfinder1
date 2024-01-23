@@ -1,8 +1,33 @@
 _id: 0d756xyqhinsstas
-name: Pyrotechnics
-type: spell
+_key: '!items!0d756xyqhinsstas'
 img: icons/magic/fire/explosion-fireball-medium-purple-orange.webp
+name: Pyrotechnics
 system:
+  actions:
+    - _id: 25kis6cp0nc0lbpg
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: >-
+          1d4+1 rounds, or 1d4+1 rounds after creatures leave the smoke cloud;
+          see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates or Fortitude negates; see text
+        type: fort
+      target:
+        value: one fire source, up to a 20-ft. cube
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Pyrotechnics</i> turns a fire into a burst of blinding fireworks or
@@ -22,45 +47,20 @@ system:
       penalties to Strength and Dexterity (Fortitude negates). These effects
       last for 1d4+1 rounds after the cloud dissipates or after the creature
       leaves the area of the cloud. Spell resistance does not apply.</p>
-  actions:
-    - _id: 25kis6cp0nc0lbpg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: >-
-          1d4+1 rounds, or 1d4+1 rounds after creatures leave the smoke cloud;
-          see text
-      target:
-        value: one fire source, up to a 20-ft. cube
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will negates or Fortitude negates; see text
   learnedAt:
     class:
+      bard: 2
+      bloodrager: 2
+      magus: 2
+      mesmerist: 2
+      psychic: 2
       sorcerer: 2
       wizard: 2
-      bard: 2
-      magus: 2
-      bloodrager: 2
-      psychic: 2
-      mesmerist: 2
     subDomain:
       Smoke: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: one fire source
-_key: '!items!0d756xyqhinsstas'
+  school: trs
+type: spell
 

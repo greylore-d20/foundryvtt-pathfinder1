@@ -1,8 +1,20 @@
 _id: 05dlMQ4G1bTM74xp
-name: Powerful Persuader
-type: feat
+_key: '!items!05dlMQ4G1bTM74xp'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Powerful Persuader
 system:
+  abilityType: su
+  actions:
+    - _id: gw9vq4bo8t6e7cyc
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, when you make a Diplomacy or Intimidate check, you can
@@ -12,22 +24,10 @@ system:
 
       <p>This power replaces the Freedom's Call power of the Liberation
       Domain.</p>
-  actions:
-    - _id: gw9vq4bo8t6e7cyc
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 6) / 2)
-  tag: classFeat_powerfulPersuader
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!05dlMQ4G1bTM74xp'
+  tag: classFeat_powerfulPersuader
+  uses:
+    maxFormula: floor((@classes.cleric.level - 6) / 2)
+    per: day
+type: feat
 

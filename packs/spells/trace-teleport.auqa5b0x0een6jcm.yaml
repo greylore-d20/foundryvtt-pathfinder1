@@ -1,8 +1,30 @@
 _id: auqa5b0x0een6jcm
-name: Trace Teleport
-type: spell
+_key: '!items!auqa5b0x0een6jcm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Trace Teleport
 system:
+  actions:
+    - _id: hhbgb68jlz9we17t
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 40-ft.-radius emanation centered on you
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '40'
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You immediately become aware of any <i>teleport</i>ation effects that
@@ -26,37 +48,15 @@ system:
       geographic knowledge of the location, so it is not sufficient for
       <i>teleport</i> or similar magic. You can't retry the caster level check,
       even if you cast trace <i>teleport</i> again.</p>
-  actions:
-    - _id: hhbgb68jlz9we17t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        value: '40'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '40'
-      area: 40-ft.-radius emanation centered on you
   learnedAt:
     class:
+      psychic: 4
       sorcerer: 5
       wizard: 5
-      psychic: 4
   level: 5
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a magnifying lens
+  school: div
   sr: false
-_key: '!items!auqa5b0x0een6jcm'
+type: spell
 

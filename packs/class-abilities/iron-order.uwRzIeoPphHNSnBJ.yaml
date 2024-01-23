@@ -1,8 +1,28 @@
 _id: uwRzIeoPphHNSnBJ
-name: Iron Order
-type: feat
+_key: '!items!uwRzIeoPphHNSnBJ'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Iron Order
 system:
+  abilityType: sp
+  actions:
+    - _id: 7im7ww8yl03i4k6n
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, you can issue an order as per
@@ -18,30 +38,10 @@ system:
       chaotic creatures take).</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: 7im7ww8yl03i4k6n
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: hour
-      target:
-        value: one creature
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_ironOrder
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!uwRzIeoPphHNSnBJ'
+  tag: classFeat_ironOrder
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

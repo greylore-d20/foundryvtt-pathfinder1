@@ -1,8 +1,30 @@
 _id: t8ozhtmfet726cs3
-name: Depilate
-type: spell
+_key: '!items!t8ozhtmfet726cs3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Depilate
 system:
+  actions:
+    - _id: ent4jh10y9u4lmv6
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature with hair or fur
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>This simple jinx causes a target's hair or fur to fall out in patchy
@@ -13,38 +35,16 @@ system:
       to the original save DC of the spell). A successful <i>break
       enchantment</i>, <i>remove curse</i>, or similar effect instantly regrows
       the target's hair or fur and removes the spell's effects.</p>
-  actions:
-    - _id: ent4jh10y9u4lmv6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature with hair or fur
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
       bard: 1
-      witch: 1
+      druid: 1
       hunter: 1
-  school: nec
-  components:
-    somatic: true
-    material: true
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a sliver of cow's tongue
-_key: '!items!t8ozhtmfet726cs3'
+  school: nec
+type: spell
 

@@ -1,8 +1,26 @@
 _id: QYHoLcZmc7ad1A1z
-name: Barbarian (Quick)
-type: feat
+_key: '!items!QYHoLcZmc7ad1A1z'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Barbarian (Quick)
 system:
+  changes:
+    - _id: jom5kuh0
+      formula: '2'
+      modifier: untyped
+      subTarget: mattack
+    - _id: 15lozryn
+      formula: '2'
+      modifier: untyped
+      subTarget: wdamage
+    - _id: tdyzbynh
+      formula: '2'
+      modifier: untyped
+      subTarget: strChecks
+    - _id: wcl5ykjc
+      formula: '2'
+      modifier: untyped
+      subTarget: strSkills
+  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -20,24 +38,6 @@ system:
       Attacks rage† (can be used a number of rounds per day equal to 4 + its HD
       + its Con modifier, functions as the greater rage† class feature if the
       creature has 10 or more HD); Ability Scores +4 Strength.</p>
-  changes:
-    - _id: jom5kuh0
-      formula: '2'
-      subTarget: mattack
-      modifier: untyped
-    - _id: 15lozryn
-      formula: '2'
-      subTarget: wdamage
-      modifier: untyped
-    - _id: tdyzbynh
-      formula: '2'
-      subTarget: strChecks
-      modifier: untyped
-    - _id: wcl5ykjc
-      formula: '2'
-      subTarget: strSkills
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
-_key: '!items!QYHoLcZmc7ad1A1z'
+type: feat
 

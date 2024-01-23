@@ -1,8 +1,39 @@
 _id: mKHMd3cbVPWTwX17
-name: Klar
-type: weapon
+_key: '!items!mKHMd3cbVPWTwX17'
 img: systems/pf1/icons/items/weapons/klar.png
+name: Klar
 system:
+  actions:
+    - _id: g5ot0x6gckql8wlf
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/klar.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Klar
   description:
     value: >-
       <p>The traditional form of this tribal weapon is a short metal blade bound
@@ -10,56 +41,25 @@ system:
       entirely out of metal. A traditional klar counts as a light wooden shield
       with armor spikes; a metal klar counts as a light steel shield with armor
       spikes. The klar's shield entry appears on page 12.</p>
-  tags:
-    - PFS
-  weight:
-    value: 6
-  price: 12
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: g5ot0x6gckql8wlf
-      name: Attack
-      img: systems/pf1/icons/items/weapons/klar.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Klar
-  weaponGroups:
-    value:
-      - bladesHeavy
-      - close
-  subType: martial
-  weaponSubtype: 1h
+  price: 12
   properties:
     spc: true
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!mKHMd3cbVPWTwX17'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesHeavy
+      - close
+  weaponSubtype: 1h
+  weight:
+    value: 6
+type: weapon
 

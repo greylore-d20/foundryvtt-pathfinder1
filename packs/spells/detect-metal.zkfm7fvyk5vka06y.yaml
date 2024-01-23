@@ -1,8 +1,30 @@
 _id: zkfm7fvyk5vka06y
-name: Detect Metal
-type: spell
+_key: '!items!zkfm7fvyk5vka06y'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Metal
 system:
+  actions:
+    - _id: iq5wnxetzplr6i8s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You detect any metal objects or creatures within a 60-foot
@@ -10,39 +32,17 @@ system:
       types of metal (such as silver, cold iron, or a type of skymetal) when you
       cast this spell; in the case of the latter, you detect only objects or
       creatures made of the specified metal.</p>
-  actions:
-    - _id: iq5wnxetzplr6i8s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level (D)
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
       alchemist: 1
+      bard: 1
+      sorcerer: 1
       summoner: 1
       summonerUnchained: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      wizard: 1
   materials:
     focus: a magnetized nail or nugget of ore
+  school: div
   sr: false
-_key: '!items!zkfm7fvyk5vka06y'
+type: spell
 

@@ -1,63 +1,63 @@
 _id: zLdHrDEnRQGbZJrv
-name: Halberd
-type: weapon
+_key: '!items!zLdHrDEnRQGbZJrv'
 img: systems/pf1/icons/items/weapons/halberd.PNG
+name: Halberd
 system:
-  description:
-    value: >-
-      <p>A halberd is similar to a 5-foot-long spear, but it also has a small,
-      axelike head mounted near the tip.</p>
-  tags:
-    - PFS
-  weight:
-    value: 12
-  price: 10
-  hardness: 10
   actions:
     - _id: ef6spzyoh4wacw8m
-      name: Attack
-      img: systems/pf1/icons/items/weapons/halberd.PNG
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 10, @size)
             type:
+              custom: ''
               values:
                 - piercing
                 - slashing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
-  held: 2h
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/halberd.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
   baseTypes:
     - Halberd
-  weaponGroups:
-    value:
-      - polearms
-  subType: martial
-  weaponSubtype: 2h
+  description:
+    value: >-
+      <p>A halberd is similar to a 5-foot-long spear, but it also has a small,
+      axelike head mounted near the tip.</p>
+  hardness: 10
+  held: 2h
+  price: 10
   properties:
     brc: true
     trp: true
   source:
     id: PZO1123
     pages: '19'
-_key: '!items!zLdHrDEnRQGbZJrv'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - polearms
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

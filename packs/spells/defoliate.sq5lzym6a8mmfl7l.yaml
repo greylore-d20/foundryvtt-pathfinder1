@@ -1,8 +1,28 @@
 _id: sq5lzym6a8mmfl7l
-name: Defoliate
-type: spell
+_key: '!items!sq5lzym6a8mmfl7l'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Defoliate
 system:
+  actions:
+    - _id: o3v3wsgjbto8ci7w
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: see text
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You hurl a tiny ball of negative energy, destroying plant life either
@@ -12,38 +32,18 @@ system:
       may also target a single plant creature with this spell.</p><p>You must
       succeed on a ranged touch attack to hit your target.</p><p>An affected
       plant creature takes 2d8 points of damage.</p>
-  actions:
-    - _id: o3v3wsgjbto8ci7w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: see text
-      range:
-        units: close
-      area: see text
   learnedAt:
     class:
+      druid: 2
+      hunter: 1
+      ranger: 1
       sorcerer: 2
       wizard: 2
-      druid: 2
-      ranger: 1
-      hunter: 1
     subDomain:
       Radiation: 8
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a locust
-_key: '!items!sq5lzym6a8mmfl7l'
+  school: nec
+type: spell
 

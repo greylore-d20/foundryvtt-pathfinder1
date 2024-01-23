@@ -1,8 +1,33 @@
 _id: 16ms1wen0vd3iezx
-name: Blend with Surroundings
-type: spell
+_key: '!items!16ms1wen0vd3iezx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blend with Surroundings
 system:
+  actions:
+    - _id: 3bky4r1aztfd5e5e
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates or Will disbelieves (if interacted with)
+        harmless: true
+        type: fort
+      target:
+        value: one creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell changes the appearance of the affected creature so that it
@@ -14,48 +39,23 @@ system:
       illusory shape, and the target's armor check penalty on Stealth checks is
       negated for the duration of the spell. If the target moves at all while
       this spell is in effect, the spell ends.</p>
-  actions:
-    - _id: 3bky4r1aztfd5e5e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates or Will disbelieves (if interacted with)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
       bard: 1
-      summoner: 1
-      witch: 1
-      shaman: 1
+      cleric: 1
+      druid: 1
       hunter: 1
+      oracle: 1
+      shaman: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a chess piece
-_key: '!items!16ms1wen0vd3iezx'
+  school: ill
+  subschool: glamer
+type: spell
 

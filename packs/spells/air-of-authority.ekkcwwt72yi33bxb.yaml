@@ -1,8 +1,26 @@
 _id: ekkcwwt72yi33bxb
-name: Air of Authority
-type: spell
+_key: '!items!ekkcwwt72yi33bxb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Air of Authority
 system:
+  actions:
+    - _id: 8ulc2lu9lnoir1nd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain an unmistakable Air of Authority, which clouds creatures'
@@ -14,33 +32,15 @@ system:
       allow additional saving throws (for instance, if a cook sees you as the
       head chef, he might be quite perplexed to see the vizier treating you as
       if you were the king).</p>
-  actions:
-    - _id: 8ulc2lu9lnoir1nd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bard: 3
-      psychic: 5
       medium: 3
       mesmerist: 3
+      psychic: 5
   level: 3
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ekkcwwt72yi33bxb'
+  subschool: glamer
+type: spell
 

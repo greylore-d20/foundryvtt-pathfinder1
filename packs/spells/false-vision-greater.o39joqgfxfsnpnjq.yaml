@@ -1,8 +1,31 @@
 _id: o39joqgfxfsnpnjq
-name: False Vision, Greater
-type: spell
+_key: '!items!o39joqgfxfsnpnjq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: False Vision, Greater
 system:
+  actions:
+    - _id: ux0rcsfzxffa616n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This functions similarly to
@@ -44,44 +67,21 @@ system:
       <p>The illusion applies to only those who observe the target via a
       divination (<em>scrying</em>) spell, and has no effect on viewers who are
       there in person.</p>
-  actions:
-    - _id: ux0rcsfzxffa616n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      bard: 6
+      mesmerist: 6
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      bard: 6
-      psychic: 7
-      mesmerist: 6
   level: 7
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a jade sphere worth 500 gp
     gpValue: 500
+    value: a jade sphere worth 500 gp
   preparation:
     spontaneousPrepared: false
+  school: ill
   sr: false
-_key: '!items!o39joqgfxfsnpnjq'
+  subschool: glamer
+type: spell
 

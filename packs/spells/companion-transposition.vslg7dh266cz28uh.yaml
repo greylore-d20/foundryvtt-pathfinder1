@@ -1,8 +1,31 @@
 _id: vslg7dh266cz28uh
-name: Companion Transposition
-type: spell
+_key: '!items!vslg7dh266cz28uh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Companion Transposition
 system:
+  actions:
+    - _id: a156j9o7e87wmday
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        harmless: true
+      target:
+        value: >-
+          yourself and one animal companion, familiar, or spirit animal within
+          range
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You trade places with the other target, teleporting as if you were both
@@ -12,45 +35,22 @@ system:
       occupied squares. As with dimension door, after casting this spell, you
       can't take any other actions until your next turn, and the other target is
       staggered until the end of its next turn due to the transposition.</p>
-  actions:
-    - _id: a156j9o7e87wmday
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: >-
-          yourself and one animal companion, familiar, or spirit animal within
-          range
-      range:
-        units: long
-      save:
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      druid: 5
-      ranger: 4
-      paladin: 4
-      witch: 5
       antipaladin: 4
-      shaman: 5
+      druid: 5
       hunter: 4
+      paladin: 4
+      ranger: 4
+      shaman: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a feather, tuft of fur, or similar memento from your target
+  school: con
   sr: false
-_key: '!items!vslg7dh266cz28uh'
+  subschool: teleportation
+type: spell
 

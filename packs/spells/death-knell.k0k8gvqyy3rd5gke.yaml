@@ -1,8 +1,30 @@
 _id: k0k8gvqyy3rd5gke
-name: Death Knell
-type: spell
+_key: '!items!k0k8gvqyy3rd5gke'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Death Knell
 system:
+  actions:
+    - _id: rh5194h96wka2ue6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous/10 minutes per HD of subject; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You draw forth the ebbing life force of a creature and use it to fuel
@@ -13,44 +35,22 @@ system:
       improving spell effects dependent on caster level. This increase in
       effective caster level does not grant you access to more spells. These
       effects last for 10 minutes per HD of the subject creature.</p>
-  actions:
-    - _id: rh5194h96wka2ue6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous/10 minutes per HD of subject; see text
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 1
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
       spiritualist: 2
+      warpriest: 2
+      witch: 2
     domain:
       Death: 2
   level: 2
   school: nec
-  types: death, evil
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '264'
-_key: '!items!k0k8gvqyy3rd5gke'
+  types: death, evil
+type: spell
 

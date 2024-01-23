@@ -1,7 +1,27 @@
-name: Metal Rending
-type: feat
+_id: AAenkn51lUvD9cld
+_key: '!items!AAenkn51lUvD9cld'
 img: icons/commodities/metal/barstock-broken-steel.webp
+name: Metal Rending
 system:
+  abilityType: su
+  actions:
+    - _id: NX4IJvRS2DgSREeP
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      damage:
+        parts:
+          - formula: floor(@classes.wizard.level / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      img: icons/commodities/metal/barstock-broken-steel.webp
+      name: Bonus Damage
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>Whenever you cast a spell that deals hit point damage, you deal extra
@@ -14,31 +34,11 @@ system:
       a creature made of metal or wearing medium or heavy armor, you can roll
       twice to penetrate the creature's spell resistance and take the better
       result.</p>
-  tags:
-    - Metal School
-  actions:
-    - _id: NX4IJvRS2DgSREeP
-      name: Bonus Damage
-      img: icons/commodities/metal/barstock-broken-steel.webp
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      damage:
-        parts:
-          - formula: floor(@classes.wizard.level / 2)
-            type:
-              values:
-                - untyped
-              custom: ''
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1117
     pages: '87'
-_id: AAenkn51lUvD9cld
-_key: '!items!AAenkn51lUvD9cld'
+  subType: classFeat
+  tags:
+    - Metal School
+type: feat
 

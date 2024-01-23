@@ -1,8 +1,20 @@
 _id: kmHyhrJZg8zE15oh
-name: Twilight Talon Improvisation
-type: feat
+_key: '!items!kmHyhrJZg8zE15oh'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Twilight Talon Improvisation
 system:
+  abilityType: ex
+  actions:
+    - _id: wa8auyefncn8xhqr
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>Whenever the investigator deals studied strike damage with an
@@ -10,21 +22,9 @@ system:
       that foe as a free action. This combat maneuver provokes attacks of
       opportunity as normal unless the investigator has a feat or other ability
       to prevent it.</p>
+  subType: classFeat
+  tag: classFeat_twilightTalonImprovisation
   tags:
     - Investigator Talent
-  actions:
-    - _id: wa8auyefncn8xhqr
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_twilightTalonImprovisation
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!kmHyhrJZg8zE15oh'
+type: feat
 

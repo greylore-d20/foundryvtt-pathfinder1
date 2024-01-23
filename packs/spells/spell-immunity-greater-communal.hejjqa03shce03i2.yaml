@@ -1,17 +1,11 @@
 _id: hejjqa03shce03i2
-name: Spell Immunity, Greater Communal
-type: spell
+_key: '!items!hejjqa03shce03i2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Immunity, Greater Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>greater spell immunity</i>, except you
-      divide the duration among the creatures in 10-minute intervals among the
-      creatures touched.</p>
   actions:
     - _id: hv271jyuab0mbk7o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,15 +13,25 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>greater spell immunity</i>, except you
+      divide the duration among the creatures in 10-minute intervals among the
+      creatures touched.</p>
   learnedAt:
     class:
       cleric: 9
@@ -35,12 +39,8 @@ system:
       psychic: 9
   level: 9
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1118
     pages: '245'
-_key: '!items!hejjqa03shce03i2'
+type: spell
 

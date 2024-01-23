@@ -1,8 +1,30 @@
 _id: 3qpvx0evlgk4bfda
-name: Sun Metal
-type: spell
+_key: '!items!3qpvx0evlgk4bfda'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sun Metal
 system:
+  actions:
+    - _id: 2dy8y1dziut0p7mj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: one melee weapon
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target weapon ignites into flame that does not hurt the weapon or
@@ -15,37 +37,15 @@ system:
       damage. It does not function on weapons with the <i>frost</i> or <i>icy
       burst</i> weapon special ability or any other effect that grants a weapon
       extra cold damage.</p>
-  actions:
-    - _id: 2dy8y1dziut0p7mj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (see text)
-      target:
-        value: one melee weapon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
-      ranger: 1
-      paladin: 1
       hunter: 1
+      oracle: 1
+      paladin: 1
+      ranger: 1
+      warpriest: 1
   school: trs
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3qpvx0evlgk4bfda'
+type: spell
 

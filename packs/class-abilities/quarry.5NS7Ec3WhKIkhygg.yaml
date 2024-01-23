@@ -1,8 +1,21 @@
 _id: 5NS7Ec3WhKIkhygg
-name: Quarry
-type: feat
+_key: '!items!5NS7Ec3WhKIkhygg'
 img: systems/pf1/icons/skills/arrow_05.jpg
+name: Quarry
 system:
+  abilityType: ex
+  actions:
+    - _id: kmp1zkz9imlgwyu7
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/arrow_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Ranger
+      - Slayer
   description:
     value: >-
       <p>The character can, as a <em>standard action</em>, denote one target
@@ -20,23 +33,10 @@ system:
       cannot select a new quarry for 24 hours. If the chracter sees proof that
       his quarry is <em>dead</em>, he can select a new quarry after waiting 1
       hour.</p>
-  actions:
-    - _id: kmp1zkz9imlgwyu7
-      name: Use
-      img: systems/pf1/icons/skills/arrow_05.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_quarry
-  subType: classFeat
-  associations:
-    classes:
-      - Ranger
-      - Slayer
-  abilityType: ex
   source:
     id: PZO1110
     pages: '67'
-_key: '!items!5NS7Ec3WhKIkhygg'
+  subType: classFeat
+  tag: classFeat_quarry
+type: feat
 

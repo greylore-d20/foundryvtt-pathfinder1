@@ -1,18 +1,11 @@
 _id: 9n0hrflrshpxv4ns
-name: Weapons Against Evil
-type: spell
+_key: '!items!9n0hrflrshpxv4ns'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Weapons Against Evil
 system:
-  description:
-    value: >-
-      <p>Each weapon this spell affects each shines with pale light that dimly
-      illuminates a 5-foot square. These weapons also ignore the DR of evil
-      creatures that have DR 5 or lower, as long as the damage reduction is not
-      DR/epic.</p>
   actions:
     - _id: bggl7r2puep299xa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,28 +13,35 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one weapon/level, no two of which can be more than 20 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates (object)
         harmless: true
+        type: fort
+      target:
+        value: one weapon/level, no two of which can be more than 20 ft. apart
+  components:
+    divineFocus: 1
+    verbal: true
+  description:
+    value: >-
+      <p>Each weapon this spell affects each shines with pale light that dimly
+      illuminates a 5-foot square. These weapons also ignore the DR of evil
+      creatures that have DR 5 or lower, as long as the damage reduction is not
+      DR/epic.</p>
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
+      inquisitor: 1
       oracle: 1
       paladin: 1
-      inquisitor: 1
+      warpriest: 1
   school: trs
-  components:
-    verbal: true
-    divineFocus: 1
   source:
     id: PZO9267
     pages: '245'
-_key: '!items!9n0hrflrshpxv4ns'
+type: spell
 

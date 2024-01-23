@@ -1,8 +1,31 @@
 _id: 8p6eshc9ef48anim
-name: Besmara's Grasping Depths
-type: spell
+_key: '!items!8p6eshc9ef48anim'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Besmara's Grasping Depths
 system:
+  actions:
+    - _id: qk3fliy365r9n83q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-ft. cube/level (S)
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial; see text
+        type: will
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call upon the restless souls of those who died at sea. This spell
@@ -30,43 +53,20 @@ system:
       haunt-like manifestation is active throughout the spell's duration,
       rendering it vulnerable to effects that damage haunts. When the haunt
       reaches 0 hit points, the spell ends.</p>
-  actions:
-    - _id: qk3fliy365r9n83q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial; see text
-      area: one 5-ft. cube/level (S)
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 6
       inquisitor: 6
+      oracle: 5
       shaman: 6
       spiritualist: 5
+      warpriest: 5
+      witch: 6
   level: 5
+  materials:
+    value: a vial of sea water
   school: nec
   subschool: haunted
   types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: a vial of sea water
-_key: '!items!8p6eshc9ef48anim'
+type: spell
 

@@ -1,19 +1,10 @@
 _id: 1hi9dt2pd3mtkm24
-name: Shadow Claws
-type: spell
+_key: '!items!1hi9dt2pd3mtkm24'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Claws
 system:
-  description:
-    value: >-
-      <p>You summon a pair of claws over your hands formed from semi-real
-      material. This grants you two primary claw attacks dealing 1d4 points of
-      damage if you are Medium (1d3 if Small) plus 1 point of Strength damage. A
-      successful Fortitude saving throw negates the Strength damage (DC = this
-      spell's DC).</p>
   actions:
     - _id: f676rgxwyirbe14t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,26 +12,35 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You summon a pair of claws over your hands formed from semi-real
+      material. This grants you two primary claw attacks dealing 1d4 points of
+      damage if you are Medium (1d3 if Small) plus 1 point of Strength damage. A
+      successful Fortitude saving throw negates the Strength damage (DC = this
+      spell's DC).</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
       antipaladin: 1
-      magus: 2
+      bard: 2
       bloodrager: 2
+      magus: 2
+      sorcerer: 2
       spiritualist: 2
+      wizard: 2
   level: 2
   school: ill
+  sr: false
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!1hi9dt2pd3mtkm24'
+type: spell
 

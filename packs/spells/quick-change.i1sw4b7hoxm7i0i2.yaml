@@ -1,19 +1,10 @@
 _id: i1sw4b7hoxm7i0i2
-name: Quick Change
-type: spell
+_key: '!items!i1sw4b7hoxm7i0i2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Quick Change
 system:
-  description:
-    value: >-
-      <p>If you have the change shape special quality, you can revert to your
-      true form as a swift action. If a creature is not aware of your true form,
-      when you use this spell to revert to your true form and attack that
-      creature in the same round, the creature is denied its Dexterity bonus to
-      AC against your first attack.</p>
   actions:
     - _id: 8tknnnkqgpmuy95z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,36 +12,45 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>If you have the change shape special quality, you can revert to your
+      true form as a swift action. If a creature is not aware of your true form,
+      when you use this spell to revert to your true form and attack that
+      creature in the same round, the creature is denied its Dexterity bonus to
+      AC against your first attack.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 2
-      bard: 2
       alchemist: 2
-      summoner: 2
-      witch: 2
+      bard: 2
+      bloodrager: 2
+      druid: 2
+      hunter: 2
       inquisitor: 2
       magus: 2
-      bloodrager: 2
-      shaman: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      ranger: 2
+      shaman: 2
+      sorcerer: 2
       spiritualist: 2
-      hunter: 2
+      summoner: 2
       summonerUnchained: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!i1sw4b7hoxm7i0i2'
+  subschool: polymorph
+type: spell
 

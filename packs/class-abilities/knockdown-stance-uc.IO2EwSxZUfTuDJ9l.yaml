@@ -1,8 +1,22 @@
 _id: IO2EwSxZUfTuDJ9l
-name: Knockdown Stance (UC)
-type: feat
+_key: '!items!IO2EwSxZUfTuDJ9l'
 img: systems/pf1/icons/feats/deafening-critical.jpg
+name: Knockdown Stance (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: ic1va0aua2r8hsfl
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Barbarian (Unchained)
   description:
     value: >-
       <p>The barbarian can focus on toppling her foes. Once per round, she can
@@ -11,21 +25,7 @@ system:
       an attack of opportunity.</p>
 
       <p>This is a stance rage power.</p>
-  actions:
-    - _id: ic1va0aua2r8hsfl
-      name: Use
-      img: systems/pf1/icons/feats/deafening-critical.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_knockdownStanceUc
   subType: classFeat
-  associations:
-    classes:
-      - Barbarian (Unchained)
-  abilityType: ex
-_key: '!items!IO2EwSxZUfTuDJ9l'
+  tag: classFeat_knockdownStanceUc
+type: feat
 

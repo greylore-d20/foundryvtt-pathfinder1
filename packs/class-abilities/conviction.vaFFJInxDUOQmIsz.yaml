@@ -1,8 +1,20 @@
 _id: vaFFJInxDUOQmIsz
-name: Conviction
-type: feat
+_key: '!items!vaFFJInxDUOQmIsz'
 img: systems/pf1/icons/spells/evil-eye-eerie-2.jpg
+name: Conviction
 system:
+  abilityType: su
+  actions:
+    - _id: 58wv2uywpjjaec8u
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/evil-eye-eerie-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you can reroll any one ability check, attack roll, skill
@@ -10,25 +22,13 @@ system:
       ability after the die is rolled, but before the results are revealed by
       the GM. You must take the second result, even if it is worse. You can use
       this ability once per day.</p>
-  actions:
-    - _id: 58wv2uywpjjaec8u
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-eerie-2.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_conviction
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
   source:
     id: PZO1110
     pages: '74'
-_key: '!items!vaFFJInxDUOQmIsz'
+  subType: classFeat
+  tag: classFeat_conviction
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

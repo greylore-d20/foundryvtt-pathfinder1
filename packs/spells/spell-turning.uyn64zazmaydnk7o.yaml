@@ -1,8 +1,28 @@
 _id: uyn64zazmaydnk7o
-name: Spell Turning
-type: spell
+_key: '!items!uyn64zazmaydnk7o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Turning
 system:
+  actions:
+    - _id: tl4rnfr7oytkjt67
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: until expended or 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Spells and spell-like effects targeted on you are turned back upon the
@@ -26,45 +46,25 @@ system:
       turning effects are rendered nonfunctional for 1d4
       minutes.</td></tr><tr><td>98-100</td><td>Both of you go through a rift
       into another plane.</td></tr></tbody></table>
-  actions:
-    - _id: tl4rnfr7oytkjt67
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: until expended or 10 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
+    bloodline:
+      Destined: 7
     class:
-      sorcerer: 7
-      wizard: 7
-      summoner: 5
       psychic: 7
+      sorcerer: 7
+      summoner: 5
       summonerUnchained: 6
+      wizard: 7
     domain:
       Luck: 7
       Magic: 7
-    bloodline:
-      Destined: 7
   level: 7
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a small silver mirror
-  sr: false
+  school: abj
   source:
     id: PZO1110
     pages: '347'
-_key: '!items!uyn64zazmaydnk7o'
+  sr: false
+type: spell
 

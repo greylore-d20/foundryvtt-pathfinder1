@@ -1,8 +1,30 @@
 _id: dvnc7zhwgccvmv9f
-name: Jealous Rage
-type: spell
+_key: '!items!dvnc7zhwgccvmv9f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Jealous Rage
 system:
+  actions:
+    - _id: 2876reulw92cjm5l
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fill the target with a sense of entitled self-importance, making
@@ -17,42 +39,20 @@ system:
       deals lethal damage is considered an attack for this purpose. Once the
       target deals lethal damage to the object of his <i>jealous rage</i>, the
       compulsion to attack that creature ends.</p>
-  actions:
-    - _id: 2876reulw92cjm5l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one living creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      bard: 2
-      witch: 3
       antipaladin: 2
+      bard: 2
       bloodrager: 2
-      shaman: 3
-      psychic: 3
       mesmerist: 2
+      psychic: 3
+      shaman: 3
       spiritualist: 2
+      witch: 3
   level: 2
   school: enc
+  sr: false
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!dvnc7zhwgccvmv9f'
+type: spell
 

@@ -1,8 +1,23 @@
 _id: KeR1tPWDZo880yqh
-name: Building-Up Koan (UC)
-type: feat
+_key: '!items!KeR1tPWDZo880yqh'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Building-Up Koan (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: n7kfy6izewsltqa9
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      save:
+        type: will
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 2 ki points as a swift action to ask
@@ -17,22 +32,7 @@ system:
       ability.</p>
 
       <p>A monk must be at least 8th level before selecting this ki power.</p>
-  actions:
-    - _id: n7kfy6izewsltqa9
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      actionType: save
-      save:
-        type: will
-  tag: classFeat_buildingupKoanUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!KeR1tPWDZo880yqh'
+  tag: classFeat_buildingupKoanUc
+type: feat
 

@@ -1,17 +1,11 @@
 _id: 9gk4lozwcoafkiw2
-name: Sculpt Simulacrum
-type: spell
+_key: '!items!9gk4lozwcoafkiw2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sculpt Simulacrum
 system:
-  description:
-    value: >-
-      <p>You create cosmetic changes to a simulacrum, similar to <i>disguise
-      self</i>, except the changes are physical rather than illusory. This does
-      not change any of the simulacrum's abilities.</p>
   actions:
     - _id: e183krzjhsk1cpoc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,23 +13,29 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: simulacrum touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: simulacrum touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You create cosmetic changes to a simulacrum, similar to <i>disguise
+      self</i>, except the changes are physical rather than illusory. This does
+      not change any of the simulacrum's abilities.</p>
   learnedAt:
     class:
+      psychic: 2
       sorcerer: 2
       wizard: 2
-      psychic: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!9gk4lozwcoafkiw2'
+type: spell
 

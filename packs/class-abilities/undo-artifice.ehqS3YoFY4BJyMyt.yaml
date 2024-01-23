@@ -1,8 +1,27 @@
 _id: ehqS3YoFY4BJyMyt
-name: Undo Artifice
-type: feat
+_key: '!items!ehqS3YoFY4BJyMyt'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Undo Artifice
 system:
+  abilityType: sp
+  actions:
+    - _id: 4x5po13mnfafu76j
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: perm
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: close
+      target:
+        value: one object
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>At 11th-level, you gain the ability to reduce a nonliving item to its
@@ -18,29 +37,10 @@ system:
 
       <p>You may use undo artifice a number of times per day equal to your
       Charisma modifier.</p>
-  actions:
-    - _id: 4x5po13mnfafu76j
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: perm
-      target:
-        value: one object
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '@abilities.cha.mod'
-  tag: classFeat_undoArtifice
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!ehqS3YoFY4BJyMyt'
+  tag: classFeat_undoArtifice
+  uses:
+    maxFormula: '@abilities.cha.mod'
+    per: day
+type: feat
 

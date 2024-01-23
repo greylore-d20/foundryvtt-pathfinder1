@@ -1,8 +1,38 @@
 _id: TGPELygeHlA4eDrj
-name: Dire Bolas
-type: weapon
+_key: '!items!TGPELygeHlA4eDrj'
 img: systems/pf1/icons/items/weapons/bolas.png
+name: Dire Bolas
 system:
+  actions:
+    - _id: uvibsibaflk41bsi
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/bolas.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Dire Bolas
   description:
     value: >-
       <p>This specialized bolas can be used to perform ranged trip combat
@@ -13,62 +43,32 @@ system:
       Making a ranged attack with it is a full-round action. You can use a dire
       bolas to trip a creature whose size is up to three size categories larger
       than yours.</p>
-  tags:
-    - PFS
-  weight:
-    value: 4
-  price: 20
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: uvibsibaflk41bsi
-      name: Throw
-      img: systems/pf1/icons/items/weapons/bolas.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Dire Bolas
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 20
   properties:
-    trp: true
     nnl: true
+    trp: true
   source:
     id: PZO9453
     pages: '24'
-_key: '!items!TGPELygeHlA4eDrj'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 4
+type: weapon
 

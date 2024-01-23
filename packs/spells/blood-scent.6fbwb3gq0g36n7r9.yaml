@@ -1,8 +1,31 @@
 _id: 6fbwb3gq0g36n7r9
-name: Blood Scent
-type: spell
+_key: '!items!6fbwb3gq0g36n7r9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Scent
 system:
+  actions:
+    - _id: 8d38m56bbux0waw0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature/2 levels, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You greatly magnify the target's ability to smell the presence of
@@ -14,46 +37,23 @@ system:
       bonus on attack and damage rolls against creatures they can smell with
       this spell, or a +4 morale bonus if the target's blood counts as a strong
       scent.</p>
-  actions:
-    - _id: 8d38m56bbux0waw0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one creature/2 levels, no two of which can be more than 30 ft. apart
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      ranger: 2
       alchemist: 3
-      witch: 3
-      inquisitor: 3
       antipaladin: 2
       bloodrager: 3
-      psychic: 3
+      cleric: 3
+      druid: 3
       hunter: 2
+      inquisitor: 3
+      oracle: 3
+      psychic: 3
+      ranger: 2
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!6fbwb3gq0g36n7r9'
+type: spell
 

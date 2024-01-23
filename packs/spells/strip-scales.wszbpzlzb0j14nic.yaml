@@ -1,16 +1,11 @@
 _id: wszbpzlzb0j14nic
-name: Strip Scales
-type: spell
+_key: '!items!wszbpzlzb0j14nic'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Strip Scales
 system:
-  description:
-    value: >-
-      <p>You reduce the target's racial natural armor bonus by 1 point per 3
-      caster levels.</p>
   actions:
     - _id: fvjb8c3wqkhhl84d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,29 +13,34 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude
+        type: fort
+      target:
+        value: one living creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You reduce the target's racial natural armor bonus by 1 point per 3
+      caster levels.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       druid: 4
-      witch: 5
       hunter: 4
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a single reptile scale
-_key: '!items!wszbpzlzb0j14nic'
+  school: trs
+type: spell
 

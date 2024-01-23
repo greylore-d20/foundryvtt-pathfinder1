@@ -1,7 +1,38 @@
-name: Assasinate (SLA)
-type: feat
+_id: 4OiltCz1tkgXU7C7
+_key: '!items!4OiltCz1tkgXU7C7'
 img: systems/pf1/icons/items/weapons/rhoka.png
+name: Assasinate (SLA)
 system:
+  abilityType: ex
+  actions:
+    - _id: ty8DRQRsqsVJrye8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/weapons/rhoka.png
+      name: Study
+    - _id: TfpyQ5ktFFp0e354
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      effectNotes:
+        - If the target fails it's save, it dies.
+      img: systems/pf1/icons/items/weapons/rhoka.png
+      name: Assasinate
+      save:
+        dc: 10 + floor(@classes.slayer.level / 2) + @abilities.int.mod
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>A slayer with this advanced talent can kill foes that are unable to
@@ -16,44 +47,13 @@ system:
       Intelligence modifier. If the target fails this save, it dies; otherwise,
       the target takes the sneak attack damage as normal and is then immune to
       that slayer’s assassinate ability for 24 hours.</p>
-  tags:
-    - Slayer Talent, Advanced
-    - Sneak Attack
-  actions:
-    - _id: ty8DRQRsqsVJrye8
-      name: Study
-      img: systems/pf1/icons/items/weapons/rhoka.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-    - _id: TfpyQ5ktFFp0e354
-      name: Assasinate
-      img: systems/pf1/icons/items/weapons/rhoka.png
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.slayer.level / 2) + @abilities.int.mod
-        type: fort
-        description: Fortitude negates
-      effectNotes:
-        - If the target fails it's save, it dies.
-  tag: classFeat_assasinateSla
-  subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
   source:
     id: PZO1129
     pages: '54'
-_id: 4OiltCz1tkgXU7C7
-_key: '!items!4OiltCz1tkgXU7C7'
+  subType: classFeat
+  tag: classFeat_assasinateSla
+  tags:
+    - Slayer Talent, Advanced
+    - Sneak Attack
+type: feat
 

@@ -1,8 +1,27 @@
 _id: h2cnN8Gbovz9oT3Q
-name: 'Luck Blessing: Lucky Presence'
-type: feat
+_key: '!items!h2cnN8Gbovz9oT3Q'
 img: systems/pf1/icons/spells/needles-acid-2.jpg
+name: 'Luck Blessing: Lucky Presence'
 system:
+  actions:
+    - _id: fv18ld9axvqkvdwu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/needles-acid-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch an ally and grant it a lucky presence. The
@@ -10,26 +29,7 @@ system:
       roll, saving throw, or skill check twice and take the better result. The
       decision to use this ability must be made before the roll is made. Once
       used, or once 1 minute passes, the effect ends.</p>
-  actions:
-    - _id: fv18ld9axvqkvdwu
-      name: Use
-      img: systems/pf1/icons/spells/needles-acid-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_luckBlessingLuckyPresence
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!h2cnN8Gbovz9oT3Q'
+  tag: classFeat_luckBlessingLuckyPresence
+type: feat
 

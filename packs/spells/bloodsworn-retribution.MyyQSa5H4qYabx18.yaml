@@ -1,8 +1,27 @@
 _id: MyyQSa5H4qYabx18
-name: Bloodsworn Retribution
-type: spell
+_key: '!items!MyyQSa5H4qYabx18'
 img: icons/skills/wounds/blood-spurt-spray-red.webp
+name: Bloodsworn Retribution
 system:
+  actions:
+    - _id: ju56q9pmoti5le5g
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: special (see text)
+      img: icons/skills/wounds/blood-spurt-spray-red.webp
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Editor's Note:</em> In order to prepare this spell, the caster must
@@ -24,37 +43,18 @@ system:
       bonus on attack rolls against the bandit leader’s minions, saves against
       spells from said minions, Intimidate checks to coerce an informant to tell
       him where the bandit leader is camped, and so on.</p>
-  actions:
-    - _id: ju56q9pmoti5le5g
-      name: Use
-      img: icons/skills/wounds/blood-spurt-spray-red.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: special (see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 6
-      oracle: 6
       hunter: 4
+      oracle: 6
       paladin: 4
       ranger: 4
       warpriest: 6
   level: 6
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: your blood
+  school: nec
   sr: false
-_key: '!items!MyyQSa5H4qYabx18'
+type: spell
 

@@ -1,16 +1,11 @@
 _id: cc0or00vpiky87n7
-name: Spellcrash, Greater
-type: spell
+_key: '!items!cc0or00vpiky87n7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spellcrash, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>lesser spellcrash</i>, except it affects
-      7th-level or lower prepared spells or spell slots.</p>
   actions:
     - _id: 7ein6c84fakkvkyi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,25 +13,30 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates; see text
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>lesser spellcrash</i>, except it affects
+      7th-level or lower prepared spells or spell slots.</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
       oracle: 8
+      sorcerer: 8
       witch: 8
+      wizard: 8
   level: 8
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!cc0or00vpiky87n7'
+type: spell
 

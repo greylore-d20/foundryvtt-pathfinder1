@@ -1,18 +1,11 @@
 _id: p222zrbf0ynwblzd
-name: Cacophonous Call
-type: spell
+_key: '!items!p222zrbf0ynwblzd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cacophonous Call
 system:
-  description:
-    value: >-
-      <p>You fill your target's mind with a blaring cacophony of discordant
-      sounds, making it hard for the target to act and concentrate.</p><p>The
-      creature gains the nauseated condition for the duration of the spell if it
-      fails its Will save.</p>
   actions:
     - _id: 0dsuuqp3ccon35iz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,26 +13,33 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You fill your target's mind with a blaring cacophony of discordant
+      sounds, making it hard for the target to act and concentrate.</p><p>The
+      creature gains the nauseated condition for the duration of the spell if it
+      fails its Will save.</p>
   learnedAt:
     class:
       bard: 2
   level: 2
+  materials:
+    value: a scrap of sheet music
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a scrap of sheet music
-_key: '!items!p222zrbf0ynwblzd'
+type: spell
 

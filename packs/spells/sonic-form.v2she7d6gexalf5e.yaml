@@ -1,8 +1,27 @@
 _id: v2she7d6gexalf5e
-name: Sonic Form
-type: spell
+_key: '!items!v2she7d6gexalf5e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sonic Form
 system:
+  actions:
+    - _id: hm6zjna2g6skzxrq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, you keep your relative shape, but you and your
@@ -22,37 +41,18 @@ system:
       a square that a creature of your size cannot normally occupy, you take 3d6
       points of damage and are shunted to the nearest open space that you can
       normally occupy.</p>
-  actions:
-    - _id: hm6zjna2g6skzxrq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 6
+      bard: 6
       sorcerer: 6
       wizard: 6
-      bard: 6
-      alchemist: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  types: sonic
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of dust gathered from a gravestone or a sacred shrine
+  school: trs
   sr: false
-_key: '!items!v2she7d6gexalf5e'
+  subschool: polymorph
+  types: sonic
+type: spell
 

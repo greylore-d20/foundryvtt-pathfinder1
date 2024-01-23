@@ -1,8 +1,22 @@
 _id: NBRb7PsnUtf5DxSm
-name: Deadly Shuriken
-type: feat
+_key: '!items!NBRb7PsnUtf5DxSm'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Deadly Shuriken
 system:
+  abilityType: ex
+  actions:
+    - _id: 4dpfpqnw5aniikl1
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
+      - Rogue
   description:
     value: >-
       <p>As a full-round action, a character with this master trick can take
@@ -19,24 +33,10 @@ system:
       the critical once using her highest base attack bonus –5. For each
       critical threat beyond the first, she reduces this penalty by 1 (to a
       maximum of 0).</p>
+  subType: classFeat
+  tag: classFeat_deadlyShuriken
   tags:
     - Ninja Trick, Master
     - Rogue Talent, Advanced
-  actions:
-    - _id: 4dpfpqnw5aniikl1
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_deadlyShuriken
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-  abilityType: ex
-_key: '!items!NBRb7PsnUtf5DxSm'
+type: feat
 

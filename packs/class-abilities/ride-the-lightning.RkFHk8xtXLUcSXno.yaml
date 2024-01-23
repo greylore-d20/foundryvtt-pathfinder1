@@ -1,8 +1,28 @@
 _id: RkFHk8xtXLUcSXno
-name: Ride the Lightning
-type: feat
+_key: '!items!RkFHk8xtXLUcSXno'
 img: systems/pf1/icons/spells/lighting-eerie-2.jpg
+name: Ride the Lightning
 system:
+  abilityType: sp
+  actions:
+    - _id: m96lpid3d5lex48w
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: round
+        value: '@classes.sorcerer.level'
+      img: systems/pf1/icons/spells/lighting-eerie-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, as a <em>full-round action</em> you can become a living
@@ -13,30 +33,10 @@ system:
       barriers do unless they are reduced to 0 <em>hit points</em>. You can use
       this power once per day for a number of rounds equal to your sorcerer
       level.</p>
-  actions:
-    - _id: m96lpid3d5lex48w
-      name: Use
-      img: systems/pf1/icons/spells/lighting-eerie-2.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '@classes.sorcerer.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_rideTheLightning
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!RkFHk8xtXLUcSXno'
+  tag: classFeat_rideTheLightning
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

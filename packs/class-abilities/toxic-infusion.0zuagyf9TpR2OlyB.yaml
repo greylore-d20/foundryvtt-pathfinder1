@@ -1,8 +1,23 @@
 _id: 0zuagyf9TpR2OlyB
-name: Toxic Infusion
-type: feat
+_key: '!items!0zuagyf9TpR2OlyB'
 img: systems/pf1/icons/spells/vines-jade-3.jpg
+name: Toxic Infusion
 system:
+  actions:
+    - _id: fq9g4jw46dzd9arq
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      name: Use
+      save:
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> wood; <b>Type</b> substance infusion; <b>Level</b> 4;
@@ -11,22 +26,7 @@ system:
 
       <p>The plants in your blast are mildly toxic. All creatures that take
       piercing or slashing damage from your blast are sickened for 1 round.</p>
-  actions:
-    - _id: fq9g4jw46dzd9arq
-      name: Use
-      img: systems/pf1/icons/spells/vines-jade-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_toxicInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!0zuagyf9TpR2OlyB'
+  tag: classFeat_toxicInfusion
+type: feat
 

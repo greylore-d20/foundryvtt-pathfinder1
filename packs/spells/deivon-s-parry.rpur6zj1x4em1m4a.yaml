@@ -1,8 +1,25 @@
 _id: rpur6zj1x4em1m4a
-name: Deivon's Parry
-type: spell
+_key: '!items!rpur6zj1x4em1m4a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deivon's Parry
 system:
+  actions:
+    - _id: 2pnfbxuzuukgptjm
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Originally designed by an Aldori magus who had long admired
@@ -14,28 +31,11 @@ system:
       weapon you're wielding, as if using the swashbuckler's opportune parry and
       riposte deed (except that this does not require panache). You cannot
       riposte as part of this spell's effect.</p>
-  actions:
-    - _id: 2pnfbxuzuukgptjm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bard: 1
       magus: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!rpur6zj1x4em1m4a'
+type: spell
 

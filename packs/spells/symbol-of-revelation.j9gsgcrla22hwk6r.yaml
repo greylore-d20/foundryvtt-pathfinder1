@@ -1,8 +1,28 @@
 _id: j9gsgcrla22hwk6r
-name: Symbol of Revelation
-type: spell
+_key: '!items!j9gsgcrla22hwk6r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Symbol of Revelation
 system:
+  actions:
+    - _id: 1ip6bla8nsv8me9m
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>symbol of death</i>, except it is only
@@ -15,43 +35,23 @@ system:
       minutes per caster level.</p><p><i>Symbol of revelation</i> can be made
       permanent with a <i>permanency</i> spell by a caster of 12th level or
       higher for the cost of 10,000 gp.</p>
-  actions:
-    - _id: 1ip6bla8nsv8me9m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one symbol
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      witch: 4
       occultist: 3
+      oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 1000
     value: >-
       mercury and phosphorous, plus powdered diamond and opal worth a total of
       1,000 gp
-    gpValue: 1000
   preparation:
     spontaneousPrepared: false
-_key: '!items!j9gsgcrla22hwk6r'
+  school: div
+type: spell
 

@@ -1,8 +1,33 @@
 _id: anya5qwdjhdfyk8u
-name: Restoration
-type: spell
+_key: '!items!anya5qwdjhdfyk8u'
 img: systems/pf1/icons/spells/heal-jade-2.jpg
+name: Restoration
 system:
+  actions:
+    - _id: lz1dmanjmiluy9ks
+      actionType: heal
+      activation:
+        cost: 3
+        type: round
+        unchained:
+          cost: 9
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/spells/heal-jade-2.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>lesser restoration</i>, except that it
@@ -14,51 +39,26 @@ system:
       damage, and it restores all points permanently drained from a single
       ability score (your choice if more than one is drained). It also
       eliminates any fatigue or exhaustion suffered by the target.</p>
-  actions:
-    - _id: lz1dmanjmiluy9ks
-      name: Use
-      img: systems/pf1/icons/spells/heal-jade-2.jpg
-      activation:
-        cost: 3
-        type: round
-        unchained:
-          cost: 9
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 4
-      oracle: 4
-      paladin: 4
       adept: 4
-      shaman: 4
-      mesmerist: 4
-      spiritualist: 4
       alchemist: 4
+      cleric: 4
       inquisitor: 4
       investigator: 4
+      mesmerist: 4
+      oracle: 4
+      paladin: 4
+      shaman: 4
+      spiritualist: 4
       warpriest: 4
   level: 4
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: diamond dust worth 100 gp or 1,000 gp, see text
     gpValue: 1000
+    value: diamond dust worth 100 gp or 1,000 gp, see text
   preparation:
     spontaneousPrepared: false
-_key: '!items!anya5qwdjhdfyk8u'
+  school: con
+  subschool: healing
+type: spell
 

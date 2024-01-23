@@ -1,8 +1,24 @@
 _id: H2LczaspdINB2MIt
-name: Ki Mount (UC)
-type: feat
+_key: '!items!H2LczaspdINB2MIt'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Ki Mount (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: 2u6j99qf73cvat0k
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.monkUnchained.level'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 1 ki point as a standard action to
@@ -13,23 +29,7 @@ system:
       still mind abilities the monk possesses.</p>
 
       <p>A monk must be at least 6th level before selecting this ki power.</p>
-  actions:
-    - _id: 2u6j99qf73cvat0k
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.monkUnchained.level'
-        units: hour
-  tag: classFeat_kiMountUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!H2LczaspdINB2MIt'
+  tag: classFeat_kiMountUc
+type: feat
 

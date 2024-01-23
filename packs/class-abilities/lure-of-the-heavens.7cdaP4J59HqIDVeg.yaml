@@ -1,8 +1,24 @@
 _id: 7cdaP4J59HqIDVeg
-name: Lure of the Heavens
-type: feat
+_key: '!items!7cdaP4J59HqIDVeg'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Lure of the Heavens
 system:
+  abilityType: su
+  actions:
+    - _id: m61mlzrzs4pw4brw
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your connection to the skies above is so strong that your feet barely
@@ -15,23 +31,7 @@ system:
       number of minutes per day equal to your oracle level. This duration does
       not need to be consecutive, but it must be spent in 1-minute
       increments.</p>
-  actions:
-    - _id: m61mlzrzs4pw4brw
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_lureOfTheHeavens
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!7cdaP4J59HqIDVeg'
+  tag: classFeat_lureOfTheHeavens
+type: feat
 

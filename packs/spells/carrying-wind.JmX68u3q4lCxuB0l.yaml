@@ -1,8 +1,27 @@
 _id: JmX68u3q4lCxuB0l
-name: Carrying Wind
-type: spell
+_key: '!items!JmX68u3q4lCxuB0l'
 img: icons/magic/air/air-wave-gust-blue.webp
+name: Carrying Wind
 system:
+  actions:
+    - _id: s90nimf39ym189rw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: icons/magic/air/air-wave-gust-blue.webp
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, a wind spirit envelopes you and carries you
@@ -14,21 +33,6 @@ system:
       feet with average maneuverability). If your caster level is 15th or
       higher, the enhancement bonus to these speeds is +30 feet (if applicable,
       your temporary fly speed is 30 feet with average maneuverability).</p>
-  actions:
-    - _id: s90nimf39ym189rw
-      name: Use
-      img: icons/magic/air/air-wave-gust-blue.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       druid: 3
@@ -36,11 +40,7 @@ system:
       shaman: 3
   level: 3
   school: con
-  types: air
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!JmX68u3q4lCxuB0l'
+  types: air
+type: spell
 

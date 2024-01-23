@@ -1,8 +1,35 @@
 _id: zrwk56c6gl27zwfx
-name: Life Pact
-type: spell
+_key: '!items!zrwk56c6gl27zwfx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Life Pact
 system:
+  actions:
+    - _id: pz2cb4u65ae2l3bm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one willing living creature/level, no two of which can be more than 30
+          ft. apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You bind the life forces of the targets into a mystical pact. If any
@@ -17,47 +44,20 @@ system:
       hit points drained from other targets are wasted.  The pact can be
       triggered once per round. It's not triggered by death effects or effects
       that do not deal hit point damage.</p>
-  actions:
-    - _id: pz2cb4u65ae2l3bm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: >-
-          one willing living creature/level, no two of which can be more than 30
-          ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
       oracle: 2
-      witch: 2
-      shaman: 2
       psychic: 2
+      shaman: 2
+      sorcerer: 2
       spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a drop of blood from each target
-_key: '!items!zrwk56c6gl27zwfx'
+  school: nec
+type: spell
 

@@ -1,35 +1,35 @@
 _id: qB0lTGQdm9za8nXH
-name: 'Nobility Blessing: Inspiring Ward'
-type: feat
+_key: '!items!qB0lTGQdm9za8nXH'
 img: systems/pf1/icons/spells/haste-royal-1.jpg
+name: 'Nobility Blessing: Inspiring Ward'
 system:
-  description:
-    value: >-
-      <p>At 1st level, you can speak a few words to a creature within 30 feet
-      that fill them with inspiration. You can grant that creature a +2 morale
-      bonus on attack rolls, ability checks, skill checks, or saving throws
-      (your choice). This effect lasts for 1 minute.</p>
   actions:
     - _id: h7bekmef7pcrwfxo
-      name: Use
-      img: systems/pf1/icons/spells/haste-royal-1.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/haste-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
       target:
         value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_nobilityBlessingInspiringWard
-  subType: classFeat
   associations:
     classes:
       - Warpriest
-_key: '!items!qB0lTGQdm9za8nXH'
+  description:
+    value: >-
+      <p>At 1st level, you can speak a few words to a creature within 30 feet
+      that fill them with inspiration. You can grant that creature a +2 morale
+      bonus on attack rolls, ability checks, skill checks, or saving throws
+      (your choice). This effect lasts for 1 minute.</p>
+  subType: classFeat
+  tag: classFeat_nobilityBlessingInspiringWard
+type: feat
 

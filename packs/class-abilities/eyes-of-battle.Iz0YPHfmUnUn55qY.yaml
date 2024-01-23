@@ -1,8 +1,27 @@
 _id: Iz0YPHfmUnUn55qY
-name: Eyes of Battle
-type: feat
+_key: '!items!Iz0YPHfmUnUn55qY'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Eyes of Battle
 system:
+  abilityType: su
+  actions:
+    - _id: kvgs5f1ejibt1osw
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman’s senses become magically heightened in the heat of battle.
@@ -15,29 +34,10 @@ system:
 
       <p>The shaman can use this ability a number of times per day equal to her
       shaman level.</p>
-  actions:
-    - _id: kvgs5f1ejibt1osw
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.shaman.level'
-  tag: classFeat_eyesOfBattle
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!Iz0YPHfmUnUn55qY'
+  tag: classFeat_eyesOfBattle
+  uses:
+    maxFormula: '@classes.shaman.level'
+    per: day
+type: feat
 

@@ -1,8 +1,51 @@
 _id: nepuuUOpM3QPHO0H
-name: Eternal Slumber
-type: feat
+_key: '!items!nepuuUOpM3QPHO0H'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Eternal Slumber
 system:
+  abilityType: su
+  actions:
+    - _id: w168r0gzpijkzgla
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: perm
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Creature
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+      touch: true
+    - _id: m0f1XGtvqe6RDuQV
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Poison Food
+      range:
+        units: touch
+      target:
+        value: food or drink
+      touch: true
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can touch a creature, causing it to drift off into a
@@ -16,53 +59,10 @@ system:
 
       <p>Whether or not the save is successful, a creature cannot be the target
       of this hex again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_eternalSlumber
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: w168r0gzpijkzgla
-      name: Creature
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: perm
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-      touch: true
-    - _id: m0f1XGtvqe6RDuQV
-      name: Poison Food
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: food or drink
-      range:
-        units: touch
-      touch: true
-  tag: classFeat_eternalSlumber
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!nepuuUOpM3QPHO0H'
+type: feat
 

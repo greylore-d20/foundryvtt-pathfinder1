@@ -1,8 +1,30 @@
 _id: y71mqkh49c6lfgec
-name: Haunting Mists
-type: spell
+_key: '!items!y71mqkh49c6lfgec'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Haunting Mists
 system:
+  actions:
+    - _id: l1dwvrgvdes9tct8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        description: Will partial (see text)
+        type: will
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An illusion of misty vapor inhabited by shadowy shapes arises around
@@ -13,40 +35,18 @@ system:
       the target).</p><p>All creatures within the mist must save or take 1d2
       points of Wisdom damage and gain the shaken condition. The shaken
       condition lasts as long as the creature remains in the mist.</p>
-  actions:
-    - _id: l1dwvrgvdes9tct8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        value: '20'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial (see text)
-      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: ill
+  sr: false
   subschool: figment
   types: fear, shadow
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!y71mqkh49c6lfgec'
+type: spell
 

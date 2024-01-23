@@ -1,8 +1,27 @@
 _id: 61uvtd18e9s6zku3
-name: Giant Form I
-type: spell
+_key: '!items!61uvtd18e9s6zku3'
 img: icons/creatures/magical/construct-iron-stomping-yellow.webp
+name: Giant Form I
 system:
+  actions:
+    - _id: vzcsyo2pltazeof4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell you can assume the form of any Large humanoid
@@ -16,37 +35,18 @@ system:
       has immunity or resistance to any elements, you gain resistance 20 to
       those elements. If the creature has vulnerability to an element, you gain
       that vulnerability.</p>
-  actions:
-    - _id: vzcsyo2pltazeof4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      alchemist: 6
     bloodline:
       Boreal: 7
+    class:
+      alchemist: 6
+      sorcerer: 7
+      wizard: 7
   level: 7
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!61uvtd18e9s6zku3'
+  subschool: polymorph
+type: spell
 

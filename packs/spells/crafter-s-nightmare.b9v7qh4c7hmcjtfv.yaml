@@ -1,8 +1,30 @@
 _id: b9v7qh4c7hmcjtfv
-name: Crafter's Nightmare
-type: spell
+_key: '!items!b9v7qh4c7hmcjtfv'
 img: icons/skills/melee/sword-damaged-broken-blue.webp
+name: Crafter's Nightmare
 system:
+  actions:
+    - _id: bn5675iiqbwcvjmj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-ft. cube/level (S)
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You concentrate feelings of competitiveness, envy, and ill will into a
@@ -21,46 +43,24 @@ system:
       and take 1d6 points of damage from the mischief. Each time the haunt is
       disruptive, the spell's haunt-like manifestation occurs during that
       round.</p>
-  actions:
-    - _id: bn5675iiqbwcvjmj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: one 5-ft. cube/level (S)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
       bard: 2
-      witch: 2
-      psychic: 2
+      druid: 2
+      hunter: 2
       medium: 1
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
       spiritualist: 2
-      hunter: 2
+      witch: 2
+      wizard: 2
   level: 2
+  materials:
+    value: a broken tool
   school: nec
   subschool: haunted
   types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a broken tool
-_key: '!items!b9v7qh4c7hmcjtfv'
+type: spell
 

@@ -1,8 +1,37 @@
 _id: xDMgU6rgdh0UNNts
-name: Shocking Touch
-type: feat
+_key: '!items!xDMgU6rgdh0UNNts'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Shocking Touch
 system:
+  abilityType: su
+  actions:
+    - _id: vxhtyeu6yn8g77rw
+      ability:
+        attack: dex
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.shaman.level / 2)
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman can make a melee touch attack that
@@ -14,39 +43,10 @@ system:
 
       <p>At 11th level, any weapon she wields is treated as a shocking
       weapon.</p>
-  actions:
-    - _id: vxhtyeu6yn8g77rw
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.shaman.level / 2)
-            type:
-              values:
-                - electric
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_shockingTouch
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!xDMgU6rgdh0UNNts'
+  tag: classFeat_shockingTouch
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

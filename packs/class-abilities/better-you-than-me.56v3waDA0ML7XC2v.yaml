@@ -1,8 +1,20 @@
 _id: 56v3waDA0ML7XC2v
-name: Better You Than me
-type: feat
+_key: '!items!56v3waDA0ML7XC2v'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Better You Than me
 system:
+  abilityType: ex
+  actions:
+    - _id: moir94ew1ttwrogz
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, the cavalier can interpose an adjacent ally in the way
@@ -17,19 +29,7 @@ system:
       natural 1, the ally takes all of the damage, including any associated
       effects (bleed, poison, etc.). An ally can purposefully fail this saving
       throw, but cannot purposefully roll a natural 1.</p>
-  actions:
-    - _id: moir94ew1ttwrogz
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_betterYouThanMe
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!56v3waDA0ML7XC2v'
+  tag: classFeat_betterYouThanMe
+type: feat
 

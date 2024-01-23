@@ -1,8 +1,39 @@
 _id: F4G4W6IN2adn2Ek6
-name: Blade Boot
-type: weapon
+_key: '!items!F4G4W6IN2adn2Ek6'
 img: systems/pf1/icons/items/weapons/blade-boot.png
+name: Blade Boot
 system:
+  actions:
+    - _id: jy4gvpg3xlbxznaw
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/blade-boot.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Blade Boot
   description:
     value: >-
       <p>Blade boots come with a spring-mounted knife that pops out when
@@ -10,62 +41,31 @@ system:
       boot as an off-hand weapon. Releasing the knife is a swift action;
       rearming it is a full-round action. When the blade is extended, you treat
       normal terrain as difficult and difficult terrain as impassable.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 25
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: jy4gvpg3xlbxznaw
-      name: Attack
-      img: systems/pf1/icons/items/weapons/blade-boot.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Blade Boot
+  material:
+    addon:
+      - null
+      - null
+    normal:
+      value: ''
+  price: 25
+  properties:
+    fin: true
+    spc: true
+  source:
+    id: PZO9410
+    pages: '2'
+  subType: martial
+  tags:
+    - PFS
   weaponGroups:
     value:
       - bladesLight
       - close
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-      - null
-  subType: martial
-  properties:
-    spc: true
-    fin: true
-  source:
-    id: PZO9410
-    pages: '2'
-_key: '!items!F4G4W6IN2adn2Ek6'
+  weight:
+    value: 2
+type: weapon
 

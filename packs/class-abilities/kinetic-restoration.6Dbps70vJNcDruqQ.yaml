@@ -1,8 +1,27 @@
 _id: 6Dbps70vJNcDruqQ
-name: Kinetic Restoration
-type: feat
+_key: '!items!6Dbps70vJNcDruqQ'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Kinetic Restoration
 system:
+  abilityType: sp
+  actions:
+    - _id: 3jb1wry8cx9ijl50
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> universal; <b>Type</b> utility (Su); <b>Level</b> 3;
@@ -14,26 +33,7 @@ system:
       condition to fatigued.<p>If you have the kinetic healer utility wild
       talent, you can use both kineticist restoration and kinetic healer on the
       same target with one standard action.</p>
-  actions:
-    - _id: 3jb1wry8cx9ijl50
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_kineticRestoration
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!6Dbps70vJNcDruqQ'
+  tag: classFeat_kineticRestoration
+type: feat
 

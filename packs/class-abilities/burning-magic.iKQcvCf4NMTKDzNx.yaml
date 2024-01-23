@@ -1,8 +1,20 @@
 _id: iKQcvCf4NMTKDzNx
-name: Burning Magic
-type: feat
+_key: '!items!iKQcvCf4NMTKDzNx'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Burning Magic
 system:
+  abilityType: su
+  actions:
+    - _id: 69fzefofjlwbgnnv
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Whenever a creature fails a saving throw and takes fire damage from one
@@ -14,19 +26,7 @@ system:
       while immersing the creature in water automatically extinguishes the fire.
       Spells that do not grant a save do not cause a creature to catch on
       fire.</p>
-  actions:
-    - _id: 69fzefofjlwbgnnv
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_burningMagic
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!iKQcvCf4NMTKDzNx'
+  tag: classFeat_burningMagic
+type: feat
 

@@ -1,58 +1,58 @@
 _id: AbmnL8ilLH6r95Oa
-name: Heavy Mace
-type: weapon
+_key: '!items!AbmnL8ilLH6r95Oa'
 img: systems/pf1/icons/items/weapons/mace-heavy.PNG
+name: Heavy Mace
 system:
-  description:
-    value: >-
-      <p>A heavy mace has a larger head and a longer handle than a light
-      mace.</p>
-  tags:
-    - PFS
-  weight:
-    value: 8
-  price: 12
-  hp:
-    max: 5
-    value: 5
-  hardness: 10
   actions:
     - _id: zfic7aj0nkinloer
-      name: Attack
-      img: systems/pf1/icons/items/weapons/mace-heavy.PNG
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 8, @size)
             type:
+              custom: ''
               values:
                 - bludgeoning
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/mace-heavy.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
   baseTypes:
     - Heavy Mace
+  description:
+    value: >-
+      <p>A heavy mace has a larger head and a longer handle than a light
+      mace.</p>
+  hardness: 10
+  hp:
+    max: 5
+    value: 5
+  price: 12
+  source:
+    id: PZO1123
+    pages: '17'
+  tags:
+    - PFS
   weaponGroups:
     value:
       - hammers
   weaponSubtype: 1h
-  source:
-    id: PZO1123
-    pages: '17'
-_key: '!items!AbmnL8ilLH6r95Oa'
+  weight:
+    value: 8
+type: weapon
 

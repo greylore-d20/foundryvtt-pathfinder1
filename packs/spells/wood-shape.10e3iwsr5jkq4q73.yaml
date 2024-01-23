@@ -1,19 +1,11 @@
 _id: 10e3iwsr5jkq4q73
-name: Wood Shape
-type: spell
+_key: '!items!10e3iwsr5jkq4q73'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wood Shape
 system:
-  description:
-    value: >-
-      <p>Wood <i>shape</i> enables you to form one existing piece of wood into
-      any <i>shape</i> that suits your purpose. While it is possible to make
-      crude coffers, doors, and so forth, fine detail isn't possible. There is a
-      30% chance that any <i>shape</i> that includes moving parts simply doesn't
-      work.</p>
   actions:
     - _id: 8d70rn6769se8l9z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,30 +13,38 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one touched piece of wood no larger than 10 cu. ft. + 1 cu. ft./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
+        type: will
+      target:
+        value: one touched piece of wood no larger than 10 cu. ft. + 1 cu. ft./level
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Wood <i>shape</i> enables you to form one existing piece of wood into
+      any <i>shape</i> that suits your purpose. While it is possible to make
+      crude coffers, doors, and so forth, fine detail isn't possible. There is a
+      30% chance that any <i>shape</i> that includes moving parts simply doesn't
+      work.</p>
   learnedAt:
     class:
       druid: 2
-      shaman: 2
-      occultist: 2
       hunter: 2
+      occultist: 2
+      shaman: 2
     domain:
       Artifice: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '370'
-_key: '!items!10e3iwsr5jkq4q73'
+type: spell
 

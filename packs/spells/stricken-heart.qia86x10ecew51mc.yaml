@@ -1,8 +1,26 @@
 _id: qia86x10ecew51mc
-name: Stricken Heart
-type: spell
+_key: '!items!qia86x10ecew51mc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stricken Heart
 system:
+  actions:
+    - _id: sknt7mas8upbbe0d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell covers your hand with a writhing black aura. As part of
@@ -11,36 +29,18 @@ system:
       round. If the attack is a critical hit, the target is staggered for 1
       minute instead. Creatures immune to precision damage are immune to the
       staggered effect.</p>
-  actions:
-    - _id: sknt7mas8upbbe0d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
       inquisitor: 2
-      shaman: 3
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      shaman: 3
+      sorcerer: 2
       spiritualist: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: nec
   types: death
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!qia86x10ecew51mc'
+type: spell
 

@@ -1,8 +1,26 @@
 _id: rrsefzpm3nhztvld
-name: Speak with Plants
-type: spell
+_key: '!items!rrsefzpm3nhztvld'
 img: icons/magic/nature/tree-animated-smile.webp
+name: Speak with Plants
 system:
+  actions:
+    - _id: xk9tdb9akvexzlni
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can communicate with normal plants and plant creatures, and can ask
@@ -14,34 +32,16 @@ system:
       plant creatures are likely to be terse and evasive, while the more stupid
       ones may make inane comments. If a plant creature is friendly, it may do
       some favor or service for you.</p>
-  actions:
-    - _id: xk9tdb9akvexzlni
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      druid: 3
-      ranger: 2
-      bard: 4
-      hunter: 2
     bloodline:
       Verdant: 3
+    class:
+      bard: 4
+      druid: 3
+      hunter: 2
+      ranger: 2
   level: 3
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!rrsefzpm3nhztvld'
+type: spell
 

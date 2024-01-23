@@ -1,18 +1,11 @@
 _id: j7l8cd9r8qog3jpl
-name: Id Insinuation II
-type: spell
+_key: '!items!j7l8cd9r8qog3jpl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Id Insinuation II
 system:
-  description:
-    value: >-
-      <p>This functions as <i>id insinuation I</i>, except as noted above. In
-      addition, on the first round of the effect, the targets of this spell must
-      roll twice to determine the result of their confused condition. You select
-      which roll is used. This spell can be undercast.</p>
   actions:
     - _id: 4pg45hd5nufy6s24
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,14 +13,23 @@ system:
           type: action
       duration:
         value: concentration + 1 round
-      target:
-        value: two creatures
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: two creatures
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>This functions as <i>id insinuation I</i>, except as noted above. In
+      addition, on the first round of the effect, the targets of this spell must
+      roll twice to determine the result of their confused condition. You select
+      which roll is used. This spell can be undercast.</p>
   learnedAt:
     class:
       psychic: 3
@@ -35,7 +37,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!j7l8cd9r8qog3jpl'
+type: spell
 

@@ -1,8 +1,30 @@
 _id: fbudsmarxob3pcms
-name: Cave Fangs
-type: spell
+_key: '!items!fbudsmarxob3pcms'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cave Fangs
 system:
+  actions:
+    - _id: 61jiro7akyk40t0t
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-ft. square/level (S); the area must be a stone surface
+      duration:
+        value: 1 day/level or until triggered (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex half (see below)
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a magical trap in the area that causes deadly stalactites or
@@ -36,43 +58,21 @@ system:
       each effect of the spell deals 4d8 points of damage instead of 3d8, and
       creatures that trigger the cave fangs take a -2 penalty on their saving
       throws against the spell's effect.</p>
-  actions:
-    - _id: 61jiro7akyk40t0t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level or until triggered (D)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see below)
-      area: one 5-ft. square/level (S); the area must be a stone surface
   learnedAt:
     class:
       druid: 5
-      witch: 5
-      shaman: 5
       hunter: 5
+      shaman: 5
+      witch: 5
   level: 5
-  school: con
-  subschool: creation
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a sharp gemstone fragment worth 150 gp
     gpValue: 150
+    value: a sharp gemstone fragment worth 150 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!fbudsmarxob3pcms'
+  subschool: creation
+  types: earth
+type: spell
 

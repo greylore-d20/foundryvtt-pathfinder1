@@ -1,18 +1,10 @@
 _id: t1wkaw7wfvboswcb
-name: Tap Inner Beauty
-type: spell
+_key: '!items!t1wkaw7wfvboswcb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tap Inner Beauty
 system:
-  description:
-    value: >-
-      <p>This spell allows you to tap into the natural beauty of your soul and
-      let it shine from your eyes and your speech. While the spell is active,
-      you gain a +2 insight bonus on all Charisma ability checks and
-      Charisma-based skill checks.</p>
   actions:
     - _id: 4bj2wkbut1npo5vm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,26 +12,34 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell allows you to tap into the natural beauty of your soul and
+      let it shine from your eyes and your speech. While the spell is active,
+      you gain a +2 insight bonus on all Charisma ability checks and
+      Charisma-based skill checks.</p>
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
+      oracle: 1
+      warpriest: 1
       witch: 1
-  school: div
-  components:
-    verbal: true
-    material: true
   materials:
     value: a tiny mirror
-  sr: false
+  school: div
   source:
     id: PZO9267
     pages: '243'
-_key: '!items!t1wkaw7wfvboswcb'
+  sr: false
+type: spell
 

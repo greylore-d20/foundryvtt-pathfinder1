@@ -1,8 +1,33 @@
 _id: b433azw2m5ov8pkq
-name: Thorny Entanglement
-type: spell
+_key: '!items!b433azw2m5ov8pkq'
 img: icons/magic/nature/root-vine-entangled-humanoid.webp
+name: Thorny Entanglement
 system:
+  actions:
+    - _id: lldyg4n7n9kg7737
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: plants in a 40-ft.-radius spread
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex partial (see text)
+        type: ref
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>entangle</i>, except the plants also grow
@@ -14,40 +39,15 @@ system:
       counts as a thrown weapon and deals 2d6 points of piercing damage on a
       successful hit. A creature that enters the spell's area or ends its turn
       there automatically takes 2d6 points of piercing damage.</p>
-  actions:
-    - _id: lldyg4n7n9kg7737
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '40'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial (see text)
-      area: plants in a 40-ft.-radius spread
   learnedAt:
     class:
       druid: 3
-      ranger: 3
-      witch: 3
-      shaman: 3
       hunter: 3
+      ranger: 3
+      shaman: 3
+      witch: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!b433azw2m5ov8pkq'
+type: spell
 

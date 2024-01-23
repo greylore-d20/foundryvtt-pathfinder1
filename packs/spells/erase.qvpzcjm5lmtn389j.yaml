@@ -1,8 +1,29 @@
 _id: qvpzcjm5lmtn389j
-name: Erase
-type: spell
+_key: '!items!qvpzcjm5lmtn389j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Erase
 system:
+  actions:
+    - _id: thttho7k5x90ewd9
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+      target:
+        value: one scroll or two pages
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Erase</i> removes writings of either magical or mundane nature from
@@ -17,40 +38,19 @@ system:
       A natural 1 is always a failure on this check. If you fail to erase
       <i><i>explosive runes</i>,</i> a <i>Glyph of Warding</i>, or a <i>sepia
       snake sigil</i>, you accidentally activate that writing instead.</p>
-  actions:
-    - _id: thttho7k5x90ewd9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one scroll or two pages
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
+      bard: 1
+      occultist: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      bard: 1
-      psychic: 1
-      occultist: 1
     domain:
       Rune: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '279'
-_key: '!items!qvpzcjm5lmtn389j'
+  sr: false
+type: spell
 

@@ -1,8 +1,29 @@
 _id: cxp0vodhvuwnfmye
-name: Litany of Madness
-type: spell
+_key: '!items!cxp0vodhvuwnfmye'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Madness
 system:
+  actions:
+    - _id: t5lw359ljxzs1udb
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 or more rounds (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: no, see below
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This litany is a sermon of madness. The target is confused. At the
@@ -11,34 +32,13 @@ system:
       continues to be confused. If it makes the save, the effect ends.  While
       subject to this spell, the target cannot be the target of another spell
       that has the word "litany" in the title.</p>
-  actions:
-    - _id: t5lw359ljxzs1udb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 or more rounds (see below)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: no, see below
   learnedAt:
     class:
-      inquisitor: 6
       antipaladin: 4
+      inquisitor: 6
   level: 6
   school: enc
   subschool: charm
   types: language-dependent, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!cxp0vodhvuwnfmye'
+type: spell
 

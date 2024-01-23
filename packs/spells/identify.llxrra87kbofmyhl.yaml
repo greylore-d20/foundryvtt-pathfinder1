@@ -1,59 +1,59 @@
 _id: llxrra87kbofmyhl
-name: Identify
-type: spell
+_key: '!items!llxrra87kbofmyhl'
 img: icons/creatures/eyes/humanoid-single-blind.webp
+name: Identify
 system:
+  actions:
+    - _id: npgcnejc0iwun59m
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: 3 rounds/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>detect magic</i>, except that it gives you a
       +10 enhancement bonus on Spellcraft checks made to identify the properties
       and command words of magic items in your possession. This spell does not
       allow you to identify artifacts.</p>
-  actions:
-    - _id: npgcnejc0iwun59m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 rounds/level
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
-    class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
-      alchemist: 1
-      summoner: 1
-      witch: 1
-      psychic: 1
-      medium: 1
-      occultist: 1
-      spiritualist: 1
-      summonerUnchained: 1
-    domain:
-      Magic: 1
     bloodline:
       Arcane: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
+    class:
+      alchemist: 1
+      bard: 1
+      medium: 1
+      occultist: 1
+      psychic: 1
+      sorcerer: 1
+      spiritualist: 1
+      summoner: 1
+      summonerUnchained: 1
+      witch: 1
+      wizard: 1
+    domain:
+      Magic: 1
   materials:
     value: wine stirred with an owl's feather
-  sr: false
+  school: div
   source:
     id: PZO1110
     pages: '299'
-_key: '!items!llxrra87kbofmyhl'
+  sr: false
+type: spell
 

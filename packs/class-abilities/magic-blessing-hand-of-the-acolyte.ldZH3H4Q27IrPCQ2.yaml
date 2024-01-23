@@ -1,8 +1,27 @@
 _id: ldZH3H4Q27IrPCQ2
-name: 'Magic Blessing: Hand of the Acolyte'
-type: feat
+_key: '!items!ldZH3H4Q27IrPCQ2'
 img: systems/pf1/icons/spells/protect-blue-2.jpg
+name: 'Magic Blessing: Hand of the Acolyte'
 system:
+  actions:
+    - _id: m2j4bjuqu15sji1d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/protect-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can cause your melee weapon to fly from your grasp
@@ -13,26 +32,7 @@ system:
       still add your Strength modifier to the damage roll as normal).</p>
 
       <p>This ability cannot be used to perform a combat maneuver.</p>
-  actions:
-    - _id: m2j4bjuqu15sji1d
-      name: Use
-      img: systems/pf1/icons/spells/protect-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_magicBlessingHandOfTheAcolyte
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!ldZH3H4Q27IrPCQ2'
+  tag: classFeat_magicBlessingHandOfTheAcolyte
+type: feat
 

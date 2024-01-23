@@ -1,8 +1,14 @@
 _id: cF55FLZJSJV9PvU4
-name: Soulbound Construct
-type: feat
+_key: '!items!cF55FLZJSJV9PvU4'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Soulbound Construct
 system:
+  changes:
+    - _id: hl7vgx6t
+      formula: '@abilities.cha.mod'
+      modifier: deflection
+      subTarget: ac
+  crOffset: '@attributes.hd.total >= 11 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -233,12 +239,6 @@ system:
       on mental ability scores. It does not retain racial modifiers to those
       skills (if any). A soul focus has hardness 8, 12 hit points, and a break
       DC of 20.</p>
-  changes:
-    - _id: hl7vgx6t
-      formula: '@abilities.cha.mod'
-      subTarget: ac
-      modifier: deflection
   subType: template
-  crOffset: '@attributes.hd.total >= 11 ? 2 : 1'
-_key: '!items!cF55FLZJSJV9PvU4'
+type: feat
 

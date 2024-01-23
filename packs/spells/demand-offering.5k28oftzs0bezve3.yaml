@@ -1,8 +1,31 @@
 _id: 5k28oftzs0bezve3
-name: Demand Offering
-type: spell
+_key: '!items!5k28oftzs0bezve3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Demand Offering
 system:
+  actions:
+    - _id: sr2w0n3jm8bnqf3r
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '5'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A creature that fails its save uses an immediate action to hand you
@@ -13,43 +36,20 @@ system:
       If you're no longer adjacent to the creature when it has to give you the
       item, the spell ends with no effect. A creature that isn't holding an item
       when you cast this spell is unaffected.</p>
-  actions:
-    - _id: sr2w0n3jm8bnqf3r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 1 round
-      target:
-        value: one creature
-      range:
-        value: '5'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 1
-      psychic: 2
+      bard: 2
+      inquisitor: 2
       mesmerist: 1
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!5k28oftzs0bezve3'
+type: spell
 

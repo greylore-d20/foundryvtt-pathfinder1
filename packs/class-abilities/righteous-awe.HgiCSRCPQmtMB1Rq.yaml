@@ -1,8 +1,26 @@
 _id: HgiCSRCPQmtMB1Rq
-name: Righteous Awe
-type: feat
+_key: '!items!HgiCSRCPQmtMB1Rq'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Righteous Awe
 system:
+  abilityType: su
+  actions:
+    - _id: 4lqjv8bhqnejm9k1
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>Whenever you make an unarmed touch attack against an evil creature, it
@@ -11,28 +29,10 @@ system:
       is an evil outsider, it becomes frightened instead of shaken. You can use
       this ability a number of times per day equal to 3 + your Wisdom
       modifier.</p>
-  actions:
-    - _id: 4lqjv8bhqnejm9k1
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_righteousAwe
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!HgiCSRCPQmtMB1Rq'
+  tag: classFeat_righteousAwe
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

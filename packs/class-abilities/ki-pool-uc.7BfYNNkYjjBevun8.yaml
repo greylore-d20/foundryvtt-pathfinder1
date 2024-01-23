@@ -1,8 +1,20 @@
 _id: 7BfYNNkYjjBevun8
-name: Ki Pool (UC)
-type: feat
+_key: '!items!7BfYNNkYjjBevun8'
 img: systems/pf1/icons/skills/red_09.jpg
+name: Ki Pool (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: 6lp1gpd4sui72ufu
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/red_09.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>At 3rd level, a monk gains a pool of ki points, supernatural energy he
@@ -30,22 +42,10 @@ system:
       <p>A monk gains additional powers that consume points from his ki pool as
       he gains levels.<p>The ki pool is replenished each morning after 8 hours
       of rest or meditation; these hours do not need to be consecutive.</p>
-  actions:
-    - _id: 6lp1gpd4sui72ufu
-      name: Use
-      img: systems/pf1/icons/skills/red_09.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: floor(@classes.monkUnchained.level / 2) + @abilities.wis.mod
-  tag: classFeat_kiPoolUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!7BfYNNkYjjBevun8'
+  tag: classFeat_kiPoolUc
+  uses:
+    maxFormula: floor(@classes.monkUnchained.level / 2) + @abilities.wis.mod
+    per: day
+type: feat
 

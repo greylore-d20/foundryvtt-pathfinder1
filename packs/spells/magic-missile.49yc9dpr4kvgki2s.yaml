@@ -1,8 +1,43 @@
 _id: 49yc9dpr4kvgki2s
-name: Magic Missile
-type: spell
+_key: '!items!49yc9dpr4kvgki2s'
 img: systems/pf1/icons/spells/fire-arrows-sky-1.jpg
+name: Magic Missile
 system:
+  actions:
+    - _id: 9x7u6zogp4pmao3y
+      ability:
+        critMult: null
+        critRange: null
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackBonus: '100'
+      attackName: Missile
+      damage:
+        parts:
+          - formula: 1d4+1
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        value: instantaneous
+      formulaicAttacks:
+        count:
+          formula: min(4, ceil(@cl / 2) - 1)
+        label: 'Missile #{0}'
+      img: systems/pf1/icons/spells/fire-arrows-sky-1.jpg
+      name: Use
+      range:
+        units: medium
+      target:
+        value: up to five creatures, no two of which can be more than 15 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A missile of magical energy darts forth from your fingertip and strikes
@@ -17,49 +52,14 @@ system:
       creatures.</p><p>A single missile can strike only one creature. You must
       designate targets before you check for spell resistance or roll
       damage.</p>
-  actions:
-    - _id: 9x7u6zogp4pmao3y
-      name: Use
-      img: systems/pf1/icons/spells/fire-arrows-sky-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: up to five creatures, no two of which can be more than 15 ft. apart
-      range:
-        units: medium
-      attackName: Missile
-      actionType: rsak
-      attackBonus: '100'
-      damage:
-        parts:
-          - formula: 1d4+1
-            type:
-              values:
-                - force
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(4, ceil(@cl / 2) - 1)
-        label: 'Missile #{0}'
-      ability:
-        critRange: null
-        critMult: null
   learnedAt:
     class:
+      bloodrager: 1
+      magus: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      magus: 1
-      bloodrager: 1
-      psychic: 1
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!49yc9dpr4kvgki2s'
+type: spell
 

@@ -1,8 +1,16 @@
 _id: MAsmwMlqEV4GZQEL
-name: Blackened Curse
-type: feat
+_key: '!items!MAsmwMlqEV4GZQEL'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Blackened Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: e78oidpi
+      formula: '-4'
+      modifier: penalty
+      subTarget: attack
   description:
     value: >-
       <p>Your hands and forearms are shriveled and blackened, as if you had
@@ -21,15 +29,7 @@ system:
 
       <p>At 15th level, add @Compendium[pf1.spells.cm3l4h4mld9j8lar]{Delayed
       Blast Fireball} to your list of spells known.</p>
-  changes:
-    - _id: e78oidpi
-      formula: '-4'
-      subTarget: attack
-      modifier: penalty
-  tag: classFeat_blackenedCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!MAsmwMlqEV4GZQEL'
+  tag: classFeat_blackenedCurse
+type: feat
 

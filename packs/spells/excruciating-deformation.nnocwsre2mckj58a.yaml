@@ -1,8 +1,30 @@
 _id: nnocwsre2mckj58a
-name: Excruciating Deformation
-type: spell
+_key: '!items!nnocwsre2mckj58a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Excruciating Deformation
 system:
+  actions:
+    - _id: dm7nh8bde5leja9e
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude partial (see text)
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your touch attack causes your target to become painfully malformed. Its
@@ -12,38 +34,16 @@ system:
       Constitution damage, and its speed is reduced by 10 feet. Once per round
       as a free action on its turn, the target can attempt a new Fortitude
       saving throw to resist the spell for 1 round.</p>
-  actions:
-    - _id: dm7nh8bde5leja9e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       bloodrager: 3
       psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
   subschool: polymorph
   types: evil, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!nnocwsre2mckj58a'
+type: spell
 

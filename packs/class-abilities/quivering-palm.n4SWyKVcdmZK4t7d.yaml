@@ -1,8 +1,20 @@
 _id: n4SWyKVcdmZK4t7d
-name: Quivering Palm
-type: feat
+_key: '!items!n4SWyKVcdmZK4t7d'
 img: systems/pf1/icons/feats/combat-casting.jpg
+name: Quivering Palm
 system:
+  abilityType: su
+  actions:
+    - _id: dq63xu5d56ntlace
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      img: systems/pf1/icons/feats/combat-casting.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk
   description:
     value: >-
       <p>Starting at 15th level, a monk can set up vibrations within the body of
@@ -22,22 +34,10 @@ system:
       later time. A monk can have no more than 1 quivering palm in effect at one
       time. If a monk uses quivering palm while another is still in effect, the
       previous effect is negated.</p>
-  actions:
-    - _id: dq63xu5d56ntlace
-      name: Use
-      img: systems/pf1/icons/feats/combat-casting.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-  tag: classFeat_quiveringPalm
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-  abilityType: su
   source:
     id: PZO1110
     pages: '60'
-_key: '!items!n4SWyKVcdmZK4t7d'
+  subType: classFeat
+  tag: classFeat_quiveringPalm
+type: feat
 

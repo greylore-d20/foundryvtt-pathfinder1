@@ -1,8 +1,16 @@
 _id: 7a930CN37xb968mP
-name: Travel Domain
-type: feat
+_key: '!items!7a930CN37xb968mP'
 img: systems/pf1/icons/spells/wind-grasp-air-1.jpg
+name: Travel Domain
 system:
+  associations:
+    classes:
+      - Cleric
+  changes:
+    - _id: l86cr80r
+      formula: '10'
+      modifier: base
+      subTarget: landSpeed
   description:
     value: >-
       <p><b>Granted Powers:</b> You are an explorer and find enlightenment in
@@ -32,18 +40,10 @@ system:
       <li>9th—@Compendium[pf1.spells.lnahlmp5mih2ongh]{Astral Projection}</li>
 
       </ul>
-  changes:
-    - _id: l86cr80r
-      formula: '10'
-      subTarget: landSpeed
-      modifier: base
-  tag: classFeat_travelDomain
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
   source:
     id: PZO1110
     pages: '47'
-_key: '!items!7a930CN37xb968mP'
+  subType: classFeat
+  tag: classFeat_travelDomain
+type: feat
 

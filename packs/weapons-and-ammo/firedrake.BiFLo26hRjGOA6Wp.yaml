@@ -1,8 +1,106 @@
 _id: BiFLo26hRjGOA6Wp
-name: Firedrake
-type: weapon
+_key: '!items!BiFLo26hRjGOA6Wp'
 img: icons/commodities/treasure/statue-carved-figurehead.webp
+name: Firedrake
 system:
+  actions:
+    - _id: fvm8jqh37m4asjrn
+      ability:
+        attack: dex
+        critRange: null
+      actionType: save
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      measureTemplate:
+        size: '60'
+        type: ray
+      name: Line
+      range:
+        units: ft
+        value: '60'
+      save:
+        dc: '15'
+        description: Reflex half
+        type: ref
+    - _id: b6IvnHeQXBDRIaGI
+      ability:
+        attack: dex
+        critRange: null
+      actionType: save
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Cone
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: '15'
+        description: Reflex half
+        type: ref
+    - _id: ecL0dse7dRGzfvJZ
+      ability:
+        attack: dex
+        critRange: null
+      actionType: save
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      area: 20-foot blast
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Explode
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: '15'
+        description: Reflex half
+        type: ref
+      target:
+        value: all creatures
+  ammo:
+    type: siege
+  baseTypes:
+    - Firedrake
   description:
     value: >-
       <h3>Statistics</h3><p><strong>Weight</strong>
@@ -21,113 +119,15 @@ system:
       mishap explodes, dealing its damage to all creatures within a 20-foot
       blast (DC 15 Reflex save halves).</p><p>One use of firedrake ammunition
       costs 200 gp and weighs 20 pounds.</p>
-  price: 4000
+  hardness: 10
   hp:
     max: 70
     value: 70
-  hardness: 10
-  actions:
-    - _id: fvm8jqh37m4asjrn
-      name: Line
-      img: icons/commodities/treasure/statue-carved-figurehead.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: ray
-        size: '60'
-      actionType: save
-      damage:
-        parts:
-          - formula: sizeRoll(6, 6, @size)
-            type:
-              values:
-                - fire
-              custom: ''
-      ability:
-        attack: dex
-        critRange: null
-      save:
-        dc: '15'
-        type: ref
-        description: Reflex half
-    - _id: b6IvnHeQXBDRIaGI
-      name: Cone
-      img: icons/commodities/treasure/statue-carved-figurehead.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '30'
-      actionType: save
-      damage:
-        parts:
-          - formula: sizeRoll(6, 6, @size)
-            type:
-              values:
-                - fire
-              custom: ''
-      ability:
-        attack: dex
-        critRange: null
-      save:
-        dc: '15'
-        type: ref
-        description: Reflex half
-    - _id: ecL0dse7dRGzfvJZ
-      name: Explode
-      img: icons/commodities/treasure/statue-carved-figurehead.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      target:
-        value: all creatures
-      range:
-        value: '20'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: save
-      damage:
-        parts:
-          - formula: sizeRoll(6, 6, @size)
-            type:
-              values:
-                - fire
-              custom: ''
-      ability:
-        attack: dex
-        critRange: null
-      save:
-        dc: '15'
-        type: ref
-        description: Reflex half
-      area: 20-foot blast
-  baseTypes:
-    - Firedrake
-  subType: exotic
-  weaponSubtype: ranged
+  price: 4000
   source:
     id: PZO1118
     pages: '163'
-  ammo:
-    type: siege
-_key: '!items!BiFLo26hRjGOA6Wp'
+  subType: exotic
+  weaponSubtype: ranged
+type: weapon
 

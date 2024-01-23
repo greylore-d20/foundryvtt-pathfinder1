@@ -1,8 +1,26 @@
 _id: 68quvqg93a3da02z
-name: Prying Eyes
-type: spell
+_key: '!items!68quvqg93a3da02z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Prying Eyes
 system:
+  actions:
+    - _id: yae5ufscfxda10x8
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '1'
+      spellEffect: 10 or more levitating eyes
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a number of semitangible, visible magical orbs (called
@@ -30,39 +48,21 @@ system:
       they return to you. <i>Dispel magic</i> can destroy eyes. Roll separately
       for each eye caught in an area dispel. Of course, if an eye is sent into
       darkness, it could hit a wall or similar obstacle and destroy itself.</p>
-  actions:
-    - _id: yae5ufscfxda10x8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level; see text
-      range:
-        value: '1'
-        units: mi
-      spellEffect: 10 or more levitating eyes
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      witch: 5
-      psychic: 5
-      mesmerist: 5
-      occultist: 5
-      spiritualist: 5
     bloodline:
       Rakshasa: 5
+    class:
+      mesmerist: 5
+      occultist: 5
+      psychic: 5
+      sorcerer: 5
+      spiritualist: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of crystal marbles
+  school: div
   sr: false
-_key: '!items!68quvqg93a3da02z'
+type: spell
 

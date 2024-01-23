@@ -1,8 +1,16 @@
 _id: 717fyDCcfLtD345B
-name: Teamwork Feat
-type: feat
+_key: '!items!717fyDCcfLtD345B'
 img: systems/pf1/icons/skills/gray_08.jpg
+name: Teamwork Feat
 system:
+  associations:
+    classes:
+      - Inquisitor
+  changes:
+    - _id: upaei6g0
+      formula: floor(@classes.inquisitor.level / 3)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 3rd level, and every three levels thereafter, the inquisitor gains a
@@ -16,15 +24,7 @@ system:
       Whenever she gains a new teamwork feat, the previous teamwork feat becomes
       set and cannot be changed again. An inquisitor can change her most recent
       teamwork feat a number of times per day equal to her Wisdom modifier.</p>
-  changes:
-    - _id: upaei6g0
-      formula: floor(@classes.inquisitor.level / 3)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_teamworkFeat
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-_key: '!items!717fyDCcfLtD345B'
+  tag: classFeat_teamworkFeat
+type: feat
 

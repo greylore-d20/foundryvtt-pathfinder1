@@ -1,8 +1,26 @@
 _id: hl9l92qfalq6c55z
-name: Bless Weapon
-type: spell
+_key: '!items!hl9l92qfalq6c55z'
 img: icons/skills/melee/strike-sword-slashing-red.webp
+name: Bless Weapon
 system:
+  actions:
+    - _id: j9xgif3w2vfise7z
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This transmutation makes a weapon strike true against evil foes. The
@@ -18,33 +36,15 @@ system:
       This last effect does not apply to any weapon that already has a magical
       effect related to critical hits, such as a <i>keen</i> weapon or a
       <i>vorpal sword</i>.</p>
-  actions:
-    - _id: j9xgif3w2vfise7z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: weapon touched
-      range:
-        units: touch
   learnedAt:
     class:
       paladin: 1
     domain:
       Glory: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '250'
-_key: '!items!hl9l92qfalq6c55z'
+  sr: false
+type: spell
 

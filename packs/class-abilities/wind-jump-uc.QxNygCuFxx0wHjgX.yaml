@@ -1,8 +1,27 @@
 _id: QxNygCuFxx0wHjgX
-name: Wind Jump (UC)
-type: feat
+_key: '!items!QxNygCuFxx0wHjgX'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Wind Jump (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: d9bbujgszht9t2im
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ki power can spend 1 point from his ki pool as a move
@@ -13,26 +32,7 @@ system:
 
       <p>A monk must be at least 8th level and have the high jump ki power
       before selecting this ki power.</p>
-  actions:
-    - _id: d9bbujgszht9t2im
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_windJumpUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!QxNygCuFxx0wHjgX'
+  tag: classFeat_windJumpUc
+type: feat
 

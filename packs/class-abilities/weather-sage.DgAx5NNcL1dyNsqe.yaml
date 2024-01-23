@@ -1,8 +1,21 @@
 _id: DgAx5NNcL1dyNsqe
-name: Weather Sage
-type: feat
+_key: '!items!DgAx5NNcL1dyNsqe'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Weather Sage
 system:
+  abilityType: su
+  actions:
+    - _id: 7ul731vpgmyyfmob
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>If she spends 1 point from her arcane reservoir, the arcanist can
@@ -12,22 +25,9 @@ system:
       gains a bonus equal to half her arcanist level on Fortitude saves against
       severe weather for the next 24 hours. She can share this benefit with a
       number of allies equal to her Charisma bonus.</p>
+  subType: classFeat
+  tag: classFeat_weatherSage
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 7ul731vpgmyyfmob
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_weatherSage
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!DgAx5NNcL1dyNsqe'
+type: feat
 

@@ -1,8 +1,30 @@
 _id: 7f9tbbxfod3to7yu
-name: Advanced Scurvy
-type: spell
+_key: '!items!7f9tbbxfod3to7yu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Advanced Scurvy
 system:
+  actions:
+    - _id: xs03u75gtragu7jr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject contracts an advanced form of scurvy. He becomes constantly
@@ -13,36 +35,14 @@ system:
       treated magically or can be overcome with proper nutrition; eating the
       right foods ends the fatigue and bone pain within 1-2 days and provides a
       full cure 2d6 days after that.</p>
-  actions:
-    - _id: xs03u75gtragu7jr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
       hunter: 1
+      oracle: 1
+      warpriest: 1
   school: nec
   types: disease, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!7f9tbbxfod3to7yu'
+type: spell
 

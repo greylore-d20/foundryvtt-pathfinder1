@@ -1,8 +1,23 @@
 _id: XMSXudP5TOWSWCJc
-name: Spore Infusion
-type: feat
+_key: '!items!XMSXudP5TOWSWCJc'
 img: systems/pf1/icons/spells/vines-jade-3.jpg
+name: Spore Infusion
 system:
+  actions:
+    - _id: mejobq3xt68jesyn
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      name: Use
+      save:
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> wood; <b>Type</b> substance infusion; <b>Level</b> 5;
@@ -20,22 +35,7 @@ system:
       </em>Fort DC 18; <em>onset </em>1 minute; <em>frequency </em>1/day;
       <em>effect </em>1d6 Dex damage; <em>cure </em>2 consecutive saving
       throws.</p>
-  actions:
-    - _id: mejobq3xt68jesyn
-      name: Use
-      img: systems/pf1/icons/spells/vines-jade-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_sporeInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!XMSXudP5TOWSWCJc'
+  tag: classFeat_sporeInfusion
+type: feat
 

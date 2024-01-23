@@ -1,8 +1,27 @@
 _id: 723f51pesdjauhyy
-name: Blessing of Liberty
-type: spell
+_key: '!items!723f51pesdjauhyy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blessing of Liberty
 system:
+  actions:
+    - _id: q7zpwiydqoxkerov
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue yourself with the blessings of liberty. You gain a +1 luck
@@ -11,33 +30,14 @@ system:
       movement. You can end the spell's effects as a swift action to gain a +20
       foot enhancement bonus to your base speed for 1 round per whole minute of
       duration remaining.</p>
-  actions:
-    - _id: q7zpwiydqoxkerov
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bard: 2
       shaman: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a feather or small object that symbolizes good fortune
+  school: abj
   sr: false
-_key: '!items!723f51pesdjauhyy'
+type: spell
 

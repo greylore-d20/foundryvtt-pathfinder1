@@ -1,8 +1,26 @@
 _id: my0eryt29f91bcnz
-name: Ghostly Disguise
-type: spell
+_key: '!items!my0eryt29f91bcnz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ghostly Disguise
 system:
+  actions:
+    - _id: i78zoq6tbm24ftg9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make yourself-including clothing, armor, weapons, and
@@ -16,39 +34,21 @@ system:
       slightly above the ground, though you are actually still on the ground. A
       creature that interacts with the glamer gets a Will save to recognize it
       as an illusion.</p>
-  actions:
-    - _id: i78zoq6tbm24ftg9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
       alchemist: 2
-      witch: 2
+      bard: 2
       inquisitor: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!my0eryt29f91bcnz'
+  subschool: glamer
+type: spell
 

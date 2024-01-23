@@ -1,8 +1,38 @@
 _id: Q0lPhlUtRuqoWfyI
-name: Boomerang
-type: weapon
+_key: '!items!Q0lPhlUtRuqoWfyI'
 img: systems/pf1/icons/items/weapons/boomerang.png
+name: Boomerang
 system:
+  actions:
+    - _id: 7gwjczho0xdejc3r
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/boomerang.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '30'
+  baseTypes:
+    - Boomerang
   description:
     value: >-
       <p>The boomerang is primarily a hunting tool, but it is not uncommon for
@@ -10,61 +40,31 @@ system:
       made of wood and is flat, with a long haft, a pronounced forward curve,
       and a sharp backward bend at the head. A hunting boomerang does not fly in
       a returning path.</p>
-  tags:
-    - PFS
-  weight:
-    value: 3
-  price: 3
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 7gwjczho0xdejc3r
-      name: Throw
-      img: systems/pf1/icons/items/weapons/boomerang.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Boomerang
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 3
   properties:
     spc: true
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!Q0lPhlUtRuqoWfyI'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 3
+type: weapon
 

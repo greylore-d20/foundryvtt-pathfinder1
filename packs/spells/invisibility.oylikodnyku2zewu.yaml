@@ -1,8 +1,33 @@
 _id: oylikodnyku2zewu
-name: Invisibility
-type: spell
+_key: '!items!oylikodnyku2zewu'
 img: icons/magic/perception/silhouette-stealth-shadow.webp
+name: Invisibility
 system:
+  actions:
+    - _id: qp6p99piwq1svpux
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates or Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: you or a creature or object weighing no more than 100 lbs./level
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The creature or object touched becomes invisible. If the recipient is a
@@ -33,62 +58,37 @@ system:
       for this purpose, even when they include foes in their
       area.</p><p><i>Invisibility</i> can be made permanent (on objects only)
       with a <i>permanency</i> spell.</p>
-  actions:
-    - _id: qp6p99piwq1svpux
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      target:
-        value: you or a creature or object weighing no more than 100 lbs./level
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates or Will negates (object)
-        harmless: true
   learnedAt:
-    class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
-      alchemist: 2
-      summoner: 2
-      inquisitor: 2
-      antipaladin: 2
-      magus: 2
-      adept: 2
-      psychic: 2
-      medium: 2
-      mesmerist: 2
-      occultist: 2
-      spiritualist: 2
-      summonerUnchained: 2
-    domain:
-      Trickery: 2
     bloodline:
       Arcane: 2
       Djinni: 2
       Oni: 2
       Rakshasa: 2
+    class:
+      adept: 2
+      alchemist: 2
+      antipaladin: 2
+      bard: 2
+      inquisitor: 2
+      magus: 2
+      medium: 2
+      mesmerist: 2
+      occultist: 2
+      psychic: 2
+      sorcerer: 2
+      spiritualist: 2
+      summoner: 2
+      summonerUnchained: 2
+      wizard: 2
+    domain:
+      Trickery: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: an eyelash encased in gum arabic
+  school: ill
   source:
     id: PZO1110
     pages: '301'
-_key: '!items!oylikodnyku2zewu'
+  subschool: glamer
+type: spell
 

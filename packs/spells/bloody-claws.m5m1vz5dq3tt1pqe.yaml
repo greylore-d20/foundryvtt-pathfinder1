@@ -1,8 +1,32 @@
 _id: m5m1vz5dq3tt1pqe
-name: Bloody Claws
-type: spell
+_key: '!items!m5m1vz5dq3tt1pqe'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bloody Claws
 system:
+  actions:
+    - _id: manhd1ap6qrbabzk
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You give a creature the ability to deal bleed damage when making
@@ -11,36 +35,12 @@ system:
       (limited to the creature's maximum damage with that attack), though bleed
       damage does not stack. When two or more attacks deal bleed damage, take
       the worse effect.</p>
-  actions:
-    - _id: manhd1ap6qrbabzk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       druid: 4
-      ranger: 3
       hunter: 3
+      ranger: 3
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!m5m1vz5dq3tt1pqe'
+type: spell
 

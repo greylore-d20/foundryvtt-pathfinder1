@@ -1,8 +1,26 @@
 _id: atclo4xtkept97ox
-name: Deadeye's Arrow
-type: spell
+_key: '!items!atclo4xtkept97ox'
 img: icons/weapons/ammunition/arrowhead-glowing-blue.webp
+name: Deadeye's Arrow
 system:
+  actions:
+    - _id: ye6rdj0hi7bndnfm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 1 round (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: arrow of electricity
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an arrow made of crackling electricity, which you may use
@@ -16,39 +34,21 @@ system:
       lingers for 1 round. The thunder and lightning are as loud and bright as
       natural thunder and lightning, but they do not harm any nearby
       creatures.</p>
-  actions:
-    - _id: ye6rdj0hi7bndnfm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 1 round (see text)
-      range:
-        units: medium
-      spellEffect: arrow of electricity
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 1
-      ranger: 1
-      paladin: 1
+      hunter: 1
       inquisitor: 1
       magus: 1
-      hunter: 1
+      oracle: 2
+      paladin: 1
+      ranger: 1
+      warpriest: 2
   level: 2
-  school: evo
-  types: electricity
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: one arrow
-_key: '!items!atclo4xtkept97ox'
+  school: evo
+  types: electricity
+type: spell
 

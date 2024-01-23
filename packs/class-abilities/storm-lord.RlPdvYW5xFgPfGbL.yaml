@@ -1,8 +1,20 @@
 _id: RlPdvYW5xFgPfGbL
-name: Storm Lord
-type: feat
+_key: '!items!RlPdvYW5xFgPfGbL'
 img: systems/pf1/icons/spells/haste-sky-3.jpg
+name: Storm Lord
 system:
+  abilityType: ex
+  actions:
+    - _id: iw3nkmxfy7c24bt5
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/haste-sky-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 20th level, you are one with the storm. You gain <em>immunity</em>
@@ -12,19 +24,7 @@ system:
       electricity or sonic effect, you may forgo your <em>saving throw</em> and
       absorb the energies of the attack, healing 1 point of damage for every 3
       points of damage the attack would otherwise have dealt.</p>
-  actions:
-    - _id: iw3nkmxfy7c24bt5
-      name: Use
-      img: systems/pf1/icons/spells/haste-sky-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_stormLord
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!RlPdvYW5xFgPfGbL'
+  tag: classFeat_stormLord
+type: feat
 

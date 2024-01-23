@@ -1,8 +1,32 @@
 _id: d40ia71c2eljm91k
-name: Polymorph
-type: spell
+_key: '!items!d40ia71c2eljm91k'
 img: icons/creatures/magical/spirit-undead-winged-ghost.webp
+name: Polymorph
 system:
+  actions:
+    - _id: 56o6eu9yvxifi5cq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: living creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell transforms a willing creature into an animal, humanoid or
@@ -21,40 +45,16 @@ system:
 
       <p>The subject may choose to resume its normal form as a full-round
       action; doing so ends the spell for that subject.</p>
-  actions:
-    - _id: 56o6eu9yvxifi5cq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
+      adept: 4
+      alchemist: 5
       sorcerer: 5
       wizard: 5
-      alchemist: 5
-      adept: 4
   level: 5
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you choose
-_key: '!items!d40ia71c2eljm91k'
+  school: trs
+  subschool: polymorph
+type: spell
 

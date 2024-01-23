@@ -1,8 +1,38 @@
 _id: Rjetl2ez4SJfd0i3
-name: Ice Splinter
-type: feat
+_key: '!items!Rjetl2ez4SJfd0i3'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Ice Splinter
 system:
+  abilityType: su
+  actions:
+    - _id: hr6uoe31w37c4wzp
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.shaman.level / 2)
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: One creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman can shoot razor-sharp icicles at an
@@ -11,40 +41,10 @@ system:
       has.</p><p>The shaman can use this ability a number of times per day equal
       to 3 + her Charisma modifier.</p><p>At 11th level, any weapon she wields
       is treated as a <em>frost</em> weapon.</p>
-  actions:
-    - _id: hr6uoe31w37c4wzp
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: One creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.shaman.level / 2)
-            type:
-              values:
-                - cold
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_iceSplinter
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!Rjetl2ez4SJfd0i3'
+  tag: classFeat_iceSplinter
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

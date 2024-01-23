@@ -1,8 +1,24 @@
 _id: 06q3ksVDlzgs2V8a
-name: Smoke Storm
-type: feat
+_key: '!items!06q3ksVDlzgs2V8a'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Smoke Storm
 system:
+  abilityType: sp
+  actions:
+    - _id: rhi0wm4k08m8ca4i
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      save:
+        description: Fort negates; see text
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 3;
@@ -14,23 +30,7 @@ system:
       smokestick. All creatures that begin their turns inside the area become
       sickened as long as they remain in the smoke and for 1d4+1 rounds
       thereafter (Fortitude negates).</p>
-  actions:
-    - _id: rhi0wm4k08m8ca4i
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fort negates; see text
-  tag: classFeat_smokeStorm
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!06q3ksVDlzgs2V8a'
+  tag: classFeat_smokeStorm
+type: feat
 

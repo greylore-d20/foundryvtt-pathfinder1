@@ -1,8 +1,33 @@
 _id: ngcx59msygjom4h2
-name: Ant Haul
-type: spell
+_key: '!items!ngcx59msygjom4h2'
 img: icons/magic/control/buff-strength-muscle-damage.webp
+name: Ant Haul
 system:
+  actions:
+    - _id: z0ra775keidyb09z
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 2 hours/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target's carrying capacity triples (see Table 7-4: Carrying
@@ -12,49 +37,24 @@ system:
       encumbrance due to armor. If the creature wears armor it still takes the
       normal penalties for doing so regardless of how much weight the spell
       allows it to carry.</p>
-  actions:
-    - _id: z0ra775keidyb09z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 2 hours/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      ranger: 1
       alchemist: 1
-      summoner: 1
-      psychic: 1
+      cleric: 1
+      druid: 1
+      hunter: 1
       medium: 1
       occultist: 1
-      hunter: 1
+      oracle: 1
+      psychic: 1
+      ranger: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      warpriest: 1
+      wizard: 1
   materials:
     value: a small pulley
-_key: '!items!ngcx59msygjom4h2'
+  school: trs
+type: spell
 

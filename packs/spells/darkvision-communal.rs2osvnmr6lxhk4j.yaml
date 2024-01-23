@@ -1,16 +1,11 @@
 _id: rs2osvnmr6lxhk4j
-name: Darkvision, Communal
-type: spell
+_key: '!items!rs2osvnmr6lxhk4j'
 img: icons/creatures/eyes/humanoid-single-blind.webp
+name: Darkvision, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like darkvision, except you may divide the
-      duration in 1-hour intervals among the creatures touched.</p>
   actions:
     - _id: bcpfnj2r0rwjrfov
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,32 +13,37 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like darkvision, except you may divide the
+      duration in 1-hour intervals among the creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      ranger: 4
       alchemist: 3
       antipaladin: 3
-      psychic: 3
-      occultist: 3
       hunter: 4
+      occultist: 3
+      psychic: 3
+      ranger: 4
+      sorcerer: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: either a pinch of dried carrot or an agate
-_key: '!items!rs2osvnmr6lxhk4j'
+  school: trs
+type: spell
 

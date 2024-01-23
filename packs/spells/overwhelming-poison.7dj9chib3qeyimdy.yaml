@@ -1,8 +1,27 @@
 _id: 7dj9chib3qeyimdy
-name: Overwhelming Poison
-type: spell
+_key: '!items!7dj9chib3qeyimdy'
 img: icons/skills/toxins/poison-bottle-corked-fire-green.webp
+name: Overwhelming Poison
 system:
+  actions:
+    - _id: afodyioewu5woeji
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature or one dose of poison; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell increases the virulence of the targeted dose of poison,
@@ -16,41 +35,22 @@ system:
       afflicting the target. If cast on a creature that is venomous, this spell
       affects the first dose of poison that creature delivers before the end of
       the spell's duration.</p>
-  actions:
-    - _id: afodyioewu5woeji
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: one creature or one dose of poison; see text
-      range:
-        units: close
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      druid: 6
-      ranger: 4
-      witch: 6
       antipaladin: 4
-      shaman: 6
+      cleric: 6
+      druid: 6
       hunter: 4
+      oracle: 6
+      ranger: 4
+      shaman: 6
+      warpriest: 6
+      witch: 6
   level: 6
-  school: nec
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: an adder's fang
+  school: nec
   sr: false
-_key: '!items!7dj9chib3qeyimdy'
+  types: poison
+type: spell
 

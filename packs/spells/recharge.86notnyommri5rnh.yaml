@@ -1,8 +1,31 @@
 _id: 86notnyommri5rnh
-name: Recharge
-type: spell
+_key: '!items!86notnyommri5rnh'
 img: icons/commodities/tech/tube-chamber-lightning.webp
+name: Recharge
 system:
+  actions:
+    - _id: ut7qjd8ikjlhblhr
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You restore up to 1 charge per level to a battery or half that number
@@ -15,44 +38,21 @@ system:
       to bestow fewer charges than the maximum allowed to reduce the risk; you
       must declare how many charges you are restoring before casting this
       spell.</p>
-  actions:
-    - _id: ut7qjd8ikjlhblhr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
       magus: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: 500 gp of diamond dust
     gpValue: 500
+    value: 500 gp of diamond dust
   preparation:
     spontaneousPrepared: false
-_key: '!items!86notnyommri5rnh'
+  school: evo
+type: spell
 

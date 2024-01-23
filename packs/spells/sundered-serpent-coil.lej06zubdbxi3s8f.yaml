@@ -1,8 +1,29 @@
 _id: lej06zubdbxi3s8f
-name: Sundered Serpent Coil
-type: spell
+_key: '!items!lej06zubdbxi3s8f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sundered Serpent Coil
 system:
+  actions:
+    - _id: obsrahnm5hvsibac
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-foot square
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Use
+      range:
+        units: medium
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>black tentacles</i>, except it creates a
@@ -10,40 +31,19 @@ system:
       creature you specify within its 5-foot reach. As a standard action, you
       can command the snake to release its grappled target and direct it to
       attack a different creature.</p>
-  actions:
-    - _id: obsrahnm5hvsibac
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: rect
-        size: '5'
-      area: one 5-foot square
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      summoner: 3
-      witch: 3
       magus: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a snake scale
+  school: con
   sr: false
-_key: '!items!lej06zubdbxi3s8f'
+  subschool: creation
+type: spell
 

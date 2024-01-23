@@ -1,8 +1,33 @@
 _id: nll8ip8348eti0ff
-name: Geyser
-type: spell
+_key: '!items!nll8ip8348eti0ff'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Geyser
 system:
+  actions:
+    - _id: x8av3jrhmf6f7cfo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex partial (see below)
+        type: ref
+      spellEffect: >-
+        spout of boiling water filling a 5 ft. square and spraying upward 10
+        ft./2 levels
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a column of boiling water to spring forth from any horizontal
@@ -30,46 +55,21 @@ system:
       permits if an obstruction prevents it from reaching its full height, or if
       you simply want to create a spread of boiling rain that's smaller than
       what would be created by a full-height <i>geyser</i> spell.</p>
-  actions:
-    - _id: x8av3jrhmf6f7cfo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial (see below)
-      spellEffect: >-
-        spout of boiling water filling a 5 ft. square and spraying upward 10
-        ft./2 levels
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      druid: 4
-      magus: 5
-      hunter: 4
     bloodline:
       Aquatic: 4
+    class:
+      druid: 4
+      hunter: 4
+      magus: 5
+      sorcerer: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: creation
-  types: fire, water
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a piece of lava rock
+  school: con
   sr: false
-_key: '!items!nll8ip8348eti0ff'
+  subschool: creation
+  types: fire, water
+type: spell
 

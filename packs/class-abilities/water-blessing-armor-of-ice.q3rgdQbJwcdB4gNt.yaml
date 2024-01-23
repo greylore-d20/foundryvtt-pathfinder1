@@ -1,33 +1,33 @@
 _id: q3rgdQbJwcdB4gNt
-name: 'Water Blessing: Armor of Ice'
-type: feat
+_key: '!items!q3rgdQbJwcdB4gNt'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: 'Water Blessing: Armor of Ice'
 system:
-  description:
-    value: >-
-      <p>At 10th level, you can touch any one ally and wreath it in freezing
-      mist. This works as @Compendium[pf1.spells.nfm6i9z9r3n2fku7]{Fire Shield}
-      (chill shield only) with a duration 1 minute.</p>
   actions:
     - _id: wy9n1ypjrmqnsi0c
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-2.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: ally touched
+        value: '1'
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      name: Use
       range:
         units: touch
-  tag: classFeat_waterBlessingArmorOfIce
-  subType: classFeat
+      target:
+        value: ally touched
   associations:
     classes:
       - Warpriest
-_key: '!items!q3rgdQbJwcdB4gNt'
+  description:
+    value: >-
+      <p>At 10th level, you can touch any one ally and wreath it in freezing
+      mist. This works as @Compendium[pf1.spells.nfm6i9z9r3n2fku7]{Fire Shield}
+      (chill shield only) with a duration 1 minute.</p>
+  subType: classFeat
+  tag: classFeat_waterBlessingArmorOfIce
+type: feat
 

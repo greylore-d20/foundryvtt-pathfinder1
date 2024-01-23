@@ -1,8 +1,30 @@
 _id: b84qtxpkenolyt8b
-name: Contingent Action
-type: spell
+_key: '!items!b84qtxpkenolyt8b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contingent Action
 system:
+  actions:
+    - _id: yi77nxmqt2s9n7oc
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 minute/level (D) or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one willing creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target gains an extra action that becomes available when a
@@ -27,35 +49,13 @@ system:
       is successful.  This spell counts as a <i>contingency</i> spell for the
       purpose of having multiple contingent effects on a creature at the same
       time.</p>
-  actions:
-    - _id: yi77nxmqt2s9n7oc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 minute/level (D) or until discharged
-      target:
-        value: one willing creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
       psychic: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!b84qtxpkenolyt8b'
+type: spell
 

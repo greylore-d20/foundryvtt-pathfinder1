@@ -1,8 +1,33 @@
 _id: 3fbrrckyfagfzyop
-name: Regenerate
-type: spell
+_key: '!items!3fbrrckyfagfzyop'
 img: icons/magic/life/heart-cross-strong-flame-green.webp
+name: Regenerate
 system:
+  actions:
+    - _id: 4nljaivyle8y7035
+      actionType: heal
+      activation:
+        cost: 3
+        type: full
+        unchained:
+          cost: 9
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject's severed body members (fingers, toes, hands, feet, arms,
@@ -14,45 +39,20 @@ system:
       point per caster level (maximum +35), rids the subject of exhaustion and
       fatigue, and eliminates all nonlethal damage the subject has taken. It has
       no effect on nonliving creatures (including undead).</p>
-  actions:
-    - _id: 4nljaivyle8y7035
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 3
-        type: full
-        unchained:
-          cost: 9
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       cleric: 7
-      oracle: 7
       druid: 9
-      witch: 7
+      oracle: 7
       shaman: 7
+      witch: 7
     domain:
       Healing: 7
   level: 7
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '331'
-_key: '!items!3fbrrckyfagfzyop'
+  subschool: healing
+type: spell
 

@@ -1,8 +1,29 @@
 _id: 92hth51cs9oi0nfe
-name: Wall of Fire
-type: spell
+_key: '!items!92hth51cs9oi0nfe'
 img: icons/magic/fire/barrier-wall-explosion-orange.webp
+name: Wall of Fire
 system:
+  actions:
+    - _id: krq9lmadshc2lnoc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: >-
+        opaque sheet of flame up to 20 ft. long/level or a ring of fire with a
+        radius of up to 5 ft./two levels; either form 20 ft. high
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An immobile, blazing curtain of shimmering violet fire springs into
@@ -21,52 +42,31 @@ system:
       <i>permanency</i> spell. A permanent <i>Wall of Fire</i> that is
       extinguished by cold damage becomes inactive for 10 minutes, then reforms
       at normal strength.</p>
-  actions:
-    - _id: krq9lmadshc2lnoc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level
-      range:
-        units: medium
-      spellEffect: >-
-        opaque sheet of flame up to 20 ft. long/level or a ring of fire with a
-        radius of up to 5 ft./two levels; either form 20 ft. high
   learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      druid: 5
-      summoner: 3
-      magus: 4
-      adept: 4
-      bloodrager: 4
-      shaman: 5
-      occultist: 4
-      hunter: 5
-      summonerUnchained: 4
-    domain:
-      Fire: 4
     bloodline:
       Efreeti: 4
       Orc: 4
+    class:
+      adept: 4
+      bloodrager: 4
+      druid: 5
+      hunter: 5
+      magus: 4
+      occultist: 4
+      shaman: 5
+      sorcerer: 4
+      summoner: 3
+      summonerUnchained: 4
+      wizard: 4
+    domain:
+      Fire: 4
   level: 4
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a piece of phosphor
+  school: evo
   source:
     id: PZO1110
     pages: '365'
-_key: '!items!92hth51cs9oi0nfe'
+  types: fire
+type: spell
 

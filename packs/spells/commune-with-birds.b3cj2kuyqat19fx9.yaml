@@ -1,8 +1,26 @@
 _id: b3cj2kuyqat19fx9
-name: Commune with Birds
-type: spell
+_key: '!items!b3cj2kuyqat19fx9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Commune with Birds
 system:
+  actions:
+    - _id: xrayuubhgq8vuix5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You utter a question in the form of a low-pitched bird call that can be
@@ -18,38 +36,20 @@ system:
       animals</i> (or a similar ability) who hears this bird call can understand
       your question, though it may not be able to reply in a way you can
       hear.</p>
-  actions:
-    - _id: xrayuubhgq8vuix5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes; see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 1
-      ranger: 1
       bard: 2
-      witch: 2
-      shaman: 2
-      psychic: 2
-      mesmerist: 2
+      druid: 1
       hunter: 1
+      mesmerist: 2
+      psychic: 2
+      ranger: 1
+      shaman: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!b3cj2kuyqat19fx9'
+type: spell
 

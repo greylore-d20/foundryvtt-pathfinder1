@@ -1,8 +1,39 @@
 _id: f5rgOsdDlseGr4o5
-name: Elemental Channel
-type: feat
+_key: '!items!f5rgOsdDlseGr4o5'
 img: systems/pf1/icons/feats/elemental-channel.jpg
+name: Elemental Channel
 system:
+  actions:
+    - _id: cj2zso1zrq7o3dkv
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.cleric.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/elemental-channel.jpg
+      measureTemplate:
+        type: circle
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.cleric.level / 2) + @abilities.cha.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: Outsiders of chosen elemental subtype
   description:
     value: >-
       <p><em>Choose one elemental subtype, such as air, earth, fire, or water.
@@ -20,39 +51,8 @@ system:
       link this feat to Channel Energy charges. Change damage type to negative
       if you channel negative energy. Copy this feature and change Action Type
       to Healing if you plan to heal.</p>
+  tag: feat_elementalChannel
   tags:
     - Channeling
-  actions:
-    - _id: cj2zso1zrq7o3dkv
-      name: Use
-      img: systems/pf1/icons/feats/elemental-channel.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: Outsiders of chosen elemental subtype
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-      measureTemplate:
-        type: circle
-      actionType: save
-      damage:
-        parts:
-          - formula: (ceil(@classes.cleric.level / 2))d6
-            type:
-              values:
-                - positive
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.cleric.level / 2) + @abilities.cha.mod
-        type: will
-        description: Will halves damage
-  tag: feat_elementalChannel
-_key: '!items!f5rgOsdDlseGr4o5'
+type: feat
 

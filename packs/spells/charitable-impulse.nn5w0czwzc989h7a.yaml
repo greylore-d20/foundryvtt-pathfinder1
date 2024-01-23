@@ -1,8 +1,32 @@
 _id: nn5w0czwzc989h7a
-name: Charitable Impulse
-type: spell
+_key: '!items!nn5w0czwzc989h7a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Charitable Impulse
 system:
+  actions:
+    - _id: lhz00301a0980o8o
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one humanoid creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell makes a creature more charitable, compelling it to aid
@@ -29,44 +53,20 @@ system:
       the spell effect ends. The subject cannot attack or take attacks of
       opportunity, but can defend himself as normal. If the subject is attacked,
       the spell's effect immediately ends.</p>
-  actions:
-    - _id: lhz00301a0980o8o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one humanoid creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
       witch: 3
+      wizard: 3
   level: 3
+  materials:
+    focus: a miniature collection plate
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
-  materials:
-    focus: a miniature collection plate
-_key: '!items!nn5w0czwzc989h7a'
+type: spell
 

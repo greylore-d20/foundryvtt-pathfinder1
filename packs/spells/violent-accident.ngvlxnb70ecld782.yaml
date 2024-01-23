@@ -1,8 +1,30 @@
 _id: ngvlxnb70ecld782
-name: Violent Accident
-type: spell
+_key: '!items!ngvlxnb70ecld782'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Violent Accident
 system:
+  actions:
+    - _id: ce477ibbr9ffgwre
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex half; see text
+        type: ref
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You curse the target to suffer a violent accident  within the next 24
@@ -16,38 +38,16 @@ system:
       occurs, the target can attempt a Reflex saving throw to reduce the damage
       by half. Although others might be surprised or inconvenienced by the
       accident, it damages only the target.</p>
-  actions:
-    - _id: ce477ibbr9ffgwre
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day or until discharged
-      target:
-        value: one creature
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half; see text
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
       mesmerist: 2
       occultist: 2
+      oracle: 2
+      warpriest: 2
+      witch: 2
   level: 2
   school: trs
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ngvlxnb70ecld782'
+type: spell
 

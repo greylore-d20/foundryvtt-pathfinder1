@@ -1,16 +1,11 @@
 _id: j71cjhkj0697faj3
-name: Scare
-type: spell
+_key: '!items!j71cjhkj0697faj3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scare
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>cause fear</i>, except that it causes all
-      targeted creatures of less than 6 HD to become frightened.</p>
   actions:
     - _id: yabw7nw34k6ycerg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,39 +13,44 @@ system:
           type: action
       duration:
         value: 1 round/level or 1 round; see text for cause fear
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will partial
+        type: will
       target:
         value: >-
           one living creature per three levels, no two of which can be more than
           30 ft. apart
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>cause fear</i>, except that it causes all
+      targeted creatures of less than 6 HD to become frightened.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
-      witch: 2
       antipaladin: 2
-      shaman: 2
-      psychic: 2
+      bard: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
       spiritualist: 2
+      witch: 2
+      wizard: 2
     subDomain:
       Fear: 3
   level: 2
-  school: nec
-  types: fear, mind-affecting, emotion
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a bone from an undead creature
-_key: '!items!j71cjhkj0697faj3'
+  school: nec
+  types: fear, mind-affecting, emotion
+type: spell
 

@@ -1,8 +1,22 @@
 _id: BlT6nN2gMN3tc901
-name: Master-Thought Koan (UC)
-type: feat
+_key: '!items!BlT6nN2gMN3tc901'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Master-Thought Koan (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: 323zd6d5nsnreite
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend an additional 2 ki points when using
@@ -14,21 +28,7 @@ system:
 
       <p>A monk must be at least 12th level and have either the breaking-down
       koan or the building-up koan ki power before selecting this ki power.</p>
-  actions:
-    - _id: 323zd6d5nsnreite
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_masterthoughtKoanUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!BlT6nN2gMN3tc901'
+  tag: classFeat_masterthoughtKoanUc
+type: feat
 

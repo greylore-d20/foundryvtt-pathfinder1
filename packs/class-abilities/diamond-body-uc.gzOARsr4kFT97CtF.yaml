@@ -1,8 +1,27 @@
 _id: gzOARsr4kFT97CtF
-name: Diamond Body (UC)
-type: feat
+_key: '!items!gzOARsr4kFT97CtF'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Diamond Body (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: yqal5nhwj7ohflon
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>By spending 1 point from his ki pool, a monk with this power can remove
@@ -11,26 +30,7 @@ system:
       use of this ability.</p>
 
       <p>A monk must be at least 8th level before selecting this ki power.</p>
-  actions:
-    - _id: yqal5nhwj7ohflon
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_diamondBodyUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!gzOARsr4kFT97CtF'
+  tag: classFeat_diamondBodyUc
+type: feat
 

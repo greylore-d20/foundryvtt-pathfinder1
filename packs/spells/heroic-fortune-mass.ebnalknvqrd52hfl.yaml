@@ -1,16 +1,11 @@
 _id: ebnalknvqrd52hfl
-name: Heroic Fortune, Mass
-type: spell
+_key: '!items!ebnalknvqrd52hfl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Heroic Fortune, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>heroic fortune</i>, except as noted
-      above.</p>
   actions:
     - _id: l8os1yldlaloqj2f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,33 +13,38 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one or more creatures, no two of which can be more  than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one or more creatures, no two of which can be more  than 30 ft. apart
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>heroic fortune</i>, except as noted
+      above.</p>
   learnedAt:
     class:
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 4
+      cleric: 5
+      oracle: 5
+      warpriest: 5
   level: 5
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: diamond dust worth 1,000 gp
     gpValue: 1000
+    value: diamond dust worth 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: evo
   sr: false
-_key: '!items!ebnalknvqrd52hfl'
+type: spell
 

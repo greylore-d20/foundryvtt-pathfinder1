@@ -1,18 +1,10 @@
 _id: BQANb2OZFvudfj8n
-name: Sign of the Dawnflower
-type: spell
+_key: '!items!BQANb2OZFvudfj8n'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sign of the Dawnflower
 system:
-  description:
-    value: >-
-      <p>As @Compendium[pf1.spells.msaqovkgfxi6q8s8]{message}, except the only
-      information you can transmit is that you are a worshiper of Sarenrae. Once
-      notified, the target can reply that he understands your sign. The spell
-      transmits meaning, not sound, and transcends language barriers.</p>
   actions:
     - _id: YWbrBipzGhVZLwTl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,10 +12,21 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: one creature/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
+      target:
+        value: one creature/level
+  components:
+    focus: true
+    somatic: true
+  description:
+    value: >-
+      <p>As @Compendium[pf1.spells.msaqovkgfxi6q8s8]{message}, except the only
+      information you can transmit is that you are a worshiper of Sarenrae. Once
+      notified, the target can reply that he understands your sign. The spell
+      transmits meaning, not sound, and transcends language barriers.</p>
   learnedAt:
     class:
       cleric: 0
@@ -35,9 +38,6 @@ system:
       warpriest: 0
   level: 0
   school: trs
-  components:
-    somatic: true
-    focus: true
   sr: false
-_key: '!items!BQANb2OZFvudfj8n'
+type: spell
 

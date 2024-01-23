@@ -1,8 +1,27 @@
 _id: u11ttwr45xsibpx4
-name: Flesh Puppet
-type: spell
+_key: '!items!u11ttwr45xsibpx4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Flesh Puppet
 system:
+  actions:
+    - _id: k775skuayha1d0rp
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one corpse touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You animate one corpse that has been dead no more than 48 hours. It
@@ -36,45 +55,26 @@ system:
       this spell ends, the zombie immediately reverts back to a normal corpse.
       The spell ends automatically if you cast <i>flesh puppet</i> or <i>flesh
       puppet</i> horde on a new corpse.</p>
-  actions:
-    - _id: k775skuayha1d0rp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent (D)
-      target:
-        value: one corpse touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 4
       antipaladin: 2
-      shaman: 3
+      cleric: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      sorcerer: 4
       spiritualist: 3
+      warpriest: 3
+      witch: 4
+      wizard: 4
   level: 4
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: an onyx worth 25 gp and a silken string
     gpValue: 25
+    value: an onyx worth 25 gp and a silken string
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!u11ttwr45xsibpx4'
+  types: evil
+type: spell
 

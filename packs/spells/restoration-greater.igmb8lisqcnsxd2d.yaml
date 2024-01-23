@@ -1,8 +1,31 @@
 _id: igmb8lisqcnsxd2d
-name: Restoration, Greater
-type: spell
+_key: '!items!igmb8lisqcnsxd2d'
 img: systems/pf1/icons/spells/heal-jade-3.jpg
+name: Restoration, Greater
 system:
+  actions:
+    - _id: uuumh278vgaqpfku
+      actionType: heal
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/spells/heal-jade-3.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>lesser restoration,</i> except that it
@@ -12,41 +35,18 @@ system:
       and restores all points permanently drained from all ability scores. It
       also eliminates fatigue and exhaustion, and removes all forms of insanity,
       confusion, and similar mental effects.</p>
-  actions:
-    - _id: uuumh278vgaqpfku
-      name: Use
-      img: systems/pf1/icons/spells/heal-jade-3.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 7
       oracle: 7
       shaman: 7
   level: 7
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: diamond dust 5,000 gp
     gpValue: 5000
+    value: diamond dust 5,000 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!igmb8lisqcnsxd2d'
+  school: con
+  subschool: healing
+type: spell
 

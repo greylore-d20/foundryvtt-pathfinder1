@@ -1,8 +1,27 @@
 _id: aDfSOUPRAhIDAofZ
-name: Might of the Fallen
-type: feat
+_key: '!items!aDfSOUPRAhIDAofZ'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Might of the Fallen
 system:
+  abilityType: su
+  actions:
+    - _id: tywrxb766u0p6v4s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can call upon the ancestral heroes of her family to bolster
@@ -14,26 +33,7 @@ system:
 
       <p>Once a creature has been the target of this hex, it cannot be the
       target of this hex again for 24 hours.</p>
-  actions:
-    - _id: tywrxb766u0p6v4s
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_mightOfTheFallen
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!aDfSOUPRAhIDAofZ'
+  tag: classFeat_mightOfTheFallen
+type: feat
 

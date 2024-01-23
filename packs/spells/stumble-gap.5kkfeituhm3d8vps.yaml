@@ -1,8 +1,30 @@
 _id: 5kkfeituhm3d8vps
-name: Stumble Gap
-type: spell
+_key: '!items!5kkfeituhm3d8vps'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stumble Gap
 system:
+  actions:
+    - _id: xnsilp1esagr1la5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex partial
+        type: ref
+      spellEffect: see text
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a shallow extradimensional hole perfectly sized to trip
@@ -14,36 +36,14 @@ system:
       throw still stumbles ever so slightly and takes a -1 penalty on all rolls
       and checks for 1 round. The spell has no effect on creatures adjacent to
       the square containing the hole.</p>
-  actions:
-    - _id: xnsilp1esagr1la5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round + 1 round/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial
-      spellEffect: see text
   learnedAt:
     class:
       sorcerer: 1
       wizard: 1
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: miniature shovel costing 10 gp
+  school: con
   sr: false
-_key: '!items!5kkfeituhm3d8vps'
+  subschool: creation
+type: spell
 

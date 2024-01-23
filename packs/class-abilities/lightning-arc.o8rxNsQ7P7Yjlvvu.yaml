@@ -1,8 +1,38 @@
 _id: o8rxNsQ7P7Yjlvvu
-name: Lightning Arc
-type: feat
+_key: '!items!o8rxNsQ7P7Yjlvvu'
 img: systems/pf1/icons/spells/lightning-blue-1.jpg
+name: Lightning Arc
 system:
+  abilityType: sp
+  actions:
+    - _id: l1kjk1vjh1clqqp9
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + (floor(@classes.cleric.level / 2))
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/lightning-blue-1.jpg
+      name: Use
+      range:
+        units: spec
+        value: 30 ft.
+      target:
+        value: One creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can unleash an arc of electricity targeting
@@ -10,43 +40,13 @@ system:
       deals 1d6 points of electricity damage + 1 point for every two cleric
       levels you possess. You can use this ability a number of times per day
       equal to 3 + your Wisdom modifier.</p>
-  actions:
-    - _id: l1kjk1vjh1clqqp9
-      name: Use
-      img: systems/pf1/icons/spells/lightning-blue-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: One creature
-      range:
-        value: 30 ft.
-        units: spec
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d6 + (floor(@classes.cleric.level / 2))
-            type:
-              values:
-                - electric
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_lightningArc
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '41'
-_key: '!items!o8rxNsQ7P7Yjlvvu'
+  subType: classFeat
+  tag: classFeat_lightningArc
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

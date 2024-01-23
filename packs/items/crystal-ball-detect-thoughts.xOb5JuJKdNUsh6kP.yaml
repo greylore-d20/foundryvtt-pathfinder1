@@ -1,8 +1,30 @@
 _id: xOb5JuJKdNUsh6kP
-name: Crystal Ball (Detect Thoughts)
-type: consumable
+_key: '!items!xOb5JuJKdNUsh6kP'
 img: icons/commodities/gems/pearl-glass-purple.webp
+name: Crystal Ball (Detect Thoughts)
 system:
+  actions:
+    - _id: 03uaydp57ralvczo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@item.cl'
+      img: icons/commodities/gems/pearl-glass-purple.webp
+      name: Use
+      range:
+        units: seeText
+      save:
+        dc: 10[Base] + 4[SL] + 2[CAM]
+        description: Will negates
+        type: will
+  aura:
+    school: div
+  cl: 10
   description:
     value: >-
       <p>This is the most common form of scrying device, a crystal sphere about
@@ -20,33 +42,11 @@ system:
       <p>While looking through the crystal ball, you can use
       @Compendium[pf1.spells.xllxylvvqr82o2d5]{Detect Thoughts} (Will DC
       [[10[Base] + 1[SL] + 2[CAM]]] negates) on the subject.</p>
-  weight:
-    value: 7
   price: 51000
+  subType: misc
   unidentified:
     name: Crystal Ball
-  cl: 10
-  aura:
-    school: div
-  actions:
-    - _id: 03uaydp57ralvczo
-      name: Use
-      img: icons/commodities/gems/pearl-glass-purple.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@item.cl'
-        units: minute
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        dc: 10[Base] + 4[SL] + 2[CAM]
-        type: will
-        description: Will negates
-  subType: misc
-_key: '!items!xOb5JuJKdNUsh6kP'
+  weight:
+    value: 7
+type: consumable
 

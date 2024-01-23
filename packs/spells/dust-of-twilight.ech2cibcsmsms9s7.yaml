@@ -1,19 +1,11 @@
 _id: ech2cibcsmsms9s7
-name: Dust of Twilight
-type: spell
+_key: '!items!ech2cibcsmsms9s7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dust of Twilight
 system:
-  description:
-    value: >-
-      <p>A shower of iridescent black particles clings to and extinguishes
-      torches, lanterns, sunrods, and similar mundane light sources and
-      <i>dispel</i>s any spell of 2nd level or lower with the light descriptor
-      (as <i>dispel</i> magic). Creatures in the area must make a Fortitude save
-      or become fatigued.</p>
   actions:
     - _id: 4e6yrtw517cff98w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,29 +13,37 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: creatures and objects in a 10-ft. spread
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates (fatigue only)
+        type: fort
+      target:
+        value: creatures and objects in a 10-ft. spread
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>A shower of iridescent black particles clings to and extinguishes
+      torches, lanterns, sunrods, and similar mundane light sources and
+      <i>dispel</i>s any spell of 2nd level or lower with the light descriptor
+      (as <i>dispel</i> magic). Creatures in the area must make a Fortitude save
+      or become fatigued.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
       bloodrager: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: con
-  types: darkness
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: coal dust
+  school: con
   sr: false
-_key: '!items!ech2cibcsmsms9s7'
+  types: darkness
+type: spell
 

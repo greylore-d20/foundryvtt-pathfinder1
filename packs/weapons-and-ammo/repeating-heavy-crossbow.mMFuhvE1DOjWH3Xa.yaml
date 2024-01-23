@@ -1,8 +1,44 @@
 _id: mMFuhvE1DOjWH3Xa
-name: Repeating Heavy Crossbow
-type: weapon
+_key: '!items!mMFuhvE1DOjWH3Xa'
 img: systems/pf1/icons/items/weapons/crossbow-repeating.PNG
+name: Repeating Heavy Crossbow
 system:
+  actions:
+    - _id: enisz4ztw08oca11
+      ability:
+        attack: dex
+        critRange: 19
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: repeatingBolt
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/crossbow-repeating.PNG
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '120'
+  ammo:
+    type: repeatingBolt
+  baseTypes:
+    - Repeating Heavy Crossbow
   description:
     value: >-
       <p>The repeating heavy crossbow holds 5 repeating crossbow bolts. As long
@@ -13,58 +49,22 @@ system:
       as you would a normal crossbow of the same size. However, you must fire
       the weapon with two hands in order to use the reloading lever, and you
       must use two hands to load a new case of bolts.</p>
-  tags:
-    - PFS
-  weight:
-    value: 12
-  price: 400
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: enisz4ztw08oca11
-      name: Attack
-      img: systems/pf1/icons/items/weapons/crossbow-repeating.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '120'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        critRange: 19
-      ammoType: repeatingBolt
-  baseTypes:
-    - Repeating Heavy Crossbow
-  weaponGroups:
-    value:
-      - crossbows
-  subType: exotic
-  weaponSubtype: ranged
-  ammo:
-    type: repeatingBolt
+  price: 400
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!mMFuhvE1DOjWH3Xa'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - crossbows
+  weaponSubtype: ranged
+  weight:
+    value: 12
+type: weapon
 

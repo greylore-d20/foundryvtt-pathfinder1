@@ -1,8 +1,25 @@
 _id: ou85mTXBHWjreUYw
-name: Consummate Liar
-type: feat
+_key: '!items!ou85mTXBHWjreUYw'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Consummate Liar
 system:
+  actions:
+    - _id: r5acpnwrvw4jwaxv
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Mesmerist
+  changes:
+    - _id: 8v5u4pi6
+      formula: max(1, floor(@classes.mesmerist.level / 2))
+      modifier: untyped
+      priority: '0'
+      subTarget: skill.blf
   description:
     value: >-
       <p>A mesmerist adds 1/2 his mesmerist level (minimum 1) as a bonus on all
@@ -13,24 +30,7 @@ system:
       <p>He can also ignore Combat Expertise and an Intelligence score of 13 as
       prerequisites for other feats that require Improved Feint or Greater
       Feint.</p>
-  actions:
-    - _id: r5acpnwrvw4jwaxv
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 8v5u4pi6
-      formula: max(1, floor(@classes.mesmerist.level / 2))
-      subTarget: skill.blf
-      modifier: untyped
-      priority: '0'
-  tag: classFeat_consummateLiar
   subType: classFeat
-  associations:
-    classes:
-      - Mesmerist
-_key: '!items!ou85mTXBHWjreUYw'
+  tag: classFeat_consummateLiar
+type: feat
 

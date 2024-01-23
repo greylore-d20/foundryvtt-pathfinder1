@@ -1,8 +1,28 @@
 _id: 4jsss37x0pplib8f
-name: Mirror Image
-type: spell
+_key: '!items!4jsss37x0pplib8f'
 img: icons/magic/defensive/illusion-evasion-echo-purple.webp
+name: Mirror Image
 system:
+  actions:
+    - _id: y767mqou0anwagum
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      effectNotes:
+        - '[[min(8, (1d4 + floor(@cl / 3)))]] Images'
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a number of illusory doubles of you that inhabit
@@ -23,43 +43,23 @@ system:
       figment.</p><p>An attacker must be able to see the figments to be fooled.
       If you are invisible or the attacker is blind, the spell has no effect
       (although the normal miss chances still apply).</p>
-  actions:
-    - _id: y767mqou0anwagum
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
-      effectNotes:
-        - '[[min(8, (1d4 + floor(@cl / 3)))]] Images'
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
-      magus: 2
       adept: 2
+      bard: 2
       bloodrager: 2
-      psychic: 2
+      magus: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
     subDomain:
       Deception: 2
   level: 2
   school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!4jsss37x0pplib8f'
+  subschool: figment
+type: spell
 

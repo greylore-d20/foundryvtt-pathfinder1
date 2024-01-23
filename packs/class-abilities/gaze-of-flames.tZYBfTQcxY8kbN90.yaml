@@ -1,8 +1,28 @@
 _id: tZYBfTQcxY8kbN90
-name: Gaze of Flames
-type: feat
+_key: '!items!tZYBfTQcxY8kbN90'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Gaze of Flames
 system:
+  abilityType: su
+  actions:
+    - _id: a0vjck1m31fvbytk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can see through fire, fog, and smoke without penalty as long as the
@@ -13,30 +33,10 @@ system:
 
       <p>You can use this ability for a number of rounds per day equal to your
       oracle level, but these rounds do not need to be consecutive.</p>
-  actions:
-    - _id: a0vjck1m31fvbytk
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_gazeOfFlames
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!tZYBfTQcxY8kbN90'
+  tag: classFeat_gazeOfFlames
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

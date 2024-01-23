@@ -1,17 +1,11 @@
 _id: 2zyr6klf97jyr5ng
-name: Pass without Trace
-type: spell
+_key: '!items!2zyr6klf97jyr5ng'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pass without Trace
 system:
-  description:
-    value: >-
-      <p>The subject or subjects of this spell do not leave footprints or a
-      scent trail while moving. Tracking the subjects is impossible by
-      nonmagical means.</p>
   actions:
     - _id: 7zqtsh93tvxqzxdv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,29 +13,35 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: one creature/level touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The subject or subjects of this spell do not leave footprints or a
+      scent trail while moving. Tracking the subjects is impossible by
+      nonmagical means.</p>
   learnedAt:
     class:
       druid: 1
+      hunter: 1
+      occultist: 1
       ranger: 1
       shaman: 1
-      occultist: 1
-      hunter: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '318'
-_key: '!items!2zyr6klf97jyr5ng'
+type: spell
 

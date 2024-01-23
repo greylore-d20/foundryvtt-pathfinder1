@@ -1,8 +1,27 @@
 _id: xooxcffqnx8rbgf7
-name: Infuse Self
-type: spell
+_key: '!items!xooxcffqnx8rbgf7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Infuse Self
 system:
+  actions:
+    - _id: 2prb22p4qe2ztp5u
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you assume the form of a native outsider from
@@ -14,38 +33,19 @@ system:
       of those types. If the race gains a racial bonus on saving throws or
       skills, you gain those bonuses. If the race has darkvision or low-light
       vision, you gain those qualities.</p>
-  actions:
-    - _id: 2prb22p4qe2ztp5u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 3
+      bard: 3
+      bloodrager: 3
+      magus: 3
       sorcerer: 3
       wizard: 3
-      bard: 3
-      alchemist: 3
-      magus: 3
-      bloodrager: 3
   level: 3
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!xooxcffqnx8rbgf7'
+  subschool: polymorph
+type: spell
 

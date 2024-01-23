@@ -1,8 +1,27 @@
 _id: g2ba665hjm0gt6yi
-name: Tactical Adaptation
-type: spell
+_key: '!items!g2ba665hjm0gt6yi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tactical Adaptation
 system:
+  actions:
+    - _id: qtldn94jdxc80c8q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell was developed by an Aldori Academy student after several
@@ -15,34 +34,15 @@ system:
       you cannot change the chosen feat (or any decisions related to that feat)
       for additional castings of this spell on the same day. A creature can
       benefit from only one <i>tactical adaptation</i> spell at a time.</p>
-  actions:
-    - _id: qtldn94jdxc80c8q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       magus: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: >-
       a gold and sapphire ring worth 500 gp, which the caster must wear for the
       spell's duration
+  school: trs
   sr: false
-_key: '!items!g2ba665hjm0gt6yi'
+type: spell
 

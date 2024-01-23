@@ -1,8 +1,29 @@
 _id: r3vwq533ekogxq1p
-name: Deadman's Contingency
-type: spell
+_key: '!items!r3vwq533ekogxq1p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deadman's Contingency
 system:
+  actions:
+    - _id: jamg2hw01clzpuqz
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: up to 1 hour/level plus 1d6 rounds (D); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>contingency</i>, except as noted above. This
@@ -18,42 +39,21 @@ system:
       <i>fireball</i>, <i>gentle repose</i>, <i>magic mouth</i>, <i>major
       image</i> (with a duration of 3 rounds), <i>permanent image</i>,
       <i>sending</i>, <i>stinking cloud</i>, and <i>teleport object</i>.</p>
-  actions:
-    - _id: jamg2hw01clzpuqz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: up to 1 hour/level plus 1d6 rounds (D); see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       bard: 4
-      witch: 4
+      cleric: 4
+      oracle: 4
       psychic: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: a scorpion's tail
     focus: ivory statuette of you worth 1,500 gp
+    value: a scorpion's tail
+  school: evo
   sr: false
-_key: '!items!r3vwq533ekogxq1p'
+type: spell
 

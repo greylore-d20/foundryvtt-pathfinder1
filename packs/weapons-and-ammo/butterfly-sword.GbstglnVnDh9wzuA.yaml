@@ -1,8 +1,40 @@
 _id: GbstglnVnDh9wzuA
-name: Butterfly Sword
-type: weapon
+_key: '!items!GbstglnVnDh9wzuA'
 img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+name: Butterfly Sword
 system:
+  actions:
+    - _id: 8qarf2fjk64qo2q1
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Butterfly Sword
   description:
     value: >-
       <p>These short matching swords come in pairs, cleverly nested together to
@@ -16,63 +48,31 @@ system:
       properties to a butterfly sword, treat each sword in the pair as a
       separate weapon (for example, adding a +1 magical enhancement bonus to a
       pair of masterwork butterfly swords costs 4,000 gp).</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 20
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: 8qarf2fjk64qo2q1
-      name: Attack
-      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-  baseTypes:
-    - Butterfly Sword
+  material:
+    addon:
+      - null
+      - null
+    normal:
+      value: ''
+  price: 20
+  properties:
+    fin: true
+    mnk: true
+  source:
+    id: PZO1123
+    pages: '18'
+  subType: martial
+  tags:
+    - PFS
   weaponGroups:
     value:
       - bladesLight
       - monk
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-      - null
-  subType: martial
-  properties:
-    mnk: true
-    fin: true
-  source:
-    id: PZO1123
-    pages: '18'
-_key: '!items!GbstglnVnDh9wzuA'
+  weight:
+    value: 1
+type: weapon
 

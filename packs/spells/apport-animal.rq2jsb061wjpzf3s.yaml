@@ -1,17 +1,11 @@
 _id: rq2jsb061wjpzf3s
-name: Apport Animal
-type: spell
+_key: '!items!rq2jsb061wjpzf3s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Apport Animal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>apport object</i> except the target is an
-      animal. Only normal, nonmagical creatures of the animal type can be
-      teleported.</p>
   actions:
     - _id: 6wy8zo2xrlms4r9v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,31 +13,37 @@ system:
           type: action
       duration:
         value: instantaneous or 1 hour/level
-      target:
-        value: one touched animal of Tiny or smaller size
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one touched animal of Tiny or smaller size
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>apport object</i> except the target is an
+      animal. Only normal, nonmagical creatures of the animal type can be
+      teleported.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
-      ranger: 3
-      summoner: 3
-      witch: 3
-      psychic: 3
+      hunter: 3
       medium: 3
       mesmerist: 3
-      hunter: 3
+      psychic: 3
+      ranger: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-_key: '!items!rq2jsb061wjpzf3s'
+type: spell
 

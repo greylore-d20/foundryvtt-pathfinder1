@@ -1,8 +1,29 @@
 _id: DPOULgvRiIdcPFMt
-name: Protective Luck
-type: feat
+_key: '!items!DPOULgvRiIdcPFMt'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Protective Luck
 system:
+  abilityType: su
+  actions:
+    - _id: 0qhc085g9naj8dbj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 1 + min(2, floor(@classes.witch.level / 8))
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can cause fate to twist so that it benefits a creature within
@@ -17,30 +38,9 @@ system:
 
       <p>Hexes that affect the fortune hex, such as cackle, also affect
       protective luck.</p>
+  subType: classFeat
+  tag: classFeat_protectiveLuck
   tags:
     - Hex
-  actions:
-    - _id: 0qhc085g9naj8dbj
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 + min(2, floor(@classes.witch.level / 8))
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_protectiveLuck
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!DPOULgvRiIdcPFMt'
+type: feat
 

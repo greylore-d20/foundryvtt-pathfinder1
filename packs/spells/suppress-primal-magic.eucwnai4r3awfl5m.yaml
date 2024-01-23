@@ -1,8 +1,30 @@
 _id: eucwnai4r3awfl5m
-name: Suppress Primal Magic
-type: spell
+_key: '!items!eucwnai4r3awfl5m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Suppress Primal Magic
 system:
+  actions:
+    - _id: 2wwul6cyp9vyev3z
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation centered on you
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '10'
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Nexian wizards first created this spell while researching the nature of
@@ -25,39 +47,17 @@ system:
       making a DC 20 Will save-most spellcasters instead relocate to an area not
       affected by primal magic if they can so that they can end the spell's
       effect safely.</p>
-  actions:
-    - _id: 2wwul6cyp9vyev3z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        value: '10'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '10'
-      area: 10-ft.-radius emanation centered on you
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
       oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of sand from the Spellscar Desert
+  school: abj
   sr: false
-_key: '!items!eucwnai4r3awfl5m'
+type: spell
 

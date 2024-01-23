@@ -1,18 +1,11 @@
 _id: vln322jeis7ghbfi
-name: Delusional Pride
-type: spell
+_key: '!items!vln322jeis7ghbfi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Delusional Pride
 system:
-  description:
-    value: >-
-      <p>The target becomes so distracted by an overblown sense of its worth
-      that it takes a -2 penalty on attacks and skill checks.</p><p>However,
-      this feeling also gives the target a +2 morale bonus on saves against
-      charm and compulsion effects.</p>
   actions:
     - _id: wrasu63n8v566vpd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,28 +13,35 @@ system:
           type: action
       duration:
         value: 1 minute
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target becomes so distracted by an overblown sense of its worth
+      that it takes a -2 penalty on attacks and skill checks.</p><p>However,
+      this feeling also gives the target a +2 morale bonus on saves against
+      charm and compulsion effects.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      witch: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vln322jeis7ghbfi'
+type: spell
 

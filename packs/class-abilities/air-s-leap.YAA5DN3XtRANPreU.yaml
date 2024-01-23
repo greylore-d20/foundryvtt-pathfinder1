@@ -1,8 +1,26 @@
 _id: YAA5DN3XtRANPreU
-name: Air's Leap
-type: feat
+_key: '!items!YAA5DN3XtRANPreU'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Air's Leap
 system:
+  abilityType: su
+  actions:
+    - _id: fkskqivvckbuhi2q
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> utility (Su); <b>Level</b> 1;
@@ -13,25 +31,7 @@ system:
       jump twice as far or high as the results of your check indicate, and you
       can accept 1 point of burn when jumping to double the distance you jump
       again (to a total of four times as far).</p>
-  actions:
-    - _id: fkskqivvckbuhi2q
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_airsLeap
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-_key: '!items!YAA5DN3XtRANPreU'
+  tag: classFeat_airsLeap
+type: feat
 

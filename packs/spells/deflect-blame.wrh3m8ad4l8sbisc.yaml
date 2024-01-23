@@ -1,8 +1,29 @@
 _id: wrh3m8ad4l8sbisc
-name: Deflect Blame
-type: spell
+_key: '!items!wrh3m8ad4l8sbisc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deflect Blame
 system:
+  actions:
+    - _id: dgm1p1be237hja7f
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can cast this spell immediately after attacking a creature, causing
@@ -14,37 +35,16 @@ system:
       failed check. Using the spell in these ways doesn't compel the target to
       undertake a specific action in response to its belief of where the blame
       lies.</p>
-  actions:
-    - _id: dgm1p1be237hja7f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      bard: 2
+      mesmerist: 2
+      psychic: 2
       sorcerer: 3
       wizard: 3
-      bard: 2
-      psychic: 2
-      mesmerist: 2
   level: 3
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wrh3m8ad4l8sbisc'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: 5g3k1ocjvt4omciq
-name: Spite
-type: spell
+_key: '!items!5g3k1ocjvt4omciq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spite
 system:
+  actions:
+    - _id: i1c7r3kwg29tqgte
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level (D) or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Choose a single touch range spell of 4th level or lower with a casting
@@ -17,36 +36,17 @@ system:
       the stored spell is lost with no effect.</p><p>You can have only one
       <i>spite</i> spell in effect at a time; if you cast this spell a second
       time, the previous spell effect ends.</p>
-  actions:
-    - _id: i1c7r3kwg29tqgte
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level (D) or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      witch: 4
       mesmerist: 3
+      witch: 4
   level: 4
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: rare inks worth 250 gp
     gpValue: 250
+    value: rare inks worth 250 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!5g3k1ocjvt4omciq'
+type: spell
 

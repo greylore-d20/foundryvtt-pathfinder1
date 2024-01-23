@@ -1,7 +1,41 @@
-name: Spirit Touch (ORA)
-type: feat
+_id: yBvKkYJb4mYdhQ9C
+_key: '!items!yBvKkYJb4mYdhQ9C'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Spirit Touch (ORA)
 system:
+  abilityType: su
+  actions:
+    - _id: thqX1va9j9BRLfxJ
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: ''
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Ghost Touch
+      range:
+        units: touch
+      touch: true
+    - _id: HmTVlhZbSieMCFE6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: ''
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Ghost Touch + Undead Bane
+      range:
+        units: touch
+      touch: true
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can touch one weapon to grant it the ghost
@@ -9,48 +43,14 @@ system:
       modifier. At 11th level, you can spend two uses of this ability to grant
       it the ghost touch and undead bane special abilities. You can use this
       ability a number of times per day equal to 3 + your Charisma modifier.</p>
-  tags:
-    - Reaper Mystery
-  actions:
-    - _id: thqX1va9j9BRLfxJ
-      name: Ghost Touch
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: ''
-      range:
-        units: touch
-      touch: true
-    - _id: HmTVlhZbSieMCFE6
-      name: Ghost Touch + Undead Bane
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: ''
-      range:
-        units: touch
-      uses:
-        autoDeductChargesCost: '2'
-      touch: true
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO90139
     pages: '66'
-_id: yBvKkYJb4mYdhQ9C
-_key: '!items!yBvKkYJb4mYdhQ9C'
+  subType: classFeat
+  tags:
+    - Reaper Mystery
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,26 @@
 _id: xSQbhV3lijAAMmbA
-name: From the Ashes
-type: feat
+_key: '!items!xSQbhV3lijAAMmbA'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: From the Ashes
 system:
+  abilityType: sp
+  actions:
+    - _id: cl02q0a8k0n9vopi
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 9;
@@ -17,25 +35,7 @@ system:
       destroyed, you arise in the square where the most ash is located, having
       taken the damage from the triggering effect but having also healed 5
       points of damage per kineticist level you possess.</p>
-  actions:
-    - _id: cl02q0a8k0n9vopi
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      target:
-        value: self
-      range:
-        units: personal
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_fromTheAshes
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!xSQbhV3lijAAMmbA'
+  tag: classFeat_fromTheAshes
+type: feat
 

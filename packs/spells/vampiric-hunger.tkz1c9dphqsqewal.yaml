@@ -1,8 +1,30 @@
 _id: tkz1c9dphqsqewal
-name: Vampiric Hunger
-type: spell
+_key: '!items!tkz1c9dphqsqewal'
 img: icons/magic/death/mouth-bite-fangs-vampire.webp
+name: Vampiric Hunger
 system:
+  actions:
+    - _id: l61dguowlbgx6v1q
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target of this spell grows the fangs of a vampire, as well as a
@@ -15,42 +37,20 @@ system:
       normal hit points). If the target does not drain blood in this way while
       under the effects of this spell, it becomes exhausted at the end of the
       spell's duration.</p>
-  actions:
-    - _id: l61dguowlbgx6v1q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      witch: 3
       antipaladin: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: nec
   subschool: polymorph
   types: evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!tkz1c9dphqsqewal'
+type: spell
 

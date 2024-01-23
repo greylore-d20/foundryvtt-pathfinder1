@@ -1,8 +1,31 @@
 _id: 71amq2u3r052h060
-name: Meticulous Match
-type: spell
+_key: '!items!71amq2u3r052h060'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Meticulous Match
 system:
+  actions:
+    - _id: 8846f1zsxfofzktd
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fort negates (object)
+        type: fort
+      target:
+        value: two objects touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You compare two similar items and know if they are identical to one
@@ -18,40 +41,17 @@ system:
       duplicates of one another. For instance, a knife might have an identical
       match with a stab wound if an identical knife was used to inflict the
       wound, and twins might have identical blood or tissues.</p>
-  actions:
-    - _id: 8846f1zsxfofzktd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: two objects touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fort negates (object)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      ranger: 3
       bard: 3
-      witch: 4
+      hunter: 3
       inquisitor: 3
       occultist: 3
-      hunter: 3
+      ranger: 3
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: div
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!71amq2u3r052h060'
+type: spell
 

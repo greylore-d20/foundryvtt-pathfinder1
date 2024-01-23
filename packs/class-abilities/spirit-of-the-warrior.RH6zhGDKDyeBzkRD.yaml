@@ -1,8 +1,28 @@
 _id: RH6zhGDKDyeBzkRD
-name: Spirit of the Warrior
-type: feat
+_key: '!items!RH6zhGDKDyeBzkRD'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Spirit of the Warrior
 system:
+  abilityType: su
+  actions:
+    - _id: o8kzb7agiwst406v
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can summon the spirit of a great warrior ancestor and allow it to
@@ -15,33 +35,13 @@ system:
       to be consecutive, but it must be spent in 1-round increments.</p>
 
       <p>You must be at least 11th level to select this revelation.</p>
+  subType: classFeat
+  tag: classFeat_spiritOfTheWarrior
   tags:
     - Revelation
     - Ancestor Mystery
-  actions:
-    - _id: o8kzb7agiwst406v
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: floor(@classes.oracle.level / 2)
-  tag: classFeat_spiritOfTheWarrior
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!RH6zhGDKDyeBzkRD'
+    per: day
+type: feat
 

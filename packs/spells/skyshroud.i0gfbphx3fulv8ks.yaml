@@ -1,8 +1,27 @@
 _id: i0gfbphx3fulv8ks
-name: Skyshroud
-type: spell
+_key: '!items!i0gfbphx3fulv8ks'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Skyshroud
 system:
+  actions:
+    - _id: twyrmwm7fqx9rqmx
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: >-
+        hemisphere that cannot extend beyond four 10-ft. cubes + one 10-ft.
+        cube/level (S)
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The caster designates the area of a hemisphere within the spell's
@@ -18,39 +37,20 @@ system:
       effects that draw effects from the sky (such as <i>call</i> lightning). 
       Light created by this effect functions normally and harms creatures
       vulnerable to bright light or direct sunlight.</p>
-  actions:
-    - _id: twyrmwm7fqx9rqmx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      range:
-        units: long
-      spellEffect: >-
-        hemisphere that cannot extend beyond four 10-ft. cubes + one 10-ft.
-        cube/level (S)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
+      oracle: 3
       skald: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a jar of earth from the surface
+  school: div
   sr: false
-_key: '!items!i0gfbphx3fulv8ks'
+  subschool: scrying
+type: spell
 

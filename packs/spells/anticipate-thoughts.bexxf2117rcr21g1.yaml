@@ -1,8 +1,29 @@
 _id: bexxf2117rcr21g1
-name: Anticipate Thoughts
-type: spell
+_key: '!items!bexxf2117rcr21g1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Anticipate Thoughts
 system:
+  actions:
+    - _id: 70nq4u611pedvf34
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell taps into the target's mind so you get an impression of the
@@ -14,39 +35,18 @@ system:
       the bonuses return once it's back in range. Whenever the target misses you
       with an attack, the spell's bonuses increase by 1 until the spell ends (to
       a maximum of +5).</p>
-  actions:
-    - _id: 70nq4u611pedvf34
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
       inquisitor: 2
       magus: 2
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: div
   types: mind-affecting
-  components:
-    verbal: true
-_key: '!items!bexxf2117rcr21g1'
+type: spell
 

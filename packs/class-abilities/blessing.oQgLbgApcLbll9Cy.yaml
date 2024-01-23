@@ -1,8 +1,20 @@
 _id: oQgLbgApcLbll9Cy
-name: Blessing
-type: feat
+_key: '!items!oQgLbgApcLbll9Cy'
 img: systems/pf1/icons/skills/emerald_03.jpg
+name: Blessing
 system:
+  abilityType: su
+  actions:
+    - _id: dpmdkuw33hbxru00
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/emerald_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 20th level, you gain <em>immunity</em> to <em>poison</em>, to
@@ -11,19 +23,7 @@ system:
       @Compendium[pf1.spells.1i8b1v3dngkxj6jp]{Magic Circle against Evil} at
       will with a <em>caster level</em> equal to your <em>sorcerer</em>
       level.</p>
-  actions:
-    - _id: dpmdkuw33hbxru00
-      name: Use
-      img: systems/pf1/icons/skills/emerald_03.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_blessing
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!oQgLbgApcLbll9Cy'
+  tag: classFeat_blessing
+type: feat
 

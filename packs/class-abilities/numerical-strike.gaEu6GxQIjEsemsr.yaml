@@ -1,8 +1,20 @@
 _id: gaEu6GxQIjEsemsr
-name: Numerical Strike
-type: feat
+_key: '!items!gaEu6GxQIjEsemsr'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Numerical Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: k1g324wq85lg1a18
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>Once per day when the investigator has confirmed a critical hit with a
@@ -16,24 +28,12 @@ system:
       <p>Using this ability doesn’t require an action.</p>
 
       <p>The investigator must be at least 5th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_numericalStrike
   tags:
     - Investigator Talent
-  actions:
-    - _id: k1g324wq85lg1a18
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: special
-        unchained:
-          type: special
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_numericalStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!gaEu6GxQIjEsemsr'
+    per: day
+type: feat
 

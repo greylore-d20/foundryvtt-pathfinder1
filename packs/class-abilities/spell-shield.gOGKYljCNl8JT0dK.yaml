@@ -1,33 +1,33 @@
 _id: gOGKYljCNl8JT0dK
-name: Spell Shield
-type: feat
+_key: '!items!gOGKYljCNl8JT0dK'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Spell Shield
 system:
-  description:
-    value: >-
-      <p>The magus can expend a point from his arcane pool as an immediate
-      action to grant himself a shield bonus to AC equal to his Intelligence
-      bonus until the end of his next turn.</p>
+  abilityType: su
   actions:
     - _id: vqk9k5t4jx0jeixm
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
-        value: '1'
         units: round
-      target:
-        value: self
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
       range:
         units: personal
-  tag: classFeat_spellShield
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Magus
-  abilityType: su
-_key: '!items!gOGKYljCNl8JT0dK'
+  description:
+    value: >-
+      <p>The magus can expend a point from his arcane pool as an immediate
+      action to grant himself a shield bonus to AC equal to his Intelligence
+      bonus until the end of his next turn.</p>
+  subType: classFeat
+  tag: classFeat_spellShield
+type: feat
 

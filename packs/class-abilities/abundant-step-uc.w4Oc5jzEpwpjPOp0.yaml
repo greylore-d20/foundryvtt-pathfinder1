@@ -1,8 +1,24 @@
 _id: w4Oc5jzEpwpjPOp0
-name: Abundant Step (UC)
-type: feat
+_key: '!items!w4Oc5jzEpwpjPOp0'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Abundant Step (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: 8deuajglxr568jhx
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ki power can slip magically between spaces, as if
@@ -12,23 +28,7 @@ system:
       when he uses this ability.</p>
 
       <p>A monk must be at least 8th level before selecting this ki power.</p>
-  actions:
-    - _id: 8deuajglxr568jhx
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        units: inst
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_abundantStepUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!w4Oc5jzEpwpjPOp0'
+  tag: classFeat_abundantStepUc
+type: feat
 

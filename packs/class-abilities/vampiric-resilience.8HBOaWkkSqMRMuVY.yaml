@@ -1,8 +1,20 @@
 _id: 8HBOaWkkSqMRMuVY
-name: Vampiric Resilience
-type: feat
+_key: '!items!8HBOaWkkSqMRMuVY'
 img: systems/pf1/icons/skills/beast_02.jpg
+name: Vampiric Resilience
 system:
+  abilityType: su
+  actions:
+    - _id: eijr4npfexkkffcv
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/beast_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>The vampire hunter gains protection against <em>energy drain</em>. Each
@@ -12,19 +24,7 @@ system:
       activated, he does not. At 16th level, the first six times he would gain a
       <em>negative level</em> while this focus is activated, he does not gain
       any <em>negative levels</em>.</p>
-  actions:
-    - _id: eijr4npfexkkffcv
-      name: Use
-      img: systems/pf1/icons/skills/beast_02.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_vampiricResilience
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!8HBOaWkkSqMRMuVY'
+  tag: classFeat_vampiricResilience
+type: feat
 

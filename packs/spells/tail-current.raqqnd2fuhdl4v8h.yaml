@@ -1,17 +1,11 @@
 _id: raqqnd2fuhdl4v8h
-name: Tail Current
-type: spell
+_key: '!items!raqqnd2fuhdl4v8h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tail Current
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>tailwind</i> except it creates a helpful
-      current in water instead of in the air. It grants free movement while
-      swimming rather than while flying and functions only underwater.</p>
   actions:
     - _id: aq5sicyg3ukue4j8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,36 +13,42 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: one or more creatures, no two of which can be more than 120 feet apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '120'
         units: ft
-      actionType: spellsave
+        value: '120'
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one or more creatures, no two of which can be more than 120 feet apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>tailwind</i> except it creates a helpful
+      current in water instead of in the air. It grants free movement while
+      swimming rather than while flying and functions only underwater.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 3
-      ranger: 3
-      magus: 4
       bloodrager: 4
-      shaman: 3
-      occultist: 3
-      spiritualist: 3
+      cleric: 4
+      druid: 3
       hunter: 3
+      magus: 4
+      occultist: 3
+      oracle: 4
+      ranger: 3
+      shaman: 3
+      sorcerer: 4
+      spiritualist: 3
+      warpriest: 4
+      wizard: 4
   level: 4
   school: trs
   types: water
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!raqqnd2fuhdl4v8h'
+type: spell
 

@@ -1,65 +1,65 @@
 _id: mCwwHo32SU7kjGyu
-name: Dart
-type: weapon
+_key: '!items!mCwwHo32SU7kjGyu'
 img: systems/pf1/icons/items/weapons/dart.png
+name: Dart
 system:
+  actions:
+    - _id: cql222p9plilqj3l
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: dart
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/dart.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Dart
   description:
     value: >-
       <p>This thrown weapon is larger than an arrow and shorter than a javelin,
       with a weighted tip and a shorter range than a javelin. Most darts are
       wooden shafts with a thick metal point.</p>
-  tags:
-    - PFS
-  weight:
-    value: 0.5
-  price: 0.5
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: cql222p9plilqj3l
-      name: Throw
-      img: systems/pf1/icons/items/weapons/dart.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: dart
-  uses:
-    per: single
-  baseTypes:
-    - Dart
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 0.5
   source:
     id: PZO9452
     pages: '0'
-_key: '!items!mCwwHo32SU7kjGyu'
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 0.5
+type: weapon
 

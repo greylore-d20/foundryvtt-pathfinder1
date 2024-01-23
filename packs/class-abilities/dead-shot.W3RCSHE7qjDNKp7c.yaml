@@ -1,8 +1,21 @@
 _id: W3RCSHE7qjDNKp7c
-name: Dead Shot
-type: feat
+_key: '!items!W3RCSHE7qjDNKp7c'
 img: systems/pf1/icons/skills/weapon_37.jpg
+name: Dead Shot
 system:
+  abilityType: ex
+  actions:
+    - _id: UnDW7W7AromBUkU6
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/skills/weapon_37.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 7th level, as a full-round action, the gunslinger can take careful
@@ -25,22 +38,9 @@ system:
       shot if all the attack rolls are misfires. She cannot perform this deed
       with a blunderbuss or other scatter weapon when attacking creatures in a
       cone. The gunslinger must spend 1 grit point to perform this deed.</p>
+  subType: classFeat
+  tag: classFeat_deadShot
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: UnDW7W7AromBUkU6
-      name: Use
-      img: systems/pf1/icons/skills/weapon_37.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_deadShot
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!W3RCSHE7qjDNKp7c'
+type: feat
 

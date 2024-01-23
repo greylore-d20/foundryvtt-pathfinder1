@@ -1,7 +1,36 @@
-name: Fool's Gold (AA)
-type: spell
+_id: Y1wgewApRHLDb3Hq
+_key: '!items!Y1wgewApRHLDb3Hq'
 img: icons/commodities/currency/coin-inset-skull-gold.webp
+name: Fool's Gold (AA)
 system:
+  actions:
+    - _id: 5TkFFJ78xCR2nPq4
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      formulaicAttacks:
+        label: ''
+      img: icons/commodities/currency/coin-inset-skull-gold.webp
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object, see text)
+        type: fort
+      target:
+        value: 1 gold piece/level touched
+      touch: true
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cast this spell on one or more gold pieces, which make those who
@@ -14,30 +43,6 @@ system:
       Additionally, if it fails a saving throw against a magic ability of yours
       that is not harmless and has a duration, the duration is doubled for that
       creature.</p>
-  actions:
-    - _id: 5TkFFJ78xCR2nPq4
-      name: Use
-      img: icons/commodities/currency/coin-inset-skull-gold.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: 1 gold piece/level touched
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      save:
-        type: fort
-        description: Fortitude negates (object, see text)
-      touch: true
   learnedAt:
     class:
       alchemist: 1
@@ -53,13 +58,8 @@ system:
       sorcerer: 2
       witch: 2
       wizard: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a lump of gold worth 5 gp
-_id: Y1wgewApRHLDb3Hq
-_key: '!items!Y1wgewApRHLDb3Hq'
+  school: trs
+type: spell
 

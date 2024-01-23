@@ -1,8 +1,28 @@
 _id: qjpLIatoQIzmcehq
-name: Wild Shape (SHI)
-type: feat
+_key: '!items!qjpLIatoQIzmcehq'
 img: systems/pf1/icons/skills/blue_29.jpg
+name: Wild Shape (SHI)
 system:
+  abilityType: su
+  actions:
+    - _id: ajij0bn12b4y79c2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/skills/blue_29.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shifter
   description:
     value: >-
       <p>At 4th level, a shifter gains the ability to turn herself into the
@@ -26,30 +46,10 @@ system:
       feats and other abilities that require wild shape; for the purpose of
       qualifying for prerequisites, her effective druid level is equal to her
       shifter level.</p>
-  actions:
-    - _id: ajij0bn12b4y79c2
-      name: Use
-      img: systems/pf1/icons/skills/blue_29.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.shifter.level + @abilities.wis.mod'
-  tag: classFeat_wildShapeShi
   subType: classFeat
-  associations:
-    classes:
-      - Shifter
-  abilityType: su
-_key: '!items!qjpLIatoQIzmcehq'
+  tag: classFeat_wildShapeShi
+  uses:
+    maxFormula: '@classes.shifter.level + @abilities.wis.mod'
+    per: day
+type: feat
 

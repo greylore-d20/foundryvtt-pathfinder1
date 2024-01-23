@@ -1,7 +1,41 @@
-name: Fire Jet
-type: feat
+_id: 1mwNVTch2j88G8h3
+_key: '!items!1mwNVTch2j88G8h3'
 img: icons/magic/fire/beam-jet-stream-embers.webp
+name: Fire Jet
 system:
+  abilityType: su
+  actions:
+    - _id: LYc8L8vkh6gaXgYC
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20 ft. Line
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.wizard.level / 2)
+            type:
+              custom: ''
+              values:
+                - fire
+      effectNotes:
+        - >-
+          Creatures that fail their saving throw catch fire and take 1d6 points
+          of fire damage on the following round.
+      img: icons/magic/fire/beam-jet-stream-embers.webp
+      measureTemplate:
+        size: '20'
+        type: ray
+      name: Line of Fire
+      save:
+        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        description: Reflex no ignition
+        type: ref
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a standard action, you can send forth a 20-foot line of fire. Anyone
@@ -15,48 +49,14 @@ system:
       gives a +2 circumstance bonus on the save. Dousing the creature with water
       automatically extinguishes the flame. You can use this ability a number of
       times per day equal to 3 + your Intelligence modifier.</p>
-  tags:
-    - Fire School
-  actions:
-    - _id: LYc8L8vkh6gaXgYC
-      name: Line of Fire
-      img: icons/magic/fire/beam-jet-stream-embers.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      measureTemplate:
-        type: ray
-        size: '20'
-      actionType: save
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.wizard.level / 2)
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
-        type: ref
-        description: Reflex no ignition
-      effectNotes:
-        - >-
-          Creatures that fail their saving throw catch fire and take 1d6 points
-          of fire damage on the following round.
-      area: 20 ft. Line
-  uses:
-    per: day
-    maxFormula: 3 + @classes.wizard.level
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1115
     pages: '142'
-_id: 1mwNVTch2j88G8h3
-_key: '!items!1mwNVTch2j88G8h3'
+  subType: classFeat
+  tags:
+    - Fire School
+  uses:
+    maxFormula: 3 + @classes.wizard.level
+    per: day
+type: feat
 

@@ -1,54 +1,54 @@
 _id: vXvF2dNAdD8B9lDY
-name: Channel
-type: feat
+_key: '!items!vXvF2dNAdD8B9lDY'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Channel
 system:
+  abilityType: su
+  actions:
+    - _id: k2xl7zkjlaj1f38q
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.oracle.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: self; affects living OR undead
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can channel positive energy like a cleric, using your oracle level
       as your effective cleric level when determining the amount of damage
       healed (or caused to undead) and the DC. You can use this ability a number
       of times per day equal to 1 + your Charisma modifier.</p>
-  actions:
-    - _id: k2xl7zkjlaj1f38q
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self; affects living OR undead
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: heal
-      damage:
-        parts:
-          - formula: (ceil(@classes.oracle.level / 2))d6
-            type:
-              values:
-                - positive
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
-        type: will
-        description: Will halves damage
-  uses:
-    per: day
-    maxFormula: 1 + @abilities.cha.mod
-  tag: classFeat_channel
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!vXvF2dNAdD8B9lDY'
+  tag: classFeat_channel
+  uses:
+    maxFormula: 1 + @abilities.cha.mod
+    per: day
+type: feat
 

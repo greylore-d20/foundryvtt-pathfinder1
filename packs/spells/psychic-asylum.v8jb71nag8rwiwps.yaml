@@ -1,8 +1,25 @@
 _id: v8jb71nag8rwiwps
-name: Psychic Asylum
-type: spell
+_key: '!items!v8jb71nag8rwiwps'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychic Asylum
 system:
+  actions:
+    - _id: z8fh2lbzjigifmak
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You retreat into a mindscape (see page 234) of your own making that
@@ -34,33 +51,16 @@ system:
       currently affecting your body do not expend additional duration while you
       are in the <i>psychic asylum</i>, but you also don't experience their
       effects during the time spent there.</p>
-  actions:
-    - _id: z8fh2lbzjigifmak
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous; see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      mesmerist: 5
+      psychic: 5
       sorcerer: 6
       wizard: 6
-      psychic: 5
-      mesmerist: 5
   level: 6
   school: ill
+  sr: false
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!v8jb71nag8rwiwps'
+type: spell
 

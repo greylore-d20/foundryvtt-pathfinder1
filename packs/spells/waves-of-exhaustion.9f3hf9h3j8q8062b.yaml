@@ -1,52 +1,52 @@
 _id: 9f3hf9h3j8q8062b
-name: Waves of Exhaustion
-type: spell
+_key: '!items!9f3hf9h3j8q8062b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Waves of Exhaustion
 system:
-  description:
-    value: >-
-      <p>Waves of negative energy cause all living creatures in the spell's area
-      to become exhausted. This spell has no effect on a creature that is
-      already exhausted.</p>
   actions:
     - _id: 7g00pymgd62ntfix
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      area: cone-shaped burst
       duration:
         value: instantaneous
-      range:
-        value: '60'
-        units: ft
+      img: systems/pf1/icons/misc/magic-swirl.png
       measureTemplate:
-        type: cone
         size: '60'
-      area: cone-shaped burst
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Waves of negative energy cause all living creatures in the spell's area
+      to become exhausted. This spell has no effect on a creature that is
+      already exhausted.</p>
   learnedAt:
+    bloodline:
+      Daemon: 7
+      Oni: 7
     class:
-      sorcerer: 7
-      wizard: 7
-      witch: 7
-      psychic: 7
       mesmerist: 6
+      psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
     domain:
       Repose: 8
     subDomain:
       Toil: 7
-    bloodline:
-      Oni: 7
-      Daemon: 7
   level: 7
   school: nec
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '368'
-_key: '!items!9f3hf9h3j8q8062b'
+type: spell
 

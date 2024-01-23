@@ -1,8 +1,23 @@
 _id: WVwFa368qlKbrn5O
-name: Forest Siege
-type: feat
+_key: '!items!WVwFa368qlKbrn5O'
 img: systems/pf1/icons/spells/vines-jade-3.jpg
+name: Forest Siege
 system:
+  abilityType: sp
+  actions:
+    - _id: fy5e69hl957yo1rf
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> wood; <b>Type</b> utility (Sp); <b>Level</b> 9;
@@ -16,22 +31,7 @@ system:
       <p>If you accept 1 point of burn, you can prolong the effect without the
       need for concentration until the next time you recover burn, but you need
       to spend a standard action to change targets.</p>
-  actions:
-    - _id: fy5e69hl957yo1rf
-      name: Use
-      img: systems/pf1/icons/spells/vines-jade-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-  tag: classFeat_forestSiege
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!WVwFa368qlKbrn5O'
+  tag: classFeat_forestSiege
+type: feat
 

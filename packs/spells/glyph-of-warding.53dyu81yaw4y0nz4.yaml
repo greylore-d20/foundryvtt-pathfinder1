@@ -1,8 +1,56 @@
 _id: 53dyu81yaw4y0nz4
-name: Glyph of Warding
-type: spell
+_key: '!items!53dyu81yaw4y0nz4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Glyph of Warding
 system:
+  actions:
+    - _id: xito5776habiio2g
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: object touched or up to 5 sq. ft./level
+      duration:
+        value: permanent until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Object touched
+      range:
+        units: touch
+      save:
+        description: see text
+        type: ref
+      target:
+        value: object touched or up to 5 sq. ft./level
+    - _id: bn57QDqSNo7g5780
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: object touched or up to 5 sq. ft./level
+      duration:
+        value: permanent until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: 5 * @cl
+        type: rect
+      name: Square
+      range:
+        units: touch
+      save:
+        description: see text
+        type: ref
+      target:
+        value: object touched or up to 5 sq. ft./level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This powerful inscription harms those who enter, pass, or open the
@@ -51,73 +99,25 @@ system:
       intruder and attack.Saving Throws and spell resistance operate as normal,
       except that the DC is based on the level of the spell stored in the
       glyph.</p>
-  actions:
-    - _id: xito5776habiio2g
-      name: Object touched
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged (D)
-      target:
-        value: object touched or up to 5 sq. ft./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: ref
-        description: see text
-      area: object touched or up to 5 sq. ft./level
-    - _id: bn57QDqSNo7g5780
-      name: Square
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged (D)
-      target:
-        value: object touched or up to 5 sq. ft./level
-      range:
-        units: touch
-      measureTemplate:
-        type: rect
-        size: 5 * @cl
-      actionType: spellsave
-      save:
-        type: ref
-        description: see text
-      area: object touched or up to 5 sq. ft./level
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
       oracle: 3
+      warpriest: 3
     domain:
       Rune: 3
     subDomain:
       Home: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered diamond worth 200 gp
     gpValue: 200
+    value: powdered diamond worth 200 gp
   preparation:
     spontaneousPrepared: false
-  sr: false
+  school: abj
   source:
     id: PZO1110
     pages: '290'
-_key: '!items!53dyu81yaw4y0nz4'
+  sr: false
+type: spell
 

@@ -1,8 +1,27 @@
 _id: 08rPPRYYlPzG5jZ0
-name: Arid Refuge
-type: spell
+_key: '!items!08rPPRYYlPzG5jZ0'
 img: icons/environment/settlement/house-two-stories.webp
+name: Arid Refuge
 system:
+  actions:
+    - _id: 0p3djtqkyvqy5saa
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 2 hours/level (D)
+      img: icons/environment/settlement/house-two-stories.webp
+      name: Use
+      range:
+        units: close
+      spellEffect: 20-ft.-square structure
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a small stone building on any relatively flat nonliving
@@ -25,38 +44,19 @@ system:
       shelter.</p>
 
       <p>This spell can be cast only underwater.</p>
-  actions:
-    - _id: 0p3djtqkyvqy5saa
-      name: Use
-      img: icons/environment/settlement/house-two-stories.webp
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 2 hours/level (D)
-      range:
-        units: close
-      spellEffect: 20-ft.-square structure
   learnedAt:
     class:
       arcanist: 5
       bard: 5
       skald: 5
       sorcerer: 5
-      wizard: 5
       witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chip of stone wrapped in cloth
+  school: con
   sr: false
-_key: '!items!08rPPRYYlPzG5jZ0'
+  subschool: creation
+type: spell
 

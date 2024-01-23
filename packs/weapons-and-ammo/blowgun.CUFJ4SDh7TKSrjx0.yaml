@@ -1,65 +1,65 @@
 _id: CUFJ4SDh7TKSrjx0
-name: Blowgun
-type: weapon
+_key: '!items!CUFJ4SDh7TKSrjx0'
 img: systems/pf1/icons/items/weapons/blowgun.PNG
+name: Blowgun
 system:
+  actions:
+    - _id: 9xo1fz7ad6f545a6
+      ability:
+        attack: dex
+        damage: str
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: dart
+      damage:
+        parts:
+          - formula: sizeRoll(1, 2, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/blowgun.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  ammo:
+    type: dart
+  baseTypes:
+    - Blowgun
   description:
     value: >-
       <p>Blowguns are generally used to deliver debilitating (but rarely fatal)
       poisons from a distance. They are nearly silent when fired. For a list of
       appropriate poisons, see Poisons on page 110.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 2
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 9xo1fz7ad6f545a6
-      name: Throw
-      img: systems/pf1/icons/items/weapons/blowgun.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 2, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: dart
-  baseTypes:
-    - Blowgun
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 2
   source:
     id: PZO9452
     pages: '0'
-  ammo:
-    type: dart
-_key: '!items!CUFJ4SDh7TKSrjx0'
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 1
+type: weapon
 

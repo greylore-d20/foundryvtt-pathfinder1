@@ -1,8 +1,31 @@
 _id: aa0w7tk852iqn3ni
-name: Detect Undead
-type: spell
+_key: '!items!aa0w7tk852iqn3ni'
 img: icons/magic/death/undead-skeleton-worn-blue.webp
+name: Detect Undead
 system:
+  actions:
+    - _id: 1sfdmqdawqorgp41
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can detect the aura that surrounds undead creatures. The amount of
@@ -31,47 +54,24 @@ system:
       in a new area. The spell can penetrate barriers, but 1 foot of stone, 1
       inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt
       blocks it.<p></p>
-  actions:
-    - _id: 1sfdmqdawqorgp41
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      paladin: 1
       alchemist: 1
+      cleric: 1
       inquisitor: 1
-      shaman: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      oracle: 1
+      paladin: 1
+      psychic: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      warpriest: 1
+      wizard: 1
   materials:
     value: earth from a grave
+  school: div
   sr: false
-_key: '!items!aa0w7tk852iqn3ni'
+type: spell
 

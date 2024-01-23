@@ -1,8 +1,25 @@
 _id: t0p5mcpgpjbx6o1v
-name: Instant Portrait
-type: spell
+_key: '!items!t0p5mcpgpjbx6o1v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instant Portrait
 system:
+  actions:
+    - _id: 62u65cckjye374hy
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      spellEffect: a monochromatic illustration up to 1 square foot in area
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You touch a surface and produce a painted portrait of either yourself
@@ -15,40 +32,23 @@ system:
       creature depicted, including any disguises, magical or mundane, that the
       subject is wearing at the time of the painting's creation. The portrait is
       only as durable as normal paint and can be removed by mundane means.</p>
-  actions:
-    - _id: 62u65cckjye374hy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: touch
-      spellEffect: a monochromatic illustration up to 1 square foot in area
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
-      summoner: 1
-      witch: 1
+      cleric: 1
       inquisitor: 1
-      psychic: 1
       mesmerist: 1
       occultist: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!t0p5mcpgpjbx6o1v'
+  subschool: creation
+type: spell
 

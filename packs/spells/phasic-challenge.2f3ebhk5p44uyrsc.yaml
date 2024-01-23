@@ -1,8 +1,31 @@
 _id: 2f3ebhk5p44uyrsc
-name: Phasic Challenge
-type: spell
+_key: '!items!2f3ebhk5p44uyrsc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phasic Challenge
 system:
+  actions:
+    - _id: zaz1x5tbxcp7xuwv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (see below)
+        type: will
+      target:
+        value: two creatures within 60 feet of one another; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You select one enemy and one willing ally as targets. The enemy gains a
@@ -14,42 +37,19 @@ system:
       other factors not related to other creatures. If one of the creatures
       becomes unconscious or dies, or if the effect is dispelled, the effect
       ends for both of them.</p>
-  actions:
-    - _id: zaz1x5tbxcp7xuwv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: two creatures within 60 feet of one another; see text
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see below)
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
       oracle: 8
-      witch: 7
-      shaman: 8
       psychic: 8
+      shaman: 8
+      sorcerer: 8
       spiritualist: 6
+      witch: 7
+      wizard: 8
   level: 8
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a scrap of a knight's banner
-_key: '!items!2f3ebhk5p44uyrsc'
+  school: trs
+type: spell
 

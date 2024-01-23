@@ -1,8 +1,29 @@
 _id: gk8fqfvj99d46p2h
-name: False Vision
-type: spell
+_key: '!items!gk8fqfvj99d46p2h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: False Vision
 system:
+  actions:
+    - _id: ir0l6e53lxp2ronm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 40-ft.-radius emanation
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: touch
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a subtle illusion, causing any divination (scrying)
@@ -11,50 +32,29 @@ system:
       at the time of casting. As long as the duration lasts, you can concentrate
       to change the image as desired. While you aren't concentrating, the image
       remains static.</p>
-  actions:
-    - _id: ir0l6e53lxp2ronm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: touch
-      measureTemplate:
-        type: circle
-        size: '40'
-      area: 40-ft.-radius emanation
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 5
-      psychic: 5
       medium: 4
       mesmerist: 5
       occultist: 5
+      psychic: 5
+      sorcerer: 5
       spiritualist: 5
+      wizard: 5
     domain:
       Trickery: 5
   level: 5
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: crushed jade worth 250 gp
     gpValue: 250
+    value: crushed jade worth 250 gp
   preparation:
     spontaneousPrepared: false
-  sr: false
+  school: ill
   source:
     id: PZO1110
     pages: '280'
-_key: '!items!gk8fqfvj99d46p2h'
+  sr: false
+  subschool: glamer
+type: spell
 

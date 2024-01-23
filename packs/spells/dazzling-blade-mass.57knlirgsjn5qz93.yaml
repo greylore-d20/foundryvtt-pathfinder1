@@ -1,32 +1,35 @@
 _id: 57knlirgsjn5qz93
-name: Dazzling Blade, Mass
-type: spell
+_key: '!items!57knlirgsjn5qz93'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dazzling Blade, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>dazzling blade</i>, except that it affects
-      multiple weapons. Each wielder of a <i>dazzling blade</i> can discharge
-      the weapon's effect to attempt to blind a foe independently of the
-      others.</p>
   actions:
     - _id: 7k8rbdqbvtemlo8g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: One metal weapon/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (see text)
+        type: will
+      target:
+        value: One metal weapon/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>dazzling blade</i>, except that it affects
+      multiple weapons. Each wielder of a <i>dazzling blade</i> can discharge
+      the weapon's effect to attempt to blind a foe independently of the
+      others.</p>
   learnedAt:
     class:
       sorcerer: 3
@@ -34,8 +37,5 @@ system:
   level: 3
   school: ill
   subschool: pattern
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!57knlirgsjn5qz93'
+type: spell
 

@@ -1,8 +1,58 @@
 _id: kCnCPAaNfB0HPheV
-name: Vahana
-type: feat
+_key: '!items!kCnCPAaNfB0HPheV'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Vahana
 system:
+  changes:
+    - _id: ohmp0wd7
+      formula: '3'
+      modifier: untyped
+      subTarget: nac
+    - _id: xfrqcsv0
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+    - _id: ndsz9phx
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+    - _id: r410zwpu
+      formula: '4'
+      modifier: untyped
+      subTarget: con
+    - _id: 9h2fz7qi
+      formula: '10'
+      modifier: untyped
+      subTarget: int
+    - _id: wdl3ulml
+      formula: '2'
+      modifier: untyped
+      subTarget: wis
+    - _id: gejl6fyx
+      formula: '2'
+      modifier: untyped
+      subTarget: cha
+    - _id: 94zw9odn
+      formula: min(@attributes.speed.land.base, 30)
+      modifier: untyped
+      subTarget: landSpeed
+    - _id: e2xtgxw0
+      formula: min(@attributes.speed.climb.base, 30)
+      modifier: untyped
+      subTarget: climbSpeed
+    - _id: l366fvqf
+      formula: min(@attributes.speed.swim.base, 30)
+      modifier: untyped
+      subTarget: swimSpeed
+    - _id: t3goyg2m
+      formula: min(@attributes.speed.burrow.base, 30)
+      modifier: untyped
+      subTarget: burrowSpeed
+    - _id: 7lp6k55t
+      formula: min(@attributes.speed.fly.base, 30)
+      modifier: untyped
+      subTarget: flySpeed
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -42,56 +92,6 @@ system:
       damage dealt to the vahana to instead affect the
       rider.<p><b>Abilities:</b> Increase from the base creature as follows: Str
       +4, Dex +4, Con +4, Int +10, Wis +2, Cha +2.</p>
-  changes:
-    - _id: ohmp0wd7
-      formula: '3'
-      subTarget: nac
-      modifier: untyped
-    - _id: xfrqcsv0
-      formula: '4'
-      subTarget: str
-      modifier: untyped
-    - _id: ndsz9phx
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
-    - _id: r410zwpu
-      formula: '4'
-      subTarget: con
-      modifier: untyped
-    - _id: 9h2fz7qi
-      formula: '10'
-      subTarget: int
-      modifier: untyped
-    - _id: wdl3ulml
-      formula: '2'
-      subTarget: wis
-      modifier: untyped
-    - _id: gejl6fyx
-      formula: '2'
-      subTarget: cha
-      modifier: untyped
-    - _id: 94zw9odn
-      formula: min(@attributes.speed.land.base, 30)
-      subTarget: landSpeed
-      modifier: untyped
-    - _id: e2xtgxw0
-      formula: min(@attributes.speed.climb.base, 30)
-      subTarget: climbSpeed
-      modifier: untyped
-    - _id: l366fvqf
-      formula: min(@attributes.speed.swim.base, 30)
-      subTarget: swimSpeed
-      modifier: untyped
-    - _id: t3goyg2m
-      formula: min(@attributes.speed.burrow.base, 30)
-      subTarget: burrowSpeed
-      modifier: untyped
-    - _id: 7lp6k55t
-      formula: min(@attributes.speed.fly.base, 30)
-      subTarget: flySpeed
-      modifier: untyped
   subType: template
-  crOffset: '2'
-_key: '!items!kCnCPAaNfB0HPheV'
+type: feat
 

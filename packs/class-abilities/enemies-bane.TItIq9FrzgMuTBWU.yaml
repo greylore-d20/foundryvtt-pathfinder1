@@ -1,8 +1,27 @@
 _id: TItIq9FrzgMuTBWU
-name: Enemies' Bane
-type: feat
+_key: '!items!TItIq9FrzgMuTBWU'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Enemies' Bane
 system:
+  abilityType: su
+  actions:
+    - _id: ngcow6a4rwo97qc8
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon held
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a swift action, the shaman imbues a single weapon she’s wielding
@@ -13,29 +32,10 @@ system:
 
       <p>The shaman can use this ability a number of times per day equal to 3 +
       her Charisma modifier.</p>
-  actions:
-    - _id: ngcow6a4rwo97qc8
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon held
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_enemiesBane
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!TItIq9FrzgMuTBWU'
+  tag: classFeat_enemiesBane
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

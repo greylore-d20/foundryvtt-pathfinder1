@@ -1,8 +1,32 @@
 _id: dm52jk1e37b05v9d
-name: Righteous Vigor
-type: spell
+_key: '!items!dm52jk1e37b05v9d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Righteous Vigor
 system:
+  actions:
+    - _id: a74hbpouwndb3kdo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Infusing the target with a surge of furious divine energy, you enhance
@@ -14,37 +38,13 @@ system:
       hit points). If an attack misses, the attack bonus resets to +0 but any
       accumulated temporary hit points remain. The temporary hit points
       disappear at the end of the spell's duration.</p>
-  actions:
-    - _id: a74hbpouwndb3kdo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      paladin: 2
       inquisitor: 3
+      paladin: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!dm52jk1e37b05v9d'
+type: spell
 

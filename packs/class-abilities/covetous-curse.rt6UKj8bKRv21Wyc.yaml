@@ -1,8 +1,24 @@
 _id: rt6UKj8bKRv21Wyc
-name: Covetous Curse
-type: feat
+_key: '!items!rt6UKj8bKRv21Wyc'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Covetous Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: bqupe4f7
+      formula: '@classes.oracle.level >= 5 ? 4 : 0'
+      modifier: insight
+      subTarget: skill.apr
+    - _id: s22762hv
+      formula: '@classes.oracle.level >= 5 ? 4 : 0'
+      modifier: insight
+      subTarget: skill.spl
+    - _id: w05jp0uv
+      formula: '@classes.oracle.level >= 5 ? 4 : 0'
+      modifier: insight
+      subTarget: skill.umd
   description:
     value: >-
       <p>You find yourself drawn to the luster of wealthy living. You must wear
@@ -26,23 +42,7 @@ system:
       <p>At 15th level, you add half your oracle level to your CMD against
       stealAPG combat maneuvers and to the DC of Sleight of Hand checks to take
       items from you.</p>
-  changes:
-    - _id: bqupe4f7
-      formula: '@classes.oracle.level >= 5 ? 4 : 0'
-      subTarget: skill.apr
-      modifier: insight
-    - _id: s22762hv
-      formula: '@classes.oracle.level >= 5 ? 4 : 0'
-      subTarget: skill.spl
-      modifier: insight
-    - _id: w05jp0uv
-      formula: '@classes.oracle.level >= 5 ? 4 : 0'
-      subTarget: skill.umd
-      modifier: insight
-  tag: classFeat_covetousCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!rt6UKj8bKRv21Wyc'
+  tag: classFeat_covetousCurse
+type: feat
 

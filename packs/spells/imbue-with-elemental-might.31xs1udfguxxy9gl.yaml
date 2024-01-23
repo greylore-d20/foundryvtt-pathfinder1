@@ -1,8 +1,32 @@
 _id: 31xs1udfguxxy9gl
-name: Imbue with Elemental Might
-type: spell
+_key: '!items!31xs1udfguxxy9gl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Imbue with Elemental Might
 system:
+  actions:
+    - _id: 8v8h6xdnwzbze7r4
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 24 hours or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched; see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>imbue with spell ability</i>, except you
@@ -12,42 +36,18 @@ system:
       ability's duration is based on the target's level or Hit Dice. Once you
       cast this spell, you cannot use your elemental assault ability until the
       duration of the spell is over.</p>
-  actions:
-    - _id: 8v8h6xdnwzbze7r4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 24 hours or until discharged (D)
-      target:
-        value: creature touched; see text
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      magus: 2
       bloodrager: 2
+      cleric: 2
+      magus: 2
+      oracle: 2
       shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: evo
   types: see text
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!31xs1udfguxxy9gl'
+type: spell
 

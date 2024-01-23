@@ -1,8 +1,34 @@
 _id: hojjvgtu18r6x9yy
-name: Ban Corruption
-type: spell
+_key: '!items!hojjvgtu18r6x9yy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ban Corruption
 system:
+  actions:
+    - _id: qjzab6tz6ick6vej
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft.-radius emanation centered on you
+      duration:
+        value: concentration plus 1 round/level, up to 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You strip all creatures within the emanation of any gifts associated
@@ -13,46 +39,20 @@ system:
       ends, even if it leaves the emanation, but a successful saving throw
       renders a creature immune to the spell, even if it enters and exits the
       emanation several times.</p>
-  actions:
-    - _id: qjzab6tz6ick6vej
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration plus 1 round/level, up to 1 hour/level
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 30-ft.-radius emanation centered on you
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
-      paladin: 4
       inquisitor: 4
-      shaman: 5
       medium: 3
       occultist: 4
+      oracle: 5
+      paladin: 4
+      shaman: 5
+      warpriest: 5
   level: 5
-  school: abj
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a ceremonial dagger
-_key: '!items!hojjvgtu18r6x9yy'
+  school: abj
+  types: good
+type: spell
 

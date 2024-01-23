@@ -1,8 +1,31 @@
 _id: fz4uvu2ajibbzx10
-name: Mirage
-type: spell
+_key: '!items!fz4uvu2ajibbzx10'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mirage
 system:
+  actions:
+    - _id: ac4u7yiwgqvamo45
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: one 40-ft. cube/level (S)
+      duration:
+        value: 2 hours/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief (see below)
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an image of a pool of water, a group of standing stones, a
@@ -16,42 +39,19 @@ system:
       saving throw. If the result is equal to or greater than the spell's save
       DC, the creature realizes the mirage is an illusion as if it disbelieved
       the spell.</p>
-  actions:
-    - _id: ac4u7yiwgqvamo45
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 2 hours/level (D)
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (see below)
-      area: one 40-ft. cube/level (S)
   learnedAt:
     class:
-      druid: 3
-      ranger: 3
       bard: 3
-      psychic: 3
+      druid: 3
+      hunter: 3
       mesmerist: 3
       occultist: 3
-      hunter: 3
+      psychic: 3
+      ranger: 3
   level: 3
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of sand and a drop of water
-_key: '!items!fz4uvu2ajibbzx10'
+  school: ill
+  subschool: figment
+type: spell
 

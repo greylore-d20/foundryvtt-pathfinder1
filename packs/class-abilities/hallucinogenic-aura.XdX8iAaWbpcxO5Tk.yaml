@@ -1,8 +1,32 @@
 _id: XdX8iAaWbpcxO5Tk
-name: Hallucinogenic Aura
-type: feat
+_key: '!items!XdX8iAaWbpcxO5Tk'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Hallucinogenic Aura
 system:
+  abilityType: su
+  actions:
+    - _id: 7vu93dx3tqibuhyt
+      actionType: save
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      duration:
+        units: round
+        value: 1d4
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 13th level, a mental field emanates from you, touching the minds of
@@ -17,31 +41,7 @@ system:
       other psychic. You can brew an antidote that protects the imbiber from
       your aura. Brewing 1 dose requires 1 hour and a successful DC 15 Craft
       (alchemy) check. One dose’s effects last for 1 month.</p>
-  actions:
-    - _id: 7vu93dx3tqibuhyt
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      duration:
-        value: 1d4
-        units: round
-      range:
-        value: '30'
-        units: ft
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_hallucinogenicAura
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!XdX8iAaWbpcxO5Tk'
+  tag: classFeat_hallucinogenicAura
+type: feat
 

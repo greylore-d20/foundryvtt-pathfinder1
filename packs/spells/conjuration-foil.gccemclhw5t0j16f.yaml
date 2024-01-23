@@ -1,8 +1,30 @@
 _id: gccemclhw5t0j16f
-name: Conjuration Foil
-type: spell
+_key: '!items!gccemclhw5t0j16f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Conjuration Foil
 system:
+  actions:
+    - _id: 1bb3oimoevncfey7
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      area: 20-foot radius spread
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will partial (see text)
+        type: will
+  components:
+    somatic: true
   description:
     value: >-
       <p>All creatures in the area gain a +4 bonus on saving throws against
@@ -13,42 +35,20 @@ system:
       random similar location within the triggering effect's range, rather than
       the intended destination. A successful Will save halves the damage and
       negates the altered destination.</p>
-  actions:
-    - _id: 1bb3oimoevncfey7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial (see text)
-      area: 20-foot radius spread
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      summoner: 3
-      witch: 4
       magus: 3
-      psychic: 4
       medium: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 3
       summonerUnchained: 3
+      witch: 4
+      wizard: 4
   level: 4
   school: abj
-  components:
-    somatic: true
-_key: '!items!gccemclhw5t0j16f'
+type: spell
 

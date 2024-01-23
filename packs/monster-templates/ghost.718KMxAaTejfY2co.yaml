@@ -1,8 +1,26 @@
 _id: 718KMxAaTejfY2co
-name: Ghost
-type: feat
+_key: '!items!718KMxAaTejfY2co'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Ghost
 system:
+  changes:
+    - _id: 0wwuebw6
+      formula: '@abilities.cha.mod'
+      modifier: deflection
+      subTarget: ac
+    - _id: njfnkfir
+      formula: '-max(0, @ac.natural.total)'
+      modifier: untyped
+      subTarget: nac
+    - _id: 7919odge
+      formula: '30'
+      modifier: base
+      subTarget: flySpeed
+    - _id: im5ym2hw
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -80,24 +98,6 @@ system:
       Disguise, Fly, Intimidate, Knowledge (arcana), Knowledge (religion),
       Perception, Sense Motive, Spellcraft, and Stealth as class skills.
       Otherwise, skills are the same as the base creature.</p>
-  changes:
-    - _id: 0wwuebw6
-      formula: '@abilities.cha.mod'
-      subTarget: ac
-      modifier: deflection
-    - _id: njfnkfir
-      formula: '-max(0, @ac.natural.total)'
-      subTarget: nac
-      modifier: untyped
-    - _id: 7919odge
-      formula: '30'
-      subTarget: flySpeed
-      modifier: base
-    - _id: im5ym2hw
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
   subType: template
-  crOffset: '2'
-_key: '!items!718KMxAaTejfY2co'
+type: feat
 

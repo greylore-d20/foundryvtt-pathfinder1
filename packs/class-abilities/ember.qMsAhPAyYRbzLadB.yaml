@@ -1,8 +1,20 @@
 _id: qMsAhPAyYRbzLadB
-name: Ember
-type: feat
+_key: '!items!qMsAhPAyYRbzLadB'
 img: systems/pf1/icons/skills/fire_01.jpg
+name: Ember
 system:
+  abilityType: su
+  actions:
+    - _id: zn5skul6af3fcvcr
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/fire_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, when making a <em>Craft</em> check involving metal, you
@@ -11,22 +23,10 @@ system:
       bonus</em> on the check equal to twice the number of uses expended. You
       can use this ability a number of times per day equal to 3 + your
       <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: zn5skul6af3fcvcr
-      name: Use
-      img: systems/pf1/icons/skills/fire_01.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_ember
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!qMsAhPAyYRbzLadB'
+  tag: classFeat_ember
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

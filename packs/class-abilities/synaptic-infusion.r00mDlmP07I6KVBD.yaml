@@ -1,8 +1,23 @@
 _id: r00mDlmP07I6KVBD
-name: Synaptic Infusion
-type: feat
+_key: '!items!r00mDlmP07I6KVBD'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Synaptic Infusion
 system:
+  actions:
+    - _id: qpnx4kudl60p1fmv
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> substance infusion; <b>Level</b> 3;
@@ -14,22 +29,7 @@ system:
       The target is aware it can choose to take a move action to remove the
       staggered condition inflicted by this infusion. This infusion is a
       mind-affecting effect.</p>
-  actions:
-    - _id: qpnx4kudl60p1fmv
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_synapticInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!r00mDlmP07I6KVBD'
+  tag: classFeat_synapticInfusion
+type: feat
 

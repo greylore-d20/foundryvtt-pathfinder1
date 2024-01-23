@@ -1,8 +1,30 @@
 _id: 2fp2iq80vj4gugzi
-name: Tamer's Lash
-type: spell
+_key: '!items!2fp2iq80vj4gugzi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tamer's Lash
 system:
+  actions:
+    - _id: lqcbmqvk7rk2u8v0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will partial (see text)
+        type: will
+      spellEffect: a whip of magical sound
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A 15-foot-long whip of sonic energy springs from your hand, delivering
@@ -18,36 +40,14 @@ system:
       with Hit Dice in excess of your caster level + 4 gain a +4 circumstance
       bonus on their saves to avoid being intimidated in this way. This
       intimidation effect is a mind-affecting fear effect.</p>
-  actions:
-    - _id: lqcbmqvk7rk2u8v0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial (see text)
-      spellEffect: a whip of magical sound
   learnedAt:
     class:
-      ranger: 1
       bard: 1
-      magus: 1
       bloodrager: 1
       hunter: 1
+      magus: 1
+      ranger: 1
   school: evo
   types: sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!2fp2iq80vj4gugzi'
+type: spell
 

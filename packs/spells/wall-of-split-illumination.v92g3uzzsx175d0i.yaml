@@ -1,8 +1,25 @@
 _id: v92g3uzzsx175d0i
-name: Wall of Split Illumination
-type: spell
+_key: '!items!v92g3uzzsx175d0i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wall of Split Illumination
 system:
+  actions:
+    - _id: 2de2pz3z09u7dk9s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: 10-ft.-high vertical sheet of illumination up to 5 ft. long/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An immobile curtain of illumination springs into existence. When
@@ -12,38 +29,21 @@ system:
       by up to two steps toward either bright light (the light side) or darkness
       (the dark side). The wall also obstructs vision through it, regardless of
       which side of the wall the viewer is on.</p>
-  actions:
-    - _id: 2de2pz3z09u7dk9s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: medium
-      spellEffect: 10-ft.-high vertical sheet of illumination up to 5 ft. long/level
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
       inquisitor: 3
       magus: 3
-      shaman: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: evo
-  types: darkness, light
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!v92g3uzzsx175d0i'
+  types: darkness, light
+type: spell
 

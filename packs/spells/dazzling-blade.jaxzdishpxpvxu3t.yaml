@@ -1,8 +1,29 @@
 _id: jaxzdishpxpvxu3t
-name: Dazzling Blade
-type: spell
+_key: '!items!jaxzdishpxpvxu3t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dazzling Blade
 system:
+  actions:
+    - _id: f06ny66pl9l94uzi
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one metal weapon
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Dazzling blade</i> makes a weapon appear dazzlingly shiny, as if
@@ -21,33 +42,12 @@ system:
       round (with a successful save, the creature is instead dazzled for 1
       round).</p><p>Despite its shiny appearance, a <i>dazzling blade</i> grants
       no extra benefit against creatures that are vulnerable to silver.</p>
-  actions:
-    - _id: f06ny66pl9l94uzi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one metal weapon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
+      bard: 1
       sorcerer: 1
       wizard: 1
-      bard: 1
   school: ill
   subschool: pattern
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!jaxzdishpxpvxu3t'
+type: spell
 

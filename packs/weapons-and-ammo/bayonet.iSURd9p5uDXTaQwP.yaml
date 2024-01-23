@@ -1,58 +1,58 @@
 _id: iSURd9p5uDXTaQwP
-name: Bayonet
-type: weapon
+_key: '!items!iSURd9p5uDXTaQwP'
 img: systems/pf1/icons/items/weapons/bayonet.PNG
+name: Bayonet
 system:
+  actions:
+    - _id: nd6ua88t1om955za
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/bayonet.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Bayonet
   description:
     value: >-
       <p>Bayonets are close combat weapons designed to fit into the grooves or
       muzzles of crossbows and firearms. They allow you to make melee attacks
       with these weapons but render them temporarily useless as ranged weapons.
       Attaching or removing a bayonet is a move action.</p>
-  weight:
-    value: 1
-  price: 5
   hardness: 10
-  actions:
-    - _id: nd6ua88t1om955za
-      name: Attack
-      img: systems/pf1/icons/items/weapons/bayonet.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
   held: 2h
-  baseTypes:
-    - Bayonet
+  price: 5
+  source:
+    id: PZO1123
+    pages: '17'
   weaponGroups:
     value:
       - bladesLight
       - close
   weaponSubtype: 2h
-  source:
-    id: PZO1123
-    pages: '17'
-_key: '!items!iSURd9p5uDXTaQwP'
+  weight:
+    value: 1
+type: weapon
 

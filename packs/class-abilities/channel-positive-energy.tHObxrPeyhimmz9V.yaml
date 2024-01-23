@@ -1,8 +1,46 @@
 _id: tHObxrPeyhimmz9V
-name: Channel Positive Energy
-type: feat
+_key: '!items!tHObxrPeyhimmz9V'
 img: systems/pf1/icons/feats/blinding-critical.jpg
+name: Channel Positive Energy
 system:
+  abilityType: su
+  actions:
+    - _id: gdp25p05v255kjcl
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.paladin.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/blinding-critical.jpg
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.paladin.level / 2) + @abilities.cha.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: self; affects all living OR undead within burst
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Paladin
   description:
     value: >-
       <p>When a paladin reaches 4th level, she gains the supernatural ability to
@@ -10,47 +48,9 @@ system:
       consumes two uses of her lay on hands ability. A paladin uses her level as
       her effective cleric level when channeling positive energy. This is a
       <em>Charisma</em>-based ability.</p>
-  actions:
-    - _id: gdp25p05v255kjcl
-      name: Use
-      img: systems/pf1/icons/feats/blinding-critical.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self; affects all living OR undead within burst
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-      uses:
-        autoDeductChargesCost: '2'
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: heal
-      damage:
-        parts:
-          - formula: (ceil(@classes.paladin.level / 2))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.paladin.level / 2) + @abilities.cha.mod
-        type: will
-        description: Will halves damage
+  subType: classFeat
+  tag: classFeat_channelPositiveEnergy
   uses:
     per: charges
-  tag: classFeat_channelPositiveEnergy
-  subType: classFeat
-  associations:
-    classes:
-      - Paladin
-  abilityType: su
-_key: '!items!tHObxrPeyhimmz9V'
+type: feat
 

@@ -1,16 +1,11 @@
 _id: smbkd2yobhshbpqf
-name: Charm Monster
-type: spell
+_key: '!items!smbkd2yobhshbpqf'
 img: icons/magic/control/mouth-smile-deception-purple.webp
+name: Charm Monster
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>charm person</i>, except that the effect
-      is not restricted by creature type or size.</p>
   actions:
     - _id: c9d7wx6tazvwbrfq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,39 +13,44 @@ system:
           type: action
       duration:
         value: 1 day/level
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>charm person</i>, except that the effect
+      is not restricted by creature type or size.</p>
   learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      bard: 3
-      summoner: 3
-      witch: 4
-      psychic: 4
-      mesmerist: 3
-      occultist: 4
-      summonerUnchained: 4
-    domain:
-      Charm: 5
     bloodline:
       Infernal: 4
       Oni: 4
+    class:
+      bard: 3
+      mesmerist: 3
+      occultist: 4
+      psychic: 4
+      sorcerer: 4
+      summoner: 3
+      summonerUnchained: 4
+      witch: 4
+      wizard: 4
+    domain:
+      Charm: 5
   level: 4
   school: enc
-  subschool: charm
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '254'
-_key: '!items!smbkd2yobhshbpqf'
+  subschool: charm
+  types: mind-affecting
+type: spell
 

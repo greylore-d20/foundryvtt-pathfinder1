@@ -1,8 +1,30 @@
 _id: dq8s6rcj8uy18yzr
-name: Emblem of Greed
-type: spell
+_key: '!items!dq8s6rcj8uy18yzr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Emblem of Greed
 system:
+  actions:
+    - _id: o53r315sbsyn64yq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none (object)
+      target:
+        value: 1 masterwork melee weapon touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transform one melee weapon into a burning glaive similar to the
@@ -24,44 +46,22 @@ system:
       modify the weapon in any way. This spell does not work on artifacts. A
       masterwork weapon's bonus on attack rolls does not stack with an
       enhancement bonus to attack.</p>
-  actions:
-    - _id: o53r315sbsyn64yq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: 1 masterwork melee weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none (object)
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
-      oracle: 6
       inquisitor: 6
       magus: 6
-      shaman: 7
       medium: 6
+      oracle: 6
+      shaman: 7
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a masterwork or magical melee weapon
+  school: trs
   sr: false
-_key: '!items!dq8s6rcj8uy18yzr'
+  subschool: polymorph
+type: spell
 

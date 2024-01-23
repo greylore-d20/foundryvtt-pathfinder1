@@ -1,8 +1,25 @@
 _id: 1p5efnjtbuf2qzb0
-name: Rite of Centered Mind
-type: spell
+_key: '!items!1p5efnjtbuf2qzb0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rite of Centered Mind
 system:
+  actions:
+    - _id: re51zh0e7hc5c0m6
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You heighten your awareness of your own thoughts, allowing you to more
@@ -15,38 +32,21 @@ system:
       must take the second result, even if it's worse. The +2 resistance bonus
       granted by the spell applies to the reroll, but after you make this
       reroll, the spell ends.</p>
-  actions:
-    - _id: re51zh0e7hc5c0m6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      shaman: 1
       hunter: 1
-  school: abj
-  types: meditative
-  components:
-    verbal: true
-    material: true
+      oracle: 1
+      shaman: 1
+      warpriest: 1
   materials:
-    value: soothing incense worth 100 gp
     gpValue: 100
+    value: soothing incense worth 100 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!1p5efnjtbuf2qzb0'
+  types: meditative
+type: spell
 

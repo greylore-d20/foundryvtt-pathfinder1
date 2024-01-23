@@ -1,8 +1,26 @@
 _id: 3l41qcrvsmo9f2zc
-name: Pouncing Fury
-type: spell
+_key: '!items!3l41qcrvsmo9f2zc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pouncing Fury
 system:
+  actions:
+    - _id: 62hciatv3hs8fo06
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you charge, you can make a full attack at the end of that charge,
@@ -13,37 +31,19 @@ system:
       opportunity, you can expend one additional use of your attacks of
       opportunity to make an additional claw attack against the target that
       provoked the attack.</p>
-  actions:
-    - _id: 62hciatv3hs8fo06
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 2
       alchemist: 2
-      witch: 2
-      magus: 2
       bloodrager: 2
+      druid: 2
       hunter: 2
+      magus: 2
+      ranger: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!3l41qcrvsmo9f2zc'
+type: spell
 

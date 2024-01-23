@@ -1,8 +1,20 @@
 _id: lkVGkpsywFpdtoIs
-name: Shift Focus
-type: feat
+_key: '!items!lkVGkpsywFpdtoIs'
 img: systems/pf1/icons/skills/violet_04.jpg
+name: Shift Focus
 system:
+  abilityType: su
+  actions:
+    - _id: x15zvmrhfrt6ig6p
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/skills/violet_04.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>At 4th level, an occultist gains the ability to shift his mental focus
@@ -17,19 +29,7 @@ system:
       resonant power in the implement from which the mental focus was taken. It
       does not, however, add to the resonant power of the implement to which the
       focus is added.</p>
-  actions:
-    - _id: x15zvmrhfrt6ig6p
-      name: Use
-      img: systems/pf1/icons/skills/violet_04.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-  tag: classFeat_shiftFocus
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: su
-_key: '!items!lkVGkpsywFpdtoIs'
+  tag: classFeat_shiftFocus
+type: feat
 

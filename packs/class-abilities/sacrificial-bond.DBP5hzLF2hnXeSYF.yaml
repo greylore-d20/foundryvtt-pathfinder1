@@ -1,8 +1,27 @@
 _id: DBP5hzLF2hnXeSYF
-name: Sacrificial Bond
-type: feat
+_key: '!items!DBP5hzLF2hnXeSYF'
 img: systems/pf1/icons/skills/red_13.jpg
+name: Sacrificial Bond
 system:
+  abilityType: su
+  actions:
+    - _id: 4ze5hoc0p9r94a6o
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/red_13.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: damaged ally
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, when an ally within 30 feet takes damage from an attack,
@@ -13,29 +32,10 @@ system:
       20th level.</p>
 
       <p>This power replaces the Leadership power of the Nobility Domain.</p>
-  actions:
-    - _id: 4ze5hoc0p9r94a6o
-      name: Use
-      img: systems/pf1/icons/skills/red_13.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: damaged ally
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 2) / 6)
-  tag: classFeat_sacrificialBond
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!DBP5hzLF2hnXeSYF'
+  tag: classFeat_sacrificialBond
+  uses:
+    maxFormula: floor((@classes.cleric.level - 2) / 6)
+    per: day
+type: feat
 

@@ -1,18 +1,11 @@
 _id: oydtk2tok7c33s9q
-name: Janni's Jaunt
-type: spell
+_key: '!items!oydtk2tok7c33s9q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Janni's Jaunt
 system:
-  description:
-    value: >-
-      <p>This spell functions as per <i>plane shift</i>, but with the following
-      exceptions. First, you are able to transport only willing creatures.
-      Second, the spell can transport you and any other willing targets only to
-      an Elemental Plane, the Astral Plane, or the Material Plane.</p>
   actions:
     - _id: 6887unm8eqibtmt8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,35 +13,42 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: creature touched, or up to eight willing creatures joining hands
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: creature touched, or up to eight willing creatures joining hands
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as per <i>plane shift</i>, but with the following
+      exceptions. First, you are able to transport only willing creatures.
+      Second, the spell can transport you and any other willing targets only to
+      an Elemental Plane, the Astral Plane, or the Material Plane.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 5
-      witch: 6
-      shaman: 6
-      psychic: 4
       medium: 3
+      oracle: 4
+      psychic: 4
+      shaman: 6
+      sorcerer: 6
+      summoner: 5
       summonerUnchained: 5
+      warpriest: 4
+      witch: 6
+      wizard: 6
   level: 6
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a forked metal rod attuned to the plane of travel
-_key: '!items!oydtk2tok7c33s9q'
+  school: con
+  subschool: teleportation
+type: spell
 

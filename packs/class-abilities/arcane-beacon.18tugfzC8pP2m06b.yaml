@@ -1,8 +1,29 @@
 _id: 18tugfzC8pP2m06b
-name: Arcane Beacon
-type: feat
+_key: '!items!18tugfzC8pP2m06b'
 img: systems/pf1/icons/spells/beam-blue-3.jpg
+name: Arcane Beacon
 system:
+  abilityType: su
+  actions:
+    - _id: ozke5lskj3609987
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/beam-blue-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '15'
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action you can become a beacon of arcane energy until the
@@ -14,31 +35,10 @@ system:
 
       <p>This power replaces the Hand of the Acolyte power of the Arcane
       Domain.</p>
-  actions:
-    - _id: ozke5lskj3609987
-      name: Use
-      img: systems/pf1/icons/spells/beam-blue-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        value: '15'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_arcaneBeacon
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!18tugfzC8pP2m06b'
+  tag: classFeat_arcaneBeacon
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

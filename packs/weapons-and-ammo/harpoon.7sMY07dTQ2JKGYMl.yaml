@@ -1,8 +1,72 @@
 _id: 7sMY07dTQ2JKGYMl
-name: Harpoon
-type: weapon
+_key: '!items!7sMY07dTQ2JKGYMl'
 img: systems/pf1/icons/items/weapons/harpoon.PNG
+name: Harpoon
 system:
+  actions:
+    - _id: wtem465dwb9lik33
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/harpoon.PNG
+      name: Melee
+      range:
+        units: melee
+        value: '10'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: dA307c8BeXLh7I5R
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks: null
+      img: systems/pf1/icons/items/weapons/harpoon.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Harpoon
   description:
     value: >-
       <p>A harpoon is a barbed spear with an attached rope 50 feet or less in
@@ -12,94 +76,30 @@ system:
       50 feet of hemp rope. The weight can be reduced by using shorter or
       lighter rope. If you are not proficient with a harpoon, treat it like a
       spear.</p>
-  weight:
-    value: 16
-  price: 5
   hardness: 10
-  actions:
-    - _id: wtem465dwb9lik33
-      name: Melee
-      img: systems/pf1/icons/items/weapons/harpoon.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
-      ammoType: none
-    - _id: dA307c8BeXLh7I5R
-      name: Throw
-      img: systems/pf1/icons/items/weapons/harpoon.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks: null
-      ability:
-        attack: dex
-        damage: str
-        damageMult: 1.5
-        critMult: 3
-  uses:
-    per: single
   held: 2h
-  baseTypes:
-    - Harpoon
-  weaponGroups:
-    value:
-      - spears
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
-  weaponSubtype: 2h
+    normal:
+      value: ''
+  price: 5
   properties:
     grp: true
     spc: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!7sMY07dTQ2JKGYMl'
+  subType: exotic
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - spears
+      - thrown
+  weaponSubtype: 2h
+  weight:
+    value: 16
+type: weapon
 

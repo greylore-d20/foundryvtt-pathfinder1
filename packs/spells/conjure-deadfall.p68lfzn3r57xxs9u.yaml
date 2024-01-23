@@ -1,8 +1,31 @@
 _id: p68lfzn3r57xxs9u
-name: Conjure Deadfall
-type: spell
+_key: '!items!p68lfzn3r57xxs9u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Conjure Deadfall
 system:
+  actions:
+    - _id: 8ksfbg47gi4aw83q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: see text
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates (see text)
+        type: ref
+      spellEffect: one spiked, falling block
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a large metal cube covered in sharp spikes. If you conjure
@@ -24,38 +47,15 @@ system:
       conjure a deadfall in an area already occupied by a creature or object
       (including the ceiling). Regardless, a deadfall conjured by this spell
       disappears as soon as it deals damage or strikes the ground.</p>
-  actions:
-    - _id: 8ksfbg47gi4aw83q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (see text)
-      spellEffect: one spiked, falling block
-      area: see text
   learnedAt:
     class:
+      magus: 5
       sorcerer: 4
       wizard: 4
-      magus: 5
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: fistful of mithral tacks
-_key: '!items!p68lfzn3r57xxs9u'
+  school: con
+  subschool: creation
+type: spell
 

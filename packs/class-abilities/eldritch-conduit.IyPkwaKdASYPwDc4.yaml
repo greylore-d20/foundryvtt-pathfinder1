@@ -1,8 +1,24 @@
 _id: IyPkwaKdASYPwDc4
-name: Eldritch Conduit
-type: feat
+_key: '!items!IyPkwaKdASYPwDc4'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Eldritch Conduit
 system:
+  abilityType: su
+  actions:
+    - _id: g4n1sKx9RUskKEdO
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Ninja
+      - Investigator
   description:
     value: >-
       <p>Survival in the Mana Wastes between the nations of Nex and Geb can
@@ -15,30 +31,14 @@ system:
       other. The character must still succeed at a Use Magic Device check to
       operate scrolls or wands unless some other ability allows him to do so,
       but makes only one skill check to operate both items.</p>
+  source:
+    id: PZO9468
+    pages: '7'
+  subType: classFeat
+  tag: classFeat_eldritchConduit
   tags:
     - Rogue Talent
     - Ninja Trick
     - Investigator Talent
-  actions:
-    - _id: g4n1sKx9RUskKEdO
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_eldritchConduit
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Ninja
-      - Investigator
-  abilityType: su
-  source:
-    id: PZO9468
-    pages: '7'
-_key: '!items!IyPkwaKdASYPwDc4'
+type: feat
 

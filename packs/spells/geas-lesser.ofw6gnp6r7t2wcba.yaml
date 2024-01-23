@@ -1,8 +1,29 @@
 _id: ofw6gnp6r7t2wcba
-name: Geas, Lesser
-type: spell
+_key: '!items!ofw6gnp6r7t2wcba'
 img: icons/magic/control/control-influence-puppet.webp
+name: Geas, Lesser
 system:
+  actions:
+    - _id: iz0fvn0vsw30rsqu
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature with 7 HD or less
+  components:
+    verbal: true
   description:
     value: >-
       <p>A <i>lesser <i>geas</i></i> places a magical command on a creature to
@@ -25,39 +46,18 @@ system:
       penalties) can be ended by break enchantment, limited wish, remove curse,
       miracle, or <i>wish. Dispel magic</i> does not affect a <i>lesser
       <i>geas</i></i>.</p>
-  actions:
-    - _id: iz0fvn0vsw30rsqu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day/level or until discharged
-      target:
-        value: one living creature with 7 HD or less
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
-      witch: 4
       inquisitor: 4
-      psychic: 4
       mesmerist: 3
+      psychic: 4
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: enc
   subschool: compulsion
   types: language-dependent, mind-affecting, curse
-  components:
-    verbal: true
-_key: '!items!ofw6gnp6r7t2wcba'
+type: spell
 

@@ -1,8 +1,42 @@
 _id: v2G8vwbfvZDmseCQ
-name: Monk's Spade
-type: weapon
+_key: '!items!v2G8vwbfvZDmseCQ'
 img: systems/pf1/icons/items/weapons/gnome-pincher.png
+name: Monk's Spade
 system:
+  actions:
+    - _id: 3nbz8pmc63cxloch
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/gnome-pincher.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Monk's Spade
   description:
     value: >-
       <p>This polearm is a double weapon. One side is fitted with a broad,
@@ -11,59 +45,25 @@ system:
       does many types of damage. The type of damage it deals depends on how it
       is wielded, with the spade side able to bludgeon and slash and the
       crescent side able to slash and pierce.</p>
-  tags:
-    - PFS
-  weight:
-    value: 12
-  price: 20
   hardness: 10
-  actions:
-    - _id: 3nbz8pmc63cxloch
-      name: Attack
-      img: systems/pf1/icons/items/weapons/gnome-pincher.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
   held: 2h
-  baseTypes:
-    - Monk's Spade
-  weaponGroups:
-    value:
-      - double
-      - monk
-      - polearms
-  subType: martial
-  weaponSubtype: 2h
+  price: 20
   properties:
     dbl: true
     mnk: true
   source:
     id: PZO1123
     pages: '19'
-_key: '!items!v2G8vwbfvZDmseCQ'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - double
+      - monk
+      - polearms
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

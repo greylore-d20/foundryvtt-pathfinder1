@@ -1,8 +1,27 @@
 _id: CaSgPmUPijRDf2Vp
-name: Diamond Resilience (UC)
-type: feat
+_key: '!items!CaSgPmUPijRDf2Vp'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Diamond Resilience (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: 1j2wihyct9oh4i8b
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>By spending 1 ki point as a swift action, the monk gains DR 2/—. This
@@ -13,26 +32,7 @@ system:
       <p>At 19th level, it increases to DR 6/—.</p>
 
       <p>A monk must be at least 12th level before selecting this ki power.</p>
-  actions:
-    - _id: 1j2wihyct9oh4i8b
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_diamondResilienceUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!CaSgPmUPijRDf2Vp'
+  tag: classFeat_diamondResilienceUc
+type: feat
 

@@ -1,8 +1,29 @@
 _id: hDf52MYziTylyfHb
-name: Instant Plan
-type: feat
+_key: '!items!hDf52MYziTylyfHb'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Instant Plan
 system:
+  abilityType: ex
+  actions:
+    - _id: vp31pvi3sueofmbc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.vigilante.level'
+      img: systems/pf1/icons/feats/deceitful.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>The vigilante can quickly manage a situation that seems to be spiraling
@@ -12,31 +33,10 @@ system:
       They also gain a +1 morale bonus on skill checks or combat maneuver checks
       of the vigilante’s choice. The benefits last for 1 round per vigilante
       level.</p>
-  actions:
-    - _id: vp31pvi3sueofmbc
-      name: Use
-      img: systems/pf1/icons/feats/deceitful.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.vigilante.level'
-        units: round
-      target:
-        value: allies
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_instantPlan
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!hDf52MYziTylyfHb'
+  tag: classFeat_instantPlan
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

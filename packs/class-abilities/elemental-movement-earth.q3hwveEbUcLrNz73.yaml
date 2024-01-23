@@ -1,31 +1,31 @@
 _id: q3hwveEbUcLrNz73
-name: Elemental Movement (Earth)
-type: feat
+_key: '!items!q3hwveEbUcLrNz73'
 img: systems/pf1/icons/skills/yellow_42.jpg
+name: Elemental Movement (Earth)
 system:
-  description:
-    value: <p>At 15th level, you gain a <em>burrow</em> speed of 30 feet.</p>
+  abilityType: ex
   actions:
     - _id: 87dng2gct8333nsr
-      name: Use
-      img: systems/pf1/icons/skills/yellow_42.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: kr1a13wt
-      formula: '30'
-      subTarget: burrowSpeed
-      modifier: base
-  tag: classFeat_elementalMovementEarth
-  subType: classFeat
+      img: systems/pf1/icons/skills/yellow_42.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
-  abilityType: ex
+  changes:
+    - _id: kr1a13wt
+      formula: '30'
+      modifier: base
+      subTarget: burrowSpeed
+  description:
+    value: <p>At 15th level, you gain a <em>burrow</em> speed of 30 feet.</p>
   source:
     id: PZO1110
     pages: '76'
-_key: '!items!q3hwveEbUcLrNz73'
+  subType: classFeat
+  tag: classFeat_elementalMovementEarth
+type: feat
 

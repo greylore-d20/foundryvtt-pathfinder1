@@ -1,8 +1,31 @@
 _id: gbyk3kokpifgj1vr
-name: Maze of Madness and Suffering
-type: spell
+_key: '!items!gbyk3kokpifgj1vr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Maze of Madness and Suffering
 system:
+  actions:
+    - _id: j0cbiskha5d2m6ps
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial, see below
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell works like <i>maze</i>, except the DC of the Intelligence
@@ -52,43 +75,20 @@ system:
       Will save or take 2d4 points of Wisdom damage. If your campaign uses the
       sanity system (see page 12), the creature instead takes 2d10 points of
       sanity damage.<p></p>
-  actions:
-    - _id: j0cbiskha5d2m6ps
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial, see below
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
-      witch: 9
       psychic: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
   level: 9
+  materials:
+    gpValue: 1000
+    value: an ornate puzzle box worth 1,000 gp and soaked in fresh blood
+  preparation:
+    spontaneousPrepared: false
   school: con
   subschool: teleportation
   types: evil, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: an ornate puzzle box worth 1,000 gp and soaked in fresh blood
-    gpValue: 1000
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!gbyk3kokpifgj1vr'
+type: spell
 

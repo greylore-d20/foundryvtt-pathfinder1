@@ -1,7 +1,36 @@
-name: Resize Item
-type: spell
+_id: rjvbgUOBuTR48Pyl
+_key: '!items!rjvbgUOBuTR48Pyl'
 img: icons/skills/melee/hand-grip-staff-blue.webp
+name: Resize Item
 system:
+  actions:
+    - _id: gGKvpzjrCHhTj0uh
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours (D)
+      formulaicAttacks:
+        label: ''
+      img: icons/skills/melee/hand-grip-staff-blue.webp
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one weapon or suit of armor weighing up to 25 lbs./level
+      touch: true
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You alter a magic weapon or suit of armor to be up to two size
@@ -12,44 +41,15 @@ system:
       made permanent with a @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanency}
       spell for 7,500 gp, in which case the affected object is set at one
       specific new size within two steps of its original size.</p>
-  actions:
-    - _id: gGKvpzjrCHhTj0uh
-      name: Use
-      img: icons/skills/melee/hand-grip-staff-blue.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours (D)
-      target:
-        value: one weapon or suit of armor weighing up to 25 lbs./level
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      save:
-        type: will
-        description: Will negates (object)
-      touch: true
   learnedAt:
     class:
       arcanist: 3
       sorcerer: 3
       wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: silver calipers worth 25 gp
     gpValue: 25
-_id: rjvbgUOBuTR48Pyl
-_key: '!items!rjvbgUOBuTR48Pyl'
+    value: silver calipers worth 25 gp
+  school: trs
+type: spell
 

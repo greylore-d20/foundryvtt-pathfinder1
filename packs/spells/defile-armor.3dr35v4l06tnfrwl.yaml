@@ -1,16 +1,11 @@
 _id: 3dr35v4l06tnfrwl
-name: Defile Armor
-type: spell
+_key: '!items!3dr35v4l06tnfrwl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Defile Armor
 system:
-  description:
-    value: >-
-      <p>As <i>sanctify armor</i>, except you gain DR 5/good when using your
-      judgment or smite ability.</p>
   actions:
     - _id: 6s820csar73pf7a8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,24 +13,29 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: armor touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: armor touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>As <i>sanctify armor</i>, except you gain DR 5/good when using your
+      judgment or smite ability.</p>
   learnedAt:
     class:
-      inquisitor: 4
       antipaladin: 3
+      inquisitor: 4
   level: 4
   school: abj
   types: evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3dr35v4l06tnfrwl'
+type: spell
 

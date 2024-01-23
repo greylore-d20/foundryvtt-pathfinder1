@@ -1,6 +1,36 @@
-type: feat
+_id: I34hZ82Wa8O0ibpX
+_key: '!items!I34hZ82Wa8O0ibpX'
+img: systems/pf1/icons/races/vishkanya.png
 name: Spit Venom
 system:
+  actions:
+    - _id: tqDVS0yA9JIaLWTZ
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      ammoType: none
+      duration:
+        units: inst
+      effectNotes:
+        - Target is blinded for [[1d6]] rounds.
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/races/vishkanya.png
+      name: Use
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      save:
+        dc: 10 + floor(@attributes.hd.total / 2) + @abilities.con.mod
+        description: Fortitude negates
+        type: fort
+      touch: true
   description:
     value: >-
       <p><em>You have mastered the nagaji warrior technique of spitting venom
@@ -13,45 +43,15 @@ system:
       per day for every three Hit Dice you have.</p><h3>Combat Trick</h3><p>When
       you spit poison, you can spend up to 5 stamina points. For each stamina
       point spent, you can increase the range of the attack by 5 feet.</p>
+  source:
+    id: PZO1121
+    pages: '197'
   tags:
     - Combat
     - Nagaji
     - Combat Trick
-  actions:
-    - _id: tqDVS0yA9JIaLWTZ
-      name: Use
-      img: systems/pf1/icons/races/vishkanya.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: rwak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      save:
-        dc: 10 + floor(@attributes.hd.total / 2) + @abilities.con.mod
-        type: fort
-        description: Fortitude negates
-      effectNotes:
-        - Target is blinded for [[1d6]] rounds.
-      touch: true
-      ammoType: none
   uses:
-    per: charges
     maxFormula: 1 + floor(@attributes.hd.total / 3)
-  source:
-    id: PZO1121
-    pages: '197'
-_id: I34hZ82Wa8O0ibpX
-img: systems/pf1/icons/races/vishkanya.png
-_key: '!items!I34hZ82Wa8O0ibpX'
+    per: charges
+type: feat
 

@@ -1,16 +1,11 @@
 _id: 1yy070vempzgwz6g
-name: Restore Eidolon, Lesser
-type: spell
+_key: '!items!1yy070vempzgwz6g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Restore Eidolon, Lesser
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>lesser restoration</i>, except it only
-      affects an eidolon.</p>
   actions:
     - _id: 4kdgurs9v7ixsa0r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         cost: 3
         type: round
@@ -19,15 +14,23 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: eidolon touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: heal
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: eidolon touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>lesser restoration</i>, except it only
+      affects an eidolon.</p>
   learnedAt:
     class:
       summoner: 2
@@ -35,8 +38,5 @@ system:
   level: 2
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1yy070vempzgwz6g'
+type: spell
 

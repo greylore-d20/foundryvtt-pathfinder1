@@ -1,8 +1,26 @@
 _id: 7x2z0i8rcx7s81fk
-name: Daylight
-type: spell
+_key: '!items!7x2z0i8rcx7s81fk'
 img: icons/magic/light/beam-rays-yellow.webp
+name: Daylight
 system:
+  actions:
+    - _id: df4t4azbjo8nfk1o
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You touch an object when you cast this spell, causing the object to
@@ -20,46 +38,28 @@ system:
       otherwise prevailing light conditions exist in the overlapping areas of
       effect.</p><p><i>Daylight</i> counters or dispels any <i>darkness</i>
       spell of equal or lower level, such as <i>darkness</i>.</p>
-  actions:
-    - _id: df4t4azbjo8nfk1o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level (D)
-      target:
-        value: object touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
+      adept: 3
       bard: 3
-      paladin: 3
+      cleric: 3
+      druid: 3
+      hunter: 3
       inquisitor: 3
       magus: 3
-      adept: 3
-      shaman: 3
       occultist: 3
-      hunter: 3
+      oracle: 3
+      paladin: 3
+      shaman: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
     subDomain:
       Day: 3
       Light: 3
   level: 3
   school: evo
-  types: light
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!7x2z0i8rcx7s81fk'
+  types: light
+type: spell
 

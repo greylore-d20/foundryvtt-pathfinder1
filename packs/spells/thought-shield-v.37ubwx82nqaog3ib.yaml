@@ -1,34 +1,34 @@
 _id: 37ubwx82nqaog3ib
-name: Thought Shield V
-type: spell
+_key: '!items!37ubwx82nqaog3ib'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thought Shield V
 system:
-  description:
-    value: >-
-      <p>This functions as <i>thought shield IV</i>, except as noted above. This
-      spell immediately ends if you fail a Will saving throw against a
-      mind-affecting effect. This spell can be undercast.</p>
   actions:
     - _id: qbykmevpm9a7stjr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         value: 1 round/level; see text
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This functions as <i>thought shield IV</i>, except as noted above. This
+      spell immediately ends if you fail a Will saving throw against a
+      mind-affecting effect. This spell can be undercast.</p>
   learnedAt:
     class:
       psychic: 6
   level: 6
   school: abj
-  components:
-    verbal: true
   sr: false
-_key: '!items!37ubwx82nqaog3ib'
+type: spell
 

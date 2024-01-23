@@ -1,8 +1,41 @@
 _id: eYmic2XB4xFI0WqY
-name: Kobold Tail Attachment (Spiked)
-type: weapon
+_key: '!items!eYmic2XB4xFI0WqY'
 img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
+name: Kobold Tail Attachment (Spiked)
 system:
+  actions:
+    - _id: bxcs5wgdp99eb6ji
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Kobold Tail Attachment (Spiked)
+    - Kobold Tail Attachment
   description:
     value: >-
       <p>A kobold with the Tail Terror feat (see below) can slip this device
@@ -21,57 +54,24 @@ system:
       items. There are five types of common tail
       attachments.</p><p><strong>Spiked</strong>: This narrow spike tapers to a
       sharp point.</p>
-  weight:
-    value: 2
-  price: 3
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: bxcs5wgdp99eb6ji
-      name: Attack
-      img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critMult: 3
-  baseTypes:
-    - Kobold Tail Attachment (Spiked)
-    - Kobold Tail Attachment
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 3
   properties:
     fin: true
   source:
     id: PZO1121
     pages: '135'
-_key: '!items!eYmic2XB4xFI0WqY'
+  subType: exotic
+  weight:
+    value: 2
+type: weapon
 

@@ -1,8 +1,34 @@
 _id: pzwe3gxjz8gthyaj
-name: Cloak of Dreams
-type: spell
+_key: '!items!pzwe3gxjz8gthyaj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cloak of Dreams
 system:
+  actions:
+    - _id: ft0b8w4ypfb2jn94
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      area: 5-ft.-radius emanation centered on you
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '5'
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You are surrounded by a soporific aroma that causes living creatures
@@ -13,50 +39,24 @@ system:
       can be awakened with a standard action or after being
       wounded.</p><p>Creatures with the scent special quality have a -4 penalty
       on their saves.</p>
-  actions:
-    - _id: ft0b8w4ypfb2jn94
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        value: '5'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '5'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 5-ft.-radius emanation centered on you
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 5
-      witch: 6
-      shaman: 7
-      psychic: 6
       mesmerist: 5
       occultist: 6
+      psychic: 6
+      shaman: 7
+      sorcerer: 6
+      witch: 6
+      wizard: 6
     subDomain:
       Nightmare: 6
       Whimsy: 6
   level: 6
+  materials:
+    value: a rose petal and a drop of perfume
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a rose petal and a drop of perfume
-_key: '!items!pzwe3gxjz8gthyaj'
+type: spell
 

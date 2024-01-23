@@ -1,8 +1,29 @@
 _id: zunl3gkgtgatogjp
-name: Sundering Shards
-type: spell
+_key: '!items!zunl3gkgtgatogjp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sundering Shards
 system:
+  actions:
+    - _id: oysu2osc0qae7vk1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Reflex negates (see text)
+        type: ref
+      target:
+        value: melee weapon touched
+  components:
+    verbal: true
   description:
     value: >-
       <p>You channel power into a melee weapon. If the weapon's wielder destroys
@@ -16,36 +37,15 @@ system:
       whatever special materials the sundered item was made of (for example, the
       shards from a shattered cold iron weapon are cold iron). Once the weapon's
       extra power is unleashed, the spell is discharged.</p>
-  actions:
-    - _id: oysu2osc0qae7vk1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level or until discharged
-      target:
-        value: melee weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (see text)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
-      magus: 1
       bloodrager: 1
-      psychic: 1
+      magus: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-_key: '!items!zunl3gkgtgatogjp'
+type: spell
 

@@ -1,8 +1,35 @@
 _id: 5u43heihlrtuc58y
-name: Ghoul Touch
-type: spell
+_key: '!items!5u43heihlrtuc58y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ghoul Touch
 system:
+  actions:
+    - _id: epkz0s26kaa5vs2r
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1d6+2 rounds
+      effectNotes:
+        - Lasts [[1d6+2]] Rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: living humanoid touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Imbuing you with negative energy, this spell allows you to paralyze a
@@ -12,44 +39,17 @@ system:
       become sickened (Fortitude negates). A <i>neutralize poison</i> spell
       removes the effect from a sickened creature, and creatures immune to
       poison are unaffected by the stench. This is a poison effect.</p>
-  actions:
-    - _id: epkz0s26kaa5vs2r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d6+2 rounds
-      target:
-        value: living humanoid touched
-      range:
-        units: touch
-      actionType: msak
-      ability:
-        attack: str
-      save:
-        type: fort
-        description: Fortitude negates
-      effectNotes:
-        - Lasts [[1d6+2]] Rounds
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bloodrager: 2
+      sorcerer: 2
       spiritualist: 2
+      wizard: 2
     subDomain:
       Undead: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: cloth from a ghoul or earth from a ghoul's lair
-_key: '!items!5u43heihlrtuc58y'
+  school: nec
+type: spell
 

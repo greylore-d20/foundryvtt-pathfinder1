@@ -1,8 +1,25 @@
 _id: um72rff8638jpgpt
-name: Corpse Lanterns
-type: spell
+_key: '!items!um72rff8638jpgpt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Corpse Lanterns
 system:
+  actions:
+    - _id: byywhrmro6mmkd3m
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: up to 4 lights, all within a 10-ft.-radius area
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>dancing lights</i>, except it summons up to
@@ -19,31 +36,14 @@ system:
       require concentration.</p><p><i>Corpse lanterns</i> can be made permanent
       on an area with a <i>permanency</i> spell by a caster of at least 11th
       level for the cost of 7,500 gp.</p>
-  actions:
-    - _id: byywhrmro6mmkd3m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: medium
-      spellEffect: up to 4 lights, all within a 10-ft.-radius area
   learnedAt:
     class:
       sorcerer: 2
-      wizard: 2
       witch: 2
+      wizard: 2
   level: 2
   school: nec
-  types: light
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!um72rff8638jpgpt'
+  types: light
+type: spell
 

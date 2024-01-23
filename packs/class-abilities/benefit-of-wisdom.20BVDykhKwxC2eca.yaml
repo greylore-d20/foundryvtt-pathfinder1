@@ -1,23 +1,23 @@
 _id: 20BVDykhKwxC2eca
-name: Benefit of Wisdom
-type: feat
+_key: '!items!20BVDykhKwxC2eca'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Benefit of Wisdom
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Shaman
+  changes:
+    - _id: rwkhgozs
+      formula: '@abilities.wis.mod - @abilities.int.mod'
+      modifier: untyped
+      subTarget: intSkills
   description:
     value: >-
       <p>The shaman relies on wisdom rather than intellect to gain and retain
       knowledge. She can use her Wisdom modifier instead of her Intelligence
       modifier on all Intelligence-based skill checks.</p>
-  changes:
-    - _id: rwkhgozs
-      formula: '@abilities.wis.mod - @abilities.int.mod'
-      subTarget: intSkills
-      modifier: untyped
-  tag: classFeat_benefitOfWisdom
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: ex
-_key: '!items!20BVDykhKwxC2eca'
+  tag: classFeat_benefitOfWisdom
+type: feat
 

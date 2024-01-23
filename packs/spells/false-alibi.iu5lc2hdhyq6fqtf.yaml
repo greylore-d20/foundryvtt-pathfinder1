@@ -1,8 +1,31 @@
 _id: iu5lc2hdhyq6fqtf
-name: False Alibi
-type: spell
+_key: '!items!iu5lc2hdhyq6fqtf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: False Alibi
 system:
+  actions:
+    - _id: o39mzstf82akodm8
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions similarly to <i>modify memory</i>, except you can
@@ -19,44 +42,21 @@ system:
       target's memory altered, that condition no longer triggers this spell
       unless the victim is subject to another casting of <i>false alibi</i> that
       specifies the same trigger.</p>
-  actions:
-    - _id: o39mzstf82akodm8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent; see text
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
       inquisitor: 3
+      oracle: 3
+      warpriest: 3
   level: 3
+  materials:
+    gpValue: 100
+    value: emerald dust worth 100 gp
+  preparation:
+    spontaneousPrepared: false
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: emerald dust worth 100 gp
-    gpValue: 100
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!iu5lc2hdhyq6fqtf'
+type: spell
 

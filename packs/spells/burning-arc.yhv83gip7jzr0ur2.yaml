@@ -1,8 +1,56 @@
 _id: yhv83gip7jzr0ur2
-name: Burning Arc
-type: spell
+_key: '!items!yhv83gip7jzr0ur2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Burning Arc
 system:
+  actions:
+    - _id: k67rh2zjsplata2b
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (min(@cl, 10))d6
+            type:
+              custom: ''
+              values:
+                - fire
+          - formula: (min(floor(@cl / 2), 5))d6
+            type:
+              custom: ''
+              values:
+                - fire
+          - formula: (min(floor(@cl / 4), 5))d6
+            type:
+              custom: ''
+              values:
+                - fire
+          - formula: (min(floor(@cl / 8), 5))d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        value: instantaneous
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: >-
+          one primary target plus one additional target/3 levels  (each of which
+          must be within 15 ft. of the primary target)
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Keleshites brag that they stole this spell from genie-kind thousands of
@@ -20,51 +68,6 @@ system:
       they must all be within 15 feet of the primary target, and no target can
       be struck more than once. You can choose to affect fewer secondary targets
       than the maximum.</p>
-  actions:
-    - _id: k67rh2zjsplata2b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: >-
-          one primary target plus one additional target/3 levels  (each of which
-          must be within 15 ft. of the primary target)
-      range:
-        units: close
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (min(@cl, 10))d6
-            type:
-              values:
-                - fire
-              custom: ''
-          - formula: (min(floor(@cl / 2), 5))d6
-            type:
-              values:
-                - fire
-              custom: ''
-          - formula: (min(floor(@cl / 4), 5))d6
-            type:
-              values:
-                - fire
-              custom: ''
-          - formula: (min(floor(@cl / 8), 5))d6
-            type:
-              values:
-                - fire
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      save:
-        type: ref
-        description: Reflex half
   learnedAt:
     class:
       sorcerer: 2
@@ -72,8 +75,5 @@ system:
   level: 2
   school: evo
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!yhv83gip7jzr0ur2'
+type: spell
 

@@ -1,8 +1,25 @@
 _id: 0mbl9irc95io6wko
-name: Catatonia
-type: spell
+_key: '!items!0mbl9irc95io6wko'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Catatonia
 system:
+  actions:
+    - _id: wnt7bgfrh3nylfqn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: willing creature touched
+  components:
+    somatic: true
   description:
     value: >-
       <p>You touch the target and place it into a deathlike state that persists
@@ -19,38 +36,21 @@ system:
       change form (such as <i>shrink</i> item) fails and ends the
       <i>catatonia</i>. This doesn't prevent the effects of spells that simply
       deal damage or otherwise destroy objects.</p>
-  actions:
-    - _id: wnt7bgfrh3nylfqn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: willing creature touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      bard: 2
       alchemist: 2
-      witch: 3
-      psychic: 3
+      bard: 2
+      cleric: 3
       medium: 2
       mesmerist: 2
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
       spiritualist: 2
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: nec
-  components:
-    somatic: true
-_key: '!items!0mbl9irc95io6wko'
+type: spell
 

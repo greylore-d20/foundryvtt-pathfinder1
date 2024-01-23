@@ -1,8 +1,26 @@
 _id: gigqcn4amhmhgnnl
-name: Fungal Blisters
-type: spell
+_key: '!items!gigqcn4amhmhgnnl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fungal Blisters
 system:
+  actions:
+    - _id: pg48uo92mh9x5ch3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level or until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, horrible, fungal growths sprout forth all
@@ -20,34 +38,16 @@ system:
       wearing heavy armor. If you don heavy armor during the spell's duration,
       all remaining blisters burst as if you had been reduced to 0 or fewer hit
       points.</p>
-  actions:
-    - _id: pg48uo92mh9x5ch3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level or until discharged (see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
       alchemist: 2
-      witch: 2
+      druid: 2
       hunter: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!gigqcn4amhmhgnnl'
+type: spell
 

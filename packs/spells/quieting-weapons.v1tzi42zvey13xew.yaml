@@ -1,8 +1,29 @@
 _id: v1tzi42zvey13xew
-name: Quieting Weapons
-type: spell
+_key: '!items!v1tzi42zvey13xew'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Quieting Weapons
 system:
+  actions:
+    - _id: utgtrqorl5lvbpe4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: up to one natural or manufactured weapon per 3 caster levels
+  components:
+    somatic: true
   description:
     value: >-
       <p>The target weapons and any ammunition they fire make no sound as part
@@ -17,44 +38,23 @@ system:
       spell components. Whether it succeeds or fails its saving throw, the
       creature is immune to further effects from this casting of <i>quieting
       weapons</i>.</p>
-  actions:
-    - _id: utgtrqorl5lvbpe4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: up to one natural or manufactured weapon per 3 caster levels
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      ranger: 3
       bard: 4
+      cleric: 4
+      hunter: 3
       inquisitor: 4
       magus: 4
-      psychic: 4
       occultist: 4
+      oracle: 4
+      psychic: 4
+      ranger: 3
+      sorcerer: 4
       spiritualist: 4
-      hunter: 3
+      warpriest: 4
+      wizard: 4
   level: 4
   school: ill
   subschool: glamer
-  components:
-    somatic: true
-_key: '!items!v1tzi42zvey13xew'
+type: spell
 

@@ -1,8 +1,20 @@
 _id: iHVO0z5RTRIYL7yU
-name: Rock Throwing
-type: feat
+_key: '!items!iHVO0z5RTRIYL7yU'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Rock Throwing
 system:
+  abilityType: ex
+  actions:
+    - _id: vl1bchs3dgotwkjm
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You are an accomplished rock thrower and have a +1 racial bonus on
@@ -11,19 +23,7 @@ system:
       you can hurl it up to 5 range increments. Damage for a hurled rock is 2d4
       for a Medium creature or 2d3 for a Small creature, plus 1-1/2 your
       Strength bonus.</p>
-  actions:
-    - _id: vl1bchs3dgotwkjm
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_rockThrowing
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!iHVO0z5RTRIYL7yU'
+  tag: classFeat_rockThrowing
+type: feat
 

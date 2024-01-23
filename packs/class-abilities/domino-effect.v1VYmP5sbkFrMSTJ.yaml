@@ -1,8 +1,20 @@
 _id: v1VYmP5sbkFrMSTJ
-name: Domino Effect
-type: feat
+_key: '!items!v1VYmP5sbkFrMSTJ'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Domino Effect
 system:
+  abilityType: ex
+  actions:
+    - _id: lsvo4ut9bcsron5q
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When the investigator uses studied strike, he uses his opponents
@@ -12,21 +24,9 @@ system:
       opponent adjacent to the first.</p>
 
       <p>An investigator must be at least 5th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_dominoEffect
   tags:
     - Investigator Talent
-  actions:
-    - _id: lsvo4ut9bcsron5q
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_dominoEffect
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!v1VYmP5sbkFrMSTJ'
+type: feat
 

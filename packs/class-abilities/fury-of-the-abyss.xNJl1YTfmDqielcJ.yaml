@@ -1,8 +1,27 @@
 _id: xNJl1YTfmDqielcJ
-name: Fury of the Abyss
-type: feat
+_key: '!items!xNJl1YTfmDqielcJ'
 img: systems/pf1/icons/skills/blood_08.jpg
+name: Fury of the Abyss
 system:
+  abilityType: su
+  actions:
+    - _id: zg5ah8ivqanpx76v
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/blood_08.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a swift action, you can give yourself an enhancement bonus equal to
@@ -13,29 +32,10 @@ system:
 
       <p>This power replaces the Touch of Chaos power of the Chaos Domain or the
       Touch of Evil power of the Evil Domain.</p>
-  actions:
-    - _id: zg5ah8ivqanpx76v
-      name: Use
-      img: systems/pf1/icons/skills/blood_08.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_furyOfTheAbyss
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!xNJl1YTfmDqielcJ'
+  tag: classFeat_furyOfTheAbyss
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

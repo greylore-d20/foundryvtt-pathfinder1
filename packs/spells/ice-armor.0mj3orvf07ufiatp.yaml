@@ -1,8 +1,26 @@
 _id: 0mj3orvf07ufiatp
-name: Ice Armor
-type: spell
+_key: '!items!0mj3orvf07ufiatp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ice Armor
 system:
+  actions:
+    - _id: qgov5ks3p5dsuoku
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level or until destroyed
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: a suit of armor made of ice
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a suit of armor made of ice. While cold to the touch, it
@@ -18,35 +36,17 @@ system:
       Because the ice is slightly buoyant, the wearer gains a +2 circumstance
       bonus on Swim checks, except when swimming downward. Druids can wear
       <i>ice armor</i> without penalty.</p>
-  actions:
-    - _id: qgov5ks3p5dsuoku
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level or until destroyed
-      range:
-        value: '0'
-        units: ft
-      spellEffect: a suit of armor made of ice
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
       hunter: 1
-  school: trs
-  types: cold, water
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      oracle: 1
+      warpriest: 1
   materials:
     focus: 5 gallons of water
+  school: trs
   sr: false
-_key: '!items!0mj3orvf07ufiatp'
+  types: cold, water
+type: spell
 

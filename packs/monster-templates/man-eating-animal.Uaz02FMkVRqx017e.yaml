@@ -1,8 +1,36 @@
 _id: Uaz02FMkVRqx017e
-name: Man-Eating Animal
-type: feat
+_key: '!items!Uaz02FMkVRqx017e'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Man-Eating Animal
 system:
+  changes:
+    - _id: k7q1nkuw
+      formula: '2'
+      modifier: untyped
+      subTarget: nac
+    - _id: gsawyf1c
+      formula: '@attributes.hd.total'
+      modifier: untyped
+      subTarget: mhp
+    - _id: e9h12x9w
+      formula: '4'
+      modifier: untyped
+      subTarget: con
+    - _id: 9o2gul3t
+      formula: '2'
+      modifier: untyped
+      subTarget: int
+    - _id: 9kbkzfoc
+      formula: '4'
+      modifier: untyped
+      subTarget: wis
+    - _id: h29l6ogu
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+  crOffset: >-
+    (@attributes.hd.total >= 11) ? 3 : ((@attributes.hd.total > 4 &&
+    @attributes.hd.total < 11) ? 2 : 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Both<br><b>Simple Template</b>
@@ -108,34 +136,6 @@ system:
 
       <p><b>Languages:</b> A man-eating animal understands Abyssal and Common,
       but cannot speak.</p>
-  changes:
-    - _id: k7q1nkuw
-      formula: '2'
-      subTarget: nac
-      modifier: untyped
-    - _id: gsawyf1c
-      formula: '@attributes.hd.total'
-      subTarget: mhp
-      modifier: untyped
-    - _id: e9h12x9w
-      formula: '4'
-      subTarget: con
-      modifier: untyped
-    - _id: 9o2gul3t
-      formula: '2'
-      subTarget: int
-      modifier: untyped
-    - _id: 9kbkzfoc
-      formula: '4'
-      subTarget: wis
-      modifier: untyped
-    - _id: h29l6ogu
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
   subType: template
-  crOffset: >-
-    (@attributes.hd.total >= 11) ? 3 : ((@attributes.hd.total > 4 &&
-    @attributes.hd.total < 11) ? 2 : 1)
-_key: '!items!Uaz02FMkVRqx017e'
+type: feat
 

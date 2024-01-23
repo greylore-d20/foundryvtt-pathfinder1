@@ -1,8 +1,21 @@
 _id: HMmsaPUiNgB5Xa8u
-name: Creator's Will
-type: feat
+_key: '!items!HMmsaPUiNgB5Xa8u'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Creator's Will
 system:
+  abilityType: sp
+  actions:
+    - _id: 7qh0s4p2wn84mv6z
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can cast
@@ -13,23 +26,10 @@ system:
       12th level, this ability improves to
       @Compendium[pf1.spells.b8lt1275mz4ez4d8]{Major Creation}. You can use this
       ability a number of times per day equal to 1/2 your wizard level.</p>
-  actions:
-    - _id: 7qh0s4p2wn84mv6z
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: floor(@classes.wizard.level / 2)
-  tag: classFeat_creatorsWill
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!HMmsaPUiNgB5Xa8u'
+  tag: classFeat_creatorsWill
+  uses:
+    maxFormula: floor(@classes.wizard.level / 2)
+    per: day
+type: feat
 

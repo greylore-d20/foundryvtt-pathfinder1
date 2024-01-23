@@ -1,8 +1,28 @@
 _id: DznZR1X3Sou66T6U
-name: Reforged Arms
-type: feat
+_key: '!items!DznZR1X3Sou66T6U'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Reforged Arms
 system:
+  abilityType: su
+  actions:
+    - _id: yiqulv2qi3hj94kn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>The forge’s fire turns earthen ore into useful metal, and you can hone
@@ -18,35 +38,15 @@ system:
       than of alchemical silver or cold iron.</p><p>This effect lasts for 1
       minute per oracle level, and you can use this ability a number of times
       per day equal to 3 + your Charisma modifier.</p>
-  tags:
-    - Elemental Mystery
-  actions:
-    - _id: yiqulv2qi3hj94kn
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_reforgedArms
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9483
     pages: '29'
-_key: '!items!DznZR1X3Sou66T6U'
+  subType: classFeat
+  tag: classFeat_reforgedArms
+  tags:
+    - Elemental Mystery
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

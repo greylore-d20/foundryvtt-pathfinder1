@@ -1,8 +1,28 @@
 _id: qyqbVqtFmw5QBRbg
-name: Destructive Aura
-type: feat
+_key: '!items!qyqbVqtFmw5QBRbg'
 img: systems/pf1/icons/skills/arrow_03.jpg
+name: Destructive Aura
 system:
+  abilityType: su
+  actions:
+    - _id: lrei12zfzl8y1705
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/arrow_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: aura
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura of destruction for a number
@@ -10,33 +30,13 @@ system:
       targets in this aura (including you) gain a morale bonus on damage equal
       to 1/2 your cleric level and all critical threats are automatically
       confirmed. These rounds do not need to be consecutive.</p>
-  actions:
-    - _id: lrei12zfzl8y1705
-      name: Use
-      img: systems/pf1/icons/skills/arrow_03.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: aura
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor(@classes.cleric.level / 2)
-  tag: classFeat_destructiveAura
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '43'
-_key: '!items!qyqbVqtFmw5QBRbg'
+  subType: classFeat
+  tag: classFeat_destructiveAura
+  uses:
+    maxFormula: floor(@classes.cleric.level / 2)
+    per: day
+type: feat
 

@@ -1,8 +1,26 @@
 _id: dkm0qvaw0iv3y44q
-name: Escape Alarm
-type: spell
+_key: '!items!dkm0qvaw0iv3y44q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Escape Alarm
 system:
+  actions:
+    - _id: 41d3bfnz7okbq7yf
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: ten 10-foot cubes/level
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You place a ward on an area that notifies you when a creature exits it.
@@ -15,41 +33,23 @@ system:
       enter and exit the spell's area without triggering the <i>alarm</i>. If
       you select a mental <i>alarm</i> rather than an audible one, all attuned
       creatures receive the mental alert when someone exits the warded area.</p>
-  actions:
-    - _id: 41d3bfnz7okbq7yf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      range:
-        units: medium
-      area: ten 10-foot cubes/level
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      ranger: 2
       bard: 2
-      summoner: 2
-      inquisitor: 2
-      psychic: 2
-      occultist: 2
-      spiritualist: 2
       hunter: 2
+      inquisitor: 2
+      occultist: 2
+      psychic: 2
+      ranger: 2
+      sorcerer: 2
+      spiritualist: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a short segment of a chain
+  school: abj
   sr: false
-_key: '!items!dkm0qvaw0iv3y44q'
+type: spell
 

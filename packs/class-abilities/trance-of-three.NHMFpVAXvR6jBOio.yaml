@@ -1,8 +1,29 @@
 _id: NHMFpVAXvR6jBOio
-name: Trance of Three
-type: feat
+_key: '!items!NHMFpVAXvR6jBOio'
 img: systems/pf1/icons/skills/violet_03.jpg
+name: Trance of Three
 system:
+  abilityType: su
+  actions:
+    - _id: imkv4vnv2oqc47sf
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.medium.level'
+      img: systems/pf1/icons/skills/violet_03.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Medium
   description:
     value: >-
       <p>At 15th level, as a swift action, a medium can allow his spirit to gain
@@ -19,28 +40,7 @@ system:
       spirit. The medium doesn’t gain the benefits of his spirit bonus from the
       secondary spirit. The medium can end the trance of three early as a free
       action.</p>
-  actions:
-    - _id: imkv4vnv2oqc47sf
-      name: Use
-      img: systems/pf1/icons/skills/violet_03.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.medium.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_tranceOfThree
   subType: classFeat
-  associations:
-    classes:
-      - Medium
-  abilityType: su
-_key: '!items!NHMFpVAXvR6jBOio'
+  tag: classFeat_tranceOfThree
+type: feat
 

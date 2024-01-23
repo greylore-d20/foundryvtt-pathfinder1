@@ -1,8 +1,20 @@
 _id: KR6Hhz4S7ZIegQCx
-name: Ascension
-type: feat
+_key: '!items!KR6Hhz4S7ZIegQCx'
 img: systems/pf1/icons/spells/haste-sky-3.jpg
+name: Ascension
 system:
+  abilityType: su
+  actions:
+    - _id: bg64b2v1i7cxbme8
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/haste-sky-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 20th level, you become infused with the power of the heavens. You
@@ -24,22 +36,10 @@ system:
       @Compendium[pf1.spells.m1rmcpcaixcpz9ib]{Tongues} spell).</li>
 
       </ul>
-  actions:
-    - _id: bg64b2v1i7cxbme8
-      name: Use
-      img: systems/pf1/icons/spells/haste-sky-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_ascension
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
   source:
     id: PZO1110
     pages: '74'
-_key: '!items!KR6Hhz4S7ZIegQCx'
+  subType: classFeat
+  tag: classFeat_ascension
+type: feat
 

@@ -1,8 +1,29 @@
 _id: fDyiwiGdMIpCGGG9
-name: Share Knowledge
-type: feat
+_key: '!items!fDyiwiGdMIpCGGG9'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Share Knowledge
 system:
+  abilityType: su
+  actions:
+    - _id: v05qc09dwxrhrppr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: willing ally
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman targets a single willing ally within 30 feet and shares her
@@ -13,28 +34,7 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
-  actions:
-    - _id: v05qc09dwxrhrppr
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: minute
-      target:
-        value: willing ally
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_shareKnowledge
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!fDyiwiGdMIpCGGG9'
+  tag: classFeat_shareKnowledge
+type: feat
 

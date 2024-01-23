@@ -1,8 +1,11 @@
 _id: ic1tUgzcKHMyBiOr
-name: Remote Bomb
-type: feat
+_key: '!items!ic1tUgzcKHMyBiOr'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Remote Bomb
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>The alchemist can spend two uses of his daily bombs to create a special
@@ -15,12 +18,9 @@ system:
       detonate a bomb even if the bomb has already been hurled at a target.
       Triggering the distillate outside of the 60-foot range or after 1 hour has
       no effect.</p>
+  subType: classFeat
+  tag: classFeat_remoteBomb
   tags:
     - Alchemist Discovery
-  tag: classFeat_remoteBomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!ic1tUgzcKHMyBiOr'
+type: feat
 

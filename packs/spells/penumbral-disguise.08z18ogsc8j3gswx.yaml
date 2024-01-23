@@ -1,8 +1,26 @@
 _id: 08z18ogsc8j3gswx
-name: Penumbral Disguise
-type: spell
+_key: '!items!08z18ogsc8j3gswx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Penumbral Disguise
 system:
+  actions:
+    - _id: uswfhz96pjjj8wrn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You mask your features with shadowy illumination, gaining a competence
@@ -15,37 +33,19 @@ system:
       to break into the store"), but cannot determine your precise actions, your
       appearance, or any identifying information about you. In bright light,
       your normal appearance is revealed.</p>
-  actions:
-    - _id: uswfhz96pjjj8wrn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 3
       alchemist: 3
-      witch: 3
+      bard: 3
       inquisitor: 3
       mesmerist: 3
       occultist: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: con
-  types: shadow
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!08z18ogsc8j3gswx'
+  types: shadow
+type: spell
 

@@ -1,8 +1,27 @@
 _id: T942SxtkyzZRTest
-name: Exoskeleton
-type: feat
+_key: '!items!T942SxtkyzZRTest'
 img: systems/pf1/icons/items/inventory/monster-chitin-blue.jpg
+name: Exoskeleton
 system:
+  abilityType: su
+  actions:
+    - _id: 16n1firsd31k7bu2
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/inventory/monster-chitin-blue.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a swift action, you can grow an exoskeleton that grants you a +1
@@ -11,29 +30,10 @@ system:
       for every 5 cleric levels you have. The exoskeleton retracts after 1
       round, ending its benefits. You can use this ability a number of times per
       day equal to 3 + your Wisdom modifier.</p>
-  actions:
-    - _id: 16n1firsd31k7bu2
-      name: Use
-      img: systems/pf1/icons/items/inventory/monster-chitin-blue.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_exoskeleton
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!T942SxtkyzZRTest'
+  tag: classFeat_exoskeleton
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,25 @@
 _id: vj453xqbi6jo71u9
-name: Rite of Bodily Purity
-type: spell
+_key: '!items!vj453xqbi6jo71u9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rite of Bodily Purity
 system:
+  actions:
+    - _id: 322lmd217tmleahc
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You energize your body's immune system, improving your ability to
@@ -14,40 +31,23 @@ system:
       the second result, even if it's worse. The +2 resistance bonus granted by
       the spell applies to the reroll, but after you make this reroll, the spell
       ends.</p>
-  actions:
-    - _id: 322lmd217tmleahc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      ranger: 1
-      paladin: 1
-      shaman: 1
       hunter: 1
-  school: abj
-  types: meditative
-  components:
-    verbal: true
-    material: true
+      oracle: 1
+      paladin: 1
+      ranger: 1
+      shaman: 1
+      warpriest: 1
   materials:
-    value: soothing incense worth 100 gp
     gpValue: 100
+    value: soothing incense worth 100 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!vj453xqbi6jo71u9'
+  types: meditative
+type: spell
 

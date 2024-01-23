@@ -1,65 +1,65 @@
 _id: i1746993ztqNRZwk
-name: Tiger Fork
-type: weapon
+_key: '!items!i1746993ztqNRZwk'
 img: icons/weapons/polearms/trident-silver-red.webp
+name: Tiger Fork
 system:
+  actions:
+    - _id: vufyk7b4n6lem5vc
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/polearms/trident-silver-red.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Tiger Fork
   description:
     value: >-
       <p>This long, tridentlike weapon consists of a three-pronged metal fork
       set upon an 8-foot-long shaft. It is wielded much like a staff, with the
       wielder grasping the shaft from the center and jabbing with its forked
       end. A tiger fork can be set to receive a charge.</p>
-  tags:
-    - PFS
-  weight:
-    value: 8
-  price: 5
   hardness: 10
-  actions:
-    - _id: vufyk7b4n6lem5vc
-      name: Attack
-      img: icons/weapons/polearms/trident-silver-red.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
   held: 2h
-  baseTypes:
-    - Tiger Fork
-  weaponGroups:
-    value:
-      - monk
-      - polearms
-      - spears
-  subType: martial
-  weaponSubtype: 2h
+  price: 5
   properties:
     brc: true
     mnk: true
   source:
     id: PZO1123
     pages: '19'
-_key: '!items!i1746993ztqNRZwk'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - monk
+      - polearms
+      - spears
+  weaponSubtype: 2h
+  weight:
+    value: 8
+type: weapon
 

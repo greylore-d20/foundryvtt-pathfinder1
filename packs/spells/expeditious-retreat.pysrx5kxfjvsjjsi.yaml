@@ -1,19 +1,10 @@
 _id: pysrx5kxfjvsjjsi
-name: Expeditious Retreat
-type: spell
+_key: '!items!pysrx5kxfjvsjjsi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Expeditious Retreat
 system:
-  description:
-    value: >-
-      <p>This spell increases your base land speed by 30 feet. This adjustment
-      is treated as an enhancement bonus. There is no effect on other modes of
-      movement, such as burrow, climb, fly, or swim. As with any effect that
-      increases your speed, this spell affects your jumping distance (see the
-      Acrobatics skill).</p>
   actions:
     - _id: ya3kwleafzjcs1az
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,36 +12,45 @@ system:
           type: action
       duration:
         value: 1 min./level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell increases your base land speed by 30 feet. This adjustment
+      is treated as an enhancement bonus. There is no effect on other modes of
+      movement, such as burrow, climb, fly, or swim. As with any effect that
+      increases your speed, this spell affects your jumping distance (see the
+      Acrobatics skill).</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
       alchemist: 1
-      summoner: 1
+      bard: 1
+      bloodrager: 1
       inquisitor: 1
       magus: 1
-      bloodrager: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
       spiritualist: 1
+      summoner: 1
       summonerUnchained: 1
+      wizard: 1
     subDomain:
       Azata: 1
       Exploration: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '279'
-_key: '!items!pysrx5kxfjvsjjsi'
+  sr: false
+type: spell
 

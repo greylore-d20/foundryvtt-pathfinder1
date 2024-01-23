@@ -1,8 +1,31 @@
 _id: p856jzzwg1rm6s0o
-name: Counterbalancing Aura
-type: spell
+_key: '!items!p856jzzwg1rm6s0o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Counterbalancing Aura
 system:
+  actions:
+    - _id: trxnlpp8q6c5gmn4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        description: see text
+      target:
+        value: one creature/level in a 20-ft.-radius burst centered on you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An oscillating bronze glow surrounds the targets, protecting them from
@@ -22,36 +45,13 @@ system:
       sickened for 1d6 rounds (Fortitude negates). If a neutral creature
       successfully hits a warded creature with a melee attack, the attacker is
       instead nauseated for 1d6 rounds (Fortitude negates).</p>
-  actions:
-    - _id: trxnlpp8q6c5gmn4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level in a 20-ft.-radius burst centered on you
-      range:
-        value: '20'
-        units: ft
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
       cleric: 8
       oracle: 8
   level: 8
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a set of scales worth 500 gp
-_key: '!items!p856jzzwg1rm6s0o'
+  school: abj
+type: spell
 

@@ -1,8 +1,33 @@
 _id: 5aHSLfOTwq0LWpOR
-name: Gift of Madness
-type: feat
+_key: '!items!5aHSLfOTwq0LWpOR'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Gift of Madness
 system:
+  abilityType: su
+  actions:
+    - _id: wjqhgl70a9o5puie
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You tap into the unthinkable void between the stars and cause a single
@@ -15,35 +40,10 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  actions:
-    - _id: wjqhgl70a9o5puie
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_giftOfMadness
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!5aHSLfOTwq0LWpOR'
+  tag: classFeat_giftOfMadness
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

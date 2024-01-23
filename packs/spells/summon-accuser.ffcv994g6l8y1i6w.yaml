@@ -1,8 +1,27 @@
 _id: ffcv994g6l8y1i6w
-name: Summon Accuser
-type: spell
+_key: '!items!ffcv994g6l8y1i6w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Accuser
 system:
+  actions:
+    - _id: m9pdzf1524h0skmb
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 1 accuser devil
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons a single accuser devil from Hell to do the
@@ -14,42 +33,23 @@ system:
       Hands sometimes use summoned zebubs to observe suspects from afar. Accuser
       devils are detailed on page 84 of the <i>Pathfinder RPG Bestiary
       2</i>.</p>
-  actions:
-    - _id: m9pdzf1524h0skmb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: close
-      spellEffect: 1 accuser devil
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       bard: 4
+      cleric: 4
+      oracle: 4
+      sorcerer: 4
       summoner: 4
-      witch: 4
       summonerUnchained: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: con
-  subschool: summoning
-  types: evil, lawful
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: chunk of rotten meat
+  school: con
   sr: false
-_key: '!items!ffcv994g6l8y1i6w'
+  subschool: summoning
+  types: evil, lawful
+type: spell
 

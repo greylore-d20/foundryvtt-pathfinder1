@@ -1,18 +1,11 @@
 _id: jnk5sfl5thmgdb3a
-name: Diminish Resistance
-type: spell
+_key: '!items!jnk5sfl5thmgdb3a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Diminish Resistance
 system:
-  description:
-    value: >-
-      <p>You weaken a creature's resistance against one energy type you select:
-      acid, cold, electricity, fire, or sonic. The creature's resistance to that
-      energy type decreases by 5 (minimum 0), plus an additional 5 for every 5
-      caster levels beyond 3rd (to a maximum of 20 at 18th level).</p>
   actions:
     - _id: z517zh33jw7bn5mp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,35 +13,42 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You weaken a creature's resistance against one energy type you select:
+      acid, cold, electricity, fire, or sonic. The creature's resistance to that
+      energy type decreases by 5 (minimum 0), plus an additional 5 for every 5
+      caster levels beyond 3rd (to a maximum of 20 at 18th level).</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      witch: 2
+      cleric: 2
       inquisitor: 2
       magus: 2
-      psychic: 2
       mesmerist: 2
+      oracle: 2
+      psychic: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pinch of coarse sand
-_key: '!items!jnk5sfl5thmgdb3a'
+  school: trs
+type: spell
 

@@ -1,8 +1,31 @@
 _id: nkd3xocluvt1rovu
-name: Alter Winds
-type: spell
+_key: '!items!nkd3xocluvt1rovu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Alter Winds
 system:
+  actions:
+    - _id: h2k1h9vxhand88jn
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      area: immobile 10-ft.-radius emanation
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You subtly enhance or diminish the effects of natural winds within the
@@ -15,38 +38,15 @@ system:
       Level</th><th>Wind
       Force</th></tr><tr><td>1st-3rd</td><td>Light</td></tr><tr><td>4th-9th</td><td>Moderate</td></tr><tr><td>10th-15th</td><td>Strong</td></tr><tr><td>16th
       or higher</td><td>Severe</td></tr></tbody></table>
-  actions:
-    - _id: h2k1h9vxhand88jn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      range:
-        units: touch
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: immobile 10-ft.-radius emanation
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       druid: 1
-      occultist: 1
-      spiritualist: 1
       hunter: 1
+      occultist: 1
+      sorcerer: 1
+      spiritualist: 1
+      wizard: 1
   school: trs
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!nkd3xocluvt1rovu'
+type: spell
 

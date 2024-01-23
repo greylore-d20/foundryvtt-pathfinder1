@@ -1,16 +1,10 @@
 _id: u0dx0en9u171f7t0
-name: Siege of Trees, Greater
-type: spell
+_key: '!items!u0dx0en9u171f7t0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Siege of Trees, Greater
 system:
-  description:
-    value: >-
-      <p>As <i>Siege of Trees</i>, but you can affect larger-sized plants. Each
-      plant acts as a catapult of its size.</p>
   actions:
     - _id: je0nupsdb8fu873t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
@@ -19,18 +13,24 @@ system:
           type: minute
       duration:
         value: 1 hour/level (D)
-      target:
-        value: one Gargantuan, Huge, or Large plant per three caster levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
+      target:
+        value: one Gargantuan, Huge, or Large plant per three caster levels
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>As <i>Siege of Trees</i>, but you can affect larger-sized plants. Each
+      plant acts as a catapult of its size.</p>
   learnedAt:
     class:
       druid: 9
   level: 9
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!u0dx0en9u171f7t0'
+type: spell
 

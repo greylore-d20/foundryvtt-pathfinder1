@@ -1,8 +1,26 @@
 _id: 1b6irvf27vdt5c1l
-name: Produce Flame
-type: spell
+_key: '!items!1b6irvf27vdt5c1l'
 img: icons/magic/fire/flame-burning-hand-orange.webp
+name: Produce Flame
 system:
+  actions:
+    - _id: m67221q25eruums8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: flame in your palm
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Flames as bright as a torch appear in your open hand. The flames harm
@@ -17,35 +35,17 @@ system:
       duration by 1 minute. If an attack reduces the remaining duration to 0
       minutes or less, the spell ends after the attack resolves.</p><p>This
       spell does not function underwater.</p>
-  actions:
-    - _id: m67221q25eruums8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: flame in your palm
   learnedAt:
     class:
       druid: 1
-      shaman: 1
       hunter: 1
+      shaman: 1
     domain:
       Fire: 2
   school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '326'
-_key: '!items!1b6irvf27vdt5c1l'
+  types: fire
+type: spell
 

@@ -1,8 +1,33 @@
 _id: jwhZBdIuoKxfl68f
-name: Second Wind
-type: spell
+_key: '!items!jwhZBdIuoKxfl68f'
 img: systems/pf1/icons/spells/wind-grasp-magenta-2.jpg
+name: Second Wind
 system:
+  actions:
+    - _id: ehfkxxgjk2k466w1
+      actionType: heal
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: 2d8 + min(@cl, 10)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/spells/wind-grasp-magenta-2.jpg
+      name: Use
+      range:
+        minUnits: personal
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You can cast this spell only when you have fewer than one-quarter of
@@ -11,45 +36,20 @@ system:
       level (maximum +10). You can cast this spell either as a swift action on
       your turn or as an immediate action when you are brought to below 0 hit
       points. If you do not breathe, you can’t benefit from this spell.</p>
-  actions:
-    - _id: ehfkxxgjk2k466w1
-      name: Use
-      img: systems/pf1/icons/spells/wind-grasp-magenta-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
-        minUnits: personal
-      actionType: heal
-      damage:
-        parts:
-          - formula: 2d8 + min(@cl, 10)
-            type:
-              values:
-                - untyped
-              custom: ''
   learnedAt:
     class:
       antipaladin: 3
       cleric: 3
-      oracle: 3
       hunter: 3
       inquisitor: 3
+      oracle: 3
       paladin: 3
       ranger: 3
       warpriest: 3
   level: 3
   school: con
+  sr: false
   subschool: healing
   types: air
-  components:
-    verbal: true
-  sr: false
-_key: '!items!jwhZBdIuoKxfl68f'
+type: spell
 

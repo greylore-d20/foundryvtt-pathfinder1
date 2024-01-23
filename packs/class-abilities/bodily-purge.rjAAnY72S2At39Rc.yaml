@@ -1,8 +1,27 @@
 _id: rjAAnY72S2At39Rc
-name: Bodily Purge
-type: feat
+_key: '!items!rjAAnY72S2At39Rc'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Bodily Purge
 system:
+  abilityType: su
+  actions:
+    - _id: 0tfby17d8lppfid6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>You can heal your own wounds and maladies with the power of thought
@@ -24,29 +43,10 @@ system:
       expend 4 dice from this pool instead of 3.</p>
 
       <p>Use your psychic level as your caster level for these effects.</p>
-  actions:
-    - _id: 0tfby17d8lppfid6
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: ceil(@classes.psychic.level / 2)
-  tag: classFeat_bodilyPurge
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!rjAAnY72S2At39Rc'
+  tag: classFeat_bodilyPurge
+  uses:
+    maxFormula: ceil(@classes.psychic.level / 2)
+    per: day
+type: feat
 

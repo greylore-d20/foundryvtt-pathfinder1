@@ -1,17 +1,11 @@
 _id: z6tixjb99njmjgif
-name: Lose the Trail
-type: spell
+_key: '!items!z6tixjb99njmjgif'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lose the Trail
 system:
-  description:
-    value: >-
-      <p>The target or targets of this spell can obscure their tracks when
-      fleeing from a pursuer. This increases the DC of any Survival checks made
-      to track the spell's targets by 2 per level of the caster.</p>
   actions:
     - _id: gpjdk5hef3lox1jf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,26 +13,32 @@ system:
           type: action
       duration:
         value: 1 hour/level (D)
-      target:
-        value: one creature/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target or targets of this spell can obscure their tracks when
+      fleeing from a pursuer. This increases the DC of any Survival checks made
+      to track the spell's targets by 2 per level of the caster.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      ranger: 1
       antipaladin: 2
       hunter: 1
+      ranger: 1
+      sorcerer: 1
+      wizard: 1
   school: ill
   subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!z6tixjb99njmjgif'
+type: spell
 

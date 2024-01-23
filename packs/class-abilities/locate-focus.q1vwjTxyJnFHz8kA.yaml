@@ -1,19 +1,11 @@
 _id: q1vwjTxyJnFHz8kA
-name: Locate Focus
-type: feat
+_key: '!items!q1vwjTxyJnFHz8kA'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Locate Focus
 system:
-  description:
-    value: >-
-      <p>At 8th level, once per day you may use either
-      @Compendium[pf1.spells.vl2mznu91c3efcam]{Locate Creature} or
-      @Compendium[pf1.spells.tcnirpnzjdaym1fd]{Locate Object} as a spell-like
-      ability using your current focus as the target. The range of this effect
-      is 1 mile per level.</p>
+  abilityType: sp
   actions:
     - _id: uhdkudt2f1aojubo
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: standard
         unchained:
@@ -21,19 +13,27 @@ system:
           type: action
       duration:
         units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: mi
+        value: '1'
       target:
         value: focus object or person
-      range:
-        value: '1'
-        units: mi
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_locateFocus
-  subType: classFeat
   associations:
     classes:
       - Inquisitor
-  abilityType: sp
-_key: '!items!q1vwjTxyJnFHz8kA'
+  description:
+    value: >-
+      <p>At 8th level, once per day you may use either
+      @Compendium[pf1.spells.vl2mznu91c3efcam]{Locate Creature} or
+      @Compendium[pf1.spells.tcnirpnzjdaym1fd]{Locate Object} as a spell-like
+      ability using your current focus as the target. The range of this effect
+      is 1 mile per level.</p>
+  subType: classFeat
+  tag: classFeat_locateFocus
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

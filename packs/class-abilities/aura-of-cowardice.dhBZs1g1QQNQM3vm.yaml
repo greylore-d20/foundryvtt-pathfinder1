@@ -1,8 +1,23 @@
 _id: dhBZs1g1QQNQM3vm
-name: Aura of Cowardice
-type: feat
+_key: '!items!dhBZs1g1QQNQM3vm'
 img: systems/pf1/icons/skills/yellow_18.jpg
+name: Aura of Cowardice
 system:
+  abilityType: su
+  actions:
+    - _id: gle2jmzpgapues8v
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/yellow_18.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+  associations:
+    classes:
+      - Antipaladin
   description:
     value: >-
       <p>At 3rd level, an antipaladin radiates a palpably daunting aura that
@@ -11,22 +26,7 @@ system:
       immunity while within 10 feet of an antipaladin with this ability. This
       ability functions only while the antipaladin remains conscious, not if he
       is unconscious or dead.</p>
-  actions:
-    - _id: gle2jmzpgapues8v
-      name: Use
-      img: systems/pf1/icons/skills/yellow_18.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      range:
-        value: '10'
-        units: ft
-  tag: classFeat_auraOfCowardice
   subType: classFeat
-  associations:
-    classes:
-      - Antipaladin
-  abilityType: su
-_key: '!items!dhBZs1g1QQNQM3vm'
+  tag: classFeat_auraOfCowardice
+type: feat
 

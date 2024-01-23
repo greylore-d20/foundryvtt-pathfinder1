@@ -1,17 +1,11 @@
 _id: rhlv5ckupqn127i9
-name: Unbreakable Construct
-type: spell
+_key: '!items!rhlv5ckupqn127i9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unbreakable Construct
 system:
-  description:
-    value: >-
-      <p>This spell increases the target's DR/adamantine by 5 or its hardness by
-      5. If the target does not have DR/adamantine or hardness, this spell has
-      no effect.</p>
   actions:
     - _id: 58z1wz0q01jzkssb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,31 +13,37 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one construct
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one construct
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell increases the target's DR/adamantine by 5 or its hardness by
+      5. If the target does not have DR/adamantine or hardness, this spell has
+      no effect.</p>
   learnedAt:
     class:
+      occultist: 4
       sorcerer: 5
       wizard: 5
-      occultist: 4
   level: 5
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered adamantine worth 100 gp
     gpValue: 100
+    value: powdered adamantine worth 100 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!rhlv5ckupqn127i9'
+type: spell
 

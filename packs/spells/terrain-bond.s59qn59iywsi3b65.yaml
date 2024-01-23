@@ -1,18 +1,10 @@
 _id: s59qn59iywsi3b65
-name: Terrain Bond
-type: spell
+_key: '!items!s59qn59iywsi3b65'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Terrain Bond
 system:
-  description:
-    value: >-
-      <p>You call upon the spirits of nature to help you adapt to your
-      environment. You treat the terrain you are in as your most favored terrain
-      until this spell ends.  If you do not have the favored terrain class
-      feature, you gain no benefit from this spell.</p>
   actions:
     - _id: qwmfe7lcw8wxcrov
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,24 +12,32 @@ system:
           type: action
       duration:
         value: 1 hour/2 levels (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You call upon the spirits of nature to help you adapt to your
+      environment. You treat the terrain you are in as your most favored terrain
+      until this spell ends.  If you do not have the favored terrain class
+      feature, you gain no benefit from this spell.</p>
   learnedAt:
     class:
-      ranger: 4
       hunter: 4
+      ranger: 4
   level: 4
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of earth taken from your most favored terrain
+  school: enc
   sr: false
-_key: '!items!s59qn59iywsi3b65'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

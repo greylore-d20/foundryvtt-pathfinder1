@@ -1,8 +1,16 @@
 _id: VjHjPja5QABBgRvR
-name: Bonus Feat (MNK)
-type: feat
+_key: '!items!VjHjPja5QABBgRvR'
 img: systems/pf1/icons/skills/blue_10.jpg
+name: Bonus Feat (MNK)
 system:
+  associations:
+    classes:
+      - Monk
+  changes:
+    - _id: fjkapxbj
+      formula: 1 + floor((@classes.monk.level + 2) / 4)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 1st level, 2nd level, and every 4 levels thereafter, a monk may
@@ -35,15 +43,7 @@ system:
 
       <p>A monk need not have any of the prerequisites normally required for
       these feats to select them.</p>
-  changes:
-    - _id: fjkapxbj
-      formula: 1 + floor((@classes.monk.level + 2) / 4)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_bonusFeatMnk
   subType: classFeat
-  associations:
-    classes:
-      - Monk
-_key: '!items!VjHjPja5QABBgRvR'
+  tag: classFeat_bonusFeatMnk
+type: feat
 

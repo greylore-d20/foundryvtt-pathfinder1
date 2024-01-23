@@ -1,8 +1,25 @@
 _id: p1kPuhotKvZGVCOK
-name: Fan of Flames Infusion
-type: feat
+_key: '!items!p1kPuhotKvZGVCOK'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Fan of Flames Infusion
 system:
+  actions:
+    - _id: aajz5lf95iwbhj76
+      actionType: save
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: 15-ft. cone
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> form infusion; <b>Level</b> 1;
@@ -11,24 +28,7 @@ system:
 
       <p>Your kinetic blast extends in a fan of flames, damaging all creatures
       and objects in a 15-foot cone. The saving throw DC is Dexterity-based.</p>
-  actions:
-    - _id: aajz5lf95iwbhj76
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      target:
-        value: 15-ft. cone
-      actionType: save
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_fanOfFlamesInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!p1kPuhotKvZGVCOK'
+  tag: classFeat_fanOfFlamesInfusion
+type: feat
 

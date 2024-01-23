@@ -1,28 +1,28 @@
 _id: E0skJEqlJOvB5CoA
-name: Endurance
-type: feat
+_key: '!items!E0skJEqlJOvB5CoA'
 img: systems/pf1/icons/feats/athletic.jpg
+name: Endurance
 system:
+  associations:
+    classes:
+      - Ranger
+  changes:
+    - _id: f9Z61dbH
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>A ranger gains @Compendium[pf1.feats.ehqx8txNRGMaNOPt]{Endurance} as a
       bonus feat at 3rd level.</p>
-  changes:
-    - _id: f9Z61dbH
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Endurance
         uuid: Compendium.pf1.feats.Item.ehqx8txNRGMaNOPt
-  tag: classFeat_endurance
-  subType: classFeat
-  associations:
-    classes:
-      - Ranger
   source:
     id: PZO1110
     pages: '65'
-_key: '!items!E0skJEqlJOvB5CoA'
+  subType: classFeat
+  tag: classFeat_endurance
+type: feat
 

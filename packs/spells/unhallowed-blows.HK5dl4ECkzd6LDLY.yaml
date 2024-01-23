@@ -1,7 +1,35 @@
-name: Unhallowed Blows
-type: spell
+_id: HK5dl4ECkzd6LDLY
+_key: '!items!HK5dl4ECkzd6LDLY'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unhallowed Blows
 system:
+  actions:
+    - _id: x47bJ5VYyid0a9VH
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one undead creature/level, no two of which can be more than 30 ft.
+          apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell empowers the natural attacks or unarmed strikes of undead
@@ -13,28 +41,6 @@ system:
       @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanancy} spell. In this case,
       the caster must be at least 9th level and must expend 2,500 gp worth of
       diamond dust as a material component.</p>
-  actions:
-    - _id: x47bJ5VYyid0a9VH
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: >-
-          one undead creature/level, no two of which can be more than 30 ft.
-          apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       antipaladin: 1
@@ -46,15 +52,9 @@ system:
       warpriest: 1
       witch: 1
       wizard: 1
-  school: trs
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pinch of dust from a destroyed undead creature
-_id: HK5dl4ECkzd6LDLY
-_key: '!items!HK5dl4ECkzd6LDLY'
+  school: trs
+  types: evil
+type: spell
 

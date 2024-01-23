@@ -1,17 +1,10 @@
 _id: xsecnbuvc3rbrefu
-name: Invisibility Purge
-type: spell
+_key: '!items!xsecnbuvc3rbrefu'
 img: icons/magic/light/projectile-smoke-blue-light.webp
+name: Invisibility Purge
 system:
-  description:
-    value: >-
-      <p>You surround yourself with a sphere of power with a radius of 5 feet
-      per caster level that negates all forms of invisibility.</p><p>Anything
-      invisible becomes visible while in the area.</p>
   actions:
     - _id: fzyposxkyv7af0t1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,23 +12,30 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You surround yourself with a sphere of power with a radius of 5 feet
+      per caster level that negates all forms of invisibility.</p><p>Anything
+      invisible becomes visible while in the area.</p>
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
       inquisitor: 3
       occultist: 3
+      oracle: 3
       spiritualist: 3
+      warpriest: 3
   level: 3
   school: evo
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!xsecnbuvc3rbrefu'
+type: spell
 

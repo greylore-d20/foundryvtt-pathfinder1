@@ -1,8 +1,14 @@
 _id: 3snzuCXL24e4aiOC
-name: Ranger (DEX)
-type: feat
+_key: '!items!3snzuCXL24e4aiOC'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Ranger (DEX)
 system:
+  changes:
+    - _id: tgbuw61g
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -35,12 +41,6 @@ system:
       the lists in the combat style ranger class feature—either from archery if
       the creature took Point-Blank Shot, or from two-weapon combat if the
       creature took Two-Weapon Fighting).</p>
-  changes:
-    - _id: tgbuw61g
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!3snzuCXL24e4aiOC'
+type: feat
 

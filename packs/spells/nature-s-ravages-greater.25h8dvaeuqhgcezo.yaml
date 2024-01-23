@@ -1,18 +1,10 @@
 _id: 25h8dvaeuqhgcezo
-name: Nature's Ravages, Greater
-type: spell
+_key: '!items!25h8dvaeuqhgcezo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nature's Ravages, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.0y3go94j3gfmkduu]{Nature's Ravages}, except the
-      target corpse ages a number of years equal to up to 1 year per caster
-      level (maximum 20 years at 20th level).</p>
   actions:
     - _id: l3cjy9ny1zf9t68v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
@@ -21,26 +13,34 @@ system:
           type: minute
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
       target:
         value: >-
           corpse of creature whose total number of HD does not exceed your
           caster level
-      range:
-        units: close
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.0y3go94j3gfmkduu]{Nature's Ravages}, except the
+      target corpse ages a number of years equal to up to 1 year per caster
+      level (maximum 20 years at 20th level).</p>
   learnedAt:
     class:
       cleric: 8
       oracle: 8
       witch: 7
   level: 8
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: dried maggots
+  school: nec
   sr: false
-_key: '!items!25h8dvaeuqhgcezo'
+type: spell
 

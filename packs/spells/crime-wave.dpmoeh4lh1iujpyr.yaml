@@ -1,8 +1,34 @@
 _id: dpmoeh4lh1iujpyr
-name: Crime Wave
-type: spell
+_key: '!items!dpmoeh4lh1iujpyr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Crime Wave
 system:
+  actions:
+    - _id: qe950x1gcuiv8ddc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You instill overwhelming avarice in the targets and impel them toward a
@@ -31,45 +57,19 @@ system:
       hide. Affected creatures with the ability to turn invisible (including
       through the use of magic items or spells) do so instead of attempting a
       Stealth check.</p>
-  actions:
-    - _id: qe950x1gcuiv8ddc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      antipaladin: 4
+      bard: 5
+      mesmerist: 5
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      bard: 5
-      antipaladin: 4
-      psychic: 7
-      mesmerist: 5
   level: 7
+  materials:
+    value: a tarnished coin
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a tarnished coin
-_key: '!items!dpmoeh4lh1iujpyr'
+type: spell
 

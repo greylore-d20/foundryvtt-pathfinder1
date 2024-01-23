@@ -1,8 +1,28 @@
 _id: ZDsuvo1dGeAm1E4F
-name: Radiating Touch
-type: feat
+_key: '!items!ZDsuvo1dGeAm1E4F'
 img: systems/pf1/icons/skills/green_15.jpg
+name: Radiating Touch
 system:
+  abilityType: su
+  actions:
+    - _id: 4s049fyl9pp79vae
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.cleric.level'
+      img: systems/pf1/icons/skills/green_15.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action that provokes attacks of opportunity, you can
@@ -15,30 +35,10 @@ system:
       your Wisdom modifier.</p>
 
       <p>This power replaces the Acid Dart power of the Earth Domain.</p>
-  actions:
-    - _id: 4s049fyl9pp79vae
-      name: Use
-      img: systems/pf1/icons/skills/green_15.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.cleric.level'
-        units: round
-      target:
-        value: object touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_radiatingTouch
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!ZDsuvo1dGeAm1E4F'
+  tag: classFeat_radiatingTouch
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

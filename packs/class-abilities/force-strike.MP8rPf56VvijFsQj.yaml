@@ -1,8 +1,35 @@
 _id: MP8rPf56VvijFsQj
-name: Force Strike
-type: feat
+_key: '!items!MP8rPf56VvijFsQj'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Force Strike
 system:
+  abilityType: su
+  actions:
+    - _id: 5j365t7fss8ot3s6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + @classes.arcanist.level
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can unleash a blast of force by expending 1 point from her
@@ -12,36 +39,9 @@ system:
       level. Spells and effects that negate
       @Compendium[pf1.spells.49yc9dpr4kvgki2s]{Magic Missile} also negate this
       effect.</p>
+  subType: classFeat
+  tag: classFeat_forceStrike
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 5j365t7fss8ot3s6
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      damage:
-        parts:
-          - formula: 1d6 + @classes.arcanist.level
-            type:
-              values:
-                - force
-              custom: ''
-  tag: classFeat_forceStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!MP8rPf56VvijFsQj'
+type: feat
 

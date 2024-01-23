@@ -1,7 +1,36 @@
-name: Toxic Blood
-type: spell
+_id: IHFIFyvEVyfS68C2
+_key: '!items!IHFIFyvEVyfS68C2'
 img: systems/pf1/icons/skills/green_29.jpg
+name: Toxic Blood
 system:
+  actions:
+    - _id: sZA7UaNr7X79GpKG
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/green_29.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates; see text
+        type: fort
+      target:
+        value: creature touched
+      touch: true
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target creature’s blood becomes poisonous. Anytime the target takes
@@ -13,37 +42,12 @@ system:
       DC.</p><p><em>Toxic blood</em> can be made permanent with a
       @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanency} spell cast by a
       caster of 11th level or higher, at a cost of 7,500 gp.</p>
-  actions:
-    - _id: sZA7UaNr7X79GpKG
-      name: Use
-      img: systems/pf1/icons/skills/green_29.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      save:
-        type: fort
-        description: Fortitude negates; see text
-      touch: true
   learnedAt:
     class:
       alchemist: 3
       arcanist: 3
       bloodrager: 3
       cleric: 3
-      warpriest: 3
       druid: 3
       hunter: 3
       investigator: 3
@@ -53,18 +57,14 @@ system:
       sorcerer: 3
       summoner: 3
       summonerUnchained: 3
+      warpriest: 3
       witch: 3
       wizard: 3
   level: 3
-  school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: vial of black adder venom
+  school: trs
   sr: false
-_id: IHFIFyvEVyfS68C2
-_key: '!items!IHFIFyvEVyfS68C2'
+  types: poison
+type: spell
 

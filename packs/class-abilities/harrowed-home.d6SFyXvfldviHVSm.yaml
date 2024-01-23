@@ -1,8 +1,21 @@
 _id: d6SFyXvfldviHVSm
-name: Harrowed Home
-type: feat
+_key: '!items!d6SFyXvfldviHVSm'
 img: systems/pf1/icons/skills/shadow_09.jpg
+name: Harrowed Home
 system:
+  abilityType: sp
+  actions:
+    - _id: qlu2b2xy52fngw93
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/shadow_09.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, your otherworldly connection is so strong that your
@@ -19,23 +32,10 @@ system:
       continues as normal whenever you are inside your harrowed home. This
       ability is otherwise identical to
       @Compendium[pf1.spells.kqftgm3bi2dqj92l]{Mage's Magnificent Mansion}.</p>
-  actions:
-    - _id: qlu2b2xy52fngw93
-      name: Use
-      img: systems/pf1/icons/skills/shadow_09.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_harrowedHome
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!d6SFyXvfldviHVSm'
+  tag: classFeat_harrowedHome
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

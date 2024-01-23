@@ -1,8 +1,34 @@
 _id: 7wt5a8gn5wbfplyl
-name: Disrupt Silence
-type: spell
+_key: '!items!7wt5a8gn5wbfplyl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Disrupt Silence
 system:
+  actions:
+    - _id: z57zm5f91axxm7nh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: >-
+        10-ft.-radius emanation centered on a creature, object, or point in
+        space
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>You suppress magical sound-dampening effects within the area.
@@ -14,43 +40,17 @@ system:
       cast <i>disrupt <i>silence</i></i> on the target of a higher-level
       <i>silence</i> effect, it functions as <i>dispel magic</i> instead of its
       normal function.</p>
-  actions:
-    - _id: z57zm5f91axxm7nh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: touch
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: >-
-        10-ft.-radius emanation centered on a creature, object, or point in
-        space
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
       inquisitor: 3
+      oracle: 3
       psychic: 3
+      warpriest: 3
   level: 3
-  school: abj
-  components:
-    somatic: true
-    material: true
   materials:
     value: tiny silver bell, chime, or gong
-_key: '!items!7wt5a8gn5wbfplyl'
+  school: abj
+type: spell
 

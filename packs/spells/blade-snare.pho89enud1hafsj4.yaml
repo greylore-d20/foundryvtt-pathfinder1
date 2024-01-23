@@ -1,8 +1,26 @@
 _id: pho89enud1hafsj4
-name: Blade Snare
-type: spell
+_key: '!items!pho89enud1hafsj4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blade Snare
 system:
+  actions:
+    - _id: riqcj3o5i9s3ry6b
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates an invisible magic field that does not stop weapons
@@ -33,34 +51,16 @@ system:
       field and you are hit by a second melee attack, you must choose which
       weapon or limb to snare. The other limb or weapon is unaffected by the
       spell.</p>
-  actions:
-    - _id: riqcj3o5i9s3ry6b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      druid: 3
+      hunter: 3
+      magus: 3
+      ranger: 3
       sorcerer: 3
       wizard: 3
-      druid: 3
-      ranger: 3
-      magus: 3
-      hunter: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!pho89enud1hafsj4'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: 0y78ewctynz9zna6
-name: Aram Zey's Trap Ward
-type: spell
+_key: '!items!0y78ewctynz9zna6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aram Zey's Trap Ward
 system:
+  actions:
+    - _id: s5u7leb5bsh77vdw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>While he was researching the underlying causes of the resonance created
@@ -17,36 +36,17 @@ system:
       magical effect of the trap before the effect actually manifests,
       effectively preventing the trap from triggering for the next 1d4 rounds
       and ending Aram Zey's trap ward immediately.</p>
-  actions:
-    - _id: s5u7leb5bsh77vdw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 4
       wizard: 4
   level: 4
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: masterwork thieves' tools worth 100 gp
     gpValue: 100
+    value: masterwork thieves' tools worth 100 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!0y78ewctynz9zna6'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: TH51moex2K8P4UjM
-name: Resist Energy (CAV)
-type: feat
+_key: '!items!TH51moex2K8P4UjM'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Resist Energy (CAV)
 system:
+  abilityType: su
+  actions:
+    - _id: uceb5c540lmyyq14
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, the cavalier can steel himself against harmful energies.
@@ -11,29 +30,10 @@ system:
       chosen type for 1 minute. At 12th, 16th, and 20th levels, the resistance
       increases by 5, and the cavalier gains an additional daily use of this
       ability.</p>
-  actions:
-    - _id: uceb5c540lmyyq14
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: floor((@classes.cavalier.level - 4) / 4)
-  tag: classFeat_resistEnergyCav
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: su
-_key: '!items!TH51moex2K8P4UjM'
+  tag: classFeat_resistEnergyCav
+  uses:
+    maxFormula: floor((@classes.cavalier.level - 4) / 4)
+    per: day
+type: feat
 

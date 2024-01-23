@@ -1,8 +1,28 @@
 _id: fv17a5jsmapb0wcz
-name: Entice Fey, Lesser
-type: spell
+_key: '!items!fv17a5jsmapb0wcz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Entice Fey, Lesser
 system:
+  actions:
+    - _id: 9aj72zzeq7u0vrrq
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one called fey with 6 Hit Dice or fewer
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>lesser planar ally</i>, except that you
@@ -21,42 +41,22 @@ system:
       it can simply choose to refuse, in which case you don't expend any of the
       material components for the spell, either the offerings or the
       payment.</p>
-  actions:
-    - _id: 9aj72zzeq7u0vrrq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      spellEffect: one called fey with 6 Hit Dice or fewer
   learnedAt:
     class:
-      druid: 5
-      ranger: 4
       bard: 4
-      shaman: 5
-      medium: 3
+      druid: 5
       hunter: 4
+      medium: 3
+      ranger: 4
+      shaman: 5
   level: 5
-  school: con
-  subschool: calling
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: offerings worth 500 gp plus payment, see text
     gpValue: 500
+    value: offerings worth 500 gp plus payment, see text
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!fv17a5jsmapb0wcz'
+  subschool: calling
+type: spell
 

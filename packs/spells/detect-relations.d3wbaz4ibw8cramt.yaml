@@ -1,8 +1,32 @@
 _id: d3wbaz4ibw8cramt
-name: Detect Relations
-type: spell
+_key: '!items!d3wbaz4ibw8cramt'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Relations
 system:
+  actions:
+    - _id: xxa877hupxru7ie4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration, up to 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one creature per level, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can determine whether or not two or more creatures are related by
@@ -26,42 +50,18 @@ system:
       them to those of others in the area while looking for patterns. Thus,
       adoptive siblings and parents cannot be detected with this spell, since
       they share no blood.</p>
-  actions:
-    - _id: xxa877hupxru7ie4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 min./level (D)
-      target:
-        value: one creature per level, no two of which can be more than 30 ft. apart
-      range:
-        units: unlimited
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      witch: 2
+      cleric: 2
       inquisitor: 2
+      oracle: 2
+      warpriest: 2
+      witch: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a seed
+  school: div
   sr: false
-_key: '!items!d3wbaz4ibw8cramt'
+type: spell
 

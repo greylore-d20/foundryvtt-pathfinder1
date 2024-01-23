@@ -1,8 +1,30 @@
 _id: jojn72j6k6hs8vvp
-name: Shard of Chaos
-type: spell
+_key: '!items!jojn72j6k6hs8vvp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shard of Chaos
 system:
+  actions:
+    - _id: jih4iwcewoqkqt40
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous (1d6 rounds)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial (see text)
+        type: will
+      spellEffect: dart-shaped projectile of chaotic energy
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You hurl a multicolored shard of congealed chaos from your holy symbol,
@@ -14,35 +36,13 @@ system:
       effect. The bolt has no effect on chaotic creatures. This spell deals only
       half damage to creatures that are neither lawful nor chaotic, and they are
       not slowed.</p>
-  actions:
-    - _id: jih4iwcewoqkqt40
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous (1d6 rounds)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial (see text)
-      spellEffect: dart-shaped projectile of chaotic energy
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
+      warpriest: 2
   level: 2
   school: evo
   types: chaotic
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!jojn72j6k6hs8vvp'
+type: spell
 

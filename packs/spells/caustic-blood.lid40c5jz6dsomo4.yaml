@@ -1,8 +1,31 @@
 _id: lid40c5jz6dsomo4
-name: Caustic Blood
-type: spell
+_key: '!items!lid40c5jz6dsomo4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Caustic Blood
 system:
+  actions:
+    - _id: sh96v42ka8bqycvr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex half or negates; see text
+        type: ref
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue your blood with corrosive acid. Any time you take piercing or
@@ -14,47 +37,24 @@ system:
       your acidic blood continues to burn that creature for 1 round, dealing 1d6
       points of acid damage per 2 caster levels (maximum 7d6). A second
       successful Reflex save negates this additional damage.</p>
-  actions:
-    - _id: sh96v42ka8bqycvr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half or negates; see text
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      druid: 4
       alchemist: 4
-      summoner: 4
-      magus: 4
+      cleric: 5
+      druid: 4
       hunter: 4
+      magus: 4
+      oracle: 5
+      sorcerer: 5
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 5
+      wizard: 5
   level: 5
-  school: trs
-  types: acid
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: vial of black adder venom
+  school: trs
   sr: false
-_key: '!items!lid40c5jz6dsomo4'
+  types: acid
+type: spell
 

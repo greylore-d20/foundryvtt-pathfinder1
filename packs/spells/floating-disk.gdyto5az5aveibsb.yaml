@@ -1,8 +1,26 @@
 _id: gdyto5az5aveibsb
-name: Floating Disk
-type: spell
+_key: '!items!gdyto5az5aveibsb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Floating Disk
 system:
+  actions:
+    - _id: 6a02a4fuyfkey8s1
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 3-ft.-diameter disk of force
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a slightly concave, circular plane of force that follows you
@@ -18,37 +36,19 @@ system:
       to take the disk more than 3 feet away from the surface beneath
       it.</p><p>When the disk winks out, whatever it was supporting falls to the
       surface beneath it.</p>
-  actions:
-    - _id: 6a02a4fuyfkey8s1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: close
-      spellEffect: 3-ft.-diameter disk of force
   learnedAt:
     class:
+      magus: 1
+      occultist: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      magus: 1
-      psychic: 1
-      occultist: 1
     subDomain:
       Trade: 1
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of mercury
+  school: evo
   sr: false
-_key: '!items!gdyto5az5aveibsb'
+  types: force
+type: spell
 

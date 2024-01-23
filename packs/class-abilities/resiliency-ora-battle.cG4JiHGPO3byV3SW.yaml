@@ -1,8 +1,20 @@
 _id: cG4JiHGPO3byV3SW
-name: Resiliency (ORA) (Battle)
-type: feat
+_key: '!items!cG4JiHGPO3byV3SW'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Resiliency (ORA) (Battle)
 system:
+  abilityType: ex
+  actions:
+    - _id: r3rb2l4clzgu9pu5
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You are not disabled and you do not gain the staggered condition if you
@@ -14,22 +26,10 @@ system:
       <p>At 11th level, you do not lose a hit point when you take a standard
       action while disabled. You do not need to meet the prerequisite to receive
       the Diehard feat.</p>
+  subType: classFeat
+  tag: classFeat_resiliencyOraBattle
   tags:
     - Revelation
     - Battle Mystery
-  actions:
-    - _id: r3rb2l4clzgu9pu5
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_resiliencyOraBattle
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!cG4JiHGPO3byV3SW'
+type: feat
 

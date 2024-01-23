@@ -1,18 +1,10 @@
 _id: mf6k8tg8xu0wedoz
-name: Summon Monster VI
-type: spell
+_key: '!items!mf6k8tg8xu0wedoz'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Summon Monster VI
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster I,</i> except you can
-      summon one creature from the 6th-level list, 1d3 creatures of the same
-      kind from the 5th-level list, or 1d4+1 creatures of the same kind from a
-      lower-level list.</p>
   actions:
     - _id: di3myyoo91w31fpi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -20,34 +12,42 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster I,</i> except you can
+      summon one creature from the 6th-level list, 1d3 creatures of the same
+      kind from the 5th-level list, or 1d4+1 creatures of the same kind from a
+      lower-level list.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 6
-      witch: 6
+      cleric: 6
+      oracle: 6
       psychic: 6
+      sorcerer: 6
       spiritualist: 6
       summonerUnchained: 5
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a tiny bag and a small candle
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '352'
-_key: '!items!mf6k8tg8xu0wedoz'
+  sr: false
+  subschool: summoning
+type: spell
 

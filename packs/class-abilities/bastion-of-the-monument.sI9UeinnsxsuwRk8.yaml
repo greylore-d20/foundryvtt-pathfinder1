@@ -1,8 +1,23 @@
 _id: sI9UeinnsxsuwRk8
-name: Bastion of the Monument
-type: feat
+_key: '!items!sI9UeinnsxsuwRk8'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Bastion of the Monument
 system:
+  abilityType: ex
+  actions:
+    - _id: ru575h0jo8mree12
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, the cavalier defends his homeland with unmatched
@@ -14,25 +29,10 @@ system:
       use this ability for a number of rounds per day equal to half his cavalier
       level. This duration need not be continuous but must be used in 1-round
       increments.</p>
-  actions:
-    - _id: ru575h0jo8mree12
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: floor(@classes.cavalier.level / 2)
-  tag: classFeat_bastionOfTheMonument
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!sI9UeinnsxsuwRk8'
+  tag: classFeat_bastionOfTheMonument
+  uses:
+    maxFormula: floor(@classes.cavalier.level / 2)
+    per: day
+type: feat
 

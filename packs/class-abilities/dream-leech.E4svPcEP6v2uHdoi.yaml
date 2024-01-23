@@ -1,8 +1,28 @@
 _id: E4svPcEP6v2uHdoi
-name: Dream Leech
-type: feat
+_key: '!items!E4svPcEP6v2uHdoi'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Dream Leech
 system:
+  abilityType: su
+  actions:
+    - _id: ijx30norcu3udsm5
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: sleeping creature
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>While adjacent to a sleeping or unconscious creature, you can take a
@@ -17,30 +37,10 @@ system:
       <p>You can use this ability a number of times per day equal to your
       Charisma modifier, but no more than once per hour and no more than once
       per creature per day.</p>
-  actions:
-    - _id: ijx30norcu3udsm5
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: sleeping creature
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  uses:
-    per: day
-    maxFormula: '@abilities.cha.mod'
-  tag: classFeat_dreamLeech
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!E4svPcEP6v2uHdoi'
+  tag: classFeat_dreamLeech
+  uses:
+    maxFormula: '@abilities.cha.mod'
+    per: day
+type: feat
 

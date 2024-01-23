@@ -1,30 +1,34 @@
-name: Spindrift Spritz, Mass
-type: spell
+_id: BcZC63EPa8AuJBdq
+_key: '!items!BcZC63EPa8AuJBdq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spindrift Spritz, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as
-      @Compendium[pf1.spells.NnbDuJ1RbfbuiiY0]{spindrift spritz}, except as
-      noted above.</p>
   actions:
     - _id: J5oXp7UsQcit9sb0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         value: instantaneous
-      target:
-        value: one creature/level, no two of which can be more than 20 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
         description: Will negates
         harmless: true
+      target:
+        value: one creature/level, no two of which can be more than 20 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as
+      @Compendium[pf1.spells.NnbDuJ1RbfbuiiY0]{spindrift spritz}, except as
+      noted above.</p>
   learnedAt:
     class:
       cleric: 4
@@ -41,9 +45,5 @@ system:
   school: con
   subschool: healing
   types: water
-  components:
-    verbal: true
-    somatic: true
-_id: BcZC63EPa8AuJBdq
-_key: '!items!BcZC63EPa8AuJBdq'
+type: spell
 

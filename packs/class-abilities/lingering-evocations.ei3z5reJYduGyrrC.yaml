@@ -1,8 +1,20 @@
 _id: ei3z5reJYduGyrrC
-name: Lingering Evocations
-type: feat
+_key: '!items!ei3z5reJYduGyrrC'
 img: systems/pf1/icons/spells/protect-red-3.jpg
+name: Lingering Evocations
 system:
+  abilityType: su
+  actions:
+    - _id: 62q4ouvjyehcw5b3
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/protect-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>Any <em>evocation</em> spell you cast with a duration greater than
@@ -10,19 +22,7 @@ system:
       wizard level (minimum +1). At 20th level, any dispel checks made against
       your <em>evocation</em> spells must be rolled twice, and your opponent
       must use the less favorable result.</p>
-  actions:
-    - _id: 62q4ouvjyehcw5b3
-      name: Use
-      img: systems/pf1/icons/spells/protect-red-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_lingeringEvocations
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!ei3z5reJYduGyrrC'
+  tag: classFeat_lingeringEvocations
+type: feat
 

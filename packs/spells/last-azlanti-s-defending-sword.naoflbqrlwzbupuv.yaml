@@ -1,8 +1,26 @@
 _id: naoflbqrlwzbupuv
-name: Last Azlanti's Defending Sword
-type: spell
+_key: '!items!naoflbqrlwzbupuv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Last Azlanti's Defending Sword
 system:
+  actions:
+    - _id: ofcn8bd49v9nug7d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one sword
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a sword of force that functions as mage's sword except as
@@ -19,35 +37,17 @@ system:
       attack. If its target moves beyond the sword's range, the sword returns to
       you and hovers until the target is again within range. The sword's return
       does not restore the spell's shield bonus to AC.</p>
-  actions:
-    - _id: ofcn8bd49v9nug7d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: one sword
   learnedAt:
     class:
+      magus: 6
+      occultist: 6
+      psychic: 7
       sorcerer: 6
       wizard: 6
-      magus: 6
-      psychic: 7
-      occultist: 6
   level: 6
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a miniature platinum sword worth 250 gp
-_key: '!items!naoflbqrlwzbupuv'
+  school: evo
+  types: force
+type: spell
 

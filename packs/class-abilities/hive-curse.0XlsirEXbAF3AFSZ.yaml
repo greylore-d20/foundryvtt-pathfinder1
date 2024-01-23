@@ -1,8 +1,16 @@
 _id: 0XlsirEXbAF3AFSZ
-name: Hive Curse
-type: feat
+_key: '!items!0XlsirEXbAF3AFSZ'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Hive Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: qglb11lf
+      formula: '@classes.oracle.level >= 10 ? 1 : 0'
+      modifier: untyped
+      subTarget: nac
   description:
     value: >-
       <p>You were exposed at a young age (perhaps even before you were born) to
@@ -23,15 +31,7 @@ system:
       your natural armor bonus by 1.</p>
 
       <p>At 15th level, you gain acid resistance 20.</p>
-  changes:
-    - _id: qglb11lf
-      formula: '@classes.oracle.level >= 10 ? 1 : 0'
-      subTarget: nac
-      modifier: untyped
-  tag: classFeat_hiveCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!0XlsirEXbAF3AFSZ'
+  tag: classFeat_hiveCurse
+type: feat
 

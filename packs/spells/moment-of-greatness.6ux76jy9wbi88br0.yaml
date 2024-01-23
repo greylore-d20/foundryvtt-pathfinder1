@@ -1,19 +1,10 @@
 _id: 6ux76jy9wbi88br0
-name: Moment of Greatness
-type: spell
+_key: '!items!6ux76jy9wbi88br0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Moment of Greatness
 system:
-  description:
-    value: >-
-      <p>Each creature affected by this spell is given the potential for greater
-      success and glory. If the affected creature is benefiting from a morale
-      bonus of any type, it can double that morale bonus on one roll or check,
-      before making the roll. Once an affected creature uses this spell's
-      effect, the spell is discharged for that subject.</p>
   actions:
     - _id: ybjd1e3rf7ynmn5e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,31 +12,40 @@ system:
           type: action
       duration:
         value: 1 minute/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '50'
       target:
         value: The caster and allies within a 50-ft. burst centered on the caster
-      range:
-        value: '50'
-        units: ft
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Each creature affected by this spell is given the potential for greater
+      success and glory. If the affected creature is benefiting from a morale
+      bonus of any type, it can double that morale bonus on one roll or check,
+      before making the roll. Once an affected creature uses this spell's
+      effect, the spell is discharged for that subject.</p>
   learnedAt:
-    class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      bard: 1
-      psychic: 1
     bloodline:
       Imperious: 1
+    class:
+      bard: 1
+      cleric: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
+  materials:
+    value: rabbit fur
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: rabbit fur
-_key: '!items!6ux76jy9wbi88br0'
+type: spell
 

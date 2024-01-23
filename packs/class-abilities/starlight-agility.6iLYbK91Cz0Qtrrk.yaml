@@ -1,8 +1,19 @@
 _id: 6iLYbK91Cz0Qtrrk
-name: Starlight Agility
-type: feat
+_key: '!items!6iLYbK91Cz0Qtrrk'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Starlight Agility
 system:
+  actions:
+    - _id: 5co2lcytqhhmf6a2
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You gain @Compendium[pf1.feats.JreaiTHdyWFNj3Tb]{Dodge} as a bonus
@@ -16,18 +27,7 @@ system:
       feat.</p>
 
       <p>You do not need to meet the prerequisites to receive these feats.</p>
-  actions:
-    - _id: 5co2lcytqhhmf6a2
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_starlightAgility
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!6iLYbK91Cz0Qtrrk'
+  tag: classFeat_starlightAgility
+type: feat
 

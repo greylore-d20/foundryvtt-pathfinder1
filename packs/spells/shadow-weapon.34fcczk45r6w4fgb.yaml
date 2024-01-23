@@ -1,8 +1,30 @@
 _id: 34fcczk45r6w4fgb
-name: Shadow Weapon
-type: spell
+_key: '!items!34fcczk45r6w4fgb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Weapon
 system:
+  actions:
+    - _id: aozmx86tdff58ecp
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will disbelief (if interacted with)
+        type: will
+      spellEffect: one shadow weapon
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Drawing upon the Plane of Shadow, you shape a quasi-real masterwork
@@ -21,38 +43,16 @@ system:
       <i>frost</i> or <i>keen</i> weapon property. The <i>frost</i> and
       <i>keen</i> properties have no effect if the target makes its disbelief
       save.  The spell ends if the weapon leaves your possession.</p>
-  actions:
-    - _id: aozmx86tdff58ecp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with)
-      spellEffect: one shadow weapon
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
       bloodrager: 1
-      psychic: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!34fcczk45r6w4fgb'
+type: spell
 

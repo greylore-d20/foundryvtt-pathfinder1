@@ -1,8 +1,30 @@
 _id: bfyis6egnv5e9ohs
-name: Bouncing Bomb Admixture
-type: spell
+_key: '!items!bfyis6egnv5e9ohs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bouncing Bomb Admixture
 system:
+  actions:
+    - _id: i1ic8a36vzmg6ucx
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon drinking an extract created with this formula, you make a
@@ -15,33 +37,11 @@ system:
       one becomes active.  When you throw your next bomb, choose one target that
       would normally be hit by the bomb's splash damage. The target is affected
       as if it suffered a direct hit from the bomb instead.</p>
-  actions:
-    - _id: i1ic8a36vzmg6ucx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       alchemist: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!bfyis6egnv5e9ohs'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: s72y6ioltjbpucz0
-name: Chain of Perdition
-type: spell
+_key: '!items!s72y6ioltjbpucz0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Chain of Perdition
 system:
+  actions:
+    - _id: k5pnsll4f7fcga8v
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 10-ft. chain
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A floating chain of force with hooks at each end appears within an
@@ -27,40 +46,21 @@ system:
       chain is successfully resisted, the spell is dispelled. If not, the weapon
       has its normal full effect on that creature for the duration of the
       spell.</p>
-  actions:
-    - _id: k5pnsll4f7fcga8v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: 10-ft. chain
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bloodrager: 3
+      cleric: 3
+      oracle: 3
       psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
     subDomain:
       Psychopomp: 3
   level: 3
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: chain link
-_key: '!items!s72y6ioltjbpucz0'
+  school: evo
+  types: force
+type: spell
 

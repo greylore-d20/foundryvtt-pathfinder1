@@ -1,8 +1,29 @@
 _id: vefvam94asoxl7ow
-name: Gloomblind Bolts
-type: spell
+_key: '!items!vefvam94asoxl7ow'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gloomblind Bolts
 system:
+  actions:
+    - _id: 79p3gjqdv0qgpaff
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates; see text
+        type: ref
+      spellEffect: one or more bolts of energy
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create one or more bolts of negative energy infused with shadow
@@ -15,37 +36,16 @@ system:
       the skin of creature, possibly blinding it for a short time. Any creature
       struck by a bolt must succeed at a Reflex saving throw or become blinded
       for 1 round.</p>
-  actions:
-    - _id: 79p3gjqdv0qgpaff
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates; see text
-      spellEffect: one or more bolts of energy
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
-      magus: 3
       bloodrager: 3
+      magus: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: con
   subschool: creation
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vefvam94asoxl7ow'
+type: spell
 

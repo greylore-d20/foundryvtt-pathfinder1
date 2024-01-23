@@ -1,8 +1,39 @@
 _id: 4SSZ3lcMaUltNGYA
-name: Assassinate (NIN)
-type: feat
+_key: '!items!4SSZ3lcMaUltNGYA'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Assassinate (NIN)
 system:
+  abilityType: ex
+  actions:
+    - _id: 0sXmPkw6nYjMjVGs
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Study
+    - _id: Q4kGOJULDpKsUoxf
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      effectNotes:
+        - If the target fails it's save, it dies.
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Assasinate
+      save:
+        dc: 10 + floor(@classes.ninja.level / 2) + @abilities.cha.mod
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Ninja
+      - Rogue
   description:
     value: >-
       <p>A ninja with this master trick can kill foes that are unable to defend
@@ -17,45 +48,14 @@ system:
       modifier. If the save is successful, the target still takes the sneak
       attack damage as normal, but it is immune to that ninja's assassinate
       ability for 1 day.</p>
+  source:
+    id: PZO1118
+    pages: '16'
+  subType: classFeat
+  tag: classFeat_assassinateNin
   tags:
     - Ninja Trick, Master
     - Rogue Talent, Advanced
     - Sneak Attack
-  actions:
-    - _id: 0sXmPkw6nYjMjVGs
-      name: Study
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-    - _id: Q4kGOJULDpKsUoxf
-      name: Assasinate
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.ninja.level / 2) + @abilities.cha.mod
-        type: fort
-        description: Fortitude negates
-      effectNotes:
-        - If the target fails it's save, it dies.
-  tag: classFeat_assassinateNin
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-  abilityType: ex
-  source:
-    id: PZO1118
-    pages: '16'
-_key: '!items!4SSZ3lcMaUltNGYA'
+type: feat
 

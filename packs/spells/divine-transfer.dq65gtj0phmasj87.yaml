@@ -1,8 +1,31 @@
 _id: dq65gtj0phmasj87
-name: Divine Transfer
-type: spell
+_key: '!items!dq65gtj0phmasj87'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Divine Transfer
 system:
+  actions:
+    - _id: 0tjtrq3swc14ohbc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>With a single touch, you transfer some of your life essence to the
@@ -12,33 +35,10 @@ system:
       cannot raise the subject's hit points higher than its normal hit point
       total. In addition, the subject gains DR/evil equal to your Charisma bonus
       (if any) for the duration of the spell.</p>
-  actions:
-    - _id: 0tjtrq3swc14ohbc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       paladin: 3
   level: 3
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!dq65gtj0phmasj87'
+type: spell
 

@@ -1,8 +1,20 @@
 _id: NUsLshXpE3d8W3AI
-name: Phantom Recall
-type: feat
+_key: '!items!NUsLshXpE3d8W3AI'
 img: systems/pf1/icons/skills/affliction_03.jpg
+name: Phantom Recall
 system:
+  abilityType: su
+  actions:
+    - _id: w6ndky64iiizbkqs
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/affliction_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Spiritualist
   description:
     value: >-
       <p>At 6th level, as either a swift or an immediate action, a spiritualist
@@ -17,22 +29,10 @@ system:
       manifestation.<p>The spiritualist can use this ability once per day at 6th
       level, plus one additional time per day for every 4 spiritualist levels
       she possesses beyond 6th.</p>
-  actions:
-    - _id: w6ndky64iiizbkqs
-      name: Use
-      img: systems/pf1/icons/skills/affliction_03.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: floor((@classes.spiritualist.level - 2) / 4)
-  tag: classFeat_phantomRecall
   subType: classFeat
-  associations:
-    classes:
-      - Spiritualist
-  abilityType: su
-_key: '!items!NUsLshXpE3d8W3AI'
+  tag: classFeat_phantomRecall
+  uses:
+    maxFormula: floor((@classes.spiritualist.level - 2) / 4)
+    per: day
+type: feat
 

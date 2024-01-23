@@ -1,8 +1,32 @@
 _id: hlom4mgjkdy2dd5u
-name: Weapon of Awe
-type: spell
+_key: '!items!hlom4mgjkdy2dd5u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Weapon of Awe
 system:
+  actions:
+    - _id: zkg4zqg3459zw9xl
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: weapon touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transform a single weapon into an awe-inspiring instrument. The
@@ -12,43 +36,19 @@ system:
       weapon affected by this spell applies these effects to its
       ammunition.</p><p>You can't cast this spell on a natural weapon, but you
       can cast it on an unarmed strike.</p>
-  actions:
-    - _id: zkg4zqg3459zw9xl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      paladin: 2
       inquisitor: 2
       occultist: 2
+      oracle: 2
+      paladin: 2
+      warpriest: 2
   level: 2
   school: trs
-  types: emotion
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1115
     pages: '256'
-_key: '!items!hlom4mgjkdy2dd5u'
+  types: emotion
+type: spell
 

@@ -1,8 +1,39 @@
 _id: P1zlk4ivL3jjyvp2
-name: Lasso
-type: weapon
+_key: '!items!P1zlk4ivL3jjyvp2'
 img: systems/pf1/icons/items/weapons/lasso.png
+name: Lasso
 system:
+  actions:
+    - _id: hag0ii35yc9dsb3g
+      ability:
+        attack: dex
+        critMult: null
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: 'NULL'
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/lasso.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Lasso
   description:
     value: >-
       <p>This thrown weapon is a length of rope with a simple open knot on one
@@ -13,62 +44,31 @@ system:
       and requires a DC 23 Strength check to break it. On a successful hit, the
       lasso tightens; to use it again you must spend a standard action sliding
       the knot to enlarge the loop.</p>
-  tags:
-    - PFS
-  weight:
-    value: 5
-  price: 0.1
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: hag0ii35yc9dsb3g
-      name: Throw
-      img: systems/pf1/icons/items/weapons/lasso.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: 'NULL'
-            type:
-              values:
-                - untyped
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critMult: null
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Lasso
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 0.1
   properties:
     spc: true
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!P1zlk4ivL3jjyvp2'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 5
+type: weapon
 

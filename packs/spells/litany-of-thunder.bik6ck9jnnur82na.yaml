@@ -1,43 +1,43 @@
 _id: bik6ck9jnnur82na
-name: Litany of Thunder
-type: spell
+_key: '!items!bik6ck9jnnur82na'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Thunder
 system:
-  description:
-    value: >-
-      <p>You call down a thunderous boom upon your enemy. The target becomes
-      deafened until the condition is removed, and is confused for 1 round. 
-      While subject to this spell, the target cannot be the target of another
-      spell that has the word "litany" in the title.</p>
   actions:
     - _id: cway8boc729hg5oc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You call down a thunderous boom upon your enemy. The target becomes
+      deafened until the condition is removed, and is confused for 1 round. 
+      While subject to this spell, the target cannot be the target of another
+      spell that has the word "litany" in the title.</p>
   learnedAt:
     class:
-      paladin: 4
-      inquisitor: 5
       antipaladin: 4
+      inquisitor: 5
+      paladin: 4
   level: 4
   school: evo
   types: language-dependent, sonic
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!bik6ck9jnnur82na'
+type: spell
 

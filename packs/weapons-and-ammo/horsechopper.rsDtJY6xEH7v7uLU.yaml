@@ -1,61 +1,61 @@
 _id: rsDtJY6xEH7v7uLU
-name: Horsechopper
-type: weapon
+_key: '!items!rsDtJY6xEH7v7uLU'
 img: systems/pf1/icons/items/weapons/horsechopper.png
+name: Horsechopper
 system:
+  actions:
+    - _id: e8wetbb5ychiho6f
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/horsechopper.png
+      name: Attack
+      range:
+        units: reach
+        value: '0'
+  baseTypes:
+    - Horsechopper
   description:
     value: >-
       <p>Crafted by goblins for battling horses, this weapon is essentially a
       long-handled halberd with an enlarged hook on the blade. Most
       horsechoppers are sized for Small creatures.</p>
-  tags:
-    - PFS
-  weight:
-    value: 12
-  price: 10
   hardness: 10
-  actions:
-    - _id: e8wetbb5ychiho6f
-      name: Attack
-      img: systems/pf1/icons/items/weapons/horsechopper.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: reach
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Horsechopper
-  subType: martial
-  weaponSubtype: 2h
+  price: 10
   properties:
     rch: true
     trp: true
   source:
     id: PZO1123
     pages: '19'
-_key: '!items!rsDtJY6xEH7v7uLU'
+  subType: martial
+  tags:
+    - PFS
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

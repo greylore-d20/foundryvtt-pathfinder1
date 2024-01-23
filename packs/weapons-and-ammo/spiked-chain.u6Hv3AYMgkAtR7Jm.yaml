@@ -1,8 +1,40 @@
 _id: u6Hv3AYMgkAtR7Jm
-name: Spiked Chain
-type: weapon
+_key: '!items!u6Hv3AYMgkAtR7Jm'
 img: systems/pf1/icons/items/weapons/spiked-chain.png
+name: Spiked Chain
 system:
+  actions:
+    - _id: f0qtyqexlyyxnsjs
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/spiked-chain.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Spiked Chain
   description:
     value: >-
       <p>A spiked chain is about 4 feet in length and covered in wicked barbs.
@@ -10,62 +42,30 @@ system:
       feat to apply your Dexterity modifier instead of your Strength modifier to
       attack rolls with a spiked chain sized for you, even though it isn't a
       light weapon.</p>
-  tags:
-    - PFS
-  weight:
-    value: 10
-  price: 25
   hardness: 10
-  actions:
-    - _id: f0qtyqexlyyxnsjs
-      name: Attack
-      img: systems/pf1/icons/items/weapons/spiked-chain.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(2, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
   held: 2h
-  baseTypes:
-    - Spiked Chain
-  weaponGroups:
-    value:
-      - flails
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
-  weaponSubtype: 2h
+    normal:
+      value: ''
+  price: 25
   properties:
     dis: true
-    trp: true
     fin: true
+    trp: true
   source:
     id: PZO1123
     pages: '21'
-_key: '!items!u6Hv3AYMgkAtR7Jm'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - flails
+  weaponSubtype: 2h
+  weight:
+    value: 10
+type: weapon
 

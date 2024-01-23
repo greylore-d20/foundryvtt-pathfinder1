@@ -1,8 +1,33 @@
 _id: 6lxbConWWOonAsoD
-name: Cobra Breath (UC)
-type: feat
+_key: '!items!6lxbConWWOonAsoD'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Cobra Breath (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: gel9n9ni7ysekjky
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>Whenever a monk with this ki power uses diamond body to neutralize a
@@ -13,32 +38,7 @@ system:
 
       <p>A monk must be at least 12th level and must possess the diamond body ki
       power before selecting this ki power.</p>
-  actions:
-    - _id: gel9n9ni7ysekjky
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: rsak
-      ability:
-        attack: dex
-  tag: classFeat_cobraBreathUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!6lxbConWWOonAsoD'
+  tag: classFeat_cobraBreathUc
+type: feat
 

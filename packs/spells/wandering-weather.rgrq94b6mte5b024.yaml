@@ -1,42 +1,42 @@
 _id: rgrq94b6mte5b024
-name: Wandering Weather
-type: spell
+_key: '!items!rgrq94b6mte5b024'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wandering Weather
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>control weather</i> except you can opt for
-      the weather to remain centered on you as you move.</p>
   actions:
     - _id: vsuetemd8ugxalvf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
         unchained:
           cost: 10
           type: minute
+      area: 2-mile-radius circle, centered on you; see text
       duration:
         value: 4d12 hours; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '2'
         units: mi
-      area: 2-mile-radius circle, centered on you; see text
+        value: '2'
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>control weather</i> except you can opt for
+      the weather to remain centered on you as you move.</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
-      oracle: 8
       druid: 8
-      witch: 8
+      oracle: 8
       shaman: 8
+      sorcerer: 8
+      witch: 8
+      wizard: 8
   level: 8
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!rgrq94b6mte5b024'
+type: spell
 

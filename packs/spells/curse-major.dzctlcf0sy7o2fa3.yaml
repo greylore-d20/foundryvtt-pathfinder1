@@ -1,16 +1,11 @@
 _id: dzctlcf0sy7o2fa3
-name: Curse, Major
-type: spell
+_key: '!items!dzctlcf0sy7o2fa3'
 img: icons/magic/control/fear-fright-monster-grin-red-orange.webp
+name: Curse, Major
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>bestow curse</i>, except the DC to remove
-      the curse is equal to the save DC + 5.</p>
   actions:
     - _id: dknzidw7bhfc9k85
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,32 +13,37 @@ system:
           type: action
       duration:
         value: permanent
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>bestow curse</i>, except the DC to remove
+      the curse is equal to the save DC + 5.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 5
-      shaman: 5
-      psychic: 6
       mesmerist: 4
       occultist: 5
+      oracle: 5
+      psychic: 6
+      shaman: 5
+      sorcerer: 6
       spiritualist: 5
+      warpriest: 5
+      witch: 5
+      wizard: 6
   level: 6
   school: nec
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!dzctlcf0sy7o2fa3'
+type: spell
 

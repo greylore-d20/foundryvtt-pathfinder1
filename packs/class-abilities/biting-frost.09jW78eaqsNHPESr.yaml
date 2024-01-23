@@ -1,8 +1,40 @@
 _id: 09jW78eaqsNHPESr
-name: Biting Frost
-type: feat
+_key: '!items!09jW78eaqsNHPESr'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Biting Frost
 system:
+  abilityType: su
+  actions:
+    - _id: i3pwyq8pa3ypa296
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: round
+        value: '@classes.shaman.level'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude ends effect
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman turns the air frigid around a target within 30 feet for a
@@ -14,39 +46,7 @@ system:
 
       <p>Whether or not the initial save is successful, the creature cannot be
       the target of this hex again for 24 hours.</p>
-  actions:
-    - _id: i3pwyq8pa3ypa296
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.shaman.level'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: fort
-        description: Fortitude ends effect
-  tag: classFeat_bitingFrost
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!09jW78eaqsNHPESr'
+  tag: classFeat_bitingFrost
+type: feat
 

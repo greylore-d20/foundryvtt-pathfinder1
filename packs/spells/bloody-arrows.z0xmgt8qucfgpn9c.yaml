@@ -1,8 +1,28 @@
 _id: z0xmgt8qucfgpn9c
-name: Bloody Arrows
-type: spell
+_key: '!items!z0xmgt8qucfgpn9c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bloody Arrows
 system:
+  actions:
+    - _id: lp8y7h1wlexsgvgu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        harmless: true
+      target:
+        value: one willing creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Whenever this spell's target hits a creature with a ranged weapon that
@@ -11,39 +31,19 @@ system:
       by the subject of this spell is cumulative up to an amount equal to 1/2
       your caster level (to a maximum of 5 points of bleed damage at 10th
       level).</p>
-  actions:
-    - _id: lp8y7h1wlexsgvgu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one willing creature
-      range:
-        units: close
-      save:
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      ranger: 3
-      witch: 4
-      inquisitor: 3
       antipaladin: 3
-      magus: 3
-      shaman: 4
       hunter: 3
+      inquisitor: 3
+      magus: 3
+      ranger: 3
+      shaman: 4
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!z0xmgt8qucfgpn9c'
+type: spell
 

@@ -1,8 +1,24 @@
 _id: VKjlYyKkb0WE14v6
-name: Elemental Allies
-type: feat
+_key: '!items!VKjlYyKkb0WE14v6'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Elemental Allies
 system:
+  abilityType: su
+  actions:
+    - _id: i68wu8q5g26ijk4m
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      target:
+        value: creature summoned
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>The beings tied to the fundamental elements can hear your calls plainly
@@ -11,31 +27,15 @@ system:
       spell as a standard action instead of a casting time of 1 round.</p><p>You
       can use this ability a number of times per day equal to your oracle
       level.</p><p>You must be at least 7th level to select this revelation.</p>
-  tags:
-    - Elemental Mystery
-  actions:
-    - _id: i68wu8q5g26ijk4m
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: creature summoned
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_elementalAllies
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9483
     pages: '28'
-_key: '!items!VKjlYyKkb0WE14v6'
+  subType: classFeat
+  tag: classFeat_elementalAllies
+  tags:
+    - Elemental Mystery
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

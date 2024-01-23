@@ -1,18 +1,11 @@
 _id: jg3p4t3dv1a7nqvo
-name: Spell Immunity, Greater
-type: spell
+_key: '!items!jg3p4t3dv1a7nqvo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Immunity, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>spell immunity</i>, except the immunity
-      applies to spells of 8th level or lower. A creature can have only one
-      <i>spell immunity</i> or <i>greater spell immunity</i> spell in effect on
-      it at a time.</p>
   actions:
     - _id: 66wvqct22l4ukx17
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,15 +13,26 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>spell immunity</i>, except the immunity
+      applies to spells of 8th level or lower. A creature can have only one
+      <i>spell immunity</i> or <i>greater spell immunity</i> spell in effect on
+      it at a time.</p>
   learnedAt:
     class:
       cleric: 8
@@ -36,12 +40,8 @@ system:
       psychic: 8
   level: 8
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '347'
-_key: '!items!jg3p4t3dv1a7nqvo'
+type: spell
 

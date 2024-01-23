@@ -1,8 +1,40 @@
 _id: 0NPPWtbVko8XeYXU
-name: Healing Burst
-type: feat
+_key: '!items!0NPPWtbVko8XeYXU'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Healing Burst
 system:
+  abilityType: sp
+  actions:
+    - _id: 8hf7r594qvvdol5y
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: >-
+              floor(((ceil(@classes.kineticist.level / 2))d6 +
+              floor(@abilities.con.mod / 2) +
+              min(@resources.classFeat_burn.value,
+              floor(@classes.kineticist.level / 3) ) * 2) / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: creatures in range
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether, void, water, wood; <b>Type</b> utility (Sp);
@@ -17,39 +49,7 @@ system:
       kinetic healer for the purpose of the kinetic chirurgeon archetype (the
       17th-level metahealer ability heals the kinetic chirurgeon twice—once for
       half and once for full).</p>
-  actions:
-    - _id: 8hf7r594qvvdol5y
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creatures in range
-      range:
-        value: '30'
-        units: ft
-      actionType: heal
-      damage:
-        parts:
-          - formula: >-
-              floor(((ceil(@classes.kineticist.level / 2))d6 +
-              floor(@abilities.con.mod / 2) +
-              min(@resources.classFeat_burn.value,
-              floor(@classes.kineticist.level / 3) ) * 2) / 2)
-            type:
-              values:
-                - untyped
-              custom: ''
-  tag: classFeat_healingBurst
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!0NPPWtbVko8XeYXU'
+  tag: classFeat_healingBurst
+type: feat
 

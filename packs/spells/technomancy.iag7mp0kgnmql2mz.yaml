@@ -1,8 +1,28 @@
 _id: iag7mp0kgnmql2mz
-name: Technomancy
-type: spell
+_key: '!items!iag7mp0kgnmql2mz'
 img: icons/commodities/tech/blueprint.webp
+name: Technomancy
 system:
+  actions:
+    - _id: josrys9awaatg19h
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 3 rounds/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      target:
+        value: cone-shaped emanation
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>detect magic</i>, except it detects the
@@ -11,34 +31,14 @@ system:
       (engineering) checks to identify the properties of technological items in
       your possession. If you already possess this feat, you gain a +10 bonus on
       Knowledge (engineering) checks to identify item properties.</p>
-  actions:
-    - _id: josrys9awaatg19h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 rounds/level
-      target:
-        value: cone-shaped emanation
-      range:
-        value: '60'
-        units: ft
   learnedAt:
     class:
+      bard: 1
       sorcerer: 1
       wizard: 1
-      bard: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: oil stirred with a coil of wires
+  school: div
   sr: false
-_key: '!items!iag7mp0kgnmql2mz'
+type: spell
 

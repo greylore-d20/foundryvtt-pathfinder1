@@ -1,8 +1,33 @@
 _id: qpy604flzqos7w9z
-name: Freedom's Toast
-type: spell
+_key: '!items!qpy604flzqos7w9z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Freedom's Toast
 system:
+  actions:
+    - _id: yk23fb63tli9oujr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When the caster hoists a flagon and delivers a toast to freedom, the
@@ -17,44 +42,19 @@ system:
       target with a successful caster level check against a DC based on the
       restraints' caster level (DC = 11 + the restraining magic item's or
       spell's caster level).</p>
-  actions:
-    - _id: yk23fb63tli9oujr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 5
+      cleric: 5
       inquisitor: 5
+      oracle: 5
+      sorcerer: 4
+      warpriest: 5
+      wizard: 4
   level: 4
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a small amount of ale in a flagon
-_key: '!items!qpy604flzqos7w9z'
+  school: con
+  subschool: teleportation
+type: spell
 

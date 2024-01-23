@@ -1,17 +1,11 @@
 _id: m2r6cfdd7ab137xo
-name: Lend Judgment, Greater
-type: spell
+_key: '!items!m2r6cfdd7ab137xo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lend Judgment, Greater
 system:
-  description:
-    value: >-
-      <p>This functions as @Compendium[pf1.spells.kofz5oklwt5y8v6s]{Lend
-      Judgment}, except the ally gains the benefit of all your active
-      judgments.</p>
   actions:
     - _id: 1x2wn5k7k72skfbu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,22 +13,28 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one ally
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one ally
+  components:
+    divineFocus: 1
+    verbal: true
+  description:
+    value: >-
+      <p>This functions as @Compendium[pf1.spells.kofz5oklwt5y8v6s]{Lend
+      Judgment}, except the ally gains the benefit of all your active
+      judgments.</p>
   learnedAt:
     class:
       inquisitor: 5
   level: 5
   school: div
-  components:
-    verbal: true
-    divineFocus: 1
-_key: '!items!m2r6cfdd7ab137xo'
+type: spell
 

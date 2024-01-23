@@ -1,8 +1,26 @@
 _id: 2ew7fowmibtk5jbi
-name: Force Hook Charge
-type: spell
+_key: '!items!2ew7fowmibtk5jbi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Force Hook Charge
 system:
+  actions:
+    - _id: b879pyxm3kdb4948
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature or object within range and you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a hook of force that strikes the target and drags you to a
@@ -26,31 +44,13 @@ system:
       you begin to fall.</p><p>If you use this spell with your spell combat
       class ability, you can make your melee attack from your starting position
       or your ending position.</p>
-  actions:
-    - _id: b879pyxm3kdb4948
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature or object within range and you
-      range:
-        units: close
   learnedAt:
     class:
-      magus: 3
       bloodrager: 3
+      magus: 3
       psychic: 4
   level: 3
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!2ew7fowmibtk5jbi'
+type: spell
 

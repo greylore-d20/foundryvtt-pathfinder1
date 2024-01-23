@@ -1,8 +1,26 @@
 _id: ej87t487r59demgy
-name: Call Animal
-type: spell
+_key: '!items!ej87t487r59demgy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Call Animal
 system:
+  actions:
+    - _id: 0n4ou19oufsr0rjl
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      spellEffect: one animal whose CR is equal or less than your caster level
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell calls the nearest wild animal of a particular type you
@@ -25,33 +43,15 @@ system:
       especially if it is hungry or provoked.</p><p>Domesticated animals or
       animals trained by someone else, including such creatures as familiars or
       animal companions, are unaffected by <i>call animals</i>.</p>
-  actions:
-    - _id: 0n4ou19oufsr0rjl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: seeText
-      spellEffect: one animal whose CR is equal or less than your caster level
   learnedAt:
     class:
       druid: 1
-      ranger: 1
-      mesmerist: 1
       hunter: 1
+      mesmerist: 1
+      ranger: 1
   school: enc
+  sr: false
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_key: '!items!ej87t487r59demgy'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: uv3bvuerhe0furhu
-name: Hollow Heroism
-type: spell
+_key: '!items!uv3bvuerhe0furhu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hollow Heroism
 system:
+  actions:
+    - _id: qkjvv9qddz9m0yyx
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as
@@ -14,45 +37,22 @@ system:
       ends (no save). Attempts to identify hollow <em>heroism</em> with a skill
       check incorrectly identify it as <em>heroism</em> (see the ruse descriptor
       on page 192).</p>
-  actions:
-    - _id: qkjvv9qddz9m0yyx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
-      summoner: 4
-      witch: 4
-      inquisitor: 4
       bloodrager: 4
-      psychic: 4
+      inquisitor: 4
       medium: 3
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: enc
   subschool: compulsion
   types: mind-affecting, ruse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!uv3bvuerhe0furhu'
+type: spell
 

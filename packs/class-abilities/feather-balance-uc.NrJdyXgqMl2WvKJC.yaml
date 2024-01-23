@@ -1,8 +1,27 @@
 _id: NrJdyXgqMl2WvKJC
-name: Feather Balance (UC)
-type: feat
+_key: '!items!NrJdyXgqMl2WvKJC'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Feather Balance (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: xbw1ixa41dhuxzsf
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 1 ki point as a swift action to
@@ -10,26 +29,7 @@ system:
       Acrobatics attempt made to balance as if he had rolled a 20.</p>
 
       <p>This ability lasts for 1 minute.</p>
-  actions:
-    - _id: xbw1ixa41dhuxzsf
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_featherBalanceUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!NrJdyXgqMl2WvKJC'
+  tag: classFeat_featherBalanceUc
+type: feat
 

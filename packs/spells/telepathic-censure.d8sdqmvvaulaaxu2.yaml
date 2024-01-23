@@ -1,8 +1,29 @@
 _id: d8sdqmvvaulaaxu2
-name: Telepathic Censure
-type: spell
+_key: '!items!d8sdqmvvaulaaxu2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Telepathic Censure
 system:
+  actions:
+    - _id: 5vj3i9dktjh245k4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature (see text)
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell creates an invisible psychic interference that inhibits
@@ -17,32 +38,11 @@ system:
       <i>helm of telepathy</i>, but not attacks and effects unrelated to
       communication like <i>detect thoughts</i> or a neothelid's psychic
       crush.</p>
-  actions:
-    - _id: 5vj3i9dktjh245k4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one creature (see text)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 2
       inquisitor: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-_key: '!items!d8sdqmvvaulaaxu2'
+type: spell
 

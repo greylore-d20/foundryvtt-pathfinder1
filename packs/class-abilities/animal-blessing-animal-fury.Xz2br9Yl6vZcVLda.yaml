@@ -1,8 +1,27 @@
 _id: Xz2br9Yl6vZcVLda
-name: 'Animal Blessing: Animal Fury'
-type: feat
+_key: '!items!Xz2br9Yl6vZcVLda'
 img: systems/pf1/icons/spells/wild-jade-2.jpg
+name: 'Animal Blessing: Animal Fury'
 system:
+  actions:
+    - _id: y9u17kq9tis7agh4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/wild-jade-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creatuer touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch one ally and grant it feral features. The
@@ -11,26 +30,7 @@ system:
       damage if the ally is Medium or 1d6 if it’s Small. These are primary
       natural attacks that replace any similar primary natural attacks the ally
       might have. This effect lasts for 1 minute.</p>
-  actions:
-    - _id: y9u17kq9tis7agh4
-      name: Use
-      img: systems/pf1/icons/spells/wild-jade-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creatuer touched
-      range:
-        units: touch
-  tag: classFeat_animalBlessingAnimalFury
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!Xz2br9Yl6vZcVLda'
+  tag: classFeat_animalBlessingAnimalFury
+type: feat
 

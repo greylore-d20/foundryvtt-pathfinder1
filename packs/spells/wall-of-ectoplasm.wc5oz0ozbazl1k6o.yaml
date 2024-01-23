@@ -1,8 +1,32 @@
 _id: wc5oz0ozbazl1k6o
-name: Wall of Ectoplasm
-type: spell
+_key: '!items!wc5oz0ozbazl1k6o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wall of Ectoplasm
 system:
+  actions:
+    - _id: 7km2968bmehlwnjk
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none, and Will negates; see text
+        type: will
+      spellEffect: >-
+        opaque sheet of ectoplasm up to 10 ft. square/level or a sphere or
+        hemisphere with a radius of up to 1 ft./level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You draw forth a massive veil of ectoplasm that roils with restless
@@ -30,44 +54,20 @@ system:
       can also take the form of a sphere or hemisphere whose maximum radius is 1
       foot per caster level, and that is as hard to break through as the
       ectoplasmic plane form.</p>
-  actions:
-    - _id: 7km2968bmehlwnjk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: none, and Will negates; see text
-      spellEffect: >-
-        opaque sheet of ectoplasm up to 10 ft. square/level or a sphere or
-        hemisphere with a radius of up to 1 ft./level
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      psychic: 5
-      spiritualist: 5
     bloodline:
       Ectoplasm: 5
+    class:
+      cleric: 5
+      oracle: 5
+      psychic: 5
+      sorcerer: 5
+      spiritualist: 5
+      warpriest: 5
+      wizard: 5
   level: 5
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: small bit of gauze
-_key: '!items!wc5oz0ozbazl1k6o'
+  school: evo
+type: spell
 

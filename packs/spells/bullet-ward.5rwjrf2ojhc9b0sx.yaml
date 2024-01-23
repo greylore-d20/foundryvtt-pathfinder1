@@ -1,8 +1,27 @@
 _id: 5rwjrf2ojhc9b0sx
-name: Bullet Ward
-type: spell
+_key: '!items!5rwjrf2ojhc9b0sx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bullet Ward
 system:
+  actions:
+    - _id: g5xejkz1kjkzowky
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You toss several adamantine bullets into the air, which then hover
@@ -15,41 +34,22 @@ system:
       is discharged when all affected adamantine bullets are destroyed or taken
       from you. Each adamantine bullet has AC 24, 20 hit points, and hardness
       20.</p>
-  actions:
-    - _id: g5xejkz1kjkzowky
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      ranger: 2
-      bard: 2
-      paladin: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 2
-      psychic: 2
+      bard: 2
       hunter: 2
+      inquisitor: 2
+      paladin: 2
+      psychic: 2
+      ranger: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: one to four adamantine bullets, each worth 61 gp
+  school: abj
   sr: false
-_key: '!items!5rwjrf2ojhc9b0sx'
+type: spell
 

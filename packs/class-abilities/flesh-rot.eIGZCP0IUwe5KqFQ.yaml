@@ -1,8 +1,39 @@
 _id: eIGZCP0IUwe5KqFQ
-name: Flesh Rot
-type: feat
+_key: '!items!eIGZCP0IUwe5KqFQ'
 img: systems/pf1/icons/skills/affliction_08.jpg
+name: Flesh Rot
 system:
+  abilityType: sp
+  actions:
+    - _id: 4ghvfck8cmnmx8xg
+      ability:
+        attack: dex
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: >-
+              (1 + floor((@classes.occultist.level - 3) / 4))d8 +
+              @classes.occultist.level
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/affliction_08.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can make a melee touch attack and expend 1
@@ -16,38 +47,7 @@ system:
       effect.</p>
 
       <p>You must be at least 3rd level to select this focus power.</p>
-  actions:
-    - _id: 4ghvfck8cmnmx8xg
-      name: Use
-      img: systems/pf1/icons/skills/affliction_08.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: >-
-              (1 + floor((@classes.occultist.level - 3) / 4))d8 +
-              @classes.occultist.level
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: dex
-  tag: classFeat_fleshRot
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!eIGZCP0IUwe5KqFQ'
+  tag: classFeat_fleshRot
+type: feat
 

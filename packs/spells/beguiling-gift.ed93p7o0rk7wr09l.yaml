@@ -1,8 +1,32 @@
 _id: ed93p7o0rk7wr09l
-name: Beguiling Gift
-type: spell
+_key: '!items!ed93p7o0rk7wr09l'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Beguiling Gift
 system:
+  actions:
+    - _id: 4cwnedahz5e8z9w7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '5'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You offer an object to an adjacent creature, and entice it into using
@@ -15,40 +39,16 @@ system:
       spell fails. The subject is under no obligation to continue consuming or
       using the item once the spell's duration has expired, although it may find
       a cursed item difficult to be rid of.</p>
-  actions:
-    - _id: 4cwnedahz5e8z9w7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: one creature
-      range:
-        value: '5'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 1
-      witch: 1
-      psychic: 1
       mesmerist: 1
+      psychic: 1
+      witch: 1
+  materials:
+    focus: the object to be offered
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-  materials:
-    focus: the object to be offered
-_key: '!items!ed93p7o0rk7wr09l'
+type: spell
 

@@ -1,8 +1,20 @@
 _id: jR8RFYhHsjRzzmB0
-name: Song of Marching
-type: feat
+_key: '!items!jR8RFYhHsjRzzmB0'
 img: systems/pf1/icons/skills/yellow_08.jpg
+name: Song of Marching
 system:
+  abilityType: su
+  actions:
+    - _id: u8jso75by6k6dx9g
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      img: systems/pf1/icons/skills/yellow_08.jpg
+      name: Use
+  associations:
+    classes:
+      - Skald
   description:
     value: >-
       <p>At 3rd level, a skald can use raging song to inspire his allies to move
@@ -14,19 +26,7 @@ system:
       <p>The skald must continue to perform the song for the remainder of the
       hour, otherwise its effects end, but only 1 round of raging song is
       expended for that hour.</p>
-  actions:
-    - _id: u8jso75by6k6dx9g
-      name: Use
-      img: systems/pf1/icons/skills/yellow_08.jpg
-      activation:
-        type: hour
-        unchained:
-          type: hour
-  tag: classFeat_songOfMarching
   subType: classFeat
-  associations:
-    classes:
-      - Skald
-  abilityType: su
-_key: '!items!jR8RFYhHsjRzzmB0'
+  tag: classFeat_songOfMarching
+type: feat
 

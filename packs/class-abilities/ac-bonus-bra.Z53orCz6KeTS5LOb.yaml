@@ -1,8 +1,33 @@
 _id: Z53orCz6KeTS5LOb
-name: AC Bonus (BRA)
-type: feat
+_key: '!items!Z53orCz6KeTS5LOb'
 img: systems/pf1/icons/feats/dodge.jpg
+name: AC Bonus (BRA)
 system:
+  abilityType: ex
+  actions:
+    - _id: gjhchr660b8hm20w
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/feats/dodge.jpg
+      name: Use
+  associations:
+    classes:
+      - Brawler
+  changes:
+    - _id: ipjt76kz
+      formula: >-
+        (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
+        clamped(floor((@classes.brawler.level - 1) / 4), 0, 4)
+      modifier: dodge
+      subTarget: ac
+    - _id: tvl84rm2
+      formula: >-
+        (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
+        clamped(floor((@classes.brawler.level - 1) / 4), 0, 4)
+      modifier: dodge
+      subTarget: cmd
   description:
     value: >-
       <p>At 4th level, when a brawler wears light or no armor, she gains a +1
@@ -10,32 +35,7 @@ system:
       18th levels.<p>These bonuses to AC apply against touch attacks. She loses
       these bonuses while immobilized or helpless, wearing medium or heavy
       armor, or carrying a medium or heavy load.</p>
-  actions:
-    - _id: gjhchr660b8hm20w
-      name: Use
-      img: systems/pf1/icons/feats/dodge.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: ipjt76kz
-      formula: >-
-        (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
-        clamped(floor((@classes.brawler.level - 1) / 4), 0, 4)
-      subTarget: ac
-      modifier: dodge
-    - _id: tvl84rm2
-      formula: >-
-        (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
-        clamped(floor((@classes.brawler.level - 1) / 4), 0, 4)
-      subTarget: cmd
-      modifier: dodge
-  tag: classFeat_acBonusBra
   subType: classFeat
-  associations:
-    classes:
-      - Brawler
-  abilityType: ex
-_key: '!items!Z53orCz6KeTS5LOb'
+  tag: classFeat_acBonusBra
+type: feat
 

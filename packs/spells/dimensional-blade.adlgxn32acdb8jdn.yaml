@@ -1,8 +1,25 @@
 _id: adlgxn32acdb8jdn
-name: Dimensional Blade
-type: spell
+_key: '!items!adlgxn32acdb8jdn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dimensional Blade
 system:
+  actions:
+    - _id: lkwn54x4yvgfbqrq
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell gives you the power to turn one melee weapon in your hand
@@ -16,37 +33,20 @@ system:
       make attacks with this spell deal half damage and are treated as slashing
       weapons. If the weapon leaves your hand before the end of the spell, the
       effect ends.</p>
-  actions:
-    - _id: lkwn54x4yvgfbqrq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
+      antipaladin: 4
+      bloodrager: 4
       cleric: 6
-      warpriest: 6
+      inquisitor: 5
+      magus: 5
       oracle: 6
       paladin: 4
-      inquisitor: 5
-      antipaladin: 4
-      magus: 5
-      bloodrager: 4
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!adlgxn32acdb8jdn'
+type: spell
 

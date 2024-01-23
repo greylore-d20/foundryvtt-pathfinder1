@@ -1,8 +1,24 @@
 _id: FHaDsiXYuUKP7ZrL
-name: Shadow Projection
-type: feat
+_key: '!items!FHaDsiXYuUKP7ZrL'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Shadow Projection
 system:
+  abilityType: su
+  actions:
+    - _id: chknc1o5ce6g7hdp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You infuse your life force and psyche into your shadow, causing it to
@@ -20,26 +36,10 @@ system:
       heals your shadow for an equal amount.</p>
 
       <p>You must be at least 7th level to choose this revelation.</p>
-  actions:
-    - _id: chknc1o5ce6g7hdp
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-  uses:
-    per: day
-    maxFormula: floor(@classes.oracle.level / 2)
-  tag: classFeat_shadowProjection
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!FHaDsiXYuUKP7ZrL'
+  tag: classFeat_shadowProjection
+  uses:
+    maxFormula: floor(@classes.oracle.level / 2)
+    per: day
+type: feat
 

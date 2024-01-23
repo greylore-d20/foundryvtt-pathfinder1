@@ -1,34 +1,34 @@
 _id: Cxu9FSuqw0DJB8I4
-name: First-World Face Thief
-type: feat
+_key: '!items!Cxu9FSuqw0DJB8I4'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: First-World Face Thief
 system:
-  description:
-    value: >-
-      <p>The arcanist can expend 1 point from her arcane reservoir to assume an
-      illusory disguise as @Compendium[pf1.spells.oj36nfak6jc2s5ky]{Disguise
-      Self}. If she expends 2 points from her arcane reservoir instead of 1, the
-      duration of the effect increases to 10 minutes per level.</p>
-  tags:
-    - Arcanist Exploit
+  abilityType: su
   actions:
     - _id: p9r1e5pjw7on4cb7
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '@classes.arcanist.level'
         units: minute
-      target:
-        value: self
+        value: '@classes.arcanist.level'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
       range:
         units: personal
-  tag: classFeat_firstworldFaceThief
+      target:
+        value: self
+  description:
+    value: >-
+      <p>The arcanist can expend 1 point from her arcane reservoir to assume an
+      illusory disguise as @Compendium[pf1.spells.oj36nfak6jc2s5ky]{Disguise
+      Self}. If she expends 2 points from her arcane reservoir instead of 1, the
+      duration of the effect increases to 10 minutes per level.</p>
   subType: classFeat
-  abilityType: su
-_key: '!items!Cxu9FSuqw0DJB8I4'
+  tag: classFeat_firstworldFaceThief
+  tags:
+    - Arcanist Exploit
+type: feat
 

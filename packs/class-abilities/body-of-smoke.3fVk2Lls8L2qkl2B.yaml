@@ -1,7 +1,23 @@
-name: Body of Smoke
-type: feat
+_id: 3fVk2Lls8L2qkl2B
+_key: '!items!3fVk2Lls8L2qkl2B'
 img: icons/magic/air/air-smoke-casting.webp
+name: Body of Smoke
 system:
+  abilityType: su
+  actions:
+    - _id: Oq02dmTmkQgrgPYN
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: icons/magic/air/air-smoke-casting.webp
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can assume a
@@ -9,30 +25,14 @@ system:
       spell of that name) as a swift action for a number of minutes per day
       equal to your wizard level. This duration does not need to be consecutive,
       but it must be used in 1-minute increments.</p>
-  tags:
-    - Smoke School
-  actions:
-    - _id: Oq02dmTmkQgrgPYN
-      name: Use
-      img: icons/magic/air/air-smoke-casting.webp
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-  uses:
-    per: day
-    maxFormula: '@classes.wizard.level'
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9483
     pages: '21'
-_id: 3fVk2Lls8L2qkl2B
-_key: '!items!3fVk2Lls8L2qkl2B'
+  subType: classFeat
+  tags:
+    - Smoke School
+  uses:
+    maxFormula: '@classes.wizard.level'
+    per: day
+type: feat
 

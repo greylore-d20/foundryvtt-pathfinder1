@@ -1,8 +1,25 @@
 _id: xfks1h6x8ds8vdtn
-name: Batrachian Surge
-type: spell
+_key: '!items!xfks1h6x8ds8vdtn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Batrachian Surge
 system:
+  actions:
+    - _id: lzgo679zl595tg8q
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round + 1 round/3 levels (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You tap into your latent amphibian strengths, unlocking a short-lived
@@ -20,32 +37,15 @@ system:
       extends to the length of your body. Increase your reach by 5 feet when
       delivering touch spells. This increased reach doesn't stack with any other
       spells or abilities that affect your reach.</p>
-  actions:
-    - _id: lzgo679zl595tg8q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round + 1 round/3 levels (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      bloodrager: 1
       druid: 1
+      hunter: 1
+      inquisitor: 1
       ranger: 1
       summoner: 1
-      inquisitor: 1
-      bloodrager: 1
-      hunter: 1
       summonerUnchained: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!xfks1h6x8ds8vdtn'
+type: spell
 

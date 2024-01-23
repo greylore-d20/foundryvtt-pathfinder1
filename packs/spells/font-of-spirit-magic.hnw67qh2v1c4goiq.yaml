@@ -1,8 +1,35 @@
 _id: hnw67qh2v1c4goiq
-name: Font of Spirit Magic
-type: spell
+_key: '!items!hnw67qh2v1c4goiq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Font of Spirit Magic
 system:
+  actions:
+    - _id: v0cl88mlmiyehqs1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft.-radius emanation centered on you
+      duration:
+        value: concentration + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You amplify the effect of magic associated with your spirit and your
@@ -12,44 +39,17 @@ system:
       spell DCs. This bonus is a sacred bonus if you are good-aligned or a
       profane bonus if you are evil-aligned; if you are neither good nor evil,
       you can choose what type of bonus the spell grants when you cast it.</p>
-  actions:
-    - _id: v0cl88mlmiyehqs1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: 30-ft.-radius emanation centered on you
   learnedAt:
     class:
       shaman: 3
   level: 3
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: gold dust worth 50 gp
     gpValue: 50
+    value: gold dust worth 50 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!hnw67qh2v1c4goiq'
+  subschool: creation
+type: spell
 

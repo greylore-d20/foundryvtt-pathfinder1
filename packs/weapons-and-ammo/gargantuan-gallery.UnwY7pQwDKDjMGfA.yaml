@@ -1,8 +1,33 @@
 _id: UnwY7pQwDKDjMGfA
-name: Gargantuan Gallery
-type: weapon
+_key: '!items!UnwY7pQwDKDjMGfA'
 img: icons/sundries/misc/bird-house.webp
+name: Gargantuan Gallery
 system:
+  actions:
+    - _id: a1v5j8w7yen572i8
+      ability:
+        attack: str
+        critRange: null
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/sundries/misc/bird-house.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Gallery
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> -; <b>Critical</b> -; <b>Range</b> -;
@@ -28,40 +53,15 @@ system:
       points based on their size. A Large gallery has 30 hit points, a Huge one
       has 120 hit points, a Gargantuan one has 320 hit points, and a colossal
       one has 625 hit points.</p>
-  price: 1000
+  hardness: 5
   hp:
     max: 320
     value: 320
-  hardness: 5
-  actions:
-    - _id: a1v5j8w7yen572i8
-      name: Attack
-      img: icons/sundries/misc/bird-house.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: null
-  baseTypes:
-    - Gallery
-  subType: misc
-  weaponSubtype: other
+  price: 1000
   source:
     id: PZO1118
     pages: '166'
-_key: '!items!UnwY7pQwDKDjMGfA'
+  subType: misc
+  weaponSubtype: other
+type: weapon
 

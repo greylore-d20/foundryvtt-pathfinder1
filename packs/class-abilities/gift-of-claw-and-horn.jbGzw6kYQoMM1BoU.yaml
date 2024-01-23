@@ -1,8 +1,27 @@
 _id: jbGzw6kYQoMM1BoU
-name: Gift of Claw and Horn
-type: feat
+_key: '!items!jbGzw6kYQoMM1BoU'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Gift of Claw and Horn
 system:
+  abilityType: su
+  actions:
+    - _id: d039nois1ryg2vec
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.oracle.level / 2))
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you gain a natural weapon. The natural weapon lasts
@@ -15,29 +34,10 @@ system:
 
       <p>At 11th level, you gain two natural weapons at a time. You can use this
       ability a number of times per day equal to 3 + your Charisma modifier.</p>
-  actions:
-    - _id: d039nois1ryg2vec
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: max(1, floor(@classes.oracle.level / 2))
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_giftOfClawAndHorn
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!jbGzw6kYQoMM1BoU'
+  tag: classFeat_giftOfClawAndHorn
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

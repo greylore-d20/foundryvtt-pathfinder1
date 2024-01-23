@@ -1,103 +1,103 @@
 _id: bTmiY6Bkj2kSPUKV
-name: Dwarven Sphinx Hammer
-type: weapon
+_key: '!items!bTmiY6Bkj2kSPUKV'
 img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
+name: Dwarven Sphinx Hammer
 system:
+  actions:
+    - _id: m50ds28lnooa637f
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
+      name: Melee
+      range:
+        units: melee
+        value: '20'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: gPJm6BQCjG4UP2yQ
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Dwarven Sphinx Hammer
   description:
     value: >-
       <p>The dwarven sphinx hammer is a long-handled hammer with a striking head
       that is artfully designed to look like a ram-headed criosphinx. Most
       commonly found among the Pahmet, the dwarven sphinx hammer is balanced for
       use as both a melee weapon and a thrown weapon.</p>
+  hardness: 10
+  held: 2h
+  material:
+    addon:
+      - null
+      - null
+    normal:
+      value: ''
+  price: 45
+  source:
+    id: PZO9491
+    pages: '8'
+  subType: exotic
   tags:
     - Dwarven
-  weight:
-    value: 8
-  price: 45
-  hardness: 10
-  actions:
-    - _id: m50ds28lnooa637f
-      name: Melee
-      img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
-      ammoType: none
-    - _id: gPJm6BQCjG4UP2yQ
-      name: Throw
-      img: systems/pf1/icons/items/weapons/dwarven-sphinx-hammer.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        damageMult: 1.5
-        critMult: 3
-      ammoType: none
   uses:
     per: single
-  held: 2h
-  baseTypes:
-    - Dwarven Sphinx Hammer
   weaponGroups:
     value:
       - hammers
       - thrown
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-      - null
-  subType: exotic
   weaponSubtype: 2h
-  source:
-    id: PZO9491
-    pages: '8'
-_key: '!items!bTmiY6Bkj2kSPUKV'
+  weight:
+    value: 8
+type: weapon
 

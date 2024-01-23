@@ -1,8 +1,32 @@
 _id: ucc0a31d1y86oleh
-name: Mage Armor
-type: spell
+_key: '!items!ucc0a31d1y86oleh'
 img: icons/magic/defensive/shield-barrier-flaming-diamond-blue.webp
+name: Mage Armor
 system:
+  actions:
+    - _id: kgk7n92g1rhhzlu2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An invisible but tangible field of force surrounds the subject of a
@@ -11,51 +35,27 @@ system:
       spell failure chance, or speed reduction. Since <i>mage armor</i> is made
       of force, incorporeal creatures can't bypass it the way they do normal
       armor.</p>
-  actions:
-    - _id: kgk7n92g1rhhzlu2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
-    class:
-      sorcerer: 1
-      wizard: 1
-      summoner: 1
-      witch: 1
-      bloodrager: 1
-      psychic: 1
-      occultist: 1
-      spiritualist: 1
-      summonerUnchained: 1
     bloodline:
       Draconic: 1
-  school: con
-  subschool: creation
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+    class:
+      bloodrager: 1
+      occultist: 1
+      psychic: 1
+      sorcerer: 1
+      spiritualist: 1
+      summoner: 1
+      summonerUnchained: 1
+      witch: 1
+      wizard: 1
   materials:
     focus: a piece of cured leather
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '306'
-_key: '!items!ucc0a31d1y86oleh'
+  sr: false
+  subschool: creation
+  types: force
+type: spell
 

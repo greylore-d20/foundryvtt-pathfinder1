@@ -1,8 +1,20 @@
 _id: nKbyztRQCU5XMbbs
-name: Inspiration
-type: feat
+_key: '!items!nKbyztRQCU5XMbbs'
 img: systems/pf1/icons/skills/emerald_11.jpg
+name: Inspiration
 system:
+  abilityType: ex
+  actions:
+    - _id: didgk77lyb52bgl9
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/emerald_11.jpg
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>An investigator is beyond knowledgeable and skilled—he also possesses
@@ -24,22 +36,10 @@ system:
       and saving throws, at the cost of expending two uses of inspiration each
       time from the investigator’s pool. In the case of saving throws, using
       inspiration is an immediate action rather than a free action.</p>
-  actions:
-    - _id: didgk77lyb52bgl9
-      name: Use
-      img: systems/pf1/icons/skills/emerald_11.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '@abilities.int.mod + floor(@classes.investigator.level / 2)'
-  tag: classFeat_inspiration
   subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!nKbyztRQCU5XMbbs'
+  tag: classFeat_inspiration
+  uses:
+    maxFormula: '@abilities.int.mod + floor(@classes.investigator.level / 2)'
+    per: day
+type: feat
 

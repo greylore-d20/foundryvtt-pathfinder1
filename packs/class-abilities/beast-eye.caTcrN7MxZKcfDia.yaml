@@ -1,8 +1,34 @@
 _id: caTcrN7MxZKcfDia
-name: Beast Eye
-type: feat
+_key: '!items!caTcrN7MxZKcfDia'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Beast Eye
 system:
+  abilityType: su
+  actions:
+    - _id: huhvrw7ff7wcav7o
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '100'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates; see text
+        type: will
+      target:
+        value: one animal
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can project her senses into an animal within 100 feet,
@@ -20,39 +46,13 @@ system:
       ability for a number of minutes per day equal to her level. These minutes
       need not be consecutive, but they must be spent in 1-minute
       increments.</p>
+  subType: classFeat
+  tag: classFeat_beastEye
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: huhvrw7ff7wcav7o
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: one animal
-      range:
-        value: '100'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates; see text
   uses:
-    per: day
     maxFormula: '@classes.witch.level'
-  tag: classFeat_beastEye
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!caTcrN7MxZKcfDia'
+    per: day
+type: feat
 

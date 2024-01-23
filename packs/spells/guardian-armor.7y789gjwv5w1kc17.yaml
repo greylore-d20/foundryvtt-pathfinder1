@@ -1,8 +1,26 @@
 _id: 7y789gjwv5w1kc17
-name: Guardian Armor
-type: spell
+_key: '!items!7y789gjwv5w1kc17'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Guardian Armor
 system:
+  actions:
+    - _id: 104omiaqrsstbo8i
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one willing creature; see below
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell teleports the suit of armor you are wearing off of your body
@@ -12,40 +30,22 @@ system:
       protection. If the target of <i>guardian armor</i> was already wearing
       armor, the armor wearing it is removed from the target's body and falls
       undamaged into an adjacent square.</p>
-  actions:
-    - _id: 104omiaqrsstbo8i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one willing creature; see below
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
+      antipaladin: 1
+      bloodrager: 1
       cleric: 1
-      warpriest: 1
+      inquisitor: 1
+      magus: 1
+      occultist: 1
       oracle: 1
       paladin: 1
-      inquisitor: 1
-      antipaladin: 1
-      magus: 1
-      bloodrager: 1
-      occultist: 1
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   materials:
     focus: armor worn
-_key: '!items!7y789gjwv5w1kc17'
+  school: con
+  subschool: teleportation
+type: spell
 

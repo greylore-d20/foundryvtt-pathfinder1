@@ -1,8 +1,30 @@
 _id: 5h7qpvgnqof7oku7
-name: Forcecage
-type: spell
+_key: '!items!5h7qpvgnqof7oku7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Forcecage
 system:
+  actions:
+    - _id: 2u7un8r7i3m4kxag
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: barred cage (20-ft. cube) or windowless cell (10-ft. cube)
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex negates
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates an immobile, invisible cubical prison composed of
@@ -30,41 +52,19 @@ system:
       breath weapons can pass through the gaps in the bars.</p><p><i>Windowless
       Cell</i>: This version of the spell produces a 10-foot cube with no way in
       and no way out. Solid walls of force form its six sides.</p>
-  actions:
-    - _id: 2u7un8r7i3m4kxag
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      area: barred cage (20-ft. cube) or windowless cell (10-ft. cube)
   learnedAt:
     class:
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
   level: 7
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: ruby dust worth 500 gp
     gpValue: 500
+    value: ruby dust worth 500 gp
   preparation:
     spontaneousPrepared: false
+  school: evo
   sr: false
-_key: '!items!5h7qpvgnqof7oku7'
+  types: force
+type: spell
 

@@ -1,8 +1,43 @@
 _id: OJQTYO08QXGm4EUa
-name: Manticore's Tail
-type: weapon
+_key: '!items!OJQTYO08QXGm4EUa'
 img: icons/weapons/artillery/ballista-wood-green.webp
+name: Manticore's Tail
 system:
+  actions:
+    - _id: 4zgyei6efexe8p5i
+      ability:
+        attack: dex
+        critRange: 19
+        damage: str
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      area: 60-foot cone
+      attackBonus: '-2'
+      damage:
+        parts:
+          - formula: sizeRoll(3, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      img: icons/weapons/artillery/ballista-wood-green.webp
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Attack
+      range:
+        units: ft
+        value: '60'
+      target:
+        value: all creatures and objects
+  baseTypes:
+    - Manticore's Tail
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> 3d8; <b>Critical</b> 19-20/x2;
@@ -17,50 +52,15 @@ system:
       mishap. A manticore's tail has a hardness of 5 and 100 hit points.
       Ammunition for one use of the manticore's tail costs 120 gp and weighs 120
       pounds.</p>
-  price: 1000
+  hardness: 5
   hp:
     max: 100
     value: 100
-  hardness: 5
-  actions:
-    - _id: 4zgyei6efexe8p5i
-      name: Attack
-      img: icons/weapons/artillery/ballista-wood-green.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      target:
-        value: all creatures and objects
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      actionType: rwak
-      attackBonus: '-2'
-      damage:
-        parts:
-          - formula: sizeRoll(3, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      ability:
-        attack: dex
-        damage: str
-        critRange: 19
-      ammoType: none
-      area: 60-foot cone
-  baseTypes:
-    - Manticore's Tail
-  subType: exotic
-  weaponSubtype: ranged
+  price: 1000
   source:
     id: PZO9276
     pages: '39'
-_key: '!items!OJQTYO08QXGm4EUa'
+  subType: exotic
+  weaponSubtype: ranged
+type: weapon
 

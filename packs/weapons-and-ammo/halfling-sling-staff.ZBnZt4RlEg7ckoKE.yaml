@@ -1,8 +1,41 @@
 _id: ZBnZt4RlEg7ckoKE
-name: Halfling Sling Staff
-type: weapon
+_key: '!items!ZBnZt4RlEg7ckoKE'
 img: systems/pf1/icons/items/weapons/sling-staff.png
+name: Halfling Sling Staff
 system:
+  actions:
+    - _id: b9hja4xi59mv7qo2
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: slingBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/sling-staff.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '80'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Halfling Sling Staff
   description:
     value: >-
       <p>Made from a specially designed sling attached to a short club, a
@@ -19,61 +52,28 @@ system:
       used as a simple weapon that deals bludgeoning damage equal to that of a
       club of its size. Halflings treat halfling sling staves as martial
       weapons.</p>
-  tags:
-    - PFS
-    - Halfling
-  weight:
-    value: 3
-  price: 20
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: b9hja4xi59mv7qo2
-      name: Throw
-      img: systems/pf1/icons/items/weapons/sling-staff.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '80'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critMult: 3
-      ammoType: slingBullet
-  baseTypes:
-    - Halfling Sling Staff
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 20
   source:
     id: PZO9452
     pages: '33'
-  ammo:
-    type: slingBullet
-_key: '!items!ZBnZt4RlEg7ckoKE'
+  subType: exotic
+  tags:
+    - PFS
+    - Halfling
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 3
+type: weapon
 

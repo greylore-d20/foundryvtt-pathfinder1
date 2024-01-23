@@ -1,8 +1,21 @@
 _id: XjdctYm8hBkALI2K
-name: Major Magic (ROG)
-type: feat
+_key: '!items!XjdctYm8hBkALI2K'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Major Magic (ROG)
 system:
+  abilityType: sp
+  actions:
+    - _id: zw7lj54mn0dame4w
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Ninja
   description:
     value: >-
       <p>A character with this talent gains the ability to cast a 1st-level
@@ -12,26 +25,13 @@ system:
       rogue must have an Intelligence of at least 11 to select this talent. A
       rogue must have the minor magic rogue talent before choosing this
       talent.</p>
+  subType: classFeat
+  tag: classFeat_majorMagicRog
   tags:
     - Rogue Talent
     - Ninja Trick
-  actions:
-    - _id: zw7lj54mn0dame4w
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: passive
-        unchained:
-          type: passive
   uses:
-    per: day
     maxFormula: '2'
-  tag: classFeat_majorMagicRog
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Ninja
-  abilityType: sp
-_key: '!items!XjdctYm8hBkALI2K'
+    per: day
+type: feat
 

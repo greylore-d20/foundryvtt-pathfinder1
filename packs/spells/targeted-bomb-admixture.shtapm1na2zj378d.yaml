@@ -1,8 +1,26 @@
 _id: shtapm1na2zj378d
-name: Targeted Bomb Admixture
-type: spell
+_key: '!items!shtapm1na2zj378d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Targeted Bomb Admixture
 system:
+  actions:
+    - _id: 8yakx0zfsovovip9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon drinking an extract created with this formula, you make a
@@ -16,28 +34,10 @@ system:
       direct target; they do not splash. However, the bomb deals its base damage
       plus double your Intelligence modifier instead of just its base damage
       plus your Intelligence modifier.</p>
-  actions:
-    - _id: 8yakx0zfsovovip9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       alchemist: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!shtapm1na2zj378d'
+type: spell
 

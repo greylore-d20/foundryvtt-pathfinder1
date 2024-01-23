@@ -1,8 +1,29 @@
 _id: fnxgq54y02f6ri82
-name: Wall of Iron
-type: spell
+_key: '!items!fnxgq54y02f6ri82'
 img: icons/commodities/tech/frame-copper.webp
+name: Wall of Iron
 system:
+  actions:
+    - _id: 3w0o16wlsgyjgqfj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: see text
+      spellEffect: iron wall whose area is up to one 5-ft. square/level; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a flat, vertical iron wall to spring into being. The wall
@@ -28,52 +49,31 @@ system:
       perforation, and other natural phenomena. Iron created by this spell is
       not suitable for use in the creation of other objects and cannot be
       sold.</p>
-  actions:
-    - _id: 3w0o16wlsgyjgqfj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        description: see text
-      spellEffect: iron wall whose area is up to one 5-ft. square/level; see text
   learnedAt:
+    bloodline:
+      Shaitan: 6
     class:
-      sorcerer: 6
-      wizard: 6
-      summoner: 5
       magus: 6
       occultist: 6
+      sorcerer: 6
+      summoner: 5
       summonerUnchained: 6
+      wizard: 6
     domain:
       Artifice: 7
     subDomain:
       Metal: 6
-    bloodline:
-      Shaitan: 6
   level: 6
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a small iron sheet plus gold dust worth 50 gp
     gpValue: 50
+    value: a small iron sheet plus gold dust worth 50 gp
   preparation:
     spontaneousPrepared: false
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '367'
-_key: '!items!fnxgq54y02f6ri82'
+  sr: false
+  subschool: creation
+type: spell
 

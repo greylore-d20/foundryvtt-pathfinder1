@@ -1,8 +1,13 @@
 _id: F9mKy0SmRo4bTdni
-name: Defensive Combat Training
-type: feat
+_key: '!items!F9mKy0SmRo4bTdni'
 img: systems/pf1/icons/feats/defensive-combat-training.jpg
+name: Defensive Combat Training
 system:
+  changes:
+    - _id: jbhziqyk
+      formula: '@attributes.hd.total - @attributes.bab.total'
+      modifier: untyped
+      subTarget: cmd
   description:
     value: >-
       <em>You excel at defending yourself from all manner of combat
@@ -11,17 +16,12 @@ system:
       (see Combat).<h3>Combat Trick</h3><p>When targeted with a combat maneuver,
       you can spend any number of stamina points to gain a bonus to your CMD
       equal to the number of stamina points you spent.
-  tags:
-    - Combat
-    - Combat Trick
-  changes:
-    - _id: jbhziqyk
-      formula: '@attributes.hd.total - @attributes.bab.total'
-      subTarget: cmd
-      modifier: untyped
-  tag: feat_defensiveCombatTraining
   source:
     id: PZO1110
     pages: 114, 121
-_key: '!items!F9mKy0SmRo4bTdni'
+  tag: feat_defensiveCombatTraining
+  tags:
+    - Combat
+    - Combat Trick
+type: feat
 

@@ -1,8 +1,30 @@
 _id: fdg9goug5f6s1qtx
-name: Transmute Mud to Rock
-type: spell
+_key: '!items!fdg9goug5f6s1qtx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transmute Mud to Rock
 system:
+  actions:
+    - _id: f3415uvbrkp0m3x4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to two 10-ft. cubes/level
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: see text
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell permanently transforms normal mud or quicksand of any depth
@@ -10,40 +32,18 @@ system:
       the mud is allowed a Reflex save to escape before the area is hardened to
       stone.</p><p><i>Transmute mud to rock</i> counters and dispels
       <i>transmute rock to mud</i>.</p>
-  actions:
-    - _id: f3415uvbrkp0m3x4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        description: see text
-      area: up to two 10-ft. cubes/level
   learnedAt:
     class:
+      druid: 5
+      hunter: 5
+      occultist: 5
       sorcerer: 5
       wizard: 5
-      druid: 5
-      occultist: 5
-      hunter: 5
   level: 5
-  school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: sand, lime, and water
+  school: trs
   sr: false
-_key: '!items!fdg9goug5f6s1qtx'
+  types: earth
+type: spell
 

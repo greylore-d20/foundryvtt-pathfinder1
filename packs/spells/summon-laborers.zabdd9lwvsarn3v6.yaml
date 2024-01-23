@@ -1,8 +1,28 @@
 _id: zabdd9lwvsarn3v6
-name: Summon Laborers
-type: spell
+_key: '!items!zabdd9lwvsarn3v6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Laborers
 system:
+  actions:
+    - _id: r5ral03pvbn7o2d2
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 8 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one summoned petitioner/caster level
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Summon laborers</i> summons one humanoid petitioner per caster
@@ -19,40 +39,20 @@ system:
       (chaotic and evil for the Abyss, lawful and good for Heaven, and so on).
       <b>Effect</b>s that increase the number of creatures summoned by a spell
       (such as Superior SummoningUM) do not affect <i>summon laborers</i>.</p>
-  actions:
-    - _id: r5ral03pvbn7o2d2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 8 hours (D)
-      range:
-        units: close
-      spellEffect: one summoned petitioner/caster level
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
       oracle: 6
-      summoner: 6
-      witch: 6
       shaman: 6
+      summoner: 6
       summonerUnchained: 6
+      warpriest: 6
+      witch: 6
   level: 6
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a strip of rune-inscribed parchment
+  school: con
   sr: false
-_key: '!items!zabdd9lwvsarn3v6'
+  subschool: summoning
+type: spell
 

@@ -1,18 +1,10 @@
 _id: 8ru8b4ze5yt7eyuo
-name: Surefoot Boots
-type: spell
+_key: '!items!8ru8b4ze5yt7eyuo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Surefoot Boots
 system:
-  description:
-    value: >-
-      <p>You touch your boots, shoes, or other footwear and imbue them with the
-      ability to find purchase on even the most treacherous ground. While the
-      spell is in effect, the footwear's wearer treats any Acrobatics skill
-      check to balance as though the wearer had rolled a 20.</p>
   actions:
     - _id: vet6lvwwfueh3l1m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,25 +12,33 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You touch your boots, shoes, or other footwear and imbue them with the
+      ability to find purchase on even the most treacherous ground. While the
+      spell is in effect, the footwear's wearer treats any Acrobatics skill
+      check to balance as though the wearer had rolled a 20.</p>
   learnedAt:
     class:
       druid: 2
+      hunter: 2
+      occultist: 2
       ranger: 2
       shaman: 2
-      occultist: 2
-      hunter: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: footwear
+  school: trs
   sr: false
-_key: '!items!8ru8b4ze5yt7eyuo'
+type: spell
 

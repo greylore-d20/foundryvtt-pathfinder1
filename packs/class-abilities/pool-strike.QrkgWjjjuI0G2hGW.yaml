@@ -1,8 +1,37 @@
 _id: QrkgWjjjuI0G2hGW
-name: Pool Strike
-type: feat
+_key: '!items!QrkgWjjjuI0G2hGW'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Pool Strike
 system:
+  abilityType: su
+  actions:
+    - _id: lgc2xyro9gjthsre
+      ability:
+        attack: dex
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can expend 1 point from his arcane pool as a standard action
@@ -16,36 +45,7 @@ system:
 
       <p>At 6th level, and every three levels thereafter, the amount of damage
       dealt by this attack increases by 1d6.</p>
-  actions:
-    - _id: lgc2xyro9gjthsre
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: 2d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: dex
-  tag: classFeat_poolStrike
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!QrkgWjjjuI0G2hGW'
+  tag: classFeat_poolStrike
+type: feat
 

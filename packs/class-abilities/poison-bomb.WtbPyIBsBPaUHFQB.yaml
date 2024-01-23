@@ -1,8 +1,11 @@
 _id: WtbPyIBsBPaUHFQB
-name: Poison Bomb
-type: feat
+_key: '!items!WtbPyIBsBPaUHFQB'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Poison Bomb
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>The effects of the smoke created by an alchemist's bomb duplicates the
@@ -12,12 +15,9 @@ system:
 
       <p>An alchemist must be at least 12th level and must possess the smoke
       bomb discovery before selecting this discovery.</p>
+  subType: classFeat
+  tag: classFeat_poisonBomb
   tags:
     - Alchemist Discovery
-  tag: classFeat_poisonBomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!WtbPyIBsBPaUHFQB'
+type: feat
 

@@ -1,8 +1,28 @@
 _id: 0vmz2klcfvkc3h0v
-name: Dimensional Anchor
-type: spell
+_key: '!items!0vmz2klcfvkc3h0v'
 img: icons/tools/nautical/anchor-blue-orange.webp
+name: Dimensional Anchor
 system:
+  actions:
+    - _id: vavein4s7pr30n96
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: ray
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A green ray springs from your hand. You must make a ranged touch attack
@@ -19,43 +39,23 @@ system:
       does it block extradimensional perception or attack forms. Also,
       <i>dimensional anchor</i> does not prevent summoned creatures from
       disappearing at the end of a summoning spell.</p>
-  actions:
-    - _id: vavein4s7pr30n96
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: medium
-      actionType: rsak
-      ability:
-        attack: dex
-      spellEffect: ray
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 3
       inquisitor: 3
-      psychic: 4
       medium: 3
       occultist: 4
+      oracle: 4
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 3
       summonerUnchained: 4
+      warpriest: 4
+      wizard: 4
     subDomain:
       Wards: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!0vmz2klcfvkc3h0v'
+type: spell
 

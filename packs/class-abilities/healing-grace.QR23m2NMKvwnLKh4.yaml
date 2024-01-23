@@ -1,8 +1,20 @@
 _id: QR23m2NMKvwnLKh4
-name: Healing Grace
-type: feat
+_key: '!items!QR23m2NMKvwnLKh4'
 img: systems/pf1/icons/skills/nature_07.jpg
+name: Healing Grace
 system:
+  abilityType: su
+  actions:
+    - _id: yftvvsyigmgwdb9m
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/nature_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>Whenever you cast a spell that has targets, affects creatures in an
@@ -16,19 +28,7 @@ system:
       creatures that enter its area after the spell is in place. At 20th level,
       the amount of damage cured increases to 3 points of damage per level of
       the spell.</p>
-  actions:
-    - _id: yftvvsyigmgwdb9m
-      name: Use
-      img: systems/pf1/icons/skills/nature_07.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_healingGrace
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!QR23m2NMKvwnLKh4'
+  tag: classFeat_healingGrace
+type: feat
 

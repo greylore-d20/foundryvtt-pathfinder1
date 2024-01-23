@@ -1,19 +1,11 @@
 _id: fbf5k440pbpp6d8b
-name: Duplicate Familiar
-type: spell
+_key: '!items!fbf5k440pbpp6d8b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Duplicate Familiar
 system:
-  description:
-    value: >-
-      <p>You create a duplicate of a familiar. The familiar's master can use the
-      duplicate as if it were his familiar in all respects, though he doesn't
-      gain the bonus special ability from more  than one familiar at a time.
-      When the spell's duration expires, the familiar duplicate shrivels into
-      nothing, even if petrified or otherwise transformed.</p>
   actions:
     - _id: 8teehpe335ou2lk8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,30 +13,38 @@ system:
           type: action
       duration:
         value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
       spellEffect: temporary duplicate of familiar touched
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You create a duplicate of a familiar. The familiar's master can use the
+      duplicate as if it were his familiar in all respects, though he doesn't
+      gain the bonus special ability from more  than one familiar at a time.
+      When the spell's duration expires, the familiar duplicate shrivels into
+      nothing, even if petrified or otherwise transformed.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       alchemist: 4
+      sorcerer: 5
       witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: alchemically preserved mockingfey feathers
     focus: familiar
+    value: alchemically preserved mockingfey feathers
+  school: con
   sr: false
-_key: '!items!fbf5k440pbpp6d8b'
+  subschool: creation
+type: spell
 

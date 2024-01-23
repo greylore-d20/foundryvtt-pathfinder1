@@ -1,8 +1,20 @@
 _id: FREfQdVna9y2CjR8
-name: Oni Healing
-type: feat
+_key: '!items!FREfQdVna9y2CjR8'
 img: systems/pf1/icons/skills/blood_04.jpg
+name: Oni Healing
 system:
+  abilityType: su
+  actions:
+    - _id: lib62ilobqerbkoh
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/blood_04.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, if your <em>hit points</em> drop below 0, you
@@ -17,19 +29,7 @@ system:
       score, regardless of whether you are regenerating. This ability only works
       once per day—if you drop below 0 <em>hit points</em> a second time, you do
       not benefit from this ability.</p>
-  actions:
-    - _id: lib62ilobqerbkoh
-      name: Use
-      img: systems/pf1/icons/skills/blood_04.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_oniHealing
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!FREfQdVna9y2CjR8'
+  tag: classFeat_oniHealing
+type: feat
 

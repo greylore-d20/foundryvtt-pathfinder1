@@ -1,8 +1,19 @@
 _id: quonqudYcCHGRMC3
-name: Blood Debt
-type: feat
+_key: '!items!quonqudYcCHGRMC3'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Blood Debt
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Ninja
+      - Rogue
+      - Rogue (Unchained)
+  changes:
+    - _id: 7PCA8wig
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>A character with this ability gains
@@ -15,25 +26,14 @@ system:
       against her by a creature the indebted ally threatens, the ally (who must
       be willing) takes full damage from that attack and any associated effects
       instead of the character.</p>
-  tags:
-    - Ninja Trick
-    - Rogue Talent
-  changes:
-    - _id: 7PCA8wig
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: In Harm’s Way
         uuid: Compendium.pf1.feats.Item.nW2GUYlGhZ2bmgdz
-  tag: classFeat_bloodDebt
   subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-      - Rogue (Unchained)
-  abilityType: su
-_key: '!items!quonqudYcCHGRMC3'
+  tag: classFeat_bloodDebt
+  tags:
+    - Ninja Trick
+    - Rogue Talent
+type: feat
 

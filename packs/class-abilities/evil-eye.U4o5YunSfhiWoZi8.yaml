@@ -1,8 +1,34 @@
 _id: U4o5YunSfhiWoZi8
-name: Evil Eye
-type: feat
+_key: '!items!U4o5YunSfhiWoZi8'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Evil Eye
 system:
+  abilityType: su
+  actions:
+    - _id: 4b8hasr2rdvulpvp
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 3 + @classes.witch.level
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will reduces duration to 1 round
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can cause doubt to creep into the mind of a foe within 30
@@ -13,35 +39,9 @@ system:
       round. This is a mind-affecting effect.</p>
 
       <p>At 8th level the penalty increases to –4.</p>
+  subType: classFeat
+  tag: classFeat_evilEye
   tags:
     - Hex
-  actions:
-    - _id: 4b8hasr2rdvulpvp
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 + @classes.witch.level
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will reduces duration to 1 round
-  tag: classFeat_evilEye
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!U4o5YunSfhiWoZi8'
+type: feat
 

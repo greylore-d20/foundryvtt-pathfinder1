@@ -1,8 +1,29 @@
 _id: 6mnzidgvtc2zsqkh
-name: Judgment Undone
-type: spell
+_key: '!items!6mnzidgvtc2zsqkh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Judgment Undone
 system:
+  actions:
+    - _id: qbuxvim1ptk1odtm
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one willing petitioner
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This powerful, elaborate, and risky spell undoes Pharasma's judgment,
@@ -47,41 +68,20 @@ system:
       required focus, or even both. Worshipers of Pharasma who cast this spell
       without securing permission in this manner are considered to have grossly
       violated Pharasma's code of conduct.</p>
-  actions:
-    - _id: qbuxvim1ptk1odtm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one willing petitioner
-      range:
-        units: touch
   learnedAt:
     class:
       cleric: 9
       oracle: 9
-      shaman: 9
       psychic: 9
+      shaman: 9
   level: 9
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: diamonds worth 50,000 gp
     focus: see text
     gpValue: 50000
+    value: diamonds worth 50,000 gp
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!6mnzidgvtc2zsqkh'
+type: spell
 

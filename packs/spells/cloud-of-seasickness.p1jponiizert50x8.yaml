@@ -1,19 +1,11 @@
 _id: p1jponiizert50x8
-name: Cloud of Seasickness
-type: spell
+_key: '!items!p1jponiizert50x8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cloud of Seasickness
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>stinking cloud</i>, except as noted above
-      and that the vapors make creatures sickened instead of nauseated. <i>Cloud
-      of Seasickness</i> can be made permanent with a <i>permanency</i> spell
-      (requiring a 9th-level caster and costing 2,500 gp). A permanent <i>Cloud
-      of Seasickness</i> dispersed by wind reforms in 10 minutes.</p>
   actions:
     - _id: dxb1hkv8frtwtoov
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,32 +13,40 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates; see text
+        type: fort
       spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>stinking cloud</i>, except as noted above
+      and that the vapors make creatures sickened instead of nauseated. <i>Cloud
+      of Seasickness</i> can be made permanent with a <i>permanency</i> spell
+      (requiring a 9th-level caster and costing 2,500 gp). A permanent <i>Cloud
+      of Seasickness</i> dispersed by wind reforms in 10 minutes.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
       hunter: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: creation
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of seaweed
+  school: con
   sr: false
-_key: '!items!p1jponiizert50x8'
+  subschool: creation
+  types: poison
+type: spell
 

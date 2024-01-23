@@ -1,8 +1,30 @@
 _id: j9qpy0d585f8lpm4
-name: Web
-type: spell
+_key: '!items!j9qpy0d585f8lpm4'
 img: icons/creatures/webs/web-spider-white-green.webp
+name: Web
 system:
+  actions:
+    - _id: q55kmpb4pm75lgn8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates; see text
+        type: ref
+      spellEffect: webs in a 20-ft.-radius spread
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Web</i> creates a many-layered mass of strong, sticky strands. These
@@ -31,40 +53,18 @@ system:
       2d4 points of fire damage from the flames.</p><p><i>Web</i> can be made
       permanent with a <i>permanency</i> spell. A permanent <i>web</i> that is
       damaged (but not destroyed) regrows in 10 minutes.</p>
-  actions:
-    - _id: q55kmpb4pm75lgn8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates; see text
-      spellEffect: webs in a 20-ft.-radius spread
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
-      magus: 2
       adept: 2
+      magus: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: spider web
+  school: con
   sr: false
-_key: '!items!j9qpy0d585f8lpm4'
+  subschool: creation
+type: spell
 

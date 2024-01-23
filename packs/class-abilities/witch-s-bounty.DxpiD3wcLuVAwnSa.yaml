@@ -1,8 +1,27 @@
 _id: DxpiD3wcLuVAwnSa
-name: Witch's Bounty
-type: feat
+_key: '!items!DxpiD3wcLuVAwnSa'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Witch's Bounty
 system:
+  abilityType: su
+  actions:
+    - _id: Ib1GDJfa8Q0wrmpP
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Bless
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one plant
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch may bless a bush, plant, or tree that is planted in the
@@ -13,29 +32,10 @@ system:
 
       <p>The witch may only have one witch’s bounty active at a time, but can
       shift her blessing to a new plant with a ritual requiring 1 hour.</p>
+  subType: classFeat
+  tag: classFeat_witchsBounty
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: Ib1GDJfa8Q0wrmpP
-      name: Bless
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        units: inst
-      target:
-        value: one plant
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_witchsBounty
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!DxpiD3wcLuVAwnSa'
+type: feat
 

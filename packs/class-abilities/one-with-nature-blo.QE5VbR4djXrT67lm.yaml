@@ -1,8 +1,23 @@
 _id: QE5VbR4djXrT67lm
-name: One with Nature (BLO)
-type: feat
+_key: '!items!QE5VbR4djXrT67lm'
 img: systems/pf1/icons/skills/red_05.jpg
+name: One with Nature (BLO)
 system:
+  abilityType: su
+  actions:
+    - _id: 90pufcg2llpst4dl
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+      range:
+        units: spec
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 16th level, creatures of the animal or plant types don’t attack you
@@ -11,25 +26,10 @@ system:
       @Compendium[pf1.spells.6x6epf4g5wgzl1gh]{Tree Stride} with half the
       transport range. Moving from one tree to another in this manner is a move
       action. You gain these abilities even while not bloodraging.</p>
-  actions:
-    - _id: 90pufcg2llpst4dl
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      range:
-        units: spec
-  uses:
-    per: day
-    maxFormula: '3'
-  tag: classFeat_oneWithNatureBlo
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!QE5VbR4djXrT67lm'
+  tag: classFeat_oneWithNatureBlo
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

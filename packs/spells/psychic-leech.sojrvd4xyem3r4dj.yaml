@@ -1,8 +1,29 @@
 _id: sojrvd4xyem3r4dj
-name: Psychic Leech
-type: spell
+_key: '!items!sojrvd4xyem3r4dj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychic Leech
 system:
+  actions:
+    - _id: zxvgkay5ojcdrz4o
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
   description:
     value: >-
       <p>The target experiences feelings of ennui and lethargy, becoming
@@ -11,41 +32,20 @@ system:
       Dexterity. On a successful save, the target is fatigued for only 1d4
       rounds and you receive no bonus. This spell has no effect if it targets a
       creature that is already fatigued.</p>
-  actions:
-    - _id: zxvgkay5ojcdrz4o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 2
-      magus: 3
       bloodrager: 3
-      psychic: 2
+      magus: 3
       medium: 3
       mesmerist: 2
+      psychic: 2
+      sorcerer: 3
       spiritualist: 2
+      witch: 2
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    somatic: true
-_key: '!items!sojrvd4xyem3r4dj'
+type: spell
 

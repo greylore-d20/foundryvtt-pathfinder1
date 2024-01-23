@@ -1,8 +1,25 @@
 _id: lgrpe1zwgml5c41r
-name: Skinsend
-type: spell
+_key: '!items!lgrpe1zwgml5c41r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Skinsend
 system:
+  actions:
+    - _id: ohyru9335oiwfdy2
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause your own skin to peel off your body and animate as a magical
@@ -38,33 +55,16 @@ system:
       in it, the spell ends and you are instantly killed.</p><p>This spell
       leaves long scars on your skin where it split apart, although these fade
       normally with the use of <i>heal</i>ing magic.</p>
-  actions:
-    - _id: ohyru9335oiwfdy2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       alchemist: 2
-      witch: 2
-      psychic: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lgrpe1zwgml5c41r'
+type: spell
 

@@ -1,8 +1,37 @@
 _id: 6pjr8jMFSKqXkBKk
-name: Sneak Attack
-type: feat
+_key: '!items!6pjr8jMFSKqXkBKk'
 img: systems/pf1/icons/skills/red_13.jpg
+name: Sneak Attack
 system:
+  actions:
+    - _id: 3121tfns5ck508lz
+      ability:
+        critMult: null
+        critRange: null
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      damage:
+        parts:
+          - formula: ceil(@class.level / 2)d6
+            type:
+              custom: ''
+              values:
+                - precision
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/red_13.jpg
+      name: Use
+      powerAttack:
+        critMultiplier: null
+        damageBonus: null
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Ninja
   description:
     value: >-
       <p>If a character can catch an opponent when he is unable to defend
@@ -22,36 +51,7 @@ system:
       able to see the target well enough to pick out a vital spot and must be
       able to reach such a spot. A character cannot sneak attack while striking
       a creature with concealment.</p>
-  actions:
-    - _id: 3121tfns5ck508lz
-      name: Use
-      img: systems/pf1/icons/skills/red_13.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      damage:
-        parts:
-          - formula: ceil(@class.level / 2)d6
-            type:
-              values:
-                - precision
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        critRange: null
-        critMult: null
-      powerAttack:
-        damageBonus: null
-        critMultiplier: null
-      ammoType: none
-  tag: classFeat_sneakAttack
   subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Ninja
-_key: '!items!6pjr8jMFSKqXkBKk'
+  tag: classFeat_sneakAttack
+type: feat
 

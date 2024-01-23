@@ -1,8 +1,28 @@
 _id: pwueht12qqo0268e
-name: Divination
-type: spell
+_key: '!items!pwueht12qqo0268e'
 img: icons/magic/perception/orb-eye-scrying.webp
+name: Divination
 system:
+  actions:
+    - _id: 3lxuo28ln3n7ax2i
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Similar to <i>augury</i> but more powerful, a <i>divination</i> spell
@@ -18,51 +38,31 @@ system:
       multiple <i>divinations</i> about the same topic by the same caster use
       the same dice result as the first <i>divination</i> spell and yield the
       same answer each time.</p>
-  actions:
-    - _id: 3lxuo28ln3n7ax2i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      witch: 4
-      inquisitor: 4
-      shaman: 4
-      psychic: 4
-      medium: 3
-      spiritualist: 4
-    domain:
-      Knowledge: 4
     bloodline:
       Dreamspun: 4
+    class:
+      cleric: 4
+      inquisitor: 4
+      medium: 3
+      oracle: 4
+      psychic: 4
+      shaman: 4
+      spiritualist: 4
+      warpriest: 4
+      witch: 4
+    domain:
+      Knowledge: 4
   level: 4
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: incense and an appropriate offering worth 25 gp
     gpValue: 25
+    value: incense and an appropriate offering worth 25 gp
   preparation:
     spontaneousPrepared: false
-  sr: false
+  school: div
   source:
     id: PZO1110
     pages: '273'
-_key: '!items!pwueht12qqo0268e'
+  sr: false
+type: spell
 

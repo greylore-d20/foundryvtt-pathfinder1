@@ -1,16 +1,11 @@
 _id: wzv7btl0r3l2nzmm
-name: Spider Climb, Communal
-type: spell
+_key: '!items!wzv7btl0r3l2nzmm'
 img: icons/creatures/invertebrates/spider-pink-purple.webp
+name: Spider Climb, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>spider climb</i>, except you divide the
-      duration in 10-minute intervals among the creatures touched.</p>
   actions:
     - _id: p4qxr9bx5tu9admx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,33 +13,38 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>spider climb</i>, except you divide the
+      duration in 10-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       alchemist: 3
-      summoner: 3
-      psychic: 3
-      occultist: 3
+      druid: 3
       hunter: 3
+      occultist: 3
+      psychic: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a live spider
-_key: '!items!wzv7btl0r3l2nzmm'
+  school: trs
+type: spell
 

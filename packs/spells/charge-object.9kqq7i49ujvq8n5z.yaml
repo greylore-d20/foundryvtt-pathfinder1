@@ -1,8 +1,30 @@
 _id: 9kqq7i49ujvq8n5z
-name: Charge Object
-type: spell
+_key: '!items!9kqq7i49ujvq8n5z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Charge Object
 system:
+  actions:
+    - _id: 90j8bouoejbt0oj9
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You charge an item with minor psychic energy. The item can be detected
@@ -16,36 +38,14 @@ system:
       target object is already psychically charged, you can add more information
       to it, but you can't use <i>charge object</i> t o e rase existing psychic
       information.</p>
-  actions:
-    - _id: 90j8bouoejbt0oj9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none; see text
   learnedAt:
     class:
-      psychic: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
       spiritualist: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!9kqq7i49ujvq8n5z'
+type: spell
 

@@ -1,8 +1,21 @@
 _id: 9txI8TwNCtQq45Ov
-name: Staggering Assault
-type: feat
+_key: '!items!9txI8TwNCtQq45Ov'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Staggering Assault
 system:
+  abilityType: ex
+  actions:
+    - _id: pbpgdqswxoqo2ts7
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, the cavalier can drive opponents back without giving
@@ -11,20 +24,7 @@ system:
       normal, and the cavalier may attempt a bull rush against the target. The
       cavalier gains a bonus on the bull rush combat maneuver check equal to
       half the amount of damage dealt on the initial attack.</p>
-  actions:
-    - _id: pbpgdqswxoqo2ts7
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_staggeringAssault
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!9txI8TwNCtQq45Ov'
+  tag: classFeat_staggeringAssault
+type: feat
 

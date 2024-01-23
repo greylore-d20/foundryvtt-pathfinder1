@@ -1,8 +1,27 @@
 _id: g4di5mkja7ne1p0j
-name: Ooze Form II
-type: spell
+_key: '!items!g4di5mkja7ne1p0j'
 img: icons/creatures/slimes/slime-face-skull-green.webp
+name: Ooze Form II
 system:
+  actions:
+    - _id: nm5vy3w4emd01ofc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>ooze form I</i> except you can also assume
@@ -12,36 +31,17 @@ system:
       +8 size bonus to your Constitution score, a slam attack (2d4 plus 1d6 acid
       and grab), and constrict (2d4), and you take a -8 penalty to your
       Dexterity score.</p>
-  actions:
-    - _id: nm5vy3w4emd01ofc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       alchemist: 6
       magus: 6
+      sorcerer: 6
+      wizard: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a bit of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!g4di5mkja7ne1p0j'
+  subschool: polymorph
+type: spell
 

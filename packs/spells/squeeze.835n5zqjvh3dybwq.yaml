@@ -1,19 +1,11 @@
 _id: 835n5zqjvh3dybwq
-name: Squeeze
-type: spell
+_key: '!items!835n5zqjvh3dybwq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Squeeze
 system:
-  description:
-    value: >-
-      <p>The target becomes flexible regardless of its actual size and mass. It
-      can move through areas at least half its size with no penalty for
-      squeezing. It can move through a space at least one-quarter its width
-      using the penalties for squeezing through a space at least half its
-      width.</p>
   actions:
     - _id: bmjj2vmeqdg9ytd0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,26 +13,34 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target becomes flexible regardless of its actual size and mass. It
+      can move through areas at least half its size with no penalty for
+      squeezing. It can move through a space at least one-quarter its width
+      using the penalties for squeezing through a space at least half its
+      width.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       alchemist: 2
+      sorcerer: 2
       witch: 2
+      wizard: 2
   level: 2
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!835n5zqjvh3dybwq'
+type: spell
 

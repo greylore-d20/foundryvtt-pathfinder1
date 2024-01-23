@@ -1,8 +1,30 @@
 _id: xhd6734dulevnwef
-name: Wind Wall
-type: spell
+_key: '!items!xhd6734dulevnwef'
 img: icons/magic/air/air-wave-gust-blue.webp
+name: Wind Wall
 system:
+  actions:
+    - _id: jwjziihwajv7rczu
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: none; see text
+      spellEffect: wall up to 10 ft./level long and 5 ft./level high (S)
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An invisible vertical curtain of wind appears. It is 2 feet thick and
@@ -20,54 +42,32 @@ system:
       must be vertical, you can shape it in any continuous path along the ground
       that you like. It is possible to create cylindrical or square <i>wind
       walls</i> to enclose specific points.</p>
-  actions:
-    - _id: jwjziihwajv7rczu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        description: none; see text
-      spellEffect: wall up to 10 ft./level long and 5 ft./level high (S)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      ranger: 2
-      summoner: 2
-      magus: 3
       bloodrager: 3
-      shaman: 3
-      occultist: 3
-      spiritualist: 3
+      cleric: 3
+      druid: 3
       hunter: 2
+      magus: 3
+      occultist: 3
+      oracle: 3
+      ranger: 2
+      shaman: 3
+      sorcerer: 3
+      spiritualist: 3
+      summoner: 2
       summonerUnchained: 3
+      warpriest: 3
+      wizard: 3
     domain:
       Air: 2
   level: 3
-  school: evo
-  types: air
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a tiny fan and an exotic feather
+  school: evo
   source:
     id: PZO1110
     pages: '370'
-_key: '!items!xhd6734dulevnwef'
+  types: air
+type: spell
 

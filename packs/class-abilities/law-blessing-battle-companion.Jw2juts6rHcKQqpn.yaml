@@ -1,8 +1,23 @@
 _id: Jw2juts6rHcKQqpn
-name: 'Law Blessing: Battle Companion'
-type: feat
+_key: '!items!Jw2juts6rHcKQqpn'
 img: systems/pf1/icons/spells/enchant-orange-3.jpg
+name: 'Law Blessing: Battle Companion'
 system:
+  actions:
+    - _id: u1odvklcmshaon7e
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-orange-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can summon a battle companion. This ability
@@ -15,22 +30,7 @@ system:
       increases by 1 (to a maximum of
       @Compendium[pf1.spells.mi52crelhwuy6bmp]{Summon Monster IX} at 20
       level).</p>
-  actions:
-    - _id: u1odvklcmshaon7e
-      name: Use
-      img: systems/pf1/icons/spells/enchant-orange-3.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '1'
-        units: minute
-  tag: classFeat_lawBlessingBattleCompanion
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!Jw2juts6rHcKQqpn'
+  tag: classFeat_lawBlessingBattleCompanion
+type: feat
 

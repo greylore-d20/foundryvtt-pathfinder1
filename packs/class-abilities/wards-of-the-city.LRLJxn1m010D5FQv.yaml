@@ -1,8 +1,27 @@
 _id: LRLJxn1m010D5FQv
-name: Wards of the City
-type: feat
+_key: '!items!LRLJxn1m010D5FQv'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Wards of the City
 system:
+  abilityType: su
+  actions:
+    - _id: phniuu4gip5y0xpa
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: spec
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The spirit of the city shrouds one creature the shaman touches from the
@@ -19,26 +38,7 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
-  actions:
-    - _id: phniuu4gip5y0xpa
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: spec
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_wardsOfTheCity
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!LRLJxn1m010D5FQv'
+  tag: classFeat_wardsOfTheCity
+type: feat
 

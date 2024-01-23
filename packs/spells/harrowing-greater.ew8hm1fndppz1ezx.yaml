@@ -1,8 +1,28 @@
 _id: ew8hm1fndppz1ezx
-name: Harrowing, Greater
-type: spell
+_key: '!items!ew8hm1fndppz1ezx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Harrowing, Greater
 system:
+  actions:
+    - _id: cafq9w59wpltwiaj
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level or until fulfilled
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one creature, plus one additional creature for every 3  caster levels
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as
@@ -62,38 +82,18 @@ system:
       spell while a previous <em>harrowing</em> or greater <em>harrowing</em> is
       s till a ffecting him, the new spell automatically fails for that
       subject.</p>
-  actions:
-    - _id: cafq9w59wpltwiaj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level or until fulfilled
-      target:
-        value: one creature, plus one additional creature for every 3  caster levels
-      range:
-        units: touch
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      bard: 5
-      witch: 6
     bloodline:
       Harrow: 7
+    class:
+      bard: 5
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a harrow deck
+  school: div
   sr: false
-_key: '!items!ew8hm1fndppz1ezx'
+type: spell
 

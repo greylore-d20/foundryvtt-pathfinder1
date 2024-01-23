@@ -1,8 +1,28 @@
 _id: 93ufp6thcni304jh
-name: Wicker Horse
-type: spell
+_key: '!items!93ufp6thcni304jh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wicker Horse
 system:
+  actions:
+    - _id: woai85icj6m1pka4
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      spellEffect: a horselike wicker construct
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Reeds, grasses, creepers, or thin tree branches (your choice) that you
@@ -23,38 +43,18 @@ system:
       only in an environment where suitable plant material is available. When
       the spell ends or the horse loses all its hit points, the horse falls
       apart.</p>
-  actions:
-    - _id: woai85icj6m1pka4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: touch
-      spellEffect: a horselike wicker construct
   learnedAt:
     class:
-      summoner: 2
-      witch: 2
-      shaman: 2
       occultist: 2
+      shaman: 2
+      summoner: 2
       summonerUnchained: 2
+      witch: 2
   level: 2
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a reed or twig
+  school: con
   sr: false
-_key: '!items!93ufp6thcni304jh'
+  subschool: creation
+type: spell
 

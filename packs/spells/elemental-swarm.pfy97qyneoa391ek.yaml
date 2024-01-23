@@ -1,8 +1,28 @@
 _id: pfy97qyneoa391ek
-name: Elemental Swarm
-type: spell
+_key: '!items!pfy97qyneoa391ek'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Elemental Swarm
 system:
+  actions:
+    - _id: o9rxbkrm6m3yof41
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: >-
+        two or more summoned creatures, no two of which can be more than 30 ft.
+        apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell opens a portal to an Elemental Plane and summons elementals
@@ -17,45 +37,25 @@ system:
       maintain control over the elementals. You can dismiss them singly or in
       groups at any time.</p><p>When you use a summoning spell to summon an air,
       earth, fire, or water creature, it is a spell of that type.</p>
-  actions:
-    - _id: o9rxbkrm6m3yof41
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 10 min./level
-      range:
-        units: medium
-      spellEffect: >-
-        two or more summoned creatures, no two of which can be more than 30 ft.
-        apart
   learnedAt:
+    bloodline:
+      Elemental: 9
     class:
       druid: 9
-      witch: 9
       shaman: 9
+      witch: 9
     domain:
       Air: 9
       Earth: 9
       Fire: 9
       Water: 9
-    bloodline:
-      Elemental: 9
   level: 9
   school: con
-  subschool: summoning
-  types: see text
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '277'
-_key: '!items!pfy97qyneoa391ek'
+  sr: false
+  subschool: summoning
+  types: see text
+type: spell
 

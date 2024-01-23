@@ -1,18 +1,11 @@
 _id: fipqx43u5blpjsvo
-name: Stabilize
-type: spell
+_key: '!items!fipqx43u5blpjsvo'
 img: icons/magic/life/heart-glowing-red.webp
+name: Stabilize
 system:
-  description:
-    value: >-
-      <p>Upon casting this spell, you target a living creature that has -1 or
-      fewer hit points. That creature is automatically stabilized and does not
-      lose any further hit points. If the creature later takes damage, it
-      continues dying normally.</p>
   actions:
     - _id: ncboqe1l7g4pnjr2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
@@ -20,36 +13,43 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: heal
       save:
-        type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Upon casting this spell, you target a living creature that has -1 or
+      fewer hit points. That creature is automatically stabilized and does not
+      lose any further hit points. If the creature later takes damage, it
+      continues dying normally.</p>
   learnedAt:
     class:
-      cleric: 0
-      oracle: 0
-      druid: 0
-      witch: 0
-      inquisitor: 0
       adept: 0
-      shaman: 0
-      psychic: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
+      inquisitor: 0
       medium: 0
       occultist: 0
+      oracle: 0
+      psychic: 0
+      shaman: 0
       spiritualist: 0
-      hunter: 0
+      witch: 0
   level: 0
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!fipqx43u5blpjsvo'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

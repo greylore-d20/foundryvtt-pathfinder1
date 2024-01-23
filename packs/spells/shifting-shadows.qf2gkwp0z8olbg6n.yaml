@@ -1,8 +1,33 @@
 _id: qf2gkwp0z8olbg6n
-name: Shifting Shadows
-type: spell
+_key: '!items!qf2gkwp0z8olbg6n'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shifting Shadows
 system:
+  actions:
+    - _id: 7h42sdkq8pjabfx5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation centered on a point in space
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: none, see text
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Waves of shifting shadows obscure the appearance of all creatures
@@ -21,42 +46,17 @@ system:
       Creatures with scent or keen scent, creatures that are blind, and
       creatures that operate effectively without vision (such as creatures with
       blindsight or blindsense) are also not affected by this spell.</p>
-  actions:
-    - _id: 7h42sdkq8pjabfx5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: ref
-        description: none, see text
-      area: 20-ft.-radius emanation centered on a point in space
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
+      sorcerer: 3
       witch: 3
+      wizard: 3
   level: 3
-  school: evo
-  types: darkness
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of ink
+  school: evo
   sr: false
-_key: '!items!qf2gkwp0z8olbg6n'
+  types: darkness
+type: spell
 

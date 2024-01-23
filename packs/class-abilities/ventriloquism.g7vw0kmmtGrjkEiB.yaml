@@ -1,8 +1,23 @@
 _id: g7vw0kmmtGrjkEiB
-name: Ventriloquism
-type: feat
+_key: '!items!g7vw0kmmtGrjkEiB'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Ventriloquism
 system:
+  abilityType: su
+  actions:
+    - _id: q89quqmwxr5ou3zd
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@classes.ninja.level'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>As a swift action, the ninja can throw her voice as if using the spell
@@ -10,24 +25,9 @@ system:
       ability for 1 minute per ninja level.</p>
 
       <p>Each use of this ability uses up 1 ki point.</p>
+  subType: classFeat
+  tag: classFeat_ventriloquism
   tags:
     - Ninja Trick
-  actions:
-    - _id: q89quqmwxr5ou3zd
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.ninja.level'
-        units: minute
-  tag: classFeat_ventriloquism
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: su
-_key: '!items!g7vw0kmmtGrjkEiB'
+type: feat
 

@@ -1,18 +1,11 @@
 _id: wayryp00n6di730s
-name: Protection from Natural Attacks
-type: spell
+_key: '!items!wayryp00n6di730s'
 img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
+name: Protection from Natural Attacks
 system:
-  description:
-    value: >-
-      <p>Upon casting this spell, select one type of natural attack from the
-      following: bite, claw, gore, hoof, pincers, slam, sting, swarm, tail slap,
-      talon, tentacle, or wing. For the duration of the spell, the target gains
-      DR 5/- against all attacks from natural weapons of the selected type.</p>
   actions:
     - _id: cunur0zxiszaeibo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,34 +13,41 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Upon casting this spell, select one type of natural attack from the
+      following: bite, claw, gore, hoof, pincers, slam, sting, swarm, tail slap,
+      talon, tentacle, or wing. For the duration of the spell, the target gains
+      DR 5/- against all attacks from natural weapons of the selected type.</p>
   learnedAt:
     class:
-      druid: 4
-      ranger: 2
       alchemist: 3
-      summoner: 3
-      shaman: 4
-      psychic: 4
-      spiritualist: 3
+      druid: 4
       hunter: 2
+      psychic: 4
+      ranger: 2
+      shaman: 4
+      spiritualist: 3
+      summoner: 3
       summonerUnchained: 3
   level: 4
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a scale from a lizard
-_key: '!items!wayryp00n6di730s'
+  school: abj
+type: spell
 

@@ -1,8 +1,43 @@
 _id: cy4pO52j4iAedcHZ
-name: Stonebow
-type: weapon
+_key: '!items!cy4pO52j4iAedcHZ'
 img: systems/pf1/icons/items/weapons/stonebow.PNG
+name: Stonebow
 system:
+  actions:
+    - _id: vzb6olatqzbpkuc8
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: slingBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/stonebow.PNG
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '50'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Stonebow
   description:
     value: >-
       <p>A stonebow, or bullet crossbow, resembles a light crossbow except for
@@ -18,56 +53,21 @@ system:
       penalty on your attack rolls. You can shoot a stonebow with each hand, but
       you take a penalty on attack rolls as if attacking with two light weapons.
       This penalty is cumulative with the penalty for firing one-handed.</p>
-  tags:
-    - PFS
-  weight:
-    value: 4
-  price: 35
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: vzb6olatqzbpkuc8
-      name: Attack
-      img: systems/pf1/icons/items/weapons/stonebow.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '50'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-      ammoType: slingBullet
-  baseTypes:
-    - Stonebow
+  price: 35
+  source:
+    id: PZO9452
+    pages: '19'
+  tags:
+    - PFS
   weaponGroups:
     value:
       - crossbows
   weaponSubtype: ranged
-  source:
-    id: PZO9452
-    pages: '19'
-  ammo:
-    type: slingBullet
-_key: '!items!cy4pO52j4iAedcHZ'
+  weight:
+    value: 4
+type: weapon
 

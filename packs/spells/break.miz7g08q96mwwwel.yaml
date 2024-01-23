@@ -1,18 +1,11 @@
 _id: miz7g08q96mwwwel
-name: Break
-type: spell
+_key: '!items!miz7g08q96mwwwel'
 img: icons/skills/melee/sword-damaged-broken-orange.webp
+name: Break
 system:
-  description:
-    value: >-
-      <p>You can attempt to break or at least damage any one Medium or smaller
-      object within range. If the target fails its Fortitude saving throw, it
-      gains the broken condition. If cast on a broken item, that item is
-      destroyed on a failed save.</p>
   actions:
     - _id: ulwcyup5popfiixu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,27 +13,34 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one Medium or smaller object
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates (object)
+        type: fort
+      target:
+        value: one Medium or smaller object
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You can attempt to break or at least damage any one Medium or smaller
+      object within range. If the target fails its Fortitude saving throw, it
+      gains the broken condition. If cast on a broken item, that item is
+      destroyed on a failed save.</p>
   learnedAt:
     class:
+      bloodrager: 1
+      occultist: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      bloodrager: 1
-      psychic: 1
-      occultist: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a twig
-_key: '!items!miz7g08q96mwwwel'
+  school: trs
+type: spell
 

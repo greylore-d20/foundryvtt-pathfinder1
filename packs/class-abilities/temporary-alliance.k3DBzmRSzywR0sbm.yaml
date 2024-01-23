@@ -1,8 +1,21 @@
 _id: k3DBzmRSzywR0sbm
-name: Temporary Alliance
-type: feat
+_key: '!items!k3DBzmRSzywR0sbm'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Temporary Alliance
 system:
+  abilityType: ex
+  actions:
+    - _id: djluhu2so7tnlfc2
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 2nd level, an order of the eel cavalier gains the ability to create
@@ -17,20 +30,7 @@ system:
       one alliance active at a time; if he creates a new alliance while under
       the effects of an existing alliance, the existing alliance immediately
       ends and the new one takes effect.</p>
-  actions:
-    - _id: djluhu2so7tnlfc2
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_temporaryAlliance
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!k3DBzmRSzywR0sbm'
+  tag: classFeat_temporaryAlliance
+type: feat
 

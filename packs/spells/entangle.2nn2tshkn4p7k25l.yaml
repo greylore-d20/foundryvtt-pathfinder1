@@ -1,8 +1,35 @@
 _id: 2nn2tshkn4p7k25l
-name: Entangle
-type: spell
+_key: '!items!2nn2tshkn4p7k25l'
 img: icons/magic/nature/root-vine-entangled-hands.webp
+name: Entangle
 system:
+  actions:
+    - _id: 4o4tl11xzxxqeera
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: plants in a 40-ft.-radius spread
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        customColor: '#658726'
+        overrideColor: true
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex partial; see text
+        type: ref
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes tall grass, weeds, and other plants to wrap around
@@ -19,48 +46,21 @@ system:
       damage each time they fail a save against the <i>entangle</i> or fail a
       check made to break free. Other effects, depending on the local plants,
       might be possible at GM discretion.</p>
-  actions:
-    - _id: 4o4tl11xzxxqeera
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '40'
-        overrideColor: true
-        customColor: '#658726'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial; see text
-      area: plants in a 40-ft.-radius spread
   learnedAt:
-    class:
-      druid: 1
-      ranger: 1
-      shaman: 1
-      hunter: 1
-    domain:
-      Plant: 1
     bloodline:
       Fey: 1
       Verdant: 1
+    class:
+      druid: 1
+      hunter: 1
+      ranger: 1
+      shaman: 1
+    domain:
+      Plant: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '278'
-_key: '!items!2nn2tshkn4p7k25l'
+  sr: false
+type: spell
 

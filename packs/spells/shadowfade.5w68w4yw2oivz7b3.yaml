@@ -1,19 +1,11 @@
 _id: 5w68w4yw2oivz7b3
-name: Shadowfade
-type: spell
+_key: '!items!5w68w4yw2oivz7b3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadowfade
 system:
-  description:
-    value: >-
-      <p>In areas of darkness, the target of <i>shadowfade</i> is invisible to
-      creatures using darkvision to see. In areas of dim light, the target gains
-      concealment against creatures using darkvision. This spell has no effect
-      in areas of normal light or brighter, and is automatically dispelled if
-      the target enters an area of bright light or takes a hostile action.</p>
   actions:
     - _id: 44prnmhuohotl1v7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,15 +13,27 @@ system:
           type: action
       duration:
         value: 1 minutes/level (D)
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>In areas of darkness, the target of <i>shadowfade</i> is invisible to
+      creatures using darkvision to see. In areas of dim light, the target gains
+      concealment against creatures using darkvision. This spell has no effect
+      in areas of normal light or brighter, and is automatically dispelled if
+      the target enters an area of bright light or takes a hostile action.</p>
   learnedAt:
     class:
       arcanist: 1
@@ -41,13 +45,9 @@ system:
       summoner: 1
       summonerUnchained: 1
       wizard: 1
-  school: ill
-  subschool: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a blindfold
-_key: '!items!5w68w4yw2oivz7b3'
+  school: ill
+  subschool: shadow
+type: spell
 

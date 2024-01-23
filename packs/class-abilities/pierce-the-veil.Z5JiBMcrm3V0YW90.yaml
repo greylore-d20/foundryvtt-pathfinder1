@@ -1,8 +1,24 @@
 _id: Z5JiBMcrm3V0YW90
-name: Pierce the Veil
-type: feat
+_key: '!items!Z5JiBMcrm3V0YW90'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Pierce the Veil
 system:
+  abilityType: su
+  actions:
+    - _id: qfsrv1kxi4fj9zzx
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your bond with the alien denizens of the Dark Tapestry allows you to
@@ -10,23 +26,7 @@ system:
 
       <p>At 11th level, you can see perfectly in darkness of any kind, even in
       absolute darkness or the darkness created by a deeper darkness spell.</p>
-  actions:
-    - _id: qfsrv1kxi4fj9zzx
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_pierceTheVeil
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!Z5JiBMcrm3V0YW90'
+  tag: classFeat_pierceTheVeil
+type: feat
 

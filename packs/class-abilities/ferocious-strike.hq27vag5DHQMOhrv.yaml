@@ -1,8 +1,20 @@
 _id: hq27vag5DHQMOhrv
-name: Ferocious Strike
-type: feat
+_key: '!items!hq27vag5DHQMOhrv'
 img: systems/pf1/icons/feats/greater-weapon-focus.jpg
+name: Ferocious Strike
 system:
+  abilityType: su
+  actions:
+    - _id: 9l9bv374d6hvmxsm
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/feats/greater-weapon-focus.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Whenever you make a melee attack, you can designate that attack as a
@@ -12,22 +24,10 @@ system:
 
       <p>This power replaces the Strength Surge power of the Strength
       Domain.</p>
-  actions:
-    - _id: 9l9bv374d6hvmxsm
-      name: Use
-      img: systems/pf1/icons/feats/greater-weapon-focus.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_ferociousStrike
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!hq27vag5DHQMOhrv'
+  tag: classFeat_ferociousStrike
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

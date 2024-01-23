@@ -1,8 +1,26 @@
 _id: 1zyixa5b6aw7npub
-name: Crushing Hand
-type: spell
+_key: '!items!1zyixa5b6aw7npub'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Crushing Hand
 system:
+  actions:
+    - _id: kfi03rxnloqoqnvo
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: 10-ft. hand
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>interposing hand</i>, except that it can
@@ -15,38 +33,20 @@ system:
       bull rush a target (as <i>forceful hand</i>), using the same bonuses
       outlined above, or it can be directed to interpose itself, as
       <i>interposing hand</i> does.</p>
-  actions:
-    - _id: kfi03rxnloqoqnvo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      spellEffect: 10-ft. hand
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
     domain:
       Strength: 9
   level: 9
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a soft glove
+  school: evo
   source:
     id: PZO1110
     pages: '262'
-_key: '!items!1zyixa5b6aw7npub'
+  types: force
+type: spell
 

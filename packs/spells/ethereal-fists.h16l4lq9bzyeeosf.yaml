@@ -1,19 +1,10 @@
 _id: h16l4lq9bzyeeosf
-name: Ethereal Fists
-type: spell
+_key: '!items!h16l4lq9bzyeeosf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ethereal Fists
 system:
-  description:
-    value: >-
-      <p>Your hands reach simultaneously into the Ethereal and Material planes,
-      allowing you to deal normal damage with claws, unarmed strikes, and touch
-      spells or effects to ethereal creatures. Miss chance due to etherealness
-      (such as from the <i>blink</i> spell) doesn't apply, though miss chance
-      based on concealment does.</p>
   actions:
     - _id: ilmnrkbuubbb3huh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,18 +12,27 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>Your hands reach simultaneously into the Ethereal and Material planes,
+      allowing you to deal normal damage with claws, unarmed strikes, and touch
+      spells or effects to ethereal creatures. Miss chance due to etherealness
+      (such as from the <i>blink</i> spell) doesn't apply, though miss chance
+      based on concealment does.</p>
   learnedAt:
     class:
       magus: 4
       spiritualist: 3
   level: 4
   school: trs
-  components:
-    somatic: true
   sr: false
-_key: '!items!h16l4lq9bzyeeosf'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: DdEqBho3KmfNC5Fp
-name: City Spirit
-type: feat
+_key: '!items!DdEqBho3KmfNC5Fp'
 img: systems/pf1/icons/skills/green_03.jpg
+name: City Spirit
 system:
+  abilityType: su
+  actions:
+    - _id: 29qch84yvxpxfbnr
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a swift action, the shaman channels the city’s spirit through
@@ -11,29 +30,10 @@ system:
 
       <p>She can use this ability for a number of rounds per day equal to 3 +
       her Charisma modifier. These rounds need not be consecutive.</p>
-  actions:
-    - _id: 29qch84yvxpxfbnr
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_citySpirit
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!DdEqBho3KmfNC5Fp'
+  tag: classFeat_citySpirit
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

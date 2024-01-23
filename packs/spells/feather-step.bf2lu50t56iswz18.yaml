@@ -1,17 +1,11 @@
 _id: bf2lu50t56iswz18
-name: Feather Step
-type: spell
+_key: '!items!bf2lu50t56iswz18'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Feather Step
 system:
-  description:
-    value: >-
-      <p>For the duration of this spell, the subject ignores the adverse
-      movement effects of difficult terrain, and can even take 5-foot steps in
-      difficult terrain.</p>
   actions:
     - _id: kqxp4i4xp2s5buda
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,25 +13,31 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>For the duration of this spell, the subject ignores the adverse
+      movement effects of difficult terrain, and can even take 5-foot steps in
+      difficult terrain.</p>
   learnedAt:
     class:
-      druid: 1
-      ranger: 1
       bard: 1
-      psychic: 1
+      druid: 1
       hunter: 1
+      psychic: 1
+      ranger: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!bf2lu50t56iswz18'
+type: spell
 

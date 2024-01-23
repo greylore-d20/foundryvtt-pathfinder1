@@ -1,8 +1,25 @@
 _id: qk3oeq4awbc1smjw
-name: Fiery Body
-type: spell
+_key: '!items!qk3oeq4awbc1smjw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fiery Body
 system:
+  actions:
+    - _id: w7c9wv0dc1rq7k7j
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell transforms your body into living flame. You and your
@@ -22,21 +39,6 @@ system:
       surrounded by a 5-foot radius of steam and bubbles that grant you
       concealment (50% miss chance) but you take 2d6 points of damage each round
       you remain in water.</p>
-  actions:
-    - _id: w7c9wv0dc1rq7k7j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 9
@@ -45,9 +47,7 @@ system:
       Ash: 9
   level: 9
   school: trs
-  types: fire
-  components:
-    verbal: true
   sr: false
-_key: '!items!qk3oeq4awbc1smjw'
+  types: fire
+type: spell
 

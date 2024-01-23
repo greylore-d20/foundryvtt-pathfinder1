@@ -1,8 +1,28 @@
 _id: ef75tkrzjuotgra2
-name: Dimensional Lock
-type: spell
+_key: '!items!ef75tkrzjuotgra2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dimensional Lock
 system:
+  actions:
+    - _id: 0z8c62p6itkpva4b
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation centered on a point in space
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a shimmering emerald barrier that completely blocks
@@ -16,38 +36,18 @@ system:
       form when the spell is cast, nor does it block extradimensional perception
       or attack forms. Also, the spell does not prevent summoned creatures from
       disappearing at the end of a summoning spell.</p>
-  actions:
-    - _id: 0z8c62p6itkpva4b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: 20-ft.-radius emanation centered on a point in space
   learnedAt:
-    class:
-      sorcerer: 8
-      wizard: 8
-      cleric: 8
-      oracle: 8
-      summoner: 6
-      psychic: 8
-      summonerUnchained: 6
     bloodline:
       Accursed: 8
+    class:
+      cleric: 8
+      oracle: 8
+      psychic: 8
+      sorcerer: 8
+      summoner: 6
+      summonerUnchained: 6
+      wizard: 8
   level: 8
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ef75tkrzjuotgra2'
+type: spell
 

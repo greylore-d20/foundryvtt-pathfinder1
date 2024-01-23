@@ -1,7 +1,7 @@
 _id: PI7uxv6NWE1RX7B8
-name: Kit, Vampire Slayer's
-type: container
+_key: '!items!PI7uxv6NWE1RX7B8'
 img: icons/containers/chest/chest-simple-box-gold-brown.webp
+name: Kit, Vampire Slayer's
 system:
   description:
     value: >-
@@ -15,34 +15,47 @@ system:
       owner a +2 bonus on all <em>Charisma</em>-based skill checks made to
       investigate or seek out vampires.</p>
   items:
-    sitIOP5Yl449GrO6:
-      name: Garlic
-      type: loot
-      img: icons/commodities/flowers/lily-white.webp
-      system:
-        description:
-          value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
-            <p>These pungent white cloves serve as food and medicine and play a
-            role in many traditional cleansing rituals. It is well established
-            that <em>vampires</em> cannot abide the presence of garlic
-            (<em>vampires</em> cannot tolerate the strong odor of garlic and
-            will not enter an area laced with it.)</p>
-        weight:
-          value: 1
-        price: 0.1
-        equipped: false
-        subType: gear
+    110cWpBoK3oSO9WM:
+      _id: 110cWpBoK3oSO9WM
       flags:
         core:
-          sourceId: Compendium.pf1.items.vqwyugaticvrbzhn
-      _id: sitIOP5Yl449GrO6
-    110cWpBoK3oSO9WM:
-      name: Wooden Stake
-      type: weapon
+          sourceId: Compendium.pf1.weapons-and-ammo.7zvBqNNlc5i5EtFd
       img: systems/pf1/icons/items/weapons/wooden-stake.png
+      name: Wooden Stake
       system:
+        actions:
+          - _id: zye4zhg9qsamhdqz
+            ability:
+              attack: str
+              critMult: '2'
+              critRange: ''
+              damage: str
+            actionType: mwak
+            activation:
+              type: attack
+              unchained:
+                type: nonaction
+            damage:
+              parts:
+                - formula: sizeRoll(1, 4, @size)
+                  type:
+                    custom: ''
+                    values:
+                      - piercing
+            duration:
+              units: inst
+            formulaicAttacks:
+              bonus:
+                formula: '@formulaicAttack * -5'
+              count:
+                formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+            img: systems/pf1/icons/items/weapons/wooden-stake.png
+            name: Attack
+            range:
+              units: melee
+              value: '10'
+        baseTypes:
+          - Wooden Stake
         description:
           value: >-
             <p><b>Source</b> <em>Ultimate Equipment pg. 17</em>, <em>Pathfinder
@@ -53,59 +66,44 @@ system:
             P</p><p><b>Weapon Groups</b> Close</p><h3>Description</h3><p>This
             close combat weapon is just a sharpened piece of wood. Iron spikes
             that are used as weapons deal damage as wooden stakes.</p>
-        tags:
-          - PFS
-        weight:
-          value: 1
+        hardness: 10
         hp:
           max: 2
           value: 2
-        hardness: 10
-        actions:
-          - _id: zye4zhg9qsamhdqz
-            name: Attack
-            img: systems/pf1/icons/items/weapons/wooden-stake.png
-            activation:
-              type: attack
-              unchained:
-                type: nonaction
-            duration:
-              units: inst
-            range:
-              value: '10'
-              units: melee
-            actionType: mwak
-            damage:
-              parts:
-                - formula: sizeRoll(1, 4, @size)
-                  type:
-                    values:
-                      - piercing
-                    custom: ''
-            formulaicAttacks:
-              count:
-                formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-              bonus:
-                formula: '@formulaicAttack * -5'
-            ability:
-              attack: str
-              damage: str
-              critRange: ''
-              critMult: '2'
         tag: woodenStake
-        baseTypes:
-          - Wooden Stake
+        tags:
+          - PFS
         weaponGroups:
           value:
             - close
+        weight:
+          value: 1
+      type: weapon
+    SDIBRi9UbnNzejZF:
+      _id: SDIBRi9UbnNzejZF
       flags:
         core:
-          sourceId: Compendium.pf1.weapons-and-ammo.7zvBqNNlc5i5EtFd
-      _id: 110cWpBoK3oSO9WM
-    Yp9AF9EirbemACOQ:
-      name: Hammer
+          sourceId: Compendium.pf1.items.gjtuklwkrbqykmdk
+      img: icons/tools/scribal/lens-grey-brown.webp
+      name: Mirror
+      system:
+        description:
+          value: |-
+            <p class="source"><b>Source</b> <em>PZO1110</em></p>
+            <p>A small steel mirror.</p>
+        equipped: false
+        price: 10
+        subType: gear
+        weight:
+          value: 0.5
       type: loot
+    Yp9AF9EirbemACOQ:
+      _id: Yp9AF9EirbemACOQ
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.ieedspgjoepqnfqj
       img: icons/tools/smithing/hammer-maul-steel-grey.webp
+      name: Hammer
       system:
         description:
           value: >-
@@ -114,37 +112,19 @@ system:
             <p>If a <em>hammer</em> is used in combat, treat it as a one-handed
             improvised weapon that deals bludgeoning damage equal to that of a
             spiked gauntlet of its size.</p>
+        equipped: false
+        price: 0.5
+        subType: gear
         weight:
           value: 2
-        price: 0.5
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.ieedspgjoepqnfqj
-      _id: Yp9AF9EirbemACOQ
-    SDIBRi9UbnNzejZF:
-      name: Mirror
       type: loot
-      img: icons/tools/scribal/lens-grey-brown.webp
-      system:
-        description:
-          value: |-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-            <p>A small steel mirror.</p>
-        weight:
-          value: 0.5
-        price: 10
-        equipped: false
-        subType: gear
+    jrEKDhyBCQppknEw:
+      _id: jrEKDhyBCQppknEw
       flags:
         core:
-          sourceId: Compendium.pf1.items.gjtuklwkrbqykmdk
-      _id: SDIBRi9UbnNzejZF
-    jrEKDhyBCQppknEw:
-      name: Holy water
-      type: weapon
+          sourceId: Compendium.pf1.items.CmjSKOVJuQnV8o3S
       img: systems/pf1/icons/items/potions/grand-blue.jpg
+      name: Holy water
       system:
         description:
           value: >-
@@ -172,42 +152,20 @@ system:
             the splash.<br /><br />Temples to good deities sell holy water at
             cost (making no profit). Holy water is made using the bless water
             spell.</p>
+        price: 25
+        subType: misc
+        tag: holyWater
+        weaponSubtype: other
         weight:
           value: 1
-        price: 25
-        tag: holyWater
-        subType: misc
-        weaponSubtype: other
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.CmjSKOVJuQnV8o3S
-      _id: jrEKDhyBCQppknEw
-    p3A1lmYFPjbujRzw:
-      name: Silversheen
-      type: loot
-      img: systems/pf1/icons/items/inventory/dice.jpg
-      system:
-        description:
-          value: >-
-            <p>This shimmering paste-like substance can be applied to a weapon
-            as a <em>standard action</em>. It gives the weapon the properties of
-            <em>alchemical silver</em> for 1 hour, replacing the properties of
-            any other special material it might have. One vial coats a single
-            melee weapon or 20 units of ammunition.</p>
-        price: 250
-        equipped: false
-        cl: 5
-        aura:
-          school: trs
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.pzoofblizyixlcoc
-      _id: p3A1lmYFPjbujRzw
+      type: weapon
     mBi2tDZYb8e0rrxH:
-      name: Holy symbol (Wood)
-      type: loot
+      _id: mBi2tDZYb8e0rrxH
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.s5KkeKPLnneb0WR4
       img: systems/pf1/icons/items/inventory/dice.jpg
+      name: Holy symbol (Wood)
       system:
         description:
           value: >-
@@ -228,12 +186,54 @@ system:
             symbol except that it focuses negative energy and is used by evil
             clerics (or by neutral clerics who want to cast evil spells or
             channel negative energy).</p>
-        price: 1
         equipped: false
+        price: 1
         subType: gear
+      type: loot
+    p3A1lmYFPjbujRzw:
+      _id: p3A1lmYFPjbujRzw
       flags:
         core:
-          sourceId: Compendium.pf1.items.s5KkeKPLnneb0WR4
-      _id: mBi2tDZYb8e0rrxH
-_key: '!items!PI7uxv6NWE1RX7B8'
+          sourceId: Compendium.pf1.items.pzoofblizyixlcoc
+      img: systems/pf1/icons/items/inventory/dice.jpg
+      name: Silversheen
+      system:
+        aura:
+          school: trs
+        cl: 5
+        description:
+          value: >-
+            <p>This shimmering paste-like substance can be applied to a weapon
+            as a <em>standard action</em>. It gives the weapon the properties of
+            <em>alchemical silver</em> for 1 hour, replacing the properties of
+            any other special material it might have. One vial coats a single
+            melee weapon or 20 units of ammunition.</p>
+        equipped: false
+        price: 250
+        subType: gear
+      type: loot
+    sitIOP5Yl449GrO6:
+      _id: sitIOP5Yl449GrO6
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.vqwyugaticvrbzhn
+      img: icons/commodities/flowers/lily-white.webp
+      name: Garlic
+      system:
+        description:
+          value: >-
+            <p class="source"><b>Source</b> <em>PZO9410</em></p>
+
+            <p>These pungent white cloves serve as food and medicine and play a
+            role in many traditional cleansing rituals. It is well established
+            that <em>vampires</em> cannot abide the presence of garlic
+            (<em>vampires</em> cannot tolerate the strong odor of garlic and
+            will not enter an area laced with it.)</p>
+        equipped: false
+        price: 0.1
+        subType: gear
+        weight:
+          value: 1
+      type: loot
+type: container
 

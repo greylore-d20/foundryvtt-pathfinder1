@@ -1,8 +1,17 @@
 _id: Hu9WkLjYU5JhDtzG
-name: Combat Expertise (VIG)
-type: feat
+_key: '!items!Hu9WkLjYU5JhDtzG'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Combat Expertise (VIG)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Vigilante
+  changes:
+    - _id: w4ungcKo
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>The vigilante gains @Compendium[pf1.feats.NFxHebU1XhEs5WJh]{Combat
@@ -11,20 +20,11 @@ system:
       qualified for at the level when he chose Combat Expertise. If the
       vigilante’s Intelligence score is less than 13, it counts as 13 for the
       purpose of meeting the prerequisites of combat feats.</p>
-  changes:
-    - _id: w4ungcKo
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Combat Expertise
         uuid: Compendium.pf1.feats.Item.NFxHebU1XhEs5WJh
-  tag: classFeat_combatExpertiseVig
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!Hu9WkLjYU5JhDtzG'
+  tag: classFeat_combatExpertiseVig
+type: feat
 

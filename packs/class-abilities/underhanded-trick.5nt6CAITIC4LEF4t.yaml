@@ -1,8 +1,20 @@
 _id: 5nt6CAITIC4LEF4t
-name: Underhanded Trick
-type: feat
+_key: '!items!5nt6CAITIC4LEF4t'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Underhanded Trick
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
+  changes:
+    - _id: 5Hk72Pcw
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>A character who selects this talent gains
@@ -13,30 +25,18 @@ system:
       (although she must take the feat as normal). If she succeeds in giving her
       target the blinded condition, the target cannot remove the condition
       during the first round of blindness.</p>
-  tags:
-    - Rogue Talent
-    - Slayer Talent
-    - Ninja Trick
-  changes:
-    - _id: 5Hk72Pcw
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Improved Dirty Trick
         uuid: Compendium.pf1.feats.Item.LUOETW7Fm0oPKKWj
-  tag: classFeat_underhandedTrick
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Slayer
-      - Ninja
-  abilityType: ex
   source:
     id: PZO9466
     pages: '8'
-_key: '!items!5nt6CAITIC4LEF4t'
+  subType: classFeat
+  tag: classFeat_underhandedTrick
+  tags:
+    - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
+type: feat
 

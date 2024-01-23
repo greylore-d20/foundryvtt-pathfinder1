@@ -1,8 +1,27 @@
 _id: TPS8Of5wKGCjIAxB
-name: Pass the Torch
-type: feat
+_key: '!items!TPS8Of5wKGCjIAxB'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Pass the Torch
 system:
+  abilityType: su
+  actions:
+    - _id: xkohpnvmw9ewuf9i
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: seeText
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day as a swift action, you can channel the energy of the
@@ -16,29 +35,10 @@ system:
       ability for a number of rounds equal to 1/2 your oracle level, and you can
       end this ability as a free action. At 5th level and every 5 levels
       thereafter, you can use this ability one additional time per day.</p>
-  actions:
-    - _id: xkohpnvmw9ewuf9i
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_passTheTorch
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!TPS8Of5wKGCjIAxB'
+  tag: classFeat_passTheTorch
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

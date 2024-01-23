@@ -1,33 +1,33 @@
 _id: nBpCfDWgxcTQikDO
-name: 'Liberation Blessing: Freedom''s Shout'
-type: feat
+_key: '!items!nBpCfDWgxcTQikDO'
 img: systems/pf1/icons/spells/wind-grasp-sky-3.jpg
+name: 'Liberation Blessing: Freedom''s Shout'
 system:
-  description:
-    value: >-
-      <p>At 10th level, as a swift action you can emit a 30-foot aura that
-      affects all allies with the liberation blessing described above. This
-      effect lasts for 1 round.</p>
   actions:
     - _id: 3eq257gliyi93zyq
-      name: Use
-      img: systems/pf1/icons/spells/wind-grasp-sky-3.jpg
       activation:
         type: swift
         unchained:
           type: action
       duration:
-        value: '1'
         units: round
+        value: '1'
+      img: systems/pf1/icons/spells/wind-grasp-sky-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
       target:
         value: allies
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_liberationBlessingFreedomsShout
-  subType: classFeat
   associations:
     classes:
       - Warpriest
-_key: '!items!nBpCfDWgxcTQikDO'
+  description:
+    value: >-
+      <p>At 10th level, as a swift action you can emit a 30-foot aura that
+      affects all allies with the liberation blessing described above. This
+      effect lasts for 1 round.</p>
+  subType: classFeat
+  tag: classFeat_liberationBlessingFreedomsShout
+type: feat
 

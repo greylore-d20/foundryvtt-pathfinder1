@@ -1,8 +1,36 @@
 _id: Az0rp0Uf84Ee8PKJ
-name: Water's Fury
-type: feat
+_key: '!items!Az0rp0Uf84Ee8PKJ'
 img: systems/pf1/icons/spells/needles-blue-1.jpg
+name: Water's Fury
 system:
+  abilityType: sp
+  actions:
+    - _id: igxcbdi6vaker3im
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.sorcerer.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/needles-blue-1.jpg
+      name: Use
+      range:
+        units: spec
+        value: 60-ft. line
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you gain the ability to summon a rushing jet of water
@@ -12,35 +40,7 @@ system:
       blinds the target that was struck for 1d6 rounds. A <em>Reflex</em> save
       (DC 10 + 1/2 your sorcerer level + your <em>Charisma</em> bonus) reduces
       the damage by half and negates the blinding effect.</p>
-  actions:
-    - _id: igxcbdi6vaker3im
-      name: Use
-      img: systems/pf1/icons/spells/needles-blue-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: 60-ft. line
-        units: spec
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (floor(@classes.sorcerer.level / 2))d6
-            type:
-              values:
-                - cold
-              custom: ''
-  tag: classFeat_watersFury
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!Az0rp0Uf84Ee8PKJ'
+  tag: classFeat_watersFury
+type: feat
 

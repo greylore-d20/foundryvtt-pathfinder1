@@ -1,8 +1,33 @@
 _id: h9qiwo9kx8d1hqrn
-name: Awaken
-type: spell
+_key: '!items!h9qiwo9kx8d1hqrn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Awaken
 system:
+  actions:
+    - _id: 5f1ljmb1uc6jupvn
+      actionType: spellsave
+      activation:
+        cost: 24
+        type: hour
+        unchained:
+          cost: 24
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: animal or tree touched
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You awaken a tree or animal to human-like sentience. To succeed, you
@@ -24,42 +49,17 @@ system:
       language that you know per point of Intelligence bonus (if any). This
       spell does not function on an animal or plant with an Intelligence greater
       than 2.</p>
-  actions:
-    - _id: 5f1ljmb1uc6jupvn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 24
-        type: hour
-        unchained:
-          cost: 24
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: animal or tree touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       druid: 5
-      shaman: 6
       hunter: 5
+      shaman: 6
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: herbs and oils worth 2,000 gp
     gpValue: 2000
+    value: herbs and oils worth 2,000 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!h9qiwo9kx8d1hqrn'
+  school: trs
+type: spell
 

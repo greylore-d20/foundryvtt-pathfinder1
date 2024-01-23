@@ -1,8 +1,29 @@
 _id: nmn10phn471696dx
-name: Wave Form
-type: spell
+_key: '!items!nmn10phn471696dx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wave Form
 system:
+  actions:
+    - _id: wqa4x07ghrccmugo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transform into a wave of frothing water up to 15 feet wide and 15
@@ -15,41 +36,20 @@ system:
       actions and the like). All creatures and unattended objects in your path
       take 4d6 points of bludgeoning damage and are knocked prone. A successful
       Reflex save prevents a creature from being knocked prone.</p>
-  actions:
-    - _id: wqa4x07ghrccmugo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
       bloodrager: 4
-      shaman: 4
+      cleric: 4
+      druid: 4
       hunter: 4
+      oracle: 4
+      shaman: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
   school: trs
-  types: water
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!nmn10phn471696dx'
+  types: water
+type: spell
 

@@ -1,8 +1,27 @@
 _id: op40qjf9oohlx5nu
-name: Heroes' Feast
-type: spell
+_key: '!items!op40qjf9oohlx5nu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Heroes' Feast
 system:
+  actions:
+    - _id: kv12cgzwf4mdljxa
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour plus 12 hours; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: feast for one creature/level
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You bring forth a great feast, including a magnificent table, chairs,
@@ -16,28 +35,13 @@ system:
       and Will saves and a +4 morale bonus on saving throws against poison and
       fear effects for 12 hours.</p><p>If the feast is interrupted for any
       reason, the spell is ruined and all effects of the spell are negated.</p>
-  actions:
-    - _id: kv12cgzwf4mdljxa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour plus 12 hours; see text
-      range:
-        units: close
-      spellEffect: feast for one creature/level
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 6
+      cleric: 6
       inquisitor: 6
+      oracle: 6
+      warpriest: 6
     domain:
       Community: 6
     subDomain:
@@ -45,14 +49,10 @@ system:
       Revelry: 6
   level: 6
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '295'
-_key: '!items!op40qjf9oohlx5nu'
+  sr: false
+  subschool: creation
+type: spell
 

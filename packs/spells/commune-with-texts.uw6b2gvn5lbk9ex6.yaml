@@ -1,8 +1,26 @@
 _id: uw6b2gvn5lbk9ex6
-name: Commune with Texts
-type: spell
+_key: '!items!uw6b2gvn5lbk9ex6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Commune with Texts
 system:
+  actions:
+    - _id: 3ouws3lgf7acdqz1
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: a collection of texts
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You quickly absorb the knowledge in the target, which can be any
@@ -22,44 +40,26 @@ system:
       lasts. Once during the duration of this spell, for a number of minutes
       equal to your caster level, you can also speak with the texts about anyone
       who has read or handled them previously, as per <i>stone tell</i>.</p>
-  actions:
-    - _id: 3ouws3lgf7acdqz1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      target:
-        value: a collection of texts
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 5
+      cleric: 6
       inquisitor: 6
-      psychic: 6
       medium: 4
       occultist: 4
+      oracle: 6
+      psychic: 6
+      sorcerer: 5
       spiritualist: 6
+      warpriest: 6
+      wizard: 5
   level: 5
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: incense worth 250 gp
     gpValue: 250
+    value: incense worth 250 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!uw6b2gvn5lbk9ex6'
+type: spell
 

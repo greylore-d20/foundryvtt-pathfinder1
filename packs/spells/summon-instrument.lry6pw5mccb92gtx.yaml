@@ -1,8 +1,26 @@
 _id: lry6pw5mccb92gtx
-name: Summon Instrument
-type: spell
+_key: '!items!lry6pw5mccb92gtx'
 img: icons/tools/instruments/lute-gold-brown.webp
+name: Summon Instrument
 system:
+  actions:
+    - _id: s3c5u4ww9rolr5fk
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one summoned handheld musical instrument
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons one handheld musical instrument of your choice. This
@@ -11,32 +29,14 @@ system:
       casting, and it will play only for you. You can't summon an instrument too
       large to be held in two hands.</p><p>The summoned instrument disappears at
       the end of this spell.</p>
-  actions:
-    - _id: s3c5u4ww9rolr5fk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one summoned handheld musical instrument
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
       bard: 0
   level: 0
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lry6pw5mccb92gtx'
+  subschool: summoning
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

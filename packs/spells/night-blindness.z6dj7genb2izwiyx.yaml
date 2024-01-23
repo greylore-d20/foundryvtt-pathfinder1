@@ -1,8 +1,30 @@
 _id: z6dj7genb2izwiyx
-name: Night Blindness
-type: spell
+_key: '!items!z6dj7genb2izwiyx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Night Blindness
 system:
+  actions:
+    - _id: 40powhwha3ia8u7a
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one living creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>Your target's vision becomes impaired as if the light level were one
@@ -12,45 +34,23 @@ system:
       The subject gains a +4 bonus on saving throws to resist the blind or
       dazzled condition caused by bright light (such as flare). <i>Remove
       blindness/deafness</i> dispels <i>night blindness</i>.</p>
-  actions:
-    - _id: 40powhwha3ia8u7a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: one living creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      bard: 1
-      witch: 1
       antipaladin: 1
+      bard: 1
       bloodrager: 1
-      shaman: 2
-      psychic: 1
+      cleric: 2
       mesmerist: 1
+      oracle: 2
+      psychic: 1
+      shaman: 2
+      sorcerer: 1
       spiritualist: 2
+      warpriest: 2
+      witch: 1
+      wizard: 1
   school: nec
-  types: curse
-  components:
-    verbal: true
   sr: false
-_key: '!items!z6dj7genb2izwiyx'
+  types: curse
+type: spell
 

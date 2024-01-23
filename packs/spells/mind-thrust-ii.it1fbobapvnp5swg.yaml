@@ -1,16 +1,11 @@
 _id: it1fbobapvnp5swg
-name: Mind Thrust II
-type: spell
+_key: '!items!it1fbobapvnp5swg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mind Thrust II
 system:
-  description:
-    value: >-
-      <p>This functions as <i>mind thrust I</i>, but the target takes 1d8 points
-      of damage per caster level (maximum 5d8). This spell can be undercast.</p>
   actions:
     - _id: s4ckll06r3o8x16r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,20 +13,25 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will half
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>This functions as <i>mind thrust I</i>, but the target takes 1d8 points
+      of damage per caster level (maximum 5d8). This spell can be undercast.</p>
   learnedAt:
     class:
       psychic: 2
   level: 2
   school: div
-  components:
-    somatic: true
-_key: '!items!it1fbobapvnp5swg'
+type: spell
 

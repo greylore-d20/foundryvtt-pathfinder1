@@ -1,19 +1,11 @@
 _id: xcjp1creu2nn3vjj
-name: Life Conduit
-type: spell
+_key: '!items!xcjp1creu2nn3vjj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Life Conduit
 system:
-  description:
-    value: >-
-      <p>You utilize <i>life conduit</i> to share hit points with your eidolon.
-      While this spell is active, you can spend a swift action to transfer 1d6
-      hit points between you and your eidolon, either taking damage yourself and
-      healing your eidolon or healing yourself and damaging your eidolon. If
-      your eidolon moves farther than 50 feet from you, this spell ends.</p>
   actions:
     - _id: 49vzorglm6pr7ko4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
@@ -21,20 +13,28 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: heal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You utilize <i>life conduit</i> to share hit points with your eidolon.
+      While this spell is active, you can spend a swift action to transfer 1d6
+      hit points between you and your eidolon, either taking damage yourself and
+      healing your eidolon or healing yourself and damaging your eidolon. If
+      your eidolon moves farther than 50 feet from you, this spell ends.</p>
   learnedAt:
     class:
       summoner: 1
       summonerUnchained: 1
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!xcjp1creu2nn3vjj'
+  subschool: healing
+type: spell
 

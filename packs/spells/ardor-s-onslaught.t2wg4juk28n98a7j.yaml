@@ -1,8 +1,32 @@
 _id: t2wg4juk28n98a7j
-name: Ardor's Onslaught
-type: spell
+_key: '!items!t2wg4juk28n98a7j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ardor's Onslaught
 system:
+  actions:
+    - _id: 1w0m15sxoe49i2m6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius burst
+      duration:
+        value: instantaneous or 1d6 rounds; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will partial, see text
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You unleash the power of zealous conviction to smite your enemies with
@@ -17,37 +41,13 @@ system:
       chaotic neutral, lawful neutral, neutral evil, or neutral good, and such
       targets are not nauseated. On a successful Will save, such a creature
       reduces the damage to one-quarter the damage rolled.</p>
-  actions:
-    - _id: 1w0m15sxoe49i2m6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 1d6 rounds; see text
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial, see text
-      area: 20-ft.-radius burst
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
       inquisitor: 4
+      oracle: 4
+      warpriest: 4
   level: 4
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!t2wg4juk28n98a7j'
+type: spell
 

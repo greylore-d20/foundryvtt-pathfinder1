@@ -1,8 +1,32 @@
 _id: jbqo4o2b2tmdz7wv
-name: True Seeing
-type: spell
+_key: '!items!jbqo4o2b2tmdz7wv'
 img: icons/magic/perception/eye-ringed-glow-angry-large-teal.webp
+name: True Seeing
 system:
+  actions:
+    - _id: 1bye3radcja4ygko
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You confer on the subject the ability to see all things as they
@@ -21,66 +45,42 @@ system:
       means. In addition, the spell effects cannot be further enhanced with
       known magic, so one cannot use <i>true seeing</i> through a <i>crystal
       ball</i> or in conjunction with clairaudience/clairvoyance.</p>
-  actions:
-    - _id: 1bye3radcja4ygko
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
+    bloodline:
+      Arcane: 6
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      druid: 7
+      adept: 5
       alchemist: 6
-      summoner: 5
-      witch: 6
+      cleric: 5
+      druid: 7
       inquisitor: 5
       magus: 6
-      adept: 5
-      shaman: 5
-      psychic: 5
       medium: 4
       mesmerist: 6
       occultist: 5
+      oracle: 5
+      psychic: 5
+      shaman: 5
+      sorcerer: 6
       spiritualist: 6
+      summoner: 5
       summonerUnchained: 6
+      warpriest: 5
+      witch: 6
+      wizard: 6
     domain:
       Knowledge: 5
     subDomain:
       Revelation: 5
-    bloodline:
-      Arcane: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: an eye ointment that costs 250 gp
     gpValue: 250
+    value: an eye ointment that costs 250 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   source:
     id: PZO1110
     pages: '363'
-_key: '!items!jbqo4o2b2tmdz7wv'
+type: spell
 

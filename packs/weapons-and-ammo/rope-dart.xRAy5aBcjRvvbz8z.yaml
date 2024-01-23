@@ -1,8 +1,38 @@
 _id: xRAy5aBcjRvvbz8z
-name: Rope Dart
-type: weapon
+_key: '!items!xRAy5aBcjRvvbz8z'
 img: icons/weapons/thrown/dart-feathered.webp
+name: Rope Dart
 system:
+  actions:
+    - _id: dkrj4a47fwuy3fmv
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/weapons/thrown/dart-feathered.webp
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Rope Dart
   description:
     value: >-
       <p>This deceptively complex weapon appears to be nothing more than a
@@ -10,56 +40,16 @@ system:
       meteor hammer, it can be whirled at great speeds, then aimed to strike and
       pierce opponents with great reach. Once it strikes, the wielder can
       quickly retrieve the weapon with a tug of the rope as a free action.</p>
-  tags:
-    - PFS
-  price: 1
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: dkrj4a47fwuy3fmv
-      name: Throw
-      img: icons/weapons/thrown/dart-feathered.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Rope Dart
-  weaponGroups:
-    value:
-      - monk
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 1
   properties:
     blc: true
     dst: true
@@ -67,5 +57,15 @@ system:
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!xRAy5aBcjRvvbz8z'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - monk
+      - thrown
+  weaponSubtype: ranged
+type: weapon
 

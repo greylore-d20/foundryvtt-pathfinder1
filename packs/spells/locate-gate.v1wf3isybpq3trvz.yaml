@@ -1,8 +1,30 @@
 _id: v1wf3isybpq3trvz
-name: Locate Gate
-type: spell
+_key: '!items!v1wf3isybpq3trvz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Locate Gate
 system:
+  actions:
+    - _id: st4euom2i59kldhv
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: circle centered on you with a radius of 400 ft. + 40 ft./level
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: 400  + (40 * @cl)
+        type: circle
+      name: Use
+      range:
+        units: long
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You sense the direction of the nearest <i><i>teleport</i>ation
@@ -20,44 +42,22 @@ system:
       water, or other physical environmental conditions, but it is blocked by
       any intervening area that is dimensionally warded (such as by
       <i>dimensional lock</i> or forbiddance).</p>
-  actions:
-    - _id: st4euom2i59kldhv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: 400  + (40 * @cl)
-      area: circle centered on you with a radius of 400 ft. + 40 ft./level
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 5
-      summoner: 5
-      psychic: 5
+      cleric: 5
       occultist: 5
+      oracle: 5
+      psychic: 5
+      sorcerer: 5
+      summoner: 5
       summonerUnchained: 5
+      warpriest: 5
+      wizard: 5
   level: 5
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a small lodestone sphere
+  school: div
   sr: false
-_key: '!items!v1wf3isybpq3trvz'
+type: spell
 

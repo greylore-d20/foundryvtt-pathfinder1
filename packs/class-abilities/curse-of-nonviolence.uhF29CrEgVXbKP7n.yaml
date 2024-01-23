@@ -1,8 +1,30 @@
 _id: uhF29CrEgVXbKP7n
-name: Curse of Nonviolence
-type: feat
+_key: '!items!uhF29CrEgVXbKP7n'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Curse of Nonviolence
 system:
+  abilityType: su
+  actions:
+    - _id: 24hb7psd0t3hawmn
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: perm
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can curse a creature to prevent it from attacking innocents.
@@ -16,32 +38,10 @@ system:
       @Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish} spell.</p><p>Whether or not
       the save is successful, a creature cannot be the target of this hex again
       for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_curseOfNonviolence
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: 24hb7psd0t3hawmn
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: perm
-      target:
-        value: one creature
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-  tag: classFeat_curseOfNonviolence
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!uhF29CrEgVXbKP7n'
+type: feat
 

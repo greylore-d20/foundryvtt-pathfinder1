@@ -1,8 +1,26 @@
 _id: 4br9puuneexco5hx
-name: Contingency
-type: spell
+_key: '!items!4br9puuneexco5hx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contingency
 system:
+  actions:
+    - _id: SGpFnrSJWJnA9mfn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: ''
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can place another spell upon your person so that it comes into
@@ -24,35 +42,17 @@ system:
       occurs based solely on the stated conditions, regardless of whether you
       want it to.</p><p>You can use only one <i>contingency</i> spell at a time;
       if a second is cast, the first one (if still active) is dispelled.</p>
-  actions:
-    - _id: SGpFnrSJWJnA9mfn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: ''
-      range:
-        units: personal
   learnedAt:
     class:
+      occultist: 6
+      psychic: 6
       sorcerer: 6
       wizard: 6
-      psychic: 6
-      occultist: 6
   level: 6
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: quicksilver and an eyelash of a spell-using creature
     focus: ivory statuette of you worth 1,500 gp
+    value: quicksilver and an eyelash of a spell-using creature
+  school: evo
   sr: false
-_key: '!items!4br9puuneexco5hx'
+type: spell
 

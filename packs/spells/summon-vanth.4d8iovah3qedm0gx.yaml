@@ -1,17 +1,10 @@
 _id: 4d8iovah3qedm0gx
-name: Summon Vanth
-type: spell
+_key: '!items!4d8iovah3qedm0gx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Vanth
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster</i>, except that it summons
-      a single vanth psychopomp. Vanth psychopomps are detailed on page 221 of
-      <i>Pathfinder RPG Bestiary 4</i>.</p>
   actions:
     - _id: frwbx4p1sii0v7jl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -19,29 +12,36 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned vanth psychopomp
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster</i>, except that it summons
+      a single vanth psychopomp. Vanth psychopomps are detailed on page 221 of
+      <i>Pathfinder RPG Bestiary 4</i>.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 6
       summoner: 5
-      witch: 6
       summonerUnchained: 5
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a vulture skull funerary mask
+  school: con
   sr: false
-_key: '!items!4d8iovah3qedm0gx'
+  subschool: summoning
+type: spell
 

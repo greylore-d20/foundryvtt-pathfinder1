@@ -1,16 +1,10 @@
 _id: psrxebolpvm64xlg
-name: Corrosive Touch
-type: spell
+_key: '!items!psrxebolpvm64xlg'
 img: icons/magic/unholy/hand-grasping-green.webp
+name: Corrosive Touch
 system:
-  description:
-    value: >-
-      <p>Your successful melee touch attack deals 1d4 points of acid damage per
-      caster level (maximum 5d4).</p>
   actions:
     - _id: 8sohfkn0pugplbko
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,23 +12,29 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: creature or object touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: creature or object touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your successful melee touch attack deals 1d4 points of acid damage per
+      caster level (maximum 5d4).</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      summoner: 1
-      magus: 1
       bloodrager: 1
+      magus: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      wizard: 1
   school: con
   subschool: creation
   types: acid
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!psrxebolpvm64xlg'
+type: spell
 

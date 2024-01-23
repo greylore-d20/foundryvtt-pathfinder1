@@ -1,18 +1,11 @@
 _id: 9hi94t05i449j5ul
-name: Share Memory
-type: spell
+_key: '!items!9hi94t05i449j5ul'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Share Memory
 system:
-  description:
-    value: >-
-      <p>You momentarily link your mind with the target and share a single
-      memory of no longer than 1 minute. You can show the target one of your
-      memories, show the target one of its own memories, or view one of the
-      target's memories.</p>
   actions:
     - _id: pvavabxthkssj597
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,28 +13,35 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: you and one creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: you and one creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You momentarily link your mind with the target and share a single
+      memory of no longer than 1 minute. You can show the target one of your
+      memories, show the target one of its own memories, or view one of the
+      target's memories.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!9hi94t05i449j5ul'
+type: spell
 

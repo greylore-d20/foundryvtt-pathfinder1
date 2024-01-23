@@ -1,8 +1,61 @@
 _id: 9meWuDhxKqBDil51
-name: Poisoned Sand Tube
-type: weapon
+_key: '!items!9meWuDhxKqBDil51'
 img: systems/pf1/icons/items/weapons/blowgun.PNG
+name: Poisoned Sand Tube
 system:
+  actions:
+    - _id: xmgzzurict914bso
+      ability:
+        attack: dex
+        critMult: 0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      area: Cone
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/blowgun.PNG
+      measureTemplate:
+        size: '15'
+        type: cone
+      name: Blow Sand
+      range:
+        units: ft
+        value: '15'
+      save:
+        dc: '12'
+        description: Fortitude negates
+        type: fort
+    - _id: ipJnX0SfXIGYQOPN
+      ability:
+        attack: dex
+        critMult: 0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      area: Cone
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/blowgun.PNG
+      measureTemplate:
+        size: '15'
+        type: cone
+      name: Blow Poison
+      range:
+        units: ft
+        value: '15'
+  baseTypes:
+    - Poisoned Sand Tube
   description:
     value: >-
       <p>Resembling a slim scroll case made of bamboo or metal, this tube is
@@ -16,84 +69,31 @@ system:
       must be repacked before it can be used again. Repacking a tube requires a
       full-round action, or a standard action if you have the Rapid Reload
       feat.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 1
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: xmgzzurict914bso
-      name: Blow Sand
-      img: systems/pf1/icons/items/weapons/blowgun.PNG
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '15'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '15'
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        critMult: 0
-      save:
-        dc: '12'
-        type: fort
-        description: Fortitude negates
-      ammoType: none
-      area: Cone
-    - _id: ipJnX0SfXIGYQOPN
-      name: Blow Poison
-      img: systems/pf1/icons/items/weapons/blowgun.PNG
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '15'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '15'
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        critMult: 0
-      ammoType: none
-      area: Cone
-  uses:
-    per: single
-  baseTypes:
-    - Poisoned Sand Tube
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: martial
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 1
   properties:
     spc: true
   source:
     id: PZO9452
     pages: '0'
-_key: '!items!9meWuDhxKqBDil51'
+  subType: martial
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 1
+type: weapon
 

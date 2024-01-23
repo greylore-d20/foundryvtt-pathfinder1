@@ -1,8 +1,27 @@
 _id: vEoPg08w2QIYnMua
-name: Ghoulish Claws
-type: feat
+_key: '!items!vEoPg08w2QIYnMua'
 img: systems/pf1/icons/skills/affliction_15.jpg
+name: Ghoulish Claws
 system:
+  abilityType: su
+  actions:
+    - _id: fhm2yiytk8eufpbg
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_15.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>Starting at 1st level, you can grow claws as a <em>free action</em>.
@@ -20,29 +39,10 @@ system:
       this ability, your levels in <em>sorcerer</em> stack with your racial
       <em>Hit Dice</em> when determining the DC of your <em>paralysis</em> and
       <em>disease</em> special abilities.</p>
-  actions:
-    - _id: fhm2yiytk8eufpbg
-      name: Use
-      img: systems/pf1/icons/skills/affliction_15.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_ghoulishClaws
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!vEoPg08w2QIYnMua'
+  tag: classFeat_ghoulishClaws
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

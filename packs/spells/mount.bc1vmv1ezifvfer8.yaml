@@ -1,17 +1,10 @@
 _id: bc1vmv1ezifvfer8
-name: Mount
-type: spell
+_key: '!items!bc1vmv1ezifvfer8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mount
 system:
-  description:
-    value: >-
-      <p>You summon a light horse or a pony (your choice) to serve you as a
-      mount (see the <i>Pathfinder RPG Bestiary</i>). The steed serves willingly
-      and well. The mount comes with a bit and bridle and a riding saddle.</p>
   actions:
     - _id: nl8oi2vnxmh3ki5a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -19,27 +12,34 @@ system:
           type: action
       duration:
         value: 2 hours/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one mount
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You summon a light horse or a pony (your choice) to serve you as a
+      mount (see the <i>Pathfinder RPG Bestiary</i>). The steed serves willingly
+      and well. The mount comes with a bit and bridle and a riding saddle.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      summoner: 1
-      witch: 1
-      magus: 1
       bloodrager: 1
+      magus: 1
       occultist: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      witch: 1
+      wizard: 1
   materials:
     value: a bit of horse hair
+  school: con
   sr: false
-_key: '!items!bc1vmv1ezifvfer8'
+  subschool: summoning
+type: spell
 

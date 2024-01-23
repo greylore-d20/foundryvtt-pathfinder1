@@ -1,8 +1,31 @@
 _id: ocbjt6z7amc3yn8w
-name: Remove Disease
-type: spell
+_key: '!items!ocbjt6z7amc3yn8w'
 img: icons/magic/life/cross-explosion-burst-green.webp
+name: Remove Disease
 system:
+  actions:
+    - _id: pcnxa3fuo9suex9v
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Remove disease</i> can cure all diseases from which the subject is
@@ -12,46 +35,23 @@ system:
       including green slime and others.</p><p>Since the spell's duration is
       instantaneous, it does not prevent reinfection after a new exposure to the
       same disease at a later date.</p>
-  actions:
-    - _id: pcnxa3fuo9suex9v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      ranger: 3
-      alchemist: 3
-      witch: 3
-      inquisitor: 3
       adept: 3
-      spiritualist: 3
+      alchemist: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      inquisitor: 3
+      oracle: 3
+      ranger: 3
+      spiritualist: 3
+      warpriest: 3
+      witch: 3
     subDomain:
       Restoration: 2
   level: 3
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ocbjt6z7amc3yn8w'
+type: spell
 

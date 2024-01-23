@@ -1,8 +1,28 @@
 _id: sJdBOE9lwz5XAkUi
-name: Wild Shape
-type: feat
+_key: '!items!sJdBOE9lwz5XAkUi'
 img: systems/pf1/icons/skills/green_21.jpg
+name: Wild Shape
 system:
+  abilityType: su
+  actions:
+    - _id: t1lo0qlokxp4kze3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@attributes.hd.total'
+      img: systems/pf1/icons/skills/green_21.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: Self
+  associations:
+    classes:
+      - Druid
   description:
     value: >-
       <p>At 4th level, a druid gains the ability to turn herself into any small
@@ -52,33 +72,13 @@ system:
       @UUID[Compendium.pf1.spells.Item.v42t5kpxc8mvd615]{elemental body IV}.
       When taking the form of a plant, the druid’s wild shape now functions as
       @UUID[Compendium.pf1.spells.Item.sheso071mxbywlah]{plant shape III}.</p>
-  actions:
-    - _id: t1lo0qlokxp4kze3
-      name: Use
-      img: systems/pf1/icons/skills/green_21.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@attributes.hd.total'
-        units: hour
-      target:
-        value: Self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: min(floor((@classes.druid.level - 2) / 2), 8)
-  tag: classFeat_wildShape
-  subType: classFeat
-  associations:
-    classes:
-      - Druid
-  abilityType: su
   source:
     id: PZO1110
     pages: '51'
-_key: '!items!sJdBOE9lwz5XAkUi'
+  subType: classFeat
+  tag: classFeat_wildShape
+  uses:
+    maxFormula: min(floor((@classes.druid.level - 2) / 2), 8)
+    per: day
+type: feat
 

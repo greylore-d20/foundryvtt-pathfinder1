@@ -1,8 +1,26 @@
 _id: srrjwsz443yphzr9
-name: Blood Salvation
-type: spell
+_key: '!items!srrjwsz443yphzr9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Salvation
 system:
+  actions:
+    - _id: m1jlbur672mlsqeq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D; see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>While under the effect of this spell, you're immune to any damaging
@@ -11,29 +29,11 @@ system:
       if you do, you're immune to that particular casting of that spell as well.
       If you have the blood casting class feature, you can cast this spell as a
       swift action instead of a standard action while you're in a bloodrage.</p>
-  actions:
-    - _id: m1jlbur672mlsqeq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D; see below)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       bloodrager: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!srrjwsz443yphzr9'
+type: spell
 

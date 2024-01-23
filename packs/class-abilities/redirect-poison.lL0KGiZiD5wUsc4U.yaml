@@ -1,8 +1,20 @@
 _id: lL0KGiZiD5wUsc4U
-name: Redirect Poison
-type: feat
+_key: '!items!lL0KGiZiD5wUsc4U'
 img: systems/pf1/icons/items/weapons/rhoka.PNG
+name: Redirect Poison
 system:
+  abilityType: ex
+  actions:
+    - _id: 3ywalma2giwbo0in
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/items/weapons/rhoka.PNG
+      name: Use
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>The slayer can divert poisoned attacks against him. When a creature
@@ -19,21 +31,9 @@ system:
       <p>This ability cannot affect a creature that attacked the slayer with a
       poisoned natural weapon, but it can affect a creature that attacked him
       with a poisoned manufactured weapon.</p>
+  subType: classFeat
+  tag: classFeat_redirectPoison
   tags:
     - Slayer Talent
-  actions:
-    - _id: 3ywalma2giwbo0in
-      name: Use
-      img: systems/pf1/icons/items/weapons/rhoka.PNG
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_redirectPoison
-  subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
-_key: '!items!lL0KGiZiD5wUsc4U'
+type: feat
 

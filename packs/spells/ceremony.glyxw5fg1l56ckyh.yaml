@@ -1,8 +1,34 @@
 _id: glyxw5fg1l56ckyh
-name: Ceremony
-type: spell
+_key: '!items!glyxw5fg1l56ckyh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ceremony
 system:
+  actions:
+    - _id: b6h1w3bl05guhicu
+      actionType: spellsave
+      activation:
+        cost: 8
+        type: hour
+        unchained:
+          cost: 8
+          type: hour
+      duration:
+        value: 1 hour/level or 1 day/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: >-
+          willing, living creature or creatures touched or one creature/level
+          (see text)
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You harness divine power to create one of four different ceremonies-a
@@ -151,37 +177,11 @@ system:
       creatures in the affected area attempting to cast spells to first succeed
       at DC 13 concentration checks for 1 round. <i>Augmented</i>: The DC is 15
       for 3 rounds.</p>
-  actions:
-    - _id: b6h1w3bl05guhicu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 8
-        type: hour
-        unchained:
-          cost: 8
-          type: hour
-      duration:
-        value: 1 hour/level or 1 day/level (see text)
-      target:
-        value: >-
-          willing, living creature or creatures touched or one creature/level
-          (see text)
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
       oracle: 1
+      warpriest: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!glyxw5fg1l56ckyh'
+type: spell
 

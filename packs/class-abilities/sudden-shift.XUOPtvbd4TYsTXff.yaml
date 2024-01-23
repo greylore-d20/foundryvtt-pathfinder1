@@ -1,8 +1,26 @@
 _id: XUOPtvbd4TYsTXff
-name: Sudden Shift
-type: feat
+_key: '!items!XUOPtvbd4TYsTXff'
 img: systems/pf1/icons/skills/violet_10.jpg
+name: Sudden Shift
 system:
+  abilityType: sp
+  actions:
+    - _id: aeyd7gapex91kmpv
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_10.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>In the blink of an eye, you can appear somewhere else. As an immediate
@@ -12,28 +30,10 @@ system:
       each day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Copycat power of the Trickery Domain.</p>
-  actions:
-    - _id: aeyd7gapex91kmpv
-      name: Use
-      img: systems/pf1/icons/skills/violet_10.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_suddenShift
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
-_key: '!items!XUOPtvbd4TYsTXff'
+  tag: classFeat_suddenShift
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

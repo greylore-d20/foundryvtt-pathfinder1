@@ -1,19 +1,11 @@
 _id: 1ynz09dpvh57m7t5
-name: Crimson Breath
-type: spell
+_key: '!items!1ynz09dpvh57m7t5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Crimson Breath
 system:
-  description:
-    value: >-
-      <p>When you cast this spell, your salivary glands transform and instantly
-      fill with potent venom. Make a ranged touch attack against a single target
-      in range; if you hit, the target is affected by a dose of breath of the
-      mantis god (see page 158). The Fortitude save DC for this poison is the
-      same as the spell's DC, not the standard save DC for the poison.</p>
   actions:
     - _id: al1cvvuf8pixjjh1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,29 +13,37 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
-  learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
-      alchemist: 4
-      witch: 4
-      hunter: 4
-  level: 4
-  school: trs
+        type: fort
+      target:
+        value: one creature
   components:
     somatic: true
+  description:
+    value: >-
+      <p>When you cast this spell, your salivary glands transform and instantly
+      fill with potent venom. Make a ranged touch attack against a single target
+      in range; if you hit, the target is affected by a dose of breath of the
+      mantis god (see page 158). The Fortitude save DC for this poison is the
+      same as the spell's DC, not the standard save DC for the poison.</p>
+  learnedAt:
+    class:
+      alchemist: 4
+      cleric: 4
+      druid: 4
+      hunter: 4
+      oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
+  level: 4
+  school: trs
   sr: false
-_key: '!items!1ynz09dpvh57m7t5'
+type: spell
 

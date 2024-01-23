@@ -1,8 +1,31 @@
 _id: nb9ijjhie5l7x2ir
-name: Out of Sight
-type: spell
+_key: '!items!nb9ijjhie5l7x2ir'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Out of Sight
 system:
+  actions:
+    - _id: svmtc7g2p0a7nifi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The spell inhibits the memories of creatures that perceive you. While
@@ -16,38 +39,15 @@ system:
       to itself or its environment. For instance, a guard will remember running,
       and may notice a newly unlocked door, but will not remember that he was
       chasing after you.</p>
-  actions:
-    - _id: svmtc7g2p0a7nifi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D); see text
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      psychic: 4
       medium: 3
       mesmerist: 3
+      psychic: 4
   level: 4
-  school: enc
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a strip of black cloth
-_key: '!items!nb9ijjhie5l7x2ir'
+  school: enc
+  types: mind-affecting
+type: spell
 

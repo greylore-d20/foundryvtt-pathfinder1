@@ -1,8 +1,26 @@
 _id: s0jumWNJU25qqe2U
-name: Tugging Strands
-type: feat
+_key: '!items!s0jumWNJU25qqe2U'
 img: systems/pf1/icons/spells/shielding-fire-2.jpg
+name: Tugging Strands
 system:
+  abilityType: su
+  actions:
+    - _id: n52t6yhh5jrjv2x9
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/shielding-fire-2.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can force a creature within line of sight to reroll
@@ -12,28 +30,10 @@ system:
       one additional time per day for every 6 levels beyond 8th.</p>
 
       <p>This pwoer replaces the Good Fortune power of the Luck Domain.</p>
-  actions:
-    - _id: n52t6yhh5jrjv2x9
-      name: Use
-      img: systems/pf1/icons/spells/shielding-fire-2.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 2) / 6)
-  tag: classFeat_tuggingStrands
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!s0jumWNJU25qqe2U'
+  tag: classFeat_tuggingStrands
+  uses:
+    maxFormula: floor((@classes.cleric.level - 2) / 6)
+    per: day
+type: feat
 

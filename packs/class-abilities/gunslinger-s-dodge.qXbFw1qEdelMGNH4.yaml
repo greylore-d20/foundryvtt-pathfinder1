@@ -1,8 +1,20 @@
 _id: qXbFw1qEdelMGNH4
-name: Gunslinger's Dodge
-type: feat
+_key: '!items!qXbFw1qEdelMGNH4'
 img: systems/pf1/icons/feats/dodge.jpg
+name: Gunslinger's Dodge
 system:
+  abilityType: ex
+  actions:
+    - _id: uGRBMDP0zp08yMJL
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/feats/dodge.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 1st level, the gunslinger gains an uncanny knack for getting out of
@@ -14,21 +26,9 @@ system:
       gain a +4 bonus to AC against the triggering attack. The gunslinger can
       only perform this deed while wearing medium or light armor, and while
       carrying no more than a light load.</p>
+  subType: classFeat
+  tag: classFeat_gunslingersDodge
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: uGRBMDP0zp08yMJL
-      name: Use
-      img: systems/pf1/icons/feats/dodge.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_gunslingersDodge
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!qXbFw1qEdelMGNH4'
+type: feat
 

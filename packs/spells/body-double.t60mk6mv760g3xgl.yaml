@@ -1,8 +1,31 @@
 _id: t60mk6mv760g3xgl
-name: Body Double
-type: spell
+_key: '!items!t60mk6mv760g3xgl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Body Double
 system:
+  actions:
+    - _id: ez50c2ylwl2ajsge
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: two creatures; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, choose a primary target and a secondary
@@ -19,40 +42,17 @@ system:
       the targets is not fooled by this spell (even if the spell fooled that
       creature earlier), and its attacks, targeted spells, and other actions
       affect targets as normal.</p>
-  actions:
-    - _id: ez50c2ylwl2ajsge
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: two creatures; see text
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      bard: 2
+      bloodrager: 2
+      magus: 2
       sorcerer: 2
       wizard: 2
-      bard: 2
-      magus: 2
-      bloodrager: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: two glass beads
-_key: '!items!t60mk6mv760g3xgl'
+  school: ill
+  subschool: glamer
+type: spell
 

@@ -1,8 +1,31 @@
 _id: p5cqz8mzfy93ztee
-name: Grim Stalker
-type: spell
+_key: '!items!p5cqz8mzfy93ztee'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Grim Stalker
 system:
+  actions:
+    - _id: f0yrn5jlclsuuzce
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object); see text
+        type: will
+      target:
+        value: one object touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You bind spirits of ill fate to an object, focusing their wrath onto
@@ -38,45 +61,22 @@ system:
       stalker immediately attacks the affected creature, persisting until either
       it or the creature is slain, at which point the spell effect (and the
       warhound) disappears.</p>
-  actions:
-    - _id: f0yrn5jlclsuuzce
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: one object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object); see text
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
-      summoner: 6
-      witch: 7
       magus: 6
+      oracle: 7
       shaman: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
+  materials:
+    value: a hound's fang
   school: nec
   subschool: haunted
   types: death, emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: a hound's fang
-_key: '!items!p5cqz8mzfy93ztee'
+type: spell
 

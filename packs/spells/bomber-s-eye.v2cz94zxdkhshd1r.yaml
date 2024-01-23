@@ -1,18 +1,10 @@
 _id: v2cz94zxdkhshd1r
-name: Bomber's Eye
-type: spell
+_key: '!items!v2cz94zxdkhshd1r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bomber's Eye
 system:
-  description:
-    value: >-
-      <p>This extract allows you to throw weapons farther and more accurately.
-      While this extract is in effect, increase the range of any thrown weapon
-      by 10 feet. In addition, you receive a +1 insight bonus on attack rolls
-      made with thrown weapons.</p>
   actions:
     - _id: o17kjsh0d4a90x37
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,16 +12,24 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>This extract allows you to throw weapons farther and more accurately.
+      While this extract is in effect, increase the range of any thrown weapon
+      by 10 feet. In addition, you receive a +1 insight bonus on attack rolls
+      made with thrown weapons.</p>
   learnedAt:
     class:
       alchemist: 1
   school: trs
-  components:
-    somatic: true
   sr: false
-_key: '!items!v2cz94zxdkhshd1r'
+type: spell
 

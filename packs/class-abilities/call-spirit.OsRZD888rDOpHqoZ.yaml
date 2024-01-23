@@ -1,17 +1,11 @@
 _id: OsRZD888rDOpHqoZ
-name: Call Spirit
-type: feat
+_key: '!items!OsRZD888rDOpHqoZ'
 img: systems/pf1/icons/skills/affliction_07.jpg
+name: Call Spirit
 system:
-  description:
-    value: >-
-      <p>At 16th level, a spiritualist gains the ability to use
-      @Compendium[pf1.spells.k0ihiqhfppkchs1j]{Call Spirit} as a spell-like
-      ability once per day.</p>
+  abilityType: sp
   actions:
     - _id: qbdsfy2yojybiqq0
-      name: Use
-      img: systems/pf1/icons/skills/affliction_07.jpg
       activation:
         cost: 10
         type: minute
@@ -20,17 +14,23 @@ system:
           type: minute
       duration:
         units: seeText
+      img: systems/pf1/icons/skills/affliction_07.jpg
+      name: Use
       range:
-        value: '10'
         units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_callSpirit
-  subType: classFeat
+        value: '10'
   associations:
     classes:
       - Spiritualist
-  abilityType: sp
-_key: '!items!OsRZD888rDOpHqoZ'
+  description:
+    value: >-
+      <p>At 16th level, a spiritualist gains the ability to use
+      @Compendium[pf1.spells.k0ihiqhfppkchs1j]{Call Spirit} as a spell-like
+      ability once per day.</p>
+  subType: classFeat
+  tag: classFeat_callSpirit
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,8 +1,26 @@
 _id: z7n412mo4qaxxb4h
-name: Tectonic Communion
-type: spell
+_key: '!items!z7n412mo4qaxxb4h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tectonic Communion
 system:
+  actions:
+    - _id: rh0jnsmwsrr22ilw
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Tectonic communion</i> functions as <i>commune with nature</i> with
@@ -15,29 +33,11 @@ system:
       unknowable blots in your perception of the spell's area; you're aware of
       their location and existence, but can't discern any information regarding
       them.</p>
-  actions:
-    - _id: rh0jnsmwsrr22ilw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       druid: 7
   level: 7
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!z7n412mo4qaxxb4h'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: 0wahvj06h5eak2fk
-name: Placebo Effect
-type: spell
+_key: '!items!0wahvj06h5eak2fk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Placebo Effect
 system:
+  actions:
+    - _id: 8h5l1r1qzf7jaxiy
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will disbelief
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>The subject temporarily ceases to feel the ill effects of a single
@@ -16,40 +39,17 @@ system:
       temporarily negate any damage that the affliction may have already caused,
       nor does it provide protection against receiving such conditions
       again.</p>
-  actions:
-    - _id: 8h5l1r1qzf7jaxiy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief
-        harmless: true
   learnedAt:
     class:
-      psychic: 2
       medium: 2
       mesmerist: 2
+      psychic: 2
   level: 2
-  school: ill
-  subschool: phantasm
-  types: mind-affecting
-  components:
-    verbal: true
-    material: true
   materials:
     value: a sugar cube
+  school: ill
   sr: false
-_key: '!items!0wahvj06h5eak2fk'
+  subschool: phantasm
+  types: mind-affecting
+type: spell
 

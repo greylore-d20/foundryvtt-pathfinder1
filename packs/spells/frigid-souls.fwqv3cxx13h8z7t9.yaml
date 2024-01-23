@@ -1,8 +1,31 @@
 _id: fwqv3cxx13h8z7t9
-name: Frigid Souls
-type: spell
+_key: '!items!fwqv3cxx13h8z7t9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Frigid Souls
 system:
+  actions:
+    - _id: 2gylrplownawcglb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-ft. cube/level (S)
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You harness the Irriseni people's palpable fear of their frozen
@@ -20,46 +43,23 @@ system:
       with the highest-level abjuration effects and work their way down the
       list. Each time the haunt attempts a dispel check, the spell's haunt-like
       manifestation occurs during that round.</p>
-  actions:
-    - _id: 2gylrplownawcglb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: one 5-ft. cube/level (S)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      ranger: 3
-      witch: 4
-      shaman: 4
       hunter: 3
+      oracle: 4
+      ranger: 3
+      shaman: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
+  materials:
+    value: a bloody icicle
   school: nec
   subschool: haunted
   types: cold, emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: a bloody icicle
-_key: '!items!fwqv3cxx13h8z7t9'
+type: spell
 

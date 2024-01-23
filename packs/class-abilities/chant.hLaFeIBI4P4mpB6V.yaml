@@ -1,8 +1,20 @@
 _id: hLaFeIBI4P4mpB6V
-name: Chant
-type: feat
+_key: '!items!hLaFeIBI4P4mpB6V'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Chant
 system:
+  abilityType: su
+  actions:
+    - _id: 72x3rvyktv7xmhgn
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>A shaman can chant as a move action. Any creature that is within 30
@@ -11,19 +23,7 @@ system:
       round.</p>
 
       <p>A shaman cannot select both this hex and the witch’s cackle hex.</p>
-  actions:
-    - _id: 72x3rvyktv7xmhgn
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_chant
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!hLaFeIBI4P4mpB6V'
+  tag: classFeat_chant
+type: feat
 

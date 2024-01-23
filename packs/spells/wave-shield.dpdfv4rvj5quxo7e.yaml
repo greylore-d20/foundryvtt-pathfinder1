@@ -1,8 +1,24 @@
 _id: dpdfv4rvj5quxo7e
-name: Wave Shield
-type: spell
+_key: '!items!dpdfv4rvj5quxo7e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wave Shield
 system:
+  actions:
+    - _id: 18wcckavsthqevlv
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You create a rushing torrent of water in the rough outline of a shield.
@@ -10,34 +26,18 @@ system:
       and fire resistance equal to half your caster level (minimum 1) on that
       attack. Once the spell has reduced the damage of one attack against you,
       it is discharged.</p>
-  actions:
-    - _id: 18wcckavsthqevlv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
-      witch: 1
-      magus: 1
       bloodrager: 1
-      shaman: 1
+      druid: 1
       hunter: 1
+      magus: 1
+      shaman: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: abj
-  types: water
-  components:
-    verbal: true
   sr: false
-_key: '!items!dpdfv4rvj5quxo7e'
+  types: water
+type: spell
 

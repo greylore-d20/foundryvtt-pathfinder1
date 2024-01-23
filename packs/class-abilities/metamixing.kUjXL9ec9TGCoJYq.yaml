@@ -1,8 +1,20 @@
 _id: kUjXL9ec9TGCoJYq
-name: Metamixing
-type: feat
+_key: '!items!kUjXL9ec9TGCoJYq'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Metamixing
 system:
+  abilityType: su
+  actions:
+    - _id: 7bx9gis8yy5he3ci
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can expend 1 point from her arcane reservoir to add a
@@ -11,21 +23,9 @@ system:
       can use this ability to add a metamagic feat to a spell that she prepared
       using a metamagic feat, although she cannot add the same metamagic feat to
       a given spell more than once.</p>
+  subType: classFeat
+  tag: classFeat_metamixing
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 7bx9gis8yy5he3ci
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_metamixing
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!kUjXL9ec9TGCoJYq'
+type: feat
 

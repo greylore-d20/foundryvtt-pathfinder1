@@ -1,8 +1,25 @@
 _id: ln100z6lxk83ryb6
-name: Spirit Bonds
-type: spell
+_key: '!items!ln100z6lxk83ryb6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spirit Bonds
 system:
+  actions:
+    - _id: rqo57xdg0phvb5m7
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you; see text
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You heighten your awareness of up to one willing creature or object per
@@ -24,38 +41,21 @@ system:
       connection with that character, and you can no longer learn information
       about that creature through this spell, but doing so does not impact the
       remaining duration you have linked to other creatures or objects.</p>
-  actions:
-    - _id: rqo57xdg0phvb5m7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you; see text
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
       oracle: 3
-      witch: 3
       shaman: 3
+      warpriest: 3
+      witch: 3
   level: 3
-  school: div
-  types: meditative
-  components:
-    verbal: true
-    material: true
   materials:
-    value: soothing incense worth 300 gp
     gpValue: 300
+    value: soothing incense worth 300 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!ln100z6lxk83ryb6'
+  types: meditative
+type: spell
 

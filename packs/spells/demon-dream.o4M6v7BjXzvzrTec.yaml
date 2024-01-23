@@ -1,8 +1,48 @@
 _id: o4M6v7BjXzvzrTec
-name: Demon Dream
-type: spell
+_key: '!items!o4M6v7BjXzvzrTec'
 img: icons/magic/perception/eye-ringed-glow-angry-large-teal.webp
+name: Demon Dream
 system:
+  actions:
+    - _id: 84hyc8bi93nz4l74
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: see text
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/perception/eye-ringed-glow-angry-large-teal.webp
+      name: Nightmare
+      range:
+        units: unlimited
+      save:
+        description: see text
+        type: will
+      target:
+        value: one living creature
+    - _id: iaU2v3tTWNG87NgL
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: see text
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/perception/eye-ringed-glow-angry-large-teal.webp
+      name: Dream
+      range:
+        units: unlimited
+      target:
+        value: one living creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When the target of <em>demon dream</em> is a worshiper of a demon lord
@@ -16,42 +56,6 @@ system:
       points of Wisdom drain from the unsettling, madness- inducing dream — this
       is in addition to the damage and fatigue normally caused by the
       <em>nightmare</em>.</p>
-  actions:
-    - _id: 84hyc8bi93nz4l74
-      name: Nightmare
-      img: icons/magic/perception/eye-ringed-glow-angry-large-teal.webp
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      target:
-        value: one living creature
-      range:
-        units: unlimited
-      formulaicAttacks:
-        label: ''
-      save:
-        type: will
-        description: see text
-    - _id: iaU2v3tTWNG87NgL
-      name: Dream
-      img: icons/magic/perception/eye-ringed-glow-angry-large-teal.webp
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: see text
-      target:
-        value: one living creature
-      range:
-        units: unlimited
-      formulaicAttacks:
-        label: ''
   learnedAt:
     class:
       cleric: 6
@@ -61,9 +65,5 @@ system:
   school: ill
   subschool: phantasm
   types: evil, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!o4M6v7BjXzvzrTec'
+type: spell
 

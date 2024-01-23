@@ -1,8 +1,31 @@
 _id: svkzlis7pqjux13a
-name: Stolen Light
-type: spell
+_key: '!items!svkzlis7pqjux13a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stolen Light
 system:
+  actions:
+    - _id: r90be1rm519usurk
+      actionType: spellsave
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent or 1 minute/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: transparent gem touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Kreighton Shaine researched this spell from the fragmentary notes of a
@@ -30,38 +53,15 @@ system:
       This leaves the gem capable of projecting the image indefinitely,
       activated and deactivated by its command word, until it is destroyed or
       dispelled.</p>
-  actions:
-    - _id: r90be1rm519usurk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent or 1 minute/level (see text)
-      target:
-        value: transparent gem touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
+      bard: 3
       sorcerer: 3
       wizard: 3
-      bard: 3
   level: 3
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a gem worth at least 500 gp
-_key: '!items!svkzlis7pqjux13a'
+  school: ill
+  subschool: figment
+type: spell
 

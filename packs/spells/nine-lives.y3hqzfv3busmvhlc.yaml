@@ -1,8 +1,33 @@
 _id: y3hqzfv3busmvhlc
-name: Nine Lives
-type: spell
+_key: '!items!y3hqzfv3busmvhlc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nine Lives
 system:
+  actions:
+    - _id: qslijrea1lah0eus
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Despite its name, this powerful ward does not grant the target multiple
@@ -30,39 +55,14 @@ system:
       it had succeeded at an Escape Artist check to escape the grapple. <i>Stay
       Up</i>: The target uses this ability when it is tripped or otherwise
       knocked prone. The target steadies itself and stays upright.</p>
-  actions:
-    - _id: qslijrea1lah0eus
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 8
       oracle: 8
       witch: 8
   level: 8
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a cat's whisker
-_key: '!items!y3hqzfv3busmvhlc'
+  school: abj
+type: spell
 

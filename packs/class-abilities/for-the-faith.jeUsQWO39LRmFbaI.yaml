@@ -1,8 +1,20 @@
 _id: jeUsQWO39LRmFbaI
-name: For the Faith
-type: feat
+_key: '!items!jeUsQWO39LRmFbaI'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: For the Faith
 system:
+  abilityType: ex
+  actions:
+    - _id: iy8nmu49izklthh9
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, the cavalier can call upon his faith to bolster himself
@@ -12,22 +24,10 @@ system:
       his faith also receive half this bonus (minimum +1). The cavalier can use
       this ability once per day, plus one additional time per day at 12th level
       and every four levels thereafter.</p>
-  actions:
-    - _id: iy8nmu49izklthh9
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: floor((@classes.cavalier.level - 4) / 4)
-  tag: classFeat_forTheFaith
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!jeUsQWO39LRmFbaI'
+  tag: classFeat_forTheFaith
+  uses:
+    maxFormula: floor((@classes.cavalier.level - 4) / 4)
+    per: day
+type: feat
 

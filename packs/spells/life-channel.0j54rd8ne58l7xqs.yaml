@@ -1,8 +1,31 @@
 _id: 0j54rd8ne58l7xqs
-name: Life Channel
-type: spell
+_key: '!items!0j54rd8ne58l7xqs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Life Channel
 system:
+  actions:
+    - _id: nbkv9ocamhainj9z
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one touched creature with negative energy affinity
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When cast on a creature with negative energy affinity, the target is
@@ -12,35 +35,12 @@ system:
       a number of temporary hit points equal to half the number of hit points
       that the positive energy would normally heal. These temporary hit points
       go away at the end of this spell's duration.</p>
-  actions:
-    - _id: nbkv9ocamhainj9z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one touched creature with negative energy affinity
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
+      warpriest: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!0j54rd8ne58l7xqs'
+type: spell
 

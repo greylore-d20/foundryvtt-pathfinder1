@@ -1,8 +1,32 @@
 _id: 19u4fiaihfaglw5g
-name: Dream Feast
-type: spell
+_key: '!items!19u4fiaihfaglw5g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Feast
 system:
+  actions:
+    - _id: v92rvksepc8ujc5c
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The next time the target sleeps (within the next 8 hours), she dreams
@@ -16,39 +40,15 @@ system:
       purpose of determining available spell slots (you could go to sleep at
       midnight, expend this spell during an 8-hour period of sleep, and still
       prepare your full allotment of spells in the morning).</p>
-  actions:
-    - _id: v92rvksepc8ujc5c
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      ranger: 1
       hunter: 1
+      oracle: 1
+      ranger: 1
+      warpriest: 1
   school: con
   subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!19u4fiaihfaglw5g'
+type: spell
 

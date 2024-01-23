@@ -1,8 +1,40 @@
 _id: pCFqtR5WrJmeZnDF
-name: Warhammer
-type: weapon
+_key: '!items!pCFqtR5WrJmeZnDF'
 img: systems/pf1/icons/items/weapons/warhammer.png
+name: Warhammer
 system:
+  actions:
+    - _id: sc0l1rnnsr44o6a5
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/warhammer.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Warhammer
   description:
     value: >-
       <p>This weapon consists of a wooden haft and a heavy, metal head. The head
@@ -10,54 +42,22 @@ system:
       The haft is long enough that you may wield it one- or two-handed. Though
       heavy and relatively slow to wield, warhammers are capable of delivering
       immense blows, crushing armor and flesh alike.</p>
-  tags:
-    - PFS
-  weight:
-    value: 5
-  price: 12
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: sc0l1rnnsr44o6a5
-      name: Attack
-      img: systems/pf1/icons/items/weapons/warhammer.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critMult: 3
-  baseTypes:
-    - Warhammer
-  weaponGroups:
-    value:
-      - hammers
-  subType: martial
-  weaponSubtype: 1h
+  price: 12
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!pCFqtR5WrJmeZnDF'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - hammers
+  weaponSubtype: 1h
+  weight:
+    value: 5
+type: weapon
 

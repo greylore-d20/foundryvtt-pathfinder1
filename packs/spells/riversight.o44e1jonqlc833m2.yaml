@@ -1,8 +1,28 @@
 _id: o44e1jonqlc833m2
-name: Riversight
-type: spell
+_key: '!items!o44e1jonqlc833m2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Riversight
 system:
+  actions:
+    - _id: fhdswkt9o3w0fqt0
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      spellEffect: magical sensor
+      target:
+        value: nonmagical freshwater waterway
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can view events transpiring along a natural watercourse you touch.
@@ -19,41 +39,21 @@ system:
       and the river permits; obstructions such as dams and reservoirs halt the
       sensor, as does an estuary flowing into the sea or other body of
       saltwater.</p>
-  actions:
-    - _id: fhdswkt9o3w0fqt0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: nonmagical freshwater waterway
-      range:
-        units: seeText
-      spellEffect: magical sensor
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 2
-      ranger: 2
-      witch: 3
-      inquisitor: 3
       hunter: 2
+      inquisitor: 3
+      oracle: 3
+      ranger: 2
+      warpriest: 3
+      witch: 3
   level: 3
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a smooth river stone
+  school: div
   sr: false
-_key: '!items!o44e1jonqlc833m2'
+  subschool: scrying
+type: spell
 

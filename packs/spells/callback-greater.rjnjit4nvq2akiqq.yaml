@@ -1,17 +1,11 @@
 _id: rjnjit4nvq2akiqq
-name: Callback, Greater
-type: spell
+_key: '!items!rjnjit4nvq2akiqq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Callback, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as
-      @Compendium[pf1.spells.uuatu68e7gkxnfbi]{callback}, except as noted
-      above.</p>
   actions:
     - _id: png3cn534dpd48my
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,30 +13,36 @@ system:
           type: action
       duration:
         value: 1 hour/level or until expended
-      target:
-        value: your familiar or spirit animal
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '1'
         units: mi
-      actionType: spellsave
+        value: '1'
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: your familiar or spirit animal
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as
+      @Compendium[pf1.spells.uuatu68e7gkxnfbi]{callback}, except as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      witch: 5
       shaman: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a crushed grasshopper
-_key: '!items!rjnjit4nvq2akiqq'
+  school: con
+  subschool: teleportation
+type: spell
 

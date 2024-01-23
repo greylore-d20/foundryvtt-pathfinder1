@@ -1,8 +1,26 @@
 _id: lbbkx4obhu2xaq7g
-name: Skeleton Crew
-type: spell
+_key: '!items!lbbkx4obhu2xaq7g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Skeleton Crew
 system:
+  actions:
+    - _id: gsf5sg8lvvltm50f
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one or more humanoid corpses touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell turns corpses into skeletons (<i>Pathfinder RPG Bestiary</i>
@@ -24,36 +42,18 @@ system:
       created from a mostly intact humanoid corpse. The corpse must have bones.
       When you cast this spell, any flesh left on the corpses melts away into
       fog.</p>
-  actions:
-    - _id: gsf5sg8lvvltm50f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one or more humanoid corpses touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 3
-      warpriest: 3
       oracle: 3
+      sorcerer: 4
       summoner: 4
-      witch: 4
       summonerUnchained: 4
+      warpriest: 3
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lbbkx4obhu2xaq7g'
+type: spell
 

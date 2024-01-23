@@ -1,8 +1,20 @@
 _id: Q9OIkgxvOhtvKcCE
-name: Bonded Object
-type: feat
+_key: '!items!Q9OIkgxvOhtvKcCE'
 img: systems/pf1/icons/items/jewelry/ring-purple.jpg
+name: Bonded Object
 system:
+  abilityType: sp
+  actions:
+    - _id: hrjlzmegi4bueelc
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/jewelry/ring-purple.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you gain an arcane bond, per a <em>wizard</em> equal to
@@ -12,19 +24,7 @@ system:
       ability does not allow you to have both a <em>familiar</em> and a bonded
       object. Once per day, your bonded object allows you to cast any one of
       your spells known and increase the save DC of that spell by 1.</p>
-  actions:
-    - _id: hrjlzmegi4bueelc
-      name: Use
-      img: systems/pf1/icons/items/jewelry/ring-purple.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_bondedObject
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!Q9OIkgxvOhtvKcCE'
+  tag: classFeat_bondedObject
+type: feat
 

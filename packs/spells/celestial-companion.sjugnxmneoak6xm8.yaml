@@ -1,8 +1,31 @@
 _id: sjugnxmneoak6xm8
-name: Celestial Companion
-type: spell
+_key: '!items!sjugnxmneoak6xm8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Celestial Companion
 system:
+  actions:
+    - _id: 1awphi5p2j3li3sm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: animal companion, eidolon, familiar, or mount
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You bestow divine protection on your companion. The target gains spell
@@ -12,41 +35,18 @@ system:
       effects of this spell often take on a celestial appearance, such as golden
       feathers or a radiant aura, but they are not truly celestial
       creatures.</p>
-  actions:
-    - _id: 1awphi5p2j3li3sm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: animal companion, eidolon, familiar, or mount
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      ranger: 2
+      hunter: 2
       paladin: 1
+      ranger: 2
+      shaman: 2
+      sorcerer: 2
       summoner: 1
       witch: 2
-      shaman: 2
-      hunter: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!sjugnxmneoak6xm8'
+type: spell
 

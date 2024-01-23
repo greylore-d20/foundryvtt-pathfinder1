@@ -1,8 +1,26 @@
 _id: t4u9ftehq7pw1nky
-name: Amplify Stench
-type: spell
+_key: '!items!t4u9ftehq7pw1nky'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Amplify Stench
 system:
+  actions:
+    - _id: wqlqr37uyhbajng7
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You amplify your natural stench special ability-its save DC increases
@@ -11,37 +29,19 @@ system:
       causes a creature to become nauseated (such as with the foul stench
       ability), the radius of your stench doubles instead. This spell has no
       effect if you don't possess the stench special ability.</p>
-  actions:
-    - _id: wqlqr37uyhbajng7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      shaman: 2
-      psychic: 2
       hunter: 2
+      oracle: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!t4u9ftehq7pw1nky'
+type: spell
 

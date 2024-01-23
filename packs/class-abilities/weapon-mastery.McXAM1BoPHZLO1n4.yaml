@@ -1,8 +1,20 @@
 _id: McXAM1BoPHZLO1n4
-name: Weapon Mastery
-type: feat
+_key: '!items!McXAM1BoPHZLO1n4'
 img: systems/pf1/icons/items/weapons/sabre-sawtooth.png
+name: Weapon Mastery
 system:
+  abilityType: ex
+  actions:
+    - _id: nr7zd0fgdzsq3hxx
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/weapons/sabre-sawtooth.png
+      name: Use
+  associations:
+    classes:
+      - Fighter
   description:
     value: >-
       <p>At 20th level, a fighter chooses one weapon, such as the longsword,
@@ -10,22 +22,10 @@ system:
       confirm all critical threats and have their damage multiplier increased by
       1 (×2 becomes ×3, for example). In addition, he cannot be disarmed while
       wielding a weapon of this type.</p>
-  actions:
-    - _id: nr7zd0fgdzsq3hxx
-      name: Use
-      img: systems/pf1/icons/items/weapons/sabre-sawtooth.png
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_weaponMastery
-  subType: classFeat
-  associations:
-    classes:
-      - Fighter
-  abilityType: ex
   source:
     id: PZO1110
     pages: '56'
-_key: '!items!McXAM1BoPHZLO1n4'
+  subType: classFeat
+  tag: classFeat_weaponMastery
+type: feat
 

@@ -1,8 +1,28 @@
 _id: r4znakt4ukpebsxg
-name: Create Demiplane, Lesser
-type: spell
+_key: '!items!r4znakt4ukpebsxg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Demiplane, Lesser
 system:
+  actions:
+    - _id: ac8kpzeccnhsrf5m
+      activation:
+        cost: 2
+        type: hour
+        unchained:
+          cost: 2
+          type: hour
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: extradimensional demiplane, up to three 10-ft. cubes/level (S)
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a small, finite demiplane. You must be on the Astral or
@@ -52,45 +72,25 @@ system:
       <i>permanency</i> spell, at a cost of 17,500 gp. If you have cast
       <i>create lesser demiplane</i> multiple times to enlarge the demiplane,
       each casting's area requires its own <i>permanency</i> spell.</p>
-  actions:
-    - _id: ac8kpzeccnhsrf5m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 2
-        type: hour
-        unchained:
-          cost: 2
-          type: hour
-      duration:
-        value: 1 day/level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: extradimensional demiplane, up to three 10-ft. cubes/level (S)
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
-      summoner: 5
-      witch: 7
-      psychic: 7
       occultist: 5
+      oracle: 7
+      psychic: 7
+      sorcerer: 7
+      summoner: 5
       summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a forked metal rod worth at least 500 gp
-  sr: false
+  school: con
   source:
     id: PZO1117
     pages: '214'
-_key: '!items!r4znakt4ukpebsxg'
+  sr: false
+  subschool: creation
+type: spell
 

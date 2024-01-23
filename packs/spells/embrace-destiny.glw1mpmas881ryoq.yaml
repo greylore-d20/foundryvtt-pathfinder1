@@ -1,8 +1,26 @@
 _id: glw1mpmas881ryoq
-name: Embrace Destiny
-type: spell
+_key: '!items!glw1mpmas881ryoq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Embrace Destiny
 system:
+  actions:
+    - _id: up27faudldrunvzc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon completing this spell, roll a single d20 and record the result. At
@@ -14,31 +32,13 @@ system:
       result or the duration of the spell ends, the spell's effect ends. You
       can't have more than one instance of <i>embrace destiny</i> active on you
       at the same time.</p>
-  actions:
-    - _id: up27faudldrunvzc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 2
-      wizard: 2
       witch: 2
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!glw1mpmas881ryoq'
+type: spell
 

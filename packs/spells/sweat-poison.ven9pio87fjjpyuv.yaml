@@ -1,8 +1,26 @@
 _id: ven9pio87fjjpyuv
-name: Sweat Poison
-type: spell
+_key: '!items!ven9pio87fjjpyuv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sweat Poison
 system:
+  actions:
+    - _id: ilm1elo53xe8wsxu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Glands along your neck, back, or wrists swell and exude a viscous
@@ -23,34 +41,16 @@ system:
       toxic skin alternate racial trait (<i>Advanced Race Guide</i> 190), you
       can expend one daily use as a free action to enhance this spell's poison's
       damage to 1d3 Strength and its starting <i>save</i> DC to 15.</p>
-  actions:
-    - _id: ilm1elo53xe8wsxu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      druid: 3
-      ranger: 2
       alchemist: 2
-      inquisitor: 3
+      druid: 3
       hunter: 2
+      inquisitor: 3
+      ranger: 2
   level: 3
   school: nec
-  types: poison
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ven9pio87fjjpyuv'
+  types: poison
+type: spell
 

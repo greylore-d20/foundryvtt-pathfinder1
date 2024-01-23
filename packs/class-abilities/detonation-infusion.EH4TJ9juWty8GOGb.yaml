@@ -1,8 +1,23 @@
 _id: EH4TJ9juWty8GOGb
-name: Detonation Infusion
-type: feat
+_key: '!items!EH4TJ9juWty8GOGb'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Detonation Infusion
 system:
+  actions:
+    - _id: t7tfnxf81nw2yoby
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      save:
+        description: Reflex half
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> form infusion; <b>Level</b> 4;
@@ -11,22 +26,7 @@ system:
 
       <p>Flames explode outward from your body, dealing your blast damage to all
       creatures and objects within a 20- foot radius.</p>
-  actions:
-    - _id: t7tfnxf81nw2yoby
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_detonationInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!EH4TJ9juWty8GOGb'
+  tag: classFeat_detonationInfusion
+type: feat
 

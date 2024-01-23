@@ -1,8 +1,25 @@
 _id: N0ydNdimAIKYXGTh
-name: Snow Sight
-type: feat
+_key: '!items!N0ydNdimAIKYXGTh'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Snow Sight
 system:
+  abilityType: su
+  actions:
+    - _id: zfu4wlxyxhjhyoe8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can see through falling snow and sleet without taking any penalties
@@ -15,24 +32,7 @@ system:
 
       <p>You can use the commune with nature ability once per day at 11th level,
       and twice per day at 15th level.</p>
-  actions:
-    - _id: zfu4wlxyxhjhyoe8
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_snowSight
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!N0ydNdimAIKYXGTh'
+  tag: classFeat_snowSight
+type: feat
 

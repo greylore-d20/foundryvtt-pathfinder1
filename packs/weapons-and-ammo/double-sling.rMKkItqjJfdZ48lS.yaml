@@ -1,8 +1,44 @@
 _id: rMKkItqjJfdZ48lS
-name: Double Sling
-type: weapon
+_key: '!items!rMKkItqjJfdZ48lS'
 img: systems/pf1/icons/items/weapons/sling-double.png
+name: Double Sling
 system:
+  actions:
+    - _id: w9ewgfhap29kynmy
+      ability:
+        attack: dex
+        damage: str
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: slingBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/sling-double.png
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '50'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Double Sling
   description:
     value: >-
       <p><em>At first glance resembling a baton-like stick with a sling dangling
@@ -23,50 +59,14 @@ system:
       dense or as round as bullets. Thus, such an attack deals damage as if the
       weapon were designed for a creature one size category smaller than you,
       and you take a -1 penalty on <em>attack rolls</em>.</p>
-  weight:
-    value: 1
-  price: 10
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: w9ewgfhap29kynmy
-      name: Attack
-      img: systems/pf1/icons/items/weapons/sling-double.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '50'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: slingBullet
-  baseTypes:
-    - Double Sling
+  price: 10
   subType: exotic
   weaponSubtype: ranged
-  ammo:
-    type: slingBullet
-_key: '!items!rMKkItqjJfdZ48lS'
+  weight:
+    value: 1
+type: weapon
 

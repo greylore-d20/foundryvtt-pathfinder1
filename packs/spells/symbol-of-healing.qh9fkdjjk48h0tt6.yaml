@@ -1,8 +1,33 @@
 _id: qh9fkdjjk48h0tt6
-name: Symbol of Healing
-type: spell
+_key: '!items!qh9fkdjjk48h0tt6'
 img: icons/magic/life/cross-flared-green.webp
+name: Symbol of Healing
 system:
+  actions:
+    - _id: sc52hihs989gkjxd
+      actionType: heal
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will half (see text)
+        harmless: true
+        type: will
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>symbol of death</i>, except all creatures
@@ -15,48 +40,23 @@ system:
       the symbol remains active for 10 minutes per caster level.</p><p><i>Symbol
       of healing</i> can be made permanent with a <i>permanency</i> spell by a
       caster of 10th level or higher for the cost of 10,000 gp.</p>
-  actions:
-    - _id: sc52hihs989gkjxd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      range:
-        value: '0'
-        units: ft
-      actionType: heal
-      save:
-        type: will
-        description: Will half (see text)
-        harmless: true
-      spellEffect: one symbol
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
+      occultist: 3
       oracle: 3
       paladin: 4
+      warpriest: 3
       witch: 4
-      occultist: 3
   level: 3
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 500
     value: >-
       mercury and phosphorous, plus powdered diamond and opal worth a total of
       500 gp
-    gpValue: 500
   preparation:
     spontaneousPrepared: false
-_key: '!items!qh9fkdjjk48h0tt6'
+  school: con
+  subschool: healing
+type: spell
 

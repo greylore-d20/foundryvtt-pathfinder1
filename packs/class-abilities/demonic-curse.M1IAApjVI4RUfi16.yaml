@@ -1,8 +1,20 @@
 _id: M1IAApjVI4RUfi16
-name: Demonic Curse
-type: feat
+_key: '!items!M1IAApjVI4RUfi16'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Demonic Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 31j8jccm
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.blf
+    - _id: 5kfetqef
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.int
   description:
     value: >-
       <p>Your heart is cursed with the pull of the Abyss. You cannot cast spells
@@ -19,19 +31,7 @@ system:
 
       <p>At 15th level, any weapon you wield is treated as chaotic and evil for
       the purposes of overcoming damage reduction.</p>
-  changes:
-    - _id: 31j8jccm
-      formula: '2'
-      subTarget: skill.blf
-      modifier: untyped
-    - _id: 5kfetqef
-      formula: '2'
-      subTarget: skill.int
-      modifier: untyped
-  tag: classFeat_demonicCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!M1IAApjVI4RUfi16'
+  tag: classFeat_demonicCurse
+type: feat
 

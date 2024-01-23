@@ -1,8 +1,28 @@
 _id: wsbgsmz8ebz1klbu
-name: Wall of Silver
-type: spell
+_key: '!items!wsbgsmz8ebz1klbu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wall of Silver
 system:
+  actions:
+    - _id: wmagok2vj3nukcbt
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: see text
+      spellEffect: transparent wall 20 ft. high by up to 20 ft. long/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a wall of translucent silver energy that hums and vibrates
@@ -21,37 +41,17 @@ system:
       each creature takes damage as if passing through the wall. Each such
       creature can avoid the wall (ending up on the side of its choice) and thus
       take no damage by succeeding at a Reflex save.</p>
-  actions:
-    - _id: wmagok2vj3nukcbt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        description: see text
-      spellEffect: transparent wall 20 ft. high by up to 20 ft. long/level
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 5
+      cleric: 6
       inquisitor: 5
+      oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
   school: abj
   types: good
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wsbgsmz8ebz1klbu'
+type: spell
 

@@ -1,19 +1,10 @@
 _id: grgpvfexq2dh31fq
-name: Frostbite
-type: spell
+_key: '!items!grgpvfexq2dh31fq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Frostbite
 system:
-  description:
-    value: >-
-      <p>Your melee touch attack deals 1d6 points of nonlethal cold damage + 1
-      point per level, and the target is fatigued. The fatigued condition ends
-      when the target recovers from the nonlethal damage. This spell cannot make
-      a creature exhausted even if it is already fatigued. You can use this
-      melee touch attack up to one time per level.</p>
   actions:
     - _id: bunp5hze8qz1vrl7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,22 +12,31 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your melee touch attack deals 1d6 points of nonlethal cold damage + 1
+      point per level, and the target is fatigued. The fatigued condition ends
+      when the target recovers from the nonlethal damage. This spell cannot make
+      a creature exhausted even if it is already fatigued. You can use this
+      melee touch attack up to one time per level.</p>
   learnedAt:
     class:
-      druid: 1
-      witch: 1
-      magus: 1
       bloodrager: 1
-      shaman: 1
+      druid: 1
       hunter: 1
+      magus: 1
+      shaman: 1
+      witch: 1
   school: trs
   types: cold
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!grgpvfexq2dh31fq'
+type: spell
 

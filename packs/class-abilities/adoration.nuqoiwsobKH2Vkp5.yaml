@@ -1,8 +1,26 @@
 _id: nuqoiwsobKH2Vkp5
-name: Adoration
-type: feat
+_key: '!items!nuqoiwsobKH2Vkp5'
 img: systems/pf1/icons/skills/affliction_01.jpg
+name: Adoration
 system:
+  abilityType: su
+  actions:
+    - _id: 2id9za2l9xgazyvg
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/affliction_01.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As an immediate action, you can attempt to thwart a melee or ranged
@@ -15,28 +33,10 @@ system:
       is a mind-affecting effect.</p>
 
       <p>This power replaces the Dazing Touch power of the Charm Domain.</p>
-  actions:
-    - _id: 2id9za2l9xgazyvg
-      name: Use
-      img: systems/pf1/icons/skills/affliction_01.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_adoration
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!nuqoiwsobKH2Vkp5'
+  tag: classFeat_adoration
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,16 @@
 _id: 1CmMryKMJkLy2CQu
-name: Powerless Prophecy Curse
-type: feat
+_key: '!items!1CmMryKMJkLy2CQu'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Powerless Prophecy Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 1novvvy9
+      formula: '@classes.oracle.level >= 5 ? 4 : 0'
+      modifier: insight
+      subTarget: init
   description:
     value: >-
       <p>You are forewarned of danger but can’t act to prevent it. You gain
@@ -19,15 +27,7 @@ system:
       <p>At 15th level, you gain a +4 insight bonus on all your saving throws
       and to your AC during surprise rounds and when you are otherwise unaware
       of an attack.</p>
-  changes:
-    - _id: 1novvvy9
-      formula: '@classes.oracle.level >= 5 ? 4 : 0'
-      subTarget: init
-      modifier: insight
-  tag: classFeat_powerlessProphecyCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!1CmMryKMJkLy2CQu'
+  tag: classFeat_powerlessProphecyCurse
+type: feat
 

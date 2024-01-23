@@ -1,8 +1,46 @@
 _id: Ktda1hno3geFi4j8
-name: Channel Energy (WAR)
-type: feat
+_key: '!items!Ktda1hno3geFi4j8'
 img: systems/pf1/icons/feats/alignment-channel.jpg
+name: Channel Energy (WAR)
 system:
+  abilityType: su
+  actions:
+    - _id: 3of44xvqzv5wycg8
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor((@classes.warpriest.level + 1) / 3))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/alignment-channel.jpg
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.warpriest.level / 2) + @abilities.wis.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: self; affects living OR undead
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>Starting at 4th level, a warpriest can release a wave of energy by
@@ -28,47 +66,9 @@ system:
       Creatures healed by channeled energy cannot exceed their maximum hit point
       total—all excess healing is lost. A warpriest can choose whether or not to
       include himself in this effect.</p>
-  actions:
-    - _id: 3of44xvqzv5wycg8
-      name: Use
-      img: systems/pf1/icons/feats/alignment-channel.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self; affects living OR undead
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-      uses:
-        autoDeductChargesCost: '2'
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: heal
-      damage:
-        parts:
-          - formula: (floor((@classes.warpriest.level + 1) / 3))d6
-            type:
-              values:
-                - positive
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.warpriest.level / 2) + @abilities.wis.mod
-        type: will
-        description: Will halves damage
+  subType: classFeat
+  tag: classFeat_channelEnergyWar
   uses:
     per: charges
-  tag: classFeat_channelEnergyWar
-  subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-  abilityType: su
-_key: '!items!Ktda1hno3geFi4j8'
+type: feat
 

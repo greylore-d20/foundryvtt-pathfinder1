@@ -1,9 +1,20 @@
 _id: sv1iKPTOpaiZMOWk
-name: Headband of Alluring Charisma +2
-type: equipment
+_key: '!items!sv1iKPTOpaiZMOWk'
 img: systems/pf1/icons/items/equipment/belt-gems.jpg
+name: Headband of Alluring Charisma +2
 system:
+  aura:
+    school: trs
+  changes:
+    - _id: 3829rluc
+      formula: '2'
+      modifier: enh
+      subTarget: cha
+  cl: 8
   description:
+    unidentified: >-
+      <p>This attractive silver headband is decorated with a number of small red
+      and orange gemstones.</p>
     value: >-
       <p>This attractive silver headband is decorated with a number of small red
       and orange gemstones.</p>
@@ -11,24 +22,13 @@ system:
       <p>The headband grants the wearer an <em>enhancement bonus</em> to
       <em>Charisma</em> of +2, +4, or +6. Treat this as a temporary ability
       bonus for the first 24 hours the headband is worn.</p>
-    unidentified: >-
-      <p>This attractive silver headband is decorated with a number of small red
-      and orange gemstones.</p>
-  weight:
-    value: 1
   price: 4000
   resizing: true
+  slot: headband
+  subType: wondrous
   unidentified:
     name: Headband
-  cl: 8
-  aura:
-    school: trs
-  changes:
-    - _id: 3829rluc
-      formula: '2'
-      subTarget: cha
-      modifier: enh
-  subType: wondrous
-  slot: headband
-_key: '!items!sv1iKPTOpaiZMOWk'
+  weight:
+    value: 1
+type: equipment
 

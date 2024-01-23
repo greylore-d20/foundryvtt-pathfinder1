@@ -1,8 +1,20 @@
 _id: RzEzudurxQFirFoF
-name: Weapon Training
-type: feat
+_key: '!items!RzEzudurxQFirFoF'
 img: systems/pf1/icons/items/weapons/dagger-swordbreaker.PNG
+name: Weapon Training
 system:
+  abilityType: ex
+  actions:
+    - _id: nb6t4lmvah4yx96t
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/weapons/dagger-swordbreaker.PNG
+      name: Use
+  associations:
+    classes:
+      - Fighter
   description:
     value: >-
       <p>Starting at 5th level, a fighter can select one group of weapons, as
@@ -120,22 +132,10 @@ system:
 
       <p><b>Tribal:</b> Club, dagger, greatclub, handaxe, heavy shield, light
       shield, shortspear, spear, throwing axe, and unarmed strike.</p>
-  actions:
-    - _id: nb6t4lmvah4yx96t
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger-swordbreaker.PNG
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_weaponTraining
-  subType: classFeat
-  associations:
-    classes:
-      - Fighter
-  abilityType: ex
   source:
     id: PZO1110
     pages: '56'
-_key: '!items!RzEzudurxQFirFoF'
+  subType: classFeat
+  tag: classFeat_weaponTraining
+type: feat
 

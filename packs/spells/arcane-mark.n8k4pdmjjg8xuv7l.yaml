@@ -1,8 +1,25 @@
 _id: n8k4pdmjjg8xuv7l
-name: Arcane Mark
-type: spell
+_key: '!items!n8k4pdmjjg8xuv7l'
 img: icons/magic/symbols/rune-sigil-rough-white-teal.webp
+name: Arcane Mark
 system:
+  actions:
+    - _id: 7t12hx082aitt39g
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      spellEffect: one personal rune or mark, all of which must fit within 1 sq. ft.
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to inscribe your personal rune or mark, which can
@@ -19,37 +36,20 @@ system:
       being, the effect gradually fades in about a month.</p><p><i>Arcane
       mark</i> must be cast on an object prior to casting <i>instant summons</i>
       on the same object (see that spell description for details).</p>
-  actions:
-    - _id: 7t12hx082aitt39g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      range:
-        units: touch
-      spellEffect: one personal rune or mark, all of which must fit within 1 sq. ft.
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      summoner: 0
       magus: 0
-      shaman: 0
       psychic: 0
-      witch: 0
+      shaman: 0
+      sorcerer: 0
+      summoner: 0
       summonerUnchained: 0
+      witch: 0
+      wizard: 0
   level: 0
   school: uni
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!n8k4pdmjjg8xuv7l'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

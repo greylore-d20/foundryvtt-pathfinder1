@@ -1,8 +1,27 @@
 _id: SqTaI2sHPIZpLDtQ
-name: Aura of Vengeance
-type: feat
+_key: '!items!SqTaI2sHPIZpLDtQ'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Aura of Vengeance
 system:
+  abilityType: su
+  actions:
+    - _id: iw9yvge99gqhtfow
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      target:
+        value: allies
+  associations:
+    classes:
+      - Antipaladin
   description:
     value: >-
       <p>At 11th level, an antipaladin can expend two uses of his smite good
@@ -11,26 +30,7 @@ system:
       the antipaladin's next turn and the bonuses last for 1 minute. Using this
       ability is a free action. Good creatures gain no benefit from this
       ability.</p>
-  actions:
-    - _id: iw9yvge99gqhtfow
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: seeText
-      target:
-        value: allies
-      range:
-        value: '10'
-        units: ft
-  tag: classFeat_auraOfVengeance
   subType: classFeat
-  associations:
-    classes:
-      - Antipaladin
-  abilityType: su
-_key: '!items!SqTaI2sHPIZpLDtQ'
+  tag: classFeat_auraOfVengeance
+type: feat
 

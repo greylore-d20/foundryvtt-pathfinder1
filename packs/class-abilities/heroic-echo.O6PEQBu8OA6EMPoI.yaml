@@ -1,8 +1,24 @@
 _id: O6PEQBu8OA6EMPoI
-name: Heroic Echo
-type: feat
+_key: '!items!O6PEQBu8OA6EMPoI'
 img: systems/pf1/icons/feats/intimidating-prowess.jpg
+name: Heroic Echo
 system:
+  abilityType: su
+  actions:
+    - _id: iklnimichld76gf5
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/feats/intimidating-prowess.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 3rd level, when you receive a <em>morale bonus</em> from any spell,
@@ -14,26 +30,10 @@ system:
       all other recipients. This increase to other participants lasts a number
       of rounds equal to your <em>Charisma</em> bonus. You can use this ability
       once per day, plus one time per three levels after 3rd.</p>
-  actions:
-    - _id: iklnimichld76gf5
-      name: Use
-      img: systems/pf1/icons/feats/intimidating-prowess.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 1 + (floor((@classes.sorcerer.level - 3) / 3))
-  tag: classFeat_heroicEcho
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!O6PEQBu8OA6EMPoI'
+  tag: classFeat_heroicEcho
+  uses:
+    maxFormula: 1 + (floor((@classes.sorcerer.level - 3) / 3))
+    per: day
+type: feat
 

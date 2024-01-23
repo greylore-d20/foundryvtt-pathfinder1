@@ -1,6 +1,34 @@
-type: buff
+_id: o0U6E2WvMBTectrc
+_key: '!items!o0U6E2WvMBTectrc'
+img: icons/magic/holy/meditation-chi-focus-blue.webp
 name: Calm Stance
 system:
+  changes:
+    - _id: GermLGLP
+      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
+      modifier: untyped
+      subTarget: mattack
+    - _id: VMgJfOZR
+      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
+      modifier: untyped
+      subTarget: mwdamage
+    - _id: kDQYenzV
+      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
+      modifier: untyped
+      subTarget: twdamage
+    - _id: ry2P7xT1
+      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
+      modifier: untyped
+      subTarget: will
+    - _id: k34t9iHY
+      formula: '2'
+      modifier: penalty
+      subTarget: ac
+  contextNotes:
+    - subTarget: skills
+      text: Calm Stance removes action restriction on skills while raging
+    - subTarget: allChecks
+      text: Calm Stance removes action restriction on abilities while raging
   description:
     value: >-
       <p>The barbarian can enter a state of calm. While in this stance, the
@@ -9,39 +37,11 @@ system:
       penalty to AC and the restriction on actions she can take). Rounds spent
       in a calm stance still count against her total number of rounds of rage
       per day. This is a stance rage power.</p>
-  changes:
-    - _id: GermLGLP
-      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
-      subTarget: mattack
-      modifier: untyped
-    - _id: VMgJfOZR
-      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
-      subTarget: mwdamage
-      modifier: untyped
-    - _id: kDQYenzV
-      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
-      subTarget: twdamage
-      modifier: untyped
-    - _id: ry2P7xT1
-      formula: '- (2 + floor((@classes.barbarianUnchained.level - 2) / 9))'
-      subTarget: will
-      modifier: untyped
-    - _id: k34t9iHY
-      formula: '2'
-      subTarget: ac
-      modifier: penalty
-  contextNotes:
-    - text: Calm Stance removes action restriction on skills while raging
-      subTarget: skills
-    - text: Calm Stance removes action restriction on abilities while raging
-      subTarget: allChecks
-  level: null
   duration:
     value: ''
+  level: null
   source:
-    pages: '9'
     id: PZO1131
-img: icons/magic/holy/meditation-chi-focus-blue.webp
-_id: o0U6E2WvMBTectrc
-_key: '!items!o0U6E2WvMBTectrc'
+    pages: '9'
+type: buff
 

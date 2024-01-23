@@ -1,8 +1,12 @@
 _id: b9BvXgbKJ5LMcL2K
-name: Spontaneous Healing
-type: feat
+_key: '!items!b9BvXgbKJ5LMcL2K'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Spontaneous Healing
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>The alchemist gains the ability to heal from wounds rapidly. As a free
@@ -12,13 +16,9 @@ system:
       because of hit point damage and he still has healing available from this
       ability, the ability activates automatically each round until he is
       conscious again or the ability is depleted for the day.</p>
+  subType: classFeat
+  tag: classFeat_spontaneousHealing
   tags:
     - Alchemist Discovery
-  tag: classFeat_spontaneousHealing
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-  abilityType: ex
-_key: '!items!b9BvXgbKJ5LMcL2K'
+type: feat
 

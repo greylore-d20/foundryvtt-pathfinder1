@@ -1,8 +1,28 @@
 _id: JQDmibR6AWxm1idi
-name: Wisdom of the Ancestors
-type: feat
+_key: '!items!JQDmibR6AWxm1idi'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wisdom of the Ancestors
 system:
+  abilityType: su
+  actions:
+    - _id: h0zze0owvtka9djv
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, you can enter a trance in which you commune with the
@@ -23,33 +43,13 @@ system:
       @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune} spell.</p>
 
       <p>None of these spell effects require material components.</p>
+  subType: classFeat
+  tag: classFeat_wisdomOfTheAncestors
   tags:
     - Revelation
     - Ancestor Mystery
-  actions:
-    - _id: h0zze0owvtka9djv
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_wisdomOfTheAncestors
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!JQDmibR6AWxm1idi'
+    per: day
+type: feat
 

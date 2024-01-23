@@ -1,8 +1,27 @@
 _id: 6cjfszctojrskwm0
-name: Bloodstone Mirror
-type: spell
+_key: '!items!6cjfszctojrskwm0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bloodstone Mirror
 system:
+  actions:
+    - _id: 26q0vxhuqdmk052b
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Developed due to Arazni's fear that her stolen organs might be used to
@@ -18,38 +37,19 @@ system:
       its original caster). The target creature applies any spell resistance or
       immunities it has normally. You can have only one instance of this spell
       active at a time.</p>
-  actions:
-    - _id: 26q0vxhuqdmk052b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 7
+      occultist: 5
       oracle: 7
       witch: 7
-      occultist: 5
   level: 7
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a red bloodstone worth 500 gp
     gpValue: 500
+    value: a red bloodstone worth 500 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!6cjfszctojrskwm0'
+type: spell
 

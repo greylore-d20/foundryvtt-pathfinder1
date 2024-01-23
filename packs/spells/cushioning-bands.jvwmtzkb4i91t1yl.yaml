@@ -1,8 +1,31 @@
 _id: jvwmtzkb4i91t1yl
-name: Cushioning Bands
-type: spell
+_key: '!items!jvwmtzkb4i91t1yl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cushioning Bands
 system:
+  actions:
+    - _id: fmfbgb1aoxpgf11p
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Invisible bands of force encircle vital areas of the target. The bands
@@ -15,39 +38,16 @@ system:
       maximum of 120 points at 10th level), it is discharged. The bands have no
       effect on incorporeal attacks unless they deal damage from constriction or
       crushing, or unless the attacks would be subject to damage reduction.</p>
-  actions:
-    - _id: fmfbgb1aoxpgf11p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level or until discharged (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      summoner: 2
       psychic: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
   school: con
   subschool: creation
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!jvwmtzkb4i91t1yl'
+type: spell
 

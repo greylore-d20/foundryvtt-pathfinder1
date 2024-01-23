@@ -1,8 +1,77 @@
 _id: qEpaSO593GKaXJuo
-name: Hurlbat
-type: weapon
+_key: '!items!qEpaSO593GKaXJuo'
 img: systems/pf1/icons/items/weapons/hurlbat.png
+name: Hurlbat
 system:
+  actions:
+    - _id: 84n5f2f9gxl67dtq
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/hurlbat.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+    - _id: f09Zw2wb9NiKgkZQ
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      attackBonus: '-1'
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: ceil(@attributes.bab.total / 5) - 1
+        label: ''
+      img: systems/pf1/icons/items/weapons/hurlbat.png
+      name: Melee
+      range:
+        units: melee
+      save:
+        dc: '15'
+        description: Reflex see text
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
+  baseTypes:
+    - Hurlbat
   description:
     value: >-
       <p>A hurlbat is a throwing axe made from a single piece of flat metal.
@@ -12,99 +81,30 @@ system:
       and you must succeed at a DC 15 Reflex save when making melee attacks to
       avoid cutting yourself on an edge and taking 1 point of slashing damage.
       You don't need to attempt this save while wearing heavy armor.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 8
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 84n5f2f9gxl67dtq
-      name: Throw
-      img: systems/pf1/icons/items/weapons/hurlbat.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-    - _id: f09Zw2wb9NiKgkZQ
-      name: Melee
-      img: systems/pf1/icons/items/weapons/hurlbat.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      attackBonus: '-1'
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: ceil(@attributes.bab.total / 5) - 1
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: str
-        damage: str
-        critMult: 3
-      save:
-        dc: '15'
-        type: ref
-        description: Reflex see text
-      ammoType: none
+  material:
+    addon:
+      - null
+    normal:
+      value: ''
+  price: 8
+  source:
+    id: PZO9452
+    pages: '18'
+  subType: martial
+  tags:
+    - PFS
   uses:
     per: single
-  baseTypes:
-    - Hurlbat
   weaponGroups:
     value:
       - axes
       - thrown
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-  subType: martial
   weaponSubtype: ranged
-  source:
-    id: PZO9452
-    pages: '18'
-_key: '!items!qEpaSO593GKaXJuo'
+  weight:
+    value: 2
+type: weapon
 

@@ -1,8 +1,28 @@
 _id: A99UIwWIeHLx4O9m
-name: Body of Ice
-type: feat
+_key: '!items!A99UIwWIeHLx4O9m'
 img: systems/pf1/icons/skills/ice_09.jpg
+name: Body of Ice
 system:
+  abilityType: su
+  actions:
+    - _id: sn4e20y61n8af9zd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/ice_09.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can transmute your body and equipment to ice for a
@@ -14,30 +34,10 @@ system:
       rounds need not be consecutive.</p>
 
       <p>This power replaces the Cold Resistance power of the Water Domain.</p>
-  actions:
-    - _id: sn4e20y61n8af9zd
-      name: Use
-      img: systems/pf1/icons/skills/ice_09.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_bodyOfIce
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!A99UIwWIeHLx4O9m'
+  tag: classFeat_bodyOfIce
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

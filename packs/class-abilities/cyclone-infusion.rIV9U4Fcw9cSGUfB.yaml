@@ -1,8 +1,23 @@
 _id: rIV9U4Fcw9cSGUfB
-name: Cyclone Infusion
-type: feat
+_key: '!items!rIV9U4Fcw9cSGUfB'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Cyclone Infusion
 system:
+  actions:
+    - _id: adrdkjbmtrqbvwd4
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      save:
+        description: Reflex half
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> form infusion; <b>Level</b> 4;
@@ -12,22 +27,7 @@ system:
       <p>You create a circular rush of wind. All creatures and objects within a
       20-foot-radius burst centered on you take half your blast’s normal amount
       of damage. The saving throw DC is Dexterity-based.</p>
-  actions:
-    - _id: adrdkjbmtrqbvwd4
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_cycloneInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!rIV9U4Fcw9cSGUfB'
+  tag: classFeat_cycloneInfusion
+type: feat
 

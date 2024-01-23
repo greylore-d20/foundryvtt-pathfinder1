@@ -1,8 +1,32 @@
 _id: 597thk7efof38132
-name: Delay Disease
-type: spell
+_key: '!items!597thk7efof38132'
 img: icons/magic/life/cross-embers-glow-yellow-purple.webp
+name: Delay Disease
 system:
+  actions:
+    - _id: gpbuad8wi7rk3owt
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target becomes temporarily immune to disease. Any disease to which
@@ -12,48 +36,24 @@ system:
       suspend it for the duration of the spell; otherwise, that disease affects
       the target normally. <i>Delay disease</i> does not cure any damage a
       disease may have already done.</p>
-  actions:
-    - _id: gpbuad8wi7rk3owt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
-      paladin: 2
       alchemist: 2
-      witch: 1
+      cleric: 2
+      druid: 2
+      hunter: 2
       inquisitor: 2
       mesmerist: 2
-      hunter: 2
+      oracle: 2
+      paladin: 2
+      ranger: 2
+      warpriest: 2
+      witch: 1
   level: 2
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1121
     pages: '155'
-_key: '!items!597thk7efof38132'
+  subschool: healing
+type: spell
 

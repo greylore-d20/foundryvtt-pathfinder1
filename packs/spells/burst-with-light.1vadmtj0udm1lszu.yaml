@@ -1,8 +1,29 @@
 _id: 1vadmtj0udm1lszu
-name: Burst with Light
-type: spell
+_key: '!items!1vadmtj0udm1lszu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Burst with Light
 system:
+  actions:
+    - _id: 4ca7qp9wkzrbutc6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/4 levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target becomes filled with intense magical light, taking 2d6 points
@@ -21,35 +42,14 @@ system:
       and takes damage takes half as much damage and is blinded for 1 round. A
       successful Reflex save halves this damage (to a total of one-quarter the
       damage taken by the target) and negates the blindness effect.</p>
-  actions:
-    - _id: 4ca7qp9wkzrbutc6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/4 levels
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
       paladin: 4
+      warpriest: 4
   level: 4
   school: evo
   types: light
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1vadmtj0udm1lszu'
+type: spell
 

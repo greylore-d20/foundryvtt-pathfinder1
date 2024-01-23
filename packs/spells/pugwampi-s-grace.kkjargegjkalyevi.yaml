@@ -1,8 +1,31 @@
 _id: kkjargegjkalyevi
-name: Pugwampi's Grace
-type: spell
+_key: '!items!kkjargegjkalyevi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pugwampi's Grace
 system:
+  actions:
+    - _id: mo4ne9pi5r80z02f
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature (see below)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Hated by adventurers throughout the Inner Sea region, the gremlins
@@ -19,40 +42,17 @@ system:
       not impacted by these effects. If the luck bonus goes away before the
       pugwampi's grace effect ends, the unluck returns and remains until the
       spell's normal duration runs out.</p>
-  actions:
-    - _id: mo4ne9pi5r80z02f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature (see below)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 2
+      sorcerer: 3
       witch: 3
+      wizard: 3
   level: 3
+  materials:
+    value: a pugwampi's hair
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a pugwampi's hair
-_key: '!items!kkjargegjkalyevi'
+type: spell
 

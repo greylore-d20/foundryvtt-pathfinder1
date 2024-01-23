@@ -1,8 +1,21 @@
 _id: oApi2Ju7Di2GD65T
-name: Night Terror
-type: feat
+_key: '!items!oApi2Ju7Di2GD65T'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Night Terror
 system:
+  abilityType: su
+  actions:
+    - _id: cdmvdojhoqp5fep4
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You send your spirit to torment another being’s dreams. Once per day,
@@ -13,23 +26,10 @@ system:
       AC. You deal 1d10 damage for each successful hit.</p>
 
       <p>You must be at least 11th level before selecting this revelation.</p>
-  actions:
-    - _id: cdmvdojhoqp5fep4
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_nightTerror
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!oApi2Ju7Di2GD65T'
+  tag: classFeat_nightTerror
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

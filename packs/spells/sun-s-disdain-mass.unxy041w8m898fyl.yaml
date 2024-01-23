@@ -1,16 +1,11 @@
 _id: unxy041w8m898fyl
-name: Sun's Disdain, Mass
-type: spell
+_key: '!items!unxy041w8m898fyl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sun's Disdain, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like sun's disdain, except that it can affect
-      multiple creatures.</p>
   actions:
     - _id: 8okw3i8zhi5qcvx8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,36 +13,41 @@ system:
           type: action
       duration:
         value: permanent
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: long
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like sun's disdain, except that it can affect
+      multiple creatures.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 5
-      inquisitor: 5
       bloodrager: 5
+      cleric: 5
+      inquisitor: 5
+      oracle: 5
       shaman: 5
+      sorcerer: 5
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: trs
-  types: curse
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of glass
-_key: '!items!unxy041w8m898fyl'
+  school: trs
+  types: curse
+type: spell
 

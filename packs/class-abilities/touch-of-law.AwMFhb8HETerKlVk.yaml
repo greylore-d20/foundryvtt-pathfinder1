@@ -1,8 +1,28 @@
 _id: AwMFhb8HETerKlVk
-name: Touch of Law
-type: feat
+_key: '!items!AwMFhb8HETerKlVk'
 img: systems/pf1/icons/skills/ice_16.jpg
+name: Touch of Law
 system:
+  abilityType: sp
+  actions:
+    - _id: viyvdnyxrxige8js
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/ice_16.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can touch a willing creature as a standard action, infusing it with
@@ -10,33 +30,13 @@ system:
       checks, ability checks, and saving throws for 1 round as if the natural
       d20 roll resulted in an 11. You can use this ability a number of times per
       day equal to 3 + your Wisdom modifier.</p>
-  actions:
-    - _id: viyvdnyxrxige8js
-      name: Use
-      img: systems/pf1/icons/skills/ice_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_touchOfLaw
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '45'
-_key: '!items!AwMFhb8HETerKlVk'
+  subType: classFeat
+  tag: classFeat_touchOfLaw
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

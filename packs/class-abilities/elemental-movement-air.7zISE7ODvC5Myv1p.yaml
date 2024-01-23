@@ -1,33 +1,33 @@
 _id: 7zISE7ODvC5Myv1p
-name: Elemental Movement (Air)
-type: feat
+_key: '!items!7zISE7ODvC5Myv1p'
 img: systems/pf1/icons/spells/air-burst-air-1.jpg
+name: Elemental Movement (Air)
 system:
-  description:
-    value: >-
-      <p>At 15th level, you gain a fly speed of 60 feet with average
-      maneuverability.</p>
+  abilityType: su
   actions:
     - _id: nk4j7u9nj8t6lnas
-      name: Use
-      img: systems/pf1/icons/spells/air-burst-air-1.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: 7vrx0gp7
-      formula: '60'
-      subTarget: flySpeed
-      modifier: base
-  tag: classFeat_elementalMovementAir
-  subType: classFeat
+      img: systems/pf1/icons/spells/air-burst-air-1.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
-  abilityType: su
+  changes:
+    - _id: 7vrx0gp7
+      formula: '60'
+      modifier: base
+      subTarget: flySpeed
+  description:
+    value: >-
+      <p>At 15th level, you gain a fly speed of 60 feet with average
+      maneuverability.</p>
   source:
     id: PZO1110
     pages: '76'
-_key: '!items!7zISE7ODvC5Myv1p'
+  subType: classFeat
+  tag: classFeat_elementalMovementAir
+type: feat
 

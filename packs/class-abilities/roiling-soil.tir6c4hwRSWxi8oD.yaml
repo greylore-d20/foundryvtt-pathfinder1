@@ -1,8 +1,28 @@
 _id: tir6c4hwRSWxi8oD
-name: Roiling Soil
-type: feat
+_key: '!items!tir6c4hwRSWxi8oD'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Roiling Soil
 system:
+  abilityType: su
+  actions:
+    - _id: f982w7k8p0w89wys
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Combining your mastery of earth and water, you shape the battlefield in
@@ -18,35 +38,15 @@ system:
       prone.</p><p>This effect lasts a number of rounds equal to your oracle
       level, and you can use this ability a number of times per day equal to 3 +
       your Charisma modifier.</p>
-  tags:
-    - Elemental Mystery
-  actions:
-    - _id: f982w7k8p0w89wys
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 3 + @classes.oracle.level
-  tag: classFeat_roilingSoil
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9483
     pages: '29'
-_key: '!items!tir6c4hwRSWxi8oD'
+  subType: classFeat
+  tag: classFeat_roilingSoil
+  tags:
+    - Elemental Mystery
+  uses:
+    maxFormula: 3 + @classes.oracle.level
+    per: day
+type: feat
 

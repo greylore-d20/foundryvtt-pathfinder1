@@ -1,8 +1,33 @@
 _id: 0axqb92kzlesc24q
-name: Imbue with Spell Ability
-type: spell
+_key: '!items!0axqb92kzlesc24q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Imbue with Spell Ability
 system:
+  actions:
+    - _id: qsnew92g9phjmwhu
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched; see text
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transfer some of your currently prepared spells, and the ability to
@@ -30,45 +55,20 @@ system:
       component, the subject must be able to speak. To cast a spell with a
       somatic component, it must be able to move freely. To cast a spell with a
       material component or focus, it must have the materials or focus.</p>
-  actions:
-    - _id: qsnew92g9phjmwhu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged
-      target:
-        value: creature touched; see text
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
       shaman: 4
       spiritualist: 4
+      warpriest: 4
     domain:
       Community: 4
       Magic: 4
   level: 4
   school: evo
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '299'
-_key: '!items!0axqb92kzlesc24q'
+type: spell
 

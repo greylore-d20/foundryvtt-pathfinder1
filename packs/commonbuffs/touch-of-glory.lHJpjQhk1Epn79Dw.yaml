@@ -1,8 +1,17 @@
 _id: lHJpjQhk1Epn79Dw
-name: Touch of Glory
-type: buff
+_key: '!items!lHJpjQhk1Epn79Dw'
 img: systems/pf1/icons/feats/extra-mercy.jpg
+name: Touch of Glory
 system:
+  contextNotes:
+    - subTarget: chaSkills
+      text: >-
+        +[[@item.level]] to a single charisma based skill check. The receiver of
+        the buff must elect to use the buff before the roll..
+    - subTarget: chaChecks
+      text: >-
+        +[[@item.level]] to a single charisma ability check. The receiver of the
+        buff must elect to use the buff before the roll.
   description:
     value: >-
       <p><b>Effect</b>: You gain a bonus equal to the caster cleric level on a
@@ -15,16 +24,7 @@ system:
       of glory.</p>
 
       <p>Current value: [[@item.level]]</p>
-  contextNotes:
-    - subTarget: chaSkills
-      text: >-
-        +[[@item.level]] to a single charisma based skill check. The receiver of
-        the buff must elect to use the buff before the roll..
-    - subTarget: chaChecks
-      text: >-
-        +[[@item.level]] to a single charisma ability check. The receiver of the
-        buff must elect to use the buff before the roll.
-  tag: touchOfGlory
   level: '0'
-_key: '!items!lHJpjQhk1Epn79Dw'
+  tag: touchOfGlory
+type: buff
 

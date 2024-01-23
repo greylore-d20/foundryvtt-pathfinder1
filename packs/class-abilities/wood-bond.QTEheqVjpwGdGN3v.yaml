@@ -1,8 +1,26 @@
 _id: QTEheqVjpwGdGN3v
-name: Wood Bond
-type: feat
+_key: '!items!QTEheqVjpwGdGN3v'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wood Bond
 system:
+  abilityType: ex
+  actions:
+    - _id: uuj4buy59oimuqop
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: z5ttwk4b
+      formula: 1 + floor(@classes.oracle.level / 5)
+      modifier: competence
+      priority: null
+      subTarget: mattack
   description:
     value: >-
       <p>Your mystical bond with wood is such that your weapons become an
@@ -12,30 +30,12 @@ system:
 
       <p>This bonus increases by +1 at 5th level and every five levels
       thereafter.</p>
-  tags:
-    - Wood Mystery
-  actions:
-    - _id: uuj4buy59oimuqop
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: z5ttwk4b
-      formula: 1 + floor(@classes.oracle.level / 5)
-      subTarget: mattack
-      modifier: competence
-      priority: null
-  tag: classFeat_woodBond
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
   source:
     id: PZO1117
     pages: '57'
-_key: '!items!QTEheqVjpwGdGN3v'
+  subType: classFeat
+  tag: classFeat_woodBond
+  tags:
+    - Wood Mystery
+type: feat
 

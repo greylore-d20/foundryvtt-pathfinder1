@@ -1,8 +1,19 @@
 _id: FQiwHjr9khaqLNSU
-name: Superior Psychic Magic (UC) (4 pts)
-type: feat
+_key: '!items!FQiwHjr9khaqLNSU'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Superior Psychic Magic (UC) (4 pts)
 system:
+  actions:
+    - _id: 0pj4tr4lzkpyjes2
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/blue_26.jpg
+      name: Use
+  associations:
+    classes:
+      - Eidolon (Unchained)
   description:
     value: >-
       <p><b>Requirements:</b> Aberrant subtype; advanced psychic magic
@@ -37,21 +48,10 @@ system:
       <p>The eidolon’s amount of psychic energy available to spend each day does
       not stack; it uses only the highest number of points granted by its most
       powerful psychic magic evolution.</p>
-  actions:
-    - _id: 0pj4tr4lzkpyjes2
-      name: Use
-      img: systems/pf1/icons/skills/blue_26.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '7'
-  tag: classFeat_superiorPsychicMagicUc4Pts
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon (Unchained)
-_key: '!items!FQiwHjr9khaqLNSU'
+  tag: classFeat_superiorPsychicMagicUc4Pts
+  uses:
+    maxFormula: '7'
+    per: day
+type: feat
 

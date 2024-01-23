@@ -1,8 +1,29 @@
 _id: php9fdazlc2sjmg9
-name: Vision of Hell
-type: spell
+_key: '!items!php9fdazlc2sjmg9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vision of Hell
 system:
+  actions:
+    - _id: 27hfm05oh6504gnz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      spellEffect: 50-ft.-radius emanation
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You overlay a realistic illusion of a terrifying hellscape upon an
@@ -13,46 +34,25 @@ system:
       take a -2 penalty on saves versus fear effects; the fear and penalty
       persists as long as the creature remains in the area. Devils and any
       lawful evil creatures suffer no negative effects from this spell.</p>
-  actions:
-    - _id: 27hfm05oh6504gnz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: 50-ft.-radius emanation
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
-      witch: 3
       bloodrager: 3
-      psychic: 3
+      cleric: 3
       mesmerist: 3
       occultist: 3
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: ill
-  subschool: glamer
-  types: evil, fear
-  components:
-    verbal: true
-    material: true
   materials:
     value: a pinch of brimstone
+  school: ill
   sr: false
-_key: '!items!php9fdazlc2sjmg9'
+  subschool: glamer
+  types: evil, fear
+type: spell
 

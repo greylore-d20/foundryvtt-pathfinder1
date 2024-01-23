@@ -1,8 +1,28 @@
 _id: borbn2jnp2rt387d
-name: Deathwine
-type: spell
+_key: '!items!borbn2jnp2rt387d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deathwine
 system:
+  actions:
+    - _id: 196cddfjfrw82ghl
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none (object)
+      target:
+        value: 1 potion touched/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to turn a potion into a temporary pool of
@@ -22,37 +42,17 @@ system:
       <i>deathwine</i> is healed of 1d8 points of damage. Any potion not imbibed
       before this spell's duration expires is destroyed at the end of the
       <i>deathwine</i>'s duration.</p>
-  actions:
-    - _id: 196cddfjfrw82ghl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      target:
-        value: 1 potion touched/level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none (object)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       alchemist: 2
+      cleric: 2
+      oracle: 2
+      sorcerer: 3
+      warpriest: 2
       witch: 3
+      wizard: 3
   level: 3
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!borbn2jnp2rt387d'
+type: spell
 

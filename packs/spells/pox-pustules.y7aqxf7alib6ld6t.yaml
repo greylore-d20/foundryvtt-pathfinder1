@@ -1,19 +1,11 @@
 _id: y7aqxf7alib6ld6t
-name: Pox Pustules
-type: spell
+_key: '!items!y7aqxf7alib6ld6t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pox Pustules
 system:
-  description:
-    value: >-
-      <p>You inflict a painful, itching rash on the target creature. The target
-      is sickened and takes a -4 penalty to Dexterity (this penalty cannot lower
-      Dexterity below 0). The target can spend a move action scratching
-      furiously at the rash to remove the sickened condition (but not the
-      Dexterity penalty) until the start of its next turn.</p>
   actions:
     - _id: cmbv9nwn6uexk11y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,26 +13,34 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You inflict a painful, itching rash on the target creature. The target
+      is sickened and takes a -4 penalty to Dexterity (this penalty cannot lower
+      Dexterity below 0). The target can spend a move action scratching
+      furiously at the rash to remove the sickened condition (but not the
+      Dexterity penalty) until the start of its next turn.</p>
   learnedAt:
     class:
       druid: 2
-      witch: 2
       hunter: 2
+      witch: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: leaves from a toxic plant
-_key: '!items!y7aqxf7alib6ld6t'
+  school: nec
+type: spell
 

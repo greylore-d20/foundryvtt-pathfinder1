@@ -1,8 +1,20 @@
 _id: 4P9uQbUAzA5njekz
-name: Scourge of the Enemy
-type: feat
+_key: '!items!4P9uQbUAzA5njekz'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Scourge of the Enemy
 system:
+  abilityType: ex
+  actions:
+    - _id: bvhlw4f13ll9ahup
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, select one religion that is a rival or opponent of your
@@ -11,19 +23,7 @@ system:
       rolls. At 13th level, these bonuses increase to +4, and at 18th level, the
       bonuses increase to +6. These bonuses do not stack with other favored
       enemy bonuses (use the highest bonus that applies).</p>
-  actions:
-    - _id: bvhlw4f13ll9ahup
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_scourgeOfTheEnemy
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: ex
-_key: '!items!4P9uQbUAzA5njekz'
+  tag: classFeat_scourgeOfTheEnemy
+type: feat
 

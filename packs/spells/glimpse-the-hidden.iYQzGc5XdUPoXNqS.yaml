@@ -1,16 +1,13 @@
-name: Glimpse the Hidden
-type: spell
+_id: iYQzGc5XdUPoXNqS
+_key: '!items!iYQzGc5XdUPoXNqS'
 img: systems/pf1/icons/skills/shadow_12.jpg
+name: Glimpse the Hidden
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.nokru6mxk9p3r513]{see
-      invisibility}, except as noted here. This spell cannot be made
-      permanent.</p>
   actions:
     - _id: ZtJYdvwTVpsk755P
-      name: Use
-      img: systems/pf1/icons/skills/shadow_12.jpg
+      ability:
+        attack: str
+      actionType: msak
       activation:
         type: standard
         unchained:
@@ -18,20 +15,28 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
       formulaicAttacks:
         label: ''
-      ability:
-        attack: str
+      img: systems/pf1/icons/skills/shadow_12.jpg
+      name: Use
+      range:
+        units: touch
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
       touch: true
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.nokru6mxk9p3r513]{see
+      invisibility}, except as noted here. This spell cannot be made
+      permanent.</p>
   learnedAt:
     class:
       alchemist: 3
@@ -43,13 +48,8 @@ system:
       summonerUnchained: 3
       wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of magnesium and platinum
-_id: iYQzGc5XdUPoXNqS
-_key: '!items!iYQzGc5XdUPoXNqS'
+  school: div
+type: spell
 

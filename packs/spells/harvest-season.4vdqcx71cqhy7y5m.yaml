@@ -1,8 +1,25 @@
 _id: 4vdqcx71cqhy7y5m
-name: Harvest Season
-type: spell
+_key: '!items!4vdqcx71cqhy7y5m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Harvest Season
 system:
+  actions:
+    - _id: sl17y74hoq0wxhqi
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one plant
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause an explosive burst of growth in a single plant, causing it to
@@ -14,30 +31,13 @@ system:
       hours. This spell nourishes, fertilizes, and pollinates the plant, and
       doesn't harm the plant in any way. This spell has no effect on plant
       creatures.</p>
-  actions:
-    - _id: sl17y74hoq0wxhqi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous; see text
-      target:
-        value: one plant
-      range:
-        units: close
   learnedAt:
     class:
       druid: 2
-      shaman: 2
       hunter: 2
+      shaman: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!4vdqcx71cqhy7y5m'
+type: spell
 

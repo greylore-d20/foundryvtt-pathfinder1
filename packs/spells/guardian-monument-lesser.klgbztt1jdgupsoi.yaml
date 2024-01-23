@@ -1,8 +1,59 @@
 _id: klgbztt1jdgupsoi
-name: Guardian Monument, Lesser
-type: spell
+_key: '!items!klgbztt1jdgupsoi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Guardian Monument, Lesser
 system:
+  actions:
+    - _id: zxcx948toox9e7e2
+      actionType: spellsave
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      area: >-
+        40-ft. radius from touched object or 60-ft. radius from touched object;
+        see text
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: 40-ft. radius
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+    - _id: 4v10aW6pVP86t0q8
+      actionType: spellsave
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      area: >-
+        40-ft. radius from touched object or 60-ft. radius from touched object;
+        see text
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: circle
+      name: 60-ft. radius
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You touch an unattended, nonmagical object to create a touchstone for
@@ -14,72 +65,21 @@ system:
       continues to elapse while it is suppressed this way.  Normally, the area
       of effect is 40 feet from the touched object. If the touched object is a
       monument to human achievement, the area increases to a 60-foot radius.</p>
-  actions:
-    - _id: zxcx948toox9e7e2
-      name: 40-ft. radius
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: touch
-      measureTemplate:
-        type: circle
-        size: '40'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: >-
-        40-ft. radius from touched object or 60-ft. radius from touched object;
-        see text
-    - _id: 4v10aW6pVP86t0q8
-      name: 60-ft. radius
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: touch
-      measureTemplate:
-        type: circle
-        size: '60'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: >-
-        40-ft. radius from touched object or 60-ft. radius from touched object;
-        see text
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      paladin: 3
-      witch: 3
       inquisitor: 3
       magus: 3
-      shaman: 4
-      psychic: 3
       occultist: 3
+      paladin: 3
+      psychic: 3
+      shaman: 4
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: an unattended, nonmagical object
-_key: '!items!klgbztt1jdgupsoi'
+  school: abj
+type: spell
 

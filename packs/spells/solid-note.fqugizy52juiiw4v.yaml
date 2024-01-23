@@ -1,8 +1,24 @@
 _id: fqugizy52juiiw4v
-name: Solid Note
-type: spell
+_key: '!items!fqugizy52juiiw4v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Solid Note
 system:
+  actions:
+    - _id: cp9t8h2fv17q2cun
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one solidified musical note
+  components:
+    verbal: true
   description:
     value: >-
       <p>You give temporary physical form to a single musical note and can hang
@@ -23,27 +39,11 @@ system:
       combat maneuver such as bull rush (CMD 2 + your base attack bonus + your
       Charisma modifier). Any creature obstructed by the <i>solid note</i>
       simply fails to budge it and loses that action for the round.</p>
-  actions:
-    - _id: cp9t8h2fv17q2cun
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level
-      range:
-        units: close
-      spellEffect: one solidified musical note
   learnedAt:
     class:
       bard: 1
   school: con
-  subschool: creation
-  components:
-    verbal: true
   sr: false
-_key: '!items!fqugizy52juiiw4v'
+  subschool: creation
+type: spell
 

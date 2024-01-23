@@ -1,8 +1,42 @@
 _id: Vh7vgyNDNsiEnGHf
-name: Restless Slumber
-type: feat
+_key: '!items!Vh7vgyNDNsiEnGHf'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Restless Slumber
 system:
+  abilityType: su
+  actions:
+    - _id: v6jqj1e0m4vtlmw3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: ''
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+    - _id: 7nge3hJ0U0wb1lb7
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 1d10
+            type:
+              custom: ''
+              values:
+                - untyped
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Violent Sleep
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch causes a creature within 30 feet to fall into a sleep riddled
@@ -14,44 +48,10 @@ system:
       wakes, the creature’s addled state causes it to be confused for a number
       of rounds equal to half the witch’s level.</p><p>The witch must have the
       slumber hex to select this hex.</p>
+  subType: classFeat
+  tag: classFeat_restlessSlumber
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: v6jqj1e0m4vtlmw3
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: ''
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-    - _id: 7nge3hJ0U0wb1lb7
-      name: Violent Sleep
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      damage:
-        parts:
-          - formula: 1d10
-            type:
-              values:
-                - untyped
-              custom: ''
-  tag: classFeat_restlessSlumber
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!Vh7vgyNDNsiEnGHf'
+type: feat
 

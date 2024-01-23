@@ -1,8 +1,33 @@
 _id: 09juighnblqlqwro
-name: Unerring Weapon
-type: spell
+_key: '!items!09juighnblqlqwro'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unerring Weapon
 system:
+  actions:
+    - _id: h5yv6kzy5d6v61wq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one weapon or 20 projectiles, all of which must be together at the
+          time of casting
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes a weapon to veer closer to vital areas, improving the
@@ -12,45 +37,20 @@ system:
       projectiles, the effect ends on a specific projectile whenever that
       projectile is used to make an attack, regardless of whether the attack
       hits. For this spell, shuriken are considered projectiles.</p>
-  actions:
-    - _id: h5yv6kzy5d6v61wq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: >-
-          one weapon or 20 projectiles, all of which must be together at the
-          time of casting
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
+      bloodrager: 1
       inquisitor: 1
       magus: 1
-      bloodrager: 1
-      psychic: 1
       medium: 1
       occultist: 2
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1118
     pages: '248'
-_key: '!items!09juighnblqlqwro'
+type: spell
 

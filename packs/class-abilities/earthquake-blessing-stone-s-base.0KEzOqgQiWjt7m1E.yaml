@@ -1,33 +1,33 @@
 _id: 0KEzOqgQiWjt7m1E
-name: 'Earthquake Blessing: Stone''s Base'
-type: feat
+_key: '!items!0KEzOqgQiWjt7m1E'
 img: systems/pf1/icons/spells/rock-plain-2.jpg
+name: 'Earthquake Blessing: Stone''s Base'
 system:
-  description:
-    value: >-
-      <p>You can touch an ally to bless it with the stalwart resilience of
-      stone. For 1 minute, the creature gains a +4 bonus to its CMD against
-      maneuvers that would move the ally or knock it prone.</p>
   actions:
     - _id: gjazf4n21u8efh4p
-      name: Use
-      img: systems/pf1/icons/spells/rock-plain-2.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: creature touched
+        value: '1'
+      img: systems/pf1/icons/spells/rock-plain-2.jpg
+      name: Use
       range:
         units: touch
-  tag: classFeat_earthquakeBlessingStonesBase
-  subType: classFeat
+      target:
+        value: creature touched
   associations:
     classes:
       - Warpriest
-_key: '!items!0KEzOqgQiWjt7m1E'
+  description:
+    value: >-
+      <p>You can touch an ally to bless it with the stalwart resilience of
+      stone. For 1 minute, the creature gains a +4 bonus to its CMD against
+      maneuvers that would move the ally or knock it prone.</p>
+  subType: classFeat
+  tag: classFeat_earthquakeBlessingStonesBase
+type: feat
 

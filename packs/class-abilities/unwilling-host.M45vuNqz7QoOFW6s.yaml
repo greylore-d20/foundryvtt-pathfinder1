@@ -1,8 +1,29 @@
 _id: M45vuNqz7QoOFW6s
-name: Unwilling Host
-type: feat
+_key: '!items!M45vuNqz7QoOFW6s'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Unwilling Host
 system:
+  abilityType: su
+  actions:
+    - _id: acs3tsrz62vuj7ym
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '100'
+      target:
+        value: a number of creatures up to your Charisma modifier
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You command spirits to invade the bodies of your enemies. Once per day
@@ -14,31 +35,10 @@ system:
       rounds equal to your oracle level.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: acs3tsrz62vuj7ym
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: round
-      target:
-        value: a number of creatures up to your Charisma modifier
-      range:
-        value: '100'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_unwillingHost
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!M45vuNqz7QoOFW6s'
+  tag: classFeat_unwillingHost
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

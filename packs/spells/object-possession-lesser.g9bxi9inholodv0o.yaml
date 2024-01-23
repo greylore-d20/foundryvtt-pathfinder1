@@ -1,8 +1,26 @@
 _id: g9bxi9inholodv0o
-name: Object Possession, Lesser
-type: spell
+_key: '!items!g9bxi9inholodv0o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Object Possession, Lesser
 system:
+  actions:
+    - _id: 41kctc2rn4rztogn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: unattended Tiny or Small object
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>possession</i>, except you possess an object
@@ -14,36 +32,18 @@ system:
       silver cord (see page 244). If the possessed object and your body are ever
       farther than close range (25 ft. + 5 ft./2 levels) from one another, this
       tether breaks, returning your consciousness to your body.</p>
-  actions:
-    - _id: 41kctc2rn4rztogn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: unattended Tiny or Small object
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 4
-      psychic: 3
       medium: 2
       mesmerist: 3
       occultist: 2
+      psychic: 3
+      sorcerer: 4
       spiritualist: 3
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!g9bxi9inholodv0o'
+type: spell
 

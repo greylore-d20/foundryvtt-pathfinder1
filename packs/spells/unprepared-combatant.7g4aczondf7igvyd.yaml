@@ -1,16 +1,11 @@
 _id: 7g4aczondf7igvyd
-name: Unprepared Combatant
-type: spell
+_key: '!items!7g4aczondf7igvyd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unprepared Combatant
 system:
-  description:
-    value: >-
-      <p>The target takes a -4 penalty on initiative checks and Reflex
-      saves.</p>
   actions:
     - _id: osrsci0am1r347oa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,31 +13,36 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target takes a -4 penalty on initiative checks and Reflex
+      saves.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      witch: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: enc
-  subschool: compulsion
-  types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1117
     pages: '246'
-_key: '!items!7g4aczondf7igvyd'
+  subschool: compulsion
+  types: emotion, mind-affecting
+type: spell
 

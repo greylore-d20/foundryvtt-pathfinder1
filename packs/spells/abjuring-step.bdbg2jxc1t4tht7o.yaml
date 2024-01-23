@@ -1,8 +1,27 @@
 _id: bdbg2jxc1t4tht7o
-name: Abjuring Step
-type: spell
+_key: '!items!bdbg2jxc1t4tht7o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Abjuring Step
 system:
+  actions:
+    - _id: rcrub8dxvblvqfvq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a subtle and complicated force effect that is most
@@ -14,38 +33,19 @@ system:
       more than 5 feet with a single move action. If the action that discharges
       the spell also provokes attacks of opportunity, that action still provokes
       attacks of opportunity as normal.</p>
-  actions:
-    - _id: rcrub8dxvblvqfvq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 1
+      bard: 1
+      magus: 1
+      occultist: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      bard: 1
-      alchemist: 1
-      magus: 1
-      psychic: 1
-      occultist: 1
-  school: abj
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a rabbit's foot
+  school: abj
   sr: false
-_key: '!items!bdbg2jxc1t4tht7o'
+  types: force
+type: spell
 

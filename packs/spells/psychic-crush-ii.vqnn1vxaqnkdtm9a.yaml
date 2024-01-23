@@ -1,8 +1,29 @@
 _id: vqnn1vxaqnkdtm9a
-name: Psychic Crush II
-type: spell
+_key: '!items!vqnn1vxaqnkdtm9a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychic Crush II
 system:
+  actions:
+    - _id: 8uam58qtyqsxupvc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial and Fortitude partial; see text
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
   description:
     value: >-
       <p>This functions as <i>psychic crush I</i>, but on a successful Fortitude
@@ -11,32 +32,11 @@ system:
       the Fortitude save only if it is at full hit points; otherwise, it gains a
       +2 bonus if it has more than half its total hit points remaining. This
       spell can be undercast.</p>
-  actions:
-    - _id: 8uam58qtyqsxupvc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will partial and Fortitude partial; see text
   learnedAt:
     class:
       psychic: 6
   level: 6
   school: nec
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!vqnn1vxaqnkdtm9a'
+type: spell
 

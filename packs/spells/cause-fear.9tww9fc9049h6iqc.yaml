@@ -1,17 +1,11 @@
 _id: 9tww9fc9049h6iqc
-name: Cause Fear
-type: spell
+_key: '!items!9tww9fc9049h6iqc'
 img: icons/creatures/magical/spirit-fear-energy-pink.webp
+name: Cause Fear
 system:
-  description:
-    value: >-
-      <p>The affected creature becomes frightened. If the subject succeeds on a
-      Will save, it is shaken for 1 round. Creatures with 6 or more HD are
-      immune to this effect. Cause fear counters and dispels remove fear.</p>
   actions:
     - _id: ucbil3spn3e1y1e3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,47 +13,53 @@ system:
           type: action
       duration:
         value: 1d4 rounds or 1 round; see text
-      target:
-        value: one living creature with 5 or fewer HD
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will partial
+        type: will
+      target:
+        value: one living creature with 5 or fewer HD
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The affected creature becomes frightened. If the subject succeeds on a
+      Will save, it is shaken for 1 round. Creatures with 6 or more HD are
+      immune to this effect. Cause fear counters and dispels remove fear.</p>
   learnedAt:
+    bloodline:
+      Abyssal: 1
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      bard: 1
-      witch: 1
-      inquisitor: 1
-      antipaladin: 1
       adept: 1
+      antipaladin: 1
+      bard: 1
       bloodrager: 1
-      shaman: 1
-      psychic: 1
+      cleric: 1
+      inquisitor: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      oracle: 1
+      psychic: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
     domain:
       Death: 1
     subDomain:
       Daemon: 1
       Fear: 1
-    bloodline:
-      Abyssal: 1
   school: nec
-  types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '252'
-_key: '!items!9tww9fc9049h6iqc'
+  types: emotion, fear, mind-affecting
+type: spell
 

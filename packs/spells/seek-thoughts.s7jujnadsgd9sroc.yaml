@@ -1,8 +1,34 @@
 _id: s7jujnadsgd9sroc
-name: Seek Thoughts
-type: spell
+_key: '!items!s7jujnadsgd9sroc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Seek Thoughts
 system:
+  actions:
+    - _id: ng98s81jg39n7q3f
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 40-ft.-radius emanation centered on you
+      duration:
+        value: concentration, up to 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '40'
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Similar to <i>detect thoughts</i>, <i>seek thoughts</i> allows you to
@@ -20,54 +46,28 @@ system:
       about topics of interest. A creature conversing with you while you
       concentrate can notice that you are distracted with a successful DC 25
       Sense Motive check.</p>
-  actions:
-    - _id: ng98s81jg39n7q3f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level
-      range:
-        value: '40'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '40'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 40-ft.-radius emanation centered on you
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 3
       alchemist: 3
-      summoner: 3
-      witch: 3
+      bard: 3
       inquisitor: 3
-      psychic: 2
       medium: 2
       mesmerist: 3
       occultist: 3
+      psychic: 2
+      sorcerer: 3
       spiritualist: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
     subDomain:
       Thought: 3
   level: 3
-  school: div
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of copper coins
+  school: div
   sr: false
-_key: '!items!s7jujnadsgd9sroc'
+  types: mind-affecting
+type: spell
 

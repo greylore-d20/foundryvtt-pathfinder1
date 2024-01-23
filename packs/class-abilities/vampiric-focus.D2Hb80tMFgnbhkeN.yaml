@@ -1,8 +1,27 @@
 _id: D2Hb80tMFgnbhkeN
-name: Vampiric Focus
-type: feat
+_key: '!items!D2Hb80tMFgnbhkeN'
 img: systems/pf1/icons/skills/beast_02.jpg
+name: Vampiric Focus
 system:
+  abilityType: su
+  actions:
+    - _id: mcz23qjp28mxtxg9
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/beast_02.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>A vampire hunter knows the sinister power of the <em>undead</em>.
@@ -27,29 +46,10 @@ system:
       minute. The vampire hunter can have only one vampiric focus active at a
       time. Benefits from different vampiric foci do not stack with one another,
       including <em>temporary hit points</em> from multiple foci.</p>
-  actions:
-    - _id: mcz23qjp28mxtxg9
-      name: Use
-      img: systems/pf1/icons/skills/beast_02.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.vampirehunter.level'
-  tag: classFeat_vampiricFocus
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!D2Hb80tMFgnbhkeN'
+  tag: classFeat_vampiricFocus
+  uses:
+    maxFormula: '@classes.vampirehunter.level'
+    per: day
+type: feat
 

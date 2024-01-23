@@ -1,8 +1,26 @@
 _id: YZnFYJppNYe6KtBF
-name: Silver-Tongued Haggler
-type: feat
+_key: '!items!YZnFYJppNYe6KtBF'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Silver-Tongued Haggler
 system:
+  abilityType: su
+  actions:
+    - _id: z73nnv17llxehcfo
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Whenever you make a Bluff, Diplomacy, or Sense Motive check, you can,
@@ -11,28 +29,10 @@ system:
       day equal to 3 + your Wisdom modifier.</p>
 
       <p>This pwoer replaces the Agile Feet power of the Travel Domain.</p>
-  actions:
-    - _id: z73nnv17llxehcfo
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_silvertonguedHaggler
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!YZnFYJppNYe6KtBF'
+  tag: classFeat_silvertonguedHaggler
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

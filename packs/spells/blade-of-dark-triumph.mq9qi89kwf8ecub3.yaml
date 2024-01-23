@@ -1,8 +1,31 @@
 _id: mq9qi89kwf8ecub3
-name: Blade of Dark Triumph
-type: spell
+_key: '!items!mq9qi89kwf8ecub3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blade of Dark Triumph
 system:
+  actions:
+    - _id: 0roajrx1778335ov
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: your fiendish boon weapon
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You strengthen the bond between your fiendish boon weapon and its
@@ -11,35 +34,12 @@ system:
       a swift action. You gain a profane bonus to your CMD against disarm and
       sunder attacks directed at your boon weapon; this bonus is equal to half
       your caster level.</p>
-  actions:
-    - _id: 0roajrx1778335ov
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: your fiendish boon weapon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       antipaladin: 3
   level: 3
   school: trs
-  types: evil
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!mq9qi89kwf8ecub3'
+  types: evil
+type: spell
 

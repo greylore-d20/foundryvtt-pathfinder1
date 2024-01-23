@@ -1,8 +1,28 @@
 _id: EEhxjLPjqnG05YEc
-name: Haze of Daydreams
-type: feat
+_key: '!items!EEhxjLPjqnG05YEc'
 img: systems/pf1/icons/spells/fog-air-2.jpg
+name: Haze of Daydreams
 system:
+  abilityType: su
+  actions:
+    - _id: qu2ihjagzrchhsi0
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/fog-air-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '15'
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 6th level, you can emit a 15-foot-radius haze of daydreams for a
@@ -15,30 +35,10 @@ system:
       area or the aura expires.</p>
 
       <p>This power replaces the Good Fortune power of the Luck Domain.</p>
-  actions:
-    - _id: qu2ihjagzrchhsi0
-      name: Use
-      img: systems/pf1/icons/spells/fog-air-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        value: '15'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_hazeOfDaydreams
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!EEhxjLPjqnG05YEc'
+  tag: classFeat_hazeOfDaydreams
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

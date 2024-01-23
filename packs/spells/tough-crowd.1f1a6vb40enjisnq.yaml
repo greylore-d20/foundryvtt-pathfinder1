@@ -1,8 +1,31 @@
 _id: 1f1a6vb40enjisnq
-name: Tough Crowd
-type: spell
+_key: '!items!1f1a6vb40enjisnq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tough Crowd
 system:
+  actions:
+    - _id: utf33y0t6oa5l5l1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: 1 creature/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fortify your allies against attempts to control or mislead them.
@@ -11,39 +34,16 @@ system:
       addition, the DC of any Bluff, Diplomacy, Disguise, or Intimidate check to
       influence an affected character increases by 4 for the duration of the
       spell.</p>
-  actions:
-    - _id: utf33y0t6oa5l5l1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: 1 creature/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      witch: 3
       inquisitor: 4
-      psychic: 3
       mesmerist: 4
+      psychic: 3
+      sorcerer: 4
+      witch: 3
+      wizard: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1f1a6vb40enjisnq'
+type: spell
 

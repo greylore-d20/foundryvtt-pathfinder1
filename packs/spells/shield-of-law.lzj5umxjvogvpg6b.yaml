@@ -1,8 +1,31 @@
 _id: lzj5umxjvogvpg6b
-name: Shield of Law
-type: spell
+_key: '!items!lzj5umxjvogvpg6b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield of Law
 system:
+  actions:
+    - _id: uc1bmc5nmfpyvv8v
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        description: see text
+      target:
+        value: one creature/level in a 20-ft.-radius burst centered on you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A dim, blue glow surrounds the subjects, protecting them from attacks,
@@ -19,25 +42,6 @@ system:
       against a warded creature, the attacker is <i><i>slow</i>ed</i> (Will save
       negates, as the <i>slow</i> spell, but against <i>shield of law</i>'s save
       DC).</p>
-  actions:
-    - _id: uc1bmc5nmfpyvv8v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level in a 20-ft.-radius burst centered on you
-      range:
-        value: '20'
-        units: ft
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
       cleric: 8
@@ -45,16 +49,12 @@ system:
     domain:
       Law: 8
   level: 8
-  school: abj
-  types: lawful
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a reliquary worth 500 gp
+  school: abj
   source:
     id: PZO1110
     pages: '342'
-_key: '!items!lzj5umxjvogvpg6b'
+  types: lawful
+type: spell
 

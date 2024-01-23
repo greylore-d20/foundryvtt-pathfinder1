@@ -1,17 +1,11 @@
 _id: 6eh8zc5ohjqt2n8y
-name: Utter Contempt
-type: spell
+_key: '!items!6eh8zc5ohjqt2n8y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Utter Contempt
 system:
-  description:
-    value: >-
-      <p>You fill the target's heart with malice for all other
-      creatures.</p><p>The target's attitude toward all creatures other than
-      itself worsens by two steps.</p>
   actions:
     - _id: pnvztetodikgi8rv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,30 +13,36 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You fill the target's heart with malice for all other
+      creatures.</p><p>The target's attitude toward all creatures other than
+      itself worsens by two steps.</p>
   learnedAt:
     class:
+      antipaladin: 3
+      bard: 4
+      mesmerist: 4
+      psychic: 5
       sorcerer: 6
       wizard: 6
-      bard: 4
-      antipaladin: 3
-      psychic: 5
-      mesmerist: 4
   level: 6
-  school: enc
-  types: emotion
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: spittle
-_key: '!items!6eh8zc5ohjqt2n8y'
+  school: enc
+  types: emotion
+type: spell
 

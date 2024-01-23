@@ -1,8 +1,13 @@
 _id: iGo5EQHzwfFmyJ0w
-name: Bleeding Attack
-type: feat
+_key: '!items!iGo5EQHzwfFmyJ0w'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Bleeding Attack
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Rogue
+      - Slayer
   description:
     value: >-
       <p>A character with this ability can cause living opponents to bleed by
@@ -14,16 +19,11 @@ system:
       effect that heals hit point damage. Bleeding damage from this ability does
       not stack with itself. Bleeding damage bypasses any damage reduction the
       creature might possess.</p>
+  subType: classFeat
+  tag: classFeat_bleedingAttack
   tags:
     - Rogue Talent
     - Slayer Talent
     - Sneak Attack
-  tag: classFeat_bleedingAttack
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Slayer
-  abilityType: ex
-_key: '!items!iGo5EQHzwfFmyJ0w'
+type: feat
 

@@ -1,8 +1,31 @@
 _id: o8jgqcm2e7fq7d9t
-name: Ferment
-type: spell
+_key: '!items!o8jgqcm2e7fq7d9t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ferment
 system:
+  actions:
+    - _id: 2zkw0wo89o3a9vxd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell temporarily imbues a potable liquid (including elixirs,
@@ -17,43 +40,20 @@ system:
       skill checks for the remaining duration of the spell. Additionally, the DC
       of any skill check to identify a magic liquid or poison under the effects
       of this spell increases by 5.</p>
-  actions:
-    - _id: 2zkw0wo89o3a9vxd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      bard: 1
       alchemist: 1
-      witch: 1
+      bard: 1
+      cleric: 1
+      druid: 1
       hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      oracle: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a drop of ale, mead, or wine
-_key: '!items!o8jgqcm2e7fq7d9t'
+  school: trs
+type: spell
 

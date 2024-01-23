@@ -1,8 +1,28 @@
 _id: cyQV91IYp7KVdgp2
-name: Witness the Legend
-type: feat
+_key: '!items!cyQV91IYp7KVdgp2'
 img: systems/pf1/icons/skills/yellow_38.jpg
+name: Witness the Legend
 system:
+  abilityType: su
+  actions:
+    - _id: 7iki2ugrh8s4pand
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/yellow_38.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      target:
+        value: self or ally
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as a move action, you can extol the virtues of yourself
@@ -16,30 +36,10 @@ system:
       levels beyond 8th.</p>
 
       <p>This power replaces the Divine Presence power of the Glory Domain.</p>
-  actions:
-    - _id: 7iki2ugrh8s4pand
-      name: Use
-      img: systems/pf1/icons/skills/yellow_38.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self or ally
-      range:
-        value: '60'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_witnessTheLegend
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!cyQV91IYp7KVdgp2'
+  tag: classFeat_witnessTheLegend
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

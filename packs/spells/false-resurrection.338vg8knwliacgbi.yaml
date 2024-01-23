@@ -1,8 +1,27 @@
 _id: 338vg8knwliacgbi
-name: False Resurrection
-type: spell
+_key: '!items!338vg8knwliacgbi'
 img: icons/creatures/unholy/demons-horned-glowing-pink.webp
+name: False Resurrection
 system:
+  actions:
+    - _id: gwvka47yrc884ejk
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: dead creature touched
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>resurrection</i> except that instead of
@@ -22,39 +41,20 @@ system:
       incorrectly identify it as <i>resurrection</i> (see the ruse descriptor on
       page 192). A fooled viewer mistakes <i>false</i> <i>resurrection</i>'s
       aura as the lingering aura of an instantaneous conjuration effect.</p>
-  actions:
-    - _id: gwvka47yrc884ejk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level
-      target:
-        value: dead creature touched
-      range:
-        units: touch
   learnedAt:
     class:
       cleric: 7
       oracle: 7
-      witch: 8
       shaman: 8
+      witch: 8
   level: 7
+  materials:
+    gpValue: 10000
+    value: diamond worth 10,000 gp
+  preparation:
+    spontaneousPrepared: false
   school: con
   subschool: calling
   types: chaotic, evil, ruse
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
-  materials:
-    value: diamond worth 10,000 gp
-    gpValue: 10000
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!338vg8knwliacgbi'
+type: spell
 

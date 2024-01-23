@@ -1,8 +1,22 @@
 _id: k1OBZUPyNyodotBI
-name: School Understanding
-type: feat
+_key: '!items!k1OBZUPyNyodotBI'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: School Understanding
 system:
+  actions:
+    - _id: gy6ykeuf8xqbi238
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can select one <a
@@ -24,26 +38,12 @@ system:
       her arcanist levels to stack with the levels of the class that granted the
       arcane school when determining the powers and abilities of her arcane
       school.</p>
+  subType: classFeat
+  tag: classFeat_schoolUnderstanding
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: gy6ykeuf8xqbi238
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: minute
   uses:
-    per: day
     maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_schoolUnderstanding
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-_key: '!items!k1OBZUPyNyodotBI'
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: XfCULgDMFWhi7g55
-name: Refreshing Rain
-type: feat
+_key: '!items!XfCULgDMFWhi7g55'
 img: systems/pf1/icons/spells/needles-blue-3.jpg
+name: Refreshing Rain
 system:
+  abilityType: su
+  actions:
+    - _id: hao3u273xe7zaxbs
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/needles-blue-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: all within range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as standard action, you can call a brief shower of rain
@@ -13,30 +33,10 @@ system:
       beyond 8th.</p>
 
       <p>This power replaces the Lightning Lord power of the Weather Domain.</p>
-  actions:
-    - _id: hao3u273xe7zaxbs
-      name: Use
-      img: systems/pf1/icons/spells/needles-blue-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: all within range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_refreshingRain
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!XfCULgDMFWhi7g55'
+  tag: classFeat_refreshingRain
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

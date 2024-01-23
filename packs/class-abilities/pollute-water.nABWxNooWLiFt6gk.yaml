@@ -1,8 +1,50 @@
 _id: nABWxNooWLiFt6gk
-name: Pollute Water
-type: feat
+_key: '!items!nABWxNooWLiFt6gk'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Pollute Water
 system:
+  abilityType: su
+  actions:
+    - _id: CgEuiIY8vy6O827i
+      ability:
+        critMult: 1
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Creature
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+      touch: true
+    - _id: EZJDZ0IV8bTtn9g6
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      area: radius of 10 ft per level
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Area
+      range:
+        units: touch
+      target:
+        value: area
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can corrupt bodies of water with foul energies. This
@@ -15,51 +57,9 @@ system:
       curse.</p><p>A creature that succeeds at this saving throw is immune to
       the effects of polluted water from this area for 24 hours.</p><p>Polluted
       water does not quench thirst.</p>
+  subType: classFeat
+  tag: classFeat_polluteWater
   tags:
     - Hex
-  actions:
-    - _id: CgEuiIY8vy6O827i
-      name: Creature
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        critMult: 1
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-      touch: true
-    - _id: EZJDZ0IV8bTtn9g6
-      name: Area
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: area
-      range:
-        units: touch
-      area: radius of 10 ft per level
-  tag: classFeat_polluteWater
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!nABWxNooWLiFt6gk'
+type: feat
 

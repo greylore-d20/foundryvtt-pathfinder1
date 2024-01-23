@@ -1,8 +1,26 @@
 _id: 7jqqoorcwq9ro81m
-name: Lily Pad Stride
-type: spell
+_key: '!items!7jqqoorcwq9ro81m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lily Pad Stride
 system:
+  actions:
+    - _id: bze9wbgmyktglob7
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: trail of lily pads behind you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your every footstep creates aquatic plants capable of supporting your
@@ -22,32 +40,14 @@ system:
       that particular stretch of plants.</p><p>As you move, the lily pads
       disappear behind you once you pass beyond the spell's range. Otherwise,
       they remain until the spell's duration expires.</p>
-  actions:
-    - _id: bze9wbgmyktglob7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D); see text
-      range:
-        units: long
-      spellEffect: trail of lily pads behind you
   learnedAt:
     class:
       druid: 3
       hunter: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a frog's leg
+  school: trs
   sr: false
-_key: '!items!7jqqoorcwq9ro81m'
+type: spell
 

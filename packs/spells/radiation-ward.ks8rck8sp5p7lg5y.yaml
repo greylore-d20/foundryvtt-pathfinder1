@@ -1,18 +1,11 @@
 _id: ks8rck8sp5p7lg5y
-name: Radiation Ward
-type: spell
+_key: '!items!ks8rck8sp5p7lg5y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Radiation Ward
 system:
-  description:
-    value: >-
-      <p>A creature warded by this spell gains a +4 bonus on saving throws
-      against radiation-based effects. In addition, the warded creature is
-      immediately aware when it enters an area  of radiation, as well as the
-      radiation level (low, medium, high, or severe) suffusing the area.</p>
   actions:
     - _id: jg36wm4cxy2tmdmz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,31 +13,38 @@ system:
           type: action
       duration:
         value: 1 hour/level (D)
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fort negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>A creature warded by this spell gains a +4 bonus on saving throws
+      against radiation-based effects. In addition, the warded creature is
+      immediately aware when it enters an area  of radiation, as well as the
+      radiation level (low, medium, high, or severe) suffusing the area.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 1
       alchemist: 2
-      shaman: 2
+      cleric: 2
+      druid: 2
       hunter: 1
+      oracle: 2
+      ranger: 1
+      shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ks8rck8sp5p7lg5y'
+type: spell
 

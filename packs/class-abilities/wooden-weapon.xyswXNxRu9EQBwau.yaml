@@ -1,8 +1,28 @@
 _id: xyswXNxRu9EQBwau
-name: Wooden Weapon
-type: feat
+_key: '!items!xyswXNxRu9EQBwau'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wooden Weapon
 system:
+  abilityType: su
+  actions:
+    - _id: 66lr81lyzmg44atf
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can create a wooden club, quarterstaff, longspear, shortspear, or
@@ -22,35 +42,15 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  tags:
-    - Wood Mystery
-  actions:
-    - _id: 66lr81lyzmg44atf
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_woodenWeapon
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO1117
     pages: '57'
-_key: '!items!xyswXNxRu9EQBwau'
+  subType: classFeat
+  tag: classFeat_woodenWeapon
+  tags:
+    - Wood Mystery
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

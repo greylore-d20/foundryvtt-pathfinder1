@@ -1,7 +1,29 @@
-name: Planned Assault
-type: spell
+_id: cXuzSqklJEBXhZqg
+_key: '!items!cXuzSqklJEBXhZqg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Planned Assault
 system:
+  actions:
+    - _id: wZNphPb09C9Be6uZ
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one creature/level, no two of which can be more than 30 ft. apart
+      duration:
+        value: 1 minute/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Editor's Note:</em> In order to prepare this spell, the caster must
@@ -18,23 +40,6 @@ system:
       minute analyzing the layout of the camp, and then declares its actions. As
       long as the PCs stick to the plan, they gain a +2 morale bonus to AC,
       saving throws, and all actions for the first round.</p>
-  actions:
-    - _id: wZNphPb09C9Be6uZ
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level or until discharged
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      area: one creature/level, no two of which can be more than 30 ft. apart
   learnedAt:
     class:
       cleric: 3
@@ -45,11 +50,6 @@ system:
       warpriest: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_id: cXuzSqklJEBXhZqg
-_key: '!items!cXuzSqklJEBXhZqg'
+type: spell
 

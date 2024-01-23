@@ -1,8 +1,39 @@
 _id: fxz69pwpqt9b6uss
-name: Restoration, Lesser
-type: spell
+_key: '!items!fxz69pwpqt9b6uss'
 img: systems/pf1/icons/spells/heal-jade-1.jpg
+name: Restoration, Lesser
 system:
+  actions:
+    - _id: rzw52a8drm089bak
+      actionType: heal
+      activation:
+        cost: 3
+        type: round
+        unchained:
+          cost: 9
+          type: action
+      damage:
+        parts:
+          - formula: 1d4
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/spells/heal-jade-1.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Lesser restoration</i> dispels any magical effects reducing one of
@@ -10,53 +41,22 @@ system:
       damage to one of the subject's ability scores. It also eliminates any
       fatigue suffered by the character, and improves an exhausted condition to
       fatigued. It does not restore permanent ability drain.</p>
-  actions:
-    - _id: rzw52a8drm089bak
-      name: Use
-      img: systems/pf1/icons/spells/heal-jade-1.jpg
-      activation:
-        cost: 3
-        type: round
-        unchained:
-          cost: 9
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      damage:
-        parts:
-          - formula: 1d4
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 2
-      oracle: 2
-      druid: 2
-      paladin: 1
       alchemist: 2
-      inquisitor: 2
-      shaman: 2
-      mesmerist: 2
-      spiritualist: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      inquisitor: 2
       investigator: 2
+      mesmerist: 2
+      oracle: 2
+      paladin: 1
+      shaman: 2
+      spiritualist: 2
       warpriest: 2
   level: 2
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!fxz69pwpqt9b6uss'
+type: spell
 

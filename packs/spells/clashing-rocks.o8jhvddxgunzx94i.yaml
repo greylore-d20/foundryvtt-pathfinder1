@@ -1,8 +1,29 @@
 _id: o8jhvddxgunzx94i
-name: Clashing Rocks
-type: spell
+_key: '!items!o8jhvddxgunzx94i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Clashing Rocks
 system:
+  actions:
+    - _id: 0hf8qujipyn8icul
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex partial, see text
+        type: ref
+      spellEffect: see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create two Colossal-sized masses of rock, dirt, and stone and slam
@@ -27,38 +48,17 @@ system:
       remain standing). A creature can only take damage once from the
       <i>clashing rocks</i>, no matter how many times the <i>clashing rocks</i>
       pass over a target creature.</p>
-  actions:
-    - _id: 0hf8qujipyn8icul
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial, see text
-      spellEffect: see text
   learnedAt:
     class:
+      druid: 9
       sorcerer: 9
       wizard: 9
-      druid: 9
     domain:
       Ruins: 9
   level: 9
   school: con
+  sr: false
   subschool: creation
   types: earth
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!o8jhvddxgunzx94i'
+type: spell
 

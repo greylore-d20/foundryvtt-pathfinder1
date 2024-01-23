@@ -1,8 +1,32 @@
 _id: w337355nk3cvom02
-name: Haunting Choir
-type: spell
+_key: '!items!w337355nk3cvom02'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Haunting Choir
 system:
+  actions:
+    - _id: e9t8tt3zwfro4uoc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft.-radius emanation
+      duration:
+        value: concentration + 2 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a spectral choir and conduct its tortured, ghostly moans,
@@ -14,27 +38,6 @@ system:
       rolls, skill checks, and ability checks.</p><p>Individuals who exit the
       area of effect take these penalties for an additional 2 rounds before the
       delusion wears off.</p>
-  actions:
-    - _id: e9t8tt3zwfro4uoc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 2 rounds
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 30-ft.-radius emanation
   learnedAt:
     class:
       bard: 3
@@ -42,8 +45,5 @@ system:
   level: 3
   school: nec
   types: mind-affecting, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!w337355nk3cvom02'
+type: spell
 

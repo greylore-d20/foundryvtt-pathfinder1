@@ -1,8 +1,27 @@
 _id: 1ktDKZSNhUB36NwH
-name: 'Water Blessing: Ice Strike'
-type: feat
+_key: '!items!1ktDKZSNhUB36NwH'
 img: systems/pf1/icons/spells/ice-blue-1.jpg
+name: 'Water Blessing: Ice Strike'
 system:
+  actions:
+    - _id: z25r9ezmwxwkhp8d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/ice-blue-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch one weapon and enhance it with the power of
@@ -11,26 +30,7 @@ system:
 
       <p>This additional damage doesn’t stack with the additional damage from
       the frost or icy burst weapon special abilities.</p>
-  actions:
-    - _id: z25r9ezmwxwkhp8d
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  tag: classFeat_waterBlessingIceStrike
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!1ktDKZSNhUB36NwH'
+  tag: classFeat_waterBlessingIceStrike
+type: feat
 

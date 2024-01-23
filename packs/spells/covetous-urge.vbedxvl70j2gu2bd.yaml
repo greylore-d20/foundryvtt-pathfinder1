@@ -1,8 +1,31 @@
 _id: vbedxvl70j2gu2bd
-name: Covetous Urge
-type: spell
+_key: '!items!vbedxvl70j2gu2bd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Covetous Urge
 system:
+  actions:
+    - _id: 4o0uf5vz43qlgnv5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature with 7 HD or fewer
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You curse the target with insatiable greed, causing it to attempt to
@@ -26,42 +49,19 @@ system:
       <i>remove curse</i>, or <i>wish</i> can each end <i>covetous urge</i>
       before the duration expires. <i>Dispel magic</i> does not affect
       <i>covetous urge</i>.</p>
-  actions:
-    - _id: 4o0uf5vz43qlgnv5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one living creature with 7 HD or fewer
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
+      sorcerer: 2
       summoner: 2
-      witch: 2
       summonerUnchained: 2
+      witch: 2
+      wizard: 2
   level: 2
+  materials:
+    value: a golden coin
   school: enc
   subschool: compulsion
   types: curse, language-dependent, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a golden coin
-_key: '!items!vbedxvl70j2gu2bd'
+type: spell
 

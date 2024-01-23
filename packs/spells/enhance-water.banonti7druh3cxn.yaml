@@ -1,8 +1,31 @@
 _id: banonti7druh3cxn
-name: Enhance Water
-type: spell
+_key: '!items!banonti7druh3cxn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Enhance Water
 system:
+  actions:
+    - _id: zj4d12d7u7kbqr6k
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        harmless: true
+        type: fort
+      target:
+        value: 1 pint of water/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell transforms water into an alcoholic beverage, typically ale,
@@ -13,36 +36,13 @@ system:
       wine becomes. The beverage's alcohol content is not affected by the
       presence or absence of contaminants.</p><p>This spell does not work on
       unholy water, potions, or other liquids with magical power.</p>
-  actions:
-    - _id: zj4d12d7u7kbqr6k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 pint of water/level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
-        harmless: true
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
+      oracle: 1
       paladin: 1
+      warpriest: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!banonti7druh3cxn'
+type: spell
 

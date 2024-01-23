@@ -1,8 +1,29 @@
 _id: cfjaikd0qzlefjyr
-name: Sebaceous Twin
-type: spell
+_key: '!items!cfjaikd0qzlefjyr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sebaceous Twin
 system:
+  actions:
+    - _id: qrz3doknakc6y8j1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none (see text)
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By touching a living target, you cause a half-formed, parasitic clone
@@ -20,38 +41,17 @@ system:
       damage (which can be healed as normal).  The effect of <i>sebaceous
       twin</i> counts as a disease effect with a DC equal to the spell's saving
       throw DC.</p>
-  actions:
-    - _id: qrz3doknakc6y8j1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (see text)
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      witch: 3
       hunter: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!cfjaikd0qzlefjyr'
+type: spell
 

@@ -1,8 +1,29 @@
 _id: zoAzpadyLkDaOwDL
-name: Master's Yoke
-type: feat
+_key: '!items!zoAzpadyLkDaOwDL'
 img: systems/pf1/icons/skills/weapon_42.jpg
+name: Master's Yoke
 system:
+  abilityType: su
+  actions:
+    - _id: 2ihy4udtkne65t3a
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/weapon_42.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can attempt to assert your dominance over any visible
@@ -17,31 +38,10 @@ system:
       language-based mind-affecting effect.</p>
 
       <p>This power replaces the Staff of Order power of the Law Domain.</p>
-  actions:
-    - _id: 2ihy4udtkne65t3a
-      name: Use
-      img: systems/pf1/icons/skills/weapon_42.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_mastersYoke
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!zoAzpadyLkDaOwDL'
+  tag: classFeat_mastersYoke
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,31 @@
 _id: aldwednxmpolaik4
-name: Harmless Form
-type: spell
+_key: '!items!aldwednxmpolaik4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Harmless Form
 system:
+  actions:
+    - _id: 44i9ge00v2jdwqh0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 8 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fort negates
+        harmless: true
+        type: fort
+      target:
+        value: one willing animal companion, familiar, or spirit animal
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transform the target into a harmless animal of the same approximate
@@ -12,40 +35,17 @@ system:
       cannot make an animal smaller than Tiny. It cannot increase the size of
       the target or give it new natural attacks or new forms of movement. The
       spell otherwise functions as <i>beast shape II</i>.</p>
-  actions:
-    - _id: 44i9ge00v2jdwqh0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 8 hours (D)
-      target:
-        value: one willing animal companion, familiar, or spirit animal
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fort negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      ranger: 2
-      witch: 2
-      shaman: 2
       hunter: 2
+      ranger: 2
+      shaman: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!aldwednxmpolaik4'
+type: spell
 

@@ -1,8 +1,14 @@
 _id: 7mD4ZksvKFaorAfj
-name: Shield Focus
-type: feat
+_key: '!items!7mD4ZksvKFaorAfj'
 img: systems/pf1/icons/feats/shield-focus.jpg
+name: Shield Focus
 system:
+  changes:
+    - _id: insvnslf
+      formula: '@shield.type > 0 ? 1 : 0'
+      modifier: untyped
+      priority: null
+      subTarget: sac
   description:
     value: >-
       <p><em>You are skilled at deflecting blows with your
@@ -10,19 +16,13 @@ system:
       @UUID[Compendium.pf1.feats.Item.WZj7zDvuelEoeXWX]{Shield Proficiency},
       base attack bonus +1.</p><p><strong>Benefits</strong>: Increase the AC
       bonus granted by any shield you are using by 1.</p>
+  source:
+    id: PZO1110
+    pages: 116, 133
+  tag: feat_shieldFocus
   tags:
     - Combat
     - Shield
     - Defensive
-  changes:
-    - _id: insvnslf
-      formula: '@shield.type > 0 ? 1 : 0'
-      subTarget: sac
-      modifier: untyped
-      priority: null
-  tag: feat_shieldFocus
-  source:
-    id: PZO1110
-    pages: 116, 133
-_key: '!items!7mD4ZksvKFaorAfj'
+type: feat
 

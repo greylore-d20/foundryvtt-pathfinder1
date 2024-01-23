@@ -1,8 +1,24 @@
 _id: 25ey7spdaj72yioz
-name: Martyr's Bargain
-type: spell
+_key: '!items!25ey7spdaj72yioz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Martyr's Bargain
 system:
+  actions:
+    - _id: zdmg364voikzzyg9
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>Among the faithful followers of the gods of purity-whether they be the
@@ -24,31 +40,15 @@ system:
       bargain spell at a time. If you cast this spell while you are already
       under the effects of a previous martyr's bargain, the previous spell
       effect ends and you immediately take the damage it had delayed.</p>
-  actions:
-    - _id: zdmg364voikzzyg9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
       paladin: 2
+      warpriest: 2
   level: 2
   school: trs
-  types: good
-  components:
-    verbal: true
   sr: false
-_key: '!items!25ey7spdaj72yioz'
+  types: good
+type: spell
 

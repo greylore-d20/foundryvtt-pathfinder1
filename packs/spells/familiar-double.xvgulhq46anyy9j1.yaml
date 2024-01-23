@@ -1,16 +1,11 @@
 _id: xvgulhq46anyy9j1
-name: Familiar Double
-type: spell
+_key: '!items!xvgulhq46anyy9j1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Familiar Double
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>project image</i>, except the image appears
-      in your familiar's square and moves when your familiar moves.</p>
   actions:
     - _id: o37tc0pj7si099tm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,28 +13,33 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will disbelief (if interacted with)
+        type: will
       spellEffect: one shadow duplicate
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>project image</i>, except the image appears
+      in your familiar's square and moves when your familiar moves.</p>
   learnedAt:
     class:
       witch: 7
   level: 7
-  school: ill
-  subschool: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a small replica of you worth 5 gp
     gpValue: 5
+    value: a small replica of you worth 5 gp
   preparation:
     spontaneousPrepared: false
+  school: ill
   sr: false
-_key: '!items!xvgulhq46anyy9j1'
+  subschool: shadow
+type: spell
 

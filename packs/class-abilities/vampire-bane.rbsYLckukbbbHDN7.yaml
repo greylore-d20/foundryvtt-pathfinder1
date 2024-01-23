@@ -1,8 +1,25 @@
 _id: rbsYLckukbbbHDN7
-name: Vampire Bane
-type: feat
+_key: '!items!rbsYLckukbbbHDN7'
 img: systems/pf1/icons/skills/blood_04.jpg
+name: Vampire Bane
 system:
+  abilityType: su
+  actions:
+    - _id: umcfu2shbrx4dxot
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/blood_04.jpg
+      name: Use
+      target:
+        value: vampire
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>At 11th level, a vampire hunter can intensify a vampire’s revulsion to
@@ -25,24 +42,7 @@ system:
       vampire, but for the purposes of this ability, the vampire hunter treats
       his <em>Charisma</em> modifier as being 2 higher when he employs the
       symbol of the deity he worships.</p>
-  actions:
-    - _id: umcfu2shbrx4dxot
-      name: Use
-      img: systems/pf1/icons/skills/blood_04.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: vampire
-  tag: classFeat_vampireBane
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!rbsYLckukbbbHDN7'
+  tag: classFeat_vampireBane
+type: feat
 

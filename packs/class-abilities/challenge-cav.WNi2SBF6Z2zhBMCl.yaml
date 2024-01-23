@@ -1,8 +1,24 @@
 _id: WNi2SBF6Z2zhBMCl
-name: Challenge (CAV)
-type: feat
+_key: '!items!WNi2SBF6Z2zhBMCl'
 img: systems/pf1/icons/skills/light_05.jpg
+name: Challenge (CAV)
 system:
+  abilityType: ex
+  actions:
+    - _id: cdai7n8jc3xanvb3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/light_05.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>Once per day, a cavalier can challenge a foe to combat. As a swift
@@ -14,26 +30,10 @@ system:
       <p>The cavalier can use this ability once per day at 1st level, plus one
       additional time per day for every three levels beyond 1st, to a maximum of
       seven times per day at 19th level.</p>
-  actions:
-    - _id: cdai7n8jc3xanvb3
-      name: Use
-      img: systems/pf1/icons/skills/light_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      target:
-        value: one creature
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 1 + floor((@classes.cavalier.level - 1) / 3)
-  tag: classFeat_challengeCav
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!WNi2SBF6Z2zhBMCl'
+  tag: classFeat_challengeCav
+  uses:
+    maxFormula: 1 + floor((@classes.cavalier.level - 1) / 3)
+    per: day
+type: feat
 

@@ -1,8 +1,30 @@
 _id: tr7m97npkbgm4wp7
-name: Detect Evil
-type: spell
+_key: '!items!tr7m97npkbgm4wp7'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Evil
 system:
+  actions:
+    - _id: mlk2dv2yf5xgq8to
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can sense the presence of evil. The amount of information revealed
@@ -54,38 +76,16 @@ system:
       <tr><td colspan="6">2 Some characters who are not clerics may radiate an
       aura of equivalent power. The class description will indicate whether this
       applies.</td></tr></tfoot></table>&gt;
-  actions:
-    - _id: mlk2dv2yf5xgq8to
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 10 min./level
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      inquisitor: 1
       adept: 1
+      cleric: 1
+      inquisitor: 1
+      oracle: 1
       shaman: 1
       spiritualist: 1
+      warpriest: 1
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!tr7m97npkbgm4wp7'
+type: spell
 

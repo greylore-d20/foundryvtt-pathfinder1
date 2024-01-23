@@ -1,109 +1,16 @@
 _id: Xb8d1z9x8uWXCTBM
-name: Kit, Bloodrager's
-type: container
+_key: '!items!Xb8d1z9x8uWXCTBM'
 img: icons/containers/chest/chest-reinforced-steel-red.webp
+name: Kit, Bloodrager's
 system:
   items:
-    t5ROl2wAVtzCxNqv:
-      name: Backpack
-      type: container
-      img: systems/pf1/icons/items/inventory/backpack.jpg
-      system:
-        description:
-          value: >-
-            <p>This leather knapsack has one large pocket that closes with a
-            buckled strap and holds about 2 cubic feet of material. Some may
-            have one or more smaller pockets on the sides.</p>
-        weight:
-          value: 2
-        price: 2
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.lSCPUK5Ea6R0t4fz
-      _id: t5ROl2wAVtzCxNqv
-    fQ8trc7IRLIXP8zE:
-      name: Pouch, Belt
-      type: loot
-      img: icons/containers/bags/coinpouch-simple-leather-tan.webp
-      system:
-        description:
-          value: >-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-
-            <p>A belt pouch is crafted of soft cloth or leather. They typically
-            hold up to 10 lb. or 1/5 cubic ft. of items.</p>
-
-            <p><b>Empty Weight</b>: 1/2 lb.<sup>1</sup> <b>Capacity</b>: 1/5
-            cubic ft./10 lb.<sup>1</sup></p>
-
-            <p class="source"><sup>1</sup> When made for Medium characters.
-            Weighs one-quarter the normal amount when made for Small characters.
-            Weighs twice the normal amount when made for Large characters.
-            Containers carry one-quarter the normal amount when made for Small
-            characters.</p>
-        weight:
-          value: 0.5
-        price: 1
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.wjvxmolafiegvesl
-      _id: fQ8trc7IRLIXP8zE
-    ENxCuwDPpEFjxSdK:
-      name: Flint And Steel
-      type: loot
-      img: icons/commodities/stone/rock-chunk-grey.webp
-      system:
-        description:
-          value: >-
-            <p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a
-            full-round action. Lighting any other fire with them takes at least
-            that long.</p>
-        price: 1
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.ygmrcisvftnvjyob
-      _id: ENxCuwDPpEFjxSdK
-    IHoTl9rBdRQ2MZpM:
-      name: Soap
-      type: consumable
-      img: systems/pf1/icons/items/inventory/soap.jpg
-      system:
-        description:
-          value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
-            <p>You can use this thick block of soap to scrub clothes, pots,
-            linens, or anything else that might be dirty. A bar of soap has
-            approximately 50 uses.</p>
-        weight:
-          value: 0.5
-        price: 0.01
-        actions:
-          - _id: ootoocddr3l2eoat
-            name: Use
-            img: systems/pf1/icons/items/inventory/soap.jpg
-            activation:
-              type: special
-              unchained:
-                type: special
-        uses:
-          per: charges
-          value: 50
-          maxFormula: '50'
-        tag: soap
-        subType: misc
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.yMoclCylbCRKyaZF
-      _id: IHoTl9rBdRQ2MZpM
     0P5kAIDUOcC50tKW:
-      name: Torch
-      type: loot
+      _id: 0P5kAIDUOcC50tKW
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.snfogneawzopfzzl
       img: systems/pf1/icons/items/inventory/torch.jpg
+      name: Torch
       system:
         description:
           value: >-
@@ -117,19 +24,69 @@ system:
             as a one-handed improvised weapon that deals bludgeoning damage
             equal to that of a gauntlet of its size, plus 1 point of fire
             damage.</p>
+        equipped: false
+        price: 0.01
+        subType: gear
         weight:
           value: 1
-        price: 0.01
-        equipped: false
-        subType: gear
+      type: loot
+    ENxCuwDPpEFjxSdK:
+      _id: ENxCuwDPpEFjxSdK
       flags:
         core:
-          sourceId: Compendium.pf1.items.snfogneawzopfzzl
-      _id: 0P5kAIDUOcC50tKW
-    NZo7abGKdfwaD8u5:
-      name: Waterskin
+          sourceId: Compendium.pf1.items.ygmrcisvftnvjyob
+      img: icons/commodities/stone/rock-chunk-grey.webp
+      name: Flint And Steel
+      system:
+        description:
+          value: >-
+            <p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a
+            full-round action. Lighting any other fire with them takes at least
+            that long.</p>
+        equipped: false
+        price: 1
+        subType: gear
       type: loot
+    IHoTl9rBdRQ2MZpM:
+      _id: IHoTl9rBdRQ2MZpM
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.yMoclCylbCRKyaZF
+      img: systems/pf1/icons/items/inventory/soap.jpg
+      name: Soap
+      system:
+        actions:
+          - _id: ootoocddr3l2eoat
+            activation:
+              type: special
+              unchained:
+                type: special
+            img: systems/pf1/icons/items/inventory/soap.jpg
+            name: Use
+        description:
+          value: >-
+            <p class="source"><b>Source</b> <em>PZO9410</em></p>
+
+            <p>You can use this thick block of soap to scrub clothes, pots,
+            linens, or anything else that might be dirty. A bar of soap has
+            approximately 50 uses.</p>
+        price: 0.01
+        subType: misc
+        tag: soap
+        uses:
+          maxFormula: '50'
+          per: charges
+          value: 50
+        weight:
+          value: 0.5
+      type: consumable
+    NZo7abGKdfwaD8u5:
+      _id: NZo7abGKdfwaD8u5
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.bsztkhkrhgmsbqpt
       img: systems/pf1/icons/items/inventory/waterskin.jpg
+      name: Waterskin
       system:
         description:
           value: >-
@@ -238,44 +195,100 @@ system:
             </tbody>
 
             </table>
+        equipped: false
+        price: 1
+        subType: gear
         weight:
           value: 4
-        price: 1
-        equipped: false
-        subType: gear
+      type: loot
+    TCsskhvXSTf4AEJU:
+      _id: TCsskhvXSTf4AEJU
       flags:
         core:
-          sourceId: Compendium.pf1.items.bsztkhkrhgmsbqpt
-      _id: NZo7abGKdfwaD8u5
-    qP2OdHn3V5bjCvjA:
-      name: Rations, Trail
-      type: loot
-      img: systems/pf1/icons/items/inventory/meat.jpg
+          sourceId: Compendium.pf1.items.fwfwshvyweqbthwk
+      img: systems/pf1/icons/items/inventory/cloth-green.jpg
+      name: Blanket
       system:
         description:
           value: >-
-            <h4>Rations, Trail</h4>
+            <h4>Blanket</h4>
 
-            <p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>
+            <p class="source"><b>Source</b> <em>PZO1115</em></p>
 
-            <p>The listed price is for a day's worth of food. This bland food is
-            usually some kind of hard tack, jerky, and dried fruit, though the
-            contents vary from region to region and the race of those creating
-            it. As long as it stays dry, it can go for months without
-            spoiling.</p>
-        weight:
-          value: 1
-        price: 0.5
+            <p><b>Price</b> 5 sp; <b>Weight</b> 3 lbs.</p>
+
+            <p>This warm, woven blanket has straps so it can be rolled up and
+            tied. Blankets are often used in conjunction with bedrolls to
+            provide additional warmth or a ground cushion.</p>
+
+            <p><b>Winter blanket</b> This is a fur blanket large enough for one
+            person. <b>Source</b> <em>PZO1110</em></p>
         equipped: false
+        price: 0.5
         subType: gear
+        weight:
+          value: 3
+      type: loot
+    bY2QQhUrwWJU3ss8:
+      _id: bY2QQhUrwWJU3ss8
       flags:
         core:
-          sourceId: Compendium.pf1.items.manvtbznrwjmnrua
-      _id: qP2OdHn3V5bjCvjA
-    gZtuvtHbLbzYNzvV:
-      name: Rope
+          sourceId: Compendium.pf1.items.habofoapdifirevm
+      img: icons/tools/cooking/cauldron-empty.webp
+      name: Pot, Cooking (Iron)
+      system:
+        description:
+          value: >-
+            <p class="source"><b>Source</b> <em>PZO1110</em></p>
+
+            <p>Cooking pots come in a variety of materials, but the most common
+            is formed of iron.</p>
+
+            <p>A mithral cooking pot weighs 2 lbs. and costs 2,001 gp.</p>
+
+            <p><b>Empty Weight</b>: 2 lb.; <b>Capacity</b>: 1 gallon/8 lb.</p>
+        equipped: false
+        price: 0.8
+        subType: gear
+        weight:
+          value: 4
       type: loot
+    fQ8trc7IRLIXP8zE:
+      _id: fQ8trc7IRLIXP8zE
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.wjvxmolafiegvesl
+      img: icons/containers/bags/coinpouch-simple-leather-tan.webp
+      name: Pouch, Belt
+      system:
+        description:
+          value: >-
+            <p class="source"><b>Source</b> <em>PZO1110</em></p>
+
+            <p>A belt pouch is crafted of soft cloth or leather. They typically
+            hold up to 10 lb. or 1/5 cubic ft. of items.</p>
+
+            <p><b>Empty Weight</b>: 1/2 lb.<sup>1</sup> <b>Capacity</b>: 1/5
+            cubic ft./10 lb.<sup>1</sup></p>
+
+            <p class="source"><sup>1</sup> When made for Medium characters.
+            Weighs one-quarter the normal amount when made for Small characters.
+            Weighs twice the normal amount when made for Large characters.
+            Containers carry one-quarter the normal amount when made for Small
+            characters.</p>
+        equipped: false
+        price: 1
+        subType: gear
+        weight:
+          value: 0.5
+      type: loot
+    gZtuvtHbLbzYNzvV:
+      _id: gZtuvtHbLbzYNzvV
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.qlmtnppwxkubqyhp
       img: systems/pf1/icons/items/inventory/dice.jpg
+      name: Rope
       system:
         description:
           value: >-
@@ -315,66 +328,53 @@ system:
             than 10 feet long) occasionally appear among goblins. Spider's silk
             rope has 6 hit points and can be broken with a DC 25 Strength check.
             <b>Price</b> 100 gp; <b>Weight</b> 4 lbs.</p>
+        equipped: false
+        price: 1
+        subType: gear
         weight:
           value: 10
-        price: 1
-        equipped: false
-        subType: gear
+      type: loot
+    qP2OdHn3V5bjCvjA:
+      _id: qP2OdHn3V5bjCvjA
       flags:
         core:
-          sourceId: Compendium.pf1.items.qlmtnppwxkubqyhp
-      _id: gZtuvtHbLbzYNzvV
-    TCsskhvXSTf4AEJU:
-      name: Blanket
-      type: loot
-      img: systems/pf1/icons/items/inventory/cloth-green.jpg
+          sourceId: Compendium.pf1.items.manvtbznrwjmnrua
+      img: systems/pf1/icons/items/inventory/meat.jpg
+      name: Rations, Trail
       system:
         description:
           value: >-
-            <h4>Blanket</h4>
+            <h4>Rations, Trail</h4>
 
-            <p class="source"><b>Source</b> <em>PZO1115</em></p>
+            <p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>
 
-            <p><b>Price</b> 5 sp; <b>Weight</b> 3 lbs.</p>
-
-            <p>This warm, woven blanket has straps so it can be rolled up and
-            tied. Blankets are often used in conjunction with bedrolls to
-            provide additional warmth or a ground cushion.</p>
-
-            <p><b>Winter blanket</b> This is a fur blanket large enough for one
-            person. <b>Source</b> <em>PZO1110</em></p>
-        weight:
-          value: 3
+            <p>The listed price is for a day's worth of food. This bland food is
+            usually some kind of hard tack, jerky, and dried fruit, though the
+            contents vary from region to region and the race of those creating
+            it. As long as it stays dry, it can go for months without
+            spoiling.</p>
+        equipped: false
         price: 0.5
-        equipped: false
         subType: gear
+        weight:
+          value: 1
+      type: loot
+    t5ROl2wAVtzCxNqv:
+      _id: t5ROl2wAVtzCxNqv
       flags:
         core:
-          sourceId: Compendium.pf1.items.fwfwshvyweqbthwk
-      _id: TCsskhvXSTf4AEJU
-    bY2QQhUrwWJU3ss8:
-      name: Pot, Cooking (Iron)
-      type: loot
-      img: icons/tools/cooking/cauldron-empty.webp
+          sourceId: Compendium.pf1.items.lSCPUK5Ea6R0t4fz
+      img: systems/pf1/icons/items/inventory/backpack.jpg
+      name: Backpack
       system:
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-
-            <p>Cooking pots come in a variety of materials, but the most common
-            is formed of iron.</p>
-
-            <p>A mithral cooking pot weighs 2 lbs. and costs 2,001 gp.</p>
-
-            <p><b>Empty Weight</b>: 2 lb.; <b>Capacity</b>: 1 gallon/8 lb.</p>
+            <p>This leather knapsack has one large pocket that closes with a
+            buckled strap and holds about 2 cubic feet of material. Some may
+            have one or more smaller pockets on the sides.</p>
+        price: 2
         weight:
-          value: 4
-        price: 0.8
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.habofoapdifirevm
-      _id: bY2QQhUrwWJU3ss8
-_key: '!items!Xb8d1z9x8uWXCTBM'
+          value: 2
+      type: container
+type: container
 

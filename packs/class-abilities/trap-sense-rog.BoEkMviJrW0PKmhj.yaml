@@ -1,15 +1,12 @@
 _id: BoEkMviJrW0PKmhj
-name: Trap Sense (ROG)
-type: feat
+_key: '!items!BoEkMviJrW0PKmhj'
 img: systems/pf1/icons/items/inventory/hook-hand.jpg
+name: Trap Sense (ROG)
 system:
-  description:
-    value: >-
-      <p>At 3rd level, this character gains a +1 bonus on <em>Reflex</em> saves
-      made to avoid traps and a +1 <em>dodge bonus</em> to <em>armor class</em>
-      against attacks made by traps. These bonuses increase by +1 every three
-      levels thereafter (6th, 9th, 12th, 15th, and 18th level). Trap sense
-      bonuses gained from multiple classes stack.</p>
+  abilityType: ex
+  associations:
+    classes:
+      - Rogue
   contextNotes:
     - subTarget: ref
       target: savingThrows
@@ -17,11 +14,14 @@ system:
     - subTarget: ac
       target: misc
       text: +[[floor(@classes.rogue.level / 3)]] dodge vs. traps
-  tag: classFeat_trapSense
+  description:
+    value: >-
+      <p>At 3rd level, this character gains a +1 bonus on <em>Reflex</em> saves
+      made to avoid traps and a +1 <em>dodge bonus</em> to <em>armor class</em>
+      against attacks made by traps. These bonuses increase by +1 every three
+      levels thereafter (6th, 9th, 12th, 15th, and 18th level). Trap sense
+      bonuses gained from multiple classes stack.</p>
   subType: classFeat
-  associations:
-    classes:
-      - Rogue
-  abilityType: ex
-_key: '!items!BoEkMviJrW0PKmhj'
+  tag: classFeat_trapSense
+type: feat
 

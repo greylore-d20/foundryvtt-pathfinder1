@@ -1,8 +1,35 @@
 _id: e0k1fubi4uf8darc
-name: Aura of Inviolate Ownership
-type: spell
+_key: '!items!e0k1fubi4uf8darc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aura of Inviolate Ownership
 system:
+  actions:
+    - _id: wmbuaox20bp344a2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell wards the attended items of all creatures it targets (items
@@ -11,41 +38,14 @@ system:
       theft. The DC of Sleight of Hand checks to remove items warded by the
       spell is increased by 20, and affected creatures gain a +20 bonus to their
       CMDs against disarm and steal combat maneuvers.</p>
-  actions:
-    - _id: wmbuaox20bp344a2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
+      inquisitor: 3
       oracle: 3
       paladin: 3
-      inquisitor: 3
+      warpriest: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!e0k1fubi4uf8darc'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: JZlCwRBCgOeFxIk7
-name: Mesmerist Tricks
-type: feat
+_key: '!items!JZlCwRBCgOeFxIk7'
 img: systems/pf1/icons/skills/ice_12.jpg
+name: Mesmerist Tricks
 system:
+  abilityType: su
+  actions:
+    - _id: ljfuj55u6n1km8mh
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/ice_12.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Mesmerist
   description:
     value: >-
       <p>A mesmerist can create hypnotic bonds with his allies, implanting
@@ -34,29 +53,10 @@ system:
       mesmerist knows. Unless specifically noted in the mesmerist trick’s
       description, a mesmerist can’t choose a particular trick more than
       once.</p>
-  actions:
-    - _id: ljfuj55u6n1km8mh
-      name: Use
-      img: systems/pf1/icons/skills/ice_12.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: max(1, floor(@classes.mesmerist.level / 2)) + @abilities.cha.mod
-  tag: classFeat_mesmeristTricks
   subType: classFeat
-  associations:
-    classes:
-      - Mesmerist
-  abilityType: su
-_key: '!items!JZlCwRBCgOeFxIk7'
+  tag: classFeat_mesmeristTricks
+  uses:
+    maxFormula: max(1, floor(@classes.mesmerist.level / 2)) + @abilities.cha.mod
+    per: day
+type: feat
 

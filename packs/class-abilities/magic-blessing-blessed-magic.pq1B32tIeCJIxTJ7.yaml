@@ -1,8 +1,19 @@
 _id: pq1B32tIeCJIxTJ7
-name: 'Magic Blessing: Blessed Magic'
-type: feat
+_key: '!items!pq1B32tIeCJIxTJ7'
 img: systems/pf1/icons/spells/protect-blue-3.jpg
+name: 'Magic Blessing: Blessed Magic'
 system:
+  actions:
+    - _id: 3wrk8aaict65u57o
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/protect-blue-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can cast a prepared warpriest spell without
@@ -14,18 +25,7 @@ system:
       10th level and can cast 4th-level warpriest spells, you could use this
       blessing to cast a 1st-level warpriest spell without expending its spell
       slot.</p>
-  actions:
-    - _id: 3wrk8aaict65u57o
-      name: Use
-      img: systems/pf1/icons/spells/protect-blue-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  tag: classFeat_magicBlessingBlessedMagic
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!pq1B32tIeCJIxTJ7'
+  tag: classFeat_magicBlessingBlessedMagic
+type: feat
 

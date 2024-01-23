@@ -1,8 +1,30 @@
 _id: 41d87ar2vzt2rnhv
-name: Passing Fancy
-type: spell
+_key: '!items!41d87ar2vzt2rnhv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Passing Fancy
 system:
+  actions:
+    - _id: 4pn1o4kviag6ht7t
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 4d4 rounds (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Taldor's infamous Lion Blades imported this spell from the ninja clans
@@ -16,39 +38,17 @@ system:
       or less.  Because the target talks and interacts with its usual cadence,
       onlookers take a -10 penalty on Sense Motive checks to notice that
       anything is amiss with the target's behavior.</p>
-  actions:
-    - _id: 4pn1o4kviag6ht7t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 4d4 rounds (D)
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!41d87ar2vzt2rnhv'
+type: spell
 

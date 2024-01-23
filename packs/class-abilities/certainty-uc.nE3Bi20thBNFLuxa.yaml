@@ -1,8 +1,20 @@
 _id: nE3Bi20thBNFLuxa
-name: Certainty (UC)
-type: feat
+_key: '!items!nE3Bi20thBNFLuxa'
 img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+name: Certainty (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: ejez24i3ogfsv2pw
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue (Unchained)
   description:
     value: >-
       <p>The rogue chooses one of the skills she selected with rogue’s edge.
@@ -16,24 +28,12 @@ system:
 
       <p>A rogue must have the rogue’s edge class feature before selecting this
       talent.</p>
+  subType: classFeat
+  tag: classFeat_certaintyUc
   tags:
     - Rogue Talent
-  actions:
-    - _id: ejez24i3ogfsv2pw
-      name: Use
-      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
-      activation:
-        type: free
-        unchained:
-          type: free
   uses:
-    per: day
     maxFormula: floor(@classes.rogueUnchained.level / 5)
-  tag: classFeat_certaintyUc
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!nE3Bi20thBNFLuxa'
+    per: day
+type: feat
 

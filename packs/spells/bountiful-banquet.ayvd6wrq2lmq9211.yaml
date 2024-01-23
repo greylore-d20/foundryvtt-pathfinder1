@@ -1,8 +1,27 @@
 _id: ayvd6wrq2lmq9211
-name: Bountiful Banquet
-type: spell
+_key: '!items!ayvd6wrq2lmq9211'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bountiful Banquet
 system:
+  actions:
+    - _id: v6dwcbxzs8hlfh6n
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: feast for two creatures/level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a beautiful and delicious feast with hors d'oeuvres, four
@@ -22,39 +41,20 @@ system:
       possibly fermented) nectar for beverages, all on rough-hewn wooden plates
       with chopsticks instead of silverware and sizable leaves replacing
       napkins.</p>
-  actions:
-    - _id: v6dwcbxzs8hlfh6n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour; see text
-      range:
-        units: close
-      spellEffect: feast for two creatures/level
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
       bard: 4
-      shaman: 4
+      cleric: 4
+      druid: 4
       hunter: 4
+      oracle: 4
+      shaman: 4
+      warpriest: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a turkey bone
+  school: con
   sr: false
-_key: '!items!ayvd6wrq2lmq9211'
+  subschool: creation
+type: spell
 

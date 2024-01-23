@@ -1,8 +1,39 @@
 _id: JBPqanXaxNsVfPJ4
-name: Worm that Walks
-type: feat
+_key: '!items!JBPqanXaxNsVfPJ4'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Worm that Walks
 system:
+  changes:
+    - _id: 5xvtt9hz
+      formula: '-(@ac.natural.total)'
+      modifier: untyped
+      priority: -10
+      subTarget: nac
+    - _id: 0n0f52l2
+      formula: max(2, @abilities.wis.mod)
+      modifier: insight
+      subTarget: ac
+    - _id: cpfz5eb8
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+    - _id: g4z89mhi
+      formula: '4'
+      modifier: untyped
+      subTarget: con
+    - _id: ebvyjqng
+      formula: '8'
+      modifier: racial
+      subTarget: skill.per
+    - _id: 1cynlds5
+      formula: '8'
+      modifier: racial
+      subTarget: skill.sen
+    - _id: teu2h6vj
+      formula: '8'
+      modifier: racial
+      subTarget: skill.ste
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -179,37 +210,6 @@ system:
       Sense Motive, and Stealth checks.</p>
 
       <p><b>Feats:</b> Worms that walk gain Diehard as a bonus feat.</p>
-  changes:
-    - _id: 5xvtt9hz
-      formula: '-(@ac.natural.total)'
-      subTarget: nac
-      modifier: untyped
-      priority: -10
-    - _id: 0n0f52l2
-      formula: max(2, @abilities.wis.mod)
-      subTarget: ac
-      modifier: insight
-    - _id: cpfz5eb8
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
-    - _id: g4z89mhi
-      formula: '4'
-      subTarget: con
-      modifier: untyped
-    - _id: ebvyjqng
-      formula: '8'
-      subTarget: skill.per
-      modifier: racial
-    - _id: 1cynlds5
-      formula: '8'
-      subTarget: skill.sen
-      modifier: racial
-    - _id: teu2h6vj
-      formula: '8'
-      subTarget: skill.ste
-      modifier: racial
   subType: template
-  crOffset: '2'
-_key: '!items!JBPqanXaxNsVfPJ4'
+type: feat
 

@@ -1,8 +1,34 @@
 _id: uy4sgtephkpydjy5
-name: Aura of Doom
-type: spell
+_key: '!items!uy4sgtephkpydjy5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aura of Doom
 system:
+  actions:
+    - _id: ps1ux0b9hni6ddvh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation centered on you
+      duration:
+        value: 10 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        type: will
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You emanate an almost palpable aura of horror. All non-allies within
@@ -10,43 +36,17 @@ system:
       avoid becoming shaken. A successful save suppresses the effect. Creatures
       that leave the area and come back must save again to avoid being affected
       by the effect.</p>
-  actions:
-    - _id: ps1ux0b9hni6ddvh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minute/level
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 20-ft.-radius emanation centered on you
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
       psychic: 4
       spiritualist: 4
+      warpriest: 4
   level: 4
-  school: nec
-  types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: powdered bone
-_key: '!items!uy4sgtephkpydjy5'
+  school: nec
+  types: emotion, fear, mind-affecting
+type: spell
 

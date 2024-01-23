@@ -1,28 +1,28 @@
 _id: rMR6ahXEfYqASE7D
-name: Athletic
-type: feat
+_key: '!items!rMR6ahXEfYqASE7D'
 img: systems/pf1/icons/feats/athletic.jpg
+name: Athletic
 system:
+  changes:
+    - _id: 7x539gvc
+      formula: '@skills.clm.rank >= 10 ? 4 : 2'
+      modifier: untyped
+      subTarget: skill.clm
+    - _id: zgst782n
+      formula: '@skills.swm.rank >= 10 ? 4 : 2'
+      modifier: untyped
+      subTarget: skill.swm
   description:
     value: >-
       <em>You possess inherent physical
       prowess.</em><p><strong>Benefits</strong>: You get a +2 bonus on Climb and
       Swim skill checks. If you have 10 or more ranks in one of these skills,
       the bonus increases to +4 for that skill.
-  tags:
-    - General
-  changes:
-    - _id: 7x539gvc
-      formula: '@skills.clm.rank >= 10 ? 4 : 2'
-      subTarget: skill.clm
-      modifier: untyped
-    - _id: zgst782n
-      formula: '@skills.swm.rank >= 10 ? 4 : 2'
-      subTarget: skill.swm
-      modifier: untyped
-  tag: feat_athletic
   source:
     id: PZO1110
     pages: '118'
-_key: '!items!rMR6ahXEfYqASE7D'
+  tag: feat_athletic
+  tags:
+    - General
+type: feat
 

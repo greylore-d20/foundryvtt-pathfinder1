@@ -1,8 +1,20 @@
 _id: 2WY9Izl9zbw84pnk
-name: Ki Guardian (UC)
-type: feat
+_key: '!items!2WY9Izl9zbw84pnk'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Ki Guardian (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: v5cdmijvk5t86ndk
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>As an immediate action before he rolls a saving throw against a
@@ -19,19 +31,7 @@ system:
       saving throw.</p>
 
       <p>A monk must be at least 6th level before selecting this ki power.</p>
-  actions:
-    - _id: v5cdmijvk5t86ndk
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_kiGuardianUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!2WY9Izl9zbw84pnk'
+  tag: classFeat_kiGuardianUc
+type: feat
 

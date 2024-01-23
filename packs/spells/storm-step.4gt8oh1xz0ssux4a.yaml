@@ -1,8 +1,36 @@
 _id: 4gt8oh1xz0ssux4a
-name: Storm Step
-type: spell
+_key: '!items!4gt8oh1xz0ssux4a'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Storm Step
 system:
+  actions:
+    - _id: jlvv2gmfryoeh7u0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (min(floor(@cl / 2),5))d8
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex halves
+        type: ref
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You are able to harness the power of the storm to transport yourself a
@@ -16,43 +44,15 @@ system:
       through the barrier, you continue beyond the barrier as long as the
       spell's range permits; otherwise, your movement stops in the square
       adjacent to the barrier and the effect ends.</p>
-  actions:
-    - _id: jlvv2gmfryoeh7u0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: close
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (min(floor(@cl / 2),5))d8
-            type:
-              values:
-                - electric
-              custom: ''
-      save:
-        type: ref
-        description: Reflex halves
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       magus: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: con
   subschool: teleportation
   types: electricity
-  components:
-    verbal: true
-_key: '!items!4gt8oh1xz0ssux4a'
+type: spell
 

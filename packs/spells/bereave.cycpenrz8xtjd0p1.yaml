@@ -1,8 +1,32 @@
 _id: cycpenrz8xtjd0p1
-name: Bereave
-type: spell
+_key: '!items!cycpenrz8xtjd0p1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bereave
 system:
+  actions:
+    - _id: vksitjygd1cd4uoh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: all creatures in a 15-ft.-radius burst
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An overwhelming feeling of loss overcomes the targets, and their
@@ -16,44 +40,20 @@ system:
       the effect is harmless (such as <i>cure light</i> wounds). An affected
       creature still counts as her own ally and can target herself with
       abilities, effects, and spells normally.</p>
-  actions:
-    - _id: vksitjygd1cd4uoh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: all creatures in a 15-ft.-radius burst
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       bard: 3
-      witch: 4
-      psychic: 4
+      cleric: 4
       mesmerist: 3
+      oracle: 4
+      psychic: 4
+      warpriest: 4
+      witch: 4
   level: 4
+  materials:
+    value: a broken chain link
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: a broken chain link
-_key: '!items!cycpenrz8xtjd0p1'
+type: spell
 

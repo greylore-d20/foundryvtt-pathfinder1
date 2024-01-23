@@ -1,8 +1,29 @@
 _id: NcbYayADUpp8Juiy
-name: Spark Malfeasance
-type: feat
+_key: '!items!NcbYayADUpp8Juiy'
 img: systems/pf1/icons/skills/affliction_13.jpg
+name: Spark Malfeasance
 system:
+  abilityType: su
+  actions:
+    - _id: 8kjyd9osdew67gl6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/affliction_13.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can awaken the sinful desires of a target within 30
@@ -16,31 +37,10 @@ system:
       additional time per day for every 4 levels beyond 8th.</p>
 
       <p>This power replaces the Scythe of Evil power of the Evil Domain.</p>
-  actions:
-    - _id: 8kjyd9osdew67gl6
-      name: Use
-      img: systems/pf1/icons/skills/affliction_13.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_sparkMalfeasance
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!NcbYayADUpp8Juiy'
+  tag: classFeat_sparkMalfeasance
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

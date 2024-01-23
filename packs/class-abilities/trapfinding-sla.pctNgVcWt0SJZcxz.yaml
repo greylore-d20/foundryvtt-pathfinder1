@@ -1,32 +1,32 @@
 _id: pctNgVcWt0SJZcxz
-name: Trapfinding (SLA)
-type: feat
+_key: '!items!pctNgVcWt0SJZcxz'
 img: systems/pf1/icons/items/weapons/rhoka.PNG
+name: Trapfinding (SLA)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Slayer
+  changes:
+    - _id: dzjkz8b1
+      formula: max(1, floor(@classes.slayer.level / 2))
+      modifier: untyped
+      subTarget: skill.dev
+  classSkills:
+    dev: true
+  contextNotes:
+    - subTarget: skill.per
+      target: skill
+      text: +[[max(1, floor(@classes.slayer.level / 2))]] vs Traps
   description:
     value: >-
       <p>The slayer gains Disable Device as a class skill. The slayer also gains
       the @UUID[Compendium.pf1.class-abilities.pEODJDoTk7uhCZY7]{trapfinding}
       and @UUID[Compendium.pf1.class-abilities.BoEkMviJrW0PKmhj]{trap sense}
       rogue abilities, using his slayer level as his effective rogue level.</p>
+  subType: classFeat
+  tag: classFeat_trapfindingSla
   tags:
     - Slayer Talent
-  changes:
-    - _id: dzjkz8b1
-      formula: max(1, floor(@classes.slayer.level / 2))
-      subTarget: skill.dev
-      modifier: untyped
-  contextNotes:
-    - text: +[[max(1, floor(@classes.slayer.level / 2))]] vs Traps
-      target: skill
-      subTarget: skill.per
-  tag: classFeat_trapfindingSla
-  subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
-  classSkills:
-    dev: true
-_key: '!items!pctNgVcWt0SJZcxz'
+type: feat
 

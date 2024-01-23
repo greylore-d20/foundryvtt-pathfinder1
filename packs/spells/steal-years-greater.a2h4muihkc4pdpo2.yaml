@@ -1,16 +1,11 @@
 _id: a2h4muihkc4pdpo2
-name: Steal Years, Greater
-type: spell
+_key: '!items!a2h4muihkc4pdpo2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Steal Years, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>steal years</i>, except you drain 1d6
-      years per two caster levels (maximum 10d6).</p>
   actions:
     - _id: bf3yzkev9xql2y87
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,31 +13,36 @@ system:
           type: action
       duration:
         value: 1 day/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>steal years</i>, except you drain 1d6
+      years per two caster levels (maximum 10d6).</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
-      oracle: 5
       druid: 5
-      witch: 5
       hunter: 5
+      oracle: 5
+      sorcerer: 5
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of ash
-_key: '!items!a2h4muihkc4pdpo2'
+  school: trs
+type: spell
 

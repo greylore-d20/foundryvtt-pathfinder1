@@ -1,18 +1,10 @@
 _id: 2tl18dgkexyukq9j
-name: Share Shape
-type: spell
+_key: '!items!2tl18dgkexyukq9j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Share Shape
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>beast shape II</i>, but you may only assume
-      the form of an animal of a type identical to your animal companion or
-      familiar. If your familiar or companion is not an animal, this spell has
-      no effect.</p>
   actions:
     - _id: 0dy4tlw6ejyef1t5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,26 +12,34 @@ system:
           type: action
       duration:
         value: 1 hour/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>beast shape II</i>, but you may only assume
+      the form of an animal of a type identical to your animal companion or
+      familiar. If your familiar or companion is not an animal, this spell has
+      no effect.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      ranger: 3
-      witch: 4
       hunter: 3
+      ranger: 3
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!2tl18dgkexyukq9j'
+  subschool: polymorph
+type: spell
 

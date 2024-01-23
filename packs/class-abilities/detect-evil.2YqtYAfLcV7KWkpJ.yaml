@@ -1,8 +1,20 @@
 _id: 2YqtYAfLcV7KWkpJ
-name: Detect Evil
-type: feat
+_key: '!items!2YqtYAfLcV7KWkpJ'
 img: systems/pf1/icons/feats/greater-feint.png
+name: Detect Evil
 system:
+  abilityType: sp
+  actions:
+    - _id: e87e4l5t1ovmolqf
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/feats/greater-feint.png
+      name: Use
+  associations:
+    classes:
+      - Paladin
   description:
     value: >-
       <p>At will, a paladin can use
@@ -12,19 +24,7 @@ system:
       aura as if having studied it for 3 rounds. While focusing on one
       individual or object, the paladin does not detect evil in any other object
       or individual within range.</p>
-  actions:
-    - _id: e87e4l5t1ovmolqf
-      name: Use
-      img: systems/pf1/icons/feats/greater-feint.png
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_detectEvil
   subType: classFeat
-  associations:
-    classes:
-      - Paladin
-  abilityType: sp
-_key: '!items!2YqtYAfLcV7KWkpJ'
+  tag: classFeat_detectEvil
+type: feat
 

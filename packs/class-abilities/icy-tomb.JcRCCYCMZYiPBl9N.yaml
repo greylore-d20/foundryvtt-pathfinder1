@@ -1,8 +1,20 @@
 _id: JcRCCYCMZYiPBl9N
-name: Icy Tomb
-type: feat
+_key: '!items!JcRCCYCMZYiPBl9N'
 img: systems/pf1/icons/spells/runes-blue-3.jpg
+name: Icy Tomb
 system:
+  abilityType: su
+  actions:
+    - _id: ol3pp3acmndfk31m
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/runes-blue-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>Whenever the arcanist uses the ice missile exploit, she can expend 2
@@ -17,21 +29,9 @@ system:
 
       <p>The arcanist must have the ice missile arcanist exploit to select this
       exploit.</p>
+  subType: classFeat
+  tag: classFeat_icyTomb
   tags:
     - Arcanist Exploit, Greater
-  actions:
-    - _id: ol3pp3acmndfk31m
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_icyTomb
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!JcRCCYCMZYiPBl9N'
+type: feat
 

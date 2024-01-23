@@ -1,8 +1,35 @@
 _id: hj0rfw1zr2h69wjT
-name: Shadowstrike
-type: feat
+_key: '!items!hj0rfw1zr2h69wjT'
 img: systems/pf1/icons/skills/shadow_21.jpg
+name: Shadowstrike
 system:
+  abilityType: sp
+  actions:
+    - _id: wz0wldvzmqplu976
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d4 + (floor(@classes.sorcerer.level / 2))
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/shadow_21.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can make a melee <em>touch attack</em> as a
@@ -12,37 +39,10 @@ system:
       vision</em> or <em>darkvision</em> are not <em>dazzled</em> by this
       ability. You can use this ability a number of times per day equal to 3 +
       your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: wz0wldvzmqplu976
-      name: Use
-      img: systems/pf1/icons/skills/shadow_21.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: 1d4 + (floor(@classes.sorcerer.level / 2))
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_shadowstrike
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!hj0rfw1zr2h69wjT'
+  tag: classFeat_shadowstrike
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

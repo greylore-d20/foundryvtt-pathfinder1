@@ -1,7 +1,33 @@
-name: Solidify Earth
-type: spell
+_id: i29DYm99Rxp3mvhs
+_key: '!items!i29DYm99Rxp3mvhs'
 img: icons/commodities/stone/paver-brick-brown.webp
+name: Solidify Earth
 system:
+  actions:
+    - _id: HitVAerHTvzqhLbM
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to two 10-foot cubes per level (S)
+      duration:
+        value: 1 minute/level
+      img: icons/commodities/stone/paver-brick-brown.webp
+      measureTemplate:
+        size: '10'
+        type: rect
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex negates (see text)
+        type: ref
+  components:
+    divineFocus: 2
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Stone, dirt, and other types of earth within the area become more
@@ -14,27 +40,6 @@ system:
       mastery</em> special ability (such as earth elementals) double their bonus
       on attack and damage rolls so long as both they and their targets are
       touching the area affected by this spell.</p>
-  actions:
-    - _id: HitVAerHTvzqhLbM
-      name: Use
-      img: icons/commodities/stone/paver-brick-brown.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: close
-      measureTemplate:
-        type: rect
-        size: '10'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (see text)
-      area: up to two 10-foot cubes per level (S)
   learnedAt:
     class:
       arcanist: 2
@@ -48,12 +53,7 @@ system:
       wizard: 2
   level: 2
   school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 2
   sr: false
-_id: i29DYm99Rxp3mvhs
-_key: '!items!i29DYm99Rxp3mvhs'
+  types: earth
+type: spell
 

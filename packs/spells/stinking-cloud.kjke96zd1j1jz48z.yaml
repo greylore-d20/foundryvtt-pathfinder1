@@ -1,8 +1,30 @@
 _id: kjke96zd1j1jz48z
-name: Stinking Cloud
-type: spell
+_key: '!items!kjke96zd1j1jz48z'
 img: icons/magic/air/fog-gas-smoke-green.webp
+name: Stinking Cloud
 system:
+  actions:
+    - _id: pt2uaa5onc9bwk56
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates; see text
+        type: fort
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Stinking cloud</i> creates a bank of fog like that created by <i>fog
@@ -14,44 +36,22 @@ system:
       is a poison effect.</p><p><i>Stinking cloud</i> can be made permanent with
       a <i>permanency</i> spell. A permanent <i>stinking cloud</i> dispersed by
       wind reforms in 10 minutes.</p>
-  actions:
-    - _id: pt2uaa5onc9bwk56
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates; see text
-      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
-      magus: 3
       bloodrager: 3
+      magus: 3
       shaman: 3
+      sorcerer: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
     subDomain:
       Smoke: 3
   level: 3
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a rotten egg or cabbage leaves
+  school: con
   sr: false
-_key: '!items!kjke96zd1j1jz48z'
+  subschool: creation
+type: spell
 

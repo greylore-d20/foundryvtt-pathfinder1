@@ -1,8 +1,16 @@
 _id: o8AEIzEXMjEZ2EX1
-name: Bonus Combat Feats (BRA)
-type: feat
+_key: '!items!o8AEIzEXMjEZ2EX1'
 img: systems/pf1/icons/skills/gray_08.jpg
+name: Bonus Combat Feats (BRA)
 system:
+  associations:
+    classes:
+      - Brawler
+  changes:
+    - _id: 6b0hdj9l
+      formula: floor((@classes.brawler.level + 1) / 3)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 2nd level and every 3 levels thereafter, a brawler gains a bonus
@@ -17,15 +25,7 @@ system:
       ability. A brawler can only change one feat at any given level, and must
       choose whether or not to swap the feat at the time she gains a new bonus
       combat feat for the level.</p>
-  changes:
-    - _id: 6b0hdj9l
-      formula: floor((@classes.brawler.level + 1) / 3)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_bonusCombatFeatsBra
   subType: classFeat
-  associations:
-    classes:
-      - Brawler
-_key: '!items!o8AEIzEXMjEZ2EX1'
+  tag: classFeat_bonusCombatFeatsBra
+type: feat
 

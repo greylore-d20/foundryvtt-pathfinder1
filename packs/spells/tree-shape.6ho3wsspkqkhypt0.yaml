@@ -1,8 +1,27 @@
 _id: 6ho3wsspkqkhypt0
-name: Tree Shape
-type: spell
+_key: '!items!6ho3wsspkqkhypt0'
 img: icons/magic/nature/tree-elm-roots-brown.webp
+name: Tree Shape
 system:
+  actions:
+    - _id: 9gykvkg79unlxqmr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to assume the form of a Large living tree or
@@ -18,33 +37,14 @@ system:
       and a speed of 0 feet. You are immune to critical hits while in tree form.
       All clothing and gear carried or worn changes with you. You can dismiss
       <i>tree shape</i> as a free action (instead of as a standard action).</p>
-  actions:
-    - _id: 9gykvkg79unlxqmr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       druid: 2
+      hunter: 2
       ranger: 3
       shaman: 2
-      hunter: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!6ho3wsspkqkhypt0'
+type: spell
 

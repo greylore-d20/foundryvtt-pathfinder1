@@ -1,8 +1,25 @@
 _id: 7mstq5c76h3e6zzx
-name: Time Stop
-type: spell
+_key: '!items!7mstq5c76h3e6zzx'
 img: icons/magic/time/hourglass-tilted-glowing-gold.webp
+name: Time Stop
 system:
+  actions:
+    - _id: 8s5cthpa6bax16zg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1d4+1 rounds (apparent time); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell seems to make time cease to flow for everyone but you. In
@@ -21,35 +38,18 @@ system:
       possession.</p><p>You are undetectable while <i>time stop</i> lasts. You
       cannot enter an area protected by an <i>antimagic field</i> while under
       the effect of <i>time stop</i>.</p>
-  actions:
-    - _id: 8s5cthpa6bax16zg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d4+1 rounds (apparent time); see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
     domain:
       Trickery: 9
   level: 9
   school: trs
-  components:
-    verbal: true
-  sr: false
   source:
     id: PZO1110
     pages: '359'
-_key: '!items!7mstq5c76h3e6zzx'
+  sr: false
+type: spell
 

@@ -1,18 +1,10 @@
 _id: wijuvnfmtmq83jef
-name: Monkey Fish
-type: spell
+_key: '!items!wijuvnfmtmq83jef'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Monkey Fish
 system:
-  description:
-    value: >-
-      <p>Your hands and feet alter to make you better at climbing and swimming.
-      You gain a 10 foot climb speed and swim speed. This spell has no effect if
-      you are wearing medium or heavy armor or carrying a medium or heavy
-      load.</p>
   actions:
     - _id: io3rj4afe1npvtmn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,27 +12,35 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your hands and feet alter to make you better at climbing and swimming.
+      You gain a 10 foot climb speed and swim speed. This spell has no effect if
+      you are wearing medium or heavy armor or carrying a medium or heavy
+      load.</p>
   learnedAt:
     class:
+      alchemist: 1
+      druid: 1
+      hunter: 1
+      magus: 1
+      psychic: 1
+      shaman: 1
       sorcerer: 1
       wizard: 1
-      druid: 1
-      alchemist: 1
-      magus: 1
-      shaman: 1
-      psychic: 1
-      hunter: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1129
     pages: '188'
-_key: '!items!wijuvnfmtmq83jef'
+  sr: false
+type: spell
 

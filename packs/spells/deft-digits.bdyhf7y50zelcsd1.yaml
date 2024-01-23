@@ -1,8 +1,28 @@
 _id: bdyhf7y50zelcsd1
-name: Deft Digits
-type: spell
+_key: '!items!bdyhf7y50zelcsd1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deft Digits
 system:
+  actions:
+    - _id: 6qpzdjmmsnyivc0l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        harmless: true
+      target:
+        value: 1 unattended gauntlet or glove
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You animate the target of the spell, manipulating the glove with your
@@ -17,39 +37,19 @@ system:
       cannot wield weapons or make attacks effectively while this spell is in
       effect. If you cast this spell on a magical glove, its innate magic is
       suppressed for the duration of the spell.</p>
-  actions:
-    - _id: 6qpzdjmmsnyivc0l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: 1 unattended gauntlet or glove
-      range:
-        units: medium
-      save:
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      summoner: 3
-      psychic: 3
       medium: 3
       occultist: 3
+      psychic: 3
+      sorcerer: 3
       spiritualist: 3
+      summoner: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!bdyhf7y50zelcsd1'
+type: spell
 

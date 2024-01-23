@@ -1,7 +1,26 @@
-name: Litany of Duty
-type: spell
+_id: 55jB63sBH4GLV5Mm
+_key: '!items!55jB63sBH4GLV5Mm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Duty
 system:
+  actions:
+    - _id: lTcwa1a0UruhxOnD
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You repeat a mantra or phrase that reminds you of your duty. You can
@@ -11,31 +30,12 @@ system:
       saving throw that you failed within the past round. While subject to this
       spell, the target cannot be the target of another spell that has the word
       “litany” in the title.</p>
-  actions:
-    - _id: lTcwa1a0UruhxOnD
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       inquisitor: 2
       paladin: 1
   school: abj
-  types: lawful
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_id: 55jB63sBH4GLV5Mm
-_key: '!items!55jB63sBH4GLV5Mm'
+  types: lawful
+type: spell
 

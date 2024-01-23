@@ -1,8 +1,25 @@
 _id: azyo7xhfwdtjchtm
-name: Polypurpose Panacea
-type: spell
+_key: '!items!azyo7xhfwdtjchtm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Polypurpose Panacea
 system:
+  actions:
+    - _id: n07qxape386k23ym
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see below
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>This creates one of several cantrip-level effects relating to your
@@ -39,31 +56,14 @@ system:
       your need for <i>sleep</i> and does not count as rest or <i>sleep</i>. You
       can use it multiple times in succession, but as each effect wears off, you
       are as tired as you would be had you not used the panacea.</p>
-  actions:
-    - _id: n07qxape386k23ym
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see below
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 1
+      mesmerist: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      alchemist: 1
-      psychic: 1
-      mesmerist: 1
   school: trs
-  components:
-    somatic: true
   sr: false
-_key: '!items!azyo7xhfwdtjchtm'
+type: spell
 

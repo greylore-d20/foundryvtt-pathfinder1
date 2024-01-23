@@ -1,8 +1,28 @@
 _id: dymdg2azgrfh7fi3
-name: Implant False Reading
-type: spell
+_key: '!items!dymdg2azgrfh7fi3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Implant False Reading
 system:
+  actions:
+    - _id: 8zbmq6wigt5xvkl0
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You implant a false psychometric reading into an object, imbuing the
@@ -27,34 +47,14 @@ system:
       causing the target to not register as magical to <i>detect</i> spells and
       similar effects. This masking doesn't conceal any other magical auras on
       the object, and can be overcome in the same ways as <i>magic aura</i>.</p>
-  actions:
-    - _id: 8zbmq6wigt5xvkl0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none; see text
   learnedAt:
     class:
-      psychic: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
   level: 2
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!dymdg2azgrfh7fi3'
+  subschool: glamer
+type: spell
 

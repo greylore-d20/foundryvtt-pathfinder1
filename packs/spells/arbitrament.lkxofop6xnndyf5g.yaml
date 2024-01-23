@@ -1,8 +1,30 @@
 _id: lkxofop6xnndyf5g
-name: Arbitrament
-type: spell
+_key: '!items!lkxofop6xnndyf5g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Arbitrament
 system:
+  actions:
+    - _id: yhfma9apkrb86kid
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '40'
+      save:
+        description: Will partial, see text
+        type: will
+      target:
+        value: non-neutral creatures in a 40-ft.-radius spread centered on you
+  components:
+    verbal: true
   description:
     value: >-
       <p>All chaotic evil, chaotic good, lawful evil, and lawful good creatures
@@ -30,35 +52,13 @@ system:
       at least 24 hours. This effect takes place regardless of whether the
       creatures hear the <i>arbitrament</i>.  Creatures whose Hit Dice exceed
       your caster level are unaffected by <i>arbitrament</i>.<p></p>
-  actions:
-    - _id: yhfma9apkrb86kid
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: non-neutral creatures in a 40-ft.-radius spread centered on you
-      range:
-        value: '40'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial, see text
   learnedAt:
     class:
       cleric: 7
-      oracle: 7
       inquisitor: 6
+      oracle: 7
   level: 7
   school: evo
   types: sonic
-  components:
-    verbal: true
-_key: '!items!lkxofop6xnndyf5g'
+type: spell
 

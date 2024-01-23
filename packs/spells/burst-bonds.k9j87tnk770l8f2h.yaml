@@ -1,8 +1,29 @@
 _id: k9j87tnk770l8f2h
-name: Burst Bonds
-type: spell
+_key: '!items!k9j87tnk770l8f2h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Burst Bonds
 system:
+  actions:
+    - _id: utexc6j809ibbxpx
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude half (object)
+        type: fort
+      target:
+        value: one object or creature restraining you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You blast your restraints with divine wrath, dealing 1d6 points of
@@ -20,30 +41,9 @@ system:
       save and you are restrained by an ability that originally allowed a saving
       throw, <i>burst bonds</i> allows a new saving throw with a +1 luck bonus
       per two caster levels (maximum +5).</p>
-  actions:
-    - _id: utexc6j809ibbxpx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one object or creature restraining you
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude half (object)
   learnedAt:
     class:
       inquisitor: 1
   school: evo
-  components:
-    verbal: true
-_key: '!items!k9j87tnk770l8f2h'
+type: spell
 

@@ -1,8 +1,24 @@
 _id: yBOFy9fcg6WOqwAB
-name: Obscuring Blow
-type: feat
+_key: '!items!yBOFy9fcg6WOqwAB'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Obscuring Blow
 system:
+  abilityType: ex
+  actions:
+    - _id: KqfALWctCJwZfT9j
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
   description:
     value: >-
       <p>Once per day, the character can forgo her potential to deal sneak
@@ -15,35 +31,19 @@ system:
       the class level. A successful Fortitude saving throw reduces this effect
       to 1 round. The DC of this saving throw is equal to 10 + 1/2 the class
       level + the character's Intelligence modifier.</p>
+  source:
+    id: PZO9466
+    pages: '8'
+  subType: classFeat
+  tag: classFeat_obscuringBlow
   tags:
     - Rogue Talent
     - Slayer Talent
     - Ninja Trick
     - Sneak Attack
-  actions:
-    - _id: KqfALWctCJwZfT9j
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      ammoType: none
   uses:
+    maxFormula: '1'
     per: day
     value: 1
-    maxFormula: '1'
-  tag: classFeat_obscuringBlow
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Slayer
-      - Ninja
-  abilityType: ex
-  source:
-    id: PZO9466
-    pages: '8'
-_key: '!items!yBOFy9fcg6WOqwAB'
+type: feat
 

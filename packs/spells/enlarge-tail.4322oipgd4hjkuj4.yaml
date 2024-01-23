@@ -1,16 +1,10 @@
 _id: 4322oipgd4hjkuj4
-name: Enlarge Tail
-type: spell
+_key: '!items!4322oipgd4hjkuj4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Enlarge Tail
 system:
-  description:
-    value: >-
-      <p>When attacking with your tail or tail weapons, you gain 5 feet of
-      reach, a +1 bonus on attack rolls, and a +2 bonus on damage rolls.</p>
   actions:
     - _id: ht2r8ngeul1xj8d6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,26 +12,32 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: your tail
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: your tail
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>When attacking with your tail or tail weapons, you gain 5 feet of
+      reach, a +1 bonus on attack rolls, and a +2 bonus on damage rolls.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
       alchemist: 1
-      summoner: 1
-      witch: 1
       antipaladin: 1
-      magus: 1
+      druid: 1
       hunter: 1
+      magus: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!4322oipgd4hjkuj4'
+type: spell
 

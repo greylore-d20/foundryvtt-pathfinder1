@@ -1,17 +1,11 @@
 _id: 78imi9hy7dpy7y3c
-name: Evolution Surge, Greater
-type: spell
+_key: '!items!78imi9hy7dpy7y3c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Evolution Surge, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.c5ipv2mivkdb03sb]{lesser
-      evolution surge}, except that you can grant any two evolutions whose total
-      cost does not exceed 6 evolution points.</p>
   actions:
     - _id: f51mz71hugj01h33
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,27 +13,33 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: your eidolon
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: your eidolon
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.c5ipv2mivkdb03sb]{lesser
+      evolution surge}, except that you can grant any two evolutions whose total
+      cost does not exceed 6 evolution points.</p>
   learnedAt:
     class:
       summoner: 4
       summonerUnchained: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chameleon scale
+  school: trs
   sr: false
-_key: '!items!78imi9hy7dpy7y3c'
+type: spell
 

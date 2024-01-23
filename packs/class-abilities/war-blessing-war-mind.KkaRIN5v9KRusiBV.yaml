@@ -1,8 +1,27 @@
 _id: KkaRIN5v9KRusiBV
-name: 'War Blessing: War Mind'
-type: feat
+_key: '!items!KkaRIN5v9KRusiBV'
 img: systems/pf1/icons/spells/enchant-sky-2.jpg
+name: 'War Blessing: War Mind'
 system:
+  actions:
+    - _id: aj11oim5y6tu0ru0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-sky-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ally touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch an ally and grant it a tactical advantage
@@ -22,26 +41,7 @@ system:
       </ul>
 
       <p>Each bonus selected lasts for 1 round.</p>
-  actions:
-    - _id: aj11oim5y6tu0ru0
-      name: Use
-      img: systems/pf1/icons/spells/enchant-sky-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: ally touched
-      range:
-        units: touch
-  tag: classFeat_warBlessingWarMind
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!KkaRIN5v9KRusiBV'
+  tag: classFeat_warBlessingWarMind
+type: feat
 

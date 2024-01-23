@@ -1,18 +1,11 @@
 _id: k3zn13pbr5tr9zac
-name: Dismissal
-type: spell
+_key: '!items!k3zn13pbr5tr9zac'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Dismissal
 system:
-  description:
-    value: >-
-      <p>This spell forces an extraplanar creature back to its proper plane if
-      it fails a Will save. If the spell is successful, the creature is
-      instantly whisked away, but there is a 20% chance of actually sending the
-      subject to a plane other than its own.</p>
   actions:
     - _id: t4uqlp5e96tik0s1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,39 +13,46 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one extraplanar creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates; see text
+        type: will
+      target:
+        value: one extraplanar creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell forces an extraplanar creature back to its proper plane if
+      it fails a Will save. If the spell is successful, the creature is
+      instantly whisked away, but there is a 20% chance of actually sending the
+      subject to a plane other than its own.</p>
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 4
-      inquisitor: 4
-      shaman: 4
-      psychic: 5
-      medium: 4
-      occultist: 4
-      spiritualist: 5
-      summonerUnchained: 5
     bloodline:
       Abyssal: 5
+    class:
+      cleric: 4
+      inquisitor: 4
+      medium: 4
+      occultist: 4
+      oracle: 4
+      psychic: 5
+      shaman: 4
+      sorcerer: 5
+      spiritualist: 5
+      summoner: 4
+      summonerUnchained: 5
+      warpriest: 4
+      wizard: 5
   level: 5
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '271'
-_key: '!items!k3zn13pbr5tr9zac'
+type: spell
 

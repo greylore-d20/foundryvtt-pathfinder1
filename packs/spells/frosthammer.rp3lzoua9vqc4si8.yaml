@@ -1,8 +1,27 @@
 _id: rp3lzoua9vqc4si8
-name: Frosthammer
-type: spell
+_key: '!items!rp3lzoua9vqc4si8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Frosthammer
 system:
+  actions:
+    - _id: n9je2hn3qqw07f9t
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a warhammer of magically hardened ice and send it hurling
@@ -15,36 +34,17 @@ system:
       against that target, except you may use your caster level instead of your
       BAB and your spellcasting ability modifier (Wisdom for clerics, and so on)
       instead of your Strength modifier.</p>
-  actions:
-    - _id: n9je2hn3qqw07f9t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: medium
   learnedAt:
     class:
+      antipaladin: 3
       cleric: 3
-      warpriest: 3
+      hunter: 3
+      inquisitor: 3
       oracle: 3
       ranger: 3
-      inquisitor: 3
-      antipaladin: 3
-      hunter: 3
+      warpriest: 3
   level: 3
   school: evo
   types: cold
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!rp3lzoua9vqc4si8'
+type: spell
 

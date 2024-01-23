@@ -1,8 +1,29 @@
 _id: j8Z4O8Z7otvM8yXE
-name: Aura of Menace
-type: feat
+_key: '!items!j8Z4O8Z7otvM8yXE'
 img: systems/pf1/icons/skills/light_09.jpg
+name: Aura of Menace
 system:
+  abilityType: su
+  actions:
+    - _id: nku7ss5l94qpcw3u
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/light_09.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura of menace as a standard
@@ -13,31 +34,10 @@ system:
 
       <p>This power replaces the Holy Lance power of the Good Domain or the
       Staff of Order power of the Law Domain.</p>
-  actions:
-    - _id: nku7ss5l94qpcw3u
-      name: Use
-      img: systems/pf1/icons/skills/light_09.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_auraOfMenace
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!j8Z4O8Z7otvM8yXE'
+  tag: classFeat_auraOfMenace
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

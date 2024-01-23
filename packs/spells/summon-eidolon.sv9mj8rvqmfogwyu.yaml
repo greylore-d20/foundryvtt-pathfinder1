@@ -1,8 +1,27 @@
 _id: sv9mj8rvqmfogwyu
-name: Summon Eidolon
-type: spell
+_key: '!items!sv9mj8rvqmfogwyu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Eidolon
 system:
+  actions:
+    - _id: cccz4i1pbt70tda6
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one eidolon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You open a rift between dimensions that summons your
@@ -14,34 +33,15 @@ system:
       spell while your eidolon is already on your plane, this spell has no
       effect. This spell allows you to summon your eidolon even if it has been
       returned to its home plane due to damage.</p>
-  actions:
-    - _id: cccz4i1pbt70tda6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one eidolon
-      range:
-        units: close
   learnedAt:
     class:
       summoner: 2
       summonerUnchained: 2
   level: 2
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a silver coin
+  school: con
   sr: false
-_key: '!items!sv9mj8rvqmfogwyu'
+  subschool: summoning
+type: spell
 

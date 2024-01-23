@@ -1,8 +1,24 @@
 _id: GGIJUPfgLWU4FmNU
-name: Divine Might
-type: feat
+_key: '!items!GGIJUPfgLWU4FmNU'
 img: systems/pf1/icons/skills/blue_23.jpg
+name: Divine Might
 system:
+  abilityType: su
+  actions:
+    - _id: 3d02i2ngazk8yi4d
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/blue_23.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Omdura
   description:
     value: >-
       <p>At 4th level, an omdura can call on the powers of her god once per day
@@ -28,26 +44,10 @@ system:
       this ability. At 9th level and every 5 levels thereafter, the omdura can
       use divine might one additional time per day to a maximum of four times
       per day at 19th level.</p>
-  actions:
-    - _id: 3d02i2ngazk8yi4d
-      name: Use
-      img: systems/pf1/icons/skills/blue_23.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      target:
-        value: one creature
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 1 + floor((@classes.omdura.level - 4) / 5)
-  tag: classFeat_divineMight
   subType: classFeat
-  associations:
-    classes:
-      - Omdura
-  abilityType: su
-_key: '!items!GGIJUPfgLWU4FmNU'
+  tag: classFeat_divineMight
+  uses:
+    maxFormula: 1 + floor((@classes.omdura.level - 4) / 5)
+    per: day
+type: feat
 

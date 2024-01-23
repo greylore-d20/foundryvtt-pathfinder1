@@ -1,8 +1,26 @@
 _id: DbC7QZBYYIClw1m6
-name: Smite Good
-type: feat
+_key: '!items!DbC7QZBYYIClw1m6'
 img: systems/pf1/icons/skills/red_16.jpg
+name: Smite Good
 system:
+  abilityType: su
+  actions:
+    - _id: ocsrti4qxjjta8cp
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/red_16.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Antipaladin
   description:
     value: >-
       <p>Once per day, an antipaladin can call out to the dark powers to crush
@@ -25,28 +43,10 @@ system:
       <p>At 4th level, and at every three levels thereafter, the antipaladin may
       smite good one additional time per day, as indicated on Table 2–13, to a
       maximum of seven times per day at 19th level.</p>
-  actions:
-    - _id: ocsrti4qxjjta8cp
-      name: Use
-      img: systems/pf1/icons/skills/red_16.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: one creature
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 1 + floor((@classes.antipaladin.level - 1) / 3)
-  tag: classFeat_smiteGood
   subType: classFeat
-  associations:
-    classes:
-      - Antipaladin
-  abilityType: su
-_key: '!items!DbC7QZBYYIClw1m6'
+  tag: classFeat_smiteGood
+  uses:
+    maxFormula: 1 + floor((@classes.antipaladin.level - 1) / 3)
+    per: day
+type: feat
 

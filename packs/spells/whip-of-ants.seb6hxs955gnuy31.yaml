@@ -1,19 +1,10 @@
 _id: seb6hxs955gnuy31
-name: Whip of Ants
-type: spell
+_key: '!items!seb6hxs955gnuy31'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Whip of Ants
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>Whip of Spiders</i>, except it summons army
-      ants, and any creature you strike with the whip takes swarm damage as if
-      it were attacked by an army ant swarm (3d6 points of damage plus poison
-      and distraction, <i>Pathfinder RPG Bestiary</i> 16). If you transform the
-      whip into an army ant swarm, it has 16 hit points.</p>
   actions:
     - _id: uvoj8g3whlc1s2y6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,31 +12,40 @@ system:
           type: action
       duration:
         value: 1 round/level (D (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '0'
         units: ft
+        value: '0'
       spellEffect: whiplike swarm
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>Whip of Spiders</i>, except it summons army
+      ants, and any creature you strike with the whip takes swarm damage as if
+      it were attacked by an army ant swarm (3d6 points of damage plus poison
+      and distraction, <i>Pathfinder RPG Bestiary</i> 16). If you transform the
+      whip into an army ant swarm, it has 16 hit points.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 6
       bard: 6
-      summoner: 6
-      witch: 6
+      druid: 6
       hunter: 6
+      sorcerer: 6
+      summoner: 6
       summonerUnchained: 6
+      witch: 6
+      wizard: 6
     domain:
       Vermin: 6
   level: 6
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a square of red cloth
-_key: '!items!seb6hxs955gnuy31'
+  school: con
+  subschool: summoning
+type: spell
 

@@ -1,59 +1,59 @@
 _id: oyUApQSVsAqzyjdz
-name: Greatsword
-type: weapon
+_key: '!items!oyUApQSVsAqzyjdz'
 img: systems/pf1/icons/items/weapons/greatsword.PNG
+name: Greatsword
 system:
-  description:
-    value: >-
-      <p>This immense two-handed sword is about 5 feet in length. A greatsword
-      may have a dulled lower blade that can be gripped.</p>
-  tags:
-    - PFS
-  weight:
-    value: 8
-  price: 50
-  hardness: 10
   actions:
     - _id: 137kuv1fu5ds6swb
-      name: Attack
-      img: systems/pf1/icons/items/weapons/greatsword.PNG
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(2, 6, @size)
             type:
+              custom: ''
               values:
                 - slashing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critRange: 19
-  held: 2h
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/greatsword.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
   baseTypes:
     - Greatsword
-  weaponGroups:
-    value:
-      - bladesHeavy
-  subType: martial
-  weaponSubtype: 2h
+  description:
+    value: >-
+      <p>This immense two-handed sword is about 5 feet in length. A greatsword
+      may have a dulled lower blade that can be gripped.</p>
+  hardness: 10
+  held: 2h
+  price: 50
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!oyUApQSVsAqzyjdz'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 2h
+  weight:
+    value: 8
+type: weapon
 

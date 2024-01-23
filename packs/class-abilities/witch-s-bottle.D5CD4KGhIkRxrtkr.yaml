@@ -1,8 +1,33 @@
 _id: D5CD4KGhIkRxrtkr
-name: Witch's Bottle
-type: feat
+_key: '!items!D5CD4KGhIkRxrtkr'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Witch's Bottle
 system:
+  abilityType: su
+  actions:
+    - _id: ds2r2nhqtba06yt9
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Create
+    - _id: wAf82aDcJXReteFC
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Render Inert
+      range:
+        units: unlimited
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>Once per day, the witch can perform a 10-minute ritual to create a
@@ -16,37 +41,12 @@ system:
       rendered inert by the witch as a free action.</p>
 
       <p>A witch must have the cauldron hex to select this hex.</p>
+  subType: classFeat
+  tag: classFeat_witchsBottle
   tags:
     - Hex
-  actions:
-    - _id: ds2r2nhqtba06yt9
-      name: Create
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-    - _id: wAf82aDcJXReteFC
-      name: Render Inert
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      range:
-        units: unlimited
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_witchsBottle
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!D5CD4KGhIkRxrtkr'
+    per: day
+type: feat
 

@@ -1,8 +1,31 @@
 _id: 3fkwj6d8s65ufwar
-name: Accelerate Poison
-type: spell
+_key: '!items!3fkwj6d8s65ufwar'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Accelerate Poison
 system:
+  actions:
+    - _id: lceu8gjb9w42ic3r
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You hasten the onset of poison in the target. If the poison normally
@@ -13,41 +36,18 @@ system:
       poison. If the target is affected by more than one poison, you may choose
       which is affected if you administered the poison; otherwise, randomly
       determine which poison is affected.</p>
-  actions:
-    - _id: lceu8gjb9w42ic3r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
+      druid: 2
+      hunter: 2
+      occultist: 2
+      ranger: 2
       sorcerer: 2
       wizard: 2
-      druid: 2
-      ranger: 2
-      occultist: 2
-      hunter: 2
   level: 2
-  school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a thorn
-_key: '!items!3fkwj6d8s65ufwar'
+  school: trs
+  types: poison
+type: spell
 

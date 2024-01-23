@@ -1,8 +1,27 @@
 _id: w9adq660k80m5cwt
-name: Wandering Trail
-type: spell
+_key: '!items!w9adq660k80m5cwt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wandering Trail
 system:
+  actions:
+    - _id: 8o13hunx4b7kqu1l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '1'
+      target:
+        value: up to one creature/level within 180 feet
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the trail left by the targets within range to automatically
@@ -15,31 +34,12 @@ system:
       caster level, the tracker recognizes that the trail has been manipulated
       by this spell, although it cannot see the trail's true nature unless it
       uses magical means, such as <i>true seeing</i>.</p>
-  actions:
-    - _id: 8o13hunx4b7kqu1l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: up to one creature/level within 180 feet
-      range:
-        value: '1'
-        units: mi
   learnedAt:
     class:
       druid: 6
       hunter: 6
   level: 6
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!w9adq660k80m5cwt'
+type: spell
 

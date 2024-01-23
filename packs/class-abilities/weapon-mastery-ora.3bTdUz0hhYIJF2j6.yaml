@@ -1,8 +1,17 @@
 _id: 3bTdUz0hhYIJF2j6
-name: Weapon Mastery (ORA)
-type: feat
+_key: '!items!3bTdUz0hhYIJF2j6'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Weapon Mastery (ORA)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: A3dbx0Jd
+      formula: 1 + clamped(floor((@classes.oracle.level - 4) / 4), 0, 2)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>Select one weapon with which you are proficient. You gain
@@ -12,19 +21,10 @@ system:
       @Compendium[pf1.feats.IER2MzJrjSvxMlNS]{Greater Weapon Focus} with that
       weapon. You do not need to meet the prerequisites to receive these
       feats.</p>
+  subType: classFeat
+  tag: classFeat_weaponMasteryOra
   tags:
     - Revelation
     - Battle Mystery
-  changes:
-    - _id: A3dbx0Jd
-      formula: 1 + clamped(floor((@classes.oracle.level - 4) / 4), 0, 2)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_weaponMasteryOra
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!3bTdUz0hhYIJF2j6'
+type: feat
 

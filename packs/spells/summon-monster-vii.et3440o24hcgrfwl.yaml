@@ -1,18 +1,10 @@
 _id: et3440o24hcgrfwl
-name: Summon Monster VII
-type: spell
+_key: '!items!et3440o24hcgrfwl'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Summon Monster VII
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster I,</i> except that you can
-      summon one creature from the 7th-level list, 1d3 creatures of the same
-      kind from the 6th-level list, or 1d4+1 creatures of the same kind from a
-      lower-level list.</p>
   actions:
     - _id: fdhw4zl70z7nffqq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -20,35 +12,43 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster I,</i> except that you can
+      summon one creature from the 7th-level list, 1d3 creatures of the same
+      kind from the 6th-level list, or 1d4+1 creatures of the same kind from a
+      lower-level list.</p>
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 7
-      oracle: 7
-      summoner: 5
-      witch: 7
-      psychic: 7
-      summonerUnchained: 6
     bloodline:
       Aquatic: 7
       Serpentine: 7
+    class:
+      cleric: 7
+      oracle: 7
+      psychic: 7
+      sorcerer: 7
+      summoner: 5
+      summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a tiny bag and a small candle
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '352'
-_key: '!items!et3440o24hcgrfwl'
+  sr: false
+  subschool: summoning
+type: spell
 

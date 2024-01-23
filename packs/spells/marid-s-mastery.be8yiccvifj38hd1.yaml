@@ -1,17 +1,11 @@
 _id: be8yiccvifj38hd1
-name: Marid's Mastery
-type: spell
+_key: '!items!be8yiccvifj38hd1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Marid's Mastery
 system:
-  description:
-    value: >-
-      <p>The target gains a +1 bonus on attack and damage rolls if it and its
-      opponent are touching water. If the opponent or the target is touching the
-      ground, the target takes a -4 penalty on attack and damage rolls.</p>
   actions:
     - _id: xjyc2qq4haqexy0t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,33 +13,39 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: willing creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: willing creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target gains a +1 bonus on attack and damage rolls if it and its
+      opponent are touching water. If the opponent or the target is touching the
+      ground, the target takes a -4 penalty on attack and damage rolls.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      ranger: 1
-      witch: 1
       hunter: 1
+      oracle: 1
+      ranger: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: trs
-  types: water
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1121
     pages: '178'
-_key: '!items!be8yiccvifj38hd1'
+  types: water
+type: spell
 

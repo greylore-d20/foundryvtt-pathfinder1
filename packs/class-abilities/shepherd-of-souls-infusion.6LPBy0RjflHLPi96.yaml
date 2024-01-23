@@ -1,8 +1,23 @@
 _id: 6LPBy0RjflHLPi96
-name: Shepherd of Souls Infusion
-type: feat
+_key: '!items!6LPBy0RjflHLPi96'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Shepherd of Souls Infusion
 system:
+  actions:
+    - _id: lzy10za6onmebnig
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><strong>Element</strong> universal; <strong>Type</strong> substance
@@ -15,22 +30,7 @@ system:
       dead using <em>raise dead</em> or similar magic must succeed at a caster
       level check (DC = 11 + your kineticist level) or the spell fails and the
       material component is wasted.</p>
-  actions:
-    - _id: lzy10za6onmebnig
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_shepherdOfSoulsInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!6LPBy0RjflHLPi96'
+  tag: classFeat_shepherdOfSoulsInfusion
+type: feat
 

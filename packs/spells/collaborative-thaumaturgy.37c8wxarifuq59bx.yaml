@@ -1,8 +1,26 @@
 _id: 37c8wxarifuq59bx
-name: Collaborative Thaumaturgy
-type: spell
+_key: '!items!37c8wxarifuq59bx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Collaborative Thaumaturgy
 system:
+  actions:
+    - _id: pebeuzwrhan3o84v
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You tap into the magical resonance between you and your allies to
@@ -19,42 +37,24 @@ system:
       Maximize Spell or Widen Spell metamagic feat to a spell at least 3 levels
       lower than the highest-level spell she can cast. You can't target yourself
       with <i>collaborative thaumaturgy</i>.</p>
-  actions:
-    - _id: pebeuzwrhan3o84v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
       bard: 3
-      summoner: 3
-      witch: 3
-      magus: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      magus: 3
+      oracle: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: uni
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a bronze tuning fork
+  school: uni
   sr: false
-_key: '!items!37c8wxarifuq59bx'
+type: spell
 

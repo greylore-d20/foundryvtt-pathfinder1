@@ -1,19 +1,10 @@
 _id: lyqkjgw38hb4ooux
-name: Beastspeak
-type: spell
+_key: '!items!lyqkjgw38hb4ooux'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Beastspeak
 system:
-  description:
-    value: >-
-      <p>When you're in the form of an animal (such as when you are using wild
-      shape or are affected by a polymorph effect), you can speak normally,
-      including when you cast spells with verbal components, and you sound like
-      your normal self when you speak. You can cast this spell while in animal
-      form, using animal-appropriate somatic components.</p>
   actions:
     - _id: vm7i7liyntgch2i4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,21 +12,30 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+  description:
+    value: >-
+      <p>When you're in the form of an animal (such as when you are using wild
+      shape or are affected by a polymorph effect), you can speak normally,
+      including when you cast spells with verbal components, and you sound like
+      your normal self when you speak. You can cast this spell while in animal
+      form, using animal-appropriate somatic components.</p>
   learnedAt:
     class:
       druid: 2
-      witch: 2
-      shaman: 2
       hunter: 2
+      shaman: 2
+      witch: 2
   level: 2
   school: div
-  components:
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!lyqkjgw38hb4ooux'
+type: spell
 

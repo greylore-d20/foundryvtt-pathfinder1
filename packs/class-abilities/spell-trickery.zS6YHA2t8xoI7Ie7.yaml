@@ -1,8 +1,20 @@
 _id: zS6YHA2t8xoI7Ie7
-name: Spell Trickery
-type: feat
+_key: '!items!zS6YHA2t8xoI7Ie7'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Spell Trickery
 system:
+  abilityType: ex
+  actions:
+    - _id: sojjzwgi1g8t813q
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>When the magus successfully performs a dirty trick combat maneuver, he
@@ -12,22 +24,10 @@ system:
 
       <p>The magus must be at least 12th level before selecting this magus
       arcana.</p>
-  actions:
-    - _id: sojjzwgi1g8t813q
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_spellTrickery
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: ex
-_key: '!items!zS6YHA2t8xoI7Ie7'
+  tag: classFeat_spellTrickery
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,8 +1,31 @@
 _id: zyzlq7sbjvozd6mb
-name: Curse of the Outcast
-type: spell
+_key: '!items!zyzlq7sbjvozd6mb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Curse of the Outcast
 system:
+  actions:
+    - _id: fj1vk3jyp5mqrzdm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Everything about the target seems off-putting and grating, and everyone
@@ -11,44 +34,21 @@ system:
       twice and take the lower result. Additionally, each creature he encounters
       has its initial attitude toward him reduced by one step (helpful becomes
       friendly, friendly becomes indifferent, and so on).</p>
-  actions:
-    - _id: fj1vk3jyp5mqrzdm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 4
-      witch: 6
+      cleric: 6
       inquisitor: 4
-      shaman: 6
       mesmerist: 4
+      oracle: 6
+      shaman: 6
+      warpriest: 6
+      witch: 6
   level: 6
+  materials:
+    value: a handful of earthworms
   school: enc
   subschool: compulsion
   types: curse, emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a handful of earthworms
-_key: '!items!zyzlq7sbjvozd6mb'
+type: spell
 

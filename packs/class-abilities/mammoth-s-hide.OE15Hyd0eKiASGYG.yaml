@@ -1,8 +1,28 @@
 _id: OE15Hyd0eKiASGYG
-name: Mammoth's Hide
-type: feat
+_key: '!items!OE15Hyd0eKiASGYG'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Mammoth's Hide
 system:
+  abilityType: su
+  actions:
+    - _id: 3rm765jtpmjkwdj3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '10'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can touch a willing ally and cause its skin to thicken and
@@ -17,30 +37,10 @@ system:
 
       <p>The shaman can use this ability a number of times per day equal to 3 +
       her Charisma bonus.</p>
-  actions:
-    - _id: 3rm765jtpmjkwdj3
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '10'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_mammothsHide
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!OE15Hyd0eKiASGYG'
+  tag: classFeat_mammothsHide
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

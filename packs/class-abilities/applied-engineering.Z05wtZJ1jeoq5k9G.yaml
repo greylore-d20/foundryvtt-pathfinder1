@@ -1,8 +1,21 @@
 _id: Z05wtZJ1jeoq5k9G
-name: Applied Engineering
-type: feat
+_key: '!items!Z05wtZJ1jeoq5k9G'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Applied Engineering
 system:
+  abilityType: ex
+  actions:
+    - _id: tknkfemzovul682q
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>The investigator can leverage his knowledge of engineering to solve
@@ -12,22 +25,9 @@ system:
       result of that Knowledge (engineering) check in place of a Strength check
       to break the object or in place of a Perception check to locate hidden
       doors or compartments in that area.</p>
+  subType: classFeat
+  tag: classFeat_appliedEngineering
   tags:
     - Investigator Talent
-  actions:
-    - _id: tknkfemzovul682q
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_appliedEngineering
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!Z05wtZJ1jeoq5k9G'
+type: feat
 

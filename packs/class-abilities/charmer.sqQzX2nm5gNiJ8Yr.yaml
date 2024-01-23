@@ -1,39 +1,39 @@
 _id: sqQzX2nm5gNiJ8Yr
-name: Charmer
-type: feat
+_key: '!items!sqQzX2nm5gNiJ8Yr'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Charmer
 system:
+  abilityType: ex
+  actions:
+    - _id: az1ej4ej8b1brag8
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Investigator
+      - Ninja
+  contextNotes:
+    - subTarget: skill.dip
+      text: 'Charmer: roll two dice and take the better result.'
   description:
     value: >-
       <p>Once per day, the character can roll two dice while making a Diplomacy
       check, and take the better result. She must choose to use this talent
       before making the Diplomacy check. A character can use this ability one
       additional time per day for every 5 class levels she possesses.</p>
+  subType: classFeat
+  tag: classFeat_charmer
   tags:
     - Rogue Talent
     - Investigator Talent
     - Ninja Trick
-  actions:
-    - _id: az1ej4ej8b1brag8
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: free
-        unchained:
-          type: free
   uses:
-    per: day
     maxFormula: ceil(@classes.rogue.level / 5)
-  contextNotes:
-    - subTarget: skill.dip
-      text: 'Charmer: roll two dice and take the better result.'
-  tag: classFeat_charmer
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Investigator
-      - Ninja
-  abilityType: ex
-_key: '!items!sqQzX2nm5gNiJ8Yr'
+    per: day
+type: feat
 

@@ -1,8 +1,29 @@
 _id: vwmjuvpef2b9wqts
-name: Resinous Skin
-type: spell
+_key: '!items!vwmjuvpef2b9wqts'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Resinous Skin
 system:
+  actions:
+    - _id: zpqmmahvx7x9268r
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You coat your body with a resinous substance, protecting you from
@@ -17,38 +38,17 @@ system:
       weapon can be pulled free of you only with a successful Strength check (DC
       = your saving throw DC for this spell). This spell has no effect on
       unarmed strikes or natural weapons.</p>
-  actions:
-    - _id: zpqmmahvx7x9268r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       alchemist: 3
       bloodrager: 3
-      psychic: 3
+      druid: 3
       hunter: 3
+      psychic: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!vwmjuvpef2b9wqts'
+type: spell
 

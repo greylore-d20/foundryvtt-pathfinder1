@@ -1,17 +1,11 @@
 _id: 7cpk3iq9pirbzd4m
-name: Energy Siege Shot, Greater
-type: spell
+_key: '!items!7cpk3iq9pirbzd4m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Energy Siege Shot, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.x2djoiwxmgh23slx]{energy siege shot}, except it can
-      target siege engines of any size, not just Large siege engines.</p>
   actions:
     - _id: xqxxzhzooxcyykv0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
@@ -20,30 +14,36 @@ system:
           type: minute
       duration:
         value: 10 minute/level
-      target:
-        value: one siege engine of any size
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates (object)
         harmless: true
+        type: fort
+      target:
+        value: one siege engine of any size
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.x2djoiwxmgh23slx]{energy siege shot}, except it can
+      target siege engines of any size, not just Large siege engines.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      summoner: 6
       occultist: 6
+      sorcerer: 6
+      summoner: 6
       summonerUnchained: 6
+      wizard: 6
   level: 6
-  school: trs
-  types: variable
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a ball of pitch
-_key: '!items!7cpk3iq9pirbzd4m'
+  school: trs
+  types: variable
+type: spell
 

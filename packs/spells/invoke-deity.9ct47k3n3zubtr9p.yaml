@@ -1,8 +1,28 @@
 _id: 9ct47k3n3zubtr9p
-name: Invoke Deity
-type: spell
+_key: '!items!9ct47k3n3zubtr9p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invoke Deity
 system:
+  actions:
+    - _id: i1q7xzgv03gnpku4
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By holding aloft a holy symbol and calling your deity's name, you take
@@ -144,48 +164,28 @@ system:
       electricity damage, and your <i>call lightning</i> and <i>call
       lightning</i> storm spells and effects always function as though called
       outdoors in stormy weather.</p>
-  actions:
-    - _id: i1q7xzgv03gnpku4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      ranger: 4
-      paladin: 4
-      witch: 6
-      inquisitor: 6
       antipaladin: 4
+      cleric: 6
+      hunter: 4
+      inquisitor: 6
       medium: 4
       occultist: 6
-      hunter: 4
+      oracle: 6
+      paladin: 4
+      ranger: 4
+      warpriest: 6
+      witch: 6
   level: 6
-  school: trs
-  types: see text
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth 1,000 gp
     focus: a bejeweled holy symbol of your patron deity worth 2,500 gp
     gpValue: 1000
+    value: incense worth 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!9ct47k3n3zubtr9p'
+  types: see text
+type: spell
 

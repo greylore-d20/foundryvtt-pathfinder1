@@ -1,8 +1,27 @@
 _id: 50maksnxymh9jsj2
-name: Instant Armor
-type: spell
+_key: '!items!50maksnxymh9jsj2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instant Armor
 system:
+  actions:
+    - _id: 83x19iiueitm00a7
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You instantly wrap your body in a suit of armor made from opaque force.
@@ -27,36 +46,17 @@ system:
       <i>instant armor</i> you could instead choose to create <i>+1
       half-plate</i>, <i>+2 banded mail</i>, or <i>+3 chainmail</i>. You cannot
       replace these bonuses with armor special properties.<p></p>
-  actions:
-    - _id: 83x19iiueitm00a7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
       paladin: 2
       psychic: 2
+      warpriest: 2
   level: 2
   school: con
+  sr: false
   subschool: creation
   types: force
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_key: '!items!50maksnxymh9jsj2'
+type: spell
 

@@ -1,8 +1,22 @@
 _id: b95YEbR3GE3mLuoJ
-name: Thicken Ogre
-type: feat
+_key: '!items!b95YEbR3GE3mLuoJ'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Thicken Ogre
 system:
+  changes:
+    - _id: p9zwbjw7
+      formula: '-2'
+      modifier: untyped
+      subTarget: con
+    - _id: 2y07x5k1
+      formula: '2'
+      modifier: untyped
+      subTarget: nac
+  contextNotes:
+    - subTarget: skill.ste
+      target: skill
+      text: +[[4]] in Forests
+  crOffset: '0'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Inherited<br><b>Simple Template</b>
@@ -14,20 +28,6 @@ system:
       Rules:</b> Ability Scores –2 Constitution, +2 natural armor bonus; Attacks
       gains 2 claw attacks (1d6); Special +4 racial bonus on Stealth checks in
       forests.</p>
-  changes:
-    - _id: p9zwbjw7
-      formula: '-2'
-      subTarget: con
-      modifier: untyped
-    - _id: 2y07x5k1
-      formula: '2'
-      subTarget: nac
-      modifier: untyped
-  contextNotes:
-    - text: +[[4]] in Forests
-      target: skill
-      subTarget: skill.ste
   subType: template
-  crOffset: '0'
-_key: '!items!b95YEbR3GE3mLuoJ'
+type: feat
 

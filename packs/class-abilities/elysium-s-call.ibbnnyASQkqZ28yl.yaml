@@ -1,8 +1,28 @@
 _id: ibbnnyASQkqZ28yl
-name: Elysium's Call
-type: feat
+_key: '!items!ibbnnyASQkqZ28yl'
 img: systems/pf1/icons/spells/haste-royal-1.jpg
+name: Elysium's Call
 system:
+  abilityType: su
+  actions:
+    - _id: 3a6g9y1p2im7hntx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.cleric.level / 2))
+      img: systems/pf1/icons/spells/haste-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>With a touch, you can imbue creatures with the spirit of Elysium,
@@ -20,30 +40,10 @@ system:
 
       <p>This power replaces the Touch of Chaos power granted by the Chaos
       Domain.</p>
-  actions:
-    - _id: 3a6g9y1p2im7hntx
-      name: Use
-      img: systems/pf1/icons/spells/haste-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.cleric.level / 2))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_elysiumsCall
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!ibbnnyASQkqZ28yl'
+  tag: classFeat_elysiumsCall
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

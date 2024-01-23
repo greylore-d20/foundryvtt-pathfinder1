@@ -1,7 +1,24 @@
-name: Air Barrier (SHA)
-type: feat
+_id: D1mrANHho0iIDUlP
+_key: '!items!D1mrANHho0iIDUlP'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Air Barrier (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: y2qiw1UYtzrDxfXF
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman creates an invisible shell of air that grants her a +4 armor
@@ -11,32 +28,15 @@ system:
       50% miss chance. The shaman can use this barrier for 1 hour per shaman
       level. This duration does not need to be consecutive, but it must be spent
       in 1-hour increments.</p>
-  tags:
-    - Wind Spirit
-    - Shaman Spirit Hex
-  actions:
-    - _id: y2qiw1UYtzrDxfXF
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-  uses:
-    per: day
-    maxFormula: '@classes.shaman.level'
-  subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
   source:
     id: PZO1129
     pages: '46'
-_id: D1mrANHho0iIDUlP
-_key: '!items!D1mrANHho0iIDUlP'
+  subType: classFeat
+  tags:
+    - Wind Spirit
+    - Shaman Spirit Hex
+  uses:
+    maxFormula: '@classes.shaman.level'
+    per: day
+type: feat
 

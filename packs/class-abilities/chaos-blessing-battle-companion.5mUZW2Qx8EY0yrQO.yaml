@@ -1,8 +1,20 @@
 _id: 5mUZW2Qx8EY0yrQO
-name: 'Chaos Blessing: Battle Companion'
-type: feat
+_key: '!items!5mUZW2Qx8EY0yrQO'
 img: systems/pf1/icons/spells/rip-water-2.jpg
+name: 'Chaos Blessing: Battle Companion'
 system:
+  actions:
+    - _id: pffukvmcgztmotld
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/spells/rip-water-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can summon a battle companion. This ability
@@ -16,19 +28,7 @@ system:
       increases by 1 (to a maximum of
       @Compendium[pf1.spells.mi52crelhwuy6bmp]{Summon Monster IX} at 20th
       level).</p>
-  actions:
-    - _id: pffukvmcgztmotld
-      name: Use
-      img: systems/pf1/icons/spells/rip-water-2.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_chaosBlessingBattleCompanion
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!5mUZW2Qx8EY0yrQO'
+  tag: classFeat_chaosBlessingBattleCompanion
+type: feat
 

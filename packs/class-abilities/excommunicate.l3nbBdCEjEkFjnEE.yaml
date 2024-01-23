@@ -1,8 +1,28 @@
 _id: l3nbBdCEjEkFjnEE
-name: Excommunicate
-type: feat
+_key: '!items!l3nbBdCEjEkFjnEE'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Excommunicate
 system:
+  abilityType: su
+  actions:
+    - _id: 50kiacakr1v1xki3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: creature within range
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, once per day, you can silence a creature within 30 feet
@@ -13,30 +33,10 @@ system:
       language-dependent effects, write, pantomime, or take any other action
       meant to communicate anything more complex than a simple affirmative or
       negative for 1 day.</p>
-  actions:
-    - _id: 50kiacakr1v1xki3
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: creature within range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_excommunicate
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!l3nbBdCEjEkFjnEE'
+  tag: classFeat_excommunicate
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,8 +1,40 @@
 _id: cJV7OBm9KiF2WWiu
-name: Sling
-type: weapon
+_key: '!items!cJV7OBm9KiF2WWiu'
 img: systems/pf1/icons/items/weapons/sling.png
+name: Sling
 system:
+  actions:
+    - _id: m3cfkog7o9algr1t
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: slingBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/sling.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '50'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Sling
   description:
     value: >-
       <p>A sling is little more than a leather cup attached to a pair of
@@ -14,55 +46,23 @@ system:
       dense or as round as bullets. Thus, such an attack deals damage as if the
       weapon were designed for a creature one size category smaller than you and
       you take a -1 penalty on attack rolls.</p>
-  tags:
-    - PFS
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: m3cfkog7o9algr1t
-      name: Throw
-      img: systems/pf1/icons/items/weapons/sling.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '50'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: slingBullet
-  baseTypes:
-    - Sling
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  weaponSubtype: ranged
+    normal:
+      value: ''
   source:
     id: PZO9452
     pages: '0'
-  ammo:
-    type: slingBullet
-_key: '!items!cJV7OBm9KiF2WWiu'
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+type: weapon
 

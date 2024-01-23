@@ -1,8 +1,32 @@
 _id: 1os71jpk7lrrl47b
-name: Song of Discord
-type: spell
+_key: '!items!1os71jpk7lrrl47b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Song of Discord
 system:
+  actions:
+    - _id: 0s2974jjgwxrpcjm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: creatures within a 20-ft.-radius spread
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes those within the area to turn on each other rather
@@ -14,27 +38,6 @@ system:
       methods at their disposal, choosing their deadliest spells and most
       advantageous combat tactics. They do not, however, harm targets that have
       fallen unconscious.</p>
-  actions:
-    - _id: 0s2974jjgwxrpcjm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: creatures within a 20-ft.-radius spread
   learnedAt:
     class:
       bard: 5
@@ -45,8 +48,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting, sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1os71jpk7lrrl47b'
+type: spell
 

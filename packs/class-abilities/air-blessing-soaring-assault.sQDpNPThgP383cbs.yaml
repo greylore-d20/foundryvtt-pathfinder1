@@ -1,8 +1,27 @@
 _id: sQDpNPThgP383cbs
-name: 'Air Blessing: Soaring Assault'
-type: feat
+_key: '!items!sQDpNPThgP383cbs'
 img: systems/pf1/icons/spells/wind-blue-3.jpg
+name: 'Air Blessing: Soaring Assault'
 system:
+  actions:
+    - _id: nsxmpr4lsdbvwldm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/wind-blue-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can touch an ally and give her the gift of flight
@@ -11,26 +30,7 @@ system:
       level. Whenever the ally succeeds at a charge attack while flying, that
       attack deals an amount of additional electricity damage equal to your
       level.</p>
-  actions:
-    - _id: nsxmpr4lsdbvwldm
-      name: Use
-      img: systems/pf1/icons/spells/wind-blue-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_airBlessingSoaringAssault
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!sQDpNPThgP383cbs'
+  tag: classFeat_airBlessingSoaringAssault
+type: feat
 

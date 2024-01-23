@@ -1,8 +1,32 @@
 _id: olxf2tpnkoknge6q
-name: Nondetection, Lesser
-type: spell
+_key: '!items!olxf2tpnkoknge6q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nondetection, Lesser
 system:
+  actions:
+    - _id: satqya0ihae9qp8u
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>nondetection</i>, except it blocks the
@@ -13,45 +37,21 @@ system:
       in your possession with <i>locate object</i>, but it does protect  you
       against effects that target an area you happen to be in, such as detect
       spells or <i>clairaudience/clairvoyance</i>.</p>
-  actions:
-    - _id: satqya0ihae9qp8u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      ranger: 3
       alchemist: 2
-      summoner: 2
-      inquisitor: 2
       antipaladin: 2
       hunter: 3
+      inquisitor: 2
+      ranger: 3
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of mercury
+  school: abj
   sr: false
-_key: '!items!olxf2tpnkoknge6q'
+type: spell
 

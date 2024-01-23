@@ -1,8 +1,29 @@
 _id: Gd8xhOE25nKMyDzX
-name: Inspiring Command
-type: feat
+_key: '!items!Gd8xhOE25nKMyDzX'
 img: systems/pf1/icons/skills/affliction_24.jpg
+name: Inspiring Command
 system:
+  abilityType: su
+  actions:
+    - _id: x8wwgz2dceg8tmgl
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_24.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: see text
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can issue an inspiring command to your
@@ -14,28 +35,7 @@ system:
 
       <p>This power replaces the Inspiring Word power of the Nobility
       Domain.</p>
-  actions:
-    - _id: x8wwgz2dceg8tmgl
-      name: Use
-      img: systems/pf1/icons/skills/affliction_24.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: see text
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_inspiringCommand
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!Gd8xhOE25nKMyDzX'
+  tag: classFeat_inspiringCommand
+type: feat
 

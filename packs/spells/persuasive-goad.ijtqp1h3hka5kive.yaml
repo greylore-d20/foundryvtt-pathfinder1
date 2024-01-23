@@ -1,17 +1,11 @@
 _id: ijtqp1h3hka5kive
-name: Persuasive Goad
-type: spell
+_key: '!items!ijtqp1h3hka5kive'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Persuasive Goad
 system:
-  description:
-    value: >-
-      <p>Your eyes flash and the target takes 1d6 points of nonlethal damage.
-      For the next minute, you gain a +4 circumstance bonus on Intimidate checks
-      against the target.</p>
   actions:
     - _id: i5uk4bk3exrhvzrs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,21 +13,27 @@ system:
           type: action
       duration:
         value: instantaneous and 1 minute
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your eyes flash and the target takes 1d6 points of nonlethal damage.
+      For the next minute, you gain a +4 circumstance bonus on Intimidate checks
+      against the target.</p>
   learnedAt:
     class:
       inquisitor: 1
   school: nec
   types: pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ijtqp1h3hka5kive'
+type: spell
 

@@ -1,8 +1,32 @@
 _id: e0rlki4hwu76l5ya
-name: Death Ward
-type: spell
+_key: '!items!e0rlki4hwu76l5ya'
 img: icons/magic/life/ankh-shadow-green.webp
+name: Death Ward
 system:
+  actions:
+    - _id: zktttx05makm5abl
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: living creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject gains a +4 morale bonus on saves against all death spells
@@ -13,51 +37,27 @@ system:
       has already gained, but it does remove the penalties from negative levels
       for the duration of its effect.</p><p><i>Death ward</i> does not protect
       against other sorts of attacks, even if those attacks might be lethal.</p>
-  actions:
-    - _id: zktttx05makm5abl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 5
-      paladin: 4
       alchemist: 4
-      witch: 4
+      cleric: 4
+      druid: 5
+      hunter: 5
       inquisitor: 4
       medium: 4
       occultist: 4
+      oracle: 4
+      paladin: 4
       spiritualist: 4
-      hunter: 5
+      warpriest: 4
+      witch: 4
     domain:
       Death: 4
       Repose: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '264'
-_key: '!items!e0rlki4hwu76l5ya'
+type: spell
 

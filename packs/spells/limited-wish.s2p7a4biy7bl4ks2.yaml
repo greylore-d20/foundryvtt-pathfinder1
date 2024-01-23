@@ -1,8 +1,32 @@
 _id: s2p7a4biy7bl4ks2
-name: Limited Wish
-type: spell
+_key: '!items!s2p7a4biy7bl4ks2'
 img: icons/magic/symbols/runes-star-blue.webp
+name: Limited Wish
 system:
+  actions:
+    - _id: zj39v2qcxy3828vj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: see text
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: none, see text
+      spellEffect: see text
+      target:
+        value: see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A <em>limited wish</em> lets you create nearly any type of effect. For
@@ -25,43 +49,19 @@ system:
       spell with a material component that costs more than 1,000 gp, you must
       provide that component (in addition to the 1,500 gp diamond component for
       this spell).</p>
-  actions:
-    - _id: zj39v2qcxy3828vj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: see text
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        description: none, see text
-      spellEffect: see text
-      area: see text
   learnedAt:
     class:
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
     subDomain:
       Construct: 7
   level: 7
-  school: uni
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: diamond worth 1,500 gp
     gpValue: 1500
+    value: diamond worth 1,500 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!s2p7a4biy7bl4ks2'
+  school: uni
+type: spell
 

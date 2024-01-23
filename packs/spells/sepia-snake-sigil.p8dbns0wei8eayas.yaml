@@ -1,8 +1,34 @@
 _id: p8dbns0wei8eayas
-name: Sepia Snake Sigil
-type: spell
+_key: '!items!p8dbns0wei8eayas'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sepia Snake Sigil
 system:
+  actions:
+    - _id: o7c51xb8pfrmily9
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: >-
+          permanent or until discharged; until released or 1d4 days + 1
+          day/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Reflex negates
+        type: ref
+      target:
+        value: one touched book or written work
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a small symbol to appear in the text of a written
@@ -29,48 +55,22 @@ system:
       spell destroys the entire page of text.</p><p><i>Sepia snake sigil</i> can
       be cast in combination with other spells that hide or garble text, such as
       secret page.</p>
-  actions:
-    - _id: o7c51xb8pfrmily9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: >-
-          permanent or until discharged; until released or 1d4 days + 1
-          day/level; see text
-      target:
-        value: one touched book or written work
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      witch: 3
       occultist: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: creation
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered amber worth 500 gp and a snake scale
     gpValue: 500
+    value: powdered amber worth 500 gp and a snake scale
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!p8dbns0wei8eayas'
+  subschool: creation
+  types: force
+type: spell
 

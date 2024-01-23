@@ -1,8 +1,20 @@
 _id: 81XUmdEI8Yr0UXeG
-name: Greater Shield Ally
-type: feat
+_key: '!items!81XUmdEI8Yr0UXeG'
 img: systems/pf1/icons/skills/blue_18.jpg
+name: Greater Shield Ally
 system:
+  abilityType: su
+  actions:
+    - _id: 2nft1gzm8o5fpp6y
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/blue_18.jpg
+      name: Use
+  associations:
+    classes:
+      - Summoner
   description:
     value: >-
       <p>At 12th level, whenever an ally is within an eidolon’s reach, the ally
@@ -10,22 +22,10 @@ system:
       on its saving throws. If this ally is the summoner, these bonuses increase
       to +4. This bonus does not apply if the eidolon is grappled, helpless,
       paralyzed, stunned, or unconscious.</p>
-  actions:
-    - _id: 2nft1gzm8o5fpp6y
-      name: Use
-      img: systems/pf1/icons/skills/blue_18.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_greaterShieldAlly
-  subType: classFeat
-  associations:
-    classes:
-      - Summoner
-  abilityType: su
   source:
     id: PZO1115
     pages: '54'
-_key: '!items!81XUmdEI8Yr0UXeG'
+  subType: classFeat
+  tag: classFeat_greaterShieldAlly
+type: feat
 

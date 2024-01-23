@@ -1,8 +1,20 @@
 _id: DULulohPRkU7bsaM
-name: Burning Flame
-type: feat
+_key: '!items!DULulohPRkU7bsaM'
 img: systems/pf1/icons/spells/runes-blue-3.jpg
+name: Burning Flame
 system:
+  abilityType: su
+  actions:
+    - _id: n606k5ocednkxul4
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/runes-blue-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>Whenever the arcanist uses the flame arc exploit, she can expend 2
@@ -15,21 +27,9 @@ system:
 
       <p>The arcanist must have the flame arc exploit to select this
       exploit.</p>
+  subType: classFeat
+  tag: classFeat_burningFlame
   tags:
     - Arcanist Exploit, Greater
-  actions:
-    - _id: n606k5ocednkxul4
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_burningFlame
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!DULulohPRkU7bsaM'
+type: feat
 

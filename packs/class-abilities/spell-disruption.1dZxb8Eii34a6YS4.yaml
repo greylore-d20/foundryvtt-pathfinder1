@@ -1,8 +1,24 @@
 _id: 1dZxb8Eii34a6YS4
-name: Spell Disruption
-type: feat
+_key: '!items!1dZxb8Eii34a6YS4'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Spell Disruption
 system:
+  abilityType: su
+  actions:
+    - _id: 70fm8i8x4xdaqqct
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can temporarily disrupt a spell by expending 1 point from
@@ -17,25 +33,9 @@ system:
       attempt a Will saving throw to negate the effect. This ability has no
       effect on spells that are instantaneous or have a duration of
       permanent.</p>
+  subType: classFeat
+  tag: classFeat_spellDisruption
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 70fm8i8x4xdaqqct
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: round
-  tag: classFeat_spellDisruption
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!1dZxb8Eii34a6YS4'
+type: feat
 

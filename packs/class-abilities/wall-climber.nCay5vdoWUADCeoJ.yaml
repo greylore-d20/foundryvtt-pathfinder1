@@ -1,25 +1,25 @@
 _id: nCay5vdoWUADCeoJ
-name: Wall Climber
-type: feat
+_key: '!items!nCay5vdoWUADCeoJ'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Wall Climber
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Ninja
+  changes:
+    - _id: t6iwoorx
+      formula: '20'
+      modifier: base
+      subTarget: climbSpeed
   description:
     value: >-
       <p>A ninja with this ability gains a climb speed of 20 feet, but only on
       vertical surfaces. This ability cannot be used to scale perfectly smooth
       surfaces or to climb on the underside of horizontal surfaces.</p>
+  subType: classFeat
+  tag: classFeat_wallClimber
   tags:
     - Ninja Trick
-  changes:
-    - _id: t6iwoorx
-      formula: '20'
-      subTarget: climbSpeed
-      modifier: base
-  tag: classFeat_wallClimber
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: su
-_key: '!items!nCay5vdoWUADCeoJ'
+type: feat
 

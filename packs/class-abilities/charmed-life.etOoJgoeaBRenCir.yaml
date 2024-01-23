@@ -1,8 +1,20 @@
 _id: etOoJgoeaBRenCir
-name: Charmed Life
-type: feat
+_key: '!items!etOoJgoeaBRenCir'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Charmed Life
 system:
+  abilityType: ex
+  actions:
+    - _id: 2e3q5rrjrtj0w0nb
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Swashbuckler
   description:
     value: >-
       <p>At 2nd level, the swashbuckler gains a knack for getting out of
@@ -13,22 +25,10 @@ system:
       <p>At 6th level and every 4 levels thereafter, the number of times she can
       do this per day increases by one (to a maximum of 7 times per day at 18th
       level).</p>
-  actions:
-    - _id: 2e3q5rrjrtj0w0nb
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: 2 + floor((@classes.swashbuckler.level + 2) / 4)
-  tag: classFeat_charmedLife
   subType: classFeat
-  associations:
-    classes:
-      - Swashbuckler
-  abilityType: ex
-_key: '!items!etOoJgoeaBRenCir'
+  tag: classFeat_charmedLife
+  uses:
+    maxFormula: 2 + floor((@classes.swashbuckler.level + 2) / 4)
+    per: day
+type: feat
 

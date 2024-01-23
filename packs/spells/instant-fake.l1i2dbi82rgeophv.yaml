@@ -1,8 +1,31 @@
 _id: l1i2dbi82rgeophv
-name: Instant Fake
-type: spell
+_key: '!items!l1i2dbi82rgeophv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instant Fake
 system:
+  actions:
+    - _id: 78p81a85ieharvt2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will disbelief (if interacted with)
+        type: will
+      target:
+        value: one object weighing no more than 1 lb./level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an illusory duplicate of the target item. If you hold the
@@ -20,45 +43,22 @@ system:
       harm a person or break an object, a suit of unreal chainmail offers no
       actual protection, and an illusory <i>potion of cure light wounds</i>
       doesn't heal any hit points when imbibed.</p>
-  actions:
-    - _id: 78p81a85ieharvt2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one object weighing no more than 1 lb./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      ranger: 3
       bard: 3
+      hunter: 3
       inquisitor: 3
       magus: 4
       mesmerist: 3
       occultist: 3
-      hunter: 3
+      ranger: 3
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of costume jewelry
+  school: ill
   sr: false
-_key: '!items!l1i2dbi82rgeophv'
+  subschool: figment
+type: spell
 

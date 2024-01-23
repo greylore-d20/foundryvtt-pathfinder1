@@ -1,8 +1,32 @@
 _id: etskn140auk6cjj2
-name: Share Language
-type: spell
+_key: '!items!etskn140auk6cjj2'
 img: icons/magic/sonic/scream-wail-shout-teal.webp
+name: Share Language
 system:
+  actions:
+    - _id: tyaour8ahc9j9949
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can share your facility for one particular language with another
@@ -23,50 +47,26 @@ system:
       the target, or its disposition toward you or anyone else, so convincing it
       to actually carry out these instructions could require negotiation,
       threats, or outright bribery.</p>
-  actions:
-    - _id: tyaour8ahc9j9949
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
       bard: 1
-      psychic: 1
+      cleric: 2
+      druid: 2
+      hunter: 2
       medium: 1
       mesmerist: 1
       occultist: 2
-      hunter: 2
+      oracle: 2
+      psychic: 1
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
     subDomain:
-      Language: 2
       Cooperation: 2
+      Language: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a page from a dictionary
-_key: '!items!etskn140auk6cjj2'
+  school: div
+type: spell
 

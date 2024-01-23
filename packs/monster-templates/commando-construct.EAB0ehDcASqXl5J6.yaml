@@ -1,8 +1,22 @@
 _id: EAB0ehDcASqXl5J6
-name: Commando Construct
-type: feat
+_key: '!items!EAB0ehDcASqXl5J6'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Commando Construct
 system:
+  changes:
+    - _id: 1groe6gk
+      formula: '4'
+      modifier: untyped
+      subTarget: nac
+    - _id: 0w1amtep
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+    - _id: 95wfa9wi
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -101,20 +115,6 @@ system:
       heroism</a>, and <a
       href="https://aonprd.com/SpellDisplay.aspx?ItemName=limited%20wish">limited
       wish</a>.</p>
-  changes:
-    - _id: 1groe6gk
-      formula: '4'
-      subTarget: nac
-      modifier: untyped
-    - _id: 0w1amtep
-      formula: '4'
-      subTarget: str
-      modifier: untyped
-    - _id: 95wfa9wi
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!EAB0ehDcASqXl5J6'
+type: feat
 

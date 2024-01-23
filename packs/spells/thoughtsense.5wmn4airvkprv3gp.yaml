@@ -1,8 +1,26 @@
 _id: 5wmn4airvkprv3gp
-name: Thoughtsense
-type: spell
+_key: '!items!5wmn4airvkprv3gp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thoughtsense
 system:
+  actions:
+    - _id: 5xpqusin9i518cmp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You automatically detect and locate conscious creatures within 60 feet,
@@ -11,37 +29,19 @@ system:
       can distinguish between sentient (Intelligence 3 or greater) and
       non-sentient (Intelligence 1-2) creatures, but otherwise provides no
       information about the creatures it detects.</p>
-  actions:
-    - _id: 5xpqusin9i518cmp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      psychic: 4
       medium: 4
       mesmerist: 4
+      psychic: 4
+      sorcerer: 5
       spiritualist: 4
+      wizard: 5
   level: 5
-  school: div
-  types: mind-affecting
-  components:
-    verbal: true
-    material: true
   materials:
     value: a bit of dried brain tissue
+  school: div
   sr: false
-_key: '!items!5wmn4airvkprv3gp'
+  types: mind-affecting
+type: spell
 

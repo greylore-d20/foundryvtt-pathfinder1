@@ -1,8 +1,33 @@
 _id: wnb7IxOCmhk4SXzR
-name: Enchanting Smile
-type: feat
+_key: '!items!wnb7IxOCmhk4SXzR'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Enchanting Smile
 system:
+  abilityType: su
+  actions:
+    - _id: thtuznznmbk8vzkr
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: m2d5u906
+      formula: 2 + floor(@classes.wizard.level / 5)
+      modifier: untyped
+      subTarget: skill.blf
+    - _id: 88fd5nrn
+      formula: 2 + floor(@classes.wizard.level / 5)
+      modifier: untyped
+      subTarget: skill.dip
+    - _id: 0szwiif8
+      formula: 2 + floor(@classes.wizard.level / 5)
+      modifier: untyped
+      subTarget: skill.int
   description:
     value: >-
       <p>You gain a +2 enhancement bonus on <em>Bluff</em>, <em>Diplomacy</em>,
@@ -11,32 +36,7 @@ system:
       20th level, whenever you succeed at a <em>saving throw</em> against a
       spell of the enchantment school, that spell is reflected back at its
       caster, as per <em>spell turning</em>.</p>
-  actions:
-    - _id: thtuznznmbk8vzkr
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: m2d5u906
-      formula: 2 + floor(@classes.wizard.level / 5)
-      subTarget: skill.blf
-      modifier: untyped
-    - _id: 88fd5nrn
-      formula: 2 + floor(@classes.wizard.level / 5)
-      subTarget: skill.dip
-      modifier: untyped
-    - _id: 0szwiif8
-      formula: 2 + floor(@classes.wizard.level / 5)
-      subTarget: skill.int
-      modifier: untyped
-  tag: classFeat_enchantingSmile
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!wnb7IxOCmhk4SXzR'
+  tag: classFeat_enchantingSmile
+type: feat
 

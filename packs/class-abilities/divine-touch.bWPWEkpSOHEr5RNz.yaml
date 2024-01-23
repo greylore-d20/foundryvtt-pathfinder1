@@ -1,8 +1,27 @@
 _id: bWPWEkpSOHEr5RNz
-name: Divine Touch
-type: feat
+_key: '!items!bWPWEkpSOHEr5RNz'
 img: systems/pf1/icons/skills/ice_16.jpg
+name: Divine Touch
 system:
+  abilityType: su
+  actions:
+    - _id: lqcacztgedkiqevq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/ice_16.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Omdura
   description:
     value: >-
       <p>At 2nd level, an omdura can deliver divine energy by touch. She can
@@ -33,29 +52,10 @@ system:
       <em>lay on hands</em> <em>paladin</em> class feature. For example, the
       <em>Extra Lay On Hands</em> feat grants an omdura two additional uses of
       the divine touch class feature.</p>
-  actions:
-    - _id: lqcacztgedkiqevq
-      name: Use
-      img: systems/pf1/icons/skills/ice_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: floor(@classes.omdura.level / 2) + @abilities.cha.mod
-  tag: classFeat_divineTouch
   subType: classFeat
-  associations:
-    classes:
-      - Omdura
-  abilityType: su
-_key: '!items!bWPWEkpSOHEr5RNz'
+  tag: classFeat_divineTouch
+  uses:
+    maxFormula: floor(@classes.omdura.level / 2) + @abilities.cha.mod
+    per: day
+type: feat
 

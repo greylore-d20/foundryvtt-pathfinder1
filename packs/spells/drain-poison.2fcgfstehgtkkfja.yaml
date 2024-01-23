@@ -1,8 +1,28 @@
 _id: 2fcgfstehgtkkfja
-name: Drain Poison
-type: spell
+_key: '!items!2fcgfstehgtkkfja'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Drain Poison
 system:
+  actions:
+    - _id: 3ivsvv1jkvwag5se
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one weapon or a single piece of ammunition
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By touching a weapon against the fang of a poisonous creature and
@@ -17,42 +37,22 @@ system:
       has no effect if the creature whose fang is touched is a summoned
       creature, if it has been dead for more than 1 minute, or if its poison has
       already been extracted from it.</p>
-  actions:
-    - _id: 3ivsvv1jkvwag5se
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: one weapon or a single piece of ammunition
-      range:
-        units: touch
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      ranger: 3
       alchemist: 3
-      witch: 3
       antipaladin: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      oracle: 3
+      ranger: 3
+      warpriest: 3
+      witch: 3
   level: 3
-  school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: the fang of a poisonous creature
+  school: trs
   sr: false
-_key: '!items!2fcgfstehgtkkfja'
+  types: poison
+type: spell
 

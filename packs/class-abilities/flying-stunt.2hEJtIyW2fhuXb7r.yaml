@@ -1,8 +1,13 @@
 _id: 2hEJtIyW2fhuXb7r
-name: Flying Stunt
-type: feat
+_key: '!items!2hEJtIyW2fhuXb7r'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Flying Stunt
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Rogue
+      - Ninja
   description:
     value: >-
       <p>A character with this talent can attempt a Fly check against a target’s
@@ -12,15 +17,10 @@ system:
       multiplied on a critical hit. A creature immune to sneak attacks is immune
       to this additional damage. A character must be trained in Fly to select
       this talent.</p>
+  subType: classFeat
+  tag: classFeat_flyingStunt
   tags:
     - Rogue Talent
     - Ninja Trick
-  tag: classFeat_flyingStunt
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Ninja
-  abilityType: ex
-_key: '!items!2hEJtIyW2fhuXb7r'
+type: feat
 

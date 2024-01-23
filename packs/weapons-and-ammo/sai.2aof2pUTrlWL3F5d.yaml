@@ -1,8 +1,39 @@
 _id: 2aof2pUTrlWL3F5d
-name: Sai
-type: weapon
+_key: '!items!2aof2pUTrlWL3F5d'
 img: systems/pf1/icons/items/weapons/sai.png
+name: Sai
 system:
+  actions:
+    - _id: zxfdopriahlv8xbn
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/sai.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Sai
   description:
     value: >-
       <p>A sai is a metal spike flanked by a pair of prongs used to trap an
@@ -11,62 +42,31 @@ system:
       used for stabbing. Instead, it is used primarily to bludgeon foes,
       punching with the hilt, or else to catch and disarm weapons between its
       tines. Sais are often wielded in pairs.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 1
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: zxfdopriahlv8xbn
-      name: Attack
-      img: systems/pf1/icons/items/weapons/sai.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Sai
-  weaponGroups:
-    value:
-      - monk
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 1
   properties:
     dis: true
-    mnk: true
     fin: true
+    mnk: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!2aof2pUTrlWL3F5d'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - monk
+  weight:
+    value: 1
+type: weapon
 

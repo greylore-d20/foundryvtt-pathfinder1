@@ -1,16 +1,11 @@
 _id: ydiw433eopef79r5
-name: Chains of Fire
-type: spell
+_key: '!items!ydiw433eopef79r5'
 img: icons/magic/fire/flame-burning-chain.webp
+name: Chains of Fire
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>chain lightning</i>, except as noted
-      above, and the spell deals fire damage instead of electricity damage.</p>
   actions:
     - _id: cuso5m3hqc7rcenj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,29 +13,34 @@ system:
           type: action
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
       target:
         value: >-
           one primary target, plus one secondary target/level (each of which
           must be within 30 ft. of the primary target)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>chain lightning</i>, except as noted
+      above, and the spell deals fire damage instead of electricity damage.</p>
   learnedAt:
     class:
+      magus: 6
       sorcerer: 6
       wizard: 6
-      magus: 6
   level: 6
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a drop of oil and a small piece of flint
-_key: '!items!ydiw433eopef79r5'
+  school: evo
+  types: fire
+type: spell
 

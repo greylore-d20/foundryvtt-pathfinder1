@@ -1,8 +1,26 @@
 _id: ftrg3ira8jwicetv
-name: Unholy Sword
-type: spell
+_key: '!items!ftrg3ira8jwicetv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unholy Sword
 system:
+  actions:
+    - _id: zqtknmm6ghd4zn1b
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: melee weapon touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to channel the powers of evil into your sword, or
@@ -20,30 +38,12 @@ system:
       weapon in any way.</p><p>This spell does not work on artifacts. A
       masterwork weapon's bonus to attack does not stack with this spell's
       enhancement bonus to attack.</p>
-  actions:
-    - _id: zqtknmm6ghd4zn1b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: melee weapon touched
-      range:
-        units: touch
   learnedAt:
     class:
       antipaladin: 4
   level: 4
   school: evo
-  types: evil
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ftrg3ira8jwicetv'
+  types: evil
+type: spell
 

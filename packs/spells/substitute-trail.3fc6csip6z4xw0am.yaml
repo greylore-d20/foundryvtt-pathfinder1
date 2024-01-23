@@ -1,8 +1,26 @@
 _id: 3fc6csip6z4xw0am
-name: Substitute Trail
-type: spell
+_key: '!items!3fc6csip6z4xw0am'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Substitute Trail
 system:
+  actions:
+    - _id: zh2yylne2ketrxr4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      target:
+        value: 1 creature/level; see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell can affect any creatures with which you interacted in the
@@ -13,31 +31,13 @@ system:
       equal to  your caster level, the tracker recognizes that the trail has
       been manipulated by this spell, although it cannot see the trail's true
       nature unless it uses magical means, such as <i>true seeing</i>.</p>
-  actions:
-    - _id: zh2yylne2ketrxr4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: 1 creature/level; see text
-      range:
-        units: unlimited
   learnedAt:
     class:
       druid: 4
-      ranger: 4
       hunter: 4
+      ranger: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!3fc6csip6z4xw0am'
+type: spell
 

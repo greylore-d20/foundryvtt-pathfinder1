@@ -1,33 +1,33 @@
 _id: OFAi5EphqJI1GaWc
-name: 'Strength Blessing: Strength Surge'
-type: feat
+_key: '!items!OFAi5EphqJI1GaWc'
 img: systems/pf1/icons/feats/athletic.jpg
+name: 'Strength Blessing: Strength Surge'
 system:
+  actions:
+    - _id: rsywf3q3bjm4b4ch
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/feats/athletic.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, as a swift action you can focus your own strength. You
       gain an enhancement bonus equal to 1/2 your warpriest level (minimum +1)
       on melee attack rolls, combat maneuver checks that rely on Strength,
       Strength-based skills, and Strength checks for 1 round.</p>
-  actions:
-    - _id: rsywf3q3bjm4b4ch
-      name: Use
-      img: systems/pf1/icons/feats/athletic.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_strengthBlessingStrengthSurge
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!OFAi5EphqJI1GaWc'
+  tag: classFeat_strengthBlessingStrengthSurge
+type: feat
 

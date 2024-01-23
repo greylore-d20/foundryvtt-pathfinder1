@@ -1,16 +1,11 @@
 _id: r7csmpev5hk360gf
-name: Heal Mount
-type: spell
+_key: '!items!r7csmpev5hk360gf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Heal Mount
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>heal,</i> but it affects only the
-      paladin's special mount (typically a horse).</p>
   actions:
     - _id: dhexubl2v8mgzwq1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
@@ -18,23 +13,28 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: your mount touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: heal
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: your mount touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>heal,</i> but it affects only the
+      paladin's special mount (typically a horse).</p>
   learnedAt:
     class:
       paladin: 3
   level: 3
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!r7csmpev5hk360gf'
+type: spell
 

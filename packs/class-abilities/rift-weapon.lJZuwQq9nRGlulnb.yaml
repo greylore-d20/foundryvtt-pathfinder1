@@ -1,8 +1,28 @@
 _id: lJZuwQq9nRGlulnb
-name: Rift Weapon
-type: feat
+_key: '!items!lJZuwQq9nRGlulnb'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Rift Weapon
 system:
+  abilityType: su
+  actions:
+    - _id: c19oa8mranuabcr0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@cl'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your understanding of the powers that move through the Outer Rifts
@@ -17,30 +37,10 @@ system:
 
       <p>You can use this ability an additional time per day for every 5 oracle
       levels you possess.</p>
-  actions:
-    - _id: c19oa8mranuabcr0
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@cl'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_riftWeapon
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!lJZuwQq9nRGlulnb'
+  tag: classFeat_riftWeapon
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

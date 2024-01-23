@@ -1,8 +1,72 @@
 _id: tjuTlbdI85ClQhf6
-name: Starknife
-type: weapon
+_key: '!items!tjuTlbdI85ClQhf6'
 img: icons/weapons/thrown/shuriken-blue.webp
+name: Starknife
 system:
+  actions:
+    - _id: w6e259sbegh59fk9
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/thrown/shuriken-blue.webp
+      name: Melee
+      range:
+        units: melee
+        value: '20'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: EAmLa4ulL7W8ilYM
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/weapons/thrown/shuriken-blue.webp
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Starknife
   description:
     value: >-
       <p>From a central metal ring, four tapering metal blades extend from this
@@ -11,96 +75,32 @@ system:
       melee weapon. Alternatively, by gripping it by the outer rim, a
       starknife's light, aerodynamic design allows it to be thrown short
       distances in a manner similar to a chakram.</p>
-  tags:
-    - PFS
-  weight:
-    value: 3
-  price: 24
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: w6e259sbegh59fk9
-      name: Melee
-      img: icons/weapons/thrown/shuriken-blue.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: str
-        damage: str
-        critMult: 3
-      ammoType: none
-    - _id: EAmLa4ulL7W8ilYM
-      name: Throw
-      img: icons/weapons/thrown/shuriken-blue.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critMult: 3
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Starknife
-  weaponGroups:
-    value:
-      - bladesLight
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 24
   properties:
     fin: true
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!tjuTlbdI85ClQhf6'
+  subType: martial
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - bladesLight
+      - thrown
+  weight:
+    value: 3
+type: weapon
 

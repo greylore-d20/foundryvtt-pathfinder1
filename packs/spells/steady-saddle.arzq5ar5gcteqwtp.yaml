@@ -1,8 +1,32 @@
 _id: arzq5ar5gcteqwtp
-name: Steady Saddle
-type: spell
+_key: '!items!arzq5ar5gcteqwtp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Steady Saddle
 system:
+  actions:
+    - _id: sa2gvjnm8x8xyx3e
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: saddle touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A saddle affected by this spell becomes more comfortable to sit in, and
@@ -12,37 +36,13 @@ system:
       of the Mounted Archery feat and similar effects. Furthermore, the DC for
       any concentration check required as a result of the mount's movement
       decreases by 2.</p>
-  actions:
-    - _id: sa2gvjnm8x8xyx3e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: saddle touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      druid: 1
-      ranger: 1
-      paladin: 1
       antipaladin: 1
+      druid: 1
       hunter: 1
+      paladin: 1
+      ranger: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!arzq5ar5gcteqwtp'
+type: spell
 

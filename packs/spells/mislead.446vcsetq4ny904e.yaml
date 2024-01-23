@@ -1,8 +1,30 @@
 _id: 446vcsetq4ny904e
-name: Mislead
-type: spell
+_key: '!items!446vcsetq4ny904e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mislead
 system:
+  actions:
+    - _id: 0zoil7xr1es9hzny
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D) and concentration + 3 rounds; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none or Will disbelief (if interacted with); see text
+        type: will
+      spellEffect: one illusory double
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>You become invisible (as <i>greater invisibility</i>, a glamer), and at
@@ -20,51 +42,29 @@ system:
       double continues to carry out the same activity until the duration
       expires. The <i>greater invisibility</i> lasts for 1 round per level,
       regardless of concentration.</p>
-  actions:
-    - _id: 0zoil7xr1es9hzny
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D) and concentration + 3 rounds; see text
-      target:
-        value: you
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: none or Will disbelief (if interacted with); see text
-      spellEffect: one illusory double
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      bard: 5
-      alchemist: 6
-      magus: 6
-      psychic: 6
-      mesmerist: 5
-      occultist: 5
-      spiritualist: 6
-    domain:
-      Luck: 6
-      Trickery: 6
     bloodline:
       Destined: 6
       Fey: 6
+    class:
+      alchemist: 6
+      bard: 5
+      magus: 6
+      mesmerist: 5
+      occultist: 5
+      psychic: 6
+      sorcerer: 6
+      spiritualist: 6
+      wizard: 6
+    domain:
+      Luck: 6
+      Trickery: 6
   level: 6
   school: ill
-  subschool: figment, glamer
-  components:
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '315'
-_key: '!items!446vcsetq4ny904e'
+  sr: false
+  subschool: figment, glamer
+type: spell
 

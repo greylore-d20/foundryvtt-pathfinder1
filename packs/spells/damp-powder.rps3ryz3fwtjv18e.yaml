@@ -1,8 +1,32 @@
 _id: rps3ryz3fwtjv18e
-name: Damp Powder
-type: spell
+_key: '!items!rps3ryz3fwtjv18e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Damp Powder
 system:
+  actions:
+    - _id: 3o5ffw0pn2q2697s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: 1 loaded firearm
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes ammunition already loaded into the target firearm is
@@ -13,39 +37,15 @@ system:
       identify the spell being cast or similar effect), the firearm's user can
       spend a standard action to clear the altered ammunition from the firearm.
       Doing so destroys that ammunition.</p>
-  actions:
-    - _id: 3o5ffw0pn2q2697s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 loaded firearm
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       druid: 1
-      witch: 1
       hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a damp piece of cotton
-_key: '!items!rps3ryz3fwtjv18e'
+  school: trs
+type: spell
 

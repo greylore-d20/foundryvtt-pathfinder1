@@ -1,8 +1,24 @@
 _id: IYVmcGNgypL6Goah
-name: Raise the Deep
-type: feat
+_key: '!items!IYVmcGNgypL6Goah'
 img: systems/pf1/icons/skills/emerald_03.jpg
+name: Raise the Deep
 system:
+  abilityType: sp
+  actions:
+    - _id: gnzemrf08p5p5o2r
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.sorcerer.level'
+      img: systems/pf1/icons/skills/emerald_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you raise water as per
@@ -11,26 +27,10 @@ system:
       area where you create it; it lasts 1 round per sorcerer level and then
       disappears. At 20th level, the dimensions of the effect are doubled. You
       may use this ability once per day.</p>
-  actions:
-    - _id: gnzemrf08p5p5o2r
-      name: Use
-      img: systems/pf1/icons/skills/emerald_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.sorcerer.level'
-        units: round
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_raiseTheDeep
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!IYVmcGNgypL6Goah'
+  tag: classFeat_raiseTheDeep
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

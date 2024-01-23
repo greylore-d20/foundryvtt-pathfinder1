@@ -1,40 +1,40 @@
 _id: 1yt3bidqyhkdf6a1
-name: Malfunction
-type: spell
+_key: '!items!1yt3bidqyhkdf6a1'
 img: icons/creatures/magical/construct-stone-earth-gray.webp
+name: Malfunction
 system:
-  description:
-    value: >-
-      <p>This functions as <i>confusion</i>, except it only affects constructs,
-      and instead of babbling incoherently, the construct takes no actions on
-      its turn (but may still make attacks of opportunity).</p>
   actions:
     - _id: 1zv55bu2qb3uutqt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      area: one construct
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
-      area: one construct
+        type: fort
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This functions as <i>confusion</i>, except it only affects constructs,
+      and instead of babbling incoherently, the construct takes no actions on
+      its turn (but may still make attacks of opportunity).</p>
   learnedAt:
     class:
+      occultist: 4
       sorcerer: 4
       wizard: 4
-      occultist: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1yt3bidqyhkdf6a1'
+type: spell
 

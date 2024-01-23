@@ -1,7 +1,28 @@
-name: Lightning Conductor
-type: spell
+_id: akwOzTsxjZcBGzIS
+_key: '!items!akwOzTsxjZcBGzIS'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lightning Conductor
 system:
+  actions:
+    - _id: nWPUH9edBkIUtNUb
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You become capable of absorbing electricity with your body. For the
@@ -26,21 +47,6 @@ system:
       damage at 19th level).</p><p>If you are immune to electricity or have any
       amount of electricity resistance, you cannot absorb or expend energy with
       this spell.</p>
-  actions:
-    - _id: nWPUH9edBkIUtNUb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       arcanist: 3
@@ -51,16 +57,10 @@ system:
       sorcerer: 3
       wizard: 3
   level: 3
-  school: trs
-  types: air
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a miniature metal rod
+  school: trs
   sr: false
-_id: akwOzTsxjZcBGzIS
-_key: '!items!akwOzTsxjZcBGzIS'
+  types: air
+type: spell
 

@@ -1,8 +1,30 @@
 _id: b7cjr9x4kqnq9o0l
-name: Barghest Feast
-type: spell
+_key: '!items!b7cjr9x4kqnq9o0l'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Barghest Feast
 system:
+  actions:
+    - _id: mgw8hzmvgzh50qkt
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
   description:
     value: >-
       <p>The target gains the ability to absorb power from devouring a humanoid
@@ -11,33 +33,11 @@ system:
       the creature had and provokes attacks of opportunity. For every 2 rounds
       it feeds on the corpse in this way, the target gains a +1 profane bonus on
       attack rolls, saving throws, and skill checks (to a maximum of +5).</p>
-  actions:
-    - _id: mgw8hzmvgzh50qkt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level; see text
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       alchemist: 3
   level: 3
   school: trs
   types: evil
-  components:
-    somatic: true
-_key: '!items!b7cjr9x4kqnq9o0l'
+type: spell
 

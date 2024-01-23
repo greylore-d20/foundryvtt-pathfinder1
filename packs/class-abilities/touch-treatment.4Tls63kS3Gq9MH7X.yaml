@@ -1,8 +1,27 @@
 _id: 4Tls63kS3Gq9MH7X
-name: Touch Treatment
-type: feat
+_key: '!items!4Tls63kS3Gq9MH7X'
 img: systems/pf1/icons/skills/ice_16.jpg
+name: Touch Treatment
 system:
+  abilityType: su
+  actions:
+    - _id: hx059qx3xcvh4jno
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/ice_16.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Mesmerist
   description:
     value: >-
       <p>At 3rd level, the mesmerist can help allies shake off harmful
@@ -30,29 +49,10 @@ system:
       expend one use of touch treatment to replicate the effects of break
       enchantment. This targets only one creature the mesmerist is touching and
       follows all other restrictions of touch treatment.</p>
-  actions:
-    - _id: hx059qx3xcvh4jno
-      name: Use
-      img: systems/pf1/icons/skills/ice_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_touchTreatment
   subType: classFeat
-  associations:
-    classes:
-      - Mesmerist
-  abilityType: su
-_key: '!items!4Tls63kS3Gq9MH7X'
+  tag: classFeat_touchTreatment
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

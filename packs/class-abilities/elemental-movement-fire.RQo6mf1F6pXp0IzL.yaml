@@ -1,31 +1,31 @@
 _id: RQo6mf1F6pXp0IzL
-name: Elemental Movement (Fire)
-type: feat
+_key: '!items!RQo6mf1F6pXp0IzL'
 img: systems/pf1/icons/spells/fog-orange-2.jpg
+name: Elemental Movement (Fire)
 system:
-  description:
-    value: <p>At 15th level, your base speed increases by +30 feet.</p>
+  abilityType: su
   actions:
     - _id: l3nq2ljzq1s0qqrz
-      name: Use
-      img: systems/pf1/icons/spells/fog-orange-2.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: 0arua3bn
-      formula: '30'
-      subTarget: landSpeed
-      modifier: untyped
-  tag: classFeat_elementalMovementFire
-  subType: classFeat
+      img: systems/pf1/icons/spells/fog-orange-2.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
-  abilityType: su
+  changes:
+    - _id: 0arua3bn
+      formula: '30'
+      modifier: untyped
+      subTarget: landSpeed
+  description:
+    value: <p>At 15th level, your base speed increases by +30 feet.</p>
   source:
     id: PZO1110
     pages: '76'
-_key: '!items!RQo6mf1F6pXp0IzL'
+  subType: classFeat
+  tag: classFeat_elementalMovementFire
+type: feat
 

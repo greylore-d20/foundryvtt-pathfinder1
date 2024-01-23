@@ -1,30 +1,9 @@
 _id: QjWHNYX9az2Aydxz
-name: Firearm Training
-type: feat
+_key: '!items!QjWHNYX9az2Aydxz'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Firearm Training
 system:
-  description:
-    value: >-
-      <p>A character with this talent gains
-      @Compendium[pf1.feats.BJBC4lbo7xGWPsKJ]{Exotic Weapon Proficiency}
-      (firearms).</p>
-  tags:
-    - Rogue Talent
-    - Slayer Talent
-    - Investigator Talent
-    - Ninja Trick
-  changes:
-    - _id: WC88NB4F
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-      priority: null
-  links:
-    supplements:
-      - name: Exotic Weapon Proficiency
-        uuid: Compendium.pf1.feats.Item.BJBC4lbo7xGWPsKJ
-  tag: classFeat_firearmTraining
-  subType: classFeat
+  abilityType: ex
   associations:
     classes:
       - Rogue
@@ -32,6 +11,27 @@ system:
       - Slayer
       - Investigator
       - Ninja
-  abilityType: ex
-_key: '!items!QjWHNYX9az2Aydxz'
+  changes:
+    - _id: WC88NB4F
+      formula: '1'
+      modifier: untyped
+      priority: null
+      subTarget: bonusFeats
+  description:
+    value: >-
+      <p>A character with this talent gains
+      @Compendium[pf1.feats.BJBC4lbo7xGWPsKJ]{Exotic Weapon Proficiency}
+      (firearms).</p>
+  links:
+    supplements:
+      - name: Exotic Weapon Proficiency
+        uuid: Compendium.pf1.feats.Item.BJBC4lbo7xGWPsKJ
+  subType: classFeat
+  tag: classFeat_firearmTraining
+  tags:
+    - Rogue Talent
+    - Slayer Talent
+    - Investigator Talent
+    - Ninja Trick
+type: feat
 

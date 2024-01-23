@@ -1,8 +1,27 @@
 _id: hf8dK8G2P06QvTPm
-name: 'Void Blessing: Deny Gravity'
-type: feat
+_key: '!items!hf8dK8G2P06QvTPm'
 img: systems/pf1/icons/spells/rip-sky-2.jpg
+name: 'Void Blessing: Deny Gravity'
 system:
+  actions:
+    - _id: 0svmajszypfgbwct
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/rip-sky-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ally touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, as a standard action you can touch an ally to allow her
@@ -11,26 +30,7 @@ system:
       speed of 40 feet with average maneuverability. The ally is also immune to
       dangerous environmental conditions (as
       @Compendium[pf1.spells.f6lqt3ju8m7r5la2]{Life Bubble}) for 1 minute.</p>
-  actions:
-    - _id: 0svmajszypfgbwct
-      name: Use
-      img: systems/pf1/icons/spells/rip-sky-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: ally touched
-      range:
-        units: touch
-  tag: classFeat_voidBlessingDenyGravity
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!hf8dK8G2P06QvTPm'
+  tag: classFeat_voidBlessingDenyGravity
+type: feat
 

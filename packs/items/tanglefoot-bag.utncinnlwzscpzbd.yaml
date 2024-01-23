@@ -1,8 +1,29 @@
 _id: utncinnlwzscpzbd
-name: Tanglefoot Bag
-type: weapon
+_key: '!items!utncinnlwzscpzbd'
 img: icons/containers/bags/sack-simple-leahter-green.webp
+name: Tanglefoot Bag
 system:
+  actions:
+    - _id: 2m3fhbqasz79dhca
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      formulaicAttacks:
+        label: ''
+      img: icons/containers/bags/sack-simple-leahter-green.webp
+      name: Attack
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      save:
+        dc: '15'
+        description: Reflex partial (see text)
+        type: ref
   description:
     value: >-
       <p>A tanglefoot bag is a small sack filled with tar, resin, and other
@@ -40,34 +61,13 @@ system:
       by a tanglefoot bag.</li><li><em>Web</em> (M): Increase the DC of breaking
       free by making a <em>combat maneuver</em> or <em>Escape Artist</em> check
       by 1.</li></ul>
-  tags:
-    - Power Component
-  actions:
-    - _id: 2m3fhbqasz79dhca
-      name: Attack
-      img: icons/containers/bags/sack-simple-leahter-green.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: rwak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      save:
-        dc: '15'
-        type: ref
-        description: Reflex partial (see text)
-  uses:
-    per: single
-  subType: misc
-  weaponSubtype: other
   source:
     id: PZO1110
-_key: '!items!utncinnlwzscpzbd'
+  subType: misc
+  tags:
+    - Power Component
+  uses:
+    per: single
+  weaponSubtype: other
+type: weapon
 

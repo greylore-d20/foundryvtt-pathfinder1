@@ -1,8 +1,20 @@
 _id: eERziLdxhQQSkaC0
-name: Psychic Defense
-type: feat
+_key: '!items!eERziLdxhQQSkaC0'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Psychic Defense
 system:
+  abilityType: su
+  actions:
+    - _id: oi7ybht2snpytkyr
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>Reading small, invisible cues allows the psychic to take advantage of
@@ -10,19 +22,7 @@ system:
       spell during a social encounter and spending 1 point from her phrenic pool
       allows the psychic to add a +4 bonus on her next Bluff, Diplomacy,
       Intimidate, or Sense Motive check.</p>
-  actions:
-    - _id: oi7ybht2snpytkyr
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_psychicDefense
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!eERziLdxhQQSkaC0'
+  tag: classFeat_psychicDefense
+type: feat
 

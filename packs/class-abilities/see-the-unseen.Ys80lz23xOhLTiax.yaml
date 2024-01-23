@@ -1,8 +1,27 @@
 _id: Ys80lz23xOhLTiax
-name: See the Unseen
-type: feat
+_key: '!items!Ys80lz23xOhLTiax'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: See the Unseen
 system:
+  abilityType: su
+  actions:
+    - _id: fcnzb5ua062ewugj
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: 10 * @classes.ninja.level
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>A ninja with this trick learns how to see that which cannot be seen. As
@@ -11,28 +30,9 @@ system:
       level as the caster level.</p>
 
       <p>Each use of this ability uses up 1 ki point.</p>
+  subType: classFeat
+  tag: classFeat_seeTheUnseen
   tags:
     - Ninja Trick, Master
-  actions:
-    - _id: fcnzb5ua062ewugj
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 10 * @classes.ninja.level
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_seeTheUnseen
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: su
-_key: '!items!Ys80lz23xOhLTiax'
+type: feat
 

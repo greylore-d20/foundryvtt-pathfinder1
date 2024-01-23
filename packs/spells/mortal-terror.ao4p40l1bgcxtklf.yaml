@@ -1,8 +1,30 @@
 _id: ao4p40l1bgcxtklf
-name: Mortal Terror
-type: spell
+_key: '!items!ao4p40l1bgcxtklf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mortal Terror
 system:
+  actions:
+    - _id: n8tqsa93flqv3g83
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue the target with an exaggerated sense of its own mortality and
@@ -15,44 +37,22 @@ system:
       the spell's duration. If the target succeeds at the initial Will save, it
       is shaken for 1 round but its fear level cannot be further increased by
       this spell's effects during that round.</p>
-  actions:
-    - _id: n8tqsa93flqv3g83
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial (see text)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      bard: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 2
-      shaman: 2
-      psychic: 2
+      bard: 2
+      cleric: 2
+      inquisitor: 2
       mesmerist: 2
+      oracle: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
   types: fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ao4p40l1bgcxtklf'
+type: spell
 

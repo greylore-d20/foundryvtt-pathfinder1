@@ -1,8 +1,20 @@
 _id: HLuoqBZCrV6vSJzK
-name: Empathy
-type: feat
+_key: '!items!HLuoqBZCrV6vSJzK'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Empathy
 system:
+  abilityType: ex
+  actions:
+    - _id: vs8fuzlnu12j9g46
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When attempting a Sense Motive check, the investigator makes two d20
@@ -19,21 +31,9 @@ system:
       1/2 his investigator level.</p>
 
       <p>An investigator must be at least 5th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_empathy
   tags:
     - Investigator Talent
-  actions:
-    - _id: vs8fuzlnu12j9g46
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: special
-        unchained:
-          type: special
-  tag: classFeat_empathy
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!HLuoqBZCrV6vSJzK'
+type: feat
 

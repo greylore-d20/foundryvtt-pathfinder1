@@ -1,8 +1,31 @@
 _id: 2qbdesr0fwtmi9tj
-name: Brand, Greater
-type: spell
+_key: '!items!2qbdesr0fwtmi9tj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Brand, Greater
 system:
+  actions:
+    - _id: e397vbzhzi9eu7i7
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like
@@ -16,34 +39,11 @@ system:
       curse}, a greater <em>brand</em> cannot be dispelled, but it can be
       removed by any means that removes a
       @Compendium[pf1.spells.3jaumkutti1ytulq]{mark of justice}.</p>
-  actions:
-    - _id: e397vbzhzi9eu7i7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       inquisitor: 4
   level: 4
   school: trs
   types: curse
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!2qbdesr0fwtmi9tj'
+type: spell
 

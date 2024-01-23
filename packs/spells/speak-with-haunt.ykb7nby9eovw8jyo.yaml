@@ -1,8 +1,33 @@
 _id: ykb7nby9eovw8jyo
-name: Speak with Haunt
-type: spell
+_key: '!items!ykb7nby9eovw8jyo'
 img: icons/magic/death/undead-ghost-scream-teal.webp
+name: Speak with Haunt
 system:
+  actions:
+    - _id: x02va8c175l36hcg
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one haunt
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You stir a haunt (<i>Pathfinder RPG GameMastery Guide</i> 242) to a
@@ -32,44 +57,19 @@ system:
       of time.</p><p>Unlike a corpse affected by <i>speak with dead</i>, a haunt
       wants to express itself, if only to share its pain or to cause
       mischief.</p>
-  actions:
-    - _id: x02va8c175l36hcg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 minute/level
-      target:
-        value: one haunt
-      range:
-        value: '10'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      witch: 4
-      shaman: 3
-      psychic: 4
       medium: 2
+      oracle: 4
+      psychic: 4
+      shaman: 3
       spiritualist: 4
+      warpriest: 4
+      witch: 4
   level: 4
   school: nec
-  types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!ykb7nby9eovw8jyo'
+  types: language-dependent
+type: spell
 

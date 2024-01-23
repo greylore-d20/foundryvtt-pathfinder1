@@ -1,8 +1,30 @@
 _id: 8w67l6dzzsi6oz5f
-name: Create Pit
-type: spell
+_key: '!items!8w67l6dzzsi6oz5f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Pit
 system:
+  actions:
+    - _id: czpwxlu9s7mc6gwm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a 10-foot-by-10-foot extradimensional hole with a depth of
@@ -23,43 +45,21 @@ system:
       duration of the spell ends, creatures within the hole rise up with the
       bottom of the pit until they are standing on the surface over the course
       of a single round.</p>
-  actions:
-    - _id: czpwxlu9s7mc6gwm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round + 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
   learnedAt:
-    class:
-      sorcerer: 2
-      wizard: 2
-      summoner: 2
-      summonerUnchained: 2
-    subDomain:
-      Caves: 2
     bloodline:
       Kobold: 2
+    class:
+      sorcerer: 2
+      summoner: 2
+      summonerUnchained: 2
+      wizard: 2
+    subDomain:
+      Caves: 2
   level: 2
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: miniature shovel costing 10 gp
+  school: con
   sr: false
-_key: '!items!8w67l6dzzsi6oz5f'
+  subschool: creation
+type: spell
 

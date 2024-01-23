@@ -1,18 +1,11 @@
 _id: t8IFQ5we8VFQNNsi
-name: Healer's Touch
-type: feat
+_key: '!items!t8IFQ5we8VFQNNsi'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Healer's Touch
 system:
-  description:
-    value: >-
-      <p>The shaman gains a +4 bonus on Heal checks. As a standard action, the
-      shaman can move up to half her speed and touch up to six dying creatures.
-      Each creature is automatically stabilized without the need of a Heal
-      check.</p>
+  abilityType: su
   actions:
     - _id: h1auxmirem8nu6sp
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
       activation:
         type: standard
         unchained:
@@ -20,20 +13,27 @@ system:
           type: action
       duration:
         units: inst
-      target:
-        value: self
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
       range:
         units: personal
-  changes:
-    - _id: k44fvj22
-      formula: '4'
-      subTarget: skill.hea
-      modifier: untyped
-  tag: classFeat_healersTouch
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Shaman
-  abilityType: su
-_key: '!items!t8IFQ5we8VFQNNsi'
+  changes:
+    - _id: k44fvj22
+      formula: '4'
+      modifier: untyped
+      subTarget: skill.hea
+  description:
+    value: >-
+      <p>The shaman gains a +4 bonus on Heal checks. As a standard action, the
+      shaman can move up to half her speed and touch up to six dying creatures.
+      Each creature is automatically stabilized without the need of a Heal
+      check.</p>
+  subType: classFeat
+  tag: classFeat_healersTouch
+type: feat
 

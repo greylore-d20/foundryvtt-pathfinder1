@@ -1,8 +1,30 @@
 _id: 14he8rp5zehzk7tx
-name: Abstemiousness
-type: spell
+_key: '!items!14he8rp5zehzk7tx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Abstemiousness
 system:
+  actions:
+    - _id: h3ymkb4ngtad2eht
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: a handful of berries, grains, nuts, or rice
+  components:
+    verbal: true
   description:
     value: >-
       <p>Sometimes Irori smiles on his worshipers, granting them a reprieve from
@@ -11,37 +33,15 @@ system:
       for a full day. The spell does not create food, and thus will not alone
       prevent someone from starving, but it can extend even limited reserves for
       lengthy periods.</p>
-  actions:
-    - _id: h3ymkb4ngtad2eht
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour
-      target:
-        value: a handful of berries, grains, nuts, or rice
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
       bard: 1
-      witch: 1
+      cleric: 1
+      druid: 1
       hunter: 1
+      oracle: 1
+      warpriest: 1
+      witch: 1
   school: trs
-  components:
-    verbal: true
-_key: '!items!14he8rp5zehzk7tx'
+type: spell
 

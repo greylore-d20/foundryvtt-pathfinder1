@@ -1,8 +1,27 @@
 _id: 1deu73tsthfuepk5
-name: Aspect of the Stag
-type: spell
+_key: '!items!1deu73tsthfuepk5'
 img: icons/creatures/mammals/elk-moose-marked-green.webp
+name: Aspect of the Stag
 system:
+  actions:
+    - _id: irbol8servmz7zc4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you take on an aspect of a stag, including
@@ -18,33 +37,14 @@ system:
       bonus (your choice) and deals 1d8 points of piercing damage (if you are
       Medium; 1d6 points of damage if Small) plus your Strength modifier on a
       successful hit. The antlers have a critical multiplier of 19-20/x2.</p>
-  actions:
-    - _id: irbol8servmz7zc4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       druid: 4
-      ranger: 3
       hunter: 3
+      ranger: 3
   level: 4
   school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!1deu73tsthfuepk5'
+  subschool: polymorph
+type: spell
 

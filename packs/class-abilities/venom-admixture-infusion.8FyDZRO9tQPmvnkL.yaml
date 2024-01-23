@@ -1,8 +1,22 @@
 _id: 8FyDZRO9tQPmvnkL
-name: Venom Admixture Infusion
-type: feat
+_key: '!items!8FyDZRO9tQPmvnkL'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Venom Admixture Infusion
 system:
+  actions:
+    - _id: 1nschqtrq1bwioi3
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      save:
+        description: see text
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><strong>Element</strong> universal; <strong>Type</strong> substance
@@ -17,21 +31,7 @@ system:
       and creatures damaged by the infused blast are affected by the poison. Use
       the same type, save, save DC, frequency, effect, and cure as the consumed
       poison.</p>
-  actions:
-    - _id: 1nschqtrq1bwioi3
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        description: see text
-  tag: classFeat_venomAdmixtureInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!8FyDZRO9tQPmvnkL'
+  tag: classFeat_venomAdmixtureInfusion
+type: feat
 

@@ -1,8 +1,30 @@
 _id: wf4uva2rt4uez7b1
-name: Rain of Arrows
-type: spell
+_key: '!items!wf4uva2rt4uez7b1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rain of Arrows
 system:
+  actions:
+    - _id: i444lqosfxl1tmqb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex halves
+        type: ref
+      spellEffect: 15-ft.-radius cloud of arrows
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You point your finger and conjure a cloud of magical arrows that rain
@@ -13,40 +35,18 @@ system:
       arrows used as a material component are all made of the same material
       (such as cold iron), the arrows created by the spell are also made of that
       material.</p>
-  actions:
-    - _id: i444lqosfxl1tmqb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex halves
-      spellEffect: 15-ft.-radius cloud of arrows
   learnedAt:
     class:
       sorcerer: 8
       wizard: 8
   level: 8
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a quiver full of 20 arrows worth 1 gp
     gpValue: 1
+    value: a quiver full of 20 arrows worth 1 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!wf4uva2rt4uez7b1'
+  subschool: creation
+type: spell
 

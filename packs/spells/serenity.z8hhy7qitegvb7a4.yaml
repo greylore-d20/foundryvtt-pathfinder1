@@ -1,8 +1,33 @@
 _id: z8hhy7qitegvb7a4
-name: Serenity
-type: spell
+_key: '!items!z8hhy7qitegvb7a4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Serenity
 system:
+  actions:
+    - _id: g8gq92pp3omrgxkb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fill the targets' minds with feelings of tranquility. Those
@@ -12,44 +37,19 @@ system:
       participate in combat by using Combat Expertise, fighting defensively, or
       taking the total defense action without triggering the spell's nonlethal
       damage.</p>
-  actions:
-    - _id: g8gq92pp3omrgxkb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 4
-      psychic: 5
+      cleric: 5
       mesmerist: 4
+      oracle: 5
+      psychic: 5
+      sorcerer: 6
+      warpriest: 5
+      wizard: 6
   level: 6
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!z8hhy7qitegvb7a4'
+type: spell
 

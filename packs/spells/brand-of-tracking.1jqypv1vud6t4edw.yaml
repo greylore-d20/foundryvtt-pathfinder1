@@ -1,8 +1,31 @@
 _id: 1jqypv1vud6t4edw
-name: Brand of Tracking
-type: spell
+_key: '!items!1jqypv1vud6t4edw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Brand of Tracking
 system:
+  actions:
+    - _id: td1qp5kodun59e7e
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell etches the symbol of an eye or a lawful institution on the
@@ -26,34 +49,11 @@ system:
       cannot be dispelled, but it can be permanently removed by any means that
       removes a mark of justice (see page 312 of the <i>Pathfinder RPG Core</i>
       Rulebook).</p>
-  actions:
-    - _id: td1qp5kodun59e7e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       inquisitor: 4
   level: 4
   school: trs
   types: curse
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!1jqypv1vud6t4edw'
+type: spell
 

@@ -1,8 +1,26 @@
 _id: ursm11405zobemi3
-name: Gate
-type: spell
+_key: '!items!ursm11405zobemi3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gate
 system:
+  actions:
+    - _id: rough7t66lbdx4ic
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or concentration (up to 1 round/level); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Casting a <i>gate</i> spell has two effects. First, it creates an
@@ -62,45 +80,27 @@ system:
       may attack you.</p><p><i>Note:</i> When you use a calling spell such as
       <i>gate</i> to call an air, chaotic, earth, evil, fire, good, lawful, or
       water creature, it becomes a spell of that type.</p>
-  actions:
-    - _id: rough7t66lbdx4ic
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or concentration (up to 1 round/level); see text
-      range:
-        units: medium
-      spellEffect: see text
   learnedAt:
+    bloodline:
+      Celestial: 9
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
       psychic: 9
+      sorcerer: 9
+      wizard: 9
     domain:
       Glory: 9
     subDomain:
       Trade: 9
-    bloodline:
-      Celestial: 9
   level: 9
-  school: con
-  subschool: creation or calling
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see text
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '287'
-_key: '!items!ursm11405zobemi3'
+  sr: false
+  subschool: creation or calling
+type: spell
 

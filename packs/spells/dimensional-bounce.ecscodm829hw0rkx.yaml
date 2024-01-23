@@ -1,8 +1,30 @@
 _id: ecscodm829hw0rkx
-name: Dimensional Bounce
-type: spell
+_key: '!items!ecscodm829hw0rkx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dimensional Bounce
 system:
+  actions:
+    - _id: t6dkqf1gvudgrwzk
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none and Will negates (object)
+        type: will
+      target:
+        value: you and touched objects or other touched willing creatures
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You designate two locations within range and create a dimensional link
@@ -12,39 +34,17 @@ system:
       door</i>. The spell is discharged once you have used it to teleport a
       number of times equal to one-fourth your caster level (maximum 5
       times).</p>
-  actions:
-    - _id: t6dkqf1gvudgrwzk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged
-      target:
-        value: you and touched objects or other touched willing creatures
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: none and Will negates (object)
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      summoner: 6
-      witch: 7
       psychic: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
   school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ecscodm829hw0rkx'
+  subschool: teleportation
+type: spell
 

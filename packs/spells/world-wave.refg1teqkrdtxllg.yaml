@@ -1,8 +1,26 @@
 _id: refg1teqkrdtxllg
-name: World Wave
-type: spell
+_key: '!items!refg1teqkrdtxllg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: World Wave
 system:
+  actions:
+    - _id: xfwzg2312pfb5ble
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or 1 hour/level; see text (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      spellEffect: see text
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause any sort of natural terrain (including water, forest, desert,
@@ -54,35 +72,17 @@ system:
       city).</p><p>You can only create the wave if standing on the ground. You
       cannot create it when underground or on terrain that it cannot
       incorporate.</p>
-  actions:
-    - _id: xfwzg2312pfb5ble
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or 1 hour/level; see text (D)
-      range:
-        units: seeText
-      spellEffect: see text
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-      druid: 9
-    subDomain:
-      Exploration: 9
     bloodline:
       Aquatic: 9
+    class:
+      druid: 9
+      sorcerer: 9
+      wizard: 9
+    subDomain:
+      Exploration: 9
   level: 9
   school: trs
   types: earth, water
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!refg1teqkrdtxllg'
+type: spell
 

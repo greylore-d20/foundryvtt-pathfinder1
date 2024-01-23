@@ -1,19 +1,11 @@
 _id: t1w2zq5fx7mislq8
-name: Touch of Fatigue
-type: spell
+_key: '!items!t1w2zq5fx7mislq8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Touch of Fatigue
 system:
-  description:
-    value: >-
-      <p>You channel negative energy through your touch, fatiguing the target.
-      You must succeed on a touch attack to strike a target. The subject is
-      immediately fatigued for the spell's duration.</p><p>This spell has no
-      effect on a creature that is already fatigued.</p><p>Unlike with normal
-      fatigue, the effect ends as soon as the spell's duration expires.</p>
   actions:
     - _id: tuxxgmjsohpk2xdg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,32 +13,40 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
-  uses:
-    autoDeductChargesCost: '0'
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You channel negative energy through your touch, fatiguing the target.
+      You must succeed on a touch attack to strike a target. The subject is
+      immediately fatigued for the spell's duration.</p><p>This spell has no
+      effect on a creature that is already fatigued.</p><p>Unlike with normal
+      fatigue, the effect ends as soon as the spell's duration expires.</p>
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      witch: 0
       adept: 0
-      shaman: 0
       mesmerist: 0
       occultist: 0
+      shaman: 0
+      sorcerer: 0
+      witch: 0
+      wizard: 0
   level: 0
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of sweat
-_key: '!items!t1w2zq5fx7mislq8'
+  school: nec
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

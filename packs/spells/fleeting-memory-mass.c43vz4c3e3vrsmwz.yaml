@@ -1,16 +1,11 @@
 _id: c43vz4c3e3vrsmwz
-name: Fleeting Memory, Mass
-type: spell
+_key: '!items!c43vz4c3e3vrsmwz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fleeting Memory, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>fleeting memory</i>, except that it affects
-      multiple creatures.</p>
   actions:
     - _id: 96zttnq77zlgkwd6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will partial
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>fleeting memory</i>, except that it affects
+      multiple creatures.</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       bard: 6
-      psychic: 7
       mesmerist: 5
       occultist: 6
+      psychic: 7
+      sorcerer: 8
+      wizard: 8
   level: 8
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-_key: '!items!c43vz4c3e3vrsmwz'
+type: spell
 

@@ -1,8 +1,25 @@
 _id: c5vETaJIG3Phtpig
-name: Forge and Fire
-type: feat
+_key: '!items!c5vETaJIG3Phtpig'
 img: systems/pf1/icons/items/inventory/anvil.jpg
+name: Forge and Fire
 system:
+  abilityType: su
+  actions:
+    - _id: w8or24guduvshkpq
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/inventory/anvil.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
+  changes:
+    - _id: zGMQSkDL
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 3rd level, you gain @Compendium[pf1.feats.4hNO4OAWYF5vXphH]{Craft
@@ -11,28 +28,11 @@ system:
       manufactured weapon, you can also give that weapon the <em>flaming</em>
       special ability for the spell’s duration (This has no effect if the weapon
       already has the <em>flaming</em> special ability).</p>
-  actions:
-    - _id: w8or24guduvshkpq
-      name: Use
-      img: systems/pf1/icons/items/inventory/anvil.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: zGMQSkDL
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Craft Magic Arms and Armor
         uuid: Compendium.pf1.feats.Item.4hNO4OAWYF5vXphH
-  tag: classFeat_forgeAndFire
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!c5vETaJIG3Phtpig'
+  tag: classFeat_forgeAndFire
+type: feat
 

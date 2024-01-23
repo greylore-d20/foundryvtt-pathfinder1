@@ -1,18 +1,10 @@
-name: Speak with Waves
-type: spell
+_id: 4SkqICrRfq3BYu2j
+_key: '!items!4SkqICrRfq3BYu2j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Speak with Waves
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.wgm8mm1za909pwch]{stone
-      tell} but allows conversations only with a body of standing or flowing
-      fresh water at least as large as you are. Flowing water can generally
-      speak about events happening upstream but not events happening
-      downstream.</p>
   actions:
     - _id: FzaWzTF8QuQ6Scpl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
@@ -21,10 +13,23 @@ system:
           type: minute
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.wgm8mm1za909pwch]{stone
+      tell} but allows conversations only with a body of standing or flowing
+      fresh water at least as large as you are. Flowing water can generally
+      speak about events happening upstream but not events happening
+      downstream.</p>
   learnedAt:
     class:
       druid: 6
@@ -32,12 +37,7 @@ system:
       shaman: 7
   level: 6
   school: div
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_id: 4SkqICrRfq3BYu2j
-_key: '!items!4SkqICrRfq3BYu2j'
+  types: water
+type: spell
 

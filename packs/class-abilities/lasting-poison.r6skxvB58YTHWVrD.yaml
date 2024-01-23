@@ -1,8 +1,34 @@
 _id: r6skxvB58YTHWVrD
-name: Lasting Poison
-type: feat
+_key: '!items!r6skxvB58YTHWVrD'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Lasting Poison
 system:
+  abilityType: ex
+  actions:
+    - _id: EJFKdUszSDhqhX5R
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+    - _id: ifyMikFvqFwY8UV9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Swift poison use
+  associations:
+    classes:
+      - Rogue
+      - Slayer
+      - Investigator
+      - Ninja
   description:
     value: >-
       <p>A character with this talent can apply poison to a weapon in such a way
@@ -12,38 +38,12 @@ system:
       action, or a standard action if the character has the
       @UUID[Compendium.pf1.class-abilities.Item.25YEZqTGeFCUSF3L]{swift poison}
       talent.</p>
+  subType: classFeat
+  tag: classFeat_lastingPoison
   tags:
     - Rogue Talent
     - Slayer Talent
     - Investigator Talent
     - Ninja Trick
-  actions:
-    - _id: EJFKdUszSDhqhX5R
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      ammoType: none
-    - _id: ifyMikFvqFwY8UV9
-      name: Swift poison use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      ammoType: none
-  tag: classFeat_lastingPoison
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Slayer
-      - Investigator
-      - Ninja
-  abilityType: ex
-_key: '!items!r6skxvB58YTHWVrD'
+type: feat
 

@@ -1,8 +1,26 @@
 _id: rrgoo4z6xxhrsk10
-name: Frost Mammoth
-type: spell
+_key: '!items!rrgoo4z6xxhrsk10'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Frost Mammoth
 system:
+  actions:
+    - _id: mvjst7zqsmot6utf
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one frost mammoth
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A blast of snow suddenly fills an area with a space of 15 feet,
@@ -14,40 +32,22 @@ system:
       designate to ride it, and it is treated as if combat trained. At 17th
       level, a frost mammoth you conjure deals an additional 1d6 points of cold
       damage with each physical attack.</p>
-  actions:
-    - _id: mvjst7zqsmot6utf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: one frost mammoth
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
       druid: 7
-      summoner: 6
+      oracle: 7
       shaman: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      wizard: 7
   level: 7
-  school: con
-  subschool: creation
-  types: cold
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a fragment of mammoth tusk
+  school: con
   sr: false
-_key: '!items!rrgoo4z6xxhrsk10'
+  subschool: creation
+  types: cold
+type: spell
 

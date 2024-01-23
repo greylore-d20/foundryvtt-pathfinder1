@@ -1,8 +1,29 @@
 _id: 82qn051kayic7k1v
-name: Forceful Strike
-type: spell
+_key: '!items!82qn051kayic7k1v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Forceful Strike
 system:
+  actions:
+    - _id: o28rqsuztxdxzc9p
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: 1 creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cast this spell as you strike a creature with a melee weapon,
@@ -16,37 +37,16 @@ system:
       free bull rush, but it can push the target back if it defeats the target's
       CMD. A successful Fortitude save halves the force damage and negates the
       bull rush effect.</p>
-  actions:
-    - _id: o28rqsuztxdxzc9p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      paladin: 4
       inquisitor: 4
       magus: 4
+      oracle: 4
+      paladin: 4
+      warpriest: 4
   level: 4
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!82qn051kayic7k1v'
+type: spell
 

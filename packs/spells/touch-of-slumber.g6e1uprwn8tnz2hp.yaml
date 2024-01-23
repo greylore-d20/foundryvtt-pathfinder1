@@ -1,8 +1,31 @@
 _id: g6e1uprwn8tnz2hp
-name: Touch of Slumber
-type: spell
+_key: '!items!g6e1uprwn8tnz2hp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Touch of Slumber
 system:
+  actions:
+    - _id: ulb5chb8829ikcjr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: nonhostile creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions only against a creature with an attitude toward
@@ -15,47 +38,24 @@ system:
       wounding an affected creature awakens it, but normal noise does not.
       Awakening a creature is a standard action (this is an application of the
       aid another action).</p>
-  actions:
-    - _id: ulb5chb8829ikcjr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: nonhostile creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      druid: 5
       bard: 6
-      witch: 6
-      shaman: 5
-      psychic: 6
+      cleric: 5
+      druid: 5
       hunter: 5
+      oracle: 5
+      psychic: 6
+      shaman: 5
+      sorcerer: 5
+      warpriest: 5
+      witch: 6
+      wizard: 5
   level: 5
+  materials:
+    value: a bit of seaweed
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a bit of seaweed
-_key: '!items!g6e1uprwn8tnz2hp'
+type: spell
 

@@ -1,8 +1,12 @@
 _id: HaLB9xLAPdNCBQRP
-name: Poison Conversion
-type: feat
+_key: '!items!HaLB9xLAPdNCBQRP'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Poison Conversion
 system:
+  associations:
+    classes:
+      - Alchemist
+      - Investigator
   description:
     value: >-
       <p>By spending 1 minute, the character can convert 1 dose of poison from
@@ -13,14 +17,10 @@ system:
 
       <p>a character must be at least 6th level before selecting this
       discovery.</p>
+  subType: classFeat
+  tag: classFeat_poisonConversion
   tags:
     - Alchemist Discovery
     - Investigator Talent
-  tag: classFeat_poisonConversion
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-      - Investigator
-_key: '!items!HaLB9xLAPdNCBQRP'
+type: feat
 

@@ -1,8 +1,25 @@
 _id: srrymli8ai6zj352
-name: Visualization of the Mind
-type: spell
+_key: '!items!srrymli8ai6zj352'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Visualization of the Mind
 system:
+  actions:
+    - _id: sa1a4n03fwty63d8
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You enhance a single aspect of your mind, nurturing and empowering it.
@@ -20,37 +37,20 @@ system:
       also treat that skill as a class skill. <br /><b>Wisdom</b>: When you fail
       a Will save, you can immediately attempt that saving throw again, gaining
       a +4 bonus on the new saving throw to resist the effect.</p>
-  actions:
-    - _id: sa1a4n03fwty63d8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
       oracle: 2
       shaman: 2
+      warpriest: 2
   level: 2
-  school: trs
-  types: meditative
-  components:
-    verbal: true
-    material: true
   materials:
-    value: soothing incense worth 200 gp
     gpValue: 200
+    value: soothing incense worth 200 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!srrymli8ai6zj352'
+  types: meditative
+type: spell
 

@@ -1,19 +1,10 @@
 _id: oh6kkz31ai7eoxhp
-name: Walk through Space
-type: spell
+_key: '!items!oh6kkz31ai7eoxhp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Walk through Space
 system:
-  description:
-    value: >-
-      <p>When under the effects of this spell, you can teleport up to 30 feet as
-      a move action. You must end this movement in an unoccupied space that you
-      can stand on within line of sight. Alternatively, you can spend a move
-      action to teleport to a standing position from lying prone. Teleporting
-      does not provoke attacks of opportunity.</p>
   actions:
     - _id: sxnfzdxm1fmvqoy7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,29 +12,38 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>When under the effects of this spell, you can teleport up to 30 feet as
+      a move action. You must end this movement in an unoccupied space that you
+      can stand on within line of sight. Alternatively, you can spend a move
+      action to teleport to a standing position from lying prone. Teleporting
+      does not provoke attacks of opportunity.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       alchemist: 6
-      summoner: 6
-      witch: 7
       magus: 6
       psychic: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a wren's egg
+  school: con
   sr: false
-_key: '!items!oh6kkz31ai7eoxhp'
+  subschool: teleportation
+type: spell
 

@@ -1,8 +1,24 @@
 _id: Sp3O5Mn9lpnXxX8N
-name: Suffocate
-type: feat
+_key: '!items!Sp3O5Mn9lpnXxX8N'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Suffocate
 system:
+  abilityType: sp
+  actions:
+    - _id: dll7loznajksjkp9
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+      save:
+        description: Fortitude partial
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether, air, void, water; <b>Type</b> utility (Sp);
@@ -21,23 +37,7 @@ system:
       target fails its first Fortitude save, it becomes disabled and is reduced
       to 0 hit points, and on its second failed Fortitude save, it falls
       unconscious and is reduced to –1 hit points.</p>
-  actions:
-    - _id: dll7loznajksjkp9
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude partial
-  tag: classFeat_suffocate
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!Sp3O5Mn9lpnXxX8N'
+  tag: classFeat_suffocate
+type: feat
 

@@ -1,8 +1,32 @@
 _id: mxexufme4unc4l6c
-name: Spellstaff
-type: spell
+_key: '!items!mxexufme4unc4l6c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spellstaff
 system:
+  actions:
+    - _id: 68bh39z2n39nzf22
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: wooden quarterstaff touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You store one spell that you can normally cast in a wooden
@@ -12,37 +36,13 @@ system:
       among those you had prepared, but it does not count against your normal
       allotment for a given day. You use up any applicable material components
       required to cast the spell when you store it in the <i>spellstaff</i>.</p>
-  actions:
-    - _id: 68bh39z2n39nzf22
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged
-      target:
-        value: wooden quarterstaff touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
       druid: 6
       hunter: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: the staff that stores the spell
-_key: '!items!mxexufme4unc4l6c'
+  school: trs
+type: spell
 

@@ -1,8 +1,24 @@
 _id: yXOcuRJ4VU4msPbm
-name: Pool Ray
-type: feat
+_key: '!items!yXOcuRJ4VU4msPbm'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Pool Ray
 system:
+  actions:
+    - _id: tzb6xj5yd7fhvvtj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ranged weapon held
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can expend 1 point from his arcane pool as a standard action
@@ -19,23 +35,7 @@ system:
 
       <p>At 6th level and every 3 levels thereafter, the amount of damage dealt
       by this attack increases by 1d6.</p>
-  actions:
-    - _id: tzb6xj5yd7fhvvtj
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: ranged weapon held
-      range:
-        units: touch
-  tag: classFeat_poolRay
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-_key: '!items!yXOcuRJ4VU4msPbm'
+  tag: classFeat_poolRay
+type: feat
 

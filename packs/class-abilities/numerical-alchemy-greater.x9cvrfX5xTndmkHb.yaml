@@ -1,8 +1,20 @@
 _id: x9cvrfX5xTndmkHb
-name: Numerical Alchemy, Greater
-type: feat
+_key: '!items!x9cvrfX5xTndmkHb'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Numerical Alchemy, Greater
 system:
+  abilityType: su
+  actions:
+    - _id: lrrjnpzdymaka9re
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>The investigator can calculate his movements and account for his
@@ -11,21 +23,9 @@ system:
 
       <p>The investigator must have the numerical alchemy talent and be at least
       11th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_numericalAlchemyGreater
   tags:
     - Investigator Talent
-  actions:
-    - _id: lrrjnpzdymaka9re
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: special
-        unchained:
-          type: special
-  tag: classFeat_numericalAlchemyGreater
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: su
-_key: '!items!x9cvrfX5xTndmkHb'
+type: feat
 

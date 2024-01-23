@@ -1,19 +1,10 @@
 _id: 260y4g7beqkf8ppi
-name: Enemy Insight
-type: spell
+_key: '!items!260y4g7beqkf8ppi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Enemy Insight
 system:
-  description:
-    value: >-
-      <p>You forge a mental bond between yourself and the other targets, each of
-      which must have an Intelligence score of 3 or higher. Choose one of your
-      favored enemy types (such as goblinoids or magical beasts). You grant the
-      targets half your favored enemy bonus against that type of creature. If
-      any target moves out of range, the spell ends for it.</p>
   actions:
     - _id: vdkmy2cpl3kaeyyc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,22 +12,31 @@ system:
           type: action
       duration:
         value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
       target:
         value: >-
           you plus one willing creature/3 levels, no two of which can be more
           than 30 ft. apart
-      range:
-        units: close
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You forge a mental bond between yourself and the other targets, each of
+      which must have an Intelligence score of 3 or higher. Choose one of your
+      favored enemy types (such as goblinoids or magical beasts). You grant the
+      targets half your favored enemy bonus against that type of creature. If
+      any target moves out of range, the spell ends for it.</p>
   learnedAt:
     class:
-      ranger: 2
       hunter: 2
+      ranger: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!260y4g7beqkf8ppi'
+type: spell
 

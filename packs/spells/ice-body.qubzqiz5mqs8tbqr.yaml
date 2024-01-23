@@ -1,8 +1,26 @@
 _id: qubzqiz5mqs8tbqr
-name: Ice Body
-type: spell
+_key: '!items!qubzqiz5mqs8tbqr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ice Body
 system:
+  actions:
+    - _id: fp3hjboggyemd5y2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your form transmutes into living ice, granting you several abilities.
@@ -21,33 +39,15 @@ system:
       level of the effect; you automatically succeed on caster level checks
       against effects that you created. Your passage through snow and ice in
       this fashion leaves behind no tunnel or hole.</p>
-  actions:
-    - _id: fp3hjboggyemd5y2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      witch: 7
       shaman: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
   school: trs
-  types: cold
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!qubzqiz5mqs8tbqr'
+  types: cold
+type: spell
 

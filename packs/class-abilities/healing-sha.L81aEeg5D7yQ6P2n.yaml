@@ -1,8 +1,37 @@
 _id: L81aEeg5D7yQ6P2n
-name: Healing (SHA)
-type: feat
+_key: '!items!L81aEeg5D7yQ6P2n'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Healing (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: 277oippk5ozx6d5a
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: >-
+              (@classes.shaman.level >= 5 ? 2 : 1)d8 + min(10,
+              @classes.shaman.level)
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>A shaman soothes the wounds of those she touches. This acts as cure
@@ -11,36 +40,7 @@ system:
       hours.</p>
 
       <p>At 5th level, this acts as cure moderate wounds.</p>
-  actions:
-    - _id: 277oippk5ozx6d5a
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      damage:
-        parts:
-          - formula: >-
-              (@classes.shaman.level >= 5 ? 2 : 1)d8 + min(10,
-              @classes.shaman.level)
-            type:
-              values:
-                - positive
-              custom: ''
-  tag: classFeat_healingSha
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!L81aEeg5D7yQ6P2n'
+  tag: classFeat_healingSha
+type: feat
 

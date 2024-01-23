@@ -1,7 +1,17 @@
-name: Void Awareness
-type: feat
+_id: hsPaehLs8BaMEmcj
+_key: '!items!hsPaehLs8BaMEmcj'
 img: icons/magic/perception/shadow-stealth-eyes-purple.webp
+name: Void Awareness
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  contextNotes:
+    - subTarget: allSavingThrows
+      text: >-
+        +[[2 + floor(@classes.wizard.level / 5)]] insight bonus on saving throws
+        against spells and spell-like abilities.
   description:
     value: >-
       <p>Your ability to recognize the void allows your body to react to magical
@@ -11,21 +21,11 @@ system:
       whenever you would be affected by a spell or spell-like ability that
       allows a saving throw, you can roll twice to save against the effect and
       take the better result.</p>
-  tags:
-    - Void School
-  contextNotes:
-    - text: >-
-        +[[2 + floor(@classes.wizard.level / 5)]] insight bonus on saving throws
-        against spells and spell-like abilities.
-      subTarget: allSavingThrows
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9421
     pages: '29'
-_id: hsPaehLs8BaMEmcj
-_key: '!items!hsPaehLs8BaMEmcj'
+  subType: classFeat
+  tags:
+    - Void School
+type: feat
 

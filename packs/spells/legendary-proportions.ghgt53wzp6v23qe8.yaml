@@ -1,8 +1,32 @@
 _id: ghgt53wzp6v23qe8
-name: Legendary Proportions
-type: spell
+_key: '!items!ghgt53wzp6v23qe8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Legendary Proportions
 system:
+  actions:
+    - _id: epvru85gt5n877w7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: 1 creature (see text)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call upon the primordial power of ancient megafauna to boost the
@@ -23,45 +47,21 @@ system:
       any  enclosures in the process. If it fails, it is constrained without
       harm by the materials enclosing it. The spell cannot crush a creature by
       enclosing it.</p>
-  actions:
-    - _id: epvru85gt5n877w7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: 1 creature (see text)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      druid: 7
       alchemist: 6
-      witch: 7
+      druid: 7
       shaman: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a dinosaur bone and powdered amber worth at least 200 gp
     gpValue: 200
+    value: a dinosaur bone and powdered amber worth at least 200 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!ghgt53wzp6v23qe8'
+type: spell
 

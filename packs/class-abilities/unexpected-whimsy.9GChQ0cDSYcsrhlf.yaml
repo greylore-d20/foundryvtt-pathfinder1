@@ -1,8 +1,29 @@
 _id: 9GChQ0cDSYcsrhlf
-name: Unexpected Whimsy
-type: feat
+_key: '!items!9GChQ0cDSYcsrhlf'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Unexpected Whimsy
 system:
+  abilityType: su
+  actions:
+    - _id: liuogbd4tm9ewuyt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: enemies in range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you dance, act like a buffoon, or commit some
@@ -15,31 +36,10 @@ system:
       additional time for every 4 levels you possess beyond 8th.</p>
 
       <p>This power replaces the Chaos Blade power of the Chaos Domain.</p>
-  actions:
-    - _id: liuogbd4tm9ewuyt
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: enemies in range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_unexpectedWhimsy
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!9GChQ0cDSYcsrhlf'
+  tag: classFeat_unexpectedWhimsy
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,40 @@
 _id: hPkTX7pOJ5shyv1n
-name: Kestros
-type: weapon
+_key: '!items!hPkTX7pOJ5shyv1n'
 img: systems/pf1/icons/items/weapons/arrow-special.PNG
+name: Kestros
 system:
+  actions:
+    - _id: ew3jxlvxvtrbvy7x
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/arrow-special.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '50'
+  ammo:
+    type: dart
+  baseTypes:
+    - Kestros
   description:
     value: >-
       <p>The kestros is an oddly shaped Bronze Age sling used for launching
@@ -11,61 +43,29 @@ system:
       kestros with one hand. Loading a kestros is a move action that requires
       two hands and provokes attacks of opportunity. Halflings treat the kestros
       as a martial weapon.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 1
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: ew3jxlvxvtrbvy7x
-      name: Throw
-      img: systems/pf1/icons/items/weapons/arrow-special.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '50'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critMult: 3
-  uses:
-    per: single
-  baseTypes:
-    - Kestros
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 1
   source:
     id: PZO9452
     pages: '33'
-  ammo:
-    type: dart
-_key: '!items!hPkTX7pOJ5shyv1n'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 1
+type: weapon
 

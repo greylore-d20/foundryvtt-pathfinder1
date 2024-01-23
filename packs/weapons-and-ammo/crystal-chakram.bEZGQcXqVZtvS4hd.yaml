@@ -1,8 +1,39 @@
 _id: bEZGQcXqVZtvS4hd
-name: Crystal Chakram
-type: weapon
+_key: '!items!bEZGQcXqVZtvS4hd'
 img: systems/pf1/icons/items/weapons/chakram.png
+name: Crystal Chakram
 system:
+  actions:
+    - _id: 95cyy0pjnhpjl9aq
+      ability:
+        attack: dex
+        critRange: 18
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/chakram.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '30'
+  baseTypes:
+    - Crystal Chakram
   description:
     value: >-
       <p>Shaped and carved from quartz or stranger subterranean crystals, these
@@ -12,60 +43,29 @@ system:
       ground or another solid object; otherwise it can be retrieved and used
       again. A crystal chakram is treated as ammunition for the purpose of
       creating magic weapons.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 20
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 95cyy0pjnhpjl9aq
-      name: Throw
-      img: systems/pf1/icons/items/weapons/chakram.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critRange: 18
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Crystal Chakram
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 20
   source:
     id: PZO9216
     pages: '8'
-_key: '!items!bEZGQcXqVZtvS4hd'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
 

@@ -1,8 +1,30 @@
 _id: 759y8xzdg3unvt6s
-name: Dream Voyage
-type: spell
+_key: '!items!759y8xzdg3unvt6s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Voyage
 system:
+  actions:
+    - _id: s3mjx0t4njdv3qm5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: you and one creature/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i><i>dream</i> travel</i>, but you and your
@@ -53,25 +75,6 @@ system:
       targets, the spell is wasted and has no effect. Once you have touched all
       of your companions, the <i><i>dream</i> voyage</i> begins; however, its
       duration is reduced to 1 hour.</p>
-  actions:
-    - _id: s3mjx0t4njdv3qm5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: you and one creature/level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       psychic: 9
@@ -79,8 +82,5 @@ system:
   school: con
   subschool: teleportation
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!759y8xzdg3unvt6s'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: ed0epy1pofukpgm6
-name: Liveoak
-type: spell
+_key: '!items!ed0epy1pofukpgm6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Liveoak
 system:
+  actions:
+    - _id: 10pdpd1f109r0r1a
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: tree touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell turns an oak tree into a protector or guardian. The spell
@@ -14,32 +33,13 @@ system:
       dispelled, the tree takes root immediately wherever it happens to be. If
       released by you, the tree tries to return to its original location before
       taking root.</p>
-  actions:
-    - _id: 10pdpd1f109r0r1a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level
-      target:
-        value: tree touched
-      range:
-        units: touch
   learnedAt:
     class:
       druid: 6
-      shaman: 7
       hunter: 6
+      shaman: 7
   level: 6
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ed0epy1pofukpgm6'
+type: spell
 

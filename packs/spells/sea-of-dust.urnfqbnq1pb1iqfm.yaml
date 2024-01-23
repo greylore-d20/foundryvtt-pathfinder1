@@ -1,8 +1,26 @@
 _id: urnfqbnq1pb1iqfm
-name: Sea of Dust
-type: spell
+_key: '!items!urnfqbnq1pb1iqfm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sea of Dust
 system:
+  actions:
+    - _id: r3ag2qxi4evplym2
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      area: 2-mile-radius emanation
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause all areas of water to which you have line of effect to recede
@@ -37,30 +55,12 @@ system:
       discretion). This spell has no effect if cast on an entirely aquatic
       region. If the spell is cast on an island, the effects of the spell extend
       to the shore but not beyond.</p>
-  actions:
-    - _id: r3ag2qxi4evplym2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: permanent
-      range:
-        value: '0'
-        units: ft
-      area: 2-mile-radius emanation
   learnedAt:
     class:
       druid: 9
   level: 9
   school: trs
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!urnfqbnq1pb1iqfm'
+  types: water
+type: spell
 

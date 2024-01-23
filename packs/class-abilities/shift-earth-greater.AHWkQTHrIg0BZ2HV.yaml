@@ -1,8 +1,23 @@
 _id: AHWkQTHrIg0BZ2HV
-name: Shift Earth, Greater
-type: feat
+_key: '!items!AHWkQTHrIg0BZ2HV'
 img: systems/pf1/icons/spells/rock-sky-3.jpg
+name: Shift Earth, Greater
 system:
+  abilityType: sp
+  actions:
+    - _id: zq0lm5nfl2rx454q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> earth; <b>Type</b> utility (Sp); <b>Level</b> 7;
@@ -10,22 +25,7 @@ system:
 
       <p>You can move greater quantities of earth, as the spell
       @Compendium[pf1.spells.ukuyfbufbglbzfco]{Move Earth}.</p>
-  actions:
-    - _id: zq0lm5nfl2rx454q
-      name: Use
-      img: systems/pf1/icons/spells/rock-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_shiftEarthGreater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!AHWkQTHrIg0BZ2HV'
+  tag: classFeat_shiftEarthGreater
+type: feat
 

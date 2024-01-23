@@ -1,8 +1,28 @@
 _id: 2IiLAqO545rGetHR
-name: Disrupt Connection
-type: feat
+_key: '!items!2IiLAqO545rGetHR'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Disrupt Connection
 system:
+  abilityType: su
+  actions:
+    - _id: 3hmsvw7smuknk2vd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: summoned creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The hexer disrupts the connection between a summoned creature within 30
@@ -22,29 +42,9 @@ system:
       <p>The cackle hex extends the duration of this hex by 1 round. Once a
       creature has been the target of this hex, that creature is immune to this
       hex for 24 hours.</p>
+  subType: classFeat
+  tag: classFeat_disruptConnection
   tags:
     - Hex
-  actions:
-    - _id: 3hmsvw7smuknk2vd
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: summoned creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_disruptConnection
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!2IiLAqO545rGetHR'
+type: feat
 

@@ -1,8 +1,20 @@
 _id: 8YsfJcHNvvpWWtua
-name: Living Shield
-type: feat
+_key: '!items!8YsfJcHNvvpWWtua'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Living Shield
 system:
+  abilityType: ex
+  actions:
+    - _id: 7xbmubn5bbc3jqll
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/feats/deceitful.jpg
+      name: Use
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>As an immediate action whenever the vigilante is grappling a creature
@@ -15,19 +27,7 @@ system:
 
       <p>This ability must be used after the attack is declared against the
       vigilante, but before the attack is made and the results revealed.</p>
-  actions:
-    - _id: 7xbmubn5bbc3jqll
-      name: Use
-      img: systems/pf1/icons/feats/deceitful.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_livingShield
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!8YsfJcHNvvpWWtua'
+  tag: classFeat_livingShield
+type: feat
 

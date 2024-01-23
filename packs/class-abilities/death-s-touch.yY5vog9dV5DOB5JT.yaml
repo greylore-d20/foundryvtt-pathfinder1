@@ -1,8 +1,37 @@
 _id: yY5vog9dV5DOB5JT
-name: Death's Touch
-type: feat
+_key: '!items!yY5vog9dV5DOB5JT'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Death's Touch
 system:
+  abilityType: su
+  actions:
+    - _id: 6z9hem06l0w9lk6h
+      ability:
+        attack: dex
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.oracle.level / 2)
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can cause terrible wounds to appear on a creature with a melee
@@ -11,39 +40,10 @@ system:
       creature, it heals damage and grants a +2 channel resistance for 1 minute.
       You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  actions:
-    - _id: 6z9hem06l0w9lk6h
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.oracle.level / 2)
-            type:
-              values:
-                - negative
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_deathsTouch
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!yY5vog9dV5DOB5JT'
+  tag: classFeat_deathsTouch
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

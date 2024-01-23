@@ -1,30 +1,30 @@
 _id: w6blUIDEc7Yfr5g4
-name: Planar Knowledge
-type: feat
+_key: '!items!w6blUIDEc7Yfr5g4'
 img: systems/pf1/icons/spells/protect-magenta-2.jpg
+name: Planar Knowledge
 system:
-  description:
-    value: >-
-      <p>As an infernal binder, you gain a +3 bonus on <em>Knowledge</em>
-      (planes) checks.</p>
+  abilityType: ex
   actions:
     - _id: emgggv2vh0k9ijpe
-      name: Use
-      img: systems/pf1/icons/spells/protect-magenta-2.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: 36sr2mrb
-      formula: '3'
-      subTarget: skill.kpl
-      modifier: untyped
-  tag: classFeat_planarKnowledge
-  subType: classFeat
+      img: systems/pf1/icons/spells/protect-magenta-2.jpg
+      name: Use
   associations:
     classes:
       - Wizard
-  abilityType: ex
-_key: '!items!w6blUIDEc7Yfr5g4'
+  changes:
+    - _id: 36sr2mrb
+      formula: '3'
+      modifier: untyped
+      subTarget: skill.kpl
+  description:
+    value: >-
+      <p>As an infernal binder, you gain a +3 bonus on <em>Knowledge</em>
+      (planes) checks.</p>
+  subType: classFeat
+  tag: classFeat_planarKnowledge
+type: feat
 

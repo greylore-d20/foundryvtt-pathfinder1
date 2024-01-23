@@ -1,16 +1,10 @@
 _id: 4t0gx9k12vul6hcs
-name: Bless Army
-type: spell
+_key: '!items!4t0gx9k12vul6hcs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bless Army
 system:
-  description:
-    value: >-
-      <p><i>Bless army</i> fills an army with courage. The army gains a +1 bonus
-      on OM and Morale checks.</p>
   actions:
     - _id: to4xq31q5ksbp1xm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,23 +12,29 @@ system:
           type: action
       duration:
         value: 1 battle
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: spec
+        value: 1 hex
       target:
         value: one army
-      range:
-        value: 1 hex
-        units: spec
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p><i>Bless army</i> fills an army with courage. The army gains a +1 bonus
+      on OM and Morale checks.</p>
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
       oracle: 6
+      warpriest: 6
   level: 6
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!4t0gx9k12vul6hcs'
+type: spell
 

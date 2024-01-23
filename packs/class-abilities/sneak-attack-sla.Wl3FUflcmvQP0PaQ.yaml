@@ -1,8 +1,34 @@
 _id: Wl3FUflcmvQP0PaQ
-name: Sneak Attack (SLA)
-type: feat
+_key: '!items!Wl3FUflcmvQP0PaQ'
 img: systems/pf1/icons/feats/weapon-finesse.jpg
+name: Sneak Attack (SLA)
 system:
+  actions:
+    - _id: Rge5ZGwhYBkDtwDR
+      ability:
+        critMult: null
+        critRange: null
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: (floor(@classes.slayer.level / 3))d6
+            type:
+              custom: ''
+              values:
+                - precision
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/feats/weapon-finesse.jpg
+      name: Use
+      powerAttack:
+        critMultiplier: null
+        damageBonus: null
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>At 3rd level, if a slayer catches an opponent unable to defend itself
@@ -21,33 +47,7 @@ system:
       see the target well enough to pick out a vital spot and must be able to
       reach such a spot. A slayer cannot use sneak attack while striking a
       creature with concealment.</p>
-  actions:
-    - _id: Rge5ZGwhYBkDtwDR
-      name: Use
-      img: systems/pf1/icons/feats/weapon-finesse.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      damage:
-        parts:
-          - formula: (floor(@classes.slayer.level / 3))d6
-            type:
-              values:
-                - precision
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        critRange: null
-        critMult: null
-      powerAttack:
-        damageBonus: null
-        critMultiplier: null
-  tag: classFeat_sneakAttackSla
   subType: classFeat
-  associations:
-    classes:
-      - Slayer
-_key: '!items!Wl3FUflcmvQP0PaQ'
+  tag: classFeat_sneakAttackSla
+type: feat
 

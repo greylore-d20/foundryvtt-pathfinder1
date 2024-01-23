@@ -1,8 +1,23 @@
 _id: VnzaJlpvW7QeAVt6
-name: Elemental Strikes
-type: feat
+_key: '!items!VnzaJlpvW7QeAVt6'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Elemental Strikes
 system:
+  abilityType: su
+  actions:
+    - _id: 73xwe16fgxj9gei1
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 1st level, three times a day as a swift action you can imbue your
@@ -13,25 +28,10 @@ system:
 
       <p>At 20th level, all your melee attacks deal this damage, and this
       ability no longer requires a swift action to activate.</p>
-  actions:
-    - _id: 73xwe16fgxj9gei1
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.bloodrager.level >= 8 ? 5 : 3'
-  tag: classFeat_elementalStrikes
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!VnzaJlpvW7QeAVt6'
+  tag: classFeat_elementalStrikes
+  uses:
+    maxFormula: '@classes.bloodrager.level >= 8 ? 5 : 3'
+    per: day
+type: feat
 

@@ -1,16 +1,11 @@
 _id: 66s5qm8kwycgobce
-name: Dominate Monster
-type: spell
+_key: '!items!66s5qm8kwycgobce'
 img: icons/creatures/magical/construct-iron-stomping-yellow.webp
+name: Dominate Monster
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>dominate person</i>, except that the spell
-      is not restricted by creature type.</p>
   actions:
     - _id: mc31nv0qmrqgdf26
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: round
         unchained:
@@ -18,37 +13,42 @@ system:
           type: action
       duration:
         value: 1 day/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>dominate person</i>, except that the spell
+      is not restricted by creature type.</p>
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-      summoner: 6
-      witch: 9
-      psychic: 9
-      summonerUnchained: 6
-    domain:
-      Charm: 9
     bloodline:
       Oni: 9
       Rakshasa: 9
       Serpentine: 9
+    class:
+      psychic: 9
+      sorcerer: 9
+      summoner: 6
+      summonerUnchained: 6
+      witch: 9
+      wizard: 9
+    domain:
+      Charm: 9
   level: 9
   school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '274'
-_key: '!items!66s5qm8kwycgobce'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

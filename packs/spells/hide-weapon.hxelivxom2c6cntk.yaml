@@ -1,8 +1,26 @@
 _id: hxelivxom2c6cntk
-name: Hide Weapon
-type: spell
+_key: '!items!hxelivxom2c6cntk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hide Weapon
 system:
+  actions:
+    - _id: swh9yvcvodcaxvxb
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, a light or one-handed melee weapon in your
@@ -22,35 +40,17 @@ system:
       hidden weapon.  If you cast this spell a second time, you can hide another
       weapon inside your other arm. You can extend and retract both weapons as
       part of the same action.</p>
-  actions:
-    - _id: swh9yvcvodcaxvxb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      ranger: 1
-      inquisitor: 1
       antipaladin: 1
-      magus: 1
       bloodrager: 1
       hunter: 1
+      inquisitor: 1
+      magus: 1
+      ranger: 1
+      sorcerer: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!hxelivxom2c6cntk'
+type: spell
 

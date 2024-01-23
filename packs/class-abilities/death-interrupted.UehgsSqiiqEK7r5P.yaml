@@ -1,8 +1,51 @@
 _id: UehgsSqiiqEK7r5P
-name: Death Interrupted
-type: feat
+_key: '!items!UehgsSqiiqEK7r5P'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Death Interrupted
 system:
+  abilityType: su
+  actions:
+    - _id: YfVAYw4cr1BT3gOa
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.witch.level'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Meld Soul
+      range:
+        units: touch
+      target:
+        value: one dead creature
+    - _id: iOCAT1utXKZcUGdG
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 5d8 + @classes.witch.level
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Revive
+      range:
+        units: ft
+        value: '300'
+      target:
+        value: soul's body
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>A witch with this grand hex can pluck a dead creature’s soul from the
@@ -26,53 +69,10 @@ system:
       to life but is out of range, the creature remains dead.</p><p>Once a
       creature has benefited from this hex, it cannot benefit from it again for
       24 hours.</p>
+  subType: classFeat
+  tag: classFeat_deathInterrupted
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: YfVAYw4cr1BT3gOa
-      name: Meld Soul
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.witch.level'
-        units: hour
-      target:
-        value: one dead creature
-      range:
-        units: touch
-    - _id: iOCAT1utXKZcUGdG
-      name: Revive
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: soul's body
-      range:
-        value: '300'
-        units: ft
-      actionType: heal
-      damage:
-        parts:
-          - formula: 5d8 + @classes.witch.level
-            type:
-              values:
-                - positive
-              custom: ''
-  tag: classFeat_deathInterrupted
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!UehgsSqiiqEK7r5P'
+type: feat
 

@@ -1,31 +1,31 @@
 _id: pVJhodGnj550G0Hq
-name: Resilience of the Faithful
-type: feat
+_key: '!items!pVJhodGnj550G0Hq'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Resilience of the Faithful
 system:
-  description:
-    value: >-
-      <p>At 5th level, you gain a +2 resistance bonus on all saving throws. This
-      bonus increases by 1 for every 5 levels you possess beyond 5th.</p>
+  abilityType: su
   actions:
     - _id: agopmncftz8yipfg
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: 150bn2je
-      formula: 1 + floor(@classes.psychic.level / 5)
-      subTarget: allSavingThrows
-      modifier: resist
-      priority: '0'
-  tag: classFeat_resilienceOfTheFaithful
-  subType: classFeat
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
   associations:
     classes:
       - Psychic
-  abilityType: su
-_key: '!items!pVJhodGnj550G0Hq'
+  changes:
+    - _id: 150bn2je
+      formula: 1 + floor(@classes.psychic.level / 5)
+      modifier: resist
+      priority: '0'
+      subTarget: allSavingThrows
+  description:
+    value: >-
+      <p>At 5th level, you gain a +2 resistance bonus on all saving throws. This
+      bonus increases by 1 for every 5 levels you possess beyond 5th.</p>
+  subType: classFeat
+  tag: classFeat_resilienceOfTheFaithful
+type: feat
 

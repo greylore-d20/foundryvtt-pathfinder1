@@ -1,60 +1,60 @@
 _id: VSY713AzcxKiAp42
-name: Cutlass
-type: weapon
+_key: '!items!VSY713AzcxKiAp42'
 img: systems/pf1/icons/items/weapons/cutlass.PNG
+name: Cutlass
 system:
+  actions:
+    - _id: riic4ilqggi56rv4
+      ability:
+        attack: str
+        critRange: 18
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/cutlass.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Cutlass
+    - Scimitar
   description:
     value: >-
       <p>This short, curved sword is favored by seafarers for closequarters
       combat. It is treated as a scimitar for any effects that apply to
       scimitars.</p>
-  weight:
-    value: 4
-  price: 15
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: riic4ilqggi56rv4
-      name: Attack
-      img: systems/pf1/icons/items/weapons/cutlass.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 18
-  baseTypes:
-    - Cutlass
-    - Scimitar
-  weaponGroups:
-    value:
-      - bladesHeavy
-  subType: martial
-  weaponSubtype: 1h
+  price: 15
   source:
     id: PZO9481
     pages: '8'
-_key: '!items!VSY713AzcxKiAp42'
+  subType: martial
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 1h
+  weight:
+    value: 4
+type: weapon
 

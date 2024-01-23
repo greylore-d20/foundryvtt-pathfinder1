@@ -1,16 +1,11 @@
 _id: 27o3msobhyghmfid
-name: Minor Image
-type: spell
+_key: '!items!27o3msobhyghmfid'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Minor Image
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>silent image</i>, except that <i>minor
-      image</i> includes some minor sounds but not understandable speech.</p>
   actions:
     - _id: t31akitj73drn88t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,36 +13,41 @@ system:
           type: action
       duration:
         value: concentration + 2 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: long
-      actionType: spellsave
       save:
-        type: will
         description: Will disbelief (if interacted with)
+        type: will
       spellEffect: >-
         visual figment that cannot extend beyond four 10-ft. cubes + one 10-ft.
         cube/level (S)
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>silent image</i>, except that <i>minor
+      image</i> includes some minor sounds but not understandable speech.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
       magus: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
     subDomain:
       Imagination: 2
   level: 2
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a bit of fleece
+  school: ill
   sr: false
-_key: '!items!27o3msobhyghmfid'
+  subschool: figment
+type: spell
 

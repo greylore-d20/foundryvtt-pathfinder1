@@ -1,8 +1,30 @@
 _id: 3ixriz492d5rgi4t
-name: Litany of Righteousness
-type: spell
+_key: '!items!3ixriz492d5rgi4t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Righteousness
 system:
+  actions:
+    - _id: 63rbfqhcx2y2h4ar
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Calling down a litany of anathema, you make an evil more susceptible to
@@ -15,34 +37,12 @@ system:
       and the spell is wasted.  While subject to this spell, the target cannot
       be the target of another spell that has the word "litany" in the
       title.</p>
-  actions:
-    - _id: 63rbfqhcx2y2h4ar
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      paladin: 2
       inquisitor: 3
+      paladin: 2
   level: 2
   school: evo
   types: good, language-dependent
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!3ixriz492d5rgi4t'
+type: spell
 

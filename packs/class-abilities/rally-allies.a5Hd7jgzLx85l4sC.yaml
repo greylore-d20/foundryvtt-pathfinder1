@@ -1,8 +1,28 @@
 _id: a5Hd7jgzLx85l4sC
-name: Rally Allies
-type: feat
+_key: '!items!a5Hd7jgzLx85l4sC'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Rally Allies
 system:
+  abilityType: ex
+  actions:
+    - _id: 84c30qntmy8wb81j
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, an order of the eel cavalier inspires diverse groups of
@@ -14,30 +34,10 @@ system:
       the cavalier’s Charisma modifier (minimum +1). This bonus lasts for 1
       round. The cavalier can use this ability once per day, plus one additional
       time per day at 12th level and every 4 levels thereafter.</p>
-  actions:
-    - _id: 84c30qntmy8wb81j
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: allies within range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cavalier.level - 4) / 4)
-  tag: classFeat_rallyAllies
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!a5Hd7jgzLx85l4sC'
+  tag: classFeat_rallyAllies
+  uses:
+    maxFormula: floor((@classes.cavalier.level - 4) / 4)
+    per: day
+type: feat
 

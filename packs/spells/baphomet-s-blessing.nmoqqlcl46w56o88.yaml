@@ -1,8 +1,31 @@
 _id: nmoqqlcl46w56o88
-name: Baphomet's Blessing
-type: spell
+_key: '!items!nmoqqlcl46w56o88'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Baphomet's Blessing
 system:
+  actions:
+    - _id: y0mx3g6dtl8sw799
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one living creature
+  components:
+    divineFocus: 2
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You change the target's head into that of a bull. The creature's
@@ -23,45 +46,22 @@ system:
       resist Baphomet's blessing, it also becomes immune to polymorph spells
       (except for this one) for the duration of the spell's effect. Undead,
       incorporeal, or gaseous creatures are immune to Baphomet's blessing.</p>
-  actions:
-    - _id: y0mx3g6dtl8sw799
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      summoner: 4
-      witch: 4
       hunter: 4
+      oracle: 4
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    material: true
-    divineFocus: 2
   materials:
     value: powdered bull's horn
-_key: '!items!nmoqqlcl46w56o88'
+  school: trs
+  subschool: polymorph
+type: spell
 

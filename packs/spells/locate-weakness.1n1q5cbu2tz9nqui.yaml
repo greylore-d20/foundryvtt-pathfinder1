@@ -1,18 +1,10 @@
 _id: 1n1q5cbu2tz9nqui
-name: Locate Weakness
-type: spell
+_key: '!items!1n1q5cbu2tz9nqui'
 img: icons/skills/targeting/crosshair-pointed-orange.webp
+name: Locate Weakness
 system:
-  description:
-    value: >-
-      <p>You can sense your foes' weak points, granting you greater damage with
-      critical hits. Whenever you score a critical hit, roll the attack's damage
-      dice (but not extra or precision damage dice) twice and take the highest
-      result.</p>
   actions:
     - _id: sk5a7hinrievz6mq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,31 +12,39 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You can sense your foes' weak points, granting you greater damage with
+      critical hits. Whenever you score a critical hit, roll the attack's damage
+      dice (but not extra or precision damage dice) twice and take the highest
+      result.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      ranger: 2
-      witch: 3
+      bloodrager: 3
+      hunter: 2
       inquisitor: 3
       magus: 3
-      bloodrager: 3
-      psychic: 3
       occultist: 3
-      hunter: 2
+      psychic: 3
+      ranger: 2
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pickled predator's eye
+  school: div
   sr: false
-_key: '!items!1n1q5cbu2tz9nqui'
+type: spell
 

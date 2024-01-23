@@ -1,8 +1,27 @@
 _id: 7kmea4f1sjusdlbl
-name: Storm of Blades
-type: spell
+_key: '!items!7kmea4f1sjusdlbl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Storm of Blades
 system:
+  actions:
+    - _id: eecgevxwy26dkods
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create floating swords of the type used as the material component
@@ -15,38 +34,19 @@ system:
       each attack has the same threat range and critical modifier and deals the
       same damage as a standard sword of the type expended. Swords created by
       this spell disappear after striking (or missing) their targets.</p>
-  actions:
-    - _id: eecgevxwy26dkods
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 3
-      warpriest: 3
-      oracle: 3
       magus: 2
+      oracle: 3
+      sorcerer: 2
+      warpriest: 3
+      wizard: 2
   level: 2
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a sword
+  school: con
   sr: false
-_key: '!items!7kmea4f1sjusdlbl'
+  subschool: creation
+type: spell
 

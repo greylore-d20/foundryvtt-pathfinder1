@@ -1,18 +1,10 @@
 _id: vydncmn87pl83gt1
-name: Rubberskin
-type: spell
+_key: '!items!vydncmn87pl83gt1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rubberskin
 system:
-  description:
-    value: >-
-      <p>Your skin becomes more elastic, distributing crushing damage
-      efficiently. For the duration of the spell, all bludgeoning and falling
-      damage you take is converted into nonlethal damage. This spell has no
-      effect if you're immune to nonlethal damage.</p>
   actions:
     - _id: lvscvujcd5ai9jxj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,23 +12,31 @@ system:
           type: action
       duration:
         value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your skin becomes more elastic, distributing crushing damage
+      efficiently. For the duration of the spell, all bludgeoning and falling
+      damage you take is converted into nonlethal damage. This spell has no
+      effect if you're immune to nonlethal damage.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       alchemist: 4
-      witch: 5
       magus: 4
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of rubber or drop of tar
+  school: trs
   sr: false
-_key: '!items!vydncmn87pl83gt1'
+type: spell
 

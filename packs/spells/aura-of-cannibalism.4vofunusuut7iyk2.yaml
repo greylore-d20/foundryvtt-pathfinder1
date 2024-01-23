@@ -1,8 +1,33 @@
 _id: 4vofunusuut7iyk2
-name: Aura of Cannibalism
-type: spell
+_key: '!items!4vofunusuut7iyk2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aura of Cannibalism
 system:
+  actions:
+    - _id: q87bvpqlivqllwxh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation centered on you
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Fortitude negates
+        type: fort
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You emanate an aura that saps the strength of others of your kind and
@@ -16,43 +41,18 @@ system:
       spell is in effect, you gain a +1 competence bonus on attack rolls, saving
       throws, and skill checks. If you have 15 or more temporary hit points,
       this competence bonus increases to +2.</p>
-  actions:
-    - _id: q87bvpqlivqllwxh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      area: 20-ft.-radius emanation centered on you
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
       oracle: 3
+      sorcerer: 3
+      warpriest: 3
       witch: 3
+      wizard: 3
   level: 3
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of flesh from another creature of your species
-_key: '!items!4vofunusuut7iyk2'
+  school: nec
+  types: evil
+type: spell
 

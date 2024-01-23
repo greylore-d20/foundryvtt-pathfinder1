@@ -1,7 +1,35 @@
-name: Infuse Effigy
-type: spell
+_id: eG2mnEewRlbJrzFA
+_key: '!items!eG2mnEewRlbJrzFA'
 img: icons/magic/control/voodoo-doll-pain-damage-purple.webp
+name: Infuse Effigy
 system:
+  actions:
+    - _id: 5WwpelQNcByOKtbf
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: Permanent until discharged (D)
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/control/voodoo-doll-pain-damage-purple.webp
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: touched effigy
+      touch: true
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell infuses an effigy with a powerful curse that targets a
@@ -66,29 +94,6 @@ system:
       takes a –6 penalty on all saving throws against fire effects. Unless it
       has the Fire subtype, the victim loses any racial resistance or immunity
       to fire.</p>
-  actions:
-    - _id: 5WwpelQNcByOKtbf
-      name: Use
-      img: icons/magic/control/voodoo-doll-pain-damage-purple.webp
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: Permanent until discharged (D)
-      target:
-        value: touched effigy
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      save:
-        type: will
-        description: Will partial
-      touch: true
   learnedAt:
     class:
       arcanist: 4
@@ -100,14 +105,9 @@ system:
       warpriest: 4
       wizard: 4
   level: 4
-  school: nec
-  types: curse
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: effigy to be imbued
-_id: eG2mnEewRlbJrzFA
-_key: '!items!eG2mnEewRlbJrzFA'
+  school: nec
+  types: curse
+type: spell
 

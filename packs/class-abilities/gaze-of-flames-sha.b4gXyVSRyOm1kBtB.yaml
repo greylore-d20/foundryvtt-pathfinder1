@@ -1,7 +1,26 @@
-name: Gaze of Flames (SHA)
-type: feat
+_id: b4gXyVSRyOm1kBtB
+_key: '!items!b4gXyVSRyOm1kBtB'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Gaze of Flames (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: H2D6WJPE4rvxhOGi
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Clairvoyance
+      range:
+        units: personal
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman sees through fire, fog, and smoke without penalty as long as
@@ -11,34 +30,15 @@ system:
       @UUID[Compendium.pf1.spells.6kmkxepwgsbta6ui]{clairvoyance}. The shaman
       can use this ability a number of rounds per day equal to her shaman level,
       but these rounds do not need to be consecutive.</p>
-  tags:
-    - Flame Spirit
-    - Shaman Spirit Hex
-  actions:
-    - _id: H2D6WJPE4rvxhOGi
-      name: Clairvoyance
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.shaman.level'
-  subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
   source:
     id: PZO1129
     pages: '39'
-_id: b4gXyVSRyOm1kBtB
-_key: '!items!b4gXyVSRyOm1kBtB'
+  subType: classFeat
+  tags:
+    - Flame Spirit
+    - Shaman Spirit Hex
+  uses:
+    maxFormula: '@classes.shaman.level'
+    per: day
+type: feat
 

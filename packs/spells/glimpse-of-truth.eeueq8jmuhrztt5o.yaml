@@ -1,16 +1,11 @@
 _id: eeueq8jmuhrztt5o
-name: Glimpse of Truth
-type: spell
+_key: '!items!eeueq8jmuhrztt5o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Glimpse of Truth
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>true seeing</i>, except as noted
-      above.</p>
   actions:
     - _id: ujwiz33wc3nzhwrs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,43 +13,48 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>true seeing</i>, except as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 5
       alchemist: 5
-      witch: 5
+      cleric: 4
+      druid: 5
+      hunter: 5
       inquisitor: 4
       magus: 5
-      shaman: 4
-      psychic: 4
       medium: 3
       occultist: 4
+      oracle: 4
+      psychic: 4
+      shaman: 4
+      sorcerer: 5
       spiritualist: 5
-      hunter: 5
+      warpriest: 4
+      witch: 5
+      wizard: 5
   level: 5
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a tourmaline costing 50 gp
     gpValue: 50
+    value: a tourmaline costing 50 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!eeueq8jmuhrztt5o'
+  school: div
+type: spell
 

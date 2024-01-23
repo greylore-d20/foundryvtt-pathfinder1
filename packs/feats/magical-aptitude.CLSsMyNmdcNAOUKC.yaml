@@ -1,27 +1,27 @@
 _id: CLSsMyNmdcNAOUKC
-name: Magical Aptitude
-type: feat
+_key: '!items!CLSsMyNmdcNAOUKC'
 img: systems/pf1/icons/feats/magical-aptitude.jpg
+name: Magical Aptitude
 system:
+  changes:
+    - _id: eo8ln916
+      formula: '@skills.spl.rank >= 10 ? 4 : 2'
+      modifier: untyped
+      priority: null
+      subTarget: skill.spl
+    - _id: 6inqws2o
+      formula: '@skills.umd.rank >= 10 ? 4 : 2'
+      modifier: untyped
+      priority: null
+      subTarget: skill.umd
   description:
     value: >-
       <em>You are skilled at spellcasting and using magic
       items.</em><p><strong>Benefits</strong>: You get a +2 bonus on all
       Spellcraft checks and Use Magic Device checks. If you have 10 or more
       ranks in one of these skills, the bonus increases to +4 for that skill.
+  tag: feat_magicalAptitude
   tags:
     - General
-  changes:
-    - _id: eo8ln916
-      formula: '@skills.spl.rank >= 10 ? 4 : 2'
-      subTarget: skill.spl
-      modifier: untyped
-      priority: null
-    - _id: 6inqws2o
-      formula: '@skills.umd.rank >= 10 ? 4 : 2'
-      subTarget: skill.umd
-      modifier: untyped
-      priority: null
-  tag: feat_magicalAptitude
-_key: '!items!CLSsMyNmdcNAOUKC'
+type: feat
 

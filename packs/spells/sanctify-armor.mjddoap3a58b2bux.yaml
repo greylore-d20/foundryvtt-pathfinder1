@@ -1,19 +1,11 @@
 _id: mjddoap3a58b2bux
-name: Sanctify Armor
-type: spell
+_key: '!items!mjddoap3a58b2bux'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sanctify Armor
 system:
-  description:
-    value: >-
-      <p>You imbue your armor with a righteous aura. It gains a +1 enhancement
-      bonus per four caster levels (maximum +5 at 20th level). When using your
-      judgment or smite ability, you gain DR 5/evil.</p><p>An outfit of regular
-      clothing counts as armor that grants no AC bonus for the purpose of this
-      spell.</p>
   actions:
     - _id: 6gdebhy1tupuphd1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,27 +13,35 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: armor touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: armor touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You imbue your armor with a righteous aura. It gains a +1 enhancement
+      bonus per four caster levels (maximum +5 at 20th level). When using your
+      judgment or smite ability, you gain DR 5/evil.</p><p>An outfit of regular
+      clothing counts as armor that grants no AC bonus for the purpose of this
+      spell.</p>
   learnedAt:
     class:
-      paladin: 3
       inquisitor: 4
+      paladin: 3
   level: 3
   school: abj
-  types: good
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1115
     pages: '240'
-_key: '!items!mjddoap3a58b2bux'
+  types: good
+type: spell
 

@@ -1,8 +1,20 @@
 _id: Ov9kuT1OGqORvolI
-name: Arrest the Flow
-type: feat
+_key: '!items!Ov9kuT1OGqORvolI'
 img: systems/pf1/icons/spells/air-burst-jade-3.jpg
+name: Arrest the Flow
 system:
+  abilityType: su
+  actions:
+    - _id: ulxzl7qzksn03ybq
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/air-burst-jade-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, once per day as an <em>immediate action</em>, you can
@@ -20,22 +32,10 @@ system:
       effect affecting you until the end of your next turn; this does not extend
       the duration for any other creatures under the effect. At 19th level, you
       can use this ability twice per day.</p>
-  actions:
-    - _id: ulxzl7qzksn03ybq
-      name: Use
-      img: systems/pf1/icons/spells/air-burst-jade-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level >= 19 ? 2 : 1'
-  tag: classFeat_arrestTheFlow
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!Ov9kuT1OGqORvolI'
+  tag: classFeat_arrestTheFlow
+  uses:
+    maxFormula: '@classes.sorcerer.level >= 19 ? 2 : 1'
+    per: day
+type: feat
 

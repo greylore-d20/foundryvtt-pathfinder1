@@ -1,8 +1,27 @@
 _id: El24YaVufGrhydmQ
-name: Absence of Form
-type: feat
+_key: '!items!El24YaVufGrhydmQ'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Absence of Form
 system:
+  abilityType: sp
+  actions:
+    - _id: 3jfs6yc77cblixhu
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: close
+      target:
+        value: one medium or smaller freefalling object or creature/level
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You gain @Compendium[pf1.spells.68m9du7zw2di7ew6]{Feather Fall} as a
@@ -14,29 +33,10 @@ system:
 
       <p>At 10th level, you can also apply your daily rounds of this ability to
       use @Compendium[pf1.spells.e4v1uv8hexeu9sxj]{Air Walk}.</p>
-  actions:
-    - _id: 3jfs6yc77cblixhu
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one medium or smaller freefalling object or creature/level
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_absenceOfForm
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!El24YaVufGrhydmQ'
+  tag: classFeat_absenceOfForm
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

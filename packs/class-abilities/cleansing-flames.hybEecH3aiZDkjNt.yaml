@@ -1,8 +1,26 @@
 _id: hybEecH3aiZDkjNt
-name: Cleansing Flames
-type: feat
+_key: '!items!hybEecH3aiZDkjNt'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Cleansing Flames
 system:
+  abilityType: su
+  actions:
+    - _id: ivb0ce7pltt7x20c
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you can take 1d4 points of damage per oracle level
@@ -12,30 +30,12 @@ system:
 
       <p>At 7th and 15th levels, you can use this ability one additional time
       per day.</p>
-  actions:
-    - _id: ivb0ce7pltt7x20c
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
+  subType: classFeat
+  tag: classFeat_cleansingFlames
   uses:
-    per: day
     maxFormula: >-
       @classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level < 15 &&
       @classes.oracle.level > 6) ? 2 : 1)
-  tag: classFeat_cleansingFlames
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!hybEecH3aiZDkjNt'
+    per: day
+type: feat
 

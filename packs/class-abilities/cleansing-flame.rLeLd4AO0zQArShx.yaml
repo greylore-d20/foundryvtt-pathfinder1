@@ -1,8 +1,35 @@
 _id: rLeLd4AO0zQArShx
-name: Cleansing Flame
-type: feat
+_key: '!items!rLeLd4AO0zQArShx'
 img: systems/pf1/icons/spells/explosion-orange-2.jpg
+name: Cleansing Flame
 system:
+  abilityType: su
+  actions:
+    - _id: x84z9moookpa37m9
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 2d8 + @attributes.hd.total
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/explosion-orange-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, twice per day, you can use fire to restore the health of
@@ -14,37 +41,10 @@ system:
       <em>deafened</em>, diseased, <em>exhausted</em>, <em>fatigued</em>,
       <em>nauseated</em>, poisoned, or <em>sickened</em>. At 20th level, you can
       use this ability three times per day.</p>
-  actions:
-    - _id: x84z9moookpa37m9
-      name: Use
-      img: systems/pf1/icons/spells/explosion-orange-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      damage:
-        parts:
-          - formula: 2d8 + @attributes.hd.total
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level >= 20 ? 3 : 2'
-  tag: classFeat_cleansingFlame
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!rLeLd4AO0zQArShx'
+  tag: classFeat_cleansingFlame
+  uses:
+    maxFormula: '@classes.sorcerer.level >= 20 ? 3 : 2'
+    per: day
+type: feat
 

@@ -1,8 +1,27 @@
 _id: vaykjptpxxuy5ca6
-name: Questing Stone
-type: spell
+_key: '!items!vaykjptpxxuy5ca6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Questing Stone
 system:
+  actions:
+    - _id: l40rbfzlu1yjrria
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one ioun stone touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>arcane eye</i>, except that it uses an
@@ -14,32 +33,13 @@ system:
       has AC 24, 10 hp, hardness 5, fly speed 30 (perfect), and a +16 Stealth
       bonus. The stone does not provide you with its normal benefits while you
       are using it as a scrying sensor.</p>
-  actions:
-    - _id: l40rbfzlu1yjrria
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one ioun stone touched
-      range:
-        units: touch
   learnedAt:
     class:
+      bard: 4
       sorcerer: 4
       wizard: 4
-      bard: 4
   level: 4
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!vaykjptpxxuy5ca6'
+type: spell
 

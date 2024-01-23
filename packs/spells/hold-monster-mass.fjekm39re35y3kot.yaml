@@ -1,17 +1,11 @@
 _id: fjekm39re35y3kot
-name: Hold Monster, Mass
-type: spell
+_key: '!items!fjekm39re35y3kot'
 img: icons/magic/control/silhouette-hold-beam-blue.webp
+name: Hold Monster, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>hold person,</i> except that it affects
-      multiple creatures and holds any living creature that fails its Will
-      save.</p>
   actions:
     - _id: sshy2on5f8ujrfh5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,35 +13,41 @@ system:
           type: action
       duration:
         value: 1 round/level; see text
-      target:
-        value: one or more creatures, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates; see text
+        type: will
+      target:
+        value: one or more creatures, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>hold person,</i> except that it affects
+      multiple creatures and holds any living creature that fails its Will
+      save.</p>
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
-      witch: 9
       psychic: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
     subDomain:
       Legislation: 9
   level: 9
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: one hard metal bar or rod, which can be as small as a three-penny nail
+  school: enc
   source:
     id: PZO1110
     pages: '296'
-_key: '!items!fjekm39re35y3kot'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

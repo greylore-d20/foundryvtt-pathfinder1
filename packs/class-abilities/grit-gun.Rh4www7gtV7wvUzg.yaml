@@ -1,8 +1,20 @@
 _id: Rh4www7gtV7wvUzg
-name: Grit (GUN)
-type: feat
+_key: '!items!Rh4www7gtV7wvUzg'
 img: systems/pf1/icons/skills/weapon_36.jpg
+name: Grit (GUN)
 system:
+  abilityType: ex
+  actions:
+    - _id: 1ipa2tg1vdrnbu4x
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/weapon_36.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>A gunslinger makes her mark upon the world with daring deeds. Some
@@ -27,22 +39,10 @@ system:
       fewer hit points, or reducing a creature that has fewer Hit Dice than half
       the gunslinger's character level to 0 or fewer hit points does not restore
       any grit.</p>
-  actions:
-    - _id: 1ipa2tg1vdrnbu4x
-      name: Use
-      img: systems/pf1/icons/skills/weapon_36.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: '@abilities.wis.mod'
-  tag: classFeat_gritGun
   subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!Rh4www7gtV7wvUzg'
+  tag: classFeat_gritGun
+  uses:
+    maxFormula: '@abilities.wis.mod'
+    per: day
+type: feat
 

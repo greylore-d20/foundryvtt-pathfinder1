@@ -1,8 +1,30 @@
 _id: s7o5skukxrg2yvh7
-name: Alleviate Corruption
-type: spell
+_key: '!items!s7o5skukxrg2yvh7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Alleviate Corruption
 system:
+  actions:
+    - _id: fuh31t947uiq5iyw
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature other than yourself
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You combat the rising corruption (see page 14) in another creature or
@@ -34,38 +56,16 @@ system:
       succumbed to a corruption (failed three saving throws against it). A
       creature can be the beneficiary of this spell only once per week, whether
       it succeeds or not.</p>
-  actions:
-    - _id: fuh31t947uiq5iyw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one creature other than yourself
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
       oracle: 6
-      witch: 6
-      shaman: 6
       psychic: 6
+      shaman: 6
       spiritualist: 6
+      warpriest: 6
+      witch: 6
   level: 6
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!s7o5skukxrg2yvh7'
+type: spell
 

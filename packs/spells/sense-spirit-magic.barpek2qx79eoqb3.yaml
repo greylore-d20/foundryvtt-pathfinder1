@@ -1,8 +1,26 @@
 _id: barpek2qx79eoqb3
-name: Sense Spirit Magic
-type: spell
+_key: '!items!barpek2qx79eoqb3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sense Spirit Magic
 system:
+  actions:
+    - _id: khml624f9ebul6d8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain greater sensitivity to magic associated with your primary
@@ -13,28 +31,10 @@ system:
       area, and a +2 circumstance bonus on saving throws to resist the effects
       of such spells. If any of these spells require an attack roll, you are
       never considered flat-footed against such attacks.</p>
-  actions:
-    - _id: khml624f9ebul6d8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       shaman: 1
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!barpek2qx79eoqb3'
+type: spell
 

@@ -1,8 +1,20 @@
 _id: nhPZuu8E0QHjb9RK
-name: Slinger's Luck
-type: feat
+_key: '!items!nhPZuu8E0QHjb9RK'
 img: systems/pf1/icons/skills/yellow_01.jpg
+name: Slinger's Luck
 system:
+  abilityType: ex
+  actions:
+    - _id: dVeM4kRvkxthZuOU
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/skills/yellow_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 15th level, the gunslinger can spend grit to reroll a saving throw
@@ -11,21 +23,9 @@ system:
       the second roll, even if it is lower. The deed’s cost cannot be reduced by
       the true grit class ability, the Signature Deed feat, or any other effect
       that reduces the amount of grit a deed costs.</p>
+  subType: classFeat
+  tag: classFeat_slingersLuck
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: dVeM4kRvkxthZuOU
-      name: Use
-      img: systems/pf1/icons/skills/yellow_01.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-  tag: classFeat_slingersLuck
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!nhPZuu8E0QHjb9RK'
+type: feat
 

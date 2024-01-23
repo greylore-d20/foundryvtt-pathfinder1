@@ -1,8 +1,22 @@
 _id: bpuEOM70Dt5UfNIP
-name: Energized (Air, Fire)
-type: feat
+_key: '!items!bpuEOM70Dt5UfNIP'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Energized (Air, Fire)
 system:
+  changes:
+    - _id: ngx1ca79
+      formula: '3'
+      modifier: untyped
+      subTarget: nac
+    - _id: wmkvmgz8
+      formula: '@attributes.hd.total > 9 ? 4 : 2'
+      modifier: untyped
+      subTarget: str
+    - _id: 292idjdh
+      formula: '@attributes.hd.total > 9 ? 8 : 4'
+      modifier: untyped
+      subTarget: dex
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -155,20 +169,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: ngx1ca79
-      formula: '3'
-      subTarget: nac
-      modifier: untyped
-    - _id: wmkvmgz8
-      formula: '@attributes.hd.total > 9 ? 4 : 2'
-      subTarget: str
-      modifier: untyped
-    - _id: 292idjdh
-      formula: '@attributes.hd.total > 9 ? 8 : 4'
-      subTarget: dex
-      modifier: untyped
   subType: template
-  crOffset: '2'
-_key: '!items!bpuEOM70Dt5UfNIP'
+type: feat
 

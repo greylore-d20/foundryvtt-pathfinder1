@@ -1,8 +1,30 @@
 _id: l2eiaxpga1qdgk72
-name: Marks Of Forbiddance
-type: spell
+_key: '!items!l2eiaxpga1qdgk72'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Marks Of Forbiddance
 system:
+  actions:
+    - _id: 9l4qix7a1ge6ujv7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one enemy and one ally
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Marks of Forbiddance</i> magically brand two creatures, preventing
@@ -15,33 +37,11 @@ system:
       fails, the target can't follow through with the attack and the action is
       lost. This spell does not prevent the targets from attacking each other
       with area of effect spells or abilities.</p>
-  actions:
-    - _id: 9l4qix7a1ge6ujv7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one enemy and one ally
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
       paladin: 3
   level: 3
   school: abj
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!l2eiaxpga1qdgk72'
+type: spell
 

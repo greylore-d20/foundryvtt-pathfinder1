@@ -1,8 +1,30 @@
 _id: 3bdfw5f15hwcxlth
-name: Reverse Gravity
-type: spell
+_key: '!items!3bdfw5f15hwcxlth'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Reverse Gravity
 system:
+  actions:
+    - _id: qb74x33dr1oedzs4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to one 10-ft. cube/level (S)
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: none; see text
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell reverses gravity in an area, causing unattached objects and
@@ -16,42 +38,20 @@ system:
       hold onto, a creature caught in the area can attempt a Reflex save to
       secure itself when the spell strikes.</p><p>Creatures who can fly or
       levitate can keep themselves from falling.</p>
-  actions:
-    - _id: qb74x33dr1oedzs4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        description: none; see text
-      area: up to one 10-ft. cube/level (S)
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      druid: 8
-      psychic: 7
-    domain:
-      Void: 7
     bloodline:
       Starsoul: 7
+    class:
+      druid: 8
+      psychic: 7
+      sorcerer: 7
+      wizard: 7
+    domain:
+      Void: 7
   level: 7
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: lodestone and iron filings
+  school: trs
   sr: false
-_key: '!items!3bdfw5f15hwcxlth'
+type: spell
 

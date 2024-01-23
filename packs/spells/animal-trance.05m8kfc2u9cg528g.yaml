@@ -1,8 +1,30 @@
 _id: 05m8kfc2u9cg528g
-name: Animal Trance
-type: spell
+_key: '!items!05m8kfc2u9cg528g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Animal Trance
 system:
+  actions:
+    - _id: x1w33ifu2u27p3tf
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: animals or magical beasts with Intelligence 1 or 2
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your swaying motions and music (or singing, or chanting) compel animals
@@ -11,41 +33,19 @@ system:
       determine the total number of HD worth of creatures that you fascinate.
       The closest targets are selected first until no more targets within range
       can be affected.</p>
-  actions:
-    - _id: x1w33ifu2u27p3tf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration
-      target:
-        value: animals or magical beasts with Intelligence 1 or 2
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      druid: 2
-      bard: 2
       adept: 2
-      psychic: 2
-      mesmerist: 2
+      bard: 2
+      druid: 2
       hunter: 2
+      mesmerist: 2
+      psychic: 2
     domain:
       Scalykind: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting, sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!05m8kfc2u9cg528g'
+type: spell
 

@@ -1,8 +1,25 @@
 _id: frdZ5fkuGZhkE9DU
-name: Alter Enhancements
-type: feat
+_key: '!items!frdZ5fkuGZhkE9DU'
 img: systems/pf1/icons/spells/runes-blue-3.jpg
+name: Alter Enhancements
 system:
+  abilityType: su
+  actions:
+    - _id: ukhho0vqra4cwi09
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>An arcanist with this exploit can modify the enhancements placed on a
@@ -18,26 +35,9 @@ system:
 
       <p>The arcanist must have the arcane weapon exploit to select this
       exploit.</p>
+  subType: classFeat
+  tag: classFeat_alterEnhancements
   tags:
     - Arcanist Exploit, Greater
-  actions:
-    - _id: ukhho0vqra4cwi09
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-3.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      target:
-        value: object touched
-      range:
-        units: touch
-  tag: classFeat_alterEnhancements
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!frdZ5fkuGZhkE9DU'
+type: feat
 

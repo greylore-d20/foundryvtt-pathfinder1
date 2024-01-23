@@ -1,8 +1,27 @@
 _id: S3GxXIF7gJG7fqus
-name: Body Snatch
-type: feat
+_key: '!items!S3GxXIF7gJG7fqus'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Body Snatch
 system:
+  abilityType: sp
+  actions:
+    - _id: 0pg5o5r3t16xydg9
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 10th level, once per day as an immediate action upon falling
@@ -15,29 +34,10 @@ system:
       normal unless it is somehow stabilized, and if its hit points drop to a
       negative number equal to your Constitution score, the magic jar effect
       prematurely ends and you die as normal.</p>
-  actions:
-    - _id: 0pg5o5r3t16xydg9
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_bodySnatch
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: sp
-_key: '!items!S3GxXIF7gJG7fqus'
+  tag: classFeat_bodySnatch
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

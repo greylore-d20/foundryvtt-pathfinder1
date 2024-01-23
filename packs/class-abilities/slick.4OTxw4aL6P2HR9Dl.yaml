@@ -1,8 +1,25 @@
 _id: 4OTxw4aL6P2HR9Dl
-name: Slick
-type: feat
+_key: '!items!4OTxw4aL6P2HR9Dl'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: Slick
 system:
+  abilityType: sp
+  actions:
+    - _id: 4dimmj81ewsm5srj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 1;
@@ -14,24 +31,7 @@ system:
 
       <p>You can accept 1 point of burn at the start of your next turn to extend
       the duration to 1 minute per kineticist level you possess.</p>
-  actions:
-    - _id: 4dimmj81ewsm5srj
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_slick
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!4OTxw4aL6P2HR9Dl'
+  tag: classFeat_slick
+type: feat
 

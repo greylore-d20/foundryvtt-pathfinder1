@@ -1,18 +1,11 @@
 _id: iln3tn8o97rw942j
-name: Returning Weapon, Communal
-type: spell
+_key: '!items!iln3tn8o97rw942j'
 img: icons/magic/movement/pinwheel-turning-blue.webp
+name: Returning Weapon, Communal
 system:
-  description:
-    value: >-
-      <p>For the duration of the spell, the target weapon acts as if it had the
-      <i>returning</i> weapon special ability (see page 471 of the <i>Core</i>
-      Rulebook).  This spell can be used as the prerequisite for the
-      <i>returning</i> weapon special ability.</p>
   actions:
     - _id: x649tmqtoouuy9o4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,35 +13,42 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: weapons that can be thrown
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: weapons that can be thrown
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>For the duration of the spell, the target weapon acts as if it had the
+      <i>returning</i> weapon special ability (see page 471 of the <i>Core</i>
+      Rulebook).  This spell can be used as the prerequisite for the
+      <i>returning</i> weapon special ability.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      ranger: 2
       bard: 3
-      witch: 3
+      cleric: 3
+      hunter: 2
       inquisitor: 2
       magus: 2
-      psychic: 3
       occultist: 2
-      hunter: 2
+      oracle: 3
+      psychic: 3
+      ranger: 2
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!iln3tn8o97rw942j'
+type: spell
 

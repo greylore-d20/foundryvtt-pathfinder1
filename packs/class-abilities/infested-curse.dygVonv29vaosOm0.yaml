@@ -1,8 +1,16 @@
 _id: dygVonv29vaosOm0
-name: Infested Curse
-type: feat
+_key: '!items!dygVonv29vaosOm0'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Infested Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 3oazjzuy
+      formula: '-4'
+      modifier: penalty
+      subTarget: skill.dip
   description:
     value: >-
       <p>Insects, spiders, grubs, and other vermin plague you constantly. They
@@ -25,15 +33,7 @@ system:
 
       <p>At 17th level, you become immune to the swarm damage and the
       distraction ability of insect, scorpion, and spider swarms.</p>
-  changes:
-    - _id: 3oazjzuy
-      formula: '-4'
-      subTarget: skill.dip
-      modifier: penalty
-  tag: classFeat_infestedCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!dygVonv29vaosOm0'
+  tag: classFeat_infestedCurse
+type: feat
 

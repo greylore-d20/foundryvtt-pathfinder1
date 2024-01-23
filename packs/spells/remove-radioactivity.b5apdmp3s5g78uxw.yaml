@@ -1,8 +1,30 @@
 _id: b5apdmp3s5g78uxw
-name: Remove Radioactivity
-type: spell
+_key: '!items!b5apdmp3s5g78uxw'
 img: icons/magic/life/heart-hand-gold-green.webp
+name: Remove Radioactivity
 system:
+  actions:
+    - _id: 79fsqb266i56mzit
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: creature or object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You remove all ongoing radiation effects, both primary and secondary,
@@ -15,42 +37,20 @@ system:
       20-foot-radius area around the point you touch. This spell has no power to
       negate naturally radioactive materials, and as long as such materials
       remain in an area, the radiation that was removed may return.</p>
-  actions:
-    - _id: 79fsqb266i56mzit
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature or object touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
-      ranger: 4
       bard: 4
-      paladin: 4
-      witch: 4
-      inquisitor: 4
+      cleric: 4
+      druid: 4
       hunter: 4
+      inquisitor: 4
+      oracle: 4
+      paladin: 4
+      ranger: 4
+      warpriest: 4
+      witch: 4
   level: 4
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!b5apdmp3s5g78uxw'
+type: spell
 

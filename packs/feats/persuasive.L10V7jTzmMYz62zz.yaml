@@ -1,28 +1,28 @@
 _id: L10V7jTzmMYz62zz
-name: Persuasive
-type: feat
+_key: '!items!L10V7jTzmMYz62zz'
 img: systems/pf1/icons/feats/persuasive.jpg
+name: Persuasive
 system:
+  changes:
+    - _id: dxpiteim
+      formula: '@skills.dip.rank>=10?4:2'
+      modifier: untyped
+      priority: null
+      subTarget: skill.dip
+    - _id: phdvf0la
+      formula: '@skills.int.rank>=10?4:2'
+      modifier: untyped
+      priority: null
+      subTarget: skill.int
   description:
     value: >-
       <i>You are skilled at swaying attitudes and intimidating others into your
       way of thinking.</i><p><strong>Benefits</strong>: You get a +2 bonus on
       Diplomacy and Intimidate skill checks. If you have 10 or more ranks in one
       of these skills, the bonus increases to +4 for that skill.</p>
+  tag: feat_persuasive
   tags:
     - General
     - Skill
-  changes:
-    - _id: dxpiteim
-      formula: '@skills.dip.rank>=10?4:2'
-      subTarget: skill.dip
-      modifier: untyped
-      priority: null
-    - _id: phdvf0la
-      formula: '@skills.int.rank>=10?4:2'
-      subTarget: skill.int
-      modifier: untyped
-      priority: null
-  tag: feat_persuasive
-_key: '!items!L10V7jTzmMYz62zz'
+type: feat
 

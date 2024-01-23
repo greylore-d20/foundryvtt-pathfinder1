@@ -1,8 +1,30 @@
 _id: z4akz3xfwos1ll83
-name: Euphoric Cloud
-type: spell
+_key: '!items!z4akz3xfwos1ll83'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Euphoric Cloud
 system:
+  actions:
+    - _id: nkm4kwy22lr78fk5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates (see text)
+        type: fort
+      spellEffect: fog spreads in 20-ft. radius, 20 ft. high
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a bank of fog similar to that created by <i>fog cloud</i>
@@ -11,47 +33,25 @@ system:
       for 1d4+1 rounds after it leaves.</p><p>Any creature that succeeds at its
       save but remains in the cloud must continue to save each round on your
       turn.</p>
-  actions:
-    - _id: nkm4kwy22lr78fk5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (see text)
-      spellEffect: fog spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      witch: 2
-      magus: 2
-      psychic: 2
-      mesmerist: 2
       hunter: 2
+      magus: 2
+      mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: creation
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: rare mushrooms worth 5 gp
     gpValue: 5
+    value: rare mushrooms worth 5 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!z4akz3xfwos1ll83'
+  subschool: creation
+  types: poison
+type: spell
 

@@ -1,61 +1,61 @@
 _id: 62WMCpS2zAVnC5ny
-name: Thorn Bow
-type: weapon
+_key: '!items!62WMCpS2zAVnC5ny'
 img: systems/pf1/icons/items/weapons/thorn-bow.PNG
+name: Thorn Bow
 system:
-  description:
-    value: >-
-      <p>This polished rosewood bow is studded with thorns and tiny flowers;
-      treat it as a shortbow.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 50
-  hp:
-    max: 5
-    value: 5
-  hardness: 5
   actions:
     - _id: f0phcyfanf9szgng
-      name: Attack
-      img: systems/pf1/icons/items/weapons/thorn-bow.PNG
+      ability:
+        attack: dex
+        critMult: 3
+        critRange: null
+      actionType: rwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '40'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size) + min(@abilities.str.mod, 0)[Strength]
             type:
+              custom: ''
               values:
                 - piercing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         label: ''
-      ability:
-        attack: dex
-        critRange: null
-        critMult: 3
+      img: systems/pf1/icons/items/weapons/thorn-bow.PNG
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '40'
+  ammo:
+    type: arrow
   baseTypes:
     - Shortbow
-  subType: exotic
-  weaponSubtype: ranged
+  description:
+    value: >-
+      <p>This polished rosewood bow is studded with thorns and tiny flowers;
+      treat it as a shortbow.</p>
+  hardness: 5
+  hp:
+    max: 5
+    value: 5
+  price: 50
   source:
     id: PZO9410
     pages: '18'
-  ammo:
-    type: arrow
-_key: '!items!62WMCpS2zAVnC5ny'
+  subType: exotic
+  tags:
+    - PFS
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
 

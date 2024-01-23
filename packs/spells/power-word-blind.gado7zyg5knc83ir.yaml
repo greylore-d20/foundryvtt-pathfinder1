@@ -1,8 +1,25 @@
 _id: gado7zyg5knc83ir
-name: Power Word Blind
-type: spell
+_key: '!items!gado7zyg5knc83ir'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Power Word Blind
 system:
+  actions:
+    - _id: gf4gipbgu1le9q20
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature with 200 hp or less
+  components:
+    verbal: true
   description:
     value: >-
       <p>You utter a single word of power that causes a creature to become
@@ -14,42 +31,25 @@ system:
       less</td><td>Permanent</td></tr><tr><td>51-100</td><td>1d4+1
       minutes</td></tr><tr><td>101-200</td><td>1d4+1
       rounds</td></tr></tbody></table>
-  actions:
-    - _id: gf4gipbgu1le9q20
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one creature with 200 hp or less
-      range:
-        units: close
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      witch: 7
-      psychic: 7
-      mesmerist: 6
-    domain:
-      Darkness: 7
-      War: 7
     bloodline:
       Maestro: 7
       Shadow: 7
+    class:
+      mesmerist: 6
+      psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
+    domain:
+      Darkness: 7
+      War: 7
   level: 7
   school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '324'
-_key: '!items!gado7zyg5knc83ir'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

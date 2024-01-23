@@ -1,8 +1,28 @@
 _id: 6kmkxepwgsbta6ui
-name: Clairaudience/Clairvoyance
-type: spell
+_key: '!items!6kmkxepwgsbta6ui'
 img: icons/magic/perception/third-eye-blue-red.webp
+name: Clairaudience/Clairvoyance
 system:
+  actions:
+    - _id: hqmuqba9l87dkquu
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: magical sensor
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Clairaudience/clairvoyance</i> creates an invisible magical sensor
@@ -17,43 +37,23 @@ system:
       see in a 10-foot radius around the center of the spell's effect.
       <i>Clairaudience/clairvoyance</i> functions only on the plane of existence
       you are currently occupying.</p>
-  actions:
-    - _id: hqmuqba9l87dkquu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 min./level
-      range:
-        units: long
-      spellEffect: magical sensor
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      witch: 3
-      shaman: 3
-      psychic: 3
       medium: 2
       mesmerist: 3
       occultist: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
       spiritualist: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a small horn or a glass eye
+  school: div
   sr: false
-_key: '!items!6kmkxepwgsbta6ui'
+  subschool: scrying
+type: spell
 

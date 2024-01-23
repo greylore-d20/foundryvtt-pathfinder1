@@ -1,18 +1,11 @@
 _id: 7toeli7vcq5a7tv1
-name: Finger of Death
-type: spell
+_key: '!items!7toeli7vcq5a7tv1'
 img: icons/magic/death/hand-undead-skeleton-fire-green.webp
+name: Finger of Death
 system:
-  description:
-    value: >-
-      <p>This spell instantly delivers 10 points of damage per caster level. If
-      the target's Fortitude saving throw succeeds, it instead takes 3d6 points
-      of damage + 1 point per caster level. The subject might die from damage
-      even if it succeeds on its saving throw.</p>
   actions:
     - _id: 9aqorbzsatuk98m4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,30 +13,37 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude partial
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell instantly delivers 10 points of damage per caster level. If
+      the target's Fortitude saving throw succeeds, it instead takes 3d6 points
+      of damage + 1 point per caster level. The subject might die from damage
+      even if it succeeds on its saving throw.</p>
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      druid: 8
-      psychic: 7
     bloodline:
       Undead: 7
+    class:
+      druid: 8
+      psychic: 7
+      sorcerer: 7
+      wizard: 7
   level: 7
   school: nec
-  types: death
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '282'
-_key: '!items!7toeli7vcq5a7tv1'
+  types: death
+type: spell
 

@@ -1,7 +1,42 @@
-name: Pinecone Bomb
-type: spell
+_id: wRfDdRQGKnZm3nzg
+_key: '!items!wRfDdRQGKnZm3nzg'
 img: icons/magic/acid/projectile-needles-salvo-green.webp
+name: Pinecone Bomb
 system:
+  actions:
+    - _id: VsN109AYcQMf6KkU
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius spread
+      damage:
+        parts:
+          - formula: min(5, (floor(@cl / 2)))d6
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        value: instantaneous
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/acid/projectile-needles-salvo-green.webp
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex half
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Created by Ghorus when he was working to create the ghorans,
@@ -10,36 +45,6 @@ system:
       target or point within range and it detonates immediately upon landing,
       dealing 1d6 points of piercing damage per 2 caster levels you have
       (maximum 5d6) to each creature caught in the spread.</p>
-  actions:
-    - _id: VsN109AYcQMf6KkU
-      name: Use
-      img: icons/magic/acid/projectile-needles-salvo-green.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: min(5, (floor(@cl / 2)))d6
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      save:
-        type: ref
-        description: Reflex half
-      area: 10-ft.-radius spread
   learnedAt:
     class:
       druid: 2
@@ -48,13 +53,8 @@ system:
       shaman: 2
       witch: 2
   level: 2
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinecone
-_id: wRfDdRQGKnZm3nzg
-_key: '!items!wRfDdRQGKnZm3nzg'
+  school: evo
+type: spell
 

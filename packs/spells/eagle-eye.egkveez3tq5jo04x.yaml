@@ -1,8 +1,25 @@
 _id: egkveez3tq5jo04x
-name: Eagle Eye
-type: spell
+_key: '!items!egkveez3tq5jo04x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Eagle Eye
 system:
+  actions:
+    - _id: xdl3gdi5yrihdvxx
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: magical sensor
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Eagle eye</i> creates a magical sensor directly above you. The
@@ -12,32 +29,15 @@ system:
       normal visual senses. A caster using <i>eagle eye</i> can easily see for a
       considerable distance. The spell does not penetrate any solid surface,
       although it is unaffected by foliage and the like.</p>
-  actions:
-    - _id: xdl3gdi5yrihdvxx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: long
-      spellEffect: magical sensor
   learnedAt:
     class:
       druid: 2
+      hunter: 2
+      psychic: 2
       ranger: 2
       shaman: 2
-      psychic: 2
-      hunter: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!egkveez3tq5jo04x'
+type: spell
 

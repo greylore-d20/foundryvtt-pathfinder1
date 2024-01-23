@@ -1,21 +1,11 @@
 _id: ljuExbNJTbp8Ez83
-name: Life Giver
-type: feat
+_key: '!items!ljuExbNJTbp8Ez83'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Life Giver
 system:
-  description:
-    value: >-
-      <p>Once per day the witch can, as a full round action, touch a dead
-      creature and bring it back to life. This functions as
-      @Compendium[pf1.spells.thh46ghi51lrl3cl]{Resurrection}, but it does not
-      require a material component.</p>
-  tags:
-    - Hex
-    - Grand Hex
+  abilityType: su
   actions:
     - _id: 8pn4ganzjpwh1xgm
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
       activation:
         type: full
         unchained:
@@ -23,16 +13,26 @@ system:
           type: action
       duration:
         units: inst
-      target:
-        value: one dead creature
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
       range:
         units: touch
+      target:
+        value: one dead creature
       touch: true
-  tag: classFeat_lifeGiver
-  subType: classFeat
   associations:
     classes:
       - Witch
-  abilityType: su
-_key: '!items!ljuExbNJTbp8Ez83'
+  description:
+    value: >-
+      <p>Once per day the witch can, as a full round action, touch a dead
+      creature and bring it back to life. This functions as
+      @Compendium[pf1.spells.thh46ghi51lrl3cl]{Resurrection}, but it does not
+      require a material component.</p>
+  subType: classFeat
+  tag: classFeat_lifeGiver
+  tags:
+    - Hex
+    - Grand Hex
+type: feat
 

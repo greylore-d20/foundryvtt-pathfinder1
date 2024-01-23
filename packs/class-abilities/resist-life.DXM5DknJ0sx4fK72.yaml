@@ -1,8 +1,20 @@
 _id: DXM5DknJ0sx4fK72
-name: Resist Life
-type: feat
+_key: '!items!DXM5DknJ0sx4fK72'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Resist Life
 system:
+  abilityType: su
+  actions:
+    - _id: 502t3nij7ziganql
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You are treated as an undead creature when you are targeted by positive
@@ -13,19 +25,7 @@ system:
       <p>At 7th level, you receive channel resistance +2.</p>
 
       <p>This bonus increases by +2 at 11th and 15th level.</p>
-  actions:
-    - _id: 502t3nij7ziganql
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_resistLife
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!DXM5DknJ0sx4fK72'
+  tag: classFeat_resistLife
+type: feat
 

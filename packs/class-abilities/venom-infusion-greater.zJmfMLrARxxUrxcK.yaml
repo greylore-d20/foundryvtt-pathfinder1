@@ -1,8 +1,23 @@
 _id: zJmfMLrARxxUrxcK
-name: Venom Infusion, Greater
-type: feat
+_key: '!items!zJmfMLrARxxUrxcK'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Venom Infusion, Greater
 system:
+  actions:
+    - _id: bwtmscwat2cngtsf
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      save:
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> universal; <b>Type</b> substance infusion; <b>Level</b>
@@ -14,22 +29,7 @@ system:
       href="https://aonprd.com/KineticistTalentsDisplay.aspx?ItemName=Greater%20Toxic%20Infusion">greater
       toxic infusion</a> wild talent, except it affects any creature that takes
       any type of damage from the blast.</p>
-  actions:
-    - _id: bwtmscwat2cngtsf
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_venomInfusionGreater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!zJmfMLrARxxUrxcK'
+  tag: classFeat_venomInfusionGreater
+type: feat
 

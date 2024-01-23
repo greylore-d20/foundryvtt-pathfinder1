@@ -1,8 +1,27 @@
 _id: R1pmF921nxSljdwU
-name: Tree Limb
-type: feat
+_key: '!items!R1pmF921nxSljdwU'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Tree Limb
 system:
+  abilityType: su
+  actions:
+    - _id: bapxz4weidasg7n9
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a swift action, the shaman can turn one of her arms into a heavy,
@@ -18,29 +37,10 @@ system:
 
       <p>A shaman can use this ability a number of times per day equal to 3 +
       her Charisma modifier.</p>
-  actions:
-    - _id: bapxz4weidasg7n9
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_treeLimb
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!R1pmF921nxSljdwU'
+  tag: classFeat_treeLimb
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

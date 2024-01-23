@@ -1,8 +1,30 @@
 _id: 877df1h3azar7pk5
-name: Battering Blast
-type: spell
+_key: '!items!877df1h3azar7pk5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Battering Blast
 system:
+  actions:
+    - _id: 1sfrwiutv1e4lkjh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex partial (see text)
+        type: ref
+      target:
+        value: one creature or unattended object
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You hurl a fist-sized ball of force resembling a sphere of spikes to
@@ -25,25 +47,6 @@ system:
       spell cannot move creatures or objects beyond your range. Used on a door
       or other obstacle, the spell attempts a Strength check to destroy it if
       the sheer damage inflicted by the spell doesn't do the job.</p>
-  actions:
-    - _id: 1sfrwiutv1e4lkjh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature or unattended object
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial (see text)
   learnedAt:
     class:
       sorcerer: 3
@@ -51,8 +54,5 @@ system:
   level: 3
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!877df1h3azar7pk5'
+type: spell
 

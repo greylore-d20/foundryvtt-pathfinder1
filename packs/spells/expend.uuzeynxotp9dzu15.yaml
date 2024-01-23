@@ -1,8 +1,33 @@
 _id: uuzeynxotp9dzu15
-name: Expend
-type: spell
+_key: '!items!uuzeynxotp9dzu15'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Expend
 system:
+  actions:
+    - _id: 8pmiu1jqd4azw3pm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius burst
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause all creatures in the affected area to use up one or more of
@@ -19,38 +44,13 @@ system:
       making Will saves, expending an additional use of an ability for each
       failed save, until they succeed, at which point the spell has no further
       effect.</p>
-  actions:
-    - _id: 8pmiu1jqd4azw3pm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 20-ft.-radius burst
   learnedAt:
     class:
       sorcerer: 7
       wizard: 7
   level: 7
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: miniature broken hourglass
-_key: '!items!uuzeynxotp9dzu15'
+  school: abj
+type: spell
 

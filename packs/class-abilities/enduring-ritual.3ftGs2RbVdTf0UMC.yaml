@@ -1,8 +1,26 @@
 _id: 3ftGs2RbVdTf0UMC
-name: Enduring Ritual
-type: feat
+_key: '!items!3ftGs2RbVdTf0UMC'
 img: systems/pf1/icons/skills/affliction_02.jpg
+name: Enduring Ritual
 system:
+  abilityType: su
+  actions:
+    - _id: q9ebfh60hoc5dfzz
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/affliction_02.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a swift action when you cast a spell with a duration of at least 1
@@ -15,28 +33,10 @@ system:
 
       <p>This power replaces the Hand of the Acolyte power of the Arcane
       Domain.</p>
-  actions:
-    - _id: q9ebfh60hoc5dfzz
-      name: Use
-      img: systems/pf1/icons/skills/affliction_02.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_enduringRitual
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!3ftGs2RbVdTf0UMC'
+  tag: classFeat_enduringRitual
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

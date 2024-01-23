@@ -1,8 +1,31 @@
 _id: hfca2lb4tlmrzoxm
-name: Firebrand
-type: spell
+_key: '!items!hfca2lb4tlmrzoxm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Firebrand
 system:
+  actions:
+    - _id: maxa2pcfg2ci4001
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates, but see below
+        harmless: true
+        type: will
+      target:
+        value: one creature/4 levels, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You mark several allies with a flaming rune. This rune does not cause
@@ -17,26 +40,6 @@ system:
       6d6 points of fire damage. Once a creature uses its <i>firebrand</i> to
       fire a ray in this manner, the effects of the spell end for that
       creature.</p>
-  actions:
-    - _id: maxa2pcfg2ci4001
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/4 levels, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates, but see below
-        harmless: true
   learnedAt:
     class:
       sorcerer: 7
@@ -44,8 +47,5 @@ system:
   level: 7
   school: trs
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!hfca2lb4tlmrzoxm'
+type: spell
 

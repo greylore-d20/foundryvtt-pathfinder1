@@ -1,16 +1,11 @@
 _id: i6x6fporwng7de5e
-name: Synesthesia, Mass
-type: spell
+_key: '!items!i6x6fporwng7de5e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Synesthesia, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>synesthesia</i>, except as noted
-      above.</p>
   actions:
     - _id: gk4p2q9c3hft3p3o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,26 +13,31 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           one or more living creatures, no two of which can be more than 30 ft.
           apart
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>synesthesia</i>, except as noted
+      above.</p>
   learnedAt:
     class:
-      psychic: 7
       mesmerist: 5
+      psychic: 7
   level: 7
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!i6x6fporwng7de5e'
+type: spell
 

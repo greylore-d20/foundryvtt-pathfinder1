@@ -1,8 +1,16 @@
 _id: 2h3lI574tmVjOalQ
-name: Bonus Feats (WIZ)
-type: feat
+_key: '!items!2h3lI574tmVjOalQ'
 img: systems/pf1/icons/items/inventory/book-tan.jpg
+name: Bonus Feats (WIZ)
 system:
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: 6l06zvcu
+      formula: floor(@classes.wizard.level / 5)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 5th, 10th, 15th, and 20th level, a wizard gains a bonus feat. At
@@ -17,15 +25,7 @@ system:
 
       <p>A wizard may also choose an <em>Arcane Discovery</em> that he qualifies
       for in place of a bonus feat at these levels.</p>
-  changes:
-    - _id: 6l06zvcu
-      formula: floor(@classes.wizard.level / 5)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_bonusFeatsWiz
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-_key: '!items!2h3lI574tmVjOalQ'
+  tag: classFeat_bonusFeatsWiz
+type: feat
 

@@ -1,19 +1,11 @@
 _id: cjdhah1epnn4i6ft
-name: Flash Fire
-type: spell
+_key: '!items!cjdhah1epnn4i6ft'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Flash Fire
 system:
-  description:
-    value: >-
-      <p>The firearm fires with a blinding flash, even if the firearm is not
-      currently loaded. Every creature within 15 feet of the creature carrying
-      the weapon must succeed at a Fortitude save or be blinded for 1d4 rounds.
-      The creature carrying the firearm takes a -4 penalty on this saving throw.
-      If the firearm is loaded, the ammunition is wasted.</p>
   actions:
     - _id: 6xyzc2kyemey6pmd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,26 +13,34 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: 1 firearm
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object); see text
+        type: will
+      target:
+        value: 1 firearm
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The firearm fires with a blinding flash, even if the firearm is not
+      currently loaded. Every creature within 15 feet of the creature carrying
+      the weapon must succeed at a Fortitude save or be blinded for 1d4 rounds.
+      The creature carrying the firearm takes a -4 penalty on this saving throw.
+      If the firearm is loaded, the ammunition is wasted.</p>
   learnedAt:
     class:
       sorcerer: 3
-      wizard: 3
       witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of powdered fool's gold
-_key: '!items!cjdhah1epnn4i6ft'
+  school: trs
+type: spell
 

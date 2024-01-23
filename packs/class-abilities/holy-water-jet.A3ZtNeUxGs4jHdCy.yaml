@@ -1,8 +1,39 @@
 _id: A3ZtNeUxGs4jHdCy
-name: Holy Water Jet
-type: feat
+_key: '!items!A3ZtNeUxGs4jHdCy'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Holy Water Jet
 system:
+  abilityType: su
+  actions:
+    - _id: zn845xlfcuu8kvnk
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.arcanist.level / 2))d8 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: 30-ft. line
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can unleash a jet of holy water by expending 1 point from
@@ -12,40 +43,9 @@ system:
       beyond 1st (to a maximum of 10d8 at 19th level) to each target in the line
       that would normally take damage from holy water. Creatures in the area of
       effect can attempt a Reflex saving throw to halve the damage.</p>
+  subType: classFeat
+  tag: classFeat_holyWaterJet
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: zn845xlfcuu8kvnk
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: 30-ft. line
-      range:
-        value: '30'
-        units: ft
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (ceil(@classes.arcanist.level / 2))d8 + @abilities.cha.mod
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_holyWaterJet
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!A3ZtNeUxGs4jHdCy'
+type: feat
 

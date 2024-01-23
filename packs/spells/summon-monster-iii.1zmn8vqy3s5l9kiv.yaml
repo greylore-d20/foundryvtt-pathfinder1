@@ -1,18 +1,10 @@
 _id: 1zmn8vqy3s5l9kiv
-name: Summon Monster III
-type: spell
+_key: '!items!1zmn8vqy3s5l9kiv'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Summon Monster III
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster I,</i> except that you can
-      summon one creature from the 3rd-level list, 1d3 creatures of the same
-      kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the
-      1st-level list.</p>
   actions:
     - _id: skm7r2zllxaoh3sy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -20,36 +12,44 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster I,</i> except that you can
+      summon one creature from the 3rd-level list, 1d3 creatures of the same
+      kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the
+      1st-level list.</p>
   learnedAt:
-    class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      bard: 3
-      witch: 3
-      antipaladin: 3
-      psychic: 3
-      spiritualist: 3
     bloodline:
       Serpentine: 3
+    class:
+      antipaladin: 3
+      bard: 3
+      cleric: 3
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
+      spiritualist: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a tiny bag and a small candle
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '352'
-_key: '!items!1zmn8vqy3s5l9kiv'
+  sr: false
+  subschool: summoning
+type: spell
 

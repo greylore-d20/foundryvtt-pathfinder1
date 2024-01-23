@@ -1,8 +1,27 @@
 _id: yHpAFKyWWMIJNkyc
-name: Ice Shape
-type: feat
+_key: '!items!yHpAFKyWWMIJNkyc'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Ice Shape
 system:
+  abilityType: su
+  actions:
+    - _id: nunylvxoxoe4xr7s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ice or ice touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You are able to sculpt ice and snow into almost any shape. This ability
@@ -11,29 +30,10 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  actions:
-    - _id: nunylvxoxoe4xr7s
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: ice or ice touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_iceShape
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!yHpAFKyWWMIJNkyc'
+  tag: classFeat_iceShape
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

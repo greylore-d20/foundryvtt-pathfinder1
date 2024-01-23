@@ -1,8 +1,26 @@
 _id: IeX7of9cT8M7c0xy
-name: Binding Darkness
-type: feat
+_key: '!items!IeX7of9cT8M7c0xy'
 img: systems/pf1/icons/spells/rip-water-2.jpg
+name: Binding Darkness
 system:
+  abilityType: sp
+  actions:
+    - _id: 0agxmn3g1w9rfsaj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 1 + floor(@classes.wizard.level / 5)
+      img: systems/pf1/icons/spells/rip-water-2.jpg
+      name: Use
+      range:
+        units: seeText
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a <em>standard action</em>, you cast a weave of shadows at any foe
@@ -15,28 +33,10 @@ system:
       likewise have <em>concealment</em> relative to it. You can use this
       ability a number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: 0agxmn3g1w9rfsaj
-      name: Use
-      img: systems/pf1/icons/spells/rip-water-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 + floor(@classes.wizard.level / 5)
-        units: round
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_bindingDarkness
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!IeX7of9cT8M7c0xy'
+  tag: classFeat_bindingDarkness
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,8 +1,29 @@
 _id: ilp0pudgby1drbtp
-name: Dream Reality
-type: spell
+_key: '!items!ilp0pudgby1drbtp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Reality
 system:
+  actions:
+    - _id: vyk3uqw3ouc0ozdw
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will disbelief
+        type: will
+      target:
+        value: one creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>You cause the target to perceive the world as if in a dream. When the
@@ -13,42 +34,21 @@ system:
       remembers these events. A target under the effect of <i>lullaby</i> before
       this spell is cast applies its penalty to the saving throw against this
       spell.</p>
-  actions:
-    - _id: vyk3uqw3ouc0ozdw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      bard: 5
       alchemist: 5
-      psychic: 6
+      bard: 5
+      cleric: 6
       mesmerist: 5
       occultist: 5
+      oracle: 6
+      psychic: 6
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
   school: ill
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-_key: '!items!ilp0pudgby1drbtp'
+type: spell
 

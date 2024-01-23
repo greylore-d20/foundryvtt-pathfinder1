@@ -1,8 +1,28 @@
 _id: 53xzqcqwd66x85bf
-name: Whispering Lore
-type: spell
+_key: '!items!53xzqcqwd66x85bf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Whispering Lore
 system:
+  actions:
+    - _id: hf1j88lhq9ealqdr
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, you are able to gain knowledge from the land
@@ -18,41 +38,21 @@ system:
       a plane other than the Material Plane, you gain the bonus on Knowledge
       (planes) checks. If you enter a new terrain, you lose the previous
       terrain's skill bonus and gain the new bonus.</p>
-  actions:
-    - _id: hf1j88lhq9ealqdr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 1
-      ranger: 1
-      witch: 1
-      psychic: 1
-      medium: 1
       hunter: 1
+      medium: 1
+      oracle: 2
+      psychic: 1
+      ranger: 1
+      warpriest: 2
+      witch: 1
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: an owl's beak
+  school: div
   sr: false
-_key: '!items!53xzqcqwd66x85bf'
+type: spell
 

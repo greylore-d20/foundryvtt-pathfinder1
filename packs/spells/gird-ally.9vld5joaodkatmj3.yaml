@@ -1,19 +1,10 @@
 _id: 9vld5joaodkatmj3
-name: Gird Ally
-type: spell
+_key: '!items!9vld5joaodkatmj3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gird Ally
 system:
-  description:
-    value: >-
-      <p>You create a magical field around summoned creatures you control that
-      deflects attacks made against them. The targets gain a deflection bonus to
-      their AC equal to 1 + 1 for every 6 caster levels you possess (maximum +4
-      deflection bonus at 18th level). A summoner can target his eidolon with
-      this spell.</p>
   actions:
     - _id: qgdtqlm3y1s70pzc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,29 +12,38 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
       target:
         value: >-
           one summoned creature you control/level, no two of which can be more
           than 30 ft. apart
-      range:
-        units: close
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You create a magical field around summoned creatures you control that
+      deflects attacks made against them. The targets gain a deflection bonus to
+      their AC equal to 1 + 1 for every 6 caster levels you possess (maximum +4
+      deflection bonus at 18th level). A summoner can target his eidolon with
+      this spell.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      summoner: 2
-      witch: 2
       hunter: 2
+      oracle: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!9vld5joaodkatmj3'
+type: spell
 

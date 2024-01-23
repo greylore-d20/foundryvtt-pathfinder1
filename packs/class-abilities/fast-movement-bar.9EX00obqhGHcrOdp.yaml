@@ -1,8 +1,25 @@
 _id: 9EX00obqhGHcrOdp
-name: Fast Movement (BAR)
-type: feat
+_key: '!items!9EX00obqhGHcrOdp'
 img: systems/pf1/icons/skills/armor_01.jpg
+name: Fast Movement (BAR)
 system:
+  abilityType: ex
+  actions:
+    - _id: lo6bd7k9n9o3mp39
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/armor_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Barbarian
+  changes:
+    - _id: cu5r7fnq
+      formula: '@armor.type <= 2 && @attributes.encumbrance.level < 2 ? 10 : 0'
+      modifier: base
+      subTarget: landSpeed
   description:
     value: >-
       <p>A barbarian’s land speed is faster than the norm for her race by +10
@@ -11,27 +28,10 @@ system:
       load. Apply this bonus before modifying the barbarian’s speed because of
       any load carried or armor worn. This bonus stacks with any other bonuses
       to the barbarian’s land speed.</p>
-  actions:
-    - _id: lo6bd7k9n9o3mp39
-      name: Use
-      img: systems/pf1/icons/skills/armor_01.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: cu5r7fnq
-      formula: '@armor.type <= 2 && @attributes.encumbrance.level < 2 ? 10 : 0'
-      subTarget: landSpeed
-      modifier: base
-  tag: classFeat_fastMovementBar
-  subType: classFeat
-  associations:
-    classes:
-      - Barbarian
-  abilityType: ex
   source:
     id: PZO1110
     pages: '31'
-_key: '!items!9EX00obqhGHcrOdp'
+  subType: classFeat
+  tag: classFeat_fastMovementBar
+type: feat
 

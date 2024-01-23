@@ -1,34 +1,34 @@
 _id: jZNzqkSHrCCGgvZr
-name: 'Wildfire Blessing: Leaping Flames'
-type: feat
+_key: '!items!jZNzqkSHrCCGgvZr'
 img: systems/pf1/icons/spells/fog-orange-2.jpg
+name: 'Wildfire Blessing: Leaping Flames'
 system:
-  description:
-    value: >-
-      <p>You touch an ally to bless it with the speed of a wildfire for 1
-      minute. The ally gains a +10-foot enhancement bonus to its base speed, and
-      the ally gains a +1 dodge bonus to its AC against attacks of
-      opportunity.</p>
   actions:
     - _id: nw0uxubi3t8o6v5o
-      name: Use
-      img: systems/pf1/icons/spells/fog-orange-2.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: ally touched
+        value: '1'
+      img: systems/pf1/icons/spells/fog-orange-2.jpg
+      name: Use
       range:
         units: touch
-  tag: classFeat_wildfireBlessingLeapingFlames
-  subType: classFeat
+      target:
+        value: ally touched
   associations:
     classes:
       - Warpriest
-_key: '!items!jZNzqkSHrCCGgvZr'
+  description:
+    value: >-
+      <p>You touch an ally to bless it with the speed of a wildfire for 1
+      minute. The ally gains a +10-foot enhancement bonus to its base speed, and
+      the ally gains a +1 dodge bonus to its AC against attacks of
+      opportunity.</p>
+  subType: classFeat
+  tag: classFeat_wildfireBlessingLeapingFlames
+type: feat
 

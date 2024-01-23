@@ -1,17 +1,10 @@
-name: Summon Barghest II
-type: spell
+_id: M6rx2faMBFZFzuY9
+_key: '!items!M6rx2faMBFZFzuY9'
 img: icons/creatures/abilities/mouth-teeth-long-red.webp
+name: Summon Barghest II
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.ViSMOM9zfKVQLvCQ]{summon barghest I}, save that it
-      can summon 1 greater barghest or 1d3 normal barghests with 2 growth points
-      each.</p>
   actions:
     - _id: KSvA8aSL0RAlxYod
-      name: Use
-      img: icons/creatures/abilities/mouth-teeth-long-red.webp
       activation:
         type: round
         unchained:
@@ -19,9 +12,21 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: icons/creatures/abilities/mouth-teeth-long-red.webp
+      name: Use
       range:
         units: close
       spellEffect: one summoned greater barghest or 1d3 summoned barghest
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.ViSMOM9zfKVQLvCQ]{summon barghest I}, save that it
+      can summon 1 greater barghest or 1d3 normal barghests with 2 growth points
+      each.</p>
   learnedAt:
     class:
       cleric: 6
@@ -29,13 +34,8 @@ system:
       warpriest: 6
   level: 6
   school: con
+  sr: false
   subschool: summoning
   types: evil
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_id: M6rx2faMBFZFzuY9
-_key: '!items!M6rx2faMBFZFzuY9'
+type: spell
 

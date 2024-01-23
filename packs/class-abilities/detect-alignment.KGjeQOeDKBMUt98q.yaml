@@ -1,8 +1,21 @@
 _id: KGjeQOeDKBMUt98q
-name: Detect Alignment
-type: feat
+_key: '!items!KGjeQOeDKBMUt98q'
 img: systems/pf1/icons/spells/evil-eye-red-1.jpg
+name: Detect Alignment
 system:
+  abilityType: sp
+  actions:
+    - _id: d8v90zjz3u7orjg0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/evil-eye-red-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At will, this character can use
@@ -11,20 +24,7 @@ system:
       @Compendium[pf1.spells.mkgysr5o92kxxn59]{Detect Good}, or
       @Compendium[pf1.spells.jo67xdocgdmk5hhh]{Detect Law}. She can only use one
       of these at any given time.</p>
-  actions:
-    - _id: d8v90zjz3u7orjg0
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-red-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_detectAlignment
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: sp
-_key: '!items!KGjeQOeDKBMUt98q'
+  tag: classFeat_detectAlignment
+type: feat
 

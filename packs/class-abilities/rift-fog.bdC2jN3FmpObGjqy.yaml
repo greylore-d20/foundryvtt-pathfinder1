@@ -1,8 +1,24 @@
 _id: bdC2jN3FmpObGjqy
-name: Rift Fog
-type: feat
+_key: '!items!bdC2jN3FmpObGjqy'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Rift Fog
 system:
+  abilityType: su
+  actions:
+    - _id: zn72z8u8sxjhnynu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.arcanist.level / 2)
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>As a standard action, the arcanist can spend 1 point from his arcane
@@ -19,25 +35,9 @@ system:
       following round if it fails a Will save. Once created, rift fog persists
       for 1 round per 2 arcanist levels (minimum of 1 round), or until the
       arcanist activates a new exploit.</p>
+  subType: classFeat
+  tag: classFeat_riftFog
   tags:
     - Arcanist Exploit, Outer Rift
-  actions:
-    - _id: zn72z8u8sxjhnynu
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.arcanist.level / 2)
-        units: round
-  tag: classFeat_riftFog
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!bdC2jN3FmpObGjqy'
+type: feat
 

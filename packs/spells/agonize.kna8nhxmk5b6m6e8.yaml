@@ -1,8 +1,30 @@
 _id: kna8nhxmk5b6m6e8
-name: Agonize
-type: spell
+_key: '!items!kna8nhxmk5b6m6e8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Agonize
 system:
+  actions:
+    - _id: 09u8f7dy90r437c4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 full round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one conjured outsider or elemental (see text)
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You afflict a creature you have conjured via <i>planar ally</i> (or a
@@ -17,42 +39,20 @@ system:
       to try to pervert your orders to malicious ends or try to seek retribution
       after their release. This spell has no effect on creatures that are immune
       to nonlethal damage.</p>
-  actions:
-    - _id: 09u8f7dy90r437c4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 full round
-      target:
-        value: one conjured outsider or elemental (see text)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 3
-      warpriest: 3
+      occultist: 3
       oracle: 3
       psychic: 4
-      occultist: 3
+      sorcerer: 4
       summonerUnchained: 4
+      warpriest: 3
+      wizard: 4
     subDomain:
       Kyton: 3
   level: 4
   school: evo
   types: evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kna8nhxmk5b6m6e8'
+type: spell
 

@@ -1,8 +1,28 @@
 _id: lMof0b1yecCm92Uj
-name: Prehensile Hair
-type: feat
+_key: '!items!lMof0b1yecCm92Uj'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Prehensile Hair
 system:
+  abilityType: su
+  actions:
+    - _id: dw7wuyk53q0di4qd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can instantly cause her hair (or even her eyebrows) to grow
@@ -22,32 +42,12 @@ system:
 
       <p>A typical male witch with this hex can also manipulate his beard,
       moustache, or eyebrows.</p>
+  subType: classFeat
+  tag: classFeat_prehensileHair
   tags:
     - Hex
-  actions:
-    - _id: dw7wuyk53q0di4qd
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: '@classes.witch.level'
-  tag: classFeat_prehensileHair
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!lMof0b1yecCm92Uj'
+    per: day
+type: feat
 

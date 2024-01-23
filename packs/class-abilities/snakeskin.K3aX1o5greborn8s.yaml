@@ -1,32 +1,32 @@
 _id: K3aX1o5greborn8s
-name: Snakeskin
-type: feat
+_key: '!items!K3aX1o5greborn8s'
 img: systems/pf1/icons/spells/shielding-acid-2.jpg
+name: Snakeskin
 system:
+  abilityType: ex
+  actions:
+    - _id: 63u95wf87kp2qsgw
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/shielding-acid-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
+  changes:
+    - _id: 0jaxfo9p
+      formula: floor((@classes.sorcerer.level - 9) / 4) + 1
+      modifier: racial
+      subTarget: nac
   description:
     value: >-
       <p>At 9th level, you gain a +1 bonus to <em>natural armor</em>, a +2
       <em>racial bonus</em> on saves against poison, and a +2 bonus on
       <em>Escape Artist</em> checks. At 13th level and 17th level, these bonuses
       increase by +1.</p>
-  actions:
-    - _id: 63u95wf87kp2qsgw
-      name: Use
-      img: systems/pf1/icons/spells/shielding-acid-2.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 0jaxfo9p
-      formula: floor((@classes.sorcerer.level - 9) / 4) + 1
-      subTarget: nac
-      modifier: racial
-  tag: classFeat_snakeskin
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!K3aX1o5greborn8s'
+  tag: classFeat_snakeskin
+type: feat
 

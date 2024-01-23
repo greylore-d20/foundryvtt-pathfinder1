@@ -1,8 +1,27 @@
 _id: ioyzulgas2pppkvw
-name: Soothing Mud
-type: spell
+_key: '!items!ioyzulgas2pppkvw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Soothing Mud
 system:
+  actions:
+    - _id: uys54q6at3nwdyu9
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: dust, earth, sand, or water in one 5-ft. square/level
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an area of healing mud. Water, earth, sand, and dust thicken
@@ -14,35 +33,16 @@ system:
       completely submerged in this mud for 1 full minute is also healed of 1d4
       points of ability damage to an ability score of its choice. A creature can
       be healed of ability damage this way only once per day.</p>
-  actions:
-    - _id: uys54q6at3nwdyu9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      actionType: heal
-      area: dust, earth, sand, or water in one 5-ft. square/level
   learnedAt:
     class:
       druid: 3
+      hunter: 3
       ranger: 3
       shaman: 3
-      hunter: 3
   level: 3
   school: con
+  sr: false
   subschool: healing
   types: earth, water
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_key: '!items!ioyzulgas2pppkvw'
+type: spell
 

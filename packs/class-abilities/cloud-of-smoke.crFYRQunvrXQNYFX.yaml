@@ -1,8 +1,29 @@
 _id: crFYRQunvrXQNYFX
-name: Cloud of Smoke
-type: feat
+_key: '!items!crFYRQunvrXQNYFX'
 img: systems/pf1/icons/spells/fog-sky-2.jpg
+name: Cloud of Smoke
 system:
+  abilityType: su
+  actions:
+    - _id: drxgxd7zv4l012rh
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.cleric.level / 2))
+      img: systems/pf1/icons/spells/fog-sky-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: 5-ft. radius area
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can create a 5-foot-radius cloud of smoke.
@@ -14,31 +35,10 @@ system:
       to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Fire Bolt power of the Fire Domain.</p>
-  actions:
-    - _id: drxgxd7zv4l012rh
-      name: Use
-      img: systems/pf1/icons/spells/fog-sky-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.cleric.level / 2))
-        units: round
-      target:
-        value: 5-ft. radius area
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_cloudOfSmoke
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!crFYRQunvrXQNYFX'
+  tag: classFeat_cloudOfSmoke
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

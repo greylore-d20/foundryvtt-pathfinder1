@@ -1,8 +1,27 @@
 _id: ba8ur1roqmqxn0j5
-name: Elemental Speech
-type: spell
+_key: '!items!ba8ur1roqmqxn0j5'
 img: icons/magic/water/elemental-water.webp
+name: Elemental Speech
 system:
+  actions:
+    - _id: a2v0yrv5w49kus8z
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell enables you to converse with creatures associated with a
@@ -19,41 +38,22 @@ system:
       has the fire subtype.</p><p>When cast as a water spell, you can converse
       in Aquan and with any creature that has the water subtype or a swim
       speed.</p>
-  actions:
-    - _id: a2v0yrv5w49kus8z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 2
       bard: 3
-      mesmerist: 3
+      cleric: 3
+      druid: 2
       hunter: 2
+      mesmerist: 3
+      oracle: 3
+      sorcerer: 2
+      warpriest: 3
+      wizard: 2
   level: 2
-  school: div
-  types: air, earth, fire, or water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: iron filings
+  school: div
   sr: false
-_key: '!items!ba8ur1roqmqxn0j5'
+  types: air, earth, fire, or water
+type: spell
 

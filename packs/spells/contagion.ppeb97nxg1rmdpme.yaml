@@ -1,8 +1,30 @@
 _id: ppeb97nxg1rmdpme
-name: Contagion
-type: spell
+_key: '!items!ppeb97nxg1rmdpme'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contagion
 system:
+  actions:
+    - _id: te503izcvyy57baz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject contracts one of the following diseases: blinding sickness,
@@ -11,48 +33,26 @@ system:
       period does not apply). Use the disease's listed frequency and save DC to
       determine further effects. For more information on these diseases, see
       page 557.</p>
-  actions:
-    - _id: te503izcvyy57baz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
+    bloodline:
+      Daemon: 4
+      Pestilence: 3
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      antipaladin: 3
       adept: 3
+      antipaladin: 3
       bloodrager: 4
+      cleric: 3
+      druid: 3
       hunter: 3
+      oracle: 3
+      sorcerer: 4
+      warpriest: 3
+      wizard: 4
     subDomain:
       Decay: 3
       Plague: 3
-    bloodline:
-      Pestilence: 3
-      Daemon: 4
   level: 4
   school: nec
   types: evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ppeb97nxg1rmdpme'
+type: spell
 

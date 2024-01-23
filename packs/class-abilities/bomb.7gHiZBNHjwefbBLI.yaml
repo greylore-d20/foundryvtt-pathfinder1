@@ -1,8 +1,55 @@
 _id: 7gHiZBNHjwefbBLI
-name: Bomb
-type: feat
+_key: '!items!7gHiZBNHjwefbBLI'
 img: systems/pf1/icons/items/inventory/bomb.jpg
+name: Bomb
 system:
+  abilityType: su
+  actions:
+    - _id: pf6f5msnqitrhl47
+      ability:
+        attack: dex
+        damage: int
+      actionType: rwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@classes.alchemist.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          [[ceil(@classes.alchemist.level / 2) + @abilities.int.mod]] Splash
+          Damage
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@classes.alchemist.level / 2) + @abilities.int.mod
+        description: Reflex half
+        type: ref
+  associations:
+    classes:
+      - Alchemist
+  crOffset: '0'
   description:
     value: >-
       <p>In addition to magical extracts, alchemists are adept at swiftly mixing
@@ -42,60 +89,13 @@ system:
       <p>Alchemists can learn new types of bombs as discoveries (see the
       <em>Discovery</em> ability) as they level up. An alchemist’s bomb, like an
       extract, becomes inert if used or carried by anyone else.</p>
-  actions:
-    - _id: pf6f5msnqitrhl47
-      name: Use
-      img: systems/pf1/icons/items/inventory/bomb.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '5'
-      actionType: rwak
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values:
-                - fire
-              custom: ''
-        nonCritParts:
-          - formula: (ceil(@classes.alchemist.level / 2) - 1)d6
-            type:
-              values:
-                - fire
-              custom: ''
-      ability:
-        attack: dex
-        damage: int
-      save:
-        dc: 10 + floor(@classes.alchemist.level / 2) + @abilities.int.mod
-        type: ref
-        description: Reflex half
-      effectNotes:
-        - >-
-          [[ceil(@classes.alchemist.level / 2) + @abilities.int.mod]] Splash
-          Damage
-  uses:
-    per: day
-    maxFormula: '@classes.alchemist.level + @abilities.int.mod'
-  tag: classFeat_bomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-  abilityType: su
-  crOffset: '0'
   source:
     id: PZO1115
     pages: '28'
-_key: '!items!7gHiZBNHjwefbBLI'
+  subType: classFeat
+  tag: classFeat_bomb
+  uses:
+    maxFormula: '@classes.alchemist.level + @abilities.int.mod'
+    per: day
+type: feat
 

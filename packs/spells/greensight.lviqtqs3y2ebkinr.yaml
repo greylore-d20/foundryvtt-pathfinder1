@@ -1,8 +1,32 @@
 _id: lviqtqs3y2ebkinr
-name: Greensight
-type: spell
+_key: '!items!lviqtqs3y2ebkinr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Greensight
 system:
+  actions:
+    - _id: 2ztzkvjqjoymq38a
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target of this spell gains the ability to see up to 60 feet through
@@ -11,42 +35,18 @@ system:
       sight, though her vision still can be blocked by solid wood, such as trees
       or wooden structures. Undergrowth does not grant concealment to a creature
       against a target of the effects of <i>greensight</i>.</p>
-  actions:
-    - _id: 2ztzkvjqjoymq38a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
+      hunter: 2
       ranger: 2
       shaman: 2
-      hunter: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a leaf
+  school: trs
   sr: false
-_key: '!items!lviqtqs3y2ebkinr'
+type: spell
 

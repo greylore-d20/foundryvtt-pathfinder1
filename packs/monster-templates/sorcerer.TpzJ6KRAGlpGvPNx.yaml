@@ -1,8 +1,16 @@
 _id: TpzJ6KRAGlpGvPNx
-name: Sorcerer
-type: feat
+_key: '!items!TpzJ6KRAGlpGvPNx'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Sorcerer
 system:
+  changes:
+    - _id: d6fn89ev
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+  crOffset: >-
+    (@attributes hd. total >= 14) ? 3 : ((@attributes.hd.total > 7 &&
+    @attributes.hd.total < 14) ? 2 : 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -298,14 +306,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: d6fn89ev
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
   subType: template
-  crOffset: >-
-    (@attributes hd. total >= 14) ? 3 : ((@attributes.hd.total > 7 &&
-    @attributes.hd.total < 14) ? 2 : 1)
-_key: '!items!TpzJ6KRAGlpGvPNx'
+type: feat
 

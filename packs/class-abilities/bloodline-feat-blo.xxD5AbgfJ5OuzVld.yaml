@@ -1,24 +1,24 @@
-type: feat
+_id: xxD5AbgfJ5OuzVld
+_key: '!items!xxD5AbgfJ5OuzVld'
+img: icons/skills/melee/blood-slash-foam-red.webp
 name: Bloodline Feat (BLO)
 system:
+  associations:
+    classes:
+      - Bloodrager
+  changes:
+    - _id: FFqXtrE5
+      formula: floor(@class.level / 3) - 1
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 6th level and every 3 levels thereafter, a bloodrager receives one
       bonus feat chosen from a list specific to each bloodline. The bloodrager
       must meet the prerequisites for these bonus feats.</p>
-  changes:
-    - _id: FFqXtrE5
-      formula: floor(@class.level / 3) - 1
-      subTarget: bonusFeats
-      modifier: untyped
-  subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
   source:
     id: PZO1129
     pages: '15'
-img: icons/skills/melee/blood-slash-foam-red.webp
-_id: xxD5AbgfJ5OuzVld
-_key: '!items!xxD5AbgfJ5OuzVld'
+  subType: classFeat
+type: feat
 

@@ -1,8 +1,20 @@
 _id: TWlnYUuu8iyzA1ZH
-name: Deep Cover
-type: feat
+_key: '!items!TWlnYUuu8iyzA1ZH'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Deep Cover
 system:
+  abilityType: su
+  actions:
+    - _id: 6m2yl1hl90igvhbc
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/violet_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>When you prepare your spells, you can also choose one cover
@@ -18,22 +30,10 @@ system:
 
       <p>This power replaces the Lore Keeper power of the Knowledge Domain or
       the Copycat power of the Trickery Domain.</p>
-  actions:
-    - _id: 6m2yl1hl90igvhbc
-      name: Use
-      img: systems/pf1/icons/skills/violet_07.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_deepCover
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!TWlnYUuu8iyzA1ZH'
+  tag: classFeat_deepCover
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

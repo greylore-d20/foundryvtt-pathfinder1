@@ -1,8 +1,24 @@
 _id: 0hihOrAiQ7dc0jV3
-name: Aether Architect
-type: feat
+_key: '!items!0hihOrAiQ7dc0jV3'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Aether Architect
 system:
+  abilityType: su
+  actions:
+    - _id: 6ue91msgq3szgz0t
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> utility (Su); <b>Level</b> 9;
@@ -22,23 +38,7 @@ system:
       burn to make the effect last until destroyed; by accepting this burn, you
       can use this ability any number of times in a row to create a larger
       edifice.</p>
-  actions:
-    - _id: 6ue91msgq3szgz0t
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        units: seeText
-  tag: classFeat_aetherArchitect
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-_key: '!items!0hihOrAiQ7dc0jV3'
+  tag: classFeat_aetherArchitect
+type: feat
 

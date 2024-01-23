@@ -1,8 +1,40 @@
 _id: dhjhfv5hzthy0fgu
-name: Inflict Light Wounds, Mass
-type: spell
+_key: '!items!dhjhfv5hzthy0fgu'
 img: icons/magic/unholy/strike-beam-blood-small-red-teal.webp
+name: Inflict Light Wounds, Mass
 system:
+  actions:
+    - _id: e767bntvvg4r467n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d8 + min(@cl, 25)
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will half
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Negative energy spreads out in all directions from the point of origin,
@@ -11,51 +43,19 @@ system:
       inflict light wounds</i> cures undead in its area rather than damaging
       them. A cleric capable of spontaneously casting <i>inflict</i> spells can
       also spontaneously cast mass <i>inflict</i> spells.</p>
-  actions:
-    - _id: e767bntvvg4r467n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d8 + min(@cl, 25)
-            type:
-              values:
-                - negative
-              custom: ''
-      save:
-        type: will
-        description: Will half
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 6
       inquisitor: 5
-      shaman: 5
       occultist: 5
+      oracle: 5
+      shaman: 5
+      warpriest: 5
+      witch: 6
   level: 5
   school: nec
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '300'
-_key: '!items!dhjhfv5hzthy0fgu'
+type: spell
 

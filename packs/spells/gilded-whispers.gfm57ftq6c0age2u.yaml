@@ -1,8 +1,31 @@
 _id: gfm57ftq6c0age2u
-name: Gilded Whispers
-type: spell
+_key: '!items!gfm57ftq6c0age2u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gilded Whispers
 system:
+  actions:
+    - _id: l2grw0966gpw2xjn
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: a gold or platinum coin
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Developed by priests of Abadar to catch thieves and skimmers, <i>gilded
@@ -28,42 +51,19 @@ system:
       <i>gilded whispers</i>.</p><p>The <i>scrying</i> sensor created by using a
       divination (<i>scrying</i>) spell to observe or listen to the coin's
       surroundings can be detected as normal.</p>
-  actions:
-    - _id: l2grw0966gpw2xjn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: a gold or platinum coin
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 4
-      warpriest: 4
       oracle: 4
+      sorcerer: 3
+      warpriest: 4
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: 100 gp of powdered gemstones
     gpValue: 100
+    value: 100 gp of powdered gemstones
   preparation:
     spontaneousPrepared: false
-_key: '!items!gfm57ftq6c0age2u'
+  school: div
+type: spell
 

@@ -1,30 +1,30 @@
 _id: jjZ7LpQZEskB8X4v
-name: 'Tornado Blessing: Dust Devil'
-type: feat
+_key: '!items!jjZ7LpQZEskB8X4v'
 img: systems/pf1/icons/spells/wind-sky-2.jpg
+name: 'Tornado Blessing: Dust Devil'
 system:
-  description:
-    value: >-
-      <p>When you hit with a weapon attack, you can use a swift action to cause
-      a sudden burst of wind and debris to swirl around your target. The target
-      is dazzled for 1 minute.</p>
   actions:
     - _id: ihlfb65jb0lwvd47
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-2.jpg
       activation:
         type: swift
         unchained:
           type: action
       duration:
-        value: '1'
         units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/wind-sky-2.jpg
+      name: Use
       target:
         value: foe struke
-  tag: classFeat_tornadoBlessingDustDevil
-  subType: classFeat
   associations:
     classes:
       - Warpriest
-_key: '!items!jjZ7LpQZEskB8X4v'
+  description:
+    value: >-
+      <p>When you hit with a weapon attack, you can use a swift action to cause
+      a sudden burst of wind and debris to swirl around your target. The target
+      is dazzled for 1 minute.</p>
+  subType: classFeat
+  tag: classFeat_tornadoBlessingDustDevil
+type: feat
 

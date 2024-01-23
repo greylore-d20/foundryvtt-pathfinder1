@@ -1,8 +1,27 @@
 _id: I22wXi9vOXV4Apwg
-name: Enlarge
-type: feat
+_key: '!items!I22wXi9vOXV4Apwg'
 img: systems/pf1/icons/skills/red_01.jpg
+name: Enlarge
 system:
+  abilityType: su
+  actions:
+    - _id: r9pqevfh7rnf01j1
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_01.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a swift action you can enlarge yourself for 1 round, as if you were
@@ -11,29 +30,10 @@ system:
       your Wisdom modifier.</p>
 
       <p>This power replaces the Wooden Fist power of the Plant Domain.</p>
-  actions:
-    - _id: r9pqevfh7rnf01j1
-      name: Use
-      img: systems/pf1/icons/skills/red_01.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_enlarge
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!I22wXi9vOXV4Apwg'
+  tag: classFeat_enlarge
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

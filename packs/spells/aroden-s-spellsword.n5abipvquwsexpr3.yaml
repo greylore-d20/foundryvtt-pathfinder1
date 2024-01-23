@@ -1,8 +1,31 @@
 _id: n5abipvquwsexpr3
-name: Aroden's Spellsword
-type: spell
+_key: '!items!n5abipvquwsexpr3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aroden's Spellsword
 system:
+  actions:
+    - _id: v5ogdwhl4w81loyl
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      spellEffect: one melee weapon sized appropriately for you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell on a weapon, you cause an extradimensional
@@ -25,41 +48,18 @@ system:
       ground.  If the merged weapon is broken or destroyed during the duration
       of Aroden's spellsword, the merged rod or staff is similarly broken or
       destroyed.</p>
-  actions:
-    - _id: v5ogdwhl4w81loyl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
-      spellEffect: one melee weapon sized appropriately for you
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 4
-      witch: 4
-      magus: 3
       bloodrager: 4
+      magus: 3
       occultist: 4
+      sorcerer: 3
+      witch: 4
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a magic rod or staff
-_key: '!items!n5abipvquwsexpr3'
+  school: trs
+type: spell
 

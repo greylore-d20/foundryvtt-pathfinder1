@@ -1,41 +1,41 @@
-name: Ghost Blade (SHA)
-type: feat
+_id: Zyb7WAVqYpk6QE8M
+_key: '!items!Zyb7WAVqYpk6QE8M'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Ghost Blade (SHA)
 system:
-  description:
-    value: >-
-      <p>The shaman can touch a creature to grant all of her weapons the ghost
-      touch weapon property for a number of rounds equal to her Charisma bonus.
-      Once a creature has been the target of this ability, it cannot be the
-      target of this ability again for 24 hours.</p>
-  tags:
-    - Ancestors Spirit
-    - Shaman Spirit Hex
+  abilityType: su
   actions:
     - _id: wOQvKco7n9DYpJYx
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '@abilities.cha.mod'
         units: round
-      range:
-        units: touch
+        value: '@abilities.cha.mod'
       formulaicAttacks:
         label: ''
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
       touch: true
-  subType: classFeat
   associations:
     classes:
       - Shaman
-  abilityType: su
+  description:
+    value: >-
+      <p>The shaman can touch a creature to grant all of her weapons the ghost
+      touch weapon property for a number of rounds equal to her Charisma bonus.
+      Once a creature has been the target of this ability, it cannot be the
+      target of this ability again for 24 hours.</p>
   source:
     id: PZO9457
     pages: '19'
-_id: Zyb7WAVqYpk6QE8M
-_key: '!items!Zyb7WAVqYpk6QE8M'
+  subType: classFeat
+  tags:
+    - Ancestors Spirit
+    - Shaman Spirit Hex
+type: feat
 

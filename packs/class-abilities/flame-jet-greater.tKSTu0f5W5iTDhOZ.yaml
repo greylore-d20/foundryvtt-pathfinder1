@@ -1,8 +1,26 @@
 _id: tKSTu0f5W5iTDhOZ
-name: Flame Jet, Greater
-type: feat
+_key: '!items!tKSTu0f5W5iTDhOZ'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Flame Jet, Greater
 system:
+  abilityType: sp
+  actions:
+    - _id: ushvzgfunxouefzb
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 5;
@@ -10,25 +28,7 @@ system:
 
       <p>You can use flame jet as a move action and can emanate a mild jet of
       flame, allowing you to hover without spending an action.</p>
-  actions:
-    - _id: ushvzgfunxouefzb
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      target:
-        value: self
-      range:
-        units: personal
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_flameJetGreater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!tKSTu0f5W5iTDhOZ'
+  tag: classFeat_flameJetGreater
+type: feat
 

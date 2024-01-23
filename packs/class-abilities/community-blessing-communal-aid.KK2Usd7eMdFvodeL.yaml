@@ -1,34 +1,34 @@
 _id: KK2Usd7eMdFvodeL
-name: 'Community Blessing: Communal Aid'
-type: feat
+_key: '!items!KK2Usd7eMdFvodeL'
 img: systems/pf1/icons/spells/link-blue-1.jpg
+name: 'Community Blessing: Communal Aid'
 system:
-  description:
-    value: >-
-      <p>At 1st level, you can touch an ally and grant it the blessing of
-      community. For the next minute, whenever that ally uses the aid another
-      action, the bonus granted increases to +4. You can instead use this
-      ability on yourself as a swift action.</p>
   actions:
     - _id: zwqjc4q91ulhdr5l
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-1.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: creature tiouched
+        value: '1'
+      img: systems/pf1/icons/spells/link-blue-1.jpg
+      name: Use
       range:
         units: touch
-  tag: classFeat_communityBlessingCommunalAid
-  subType: classFeat
+      target:
+        value: creature tiouched
   associations:
     classes:
       - Warpriest
-_key: '!items!KK2Usd7eMdFvodeL'
+  description:
+    value: >-
+      <p>At 1st level, you can touch an ally and grant it the blessing of
+      community. For the next minute, whenever that ally uses the aid another
+      action, the bonus granted increases to +4. You can instead use this
+      ability on yourself as a swift action.</p>
+  subType: classFeat
+  tag: classFeat_communityBlessingCommunalAid
+type: feat
 

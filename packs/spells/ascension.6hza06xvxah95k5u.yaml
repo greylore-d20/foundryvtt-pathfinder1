@@ -1,8 +1,32 @@
 _id: 6hza06xvxah95k5u
-name: Ascension
-type: spell
+_key: '!items!6hza06xvxah95k5u'
 img: icons/magic/holy/angel-winged-humanoid-blue.webp
+name: Ascension
 system:
+  actions:
+    - _id: p6p7w31i3khmhi3v
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 2 hours/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one non-mythic creature/3 levels
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue a number of creatures with mythic power, granting each of
@@ -14,46 +38,22 @@ system:
       into range again. If the focus component is destroyed while the spell is
       in effect, the spell immediately ends and all targets gain 1d4 permanent
       negative levels.</p>
-  actions:
-    - _id: p6p7w31i3khmhi3v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 2 hours/level; see text
-      target:
-        value: one non-mythic creature/3 levels
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
-      oracle: 9
       druid: 9
-      witch: 9
+      oracle: 9
       psychic: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
   level: 9
-  school: uni
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: 10,000 gp in rare herbs, gems, and other exotic materials
     focus: minor artifact
     gpValue: 10000
+    value: 10,000 gp in rare herbs, gems, and other exotic materials
   preparation:
     spontaneousPrepared: false
-_key: '!items!6hza06xvxah95k5u'
+  school: uni
+type: spell
 

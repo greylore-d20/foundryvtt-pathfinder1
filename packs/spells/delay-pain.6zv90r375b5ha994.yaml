@@ -1,8 +1,30 @@
 _id: 6zv90r375b5ha994
-name: Delay Pain
-type: spell
+_key: '!items!6zv90r375b5ha994'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Delay Pain
 system:
+  actions:
+    - _id: bjc81o4dc8rb00ms
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You override the target's ability to feel pain. Pain effects (such as
@@ -11,45 +33,23 @@ system:
       damage, ability damage, or ability drain that a pain effect has already
       done, but it does negate ongoing penalties from pain while the spell
       lasts.</p>
-  actions:
-    - _id: bjc81o4dc8rb00ms
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      witch: 2
-      inquisitor: 2
       bloodrager: 2
-      psychic: 2
+      cleric: 2
+      inquisitor: 2
       mesmerist: 2
+      oracle: 2
+      psychic: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
     subDomain:
       Kyton: 1
   level: 2
   school: enc
   types: emotion
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!6zv90r375b5ha994'
+type: spell
 

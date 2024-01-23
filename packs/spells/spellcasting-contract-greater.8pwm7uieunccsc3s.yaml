@@ -1,17 +1,11 @@
 _id: 8pwm7uieunccsc3s
-name: Spellcasting Contract, Greater
-type: spell
+_key: '!items!8pwm7uieunccsc3s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spellcasting Contract, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>lesser spellcasting contract</i>, except
-      if the target has 13 HD or more you can imbue him with one or two 4thlevel
-      spells and one 5th-level spell.</p>
   actions:
     - _id: 3vatx47a05qvr53d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
@@ -20,26 +14,32 @@ system:
           type: minute
       duration:
         value: permanent until contractually terminated
-      target:
-        value: willing creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: willing creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>lesser spellcasting contract</i>, except
+      if the target has 13 HD or more you can imbue him with one or two 4thlevel
+      spells and one 5th-level spell.</p>
   learnedAt:
     class:
       cleric: 9
       oracle: 9
   level: 9
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a written contract
-_key: '!items!8pwm7uieunccsc3s'
+  school: evo
+type: spell
 

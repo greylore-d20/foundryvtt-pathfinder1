@@ -1,8 +1,21 @@
 _id: Ps2Q5UxtY36Px7Sk
-name: Soulbound Puppet
-type: feat
+_key: '!items!Ps2Q5UxtY36Px7Sk'
 img: systems/pf1/icons/skills/affliction_08.jpg
+name: Soulbound Puppet
 system:
+  abilityType: su
+  actions:
+    - _id: 1gtos69spmkx106q
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/skills/affliction_08.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a full-round action, you can expend 1 point of mental focus to
@@ -22,20 +35,7 @@ system:
 
       <p>The soulbound puppet remains animated for 10 minutes per occultist
       level you possess.</p>
-  actions:
-    - _id: 1gtos69spmkx106q
-      name: Use
-      img: systems/pf1/icons/skills/affliction_08.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_soulboundPuppet
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: su
-_key: '!items!Ps2Q5UxtY36Px7Sk'
+  tag: classFeat_soulboundPuppet
+type: feat
 

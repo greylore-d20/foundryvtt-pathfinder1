@@ -1,30 +1,30 @@
 _id: FkPoMSAx3FTGvnXy
-name: Cunning Initiative
-type: feat
+_key: '!items!FkPoMSAx3FTGvnXy'
 img: systems/pf1/icons/spells/haste-fire-1.jpg
+name: Cunning Initiative
 system:
-  description:
-    value: >-
-      <p>At 2nd level, an inquisitor adds her Wisdom modifier on initiative
-      checks, in addition to her Dexterity modifier.</p>
+  abilityType: ex
   actions:
     - _id: ncxmbijwulz46r76
-      name: Use
-      img: systems/pf1/icons/spells/haste-fire-1.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: xoftvh0t
-      formula: '@abilities.wis.mod'
-      subTarget: init
-      modifier: untyped
-  tag: classFeat_cunningInitiative
-  subType: classFeat
+      img: systems/pf1/icons/spells/haste-fire-1.jpg
+      name: Use
   associations:
     classes:
       - Inquisitor
-  abilityType: ex
-_key: '!items!FkPoMSAx3FTGvnXy'
+  changes:
+    - _id: xoftvh0t
+      formula: '@abilities.wis.mod'
+      modifier: untyped
+      subTarget: init
+  description:
+    value: >-
+      <p>At 2nd level, an inquisitor adds her Wisdom modifier on initiative
+      checks, in addition to her Dexterity modifier.</p>
+  subType: classFeat
+  tag: classFeat_cunningInitiative
+type: feat
 

@@ -1,8 +1,41 @@
 _id: zfsU3oRTcd2mPFX1
-name: Ice Missile
-type: feat
+_key: '!items!zfsU3oRTcd2mPFX1'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Ice Missile
 system:
+  abilityType: su
+  actions:
+    - _id: f00t5t9zr0wv5yd5
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude negates staggered condition
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can unleash a freezing projectile by expending 1 point
@@ -12,42 +45,9 @@ system:
       of cold damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th
       level). In addition, the target is staggered for 1 round. It can attempt a
       Fortitude saving throw to negate the staggered condition.</p>
+  subType: classFeat
+  tag: classFeat_iceMissile
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: f00t5t9zr0wv5yd5
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
-            type:
-              values:
-                - cold
-              custom: ''
-      ability:
-        attack: dex
-      save:
-        type: fort
-        description: Fortitude negates staggered condition
-  tag: classFeat_iceMissile
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!zfsU3oRTcd2mPFX1'
+type: feat
 

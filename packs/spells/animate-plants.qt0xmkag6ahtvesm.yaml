@@ -1,8 +1,27 @@
 _id: qt0xmkag6ahtvesm
-name: Animate Plants
-type: spell
+_key: '!items!qt0xmkag6ahtvesm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Animate Plants
 system:
+  actions:
+    - _id: byatw9ubu2gbt07u
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or 1 hour/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: >-
+          one Large plant per three caster levels or all plants within  range;
+          see text
+  components:
+    verbal: true
   description:
     value: >-
       <p>You imbue inanimate plants with mobility and a semblance of life. Each
@@ -22,38 +41,19 @@ system:
       effect of an <i>entangle</i> spell. Spell resistance does not keep
       creatures from being <i>entangle</i>d. This effect lasts 1 hour per caster
       level.</p>
-  actions:
-    - _id: byatw9ubu2gbt07u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or 1 hour/level; see text
-      target:
-        value: >-
-          one Large plant per three caster levels or all plants within  range;
-          see text
-      range:
-        units: close
   learnedAt:
+    bloodline:
+      Verdant: 8
     class:
       druid: 7
       shaman: 7
     domain:
       Plant: 7
-    bloodline:
-      Verdant: 8
   level: 7
   school: trs
-  components:
-    verbal: true
-  sr: false
   source:
     id: PZO1110
     pages: '242'
-_key: '!items!qt0xmkag6ahtvesm'
+  sr: false
+type: spell
 

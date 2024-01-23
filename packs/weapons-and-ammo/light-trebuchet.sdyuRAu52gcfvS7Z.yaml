@@ -1,8 +1,46 @@
 _id: sdyuRAu52gcfvS7Z
-name: Light Trebuchet
-type: weapon
+_key: '!items!sdyuRAu52gcfvS7Z'
 img: icons/weapons/artillery/trebuchet-simple.webp
+name: Light Trebuchet
 system:
+  actions:
+    - _id: ijzxrcroromx4w2r
+      ability:
+        attack: dex
+        critRange: null
+        damage: str
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(4, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/artillery/trebuchet-simple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        minUnits: ft
+        minValue: '100'
+        units: ft
+        value: '200'
+  ammo:
+    type: siege
+  baseTypes:
+    - Light Trebuchet
   description:
     value: >-
       <h3>Statistics</h3><p><strong>Damage</strong> 4d6;
@@ -26,53 +64,15 @@ system:
       square (creatures can make a DC 15 Reflex save to halve the damage again).
       Light trebuchets have a hardness of 5 and 50 hit points. One use of light
       trebuchet stones costs 15 gp and weighs 60 pounds.</p>
-  price: 800
+  hardness: 5
   hp:
     max: 50
     value: 50
-  hardness: 5
-  actions:
-    - _id: ijzxrcroromx4w2r
-      name: Attack
-      img: icons/weapons/artillery/trebuchet-simple.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '200'
-        units: ft
-        maxIncrements: 10
-        minValue: '100'
-        minUnits: ft
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(4, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critRange: null
-  baseTypes:
-    - Light Trebuchet
-  subType: exotic
-  weaponSubtype: ranged
+  price: 800
   source:
     id: PZO1118
     pages: '163'
-  ammo:
-    type: siege
-_key: '!items!sdyuRAu52gcfvS7Z'
+  subType: exotic
+  weaponSubtype: ranged
+type: weapon
 

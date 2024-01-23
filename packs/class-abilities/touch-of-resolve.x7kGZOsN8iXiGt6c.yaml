@@ -1,40 +1,40 @@
 _id: x7kGZOsN8iXiGt6c
-name: Touch of Resolve
-type: feat
+_key: '!items!x7kGZOsN8iXiGt6c'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Touch of Resolve
 system:
-  description:
-    value: >-
-      <p>You may use @Compendium[pf1.spells.eu4u4mr1naoiqohz]{Remove Fear} on a
-      single creature a number of times per day equal to your 3 + your Wisdom
-      bonus.</p>
-  tags:
-    - Inquisition
-    - Valor Inquisition
+  abilityType: sp
   actions:
     - _id: 7tofdouj778hz13f
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '10'
         units: minute
-      target:
-        value: one creature
+        value: '10'
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
       range:
         units: close
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_touchOfResolve
-  subType: classFeat
+      target:
+        value: one creature
   associations:
     classes:
       - Inquisitor
-  abilityType: sp
-_key: '!items!x7kGZOsN8iXiGt6c'
+  description:
+    value: >-
+      <p>You may use @Compendium[pf1.spells.eu4u4mr1naoiqohz]{Remove Fear} on a
+      single creature a number of times per day equal to your 3 + your Wisdom
+      bonus.</p>
+  subType: classFeat
+  tag: classFeat_touchOfResolve
+  tags:
+    - Inquisition
+    - Valor Inquisition
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

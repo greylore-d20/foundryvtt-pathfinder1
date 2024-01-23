@@ -1,8 +1,20 @@
 _id: iqpcm2zB588hf52q
-name: Phrenic Strike
-type: feat
+_key: '!items!iqpcm2zB588hf52q'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Phrenic Strike
 system:
+  abilityType: su
+  actions:
+    - _id: fu4gz1hgq18dedli
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>As long as the psychic has at least 1 point in her phrenic pool, she
@@ -10,19 +22,7 @@ system:
       casting a spell with a range of touch. This unarmed attack still provokes
       attacks of opportunity as normal unless the psychic can otherwise make
       unarmed attacks without provoking attacks of opportunity.</p>
-  actions:
-    - _id: fu4gz1hgq18dedli
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_phrenicStrike
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!iqpcm2zB588hf52q'
+  tag: classFeat_phrenicStrike
+type: feat
 

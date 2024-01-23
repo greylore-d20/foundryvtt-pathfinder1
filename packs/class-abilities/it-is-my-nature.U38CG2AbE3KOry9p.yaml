@@ -1,8 +1,26 @@
 _id: U38CG2AbE3KOry9p
-name: It Is My Nature
-type: feat
+_key: '!items!U38CG2AbE3KOry9p'
 img: systems/pf1/icons/skills/green_11.jpg
+name: It Is My Nature
 system:
+  abilityType: su
+  actions:
+    - _id: qlq2oxh4ykp1c67a
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_11.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 20th level, your poisoned blood protects you, reflexively conjuring
@@ -15,28 +33,10 @@ system:
       is immune to this effect for 24 hours. This is a poison and death effect.
       You can use this ability even when you are surprised or
       <em>flat-footed</em>.</p>
-  actions:
-    - _id: qlq2oxh4ykp1c67a
-      name: Use
-      img: systems/pf1/icons/skills/green_11.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: '3'
-  tag: classFeat_itIsMyNature
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!U38CG2AbE3KOry9p'
+  tag: classFeat_itIsMyNature
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

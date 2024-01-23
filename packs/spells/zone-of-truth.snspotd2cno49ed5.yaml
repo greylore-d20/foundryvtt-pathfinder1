@@ -1,8 +1,33 @@
 _id: snspotd2cno49ed5
-name: Zone of Truth
-type: spell
+_key: '!items!snspotd2cno49ed5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Zone of Truth
 system:
+  actions:
+    - _id: xvalrz0r4zn6lf60
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Creatures within the emanation area (or those who enter it) can't speak
@@ -13,46 +38,21 @@ system:
       they would normally respond with a lie, or they may be evasive as long as
       they remain within the boundaries of the truth. Creatures who leave the
       area are free to speak as they choose.</p>
-  actions:
-    - _id: xvalrz0r4zn6lf60
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 20-ft.-radius emanation
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
+      inquisitor: 2
+      medium: 2
       oracle: 2
       paladin: 2
-      witch: 2
-      inquisitor: 2
       psychic: 2
-      medium: 2
+      warpriest: 2
+      witch: 2
     subDomain:
       Honor: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!snspotd2cno49ed5'
+type: spell
 

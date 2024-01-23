@@ -1,8 +1,23 @@
 _id: RqBdY5fs1wiX5On3
-name: Arcane Scent
-type: feat
+_key: '!items!RqBdY5fs1wiX5On3'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Arcane Scent
 system:
+  actions:
+    - _id: 5r7qoyu9w8pgtbxh
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: hour
+        value: '@cl'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
   description:
     value: >-
       <p>The magus can sniff out other spellcasters. By spending 1 point from
@@ -13,22 +28,7 @@ system:
       determine the highest level spell a detected creature is capable of
       casting (DC = 10 + the creature’s caster level). The magus can only
       attempt this Spellcraft check once per creature per 24 hours.</p>
-  actions:
-    - _id: 5r7qoyu9w8pgtbxh
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@cl'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_arcaneScent
   subType: classFeat
-_key: '!items!RqBdY5fs1wiX5On3'
+  tag: classFeat_arcaneScent
+type: feat
 

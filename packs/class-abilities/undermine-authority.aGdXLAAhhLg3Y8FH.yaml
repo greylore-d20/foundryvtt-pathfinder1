@@ -1,8 +1,20 @@
 _id: aGdXLAAhhLg3Y8FH
-name: Undermine Authority
-type: feat
+_key: '!items!aGdXLAAhhLg3Y8FH'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Undermine Authority
 system:
+  abilityType: sp
+  actions:
+    - _id: p35n0x72zqrcar3g
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>A number of times per day equal to your Wisdom bonus, you can worsen
@@ -18,22 +30,10 @@ system:
       modifier). If the target is under a mind-affecting effect from that
       officer or leader, the effect is automatically suppressed for 1
       minute.</p>
-  actions:
-    - _id: p35n0x72zqrcar3g
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-  uses:
-    per: day
-    maxFormula: '@abilities.wis.mod'
-  tag: classFeat_undermineAuthority
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: sp
-_key: '!items!aGdXLAAhhLg3Y8FH'
+  tag: classFeat_undermineAuthority
+  uses:
+    maxFormula: '@abilities.wis.mod'
+    per: day
+type: feat
 

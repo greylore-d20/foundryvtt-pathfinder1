@@ -1,8 +1,31 @@
 _id: synnc5y9jy9ngn1h
-name: Sun's Disdain
-type: spell
+_key: '!items!synnc5y9jy9ngn1h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sun's Disdain
 system:
+  actions:
+    - _id: orfio30xutkgxqga
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You alter a creature so the touch of the sun is hostile to it. The
@@ -12,44 +35,21 @@ system:
       remains in areas of bright <i>light</i>, and it is treated as being
       particularly susceptible to sun<i>light</i> for the purposes of resolving
       spells like searing <i>light</i>, <i>sunbeam</i>, and <i>sunburst</i>.</p>
-  actions:
-    - _id: orfio30xutkgxqga
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      inquisitor: 2
       bloodrager: 2
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
       shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  types: curse
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of glass
-_key: '!items!synnc5y9jy9ngn1h'
+  school: trs
+  types: curse
+type: spell
 

@@ -1,16 +1,11 @@
 _id: 22cynh2gt4icqsqt
-name: Nondetection, Communal
-type: spell
+_key: '!items!22cynh2gt4icqsqt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nondetection, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>nondetection</i>, except you divide the
-      duration in 1-hour increments among the creatures or objects touched.</p>
   actions:
     - _id: qewxolvtpbp9hogz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creatures or objects touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: creatures or objects touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>nondetection</i>, except you divide the
+      duration in 1-hour increments among the creatures or objects touched.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       antipaladin: 4
-      psychic: 4
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: diamond dust worth 25 gp per target
-_key: '!items!22cynh2gt4icqsqt'
+  school: abj
+type: spell
 

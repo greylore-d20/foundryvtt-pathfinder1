@@ -1,7 +1,28 @@
-name: Mnemonic Siphon
-type: spell
+_id: rhvhDCbv4U1kP3sG
+_key: '!items!rhvhDCbv4U1kP3sG'
 img: icons/magic/symbols/rune-sigil-rough-white-teal.webp
+name: Mnemonic Siphon
 system:
+  actions:
+    - _id: hcT81dHkithRmQSD
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level or until discharged (D)
+      img: icons/magic/symbols/rune-sigil-rough-white-teal.webp
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+      touch: true
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You inscribe a rune on the target object. The rune remains dormant
@@ -22,23 +43,6 @@ system:
       per 2 caster levels you have before being discharged. If you are not
       capable of learning a stolen spell normally, the knowledge is useless to
       you.</p>
-  actions:
-    - _id: hcT81dHkithRmQSD
-      name: Use
-      img: icons/magic/symbols/rune-sigil-rough-white-teal.webp
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level or until discharged (D)
-      target:
-        value: object touched
-      range:
-        units: touch
-      touch: true
   learnedAt:
     class:
       arcanist: 4
@@ -49,10 +53,6 @@ system:
       wizard: 4
   level: 4
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_id: rhvhDCbv4U1kP3sG
-_key: '!items!rhvhDCbv4U1kP3sG'
+type: spell
 

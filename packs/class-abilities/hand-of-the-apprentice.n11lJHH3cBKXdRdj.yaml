@@ -1,8 +1,33 @@
 _id: n11lJHH3cBKXdRdj
-name: Hand of the Apprentice
-type: feat
+_key: '!items!n11lJHH3cBKXdRdj'
 img: systems/pf1/icons/skills/arrow_02.jpg
+name: Hand of the Apprentice
 system:
+  abilityType: su
+  actions:
+    - _id: bjriyvow1255ohsw
+      ability:
+        attack: int
+      actionType: rwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/arrow_02.jpg
+      name: Use
+      range:
+        units: spec
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>You cause your melee weapon to fly from your grasp and strike a foe
@@ -14,35 +39,10 @@ system:
       This ability cannot be used to perform a combat maneuver. You can use this
       ability a number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: bjriyvow1255ohsw
-      name: Use
-      img: systems/pf1/icons/skills/arrow_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: spec
-      actionType: rwak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: int
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_handOfTheApprentice
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!n11lJHH3cBKXdRdj'
+  tag: classFeat_handOfTheApprentice
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

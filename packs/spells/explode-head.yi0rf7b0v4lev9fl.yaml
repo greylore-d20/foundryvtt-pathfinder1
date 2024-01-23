@@ -1,8 +1,29 @@
 _id: yi0rf7b0v4lev9fl
-name: Explode Head
-type: spell
+_key: '!items!yi0rf7b0v4lev9fl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Explode Head
 system:
+  actions:
+    - _id: qwmgc1tm3nfqwe1q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: special; see text
+      target:
+        value: one living corporeal creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause incredible pressure to build in the target's head; this spell
@@ -11,34 +32,13 @@ system:
       exploding its head and spreading debris in a 10-foot radius. Each creature
       in the area must succeed at a Reflex saving throw or take 2d6 points of
       slashing damage from the flying debris.</p>
-  actions:
-    - _id: qwmgc1tm3nfqwe1q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one living corporeal creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: special; see text
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       magus: 6
       psychic: 5
+      sorcerer: 6
+      wizard: 6
   level: 6
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!yi0rf7b0v4lev9fl'
+type: spell
 

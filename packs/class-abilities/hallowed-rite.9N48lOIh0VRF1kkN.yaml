@@ -1,8 +1,22 @@
 _id: 9N48lOIh0VRF1kkN
-name: Hallowed Rite
-type: feat
+_key: '!items!9N48lOIh0VRF1kkN'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Hallowed Rite
 system:
+  abilityType: su
+  actions:
+    - _id: g8my7oiwin6icac9
+      activation:
+        cost: 24
+        type: hour
+        unchained:
+          cost: 24
+          type: hour
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, you gain the ability to conduct a sacred funeral rite.
@@ -12,21 +26,7 @@ system:
       preparation or the ritual fails. Once the body is interred, it cannot be
       turned into an undead creature, as if it were under the effect of a hallow
       spell (caster level equal to your inquisitor level).</p>
-  actions:
-    - _id: g8my7oiwin6icac9
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        cost: 24
-        type: hour
-        unchained:
-          cost: 24
-          type: hour
-  tag: classFeat_hallowedRite
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!9N48lOIh0VRF1kkN'
+  tag: classFeat_hallowedRite
+type: feat
 

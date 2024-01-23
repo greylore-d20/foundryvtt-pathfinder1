@@ -1,37 +1,37 @@
 _id: e6MZE23epaeXpxF1
-name: Divine Prison
-type: feat
+_key: '!items!e6MZE23epaeXpxF1'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Divine Prison
 system:
-  description:
-    value: >-
-      <p>At 8th level, once per day upon making a successful melee attack, you
-      can affect your target with @Compendium[pf1.spells.d8hypv6zdyan3rzr]{Hold
-      Monster} (Will negates).</p>
+  abilityType: sp
   actions:
     - _id: 2wm6e63s1vf1z802
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '@cl'
         units: round
-      target:
-        value: creature struck
+        value: '@cl'
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_divinePrison
-  subType: classFeat
+      target:
+        value: creature struck
   associations:
     classes:
       - Inquisitor
-  abilityType: sp
-_key: '!items!e6MZE23epaeXpxF1'
+  description:
+    value: >-
+      <p>At 8th level, once per day upon making a successful melee attack, you
+      can affect your target with @Compendium[pf1.spells.d8hypv6zdyan3rzr]{Hold
+      Monster} (Will negates).</p>
+  subType: classFeat
+  tag: classFeat_divinePrison
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

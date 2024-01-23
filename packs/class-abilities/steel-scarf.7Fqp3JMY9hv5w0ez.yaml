@@ -1,8 +1,36 @@
 _id: 7Fqp3JMY9hv5w0ez
-name: Steel Scarf
-type: feat
+_key: '!items!7Fqp3JMY9hv5w0ez'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Steel Scarf
 system:
+  abilityType: su
+  actions:
+    - _id: v3rer1nfzuops419
+      actionType: rwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d8 + floor(@classes.oracle.level / 2)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you can harden a scarf, sleeve, cloak, or other
@@ -19,41 +47,13 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
+  subType: classFeat
+  tag: classFeat_steelScarf
   tags:
     - Revelation
     - Metal Mystery
-  actions:
-    - _id: v3rer1nfzuops419
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rwak
-      damage:
-        parts:
-          - formula: 1d8 + floor(@classes.oracle.level / 2)
-            type:
-              values:
-                - slashing
-              custom: ''
   uses:
-    per: day
     maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_steelScarf
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!7Fqp3JMY9hv5w0ez'
+    per: day
+type: feat
 

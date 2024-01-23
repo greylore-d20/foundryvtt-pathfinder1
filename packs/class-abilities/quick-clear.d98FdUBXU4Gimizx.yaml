@@ -1,8 +1,28 @@
 _id: d98FdUBXU4Gimizx
-name: Quick Clear
-type: feat
+_key: '!items!d98FdUBXU4Gimizx'
 img: systems/pf1/icons/skills/mech_8.jpg
+name: Quick Clear
 system:
+  abilityType: ex
+  actions:
+    - _id: 2aa8anfVFcZIA9xV
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/mech_8.jpg
+      name: Normal clear
+    - _id: q70szqsvZ2VyUQDW
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/mech_8.jpg
+      name: Quick clear
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 1st level, as a standard action, the gunslinger can remove the
@@ -11,29 +31,9 @@ system:
       have at least 1 grit point to perform this deed. Alternatively, if the
       gunslinger spends 1 grit point to perform this deed, she can perform quick
       clear as a move-equivalent action instead of a standard action.</p>
+  subType: classFeat
+  tag: classFeat_quickClear
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: 2aa8anfVFcZIA9xV
-      name: Normal clear
-      img: systems/pf1/icons/skills/mech_8.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-    - _id: q70szqsvZ2VyUQDW
-      name: Quick clear
-      img: systems/pf1/icons/skills/mech_8.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_quickClear
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!d98FdUBXU4Gimizx'
+type: feat
 

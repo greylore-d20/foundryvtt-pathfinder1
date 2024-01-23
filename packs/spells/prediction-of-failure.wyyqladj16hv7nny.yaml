@@ -1,19 +1,11 @@
 _id: wyyqladj16hv7nny
-name: Prediction of Failure
-type: spell
+_key: '!items!wyyqladj16hv7nny'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Prediction of Failure
 system:
-  description:
-    value: >-
-      <p>You wrack the target's body and mind with the anguish and suffering of
-      every bitter failure it will ever experience, rendering it permanently
-      shaken and sickened. A successful Will save reduces the duration to 1
-      round per level. If the target is a spellcaster, failing this saving throw
-      means it also gains a random minor spellblight (see page 95).</p>
   actions:
     - _id: 5y3o8pahudc1ltzq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,28 +13,36 @@ system:
           type: action
       duration:
         value: permanent or 1 round/level (see text)
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You wrack the target's body and mind with the anguish and suffering of
+      every bitter failure it will ever experience, rendering it permanently
+      shaken and sickened. A successful Will save reduces the duration to 1
+      round per level. If the target is a spellcaster, failing this saving throw
+      means it also gains a random minor spellblight (see page 95).</p>
   learnedAt:
-    class:
-      sorcerer: 8
-      wizard: 8
-      witch: 8
-      psychic: 8
-      occultist: 6
     bloodline:
       Imperious: 8
+    class:
+      occultist: 6
+      psychic: 8
+      sorcerer: 8
+      witch: 8
+      wizard: 8
   level: 8
   school: div
   types: curse, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wyyqladj16hv7nny'
+type: spell
 

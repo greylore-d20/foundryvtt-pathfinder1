@@ -1,34 +1,34 @@
 _id: 4aFYh5LVr95mvzxu
-name: Vampiric Might
-type: feat
+_key: '!items!4aFYh5LVr95mvzxu'
 img: systems/pf1/icons/skills/beast_02.jpg
+name: Vampiric Might
 system:
+  abilityType: su
+  actions:
+    - _id: axdyuduoz0vvlctd
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/beast_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Vampire Hunter
+  changes:
+    - _id: g5eza6nx
+      formula: >-
+        @classes.vampirehunter.level >= 16 ? 6 : ((@classes.vampirehunter.level
+        < 16 && @classes.vampirehunter.level > 7) ? 4 : 2)
+      modifier: enh
+      subTarget: str
   description:
     value: >-
       <p>The vampire hunter gains a +2 <em>enhancement bonus</em> to
       <em>Strength</em> and his weapons are always treated as magical for the
       purpose of overcoming <em>damage reduction</em>. This bonus increases to
       +4 at 8th level and +6 at 16th level.</p>
-  actions:
-    - _id: axdyuduoz0vvlctd
-      name: Use
-      img: systems/pf1/icons/skills/beast_02.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: g5eza6nx
-      formula: >-
-        @classes.vampirehunter.level >= 16 ? 6 : ((@classes.vampirehunter.level
-        < 16 && @classes.vampirehunter.level > 7) ? 4 : 2)
-      subTarget: str
-      modifier: enh
-  tag: classFeat_vampiricMight
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!4aFYh5LVr95mvzxu'
+  tag: classFeat_vampiricMight
+type: feat
 

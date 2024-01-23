@@ -1,8 +1,24 @@
 _id: kYuSSvMUoT3MDyod
-name: Breaking Down Koan (UC)
-type: feat
+_key: '!items!kYuSSvMUoT3MDyod'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Breaking Down Koan (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: qr40uxvce3hws4sj
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 1 ki point as a swift action to
@@ -12,23 +28,7 @@ system:
       mind-affecting, language-dependent effect.</p>
 
       <p>A monk must be at least 8th level before selecting this ki power.</p>
-  actions:
-    - _id: qr40uxvce3hws4sj
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_breakingDownKoanUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!kYuSSvMUoT3MDyod'
+  tag: classFeat_breakingDownKoanUc
+type: feat
 

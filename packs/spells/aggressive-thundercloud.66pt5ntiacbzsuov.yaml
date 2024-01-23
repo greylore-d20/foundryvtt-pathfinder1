@@ -1,8 +1,31 @@
 _id: 66pt5ntiacbzsuov
-name: Aggressive Thundercloud
-type: spell
+_key: '!items!66pt5ntiacbzsuov'
 img: icons/magic/lightning/bolts-salvo-clouds-sky.webp
+name: Aggressive Thundercloud
 system:
+  actions:
+    - _id: txepzed3slo461dj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      spellEffect: 5-ft.-diameter sphere
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A crackling, spherical storm cloud flies in whichever direction you
@@ -18,41 +41,18 @@ system:
       for the purpose of determining how winds affect it. The sphere has no
       physical substance and cannot exert any force on corporeal creatures or
       objects. It disperses if it exceeds the spell's range.</p>
-  actions:
-    - _id: txepzed3slo461dj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      spellEffect: 5-ft.-diameter sphere
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      witch: 2
-      magus: 2
       hunter: 2
+      magus: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: evo
-  types: electricity
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a piece of a tree struck by lightning
-_key: '!items!66pt5ntiacbzsuov'
+  school: evo
+  types: electricity
+type: spell
 

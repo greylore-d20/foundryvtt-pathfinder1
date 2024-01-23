@@ -1,8 +1,27 @@
 _id: EwbceboL4SyjiyIX
-name: Water Sprint (UC)
-type: feat
+_key: '!items!EwbceboL4SyjiyIX'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Water Sprint (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: xd94vk2ugd91egul
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@classes.monkUnchained.level'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ki power can spend 1 point from his ki pool as a swift
@@ -11,26 +30,7 @@ system:
       ability lasts for 1 minute per monk level.</p>
 
       <p>A monk must be at least 6th level before selecting this ki power.</p>
-  actions:
-    - _id: xd94vk2ugd91egul
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.monkUnchained.level'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_waterSprintUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!EwbceboL4SyjiyIX'
+  tag: classFeat_waterSprintUc
+type: feat
 

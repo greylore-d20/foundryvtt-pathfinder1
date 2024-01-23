@@ -1,8 +1,22 @@
 _id: ivqwvEbik8jd8BUR
-name: Speak in Dreams
-type: feat
+_key: '!items!ivqwvEbik8jd8BUR'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Speak in Dreams
 system:
+  abilityType: sp
+  actions:
+    - _id: dn9pqtxixzte5qv8
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can contact a creature as if using
@@ -10,27 +24,13 @@ system:
       ability on a number of creatures per day equal to her Intelligence bonus,
       but can dream-speak to those creatures as often as desired throughout that
       time period.</p>
+  subType: classFeat
+  tag: classFeat_speakInDreams
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: dn9pqtxixzte5qv8
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      target:
-        value: one creature
   uses:
-    per: day
     maxFormula: '@abilities.int.mod'
-  tag: classFeat_speakInDreams
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: sp
-_key: '!items!ivqwvEbik8jd8BUR'
+    per: day
+type: feat
 

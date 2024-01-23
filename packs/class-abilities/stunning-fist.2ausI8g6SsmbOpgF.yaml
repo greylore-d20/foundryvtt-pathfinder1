@@ -1,8 +1,22 @@
 _id: 2ausI8g6SsmbOpgF
-name: Stunning Fist
-type: feat
+_key: '!items!2ausI8g6SsmbOpgF'
 img: systems/pf1/icons/skills/yellow_08.jpg
+name: Stunning Fist
 system:
+  abilityType: ex
+  actions:
+    - _id: t964ab1f99gydrqs
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      img: systems/pf1/icons/skills/yellow_08.jpg
+      name: Use
+      range:
+        units: touch
+  associations:
+    classes:
+      - Monk
   description:
     value: >-
       <p>At 1st level, the monk gains
@@ -24,29 +38,15 @@ system:
       stack with themselves (a creature <em>sickened</em> by <em>Stunning
       Fist</em> cannot become <em>nauseated</em> if hit by <em>Stunning
       Fist</em> again), but additional hits do increase the duration.</p>
-  actions:
-    - _id: t964ab1f99gydrqs
-      name: Use
-      img: systems/pf1/icons/skills/yellow_08.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: >-
-      @classes.monk.level + floor((@attributes.hd.total - @classes.monk.level )
-      / 4)
-  tag: classFeat_stunningFist
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-  abilityType: ex
   source:
     id: PZO1110
     pages: '59'
-_key: '!items!2ausI8g6SsmbOpgF'
+  subType: classFeat
+  tag: classFeat_stunningFist
+  uses:
+    maxFormula: >-
+      @classes.monk.level + floor((@attributes.hd.total - @classes.monk.level )
+      / 4)
+    per: day
+type: feat
 

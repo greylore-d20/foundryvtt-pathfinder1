@@ -1,8 +1,20 @@
 _id: 3mL09kGEuwkvJ2mA
-name: Maneuver Mastery (ORA)
-type: feat
+_key: '!items!3mL09kGEuwkvJ2mA'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Maneuver Mastery (ORA)
 system:
+  abilityType: ex
+  actions:
+    - _id: t8ui2nri65ceeg5m
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Select one type of combat maneuver. When performing the selected
@@ -16,22 +28,10 @@ system:
       grants you a bonus when performing that maneuver.</p>
 
       <p>You do not need to meet the prerequisites to receive these feats.</p>
+  subType: classFeat
+  tag: classFeat_maneuverMasteryOra
   tags:
     - Revelation
     - Battle Mystery
-  actions:
-    - _id: t8ui2nri65ceeg5m
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_maneuverMasteryOra
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!3mL09kGEuwkvJ2mA'
+type: feat
 

@@ -1,8 +1,27 @@
 _id: xpmhu8rj7gbjns84
-name: Veil of Positive Energy
-type: spell
+_key: '!items!xpmhu8rj7gbjns84'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Veil of Positive Energy
 system:
+  actions:
+    - _id: xb1sqwuu9ue6xv4b
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you or all creatures within 5 ft.; see text
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You surround yourself with a veil of positive energy, making it harder
@@ -12,33 +31,14 @@ system:
       You can dismiss this spell before its normal duration as a swift action on
       your turn to deal a number of points of positive energy damage equal to
       your level to all undead creatures within 5 feet of you.</p>
-  actions:
-    - _id: xb1sqwuu9ue6xv4b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you or all creatures within 5 ft.; see text
-      range:
-        units: personal
   learnedAt:
     class:
       paladin: 1
   school: abj
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1115
     pages: '254'
-_key: '!items!xpmhu8rj7gbjns84'
+  sr: false
+  types: good
+type: spell
 

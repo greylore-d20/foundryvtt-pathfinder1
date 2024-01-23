@@ -1,18 +1,11 @@
 _id: pncr3vvsa94xq4zt
-name: Stunning Barrier, Greater
-type: spell
+_key: '!items!pncr3vvsa94xq4zt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stunning Barrier, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>stunning barrier</i>, except as noted above,
-      and it provides a +2 bonus to AC and on saving throws. It is not
-      discharged until it has stunned a number of creatures equal to your caster
-      level.</p>
   actions:
     - _id: cjqzhhfx0z9jlx7i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,29 +13,36 @@ system:
           type: action
       duration:
         value: 1 round/level or until discharged
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
-        type: will
         description: none and Will negates (see text)
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>stunning barrier</i>, except as noted above,
+      and it provides a +2 bonus to AC and on saving throws. It is not
+      discharged until it has stunned a number of creatures equal to your caster
+      level.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
+      inquisitor: 3
       oracle: 3
       paladin: 3
-      inquisitor: 3
       psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!pncr3vvsa94xq4zt'
+type: spell
 

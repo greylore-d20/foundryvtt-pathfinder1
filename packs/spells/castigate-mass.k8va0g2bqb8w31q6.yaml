@@ -1,16 +1,11 @@
 _id: k8va0g2bqb8w31q6
-name: Castigate, Mass
-type: spell
+_key: '!items!k8va0g2bqb8w31q6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Castigate, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>castigate</i>, except it affects many
-      creatures.</p>
   actions:
     - _id: z5zjwynfh21pjxzb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,17 +13,26 @@ system:
           type: action
       duration:
         value: 1 round/level or 1 round; see text
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: medium
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will partial
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>castigate</i>, except it affects many
+      creatures.</p>
   learnedAt:
     class:
       inquisitor: 5
@@ -37,9 +41,5 @@ system:
   school: enc
   subschool: compulsion
   types: fear, language-dependent, mind-affecting, emotion
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!k8va0g2bqb8w31q6'
+type: spell
 

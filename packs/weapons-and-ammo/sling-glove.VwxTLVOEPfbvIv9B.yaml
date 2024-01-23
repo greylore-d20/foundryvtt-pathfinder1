@@ -1,8 +1,40 @@
 _id: VwxTLVOEPfbvIv9B
-name: Sling Glove
-type: weapon
+_key: '!items!VwxTLVOEPfbvIv9B'
 img: systems/pf1/icons/items/weapons/sling-glove.png
+name: Sling Glove
 system:
+  actions:
+    - _id: 9ttekzdljxwewhsv
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: slingBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/sling-glove.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '50'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Sling Glove
   description:
     value: >-
       <p>This curved, scooped-shaped, 2-foot-long wicker basket attaches to your
@@ -11,59 +43,27 @@ system:
       does not provoke an attack of opportunity so long as you have a free hand.
       You take -4 penalty when throwing a stone at an adjacent target and cannot
       use the weapon to attack creatures in your space.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 5
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 9ttekzdljxwewhsv
-      name: Throw
-      img: systems/pf1/icons/items/weapons/sling-glove.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '50'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: slingBullet
-  baseTypes:
-    - Sling Glove
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 5
   source:
     id: PZO9410
     pages: '5'
-  ammo:
-    type: slingBullet
-_key: '!items!VwxTLVOEPfbvIv9B'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
 

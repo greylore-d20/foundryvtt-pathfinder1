@@ -1,8 +1,30 @@
 _id: i4fjl8679kdo0vgb
-name: Detect the Faithful
-type: spell
+_key: '!items!i4fjl8679kdo0vgb'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect the Faithful
 system:
+  actions:
+    - _id: fjik56v6wjf15f7z
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can detect other worshipers of your deity (mortal worshipers,
@@ -22,41 +44,19 @@ system:
       same faith also appears to the spell to be a member. Thus, the spell is
       still useful in locating potential hidden members of the same faith among
       the general populace, but on its own, it doesn't weed out spies.</p>
-  actions:
-    - _id: fjik56v6wjf15f7z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level (D)
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      ranger: 1
-      paladin: 1
-      inquisitor: 1
       antipaladin: 1
-      shaman: 1
+      cleric: 1
+      druid: 1
       hunter: 1
+      inquisitor: 1
+      oracle: 1
+      paladin: 1
+      ranger: 1
+      shaman: 1
+      warpriest: 1
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!i4fjl8679kdo0vgb'
+type: spell
 

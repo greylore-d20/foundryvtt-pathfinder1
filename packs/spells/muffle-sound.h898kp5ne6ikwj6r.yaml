@@ -1,8 +1,30 @@
 _id: h898kp5ne6ikwj6r
-name: Muffle Sound
-type: spell
+_key: '!items!h898kp5ne6ikwj6r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Muffle Sound
 system:
+  actions:
+    - _id: 7bzq7u9srdleqk32
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: 1 ally/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You suppress sounds made by the targets, granting them a +4 bonus on
@@ -11,39 +33,17 @@ system:
       components (such as some bardic performances). This spell does not hamper
       the targets' ability to hear other sounds and provides no protection
       against language-dependent or sonic spells and effects.</p>
-  actions:
-    - _id: 7bzq7u9srdleqk32
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: 1 ally/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
+      cleric: 2
       inquisitor: 2
-      psychic: 2
       mesmerist: 2
+      oracle: 2
+      psychic: 2
+      warpriest: 2
   level: 2
   school: ill
   subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!h898kp5ne6ikwj6r'
+type: spell
 

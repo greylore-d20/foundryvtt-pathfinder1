@@ -1,19 +1,10 @@
 _id: b8vp8fgt1o6pq1qc
-name: Continual Flame
-type: spell
+_key: '!items!b8vp8fgt1o6pq1qc'
 img: icons/magic/fire/flame-burning-fence.webp
+name: Continual Flame
 system:
-  description:
-    value: >-
-      <p>A flame, equivalent in brightness to a torch, springs forth from an
-      object that you touch. The effect looks like a regular flame, but it
-      creates no heat and doesn't use oxygen. A <i>continual flame</i> can be
-      covered and hidden but not smothered or quenched.</p><p>Light spells
-      counter and dispel <i>darkness</i> spells of an equal or lower level.</p>
   actions:
     - _id: jafgv1kzroceabyc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,36 +12,45 @@ system:
           type: action
       duration:
         value: permanent
-      target:
-        value: object touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
       spellEffect: magical, heatless flame
+      target:
+        value: object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>A flame, equivalent in brightness to a torch, springs forth from an
+      object that you touch. The effect looks like a regular flame, but it
+      creates no heat and doesn't use oxygen. A <i>continual flame</i> can be
+      covered and hidden but not smothered or quenched.</p><p>Light spells
+      counter and dispel <i>darkness</i> spells of an equal or lower level.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      inquisitor: 3
       adept: 3
-      psychic: 3
+      cleric: 3
+      inquisitor: 3
       occultist: 2
+      oracle: 3
+      psychic: 3
+      sorcerer: 2
+      warpriest: 3
+      wizard: 2
     subDomain:
       Day: 2
   level: 2
-  school: evo
-  types: light
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: ruby dust worth 50 gp
     gpValue: 50
+    value: ruby dust worth 50 gp
   preparation:
     spontaneousPrepared: false
+  school: evo
   sr: false
-_key: '!items!b8vp8fgt1o6pq1qc'
+  types: light
+type: spell
 

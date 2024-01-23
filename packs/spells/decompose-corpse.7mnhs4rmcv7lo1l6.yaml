@@ -1,19 +1,11 @@
 _id: 7mnhs4rmcv7lo1l6
-name: Decompose Corpse
-type: spell
+_key: '!items!7mnhs4rmcv7lo1l6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Decompose Corpse
 system:
-  description:
-    value: >-
-      <p>Using this spell, the caster rapidly decomposes the flesh from a single
-      corpse of size Huge or smaller, leaving behind a perfectly cleaned
-      skeleton. If it is cast on a non-skeletal corporeal undead, the creature
-      takes a -2 penalty on all rolls and to its Armor Class and CMD for 1
-      minute.</p>
   actions:
     - _id: 70mn87jgmjqjbqic
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,34 +13,42 @@ system:
           type: action
       duration:
         value: instantaneous or 1 minute; see text
-      target:
-        value: one corpse or corporeal undead
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates (object)
+        type: fort
+      target:
+        value: one corpse or corporeal undead
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Using this spell, the caster rapidly decomposes the flesh from a single
+      corpse of size Huge or smaller, leaving behind a perfectly cleaned
+      skeleton. If it is cast on a non-skeletal corporeal undead, the creature
+      takes a -2 penalty on all rolls and to its Armor Class and CMD for 1
+      minute.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      witch: 1
-      psychic: 1
+      hunter: 1
       medium: 1
       occultist: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
       spiritualist: 1
-      hunter: 1
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a pinch of dried toadstool
-_key: '!items!7mnhs4rmcv7lo1l6'
+  school: nec
+type: spell
 

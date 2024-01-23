@@ -1,8 +1,29 @@
 _id: f828mjoo5afszqnk
-name: Creeping Doom
-type: spell
+_key: '!items!f828mjoo5afszqnk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Creeping Doom
 system:
+  actions:
+    - _id: eo7zrmxeolmrn04s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial; see text
+        type: fort
+      spellEffect: four swarms of insects
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons four massive swarms of biting and stinging insects.
@@ -18,41 +39,20 @@ system:
       more than 100 feet away from you, and if you move more than 100 feet from
       any swarm, that swarm remains stationary, attacking any creatures in its
       area (but can be commanded again if you move within 100 feet).</p>
-  actions:
-    - _id: eo7zrmxeolmrn04s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial; see text
-      spellEffect: four swarms of insects
   learnedAt:
+    bloodline:
+      Pestilence: 7
     class:
       druid: 7
-      summoner: 5
       shaman: 7
+      summoner: 5
       summonerUnchained: 6
     domain:
       Scalykind: 7
       Vermin: 7
-    bloodline:
-      Pestilence: 7
   level: 7
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!f828mjoo5afszqnk'
+  subschool: summoning
+type: spell
 

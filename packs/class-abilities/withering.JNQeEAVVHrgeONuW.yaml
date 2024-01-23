@@ -1,8 +1,34 @@
 _id: JNQeEAVVHrgeONuW
-name: Withering
-type: feat
+_key: '!items!JNQeEAVVHrgeONuW'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Withering
 system:
+  abilityType: su
+  actions:
+    - _id: 4bd3yat34bv1d106
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.witch.level'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch causes a creature within 30 feet to age rapidly, empowering
@@ -18,36 +44,10 @@ system:
 
       <p>Once a creature has successfully saved against the withering hex, it
       cannot be affected by it again.</p>
+  subType: classFeat
+  tag: classFeat_withering
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: 4bd3yat34bv1d106
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.witch.level'
-        units: hour
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_withering
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!JNQeEAVVHrgeONuW'
+type: feat
 

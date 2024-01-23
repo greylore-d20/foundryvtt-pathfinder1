@@ -1,8 +1,27 @@
 _id: DrBBxD60RS1ldNvf
-name: Venomous Saliva
-type: feat
+_key: '!items!DrBBxD60RS1ldNvf'
 img: systems/pf1/icons/skills/violet_23.jpg
+name: Venomous Saliva
 system:
+  abilityType: su
+  actions:
+    - _id: 16ntadf1t99lhite
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_23.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon held
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Just as certain serpents can spray poison from their fangs, as a swift
@@ -15,29 +34,10 @@ system:
 
       <p>This power replaces the Venomous Stare power of the Scalykind
       Domain.</p>
-  actions:
-    - _id: 16ntadf1t99lhite
-      name: Use
-      img: systems/pf1/icons/skills/violet_23.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon held
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_venomousSaliva
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!DrBBxD60RS1ldNvf'
+  tag: classFeat_venomousSaliva
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,31 @@
 _id: h9dzj2fr5lksdjcp
-name: Umbral Strike
-type: spell
+_key: '!items!h9dzj2fr5lksdjcp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Umbral Strike
 system:
+  actions:
+    - _id: y1i3kjmqzfg3gmwc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: 1 creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a bolt of dark energy and use it to make a ranged touch
@@ -12,48 +35,25 @@ system:
       bolt's shadow expands and covers the target, rendering him blind for the
       duration of the spell. A successful Fortitude save halves the damage and
       negates the blind condition.</p>
-  actions:
-    - _id: y1i3kjmqzfg3gmwc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: 1 creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
       druid: 7
-      witch: 7
       inquisitor: 6
       magus: 6
-      shaman: 7
-      psychic: 7
       occultist: 6
+      oracle: 7
+      psychic: 7
+      shaman: 7
+      sorcerer: 7
       spiritualist: 6
+      witch: 7
+      wizard: 7
   level: 7
+  materials:
+    value: a black crossbow bolt
   school: nec
   subschool: shadow
   types: darkness
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a black crossbow bolt
-_key: '!items!h9dzj2fr5lksdjcp'
+type: spell
 

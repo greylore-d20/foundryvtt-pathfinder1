@@ -1,8 +1,31 @@
 _id: M6714EOSXqjOoMwp
-name: Cinder Dance
-type: feat
+_key: '!items!M6714EOSXqjOoMwp'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Cinder Dance
 system:
+  abilityType: ex
+  actions:
+    - _id: nt4ob5o1pkjcmjmb
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
+      - Shaman
+  changes:
+    - _id: F9U6KbKf
+      formula: '10'
+      modifier: untyped
+      priority: null
+      subTarget: landSpeed
+    - _id: Cxo4zlbK
+      formula: min(floor(@class.level / 5), 2)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>Your base speed increases by 10 feet.</p><p>At 5th level, you receive
@@ -12,38 +35,15 @@ system:
       You do not need to meet the prerequisites to receive these
       feats.</p><p>Oracles only: Oracles with the lame oracle curse cannot
       select this revelation.</p>
+  source:
+    id: PZO1115
+    pages: '47'
+  subType: classFeat
+  tag: classFeat_cinderDance
   tags:
     - Flame Mystery
     - Oracle Revelation
     - Flame Spirit
     - Shaman Spirit Hex
-  actions:
-    - _id: nt4ob5o1pkjcmjmb
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: F9U6KbKf
-      formula: '10'
-      subTarget: landSpeed
-      modifier: untyped
-      priority: null
-    - _id: Cxo4zlbK
-      formula: min(floor(@class.level / 5), 2)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_cinderDance
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-      - Shaman
-  abilityType: ex
-  source:
-    id: PZO1115
-    pages: '47'
-_key: '!items!M6714EOSXqjOoMwp'
+type: feat
 

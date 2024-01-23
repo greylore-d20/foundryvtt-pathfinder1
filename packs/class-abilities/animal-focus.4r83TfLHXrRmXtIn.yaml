@@ -1,8 +1,27 @@
 _id: 4r83TfLHXrRmXtIn
-name: Animal Focus
-type: feat
+_key: '!items!4r83TfLHXrRmXtIn'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Animal Focus
 system:
+  abilityType: su
+  actions:
+    - _id: m81zj2ycaf7ra9e3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/blue_26.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Hunter
   description:
     value: >-
       <p>At 1st level, a hunter can take on the aspect of an animal as a swift
@@ -24,29 +43,10 @@ system:
       one she can choose, and (as with a companion’s focus) remains in effect
       until the hunter changes it instead of counting against her minutes per
       day.</p>
-  actions:
-    - _id: m81zj2ycaf7ra9e3
-      name: Use
-      img: systems/pf1/icons/skills/blue_26.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.hunter.level'
-  tag: classFeat_animalFocus
   subType: classFeat
-  associations:
-    classes:
-      - Hunter
-  abilityType: su
-_key: '!items!4r83TfLHXrRmXtIn'
+  tag: classFeat_animalFocus
+  uses:
+    maxFormula: '@classes.hunter.level'
+    per: day
+type: feat
 

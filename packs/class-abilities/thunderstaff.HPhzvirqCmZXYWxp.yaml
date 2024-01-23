@@ -1,8 +1,28 @@
 _id: HPhzvirqCmZXYWxp
-name: Thunderstaff
-type: feat
+_key: '!items!HPhzvirqCmZXYWxp'
 img: systems/pf1/icons/spells/enchant-jade-2.jpg
+name: Thunderstaff
 system:
+  abilityType: sp
+  actions:
+    - _id: dr20vxd5mzcfwva3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, (floor(@classes.sorcerer.level / 2)))
+      img: systems/pf1/icons/spells/enchant-jade-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can touch a weapon as a <em>standard action</em>,
@@ -11,30 +31,10 @@ system:
       <em>shocking burst</em> property instead, but the duration of the power is
       halved. You can use this ability a number of times per day equal to 3 +
       your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: dr20vxd5mzcfwva3
-      name: Use
-      img: systems/pf1/icons/spells/enchant-jade-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, (floor(@classes.sorcerer.level / 2)))
-        units: round
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_thunderstaff
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!HPhzvirqCmZXYWxp'
+  tag: classFeat_thunderstaff
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

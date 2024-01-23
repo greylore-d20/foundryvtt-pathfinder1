@@ -1,8 +1,28 @@
 _id: 9wfFpfkQZxaob2lw
-name: Hateful Aura
-type: feat
+_key: '!items!9wfFpfkQZxaob2lw'
 img: systems/pf1/icons/skills/affliction_24.jpg
+name: Hateful Aura
 system:
+  abilityType: su
+  actions:
+    - _id: ytumzgyil5p0pjkw
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_24.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: foes within range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura of hatred for a number of
@@ -16,30 +36,10 @@ system:
 
       <p>This power replaces the Destructive Aura power of the Destruction
       Domain.</p>
-  actions:
-    - _id: ytumzgyil5p0pjkw
-      name: Use
-      img: systems/pf1/icons/skills/affliction_24.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: foes within range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_hatefulAura
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!9wfFpfkQZxaob2lw'
+  tag: classFeat_hatefulAura
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

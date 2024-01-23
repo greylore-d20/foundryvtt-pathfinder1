@@ -1,19 +1,11 @@
 _id: y5t4k03ggcohz1uk
-name: Stunning Finale
-type: spell
+_key: '!items!y5t4k03ggcohz1uk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stunning Finale
 system:
-  description:
-    value: >-
-      <p>You must have a bardic performance in effect to cast this
-      spell.</p><p>With a flourish, you immediately end your bardic performance,
-      assaulting the senses of the targets with your finale. Each target is
-      stunned for 1 round. On a successful saving throw, a target is staggered
-      for 1 round.</p>
   actions:
     - _id: 375nr2pgot4slg8b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,14 +13,25 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: up to 3 creatures, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude partial; see text
+        type: fort
+      target:
+        value: up to 3 creatures, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You must have a bardic performance in effect to cast this
+      spell.</p><p>With a flourish, you immediately end your bardic performance,
+      assaulting the senses of the targets with your finale. Each target is
+      stunned for 1 round. On a successful saving throw, a target is staggered
+      for 1 round.</p>
   learnedAt:
     class:
       bard: 5
@@ -36,8 +39,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!y5t4k03ggcohz1uk'
+type: spell
 

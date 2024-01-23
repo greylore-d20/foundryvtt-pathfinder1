@@ -1,8 +1,15 @@
 _id: u7edWPktC4cruJQQ
-name: Hierophant
-type: class
+_key: '!items!u7edWPktC4cruJQQ'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Hierophant
 system:
+  bab: ''
+  changes:
+    - _id: hq53n1x9
+      formula: '@classes.mythicHierophant.level * 4'
+      modifier: untyped
+      priority: null
+      subTarget: mhp
   description:
     value: >-
       <p>Those who draw upon a god's power find themselves becoming closer to
@@ -77,17 +84,8 @@ system:
       the maximum possible amount. You also gain DR 10/epic. Once per round when
       you take more than 20 points of damage (after damage reduction is
       applied), you regain one use of mythic power.</p>
-  changes:
-    - _id: hq53n1x9
-      formula: '@classes.mythicHierophant.level * 4'
-      subTarget: mhp
-      modifier: untyped
-      priority: null
-  tag: mythicHierophant
-  subType: mythic
   hd: 0
   hp: 0
-  bab: ''
   savingThrows:
     fort:
       value: ''
@@ -98,5 +96,7 @@ system:
   source:
     id: PZO1126
     pages: '32'
-_key: '!items!u7edWPktC4cruJQQ'
+  subType: mythic
+  tag: mythicHierophant
+type: class
 

@@ -1,8 +1,43 @@
 _id: u6q3Zk8XL1AMPxY4
-name: Energy Kinetic Blast
-type: feat
+_key: '!items!u6q3Zk8XL1AMPxY4'
 img: systems/pf1/icons/skills/affliction_12.jpg
+name: Energy Kinetic Blast
 system:
+  abilityType: sp
+  actions:
+    - _id: vq782ct9fmhew5gz
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackBonus: >-
+        min(@resources.classFeat_burn.value, floor(@classes.kineticist.level /
+        3))
+      damage:
+        parts:
+          - formula: >-
+              (ceil(@classes.kineticist.level / 2))d6 +
+              min(@resources.classFeat_burn.value,
+              floor(@classes.kineticist.level / 3)) * 2
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/affliction_12.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+  associations:
+    classes:
+      - Kineticist
+  crOffset: '0'
   description:
     value: >-
       <p>At 1st level, a kineticist gains a kinetic blast wild talent of her
@@ -62,42 +97,7 @@ system:
       Elements</em></li>
 
       </ul>
-  actions:
-    - _id: vq782ct9fmhew5gz
-      name: Use
-      img: systems/pf1/icons/skills/affliction_12.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      attackBonus: >-
-        min(@resources.classFeat_burn.value, floor(@classes.kineticist.level /
-        3))
-      damage:
-        parts:
-          - formula: >-
-              (ceil(@classes.kineticist.level / 2))d6 +
-              min(@resources.classFeat_burn.value,
-              floor(@classes.kineticist.level / 3)) * 2
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: dex
-  tag: classFeat_energyKineticBlast
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-  crOffset: '0'
-_key: '!items!u6q3Zk8XL1AMPxY4'
+  tag: classFeat_energyKineticBlast
+type: feat
 

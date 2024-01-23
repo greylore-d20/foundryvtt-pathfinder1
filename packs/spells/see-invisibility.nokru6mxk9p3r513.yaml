@@ -1,8 +1,27 @@
 _id: nokru6mxk9p3r513
-name: See Invisibility
-type: spell
+_key: '!items!nokru6mxk9p3r513'
 img: icons/magic/perception/eye-ringed-glow-angry-red.webp
+name: See Invisibility
 system:
+  actions:
+    - _id: bsp4977nfva03n11
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can see any objects or beings that are invisible within your range
@@ -15,52 +34,33 @@ system:
       simply hiding, concealed, or otherwise hard to see.</p><p>See
       <i>invisibility</i> can be made permanent with a <i>permanency</i>
       spell.</p>
-  actions:
-    - _id: bsp4977nfva03n11
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 2
-      wizard: 2
-      bard: 3
-      alchemist: 2
-      summoner: 2
-      witch: 2
-      inquisitor: 2
-      adept: 2
-      bloodrager: 2
-      psychic: 2
-      mesmerist: 3
-      occultist: 2
-      spiritualist: 2
-      summonerUnchained: 2
-    subDomain:
-      Revelation: 2
     bloodline:
       Marid: 2
+    class:
+      adept: 2
+      alchemist: 2
+      bard: 3
+      bloodrager: 2
+      inquisitor: 2
+      mesmerist: 3
+      occultist: 2
+      psychic: 2
+      sorcerer: 2
+      spiritualist: 2
+      summoner: 2
+      summonerUnchained: 2
+      witch: 2
+      wizard: 2
+    subDomain:
+      Revelation: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: talc and powdered silver
-  sr: false
+  school: div
   source:
     id: PZO1110
     pages: '339'
-_key: '!items!nokru6mxk9p3r513'
+  sr: false
+type: spell
 

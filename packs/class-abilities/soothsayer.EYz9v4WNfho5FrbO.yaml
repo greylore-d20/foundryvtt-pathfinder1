@@ -1,8 +1,23 @@
 _id: EYz9v4WNfho5FrbO
-name: Soothsayer
-type: feat
+_key: '!items!EYz9v4WNfho5FrbO'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Soothsayer
 system:
+  abilityType: su
+  actions:
+    - _id: MFpE7mms3z0hF9FB
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        units: day
+        value: '1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch’s predictions become selffulfilling prophecies. When the
@@ -17,24 +32,9 @@ system:
       for failure). The duration of the hex begins on the same round as the
       action that causes it to take effect.</p><p>The hex is wasted if it is not
       triggered within 24 hours.</p>
+  subType: classFeat
+  tag: classFeat_soothsayer
   tags:
     - Hex
-  actions:
-    - _id: MFpE7mms3z0hF9FB
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        value: '1'
-        units: day
-  tag: classFeat_soothsayer
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!EYz9v4WNfho5FrbO'
+type: feat
 

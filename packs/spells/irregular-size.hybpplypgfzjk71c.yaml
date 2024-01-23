@@ -1,8 +1,30 @@
 _id: hybpplypgfzjk71c
-name: Irregular Size
-type: spell
+_key: '!items!hybpplypgfzjk71c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Irregular Size
 system:
+  actions:
+    - _id: plzgsaao68enqb2z
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You curse a creature so one set of its limbs (typically its arms, legs,
@@ -11,45 +33,23 @@ system:
       wield. If the creature is capable of making natural attacks with its arms,
       the damage dealt by those attacks decreases as though the target were one
       size category smaller than its actual size.</p>
-  actions:
-    - _id: plzgsaao68enqb2z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
       antipaladin: 3
       bloodrager: 4
-      shaman: 3
+      cleric: 3
       medium: 2
       mesmerist: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      sorcerer: 4
       spiritualist: 4
+      warpriest: 3
+      witch: 3
+      wizard: 4
   level: 4
   school: trs
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!hybpplypgfzjk71c'
+type: spell
 

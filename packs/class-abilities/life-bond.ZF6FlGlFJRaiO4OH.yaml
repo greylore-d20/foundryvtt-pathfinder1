@@ -1,8 +1,20 @@
 _id: ZF6FlGlFJRaiO4OH
-name: Life Bond
-type: feat
+_key: '!items!ZF6FlGlFJRaiO4OH'
 img: systems/pf1/icons/skills/blood_04.jpg
+name: Life Bond
 system:
+  abilityType: su
+  actions:
+    - _id: re3lcv9bl82ngt6y
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/blood_04.jpg
+      name: Use
+  associations:
+    classes:
+      - Summoner
   description:
     value: >-
       <p>At 14th level, a summoner’s life becomes linked to his eidolon’s. As
@@ -15,22 +27,10 @@ system:
       death but not damage are unaffected by this ability. This ability does not
       affect spells like baleful polymorph, flesh to stone, or imprisonment, or
       other spells that do not cause actual damage.</p>
-  actions:
-    - _id: re3lcv9bl82ngt6y
-      name: Use
-      img: systems/pf1/icons/skills/blood_04.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_lifeBond
-  subType: classFeat
-  associations:
-    classes:
-      - Summoner
-  abilityType: su
   source:
     id: PZO1115
     pages: '54'
-_key: '!items!ZF6FlGlFJRaiO4OH'
+  subType: classFeat
+  tag: classFeat_lifeBond
+type: feat
 

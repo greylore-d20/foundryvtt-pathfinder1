@@ -1,8 +1,23 @@
 _id: ft7bv1fjm7slgcpb
-name: Desperate Weapon
-type: spell
+_key: '!items!ft7bv1fjm7slgcpb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Desperate Weapon
 system:
+  actions:
+    - _id: uxs8nmenckrvzjbu
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      spellEffect: one-handed improvised weapon
+  components:
+    verbal: true
   description:
     value: >-
       <p>You create a one-handed object that you might expect to see in your
@@ -23,38 +38,23 @@ system:
       manufactured weapons. It can be an object that would normally make for an
       unusual improvised weapon, like a herring at a fish market, and it still
       deals its full damage.</p>
-  actions:
-    - _id: uxs8nmenckrvzjbu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: personal
-      spellEffect: one-handed improvised weapon
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
+      antipaladin: 1
+      bard: 1
+      bloodrager: 1
       cleric: 1
-      warpriest: 1
+      hunter: 1
+      inquisitor: 1
+      magus: 1
+      occultist: 1
       oracle: 1
       ranger: 1
-      bard: 1
-      inquisitor: 1
-      antipaladin: 1
-      magus: 1
-      bloodrager: 1
-      occultist: 1
-      hunter: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   school: con
-  subschool: creation
-  components:
-    verbal: true
   sr: false
-_key: '!items!ft7bv1fjm7slgcpb'
+  subschool: creation
+type: spell
 

@@ -1,8 +1,28 @@
 _id: qr6qcx8zqum6jhc4
-name: Atonement
-type: spell
+_key: '!items!qr6qcx8zqum6jhc4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Atonement
 system:
+  actions:
+    - _id: ojdcra3jmb8kx53n
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: living creature touched
+  components:
+    divineFocus: 1
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell removes the burden of misdeeds from the subject. The
@@ -39,41 +59,21 @@ system:
       question.</p><p>Note: Normally, changing alignment is up to the player.
       This use of <i>atonement</i> offers a method for a character to change his
       or her alignment drastically, suddenly, and definitively.</p>
-  actions:
-    - _id: ojdcra3jmb8kx53n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: living creature touched
-      range:
-        units: touch
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
       druid: 5
-      inquisitor: 5
       hunter: 5
+      inquisitor: 5
+      oracle: 5
+      warpriest: 5
     subDomain:
       Purity: 5
       Redemption: 5
   level: 5
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
-    divineFocus: 1
   materials:
-    value: burning incense
     focus: a set of prayer beads or other prayer device worth at least 500 gp
-_key: '!items!qr6qcx8zqum6jhc4'
+    value: burning incense
+  school: abj
+type: spell
 

@@ -1,8 +1,20 @@
 _id: U2YBSx1s8cT8iDq1
-name: Favored Terrain (RNG)
-type: feat
+_key: '!items!U2YBSx1s8cT8iDq1'
 img: systems/pf1/icons/skills/green_18.jpg
+name: Favored Terrain (RNG)
 system:
+  abilityType: ex
+  actions:
+    - _id: 3is7r3vodxmkr5vz
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/green_18.jpg
+      name: Use
+  associations:
+    classes:
+      - Ranger
   description:
     value: >-
       <p>At 3rd level, a ranger may select a type of terrain from Table: Ranger
@@ -108,22 +120,10 @@ system:
       </tbody>
 
       </table>
-  actions:
-    - _id: 3is7r3vodxmkr5vz
-      name: Use
-      img: systems/pf1/icons/skills/green_18.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_favoredTerrainRng
-  subType: classFeat
-  associations:
-    classes:
-      - Ranger
-  abilityType: ex
   source:
     id: PZO1110
     pages: '65'
-_key: '!items!U2YBSx1s8cT8iDq1'
+  subType: classFeat
+  tag: classFeat_favoredTerrainRng
+type: feat
 

@@ -1,18 +1,10 @@
 _id: b3hyz4dnnkgw9nfu
-name: Blade Lash
-type: spell
+_key: '!items!b3hyz4dnnkgw9nfu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blade Lash
 system:
-  description:
-    value: >-
-      <p>Your weapon elongates and becomes whiplike. As part of casting this
-      spell, you can use this weapon to attempt a trip combat maneuver against
-      one creature within 20 feet, and you gain a +10 bonus on your roll, after
-      which the weapon returns to its previous form.</p>
   actions:
     - _id: lufzee40amlg2hfi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,18 +12,26 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: your melee weapon
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: your melee weapon
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your weapon elongates and becomes whiplike. As part of casting this
+      spell, you can use this weapon to attempt a trip combat maneuver against
+      one creature within 20 feet, and you gain a +10 bonus on your roll, after
+      which the weapon returns to its previous form.</p>
   learnedAt:
     class:
-      magus: 1
       bloodrager: 1
+      magus: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!b3hyz4dnnkgw9nfu'
+type: spell
 

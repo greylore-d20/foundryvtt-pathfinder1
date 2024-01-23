@@ -1,8 +1,11 @@
 _id: aD2JhzW6M813epJg
-name: Explosive Bomb
-type: feat
+_key: '!items!aD2JhzW6M813epJg'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Explosive Bomb
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>The alchemist's bombs now have a splash radius of 10 feet rather than 5
@@ -12,12 +15,9 @@ system:
       requires a Reflex save. Rolling on the ground provides the target with a
       +2 to the save. Dousing the target with at least 2 gallons of water
       automatically extinguishes the flames.</p>
+  subType: classFeat
+  tag: classFeat_explosiveBomb
   tags:
     - Alchemist Discovery
-  tag: classFeat_explosiveBomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!aD2JhzW6M813epJg'
+type: feat
 

@@ -1,8 +1,23 @@
 _id: uSq9FyjQp3MF1ZPc
-name: Light Steps
-type: feat
+_key: '!items!uSq9FyjQp3MF1ZPc'
 img: systems/pf1/icons/feats/acrobatic.jpg
+name: Light Steps
 system:
+  abilityType: ex
+  actions:
+    - _id: pz42orxqejoukrf3
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/acrobatic.jpg
+      name: Use
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>At 6th level, a ninja learns to move while barely touching the surface
@@ -17,22 +32,7 @@ system:
       to make Acrobatics checks to avoid falling on slippery or rough surfaces.
       Finally, when using light steps, the ninja ignores any mechanical traps
       that use a location-based trigger.</p>
-  actions:
-    - _id: pz42orxqejoukrf3
-      name: Use
-      img: systems/pf1/icons/feats/acrobatic.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        units: inst
-  tag: classFeat_lightSteps
   subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: ex
-_key: '!items!uSq9FyjQp3MF1ZPc'
+  tag: classFeat_lightSteps
+type: feat
 

@@ -1,8 +1,33 @@
 _id: n100jPNSGj4LIhDz
-name: Evil Eye (SHA)
-type: feat
+_key: '!items!n100jPNSGj4LIhDz'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Evil Eye (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: tfxdv1hiavgoqlb1
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 3 + @abilities.wis.mod
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will reduces duration to 1 round
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman causes doubt to creep into the mind of a foe within 30 feet
@@ -14,32 +39,7 @@ system:
 
       <p>At 8th level, the penalty increases to –4. This is a mind-affecting
       effect.</p>
-  actions:
-    - _id: tfxdv1hiavgoqlb1
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 + @abilities.wis.mod
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will reduces duration to 1 round
-  tag: classFeat_evilEyeSha
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!n100jPNSGj4LIhDz'
+  tag: classFeat_evilEyeSha
+type: feat
 

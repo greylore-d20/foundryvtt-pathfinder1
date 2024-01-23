@@ -1,8 +1,28 @@
 _id: XWgx2P8BeLQLWsKt
-name: Death's Kiss
-type: feat
+_key: '!items!XWgx2P8BeLQLWsKt'
 img: systems/pf1/icons/skills/blood_12.jpg
+name: Death's Kiss
 system:
+  abilityType: su
+  actions:
+    - _id: f47zq9dj5hkuxapl
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.cleric.level / 2))
+      img: systems/pf1/icons/skills/blood_12.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can cause a creature to take on some of the traits of the undead
@@ -14,30 +34,10 @@ system:
       equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Bleeding Touch power of the Death Domain.</p>
-  actions:
-    - _id: f47zq9dj5hkuxapl
-      name: Use
-      img: systems/pf1/icons/skills/blood_12.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.cleric.level / 2))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_deathsKiss
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!XWgx2P8BeLQLWsKt'
+  tag: classFeat_deathsKiss
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

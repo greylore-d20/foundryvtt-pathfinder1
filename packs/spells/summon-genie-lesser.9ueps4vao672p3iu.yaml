@@ -1,16 +1,10 @@
 _id: 9ueps4vao672p3iu
-name: Summon Genie, Lesser
-type: spell
+_key: '!items!9ueps4vao672p3iu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Genie, Lesser
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster I</i>, except you can
-      summon one janni.</p>
   actions:
     - _id: c79gphgw0knuy76t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -18,29 +12,35 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned genie
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster I</i>, except you can
+      summon one janni.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
       oracle: 4
+      sorcerer: 4
       summoner: 3
-      witch: 4
       summonerUnchained: 3
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: an oil lamp worth at least 50 gp
+  school: con
   sr: false
-_key: '!items!9ueps4vao672p3iu'
+  subschool: summoning
+type: spell
 

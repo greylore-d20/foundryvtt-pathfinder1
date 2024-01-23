@@ -1,17 +1,10 @@
 _id: cmwcavfyc1vbehy8
-name: Shadow Step
-type: spell
+_key: '!items!cmwcavfyc1vbehy8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Step
 system:
-  description:
-    value: >-
-      <p>To use this spell, you must be in an area of dim light or darkness. You
-      enter a shadow or area of darkness, which transports you along a coiling
-      path of shadowstuff to another dim or dark location within range.</p>
   actions:
     - _id: ensuu94ews5rbewc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,25 +12,32 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>To use this spell, you must be in an area of dim light or darkness. You
+      enter a shadow or area of darkness, which transports you along a coiling
+      path of shadowstuff to another dim or dark location within range.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      witch: 4
       psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: ill
+  sr: false
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!cmwcavfyc1vbehy8'
+type: spell
 

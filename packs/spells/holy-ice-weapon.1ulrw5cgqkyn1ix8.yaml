@@ -1,8 +1,27 @@
 _id: 1ulrw5cgqkyn1ix8
-name: Holy Ice Weapon
-type: spell
+_key: '!items!1ulrw5cgqkyn1ix8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Holy Ice Weapon
 system:
+  actions:
+    - _id: tzd7z2vrgfswowl2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one ice weapon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a masterwork weapon that has the qualities of ice and holy
@@ -15,39 +34,20 @@ system:
       caster level 6th, the weapon gains the <i>returning</i> weapon special
       ability when thrown, melting away after an attack and re-forming in your
       hand just before your next turn.</p>
-  actions:
-    - _id: tzd7z2vrgfswowl2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one ice weapon
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       inquisitor: 2
+      oracle: 2
+      warpriest: 2
   level: 2
-  school: trs
-  types: cold, good, water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a flask of holy water, or 5 pounds of powdered silver worth 25 gp
     gpValue: 25
+    value: a flask of holy water, or 5 pounds of powdered silver worth 25 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!1ulrw5cgqkyn1ix8'
+  types: cold, good, water
+type: spell
 

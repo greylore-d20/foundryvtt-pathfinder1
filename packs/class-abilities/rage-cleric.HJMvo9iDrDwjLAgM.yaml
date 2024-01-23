@@ -1,8 +1,27 @@
 _id: HJMvo9iDrDwjLAgM
-name: Rage (Cleric)
-type: feat
+_key: '!items!HJMvo9iDrDwjLAgM'
 img: systems/pf1/icons/skills/affliction_24.jpg
+name: Rage (Cleric)
 system:
+  abilityType: su
+  actions:
+    - _id: 3dbos0mijhbxtro5
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_24.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can enter a fearsome rage, like a barbarian, for a
@@ -14,29 +33,10 @@ system:
 
       <p>This power replaces the Destructive Aura power of the Destruction
       Domain.</p>
-  actions:
-    - _id: 3dbos0mijhbxtro5
-      name: Use
-      img: systems/pf1/icons/skills/affliction_24.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_rageCleric
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!HJMvo9iDrDwjLAgM'
+  tag: classFeat_rageCleric
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

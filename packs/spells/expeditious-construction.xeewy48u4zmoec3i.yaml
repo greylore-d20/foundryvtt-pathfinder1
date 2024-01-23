@@ -1,8 +1,26 @@
 _id: xeewy48u4zmoec3i
-name: Expeditious Construction
-type: spell
+_key: '!items!xeewy48u4zmoec3i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Expeditious Construction
 system:
+  actions:
+    - _id: liqprl0n3lcwu1b9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: a low wall 10 feet long per 3 levels (minimum 10 feet) (S)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a low wall or other simple structure of packed earth or
@@ -22,35 +40,17 @@ system:
       check stumble and must end their movement 1d2 x 5 feet later. Characters
       who fail by 5 or more fall prone in the square where they end their
       movement. A steep slope increases the DC of Acrobatics checks by 2.</p>
-  actions:
-    - _id: liqprl0n3lcwu1b9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      spellEffect: a low wall 10 feet long per 3 levels (minimum 10 feet) (S)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       druid: 1
       hunter: 1
-  school: con
-  subschool: creation
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      sorcerer: 1
+      wizard: 1
   materials:
     value: a handful of earth or stone
+  school: con
   sr: false
-_key: '!items!xeewy48u4zmoec3i'
+  subschool: creation
+  types: earth
+type: spell
 

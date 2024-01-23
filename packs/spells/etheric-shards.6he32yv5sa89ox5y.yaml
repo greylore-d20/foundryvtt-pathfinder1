@@ -1,8 +1,29 @@
 _id: 6he32yv5sa89ox5y
-name: Etheric Shards
-type: spell
+_key: '!items!6he32yv5sa89ox5y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Etheric Shards
 system:
+  actions:
+    - _id: vvclguze3txam7gg
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 10-ft. cube/level
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex partial or Reflex negates (see text)
+        type: ref
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>You harden interpenetrated ethereal substance into deadly
@@ -26,37 +47,16 @@ system:
       trapfinding can use Perception to find them. The DC of this check is equal
       to 25 + the spell's level. <i>Etheric shards</i> can't be disabled with
       the Disable Device skill.</p>
-  actions:
-    - _id: vvclguze3txam7gg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial or Reflex negates (see text)
-      area: one 10-ft. cube/level
   learnedAt:
     class:
-      psychic: 5
       occultist: 4
+      psychic: 5
       spiritualist: 4
   level: 5
-  school: evo
-  types: force
-  components:
-    somatic: true
-    material: true
   materials:
     value: broken glass
+  school: evo
   sr: false
-_key: '!items!6he32yv5sa89ox5y'
+  types: force
+type: spell
 

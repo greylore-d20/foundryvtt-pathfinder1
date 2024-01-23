@@ -1,29 +1,29 @@
 _id: D2huasedfGMSetP7
-name: Bane
-type: buff
+_key: '!items!D2huasedfGMSetP7'
 img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
+name: Bane
 system:
+  changes:
+    - _id: naa3gpnz
+      formula: '-1'
+      modifier: untyped
+      subTarget: attack
+  contextNotes:
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: allSavingThrows
+      target: savingThrows
+      text: '-[[1]] vs Fear effects'
+      value: 0
   description:
     value: >-
       <p>You take a -1 penalty on attack rolls and saving throws vs fear
       effects.</p>
-  changes:
-    - _id: naa3gpnz
-      formula: '-1'
-      subTarget: attack
-      modifier: untyped
-  contextNotes:
-    - formula: ''
-      operator: add
-      target: savingThrows
-      subTarget: allSavingThrows
-      modifier: ''
-      priority: 0
-      value: 0
-      text: '-[[1]] vs Fear effects'
-  level: '1'
   duration:
-    value: '@item.level'
     units: minute
-_key: '!items!D2huasedfGMSetP7'
+    value: '@item.level'
+  level: '1'
+type: buff
 

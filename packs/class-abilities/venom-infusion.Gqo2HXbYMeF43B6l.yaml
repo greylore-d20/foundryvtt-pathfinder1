@@ -1,8 +1,23 @@
 _id: Gqo2HXbYMeF43B6l
-name: Venom Infusion
-type: feat
+_key: '!items!Gqo2HXbYMeF43B6l'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Venom Infusion
 system:
+  actions:
+    - _id: by9g2bvvbpgm6d9e
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      save:
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> universal; <b>Type</b> substance infusion; <b>Level</b>
@@ -12,22 +27,7 @@ system:
 
       <p>All of your blasts are mildly toxic. Creatures that take damage from
       your blast are sickened for 1 round.</p>
-  actions:
-    - _id: by9g2bvvbpgm6d9e
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_venomInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!Gqo2HXbYMeF43B6l'
+  tag: classFeat_venomInfusion
+type: feat
 

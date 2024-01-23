@@ -1,8 +1,30 @@
 _id: rue864nzo68esp30
-name: Qualm
-type: spell
+_key: '!items!rue864nzo68esp30'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Qualm
 system:
+  actions:
+    - _id: qww8p0qyowoz9un7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target is suddenly beset with unexplainable doubts about the
@@ -12,43 +34,21 @@ system:
       entire turn doing absolutely nothing (it spends a full-round action
       gaining focus). Spending an entire turn doing nothing discharges the
       spell.</p>
-  actions:
-    - _id: qww8p0qyowoz9un7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level or until discharged
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
       inquisitor: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
     subDomain:
       Redemption: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!rue864nzo68esp30'
+type: spell
 

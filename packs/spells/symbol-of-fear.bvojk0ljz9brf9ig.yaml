@@ -1,8 +1,32 @@
 _id: bvojk0ljz9brf9ig
-name: Symbol of Fear
-type: spell
+_key: '!items!bvojk0ljz9brf9ig'
 img: icons/magic/control/fear-fright-monster-grin-purple-blue.webp
+name: Symbol of Fear
 system:
+  actions:
+    - _id: ltcs1lhzpouf0coj
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will negates
+        type: will
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i><i>symbol of</i> death</i>, except that
@@ -13,48 +37,24 @@ system:
       <i><i>symbol of</i> <i>fear</i></i> and Disable Device to thwart it. The
       DC in each case is 25 + spell level, or 31 for <i><i>symbol of</i>
       <i>fear</i></i>.</p>
-  actions:
-    - _id: ltcs1lhzpouf0coj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: one symbol
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
       occultist: 4
+      oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: nec
-  types: fear, mind-affecting, emotion
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 1000
     value: >-
       mercury and phosphorus, plus powdered diamond and opal worth a total of
       1,000 gp
-    gpValue: 1000
   preparation:
     spontaneousPrepared: false
-_key: '!items!bvojk0ljz9brf9ig'
+  school: nec
+  types: fear, mind-affecting, emotion
+type: spell
 

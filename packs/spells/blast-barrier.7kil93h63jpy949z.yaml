@@ -1,8 +1,34 @@
 _id: 7kil93h63jpy949z
-name: Blast Barrier
-type: spell
+_key: '!items!7kil93h63jpy949z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blast Barrier
 system:
+  actions:
+    - _id: 058sib0jo7n60nzi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration, up to 1 round/2 levels
+      effectNotes:
+        - >-
+          [[/d 2d6[slashing] + (min(floor(@cl / 3),6))d6[sonic] #Explosion
+          Damage]]
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex half (see below)
+        type: ref
+      spellEffect: 1-ft.-thick wall up to 10 ft. high by 20 ft. wide
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Originally used by the winter witches on the field of battle in the
@@ -31,44 +57,18 @@ system:
       experts at its tactical applications, often using the barriers to cover an
       escape while lobbing spells and parting shots, hoping to trigger the
       barrier's destruction just as their would-be pursuers approached.</p>
-  actions:
-    - _id: 058sib0jo7n60nzi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 round/2 levels
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see below)
-      effectNotes:
-        - >-
-          [[/d 2d6[slashing] + (min(floor(@cl / 3),6))d6[sonic] #Explosion
-          Damage]]
-      spellEffect: 1-ft.-thick wall up to 10 ft. high by 20 ft. wide
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 4
-      ranger: 3
-      witch: 4
       hunter: 3
+      ranger: 3
+      sorcerer: 3
+      witch: 4
+      wizard: 3
   level: 3
-  school: trs
-  types: sonic
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: handful of snow, earth, or gravel
-_key: '!items!7kil93h63jpy949z'
+  school: trs
+  types: sonic
+type: spell
 

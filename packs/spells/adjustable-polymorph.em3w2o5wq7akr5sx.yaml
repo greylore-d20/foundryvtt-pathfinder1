@@ -1,19 +1,10 @@
 _id: em3w2o5wq7akr5sx
-name: Adjustable Polymorph
-type: spell
+_key: '!items!em3w2o5wq7akr5sx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Adjustable Polymorph
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i><i>alter</i> self</i>, except you can as a
-      swift action <i>alter</i> the disguise (within the limitations of
-      <i><i>alter</i> self</i>).</p><p>For example, you could transform yourself
-      into a halfling, then a lizardfolk, then an elf, and so on. You can change
-      your form a number of times equal to your caster level.</p>
   actions:
     - _id: eb87nqurtqp8z5o4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,32 +12,41 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i><i>alter</i> self</i>, except you can as a
+      swift action <i>alter</i> the disguise (within the limitations of
+      <i><i>alter</i> self</i>).</p><p>For example, you could transform yourself
+      into a halfling, then a lizardfolk, then an elf, and so on. You can change
+      your form a number of times equal to your caster level.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      bard: 4
       alchemist: 4
-      summoner: 4
-      witch: 4
+      bard: 4
       magus: 4
-      shaman: 4
-      psychic: 4
       medium: 4
+      psychic: 4
+      shaman: 4
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small piece of doppelganger flesh
+  school: trs
   sr: false
-_key: '!items!em3w2o5wq7akr5sx'
+  subschool: polymorph
+type: spell
 

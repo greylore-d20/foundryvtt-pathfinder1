@@ -1,8 +1,26 @@
 _id: 60cty4b54fifrwnu
-name: Disguise Weapon
-type: spell
+_key: '!items!60cty4b54fifrwnu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Disguise Weapon
 system:
+  actions:
+    - _id: 3e18kpjsycatwowp
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: manufactured weapon touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make one manufactured weapon look like a different manufactured
@@ -16,36 +34,18 @@ system:
       form, nor does it alter the perceived tactile or audible properties of the
       item or how it is wielded. A creature that interacts with the glamer may
       attempt a Will save to recognize it as an illusion.</p>
-  actions:
-    - _id: 3e18kpjsycatwowp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: manufactured weapon touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      witch: 1
       magus: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!60cty4b54fifrwnu'
+  subschool: glamer
+type: spell
 

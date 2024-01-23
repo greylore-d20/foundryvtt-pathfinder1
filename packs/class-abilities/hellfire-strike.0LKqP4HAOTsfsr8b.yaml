@@ -1,8 +1,23 @@
 _id: 0LKqP4HAOTsfsr8b
-name: Hellfire Strike
-type: feat
+_key: '!items!0LKqP4HAOTsfsr8b'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Hellfire Strike
 system:
+  abilityType: su
+  actions:
+    - _id: 0otrrr81ncsy2gal
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 1st level, as a swift action up to three times a day you can infuse
@@ -10,25 +25,10 @@ system:
       <em>flaming</em> weapon special ability for 1 round.</p><p>At 12th level,
       you can use this ability five times per day, and the effect is treated as
       <em>flaming burst</em>.</p>
-  actions:
-    - _id: 0otrrr81ncsy2gal
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.bloodrager.level >= 12 ? 5 : 3'
-  tag: classFeat_hellfireStrike
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!0LKqP4HAOTsfsr8b'
+  tag: classFeat_hellfireStrike
+  uses:
+    maxFormula: '@classes.bloodrager.level >= 12 ? 5 : 3'
+    per: day
+type: feat
 

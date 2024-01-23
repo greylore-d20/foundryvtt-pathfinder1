@@ -1,8 +1,28 @@
 _id: 8a3z0xruxzo3wz24
-name: Symbol of Dispelling
-type: spell
+_key: '!items!8a3z0xruxzo3wz24'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Symbol of Dispelling
 system:
+  actions:
+    - _id: a0q9t2ra36hknomf
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>symbol of death</i>, except that all
@@ -14,40 +34,20 @@ system:
       the target of one or more spells. Unlike <i>symbol of death</i>, <i>Symbol
       of Dispelling</i> grants no saving throws, and it is not subject to spell
       resistance.</p>
-  actions:
-    - _id: a0q9t2ra36hknomf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one symbol
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
       oracle: 8
+      sorcerer: 8
       witch: 8
+      wizard: 8
   level: 8
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: pure grain alcohol and powdered diamond worth 5,000 gp
     gpValue: 5000
+    value: pure grain alcohol and powdered diamond worth 5,000 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!8a3z0xruxzo3wz24'
+type: spell
 

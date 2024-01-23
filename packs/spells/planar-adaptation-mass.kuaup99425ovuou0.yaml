@@ -1,16 +1,11 @@
 _id: kuaup99425ovuou0
-name: Planar Adaptation, Mass
-type: spell
+_key: '!items!kuaup99425ovuou0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Planar Adaptation, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>planar adaptation</i>, except as noted
-      above.</p>
   actions:
     - _id: k21tra4r1fq4dni9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,33 +13,38 @@ system:
           type: action
       duration:
         value: 1 hour/level (D)
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>planar adaptation</i>, except as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      summoner: 6
-      psychic: 6
       occultist: 6
+      oracle: 6
+      psychic: 6
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      warpriest: 6
+      wizard: 7
   level: 7
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kuaup99425ovuou0'
+type: spell
 

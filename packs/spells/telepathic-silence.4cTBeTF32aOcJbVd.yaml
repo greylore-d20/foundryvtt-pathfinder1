@@ -1,7 +1,28 @@
-name: Telepathic Silence
-type: spell
+_id: 4cTBeTF32aOcJbVd
+_key: '!items!4cTBeTF32aOcJbVd'
 img: icons/magic/control/silhouette-aura-energy.webp
+name: Telepathic Silence
 system:
+  actions:
+    - _id: XhoynDPSyzbAGP4Q
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      area: 60-ft.-radius emanation centered on a point in space
+      duration:
+        value: 1 round/level (D)
+      img: icons/magic/control/silhouette-aura-energy.webp
+      measureTemplate:
+        size: '60'
+        type: circle
+      name: Use
+      range:
+        units: long
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Creatures within the area cannot send or receive telepathic messages,
@@ -14,23 +35,6 @@ system:
       hinder spells that target a creature’s mind or that do not rely on
       communication, such as @Compendium[pf1.spells.rvf2gxyy1d4strae]{mind
       thrust}.</p>
-  actions:
-    - _id: XhoynDPSyzbAGP4Q
-      name: Use
-      img: icons/magic/control/silhouette-aura-energy.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '60'
-      area: 60-ft.-radius emanation centered on a point in space
   learnedAt:
     class:
       medium: 4
@@ -40,11 +44,7 @@ system:
       spiritualist: 4
   level: 4
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_id: 4cTBeTF32aOcJbVd
-_key: '!items!4cTBeTF32aOcJbVd'
+  subschool: glamer
+type: spell
 

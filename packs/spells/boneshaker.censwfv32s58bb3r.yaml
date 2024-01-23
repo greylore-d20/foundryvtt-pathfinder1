@@ -1,8 +1,31 @@
 _id: censwfv32s58bb3r
-name: Boneshaker
-type: spell
+_key: '!items!censwfv32s58bb3r'
 img: icons/skills/wounds/anatomy-bone-joint.webp
+name: Boneshaker
 system:
+  actions:
+    - _id: qn4xq15ivah12htl
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude partial or negates (see text)
+        type: fort
+      target:
+        value: one living creature or undead creature with a skeleton
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By using a bone fetish like a marionette, you take control of a target
@@ -21,43 +44,20 @@ system:
       apply to the movement or attack, such as grab). A successful saving throw
       negates this effect. A mindless undead creature doesn't receive a save
       against this effect.</p>
-  actions:
-    - _id: qn4xq15ivah12htl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one living creature or undead creature with a skeleton
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial or negates (see text)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 1
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
+      sorcerer: 2
       spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: human-shaped fetish made of bones
-_key: '!items!censwfv32s58bb3r'
+  school: nec
+type: spell
 

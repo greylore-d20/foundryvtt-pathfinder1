@@ -1,8 +1,27 @@
 _id: jbnhp4833ce9317z
-name: Commune with Plane
-type: spell
+_key: '!items!jbnhp4833ce9317z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Commune with Plane
 system:
+  actions:
+    - _id: 22bmhd7v5n359o4f
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You become one with the plane around you, attaining knowledge of the
@@ -16,37 +35,18 @@ system:
       level. On demiplanes, the spell is less powerful, and its radius is
       limited to 100 feet per caster level. This spell has no effect when cast
       on the Material Plane.</p>
-  actions:
-    - _id: 22bmhd7v5n359o4f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
+      hunter: 4
       oracle: 5
+      psychic: 5
       ranger: 4
       summoner: 5
+      warpriest: 5
       witch: 5
-      psychic: 5
-      hunter: 4
   level: 5
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!jbnhp4833ce9317z'
+type: spell
 

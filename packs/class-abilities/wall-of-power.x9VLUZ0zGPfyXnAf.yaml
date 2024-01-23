@@ -1,8 +1,24 @@
 _id: x9VLUZ0zGPfyXnAf
-name: Wall of Power
-type: feat
+_key: '!items!x9VLUZ0zGPfyXnAf'
 img: systems/pf1/icons/items/weapons/lantern-staff.png
+name: Wall of Power
 system:
+  abilityType: sp
+  actions:
+    - _id: zah43jn4jo70ad44
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.occultist.level'
+      img: systems/pf1/icons/items/weapons/lantern-staff.png
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>By expending 1 point of mental focus as a standard action, you can
@@ -17,23 +33,7 @@ system:
       level you possess.</p>
 
       <p>You must be at least 9th level to select this focus power.</p>
-  actions:
-    - _id: zah43jn4jo70ad44
-      name: Use
-      img: systems/pf1/icons/items/weapons/lantern-staff.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.occultist.level'
-        units: round
-  tag: classFeat_wallOfPower
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!x9VLUZ0zGPfyXnAf'
+  tag: classFeat_wallOfPower
+type: feat
 

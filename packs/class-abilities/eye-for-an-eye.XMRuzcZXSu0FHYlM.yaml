@@ -1,8 +1,17 @@
 _id: XMRuzcZXSu0FHYlM
-name: Eye for an Eye
-type: feat
+_key: '!items!XMRuzcZXSu0FHYlM'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Eye for an Eye
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Cavalier
+  changes:
+    - _id: qAeQwWUR
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 8th level, the cavalier gains
@@ -11,20 +20,11 @@ system:
       href="https://aonprd.com/Feats.aspx?Category=Critical">critical feat</a>
       (in place of a teamwork feat) to her allies using the tactician
       ability.</p>
-  changes:
-    - _id: qAeQwWUR
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Critical Focus
         uuid: Compendium.pf1.feats.Item.JNlMhMhcDO8wkXiw
-  tag: classFeat_eyeForAnEye
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!XMRuzcZXSu0FHYlM'
+  tag: classFeat_eyeForAnEye
+type: feat
 

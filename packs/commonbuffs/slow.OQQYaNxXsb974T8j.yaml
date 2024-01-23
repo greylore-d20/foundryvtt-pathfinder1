@@ -1,8 +1,64 @@
 _id: OQQYaNxXsb974T8j
-name: Slow
-type: buff
+_key: '!items!OQQYaNxXsb974T8j'
 img: systems/pf1/icons/skills/yellow_18.jpg
+name: Slow
 system:
+  changes:
+    - _id: sfd9hlci
+      formula: '-1'
+      modifier: untyped
+      priority: '0'
+      subTarget: ac
+    - _id: oes4icne
+      formula: '-1'
+      modifier: untyped
+      priority: '0'
+      subTarget: attack
+    - _id: fkdqxldq
+      formula: '-1'
+      modifier: untyped
+      priority: '0'
+      subTarget: ref
+    - _id: 43vumsb9
+      formula: >-
+        @attributes.speed.land.total > 0 ? max(1,
+        floor(@attributes.speed.land.total / 5 / 2)) * 5 : 0
+      modifier: untyped
+      operator: set
+      priority: '-5'
+      subTarget: landSpeed
+    - _id: 8n7okgkh
+      formula: >-
+        @attributes.speed.climb.total > 0 ? max(1,
+        floor(@attributes.speed.climb.total / 5 / 2)) * 5 : 0
+      modifier: untyped
+      operator: set
+      priority: '-5'
+      subTarget: climbSpeed
+    - _id: 0n4xfnao
+      formula: >-
+        @attributes.speed.swim.total > 0 ? max(1,
+        floor(@attributes.speed.swim.total / 5 / 2)) * 5 : 0
+      modifier: untyped
+      operator: set
+      priority: '-5'
+      subTarget: swimSpeed
+    - _id: 5qvs6y2o
+      formula: >-
+        @attributes.speed.burrow.total > 0 ? max(1,
+        floor(@attributes.speed.burrow.total / 5 / 2)) * 5 : 0
+      modifier: untyped
+      operator: set
+      priority: '-5'
+      subTarget: burrowSpeed
+    - _id: s12qta0n
+      formula: >-
+        @attributes.speed.fly.total > 0 ? max(1,
+        floor(@attributes.speed.fly.total / 5 / 2)) * 5 : 0
+      modifier: untyped
+      operator: set
+      priority: '-5'
+      subTarget: flySpeed
   description:
     value: >-
       <p>You are <em>staggered</em>, and you have a -1 penalty to attack rolls,
@@ -10,65 +66,9 @@ system:
 
       <p>In addition, you move at half speed (round down to the next 5-foot
       increment).</p>
-  changes:
-    - _id: sfd9hlci
-      formula: '-1'
-      subTarget: ac
-      modifier: untyped
-      priority: '0'
-    - _id: oes4icne
-      formula: '-1'
-      subTarget: attack
-      modifier: untyped
-      priority: '0'
-    - _id: fkdqxldq
-      formula: '-1'
-      subTarget: ref
-      modifier: untyped
-      priority: '0'
-    - _id: 43vumsb9
-      formula: >-
-        @attributes.speed.land.total > 0 ? max(1,
-        floor(@attributes.speed.land.total / 5 / 2)) * 5 : 0
-      operator: set
-      subTarget: landSpeed
-      modifier: untyped
-      priority: '-5'
-    - _id: 8n7okgkh
-      formula: >-
-        @attributes.speed.climb.total > 0 ? max(1,
-        floor(@attributes.speed.climb.total / 5 / 2)) * 5 : 0
-      operator: set
-      subTarget: climbSpeed
-      modifier: untyped
-      priority: '-5'
-    - _id: 0n4xfnao
-      formula: >-
-        @attributes.speed.swim.total > 0 ? max(1,
-        floor(@attributes.speed.swim.total / 5 / 2)) * 5 : 0
-      operator: set
-      subTarget: swimSpeed
-      modifier: untyped
-      priority: '-5'
-    - _id: 5qvs6y2o
-      formula: >-
-        @attributes.speed.burrow.total > 0 ? max(1,
-        floor(@attributes.speed.burrow.total / 5 / 2)) * 5 : 0
-      operator: set
-      subTarget: burrowSpeed
-      modifier: untyped
-      priority: '-5'
-    - _id: s12qta0n
-      formula: >-
-        @attributes.speed.fly.total > 0 ? max(1,
-        floor(@attributes.speed.fly.total / 5 / 2)) * 5 : 0
-      operator: set
-      subTarget: flySpeed
-      modifier: untyped
-      priority: '-5'
-  level: '5'
   duration:
-    value: '@item.level'
     units: round
-_key: '!items!OQQYaNxXsb974T8j'
+    value: '@item.level'
+  level: '5'
+type: buff
 

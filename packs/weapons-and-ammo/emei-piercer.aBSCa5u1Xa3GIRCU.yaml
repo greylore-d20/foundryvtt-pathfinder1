@@ -1,8 +1,40 @@
 _id: aBSCa5u1Xa3GIRCU
-name: Emei Piercer
-type: weapon
+_key: '!items!aBSCa5u1Xa3GIRCU'
 img: icons/weapons/fist/fist-knuckles-spiked-blue.webp
+name: Emei Piercer
 system:
+  actions:
+    - _id: q1jj5k11g7dshgiu
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/fist/fist-knuckles-spiked-blue.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Emei Piercer
   description:
     value: >-
       <p>This weapon is used to augment unarmed martial techniques. It consists
@@ -10,61 +42,29 @@ system:
       mounted on a ring, so that it can be spun around at high speeds when
       slipped over the wielder's ring finger. The ring prevents the wielder from
       being disarmed and turns unarmed strikes into piercing attacks.</p>
-  tags:
-    - PFS
-  price: 3
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: q1jj5k11g7dshgiu
-      name: Attack
-      img: icons/weapons/fist/fist-knuckles-spiked-blue.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-  baseTypes:
-    - Emei Piercer
+  material:
+    addon:
+      - null
+      - null
+    normal:
+      value: ''
+  price: 3
+  properties:
+    fin: true
+    spc: true
+  source:
+    id: PZO1123
+    pages: '20'
+  subType: exotic
+  tags:
+    - PFS
   weaponGroups:
     value:
       - close
       - monk
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-      - null
-  subType: exotic
-  properties:
-    spc: true
-    fin: true
-  source:
-    id: PZO1123
-    pages: '20'
-_key: '!items!aBSCa5u1Xa3GIRCU'
+type: weapon
 

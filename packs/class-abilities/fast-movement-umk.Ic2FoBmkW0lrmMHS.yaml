@@ -1,31 +1,31 @@
 _id: Ic2FoBmkW0lrmMHS
-name: Fast Movement (UMK)
-type: feat
+_key: '!items!Ic2FoBmkW0lrmMHS'
 img: systems/pf1/icons/feats/dodge.jpg
+name: Fast Movement (UMK)
 system:
+  abilityType: ex
+  actions:
+    - _id: swfrjapyjv8myvjr
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/feats/dodge.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
+  changes:
+    - _id: xzx7ailj
+      formula: 10 * (floor(@classes.monkUnchained.level / 3))
+      modifier: enh
+      subTarget: landSpeed
   description:
     value: >-
       <p>At 3rd level, a monk gains an <em>enhancement bonus</em> to his land
       speed, as shown on Table: monk. A monk in armor or carrying a medium or
       heavy load loses this extra speed.</p>
-  actions:
-    - _id: swfrjapyjv8myvjr
-      name: Use
-      img: systems/pf1/icons/feats/dodge.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: xzx7ailj
-      formula: 10 * (floor(@classes.monkUnchained.level / 3))
-      subTarget: landSpeed
-      modifier: enh
-  tag: classFeat_fastMovementUmk
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!Ic2FoBmkW0lrmMHS'
+  tag: classFeat_fastMovementUmk
+type: feat
 

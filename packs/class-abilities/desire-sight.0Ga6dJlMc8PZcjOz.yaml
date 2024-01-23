@@ -1,8 +1,28 @@
 _id: 0Ga6dJlMc8PZcjOz
-name: Desire Sight
-type: feat
+_key: '!items!0Ga6dJlMc8PZcjOz'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Desire Sight
 system:
+  abilityType: sp
+  actions:
+    - _id: 7xwtxzexfbt5whxr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '100'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can learn the desires of any creature you can
@@ -12,30 +32,10 @@ system:
 
       <p>You can use this ability once per day at 1st level, plus one additional
       time per day at 5th level and for every 5 levels beyond 5th.</p>
-  actions:
-    - _id: 7xwtxzexfbt5whxr
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '100'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_desireSight
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!0Ga6dJlMc8PZcjOz'
+  tag: classFeat_desireSight
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

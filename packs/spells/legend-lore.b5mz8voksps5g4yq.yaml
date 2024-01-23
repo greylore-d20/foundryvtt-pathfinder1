@@ -1,8 +1,28 @@
 _id: b5mz8voksps5g4yq
-name: Legend Lore
-type: spell
+_key: '!items!b5mz8voksps5g4yq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Legend Lore
 system:
+  actions:
+    - _id: X6hEtKplCyeDEGhP
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Legend lore</i> brings to your mind legends about an important
@@ -25,52 +45,32 @@ system:
       higher are "legendary," as are the sorts of creatures they contend with,
       the major magic items they wield, and the places where they perform their
       key deeds.</p>
-  actions:
-    - _id: X6hEtKplCyeDEGhP
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      bard: 4
-      witch: 6
-      inquisitor: 6
-      psychic: 6
-      medium: 4
-      occultist: 6
-      spiritualist: 6
-    domain:
-      Knowledge: 7
     bloodline:
       Harrow: 6
+    class:
+      bard: 4
+      inquisitor: 6
+      medium: 4
+      occultist: 6
+      psychic: 6
+      sorcerer: 6
+      spiritualist: 6
+      witch: 6
+      wizard: 6
+    domain:
+      Knowledge: 7
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth 250 gp
     focus: four pieces of ivory worth 50 gp each
     gpValue: 250
+    value: incense worth 250 gp
   preparation:
     spontaneousPrepared: false
-  sr: false
+  school: div
   source:
     id: PZO1110
     pages: '304'
-_key: '!items!b5mz8voksps5g4yq'
+  sr: false
+type: spell
 

@@ -1,8 +1,31 @@
 _id: 1mc2b6d2aw6kkna0
-name: Shield Companion (ACG)
-type: spell
+_key: '!items!1mc2b6d2aw6kkna0'
 img: icons/magic/nature/wolf-paw-glow-orange.webp
+name: Shield Companion (ACG)
 system:
+  actions:
+    - _id: miqp65cy5hmysxfs
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: icons/magic/nature/wolf-paw-glow-orange.webp
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: your companion creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a special mystical connection between you and your
@@ -20,41 +43,18 @@ system:
       because it is not hit point damage. When the spell ends, damage directed
       to you by the spell is not reassigned to the subject.</p><p>If you and
       your companion move out of range of each other, the spell ends.</p>
-  actions:
-    - _id: miqp65cy5hmysxfs
-      name: Use
-      img: icons/magic/nature/wolf-paw-glow-orange.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: your companion creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      ranger: 2
-      paladin: 2
-      summoner: 3
-      shaman: 2
       hunter: 2
+      paladin: 2
+      ranger: 2
+      shaman: 2
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
       witch: 1
+      wizard: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1mc2b6d2aw6kkna0'
+type: spell
 

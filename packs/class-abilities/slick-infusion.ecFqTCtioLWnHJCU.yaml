@@ -1,8 +1,23 @@
 _id: ecFqTCtioLWnHJCU
-name: Slick Infusion
-type: feat
+_key: '!items!ecFqTCtioLWnHJCU'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: Slick Infusion
 system:
+  actions:
+    - _id: 45ncac1pbnl4weww
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      name: Use
+      save:
+        description: Reflex negates
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> water; <b>Type</b> substance infusion; <b>Level</b> 2;
@@ -15,22 +30,7 @@ system:
       difficult terrain and increasing the DC of Acrobatics checks attempted in
       the area by 5. You can use this infusion only if you also use a form
       infusion that has an area of effect.</p>
-  actions:
-    - _id: 45ncac1pbnl4weww
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-2.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex negates
-  tag: classFeat_slickInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!ecFqTCtioLWnHJCU'
+  tag: classFeat_slickInfusion
+type: feat
 

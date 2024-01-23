@@ -1,32 +1,32 @@
 _id: 5kEoK34AwLBxcN7Q
-name: Gravity Control
-type: feat
+_key: '!items!5kEoK34AwLBxcN7Q'
 img: systems/pf1/icons/spells/rip-sky-1.jpg
+name: Gravity Control
 system:
+  abilityType: sp
+  actions:
+    - _id: n9j4ujm28lezg6sa
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/rip-sky-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> void; <b>Type</b> utility (Sp); <b>Level</b> 3;
       <b>Burn</b> 0</p>
 
       <p>You use your gravitic abilities to move yourself, as per flame jet.</p>
-  actions:
-    - _id: n9j4ujm28lezg6sa
-      name: Use
-      img: systems/pf1/icons/spells/rip-sky-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_gravityControl
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!5kEoK34AwLBxcN7Q'
+  tag: classFeat_gravityControl
+type: feat
 

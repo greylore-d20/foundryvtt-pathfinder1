@@ -1,8 +1,26 @@
 _id: 26x41q3v0vhz8va0
-name: Lucky Number
-type: spell
+_key: '!items!26x41q3v0vhz8va0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lucky Number
 system:
+  actions:
+    - _id: yi913hjieqww63b0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one willing creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You are able to tweak tiny variables affecting a creature's immediate
@@ -15,40 +33,22 @@ system:
       can have only one <i>lucky number</i> at a time. If <i>lucky number</i> is
       cast on a creature already affected by that spell, the new number replaces
       the previous one.</p>
-  actions:
-    - _id: yi913hjieqww63b0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: one willing creature
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
       bard: 1
-      paladin: 1
-      summoner: 1
-      witch: 1
-      inquisitor: 1
+      cleric: 1
+      druid: 1
       hunter: 1
+      inquisitor: 1
+      oracle: 1
+      paladin: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!26x41q3v0vhz8va0'
+type: spell
 

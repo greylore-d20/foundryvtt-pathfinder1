@@ -1,8 +1,33 @@
 _id: 1jeheeuzvfy1el9u
-name: Awaken Construct
-type: spell
+_key: '!items!1jeheeuzvfy1el9u'
 img: icons/creatures/magical/construct-stone-earth-gray.webp
+name: Awaken Construct
 system:
+  actions:
+    - _id: hbitz9c3fu5n5g2z
+      actionType: spellsave
+      activation:
+        cost: 24
+        type: hour
+        unchained:
+          cost: 24
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: mindless construct touched
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You amplify the animating force of a construct to more closely resemble
@@ -22,47 +47,22 @@ system:
       bonus (if any). Its alignment is determined by the GM, but is usually
       within one step of its creator's alignment. This spell doesn't function on
       a construct with an Intelligence score.</p>
-  actions:
-    - _id: hbitz9c3fu5n5g2z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 24
-        type: hour
-        unchained:
-          cost: 24
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: mindless construct touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      cleric: 7
+      occultist: 5
+      oracle: 7
+      psychic: 6
+      shaman: 6
       sorcerer: 7
       wizard: 7
-      cleric: 7
-      oracle: 7
-      shaman: 6
-      psychic: 6
-      occultist: 5
   level: 7
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: herbs and oils worth 2,000 gp per HD of target
     gpValue: null
+    value: herbs and oils worth 2,000 gp per HD of target
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!1jeheeuzvfy1el9u'
+type: spell
 

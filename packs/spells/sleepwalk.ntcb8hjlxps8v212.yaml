@@ -1,8 +1,31 @@
 _id: ntcb8hjlxps8v212
-name: Sleepwalk
-type: spell
+_key: '!items!ntcb8hjlxps8v212'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sleepwalk
 system:
+  actions:
+    - _id: v2pfbit9qghaweph
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: unconscious creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You compel an unconscious or sleeping creature to rise and move in a
@@ -19,43 +42,20 @@ system:
       move, it does not awaken the creature, nor does it stabilize or otherwise
       heal them. A disabled creature that moves about while under the effects of
       this spell does not start dying again as a result of this movement.</p>
-  actions:
-    - _id: v2pfbit9qghaweph
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: unconscious creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      witch: 4
       inquisitor: 4
-      psychic: 4
       mesmerist: 4
+      psychic: 4
+      witch: 4
   level: 4
+  materials:
+    gpValue: 100
+    value: a sprig of belladonna worth 100 gp
+  preparation:
+    spontaneousPrepared: false
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a sprig of belladonna worth 100 gp
-    gpValue: 100
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!ntcb8hjlxps8v212'
+type: spell
 

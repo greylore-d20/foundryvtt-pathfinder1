@@ -1,8 +1,26 @@
 _id: 6vx3lvbhp6h220wq
-name: Thorn Javelin
-type: spell
+_key: '!items!6vx3lvbhp6h220wq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thorn Javelin
 system:
+  actions:
+    - _id: 4gm6so5xcifq21pn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: javelin-like thorn
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A wooden thorn the size of a javelin (appropriate for your size)
@@ -14,33 +32,15 @@ system:
       the spell's remaining duration by 1 minute.</p><p>If an attack reduces the
       remaining duration to 0 minutes or less, the spell ends after that attack
       resolves.</p>
-  actions:
-    - _id: 4gm6so5xcifq21pn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: javelin-like thorn
   learnedAt:
     class:
       druid: 1
+      hunter: 1
       ranger: 1
       shaman: 1
-      hunter: 1
   school: con
+  sr: false
   subschool: creation
   types: poison
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!6vx3lvbhp6h220wq'
+type: spell
 

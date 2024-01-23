@@ -1,8 +1,23 @@
 _id: x8BCB4tZdOdZzzdh
-name: Toxic Infusion, Greater
-type: feat
+_key: '!items!x8BCB4tZdOdZzzdh'
 img: systems/pf1/icons/spells/vines-jade-3.jpg
+name: Toxic Infusion, Greater
 system:
+  actions:
+    - _id: 31g5qdfhl9uc7gex
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      name: Use
+      save:
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> wood; <b>Type</b> substance infusion; <b>Level</b> 7;
@@ -16,22 +31,7 @@ system:
       <em>save </em>Fort; <em>frequency </em>1/round for 6 rounds; <em>effect
       </em>1d2 damage to the chosen ability score; <em>cure </em>2 consecutive
       saves.</p>
-  actions:
-    - _id: 31g5qdfhl9uc7gex
-      name: Use
-      img: systems/pf1/icons/spells/vines-jade-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_toxicInfusionGreater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!x8BCB4tZdOdZzzdh'
+  tag: classFeat_toxicInfusionGreater
+type: feat
 

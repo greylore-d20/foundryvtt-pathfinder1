@@ -1,8 +1,27 @@
 _id: amds6sfc78likqrs
-name: Umbral Weapon
-type: spell
+_key: '!items!amds6sfc78likqrs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Umbral Weapon
 system:
+  actions:
+    - _id: xcaprkwwltdakq7l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: melee weapon touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A shadowy afterimage trails behind the targeted weapon, potentially
@@ -15,37 +34,18 @@ system:
       against that spell resistance the first time the spell damages the target.
       If the creature successfully resists <i>umbral weapon</i>, the spell is
       dispelled. If not, the creature takes damage as normal.</p>
-  actions:
-    - _id: xcaprkwwltdakq7l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: melee weapon touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
-      witch: 2
       antipaladin: 2
+      bard: 2
       magus: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: ill
-  types: cold, shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pair of miniature swords
-_key: '!items!amds6sfc78likqrs'
+  school: ill
+  types: cold, shadow
+type: spell
 

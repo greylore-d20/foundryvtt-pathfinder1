@@ -1,8 +1,34 @@
 _id: xuuzj9lr2xbwaim4
-name: Overwhelming Presence
-type: spell
+_key: '!items!xuuzj9lr2xbwaim4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Overwhelming Presence
 system:
+  actions:
+    - _id: umk2jg41y5lq6yz2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates, see text
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your presence inspires incredible awe in those nearby. A creature that
@@ -17,52 +43,26 @@ system:
       points of Wisdom drain and is staggered for 1d4 rounds. A creature that
       makes the initial save to resist this spell is merely staggered for 1
       round.</p>
-  actions:
-    - _id: umk2jg41y5lq6yz2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates, see text
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-      cleric: 9
-      oracle: 9
-      bard: 6
-      inquisitor: 6
-      psychic: 4
-      mesmerist: 6
-    subDomain:
-      Aristocracy: 9
     bloodline:
       Imperious: 9
       Martyred: 9
+    class:
+      bard: 6
+      cleric: 9
+      inquisitor: 6
+      mesmerist: 6
+      oracle: 9
+      psychic: 4
+      sorcerer: 9
+      wizard: 9
+    subDomain:
+      Aristocracy: 9
   level: 9
+  materials:
+    value: a swan feather
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a swan feather
-_key: '!items!xuuzj9lr2xbwaim4'
+type: spell
 

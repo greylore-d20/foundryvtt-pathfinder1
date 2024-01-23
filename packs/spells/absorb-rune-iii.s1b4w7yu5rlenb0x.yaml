@@ -1,16 +1,11 @@
 _id: s1b4w7yu5rlenb0x
-name: Absorb Rune III
-type: spell
+_key: '!items!s1b4w7yu5rlenb0x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Absorb Rune III
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>absorb rune I</i>, but it can affect runes
-      equivalent to a spell of 8th level or lower.</p>
   actions:
     - _id: 15kbyh47n685ofmd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,31 +13,36 @@ system:
           type: action
       duration:
         value: instantaneous plus 1 minute/level (see text)
-      target:
-        value: one spell effect
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one spell effect
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>absorb rune I</i>, but it can affect runes
+      equivalent to a spell of 8th level or lower.</p>
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
+      sorcerer: 9
+      wizard: 9
   level: 9
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a white silk glove worth 25 gp
     gpValue: 25
+    value: a white silk glove worth 25 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!s1b4w7yu5rlenb0x'
+  school: abj
+type: spell
 

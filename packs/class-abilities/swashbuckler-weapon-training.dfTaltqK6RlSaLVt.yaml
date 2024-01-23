@@ -1,8 +1,17 @@
 _id: dfTaltqK6RlSaLVt
-name: Swashbuckler Weapon Training
-type: feat
+_key: '!items!dfTaltqK6RlSaLVt'
 img: systems/pf1/icons/skills/weapon_31.jpg
+name: Swashbuckler Weapon Training
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Swashbuckler
+  changes:
+    - _id: 6i701ysv
+      formula: floor((@classes.swashbuckler.level - 1) / 4)
+      modifier: untyped
+      subTarget: wdamage
   description:
     value: >-
       <p>At 5th level, a swashbuckler gains a +1 bonus on attack and damage
@@ -11,16 +20,7 @@ system:
       @Compendium[pf1.feats.TbOPtIL8Fv8obXtP]{Improved Critical} feat. These
       attack and damage bonuses increase by 1 for every 4 levels beyond 5th
       level (to a maximum of +4 at 17th level).</p>
-  changes:
-    - _id: 6i701ysv
-      formula: floor((@classes.swashbuckler.level - 1) / 4)
-      subTarget: wdamage
-      modifier: untyped
-  tag: classFeat_swashbucklerWeaponTraining
   subType: classFeat
-  associations:
-    classes:
-      - Swashbuckler
-  abilityType: ex
-_key: '!items!dfTaltqK6RlSaLVt'
+  tag: classFeat_swashbucklerWeaponTraining
+type: feat
 

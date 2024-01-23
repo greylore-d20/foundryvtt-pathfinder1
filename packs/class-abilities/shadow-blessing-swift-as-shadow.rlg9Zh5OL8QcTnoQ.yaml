@@ -1,8 +1,24 @@
 _id: rlg9Zh5OL8QcTnoQ
-name: 'Shadow Blessing: Swift as Shadow'
-type: feat
+_key: '!items!rlg9Zh5OL8QcTnoQ'
 img: systems/pf1/icons/skills/shadow_19.jpg
+name: 'Shadow Blessing: Swift as Shadow'
 system:
+  actions:
+    - _id: nev0bmktishjmccg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/shadow_19.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one ally
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can spend a swift action to empower yourself or an
@@ -12,23 +28,7 @@ system:
       safely move over areas of ice and even those affected by a grease spell.
       When a creature affected by this ability hits with a charge attack, that
       attack deals an amount of additional cold damage equal to your level.</p>
-  actions:
-    - _id: nev0bmktishjmccg
-      name: Use
-      img: systems/pf1/icons/skills/shadow_19.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      target:
-        value: one ally
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_shadowBlessingSwiftAsShadow
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!rlg9Zh5OL8QcTnoQ'
+  tag: classFeat_shadowBlessingSwiftAsShadow
+type: feat
 

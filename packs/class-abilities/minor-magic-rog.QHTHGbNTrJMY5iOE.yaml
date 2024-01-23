@@ -1,8 +1,21 @@
 _id: QHTHGbNTrJMY5iOE
-name: Minor Magic (ROG)
-type: feat
+_key: '!items!QHTHGbNTrJMY5iOE'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Minor Magic (ROG)
 system:
+  abilityType: sp
+  actions:
+    - _id: 8bxk0t2frhgl4cpb
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Ninja
   description:
     value: >-
       <p>A character with this talent gains the ability to cast a 0-level spell
@@ -11,25 +24,12 @@ system:
       the rogue's level. The save DC for this spell is 10 + the rogue's
       Intelligence modifier. The rogue must have an Intelligence of at least 10
       to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_minorMagicRog
   tags:
     - Ninja Trick
-  actions:
-    - _id: 8bxk0t2frhgl4cpb
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: passive
-        unchained:
-          type: passive
   uses:
-    per: day
     maxFormula: '3'
-  tag: classFeat_minorMagicRog
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Ninja
-  abilityType: sp
-_key: '!items!QHTHGbNTrJMY5iOE'
+    per: day
+type: feat
 

@@ -1,8 +1,33 @@
 _id: MVI1rJZeHX2JuEfW
-name: Mind Slumber
-type: feat
+_key: '!items!MVI1rJZeHX2JuEfW'
 img: systems/pf1/icons/feats/leadership.jpg
+name: Mind Slumber
 system:
+  abilityType: sp
+  actions:
+    - _id: iqkug8pic4o3p3rp
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.occultist.level'
+      img: systems/pf1/icons/feats/leadership.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>By expending 1 point of mental focus as a standard action, you can lull
@@ -24,32 +49,7 @@ system:
       immune to this effect for 24 hours.</p>
 
       <p>You must be at least 3rd level to select this focus power.</p>
-  actions:
-    - _id: iqkug8pic4o3p3rp
-      name: Use
-      img: systems/pf1/icons/feats/leadership.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.occultist.level'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_mindSlumber
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!MVI1rJZeHX2JuEfW'
+  tag: classFeat_mindSlumber
+type: feat
 

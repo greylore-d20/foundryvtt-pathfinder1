@@ -1,8 +1,30 @@
 _id: c5anior2ysy6s2xy
-name: Raise Dead
-type: spell
+_key: '!items!c5anior2ysy6s2xy'
 img: icons/magic/life/ankh-gold-blue.webp
+name: Raise Dead
 system:
+  actions:
+    - _id: wgol4xaisa6p2voa
+      actionType: heal
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: dead creature touched
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You restore life to a deceased creature. You can raise a creature that
@@ -30,46 +52,24 @@ system:
       killed by a death effect can't be raised by this spell. Constructs,
       elementals, outsiders, and undead creatures can't be raised. The spell
       cannot bring back a creature that has died of old age.</p>
-  actions:
-    - _id: wgol4xaisa6p2voa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: dead creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        description: none; see text
   learnedAt:
     class:
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 6
       adept: 5
+      cleric: 5
+      oracle: 5
       shaman: 6
       spiritualist: 5
+      warpriest: 5
+      witch: 6
     subDomain:
       Resurrection: 5
   level: 5
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: diamond worth 5,000 gp
     gpValue: 5000
+    value: diamond worth 5,000 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!c5anior2ysy6s2xy'
+  school: con
+  subschool: healing
+type: spell
 

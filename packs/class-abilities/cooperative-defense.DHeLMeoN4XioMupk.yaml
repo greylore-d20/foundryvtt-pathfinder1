@@ -1,7 +1,20 @@
-name: Cooperative Defense
-type: feat
+_id: DHeLMeoN4XioMupk
+_key: '!items!DHeLMeoN4XioMupk'
 img: icons/magic/defensive/shield-barrier-glowing-triangle-green.webp
+name: Cooperative Defense
 system:
+  abilityType: su
+  actions:
+    - _id: EWX575qPm4wkmlUH
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: icons/magic/defensive/shield-barrier-glowing-triangle-green.webp
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, whenever a spell or effect targets you and one or more
@@ -11,27 +24,14 @@ system:
       ability is an immediate action. You can use this ability once per day at
       8th level, and one additional time per day for every four wizard levels
       beyond 8th.</p>
-  tags:
-    - Wood School
-  actions:
-    - _id: EWX575qPm4wkmlUH
-      name: Use
-      img: icons/magic/defensive/shield-barrier-glowing-triangle-green.webp
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-  uses:
-    per: day
-    maxFormula: max(0, floor(@classes.wizard.level / 4) - 1)
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1117
     pages: '88'
-_id: DHeLMeoN4XioMupk
-_key: '!items!DHeLMeoN4XioMupk'
+  subType: classFeat
+  tags:
+    - Wood School
+  uses:
+    maxFormula: max(0, floor(@classes.wizard.level / 4) - 1)
+    per: day
+type: feat
 

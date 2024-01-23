@@ -1,7 +1,30 @@
-name: Uncanny Reminder
-type: spell
+_id: 3NaNHmxd9LA5BNu1
+_key: '!items!3NaNHmxd9LA5BNu1'
 img: icons/creatures/magical/construct-stone-earth-gray.webp
+name: Uncanny Reminder
 system:
+  actions:
+    - _id: 14e6mXNMKSe7ruh3
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: icons/creatures/magical/construct-stone-earth-gray.webp
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates an animated replica of the target drawn from the
@@ -30,25 +53,6 @@ system:
       memory (Will negates)</td></tr><tr><td>86-95</td><td>Target is frightened
       by the living memory (Will negates)</td></tr><tr><td>96-100</td><td>Target
       is nauseated (Fortitude negates)</td></tr></tbody></table>
-  actions:
-    - _id: 14e6mXNMKSe7ruh3
-      name: Use
-      img: icons/creatures/magical/construct-stone-earth-gray.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       arcanist: 8
@@ -60,9 +64,5 @@ system:
       wizard: 8
   level: 8
   school: con
-  components:
-    verbal: true
-    somatic: true
-_id: 3NaNHmxd9LA5BNu1
-_key: '!items!3NaNHmxd9LA5BNu1'
+type: spell
 

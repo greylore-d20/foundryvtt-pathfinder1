@@ -1,8 +1,41 @@
 _id: KVnt2bU40TdySu6L
-name: Lizard King War Trident
-type: weapon
+_key: '!items!KVnt2bU40TdySu6L'
 img: icons/weapons/polearms/trident-silver-blue.webp
+name: Lizard King War Trident
 system:
+  actions:
+    - _id: 4gghr0xjseu2iw4h
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 'NULL'
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/polearms/trident-silver-blue.webp
+      name: Attack
+      range:
+        units: melee
+        value: '10'
+  baseTypes:
+    - Lizard King War Trident
   description:
     value: >-
       <p>Upon his 100th birthday, a lizard king's status is officially
@@ -16,52 +49,19 @@ system:
       feat as a bonus feat. A war trident is worth 20 gp, although most are
       masterwork and many are inlaid with precious metals and fetch higher
       prices.</p>
-  tags:
-    - D&D 3.5
-  weight:
-    value: 12
-  price: 20
   hardness: 10
-  actions:
-    - _id: 4gghr0xjseu2iw4h
-      name: Attack
-      img: icons/weapons/polearms/trident-silver-blue.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: 'NULL'
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Lizard King War Trident
-  subType: martial
-  weaponSubtype: 2h
+  price: 20
   properties:
     brc: true
   source:
     id: PZO1107
     pages: '38'
-_key: '!items!KVnt2bU40TdySu6L'
+  subType: martial
+  tags:
+    - D&D 3.5
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

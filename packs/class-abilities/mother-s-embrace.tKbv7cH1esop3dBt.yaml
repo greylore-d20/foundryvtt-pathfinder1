@@ -1,8 +1,20 @@
 _id: tKbv7cH1esop3dBt
-name: Mother's Embrace
-type: feat
+_key: '!items!tKbv7cH1esop3dBt'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Mother's Embrace
 system:
+  abilityType: su
+  actions:
+    - _id: hg5ox8s9156rhiho
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>The hag’s call grows stronger as you grow more desperate, promising
@@ -13,22 +25,10 @@ system:
       <p>When you perform an act of cruelty, you regain 1 phrenic pool point.
       You can use each aspect of this ability a number of times per day equal to
       your Charisma modifier.</p>
-  actions:
-    - _id: hg5ox8s9156rhiho
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: '@abilities.cha.mod'
-  tag: classFeat_mothersEmbrace
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!tKbv7cH1esop3dBt'
+  tag: classFeat_mothersEmbrace
+  uses:
+    maxFormula: '@abilities.cha.mod'
+    per: day
+type: feat
 

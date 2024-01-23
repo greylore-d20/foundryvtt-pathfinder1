@@ -1,31 +1,31 @@
 _id: vJFFn2zOL4sljFpb
-name: Combat Precognition
-type: feat
+_key: '!items!vJFFn2zOL4sljFpb'
 img: systems/pf1/icons/skills/red_09.jpg
+name: Combat Precognition
 system:
+  abilityType: su
+  actions:
+    - _id: 3alg2ryy5ty3rdxj
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/red_09.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
+  changes:
+    - _id: 3bd9tl1e
+      formula: 1 + (floor((@classes.sorcerer.level - 3) / 4))
+      modifier: insight
+      subTarget: init
   description:
     value: >-
       <p>Your insight into the future grants you an advantage in combat. At 3rd
       level and every 4 levels thereafter, you gain a +1 <em>insight bonus</em>
       on <em>initiative</em> checks.</p>
-  actions:
-    - _id: 3alg2ryy5ty3rdxj
-      name: Use
-      img: systems/pf1/icons/skills/red_09.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 3bd9tl1e
-      formula: 1 + (floor((@classes.sorcerer.level - 3) / 4))
-      subTarget: init
-      modifier: insight
-  tag: classFeat_combatPrecognition
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!vJFFn2zOL4sljFpb'
+  tag: classFeat_combatPrecognition
+type: feat
 

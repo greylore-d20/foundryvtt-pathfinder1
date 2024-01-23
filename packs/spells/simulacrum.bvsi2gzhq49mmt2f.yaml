@@ -1,8 +1,28 @@
 _id: bvsi2gzhq49mmt2f
-name: Simulacrum
-type: spell
+_key: '!items!bvsi2gzhq49mmt2f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Simulacrum
 system:
+  actions:
+    - _id: l7zcmlqcu7o9nj55
+      activation:
+        cost: 12
+        type: hour
+        unchained:
+          cost: 12
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one duplicate creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Simulacrum</i> creates an illusory duplicate of any creature. The
@@ -23,40 +43,20 @@ system:
       nothingness. A complex process requiring at least 24 hours, 100 gp per hit
       point, and a fully equipped magical laboratory can repair damage to a
       simulacrum.</p>
-  actions:
-    - _id: l7zcmlqcu7o9nj55
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 12
-        type: hour
-        unchained:
-          cost: 12
-          type: hour
-      duration:
-        value: instantaneous
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one duplicate creature
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      summoner: 5
       psychic: 7
+      sorcerer: 7
+      summoner: 5
       summonerUnchained: 5
+      wizard: 7
   level: 7
-  school: ill
-  subschool: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       ice sculpture of the target plus powdered rubies worth 500 gp per HD of
       the simulacrum
+  school: ill
   sr: false
-_key: '!items!bvsi2gzhq49mmt2f'
+  subschool: shadow
+type: spell
 

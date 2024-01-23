@@ -1,17 +1,11 @@
 _id: pe6x4t8vy4zlfzh9
-name: Ant Haul, Communal
-type: spell
+_key: '!items!pe6x4t8vy4zlfzh9'
 img: icons/magic/control/buff-strength-muscle-damage.webp
+name: Ant Haul, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like ant haul (see page 202 of the Pathfinder RPG
-      Advanced Player's Guide), except you may divide the duration in 2-hour
-      intervals among the creatures touched.</p>
   actions:
     - _id: n4rwhb0v4m8xt2so
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,38 +13,44 @@ system:
           type: action
       duration:
         value: 2 hours/level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creatures touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like ant haul (see page 202 of the Pathfinder RPG
+      Advanced Player's Guide), except you may divide the duration in 2-hour
+      intervals among the creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
       alchemist: 2
-      summoner: 2
-      psychic: 2
-      occultist: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      occultist: 2
+      oracle: 2
+      psychic: 2
+      ranger: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      warpriest: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a small pulley
-_key: '!items!pe6x4t8vy4zlfzh9'
+  school: trs
+type: spell
 

@@ -1,19 +1,14 @@
 _id: V6gex88vDD4IQqog
-name: Sneak Attack (CAV)
-type: feat
+_key: '!items!V6gex88vDD4IQqog'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Sneak Attack (CAV)
 system:
-  description:
-    value: >-
-      <p>At 2nd level, an order of the blossom cavalier can make a sneak attack,
-      as the rogue ability of the same name. At 2nd level, his sneak attack
-      damage is +1d6. This damage increases by 1d6 at 8th level and every 6
-      levels thereafter. If the cavalier gets a sneak attack bonus from another
-      source, the bonus damage stacks.</p>
+  abilityType: ex
   actions:
     - _id: baKSL9suyWG3rBVh
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      ability:
+        critMult: null
+        critRange: null
       activation:
         type: nonaction
         unchained:
@@ -22,22 +17,27 @@ system:
         parts:
           - formula: floor((@classes.cavalier.level + 4) / 6)d6
             type:
+              custom: ''
               values:
                 - precision
-              custom: ''
       formulaicAttacks:
         label: ''
-      ability:
-        critRange: null
-        critMult: null
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
       powerAttack:
-        damageBonus: null
         critMultiplier: null
-  tag: classFeat_sneakAttackCav
-  subType: classFeat
+        damageBonus: null
   associations:
     classes:
       - Cavalier
-  abilityType: ex
-_key: '!items!V6gex88vDD4IQqog'
+  description:
+    value: >-
+      <p>At 2nd level, an order of the blossom cavalier can make a sneak attack,
+      as the rogue ability of the same name. At 2nd level, his sneak attack
+      damage is +1d6. This damage increases by 1d6 at 8th level and every 6
+      levels thereafter. If the cavalier gets a sneak attack bonus from another
+      source, the bonus damage stacks.</p>
+  subType: classFeat
+  tag: classFeat_sneakAttackCav
+type: feat
 

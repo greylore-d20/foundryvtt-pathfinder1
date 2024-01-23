@@ -1,8 +1,32 @@
 _id: menqakfoa1ftvi3f
-name: Shield Other
-type: spell
+_key: '!items!menqakfoa1ftvi3f'
 img: icons/skills/melee/shield-block-bash-blue.webp
+name: Shield Other
 system:
+  actions:
+    - _id: 7a42iaq6c1asa5fz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell wards the subject and creates a mystic connection between
@@ -19,50 +43,26 @@ system:
       damage is no longer divided between the subject and you, but damage
       already split is not reassigned to the subject.</p><p>If you and the
       subject of the spell move out of range of each other, the spell ends.</p>
-  actions:
-    - _id: 7a42iaq6c1asa5fz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
+      inquisitor: 2
       oracle: 2
       paladin: 2
-      inquisitor: 2
       psychic: 2
+      warpriest: 2
     domain:
       Community: 2
       Protection: 2
     subDomain:
-      Martyr: 2
       Friendship: 2
+      Martyr: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a pair of platinum rings worth 50 gp worn by both you and the target
+  school: abj
   source:
     id: PZO1110
     pages: '342'
-_key: '!items!menqakfoa1ftvi3f'
+type: spell
 

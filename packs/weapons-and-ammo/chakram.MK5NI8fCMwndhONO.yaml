@@ -1,8 +1,71 @@
 _id: MK5NI8fCMwndhONO
-name: Chakram
-type: weapon
+_key: '!items!MK5NI8fCMwndhONO'
 img: systems/pf1/icons/items/weapons/chakram.png
+name: Chakram
 system:
+  actions:
+    - _id: kvnono81fo9i55p8
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/chakram.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '30'
+    - _id: eYYMLfpxhSpu1Pj8
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      attackBonus: '-1'
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/chakram.png
+      name: Melee
+      range:
+        units: melee
+        value: '30'
+      save:
+        dc: '15'
+        description: Reflex see text
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
+  baseTypes:
+    - Chakram
   description:
     value: >-
       <p>The chakram is a simple, elegant, and highly portable thrown weapon. It
@@ -11,94 +74,31 @@ system:
       take a -1 penalty on your attack roll with the weapon and must succeed at
       a DC 15 Reflex save or cut yourself on the blade (half damage, no Strength
       modifier). You do not need to make this save if wearing heavy armor.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 1
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: kvnono81fo9i55p8
-      name: Throw
-      img: systems/pf1/icons/items/weapons/chakram.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-    - _id: eYYMLfpxhSpu1Pj8
-      name: Melee
-      img: systems/pf1/icons/items/weapons/chakram.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      attackBonus: '-1'
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-        damage: str
-      save:
-        dc: '15'
-        type: ref
-        description: Reflex see text
-      ammoType: none
+  material:
+    addon:
+      - null
+    normal:
+      value: ''
+  price: 1
+  source:
+    id: PZO9452
+    pages: '0'
+  subType: martial
+  tags:
+    - PFS
   uses:
     per: single
-  baseTypes:
-    - Chakram
   weaponGroups:
     value:
       - bladesLight
       - bladesHeavy
       - thrown
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-  subType: martial
   weaponSubtype: ranged
-  source:
-    id: PZO9452
-    pages: '0'
-_key: '!items!MK5NI8fCMwndhONO'
+  weight:
+    value: 1
+type: weapon
 

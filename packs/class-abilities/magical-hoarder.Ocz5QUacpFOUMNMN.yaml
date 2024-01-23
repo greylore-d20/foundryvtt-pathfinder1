@@ -1,8 +1,20 @@
 _id: Ocz5QUacpFOUMNMN
-name: Magical Hoarder
-type: feat
+_key: '!items!Ocz5QUacpFOUMNMN'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Magical Hoarder
 system:
+  abilityType: su
+  actions:
+    - _id: nopwg3qoa4fj30u0
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 13th level, whenever a creature within 30 feet of you casts a spell
@@ -20,19 +32,7 @@ system:
 
       <p>This ability does not affect spells with an instantaneous or permanent
       duration.</p>
-  actions:
-    - _id: nopwg3qoa4fj30u0
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_magicalHoarder
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!Ocz5QUacpFOUMNMN'
+  tag: classFeat_magicalHoarder
+type: feat
 

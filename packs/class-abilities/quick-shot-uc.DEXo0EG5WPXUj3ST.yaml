@@ -1,8 +1,20 @@
 _id: DEXo0EG5WPXUj3ST
-name: Quick Shot (UC)
-type: feat
+_key: '!items!DEXo0EG5WPXUj3ST'
 img: systems/pf1/icons/items/weapons/razor-drow.PNG
+name: Quick Shot (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: esqnh7e1ebmxudw8
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/items/weapons/razor-drow.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue (Unchained)
   description:
     value: >-
       <p>Whenever the rogue rolls initiative, she can also make a single attack
@@ -12,21 +24,9 @@ system:
       <p>If more than one rogue has this talent, their initiative check results
       determine the order in which they make their attacks. After these attacks
       are resolved, the round proceeds as normal.</p>
+  subType: classFeat
+  tag: classFeat_quickShotUc
   tags:
     - Rogue Talent, Advanced
-  actions:
-    - _id: esqnh7e1ebmxudw8
-      name: Use
-      img: systems/pf1/icons/items/weapons/razor-drow.PNG
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_quickShotUc
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!DEXo0EG5WPXUj3ST'
+type: feat
 

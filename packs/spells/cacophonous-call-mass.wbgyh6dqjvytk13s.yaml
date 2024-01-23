@@ -1,16 +1,11 @@
 _id: wbgyh6dqjvytk13s
-name: Cacophonous Call, Mass
-type: spell
+_key: '!items!wbgyh6dqjvytk13s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cacophonous Call, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>cacophonous call</i>, except that it affects
-      multiple creatures.</p>
   actions:
     - _id: ehb3c31g495anq1c
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,26 +13,31 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature/level (all of which must be within 30 feet)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature/level (all of which must be within 30 feet)
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>cacophonous call</i>, except that it affects
+      multiple creatures.</p>
   learnedAt:
     class:
       bard: 5
   level: 5
+  materials:
+    value: a scrap of sheet music
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a scrap of sheet music
-_key: '!items!wbgyh6dqjvytk13s'
+type: spell
 

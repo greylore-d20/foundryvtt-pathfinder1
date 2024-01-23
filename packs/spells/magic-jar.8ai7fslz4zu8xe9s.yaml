@@ -1,8 +1,31 @@
 _id: 8ai7fslz4zu8xe9s
-name: Magic Jar
-type: spell
+_key: '!items!8ai7fslz4zu8xe9s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magic Jar
 system:
+  actions:
+    - _id: 09f7dorpkj9hb4fm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level or until you return to your body
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By casting <i><i>magic jar</i>,</i> you place your soul in a gem or
@@ -55,40 +78,17 @@ system:
       dies if it is out of range). Destroying the receptacle ends the spell, and
       the spell can be dispelled at either the <i>magic jar</i> or the host's
       location.</p>
-  actions:
-    - _id: 09f7dorpkj9hb4fm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level or until you return to your body
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       alchemist: 5
+      sorcerer: 5
       summoner: 4
-      witch: 5
       summonerUnchained: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a gem or crystal worth at least 100 gp
-_key: '!items!8ai7fslz4zu8xe9s'
+  school: nec
+type: spell
 

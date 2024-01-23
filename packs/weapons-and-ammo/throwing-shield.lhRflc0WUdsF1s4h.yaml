@@ -1,8 +1,38 @@
 _id: lhRflc0WUdsF1s4h
-name: Throwing Shield
-type: weapon
+_key: '!items!lhRflc0WUdsF1s4h'
 img: systems/pf1/icons/items/weapons/shield-throwing.PNG
+name: Throwing Shield
 system:
+  actions:
+    - _id: kgtvvi21ghqroc3r
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/shield-throwing.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Throwing Shield
   description:
     value: >-
       <p>This shield is designed for throwing and has specially designed straps
@@ -10,60 +40,30 @@ system:
       cannot be throwing shields. Neither a shield's enhancement bonus to AC nor
       its shield spikes apply on your attack or damage rolls. A throwing shield
       can't be disarmed.</p>
-  tags:
-    - PFS
-  price: 50
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: kgtvvi21ghqroc3r
-      name: Throw
-      img: systems/pf1/icons/items/weapons/shield-throwing.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Throwing Shield
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 50
   properties:
     prf: true
     trp: true
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!lhRflc0WUdsF1s4h'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+type: weapon
 

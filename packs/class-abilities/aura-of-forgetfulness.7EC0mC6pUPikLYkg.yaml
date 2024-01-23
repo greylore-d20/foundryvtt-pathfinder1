@@ -1,8 +1,27 @@
 _id: 7EC0mC6pUPikLYkg
-name: Aura of Forgetfulness
-type: feat
+_key: '!items!7EC0mC6pUPikLYkg'
 img: systems/pf1/icons/skills/emerald_04.jpg
+name: Aura of Forgetfulness
 system:
+  abilityType: su
+  actions:
+    - _id: jk5d4cpgjzrwkfe5
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/emerald_04.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura of forgetfulness for a number
@@ -16,29 +35,10 @@ system:
 
       <p>This power replaces the Eyes of Darkness power of the Darkness
       Domain.</p>
-  actions:
-    - _id: jk5d4cpgjzrwkfe5
-      name: Use
-      img: systems/pf1/icons/skills/emerald_04.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_auraOfForgetfulness
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!7EC0mC6pUPikLYkg'
+  tag: classFeat_auraOfForgetfulness
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

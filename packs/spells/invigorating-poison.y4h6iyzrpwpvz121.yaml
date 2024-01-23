@@ -1,8 +1,33 @@
 _id: y4h6iyzrpwpvz121
-name: Invigorating Poison
-type: spell
+_key: '!items!y4h6iyzrpwpvz121'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invigorating Poison
 system:
+  actions:
+    - _id: 0r8i59hblabsh5gh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The body of the target creature gains a metabolic response that allows
@@ -17,43 +42,18 @@ system:
       single poison; if multiple poisons affect the target simultaneously, this
       spell prevents only ability damage and grants the appropriate bonuses for
       the poison that would cause the most damage.</p>
-  actions:
-    - _id: 0r8i59hblabsh5gh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
       alchemist: 2
-      shaman: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      oracle: 2
+      shaman: 2
+      warpriest: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: an apple seed
-_key: '!items!y4h6iyzrpwpvz121'
+  school: trs
+type: spell
 

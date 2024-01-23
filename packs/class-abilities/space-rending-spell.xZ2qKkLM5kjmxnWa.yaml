@@ -1,8 +1,20 @@
 _id: xZ2qKkLM5kjmxnWa
-name: Space-rending Spell
-type: feat
+_key: '!items!xZ2qKkLM5kjmxnWa'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Space-rending Spell
 system:
+  abilityType: su
+  actions:
+    - _id: jxxr6nfrrn8p7kxk
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>The psychic can warp space with her mind, teleporting herself as she
@@ -11,19 +23,7 @@ system:
 
       <p>The maximum number of points she can spend in this way is equal to the
       linked spell’s level.</p>
-  actions:
-    - _id: jxxr6nfrrn8p7kxk
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_spacerendingSpell
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!xZ2qKkLM5kjmxnWa'
+  tag: classFeat_spacerendingSpell
+type: feat
 

@@ -1,8 +1,20 @@
 _id: XhpyFMIbhL5ogMVe
-name: Part the Veil
-type: feat
+_key: '!items!XhpyFMIbhL5ogMVe'
 img: systems/pf1/icons/spells/rip-acid-2.jpg
+name: Part the Veil
 system:
+  abilityType: su
+  actions:
+    - _id: updozr6fbe1ho4dh
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/rip-acid-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can lace spells you cast with the raw madness that
@@ -18,22 +30,10 @@ system:
       confusion effect and not to the original spell effect. Part the veil is a
       mind-affecting effect. You can use this ability a number of times per day
       equal to 1/2 your class level.</p>
-  actions:
-    - _id: updozr6fbe1ho4dh
-      name: Use
-      img: systems/pf1/icons/spells/rip-acid-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: floor(@classes.cleric.level / 2)
-  tag: classFeat_partTheVeil
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!XhpyFMIbhL5ogMVe'
+  tag: classFeat_partTheVeil
+  uses:
+    maxFormula: floor(@classes.cleric.level / 2)
+    per: day
+type: feat
 

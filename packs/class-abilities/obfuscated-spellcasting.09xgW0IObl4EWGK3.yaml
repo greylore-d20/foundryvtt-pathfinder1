@@ -1,8 +1,20 @@
 _id: 09xgW0IObl4EWGK3
-name: Obfuscated Spellcasting
-type: feat
+_key: '!items!09xgW0IObl4EWGK3'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Obfuscated Spellcasting
 system:
+  abilityType: su
+  actions:
+    - _id: t260smrlrzog8bdu
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>When casting a spell, the arcanist can spend 1 point from her arcane
@@ -13,21 +25,9 @@ system:
       attempts that fail by an amount less than double the arcanist’s caster
       level mistakenly identify the spell being cast as the false spell chosen
       by the arcanist.</p>
+  subType: classFeat
+  tag: classFeat_obfuscatedSpellcasting
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: t260smrlrzog8bdu
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_obfuscatedSpellcasting
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!09xgW0IObl4EWGK3'
+type: feat
 

@@ -1,37 +1,40 @@
 _id: 7y0xvorQBvCtjoYn
-name: Shield Speech, Greater
-type: spell
+_key: '!items!7y0xvorQBvCtjoYn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield Speech, Greater
 system:
+  actions:
+    - _id: mL0yX5kSx8787iuM
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft. emanation centered on you
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as @Compendium[pf1.spells.ecfp8vGjgZevbTJi]{shield
       speech}, except all creatures within the dome may communicate with each
       other as if linked by <em>shield speech</em>. If they speak with anyone
       outside the area, those outside the area hear them normally.</p>
-  actions:
-    - _id: mL0yX5kSx8787iuM
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: 30-ft. emanation centered on you
   learnedAt:
     class:
       arcanist: 4
@@ -46,8 +49,5 @@ system:
       wizard: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!7y0xvorQBvCtjoYn'
+type: spell
 

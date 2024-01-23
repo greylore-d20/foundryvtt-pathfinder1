@@ -1,8 +1,20 @@
 _id: D1puzgiOIRi53VeN
-name: Guardian of the Tribe
-type: feat
+_key: '!items!D1puzgiOIRi53VeN'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Guardian of the Tribe
 system:
+  abilityType: su
+  actions:
+    - _id: dynf0dw5vd5w8on3
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can cast a harmless spell with a range of touch on a member
@@ -11,22 +23,10 @@ system:
       modifier (minimum 1). In addition, she is constantly aware of the
       condition of all members of her tribal bond ability, as
       @Compendium[pf1.spells.4ya1fs9tyvsqnwqx]{Status}.</p>
-  actions:
-    - _id: dynf0dw5vd5w8on3
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: max(1, @abilities.cha.mod)
-  tag: classFeat_guardianOfTheTribe
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!D1puzgiOIRi53VeN'
+  tag: classFeat_guardianOfTheTribe
+  uses:
+    maxFormula: max(1, @abilities.cha.mod)
+    per: day
+type: feat
 

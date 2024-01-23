@@ -1,8 +1,29 @@
 _id: 90xaelj2ncuzq62n
-name: Mindscape Door
-type: spell
+_key: '!items!90xaelj2ncuzq62n'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mindscape Door
 system:
+  actions:
+    - _id: 8dbsqvqdmi3ccb09
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (see text)
+        type: will
+      spellEffect: one illusory portal
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You or other creatures enter into or escape from a mindscape (see page
@@ -39,38 +60,17 @@ system:
       successfully cast <i>mindscape door</i> within a veiled mindscape, you
       learn that you are in a mindscape, but other creatures observing the door
       don't automatically realize they are.</p>
-  actions:
-    - _id: 8dbsqvqdmi3ccb09
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
-      spellEffect: one illusory portal
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      psychic: 3
       medium: 3
       mesmerist: 3
+      psychic: 3
+      sorcerer: 4
+      wizard: 4
   level: 4
   school: ill
+  sr: false
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!90xaelj2ncuzq62n'
+type: spell
 

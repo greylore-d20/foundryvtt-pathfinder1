@@ -1,8 +1,51 @@
 _id: yRMYjXkjoT22Z5IK
-name: Waxen Image
-type: feat
+_key: '!items!yRMYjXkjoT22Z5IK'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Waxen Image
 system:
+  abilityType: su
+  actions:
+    - _id: 345ncc349ar2znt0
+      actionType: save
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      description: '<p>Uses available: [[@abilities.int.mod]]</p>'
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Create
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+    - _id: u1jtMmhVOdlmV86y
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Control
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: WIll negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can spend a full-round action to create a crude and unnerving
@@ -22,53 +65,10 @@ system:
       turn.</p><p>As soon as the creature has succeeded on a saving throw
       against this effect, it is immune to it for 24 hours.</p><p>The is an
       enchantment (compulsion) effect.</p>
+  subType: classFeat
+  tag: classFeat_waxenImage
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: 345ncc349ar2znt0
-      name: Create
-      img: systems/pf1/icons/skills/violet_02.jpg
-      description: '<p>Uses available: [[@abilities.int.mod]]</p>'
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-    - _id: u1jtMmhVOdlmV86y
-      name: Control
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: WIll negates
-  tag: classFeat_waxenImage
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!yRMYjXkjoT22Z5IK'
+type: feat
 

@@ -1,8 +1,30 @@
 _id: gqtl4codfogg2u33
-name: Steal Book
-type: spell
+_key: '!items!gqtl4codfogg2u33'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Steal Book
 system:
+  actions:
+    - _id: 5xpus7wk5euzkzzk
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: one book touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Often used by bards, spies, and arcane scholars to steal important
@@ -22,36 +44,14 @@ system:
       <i>steal book</i> scroll until you select a target book for the text to
       appear in. The stolen text glitters and sparkles while it remains on the
       scroll.</p>
-  actions:
-    - _id: 5xpus7wk5euzkzzk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: one book touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      witch: 3
       inquisitor: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: div
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!gqtl4codfogg2u33'
+type: spell
 

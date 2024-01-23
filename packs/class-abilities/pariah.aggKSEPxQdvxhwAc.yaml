@@ -1,8 +1,34 @@
 _id: aggKSEPxQdvxhwAc
-name: Pariah
-type: feat
+_key: '!items!aggKSEPxQdvxhwAc'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Pariah
 system:
+  abilityType: su
+  actions:
+    - _id: mg4e7dhrmdgt2ddd
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.int.mod'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can cause a creature within 60 feet to be shunned by its
@@ -14,36 +40,10 @@ system:
       through, the action is lost, and the aiding creature can’t directly aid
       the target for the duration of this hex.</p><p>This hex does not prevent
       the target from benefiting from area of effect spells.</p>
+  subType: classFeat
+  tag: classFeat_pariah
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: mg4e7dhrmdgt2ddd
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.int.mod'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '60'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-  tag: classFeat_pariah
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!aggKSEPxQdvxhwAc'
+type: feat
 

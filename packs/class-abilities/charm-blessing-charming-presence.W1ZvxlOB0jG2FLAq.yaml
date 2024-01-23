@@ -1,8 +1,27 @@
 _id: W1ZvxlOB0jG2FLAq
-name: 'Charm Blessing: Charming Presence'
-type: feat
+_key: '!items!W1ZvxlOB0jG2FLAq'
 img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
+name: 'Charm Blessing: Charming Presence'
 system:
+  actions:
+    - _id: sczt2vyso5otpk8f
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ally touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch an ally and grant an entrancing blessing.
@@ -11,26 +30,7 @@ system:
       @Compendium[pf1.spells.yk5bgi6j9kbtigof]{Sanctuary}, except if the ally
       attacks an opponent, the effect ends with respect to only that opponent.
       This is a mind-affecting effect.</p>
-  actions:
-    - _id: sczt2vyso5otpk8f
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: ally touched
-      range:
-        units: touch
-  tag: classFeat_charmBlessingCharmingPresence
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!W1ZvxlOB0jG2FLAq'
+  tag: classFeat_charmBlessingCharmingPresence
+type: feat
 

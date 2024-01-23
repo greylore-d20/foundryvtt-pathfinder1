@@ -1,8 +1,20 @@
 _id: 3g4wtgAkMdPxTcju
-name: Critical Strike
-type: feat
+_key: '!items!3g4wtgAkMdPxTcju'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Critical Strike
 system:
+  abilityType: su
+  actions:
+    - _id: gbfuhd2wwhu69ued
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>Whenever the magus scores a critical hit with a melee weapon, he may
@@ -11,22 +23,10 @@ system:
       action. The magus can use this ability once per day.</p>
 
       <p>The magus must be at least 12th level before selecting this arcana.</p>
-  actions:
-    - _id: gbfuhd2wwhu69ued
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_criticalStrike
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!3g4wtgAkMdPxTcju'
+  tag: classFeat_criticalStrike
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

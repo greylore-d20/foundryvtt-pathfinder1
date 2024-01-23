@@ -1,8 +1,31 @@
 _id: gq7np9mwtfd500zg
-name: Blight
-type: spell
+_key: '!items!gq7np9mwtfd500zg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blight
 system:
+  actions:
+    - _id: kbw519xcy3pamisd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude half; see text
+        type: fort
+      target:
+        value: plant touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell withers a single plant of any size. An affected plant
@@ -11,46 +34,23 @@ system:
       creature doesn't receive a save and immediately withers and
       dies.</p><p>This spell has no effect on the soil or surrounding plant
       life.</p>
-  actions:
-    - _id: kbw519xcy3pamisd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: plant touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude half; see text
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      druid: 4
-      witch: 5
-      shaman: 5
-      hunter: 4
-    subDomain:
-      Seasons: 4
-      Radiation: 2
     bloodline:
       Daemon: 5
+    class:
+      druid: 4
+      hunter: 4
+      shaman: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
+    subDomain:
+      Radiation: 2
+      Seasons: 4
   level: 5
   school: nec
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '250'
-_key: '!items!gq7np9mwtfd500zg'
+type: spell
 

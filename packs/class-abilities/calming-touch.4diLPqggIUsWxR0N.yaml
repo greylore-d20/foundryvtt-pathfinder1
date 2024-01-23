@@ -1,19 +1,11 @@
 _id: 4diLPqggIUsWxR0N
-name: Calming Touch
-type: feat
+_key: '!items!4diLPqggIUsWxR0N'
 img: systems/pf1/icons/skills/light_10.jpg
+name: Calming Touch
 system:
-  description:
-    value: >-
-      <p>You can touch a creature as a standard action to heal it of 1d6 points
-      of nonlethal damage + 1 point per cleric level. This touch also removes
-      the fatigued, shaken, and sickened conditions (but has no effect on more
-      severe conditions). You can use this ability a number of times per day
-      equal to 3 + your Wisdom modifier.</p>
+  abilityType: sp
   actions:
     - _id: qxs2f13i3f23ojuy
-      name: Use
-      img: systems/pf1/icons/skills/light_10.jpg
       activation:
         type: standard
         unchained:
@@ -21,21 +13,29 @@ system:
           type: action
       duration:
         units: inst
-      target:
-        value: creature touched
+      img: systems/pf1/icons/skills/light_10.jpg
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_calmingTouch
-  subType: classFeat
+      target:
+        value: creature touched
   associations:
     classes:
       - Cleric
-  abilityType: sp
+  description:
+    value: >-
+      <p>You can touch a creature as a standard action to heal it of 1d6 points
+      of nonlethal damage + 1 point per cleric level. This touch also removes
+      the fatigued, shaken, and sickened conditions (but has no effect on more
+      severe conditions). You can use this ability a number of times per day
+      equal to 3 + your Wisdom modifier.</p>
   source:
     id: PZO1110
     pages: '42'
-_key: '!items!4diLPqggIUsWxR0N'
+  subType: classFeat
+  tag: classFeat_calmingTouch
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

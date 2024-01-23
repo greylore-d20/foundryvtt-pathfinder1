@@ -1,16 +1,10 @@
 _id: 80f89nrksbofs5vx
-name: Disguise Other
-type: spell
+_key: '!items!80f89nrksbofs5vx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Disguise Other
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>disguise self</i>, except you can disguise
-      either yourself or another creature.</p>
   actions:
     - _id: 7tsgiqiaj7x4djlt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,25 +12,31 @@ system:
           type: action
       duration:
         value: 10 minutes/level (D)
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>disguise self</i>, except you can disguise
+      either yourself or another creature.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
       inquisitor: 2
-      psychic: 2
       medium: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!80f89nrksbofs5vx'
+  subschool: glamer
+type: spell
 

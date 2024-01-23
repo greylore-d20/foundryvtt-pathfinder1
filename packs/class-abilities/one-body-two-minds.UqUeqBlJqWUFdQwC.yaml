@@ -1,8 +1,20 @@
 _id: UqUeqBlJqWUFdQwC
-name: One Body, Two Minds
-type: feat
+_key: '!items!UqUeqBlJqWUFdQwC'
 img: systems/pf1/icons/skills/affliction_21.jpg
+name: One Body, Two Minds
 system:
+  abilityType: sp
+  actions:
+    - _id: qbhr8i9virhs0lgi
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/affliction_21.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, once per day, you can improve the effectiveness of a
@@ -15,22 +27,10 @@ system:
       Spell} <em>metamagic feat</em>. This ability does not use up a spell slot
       higher than the level of the base spell, nor does it increase the level of
       the base spell.</p>
-  actions:
-    - _id: qbhr8i9virhs0lgi
-      name: Use
-      img: systems/pf1/icons/skills/affliction_21.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_oneBodyTwoMinds
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!UqUeqBlJqWUFdQwC'
+  tag: classFeat_oneBodyTwoMinds
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

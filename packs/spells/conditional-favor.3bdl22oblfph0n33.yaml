@@ -1,8 +1,24 @@
 _id: 3bdl22oblfph0n33
-name: Conditional Favor
-type: spell
+_key: '!items!3bdl22oblfph0n33'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Conditional Favor
 system:
+  actions:
+    - _id: qkmhhyqvsun36q6v
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: 1 creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>You must cast this spell immediately before casting another spell on
@@ -26,35 +42,19 @@ system:
       royalty while dominated. The subject of the spell intuitively knows
       beforehand whether an action will cause it to lose the paired spell's
       benefit.</p>
-  actions:
-    - _id: qkmhhyqvsun36q6v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: 1 creature
-      range:
-        units: seeText
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      bard: 2
-      paladin: 1
-      witch: 2
-      inquisitor: 2
       antipaladin: 1
+      bard: 2
+      cleric: 2
+      inquisitor: 2
       mesmerist: 2
       occultist: 2
+      oracle: 2
+      paladin: 1
+      warpriest: 2
+      witch: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-_key: '!items!3bdl22oblfph0n33'
+type: spell
 

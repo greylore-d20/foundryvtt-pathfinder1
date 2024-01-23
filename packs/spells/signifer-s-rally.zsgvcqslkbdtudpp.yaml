@@ -1,8 +1,32 @@
 _id: zsgvcqslkbdtudpp
-name: Signifer's Rally
-type: spell
+_key: '!items!zsgvcqslkbdtudpp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Signifer's Rally
 system:
+  actions:
+    - _id: r4lw728dwa5dh2c6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one willing ally/5 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You <i>teleport</i> up to one ally per five caster levels to your
@@ -16,41 +40,17 @@ system:
       arrival but are not considered flat-footed even though they have not taken
       any actions. The spell does not function in areas warded against intrusion
       by evil creatures (such as a <i>magic circle against evil</i> effect).</p>
-  actions:
-    - _id: r4lw728dwa5dh2c6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one willing ally/5 levels
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
       oracle: 7
+      sorcerer: 7
+      wizard: 7
   level: 7
+  materials:
+    value: 100 gp worth of bloodstone for every ally teleported
   school: con
   subschool: teleportation
   types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: 100 gp worth of bloodstone for every ally teleported
-_key: '!items!zsgvcqslkbdtudpp'
+type: spell
 

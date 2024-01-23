@@ -1,8 +1,26 @@
 _id: i39073pzg8e59qrg
-name: Caging Bomb Admixture
-type: spell
+_key: '!items!i39073pzg8e59qrg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Caging Bomb Admixture
 system:
+  actions:
+    - _id: 4z685l9dkhzxm4cj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon drinking an extract created with this formulae, you make a
@@ -34,30 +52,12 @@ system:
       earlier admixture ends, and a new one is created. When the duration of the
       caging bomb admixture ends, so does any remaining cage created by this
       admixture's effect.</p>
-  actions:
-    - _id: 4z685l9dkhzxm4cj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       alchemist: 6
   level: 6
   school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!i39073pzg8e59qrg'
+  types: force
+type: spell
 

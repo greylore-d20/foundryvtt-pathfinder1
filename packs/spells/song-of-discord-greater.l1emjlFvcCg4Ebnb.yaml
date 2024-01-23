@@ -1,7 +1,32 @@
-name: Song of Discord, Greater
-type: spell
+_id: l1emjlFvcCg4Ebnb
+_key: '!items!l1emjlFvcCg4Ebnb'
 img: icons/skills/melee/swords-parry-block-yellow.webp
+name: Song of Discord, Greater
 system:
+  actions:
+    - _id: ByApE3CQNI82bX4q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: creatures within a 20-ft. radius spread
+      duration:
+        value: 1 round/level
+      img: icons/skills/melee/swords-parry-block-yellow.webp
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will partial
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as @Compendium[pf1.spells.1os71jpk7lrrl47b]{song
@@ -9,27 +34,6 @@ system:
       nearest target each round. In addition, all affected creatures gain a +4
       morale bonus to Strength for the duration of the spell. A creature that
       succeeds at the Will save reduces the effect’s duration to 1 round.</p>
-  actions:
-    - _id: ByApE3CQNI82bX4q
-      name: Use
-      img: icons/skills/melee/swords-parry-block-yellow.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
-      area: creatures within a 20-ft. radius spread
   learnedAt:
     class:
       bard: 6
@@ -40,9 +44,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting, sonic
-  components:
-    verbal: true
-    somatic: true
-_id: l1emjlFvcCg4Ebnb
-_key: '!items!l1emjlFvcCg4Ebnb'
+type: spell
 

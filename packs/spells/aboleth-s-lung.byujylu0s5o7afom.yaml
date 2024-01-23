@@ -1,18 +1,11 @@
 _id: byujylu0s5o7afom
-name: Aboleth's Lung
-type: spell
+_key: '!items!byujylu0s5o7afom'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aboleth's Lung
 system:
-  description:
-    value: >-
-      <p>The targets are able to breathe water, freely. However, they can no
-      longer breathe air. Divide the duration evenly among all the creatures you
-      touch. This spell has no effect on creatures that can already breathe
-      water.</p>
   actions:
     - _id: qolgu0kgzsci01r0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,32 +13,39 @@ system:
           type: action
       duration:
         value: 1 hour/level; see text
-      target:
-        value: living creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: living creatures touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The targets are able to breathe water, freely. However, they can no
+      longer breathe air. Divide the duration evenly among all the creatures you
+      touch. This spell has no effect on creatures that can already breathe
+      water.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      witch: 2
       hunter: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: piece of seaweed
-_key: '!items!byujylu0s5o7afom'
+  school: trs
+type: spell
 

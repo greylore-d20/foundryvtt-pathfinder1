@@ -1,8 +1,30 @@
 _id: 29cfi65seiajh5qv
-name: Animal Growth
-type: spell
+_key: '!items!29cfi65seiajh5qv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Animal Growth
 system:
+  actions:
+    - _id: mo6k7ea77dg14h48
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one animal (Gargantuan or smaller)
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target animal grows to twice its normal size and eight times its
@@ -24,39 +46,17 @@ system:
       creature's possession instantly returns to its normal size.</p><p>The
       spell gives no means of command over an enlarged animal.</p><p>Multiple
       magical effects that increase size do not stack.</p>
-  actions:
-    - _id: mo6k7ea77dg14h48
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: one animal (Gargantuan or smaller)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       druid: 5
+      hunter: 4
       ranger: 4
       shaman: 5
-      hunter: 4
+      sorcerer: 5
+      wizard: 5
     domain:
       Scalykind: 5
   level: 5
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!29cfi65seiajh5qv'
+type: spell
 

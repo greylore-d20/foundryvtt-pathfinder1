@@ -1,8 +1,30 @@
 _id: c99w6rm28rpz14xu
-name: Spirit-Bound Blade
-type: spell
+_key: '!items!c99w6rm28rpz14xu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spirit-Bound Blade
 system:
+  actions:
+    - _id: po2tj9h9zqhhvs6q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: weapon touched
+  components:
+    somatic: true
   description:
     value: >-
       <p>You focus emotional energy and weave it into a shroud of hardened
@@ -22,38 +44,16 @@ system:
       emotional energy you choose matches the emotional focus of your phantom,
       the weapon grants its wielder a +2 bonus on skill checks with both skills
       you gain Skill Focus in from your phantom's emotional focus.</p>
-  actions:
-    - _id: po2tj9h9zqhhvs6q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
-    class:
-      shaman: 4
-      medium: 4
-      occultist: 4
-      spiritualist: 3
     bloodline:
       Ectoplasm: 4
+    class:
+      medium: 4
+      occultist: 4
+      shaman: 4
+      spiritualist: 3
   level: 4
   school: evo
-  components:
-    somatic: true
   sr: false
-_key: '!items!c99w6rm28rpz14xu'
+type: spell
 

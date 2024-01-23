@@ -1,8 +1,20 @@
 _id: XvmKpSfSy9TnjMZI
-name: Vampiric Sight
-type: feat
+_key: '!items!XvmKpSfSy9TnjMZI'
 img: systems/pf1/icons/skills/beast_02.jpg
+name: Vampiric Sight
 system:
+  abilityType: su
+  actions:
+    - _id: l82m5qleyf3xmw8o
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/beast_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>The vampire hunter gains <em>darkvision</em> to a range of 60 feet (if
@@ -10,19 +22,7 @@ system:
       8th level, the range of the vampire hunter’s <em>darkvision</em> increases
       by 30 feet. At 16th level, the vampire hunter also gains
       <em>blindsense</em> to a range of 30 feet.</p>
-  actions:
-    - _id: l82m5qleyf3xmw8o
-      name: Use
-      img: systems/pf1/icons/skills/beast_02.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_vampiricSight
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!XvmKpSfSy9TnjMZI'
+  tag: classFeat_vampiricSight
+type: feat
 

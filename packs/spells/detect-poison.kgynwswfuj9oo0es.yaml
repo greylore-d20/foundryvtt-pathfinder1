@@ -1,8 +1,30 @@
 _id: kgynwswfuj9oo0es
-name: Detect Poison
-type: spell
+_key: '!items!kgynwswfuj9oo0es'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Poison
 system:
+  actions:
+    - _id: 3cjey4y2cwlgkasp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one creature, one object, or a 5-ft. cube
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature, one object, or a 5-ft. cube
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You determine whether a creature, object, or area has been poisoned or
@@ -12,48 +34,26 @@ system:
       (alchemy) check prior to the Wisdom check. The spell can penetrate
       barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of
       lead, or 3 feet of wood or dirt blocks it.</p>
-  actions:
-    - _id: 3cjey4y2cwlgkasp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature, one object, or a 5-ft. cube
-      range:
-        units: close
-      measureTemplate:
-        type: rect
-        size: '5'
-      area: one creature, one object, or a 5-ft. cube
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
       cleric: 0
-      oracle: 0
       druid: 0
-      ranger: 1
-      paladin: 1
+      hunter: 0
       inquisitor: 0
-      shaman: 0
-      psychic: 0
       mesmerist: 0
       occultist: 0
-      hunter: 0
+      oracle: 0
+      paladin: 1
+      psychic: 0
+      ranger: 1
+      shaman: 0
+      sorcerer: 0
       witch: 0
+      wizard: 0
   level: 0
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!kgynwswfuj9oo0es'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

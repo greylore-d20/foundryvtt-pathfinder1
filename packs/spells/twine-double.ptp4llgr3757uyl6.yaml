@@ -1,8 +1,28 @@
 _id: ptp4llgr3757uyl6
-name: Twine Double
-type: spell
+_key: '!items!ptp4llgr3757uyl6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Twine Double
 system:
+  actions:
+    - _id: 3cgk8lttqxanll6i
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: One duplicate creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>As <i>simulacrum,</i> except you can only duplicate yourself, and the
@@ -23,35 +43,15 @@ system:
       half your hit points at the time of casting. If brought to 0 hit points,
       it is destroyed, reverting to cloth and twine. The double is an animated
       object.</p>
-  actions:
-    - _id: 3cgk8lttqxanll6i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 minute/level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: One duplicate creature
   learnedAt:
     class:
       sorcerer: 3
       wizard: 3
   level: 3
-  school: ill
-  subschool: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: cloth and twine
+  school: ill
   sr: false
-_key: '!items!ptp4llgr3757uyl6'
+  subschool: shadow
+type: spell
 

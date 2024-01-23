@@ -1,8 +1,26 @@
 _id: b3slhttlo5jytfti
-name: Ki Leech
-type: spell
+_key: '!items!b3slhttlo5jytfti'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ki Leech
 system:
+  actions:
+    - _id: ti9ei4lfrcowwd92
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You place your spirit in a receptive state so when you confirm a
@@ -14,36 +32,18 @@ system:
       abilities (such as the steal <i>ki</i> ability of the hungry ghost monk in
       the Advanced Player's Guide).</p><p>This spell has no effect if you do not
       have a <i>ki</i> pool.</p>
-  actions:
-    - _id: ti9ei4lfrcowwd92
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
       oracle: 3
-      witch: 3
       psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!b3slhttlo5jytfti'
+  types: evil
+type: spell
 

@@ -1,8 +1,25 @@
 _id: n16baqtb9mee2is8
-name: Fractions of Heal and Harm
-type: spell
+_key: '!items!n16baqtb9mee2is8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fractions of Heal and Harm
 system:
+  actions:
+    - _id: g37h5jjkqeybk28w
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell channels a portion of the next spell you cast into magic
@@ -19,33 +36,16 @@ system:
       is treated as the same spell level as the area-affecting spell for the
       purpose of effects that relate to the spell level of cure or inflict
       spells.</p>
-  actions:
-    - _id: g37h5jjkqeybk28w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!n16baqtb9mee2is8'
+type: spell
 

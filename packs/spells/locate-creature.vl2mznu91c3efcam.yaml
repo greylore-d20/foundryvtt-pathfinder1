@@ -1,8 +1,29 @@
 _id: vl2mznu91c3efcam
-name: Locate Creature
-type: spell
+_key: '!items!vl2mznu91c3efcam'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Locate Creature
 system:
+  actions:
+    - _id: 6qi7pxt5qat08bk6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: circle, centered on you, with a radius of 400 ft. + 40 ft./level
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: 400  + (40 * @cl)
+        type: circle
+      name: Use
+      range:
+        units: long
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>locate object,</i> except this spell
@@ -15,46 +36,25 @@ system:
       at least once.</p><p>Running water blocks the spell. It cannot detect
       objects. It can be fooled by <i>mislead, nondetection</i>, and
       <i>polymorph</i> spells.</p>
-  actions:
-    - _id: 6qi7pxt5qat08bk6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: 400  + (40 * @cl)
-      area: circle, centered on you, with a radius of 400 ft. + 40 ft./level
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      summoner: 3
-      witch: 4
-      psychic: 4
       medium: 3
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 3
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
     subDomain:
       Exploration: 4
   level: 4
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: fur from a bloodhound
+  school: div
   sr: false
-_key: '!items!vl2mznu91c3efcam'
+type: spell
 

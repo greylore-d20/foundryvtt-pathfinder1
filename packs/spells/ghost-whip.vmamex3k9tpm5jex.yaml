@@ -1,8 +1,26 @@
 _id: vmamex3k9tpm5jex
-name: Ghost Whip
-type: spell
+_key: '!items!vmamex3k9tpm5jex'
 img: icons/magic/fire/beam-strike-whip-red.webp
+name: Ghost Whip
 system:
+  actions:
+    - _id: bl8uumr56shts6s5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: whip of flexible ectoplasm
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A white, 15-foot-long lash of ghostly evanescence appears from your
@@ -17,40 +35,22 @@ system:
       a <i>ghost whip</i> deals lethal damage and can be used to perform drag or
       reposition combat maneuvers (in addition to a whip's normal disarm and
       trip maneuvers). A <i>ghost whip</i> cannot be disarmed or sundered.</p>
-  actions:
-    - _id: bl8uumr56shts6s5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: whip of flexible ectoplasm
   learnedAt:
-    class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      inquisitor: 2
-      magus: 2
-      psychic: 2
-      occultist: 2
-      spiritualist: 2
     bloodline:
       Ectoplasm: 2
+    class:
+      cleric: 2
+      inquisitor: 2
+      magus: 2
+      occultist: 2
+      oracle: 2
+      psychic: 2
+      sorcerer: 2
+      spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vmamex3k9tpm5jex'
+type: spell
 

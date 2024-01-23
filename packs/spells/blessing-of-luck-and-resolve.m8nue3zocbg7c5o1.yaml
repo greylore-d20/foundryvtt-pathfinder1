@@ -1,8 +1,31 @@
 _id: m8nue3zocbg7c5o1
-name: Blessing of Luck and Resolve
-type: spell
+_key: '!items!m8nue3zocbg7c5o1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blessing of Luck and Resolve
 system:
+  actions:
+    - _id: toy6x3buqnav87ho
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D), special see below
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A favored blessing of halfling clerics, this spell grants its target a
@@ -11,39 +34,16 @@ system:
       fails a saving throw against fear, it can end the spell as an immediate
       action to reroll the save with a +4 morale bonus, and must take the new
       result, even if it is worse.</p>
-  actions:
-    - _id: toy6x3buqnav87ho
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D), special see below
-      target:
-        value: one living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
+      inquisitor: 2
       oracle: 2
       paladin: 2
-      inquisitor: 2
+      warpriest: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!m8nue3zocbg7c5o1'
+type: spell
 

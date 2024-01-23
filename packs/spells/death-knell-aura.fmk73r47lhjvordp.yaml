@@ -1,50 +1,50 @@
 _id: fmk73r47lhjvordp
-name: Death Knell Aura
-type: spell
+_key: '!items!fmk73r47lhjvordp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Death Knell Aura
 system:
+  actions:
+    - _id: l7r7h7rv3tmgiyxd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation, centered on you
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        description: Will negates
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain a shimmering gray aura that feeds on the souls of creatures
       who die within it. The aura sheds light as a candle. If a creature at -1
       or fewer hit points is within the aura at the start of its turn, it must
       save or die, granting you the benefits of <i>death knell</i>.</p>
-  actions:
-    - _id: l7r7h7rv3tmgiyxd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        value: '20'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: 20-ft.-radius emanation, centered on you
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      witch: 4
       inquisitor: 4
+      oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
   types: death, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!fmk73r47lhjvordp'
+type: spell
 

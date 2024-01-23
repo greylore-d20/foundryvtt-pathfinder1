@@ -1,8 +1,32 @@
 _id: tkjnm3lw7ni82tag
-name: Resist Energy
-type: spell
+_key: '!items!tkjnm3lw7ni82tag'
 img: icons/magic/defensive/armor-shield-barrier-steel.webp
+name: Resist Energy
 system:
+  actions:
+    - _id: he74zujdowtkfald
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This abjuration grants a creature limited <i>protection</i> from damage
@@ -19,58 +43,34 @@ system:
       <i><i>protection</i> from energy</i>. If a character is warded by
       <i><i>protection</i> from energy</i> and <i>resist energy</i>, the
       <i>protection</i> spell absorbs damage until its power is exhausted.</p>
-  actions:
-    - _id: he74zujdowtkfald
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
-    class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 1
-      paladin: 2
-      alchemist: 2
-      summoner: 2
-      inquisitor: 2
-      adept: 2
-      bloodrager: 2
-      shaman: 2
-      psychic: 2
-      occultist: 2
-      spiritualist: 2
-      hunter: 1
-      summonerUnchained: 2
     bloodline:
       Celestial: 2
       Draconic: 2
+    class:
+      adept: 2
+      alchemist: 2
+      bloodrager: 2
+      cleric: 2
+      druid: 2
+      hunter: 1
+      inquisitor: 2
+      occultist: 2
+      oracle: 2
+      paladin: 2
+      psychic: 2
+      ranger: 1
+      shaman: 2
+      sorcerer: 2
+      spiritualist: 2
+      summoner: 2
+      summonerUnchained: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '334'
-_key: '!items!tkjnm3lw7ni82tag'
+type: spell
 

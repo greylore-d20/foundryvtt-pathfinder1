@@ -1,8 +1,47 @@
 _id: m5cdZ1RG7c1mkhqF
-name: Orang-Pendak
-type: race
+_key: '!items!m5cdZ1RG7c1mkhqF'
+folder: CWHsfTdEmZohUkw1
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Orang-Pendak
 system:
+  changes:
+    - _id: 8puu0hv7
+      formula: '2'
+      modifier: racial
+      subTarget: str
+    - _id: rztjhpdv
+      formula: '2'
+      modifier: racial
+      subTarget: wis
+    - _id: knd1ob9o
+      formula: '-2'
+      modifier: racial
+      subTarget: int
+  contextNotes:
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: skill.clm
+      target: skill
+      text: +[[2]] Racial in Jungles and Forests
+      value: 0
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: skill.ste
+      target: skill
+      text: +[[2]] Racial in Jungles and Forests
+      value: 0
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: skill.han
+      target: skill
+      text: +[[4]] Racial vs. Apes and Monkeys
+      value: 0
   description:
     value: >-
       <h2>Standard Racial Traits</h2><ul><li><strong>Ability Score
@@ -37,51 +76,12 @@ system:
       so.</p></li></ul><h3>Senses Racial Traits</h3><ul><li><strong>Low-Light
       Vision</strong>: Orang-pendaks can see twice as far as <em>humans</em> in
       conditions of dim light.</li></ul>
-  tags:
-    - Bestiary
-  changes:
-    - _id: 8puu0hv7
-      formula: '2'
-      subTarget: str
-      modifier: racial
-    - _id: rztjhpdv
-      formula: '2'
-      subTarget: wis
-      modifier: racial
-    - _id: knd1ob9o
-      formula: '-2'
-      subTarget: int
-      modifier: racial
-  contextNotes:
-    - formula: ''
-      operator: add
-      target: skill
-      subTarget: skill.clm
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[2]] Racial in Jungles and Forests
-    - formula: ''
-      operator: add
-      target: skill
-      subTarget: skill.ste
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[2]] Racial in Jungles and Forests
-    - formula: ''
-      operator: add
-      target: skill
-      subTarget: skill.han
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[4]] Racial vs. Apes and Monkeys
   languages:
     custom: Sasquatch
   size: sm
   subTypes:
     - Orang-Pendak
-folder: CWHsfTdEmZohUkw1
-_key: '!items!m5cdZ1RG7c1mkhqF'
+  tags:
+    - Bestiary
+type: race
 

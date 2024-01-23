@@ -1,8 +1,31 @@
 _id: v1wjrlIpQrbGZ8Om
-name: Lasting Poison (UC)
-type: feat
+_key: '!items!v1wjrlIpQrbGZ8Om'
 img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+name: Lasting Poison (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: xqOg3ntOeMTo0CIr
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+      name: Use
+    - _id: fGYUmcqHMYlyOZE4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+      name: Swift poison use
+  associations:
+    classes:
+      - Rogue (Unchained)
   description:
     value: >-
       <p>A rogue with this talent can apply poison to a weapon in such a way
@@ -13,32 +36,9 @@ system:
       standard action if the rogue has the
       @UUID[Compendium.pf1.class-abilities.Item.25YEZqTGeFCUSF3L]{swift poison}
       rogue talent.</p>
+  subType: classFeat
+  tag: classFeat_lastingPoisonUc
   tags:
     - Rogue Talent
-  actions:
-    - _id: xqOg3ntOeMTo0CIr
-      name: Use
-      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      ammoType: none
-    - _id: fGYUmcqHMYlyOZE4
-      name: Swift poison use
-      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      ammoType: none
-  tag: classFeat_lastingPoisonUc
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!v1wjrlIpQrbGZ8Om'
+type: feat
 

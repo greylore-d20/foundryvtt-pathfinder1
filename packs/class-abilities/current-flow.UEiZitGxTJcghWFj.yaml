@@ -1,8 +1,28 @@
 _id: UEiZitGxTJcghWFj
-name: Current Flow
-type: feat
+_key: '!items!UEiZitGxTJcghWFj'
 img: systems/pf1/icons/skills/blue_20.jpg
+name: Current Flow
 system:
+  abilityType: su
+  actions:
+    - _id: 9jeelqcyi06u4lca
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.wis.mod'
+      img: systems/pf1/icons/skills/blue_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a free action, you can increase either your base speed or your swim
@@ -12,30 +32,10 @@ system:
       a number of times per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Icicle power of the Water Domain.</p>
-  actions:
-    - _id: 9jeelqcyi06u4lca
-      name: Use
-      img: systems/pf1/icons/skills/blue_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.wis.mod'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_currentFlow
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!UEiZitGxTJcghWFj'
+  tag: classFeat_currentFlow
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

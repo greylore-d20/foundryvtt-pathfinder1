@@ -1,8 +1,29 @@
 _id: o4ywdvsm1oty8blq
-name: Explosive Runes
-type: spell
+_key: '!items!o4ywdvsm1oty8blq'
 img: icons/magic/symbols/rune-sigil-red-orange.webp
+name: Explosive Runes
 system:
+  actions:
+    - _id: vrdqsc4j58si3hvm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: see text
+      target:
+        value: one touched object weighing no more than 10 lbs.
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You trace mystic runes upon a book, map, scroll, or similar object
@@ -23,41 +44,20 @@ system:
       to thwart <i>explosive runes</i>. The DC to find magic traps using
       Perception and to disable them is 25 + spell level, or 28 for <i>explosive
       runes</i>.</p>
-  actions:
-    - _id: vrdqsc4j58si3hvm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent until discharged
-      target:
-        value: one touched object weighing no more than 10 lbs.
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
-    class:
-      sorcerer: 3
-      wizard: 3
-      occultist: 3
-    domain:
-      Rune: 4
     bloodline:
       Kobold: 3
+    class:
+      occultist: 3
+      sorcerer: 3
+      wizard: 3
+    domain:
+      Rune: 4
   level: 3
   school: abj
-  types: force
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '279'
-_key: '!items!o4ywdvsm1oty8blq'
+  types: force
+type: spell
 

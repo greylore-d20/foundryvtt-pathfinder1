@@ -1,8 +1,29 @@
 _id: rk3ltcxcw1z2sk02
-name: Fire of Judgment
-type: spell
+_key: '!items!rk3ltcxcw1z2sk02'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fire of Judgment
 system:
+  actions:
+    - _id: og0oidw32av22ruh
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>After casting this spell, the next creature you attack using your smite
@@ -14,31 +35,10 @@ system:
       successful saving throw, a creature is affected by this spell for only 1
       round. This damage is divine in nature and bypasses any DR the creature
       possesses.</p>
-  actions:
-    - _id: og0oidw32av22ruh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
       paladin: 3
   level: 3
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!rk3ltcxcw1z2sk02'
+type: spell
 

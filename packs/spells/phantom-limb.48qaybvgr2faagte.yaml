@@ -1,8 +1,26 @@
 _id: 48qaybvgr2faagte
-name: Phantom Limb
-type: spell
+_key: '!items!48qaybvgr2faagte'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantom Limb
 system:
+  actions:
+    - _id: cde05u1krtjmyxlo
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a semi-visible psychic manifestation that allows a
@@ -23,29 +41,11 @@ system:
       target grows a phantom tail, granting it a swim speed of 60 feet.
       <b>Phantom Wings</b>: The target grows phantom wings, granting it a fly
       speed of 60 feet (good maneuverability).</p>
-  actions:
-    - _id: cde05u1krtjmyxlo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours; see text
-      target:
-        value: one creature
-      range:
-        units: touch
   learnedAt:
     class:
       psychic: 6
       spiritualist: 5
   level: 6
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!48qaybvgr2faagte'
+type: spell
 

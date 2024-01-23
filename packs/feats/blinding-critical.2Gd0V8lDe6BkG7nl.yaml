@@ -1,8 +1,14 @@
 _id: 2Gd0V8lDe6BkG7nl
-name: Blinding Critical
-type: feat
+_key: '!items!2Gd0V8lDe6BkG7nl'
 img: systems/pf1/icons/skills/light_01.jpg
+name: Blinding Critical
 system:
+  contextNotes:
+    - subTarget: effect
+      text: >-
+        Blinding Critical: permanently blinded. A successful Fortitude save DC
+        [[10 + @attributes.bab.total]] reduces this to dazzled for [[1d4]]
+        rounds.
   description:
     value: >-
       <p><em>Your critical hits blind your
@@ -21,19 +27,13 @@ system:
       a critical hit and attempt to blind an opponent with this feat, you can
       spend up to 5 stamina points to increase the DC of this feat's saving
       throw by an amount equal to the number of stamina points you spent.</p>
+  source:
+    id: PZO1110
+    pages: 114, 119
+  tag: feat_blindingCritical
   tags:
     - Combat
     - Critical
     - Combat Trick
-  contextNotes:
-    - subTarget: effect
-      text: >-
-        Blinding Critical: permanently blinded. A successful Fortitude save DC
-        [[10 + @attributes.bab.total]] reduces this to dazzled for [[1d4]]
-        rounds.
-  tag: feat_blindingCritical
-  source:
-    id: PZO1110
-    pages: 114, 119
-_key: '!items!2Gd0V8lDe6BkG7nl'
+type: feat
 

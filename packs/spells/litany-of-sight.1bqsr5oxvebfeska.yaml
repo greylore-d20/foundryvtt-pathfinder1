@@ -1,41 +1,41 @@
 _id: 1bqsr5oxvebfeska
-name: Litany of Sight
-type: spell
+_key: '!items!1bqsr5oxvebfeska'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Sight
 system:
-  description:
-    value: >-
-      <p>This litany reveals the unseen to you. You can see invisible creatures
-      and objects within 30 feet.  While subject to this spell, the target
-      cannot be the target of another spell that has the word "litany" in the
-      title.</p>
   actions:
     - _id: 1lixswtiy28iea68
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 round
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
         description: 'no'
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This litany reveals the unseen to you. You can see invisible creatures
+      and objects within 30 feet.  While subject to this spell, the target
+      cannot be the target of another spell that has the word "litany" in the
+      title.</p>
   learnedAt:
     class:
-      paladin: 3
-      inquisitor: 4
       antipaladin: 3
+      inquisitor: 4
+      paladin: 3
   level: 3
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!1bqsr5oxvebfeska'
+type: spell
 

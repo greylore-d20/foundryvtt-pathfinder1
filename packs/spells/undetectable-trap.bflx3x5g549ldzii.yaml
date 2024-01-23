@@ -1,8 +1,28 @@
 _id: bflx3x5g549ldzii
-name: Undetectable Trap
-type: spell
+_key: '!items!bflx3x5g549ldzii'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Undetectable Trap
 system:
+  actions:
+    - _id: x2o4w9i8tjta94lt
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: trap touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You shroud a single trap with a powerful illusion to make it more
@@ -19,40 +39,20 @@ system:
       action he uses to prepare a ranger trap. This doesn't reduce the spell's
       casting time if such a ranger casts this spell on an ordinary trap, even
       one that he created himself using Craft (traps).</p>
-  actions:
-    - _id: x2o4w9i8tjta94lt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: trap touched
-      range:
-        units: touch
   learnedAt:
     class:
-      ranger: 2
       antipaladin: 2
-      occultist: 3
       hunter: 2
+      occultist: 3
+      ranger: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a square of black silk worth 50 gp
     gpValue: 50
+    value: a square of black silk worth 50 gp
   preparation:
     spontaneousPrepared: false
+  school: ill
   sr: false
-_key: '!items!bflx3x5g549ldzii'
+  subschool: glamer
+type: spell
 

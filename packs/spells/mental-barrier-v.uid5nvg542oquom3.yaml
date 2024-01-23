@@ -1,8 +1,24 @@
 _id: uid5nvg542oquom3
-name: Mental Barrier V
-type: spell
+_key: '!items!uid5nvg542oquom3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mental Barrier V
 system:
+  actions:
+    - _id: ow31ucuwnkf9y0lj
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This functions as <i>mental barrier <i>II</i>I</i>, but if you are
@@ -13,29 +29,13 @@ system:
       thrust I</i>, <i>II</i>, and <i>II</i>I, and you take half damage from
       <i>mind thrust I</i><i>V</i>, <i>V</i>, and <i>V</i>I (reduced to
       one-quarter on a successful Will save). This spell can be undercast.</p>
-  actions:
-    - _id: ow31ucuwnkf9y0lj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      psychic: 6
     bloodline:
       Psychic: 6
+    class:
+      psychic: 6
   level: 6
   school: abj
-  components:
-    verbal: true
   sr: false
-_key: '!items!uid5nvg542oquom3'
+type: spell
 

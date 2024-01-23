@@ -1,8 +1,25 @@
 _id: ndvks6ztnxhj6oxh
-name: Burst of Insight
-type: spell
+_key: '!items!ndvks6ztnxhj6oxh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Burst of Insight
 system:
+  actions:
+    - _id: rbevc8ggrq8mznc9
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You plumb the depths of your mind for insight, leaving you momentarily
@@ -10,30 +27,13 @@ system:
       Wisdom, or Charisma, you can cast this spell to gain a +8 enhancement
       bonus to Intelligence, Wisdom, or Charisma for that roll, but you are
       dazed for 1 round afterward.</p>
-  actions:
-    - _id: rbevc8ggrq8mznc9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      psychic: 1
       medium: 1
       mesmerist: 1
+      psychic: 1
       spiritualist: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ndvks6ztnxhj6oxh'
+type: spell
 

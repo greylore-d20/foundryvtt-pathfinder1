@@ -1,8 +1,20 @@
 _id: DYp0YbB0AFkk7heX
-name: Bare-Hand Block (UC)
-type: feat
+_key: '!items!DYp0YbB0AFkk7heX'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Bare-Hand Block (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: 2e180b3xf8wgxhz9
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 1 ki point as an immediate action
@@ -14,19 +26,7 @@ system:
 
       <p>A monk must be at least 8th level and have the ki sunder ki power
       before selecting this ki power.</p>
-  actions:
-    - _id: 2e180b3xf8wgxhz9
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  tag: classFeat_barehandBlockUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!DYp0YbB0AFkk7heX'
+  tag: classFeat_barehandBlockUc
+type: feat
 

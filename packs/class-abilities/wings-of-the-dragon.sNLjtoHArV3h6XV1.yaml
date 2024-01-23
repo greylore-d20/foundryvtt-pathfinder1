@@ -1,8 +1,26 @@
 _id: sNLjtoHArV3h6XV1
-name: Wings of the Dragon
-type: feat
+_key: '!items!sNLjtoHArV3h6XV1'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wings of the Dragon
 system:
+  abilityType: su
+  actions:
+    - _id: zopk25qfmcaj3qgl
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Like the great dragons, you can take to the skies and terrorize
@@ -15,30 +33,12 @@ system:
       for 10 minutes per day for each oracle level you have.</p><p>At 15th
       level, you can use the wings indefinitely.</p><p>You must be at least 7th
       level to select this revelation.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: zopk25qfmcaj3qgl
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_wingsOfTheDragon
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!sNLjtoHArV3h6XV1'
+  subType: classFeat
+  tag: classFeat_wingsOfTheDragon
+  tags:
+    - Dragon Mystery
+type: feat
 

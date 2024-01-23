@@ -1,8 +1,27 @@
 _id: lQdbofjqgE2deCEv
-name: 'Earth Blessing: Acid Strike'
-type: feat
+_key: '!items!lQdbofjqgE2deCEv'
 img: systems/pf1/icons/spells/rock-acid-2.jpg
+name: 'Earth Blessing: Acid Strike'
 system:
+  actions:
+    - _id: e5e124u0tbh96qc4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/rock-acid-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch one weapon and enhance it with acidic
@@ -11,26 +30,7 @@ system:
 
       <p>This additional damage doesn’t stack with the additional damage from
       the corrosive weapon special ability.</p>
-  actions:
-    - _id: e5e124u0tbh96qc4
-      name: Use
-      img: systems/pf1/icons/spells/rock-acid-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  tag: classFeat_earthBlessingAcidStrike
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!lQdbofjqgE2deCEv'
+  tag: classFeat_earthBlessingAcidStrike
+type: feat
 

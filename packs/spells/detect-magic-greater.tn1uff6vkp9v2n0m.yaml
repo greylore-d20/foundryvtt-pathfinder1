@@ -1,8 +1,30 @@
 _id: tn1uff6vkp9v2n0m
-name: Detect Magic, Greater
-type: spell
+_key: '!items!tn1uff6vkp9v2n0m'
 img: icons/magic/perception/eye-ringed-glow-angry-teal.webp
+name: Detect Magic, Greater
 system:
+  actions:
+    - _id: 7zlc0sy6f4s2hj5u
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '60'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as @Compendium[pf1.spells.uqh87jz757r2cb7r]{detect
@@ -37,51 +59,29 @@ system:
       else cast the spell. Greater <em>detect magic</em> grants a saving throw
       against @Compendium[pf1.spells.l01ajd0m4xgwq3fd]{magic aura} (but not
       <em>greater <em>magic aura</em></em>).</p>
-  actions:
-    - _id: 7zlc0sy6f4s2hj5u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level (D)
-      range:
-        value: '60'
-        units: ft
-        maxIncrements: '1'
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
       bard: 2
-      summoner: 2
-      witch: 2
+      cleric: 2
+      druid: 2
+      hunter: 2
       inquisitor: 2
       magus: 2
-      shaman: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      oracle: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
       spiritualist: 2
-      hunter: 2
+      summoner: 2
       summonerUnchained: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!tn1uff6vkp9v2n0m'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: jijpd26h53dekbop
-name: Chains of Light
-type: spell
+_key: '!items!jijpd26h53dekbop'
 img: icons/magic/light/explosion-beam-impact-silhouette.webp
+name: Chains of Light
 system:
+  actions:
+    - _id: fjeku9hjx5hvx08o
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex negates
+        type: ref
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A creature targeted by this spell is held immobile by glowing golden
@@ -15,44 +38,21 @@ system:
       <i>teleport</i>, and similar spells and spell-like abilities. The spell
       does not affect creatures that are already in ethereal or astral form when
       the spell is cast.</p>
-  actions:
-    - _id: fjeku9hjx5hvx08o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
+      inquisitor: 5
       oracle: 6
       paladin: 4
-      inquisitor: 5
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
-  school: con
-  subschool: creation
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a length of fine golden chain
+  school: con
   sr: false
-_key: '!items!jijpd26h53dekbop'
+  subschool: creation
+  types: good
+type: spell
 

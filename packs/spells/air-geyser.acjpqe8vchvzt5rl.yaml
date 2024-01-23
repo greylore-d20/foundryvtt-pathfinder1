@@ -1,8 +1,30 @@
 _id: acjpqe8vchvzt5rl
-name: Air Geyser
-type: spell
+_key: '!items!acjpqe8vchvzt5rl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Air Geyser
 system:
+  actions:
+    - _id: o6plxiymi0pnmsao
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex partial (see text)
+        type: ref
+      target:
+        value: one creature or object up to Large size
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a powerful blast of air capable of flinging an opponent
@@ -14,40 +36,18 @@ system:
       falls down (unless it was flying), taking falling damage as normal. A
       successful save means the target takes half damage from the air blast but
       is not moved by it.</p>
-  actions:
-    - _id: o6plxiymi0pnmsao
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature or object up to Large size
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
-      witch: 3
-      magus: 3
       bloodrager: 3
-      shaman: 4
+      druid: 3
       hunter: 3
+      magus: 3
+      shaman: 4
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: evo
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!acjpqe8vchvzt5rl'
+type: spell
 

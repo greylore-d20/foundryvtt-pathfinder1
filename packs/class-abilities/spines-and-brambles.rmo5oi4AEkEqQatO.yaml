@@ -1,8 +1,21 @@
 _id: rmo5oi4AEkEqQatO
-name: Spines and Brambles
-type: feat
+_key: '!items!rmo5oi4AEkEqQatO'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Spines and Brambles
 system:
+  abilityType: su
+  actions:
+    - _id: 26temic9xxphcm8w
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>With a beckoning gesture, the shaman conjures spiny shrubs in a number
@@ -13,20 +26,7 @@ system:
 
       <p>When the shaman uses this hex again, any previously conjured
       undergrowth withers away.</p>
-  actions:
-    - _id: 26temic9xxphcm8w
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_spinesAndBrambles
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!rmo5oi4AEkEqQatO'
+  tag: classFeat_spinesAndBrambles
+type: feat
 

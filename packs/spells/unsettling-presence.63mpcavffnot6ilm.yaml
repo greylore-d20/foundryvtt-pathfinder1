@@ -1,8 +1,29 @@
 _id: 63mpcavffnot6ilm
-name: Unsettling Presence
-type: spell
+_key: '!items!63mpcavffnot6ilm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unsettling Presence
 system:
+  actions:
+    - _id: svxwtfylm0jhbzmb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 5-ft. cube/level (S)
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Those in this spell's area who fail their Will saving throws harbor a
@@ -22,41 +43,20 @@ system:
       this spell causes an affected creature (or someone interacting with the
       affected creature) to attempt a Will saving throw, the spell's hauntlike
       manifestation occurs.</p>
-  actions:
-    - _id: svxwtfylm0jhbzmb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: one 5-ft. cube/level (S)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      shaman: 2
-      psychic: 2
       medium: 1
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: nec
   subschool: haunted
   types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!63mpcavffnot6ilm'
+type: spell
 

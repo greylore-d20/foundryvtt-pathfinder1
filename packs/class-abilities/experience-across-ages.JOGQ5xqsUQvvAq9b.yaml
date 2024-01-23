@@ -1,8 +1,20 @@
 _id: JOGQ5xqsUQvvAq9b
-name: Experience Across Ages
-type: feat
+_key: '!items!JOGQ5xqsUQvvAq9b'
 img: systems/pf1/icons/items/weapons/rhoka.PNG
+name: Experience Across Ages
 system:
+  abilityType: ex
+  actions:
+    - _id: be2pgsiatnanlqb3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/items/weapons/rhoka.PNG
+      name: Use
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>@UUID[Compendium.pf1.races.Item.aQ8RQYKVd2hqI4jh]{Samsaran}
@@ -12,24 +24,12 @@ system:
       as if he had a number of ranks in the appropriate Knowledge skill equal to
       his slayer level.</p><p>A slayer can use this talent one additional time
       per day for every 5 slayer levels he has.</p>
+  subType: classFeat
+  tag: classFeat_experienceAcrossAges
   tags:
     - Slayer Talent
-  actions:
-    - _id: be2pgsiatnanlqb3
-      name: Use
-      img: systems/pf1/icons/items/weapons/rhoka.PNG
-      activation:
-        type: swift
-        unchained:
-          type: action
   uses:
-    per: day
     maxFormula: 1 + floor(@classes.slayer.level / 5)
-  tag: classFeat_experienceAcrossAges
-  subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
-_key: '!items!JOGQ5xqsUQvvAq9b'
+    per: day
+type: feat
 

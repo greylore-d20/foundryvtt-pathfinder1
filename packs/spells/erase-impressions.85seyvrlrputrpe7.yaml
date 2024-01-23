@@ -1,8 +1,30 @@
 _id: 85seyvrlrputrpe7
-name: Erase Impressions
-type: spell
+_key: '!items!85seyvrlrputrpe7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Erase Impressions
 system:
+  actions:
+    - _id: 6fo8l8piyg3aotpe
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You banish psychic impressions from the object touched, rendering it
@@ -17,36 +39,14 @@ system:
       on a 2-day-old corpse could erase the past 2 days of psychic impressions
       from the corpse and 3 additional days of information from just before the
       creature died.</p>
-  actions:
-    - _id: 6fo8l8piyg3aotpe
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      psychic: 5
       medium: 3
       mesmerist: 4
       occultist: 3
+      psychic: 5
       spiritualist: 4
   level: 5
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!85seyvrlrputrpe7'
+type: spell
 

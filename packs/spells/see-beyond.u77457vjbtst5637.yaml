@@ -1,8 +1,25 @@
 _id: u77457vjbtst5637
-name: See Beyond
-type: spell
+_key: '!items!u77457vjbtst5637'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: See Beyond
 system:
+  actions:
+    - _id: 20xph39ej2c0tzq2
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You attune your mind and your sight to the hidden world of spirits. You
@@ -14,38 +31,21 @@ system:
       further as a swift action. When you do, you can see through solid objects
       (as if using a <i>ring of x-ray</i> vision) for 5 rounds. After this time,
       the spell ends.</p>
-  actions:
-    - _id: 20xph39ej2c0tzq2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
       oracle: 3
-      witch: 3
       shaman: 3
+      warpriest: 3
+      witch: 3
   level: 3
-  school: div
-  types: meditative
-  components:
-    verbal: true
-    material: true
   materials:
-    value: soothing incense worth 300 gp
     gpValue: 300
+    value: soothing incense worth 300 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!u77457vjbtst5637'
+  types: meditative
+type: spell
 

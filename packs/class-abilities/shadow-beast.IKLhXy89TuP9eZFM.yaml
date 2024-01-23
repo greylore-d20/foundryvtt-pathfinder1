@@ -1,8 +1,24 @@
 _id: IKLhXy89TuP9eZFM
-name: Shadow Beast
-type: feat
+_key: '!items!IKLhXy89TuP9eZFM'
 img: systems/pf1/icons/items/jewelry/ring-orange.jpg
+name: Shadow Beast
 system:
+  abilityType: sp
+  actions:
+    - _id: jegiq6qx5xcvg7dp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.occultist.level'
+      img: systems/pf1/icons/items/jewelry/ring-orange.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can call forth one or more beasts made of
@@ -21,23 +37,7 @@ system:
       round per occultist level you possess.</p>
 
       <p>You must be at least 9th level to select this focus power.</p>
-  actions:
-    - _id: jegiq6qx5xcvg7dp
-      name: Use
-      img: systems/pf1/icons/items/jewelry/ring-orange.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.occultist.level'
-        units: round
-  tag: classFeat_shadowBeast
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!IKLhXy89TuP9eZFM'
+  tag: classFeat_shadowBeast
+type: feat
 

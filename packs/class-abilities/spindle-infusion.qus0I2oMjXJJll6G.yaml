@@ -1,8 +1,23 @@
 _id: qus0I2oMjXJJll6G
-name: Spindle Infusion
-type: feat
+_key: '!items!qus0I2oMjXJJll6G'
 img: systems/pf1/icons/spells/runes-blue-1.jpg
+name: Spindle Infusion
 system:
+  actions:
+    - _id: uqazodv1k2qrlvme
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      name: Use
+      save:
+        description: Reflex negates; see text
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> universal; <b>Type</b> form infusion; <b>Level</b> 2;
@@ -17,22 +32,7 @@ system:
       <p>An energy blast infused with spindle deals its normal damage to each
       target, while a physical blast infused with spindle deals half its normal
       damage to each target. The saving throw DC is Dexterity-based.</p>
-  actions:
-    - _id: uqazodv1k2qrlvme
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex negates; see text
-  tag: classFeat_spindleInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!qus0I2oMjXJJll6G'
+  tag: classFeat_spindleInfusion
+type: feat
 

@@ -1,41 +1,41 @@
 _id: mnsqk035k4hr8vjs
-name: Blessing of the Mole
-type: spell
+_key: '!items!mnsqk035k4hr8vjs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blessing of the Mole
 system:
-  description:
-    value: >-
-      <p>The targets gain darkvision 30 feet and a +2 competence bonus on
-      Stealth checks.</p>
   actions:
     - _id: 7k4cvb5rjx9bnmgo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
           cost: 3
           type: action
+      area: 1 creature/level
       duration:
         value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       save:
         harmless: true
-      area: 1 creature/level
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The targets gain darkvision 30 feet and a +2 competence bonus on
+      Stealth checks.</p>
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      ranger: 3
-      paladin: 3
-      inquisitor: 3
       hunter: 3
+      inquisitor: 3
+      oracle: 3
+      paladin: 3
+      ranger: 3
+      warpriest: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mnsqk035k4hr8vjs'
+type: spell
 

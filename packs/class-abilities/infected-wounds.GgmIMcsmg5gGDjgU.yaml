@@ -1,22 +1,12 @@
 _id: GgmIMcsmg5gGDjgU
-name: Infected Wounds
-type: feat
+_key: '!items!GgmIMcsmg5gGDjgU'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Infected Wounds
 system:
-  description:
-    value: >-
-      <p>The target's wounds become infected (Fortitude negates). The target
-      takes 1 point of Constitution damage per day. After the first day, the
-      target may save once per day to cure the infection.</p>
-
-      <p>This is a disease effect.</p>
-  tags:
-    - Hex
-    - Major Hex
+  abilityType: su
   actions:
     - _id: q0fah2qgh2atex7b
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
+      actionType: save
       activation:
         type: standard
         unchained:
@@ -24,21 +14,31 @@ system:
           type: action
       duration:
         units: inst
-      target:
-        value: one creature
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
       range:
-        value: '30'
         units: ft
-      actionType: save
+        value: '30'
       save:
         dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: fort
         description: Fortitude negates
-  tag: classFeat_infectedWounds
-  subType: classFeat
+        type: fort
+      target:
+        value: one creature
   associations:
     classes:
       - Witch
-  abilityType: su
-_key: '!items!GgmIMcsmg5gGDjgU'
+  description:
+    value: >-
+      <p>The target's wounds become infected (Fortitude negates). The target
+      takes 1 point of Constitution damage per day. After the first day, the
+      target may save once per day to cure the infection.</p>
+
+      <p>This is a disease effect.</p>
+  subType: classFeat
+  tag: classFeat_infectedWounds
+  tags:
+    - Hex
+    - Major Hex
+type: feat
 

@@ -1,8 +1,25 @@
 _id: uyqffa58lap5zevb
-name: Sturdy Tree Fort
-type: spell
+_key: '!items!uyqffa58lap5zevb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sturdy Tree Fort
 system:
+  actions:
+    - _id: 36ac1tps2xcog6rb
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      spellEffect: one large tree and a sturdy wooden house
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a large tree to grow in the 5-foot square you touch. The tree
@@ -36,32 +53,15 @@ system:
       remain closed (or even if they are open, as long as those within remain
       quiet and take no violent actions), requiring a successful DC 25
       Perception check or Survival check to notice its presence.</p>
-  actions:
-    - _id: 36ac1tps2xcog6rb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: touch
-      spellEffect: one large tree and a sturdy wooden house
   learnedAt:
     class:
       druid: 5
-      ranger: 4
       hunter: 4
+      ranger: 4
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a nail, a rope, and a short wooden plank
+  school: trs
   sr: false
-_key: '!items!uyqffa58lap5zevb'
+type: spell
 

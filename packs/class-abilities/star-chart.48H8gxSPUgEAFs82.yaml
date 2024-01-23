@@ -1,20 +1,11 @@
 _id: 48H8gxSPUgEAFs82
-name: Star Chart
-type: feat
+_key: '!items!48H8gxSPUgEAFs82'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Star Chart
 system:
-  description:
-    value: >-
-      <p>Your copious notes contain a working model of the night sky expressed
-      in artistic scribbles and arcane mathematical formulae. Once per day, you
-      may spend 10 minutes contemplating your star chart to gain the benefit of
-      the spell @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune}.</p>
-
-      <p>You must be at least 7th level to select this revelation.</p>
+  abilityType: ex
   actions:
     - _id: 91pzdv2fjsrb8qla
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
       activation:
         cost: 10
         type: minute
@@ -23,18 +14,27 @@ system:
           type: minute
       duration:
         units: inst
-      target:
-        value: self
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
       range:
         units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_starChart
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Oracle
-  abilityType: ex
-_key: '!items!48H8gxSPUgEAFs82'
+  description:
+    value: >-
+      <p>Your copious notes contain a working model of the night sky expressed
+      in artistic scribbles and arcane mathematical formulae. Once per day, you
+      may spend 10 minutes contemplating your star chart to gain the benefit of
+      the spell @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune}.</p>
+
+      <p>You must be at least 7th level to select this revelation.</p>
+  subType: classFeat
+  tag: classFeat_starChart
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

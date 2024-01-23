@@ -1,8 +1,30 @@
 _id: j9cd82gppg819c1f
-name: Champion's Bout
-type: spell
+_key: '!items!j9cd82gppg819c1f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Champion's Bout
 system:
+  actions:
+    - _id: 4msw43y481fztsuc
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: two creatures
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You allow two chosen champions to fight without interference. The two
@@ -12,38 +34,16 @@ system:
       (spell resistance applies). A creature that fails its Will save against
       champion's bout cannot attempt to interfere again. If a creature
       successfully interferes with the bout, the spell ends immediately.</p>
-  actions:
-    - _id: 4msw43y481fztsuc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: two creatures
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
       mesmerist: 3
+      oracle: 3
+      warpriest: 3
   level: 3
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!j9cd82gppg819c1f'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: y6bwxep7otxrhcmm
-name: Teleport Structure
-type: spell
+_key: '!items!y6bwxep7otxrhcmm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Teleport Structure
 system:
+  actions:
+    - _id: ixvwgux76fort6yp
+      actionType: spellsave
+      activation:
+        cost: 8
+        type: hour
+        unchained:
+          cost: 8
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one building
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You instantly teleport a building in a settlement you control to
@@ -17,40 +40,17 @@ system:
       functions on buildings that occupy a number of lots equal to one-fourth
       your caster level (so, for instance, a 16th-level caster could use this
       spell on a building that occupies up to 4 lots).</p>
-  actions:
-    - _id: ixvwgux76fort6yp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 8
-        type: hour
-        unchained:
-          cost: 8
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: one building
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
       sorcerer: 6
       wizard: 6
   level: 6
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    material: true
   materials:
-    value: gold dust worth 50 gp
     gpValue: 50
+    value: gold dust worth 50 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!y6bwxep7otxrhcmm'
+  school: con
+  subschool: teleportation
+type: spell
 

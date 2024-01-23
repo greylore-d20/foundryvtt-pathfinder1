@@ -1,18 +1,11 @@
 _id: 5u1vgdhnbsxtc1fq
-name: Stage Fright
-type: spell
+_key: '!items!5u1vgdhnbsxtc1fq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stage Fright
 system:
-  description:
-    value: >-
-      <p>You fill your targets with the sudden fear of failure. A creature that
-      fails its saving throw takes a -4 penalty on ability checks, skill checks,
-      and any checks that require concentration (such as casting a spell in
-      difficult circumstances or operating a complex device).</p>
   actions:
     - _id: ua90zl0stah1tm99
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,30 +13,37 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: 1 creature/level, no two of which may be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: 1 creature/level, no two of which may be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You fill your targets with the sudden fear of failure. A creature that
+      fails its saving throw takes a -4 penalty on ability checks, skill checks,
+      and any checks that require concentration (such as casting a spell in
+      difficult circumstances or operating a complex device).</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 3
-      witch: 3
-      inquisitor: 3
       antipaladin: 3
-      psychic: 3
+      bard: 3
+      inquisitor: 3
       mesmerist: 3
+      psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!5u1vgdhnbsxtc1fq'
+type: spell
 

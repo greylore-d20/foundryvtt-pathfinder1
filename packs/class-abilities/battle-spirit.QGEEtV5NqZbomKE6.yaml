@@ -1,8 +1,30 @@
 _id: QGEEtV5NqZbomKE6
-name: Battle Spirit
-type: feat
+_key: '!items!QGEEtV5NqZbomKE6'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Battle Spirit
 system:
+  abilityType: su
+  actions:
+    - _id: ujknobm9qjcg1q3s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>A shaman surrounds herself with the spirit of battle. Allies within 30
@@ -13,32 +35,10 @@ system:
 
       <p>The shaman can use this ability for a number of rounds per day equal to
       3 + her Charisma modifier. These rounds do not need to be consecutive.</p>
-  actions:
-    - _id: ujknobm9qjcg1q3s
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: allies within range
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_battleSpirit
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!QGEEtV5NqZbomKE6'
+  tag: classFeat_battleSpirit
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,30 @@
 _id: etng7hnjsqqyoy8i
-name: Battle Trance
-type: spell
+_key: '!items!etng7hnjsqqyoy8i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Battle Trance
 system:
+  actions:
+    - _id: dhribv1j2nefcxfn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You are transformed into a single-minded force of destruction. You gain
@@ -13,42 +35,20 @@ system:
       you use this spell, you immediately take 4 points of Intelligence damage.
       You must make a DC 20 concentration check to cast spells, and all other
       concentration checks to cast spells have a -5 penalty.</p>
-  actions:
-    - _id: dhribv1j2nefcxfn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      alchemist: 3
+      antipaladin: 3
       cleric: 4
-      warpriest: 4
+      hunter: 3
+      inquisitor: 3
       oracle: 4
       ranger: 3
-      alchemist: 3
+      warpriest: 4
       witch: 4
-      inquisitor: 3
-      antipaladin: 3
-      hunter: 3
   level: 4
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!etng7hnjsqqyoy8i'
+type: spell
 

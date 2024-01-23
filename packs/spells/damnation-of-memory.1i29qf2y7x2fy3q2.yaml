@@ -1,8 +1,30 @@
 _id: 1i29qf2y7x2fy3q2
-name: Damnation of Memory
-type: spell
+_key: '!items!1i29qf2y7x2fy3q2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Damnation of Memory
 system:
+  actions:
+    - _id: wgl0buo7dwqgox3b
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: all living creatures within range
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You name one creature and excise all memory of that creature's
@@ -23,38 +45,16 @@ system:
       dispelled, disjoined, or suppressed with antimagic. If the gem is
       destroyed or the spell is dispelled (which destroys the gem), all stolen
       memories return to the affected creatures.</p>
-  actions:
-    - _id: wgl0buo7dwqgox3b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: permanent
-      target:
-        value: all living creatures within range
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 6
-      psychic: 9
       mesmerist: 6
+      psychic: 9
   level: 6
+  materials:
+    focus: a massive, flawless gemstone worth 5,000 gp
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-  materials:
-    focus: a massive, flawless gemstone worth 5,000 gp
-_key: '!items!1i29qf2y7x2fy3q2'
+type: spell
 

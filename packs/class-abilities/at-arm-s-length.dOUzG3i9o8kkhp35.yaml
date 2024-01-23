@@ -1,8 +1,25 @@
 _id: dOUzG3i9o8kkhp35
-name: At Arm's Length
-type: feat
+_key: '!items!dOUzG3i9o8kkhp35'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: At Arm's Length
 system:
+  abilityType: ex
+  actions:
+    - _id: luw1nt4229tyg3vy
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
+  changes:
+    - _id: XtAMmARc
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 5th level, you gain Reach Spell as a bonus feat. Additionally, when
@@ -12,24 +29,7 @@ system:
       range of touch increased to long range via this feat would normally use up
       a spell slot 3 levels higher, but if you spend 3 points from your phrenic
       pool, the spell does not use up a higher spell slot.)</p>
-  actions:
-    - _id: luw1nt4229tyg3vy
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  changes:
-    - _id: XtAMmARc
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_atArmsLength
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: ex
-_key: '!items!dOUzG3i9o8kkhp35'
+  tag: classFeat_atArmsLength
+type: feat
 

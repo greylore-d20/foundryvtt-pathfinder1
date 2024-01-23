@@ -1,8 +1,23 @@
 _id: ROXURblDsoniL80a
-name: Prayer Aura
-type: feat
+_key: '!items!ROXURblDsoniL80a'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Prayer Aura
 system:
+  abilityType: su
+  actions:
+    - _id: dnx2gjv4fymmm6rf
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 13th level, as a free action, you can extend an aura around you to
@@ -18,25 +33,10 @@ system:
       changes to –2 against creatures of an opposing alignment. The penalty
       doesn’t change further for a creature that opposes you on two alignment
       axes (such as a chaotic evil creature fighting a lawful good psychic).</p>
-  actions:
-    - _id: dnx2gjv4fymmm6rf
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.psychic.level'
-  tag: classFeat_prayerAura
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!ROXURblDsoniL80a'
+  tag: classFeat_prayerAura
+  uses:
+    maxFormula: '@classes.psychic.level'
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: ze2v5hkginj0tnge
-name: Ghost Brand
-type: spell
+_key: '!items!ze2v5hkginj0tnge'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ghost Brand
 system:
+  actions:
+    - _id: 42vcg5q849h5802h
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one willing creature and one object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You alter the fundamental substance of a single object up to 2 cubic
@@ -21,40 +41,20 @@ system:
       inside the target's body,  the object bursts out of the target's flesh,
       dealing 3d6 points of piercing and slashing damage to the target that
       bypasses DR, as well as 1d6 points of bleed damage.</p>
-  actions:
-    - _id: 42vcg5q849h5802h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: one willing creature and one object touched
-      range:
-        units: touch
   learnedAt:
     class:
       bard: 4
-      witch: 4
       occultist: 3
       spiritualist: 4
+      witch: 4
   level: 4
-  school: trs
-  types: shadow
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a branding iron and a strip of white silk worth 10 gp
     gpValue: 10
+    value: a branding iron and a strip of white silk worth 10 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!ze2v5hkginj0tnge'
+  types: shadow
+type: spell
 

@@ -1,8 +1,29 @@
 _id: xhzme0v6tjq95fg6
-name: Meteor Swarm
-type: spell
+_key: '!items!xhzme0v6tjq95fg6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Meteor Swarm
 system:
+  actions:
+    - _id: k25n16s92l4jdokm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: four 40-ft.-radius spreads, see text
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: none or Reflex half, see text
+        type: ref
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Meteor swarm</i> is a very powerful and spectacular spell that is
@@ -22,43 +43,22 @@ system:
       stemming from separate spheres, all of the fire damage is added together
       after the saves have been made, and fire resistance is applied only
       once.</p>
-  actions:
-    - _id: k25n16s92l4jdokm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: none or Reflex half, see text
-      area: four 40-ft.-radius spreads, see text
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-    subDomain:
-      Stars: 9
     bloodline:
       Boreal: 9
       Infernal: 9
       Orc: 9
       Starsoul: 9
+    class:
+      sorcerer: 9
+      wizard: 9
+    subDomain:
+      Stars: 9
   level: 9
   school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '313'
-_key: '!items!xhzme0v6tjq95fg6'
+  types: fire
+type: spell
 

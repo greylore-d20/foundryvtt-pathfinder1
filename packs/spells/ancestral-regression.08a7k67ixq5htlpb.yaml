@@ -1,8 +1,31 @@
 _id: 08a7k67ixq5htlpb
-name: Ancestral Regression
-type: spell
+_key: '!items!08a7k67ixq5htlpb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ancestral Regression
 system:
+  actions:
+    - _id: 14v05ofmj58h9vkk
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: willing drow touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target drow transforms into a surface elf. The drow loses her
@@ -13,42 +36,19 @@ system:
       target a +10 bonus on Disguise checks to pass as an elf, though she
       appears to be an elven analog of herself and can be recognized as such by
       other drow who know her.</p>
-  actions:
-    - _id: 14v05ofmj58h9vkk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours (D)
-      target:
-        value: willing drow touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       alchemist: 2
-      witch: 2
       antipaladin: 3
+      cleric: 2
+      oracle: 2
       psychic: 2
+      sorcerer: 3
+      warpriest: 2
+      witch: 2
+      wizard: 3
   level: 3
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!08a7k67ixq5htlpb'
+type: spell
 

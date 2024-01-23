@@ -1,8 +1,27 @@
 _id: Lebipph87ARrlM40
-name: Seize the Initiative
-type: feat
+_key: '!items!Lebipph87ARrlM40'
 img: systems/pf1/icons/skills/ice_12.jpg
+name: Seize the Initiative
 system:
+  abilityType: su
+  actions:
+    - _id: 6rof8fpf0gw85iy1
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/ice_12.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one ally
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Whenever you and your allies roll for initiative, you can grant one
@@ -11,29 +30,10 @@ system:
       number of times per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Battle Rage power of the War Domain.</p>
-  actions:
-    - _id: 6rof8fpf0gw85iy1
-      name: Use
-      img: systems/pf1/icons/skills/ice_12.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: one ally
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_seizeTheInitiative
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!Lebipph87ARrlM40'
+  tag: classFeat_seizeTheInitiative
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

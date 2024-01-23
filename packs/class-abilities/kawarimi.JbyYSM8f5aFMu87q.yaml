@@ -1,8 +1,23 @@
 _id: JbyYSM8f5aFMu87q
-name: Kawarimi
-type: feat
+_key: '!items!JbyYSM8f5aFMu87q'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Kawarimi
 system:
+  abilityType: su
+  actions:
+    - _id: i4zfgopzsnyaiwtu
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
+      - Rogue
+      - Rogue (Unchained)
   description:
     value: >-
       <p>Once per day when a successful attack is made against a character with
@@ -14,25 +29,10 @@ system:
       hits an inanimate object that the attacker mistook for the ninja, and the
       ninja may move into an adjacent square and is hidden from the
       attacker.</p>
+  subType: classFeat
+  tag: classFeat_kawarimi
   tags:
     - Ninja Trick
     - Rogue Talent
-  actions:
-    - _id: i4zfgopzsnyaiwtu
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      ammoType: none
-  tag: classFeat_kawarimi
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-      - Rogue (Unchained)
-  abilityType: su
-_key: '!items!JbyYSM8f5aFMu87q'
+type: feat
 

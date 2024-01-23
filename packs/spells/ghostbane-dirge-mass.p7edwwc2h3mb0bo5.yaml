@@ -1,16 +1,11 @@
 _id: p7edwwc2h3mb0bo5
-name: Ghostbane Dirge, Mass
-type: spell
+_key: '!items!p7edwwc2h3mb0bo5'
 img: icons/magic/death/weapon-scythe-rune-green.webp
+name: Ghostbane Dirge, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>ghostbane dirge</i>, except that it affects
-      multiple targets.</p>
   actions:
     - _id: xasghjk04vve56uh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,37 +13,42 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           one incorporeal creature/level, no two of which can be more than 30
           ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>ghostbane dirge</i>, except that it affects
+      multiple targets.</p>
   learnedAt:
     class:
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 4
-      paladin: 3
+      cleric: 5
       inquisitor: 5
-      shaman: 5
       occultist: 5
+      oracle: 5
+      paladin: 3
+      shaman: 5
+      warpriest: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: an old reed from a wind instrument
+  school: trs
   source:
     id: PZO1115
     pages: '225'
-_key: '!items!p7edwwc2h3mb0bo5'
+type: spell
 

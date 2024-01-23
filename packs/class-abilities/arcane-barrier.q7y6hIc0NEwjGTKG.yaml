@@ -1,8 +1,27 @@
 _id: q7y6hIc0NEwjGTKG
-name: Arcane Barrier
-type: feat
+_key: '!items!q7y6hIc0NEwjGTKG'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Arcane Barrier
 system:
+  abilityType: su
+  actions:
+    - _id: 15zdt8kiivu5dmw7
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@classes.arcanist.level'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>As a swift action, the arcanist can expend 1 point from her arcane
@@ -18,28 +37,9 @@ system:
       hit points from this ability do not stack with themselves, but additional
       uses do cause the total number of temporary hit points and the duration to
       reset.</p>
+  subType: classFeat
+  tag: classFeat_arcaneBarrier
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 15zdt8kiivu5dmw7
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.arcanist.level'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_arcaneBarrier
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!q7y6hIc0NEwjGTKG'
+type: feat
 

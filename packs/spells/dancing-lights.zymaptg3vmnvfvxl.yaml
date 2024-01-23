@@ -1,8 +1,25 @@
 _id: zymaptg3vmnvfvxl
-name: Dancing Lights
-type: spell
+_key: '!items!zymaptg3vmnvfvxl'
 img: icons/magic/light/orbs-firefly-hand-yellow.webp
+name: Dancing Lights
 system:
+  actions:
+    - _id: tz934s2m7t1leilt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: Up to four lights, all within a 10-ft.-radius area
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Depending on the version selected, you create up to four lights that
@@ -19,43 +36,26 @@ system:
       you make this spell permanent, it does not count against this
       limit.</p><p><i>Dancing lights</i> can be made permanent with a
       <i>permanency</i> spell.</p>
-  actions:
-    - _id: tz934s2m7t1leilt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute
-      range:
-        units: medium
-      spellEffect: Up to four lights, all within a 10-ft.-radius area
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
       bard: 0
-      witch: 0
       magus: 0
-      shaman: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      psychic: 0
+      shaman: 0
+      sorcerer: 0
+      witch: 0
+      wizard: 0
   level: 0
   school: evo
-  types: light
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '263'
-_key: '!items!zymaptg3vmnvfvxl'
+  sr: false
+  types: light
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

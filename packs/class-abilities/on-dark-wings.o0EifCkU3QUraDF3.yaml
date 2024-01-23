@@ -1,17 +1,11 @@
 _id: o0EifCkU3QUraDF3
-name: On Dark Wings
-type: feat
+_key: '!items!o0EifCkU3QUraDF3'
 img: systems/pf1/icons/skills/blue_02.jpg
+name: On Dark Wings
 system:
-  description:
-    value: >-
-      <p>At 15th level, you can grow fearsome bat wings as a standard action,
-      giving you a fly speed of 60 feet with average maneuverability. The wings
-      can be dismissed as a free action.</p>
+  abilityType: su
   actions:
     - _id: naxlfvm34gc9opno
-      name: Use
-      img: systems/pf1/icons/skills/blue_02.jpg
       activation:
         type: standard
         unchained:
@@ -19,23 +13,29 @@ system:
           type: action
       duration:
         units: seeText
-      target:
-        value: self
+      img: systems/pf1/icons/skills/blue_02.jpg
+      name: Use
       range:
         units: personal
-  changes:
-    - _id: xajj1f4p
-      formula: '60'
-      subTarget: flySpeed
-      modifier: base
-  tag: classFeat_onDarkWings
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Sorcerer
-  abilityType: su
+  changes:
+    - _id: xajj1f4p
+      formula: '60'
+      modifier: base
+      subTarget: flySpeed
+  description:
+    value: >-
+      <p>At 15th level, you can grow fearsome bat wings as a standard action,
+      giving you a fly speed of 60 feet with average maneuverability. The wings
+      can be dismissed as a free action.</p>
   source:
     id: PZO1110
     pages: '77'
-_key: '!items!o0EifCkU3QUraDF3'
+  subType: classFeat
+  tag: classFeat_onDarkWings
+type: feat
 

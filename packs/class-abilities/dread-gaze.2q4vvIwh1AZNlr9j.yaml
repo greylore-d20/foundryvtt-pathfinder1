@@ -1,8 +1,24 @@
 _id: 2q4vvIwh1AZNlr9j
-name: Dread Gaze
-type: feat
+_key: '!items!2q4vvIwh1AZNlr9j'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Dread Gaze
 system:
+  abilityType: su
+  actions:
+    - _id: n8i6y38ww2dprcys
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.sorcerer.level / 2)
+      img: icons/svg/mystery-man.svg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you gain a form of the green hag’s evil eye power. As a
@@ -13,28 +29,12 @@ system:
       ability once per day at 9th level. At 17th level, you can use this ability
       twice per day. At 20th level, you may use this ability three times per
       day.</p>
-  actions:
-    - _id: n8i6y38ww2dprcys
-      name: Use
-      img: icons/svg/mystery-man.svg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.sorcerer.level / 2)
-        units: round
+  subType: classFeat
+  tag: classFeat_dreadGaze
   uses:
-    per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-  tag: classFeat_dreadGaze
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!2q4vvIwh1AZNlr9j'
+    per: day
+type: feat
 

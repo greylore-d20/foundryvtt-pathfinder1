@@ -1,8 +1,26 @@
 _id: ZfnHhhTFQVo0Lj4P
-name: Improved Uncanny Dodge
-type: feat
+_key: '!items!ZfnHhhTFQVo0Lj4P'
 img: systems/pf1/icons/feats/wind-stance.jpg
+name: Improved Uncanny Dodge
 system:
+  abilityType: ex
+  actions:
+    - _id: 62oxegxcf5hd54nq
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/feats/wind-stance.jpg
+      name: Use
+  associations:
+    classes:
+      - Barbarian
+      - Rogue
+      - Rogue (Unchained)
+  contextNotes:
+    - subTarget: ac
+      target: misc
+      text: Cannot be flanked
   description:
     value: >-
       <p>This character can no longer be flanked. This defense denies a rogue
@@ -14,28 +32,10 @@ system:
       another class, the levels from the classes that grant <em>uncanny
       dodge</em> stack to determine the minimum rogue level required to flank
       the character.</p>
-  actions:
-    - _id: 62oxegxcf5hd54nq
-      name: Use
-      img: systems/pf1/icons/feats/wind-stance.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  contextNotes:
-    - subTarget: ac
-      target: misc
-      text: Cannot be flanked
-  tag: classFeat_improvedUncannyDodge
-  subType: classFeat
-  associations:
-    classes:
-      - Barbarian
-      - Rogue
-      - Rogue (Unchained)
-  abilityType: ex
   source:
     id: PZO1110
     pages: '34'
-_key: '!items!ZfnHhhTFQVo0Lj4P'
+  subType: classFeat
+  tag: classFeat_improvedUncannyDodge
+type: feat
 

@@ -1,8 +1,79 @@
 _id: 891YnkwG0uH5lYF7
-name: Dagger Pistol
-type: weapon
+_key: '!items!891YnkwG0uH5lYF7'
 img: icons/weapons/guns/gun-pistol-wood.webp
+name: Dagger Pistol
 system:
+  actions:
+    - _id: b3200vuwhkhase6p
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: gunBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/guns/gun-pistol-wood.webp
+      name: Attack (Dagger)
+      range:
+        maxIncrements: 10
+        units: melee
+        value: '10'
+    - _id: sqCg7RufEGGAlDe8
+      ability:
+        attack: dex
+        critMult: 3
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/guns/gun-pistol-wood.webp
+      name: Attack (Firearm)
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '10'
+  ammo:
+    type: gunBullet
+  baseTypes:
+    - Dagger Pistol
+    - Dagger
+    - Pistol
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> 1d3 (small), 1d4 (medium);
@@ -23,91 +94,20 @@ system:
       and the dagger component are considered broken. A dagger pistol uses
       either a bullet and 1 dose of black powder or a single alchemical
       cartridge as ammunition.</p>
-  tags:
-    - PFS
-    - Early Firearm
-  weight:
-    value: 1
-  price: 740
   hardness: 10
-  actions:
-    - _id: b3200vuwhkhase6p
-      name: Attack (Dagger)
-      img: icons/weapons/guns/gun-pistol-wood.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-        maxIncrements: 10
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-        critMult: 3
-      ammoType: gunBullet
-    - _id: sqCg7RufEGGAlDe8
-      name: Attack (Firearm)
-      img: icons/weapons/guns/gun-pistol-wood.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        critMult: 3
-  baseTypes:
-    - Dagger Pistol
-    - Dagger
-    - Pistol
-  weaponGroups:
-    value:
-      - firearms
-  subType: exotic
-  weaponSubtype: ranged
+  price: 740
   source:
     id: PZO1123
     pages: '43'
-  ammo:
-    type: gunBullet
-_key: '!items!891YnkwG0uH5lYF7'
+  subType: exotic
+  tags:
+    - PFS
+    - Early Firearm
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 1
+type: weapon
 

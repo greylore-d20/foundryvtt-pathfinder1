@@ -1,8 +1,29 @@
 _id: 8xmk11xnay54ftp8
-name: Create Drug
-type: spell
+_key: '!items!8xmk11xnay54ftp8'
 img: icons/consumables/food/salt-seasoning-spice-pink.webp
+name: Create Drug
 system:
+  actions:
+    - _id: z41y2ynxfwno1i8h
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: none (see below)
+      spellEffect: 1 dose of a drug/3 levels
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The caster conjures into being one of the following drugs: aether,
@@ -25,39 +46,18 @@ system:
       create adyton only once per week, regardless of her level or how many
       times she casts this spell. The spell otherwise functions- and creates as
       many doses-as normal.</p>
-  actions:
-    - _id: z41y2ynxfwno1i8h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        description: none (see below)
-      spellEffect: 1 dose of a drug/3 levels
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 3
       alchemist: 3
-      occultist: 3
+      cleric: 4
+      druid: 3
       hunter: 3
+      occultist: 3
+      oracle: 4
+      warpriest: 4
   level: 4
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!8xmk11xnay54ftp8'
+  subschool: creation
+type: spell
 

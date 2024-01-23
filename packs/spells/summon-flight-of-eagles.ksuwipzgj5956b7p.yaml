@@ -1,16 +1,10 @@
 _id: ksuwipzgj5956b7p
-name: Summon Flight of Eagles
-type: spell
+_key: '!items!ksuwipzgj5956b7p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Flight of Eagles
 system:
-  description:
-    value: >-
-      <p>You summon 1d4+1 giant eagles to serve as you designate. The summoned
-      birds can fight if you wish, but can also serve as mounts.</p>
   actions:
     - _id: fgkx6pmygmulum73
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -18,30 +12,36 @@ system:
           type: action
       duration:
         value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: 1d4+1 summoned creatures
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You summon 1d4+1 giant eagles to serve as you designate. The summoned
+      birds can fight if you wish, but can also serve as mounts.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 6
-      ranger: 4
-      summoner: 6
-      witch: 6
       bloodrager: 4
-      shaman: 6
+      druid: 6
       hunter: 4
+      ranger: 4
+      shaman: 6
+      sorcerer: 6
+      summoner: 6
       summonerUnchained: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a gold feather worth 100 gp
+  school: con
   sr: false
-_key: '!items!ksuwipzgj5956b7p'
+  subschool: summoning
+type: spell
 

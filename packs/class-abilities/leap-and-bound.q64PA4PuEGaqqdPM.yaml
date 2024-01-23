@@ -1,8 +1,17 @@
 _id: q64PA4PuEGaqqdPM
-name: Leap and Bound
-type: feat
+_key: '!items!q64PA4PuEGaqqdPM'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Leap and Bound
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Vigilante
+  changes:
+    - _id: gei58eqa
+      formula: '@abilities.str.mod'
+      modifier: untyped
+      subTarget: skill.acr
   description:
     value: >-
       <p>A vigilante with this talent adds his Strength bonus on Acrobatics
@@ -15,16 +24,7 @@ system:
       as it moves.</p>
 
       <p>A vigilante must be at least 10th level to select this talent.</p>
-  changes:
-    - _id: gei58eqa
-      formula: '@abilities.str.mod'
-      subTarget: skill.acr
-      modifier: untyped
-  tag: classFeat_leapAndBound
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!q64PA4PuEGaqqdPM'
+  tag: classFeat_leapAndBound
+type: feat
 

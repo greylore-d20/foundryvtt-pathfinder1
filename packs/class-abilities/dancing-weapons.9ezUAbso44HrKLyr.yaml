@@ -1,40 +1,40 @@
 _id: 9ezUAbso44HrKLyr
-name: Dancing Weapons
-type: feat
+_key: '!items!9ezUAbso44HrKLyr'
 img: systems/pf1/icons/items/inventory/sickle.jpg
+name: Dancing Weapons
 system:
-  description:
-    value: >-
-      <p>At 8th level, you can give a weapon touched the dancing special weapon
-      quality for 4 rounds. You can use this ability once per day at 8th level,
-      and an additional time per day for every four levels beyond 8th.</p>
+  abilityType: su
   actions:
     - _id: o0iml0gax9ug5krh
-      name: Use
-      img: systems/pf1/icons/items/inventory/sickle.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '4'
         units: round
-      target:
-        value: weapon touched
+        value: '4'
+      img: systems/pf1/icons/items/inventory/sickle.jpg
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_dancingWeapons
-  subType: classFeat
+      target:
+        value: weapon touched
   associations:
     classes:
       - Cleric
-  abilityType: su
+  description:
+    value: >-
+      <p>At 8th level, you can give a weapon touched the dancing special weapon
+      quality for 4 rounds. You can use this ability once per day at 8th level,
+      and an additional time per day for every four levels beyond 8th.</p>
   source:
     id: PZO1110
     pages: '42'
-_key: '!items!9ezUAbso44HrKLyr'
+  subType: classFeat
+  tag: classFeat_dancingWeapons
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,26 @@
 _id: BagjWlZZFLuWmrMA
-name: 'Trickery Blessing: Double'
-type: feat
+_key: '!items!BagjWlZZFLuWmrMA'
 img: systems/pf1/icons/spells/slice-spirit-1.jpg
+name: 'Trickery Blessing: Double'
 system:
+  actions:
+    - _id: pfucyi2vrzo4nxyc
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.warpriest.level'
+      img: systems/pf1/icons/spells/slice-spirit-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, as a move action you can create an illusory double of
@@ -15,25 +33,7 @@ system:
       <p>The double created by this ability doesn’t stack with the additional
       images from the @Compendium[pf1.spells.4jsss37x0pplib8f]{Mirror Image}
       spell.</p>
-  actions:
-    - _id: pfucyi2vrzo4nxyc
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@classes.warpriest.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_trickeryBlessingDouble
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!BagjWlZZFLuWmrMA'
+  tag: classFeat_trickeryBlessingDouble
+type: feat
 

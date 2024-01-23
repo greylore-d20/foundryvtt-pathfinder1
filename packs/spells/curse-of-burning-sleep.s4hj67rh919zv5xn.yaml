@@ -1,8 +1,31 @@
 _id: s4hj67rh919zv5xn
-name: Curse of Burning Sleep
-type: spell
+_key: '!items!s4hj67rh919zv5xn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Curse of Burning Sleep
 system:
+  actions:
+    - _id: mce7q8c0ou94324g
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent until triggered (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You place a curse upon the target that triggers 1 hour after the next
@@ -14,40 +37,17 @@ system:
       asleep, the fire damage from this spell wakes it.  Only one of these
       spells can be in place on a creature at any time. This has no effect on
       creatures that don't sleep.</p>
-  actions:
-    - _id: mce7q8c0ou94324g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent until triggered (see text)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 4
-      shaman: 4
       psychic: 4
+      shaman: 4
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  types: curse, fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a feather and a drop of oil
-_key: '!items!s4hj67rh919zv5xn'
+  school: trs
+  types: curse, fire
+type: spell
 

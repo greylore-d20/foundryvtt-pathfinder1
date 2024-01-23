@@ -1,8 +1,23 @@
 _id: OwQ9d1SzrgwCs1oj
-name: Thundering Infusion
-type: feat
+_key: '!items!OwQ9d1SzrgwCs1oj'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Thundering Infusion
 system:
+  actions:
+    - _id: 6rbx5bbjiuq3dx3r
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      save:
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> substance infusion; <b>Level</b> 1;
@@ -12,22 +27,7 @@ system:
       <p>Your lightning brings with it a peal of thunder. Whenever your infused
       blast hits a foe and penetrates spell resistance, that foe becomes
       deafened, even if the blast doesn’t deal damage.</p>
-  actions:
-    - _id: 6rbx5bbjiuq3dx3r
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_thunderingInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!OwQ9d1SzrgwCs1oj'
+  tag: classFeat_thunderingInfusion
+type: feat
 

@@ -1,8 +1,39 @@
 _id: 4re1j2w8wkvsvnsi
-name: Heal
-type: spell
+_key: '!items!4re1j2w8wkvsvnsi'
 img: icons/magic/life/heart-cross-strong-green.webp
+name: Heal
 system:
+  actions:
+    - _id: mj6kc8l17hp5foa3
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: min(150, @cl * 10)
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+      touch: true
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Heal</em> enables you to channel positive energy into a creature to
@@ -16,57 +47,26 @@ system:
       points.</p><p>If used against an undead creature, <em>heal</em> instead
       acts like
       <em>@UUID[Compendium.pf1.spells.dvwyzofd0yifs1ac]{harm}.</em></p>
-  actions:
-    - _id: mj6kc8l17hp5foa3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      damage:
-        parts:
-          - formula: min(150, @cl * 10)
-            type:
-              values:
-                - positive
-              custom: ''
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      touch: true
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      druid: 7
-      alchemist: 6
-      witch: 7
-      inquisitor: 6
       adept: 5
-      shaman: 7
+      alchemist: 6
+      cleric: 6
+      druid: 7
+      inquisitor: 6
       occultist: 6
+      oracle: 6
+      shaman: 7
       spiritualist: 6
+      warpriest: 6
+      witch: 7
     domain:
       Healing: 6
   level: 6
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '294'
-_key: '!items!4re1j2w8wkvsvnsi'
+  subschool: healing
+type: spell
 

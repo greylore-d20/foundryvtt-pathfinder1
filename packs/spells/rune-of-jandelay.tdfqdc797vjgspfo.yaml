@@ -1,8 +1,31 @@
 _id: tdfqdc797vjgspfo
-name: Rune of Jandelay
-type: spell
+_key: '!items!tdfqdc797vjgspfo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rune of Jandelay
 system:
+  actions:
+    - _id: 6my0ptjxk3bpwhh3
+      actionType: spellsave
+      activation:
+        cost: 3
+        type: round
+        unchained:
+          cost: 9
+          type: action
+      area: one rune
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: see below
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You scribe a potent rune of power upon a surface, similar to the way in
@@ -28,43 +51,20 @@ system:
       leaves the area must save again upon reentering the area. These negative
       levels can never result in permanent level loss but cannot be restored by
       <i>restoration</i> or similar magic.</p>
-  actions:
-    - _id: 6my0ptjxk3bpwhh3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 3
-        type: round
-        unchained:
-          cost: 9
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        description: see below
-      area: one rune
   learnedAt:
     class:
       sorcerer: 9
-      wizard: 9
       witch: 9
+      wizard: 9
   level: 9
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 5000
     value: >-
       cold iron, powdered diamond, and ground adamantine worth a total of 5,000
       gp
-    gpValue: 5000
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!tdfqdc797vjgspfo'
+type: spell
 

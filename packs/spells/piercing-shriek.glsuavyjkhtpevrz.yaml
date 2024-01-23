@@ -1,19 +1,11 @@
 _id: glsuavyjkhtpevrz
-name: Piercing Shriek
-type: spell
+_key: '!items!glsuavyjkhtpevrz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Piercing Shriek
 system:
-  description:
-    value: >-
-      <p>You emit an ear-splitting shriek which can be heard only by the target
-      of this spell; all other observers merely see you screaming silently. The
-      target suffers wracking pain from the scream, gaining the staggered
-      condition. This spell has no effect on deaf creatures and cannot penetrate
-      an area of <i>silence</i>.</p>
   actions:
     - _id: giz3qmiiarpnc91n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,14 +13,24 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>You emit an ear-splitting shriek which can be heard only by the target
+      of this spell; all other observers merely see you screaming silently. The
+      target suffers wracking pain from the scream, gaining the staggered
+      condition. This spell has no effect on deaf creatures and cannot penetrate
+      an area of <i>silence</i>.</p>
   learnedAt:
     class:
       bard: 2
@@ -36,7 +38,5 @@ system:
   level: 2
   school: evo
   types: pain, sonic
-  components:
-    verbal: true
-_key: '!items!glsuavyjkhtpevrz'
+type: spell
 

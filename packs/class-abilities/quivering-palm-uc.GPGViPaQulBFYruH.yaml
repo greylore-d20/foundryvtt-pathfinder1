@@ -1,8 +1,23 @@
 _id: GPGViPaQulBFYruH
-name: Quivering Palm (UC)
-type: feat
+_key: '!items!GPGViPaQulBFYruH'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Quivering Palm (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: lglmaaw6ced6s5tw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '4'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk can set up vibrations within the body of another creature that
@@ -23,22 +38,7 @@ system:
       in effect, the previous one is negated.</p>
 
       <p>A monk must be at least 16th level before selecting this ki power.</p>
-  actions:
-    - _id: lglmaaw6ced6s5tw
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      uses:
-        autoDeductChargesCost: '4'
-  tag: classFeat_quiveringPalmUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!GPGViPaQulBFYruH'
+  tag: classFeat_quiveringPalmUc
+type: feat
 

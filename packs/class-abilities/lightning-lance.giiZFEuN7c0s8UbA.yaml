@@ -1,8 +1,41 @@
 _id: giiZFEuN7c0s8UbA
-name: Lightning Lance
-type: feat
+_key: '!items!giiZFEuN7c0s8UbA'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Lightning Lance
 system:
+  abilityType: su
+  actions:
+    - _id: v0asp6goofi6bv2o
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude negates impaired vision
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can unleash a lance of lightning by expending 1 point from
@@ -13,42 +46,9 @@ system:
       19th level). The target’s vision is also impaired, causing the target to
       treat all creatures as if they had concealment (20%) for 1 round. It can
       attempt a Fortitude saving throw to negate the impaired vision.</p>
+  subType: classFeat
+  tag: classFeat_lightningLance
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: v0asp6goofi6bv2o
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
-            type:
-              values:
-                - electric
-              custom: ''
-      ability:
-        attack: dex
-      save:
-        type: fort
-        description: Fortitude negates impaired vision
-  tag: classFeat_lightningLance
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!giiZFEuN7c0s8UbA'
+type: feat
 

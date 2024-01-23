@@ -1,8 +1,28 @@
 _id: Iu8gyBT93dRpGtgH
-name: Strength Surge
-type: feat
+_key: '!items!Iu8gyBT93dRpGtgH'
 img: systems/pf1/icons/feats/stunning-critical.jpg
+name: Strength Surge
 system:
+  abilityType: sp
+  actions:
+    - _id: i6gl6rvs4yqc0rjr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/feats/stunning-critical.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can touch a creature to give it great
@@ -11,33 +31,13 @@ system:
       that rely on Strength, Strength-based skills, and Strength checks. You can
       use this ability a number of times per day equal to 3 + your Wisdom
       modifier.</p>
-  actions:
-    - _id: i6gl6rvs4yqc0rjr
-      name: Use
-      img: systems/pf1/icons/feats/stunning-critical.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_strengthSurge
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '47'
-_key: '!items!Iu8gyBT93dRpGtgH'
+  subType: classFeat
+  tag: classFeat_strengthSurge
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: Tlsqgb6EZol2bOJY
-name: Crystal Shard
-type: feat
+_key: '!items!Tlsqgb6EZol2bOJY'
 img: systems/pf1/icons/skills/yellow_05.jpg
+name: Crystal Shard
 system:
+  abilityType: sp
+  actions:
+    - _id: ikur9xu9d9kw10k3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/yellow_05.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: One weapon of 50 pieces of ammunition
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can touch a metal or stone weapon (or up to 50 pieces
@@ -11,32 +31,12 @@ system:
       <em>oozes</em>, or <em>constructs</em> made of stone or metal, for 1
       minute. You can use this ability once per day at 9th level, twice per day
       at 17th, and three times per day at 20th.</p>
-  actions:
-    - _id: ikur9xu9d9kw10k3
-      name: Use
-      img: systems/pf1/icons/skills/yellow_05.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: One weapon of 50 pieces of ammunition
-      range:
-        units: touch
+  subType: classFeat
+  tag: classFeat_crystalShard
   uses:
-    per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-  tag: classFeat_crystalShard
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!Tlsqgb6EZol2bOJY'
+    per: day
+type: feat
 

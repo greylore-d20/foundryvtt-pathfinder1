@@ -1,18 +1,10 @@
 _id: j91n23p4tfjixp3s
-name: Summon Monster VIII
-type: spell
+_key: '!items!j91n23p4tfjixp3s'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Summon Monster VIII
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster I,</i> except that you can
-      summon one creature from the 8th-level list, 1d3 creatures of the same
-      kind from the 7th-level list, or 1d4+1 creatures of the same kind from a
-      lower-level list.</p>
   actions:
     - _id: u4ew4hfa49bochvq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -20,34 +12,42 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster I,</i> except that you can
+      summon one creature from the 8th-level list, 1d3 creatures of the same
+      kind from the 7th-level list, or 1d4+1 creatures of the same kind from a
+      lower-level list.</p>
   learnedAt:
-    class:
-      sorcerer: 8
-      wizard: 8
-      cleric: 8
-      oracle: 8
-      summoner: 6
-      witch: 8
-      psychic: 8
-      summonerUnchained: 6
     bloodline:
       Elemental: 8
+    class:
+      cleric: 8
+      oracle: 8
+      psychic: 8
+      sorcerer: 8
+      summoner: 6
+      summonerUnchained: 6
+      witch: 8
+      wizard: 8
   level: 8
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a tiny bag and a small candle
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '352'
-_key: '!items!j91n23p4tfjixp3s'
+  sr: false
+  subschool: summoning
+type: spell
 

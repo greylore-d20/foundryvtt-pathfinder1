@@ -1,16 +1,11 @@
 _id: 5kuhfs68jk70d2xd
-name: Pierce Facade
-type: spell
+_key: '!items!5kuhfs68jk70d2xd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pierce Facade
 system:
-  description:
-    value: >-
-      <p>The target gains a +5 insight bonus on Perception checks to see through
-      disguises. This bonus increases to +10 at caster level 7th.</p>
   actions:
     - _id: alsw2hvlio5qwz3k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,34 +13,39 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target gains a +5 insight bonus on Perception checks to see through
+      disguises. This bonus increases to +10 at caster level 7th.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      bard: 1
       alchemist: 1
-      witch: 1
+      bard: 1
+      cleric: 1
       inquisitor: 1
+      oracle: 1
       psychic: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     value: an eagle's eye
-_key: '!items!5kuhfs68jk70d2xd'
+  school: div
+type: spell
 

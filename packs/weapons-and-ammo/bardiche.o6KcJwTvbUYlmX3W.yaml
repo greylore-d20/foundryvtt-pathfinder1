@@ -1,8 +1,41 @@
 _id: o6KcJwTvbUYlmX3W
-name: Bardiche
-type: weapon
+_key: '!items!o6KcJwTvbUYlmX3W'
 img: systems/pf1/icons/items/weapons/bardiche.PNG
+name: Bardiche
 system:
+  actions:
+    - _id: 3jb9cx2d8np2f8kp
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/bardiche.PNG
+      name: Attack
+      range:
+        units: reach
+        value: '0'
+  baseTypes:
+    - Bardiche
   description:
     value: >-
       <p>The crescent axe-blade of this polearm is attached to the haft at two
@@ -11,52 +44,9 @@ system:
       point. The blade is often very long, sometimes almost as long as the haft.
       You gain a +2 bonus to your CMD to resist sunder attempts made against a
       bardiche.</p>
-  tags:
-    - PFS
-  weight:
-    value: 14
-  price: 13
   hardness: 10
-  actions:
-    - _id: 3jb9cx2d8np2f8kp
-      name: Attack
-      img: systems/pf1/icons/items/weapons/bardiche.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: reach
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critRange: 19
   held: 2h
-  baseTypes:
-    - Bardiche
-  weaponGroups:
-    value:
-      - axes
-      - polearms
-  subType: martial
-  weaponSubtype: 2h
+  price: 13
   properties:
     brc: true
     rch: true
@@ -64,5 +54,15 @@ system:
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!o6KcJwTvbUYlmX3W'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - axes
+      - polearms
+  weaponSubtype: 2h
+  weight:
+    value: 14
+type: weapon
 

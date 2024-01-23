@@ -1,8 +1,26 @@
 _id: xmacjpo6tgm1xhnv
-name: Ironwood
-type: spell
+_key: '!items!xmacjpo6tgm1xhnv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ironwood
 system:
+  actions:
+    - _id: c82j0pl2hxii05dm
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: an ironwood object weighing up to 5 lbs./level
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Ironwood</i> is a magical substance created by druids from normal
@@ -17,33 +35,15 @@ system:
       druids.</p><p>Further, if you make only half as much <i>ironwood</i> as
       the spell would normally allow, any weapon, shield, or suit of armor so
       created is treated as a magic item with a +1 enhancement bonus.</p>
-  actions:
-    - _id: c82j0pl2hxii05dm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: an ironwood object weighing up to 5 lbs./level
   learnedAt:
     class:
       druid: 6
-      occultist: 6
       hunter: 6
+      occultist: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: wood to be transformed
+  school: trs
   sr: false
-_key: '!items!xmacjpo6tgm1xhnv'
+type: spell
 

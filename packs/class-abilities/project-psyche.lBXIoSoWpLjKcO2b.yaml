@@ -1,8 +1,29 @@
 _id: lBXIoSoWpLjKcO2b
-name: Project Psyche
-type: feat
+_key: '!items!lBXIoSoWpLjKcO2b'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Project Psyche
 system:
+  abilityType: su
+  actions:
+    - _id: 74fq228pqhuxsb5n
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@cl'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '5'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can project your psyche into another vessel. Once per day, you can
@@ -12,31 +33,10 @@ system:
       creature, which receives a Will save against the effect.</p>
 
       <p>You must be at least 11th level to choose this revelation.</p>
-  actions:
-    - _id: 74fq228pqhuxsb5n
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@cl'
-        units: hour
-      target:
-        value: one creature
-      range:
-        value: '5'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_projectPsyche
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!lBXIoSoWpLjKcO2b'
+  tag: classFeat_projectPsyche
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

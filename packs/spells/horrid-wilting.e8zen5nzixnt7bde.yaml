@@ -1,19 +1,11 @@
 _id: e8zen5nzixnt7bde
-name: Horrid Wilting
-type: spell
+_key: '!items!e8zen5nzixnt7bde'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Horrid Wilting
 system:
-  description:
-    value: >-
-      <p>This spell evaporates moisture from the body of each subject living
-      creature, causing flesh to wither and crack and crumble to dust. This
-      deals 1d6 points of damage per caster level (maximum 20d6). This spell is
-      especially devastating to water elementals and plant creatures, which
-      instead take 1d8 points of damage per caster level (maximum 20d8).</p>
   actions:
     - _id: pelxmy1hk3nh8dka
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,40 +13,48 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: living creatures, no two of which can be more than 60 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: long
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude half
+        type: fort
+      target:
+        value: living creatures, no two of which can be more than 60 ft. apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell evaporates moisture from the body of each subject living
+      creature, causing flesh to wither and crack and crumble to dust. This
+      deals 1d6 points of damage per caster level (maximum 20d6). This spell is
+      especially devastating to water elementals and plant creatures, which
+      instead take 1d8 points of damage per caster level (maximum 20d8).</p>
   learnedAt:
+    bloodline:
+      Daemon: 8
+      Pestilence: 8
+      Undead: 8
     class:
-      sorcerer: 8
-      wizard: 8
-      witch: 8
       shaman: 8
+      sorcerer: 8
+      witch: 8
+      wizard: 8
     domain:
       Water: 8
     subDomain:
-      Radiation: 4
       Plague: 8
-    bloodline:
-      Pestilence: 8
-      Undead: 8
-      Daemon: 8
+      Radiation: 4
   level: 8
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a bit of sponge
+  school: nec
   source:
     id: PZO1110
     pages: '298'
-_key: '!items!e8zen5nzixnt7bde'
+type: spell
 

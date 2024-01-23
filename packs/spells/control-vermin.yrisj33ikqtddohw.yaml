@@ -1,18 +1,11 @@
 _id: yrisj33ikqtddohw
-name: Control Vermin
-type: spell
+_key: '!items!yrisj33ikqtddohw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Control Vermin
 system:
-  description:
-    value: >-
-      <p>You and a number of allies less than or equal to your caster level
-      designated upon casting can use Handle Animal and Ride checks to influence
-      or control the targeted vermin as if they were animals and had
-      animal-level intelligence.</p>
   actions:
     - _id: ccfvbbit2jk9vopc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,36 +13,43 @@ system:
           type: action
       duration:
         value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           up to 1 HD/level of vermin, no two of which can be more than 30 ft.
           apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You and a number of allies less than or equal to your caster level
+      designated upon casting can use Handle Animal and Ride checks to influence
+      or control the targeted vermin as if they were animals and had
+      animal-level intelligence.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 2
-      ranger: 4
-      witch: 2
       hunter: 2
+      oracle: 3
+      ranger: 4
+      sorcerer: 3
+      warpriest: 3
+      witch: 2
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a beetle
+  school: trs
   sr: false
-_key: '!items!yrisj33ikqtddohw'
+type: spell
 

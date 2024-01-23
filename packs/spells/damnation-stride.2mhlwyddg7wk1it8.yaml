@@ -1,18 +1,11 @@
 _id: 2mhlwyddg7wk1it8
-name: Damnation Stride
-type: spell
+_key: '!items!2mhlwyddg7wk1it8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Damnation Stride
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>dimension door</i>, except you leave
-      behind a burst of fire. Choose one corner of your starting square. A
-      10-foot-radius burst of flame explodes from that corner the moment you
-      leave, dealing 4d6 points of fire damage.</p>
   actions:
     - _id: i0p8ho0xqm5j0gx8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,29 +13,36 @@ system:
           type: action
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex half, see text
+        type: ref
       target:
         value: >-
           you (teleportation) and creatures within a 10-foot-radius burst (burst
           of flame) (see text)
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half, see text
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>dimension door</i>, except you leave
+      behind a burst of fire. Choose one corner of your starting square. A
+      10-foot-radius burst of flame explodes from that corner the moment you
+      leave, dealing 4d6 points of fire damage.</p>
   learnedAt:
     class:
       sorcerer: 5
-      wizard: 5
       summoner: 4
-      witch: 5
       summonerUnchained: 4
+      witch: 5
+      wizard: 5
   level: 5
   school: con
+  sr: false
   subschool: teleportation
   types: fire
-  components:
-    verbal: true
-  sr: false
-_key: '!items!2mhlwyddg7wk1it8'
+type: spell
 

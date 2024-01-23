@@ -1,21 +1,11 @@
 _id: 9ATV6AHZG04HFrZv
-name: Pale Horse
-type: feat
+_key: '!items!9ATV6AHZG04HFrZv'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Pale Horse
 system:
-  description:
-    value: >-
-      <p>You can summon a @Compendium[pf1.spells.zpwd0f19q1lm04p3]{Phantom
-      Steed}, as the spell, to serve you for a number of hours per day equal to
-      your oracle level. This duration does not need to be consecutive, but it
-      must be spent in 1-hour increments.</p><p>You must be at least 5th level
-      to select this revelation.</p>
-  tags:
-    - Reaper Mystery
+  abilityType: sp
   actions:
     - _id: y9gmqqszzmrd0c8i
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
       activation:
         cost: 10
         type: minute
@@ -23,19 +13,29 @@ system:
           cost: 10
           type: minute
       duration:
-        value: '1'
         units: hour
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_paleHorse
-  subType: classFeat
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
   associations:
     classes:
       - Oracle
-  abilityType: sp
+  description:
+    value: >-
+      <p>You can summon a @Compendium[pf1.spells.zpwd0f19q1lm04p3]{Phantom
+      Steed}, as the spell, to serve you for a number of hours per day equal to
+      your oracle level. This duration does not need to be consecutive, but it
+      must be spent in 1-hour increments.</p><p>You must be at least 5th level
+      to select this revelation.</p>
   source:
     id: PZO90139
     pages: '66'
-_key: '!items!9ATV6AHZG04HFrZv'
+  subType: classFeat
+  tag: classFeat_paleHorse
+  tags:
+    - Reaper Mystery
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

@@ -1,100 +1,100 @@
 _id: Y4zuC6CQxCFXcojX
-name: Wushu Dart
-type: weapon
+_key: '!items!Y4zuC6CQxCFXcojX'
 img: icons/weapons/thrown/dart-feathered.webp
+name: Wushu Dart
 system:
+  actions:
+    - _id: nfvpixu66djswoyi
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/thrown/dart-feathered.webp
+      name: Melee
+      range:
+        units: melee
+        value: '10'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: T9T1bqm4UIwynzfV
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/weapons/thrown/dart-feathered.webp
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Wushu Dart
   description:
     value: >-
       <p>This sharpened wooden spike can be used as a punching weapon, but it is
       also perfectly balanced for throwing.</p>
-  tags:
-    - PFS
-  price: 0.2
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: nfvpixu66djswoyi
-      name: Melee
-      img: icons/weapons/thrown/dart-feathered.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: str
-        damage: str
-      ammoType: none
-    - _id: T9T1bqm4UIwynzfV
-      name: Throw
-      img: icons/weapons/thrown/dart-feathered.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
+  material:
+    addon:
+      - null
+      - null
+    normal:
+      value: ''
+  price: 0.2
+  properties:
+    fin: true
+    mnk: true
+  source:
+    id: PZO1123
+    pages: '18'
+  subType: martial
+  tags:
+    - PFS
   uses:
     per: single
-  baseTypes:
-    - Wushu Dart
   weaponGroups:
     value:
       - close
       - monk
       - thrown
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-      - null
-  subType: martial
-  properties:
-    mnk: true
-    fin: true
-  source:
-    id: PZO1123
-    pages: '18'
-_key: '!items!Y4zuC6CQxCFXcojX'
+type: weapon
 

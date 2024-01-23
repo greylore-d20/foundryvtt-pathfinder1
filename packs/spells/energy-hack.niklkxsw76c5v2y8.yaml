@@ -1,8 +1,24 @@
 _id: niklkxsw76c5v2y8
-name: Energy Hack
-type: spell
+_key: '!items!niklkxsw76c5v2y8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Energy Hack
 system:
+  actions:
+    - _id: 2ivmxfk1ebd8xy5y
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round/level (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You can cast this spell only when you take 10 or more points of acid,
@@ -21,29 +37,13 @@ system:
       took to the list of energy types you can choose to substitute. You can
       expend points in this way multiple times as long as you do so before the
       duration expires.</p>
-  actions:
-    - _id: 2ivmxfk1ebd8xy5y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round/level (see below)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 4
       wizard: 4
   level: 4
   school: trs
-  types: acid, cold, electricity, or fire
-  components:
-    verbal: true
   sr: false
-_key: '!items!niklkxsw76c5v2y8'
+  types: acid, cold, electricity, or fire
+type: spell
 

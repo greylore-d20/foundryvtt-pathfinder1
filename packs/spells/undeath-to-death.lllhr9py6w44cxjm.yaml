@@ -1,61 +1,61 @@
 _id: lllhr9py6w44cxjm
-name: Undeath to Death
-type: spell
+_key: '!items!lllhr9py6w44cxjm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Undeath to Death
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>circle of</i> <i>death,</i> except that it
-      destroys undead creatures as noted above.</p>
   actions:
     - _id: aogze6gu3gm5z66z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      area: several undead creatures within a 40-ft.-radius burst
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
       range:
         units: medium
-      measureTemplate:
-        type: circle
-        size: '40'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
-      area: several undead creatures within a 40-ft.-radius burst
+        type: will
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>circle of</i> <i>death,</i> except that it
+      destroys undead creatures as noted above.</p>
   learnedAt:
+    bloodline:
+      Undead: 6
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
-      oracle: 6
       inquisitor: 6
+      oracle: 6
+      sorcerer: 6
       spiritualist: 6
+      warpriest: 6
+      wizard: 6
     domain:
       Glory: 6
       Repose: 6
-    bloodline:
-      Undead: 6
   level: 6
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
-    value: diamond powder worth 500 gp
     gpValue: 500
+    value: diamond powder worth 500 gp
   preparation:
     spontaneousPrepared: false
+  school: nec
   source:
     id: PZO1110
     pages: '363'
-_key: '!items!lllhr9py6w44cxjm'
+type: spell
 

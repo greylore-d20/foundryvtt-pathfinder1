@@ -1,7 +1,46 @@
-name: Splintered Spear
-type: feat
+_id: raSRxU51tCnX2oMy
+_key: '!items!raSRxU51tCnX2oMy'
 img: icons/commodities/wood/fence-post-brown.webp
+name: Splintered Spear
 system:
+  abilityType: su
+  actions:
+    - _id: Y1CjNXQuM5YsWl9u
+      ability:
+        attack: int
+        damage: int
+      actionType: rwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackBonus: floor(@classes.wizard.level / 6)[Enhancement]
+      damage:
+        parts:
+          - formula: >-
+              sizeRoll(1, 6, @size) + floor(@classes.wizard.level /
+              6)[Enhancement]
+            type:
+              custom: ''
+              values:
+                - piercing
+          - formula: 1 + floor(@classes.wizard.level / 6)
+            type:
+              custom: Bleed
+              values: []
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/commodities/wood/fence-post-brown.webp
+      name: Use
+      range:
+        units: ft
+        value: '100'
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a standard action, you can create a wooden shortspear appropriate to
@@ -14,53 +53,14 @@ system:
       thereafter, the spear gains a +1 enhancement bonus and the bleed damage
       increases by +1. You can use this ability a number of times per day equal
       to 3 + your Intelligence modifier.</p>
-  tags:
-    - Wood School
-  actions:
-    - _id: Y1CjNXQuM5YsWl9u
-      name: Use
-      img: icons/commodities/wood/fence-post-brown.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '100'
-        units: ft
-      actionType: rwak
-      attackBonus: floor(@classes.wizard.level / 6)[Enhancement]
-      damage:
-        parts:
-          - formula: >-
-              sizeRoll(1, 6, @size) + floor(@classes.wizard.level /
-              6)[Enhancement]
-            type:
-              values:
-                - piercing
-              custom: ''
-          - formula: 1 + floor(@classes.wizard.level / 6)
-            type:
-              values: []
-              custom: Bleed
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: int
-        damage: int
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1117
     pages: '88'
-_id: raSRxU51tCnX2oMy
-_key: '!items!raSRxU51tCnX2oMy'
+  subType: classFeat
+  tags:
+    - Wood School
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

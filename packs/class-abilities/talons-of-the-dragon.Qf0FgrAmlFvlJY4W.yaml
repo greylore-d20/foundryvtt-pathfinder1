@@ -1,8 +1,27 @@
 _id: Qf0FgrAmlFvlJY4W
-name: Talons of the Dragon
-type: feat
+_key: '!items!Qf0FgrAmlFvlJY4W'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Talons of the Dragon
 system:
+  abilityType: su
+  actions:
+    - _id: 4oqp5tjh9t4xnor0
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You fight with the fearsome talons of dragonkind. You can grow claws as
@@ -18,34 +37,15 @@ system:
       hit.</p><p>You can use your claws for a number of rounds per day equal to
       3 + your Charisma modifier. These rounds do not need to be
       consecutive.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: 4oqp5tjh9t4xnor0
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_talonsOfTheDragon
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!Qf0FgrAmlFvlJY4W'
+  subType: classFeat
+  tag: classFeat_talonsOfTheDragon
+  tags:
+    - Dragon Mystery
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

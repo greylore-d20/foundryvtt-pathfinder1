@@ -1,8 +1,27 @@
 _id: A12owyXrgsSYpHGf
-name: Blood of Heroes
-type: feat
+_key: '!items!A12owyXrgsSYpHGf'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Blood of Heroes
 system:
+  abilityType: su
+  actions:
+    - _id: 2e6kzbwt27igvfev
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@abilities.cha.moc'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a move action, you can call upon your ancestors to grant you extra
@@ -15,32 +34,13 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level, and every five levels thereafter.</p>
+  subType: classFeat
+  tag: classFeat_bloodOfHeroes
   tags:
     - Revelation
     - Ancestor Mystery
-  actions:
-    - _id: 2e6kzbwt27igvfev
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@abilities.cha.moc'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_bloodOfHeroes
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!A12owyXrgsSYpHGf'
+    per: day
+type: feat
 

@@ -1,7 +1,59 @@
-name: Breath Weapon (ORA)
-type: feat
+_id: zwUHrTqbHjhreYFo
+_key: '!items!zwUHrTqbHjhreYFo'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Breath Weapon (ORA)
 system:
+  abilityType: su
+  actions:
+    - _id: vd0hIa9tUT4utyD7
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-foot cone
+      damage:
+        parts:
+          - formula: max(1, floor(@classes.oracle.level / 2))d6
+            type:
+              custom: ''
+              values: []
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Cone
+      save:
+        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        description: Relfex half
+        type: ref
+    - _id: HuYnkkcNojTDvqdJ
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 60-foot line
+      damage:
+        parts:
+          - formula: max(1, floor(@classes.oracle.level / 2))d6
+            type:
+              custom: ''
+              values: []
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      measureTemplate:
+        size: '60'
+        type: ray
+      name: Line
+      save:
+        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        description: Relfex half
+        type: ref
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>The primal power of dragonkind seethes within you. You gain a breath
@@ -11,67 +63,15 @@ system:
       choosing this revelation. You can use this ability once per day at 1st
       level, plus one additional time at 5th level and one additional time per
       day for every 5 levels beyond 5th.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: vd0hIa9tUT4utyD7
-      name: Cone
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      measureTemplate:
-        type: cone
-        size: '30'
-      actionType: save
-      damage:
-        parts:
-          - formula: max(1, floor(@classes.oracle.level / 2))d6
-            type:
-              values: []
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
-        type: ref
-        description: Relfex half
-      area: 30-foot cone
-    - _id: HuYnkkcNojTDvqdJ
-      name: Line
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      measureTemplate:
-        type: ray
-        size: '60'
-      actionType: save
-      damage:
-        parts:
-          - formula: max(1, floor(@classes.oracle.level / 2))d6
-            type:
-              values: []
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
-        type: ref
-        description: Relfex half
-      area: 60-foot line
-  uses:
-    per: day
-    maxFormula: ceil(@classes.oracle.level/5)
-  tag: classFeat_breathWeaponOra
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9470
     pages: '9'
-_id: zwUHrTqbHjhreYFo
-_key: '!items!zwUHrTqbHjhreYFo'
+  subType: classFeat
+  tag: classFeat_breathWeaponOra
+  tags:
+    - Dragon Mystery
+  uses:
+    maxFormula: ceil(@classes.oracle.level/5)
+    per: day
+type: feat
 

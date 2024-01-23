@@ -1,8 +1,28 @@
 _id: jsvjsax2eabrlx8g
-name: Minor Creation
-type: spell
+_key: '!items!jsvjsax2eabrlx8g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Minor Creation
 system:
+  actions:
+    - _id: 8854goq5cmjtqy4y
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: >-
+        unattended, nonmagical object of nonliving plant matter, up to 1 cu.
+        ft./level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a nonmagical, unattended object of nonliving vegetable
@@ -10,51 +30,31 @@ system:
       caster level. You must succeed on an appropriate Craft skill check to make
       a complex item.</p><p>Attempting to use any created object as a material
       component causes the spell to fail.</p>
-  actions:
-    - _id: 8854goq5cmjtqy4y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: >-
-        unattended, nonmagical object of nonliving plant matter, up to 1 cu.
-        ft./level
   learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      summoner: 3
-      witch: 4
-      adept: 4
-      psychic: 4
-      occultist: 3
-      spiritualist: 3
-      summonerUnchained: 3
-    domain:
-      Artifice: 4
     bloodline:
       Djinni: 4
+    class:
+      adept: 4
+      occultist: 3
+      psychic: 4
+      sorcerer: 4
+      spiritualist: 3
+      summoner: 3
+      summonerUnchained: 3
+      witch: 4
+      wizard: 4
+    domain:
+      Artifice: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       a tiny piece of matter of the same sort of item you plan to create with
       minor creation
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '313'
-_key: '!items!jsvjsax2eabrlx8g'
+  sr: false
+  subschool: creation
+type: spell
 

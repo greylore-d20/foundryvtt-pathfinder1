@@ -1,8 +1,30 @@
 _id: bbieq5hgdkeskan0
-name: Blood of the Martyr
-type: spell
+_key: '!items!bbieq5hgdkeskan0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood of the Martyr
 system:
+  actions:
+    - _id: 54znirt9pi8np54b
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the target to bleed from every orifice, and her organs and
@@ -19,35 +41,13 @@ system:
       subject's blood no longer heals those who drink it, though in the latter
       case the subject continues to bleed until the bleeding is stopped via
       magical healing or a successful DC 15 Heal check.</p>
-  actions:
-    - _id: 54znirt9pi8np54b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       inquisitor: 3
+      oracle: 2
+      warpriest: 2
   level: 2
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!bbieq5hgdkeskan0'
+type: spell
 

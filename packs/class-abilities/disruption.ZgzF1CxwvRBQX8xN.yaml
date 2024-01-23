@@ -1,8 +1,28 @@
 _id: ZgzF1CxwvRBQX8xN
-name: Disruption
-type: feat
+_key: '!items!ZgzF1CxwvRBQX8xN'
 img: systems/pf1/icons/spells/wind-grasp-acid-1.jpg
+name: Disruption
 system:
+  abilityType: su
+  actions:
+    - _id: akq76j14pqturo2y
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
+      img: systems/pf1/icons/spells/wind-grasp-acid-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: Creature touched
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 1st level, you gain the ability to disrupt spellcasting with a
@@ -15,30 +35,10 @@ system:
       number of rounds equal to 1/2 your wizard level (minimum 1). You can use
       this ability a number of times per day equal to 3 + your
       <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: akq76j14pqturo2y
-      name: Use
-      img: systems/pf1/icons/spells/wind-grasp-acid-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
-        units: round
-      target:
-        value: Creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_disruption
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!ZgzF1CxwvRBQX8xN'
+  tag: classFeat_disruption
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

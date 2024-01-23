@@ -1,8 +1,27 @@
 _id: Js2wvAGSZ1VqO7S1
-name: Moment of Triumph
-type: feat
+_key: '!items!Js2wvAGSZ1VqO7S1'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Moment of Triumph
 system:
+  abilityType: ex
+  actions:
+    - _id: g3iay7tevnj8a253
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, the cavalier can, as a free action, declare a moment of
@@ -11,29 +30,10 @@ system:
       saving throws, and skill checks. This bonus is also added to his AC. In
       addition, any critical threats he makes are automatically confirmed. The
       cavalier can use this ability once per day.</p>
-  actions:
-    - _id: g3iay7tevnj8a253
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_momentOfTriumph
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!Js2wvAGSZ1VqO7S1'
+  tag: classFeat_momentOfTriumph
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

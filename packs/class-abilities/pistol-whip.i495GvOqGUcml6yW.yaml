@@ -1,8 +1,12 @@
 _id: i495GvOqGUcml6yW
-name: Pistol-Whip
-type: feat
+_key: '!items!i495GvOqGUcml6yW'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Pistol-Whip
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 3rd level, the gunslinger can make a surprise melee attack with the
@@ -17,15 +21,11 @@ system:
       attack is 20/x2. If the attack hits, the gunslinger can make a combat
       maneuver check to knock the target prone as a free action. Performing this
       deed costs 1 grit point.</p>
+  subType: classFeat
+  tag: classFeat_pistolWhip
   tags:
     - Gunslinger Deed
   uses:
     autoDeductChargesCost: '1'
-  tag: classFeat_pistolWhip
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!i495GvOqGUcml6yW'
+type: feat
 

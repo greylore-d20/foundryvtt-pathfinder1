@@ -1,8 +1,31 @@
 _id: e5u9ds33olzjscod
-name: Speak with Soul
-type: spell
+_key: '!items!e5u9ds33olzjscod'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Speak with Soul
 system:
+  actions:
+    - _id: zzlyyp0eclfnn8zp
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You commune with the soul of a dead creature. To cast this spell, you
@@ -16,43 +39,20 @@ system:
       isn't compelled to speak or be truthful. Generally, the soul only knows
       what it knew in life, although souls that persisted with awareness of
       their surroundings after death may have more to offer.</p>
-  actions:
-    - _id: zzlyyp0eclfnn8zp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: see text
-      range:
-        value: '10'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
+      antipaladin: 4
       cleric: 6
-      warpriest: 6
+      medium: 4
       oracle: 6
       paladin: 4
-      antipaladin: 4
       shaman: 6
-      medium: 4
       spiritualist: 6
+      warpriest: 6
   level: 6
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of candle wax
+  school: nec
   sr: false
-_key: '!items!e5u9ds33olzjscod'
+type: spell
 

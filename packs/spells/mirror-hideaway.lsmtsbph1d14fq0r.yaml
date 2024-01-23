@@ -1,8 +1,27 @@
 _id: lsmtsbph1d14fq0r
-name: Mirror Hideaway
-type: spell
+_key: '!items!lsmtsbph1d14fq0r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mirror Hideaway
 system:
+  actions:
+    - _id: nski9k3zdr9i4h2l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one mirror
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transform a mirror into a portal to an extradimensional space. The
@@ -28,36 +47,17 @@ system:
       larger creature to use it as a portal.</p><p>Objects can enter the
       extradimensional space only if brought by a creature able to fully pass
       through the mirror.</p>
-  actions:
-    - _id: nski9k3zdr9i4h2l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one mirror
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
-      psychic: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a glass or metal marble and a twisted loop of parchment
+  school: trs
   sr: false
-_key: '!items!lsmtsbph1d14fq0r'
+type: spell
 

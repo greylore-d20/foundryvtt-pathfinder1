@@ -1,8 +1,17 @@
 _id: CV8BsY3ciUb9TA1Y
-name: Bonus Feats (FGT)
-type: feat
+_key: '!items!CV8BsY3ciUb9TA1Y'
 img: systems/pf1/icons/skills/affliction_18.jpg
+name: Bonus Feats (FGT)
 system:
+  associations:
+    classes:
+      - Fighter
+  changes:
+    - _id: yoxm5fp1
+      formula: 1 + floor(@classes.fighter.level / 2)
+      modifier: untyped
+      priority: null
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 1st level, and at every even level thereafter, a fighter gains a
@@ -19,19 +28,10 @@ system:
       fighter can only change one feat at any given level and must choose
       whether or not to swap the feat at the time he gains a new bonus feat for
       the level.</p>
-  changes:
-    - _id: yoxm5fp1
-      formula: 1 + floor(@classes.fighter.level / 2)
-      subTarget: bonusFeats
-      modifier: untyped
-      priority: null
-  tag: classFeat_bonusFeatsFgt
-  subType: classFeat
-  associations:
-    classes:
-      - Fighter
   source:
     id: PZO1110
     pages: '55'
-_key: '!items!CV8BsY3ciUb9TA1Y'
+  subType: classFeat
+  tag: classFeat_bonusFeatsFgt
+type: feat
 

@@ -1,17 +1,11 @@
 _id: vqfrp8t0c1lw1jna
-name: Heroism
-type: spell
+_key: '!items!vqfrp8t0c1lw1jna'
 img: icons/magic/control/buff-strength-muscle-damage-orange.webp
+name: Heroism
 system:
-  description:
-    value: >-
-      <p>This spell imbues a single creature with great bravery and morale in
-      battle. The target gains a +2 morale bonus on attack rolls, saves, and
-      skill checks.</p>
   actions:
     - _id: twv4kuszh08zzbw2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,45 +13,51 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell imbues a single creature with great bravery and morale in
+      battle. The target gains a +2 morale bonus on attack rolls, saves, and
+      skill checks.</p>
   learnedAt:
+    bloodline:
+      Imperious: 3
+      Martyred: 3
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 2
       alchemist: 3
-      summoner: 3
-      witch: 3
-      inquisitor: 3
+      bard: 2
       bloodrager: 3
-      psychic: 3
+      inquisitor: 3
       medium: 2
+      psychic: 3
+      sorcerer: 3
       spiritualist: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
     domain:
       Charm: 4
     subDomain:
       Heroism: 3
-    bloodline:
-      Imperious: 3
-      Martyred: 3
   level: 3
   school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '295'
-_key: '!items!vqfrp8t0c1lw1jna'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

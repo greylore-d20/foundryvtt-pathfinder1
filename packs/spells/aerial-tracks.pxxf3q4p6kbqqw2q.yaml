@@ -1,8 +1,28 @@
 _id: pxxf3q4p6kbqqw2q
-name: Aerial Tracks
-type: spell
+_key: '!items!pxxf3q4p6kbqqw2q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aerial Tracks
 system:
+  actions:
+    - _id: c9aqv72zokffbv1j
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: circle centered on you, with a radius of 100 feet + 10 feet per level
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: 100 + (10 * @cl)
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the air in the area to ripple where creatures have flown
@@ -15,36 +35,16 @@ system:
       as they move with you. The base DC of Survival checks to track creatures
       through the air with this spell is the same as tracking creatures across
       soft ground.</p>
-  actions:
-    - _id: c9aqv72zokffbv1j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: 100 + (10 * @cl)
-      area: circle centered on you, with a radius of 100 feet + 10 feet per level
   learnedAt:
     class:
       druid: 4
-      ranger: 3
-      inquisitor: 4
-      shaman: 4
       hunter: 3
+      inquisitor: 4
+      ranger: 3
+      shaman: 4
   level: 4
   school: div
-  types: air
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!pxxf3q4p6kbqqw2q'
+  types: air
+type: spell
 

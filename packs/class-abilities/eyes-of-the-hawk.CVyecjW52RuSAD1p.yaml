@@ -1,8 +1,25 @@
 _id: CVyecjW52RuSAD1p
-name: Eyes of the Hawk
-type: feat
+_key: '!items!CVyecjW52RuSAD1p'
 img: systems/pf1/icons/feats/alertness.jpg
+name: Eyes of the Hawk
 system:
+  abilityType: ex
+  actions:
+    - _id: su3fd1jshvkbfojm
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/feats/alertness.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
+  changes:
+    - _id: 3uyly9yt
+      formula: max(1, floor(@classes.cleric.level / 2))
+      modifier: racial
+      subTarget: skill.per
   description:
     value: >-
       <p>You gain a racial bonus on Perception checks equal to 1/2 your cleric
@@ -11,24 +28,7 @@ system:
 
       <p>This power replaces the Speak with Animals power granted by the Animal
       Domain.</p>
-  actions:
-    - _id: su3fd1jshvkbfojm
-      name: Use
-      img: systems/pf1/icons/feats/alertness.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 3uyly9yt
-      formula: max(1, floor(@classes.cleric.level / 2))
-      subTarget: skill.per
-      modifier: racial
-  tag: classFeat_eyesOfTheHawk
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: ex
-_key: '!items!CVyecjW52RuSAD1p'
+  tag: classFeat_eyesOfTheHawk
+type: feat
 

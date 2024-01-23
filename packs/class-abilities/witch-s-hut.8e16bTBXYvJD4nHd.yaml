@@ -1,8 +1,29 @@
 _id: 8e16bTBXYvJD4nHd
-name: Witch's Hut
-type: feat
+_key: '!items!8e16bTBXYvJD4nHd'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Witch's Hut
 system:
+  abilityType: su
+  actions:
+    - _id: o8IKdCstgMvoOZ8Q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '24'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Animate
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one hut, small house, wagon, tent or similar
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can animate a hut, small house, covered wagon, tent, or
@@ -19,31 +40,10 @@ system:
       <p>The hut remains animate for 24 hours, until she dismisses it or she
       animates another, at which time the hut stops where it is and reverts to
       its nonmagical state.</p>
+  subType: classFeat
+  tag: classFeat_witchsHut
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: o8IKdCstgMvoOZ8Q
-      name: Animate
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '24'
-        units: hour
-      target:
-        value: one hut, small house, wagon, tent or similar
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_witchsHut
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!8e16bTBXYvJD4nHd'
+type: feat
 

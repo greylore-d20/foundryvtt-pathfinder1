@@ -1,52 +1,52 @@
 _id: 3wZ8WwBQPft1nO76
-name: Minor Prophecy
-type: feat
+_key: '!items!3wZ8WwBQPft1nO76'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Minor Prophecy
 system:
-  description:
-    value: >-
-      <p>The witch can call on her prophetic ancestors to cast
-      @Compendium[pf1.spells.d1wxnax51cecplm4]{Augury} once per day. She can
-      spend a full hour casting the spell to negate the need for material
-      components, but this reduces the accuracy of the spell by 5%.</p>
-  tags:
-    - Hex
+  abilityType: su
   actions:
     - _id: jhpwfe026eqs0rit
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         units: inst
-      target:
-        value: self
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
       range:
         units: personal
+      target:
+        value: self
     - _id: 6lZe1jtUA8v4BrUh
-      name: Forgo Material
-      img: systems/pf1/icons/skills/violet_02.jpg
-      description: <p>Augury accuracy reduced by 5%.</p>
       activation:
         type: hour
         unchained:
           type: hour
+      description: <p>Augury accuracy reduced by 5%.</p>
       duration:
         units: inst
-      target:
-        value: self
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Forgo Material
       range:
         units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_minorProphecy
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Witch
-  abilityType: su
-_key: '!items!3wZ8WwBQPft1nO76'
+  description:
+    value: >-
+      <p>The witch can call on her prophetic ancestors to cast
+      @Compendium[pf1.spells.d1wxnax51cecplm4]{Augury} once per day. She can
+      spend a full hour casting the spell to negate the need for material
+      components, but this reduces the accuracy of the spell by 5%.</p>
+  subType: classFeat
+  tag: classFeat_minorProphecy
+  tags:
+    - Hex
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

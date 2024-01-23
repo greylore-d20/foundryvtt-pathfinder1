@@ -1,8 +1,22 @@
 _id: UBFk7gbXwA2B62ZD
-name: Camouflage (UC)
-type: feat
+_key: '!items!UBFk7gbXwA2B62ZD'
 img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+name: Camouflage (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: nojyias5cxmv4dx2
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Rogue (Unchained)
   description:
     value: >-
       <p>A rogue with this talent can craft simple but effective camouflage from
@@ -14,23 +28,9 @@ system:
       <p>The rogue gains a +4 bonus on Stealth checks while within terrain that
       matches the foliage used to make the camouflage. This ability cannot be
       used in areas without natural foliage.</p>
+  subType: classFeat
+  tag: classFeat_camouflageUc
   tags:
     - Rogue Talent
-  actions:
-    - _id: nojyias5cxmv4dx2
-      name: Use
-      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_camouflageUc
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!UBFk7gbXwA2B62ZD'
+type: feat
 

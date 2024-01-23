@@ -1,8 +1,30 @@
 _id: b49ketr3vgjnld0c
-name: Virulent Miasma
-type: spell
+_key: '!items!b49ketr3vgjnld0c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Virulent Miasma
 system:
+  actions:
+    - _id: j1xu5qtsz6btf9v7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates (see text)
+        type: fort
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Virulent miasma</i> creates fog like <i>fog cloud</i>, except that
@@ -13,40 +35,18 @@ system:
       creature that succeeds at its saving throw against the fog (or ignores the
       fog due to spell resistance) is not affected and need not make further
       saves even if it remains in the fog.</p>
-  actions:
-    - _id: j1xu5qtsz6btf9v7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (see text)
-      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       antipaladin: 2
       bloodrager: 3
+      druid: 3
       hunter: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a dried scab from a diseased creature
+  school: nec
   sr: false
-_key: '!items!b49ketr3vgjnld0c'
+type: spell
 

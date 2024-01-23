@@ -1,8 +1,29 @@
 _id: xmw9a4h8bgvlx0ub
-name: Gusting Sphere
-type: spell
+_key: '!items!xmw9a4h8bgvlx0ub'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gusting Sphere
 system:
+  actions:
+    - _id: ft6duaa6mjgr7th8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates (object) or Reflex negates; see text
+        type: ref
+      spellEffect: 5-ft.-diameter sphere of air
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A swirling ball of wind rolls in whichever direction you point, hurling
@@ -22,37 +43,16 @@ system:
       less than 4 feet tall.  The sphere moves as long as you actively direct it
       (a move action for you); otherwise, it merely stays at rest. A <i>gusting
       sphere</i> immediately dissipates if it exceeds the spell's range.</p>
-  actions:
-    - _id: ft6duaa6mjgr7th8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Fortitude negates (object) or Reflex negates; see text
-      spellEffect: 5-ft.-diameter sphere of air
   learnedAt:
     class:
+      bloodrager: 2
+      druid: 2
+      hunter: 2
+      magus: 2
       sorcerer: 2
       wizard: 2
-      druid: 2
-      magus: 2
-      bloodrager: 2
-      hunter: 2
   level: 2
   school: evo
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!xmw9a4h8bgvlx0ub'
+type: spell
 

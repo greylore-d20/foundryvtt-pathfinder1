@@ -1,8 +1,27 @@
 _id: NwSc2aYKhOMiIQ0v
-name: Judicious Force
-type: feat
+_key: '!items!NwSc2aYKhOMiIQ0v'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Judicious Force
 system:
+  abilityType: su
+  actions:
+    - _id: sgr3xmmdrf948fij
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      target:
+        value: one ally
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>If you or an ally within 10 feet makes a critical threat with a melee
@@ -10,29 +29,10 @@ system:
       confirmation roll. This does not stack with the Critical Focus feat. You
       may use this ability a number of times per day equal to your Wisdom
       bonus.</p>
-  actions:
-    - _id: sgr3xmmdrf948fij
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one ally
-      range:
-        value: '10'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_judiciousForce
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!NwSc2aYKhOMiIQ0v'
+  tag: classFeat_judiciousForce
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

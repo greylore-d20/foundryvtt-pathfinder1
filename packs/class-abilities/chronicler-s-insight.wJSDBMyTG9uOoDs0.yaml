@@ -1,8 +1,23 @@
 _id: wJSDBMyTG9uOoDs0
-name: Chronicler's Insight
-type: feat
+_key: '!items!wJSDBMyTG9uOoDs0'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Chronicler's Insight
 system:
+  actions:
+    - _id: wxwff8evu1drksp8
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: hour
+        value: '@abilities.int.mod'
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>The investigator can peruse a Pathfinder Chronicle as a standard
@@ -37,24 +52,9 @@ system:
       lie, Diplomacy checks to request favors, or Intimidate checks to
       demoralize, the investigator gains a circumstance bonus on the check equal
       to one-third his level.</p>
+  subType: classFeat
+  tag: classFeat_chroniclersInsight
   tags:
     - Investigator Talent
-  actions:
-    - _id: wxwff8evu1drksp8
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '@abilities.int.mod'
-        units: hour
-  tag: classFeat_chroniclersInsight
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-_key: '!items!wJSDBMyTG9uOoDs0'
+type: feat
 

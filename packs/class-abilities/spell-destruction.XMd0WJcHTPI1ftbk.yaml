@@ -1,8 +1,25 @@
 _id: XMd0WJcHTPI1ftbk
-name: Spell Destruction
-type: feat
+_key: '!items!XMd0WJcHTPI1ftbk'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Spell Destruction
 system:
+  abilityType: sp
+  actions:
+    - _id: qrdu2vfrwsyz948k
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> utility (Sp); <b>Level</b> 7;
@@ -19,24 +36,7 @@ system:
       per kineticist level you possess, but in that case, it deflects only 10
       spell levels in total (still rolled 1d10–1 at a time) before ending
       early.</p>
-  actions:
-    - _id: qrdu2vfrwsyz948k
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_spellDestruction
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!XMd0WJcHTPI1ftbk'
+  tag: classFeat_spellDestruction
+type: feat
 

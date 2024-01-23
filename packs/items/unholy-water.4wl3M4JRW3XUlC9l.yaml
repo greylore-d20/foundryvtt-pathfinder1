@@ -1,7 +1,39 @@
-name: Unholy water
-type: weapon
+_id: 4wl3M4JRW3XUlC9l
+_key: '!items!4wl3M4JRW3XUlC9l'
 img: systems/pf1/icons/items/potions/grand-violet.jpg
+name: Unholy water
 system:
+  actions:
+    - _id: Fw0IRIgJPiqt3Ozf
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: 2d4
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/potions/grand-violet.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Attack
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      touch: true
   description:
     value: >-
       <p>Category Alchemical Weapons</p><h3>Description</h3><p>Unholy water
@@ -18,55 +50,23 @@ system:
       point of damage from the splash.</p><p><span style="font-family:Signika,
       sans-serif">Unholy water is made using </span>the
       @UUID[Compendium.pf1.spells.Item.c0hvjnqzry149ugs]{curse water} spell.</p>
-  weight:
-    value: 1
-  price: 25
-  actions:
-    - _id: Fw0IRIgJPiqt3Ozf
-      name: Attack
-      img: systems/pf1/icons/items/potions/grand-violet.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      measureTemplate:
-        type: circle
-        size: '5'
-      actionType: twak
-      damage:
-        parts:
-          - formula: 2d4
-            type:
-              values:
-                - untyped
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      touch: true
-      ammoType: none
-  uses:
-    per: single
   material:
+    addon:
+      - null
+      - null
     base:
       value: ''
     normal:
       value: ''
-    addon:
-      - null
-      - null
-  subType: misc
-  weaponSubtype: splash
+  price: 25
   source:
     id: PZO1123
     pages: '107'
-_id: 4wl3M4JRW3XUlC9l
-_key: '!items!4wl3M4JRW3XUlC9l'
+  subType: misc
+  uses:
+    per: single
+  weaponSubtype: splash
+  weight:
+    value: 1
+type: weapon
 

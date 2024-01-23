@@ -1,8 +1,35 @@
 _id: rwcuu1e5ezb28gra
-name: Hidden Speech
-type: spell
+_key: '!items!rwcuu1e5ezb28gra'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hidden Speech
 system:
+  actions:
+    - _id: f12grmlhfdi0byi8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          you plus one creature/level, no two of which can be more than 30 ft.
+          apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You greatly enhance the ability of the subjects to communicate hidden
@@ -11,45 +38,18 @@ system:
       Sense Motive checks to decipher these messages receive a -5 penalty. All
       subjects affected by the spell must share a language to be able to pass
       messages.</p>
-  actions:
-    - _id: f12grmlhfdi0byi8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: >-
-          you plus one creature/level, no two of which can be more than 30 ft.
-          apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       bard: 2
-      witch: 2
       inquisitor: 3
-      psychic: 2
       medium: 2
       mesmerist: 2
+      psychic: 2
+      witch: 2
   level: 2
-  school: trs
-  types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a cipher written on a piece of parchment
-_key: '!items!rwcuu1e5ezb28gra'
+  school: trs
+  types: language-dependent
+type: spell
 

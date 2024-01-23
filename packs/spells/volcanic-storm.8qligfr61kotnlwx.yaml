@@ -1,8 +1,43 @@
 _id: 8qligfr61kotnlwx
-name: Volcanic Storm
-type: spell
+_key: '!items!8qligfr61kotnlwx'
 img: systems/pf1/icons/spells/fire-arrows-2.jpg
+name: Volcanic Storm
 system:
+  actions:
+    - _id: 4lt5ud0m8c04b3gv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cylinder (20-ft. radius, 40 ft. high)
+      damage:
+        parts:
+          - formula: 3d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/spells/fire-arrows-2.jpg
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: long
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Chunks of hot volcanic rock and clumps of ash pound down when this
@@ -13,53 +48,18 @@ system:
       penalty on Perception skill checks and the entire area is treated as
       difficult terrain. At the end of the duration, the rock and ash disappear,
       leaving no aftereffects (other than the damage dealt).</p>
-  actions:
-    - _id: 4lt5ud0m8c04b3gv
-      name: Use
-      img: systems/pf1/icons/spells/fire-arrows-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 3d6
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-          - formula: 2d6
-            type:
-              values:
-                - fire
-              custom: ''
-      area: cylinder (20-ft. radius, 40 ft. high)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      druid: 4
-      witch: 4
       bloodrager: 4
+      druid: 4
       hunter: 4
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: obsidian and ash
-_key: '!items!8qligfr61kotnlwx'
+  school: evo
+  types: fire
+type: spell
 

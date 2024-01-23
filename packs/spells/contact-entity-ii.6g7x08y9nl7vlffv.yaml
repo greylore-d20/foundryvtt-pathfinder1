@@ -1,50 +1,50 @@
 _id: 6g7x08y9nl7vlffv
-name: Contact Entity II
-type: spell
+_key: '!items!6g7x08y9nl7vlffv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contact Entity II
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>contact entity I</i>, except that you can
-      contact creatures from the <i>contact entity II</i> list, and as noted
-      above.</p>
   actions:
     - _id: drum41xjw8837qlt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '200'
       target:
         value: up to 20 entities of 12 HD or fewer
-      range:
-        value: '200'
-        units: mi
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>contact entity I</i>, except that you can
+      contact creatures from the <i>contact entity II</i> list, and as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      summoner: 3
-      witch: 3
-      shaman: 3
-      psychic: 3
       medium: 2
       occultist: 3
+      oracle: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see text
+  school: evo
   sr: false
-_key: '!items!6g7x08y9nl7vlffv'
+type: spell
 

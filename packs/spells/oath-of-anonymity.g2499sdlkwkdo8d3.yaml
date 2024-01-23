@@ -1,8 +1,25 @@
 _id: g2499sdlkwkdo8d3
-name: Oath of Anonymity
-type: spell
+_key: '!items!g2499sdlkwkdo8d3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Oath of Anonymity
 system:
+  actions:
+    - _id: qjt688lixseukuic
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You swear an oath not to reveal your identity, magically preventing
@@ -17,36 +34,19 @@ system:
       your voice, gear, and animals in the same way each time, essentially
       creating an alternate persona that can be recognized by those who have
       observed it before.</p>
-  actions:
-    - _id: qjt688lixseukuic
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
       bard: 0
-      paladin: 1
       inquisitor: 0
       medium: 0
+      paladin: 1
+      sorcerer: 0
+      wizard: 0
   level: 0
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
   sr: false
-_key: '!items!g2499sdlkwkdo8d3'
+  subschool: glamer
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

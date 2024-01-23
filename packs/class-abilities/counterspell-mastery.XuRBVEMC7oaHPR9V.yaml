@@ -1,8 +1,20 @@
 _id: XuRBVEMC7oaHPR9V
-name: Counterspell Mastery
-type: feat
+_key: '!items!XuRBVEMC7oaHPR9V'
 img: systems/pf1/icons/spells/link-royal-1.jpg
+name: Counterspell Mastery
 system:
+  abilityType: su
+  actions:
+    - _id: p61xbpum06wvbduv
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/link-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 6th level, you gain @Compendium[pf1.feats.V8GIvVaAofyw9xIl]{Improved
@@ -12,22 +24,10 @@ system:
       than the spell being countered to use this ability. You can use this
       ability once per day at 6th level, plus one additional time per day for
       every 4 levels beyond 6th.</p>
-  actions:
-    - _id: p61xbpum06wvbduv
-      name: Use
-      img: systems/pf1/icons/spells/link-royal-1.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: 1 + (floor((@classes.wizard.level - 6) / 4))
-  tag: classFeat_counterspellMastery
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!XuRBVEMC7oaHPR9V'
+  tag: classFeat_counterspellMastery
+  uses:
+    maxFormula: 1 + (floor((@classes.wizard.level - 6) / 4))
+    per: day
+type: feat
 

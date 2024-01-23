@@ -1,7 +1,17 @@
-name: Air Supremacy
-type: feat
+_id: fo0imMQ0szmaA6WB
+_key: '!items!fo0imMQ0szmaA6WB'
 img: icons/magic/control/buff-flight-wings-runes-blue-white.webp
+name: Air Supremacy
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: RBBsAfwX
+      formula: 2 + floor(@classes.wizard.level / 5)
+      modifier: untyped
+      subTarget: skill.fly
   description:
     value: >-
       <p>You gain a +2 enhancement bonus on
@@ -15,21 +25,11 @@ system:
       @UUID[Compendium.pf1.spells.7d6sv5ecvi7kho3m]{fly} on yourself at will. At
       20th level, whenever you make a Fly skill check, assume the roll resulted
       in a natural 20.</p>
-  tags:
-    - Air School
-  changes:
-    - _id: RBBsAfwX
-      formula: 2 + floor(@classes.wizard.level / 5)
-      subTarget: skill.fly
-      modifier: untyped
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1115
     pages: '142'
-_id: fo0imMQ0szmaA6WB
-_key: '!items!fo0imMQ0szmaA6WB'
+  subType: classFeat
+  tags:
+    - Air School
+type: feat
 

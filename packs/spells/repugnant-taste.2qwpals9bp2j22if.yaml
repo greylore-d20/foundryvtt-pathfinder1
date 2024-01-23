@@ -1,8 +1,33 @@
 _id: 2qwpals9bp2j22if
-name: Repugnant Taste
-type: spell
+_key: '!items!2qwpals9bp2j22if'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Repugnant Taste
 system:
+  actions:
+    - _id: rz362v90408mgu8d
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target creature begins sweating a foul liquid that makes it
@@ -12,45 +37,20 @@ system:
       its next turn. After a creature has become nauseated by this spell, each
       subsequent failed saving throw against the spell instead gives it the
       sickened condition until the end of its next turn.</p>
-  actions:
-    - _id: rz362v90408mgu8d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      druid: 4
-      ranger: 3
-      bard: 3
       alchemist: 3
-      witch: 4
-      shaman: 4
-      mesmerist: 3
+      bard: 3
+      druid: 4
       hunter: 3
+      mesmerist: 3
+      ranger: 3
+      shaman: 4
+      witch: 4
   level: 4
-  school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: mustard seed
-_key: '!items!2qwpals9bp2j22if'
+  school: trs
+  types: poison
+type: spell
 

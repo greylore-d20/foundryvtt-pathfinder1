@@ -1,16 +1,11 @@
 _id: 04px7z4lxxgfsf4j
-name: Feather Step, Mass
-type: spell
+_key: '!items!04px7z4lxxgfsf4j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Feather Step, Mass
 system:
-  description:
-    value: >-
-      <p>As <i>feather step</i>, except this spell affects multiple
-      creatures.</p>
   actions:
     - _id: c0n7kpcnf4afpo9u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,29 +13,34 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>As <i>feather step</i>, except this spell affects multiple
+      creatures.</p>
   learnedAt:
     class:
-      druid: 3
-      ranger: 3
       bard: 3
-      psychic: 3
+      druid: 3
       hunter: 3
+      psychic: 3
+      ranger: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!04px7z4lxxgfsf4j'
+type: spell
 

@@ -1,8 +1,26 @@
 _id: nrj7sdi7l3tqw802
-name: Starsight
-type: spell
+_key: '!items!nrj7sdi7l3tqw802'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Starsight
 system:
+  actions:
+    - _id: k8x9oejc9zr8ppaa
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can observe the night sky and all of its celestial bodies as if it
@@ -14,38 +32,20 @@ system:
       spell's duration, you gain a +2 insight bonus on Knowledge (geography)
       checks relating to the stars and planets and Survival checks to avoid
       getting lost.</p>
-  actions:
-    - _id: k8x9oejc9zr8ppaa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      ranger: 1
-      bard: 1
       alchemist: 1
-      witch: 1
+      bard: 1
+      cleric: 1
+      druid: 1
       hunter: 1
+      oracle: 1
+      ranger: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!nrj7sdi7l3tqw802'
+type: spell
 

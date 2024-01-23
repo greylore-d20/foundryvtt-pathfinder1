@@ -1,17 +1,11 @@
 _id: 1hcd5x3l5xzixwid
-name: Share Language, Communal
-type: spell
+_key: '!items!1hcd5x3l5xzixwid'
 img: icons/magic/sonic/scream-wail-shout-teal.webp
+name: Share Language, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>share language</i> (Advanced Player's
-      Guide 243), except you divide the duration in 1-hour increments among the
-      creatures touched.</p>
   actions:
     - _id: pzoqd5yffwdvodlp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,35 +13,41 @@ system:
           type: action
       duration:
         value: 24 hours
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>share language</i> (Advanced Player's
+      Guide 243), except you divide the duration in 1-hour increments among the
+      creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
       bard: 2
-      psychic: 2
+      cleric: 3
+      druid: 3
+      hunter: 3
       mesmerist: 2
       occultist: 3
-      hunter: 3
+      oracle: 3
+      psychic: 2
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a page from a dictionary
-_key: '!items!1hcd5x3l5xzixwid'
+  school: div
+type: spell
 

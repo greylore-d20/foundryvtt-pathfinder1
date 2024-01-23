@@ -1,8 +1,29 @@
 _id: djv6d485oznk72f1
-name: Fire of Entanglement
-type: spell
+_key: '!items!djv6d485oznk72f1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fire of Entanglement
 system:
+  actions:
+    - _id: 0gvmybxe3hojqk0t
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: Reflex partial
+        type: ref
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The next creature you attack using your smite evil class ability is
@@ -11,31 +32,10 @@ system:
       turn in a square adjacent to you, it is considered to be entangled to an
       immobile object (you) and cannot move. A target that saves against this
       spell is affected for only 1 round.</p>
-  actions:
-    - _id: 0gvmybxe3hojqk0t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial
   learnedAt:
     class:
       paladin: 2
   level: 2
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!djv6d485oznk72f1'
+type: spell
 

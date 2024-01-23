@@ -1,8 +1,27 @@
 _id: msaqovkgfxi6q8s8
-name: Message
-type: spell
+_key: '!items!msaqovkgfxi6q8s8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Message
 system:
+  actions:
+    - _id: qrfjoj5amgspmwjp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one creature/level
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can whisper messages and receive whispered replies.</p><p>Those
@@ -17,45 +36,26 @@ system:
       creatures that receive the message can whisper a reply that you hear. The
       spell transmits sound, not meaning; it doesn't transcend language
       barriers. To speak a message, you must mouth the words and whisper.</p>
-  actions:
-    - _id: qrfjoj5amgspmwjp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: one creature/level
-      range:
-        units: medium
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
       bard: 0
-      summoner: 0
-      witch: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      psychic: 0
+      sorcerer: 0
       spiritualist: 0
+      summoner: 0
       summonerUnchained: 0
+      witch: 0
+      wizard: 0
   level: 0
-  school: trs
-  types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a piece of copper wire
+  school: trs
   sr: false
-_key: '!items!msaqovkgfxi6q8s8'
+  types: language-dependent
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

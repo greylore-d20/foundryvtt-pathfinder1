@@ -1,8 +1,28 @@
 _id: 8nnswcde15poheci
-name: Rampart
-type: spell
+_key: '!items!8nnswcde15poheci'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rampart
 system:
+  actions:
+    - _id: e10c1yt28lmzvilt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: >-
+        10-ft.-high earthen wall, in a line up to 10 ft. long/2 levels, or a
+        circle with radius of up to 3 ft. + 1 ft./level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a massive <i>rampart</i> of hard-packed earth and stone 5
@@ -13,37 +33,17 @@ system:
       to break through the <i>rampart</i> with a single attack, the DC for the
       Strength check is 60. A creature can climb over the <i>rampart</i> with a
       DC 20 Climb check.</p>
-  actions:
-    - _id: e10c1yt28lmzvilt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      spellEffect: >-
-        10-ft.-high earthen wall, in a line up to 10 ft. long/2 levels, or a
-        circle with radius of up to 3 ft. + 1 ft./level
   learnedAt:
     class:
+      druid: 7
       sorcerer: 7
       wizard: 7
-      druid: 7
   level: 7
-  school: con
-  subschool: creation
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of earth
+  school: con
   sr: false
-_key: '!items!8nnswcde15poheci'
+  subschool: creation
+  types: earth
+type: spell
 

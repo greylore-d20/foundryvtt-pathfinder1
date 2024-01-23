@@ -1,8 +1,28 @@
 _id: p8tP6ObwLWwYbHll
-name: Intercessor
-type: feat
+_key: '!items!p8tP6ObwLWwYbHll'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Intercessor
 system:
+  abilityType: sp
+  actions:
+    - _id: urkcbu7tjgmn56yq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      target:
+        value: dead humanoid
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can invoke an ancestor spirit into an intact, humanoid or
@@ -13,27 +33,7 @@ system:
 
       <p>Once a corpse has answered a single question, it cannot be targeted
       with this ability again.</p>
-  actions:
-    - _id: urkcbu7tjgmn56yq
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: dead humanoid
-      range:
-        value: '10'
-        units: ft
-  tag: classFeat_intercessor
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: sp
-_key: '!items!p8tP6ObwLWwYbHll'
+  tag: classFeat_intercessor
+type: feat
 

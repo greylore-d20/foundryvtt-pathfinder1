@@ -1,19 +1,11 @@
 _id: ts50ndgdc9ssw3ui
-name: Bestow Grace
-type: spell
+_key: '!items!ts50ndgdc9ssw3ui'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bestow Grace
 system:
-  description:
-    value: >-
-      <p>With this spell you can bestow your divine grace on another good
-      creature for a short amount of time, infusing that creature with a portion
-      of your holy virtue. When you touch the subject, you grant that creature a
-      sacred bonus to its saving throws equal to its Charisma bonus (if any) on
-      all saving throws.</p>
   actions:
     - _id: f9p5sc4yeqb1rcea
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,23 +13,31 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one good creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one good creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>With this spell you can bestow your divine grace on another good
+      creature for a short amount of time, infusing that creature with a portion
+      of your holy virtue. When you touch the subject, you grant that creature a
+      sacred bonus to its saving throws equal to its Charisma bonus (if any) on
+      all saving throws.</p>
   learnedAt:
     class:
       paladin: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!ts50ndgdc9ssw3ui'
+type: spell
 

@@ -1,41 +1,41 @@
 _id: J4QibEdTUK559sGO
-name: Staff of Order
-type: feat
+_key: '!items!J4QibEdTUK559sGO'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Staff of Order
 system:
-  description:
-    value: >-
-      <p>At 8th level, you can give a weapon touched the axiomatic special
-      weapon quality for a number of rounds equal to 1/2 your cleric level. You
-      can use this ability once per day at 8th level, and an additional time per
-      day for every four levels beyond 8th.</p>
+  abilityType: su
   actions:
     - _id: iiify8ozt0i4k0ui
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: floor(@classes.cleric.level / 2)
         units: round
-      target:
-        value: weapon touched
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_staffOfOrder
-  subType: classFeat
+      target:
+        value: weapon touched
   associations:
     classes:
       - Cleric
-  abilityType: su
+  description:
+    value: >-
+      <p>At 8th level, you can give a weapon touched the axiomatic special
+      weapon quality for a number of rounds equal to 1/2 your cleric level. You
+      can use this ability once per day at 8th level, and an additional time per
+      day for every four levels beyond 8th.</p>
   source:
     id: PZO1110
     pages: '45'
-_key: '!items!J4QibEdTUK559sGO'
+  subType: classFeat
+  tag: classFeat_staffOfOrder
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

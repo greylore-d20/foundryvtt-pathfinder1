@@ -1,8 +1,20 @@
 _id: nyz3JgtYMrJZF6o5
-name: Aura of Sin
-type: feat
+_key: '!items!nyz3JgtYMrJZF6o5'
 img: systems/pf1/icons/spells/enchant-red-1.jpg
+name: Aura of Sin
 system:
+  abilityType: su
+  actions:
+    - _id: t9ym7v4pftewh87o
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/enchant-red-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Antipaladin
   description:
     value: >-
       <p>At 14th level, an antipaladin's weapons are treated as evil-aligned for
@@ -10,19 +22,7 @@ system:
       enemy within 10 feet of him is treated as evil-aligned for the purposes of
       overcoming damage reduction. This ability functions only while the
       antipaladin is conscious, not if he is unconscious or dead.</p>
-  actions:
-    - _id: t9ym7v4pftewh87o
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_auraOfSin
   subType: classFeat
-  associations:
-    classes:
-      - Antipaladin
-  abilityType: su
-_key: '!items!nyz3JgtYMrJZF6o5'
+  tag: classFeat_auraOfSin
+type: feat
 

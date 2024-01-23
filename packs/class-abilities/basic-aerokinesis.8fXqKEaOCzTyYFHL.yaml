@@ -1,8 +1,26 @@
 _id: 8fXqKEaOCzTyYFHL
-name: Basic Aerokinesis
-type: feat
+_key: '!items!8fXqKEaOCzTyYFHL'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Basic Aerokinesis
 system:
+  abilityType: sp
+  actions:
+    - _id: jxab1yx647kb2we3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> utility (Sp); <b>Level</b> 1;
@@ -21,25 +39,7 @@ system:
       determining the distance at which they can be detected by scent. This
       effect lasts for 1 hour or until you use basic aerokinesis again,
       whichever comes first.</p>
-  actions:
-    - _id: jxab1yx647kb2we3
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_basicAerokinesis
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!8fXqKEaOCzTyYFHL'
+  tag: classFeat_basicAerokinesis
+type: feat
 

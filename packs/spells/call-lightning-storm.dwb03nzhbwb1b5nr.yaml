@@ -1,17 +1,11 @@
 _id: dwb03nzhbwb1b5nr
-name: Call Lightning Storm
-type: spell
+_key: '!items!dwb03nzhbwb1b5nr'
 img: systems/pf1/icons/spells/lighting-sky-3.jpg
+name: Call Lightning Storm
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>call lightning</i>, except that each bolt
-      deals 5d6 points of electricity damage (or 5d10 if created outdoors in a
-      stormy area), and you may call a maximum of 15 bolts.</p>
   actions:
     - _id: 2oyn057o4rt8r00d
-      name: Use
-      img: systems/pf1/icons/spells/lighting-sky-3.jpg
+      actionType: spellsave
       activation:
         type: round
         unchained:
@@ -19,28 +13,34 @@ system:
           type: action
       duration:
         value: 1 min./level
+      img: systems/pf1/icons/spells/lighting-sky-3.jpg
+      name: Use
       range:
         units: long
-      actionType: spellsave
       save:
-        type: ref
         description: Reflex half
+        type: ref
       spellEffect: one or more 30-ft.-long vertical lines of lightning
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>call lightning</i>, except that each bolt
+      deals 5d6 points of electricity damage (or 5d10 if created outdoors in a
+      stormy area), and you may call a maximum of 15 bolts.</p>
   learnedAt:
-    class:
-      druid: 5
-      shaman: 5
-      occultist: 5
-      hunter: 5
-    subDomain:
-      Storms: 5
     bloodline:
       Starsoul: 4
+    class:
+      druid: 5
+      hunter: 5
+      occultist: 5
+      shaman: 5
+    subDomain:
+      Storms: 5
   level: 5
   school: evo
   types: electricity
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!dwb03nzhbwb1b5nr'
+type: spell
 

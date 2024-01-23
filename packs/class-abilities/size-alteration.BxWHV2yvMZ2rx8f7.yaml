@@ -1,8 +1,28 @@
 _id: BxWHV2yvMZ2rx8f7
-name: Size Alteration
-type: feat
+_key: '!items!BxWHV2yvMZ2rx8f7'
 img: systems/pf1/icons/items/weapons/axe-orc-double.png
+name: Size Alteration
 system:
+  abilityType: sp
+  actions:
+    - _id: 50act4pqxn6bsi40
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.occultist.level'
+      img: systems/pf1/icons/items/weapons/axe-orc-double.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can expend 1 point of mental focus and touch
@@ -19,27 +39,7 @@ system:
 
       <p>You can’t use this ability on a creature that is already subject to an
       effect that alters its size.</p>
-  actions:
-    - _id: 50act4pqxn6bsi40
-      name: Use
-      img: systems/pf1/icons/items/weapons/axe-orc-double.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.occultist.level'
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_sizeAlteration
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!BxWHV2yvMZ2rx8f7'
+  tag: classFeat_sizeAlteration
+type: feat
 

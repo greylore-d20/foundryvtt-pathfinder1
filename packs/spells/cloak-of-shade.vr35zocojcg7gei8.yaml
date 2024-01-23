@@ -1,8 +1,32 @@
 _id: vr35zocojcg7gei8
-name: Cloak of Shade
-type: spell
+_key: '!items!vr35zocojcg7gei8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cloak of Shade
 system:
+  actions:
+    - _id: d91jfpyhl1f5wpbi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature per level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell provides the subject with some degree of protection from the
@@ -14,37 +38,13 @@ system:
       however, eliminate the effects of direct sunlight on creatures vulnerable
       to sunlight. <i>Cloak of shade</i> has no effect on environmental heat
       from sources other than the sun.</p>
-  actions:
-    - _id: d91jfpyhl1f5wpbi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one creature per level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       druid: 1
-      ranger: 1
       hunter: 1
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      ranger: 1
   materials:
     value: a leaf from a shade tree
-_key: '!items!vr35zocojcg7gei8'
+  school: abj
+type: spell
 

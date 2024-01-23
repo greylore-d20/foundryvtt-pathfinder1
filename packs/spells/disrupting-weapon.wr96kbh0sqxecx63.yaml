@@ -1,18 +1,11 @@
 _id: wr96kbh0sqxecx63
-name: Disrupting Weapon
-type: spell
+_key: '!items!wr96kbh0sqxecx63'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Disrupting Weapon
 system:
-  description:
-    value: >-
-      <p>This spell makes a melee weapon deadly to undead. Any undead creature
-      with HD equal to or less than your caster level must succeed on a Will
-      save or be destroyed utterly if struck in combat with this weapon. Spell
-      resistance does not apply against the destruction effect.</p>
   actions:
     - _id: e4sjtco2mmtzyhe5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,26 +13,33 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one melee weapon
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object); see text
         harmless: true
+        type: will
+      target:
+        value: one melee weapon
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell makes a melee weapon deadly to undead. Any undead creature
+      with HD equal to or less than your caster level must succeed on a Will
+      save or be destroyed utterly if struck in combat with this weapon. Spell
+      resistance does not apply against the destruction effect.</p>
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
       inquisitor: 5
+      oracle: 5
       spiritualist: 5
+      warpriest: 5
   level: 5
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wr96kbh0sqxecx63'
+type: spell
 

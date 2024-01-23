@@ -1,8 +1,27 @@
 _id: bd6v1kuektkdkblx
-name: Possess Object
-type: spell
+_key: '!items!bd6v1kuektkdkblx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Possess Object
 system:
+  actions:
+    - _id: kjqyi38oo1gq5pw5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level or until you return to your body
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one object; see text
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>magic jar</i>, except you transfer your mind
@@ -12,34 +31,15 @@ system:
       original body is effectively dead while under the effect of this spell,
       this temporarily suspends disease, poisons, and other afflictions
       affecting you.</p>
-  actions:
-    - _id: kjqyi38oo1gq5pw5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level or until you return to your body
-      target:
-        value: one object; see text
-      range:
-        units: medium
   learnedAt:
     class:
       sorcerer: 5
-      wizard: 5
       witch: 5
+      wizard: 5
   level: 5
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a gem or crystal worth at least 100 gp
+  school: nec
   sr: false
-_key: '!items!bd6v1kuektkdkblx'
+type: spell
 

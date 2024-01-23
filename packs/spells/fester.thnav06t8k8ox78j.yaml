@@ -1,8 +1,31 @@
 _id: thnav06t8k8ox78j
-name: Fester
-type: spell
+_key: '!items!thnav06t8k8ox78j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fester
 system:
+  actions:
+    - _id: 4s9dh5qtr30953ow
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or 1 round; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: one living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Necrotic energy permeates the target, blocking healing
@@ -12,36 +35,13 @@ system:
       resistance (such as fast healing, regeneration, and some spells) are
       halved. If the target succeeds on a Fortitude saving throw, <i>fester</i>
       lasts only a single round.</p>
-  actions:
-    - _id: 4s9dh5qtr30953ow
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or 1 round; see text
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
-      witch: 2
       inquisitor: 3
+      witch: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: rotted meat
-_key: '!items!thnav06t8k8ox78j'
+  school: nec
+type: spell
 

@@ -1,8 +1,27 @@
 _id: 65okoqbsj9yt9nx3
-name: Transplant Visage
-type: spell
+_key: '!items!65okoqbsj9yt9nx3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transplant Visage
 system:
+  actions:
+    - _id: ify7g14o2bfb45xr
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to add a creature's stolen face to or remove such
@@ -24,42 +43,23 @@ system:
       ake o ff a nd crumble into dust. A face so removed may not be reused. If
       the caster is wearing several stolen faces when the topmost face is
       removed, the next face down is revealed, and may be used as normal.</p>
-  actions:
-    - _id: ify7g14o2bfb45xr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       alchemist: 5
-      witch: 5
-      inquisitor: 4
       antipaladin: 4
+      cleric: 4
+      inquisitor: 4
       magus: 5
+      oracle: 4
+      sorcerer: 5
+      warpriest: 4
+      witch: 5
+      wizard: 5
   level: 5
-  school: trs
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: one corpse
+  school: trs
   sr: false
-_key: '!items!65okoqbsj9yt9nx3'
+  types: evil
+type: spell
 

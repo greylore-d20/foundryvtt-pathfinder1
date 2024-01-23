@@ -1,8 +1,40 @@
 _id: Jov5ThIEm80DPn7n
-name: Ice Tomb
-type: feat
+_key: '!items!Jov5ThIEm80DPn7n'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Ice Tomb
 system:
+  abilityType: su
+  actions:
+    - _id: bgwjyr6aw2u8o6k3
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 3d8
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Fortitude half
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>A storm of ice and freezing wind envelops the target, which takes 3d8
@@ -13,42 +45,10 @@ system:
 
       <p>Whether or not the target's saving throw is successful, it cannot be
       the target of this hex again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_iceTomb
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: bgwjyr6aw2u8o6k3
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: 3d8
-            type:
-              values:
-                - cold
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: fort
-        description: Fortitude half
-  tag: classFeat_iceTomb
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!Jov5ThIEm80DPn7n'
+type: feat
 

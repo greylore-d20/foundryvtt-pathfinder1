@@ -1,8 +1,31 @@
 _id: xa2zt0mep8jb5e59
-name: Thunderous Footfalls
-type: spell
+_key: '!items!xa2zt0mep8jb5e59'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thunderous Footfalls
 system:
+  actions:
+    - _id: ybbhwf9a6tjomral
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one Large or larger creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell makes the target creature's footfalls shake the ground
@@ -12,37 +35,14 @@ system:
       increment), but each time he moves overland adjacent to a creature that is
       at least one size category smaller than he is, that creature must succeed
       at a Fortitude saving throw or be knocked prone.</p>
-  actions:
-    - _id: ybbhwf9a6tjomral
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one Large or larger creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       sorcerer: 3
-      wizard: 3
       summoner: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!xa2zt0mep8jb5e59'
+type: spell
 

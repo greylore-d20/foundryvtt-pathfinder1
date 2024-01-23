@@ -1,8 +1,30 @@
 _id: k3a8fr763ejcm4gl
-name: Anonymous Interaction
-type: spell
+_key: '!items!k3a8fr763ejcm4gl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Anonymous Interaction
 system:
+  actions:
+    - _id: igz69nyblf9sj1vh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more  than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the targets to forget all but the most general information
@@ -13,39 +35,17 @@ system:
       your appearance, or any identifying information about you. This spell
       targets any memories of you in the minute preceding its casting, but is
       otherwise permanent.</p>
-  actions:
-    - _id: igz69nyblf9sj1vh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent (see text)
-      target:
-        value: one creature/level, no two of which can be more  than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 2
-      witch: 2
-      psychic: 2
       mesmerist: 2
+      psychic: 2
+      witch: 2
     subDomain:
       Espionage: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!k3a8fr763ejcm4gl'
+type: spell
 

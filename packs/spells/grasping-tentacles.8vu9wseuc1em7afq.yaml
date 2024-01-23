@@ -1,8 +1,29 @@
 _id: 8vu9wseuc1em7afq
-name: Grasping Tentacles
-type: spell
+_key: '!items!8vu9wseuc1em7afq'
 img: icons/creatures/tentacles/tentacles-suctioncups-pink.webp
+name: Grasping Tentacles
 system:
+  actions:
+    - _id: ctvvoyyd6mrgfdjm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius spread
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>black tentacles</i>, except the tentacles
@@ -21,41 +42,20 @@ system:
       menace the victim from all sides. This is a fear
       effect.</td></tr><tr><td>81-100</td><td>Sickened. The tentacles give off
       sickening vapors. This is a poisonUM effect.</td></tr></tbody></table>
-  actions:
-    - _id: ctvvoyyd6mrgfdjm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: 20-ft.-radius spread
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      summoner: 3
-      witch: 3
-      magus: 3
       bloodrager: 3
+      magus: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: octopus or squid tentacle
+  school: con
   sr: false
-_key: '!items!8vu9wseuc1em7afq'
+  subschool: creation
+type: spell
 

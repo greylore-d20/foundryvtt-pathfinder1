@@ -1,8 +1,35 @@
 _id: spt9bts9a7fa8j7b
-name: Detect Desires
-type: spell
+_key: '!items!spt9bts9a7fa8j7b'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Desires
 system:
+  actions:
+    - _id: ek6a4f0hlk2z6uyr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        description: Will negates (see text)
+        type: will
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as per <i>detect thoughts</i>, except you sense
@@ -16,54 +43,27 @@ system:
       the area (Will negates).  Presenting a creature with an opportunity to
       fulfill a significant desire grants you a +2 circumstance bonus (or
       higher, at the GM's discretion) on Diplomacy checks to influence it.</p>
-  actions:
-    - _id: ek6a4f0hlk2z6uyr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level (D)
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
-      area: cone-shaped emanation
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      bard: 2
-      paladin: 3
-      witch: 3
-      inquisitor: 3
       antipaladin: 2
-      psychic: 2
+      bard: 2
+      cleric: 3
+      inquisitor: 3
       medium: 2
       mesmerist: 3
+      oracle: 3
+      paladin: 3
+      psychic: 2
+      sorcerer: 3
       spiritualist: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: div
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a medallion
+  school: div
   sr: false
-_key: '!items!spt9bts9a7fa8j7b'
+  types: mind-affecting
+type: spell
 

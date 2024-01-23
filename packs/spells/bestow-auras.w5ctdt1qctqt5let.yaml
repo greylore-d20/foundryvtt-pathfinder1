@@ -1,8 +1,31 @@
 _id: w5ctdt1qctqt5let
-name: Bestow Auras
-type: spell
+_key: '!items!w5ctdt1qctqt5let'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bestow Auras
 system:
+  actions:
+    - _id: j5fa7ezb95km1qql
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transfer one or more of your paladin or antipaladin auras (such as
@@ -18,34 +41,11 @@ system:
       has that other ability and expends uses of it to activate the
       aura.</p><p>You cannot transfer an aura that affects only you (such as
       aura of good).</p>
-  actions:
-    - _id: j5fa7ezb95km1qql
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      paladin: 3
       antipaladin: 3
+      paladin: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!w5ctdt1qctqt5let'
+type: spell
 

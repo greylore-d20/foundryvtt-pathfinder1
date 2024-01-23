@@ -1,8 +1,25 @@
 _id: h9k3iukoj2rkqh6t
-name: Vomit Twin
-type: spell
+_key: '!items!h9k3iukoj2rkqh6t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vomit Twin
 system:
+  actions:
+    - _id: ulk7miemqi81h15k
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      spellEffect: creates one ooze duplicate of the caster
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, you vomit forth a disgusting ooze copy of
@@ -18,35 +35,18 @@ system:
       points, it is destroyed, although you can create a new one on your turn as
       a standard action as long as the duration persists. You cannot have more
       than one vomit twin at a time.</p>
-  actions:
-    - _id: ulk7miemqi81h15k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: personal
-      spellEffect: creates one ooze duplicate of the caster
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       alchemist: 3
-      summoner: 3
       magus: 3
       psychic: 4
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 3
+      wizard: 4
   level: 4
   school: con
-  subschool: creation, teleportation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!h9k3iukoj2rkqh6t'
+  subschool: creation, teleportation
+type: spell
 

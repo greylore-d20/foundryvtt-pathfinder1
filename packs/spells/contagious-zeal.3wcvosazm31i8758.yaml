@@ -1,8 +1,31 @@
 _id: 3wcvosazm31i8758
-name: Contagious Zeal
-type: spell
+_key: '!items!3wcvosazm31i8758'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contagious Zeal
 system:
+  actions:
+    - _id: 2htqpew819iuewfi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target gains a +2 morale bonus on attack rolls and weapon damage
@@ -17,43 +40,20 @@ system:
       points share the original spell's duration, so when that duration ends,
       all affected creatures lose their bonuses and any remaining temporary hit
       points from this spell.</p>
-  actions:
-    - _id: 2htqpew819iuewfi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
+      cleric: 3
       inquisitor: 3
+      oracle: 3
       psychic: 3
+      sorcerer: 3
       spiritualist: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3wcvosazm31i8758'
+type: spell
 

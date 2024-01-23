@@ -1,8 +1,23 @@
 _id: oXBCeUcCTNposUbj
-name: Prolonged Study
-type: feat
+_key: '!items!oXBCeUcCTNposUbj'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Prolonged Study
 system:
+  abilityType: ex
+  actions:
+    - _id: j6g2ozvmz9shfey4
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        units: round
+        value: max(2, @abilities.int.mod)
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>The investigator can study his opponents for long periods of time. The
@@ -11,24 +26,9 @@ system:
       a studied strike, whichever comes f irst.</p>
 
       <p>The investigator must be at least 13th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_prolongedStudy
   tags:
     - Investigator Talent
-  actions:
-    - _id: j6g2ozvmz9shfey4
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        value: max(2, @abilities.int.mod)
-        units: round
-  tag: classFeat_prolongedStudy
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!oXBCeUcCTNposUbj'
+type: feat
 

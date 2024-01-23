@@ -1,8 +1,27 @@
 _id: xqij3sw3189p2ehl
-name: Suppressing Stone
-type: spell
+_key: '!items!xqij3sw3189p2ehl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Suppressing Stone
 system:
+  actions:
+    - _id: 16mffbmrh081yqwi
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You infuse arcane power into the focus <i>ioun stone</i>, which must be
@@ -19,34 +38,15 @@ system:
       (minimum 1 round). Rounds during which the effect is suppressed still
       count against its duration, and the effect can still be dispelled or
       disrupted during this time.</p>
-  actions:
-    - _id: 16mffbmrh081yqwi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level or until discharged (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      occultist: 3
       sorcerer: 4
       wizard: 4
-      occultist: 3
   level: 4
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: one ioun stone worth at least 1,000 gp
+  school: evo
   sr: false
-_key: '!items!xqij3sw3189p2ehl'
+type: spell
 

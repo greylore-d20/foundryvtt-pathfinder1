@@ -1,8 +1,18 @@
 _id: Zf0dy41vkqU4fcl7
-name: Paladin (Rebuild)
-type: feat
+_key: '!items!Zf0dy41vkqU4fcl7'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Paladin (Rebuild)
 system:
+  changes:
+    - _id: 3sbsg5ej
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+    - _id: lb8ttkqk
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -23,16 +33,6 @@ system:
       per day (healing 1d6 hit points for every 2 HD the creature possesses
       instead of using its paladin level); Ability Scores +4 Strength and
       Charisma.</p>
-  changes:
-    - _id: 3sbsg5ej
-      formula: '4'
-      subTarget: str
-      modifier: untyped
-    - _id: lb8ttkqk
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
-_key: '!items!Zf0dy41vkqU4fcl7'
+type: feat
 

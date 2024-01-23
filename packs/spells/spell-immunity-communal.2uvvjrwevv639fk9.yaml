@@ -1,16 +1,11 @@
 _id: 2uvvjrwevv639fk9
-name: Spell Immunity, Communal
-type: spell
+_key: '!items!2uvvjrwevv639fk9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Immunity, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>spell immunity</i>, except you divide the
-      duration in 10-minute intervals among the creatures touched.</p>
   actions:
     - _id: sv1axr5sc2nrydaz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,31 +13,36 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>spell immunity</i>, except you divide the
+      duration in 10-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
       inquisitor: 5
-      psychic: 5
       occultist: 5
+      oracle: 5
+      psychic: 5
+      warpriest: 5
   level: 5
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1118
     pages: '244'
-_key: '!items!2uvvjrwevv639fk9'
+type: spell
 

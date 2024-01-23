@@ -1,14 +1,11 @@
 _id: f0o357a1halsvm4p
-name: Daze, Mass
-type: spell
+_key: '!items!f0o357a1halsvm4p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Daze, Mass
 system:
-  description:
-    value: <p>This spell functions as <i>daze</i>, except as noted above.</p>
   actions:
     - _id: zlm39em8vadpu8tz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -16,35 +13,38 @@ system:
           type: action
       duration:
         value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           one or more humanoid creatures, no two of which  may be more than 30
           ft. apart
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: <p>This spell functions as <i>daze</i>, except as noted above.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      summoner: 4
-      witch: 4
       inquisitor: 4
-      psychic: 3
       medium: 3
       mesmerist: 4
       occultist: 4
+      psychic: 3
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!f0o357a1halsvm4p'
+type: spell
 

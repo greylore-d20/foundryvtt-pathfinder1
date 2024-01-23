@@ -1,16 +1,10 @@
 _id: h0ml4rwhpim9ey28
-name: Knock, Mass
-type: spell
+_key: '!items!h0ml4rwhpim9ey28'
 img: icons/sundries/misc/lock-open-yellow.webp
+name: Knock, Mass
 system:
-  description:
-    value: >-
-      <p>Also known as "unshackle," this spell functions as <i>knock</i>, but
-      works on multiple means of closure at once.</p>
   actions:
     - _id: ljz7ulvwt1kpqhy2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,27 +12,33 @@ system:
           type: action
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
       target:
         value: >-
           one means of closure/level, no two of which can be more than 30 feet
           apart
-      range:
-        units: close
-  learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      inquisitor: 6
-      psychic: 6
-      mesmerist: 6
-      occultist: 6
-  level: 6
-  school: trs
   components:
     verbal: true
+  description:
+    value: >-
+      <p>Also known as "unshackle," this spell functions as <i>knock</i>, but
+      works on multiple means of closure at once.</p>
+  learnedAt:
+    class:
+      cleric: 6
+      inquisitor: 6
+      mesmerist: 6
+      occultist: 6
+      oracle: 6
+      psychic: 6
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
+  level: 6
+  school: trs
   sr: false
-_key: '!items!h0ml4rwhpim9ey28'
+type: spell
 

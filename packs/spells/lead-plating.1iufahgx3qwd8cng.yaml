@@ -1,18 +1,11 @@
 _id: 1iufahgx3qwd8cng
-name: Lead Plating
-type: spell
+_key: '!items!1iufahgx3qwd8cng'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lead Plating
 system:
-  description:
-    value: >-
-      <p>You enclose the target in a thin sheath of lead. This doesn't restrict
-      the target's movement or functionality, but protects it from the effects
-      of radiation and prevents the penetration of many divination spells. The
-      lead doesn't coat the target's equipment.</p>
   actions:
     - _id: outm8pk3kuogppas
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,35 +13,42 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: a creature or object weighing up to 100 lbs./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: a creature or object weighing up to 100 lbs./level
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You enclose the target in a thin sheath of lead. This doesn't restrict
+      the target's movement or functionality, but protects it from the effects
+      of radiation and prevents the penetration of many divination spells. The
+      lead doesn't coat the target's equipment.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
       alchemist: 3
-      witch: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      oracle: 2
+      ranger: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: an ounce of lead
-_key: '!items!1iufahgx3qwd8cng'
+  school: con
+  subschool: creation
+type: spell
 

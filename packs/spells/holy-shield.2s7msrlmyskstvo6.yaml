@@ -1,8 +1,26 @@
 _id: 2s7msrlmyskstvo6
-name: Holy Shield
-type: spell
+_key: '!items!2s7msrlmyskstvo6'
 img: icons/magic/holy/barrier-shield-winged-blue.webp
+name: Holy Shield
 system:
+  actions:
+    - _id: 5tfqvp7suuezegk1
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain the ability to magically project the defense of your shield to
@@ -20,29 +38,11 @@ system:
       bonus (such as an enemy breaking the shield, you dropping the shield, or
       you becoming helpless or unconscious) means the protected creature loses
       the shield's benefit.</p>
-  actions:
-    - _id: 5tfqvp7suuezegk1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       paladin: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!2s7msrlmyskstvo6'
+type: spell
 

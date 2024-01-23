@@ -1,8 +1,26 @@
 _id: 6qz8muutqwyfp1mq
-name: Elemental Mastery
-type: spell
+_key: '!items!6qz8muutqwyfp1mq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Elemental Mastery
 system:
+  actions:
+    - _id: 4rre7jpgm24qe3df
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain mastery over the element matching the elemental essence in
@@ -23,36 +41,18 @@ system:
       fire.</td></tr><tr><td>Water (suli, undine)</td><td>+30 ft.</td><td>+1
       circumstance bonus swim on attack rolls when both you and your foe are
       touching water.</td></tr></tbody></table>
-  actions:
-    - _id: 4rre7jpgm24qe3df
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      bloodrager: 4
+      druid: 4
+      hunter: 4
+      magus: 4
+      ranger: 4
       sorcerer: 4
       wizard: 4
-      druid: 4
-      ranger: 4
-      magus: 4
-      bloodrager: 4
-      hunter: 4
   level: 4
   school: trs
-  types: see text
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!6qz8muutqwyfp1mq'
+  types: see text
+type: spell
 

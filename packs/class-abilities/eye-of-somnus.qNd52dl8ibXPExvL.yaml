@@ -1,8 +1,21 @@
 _id: qNd52dl8ibXPExvL
-name: Eye of Somnus
-type: feat
+_key: '!items!qNd52dl8ibXPExvL'
 img: systems/pf1/icons/skills/emerald_11.jpg
+name: Eye of Somnus
 system:
+  abilityType: sp
+  actions:
+    - _id: vqvlks603jrrj519
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/emerald_11.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you can project your consciousness as if using
@@ -11,23 +24,10 @@ system:
       Eye} to become visible. The eye can no longer be moved, but it acts as a
       @Compendium[pf1.spells.0khn0u6nd4fat6wb]{Symbol of Sleep} to all who see
       it. You may use this power once per day.</p>
-  actions:
-    - _id: vqvlks603jrrj519
-      name: Use
-      img: systems/pf1/icons/skills/emerald_11.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_eyeOfSomnus
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!qNd52dl8ibXPExvL'
+  tag: classFeat_eyeOfSomnus
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

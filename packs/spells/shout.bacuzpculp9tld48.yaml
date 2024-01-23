@@ -1,8 +1,32 @@
 _id: bacuzpculp9tld48
-name: Shout
-type: spell
+_key: '!items!bacuzpculp9tld48'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shout
 system:
+  actions:
+    - _id: m2q40a9eesf94yg2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude partial or Reflex negates (object); see text
+        type: ref
+  components:
+    verbal: true
   description:
     value: >-
       <p>You emit an ear-splitting yell that deafens and damages creatures in
@@ -14,49 +38,25 @@ system:
       the damage by half, and a creature holding fragile objects can negate
       damage to them with a successful Reflex save. A <i>shout</i> spell cannot
       penetrate a <i>silence</i> spell.</p>
-  actions:
-    - _id: m2q40a9eesf94yg2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '30'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Fortitude partial or Reflex negates (object); see text
-      area: cone-shaped burst
   learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      bard: 4
-      magus: 4
-      bloodrager: 4
-      psychic: 4
-      occultist: 4
-    domain:
-      Destruction: 5
     bloodline:
       Maestro: 4
       Stormborn: 4
+    class:
+      bard: 4
+      bloodrager: 4
+      magus: 4
+      occultist: 4
+      psychic: 4
+      sorcerer: 4
+      wizard: 4
+    domain:
+      Destruction: 5
   level: 4
   school: evo
-  types: sonic
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '343'
-_key: '!items!bacuzpculp9tld48'
+  types: sonic
+type: spell
 

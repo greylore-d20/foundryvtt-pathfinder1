@@ -1,33 +1,33 @@
 _id: h0Brxw6khcjlEf1T
-name: Bravery
-type: feat
+_key: '!items!h0Brxw6khcjlEf1T'
 img: systems/pf1/icons/skills/affliction_24.jpg
+name: Bravery
 system:
+  abilityType: ex
+  actions:
+    - _id: 8t8fboqlbd3uefbx
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/affliction_24.jpg
+      name: Use
+  associations:
+    classes:
+      - Fighter
+  contextNotes:
+    - subTarget: will
+      target: savingThrows
+      text: +[[floor((@classes.fighter.level + 2) / 4)]] vs fear effects
   description:
     value: >-
       <p>Starting at 2nd level, a fighter gains a +1 bonus on <em>Will</em>
       saves against fear. This bonus increases by +1 for every four levels
       beyond 2nd.</p>
-  actions:
-    - _id: 8t8fboqlbd3uefbx
-      name: Use
-      img: systems/pf1/icons/skills/affliction_24.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  contextNotes:
-    - subTarget: will
-      target: savingThrows
-      text: +[[floor((@classes.fighter.level + 2) / 4)]] vs fear effects
-  tag: classFeat_bravery
-  subType: classFeat
-  associations:
-    classes:
-      - Fighter
-  abilityType: ex
   source:
     id: PZO1110
     pages: '55'
-_key: '!items!h0Brxw6khcjlEf1T'
+  subType: classFeat
+  tag: classFeat_bravery
+type: feat
 

@@ -1,8 +1,30 @@
 _id: 5bhg2kgip9fwnlem
-name: Mirror Transport
-type: spell
+_key: '!items!5bhg2kgip9fwnlem'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mirror Transport
 system:
+  actions:
+    - _id: lrwunnw35cn21pow
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: yes (object)
+      target:
+        value: one mirror
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>mirror hideaway</i>, except any creature
@@ -11,39 +33,17 @@ system:
       a one-way transport. The creature can exit through a mirror only if it
       could fit through an opening the same size as the mirror. Each transport
       through the target mirror reduces the spell's duration by 1 hour.</p>
-  actions:
-    - _id: lrwunnw35cn21pow
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one mirror
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: yes (object)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 4
-      psychic: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a glass or metal marble and a twisted loop of parchment
-_key: '!items!5bhg2kgip9fwnlem'
+  school: trs
+type: spell
 

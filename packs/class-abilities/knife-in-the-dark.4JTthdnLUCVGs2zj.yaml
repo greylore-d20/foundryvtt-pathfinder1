@@ -1,8 +1,20 @@
 _id: 4JTthdnLUCVGs2zj
-name: Knife in the Dark
-type: feat
+_key: '!items!4JTthdnLUCVGs2zj'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Knife in the Dark
 system:
+  abilityType: ex
+  actions:
+    - _id: fc6gzud5qjn4gvic
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can make a sneak attack as if you were a
@@ -10,27 +22,15 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level and for every 5 levels thereafter.</p>
-  tags:
-    - Streets Mystery
-  actions:
-    - _id: fc6gzud5qjn4gvic
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_knifeInTheDark
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
   source:
     id: PZO9460
     pages: '20'
-_key: '!items!4JTthdnLUCVGs2zj'
+  subType: classFeat
+  tag: classFeat_knifeInTheDark
+  tags:
+    - Streets Mystery
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

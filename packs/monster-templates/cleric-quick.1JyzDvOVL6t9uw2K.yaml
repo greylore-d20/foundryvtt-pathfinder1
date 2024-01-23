@@ -1,8 +1,24 @@
 _id: 1JyzDvOVL6t9uw2K
-name: Cleric (Quick)
-type: feat
+_key: '!items!1JyzDvOVL6t9uw2K'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Cleric (Quick)
 system:
+  changes:
+    - _id: a1qpmyzs
+      formula: '2'
+      modifier: untyped
+      subTarget: will
+    - _id: 4ismtjh1
+      formula: '2'
+      modifier: untyped
+      subTarget: wisSkills
+    - _id: aszb7v22
+      formula: '2'
+      modifier: untyped
+      subTarget: wisChecks
+  crOffset: >-
+    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
+    @attributes.hd.total < 13) ? 2 : 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -296,22 +312,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: a1qpmyzs
-      formula: '2'
-      subTarget: will
-      modifier: untyped
-    - _id: 4ismtjh1
-      formula: '2'
-      subTarget: wisSkills
-      modifier: untyped
-    - _id: aszb7v22
-      formula: '2'
-      subTarget: wisChecks
-      modifier: untyped
   subType: template
-  crOffset: >-
-    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
-    @attributes.hd.total < 13) ? 2 : 1)
-_key: '!items!1JyzDvOVL6t9uw2K'
+type: feat
 

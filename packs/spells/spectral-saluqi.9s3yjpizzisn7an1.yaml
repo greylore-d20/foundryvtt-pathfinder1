@@ -1,8 +1,26 @@
 _id: 9s3yjpizzisn7an1
-name: Spectral Saluqi
-type: spell
+_key: '!items!9s3yjpizzisn7an1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spectral Saluqi
 system:
+  actions:
+    - _id: v2bvqrsw0pdos7bn
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one spectral dog
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a spectral saluqi, an undead canine resembling an
@@ -14,33 +32,15 @@ system:
       ground. You are immune to the hound's bay ability. The hound's bite is
       considered aligned to any single alignment you possess for the purposes of
       overcoming damage reduction.</p>
-  actions:
-    - _id: v2bvqrsw0pdos7bn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      range:
-        units: close
-      spellEffect: one spectral dog
   learnedAt:
     class:
       sorcerer: 6
-      wizard: 6
       witch: 6
+      wizard: 6
   level: 6
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a precious metal canine statue worth 100 gp
+  school: nec
   sr: false
-_key: '!items!9s3yjpizzisn7an1'
+type: spell
 

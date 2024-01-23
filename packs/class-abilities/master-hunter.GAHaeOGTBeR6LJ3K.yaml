@@ -1,8 +1,20 @@
 _id: GAHaeOGTBeR6LJ3K
-name: Master Hunter
-type: feat
+_key: '!items!GAHaeOGTBeR6LJ3K'
 img: systems/pf1/icons/skills/arrow_06.jpg
+name: Master Hunter
 system:
+  abilityType: ex
+  actions:
+    - _id: pdg9vyrhnc9hyh6e
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/arrow_06.jpg
+      name: Use
+  associations:
+    classes:
+      - Ranger
   description:
     value: >-
       <p>A ranger of 20th level becomes a master hunter. He can always move at
@@ -17,22 +29,10 @@ system:
       use this ability once per day against each <em>favored enemy</em> type he
       possesses, but not against the same creature more than once in a 24-hour
       period.</p>
-  actions:
-    - _id: pdg9vyrhnc9hyh6e
-      name: Use
-      img: systems/pf1/icons/skills/arrow_06.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_masterHunter
-  subType: classFeat
-  associations:
-    classes:
-      - Ranger
-  abilityType: ex
   source:
     id: PZO1110
     pages: '67'
-_key: '!items!GAHaeOGTBeR6LJ3K'
+  subType: classFeat
+  tag: classFeat_masterHunter
+type: feat
 

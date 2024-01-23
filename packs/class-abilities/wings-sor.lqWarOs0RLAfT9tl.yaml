@@ -1,17 +1,11 @@
 _id: lqWarOs0RLAfT9tl
-name: Wings (SOR)
-type: feat
+_key: '!items!lqWarOs0RLAfT9tl'
 img: systems/pf1/icons/skills/blue_02.jpg
+name: Wings (SOR)
 system:
-  description:
-    value: >-
-      <p>At 15th level, leathery dragon wings grow from your back as a standard
-      action, giving you a fly speed of 60 feet with average maneuverability.
-      You can dismiss the wings as a free action.</p>
+  abilityType: su
   actions:
     - _id: 60xq645s4qrlg1ou
-      name: Use
-      img: systems/pf1/icons/skills/blue_02.jpg
       activation:
         type: standard
         unchained:
@@ -19,23 +13,29 @@ system:
           type: action
       duration:
         units: seeText
-      target:
-        value: Self
+      img: systems/pf1/icons/skills/blue_02.jpg
+      name: Use
       range:
         units: personal
-  changes:
-    - _id: pibjfd0o
-      formula: '60'
-      subTarget: flySpeed
-      modifier: base
-  tag: classFeat_wingsSor
-  subType: classFeat
+      target:
+        value: Self
   associations:
     classes:
       - Sorcerer
-  abilityType: su
+  changes:
+    - _id: pibjfd0o
+      formula: '60'
+      modifier: base
+      subTarget: flySpeed
+  description:
+    value: >-
+      <p>At 15th level, leathery dragon wings grow from your back as a standard
+      action, giving you a fly speed of 60 feet with average maneuverability.
+      You can dismiss the wings as a free action.</p>
   source:
     id: PZO1110
     pages: '75'
-_key: '!items!lqWarOs0RLAfT9tl'
+  subType: classFeat
+  tag: classFeat_wingsSor
+type: feat
 

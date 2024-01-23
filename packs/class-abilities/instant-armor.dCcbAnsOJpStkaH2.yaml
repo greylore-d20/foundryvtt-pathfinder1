@@ -1,8 +1,26 @@
 _id: dCcbAnsOJpStkaH2
-name: Instant Armor
-type: feat
+_key: '!items!dCcbAnsOJpStkaH2'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Instant Armor
 system:
+  abilityType: su
+  actions:
+    - _id: oarbfwtie0itblpi
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: armor touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Choose one type of heavy armor. You gain proficiency in that armor.</p>
@@ -16,28 +34,10 @@ system:
       immediately don or remove that armor, calling it from or removing it to
       that extradimensional space. While in the extradimensional space, the
       armor regains 1 hit point per hour when damaged.</p>
-  actions:
-    - _id: oarbfwtie0itblpi
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: armor touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: '2'
-  tag: classFeat_instantArmor
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!dCcbAnsOJpStkaH2'
+  tag: classFeat_instantArmor
+  uses:
+    maxFormula: '2'
+    per: day
+type: feat
 

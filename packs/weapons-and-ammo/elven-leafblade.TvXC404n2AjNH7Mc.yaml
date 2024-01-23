@@ -1,8 +1,41 @@
 _id: TvXC404n2AjNH7Mc
-name: Elven Leafblade
-type: weapon
+_key: '!items!TvXC404n2AjNH7Mc'
 img: icons/weapons/swords/greatsword-crossguard-curved.webp
+name: Elven Leafblade
 system:
+  actions:
+    - _id: rvi3mg3y0hcpgtl8
+      ability:
+        attack: str
+        critRange: 18
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/swords/greatsword-crossguard-curved.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Elven Leafblade
   description:
     value: >-
       <p>Elves have traditionally eschewed the use of larger weaponry, opting
@@ -14,61 +47,28 @@ system:
       both for slashing swings and targeted thrusts. These weapons are designed
       to be wielded alongside elven thornblades. Attacks with an elven leafblade
       gain a +2 bonus on attack rolls made to confirm critical hits.</p>
+  hardness: 10
+  hp:
+    max: 2
+    value: 2
+  material:
+    addon:
+      - null
+      - null
+    normal:
+      value: ''
+  price: 40
+  properties:
+    fin: true
+    spc: true
+  source:
+    id: PZO1138
+    pages: '114'
+  subType: exotic
   tags:
     - PFS
     - Elven
   weight:
     value: 3
-  price: 40
-  hp:
-    max: 2
-    value: 2
-  hardness: 10
-  actions:
-    - _id: rvi3mg3y0hcpgtl8
-      name: Attack
-      img: icons/weapons/swords/greatsword-crossguard-curved.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 18
-  baseTypes:
-    - Elven Leafblade
-  material:
-    normal:
-      value: ''
-    addon:
-      - null
-      - null
-  subType: exotic
-  properties:
-    spc: true
-    fin: true
-  source:
-    id: PZO1138
-    pages: '114'
-_key: '!items!TvXC404n2AjNH7Mc'
+type: weapon
 

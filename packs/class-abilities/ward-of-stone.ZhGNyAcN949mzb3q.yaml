@@ -1,8 +1,28 @@
 _id: ZhGNyAcN949mzb3q
-name: Ward of Stone
-type: feat
+_key: '!items!ZhGNyAcN949mzb3q'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Ward of Stone
 system:
+  abilityType: su
+  actions:
+    - _id: wrh29ng6e64gtl3s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: willing creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman touches a willing creature (including herself ) and grants a
@@ -14,27 +34,7 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
-  actions:
-    - _id: wrh29ng6e64gtl3s
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: willing creature touched
-      range:
-        units: touch
-  tag: classFeat_wardOfStone
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!ZhGNyAcN949mzb3q'
+  tag: classFeat_wardOfStone
+type: feat
 

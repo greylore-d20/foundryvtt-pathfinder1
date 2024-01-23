@@ -1,8 +1,28 @@
 _id: pFqT3390dtnf4UyH
-name: Consume the Enemy
-type: feat
+_key: '!items!pFqT3390dtnf4UyH'
 img: systems/pf1/icons/skills/red_29.jpg
+name: Consume the Enemy
 system:
+  abilityType: su
+  actions:
+    - _id: fj1gnww4gmfyfztj
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: minute
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/red_29.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: helpless of freshly killed creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a full-round action that is considered an evil act and provokes
@@ -18,30 +38,10 @@ system:
       your Wisdom modifier.</p>
 
       <p>This power replaces the Touch of Evil power of the Evil Domain.</p>
-  actions:
-    - _id: fj1gnww4gmfyfztj
-      name: Use
-      img: systems/pf1/icons/skills/red_29.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: minute
-      target:
-        value: helpless of freshly killed creature
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_consumeTheEnemy
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!pFqT3390dtnf4UyH'
+  tag: classFeat_consumeTheEnemy
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

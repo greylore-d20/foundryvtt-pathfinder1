@@ -1,8 +1,27 @@
 _id: zx0lJIxpj8ZCDh97
-name: Taboo
-type: feat
+_key: '!items!zx0lJIxpj8ZCDh97'
 img: systems/pf1/icons/skills/affliction_23.jpg
+name: Taboo
 system:
+  abilityType: su
+  actions:
+    - _id: ywegvdsd2e9k78i7
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_23.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: attacking creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>When a creature touches you or strikes you with a melee attack, you can
@@ -15,29 +34,10 @@ system:
 
       <p>This power replaces the Resistant Touch power of the Protection
       Domain.</p>
-  actions:
-    - _id: ywegvdsd2e9k78i7
-      name: Use
-      img: systems/pf1/icons/skills/affliction_23.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: attacking creature
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_taboo
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!zx0lJIxpj8ZCDh97'
+  tag: classFeat_taboo
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

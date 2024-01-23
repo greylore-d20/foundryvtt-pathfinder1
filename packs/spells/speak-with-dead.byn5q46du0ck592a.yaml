@@ -1,8 +1,34 @@
 _id: byn5q46du0ck592a
-name: Speak with Dead
-type: spell
+_key: '!items!byn5q46du0ck592a'
 img: icons/magic/death/skeleton-skull-soul-blue.webp
+name: Speak with Dead
 system:
+  actions:
+    - _id: ebtela6hcg5j7wav
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '10'
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one dead creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You grant the semblance of life to a corpse, allowing it to answer
@@ -22,52 +48,26 @@ system:
       correct answers, but it must at least have a mouth in order to speak at
       all. This spell does not affect a corpse that has been turned into an
       undead creature.</p>
-  actions:
-    - _id: ebtela6hcg5j7wav
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 min./level
-      target:
-        value: one dead creature
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: '1'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
       inquisitor: 3
-      shaman: 3
-      psychic: 3
       medium: 2
+      oracle: 3
+      psychic: 3
+      shaman: 3
       spiritualist: 3
+      warpriest: 3
+      witch: 3
     domain:
       Knowledge: 3
       Repose: 3
   level: 3
   school: nec
-  types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '346'
-_key: '!items!byn5q46du0ck592a'
+  sr: false
+  types: language-dependent
+type: spell
 

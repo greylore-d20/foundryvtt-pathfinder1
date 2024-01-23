@@ -1,17 +1,10 @@
 _id: 7qo2cisa17kxkppx
-name: Unholy Ice Weapon
-type: spell
+_key: '!items!7qo2cisa17kxkppx'
 img: icons/weapons/axes/axe-double-ice-blue.webp
+name: Unholy Ice Weapon
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>holy ice weapon</i>, except the weapon is
-      made of frozen unholy water, and instead deals additional damage to
-      creatures that are susceptible to unholy water.</p>
   actions:
     - _id: r6hi8bn936cwnobs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,28 +12,35 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '0'
         units: ft
+        value: '0'
       spellEffect: one ice weapon
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>holy ice weapon</i>, except the weapon is
+      made of frozen unholy water, and instead deals additional damage to
+      creatures that are susceptible to unholy water.</p>
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       inquisitor: 2
+      oracle: 2
+      warpriest: 2
   level: 2
-  school: trs
-  types: cold, evil, water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a flask of unholy water or 5 pounds of powdered silver worth 25 gp
     gpValue: 25
+    value: a flask of unholy water or 5 pounds of powdered silver worth 25 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!7qo2cisa17kxkppx'
+  types: cold, evil, water
+type: spell
 

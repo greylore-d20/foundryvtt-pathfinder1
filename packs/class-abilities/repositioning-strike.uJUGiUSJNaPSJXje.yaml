@@ -1,8 +1,20 @@
 _id: uJUGiUSJNaPSJXje
-name: Repositioning Strike
-type: feat
+_key: '!items!uJUGiUSJNaPSJXje'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Repositioning Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: skglq2wsdnehj1mr
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When the investigator deals damage with studied strike, he can perform
@@ -11,21 +23,9 @@ system:
       opportunity.</p>
 
       <p>An investigator must be at least 13th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_repositioningStrike
   tags:
     - Investigator Talent
-  actions:
-    - _id: skglq2wsdnehj1mr
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_repositioningStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!uJUGiUSJNaPSJXje'
+type: feat
 

@@ -1,8 +1,30 @@
 _id: z8xnkfpufuqapseq
-name: Eyebite
-type: spell
+_key: '!items!z8xnkfpufuqapseq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Eyebite
 system:
+  actions:
+    - _id: cwcmlzmjhkp5dh5z
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Each round, you can target a single living creature, striking it with
@@ -25,46 +47,24 @@ system:
       the effect. This is not a <i>sleep</i> effect, and thus elves are not
       immune to it. You must spend a swift action each round after the first to
       target a foe.<p></p>
-  actions:
-    - _id: cwcmlzmjhkp5dh5z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
+    bloodline:
+      Accursed: 6
+      Pestilence: 6
     class:
-      sorcerer: 6
-      wizard: 6
-      bard: 6
       alchemist: 6
-      witch: 6
+      bard: 6
       mesmerist: 6
+      sorcerer: 6
       spiritualist: 6
+      witch: 6
+      wizard: 6
     domain:
       Scalykind: 6
     subDomain:
       Curse: 6
-    bloodline:
-      Accursed: 6
-      Pestilence: 6
   level: 6
   school: nec
   types: emotion, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!z8xnkfpufuqapseq'
+type: spell
 

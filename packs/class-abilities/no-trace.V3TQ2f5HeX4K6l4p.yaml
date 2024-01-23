@@ -1,8 +1,25 @@
 _id: V3TQ2f5HeX4K6l4p
-name: No Trace
-type: feat
+_key: '!items!V3TQ2f5HeX4K6l4p'
 img: systems/pf1/icons/skills/shadow_17.jpg
+name: No Trace
 system:
+  abilityType: ex
+  actions:
+    - _id: ee8ynjup7kilwkka
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/shadow_17.jpg
+      name: Use
+  associations:
+    classes:
+      - Ninja
+  contextNotes:
+    - subTarget: skill.dis
+      text: No Trace +[[floor(@classes.ninja.level / 3)]]
+    - subTarget: skill.ste
+      text: No Trace +[[floor(@classes.ninja.level / 3)]]
   description:
     value: >-
       <p>At 3rd level, a ninja learns to cover her tracks, remain hidden, and
@@ -12,24 +29,7 @@ system:
       stationary and does not take any action for at least 1 round. Every three
       levels thereafter, the increase to Survival DCs and the bonuses on
       Disguise and opposed Stealth checks increase by 1.</p>
-  actions:
-    - _id: ee8ynjup7kilwkka
-      name: Use
-      img: systems/pf1/icons/skills/shadow_17.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  contextNotes:
-    - text: No Trace +[[floor(@classes.ninja.level / 3)]]
-      subTarget: skill.dis
-    - text: No Trace +[[floor(@classes.ninja.level / 3)]]
-      subTarget: skill.ste
-  tag: classFeat_noTrace
   subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: ex
-_key: '!items!V3TQ2f5HeX4K6l4p'
+  tag: classFeat_noTrace
+type: feat
 

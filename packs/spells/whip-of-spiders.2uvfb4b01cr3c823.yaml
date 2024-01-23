@@ -1,8 +1,28 @@
 _id: 2uvfb4b01cr3c823
-name: Whip of Spiders
-type: spell
+_key: '!items!2uvfb4b01cr3c823'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Whip of Spiders
 system:
+  actions:
+    - _id: jdpnevyvi3k10ask
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: whiplike swarm
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon hundreds of Diminutive spiders, which cling together in the
@@ -27,40 +47,20 @@ system:
       swarm</i>. The spider swarm has 3 hit points and persists in that form for
       2 rounds or until the end of this spell's duration, whichever comes
       first.</p>
-  actions:
-    - _id: jdpnevyvi3k10ask
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D (see text)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: whiplike swarm
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
       bard: 2
-      summoner: 2
-      witch: 2
+      druid: 2
       hunter: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a square of red cloth
-_key: '!items!2uvfb4b01cr3c823'
+  school: con
+  subschool: summoning
+type: spell
 

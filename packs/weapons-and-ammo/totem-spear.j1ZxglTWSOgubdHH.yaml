@@ -1,8 +1,42 @@
 _id: j1ZxglTWSOgubdHH
-name: Totem Spear
-type: weapon
+_key: '!items!j1ZxglTWSOgubdHH'
 img: systems/pf1/icons/items/weapons/totem-spear.png
+name: Totem Spear
 system:
+  actions:
+    - _id: kxpa3w4d47h4dsyz
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/totem-spear.png
+      name: Attack
+      range:
+        units: melee
+        value: '10'
+  baseTypes:
+    - Totem Spear
   description:
     value: >-
       <p>Favored by the Shoanti of the Sklar-Quah, totem spears combine deadly
@@ -10,54 +44,20 @@ system:
       shovel-like heads of these broad spears are decorated with variously
       oriented hollows. In addition to its use as a weapon, a totem spear can be
       played using the Perform (wind instrument) skill.</p>
-  tags:
-    - PFS
-  weight:
-    value: 6
-  price: 25
   hardness: 10
-  actions:
-    - _id: kxpa3w4d47h4dsyz
-      name: Attack
-      img: systems/pf1/icons/items/weapons/totem-spear.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - bludgeoning
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Totem Spear
-  weaponGroups:
-    value:
-      - spears
-  subType: exotic
-  weaponSubtype: 2h
+  price: 25
   source:
     id: PZO9425
     pages: '14'
-_key: '!items!j1ZxglTWSOgubdHH'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - spears
+  weaponSubtype: 2h
+  weight:
+    value: 6
+type: weapon
 

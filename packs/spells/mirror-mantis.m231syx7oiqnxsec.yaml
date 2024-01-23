@@ -1,8 +1,30 @@
 _id: m231syx7oiqnxsec
-name: Mirror Mantis
-type: spell
+_key: '!items!m231syx7oiqnxsec'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mirror Mantis
 system:
+  actions:
+    - _id: 1y0emi41avcih060
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    focus: true
+    somatic: true
   description:
     value: >-
       <p>Whenever the target of this spell looks into a mirror or other
@@ -18,43 +40,21 @@ system:
       being shaken by the caster's <i>mirror mantis</i> spell for 24 hours,
       though it will still see the Red Mantis reflection until the spell
       ends.</p>
-  actions:
-    - _id: 1y0emi41avcih060
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one living creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
-      psychic: 1
+      cleric: 1
       mesmerist: 1
       occultist: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
+  materials:
+    focus: a hand mirror stained with a dried drop of blood
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    somatic: true
-    focus: true
-  materials:
-    focus: a hand mirror stained with a dried drop of blood
-_key: '!items!m231syx7oiqnxsec'
+type: spell
 

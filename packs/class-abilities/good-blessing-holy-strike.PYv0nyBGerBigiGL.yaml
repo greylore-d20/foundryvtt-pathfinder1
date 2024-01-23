@@ -1,8 +1,27 @@
 _id: PYv0nyBGerBigiGL
-name: 'Good Blessing: Holy Strike'
-type: feat
+_key: '!items!PYv0nyBGerBigiGL'
 img: systems/pf1/icons/spells/beam-sky-2.jpg
+name: 'Good Blessing: Holy Strike'
 system:
+  actions:
+    - _id: 0g92d6znajwbh2oi
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/beam-sky-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch one weapon and bless it with the power of
@@ -11,26 +30,7 @@ system:
       creatures. During this time, it’s treated as good for the purposes of
       overcoming damage reduction. This additional damage doesn’t stack with the
       additional damage from the holy weapon special ability.</p>
-  actions:
-    - _id: 0g92d6znajwbh2oi
-      name: Use
-      img: systems/pf1/icons/spells/beam-sky-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  tag: classFeat_goodBlessingHolyStrike
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!PYv0nyBGerBigiGL'
+  tag: classFeat_goodBlessingHolyStrike
+type: feat
 

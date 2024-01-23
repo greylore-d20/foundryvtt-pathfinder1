@@ -1,8 +1,28 @@
 _id: aqeaxoaozlv9vg35
-name: Vision
-type: spell
+_key: '!items!aqeaxoaozlv9vg35'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vision
 system:
+  actions:
+    - _id: jcauo21ckfa3yrug
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>legend lore,</i> except that it works more
@@ -14,43 +34,23 @@ system:
       place, or object is known, the DC is 25, and the information gained is
       incomplete. If only rumors are known, the DC is 30, and the information
       gained is vague. After this spell is complete, you are fatigued.</p>
-  actions:
-    - _id: jcauo21ckfa3yrug
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      witch: 7
-      shaman: 7
-      psychic: 7
     bloodline:
       Dreamspun: 7
+    class:
+      psychic: 7
+      shaman: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth 250 gp
     focus: four pieces of ivory worth 50 gp each
     gpValue: 250
+    value: incense worth 250 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!aqeaxoaozlv9vg35'
+type: spell
 

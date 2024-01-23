@@ -1,8 +1,30 @@
 _id: oqwkzmt5vihwyil9
-name: Snow Shape
-type: spell
+_key: '!items!oqwkzmt5vihwyil9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Snow Shape
 system:
+  actions:
+    - _id: j69q87hwo5ejkroh
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: >-
+          snow or snow-sculpted object touched, up to 5 cubic ft.  + 1 cubic
+          ft./level
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>In frozen northern lands, where the earth may be hidden beneath heavy
@@ -24,42 +46,20 @@ system:
       due to the slippery, unwieldy nature of the weapon, but the weapon deals 1
       point of cold damage in addition to its normal damage. A weapon created by
       this spell lasts for 24 hours before melting into uselessness.</p>
-  actions:
-    - _id: j69q87hwo5ejkroh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: >-
-          snow or snow-sculpted object touched, up to 5 cubic ft.  + 1 cubic
-          ft./level
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 1
       hunter: 1
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
-  school: trs
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a miniature shovel
+  school: trs
   sr: false
-_key: '!items!oqwkzmt5vihwyil9'
+  types: water
+type: spell
 

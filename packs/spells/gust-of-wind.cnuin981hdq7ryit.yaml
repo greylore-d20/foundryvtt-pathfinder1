@@ -1,8 +1,32 @@
 _id: cnuin981hdq7ryit
-name: Gust of Wind
-type: spell
+_key: '!items!cnuin981hdq7ryit'
 img: icons/magic/air/air-burst-spiral-blue-gray.webp
+name: Gust of Wind
 system:
+  actions:
+    - _id: 4zb9by4qyey7ewcq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        description: Fortitude negates
+        type: fort
+      spellEffect: >-
+        line-shaped gust of severe wind emanating out from you to the extreme of
+        the range
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a severe blast of air (approximately 50 mph) that
@@ -29,45 +53,21 @@ system:
       overturn delicate awnings or hangings, heel over a small boat, and blow
       gases or vapors to the edge of its range.</p><p><i>Gust of wind</i> can be
       made permanent with a <i>permanency</i> spell.</p>
-  actions:
-    - _id: 4zb9by4qyey7ewcq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round
-      range:
-        value: '60'
-        units: ft
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      spellEffect: >-
-        line-shaped gust of severe wind emanating out from you to the extreme of
-        the range
   learnedAt:
-    class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      magus: 2
-      bloodrager: 2
-      occultist: 2
-      hunter: 2
-    subDomain:
-      Catastrophe: 2
     bloodline:
       Stormborn: 2
+    class:
+      bloodrager: 2
+      druid: 2
+      hunter: 2
+      magus: 2
+      occultist: 2
+      sorcerer: 2
+      wizard: 2
+    subDomain:
+      Catastrophe: 2
   level: 2
   school: evo
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!cnuin981hdq7ryit'
+type: spell
 

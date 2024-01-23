@@ -1,8 +1,30 @@
 _id: tkmpjwwijmlyb06k
-name: Inhibiting Patterns
-type: spell
+_key: '!items!tkmpjwwijmlyb06k'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Inhibiting Patterns
 system:
+  actions:
+    - _id: 0xul4usi0pa5a976
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      spellEffect: one cylinder (10-ft. radius, 40-ft. high)/3 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create one or more vibrant pillars of kaleidoscopic color that rise
@@ -17,39 +39,17 @@ system:
       through one or more of the illusory pillars takes a 50% miss chance. A
       creature can make a melee attack against a target within a pillar at no
       penalty.</p>
-  actions:
-    - _id: 0xul4usi0pa5a976
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: one cylinder (10-ft. radius, 40-ft. high)/3 levels
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
       psychic: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
+  materials:
+    value: a sprinkle of ground glass
   school: ill
   subschool: pattern
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a sprinkle of ground glass
-_key: '!items!tkmpjwwijmlyb06k'
+type: spell
 

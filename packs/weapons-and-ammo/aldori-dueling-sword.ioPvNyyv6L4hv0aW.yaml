@@ -1,8 +1,40 @@
 _id: ioPvNyyv6L4hv0aW
-name: Aldori Dueling Sword
-type: weapon
+_key: '!items!ioPvNyyv6L4hv0aW'
 img: systems/pf1/icons/items/weapons/sword-dueling.png
+name: Aldori Dueling Sword
 system:
+  actions:
+    - _id: 974ws9snsjqu9fcz
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/sword-dueling.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Aldori Dueling Sword
   description:
     value: >-
       <p>These slightly curved swords measure just over 3 feet in length. An
@@ -13,59 +45,27 @@ system:
       rolls with an Aldori dueling sword sized for you, even though it isn't a
       light weapon. You can also wield an Aldori dueling sword in two hands to
       apply 1-1/2 times your Strength bonus to damage rolls.</p>
-  tags:
-    - PFS
-  weight:
-    value: 3
-  price: 20
   hardness: 10
-  actions:
-    - _id: 974ws9snsjqu9fcz
-      name: Attack
-      img: systems/pf1/icons/items/weapons/sword-dueling.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-  baseTypes:
-    - Aldori Dueling Sword
-  weaponGroups:
-    value:
-      - bladesHeavy
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
-  weaponSubtype: 1h
+    normal:
+      value: ''
+  price: 20
   properties:
     fin: true
   source:
     id: PZO1138
     pages: '24'
-_key: '!items!ioPvNyyv6L4hv0aW'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 1h
+  weight:
+    value: 3
+type: weapon
 

@@ -1,19 +1,11 @@
 _id: eu4u4mr1naoiqohz
-name: Remove Fear
-type: spell
+_key: '!items!eu4u4mr1naoiqohz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Remove Fear
 system:
-  description:
-    value: >-
-      <p>You instill courage in the subject, granting it a +4 morale bonus
-      against fear effects for 10 minutes. If the subject is under the influence
-      of a fear effect when receiving the spell, that effect is suppressed for
-      the duration of the spell.</p><p><i>Remove fear</i> counters and dispels
-      cause fear.</p>
   actions:
     - _id: evp975olxxiuexpk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,39 +13,47 @@ system:
           type: action
       duration:
         value: 10 minutes; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
       target:
         value: >-
           one creature plus one additional creature per four levels, no two of
           which can be more than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You instill courage in the subject, granting it a +4 morale bonus
+      against fear effects for 10 minutes. If the subject is under the influence
+      of a fear effect when receiving the spell, that effect is suppressed for
+      the duration of the spell.</p><p><i>Remove fear</i> counters and dispels
+      cause fear.</p>
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
       inquisitor: 1
-      shaman: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      oracle: 1
+      psychic: 1
+      shaman: 1
       spiritualist: 1
+      warpriest: 1
     domain:
       Liberation: 1
     subDomain:
       Loyalty: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '332'
-_key: '!items!eu4u4mr1naoiqohz'
+type: spell
 

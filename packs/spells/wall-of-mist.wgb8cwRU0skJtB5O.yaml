@@ -1,7 +1,27 @@
-name: Wall of Mist
-type: spell
+_id: wgb8cwRU0skJtB5O
+_key: '!items!wgb8cwRU0skJtB5O'
 img: icons/magic/air/fog-gas-smoke-swirling-gray.webp
+name: Wall of Mist
 system:
+  actions:
+    - _id: WuO8DNCd1SemfcJH
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: >-
+        wall of thin fog 10 ft. long/level or dense fog 5 ft. long/level; either
+        form 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>With a whispered incantation, you conjure a stationary vertical wall of
@@ -19,22 +39,6 @@ system:
       starts its turn in the wall can freely move within it or move out of the
       wall in either direction.</p><p>Only a severe or stronger wind (31+ mph)
       disperses the wall, and it does so in 1 round.</p>
-  actions:
-    - _id: WuO8DNCd1SemfcJH
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: medium
-      spellEffect: >-
-        wall of thin fog 10 ft. long/level or dense fog 5 ft. long/level; either
-        form 20 ft. high
   learnedAt:
     class:
       arcanist: 3
@@ -44,12 +48,8 @@ system:
       wizard: 3
   level: 3
   school: con
+  sr: false
   subschool: creation
   types: air
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_id: wgb8cwRU0skJtB5O
-_key: '!items!wgb8cwRU0skJtB5O'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: lzos34s87qsc620l
-name: Flaming Sphere
-type: spell
+_key: '!items!lzos34s87qsc620l'
 img: systems/pf1/icons/spells/fireball-red-1.jpg
+name: Flaming Sphere
 system:
+  actions:
+    - _id: shlc7cf4vfs7gudx
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/spells/fireball-red-1.jpg
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      spellEffect: 5-ft.-diameter sphere
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A burning globe of fire rolls in whichever direction you point and
@@ -19,44 +42,21 @@ system:
       yielding consistency and so does not cause damage except by its flame. It
       cannot push aside unwilling creatures or batter down large obstacles. A
       <i>flaming sphere</i> winks out if it exceeds the spell's range.</p>
-  actions:
-    - _id: shlc7cf4vfs7gudx
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      spellEffect: 5-ft.-diameter sphere
   learnedAt:
     class:
+      bloodrager: 2
+      druid: 2
+      hunter: 2
+      magus: 2
+      occultist: 2
       sorcerer: 2
       wizard: 2
-      druid: 2
-      magus: 2
-      bloodrager: 2
-      occultist: 2
-      hunter: 2
     subDomain:
       Arson: 2
   level: 2
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: tallow, brimstone, and powdered iron
-_key: '!items!lzos34s87qsc620l'
+  school: evo
+  types: fire
+type: spell
 

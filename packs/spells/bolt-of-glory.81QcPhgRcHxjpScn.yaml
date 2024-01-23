@@ -1,8 +1,34 @@
 _id: 81QcPhgRcHxjpScn
-name: Bolt of Glory
-type: spell
+_key: '!items!81QcPhgRcHxjpScn'
 img: icons/magic/light/beam-rays-orange.webp
+name: Bolt of Glory
 system:
+  actions:
+    - _id: pd3r75n0a4gqqder
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      effectNotes:
+        - 'Low damage: [[(min(7, ceil(@cl / 2)))d6]]'
+        - 'High damage: [[(min(15, @cl))d6]]'
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/light/beam-rays-orange.webp
+      name: Use
+      range:
+        units: close
+      spellEffect: ray
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fire a ray of positive energy. A creature struck takes varying
@@ -11,37 +37,11 @@ system:
       take 1d6 points of damage per 2 levels (maximum 7d6). Evil outsiders,
       undead, and natives of the Negative Energy Plane take 1d6 points of damage
       per level (maximum 15d6). All other creatures take no damage.</p>
-  actions:
-    - _id: pd3r75n0a4gqqder
-      name: Use
-      img: icons/magic/light/beam-rays-orange.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      actionType: rsak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      effectNotes:
-        - 'Low damage: [[(min(7, ceil(@cl / 2)))d6]]'
-        - 'High damage: [[(min(15, @cl))d6]]'
-      spellEffect: ray
   learnedAt:
     domain:
       Glory: 6
   level: 6
   school: evo
   types: good
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!81QcPhgRcHxjpScn'
+type: spell
 

@@ -1,8 +1,15 @@
 _id: RE14LhYMDTcjAyHd
-name: Deafening Critical
-type: feat
+_key: '!items!RE14LhYMDTcjAyHd'
 img: systems/pf1/icons/feats/extra-rage.jpg
+name: Deafening Critical
 system:
+  contextNotes:
+    - subTarget: effect
+      text: >-
+        Deafening Critical: permanently
+        @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}.
+        A successful Fortitude save DC [[10 + @attributes.bab.total]] reduces
+        the deafness to [[1]] round.
   description:
     value: >-
       <p><em>Your critical hits cause enemies to lose their
@@ -20,20 +27,13 @@ system:
       attempt to deafen an opponent with this feat, you can spend up to 5
       stamina points to increase the DC of this feat's saving throw by an amount
       equal to the number of stamina points you spent.</p>
+  source:
+    id: PZO1110
+    pages: 114, 121
+  tag: feat_deafeningCritical
   tags:
     - Combat
     - Critical
     - Combat Trick
-  contextNotes:
-    - subTarget: effect
-      text: >-
-        Deafening Critical: permanently
-        @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}.
-        A successful Fortitude save DC [[10 + @attributes.bab.total]] reduces
-        the deafness to [[1]] round.
-  tag: feat_deafeningCritical
-  source:
-    id: PZO1110
-    pages: 114, 121
-_key: '!items!RE14LhYMDTcjAyHd'
+type: feat
 

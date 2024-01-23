@@ -1,8 +1,30 @@
 _id: dol5wzpsk7m6gxsc
-name: Fumbletongue
-type: spell
+_key: '!items!dol5wzpsk7m6gxsc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fumbletongue
 system:
+  actions:
+    - _id: irrgpbesiqivnjzh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1d4 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This enchantment causes a creature to be unable to speak intelligibly.
@@ -13,36 +35,14 @@ system:
       use a command word to activate a magic item.</p><p>This spell has no
       effect on telepathic communication, or the vocalizations of creatures that
       lack a spoken language.</p>
-  actions:
-    - _id: irrgpbesiqivnjzh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d4 rounds
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 1
-      witch: 1
-      psychic: 1
       mesmerist: 1
+      psychic: 1
+      witch: 1
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!dol5wzpsk7m6gxsc'
+type: spell
 

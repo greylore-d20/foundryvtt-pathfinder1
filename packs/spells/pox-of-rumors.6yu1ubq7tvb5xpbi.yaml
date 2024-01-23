@@ -1,8 +1,32 @@
 _id: 6yu1ubq7tvb5xpbi
-name: Pox of Rumors
-type: spell
+_key: '!items!6yu1ubq7tvb5xpbi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pox of Rumors
 system:
+  actions:
+    - _id: k1mlma7800p5opj3
+      actionType: spellsave
+      activation:
+        cost: 8
+        type: hour
+        unchained:
+          cost: 8
+          type: hour
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: Will negates, then Will partial (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You curse the target to attract negative assumptions and rumors of a
@@ -28,46 +52,22 @@ system:
       penalty when you use a piece of the target's body. <i>Pox of Rumors</i> is
       a curse, and until its duration expires, it can be removed only by
       <i>remove curse</i> or similar magic.</p>
-  actions:
-    - _id: k1mlma7800p5opj3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 8
-        type: hour
-        unchained:
-          cost: 8
-          type: hour
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates, then Will partial (see text)
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 7
-      oracle: 7
       bard: 5
-      witch: 7
-      psychic: 7
+      cleric: 7
       mesmerist: 5
+      oracle: 7
+      psychic: 7
+      sorcerer: 7
       spiritualist: 5
+      witch: 7
+      wizard: 7
   level: 7
+  materials:
+    value: a physical connection to the target; see text
   school: enc
   subschool: compulsion
   types: curse, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a physical connection to the target; see text
-_key: '!items!6yu1ubq7tvb5xpbi'
+type: spell
 

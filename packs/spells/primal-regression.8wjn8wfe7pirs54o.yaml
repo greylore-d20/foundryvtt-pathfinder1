@@ -1,8 +1,29 @@
 _id: 8wjn8wfe7pirs54o
-name: Primal Regression
-type: spell
+_key: '!items!8wjn8wfe7pirs54o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Primal Regression
 system:
+  actions:
+    - _id: rjqe7kcqk24yxo2d
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature/2 levels, no two of which can be more than 30 feet apart
+  components:
+    somatic: true
   description:
     value: >-
       <p>This spell sequesters the targets' ability for higher reasoning,
@@ -18,38 +39,17 @@ system:
       at the end of the spell's duration. </li></ul> When the spell ends, each
       affected creature must succeed at a Will saving throw or take 1d4 points
       of Intelligence drain and 1d4 points of Charisma damage.<p></p>
-  actions:
-    - _id: rjqe7kcqk24yxo2d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature/2 levels, no two of which can be more than 30 feet apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       druid: 6
-      witch: 7
-      shaman: 6
-      psychic: 6
-      mesmerist: 5
       hunter: 6
+      mesmerist: 5
+      psychic: 6
+      shaman: 6
+      witch: 7
   level: 6
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!8wjn8wfe7pirs54o'
+type: spell
 

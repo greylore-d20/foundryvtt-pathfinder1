@@ -1,8 +1,26 @@
 _id: yHAdhGzZ0hu7h9Se
-name: Hide Aura
-type: feat
+_key: '!items!yHAdhGzZ0hu7h9Se'
 img: systems/pf1/icons/skills/blood_05.jpg
+name: Hide Aura
 system:
+  abilityType: sp
+  actions:
+    - _id: omuxwotl5sg8wqf0
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/blood_05.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can conceal yourself from prying magic. This ability
@@ -10,25 +28,7 @@ system:
       @Compendium[pf1.spells.awia42zci8nufpfl]{Nondetection} spell cast upon
       yourself. You can end or restore this protection as a <em>move
       action</em>.</p>
-  actions:
-    - _id: omuxwotl5sg8wqf0
-      name: Use
-      img: systems/pf1/icons/skills/blood_05.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_hideAura
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!yHAdhGzZ0hu7h9Se'
+  tag: classFeat_hideAura
+type: feat
 

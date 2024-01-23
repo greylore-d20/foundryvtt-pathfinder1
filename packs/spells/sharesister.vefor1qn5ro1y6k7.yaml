@@ -1,8 +1,32 @@
 _id: vefor1qn5ro1y6k7
-name: Sharesister
-type: spell
+_key: '!items!vefor1qn5ro1y6k7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sharesister
 system:
+  actions:
+    - _id: 7f2ho5hfdb4arh3q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: you and one creature of your gender
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Ithuna Vardsdottir claims to have unearthed this ancient prayer in a
@@ -21,39 +45,15 @@ system:
       levels received from the spell vanish as soon as this spell effect
       ends.</p><p>Negative levels from multiple castings of this spell
       stack.</p>
-  actions:
-    - _id: 7f2ho5hfdb4arh3q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you and one creature of your gender
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
       oracle: 3
+      warpriest: 3
       witch: 3
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of your own blood
-_key: '!items!vefor1qn5ro1y6k7'
+  school: nec
+type: spell
 

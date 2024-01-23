@@ -1,8 +1,25 @@
 _id: dW1cX5yWBOBRrEWO
-name: Corrupting Aura
-type: feat
+_key: '!items!dW1cX5yWBOBRrEWO'
 img: systems/pf1/icons/feats/sickening-critical.jpg
+name: Corrupting Aura
 system:
+  abilityType: ex
+  actions:
+    - _id: x91rtvi1e0o8arjk
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/feats/sickening-critical.jpg
+      name: Use
+      range:
+        units: seeText
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can surround yourself with an aura of corrupting
@@ -16,29 +33,12 @@ system:
       level</em> check (DC 15 + double the level of the spell) or lose the
       spell. You can use this ability once per day at 9th level, twice per day
       at 17th, and three times per day at 20th.</p>
-  actions:
-    - _id: x91rtvi1e0o8arjk
-      name: Use
-      img: systems/pf1/icons/feats/sickening-critical.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      range:
-        units: seeText
+  subType: classFeat
+  tag: classFeat_corruptingAura
   uses:
-    per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-  tag: classFeat_corruptingAura
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!dW1cX5yWBOBRrEWO'
+    per: day
+type: feat
 

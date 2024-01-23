@@ -1,8 +1,26 @@
 _id: d6bgw4rsncq58bas
-name: Animal Purpose Training
-type: spell
+_key: '!items!d6bgw4rsncq58bas'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Animal Purpose Training
 system:
+  actions:
+    - _id: aofgbnea6r7x12qc
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one indifferent or friendly animal
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You instill the target animal with a general purpose (see the Handle
@@ -11,41 +29,23 @@ system:
       supersedes the animal's previous trained purpose and any tricks it
       knows.</p><p>When the spell ends, the animal reverts to its previous
       trained purpose and known tricks.</p>
-  actions:
-    - _id: aofgbnea6r7x12qc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      target:
-        value: one indifferent or friendly animal
-      range:
-        units: close
   learnedAt:
     class:
-      druid: 2
-      ranger: 1
-      bard: 2
-      paladin: 1
-      witch: 1
-      inquisitor: 1
       antipaladin: 1
-      shaman: 2
-      psychic: 1
+      bard: 2
+      druid: 2
       hunter: 1
+      inquisitor: 1
+      paladin: 1
+      psychic: 1
+      ranger: 1
+      shaman: 2
+      witch: 1
   level: 2
+  materials:
+    value: a swatch of black cloth
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a swatch of black cloth
-_key: '!items!d6bgw4rsncq58bas'
+type: spell
 

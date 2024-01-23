@@ -1,8 +1,30 @@
 _id: 3anuql2qioluspuv
-name: Magic Aura, Greater
-type: spell
+_key: '!items!3anuql2qioluspuv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magic Aura, Greater
 system:
+  actions:
+    - _id: dta8lptj2iwc1745
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none (see text)
+      target:
+        value: one creature, or one object weighing up to 20 lbs./level
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>If cast on an object, this spell functions as
@@ -40,41 +62,19 @@ system:
       the target appears when viewed with <em>greater <em>detect</em>
       magic</em>, causing the last spell that he cast to seem to be any spell of
       your choice.</p>
-  actions:
-    - _id: dta8lptj2iwc1745
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: one creature, or one object weighing up to 20 lbs./level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: none (see text)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
-      psychic: 4
       mesmerist: 3
       occultist: 3
+      psychic: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a woolen handkerchief
+  school: ill
   sr: false
-_key: '!items!3anuql2qioluspuv'
+  subschool: glamer
+type: spell
 

@@ -1,8 +1,27 @@
 _id: UcMtpUH9UqAn9429
-name: Lightning Reload
-type: feat
+_key: '!items!UcMtpUH9UqAn9429'
 img: systems/pf1/icons/skills/mech_12.jpg
+name: Lightning Reload
 system:
+  abilityType: ex
+  actions:
+    - _id: RpIc8aR0cgWiU8yu
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/mech_12.jpg
+      name: Use
+    - _id: sRHthmeVeo7r7tSq
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/mech_12.jpg
+      name: Use (Rapid Reload / Alchemical Cartridge)
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 11th level, as long as the gunslinger has at least 1 grit point, she
@@ -12,28 +31,9 @@ system:
       alchemical cartridge (or both), she can reload a single barrel of the
       weapon as a free action each round instead. Furthermore, using this deed
       does not provoke attacks of opportunity.</p>
+  subType: classFeat
+  tag: classFeat_lightningReload
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: RpIc8aR0cgWiU8yu
-      name: Use
-      img: systems/pf1/icons/skills/mech_12.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-    - _id: sRHthmeVeo7r7tSq
-      name: Use (Rapid Reload / Alchemical Cartridge)
-      img: systems/pf1/icons/skills/mech_12.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_lightningReload
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!UcMtpUH9UqAn9429'
+type: feat
 

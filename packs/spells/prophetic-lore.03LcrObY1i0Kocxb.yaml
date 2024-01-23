@@ -1,7 +1,27 @@
-name: Prophetic Lore
-type: spell
+_id: 03LcrObY1i0Kocxb
+_key: '!items!03LcrObY1i0Kocxb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Prophetic Lore
 system:
+  actions:
+    - _id: 9KMxs7U9Jcj9H8dx
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call to mind prophecies regarding a person, place, item, or event.
@@ -36,37 +56,17 @@ system:
       the subject is a tavern destined to burn, or “The murderer shall be
       discovered by a hero” if the subject is a murder
       victim.)</td></tr></tbody></table>
-  actions:
-    - _id: 9KMxs7U9Jcj9H8dx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        value: see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       arcanist: 6
       sorcerer: 6
       wizard: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth 150 gp
     focus: rare herbs and spices worth 250 gp
     gpValue: 150
+    value: incense worth 150 gp
+  school: div
   sr: false
-_id: 03LcrObY1i0Kocxb
-_key: '!items!03LcrObY1i0Kocxb'
+type: spell
 

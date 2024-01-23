@@ -1,45 +1,45 @@
 _id: vi7biwvv87ra1zef
-name: Aura of Greater Courage
-type: spell
+_key: '!items!vi7biwvv87ra1zef'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aura of Greater Courage
 system:
+  actions:
+    - _id: xtzjtwsdw4brdi02
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation centered on you
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell you strengthen your paladin's aura of courage.
       Until the end of its duration, all allies within that aura are immune to
       fear (magical or otherwise). If you do not have the aura of courage class
       feature, <i>aura of greater courage</i> has no effect.</p>
-  actions:
-    - _id: xtzjtwsdw4brdi02
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: 10-ft.-radius emanation centered on you
   learnedAt:
     class:
       paladin: 2
   level: 2
   school: abj
   types: emotion
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!vi7biwvv87ra1zef'
+type: spell
 

@@ -1,8 +1,26 @@
 _id: h4hrop7rq2c9phyi
-name: Blurred Movement
-type: spell
+_key: '!items!h4hrop7rq2c9phyi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blurred Movement
 system:
+  actions:
+    - _id: 5nrtndlo7mjd1h97
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>blur</i>, except that the <i>blur</i>ring
@@ -11,39 +29,21 @@ system:
       your turn, such as attacks of opportunity. If you move at least twice your
       speed on your turn, the <i>blur</i>ring lasts until the start of your next
       turn.</p>
-  actions:
-    - _id: 5nrtndlo7mjd1h97
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
       alchemist: 1
-      summoner: 1
-      magus: 1
+      bard: 1
       bloodrager: 1
-      psychic: 1
+      magus: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      wizard: 1
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!h4hrop7rq2c9phyi'
+  subschool: glamer
+type: spell
 

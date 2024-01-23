@@ -1,8 +1,35 @@
 _id: scyklgov72pvw884
-name: Blessing of Fervor
-type: spell
+_key: '!items!scyklgov72pvw884'
 img: icons/magic/movement/trail-streak-zigzag-yellow.webp
+name: Blessing of Fervor
 system:
+  actions:
+    - _id: yrbargwwtqtb9yw7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>With this blessing, you call your allies to move forth and empower them
@@ -21,41 +48,14 @@ system:
       they actually grant an extra action, so you can't use it to cast a second
       spell or otherwise take an extra action in the round. <em>Blessing of
       Fervor</em> does not stack with <em>haste</em>.</p>
-  actions:
-    - _id: yrbargwwtqtb9yw7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
-    class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
     bloodline:
       Martyred: 4
+    class:
+      cleric: 4
+      oracle: 4
+      warpriest: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!scyklgov72pvw884'
+type: spell
 

@@ -1,16 +1,11 @@
 _id: pg7dbmuuaksxhp3v
-name: Charm Animal
-type: spell
+_key: '!items!pg7dbmuuaksxhp3v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Charm Animal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>charm person</i>, except that it affects a
-      creature of the animal type.</p>
   actions:
     - _id: 4xhx337lyzp9jyi8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,28 +13,33 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: one animal
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one animal
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>charm person</i>, except that it affects a
+      creature of the animal type.</p>
   learnedAt:
-    class:
-      druid: 1
-      ranger: 1
-      shaman: 1
-      psychic: 1
-      hunter: 1
     bloodline:
       Pestilence: 1
+    class:
+      druid: 1
+      hunter: 1
+      psychic: 1
+      ranger: 1
+      shaman: 1
   school: enc
   subschool: charm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!pg7dbmuuaksxhp3v'
+type: spell
 

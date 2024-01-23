@@ -1,8 +1,33 @@
 _id: gKEulSOCaCgsIGS1
-name: Confusion Curse
-type: feat
+_key: '!items!gKEulSOCaCgsIGS1'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Confusion Curse
 system:
+  abilityType: su
+  actions:
+    - _id: 75fym3bdl1812ccb
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman’s command of lore can cause weaker minds to become mired in
@@ -12,32 +37,7 @@ system:
 
       <p>Once affected by this hex, the creature cannot be the target of this
       hex again for 24 hours.</p>
-  actions:
-    - _id: 75fym3bdl1812ccb
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_confusionCurse
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!gKEulSOCaCgsIGS1'
+  tag: classFeat_confusionCurse
+type: feat
 

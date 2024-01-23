@@ -1,8 +1,27 @@
 _id: sPeernsroV2488fH
-name: Altered Shifting
-type: feat
+_key: '!items!sPeernsroV2488fH'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Altered Shifting
 system:
+  abilityType: su
+  actions:
+    - _id: ykrgra6ndx7m114k
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>When the arcanist is under the effect of a spell of the polymorph
@@ -14,28 +33,9 @@ system:
 
       <p>The arcanist must have the Lepidstadt Shifter exploit to select this
       exploit.</p>
+  subType: classFeat
+  tag: classFeat_alteredShifting
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: ykrgra6ndx7m114k
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_alteredShifting
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!sPeernsroV2488fH'
+type: feat
 

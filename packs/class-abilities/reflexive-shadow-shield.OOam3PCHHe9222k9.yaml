@@ -1,8 +1,22 @@
 _id: OOam3PCHHe9222k9
-name: Reflexive Shadow Shield
-type: feat
+_key: '!items!OOam3PCHHe9222k9'
 img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+name: Reflexive Shadow Shield
 system:
+  abilityType: su
+  actions:
+    - _id: 7lgc9wpgub7n4frb
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Ninja
   description:
     value: >-
       <p>Once per day as an immediate action, the rogue can gain an amount of
@@ -14,30 +28,16 @@ system:
       rogue must have the
       @UUID[Compendium.pf1.class-abilities.Item.HLd4skGtB4uTjuwU]{resiliency}
       rogue talent before choosing this talent.</p>
-  tags:
-    - Rogue Talent, Advanced
-    - Ninja Trick, Master
-  actions:
-    - _id: 7lgc9wpgub7n4frb
-      name: Use
-      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_reflexiveShadowShield
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Ninja
-  abilityType: su
   source:
     id: PZO9466
     pages: '9'
-_key: '!items!OOam3PCHHe9222k9'
+  subType: classFeat
+  tag: classFeat_reflexiveShadowShield
+  tags:
+    - Rogue Talent, Advanced
+    - Ninja Trick, Master
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

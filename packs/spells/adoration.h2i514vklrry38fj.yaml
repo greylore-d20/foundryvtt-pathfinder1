@@ -1,8 +1,31 @@
 _id: h2i514vklrry38fj
-name: Adoration
-type: spell
+_key: '!items!h2i514vklrry38fj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Adoration
 system:
+  actions:
+    - _id: j3hj515jyizfc6vd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target of this spell is the subject of adoration by those whom it
@@ -11,39 +34,16 @@ system:
       checks it makes to influence creatures. If the creature is engaged in
       performance combat (see page 153), the target gains a +2 morale bonus on
       all performance combat checks.</p>
-  actions:
-    - _id: j3hj515jyizfc6vd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 1
-      witch: 2
-      psychic: 2
       mesmerist: 1
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!h2i514vklrry38fj'
+type: spell
 

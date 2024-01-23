@@ -1,19 +1,11 @@
 _id: wn0c48h6w8grfz68
-name: Strong Wings
-type: spell
+_key: '!items!wn0c48h6w8grfz68'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Strong Wings
 system:
-  description:
-    value: >-
-      <p>The target's wings grow more powerful, causing its fly speed to
-      increase by +10 feet and its maneuverability to improve by one category
-      (to a maximum of good). This increase counts as an enhancement bonus. This
-      spell has no effect on wingless creatures or winged creatures that cannot
-      f ly.</p>
   actions:
     - _id: aal68tx213arf9mm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,27 +13,35 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target's wings grow more powerful, causing its fly speed to
+      increase by +10 feet and its maneuverability to improve by one category
+      (to a maximum of good). This increase counts as an enhancement bonus. This
+      spell has no effect on wingless creatures or winged creatures that cannot
+      f ly.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      druid: 1
-      ranger: 1
-      witch: 1
       bloodrager: 1
+      druid: 1
       hunter: 1
+      ranger: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wn0c48h6w8grfz68'
+type: spell
 

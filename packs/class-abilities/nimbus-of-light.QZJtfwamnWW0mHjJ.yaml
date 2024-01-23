@@ -1,8 +1,20 @@
 _id: QZJtfwamnWW0mHjJ
-name: Nimbus of Light
-type: feat
+_key: '!items!QZJtfwamnWW0mHjJ'
 img: systems/pf1/icons/spells/light-royal-2.jpg
+name: Nimbus of Light
 system:
+  abilityType: su
+  actions:
+    - _id: ih9znbdh2jospriy
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/light-royal-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot nimbus of light for a number of
@@ -13,25 +25,13 @@ system:
       abilities with the darkness descriptor are automatically dispelled if
       brought inside this nimbus. These rounds do not need to be
       consecutive.</p>
-  actions:
-    - _id: ih9znbdh2jospriy
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_nimbusOfLight
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '47'
-_key: '!items!QZJtfwamnWW0mHjJ'
+  subType: classFeat
+  tag: classFeat_nimbusOfLight
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

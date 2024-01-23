@@ -1,62 +1,62 @@
 _id: FvNfZb72TIpdRPTv
-name: Tongi
-type: weapon
+_key: '!items!FvNfZb72TIpdRPTv'
 img: systems/pf1/icons/items/weapons/tongi.png
+name: Tongi
 system:
+  actions:
+    - _id: 05wi5tsd6ifqipp6
+      ability:
+        attack: str
+        critMult: 3
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/tongi.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Tongi
   description:
     value: >-
       <p>This rare weapon resembles a battleaxe with wedges cut out of the head,
       presenting four sharp points that splay from the handle rather than a
       single convex blade.</p>
-  tags:
-    - PFS
-  weight:
-    value: 4
-  price: 18
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: 05wi5tsd6ifqipp6
-      name: Attack
-      img: systems/pf1/icons/items/weapons/tongi.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-        critMult: 3
-  baseTypes:
-    - Tongi
-  weaponGroups:
-    value:
-      - axes
-  subType: exotic
-  weaponSubtype: 1h
+  price: 18
   source:
     id: PZO9455
     pages: '19'
-_key: '!items!FvNfZb72TIpdRPTv'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - axes
+  weaponSubtype: 1h
+  weight:
+    value: 4
+type: weapon
 

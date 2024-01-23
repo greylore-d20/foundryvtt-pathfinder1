@@ -1,16 +1,11 @@
 _id: ay8nnkkegcb1zfb0
-name: Resist Energy, Communal
-type: spell
+_key: '!items!ay8nnkkegcb1zfb0'
 img: icons/magic/defensive/armor-shield-barrier-steel.webp
+name: Resist Energy, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>resist energy</i>, except you divide the
-      duration in 10-minute intervals among the creatures touched.</p>
   actions:
     - _id: 5zuj37m7zaoi73ql
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,37 +13,42 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creatures touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>resist energy</i>, except you divide the
+      duration in 10-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 3
-      ranger: 3
-      paladin: 3
       alchemist: 3
-      summoner: 3
-      inquisitor: 3
-      psychic: 3
-      occultist: 3
+      cleric: 3
+      druid: 3
       hunter: 3
+      inquisitor: 3
+      occultist: 3
+      oracle: 3
+      paladin: 3
+      psychic: 3
+      ranger: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      warpriest: 3
+      wizard: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!ay8nnkkegcb1zfb0'
+type: spell
 

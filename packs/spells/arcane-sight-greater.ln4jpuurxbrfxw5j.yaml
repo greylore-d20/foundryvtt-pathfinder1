@@ -1,8 +1,26 @@
 _id: ln4jpuurxbrfxw5j
-name: Arcane Sight, Greater
-type: spell
+_key: '!items!ln4jpuurxbrfxw5j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Arcane Sight, Greater
 system:
+  actions:
+    - _id: 6pqaltyjmspdyl2l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like
@@ -12,32 +30,14 @@ system:
 
       <p>Unlike <em>arcane sight</em>, this spell cannot be made permanent with
       a @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanency} spell.</p>
-  actions:
-    - _id: 6pqaltyjmspdyl2l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      witch: 7
       psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ln4jpuurxbrfxw5j'
+type: spell
 

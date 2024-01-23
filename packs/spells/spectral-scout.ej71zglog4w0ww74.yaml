@@ -1,8 +1,25 @@
 _id: ej71zglog4w0ww74
-name: Spectral Scout
-type: spell
+_key: '!items!ej71zglog4w0ww74'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spectral Scout
 system:
+  actions:
+    - _id: 0ko3vanerh3dovy1
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '1'
+      spellEffect: one incorporeal animal of size Tiny or smaller
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon a spectral creature in the shape of the Tiny or smaller
@@ -22,35 +39,18 @@ system:
       individuals it sees, the direction they are going, and what equipment they
       carry; it can't tell the caster whether the people were friend or foe, or
       their objective.</p>
-  actions:
-    - _id: 0ko3vanerh3dovy1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 10 minutes/level (D)
-      range:
-        value: '1'
-        units: mi
-      spellEffect: one incorporeal animal of size Tiny or smaller
   learnedAt:
     class:
+      bard: 3
+      druid: 3
+      hunter: 3
+      ranger: 3
+      shaman: 3
       sorcerer: 3
       wizard: 3
-      druid: 3
-      ranger: 3
-      bard: 3
-      shaman: 3
-      hunter: 3
   level: 3
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ej71zglog4w0ww74'
+  subschool: creation
+type: spell
 

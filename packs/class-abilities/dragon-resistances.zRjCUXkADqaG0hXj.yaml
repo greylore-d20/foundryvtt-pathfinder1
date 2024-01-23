@@ -1,32 +1,32 @@
 _id: zRjCUXkADqaG0hXj
-name: Dragon Resistances
-type: feat
+_key: '!items!zRjCUXkADqaG0hXj'
 img: systems/pf1/icons/skills/ice_11.jpg
+name: Dragon Resistances
 system:
+  abilityType: ex
+  actions:
+    - _id: njthie1zv5w4ks3m
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/ice_11.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
+  changes:
+    - _id: wvgstkuo
+      formula: '@classes.sorcerer.level > 14 ? 4 : @classes.sorcerer.level > 8 ? 2 : 1'
+      modifier: untyped
+      subTarget: nac
   description:
     value: >-
       <p>At 3rd level, you gain resist 5 against your energy type and a +1
       natural armor bonus. At 9th level, your energy resistance increases to 10
       and natural armor bonus increases to +2. At 15th level, your natural armor
       bonus increases to +4.</p>
-  actions:
-    - _id: njthie1zv5w4ks3m
-      name: Use
-      img: systems/pf1/icons/skills/ice_11.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: wvgstkuo
-      formula: '@classes.sorcerer.level > 14 ? 4 : @classes.sorcerer.level > 8 ? 2 : 1'
-      subTarget: nac
-      modifier: untyped
-  tag: classFeat_dragonResistances
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!zRjCUXkADqaG0hXj'
+  tag: classFeat_dragonResistances
+type: feat
 

@@ -1,8 +1,30 @@
 _id: oQ7j3DzDCogrBn3T
-name: Crystal Ball (Normal)
-type: consumable
+_key: '!items!oQ7j3DzDCogrBn3T'
 img: icons/commodities/gems/pearl-glass-purple.webp
+name: Crystal Ball (Normal)
 system:
+  actions:
+    - _id: xm91s5lks48aksup
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@item.cl'
+      img: icons/commodities/gems/pearl-glass-purple.webp
+      name: Use
+      range:
+        units: seeText
+      save:
+        dc: 10[Base] + 4[SL] + 2[CAM]
+        description: Will negates
+        type: will
+  aura:
+    school: div
+  cl: 10
   description:
     value: >-
       <p>This is the most common form of scrying device, a crystal sphere about
@@ -16,33 +38,11 @@ system:
       resist its power decreases by 1 for each additional use. Certain crystal
       balls have additional powers that can be used through the crystal ball on
       the target viewed.</p>
-  weight:
-    value: 7
   price: 42000
+  subType: misc
   unidentified:
     name: Crystal Ball
-  cl: 10
-  aura:
-    school: div
-  actions:
-    - _id: xm91s5lks48aksup
-      name: Use
-      img: icons/commodities/gems/pearl-glass-purple.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@item.cl'
-        units: minute
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        dc: 10[Base] + 4[SL] + 2[CAM]
-        type: will
-        description: Will negates
-  subType: misc
-_key: '!items!oQ7j3DzDCogrBn3T'
+  weight:
+    value: 7
+type: consumable
 

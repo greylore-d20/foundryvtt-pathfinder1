@@ -1,8 +1,24 @@
 _id: YsQWBe3dRvwnCHwU
-name: Evil Eye (BLO)
-type: feat
+_key: '!items!YsQWBe3dRvwnCHwU'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Evil Eye (BLO)
 system:
+  abilityType: su
+  actions:
+    - _id: 2bq9x4xz0hnbywmt
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 1st level, you can curse an opponent with a wicked glance. As a
@@ -12,23 +28,7 @@ system:
       can negate this effect with a successful Will saving throw (DC = 10 + half
       your bloodrager level + your Charisma modifier). You can use this ability
       a number of times per day equal to 3 + your Charisma modifier.</p>
-  actions:
-    - _id: 2bq9x4xz0hnbywmt
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_evilEyeBlo
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!YsQWBe3dRvwnCHwU'
+  tag: classFeat_evilEyeBlo
+type: feat
 

@@ -1,8 +1,38 @@
 _id: 2FTfKnrHp20G4j8l
-name: Siabrae
-type: feat
+_key: '!items!2FTfKnrHp20G4j8l'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Siabrae
 system:
+  changes:
+    - _id: yz53naur
+      formula: '(@ac.natural.total >= 10) ? 0 : (10 - @ac.natural.total)'
+      modifier: untyped
+      subTarget: nac
+    - _id: 355oedq0
+      formula: '2'
+      modifier: untyped
+      subTarget: str
+    - _id: buia6naf
+      formula: '2'
+      modifier: untyped
+      subTarget: wis
+    - _id: 5iyvx1fn
+      formula: '2'
+      modifier: untyped
+      subTarget: cha
+    - _id: diibrc1u
+      formula: '8'
+      modifier: racial
+      subTarget: skill.sen
+    - _id: hdne6e5c
+      formula: '8'
+      modifier: racial
+      subTarget: skill.per
+    - _id: etrqx19t
+      formula: '8'
+      modifier: racial
+      subTarget: skill.ste
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -101,36 +131,6 @@ system:
       Feats: A siabrae gains <a
       href="https://aonprd.com/FeatDisplay.aspx?ItemName=Toughness">Toughness</a>
       as a bonus feat.</p>
-  changes:
-    - _id: yz53naur
-      formula: '(@ac.natural.total >= 10) ? 0 : (10 - @ac.natural.total)'
-      subTarget: nac
-      modifier: untyped
-    - _id: 355oedq0
-      formula: '2'
-      subTarget: str
-      modifier: untyped
-    - _id: buia6naf
-      formula: '2'
-      subTarget: wis
-      modifier: untyped
-    - _id: 5iyvx1fn
-      formula: '2'
-      subTarget: cha
-      modifier: untyped
-    - _id: diibrc1u
-      formula: '8'
-      subTarget: skill.sen
-      modifier: racial
-    - _id: hdne6e5c
-      formula: '8'
-      subTarget: skill.per
-      modifier: racial
-    - _id: etrqx19t
-      formula: '8'
-      subTarget: skill.ste
-      modifier: racial
   subType: template
-  crOffset: '2'
-_key: '!items!2FTfKnrHp20G4j8l'
+type: feat
 

@@ -1,8 +1,30 @@
 _id: 68acsi5rli5t9mef
-name: Unconscious Agenda
-type: spell
+_key: '!items!68acsi5rli5t9mef'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unconscious Agenda
 system:
+  actions:
+    - _id: cjb52gf93wgag6nt
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 week/level or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: One humanoid
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell plants a subconscious directive in the target's mind that
@@ -41,38 +63,16 @@ system:
       <em>limited wish</em>, <em>remove curse</em>, <em>miracle</em>, or
       <em>wish</em>. <em>Dispel magic</em> does not affect <em>unconscious
       agenda</em>.</p>
-  actions:
-    - _id: cjb52gf93wgag6nt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 week/level or until discharged (D)
-      target:
-        value: One humanoid
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 6
-      witch: 6
       inquisitor: 6
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: enc
   subschool: compulsion
   types: language-dependent, mind-affecting
-  components:
-    verbal: true
-_key: '!items!68acsi5rli5t9mef'
+type: spell
 

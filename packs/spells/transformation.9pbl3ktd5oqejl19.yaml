@@ -1,8 +1,27 @@
 _id: 9pbl3ktd5oqejl19
-name: Transformation
-type: spell
+_key: '!items!9pbl3ktd5oqejl19'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transformation
 system:
+  actions:
+    - _id: 6qyv6xrei2idn59i
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You become a fighting machine- stronger, tougher, faster, and more
@@ -15,48 +34,29 @@ system:
       spellcasting ability, including your ability to use spell activation or
       spell completion magic items, just as if the spells were no longer on your
       class list.</p>
-  actions:
-    - _id: 6qyv6xrei2idn59i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      alchemist: 6
-      witch: 6
-      magus: 6
-      psychic: 6
-      occultist: 6
-      spiritualist: 6
     bloodline:
       Abyssal: 6
       Boreal: 6
       Orc: 6
+    class:
+      alchemist: 6
+      magus: 6
+      occultist: 6
+      psychic: 6
+      sorcerer: 6
+      spiritualist: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       a potion of bull's strength, which you drink and whose effects are
       subsumed by the spell effects
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: 360-361
-_key: '!items!9pbl3ktd5oqejl19'
+  sr: false
+type: spell
 

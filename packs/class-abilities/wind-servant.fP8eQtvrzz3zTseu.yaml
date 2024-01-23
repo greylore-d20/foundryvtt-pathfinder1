@@ -1,8 +1,21 @@
 _id: fP8eQtvrzz3zTseu
-name: Wind Servant
-type: feat
+_key: '!items!fP8eQtvrzz3zTseu'
 img: systems/pf1/icons/spells/air-burst-sky-1.jpg
+name: Wind Servant
 system:
+  abilityType: sp
+  actions:
+    - _id: yech5wqu8mgmqs8g
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/air-burst-sky-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a <em>standard action</em>, you can generate a blast of air that
@@ -15,23 +28,10 @@ system:
       you must succeed at a ranged <em>touch attack</em>. You can use this
       ability a number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: yech5wqu8mgmqs8g
-      name: Use
-      img: systems/pf1/icons/spells/air-burst-sky-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_windServant
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!fP8eQtvrzz3zTseu'
+  tag: classFeat_windServant
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

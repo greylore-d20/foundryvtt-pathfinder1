@@ -1,8 +1,29 @@
 _id: 9tvqcy1hqdmawdo2
-name: Jatembe's Ire
-type: spell
+_key: '!items!9tvqcy1hqdmawdo2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Jatembe's Ire
 system:
+  actions:
+    - _id: 80uwgwnkq0s2xvfy
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 120-ft.-radius spread
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '120'
+        type: circle
+      name: Use
+      range:
+        units: medium
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The scholars of the Magaambya claim that Old-Mage Jatembe developed
@@ -23,38 +44,17 @@ system:
       these attacks, and the tendrils deal 4d6+13 points of damage on each
       successful attack. Creatures that lack evil auras are not attacked or
       impeded by this spell.</p>
-  actions:
-    - _id: 80uwgwnkq0s2xvfy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '120'
-      area: 120-ft.-radius spread
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       druid: 6
       hunter: 6
+      sorcerer: 6
+      wizard: 6
   level: 6
-  school: trs
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: octopus or squid tentacle
+  school: trs
   sr: false
-_key: '!items!9tvqcy1hqdmawdo2'
+  types: good
+type: spell
 

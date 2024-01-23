@@ -1,8 +1,28 @@
 _id: LmTAiXHRPsujTlKC
-name: Masquerade
-type: feat
+_key: '!items!LmTAiXHRPsujTlKC'
 img: systems/pf1/icons/items/jewelry/ring-orange.jpg
+name: Masquerade
 system:
+  abilityType: sp
+  actions:
+    - _id: 53g0es07d1yggn41
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: 10 * @classes.occultist.level
+      img: systems/pf1/icons/items/jewelry/ring-orange.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can expend 1 point of mental focus to take on
@@ -21,27 +41,7 @@ system:
       mental focus.</p>
 
       <p>You must be at least 7th level to select this focus power.</p>
-  actions:
-    - _id: 53g0es07d1yggn41
-      name: Use
-      img: systems/pf1/icons/items/jewelry/ring-orange.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 * @classes.occultist.level
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_masquerade
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!LmTAiXHRPsujTlKC'
+  tag: classFeat_masquerade
+type: feat
 

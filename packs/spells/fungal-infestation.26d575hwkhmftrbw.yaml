@@ -1,19 +1,11 @@
 _id: 26d575hwkhmftrbw
-name: Fungal Infestation
-type: spell
+_key: '!items!26d575hwkhmftrbw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fungal Infestation
 system:
-  description:
-    value: >-
-      <p>You coat the target in necrotic fungus that makes its flesh soft and
-      fragile. Toadstools, ringworm, and other disgusting fungal growths sprout
-      from its skin. The target takes 1d3 points of Charisma damage. Any
-      physical attack against the target automatically adds 1d6 points of bleed
-      damage.</p>
   actions:
     - _id: 7cd2w0h5mzsh8ym6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,14 +13,25 @@ system:
           type: action
       duration:
         value: 1d3 days
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You coat the target in necrotic fungus that makes its flesh soft and
+      fragile. Toadstools, ringworm, and other disgusting fungal growths sprout
+      from its skin. The target takes 1d3 points of Charisma damage. Any
+      physical attack against the target automatically adds 1d6 points of bleed
+      damage.</p>
   learnedAt:
     class:
       druid: 3
@@ -36,8 +39,5 @@ system:
   level: 3
   school: nec
   types: disease
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!26d575hwkhmftrbw'
+type: spell
 

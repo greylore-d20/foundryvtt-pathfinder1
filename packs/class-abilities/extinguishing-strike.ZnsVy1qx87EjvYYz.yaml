@@ -1,8 +1,29 @@
 _id: ZnsVy1qx87EjvYYz
-name: Extinguishing Strike
-type: feat
+_key: '!items!ZnsVy1qx87EjvYYz'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Extinguishing Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: ysQ2r3Dl1tNVYvB2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      duration:
+        value: instantaneous
+      img: icons/magic/symbols/runes-star-orange-purple.webp
+      name: Dispel magical light
+      target:
+        value: one magical light
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
   description:
     value: >-
       <p>When a character with this talent hits a creature with a melee attack
@@ -13,40 +34,19 @@ system:
       @UUID[Compendium.pf1.spells.Item.gmgwyjfpeuuc4t4o]{dispel magic}) against
       any magical sources of light a target carries, using her character level
       as the caster level.</p>
+  source:
+    id: PZO9466
+    pages: '8'
+  subType: classFeat
+  tag: classFeat_extinguishingStrike
   tags:
     - Rogue Talent
     - Slayer Talent
     - Ninja Trick
     - Sneak Attack
-  actions:
-    - _id: ysQ2r3Dl1tNVYvB2
-      name: Dispel magical light
-      img: icons/magic/symbols/runes-star-orange-purple.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one magical light
-      ammoType: none
   uses:
+    maxFormula: '1'
     per: day
     value: 1
-    maxFormula: '1'
-  tag: classFeat_extinguishingStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Slayer
-      - Ninja
-  abilityType: ex
-  source:
-    id: PZO9466
-    pages: '8'
-_key: '!items!ZnsVy1qx87EjvYYz'
+type: feat
 

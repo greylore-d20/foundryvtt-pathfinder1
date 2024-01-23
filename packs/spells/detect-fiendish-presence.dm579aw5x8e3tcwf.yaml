@@ -1,8 +1,29 @@
 _id: dm579aw5x8e3tcwf
-name: Detect Fiendish Presence
-type: spell
+_key: '!items!dm579aw5x8e3tcwf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Detect Fiendish Presence
 system:
+  actions:
+    - _id: yn94ta17h9l7l9o2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>detect evil</i>, except that it detects
@@ -10,40 +31,19 @@ system:
       caused by their gifts, presence, and spells. It can also detect clerics
       and paladins of fiendish deities, including Asmodeus, archdevils, daemonic
       harbingers, and demon lords.</p>
-  actions:
-    - _id: yn94ta17h9l7l9o2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 10 minutes/level (D)
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      cleric: 0
-      oracle: 0
       bard: 0
-      witch: 0
+      cleric: 0
       magus: 0
+      oracle: 0
+      sorcerer: 0
+      witch: 0
+      wizard: 0
   level: 0
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!dm579aw5x8e3tcwf'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

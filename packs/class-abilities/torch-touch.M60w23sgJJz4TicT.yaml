@@ -1,8 +1,25 @@
 _id: M60w23sgJJz4TicT
-name: Torch Touch
-type: feat
+_key: '!items!M60w23sgJJz4TicT'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Torch Touch
 system:
+  abilityType: su
+  actions:
+    - _id: 0l64pjt6l125x0an
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      target:
+        value: nonmagical light source
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a move action, you can alter the amount of light shed by any
@@ -20,24 +37,7 @@ system:
       everburning torch. If a creature is holding the light source you are
       trying to affect, the creature can attempt a Reflex save to avoid the
       effect.</p>
-  actions:
-    - _id: 0l64pjt6l125x0an
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      target:
-        value: nonmagical light source
-      range:
-        value: '60'
-        units: ft
-  tag: classFeat_torchTouch
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!M60w23sgJJz4TicT'
+  tag: classFeat_torchTouch
+type: feat
 

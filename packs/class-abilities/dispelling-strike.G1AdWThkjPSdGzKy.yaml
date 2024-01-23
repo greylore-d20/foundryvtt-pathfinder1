@@ -1,8 +1,23 @@
 _id: G1AdWThkjPSdGzKy
-name: Dispelling Strike
-type: feat
+_key: '!items!G1AdWThkjPSdGzKy'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Dispelling Strike
 system:
+  abilityType: su
+  actions:
+    - _id: esqt0sh1y988oq86
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can spend 1 or more points from his arcane pool as a swift
@@ -17,22 +32,7 @@ system:
       unsuccessful.</p>
 
       <p>The magus must be at least 9th level before selecting.</p>
-  actions:
-    - _id: esqt0sh1y988oq86
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-  tag: classFeat_dispellingStrike
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!G1AdWThkjPSdGzKy'
+  tag: classFeat_dispellingStrike
+type: feat
 

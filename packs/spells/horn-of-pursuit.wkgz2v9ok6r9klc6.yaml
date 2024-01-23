@@ -1,19 +1,10 @@
 _id: wkgz2v9ok6r9klc6
-name: Horn of Pursuit
-type: spell
+_key: '!items!wkgz2v9ok6r9klc6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Horn of Pursuit
 system:
-  description:
-    value: >-
-      <p>You create the sound of a large hunting horn, blowing up to three notes
-      as loud as a roaring dragon. These notes can be heard up to 2 miles away
-      in typical outdoor conditions.</p><p>You can make these sounds at any
-      point during the spell's duration as a free action, and each sounding can
-      be short or long, allowing you to send very simple coded messages.</p>
   actions:
     - _id: m47gy1i9sggqxs2t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,20 +12,29 @@ system:
           type: action
       duration:
         value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
       spellEffect: 3 peals of a horn
-  learnedAt:
-    class:
-      ranger: 1
-      bard: 1
-      paladin: 1
-      inquisitor: 1
-      hunter: 1
-  school: evo
-  types: sonic
   components:
     somatic: true
+  description:
+    value: >-
+      <p>You create the sound of a large hunting horn, blowing up to three notes
+      as loud as a roaring dragon. These notes can be heard up to 2 miles away
+      in typical outdoor conditions.</p><p>You can make these sounds at any
+      point during the spell's duration as a free action, and each sounding can
+      be short or long, allowing you to send very simple coded messages.</p>
+  learnedAt:
+    class:
+      bard: 1
+      hunter: 1
+      inquisitor: 1
+      paladin: 1
+      ranger: 1
+  school: evo
   sr: false
-_key: '!items!wkgz2v9ok6r9klc6'
+  types: sonic
+type: spell
 

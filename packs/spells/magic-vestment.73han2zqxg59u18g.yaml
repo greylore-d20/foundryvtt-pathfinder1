@@ -1,18 +1,11 @@
 _id: 73han2zqxg59u18g
-name: Magic Vestment
-type: spell
+_key: '!items!73han2zqxg59u18g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magic Vestment
 system:
-  description:
-    value: >-
-      <p>You imbue a suit of armor or a shield with an enhancement bonus of +1
-      per four caster levels (maximum +5 at 20th level).</p><p>An outfit of
-      regular clothing counts as armor that grants no AC bonus for the purpose
-      of this spell.</p>
   actions:
     - _id: 5s7kdguqrsxp5jvd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,35 +13,42 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: armor or shield touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: armor or shield touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You imbue a suit of armor or a shield with an enhancement bonus of +1
+      per four caster levels (maximum +5 at 20th level).</p><p>An outfit of
+      regular clothing counts as armor that grants no AC bonus for the purpose
+      of this spell.</p>
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
       inquisitor: 3
-      shaman: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      warpriest: 3
     domain:
       Nobility: 3
       Strength: 3
       War: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '310'
-_key: '!items!73han2zqxg59u18g'
+type: spell
 

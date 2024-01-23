@@ -1,16 +1,11 @@
 _id: mku1agyg64jjkh3e
-name: Debilitating Pain, Mass
-type: spell
+_key: '!items!mku1agyg64jjkh3e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Debilitating Pain, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as per <i>debilitating pain</i>, except you can
-      target one creature for every 4 caster levels you have.</p>
   actions:
     - _id: p43r49tz6vfsg31w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,24 +13,29 @@ system:
           type: action
       duration:
         value: 1 round/3 levels
-      target:
-        value: one creature/4 levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will partial (see text)
+        type: will
+      target:
+        value: one creature/4 levels
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as per <i>debilitating pain</i>, except you can
+      target one creature for every 4 caster levels you have.</p>
   learnedAt:
     class:
-      witch: 5
       psychic: 5
+      witch: 5
   level: 5
   school: enc
   subschool: compulsion
   types: mind-affecting, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mku1agyg64jjkh3e'
+type: spell
 

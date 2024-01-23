@@ -1,8 +1,29 @@
 _id: F6D6MV5q8BOjiCTU
-name: Freedom's Call
-type: feat
+_key: '!items!F6D6MV5q8BOjiCTU'
 img: systems/pf1/icons/skills/red_10.jpg
+name: Freedom's Call
 system:
+  abilityType: su
+  actions:
+    - _id: 43qjdxwntxkhqsv3
+      activation:
+        type: standard
+        unchained:
+          type: standard
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_10.jpg
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      target:
+        value: allies in range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura of freedom for a number of
@@ -11,34 +32,13 @@ system:
       pinned, or shaken conditions. This aura only suppresses these effects, and
       they return once a creature leaves the aura or when the aura ends, if
       applicable. These rounds do not need to be consecutive.</p>
-  actions:
-    - _id: 43qjdxwntxkhqsv3
-      name: Use
-      img: systems/pf1/icons/skills/red_10.jpg
-      activation:
-        type: standard
-        unchained:
-          type: standard
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: allies in range
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_freedomsCall
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '45'
-_key: '!items!F6D6MV5q8BOjiCTU'
+  subType: classFeat
+  tag: classFeat_freedomsCall
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

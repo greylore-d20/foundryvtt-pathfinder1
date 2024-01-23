@@ -1,19 +1,11 @@
 _id: srf30i1q2vec40k4
-name: Cackling Skull
-type: spell
+_key: '!items!srf30i1q2vec40k4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cackling Skull
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>magic mouth</i>, except rather than creating
-      an illusory mouth on any surface, it affects a skull.</p><p>In addition,
-      when the skull's magic is triggered, it releases wild and unnerving
-      cackles before speaking its message.</p><p>All creatures that can hear the
-      cackles must save or become shaken for 1d4 rounds.</p>
   actions:
     - _id: 99snm1uiodq8donj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,22 +13,30 @@ system:
           type: action
       duration:
         value: permanent until discharged
-      target:
-        value: one skull
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one skull
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>magic mouth</i>, except rather than creating
+      an illusory mouth on any surface, it affects a skull.</p><p>In addition,
+      when the skull's magic is triggered, it releases wild and unnerving
+      cackles before speaking its message.</p><p>All creatures that can hear the
+      cackles must save or become shaken for 1d4 rounds.</p>
   learnedAt:
     class:
       witch: 3
   level: 3
   school: ill
   subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!srf30i1q2vec40k4'
+type: spell
 

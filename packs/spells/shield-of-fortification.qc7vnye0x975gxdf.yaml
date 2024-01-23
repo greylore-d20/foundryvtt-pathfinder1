@@ -1,8 +1,32 @@
 _id: qc7vnye0x975gxdf
-name: Shield of Fortification
-type: spell
+_key: '!items!qc7vnye0x975gxdf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield of Fortification
 system:
+  actions:
+    - _id: uwejsnmorz8hbe0b
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a magical barrier that protects a target's vital areas. When
@@ -11,39 +35,15 @@ system:
       instead rolled normally.</p><p>This benefit does not stack with other
       effects that can turn critical hits or sneak attacks into normal attacks,
       such as the <i>fortification</i> armor special ability.</p>
-  actions:
-    - _id: uwejsnmorz8hbe0b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
+      inquisitor: 1
       oracle: 2
       paladin: 1
-      inquisitor: 1
       psychic: 2
+      warpriest: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!qc7vnye0x975gxdf'
+type: spell
 

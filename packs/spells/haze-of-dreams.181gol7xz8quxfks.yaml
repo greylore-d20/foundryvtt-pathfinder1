@@ -1,8 +1,30 @@
 _id: 181gol7xz8quxfks
-name: Haze of Dreams
-type: spell
+_key: '!items!181gol7xz8quxfks'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Haze of Dreams
 system:
+  actions:
+    - _id: fv0hvahjrn7f0suy
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You fill an enemy's head with waking dreams, a reminder of the
@@ -12,44 +34,22 @@ system:
       distance as normal for decreased speed.</p><p>Multiple <i>Haze of
       Dreams</i> effects do not stack, nor does this spell's effect stack with
       <i>slow</i>.</p>
-  actions:
-    - _id: fv0hvahjrn7f0suy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
-      paladin: 1
-      witch: 1
+      cleric: 1
       inquisitor: 1
-  school: enc
-  subschool: charm
-  types: emotion, mind-affecting
-  components:
-    verbal: true
-    material: true
+      oracle: 1
+      paladin: 1
+      warpriest: 1
+      witch: 1
   materials:
     value: pinch of sand
+  school: enc
   source:
     id: PZO9267
     pages: '235'
-_key: '!items!181gol7xz8quxfks'
+  subschool: charm
+  types: emotion, mind-affecting
+type: spell
 

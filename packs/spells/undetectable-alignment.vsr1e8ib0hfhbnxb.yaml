@@ -1,16 +1,11 @@
 _id: vsr1e8ib0hfhbnxb
-name: Undetectable Alignment
-type: spell
+_key: '!items!vsr1e8ib0hfhbnxb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Undetectable Alignment
 system:
-  description:
-    value: >-
-      <p>An <i>undetectable alignment</i> spell conceals the alignment of an
-      object or a creature from all forms of divination.</p>
   actions:
     - _id: m5vrxag3szal2sbq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 24 hours
-      target:
-        value: one creature or object
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
+        type: will
+      target:
+        value: one creature or object
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>An <i>undetectable alignment</i> spell conceals the alignment of an
+      object or a creature from all forms of divination.</p>
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      bard: 1
-      paladin: 2
       alchemist: 2
-      inquisitor: 2
       antipaladin: 2
-      psychic: 2
+      bard: 1
+      cleric: 2
+      inquisitor: 2
       mesmerist: 1
+      oracle: 2
+      paladin: 2
+      psychic: 2
+      warpriest: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vsr1e8ib0hfhbnxb'
+type: spell
 

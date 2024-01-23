@@ -1,8 +1,30 @@
 _id: 6d4s6bh9ndvwnlvn
-name: Spellcrash, Lesser
-type: spell
+_key: '!items!6d4s6bh9ndvwnlvn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spellcrash, Lesser
 system:
+  actions:
+    - _id: 5mp59e4eaqpwm8fb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a discordant blast of energy that disrupts the target's
@@ -23,38 +45,16 @@ system:
       to cast it-the spell or the spell slot is wasted and has no effect, but is
       recovered normally the next time the character prepares spells or regains
       spell slots.</p>
-  actions:
-    - _id: 5mp59e4eaqpwm8fb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
       oracle: 4
-      witch: 4
       psychic: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!6d4s6bh9ndvwnlvn'
+type: spell
 

@@ -1,8 +1,28 @@
 _id: RC4D4WFT5kRKkdqp
-name: Witch
-type: class
+_key: '!items!RC4D4WFT5kRKkdqp'
 img: systems/pf1/icons/skills/affliction_21.jpg
+name: Witch
 system:
+  casting:
+    ability: int
+    domain: 0
+    progression: high
+    spells: arcane
+    type: prepared
+  classSkills:
+    art: true
+    crf: true
+    fly: true
+    hea: true
+    int: true
+    kar: true
+    khi: true
+    kna: true
+    kpl: true
+    lor: true
+    pro: true
+    spl: true
+    umd: true
   description:
     value: >-
       <p>Some gain power through study, some through devotion, others through
@@ -41,49 +61,29 @@ system:
       (<em>Int</em>), and <em>Use Magic Device</em> (<em>Cha</em>).</p>
 
       <p><b>Skill Ranks per Level</b>: 2 + <em>Int</em> modifier.</p>
+  hd: 6
+  hp: 6
   links:
     classAssociations:
-      - name: Hex
-        level: 1
+      - level: 1
+        name: Hex
         uuid: Compendium.pf1.class-abilities.GBkIhC1Bpp2MAD4e
-      - name: Witch's Familiar
-        level: 1
+      - level: 1
+        name: Witch's Familiar
         uuid: Compendium.pf1.class-abilities.3d9Rgw40NV8ohRtf
-      - name: Major Hex
-        level: 10
+      - level: 10
+        name: Major Hex
         uuid: Compendium.pf1.class-abilities.aZ5eCIRrsvax5CZZ
-      - name: Grand Hex
-        level: 18
+      - level: 18
+        name: Grand Hex
         uuid: Compendium.pf1.class-abilities.IMhG1JjaWP6p9ORe
+  savingThrows:
+    will:
+      value: high
+  skillsPerLevel: 2
   tag: witch
   weaponProf:
     value:
       - simple
-  hd: 6
-  hp: 6
-  skillsPerLevel: 2
-  savingThrows:
-    will:
-      value: high
-  classSkills:
-    art: true
-    crf: true
-    fly: true
-    hea: true
-    int: true
-    kar: true
-    khi: true
-    kna: true
-    kpl: true
-    lor: true
-    pro: true
-    spl: true
-    umd: true
-  casting:
-    type: prepared
-    progression: high
-    ability: int
-    spells: arcane
-    domain: 0
-_key: '!items!RC4D4WFT5kRKkdqp'
+type: class
 

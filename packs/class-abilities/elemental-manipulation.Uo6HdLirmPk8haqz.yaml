@@ -1,8 +1,23 @@
 _id: Uo6HdLirmPk8haqz
-name: Elemental Manipulation
-type: feat
+_key: '!items!Uo6HdLirmPk8haqz'
 img: systems/pf1/icons/spells/air-burst-sky-2.jpg
+name: Elemental Manipulation
 system:
+  abilityType: su
+  actions:
+    - _id: owf5vg4c9mmu603j
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/air-burst-sky-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura that transforms magical
@@ -18,25 +33,10 @@ system:
       the aura are transformed. You can use this ability for a number of rounds
       per day equal to your wizard level. The rounds do not need to be
       consecutive.</p>
-  actions:
-    - _id: owf5vg4c9mmu603j
-      name: Use
-      img: systems/pf1/icons/spells/air-burst-sky-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.wizard.level'
-  tag: classFeat_elementalManipulation
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!Uo6HdLirmPk8haqz'
+  tag: classFeat_elementalManipulation
+  uses:
+    maxFormula: '@classes.wizard.level'
+    per: day
+type: feat
 

@@ -1,19 +1,10 @@
 _id: g2nrn75rqxt1alcl
-name: Bladed Dash, Greater
-type: spell
+_key: '!items!g2nrn75rqxt1alcl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bladed Dash, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.vdmgs1xvnnobtg9y]{bladed dash}, save that you can
-      make a single melee attack against every creature you pass during the 30
-      feet of your dash. You cannot attack an individual creature more than once
-      with spell.</p>
   actions:
     - _id: l62lb3wrljfw1um5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,18 +12,27 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.vdmgs1xvnnobtg9y]{bladed dash}, save that you can
+      make a single melee attack against every creature you pass during the 30
+      feet of your dash. You cannot attack an individual creature more than once
+      with spell.</p>
   learnedAt:
     class:
       bard: 5
       magus: 5
   level: 5
   school: trs
-  components:
-    verbal: true
   sr: false
-_key: '!items!g2nrn75rqxt1alcl'
+type: spell
 

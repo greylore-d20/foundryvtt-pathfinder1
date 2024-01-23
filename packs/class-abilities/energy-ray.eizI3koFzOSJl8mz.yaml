@@ -1,8 +1,38 @@
 _id: eizI3koFzOSJl8mz
-name: Energy Ray
-type: feat
+_key: '!items!eizI3koFzOSJl8mz'
 img: systems/pf1/icons/items/weapons/lantern-staff.png
+name: Energy Ray
 system:
+  abilityType: sp
+  actions:
+    - _id: m6qj03exbzh7k6zk
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.occultist.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/weapons/lantern-staff.png
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action that provokes attacks of opportunity, you can
@@ -14,37 +44,7 @@ system:
 
       <p>When you unleash an energy ray, you must decide what type of damage it
       deals (acid, cold, electricity, or fire).</p>
-  actions:
-    - _id: m6qj03exbzh7k6zk
-      name: Use
-      img: systems/pf1/icons/items/weapons/lantern-staff.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (ceil(@classes.occultist.level / 2))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: dex
-  tag: classFeat_energyRay
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!eizI3koFzOSJl8mz'
+  tag: classFeat_energyRay
+type: feat
 

@@ -1,8 +1,27 @@
 _id: xskplzbnmivk1nnl
-name: Follow Aura
-type: spell
+_key: '!items!xskplzbnmivk1nnl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Follow Aura
 system:
+  actions:
+    - _id: 1nqaa5lf4bu58ynz
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Choose one alignment type: chaotic, evil, good, or lawful. You gain the
@@ -15,32 +34,13 @@ system:
       well.</p><p>When you use this spell to track a given alignment, it gains
       the descriptor of the opposite alignment. For example, when <i>follow
       aura</i> is used to track evil, it gains the good descriptor.</p>
-  actions:
-    - _id: 1nqaa5lf4bu58ynz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       inquisitor: 2
       occultist: 3
   level: 2
   school: div
-  types: chaotic, evil, good, or lawful
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!xskplzbnmivk1nnl'
+  types: chaotic, evil, good, or lawful
+type: spell
 

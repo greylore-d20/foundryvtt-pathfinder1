@@ -1,8 +1,30 @@
 _id: os0fjza0vpbkro5r
-name: Abyssal Vermin
-type: spell
+_key: '!items!os0fjza0vpbkro5r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Abyssal Vermin
 system:
+  actions:
+    - _id: d3dpr69rgzp8i543
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates (see text)
+        type: fort
+      target:
+        value: one vermin or vermin swarm
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You infuse the target with power from the Abyss, granting it the
@@ -16,38 +38,16 @@ system:
       dead). If the targeted vermin is under your command, it automatically
       fails its saving throw against this spell. This spell has no effect on
       vermin that already have the fiendish creature simple template.</p>
-  actions:
-    - _id: d3dpr69rgzp8i543
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one vermin or vermin swarm
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (see text)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      witch: 4
       antipaladin: 2
+      cleric: 4
+      oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!os0fjza0vpbkro5r'
+type: spell
 

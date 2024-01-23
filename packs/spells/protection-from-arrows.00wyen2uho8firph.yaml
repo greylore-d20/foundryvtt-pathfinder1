@@ -1,19 +1,11 @@
 _id: 00wyen2uho8firph
-name: Protection from Arrows
-type: spell
+_key: '!items!00wyen2uho8firph'
 img: icons/magic/defensive/shield-barrier-deflect-teal.webp
+name: Protection from Arrows
 system:
-  description:
-    value: >-
-      <p>The warded creature gains resistance to ranged weapons.</p><p>The
-      subject gains damage reduction 10/magic against ranged weapons. This spell
-      doesn't grant you the ability to damage creatures with similar damage
-      reduction. Once the spell has prevented a total of 10 points of damage per
-      caster level (maximum 100 points), it is discharged.</p>
   actions:
     - _id: p2biyolt75pirmsn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,35 +13,43 @@ system:
           type: action
       duration:
         value: 1 hour/level or until discharged
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The warded creature gains resistance to ranged weapons.</p><p>The
+      subject gains damage reduction 10/magic against ranged weapons. This spell
+      doesn't grant you the ability to damage creatures with similar damage
+      reduction. Once the spell has prevented a total of 10 points of damage per
+      caster level (maximum 100 points), it is discharged.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       alchemist: 2
-      summoner: 2
       bloodrager: 2
       psychic: 2
+      sorcerer: 2
       spiritualist: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a piece of tortoiseshell or turtle shell
+  school: abj
   source:
     id: PZO1110
     pages: '327'
-_key: '!items!00wyen2uho8firph'
+type: spell
 

@@ -1,8 +1,29 @@
 _id: 9kzk4UPBCJXDFElH
-name: Gale Aura
-type: feat
+_key: '!items!9kzk4UPBCJXDFElH'
 img: systems/pf1/icons/spells/wind-sky-2.jpg
+name: Gale Aura
 system:
+  abilityType: su
+  actions:
+    - _id: 2r2cbaallyopz0wj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/wind-sky-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: anamies within range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 6th level, as a standard action, you can create a 30-foot aura of
@@ -14,31 +35,10 @@ system:
       consecutive.</p>
 
       <p>This power replaces the Lightning Lord pwoer of the Weather Domain.</p>
-  actions:
-    - _id: 2r2cbaallyopz0wj
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: anamies within range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_galeAura
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!9kzk4UPBCJXDFElH'
+  tag: classFeat_galeAura
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

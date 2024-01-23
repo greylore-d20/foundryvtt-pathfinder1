@@ -1,8 +1,30 @@
 _id: mlwe19v7suk75jrl
-name: Dream Dalliance
-type: spell
+_key: '!items!mlwe19v7suk75jrl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Dalliance
 system:
+  actions:
+    - _id: 5sievvrj7cdwj94v
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will disbelief, then Will partial (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a comforting phantasm, which leeches onto the psyche of a
@@ -27,37 +49,15 @@ system:
       confronted in its host's mindscape (<i>Pathfinder RPG Occult
       Adventures</i> 202), where it manifests as a slothful duplicate of its
       host with identical abilities, skills, and attributes.</p>
-  actions:
-    - _id: 5sievvrj7cdwj94v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief, then Will partial (see text)
   learnedAt:
     class:
+      mesmerist: 3
+      psychic: 4
       sorcerer: 4
       wizard: 4
-      psychic: 4
-      mesmerist: 3
   level: 4
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mlwe19v7suk75jrl'
+type: spell
 

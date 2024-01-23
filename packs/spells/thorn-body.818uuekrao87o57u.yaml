@@ -1,8 +1,27 @@
 _id: 818uuekrao87o57u
-name: Thorn Body
-type: spell
+_key: '!items!818uuekrao87o57u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thorn Body
 system:
+  actions:
+    - _id: wqeqsidhrwq22vom
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes spines to grow from your exposed skin, damaging
@@ -15,33 +34,14 @@ system:
       an additional 1d6 points of piercing damage.</p><p>Thorns created by this
       spell persist through any new physical shape or form you assume, such as
       via wildshape or any polymorph effect.</p>
-  actions:
-    - _id: wqeqsidhrwq22vom
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      druid: 4
       alchemist: 3
-      shaman: 4
+      druid: 4
       hunter: 4
+      shaman: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!818uuekrao87o57u'
+type: spell
 

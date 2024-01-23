@@ -1,8 +1,30 @@
 _id: suilv5ug3tvbwuh2
-name: Vengeful Outrage
-type: spell
+_key: '!items!suilv5ug3tvbwuh2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vengeful Outrage
 system:
+  actions:
+    - _id: q75oglbjumpff7cw
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You place a magical command upon a creature to seek out and destroy a
@@ -18,39 +40,17 @@ system:
       designate one of the target's friends or loved ones as the enemy, the
       target gains another saving throw to overcome the spell as soon as it
       enters combat with the enemy.</p>
-  actions:
-    - _id: q75oglbjumpff7cw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 5
-      witch: 6
-      psychic: 6
       mesmerist: 5
+      psychic: 6
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: enc
   subschool: compulsion
   types: emotion, language-dependent, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!suilv5ug3tvbwuh2'
+type: spell
 

@@ -1,8 +1,32 @@
 _id: p6irfohhgss1iod5
-name: Ape Walk
-type: spell
+_key: '!items!p6irfohhgss1iod5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ape Walk
 system:
+  actions:
+    - _id: tkwgfc72u8x04w50
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject can climb as well as an ape or monkey, gaining a climb
@@ -12,40 +36,16 @@ system:
       subject can make a long jump of up to 10 feet without making an Acrobatics
       check (an Acrobatics check is still required to jump longer
       distances).</p>
-  actions:
-    - _id: tkwgfc72u8x04w50
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
+      druid: 3
+      hunter: 2
+      ranger: 2
       sorcerer: 3
       wizard: 3
-      druid: 3
-      ranger: 2
-      hunter: 2
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: an ape or monkey paw
-_key: '!items!p6irfohhgss1iod5'
+  school: trs
+type: spell
 

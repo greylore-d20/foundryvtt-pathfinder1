@@ -1,8 +1,50 @@
 _id: 0Buw9MiprFzt0fer
-name: Death Curse
-type: feat
+_key: '!items!0Buw9MiprFzt0fer'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Death Curse
 system:
+  abilityType: su
+  actions:
+    - _id: 0kbn67bzxverz7iw
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+    - _id: IwPZ4JN79aCOXCrP
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 4d6 + @classes.witch.level
+            type:
+              custom: ''
+              values: []
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Third Round
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Fortitude partial
+        type: fort
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>This powerful hex seizes a creature's heart, causing death within just
@@ -17,52 +59,10 @@ system:
       the effect, but any fatigue or exhaustion remains.</p><p>Whether or not
       the saves are successful, a creature cannot be the target of this hex
       again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_deathCurse
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: 0kbn67bzxverz7iw
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one living creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-    - _id: IwPZ4JN79aCOXCrP
-      name: Third Round
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      damage:
-        parts:
-          - formula: 4d6 + @classes.witch.level
-            type:
-              values: []
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: fort
-        description: Fortitude partial
-  tag: classFeat_deathCurse
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!0Buw9MiprFzt0fer'
+type: feat
 

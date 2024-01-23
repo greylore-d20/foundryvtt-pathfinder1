@@ -1,16 +1,10 @@
 _id: 6u2h8k11z8sadrxb
-name: Longshot
-type: spell
+_key: '!items!6u2h8k11z8sadrxb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Longshot
 system:
-  description:
-    value: >-
-      <p>This spell reduces the effect of range, granting a +10-foot bonus to
-      the range increment of any weapon used by the subject.</p>
   actions:
     - _id: 24zclb867r2h3z63
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,34 +12,40 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell reduces the effect of range, granting a +10-foot bonus to
+      the range increment of any weapon used by the subject.</p>
   learnedAt:
     class:
+      alchemist: 1
+      antipaladin: 1
+      hunter: 1
+      inquisitor: 1
+      magus: 1
+      occultist: 1
+      paladin: 1
+      psychic: 1
+      ranger: 1
       sorcerer: 1
       wizard: 1
-      ranger: 1
-      paladin: 1
-      alchemist: 1
-      inquisitor: 1
-      antipaladin: 1
-      magus: 1
-      psychic: 1
-      occultist: 1
-      hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a piece of fletching
-  sr: false
+  school: trs
   source:
     id: PZO1118
     pages: '236'
-_key: '!items!6u2h8k11z8sadrxb'
+  sr: false
+type: spell
 

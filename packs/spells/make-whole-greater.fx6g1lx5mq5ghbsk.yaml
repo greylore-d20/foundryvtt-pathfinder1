@@ -1,8 +1,33 @@
 _id: fx6g1lx5mq5ghbsk
-name: Make Whole, Greater
-type: spell
+_key: '!items!fx6g1lx5mq5ghbsk'
 img: icons/skills/trades/smithing-anvil-silver-red.webp
+name: Make Whole, Greater
 system:
+  actions:
+    - _id: ok17q189gcrbvgd6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '10'
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: one object of up to 5 lb./level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell repairs 1d6 points of damage plus 1 point per level when
@@ -13,42 +38,17 @@ system:
       magic properties of the item if your caster level at least equal to that
       of the item. This spell otherwise functions as
       @Compendium[pf1.spells.x23pz2agjub1eh89]{Make Whole}.</p>
-  actions:
-    - _id: ok17q189gcrbvgd6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one object of up to 5 lb./level
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: '1'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
       oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO9272
     pages: '10'
-_key: '!items!fx6g1lx5mq5ghbsk'
+type: spell
 

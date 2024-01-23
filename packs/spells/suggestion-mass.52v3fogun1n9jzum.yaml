@@ -1,17 +1,11 @@
 _id: 52v3fogun1n9jzum
-name: Suggestion, Mass
-type: spell
+_key: '!items!52v3fogun1n9jzum'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Suggestion, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i><i>suggestion</i>,</i> except that it can
-      affect more creatures. The same <i>suggestion</i> applies to all these
-      creatures.</p>
   actions:
     - _id: irzvhdu3cv7zb3bw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,40 +13,46 @@ system:
           type: action
       duration:
         value: 1 hour/level or until completed
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: medium
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i><i>suggestion</i>,</i> except that it can
+      affect more creatures. The same <i>suggestion</i> applies to all these
+      creatures.</p>
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      bard: 5
-      witch: 6
-      psychic: 5
-      mesmerist: 5
-      occultist: 5
-    subDomain:
-      Innuendo: 6
     bloodline:
       Maestro: 6
       Rakshasa: 6
       Serpentine: 6
+    class:
+      bard: 5
+      mesmerist: 5
+      occultist: 5
+      psychic: 5
+      sorcerer: 6
+      witch: 6
+      wizard: 6
+    subDomain:
+      Innuendo: 6
   level: 6
+  materials:
+    value: a snake's tongue and a honeycomb
   school: enc
   subschool: compulsion
   types: language-dependent, mind-affecting
-  components:
-    verbal: true
-    material: true
-  materials:
-    value: a snake's tongue and a honeycomb
-_key: '!items!52v3fogun1n9jzum'
+type: spell
 

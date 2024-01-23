@@ -1,8 +1,20 @@
 _id: HL5hKsGtgPVuU9UL
-name: Enveloping Winds
-type: feat
+_key: '!items!HL5hKsGtgPVuU9UL'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Enveloping Winds
 system:
+  abilityType: su
+  actions:
+    - _id: 3howv7a8rgk3hkpk
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> defense (Su); <b>Level</b> —;
@@ -25,19 +37,7 @@ system:
       surging through you causes your enveloping winds to also affect
       non-physical ranged attacks such as ray attacks for 1 round. You can
       dismiss or restore this effect as an immediate action.</p>
-  actions:
-    - _id: 3howv7a8rgk3hkpk
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_envelopingWinds
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-_key: '!items!HL5hKsGtgPVuU9UL'
+  tag: classFeat_envelopingWinds
+type: feat
 

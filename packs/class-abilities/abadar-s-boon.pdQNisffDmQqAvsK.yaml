@@ -1,8 +1,27 @@
 _id: pdQNisffDmQqAvsK
-name: Abadar's Boon
-type: feat
+_key: '!items!pdQNisffDmQqAvsK'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Abadar's Boon
 system:
+  abilityType: sp
+  actions:
+    - _id: u8vwsde0ynp9rla9
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: masterwork weapon held
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can spend 1 minute meditating on and communing with a masterwork
@@ -15,29 +34,10 @@ system:
       <p>You can speak with items in this way for a number of minutes equal to
       your oracle level. This duration does not need to be consecutive, but it
       must be used in 1-minute increments.</p>
-  actions:
-    - _id: u8vwsde0ynp9rla9
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: masterwork weapon held
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_abadarsBoon
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!pdQNisffDmQqAvsK'
+  tag: classFeat_abadarsBoon
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

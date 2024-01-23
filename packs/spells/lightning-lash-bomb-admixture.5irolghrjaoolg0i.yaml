@@ -1,8 +1,29 @@
 _id: 5irolghrjaoolg0i
-name: Lightning Lash Bomb Admixture
-type: spell
+_key: '!items!5irolghrjaoolg0i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lightning Lash Bomb Admixture
 system:
+  actions:
+    - _id: bekxk74phd4r0ds1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: special, see below
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon drinking an extract created with this formula, you make a
@@ -20,33 +41,12 @@ system:
       electrical damage each time they take a move action to move more than 5
       feet for the duration of the effect. This effect does not ignore spell
       resistance.</p>
-  actions:
-    - _id: bekxk74phd4r0ds1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: special, see below
   learnedAt:
     class:
       alchemist: 3
   level: 3
   school: evo
-  types: electricity
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!5irolghrjaoolg0i'
+  types: electricity
+type: spell
 

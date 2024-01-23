@@ -1,17 +1,10 @@
 _id: jeprfz4gkuo8fiud
-name: Animate Dead, Lesser
-type: spell
+_key: '!items!jeprfz4gkuo8fiud'
 img: icons/magic/death/skull-humanoid-white-blue.webp
+name: Animate Dead, Lesser
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>animate dead</i>, except you can only create
-      a single Small or Medium skeleton or zombie. You cannot create variant
-      skeletons or zombies with this spell.</p>
   actions:
     - _id: 7va1fp1vl3snopi4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,29 +12,36 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one corpse
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: one corpse
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>animate dead</i>, except you can only create
+      a single Small or Medium skeleton or zombie. You cannot create variant
+      skeletons or zombies with this spell.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 2
-      warpriest: 2
+      occultist: 2
       oracle: 2
       shaman: 2
-      occultist: 2
+      sorcerer: 3
       spiritualist: 2
+      warpriest: 2
+      wizard: 3
   level: 3
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: an onyx gem worth at least 25 gp per Hit Die of the undead
+  school: nec
   sr: false
-_key: '!items!jeprfz4gkuo8fiud'
+  types: evil
+type: spell
 

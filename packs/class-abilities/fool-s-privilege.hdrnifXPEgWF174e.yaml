@@ -1,8 +1,26 @@
 _id: hdrnifXPEgWF174e
-name: Fool's Privilege
-type: feat
+_key: '!items!hdrnifXPEgWF174e'
 img: systems/pf1/icons/skills/shadow_20.jpg
+name: Fool's Privilege
 system:
+  abilityType: su
+  actions:
+    - _id: 7glxjb8ul752i05p
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/shadow_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can use this power as a swift action when you fail a Bluff,
@@ -13,28 +31,10 @@ system:
       levels beyond 1st.</p>
 
       <p>This power replaces the Copycat power of the Trickery Domain.</p>
-  actions:
-    - _id: 7glxjb8ul752i05p
-      name: Use
-      img: systems/pf1/icons/skills/shadow_20.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 1 + floor((@classes.cleric.level - 1) / 4)
-  tag: classFeat_foolsPrivilege
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!hdrnifXPEgWF174e'
+  tag: classFeat_foolsPrivilege
+  uses:
+    maxFormula: 1 + floor((@classes.cleric.level - 1) / 4)
+    per: day
+type: feat
 

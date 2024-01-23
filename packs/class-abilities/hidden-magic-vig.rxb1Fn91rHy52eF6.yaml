@@ -1,7 +1,23 @@
-name: Hidden Magic (VIG)
-type: feat
+_id: rxb1Fn91rHy52eF6
+_key: '!items!rxb1Fn91rHy52eF6'
 img: systems/pf1/icons/feats/persuasive.jpg
+name: Hidden Magic (VIG)
 system:
+  abilityType: ex
+  actions:
+    - _id: wZDJWDe7DlDohDK3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/feats/persuasive.jpg
+      name: Suppress/Reactivate magic auras
+      range:
+        units: personal
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>The auras of magic items the vigilante is carrying are hidden (as per
@@ -11,28 +27,12 @@ system:
       nonmagical (as if he had cast
       @UUID[Compendium.pf1.spells.3anuql2qioluspuv]{greater magic aura}). The
       vigilante must be at least 5th level to select this talent.</p>
-  tags:
-    - Vigilante Social Talent
-  actions:
-    - _id: wZDJWDe7DlDohDK3
-      name: Suppress/Reactivate magic auras
-      img: systems/pf1/icons/feats/persuasive.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      range:
-        units: personal
-  tag: classFeat_hiddenMagicVig
-  subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
   source:
     id: PZO9484
     pages: '16'
-_id: rxb1Fn91rHy52eF6
-_key: '!items!rxb1Fn91rHy52eF6'
+  subType: classFeat
+  tag: classFeat_hiddenMagicVig
+  tags:
+    - Vigilante Social Talent
+type: feat
 

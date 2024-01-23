@@ -1,8 +1,30 @@
 _id: 6iuctz5dbr3xjl5w
-name: Alter Summoned Monster
-type: spell
+_key: '!items!6iuctz5dbr3xjl5w'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Alter Summoned Monster
 system:
+  actions:
+    - _id: xegqyokwumibvdok
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one summoned creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You swap a creature summoned by a conjuration (summoning) spell for a
@@ -20,45 +42,23 @@ system:
       spells or effects carry over. <i>Alter summoned monster</i> is a spell of
       the same alignment type or types as the creature for which you exchange
       the target. An eidolon can't be targeted by this spell.</p>
-  actions:
-    - _id: xegqyokwumibvdok
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one summoned creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
-      bard: 2
-      summoner: 2
-      witch: 2
       antipaladin: 2
+      bard: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      oracle: 2
+      ranger: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: con
   subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!6iuctz5dbr3xjl5w'
+type: spell
 

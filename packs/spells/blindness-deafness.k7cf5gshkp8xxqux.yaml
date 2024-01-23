@@ -1,16 +1,11 @@
 _id: k7cf5gshkp8xxqux
-name: Blindness/Deafness
-type: spell
+_key: '!items!k7cf5gshkp8xxqux'
 img: icons/creatures/eyes/humanoid-single-blind.webp
+name: Blindness/Deafness
 system:
-  description:
-    value: >-
-      <p>You call upon the powers of unlife to render the subject blinded or
-      deafened, as you choose.</p>
   actions:
     - _id: d83225w56iwkzunu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,37 +13,42 @@ system:
           type: action
       duration:
         value: permanent (D)
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one living creature
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>You call upon the powers of unlife to render the subject blinded or
+      deafened, as you choose.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      bard: 2
-      witch: 2
       antipaladin: 2
+      bard: 2
       bloodrager: 2
-      shaman: 3
-      psychic: 2
+      cleric: 3
       mesmerist: 2
+      oracle: 3
+      psychic: 2
+      shaman: 3
+      sorcerer: 2
       spiritualist: 3
+      warpriest: 3
+      witch: 2
+      wizard: 2
     domain:
       Darkness: 2
   level: 2
   school: nec
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '250'
-_key: '!items!k7cf5gshkp8xxqux'
+type: spell
 

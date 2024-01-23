@@ -1,16 +1,11 @@
 _id: 4s303nois8h7vhol
-name: Lighten Object, Mass
-type: spell
+_key: '!items!4s303nois8h7vhol'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lighten Object, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>lighten object</i>, except that it affects
-      a number of objects equal to half your caster level.</p>
   actions:
     - _id: p3dz4ipkx7iav3xp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,32 +13,37 @@ system:
           type: action
       duration:
         value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
       target:
         value: >-
           multiple objects totaling up to 1 cubic ft./level, no two of which can
           be more than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
+  components:
+    material: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>lighten object</i>, except that it affects
+      a number of objects equal to half your caster level.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
-      oracle: 5
-      summoner: 5
       magus: 5
+      oracle: 5
+      sorcerer: 5
+      summoner: 5
       summonerUnchained: 5
+      warpriest: 5
+      wizard: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    material: true
   materials:
     value: goose down
-_key: '!items!4s303nois8h7vhol'
+  school: trs
+type: spell
 

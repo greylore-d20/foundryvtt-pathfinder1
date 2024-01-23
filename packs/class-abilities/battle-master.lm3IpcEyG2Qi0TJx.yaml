@@ -1,8 +1,17 @@
 _id: lm3IpcEyG2Qi0TJx
-name: Battle Master
-type: feat
+_key: '!items!lm3IpcEyG2Qi0TJx'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Battle Master
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Shaman
+  changes:
+    - _id: atqeQOPL
+      formula: floor(@class.level / 8)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>The shaman makes an extra attack of opportunity each round. This
@@ -17,16 +26,7 @@ system:
       @Compendium[pf1.feats.IER2MzJrjSvxMlNS]{Greater Weapon Focus} feat as a
       bonus feat, for the same weapon chosen for Weapon Specialization. The
       shaman doesn’t need to meet the prerequisites of these feats.</p>
-  changes:
-    - _id: atqeQOPL
-      formula: floor(@class.level / 8)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_battleMaster
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: ex
-_key: '!items!lm3IpcEyG2Qi0TJx'
+  tag: classFeat_battleMaster
+type: feat
 

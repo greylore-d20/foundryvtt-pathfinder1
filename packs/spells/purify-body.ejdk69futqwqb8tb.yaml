@@ -1,8 +1,31 @@
 _id: ejdk69futqwqb8tb
-name: Purify Body
-type: spell
+_key: '!items!ejdk69futqwqb8tb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Purify Body
 system:
+  actions:
+    - _id: wwd3obg3qtqtpwwn
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous and 1 hour or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You align the target's chakras and soothe any unwanted imperfections
@@ -20,40 +43,17 @@ system:
       physical ability score damage (from Strength, Dexterity, and
       Constitution), and removes the following conditions: blinded, dazzled,
       deafened, nauseated, paralyzed, and sickened.</p>
-  actions:
-    - _id: wwd3obg3qtqtpwwn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous and 1 hour or until discharged
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
+      alchemist: 4
       cleric: 4
-      warpriest: 4
+      medium: 4
       oracle: 4
       paladin: 4
-      alchemist: 4
       psychic: 5
-      medium: 4
+      warpriest: 4
   level: 4
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ejdk69futqwqb8tb'
+type: spell
 

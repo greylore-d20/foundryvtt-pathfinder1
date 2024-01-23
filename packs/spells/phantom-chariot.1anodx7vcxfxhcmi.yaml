@@ -1,8 +1,27 @@
 _id: 1anodx7vcxfxhcmi
-name: Phantom Chariot
-type: spell
+_key: '!items!1anodx7vcxfxhcmi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantom Chariot
 system:
+  actions:
+    - _id: lip0seoud1bsou1v
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one quasi-real chariot and draft team
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a quasi-real heavy chariot with four horselike creatures in
@@ -18,36 +37,17 @@ system:
       subjecting all aboard to a crash (treat as wrecked). The entity gains
       certain powers according to caster level, just like a mount does in the
       <i>phantom steed</i> spell.</p>
-  actions:
-    - _id: lip0seoud1bsou1v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one quasi-real chariot and draft team
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      summoner: 3
       occultist: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 3
       summonerUnchained: 3
+      wizard: 4
   level: 4
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!1anodx7vcxfxhcmi'
+  subschool: creation
+type: spell
 

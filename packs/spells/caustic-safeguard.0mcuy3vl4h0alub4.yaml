@@ -1,8 +1,31 @@
 _id: 0mcuy3vl4h0alub4
-name: Caustic Safeguard
-type: spell
+_key: '!items!0mcuy3vl4h0alub4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Caustic Safeguard
 system:
+  actions:
+    - _id: xk89ot6vttqyjrm3
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Reflex half (see text)
+        type: ref
+      target:
+        value: object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue a single object with an acidic protective ward. Any creature
@@ -12,41 +35,18 @@ system:
       when the spell's damage dice reach 0, the spell ends. While casting this
       spell, you can touch up to one creature per 4 caster levels, which allows
       them to handle the warded object without triggering this spell.</p>
-  actions:
-    - _id: xk89ot6vttqyjrm3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
   learnedAt:
     class:
+      alchemist: 3
+      bloodrager: 3
+      magus: 3
       sorcerer: 4
       wizard: 4
-      alchemist: 3
-      magus: 3
-      bloodrager: 3
   level: 4
-  school: abj
-  types: acid
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a thin metal wire and a vial of acid
+  school: abj
   sr: false
-_key: '!items!0mcuy3vl4h0alub4'
+  types: acid
+type: spell
 

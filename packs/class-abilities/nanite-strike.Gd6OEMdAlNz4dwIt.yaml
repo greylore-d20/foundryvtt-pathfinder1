@@ -1,8 +1,26 @@
 _id: Gd6OEMdAlNz4dwIt
-name: Nanite Strike
-type: feat
+_key: '!items!Gd6OEMdAlNz4dwIt'
 img: systems/pf1/icons/skills/violet_24.jpg
+name: Nanite Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: xrvxafbdb8v7r4ai
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_24.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: held weapon
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level as a <em>free action</em>, you can cause nanites to flow
@@ -22,28 +40,10 @@ system:
 
       <p>You can use this ability for a number of rounds per day equal to 3 +
       your <em>Charisma</em> modifier; these rounds need not be consecutive.</p>
-  actions:
-    - _id: xrvxafbdb8v7r4ai
-      name: Use
-      img: systems/pf1/icons/skills/violet_24.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: held weapon
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_naniteStrike
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!Gd6OEMdAlNz4dwIt'
+  tag: classFeat_naniteStrike
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

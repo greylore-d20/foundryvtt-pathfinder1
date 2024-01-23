@@ -1,8 +1,31 @@
 _id: a284vfyjpxla98v0
-name: Transmogrify
-type: spell
+_key: '!items!a284vfyjpxla98v0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transmogrify
 system:
+  actions:
+    - _id: 955skpz0fmo8ixmj
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: your eidolon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your eidolon's form shifts and transforms. This spell allows you to
@@ -13,40 +36,17 @@ system:
       abilities.</p><p>Your eidolon cannot benefit from this spell more than
       once per day. This spell does not allow you to change your eidolon's base
       form.</p>
-  actions:
-    - _id: 955skpz0fmo8ixmj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: your eidolon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       summoner: 4
       summonerUnchained: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a flask of quicksilver worth 1,000 gp
     gpValue: 1000
+    value: a flask of quicksilver worth 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!a284vfyjpxla98v0'
+type: spell
 

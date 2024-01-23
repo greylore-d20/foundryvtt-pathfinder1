@@ -1,8 +1,39 @@
 _id: ev0AaPdPSSjI7Hew
-name: Implacable Stalker
-type: feat
+_key: '!items!ev0AaPdPSSjI7Hew'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Implacable Stalker
 system:
+  changes:
+    - _id: oarcp0qv
+      formula: '6'
+      modifier: untyped
+      subTarget: nac
+    - _id: i5s0w1mw
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+    - _id: 7n7wpumm
+      formula: '6'
+      modifier: untyped
+      subTarget: con
+    - _id: hygy4djc
+      formula: '8'
+      modifier: racial
+      subTarget: skill.int
+    - _id: ug91xofv
+      formula: '6'
+      modifier: racial
+      subTarget: skill.ste
+  contextNotes:
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: skill.sur
+      target: skill
+      text: +[[6]] Racial to Follow Tracks
+      value: 0
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -95,37 +126,6 @@ system:
       Intimidate checks, and a +6 racial bonus on Stealth checks and Survival
       checks to follow tracks.<p><b>Feats:</b> Implacable stalkers gain Diehard,
       Endurance, Intimidating Prowess, and Toughness as bonus feats.</p>
-  changes:
-    - _id: oarcp0qv
-      formula: '6'
-      subTarget: nac
-      modifier: untyped
-    - _id: i5s0w1mw
-      formula: '4'
-      subTarget: str
-      modifier: untyped
-    - _id: 7n7wpumm
-      formula: '6'
-      subTarget: con
-      modifier: untyped
-    - _id: hygy4djc
-      formula: '8'
-      subTarget: skill.int
-      modifier: racial
-    - _id: ug91xofv
-      formula: '6'
-      subTarget: skill.ste
-      modifier: racial
-  contextNotes:
-    - formula: ''
-      operator: add
-      target: skill
-      subTarget: skill.sur
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[6]] Racial to Follow Tracks
   subType: template
-  crOffset: '2'
-_key: '!items!ev0AaPdPSSjI7Hew'
+type: feat
 

@@ -1,8 +1,26 @@
 _id: LeeRVglZKLpW5b4e
-name: 'Death Blessing: Death''s Touch'
-type: feat
+_key: '!items!LeeRVglZKLpW5b4e'
 img: systems/pf1/icons/spells/horror-red-3.jpg
+name: 'Death Blessing: Death''s Touch'
 system:
+  actions:
+    - _id: eeab8sf1y6heq5tr
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/horror-red-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can make a melee touch attack against an opponent to
@@ -12,25 +30,7 @@ system:
       These temporary negative levels stack. You gain no benefit from imposing
       these negative levels (such as the temporary hit points undead gain from
       enervation).</p>
-  actions:
-    - _id: eeab8sf1y6heq5tr
-      name: Use
-      img: systems/pf1/icons/spells/horror-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_deathBlessingDeathsTouch
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!LeeRVglZKLpW5b4e'
+  tag: classFeat_deathBlessingDeathsTouch
+type: feat
 

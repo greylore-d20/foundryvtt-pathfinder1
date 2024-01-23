@@ -1,8 +1,24 @@
 _id: 0AYEnbhs2vcFsdUh
-name: Attune Implants
-type: feat
+_key: '!items!0AYEnbhs2vcFsdUh'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Attune Implants
 system:
+  abilityType: su
+  actions:
+    - _id: dsz4ixm1uccccbmq
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: minute
+        value: '@classes.psychic.level'
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>Starting at 5th level, you can spend a full-round action once per day
@@ -14,26 +30,10 @@ system:
 
       <p>Additional implants do not increase the duration or the number of uses
       of this discipline ability.</p>
-  actions:
-    - _id: dsz4ixm1uccccbmq
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '@classes.psychic.level'
-        units: minute
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_attuneImplants
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!0AYEnbhs2vcFsdUh'
+  tag: classFeat_attuneImplants
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

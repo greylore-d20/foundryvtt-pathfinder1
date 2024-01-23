@@ -1,8 +1,25 @@
 _id: xHg1RuRmKpSKbSsd
-name: Blinding Ray
-type: feat
+_key: '!items!xHg1RuRmKpSKbSsd'
 img: systems/pf1/icons/spells/beam-sky-3.jpg
+name: Blinding Ray
 system:
+  abilityType: sp
+  actions:
+    - _id: c9cmmlqses5478p9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/beam-sky-3.jpg
+      name: Use
+      range:
+        units: seeText
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a standard action you can fire a shimmering ray at any foe within 30
@@ -11,27 +28,10 @@ system:
       wizard level are <em>dazzled</em> for 1 round instead. You can use this
       ability a number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: c9cmmlqses5478p9
-      name: Use
-      img: systems/pf1/icons/spells/beam-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_blindingRay
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!xHg1RuRmKpSKbSsd'
+  tag: classFeat_blindingRay
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: yDG7xVuH7oqWS4Mt
-name: Deflection Aura
-type: feat
+_key: '!items!yDG7xVuH7oqWS4Mt'
 img: systems/pf1/icons/skills/red_16.jpg
+name: Deflection Aura
 system:
+  abilityType: su
+  actions:
+    - _id: ifkxen2416u3hzsa
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/red_16.jpg
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Once each day, you can emit a 20-foot aura for a number of rounds equal
@@ -11,30 +31,10 @@ system:
 
       <p>This power replaces the Resistant Touch power of the Protection
       Domain.</p>
-  actions:
-    - _id: ifkxen2416u3hzsa
-      name: Use
-      img: systems/pf1/icons/skills/red_16.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: allies within range
-      range:
-        value: '20'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_deflectionAura
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!yDG7xVuH7oqWS4Mt'
+  tag: classFeat_deflectionAura
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

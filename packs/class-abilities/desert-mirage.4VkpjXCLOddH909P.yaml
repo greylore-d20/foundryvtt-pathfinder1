@@ -1,8 +1,27 @@
 _id: 4VkpjXCLOddH909P
-name: Desert Mirage
-type: feat
+_key: '!items!4VkpjXCLOddH909P'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Desert Mirage
 system:
+  abilityType: su
+  actions:
+    - _id: 237o92vafyhg6oju
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Air and fire shroud you from your enemies’ vision and superheat your
@@ -13,34 +32,15 @@ system:
       per oracle level per day; this duration does not need to be consecutive,
       but it must be spent in 1-minute increments.</p><p>You must be at least
       3rd level to select this revelation.</p>
-  tags:
-    - Elemental Mystery
-  actions:
-    - _id: 237o92vafyhg6oju
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_desertMirage
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9483
     pages: '28'
-_key: '!items!4VkpjXCLOddH909P'
+  subType: classFeat
+  tag: classFeat_desertMirage
+  tags:
+    - Elemental Mystery
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

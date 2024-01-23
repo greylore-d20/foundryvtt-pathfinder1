@@ -1,8 +1,27 @@
 _id: 2tq8HQ4ZQpiL3njr
-name: Frightening Appearance
-type: feat
+_key: '!items!2tq8HQ4ZQpiL3njr'
 img: systems/pf1/icons/skills/red_02.jpg
+name: Frightening Appearance
 system:
+  abilityType: ex
+  actions:
+    - _id: bt6024j5gtw4hxll
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/red_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      target:
+        value: enemies in range
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>At 11th level, whenever a vigilante with this ability makes an attack
@@ -21,26 +40,7 @@ system:
       vigilante’s frightening appearance for 24 hours. This effect is in
       addition to the bonuses gained from the startling appearance ability. This
       is a mind-affecting fear effect.</p>
-  actions:
-    - _id: bt6024j5gtw4hxll
-      name: Use
-      img: systems/pf1/icons/skills/red_02.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: enemies in range
-      range:
-        value: '10'
-        units: ft
-  tag: classFeat_frighteningAppearance
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!2tq8HQ4ZQpiL3njr'
+  tag: classFeat_frighteningAppearance
+type: feat
 

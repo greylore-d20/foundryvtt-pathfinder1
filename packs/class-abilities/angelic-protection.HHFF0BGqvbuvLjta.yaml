@@ -1,8 +1,17 @@
 _id: HHFF0BGqvbuvLjta
-name: Angelic Protection
-type: feat
+_key: '!items!HHFF0BGqvbuvLjta'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Angelic Protection
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Bloodrager
+  changes:
+    - _id: 3u6sdptz
+      formula: '4'
+      modifier: deflection
+      subTarget: ac
   description:
     value: >-
       <p>At 16th level, you gain a +4 deflection bonus to AC and a +4 resistance
@@ -10,16 +19,7 @@ system:
       creatures. In addition, you are affected as if subject to a
       @Compendium[pf1.spells.skgjjub1hng29nwo]{Protection From Evil} spell. This
       effect cannot be dispelled.</p>
-  changes:
-    - _id: 3u6sdptz
-      formula: '4'
-      subTarget: ac
-      modifier: deflection
-  tag: classFeat_angelicProtection
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!HHFF0BGqvbuvLjta'
+  tag: classFeat_angelicProtection
+type: feat
 

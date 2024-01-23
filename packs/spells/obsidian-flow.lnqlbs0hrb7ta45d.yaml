@@ -1,8 +1,34 @@
 _id: lnqlbs0hrb7ta45d
-name: Obsidian Flow
-type: spell
+_key: '!items!lnqlbs0hrb7ta45d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Obsidian Flow
 system:
+  actions:
+    - _id: 3l5ipbve72oqe00f
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius burst
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex partial, see text
+        type: ref
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You convert a thin layer of the ground to molten glass that cools
@@ -17,45 +43,19 @@ system:
       increases by 5. A successful DC 15 Acrobatics check is required to run or
       charge across the area. A creature that falls prone in the area takes 1d6
       points of damage from sharp obsidian.</p>
-  actions:
-    - _id: 3l5ipbve72oqe00f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial, see text
-      area: 20-ft.-radius burst
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       druid: 4
-      summoner: 3
       hunter: 4
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 4
+      wizard: 4
   level: 4
-  school: trs
-  types: earth, fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a small piece of obsidian
+  school: trs
   sr: false
-_key: '!items!lnqlbs0hrb7ta45d'
+  types: earth, fire
+type: spell
 

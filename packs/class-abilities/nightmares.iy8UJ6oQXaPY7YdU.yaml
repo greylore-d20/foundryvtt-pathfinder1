@@ -1,23 +1,12 @@
 _id: iy8UJ6oQXaPY7YdU
-name: Nightmares
-type: feat
+_key: '!items!iy8UJ6oQXaPY7YdU'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Nightmares
 system:
-  description:
-    value: >-
-      <p>Calling upon fell powers, a witch can place a hex on a creature within
-      60 feet that causes its sleep to be tormented by terrible nightmares. This
-      functions as the spell @Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare}
-      each time the affected creature attempts to rest. A Will save negates this
-      effect. If the save is failed, the target must make a new save each night
-      or be unable to rest.</p>
-  tags:
-    - Hex
-    - Major Hex
+  abilityType: su
   actions:
     - _id: 6nkg2cikp8y4szvd
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
+      actionType: save
       activation:
         cost: 10
         type: minute
@@ -26,21 +15,32 @@ system:
           type: minute
       duration:
         units: inst
-      target:
-        value: one living creature
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
       range:
-        value: '60'
         units: ft
-      actionType: save
+        value: '60'
       save:
         dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
         description: Will negates
-  tag: classFeat_nightmares
-  subType: classFeat
+        type: will
+      target:
+        value: one living creature
   associations:
     classes:
       - Witch
-  abilityType: su
-_key: '!items!iy8UJ6oQXaPY7YdU'
+  description:
+    value: >-
+      <p>Calling upon fell powers, a witch can place a hex on a creature within
+      60 feet that causes its sleep to be tormented by terrible nightmares. This
+      functions as the spell @Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare}
+      each time the affected creature attempts to rest. A Will save negates this
+      effect. If the save is failed, the target must make a new save each night
+      or be unable to rest.</p>
+  subType: classFeat
+  tag: classFeat_nightmares
+  tags:
+    - Hex
+    - Major Hex
+type: feat
 

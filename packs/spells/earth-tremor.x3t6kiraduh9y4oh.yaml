@@ -1,8 +1,81 @@
 _id: x3t6kiraduh9y4oh
-name: Earth Tremor
-type: spell
+_key: '!items!x3t6kiraduh9y4oh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Earth Tremor
 system:
+  actions:
+    - _id: ua8hb2n5p8apu6lw
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: >-
+        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
+        text)
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: ray
+      name: Line
+      range:
+        units: spec
+        value: up to 30 ft. (see text)
+      save:
+        description: Reflex half (see text)
+        type: ref
+    - _id: Pox0qYVhnMsTxhKT
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: >-
+        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
+        text)
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: cone
+      name: Cone
+      range:
+        units: spec
+        value: up to 30 ft. (see text)
+      save:
+        description: Reflex half (see text)
+        type: ref
+    - _id: EQmGhKbsfW1Myths
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: >-
+        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
+        text)
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Radius
+      range:
+        units: spec
+        value: up to 30 ft. (see text)
+      save:
+        description: Reflex half (see text)
+        type: ref
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You strike the ground and unleash a tremor of seismic force, hurling up
@@ -17,92 +90,19 @@ system:
       their saves are knocked prone.</p><p>This spell can be cast only on a
       surface of earth, sand, or stone. It has no effect if you are in a wooden
       or metal structure or if you are not touching the ground.</p>
-  actions:
-    - _id: ua8hb2n5p8apu6lw
-      name: Line
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: up to 30 ft. (see text)
-        units: spec
-      measureTemplate:
-        type: ray
-        size: '30'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
-      area: >-
-        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
-        text)
-    - _id: Pox0qYVhnMsTxhKT
-      name: Cone
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: up to 30 ft. (see text)
-        units: spec
-      measureTemplate:
-        type: cone
-        size: '20'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
-      area: >-
-        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
-        text)
-    - _id: EQmGhKbsfW1Myths
-      name: Radius
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: up to 30 ft. (see text)
-        units: spec
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
-      area: >-
-        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
-        text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
-      witch: 3
-      magus: 3
       bloodrager: 3
-      shaman: 3
+      druid: 3
       hunter: 3
+      magus: 3
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!x3t6kiraduh9y4oh'
+  types: earth
+type: spell
 

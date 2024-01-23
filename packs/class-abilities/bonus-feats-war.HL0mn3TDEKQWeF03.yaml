@@ -1,8 +1,16 @@
 _id: HL0mn3TDEKQWeF03
-name: Bonus Feats (WAR)
-type: feat
+_key: '!items!HL0mn3TDEKQWeF03'
 img: systems/pf1/icons/feats/defensive-combat-training.jpg
+name: Bonus Feats (WAR)
 system:
+  associations:
+    classes:
+      - Warpriest
+  changes:
+    - _id: eg2gc92z
+      formula: floor(@classes.warpriest.level / 3)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 3rd level and every 3 levels thereafter, a warpriest gains a bonus
@@ -14,15 +22,7 @@ system:
       feats. Finally, for the purposes of these feats, the warpriest can select
       feats that have a minimum number of fighter levels as a prerequisite,
       treating his warpriest level as his fighter level.</p>
-  changes:
-    - _id: eg2gc92z
-      formula: floor(@classes.warpriest.level / 3)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_bonusFeatsWar
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!HL0mn3TDEKQWeF03'
+  tag: classFeat_bonusFeatsWar
+type: feat
 

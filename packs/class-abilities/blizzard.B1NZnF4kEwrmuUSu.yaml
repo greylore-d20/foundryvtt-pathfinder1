@@ -1,8 +1,21 @@
 _id: B1NZnF4kEwrmuUSu
-name: Blizzard
-type: feat
+_key: '!items!B1NZnF4kEwrmuUSu'
 img: systems/pf1/icons/skills/ice_06.jpg
+name: Blizzard
 system:
+  abilityType: sp
+  actions:
+    - _id: ficdy259hpaokmda
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/ice_06.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you can create a savage winter storm centered on you.
@@ -12,23 +25,10 @@ system:
       @Compendium[pf1.spells.qnp4eosajai8s3sf]{Sleet Storm} and all in the area
       are exposed to <em>extreme cold</em>. You may use this ability once per
       day.</p>
-  actions:
-    - _id: ficdy259hpaokmda
-      name: Use
-      img: systems/pf1/icons/skills/ice_06.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_blizzard
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!B1NZnF4kEwrmuUSu'
+  tag: classFeat_blizzard
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

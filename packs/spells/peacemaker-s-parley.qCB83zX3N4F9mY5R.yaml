@@ -1,7 +1,31 @@
-name: Peacemaker’s Parley
-type: spell
+_id: qCB83zX3N4F9mY5R
+_key: '!items!qCB83zX3N4F9mY5R'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Peacemaker’s Parley
 system:
+  actions:
+    - _id: ViNC6KbpJ4yAIFmt
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      area: creatures in a 20-ft.-radius spread
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Editor's Note:</em> In order to prepare this spell, the caster must
@@ -14,26 +38,6 @@ system:
       against the spell. Even if you favorably manipulate the attitude of the
       affected targets, they quickly revert to their previous attitude if
       threatened or treated poorly.</p>
-  actions:
-    - _id: ViNC6KbpJ4yAIFmt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: creatures in a 20-ft.-radius spread
   learnedAt:
     class:
       cleric: 2
@@ -42,9 +46,5 @@ system:
   level: 2
   school: enc
   subschool: charm
-  components:
-    verbal: true
-    somatic: true
-_id: qCB83zX3N4F9mY5R
-_key: '!items!qCB83zX3N4F9mY5R'
+type: spell
 

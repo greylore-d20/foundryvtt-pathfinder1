@@ -1,8 +1,21 @@
 _id: 4JEUZSAmgKUQvw04
-name: Ancestral Guardian
-type: feat
+_key: '!items!4JEUZSAmgKUQvw04'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Ancestral Guardian
 system:
+  abilityType: sp
+  actions:
+    - _id: fqi9pxnn4dbeal4n
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can call on the ancient allies of her ancestors to
@@ -11,23 +24,10 @@ system:
       @Compendium[pf1.spells.gfvnfa5k1tnpvg8v]{Planar Ally}. Although there is
       no cost to use the spelllike ability, the planar ally demands payment for
       services it performs as normal for the spell.</p>
-  actions:
-    - _id: fqi9pxnn4dbeal4n
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_ancestralGuardian
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: sp
-_key: '!items!4JEUZSAmgKUQvw04'
+  tag: classFeat_ancestralGuardian
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

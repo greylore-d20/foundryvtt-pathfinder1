@@ -1,8 +1,26 @@
 _id: cb2svqlo50o2gd6k
-name: River Whip
-type: spell
+_key: '!items!cb2svqlo50o2gd6k'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: River Whip
 system:
+  actions:
+    - _id: kbwpkp3zqs20mclz
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D) or until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: whip of water
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a coil of flowing fresh water, functioning a whip
@@ -15,34 +33,16 @@ system:
       equal to your caster level, the water is expended and the spell is
       discharged. The water created by this spell is otherwise identical to that
       produced by <i>create water</i>.</p>
-  actions:
-    - _id: kbwpkp3zqs20mclz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D) or until discharged (see text)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: whip of water
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
       magus: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: con
+  sr: false
   subschool: creation
   types: water
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!cb2svqlo50o2gd6k'
+type: spell
 

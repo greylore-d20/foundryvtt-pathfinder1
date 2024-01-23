@@ -1,8 +1,21 @@
 _id: fMbFcg90wRCUqkYt
-name: Sift
-type: feat
+_key: '!items!fMbFcg90wRCUqkYt'
 img: systems/pf1/icons/skills/blue_16.jpg
+name: Sift
 system:
+  abilityType: su
+  actions:
+    - _id: 2ngvzrh8h07y0ejn
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/blue_16.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 6th level, once per day you can reach into water as a standard
@@ -17,23 +30,10 @@ system:
       already used up or otherwise destroyed before then.</p>
 
       <p>This power replaces the Cold Resistance power of the Water Domain.</p>
-  actions:
-    - _id: 2ngvzrh8h07y0ejn
-      name: Use
-      img: systems/pf1/icons/skills/blue_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_sift
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!fMbFcg90wRCUqkYt'
+  tag: classFeat_sift
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

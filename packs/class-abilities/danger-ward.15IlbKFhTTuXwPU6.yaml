@@ -1,8 +1,29 @@
 _id: 15IlbKFhTTuXwPU6
-name: Danger Ward
-type: feat
+_key: '!items!15IlbKFhTTuXwPU6'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Danger Ward
 system:
+  abilityType: ex
+  actions:
+    - _id: 3b9plz30qrf7sgpo
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 2nd level, the cavalier can ready his allies for impending danger.
@@ -14,31 +35,10 @@ system:
       immediate action, but must take the results of the reroll even if it is
       worse. He can use this ability up to three times per day, once for each
       type of saving throw.</p>
-  actions:
-    - _id: 3b9plz30qrf7sgpo
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: allies within range
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '3'
-  tag: classFeat_dangerWard
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!15IlbKFhTTuXwPU6'
+  tag: classFeat_dangerWard
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

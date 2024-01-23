@@ -1,7 +1,45 @@
-name: Rage (Unchained)
-type: buff
+_id: ciAO4KwMonUzAGY0
+_key: '!items!ciAO4KwMonUzAGY0'
 img: systems/pf1/icons/feats/extra-rage.jpg
+name: Rage (Unchained)
 system:
+  changes:
+    - _id: D2POwZXV
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      modifier: untyped
+      priority: null
+      subTarget: mattack
+    - _id: 8f4QV8tz
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      modifier: untyped
+      priority: null
+      subTarget: mwdamage
+    - _id: MUtCJV5t
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      modifier: untyped
+      priority: null
+      subTarget: twdamage
+    - _id: RBiWOi4D
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      modifier: untyped
+      priority: null
+      subTarget: will
+    - _id: 1waxjG3r
+      formula: '-2'
+      modifier: penalty
+      priority: null
+      subTarget: ac
+  contextNotes:
+    - subTarget: skills
+      text: >-
+        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
+        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
+        that requires patience or concentration while raging.
+    - subTarget: allChecks
+      text: >-
+        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
+        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
+        that requires patience or concentration while raging.
   description:
     value: >-
       <p>Gain +2 bonus to melee attack and melee damage rolls, thrown weapon
@@ -10,47 +48,16 @@ system:
       Die.</p><p>Unable to use various skills, refer to
       @UUID[Compendium.pf1.class-abilities.2Az38ZPYwjYBKZd2]{Rage} class feature
       for details.</p>
-  changes:
-    - _id: D2POwZXV
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
-      subTarget: mattack
-      modifier: untyped
-      priority: null
-    - _id: 8f4QV8tz
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
-      subTarget: mwdamage
-      modifier: untyped
-      priority: null
-    - _id: MUtCJV5t
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
-      subTarget: twdamage
-      modifier: untyped
-      priority: null
-    - _id: RBiWOi4D
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
-      subTarget: will
-      modifier: untyped
-      priority: null
-    - _id: 1waxjG3r
-      formula: '-2'
-      subTarget: ac
-      modifier: penalty
-      priority: null
-  contextNotes:
-    - text: >-
-        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
-        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
-        that requires patience or concentration while raging.
-      subTarget: skills
-    - text: >-
-        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
-        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
-        that requires patience or concentration while raging.
-      subTarget: allChecks
+  duration:
+    units: round
+    value: 2 + @classes.barbarianUnchained.level * 2 + @abilities.con.mod
+  level: null
   scriptCalls:
     - _id: BUBGIP6Ubbuf61l6
-      name: Add Temporary Hit Points
+      category: toggle
+      hidden: false
       img: icons/svg/dice-target.svg
+      name: Add Temporary Hit Points
       type: script
       value: |-
         if (state) {
@@ -61,12 +68,5 @@ system:
           const newTHP = oldTHP + hd * hpPerHD;
           actor.update({ "system.attributes.hp.temp": newTHP });
         }
-      category: toggle
-      hidden: false
-  level: null
-  duration:
-    value: 2 + @classes.barbarianUnchained.level * 2 + @abilities.con.mod
-    units: round
-_id: ciAO4KwMonUzAGY0
-_key: '!items!ciAO4KwMonUzAGY0'
+type: buff
 

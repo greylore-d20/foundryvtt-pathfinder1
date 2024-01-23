@@ -1,8 +1,27 @@
 _id: rQsv3dwVmPeqzYRE
-name: Whispering Shadows
-type: feat
+_key: '!items!rQsv3dwVmPeqzYRE'
 img: systems/pf1/icons/skills/shadow_20.jpg
+name: Whispering Shadows
 system:
+  abilityType: su
+  actions:
+    - _id: htx8p78jc83gml12
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/shadow_20.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can darken the shadows around you and cause them to hiss,
@@ -15,29 +34,10 @@ system:
 
       <p>This power replaces the Touch of Darkness power of the Darkness
       Domain.</p>
-  actions:
-    - _id: htx8p78jc83gml12
-      name: Use
-      img: systems/pf1/icons/skills/shadow_20.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_whisperingShadows
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!rQsv3dwVmPeqzYRE'
+  tag: classFeat_whisperingShadows
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

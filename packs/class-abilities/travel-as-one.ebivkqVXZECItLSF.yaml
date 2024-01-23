@@ -1,8 +1,25 @@
 _id: ebivkqVXZECItLSF
-name: Travel as One
-type: feat
+_key: '!items!ebivkqVXZECItLSF'
 img: systems/pf1/icons/spells/air-burst-sky-3.jpg
+name: Travel as One
 system:
+  abilityType: su
+  actions:
+    - _id: tjiv8co3m4f7k1br
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/air-burst-sky-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
+  changes:
+    - _id: cdy5loi1
+      formula: '-10'
+      modifier: base
+      subTarget: landSpeed
   description:
     value: >-
       <p>When you cast a spell with the teleportation descriptor, treat your
@@ -14,24 +31,7 @@ system:
       into a solid body.</p>
 
       <p>This power replaces the base speed increase of the Travel Domain.</p>
-  actions:
-    - _id: tjiv8co3m4f7k1br
-      name: Use
-      img: systems/pf1/icons/spells/air-burst-sky-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: cdy5loi1
-      formula: '-10'
-      subTarget: landSpeed
-      modifier: base
-  tag: classFeat_travelAsOne
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!ebivkqVXZECItLSF'
+  tag: classFeat_travelAsOne
+type: feat
 

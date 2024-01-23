@@ -1,8 +1,11 @@
 _id: QQWbSRa9bd3hNR0O
-name: Malignant Poison
-type: feat
+_key: '!items!QQWbSRa9bd3hNR0O'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Malignant Poison
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>As a full-round action, the alchemist can increase the save DC of any
@@ -17,12 +20,9 @@ system:
       minutes equal to the alchemist’s level, whichever comes first. After that,
       the poison reverts back to its original state. An alchemist must be at
       least 10th level before selecting this discovery.</p>
+  subType: classFeat
+  tag: classFeat_malignantPoison
   tags:
     - Alchemist Discovery
-  tag: classFeat_malignantPoison
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!QQWbSRa9bd3hNR0O'
+type: feat
 

@@ -1,8 +1,12 @@
 _id: RVhRV0uTC4OD1fNb
-name: Bleeding Attack (NIN)
-type: feat
+_key: '!items!RVhRV0uTC4OD1fNb'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Bleeding Attack (NIN)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>A ninja with this trick can cause living opponents to bleed by hitting
@@ -13,14 +17,10 @@ system:
       check or the application of any effect that heals hit point damage. Bleed
       damage from this ability does not stack with itself. Bleed damage bypasses
       any DR the creature might possess.</p>
+  subType: classFeat
+  tag: classFeat_bleedingAttackNin
   tags:
     - Ninja Trick
     - Sneak Attack
-  tag: classFeat_bleedingAttackNin
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: ex
-_key: '!items!RVhRV0uTC4OD1fNb'
+type: feat
 

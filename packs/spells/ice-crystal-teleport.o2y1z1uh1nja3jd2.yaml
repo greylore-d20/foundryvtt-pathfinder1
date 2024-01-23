@@ -1,8 +1,29 @@
 _id: o2y1z1uh1nja3jd2
-name: Ice Crystal Teleport
-type: spell
+_key: '!items!o2y1z1uh1nja3jd2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ice Crystal Teleport
 system:
+  actions:
+    - _id: lk8778tfzj9umve2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1d4 rounds and instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>teleport</i>, except you use it to
@@ -18,37 +39,16 @@ system:
       points drop to 0 and it quickly melts away. If the ice is destroyed before
       the target <i>teleport</i>s, the spell ends and the <i>teleport</i>
       doesn't occur.</p>
-  actions:
-    - _id: lk8778tfzj9umve2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d4 rounds and instantaneous
-      target:
-        value: one creature
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       sorcerer: 6
-      wizard: 6
       summoner: 5
-      witch: 6
       summonerUnchained: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: con
   subschool: teleportation
   types: cold
-  components:
-    verbal: true
-_key: '!items!o2y1z1uh1nja3jd2'
+type: spell
 

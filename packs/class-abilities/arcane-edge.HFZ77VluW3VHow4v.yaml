@@ -1,8 +1,20 @@
 _id: HFZ77VluW3VHow4v
-name: Arcane Edge
-type: feat
+_key: '!items!HFZ77VluW3VHow4v'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Arcane Edge
 system:
+  abilityType: su
+  actions:
+    - _id: bbdgbdf5hzrpsudq
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can expend 1 point from his arcane pool as an immediate
@@ -11,19 +23,7 @@ system:
       (minimum 0).</p>
 
       <p>The magus must be at least 9th level before he selects this arcana.</p>
-  actions:
-    - _id: bbdgbdf5hzrpsudq
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_arcaneEdge
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!HFZ77VluW3VHow4v'
+  tag: classFeat_arcaneEdge
+type: feat
 

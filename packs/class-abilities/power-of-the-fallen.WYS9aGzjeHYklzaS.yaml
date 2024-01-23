@@ -1,8 +1,28 @@
 _id: WYS9aGzjeHYklzaS
-name: Power of the Fallen
-type: feat
+_key: '!items!WYS9aGzjeHYklzaS'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Power of the Fallen
 system:
+  abilityType: sp
+  actions:
+    - _id: cl0hafr4s9i0nhvr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.oracle.level * 10'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can touch a dying creature and channel its life energy into another
@@ -14,30 +34,10 @@ system:
       times per day equal to your Charisma modifier.</p>
 
       <p>You must be at least 5th level to select this revelation.</p>
-  actions:
-    - _id: cl0hafr4s9i0nhvr
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level * 10'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: '@abilities.cha.mod'
-  tag: classFeat_powerOfTheFallen
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!WYS9aGzjeHYklzaS'
+  tag: classFeat_powerOfTheFallen
+  uses:
+    maxFormula: '@abilities.cha.mod'
+    per: day
+type: feat
 

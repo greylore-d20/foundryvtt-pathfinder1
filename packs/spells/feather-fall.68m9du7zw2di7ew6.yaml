@@ -1,8 +1,31 @@
 _id: 68m9du7zw2di7ew6
-name: Feather Fall
-type: spell
+_key: '!items!68m9du7zw2di7ew6'
 img: icons/commodities/materials/feather-white.webp
+name: Feather Fall
 system:
+  actions:
+    - _id: jf1nmk51mmjucjvi
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: until landing or 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates or Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one Medium or smaller freefalling object or creature/level, no two of
+          which may be more than 20 ft. apart
+  components:
+    verbal: true
   description:
     value: >-
       <p>The affected creatures or objects fall slowly. <i>Feather fall</i>
@@ -20,48 +43,25 @@ system:
       on its weight, with no bonus for the height of the drop.</p><p><i>Feather
       fall</i> works only upon free-falling objects. It does not affect a sword
       blow or a charging or flying creature.</p>
-  actions:
-    - _id: jf1nmk51mmjucjvi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: until landing or 1 round/level
-      target:
-        value: >-
-          one Medium or smaller freefalling object or creature/level, no two of
-          which may be more than 20 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates or Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      summoner: 1
-      magus: 1
       bloodrager: 1
-      psychic: 1
+      magus: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
       spiritualist: 1
+      summoner: 1
       summonerUnchained: 1
+      wizard: 1
     domain:
       Void: 1
     subDomain:
       Feather: 2
   school: trs
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '281'
-_key: '!items!68m9du7zw2di7ew6'
+type: spell
 

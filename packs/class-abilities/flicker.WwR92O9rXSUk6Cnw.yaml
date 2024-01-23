@@ -1,8 +1,27 @@
 _id: WwR92O9rXSUk6Cnw
-name: Flicker
-type: feat
+_key: '!items!WwR92O9rXSUk6Cnw'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Flicker
 system:
+  abilityType: sp
+  actions:
+    - _id: b7322cy89vs2z7g6
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can flicker from sight for a short time, allowing you to escape or
@@ -11,29 +30,10 @@ system:
 
       <p>You can use this revelation a number of times per day equal to half
       your oracle level (minimum 1).</p>
-  actions:
-    - _id: b7322cy89vs2z7g6
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: max(1, floor(@classes.oracle.level / 2))
-  tag: classFeat_flicker
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!WwR92O9rXSUk6Cnw'
+  tag: classFeat_flicker
+  uses:
+    maxFormula: max(1, floor(@classes.oracle.level / 2))
+    per: day
+type: feat
 

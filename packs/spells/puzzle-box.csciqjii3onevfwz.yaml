@@ -1,8 +1,30 @@
 _id: csciqjii3onevfwz
-name: Puzzle Box
-type: spell
+_key: '!items!csciqjii3onevfwz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Puzzle Box
 system:
+  actions:
+    - _id: sey7y9fe7mh7i80q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or permanent; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates or none
+        type: will
+      target:
+        value: one creature or one object up to 5 lbs./level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes even commonly used objects to become conundrums. When
@@ -22,37 +44,15 @@ system:
       attempting to use an item affected in this way is treated as though the
       creature was the target of <i>puzzle box</i> for that item only. When cast
       on an object, the duration of this spell is permanent.</p>
-  actions:
-    - _id: sey7y9fe7mh7i80q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or permanent; see text
-      target:
-        value: one creature or one object up to 5 lbs./level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates or none
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 2
+      sorcerer: 3
       witch: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: curse, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!csciqjii3onevfwz'
+type: spell
 

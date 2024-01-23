@@ -1,8 +1,27 @@
 _id: 6v4vgwluxim6dbls
-name: Aram Zey's Focus
-type: spell
+_key: '!items!6v4vgwluxim6dbls'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aram Zey's Focus
 system:
+  actions:
+    - _id: sgapz4sc9vfykpc0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Aram Zey created this spell for use by his students, both to increase
@@ -20,35 +39,16 @@ system:
       advantage of this feature, the remaining duration of the spell is reduced
       by 1 minute-if less than a minute's worth of duration remains, the spell
       ends as soon as you reroll your Disable Device check.</p>
-  actions:
-    - _id: sgapz4sc9vfykpc0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 2
+      bard: 2
       sorcerer: 2
       wizard: 2
-      bard: 2
-      alchemist: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: masterwork thieves' tools worth 100 gp
+  school: div
   sr: false
-_key: '!items!6v4vgwluxim6dbls'
+type: spell
 

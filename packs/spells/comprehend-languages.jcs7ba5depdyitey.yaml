@@ -1,8 +1,28 @@
 _id: jcs7ba5depdyitey
-name: Comprehend Languages
-type: spell
+_key: '!items!jcs7ba5depdyitey'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Comprehend Languages
 system:
+  actions:
+    - _id: avuef1zo4krbcw45
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can understand the spoken words of creatures or read otherwise
@@ -16,54 +36,34 @@ system:
       It does not decipher codes or reveal messages concealed in otherwise
       normal text.</p><p><i>Comprehend languages</i> can be made permanent with
       a <i>permanency</i> spell.</p>
-  actions:
-    - _id: avuef1zo4krbcw45
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      bard: 1
-      alchemist: 1
-      witch: 1
-      inquisitor: 1
       adept: 1
-      shaman: 1
-      psychic: 1
+      alchemist: 1
+      bard: 1
+      cleric: 1
+      inquisitor: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      oracle: 1
+      psychic: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
     domain:
       Knowledge: 1
     subDomain:
       Language: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: pinch of soot and salt
-  sr: false
+  school: div
   source:
     id: PZO1110
     pages: '258'
-_key: '!items!jcs7ba5depdyitey'
+  sr: false
+type: spell
 

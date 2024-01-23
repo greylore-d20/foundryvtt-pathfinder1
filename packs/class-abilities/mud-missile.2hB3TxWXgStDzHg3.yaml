@@ -1,7 +1,42 @@
-name: Mud Missile
-type: feat
+_id: 2hB3TxWXgStDzHg3
+_key: '!items!2hB3TxWXgStDzHg3'
 img: icons/magic/earth/projectile-boulder-dust.webp
+name: Mud Missile
 system:
+  abilityType: su
+  actions:
+    - _id: Eo7cSrR8BNJM9Y6g
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: floor(@classes.wizard.level / 2)d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      effectNotes:
+        - >-
+          Target creature is blinded for [[1d4]] rounds. The mud can be removed
+          with a successful strength check (DC [[10 + floor(@caster.wizard.level
+          / 2)]]).
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/earth/projectile-boulder-dust.webp
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      touch: true
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can fling a ball of hardened mud at a foe within 30
@@ -12,49 +47,14 @@ system:
       with a successful Strength check (DC = 10 + half your wizard level) as a
       standard action. You can use this ability a number of times per day equal
       to half your wizard level.</p>
-  tags:
-    - Mud School
-  actions:
-    - _id: Eo7cSrR8BNJM9Y6g
-      name: Use
-      img: icons/magic/earth/projectile-boulder-dust.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: floor(@classes.wizard.level / 2)d6
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      effectNotes:
-        - >-
-          Target creature is blinded for [[1d4]] rounds. The mud can be removed
-          with a successful strength check (DC [[10 + floor(@caster.wizard.level
-          / 2)]]).
-      touch: true
-  uses:
-    per: day
-    maxFormula: floor(@classes.wizard.level / 2)
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9483
     pages: '21'
-_id: 2hB3TxWXgStDzHg3
-_key: '!items!2hB3TxWXgStDzHg3'
+  subType: classFeat
+  tags:
+    - Mud School
+  uses:
+    maxFormula: floor(@classes.wizard.level / 2)
+    per: day
+type: feat
 

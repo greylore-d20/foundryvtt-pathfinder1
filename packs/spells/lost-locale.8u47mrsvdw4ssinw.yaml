@@ -1,44 +1,44 @@
 _id: 8u47mrsvdw4ssinw
-name: Lost Locale
-type: spell
+_key: '!items!8u47mrsvdw4ssinw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lost Locale
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>lost passage</i> (see below), except that it
-      affects a larger area. <i>Lost locale</i> can be made permanent with
-      <i>permanency</i> at a cost of 90,000 gp.</p>
   actions:
     - _id: 7ycsb14i2t2sgp8g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 24
         type: hour
         unchained:
           cost: 24
           type: hour
+      area: one 1-mile cube/level
       duration:
         value: 2 hours/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '1'
         units: mi
-      actionType: spellsave
+        value: '1'
       save:
-        type: will
         description: Will partial
-      area: one 1-mile cube/level
+        type: will
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>lost passage</i> (see below), except that it
+      affects a larger area. <i>Lost locale</i> can be made permanent with
+      <i>permanency</i> at a cost of 90,000 gp.</p>
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
   level: 9
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!8u47mrsvdw4ssinw'
+type: spell
 

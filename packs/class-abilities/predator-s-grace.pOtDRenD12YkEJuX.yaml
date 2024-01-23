@@ -1,8 +1,27 @@
 _id: pOtDRenD12YkEJuX
-name: Predator's Grace
-type: feat
+_key: '!items!pOtDRenD12YkEJuX'
 img: systems/pf1/icons/skills/beast_01.jpg
+name: Predator's Grace
 system:
+  abilityType: su
+  actions:
+    - _id: j1i9yvc9ces4xltq
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/beast_01.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can, as a swift action, grant yourself a +10-foot bonus to your
@@ -11,29 +30,10 @@ system:
       you already possess low-light vision, the range of your sight becomes
       three times that of a human in dim light for 1 round. You can use this
       ability a number of times per day equal to 3 + your Wisdom modifier.</p>
-  actions:
-    - _id: j1i9yvc9ces4xltq
-      name: Use
-      img: systems/pf1/icons/skills/beast_01.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_predatorsGrace
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!pOtDRenD12YkEJuX'
+  tag: classFeat_predatorsGrace
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

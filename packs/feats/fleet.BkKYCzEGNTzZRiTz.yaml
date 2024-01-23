@@ -1,8 +1,14 @@
 _id: BkKYCzEGNTzZRiTz
-name: Fleet
-type: feat
+_key: '!items!BkKYCzEGNTzZRiTz'
 img: systems/pf1/icons/feats/fleet.png
+name: Fleet
 system:
+  changes:
+    - _id: y4qckv6r
+      formula: '(@armor.type < 2 && @attributes.encumbrance.level < 1) ? 5 : 0'
+      modifier: base
+      priority: null
+      subTarget: landSpeed
   description:
     value: >-
       <p><em>You are faster than most.</em></p><p><strong>Benefits</strong>:
@@ -10,15 +16,9 @@ system:
       feet. You lose the benefits of this feat if you carry a medium or heavy
       load.</p><p><strong>Special</strong>: You can take this feat multiple
       times. The effects stack.</p>
+  tag: feat_fleet
   tags:
     - General
     - Movement
-  changes:
-    - _id: y4qckv6r
-      formula: '(@armor.type < 2 && @attributes.encumbrance.level < 1) ? 5 : 0'
-      subTarget: landSpeed
-      modifier: base
-      priority: null
-  tag: feat_fleet
-_key: '!items!BkKYCzEGNTzZRiTz'
+type: feat
 

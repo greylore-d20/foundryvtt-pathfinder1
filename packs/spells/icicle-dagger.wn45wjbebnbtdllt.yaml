@@ -1,8 +1,26 @@
 _id: wn45wjbebnbtdllt
-name: Icicle Dagger
-type: spell
+_key: '!items!wn45wjbebnbtdllt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Icicle Dagger
 system:
+  actions:
+    - _id: p0sxzbj2hyjgqvsq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one icicle
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a masterwork dagger out of ice. The dagger deals 1 point of
@@ -11,36 +29,18 @@ system:
       6th level, the dagger functions as a <i>+1 frost dagger</i>. At 11th
       level, it gains the <i>returning</i> property when thrown, melting away
       and reforming in your hand just before your next turn.</p>
-  actions:
-    - _id: p0sxzbj2hyjgqvsq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one icicle
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      summoner: 1
-      witch: 1
       bloodrager: 1
       occultist: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      witch: 1
+      wizard: 1
   school: con
+  sr: false
   subschool: creation
   types: cold
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!wn45wjbebnbtdllt'
+type: spell
 

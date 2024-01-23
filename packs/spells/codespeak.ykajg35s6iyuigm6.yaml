@@ -1,8 +1,29 @@
 _id: ykajg35s6iyuigm6
-name: Codespeak
-type: spell
+_key: '!items!ykajg35s6iyuigm6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Codespeak
 system:
+  actions:
+    - _id: infwypzc9r4jq665
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: >-
+          you plus one willing creature per 2 levels, no two of which can be
+          more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, all recipients gain the ability to speak a new
@@ -19,42 +40,21 @@ system:
       another's <i>codespeak</i> spell, but it does reveal that the targets are
       speaking a magical language. <i>Tongues</i> translates <i>codespeak</i>
       normally.</p>
-  actions:
-    - _id: infwypzc9r4jq665
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level (D)
-      target:
-        value: >-
-          you plus one willing creature per 2 levels, no two of which can be
-          more than 30 ft. apart
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       a complex rune inscribed on a slip of paper that is then placed under your
       tongue
+  school: trs
   sr: false
-_key: '!items!ykajg35s6iyuigm6'
+type: spell
 

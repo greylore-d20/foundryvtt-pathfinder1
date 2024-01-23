@@ -1,8 +1,27 @@
 _id: 6TRopvOqsHlxvbNW
-name: Erase from Time
-type: feat
+_key: '!items!6TRopvOqsHlxvbNW'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Erase from Time
 system:
+  abilityType: su
+  actions:
+    - _id: 3fok40s4535zo7g6
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: round
+        value: max(1, floor(@classes.oracle.level / 2))
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a melee touch attack, you can temporarily remove a creature from
@@ -17,32 +36,13 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 11th level.</p>
+  subType: classFeat
+  tag: classFeat_eraseFromTime
   tags:
     - Revelation
     - Time Mystery
-  actions:
-    - _id: 3fok40s4535zo7g6
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        value: max(1, floor(@classes.oracle.level / 2))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
   uses:
-    per: day
     maxFormula: '@classes.oracle.level >= 11 ? 2 : 1'
-  tag: classFeat_eraseFromTime
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!6TRopvOqsHlxvbNW'
+    per: day
+type: feat
 

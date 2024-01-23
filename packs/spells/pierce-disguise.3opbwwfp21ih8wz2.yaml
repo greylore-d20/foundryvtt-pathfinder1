@@ -1,18 +1,10 @@
 _id: 3opbwwfp21ih8wz2
-name: Pierce Disguise
-type: spell
+_key: '!items!3opbwwfp21ih8wz2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pierce Disguise
 system:
-  description:
-    value: >-
-      <p>You see through magical disguises (whether illusions or polymorph
-      effects) of the same spell level or lower. This allows you to see the true
-      forms of creatures magically disguised by such methods. The true form
-      appears as a ghostly overlay on the creature's disguised appearance.</p>
   actions:
     - _id: bk44c5tasevofe6h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,25 +12,33 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You see through magical disguises (whether illusions or polymorph
+      effects) of the same spell level or lower. This allows you to see the true
+      forms of creatures magically disguised by such methods. The true form
+      appears as a ghostly overlay on the creature's disguised appearance.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      witch: 3
-      shaman: 3
-      psychic: 3
       medium: 3
       occultist: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!3opbwwfp21ih8wz2'
+type: spell
 

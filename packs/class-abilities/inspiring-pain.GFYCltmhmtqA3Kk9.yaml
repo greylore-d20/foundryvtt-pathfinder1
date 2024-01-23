@@ -1,8 +1,28 @@
 _id: GFYCltmhmtqA3Kk9
-name: Inspiring Pain
-type: feat
+_key: '!items!GFYCltmhmtqA3Kk9'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Inspiring Pain
 system:
+  abilityType: ex
+  actions:
+    - _id: 9db7gynce58p39s7
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, the cavalier can inspire brutal malice among his allies.
@@ -11,27 +31,7 @@ system:
       (the weapon must still be capable of dealing nonlethal damage). Affected
       allies gain a +2 bonus on nonlethal weapon damage rolls. This effect lasts
       for 1 round and can be used once every 5 minutes.</p>
-  actions:
-    - _id: 9db7gynce58p39s7
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: allies within range
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_inspiringPain
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!GFYCltmhmtqA3Kk9'
+  tag: classFeat_inspiringPain
+type: feat
 

@@ -1,8 +1,11 @@
 _id: EZ5qCVThr5HMKjo6
-name: Healing Bomb
-type: feat
+_key: '!items!EZ5qCVThr5HMKjo6'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Healing Bomb
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>When the alchemist creates a bomb, he can choose to have it heal damage
@@ -13,12 +16,9 @@ system:
       splash radius are healed for the minimum amount of damage the cure spell
       is capable of healing. A healing bomb damages undead instead of healing
       them.</p>
+  subType: classFeat
+  tag: classFeat_healingBomb
   tags:
     - Alchemist Discovery
-  tag: classFeat_healingBomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!EZ5qCVThr5HMKjo6'
+type: feat
 

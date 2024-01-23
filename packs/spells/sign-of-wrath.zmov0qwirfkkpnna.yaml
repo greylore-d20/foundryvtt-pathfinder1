@@ -1,8 +1,33 @@
 _id: zmov0qwirfkkpnna
-name: Sign of Wrath
-type: spell
+_key: '!items!zmov0qwirfkkpnna'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sign of Wrath
 system:
+  actions:
+    - _id: 1nlppa2nftqze1ex
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 25-ft.-radius burst centered on you
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '25'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex half
+        type: ref
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A giant, glowing symbol of wrath appears below you, forcibly repulsing
@@ -14,42 +39,17 @@ system:
       unaffected by both the spell's damage and its bull rush effect, and may
       select up to one creature per 4 caster levels to also be ignored by the
       spells effects.</p>
-  actions:
-    - _id: 1nlppa2nftqze1ex
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '25'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
-      area: 25-ft.-radius burst centered on you
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a gem worth 1,000 gp inscribed with the Thassilonian symbol of wrath
-_key: '!items!zmov0qwirfkkpnna'
+  school: evo
+  types: force
+type: spell
 

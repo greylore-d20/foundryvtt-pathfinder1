@@ -1,8 +1,14 @@
 _id: H8FbMUps5Z0gQdvV
-name: Construct
-type: class
+_key: '!items!H8FbMUps5Z0gQdvV'
 img: systems/pf1/icons/skills/mech_7.jpg
+name: Construct
 system:
+  bab: high
+  changes:
+    - _id: bo1uudua
+      formula: (max(0, @size - 3) * 10) + (max(0, @size - 6) * 10)
+      modifier: untypedPerm
+      subTarget: mhp
   description:
     value: >-
       <p>A construct is an animated object or artificially created creature.</p>
@@ -166,17 +172,11 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: bo1uudua
-      formula: (max(0, @size - 3) * 10) + (max(0, @size - 6) * 10)
-      subTarget: mhp
-      modifier: untypedPerm
-  links: ''
-  tag: construct
-  subType: racial
   hd: 10
   hp: 10
-  bab: high
+  links: ''
   skillsPerLevel: 2
-_key: '!items!H8FbMUps5Z0gQdvV'
+  subType: racial
+  tag: construct
+type: class
 

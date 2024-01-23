@@ -1,8 +1,27 @@
 _id: se3kb4roqvsvfcsq
-name: Air Step
-type: spell
+_key: '!items!se3kb4roqvsvfcsq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Air Step
 system:
+  actions:
+    - _id: ruzqgut8oy9e7rad
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>air walk</i>, except you can rise no higher
@@ -18,44 +37,25 @@ system:
       reduced when using this spell, and you can cross over liquid at half
       speed.</p><p>If you have 5 ranks in Fly, you can cross liquid at full
       speed and do not take the penalties to your skill checks.</p>
-  actions:
-    - _id: ruzqgut8oy9e7rad
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
-      bard: 2
       alchemist: 2
-      witch: 2
-      occultist: 2
+      bard: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      occultist: 2
+      oracle: 2
+      ranger: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  types: air
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a goose feather
+  school: trs
   sr: false
-_key: '!items!se3kb4roqvsvfcsq'
+  types: air
+type: spell
 

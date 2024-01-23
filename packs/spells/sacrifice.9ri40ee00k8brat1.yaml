@@ -1,8 +1,26 @@
 _id: 9ri40ee00k8brat1
-name: Sacrifice
-type: spell
+_key: '!items!9ri40ee00k8brat1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sacrifice
 system:
+  actions:
+    - _id: rnfe0gyvf0boptwg
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous, 1 hour, or 1 day (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one summoned elemental or outsider (see text)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make a sacrifice to aid in conjuring and commanding a creature
@@ -59,37 +77,19 @@ system:
       2,500 gp level  1 When used to sacrifice a life, body, mind, or soul other
       than the caster's own, this is an evil act.  2 A character can sacrifice
       only her own morals, and can do so only once per lifetime.</p>
-  actions:
-    - _id: rnfe0gyvf0boptwg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous, 1 hour, or 1 day (see text)
-      target:
-        value: one summoned elemental or outsider (see text)
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
       oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
-  school: enc
-  subschool: charm
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see text
+  school: enc
   sr: false
-_key: '!items!9ri40ee00k8brat1'
+  subschool: charm
+  types: mind-affecting
+type: spell
 

@@ -1,8 +1,22 @@
 _id: j6wj000Qb9tymMe4
-name: Will of the Dead
-type: feat
+_key: '!items!j6wj000Qb9tymMe4'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Will of the Dead
 system:
+  abilityType: su
+  actions:
+    - _id: jpj5k5osyfrk18qk
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>Even undead creatures can be affected by the psychic’s mind-affecting
@@ -13,21 +27,7 @@ system:
 
       <p>This amplification can be linked only to spells that have the
       mind-affecting descriptor.</p>
-  actions:
-    - _id: jpj5k5osyfrk18qk
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_willOfTheDead
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!j6wj000Qb9tymMe4'
+  tag: classFeat_willOfTheDead
+type: feat
 

@@ -1,19 +1,10 @@
 _id: sw043b79qfk3lj2e
-name: Flame Arrow
-type: spell
+_key: '!items!sw043b79qfk3lj2e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Flame Arrow
 system:
-  description:
-    value: >-
-      <p>This spell allows you to turn ammunition (such as arrows, crossbow
-      bolts, shuriken, and sling stones) into fiery projectiles. Each piece of
-      ammunition deals an extra 1d6 points of fire damage to any target it hits.
-      A flaming projectile can easily ignite a flammable object or structure,
-      but it won't ignite a creature it strikes.</p>
   actions:
     - _id: yrqqg7wi72cuurkj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,28 +12,37 @@ system:
           type: action
       duration:
         value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
       target:
         value: >-
           fifty projectiles, all of which must be together at the time of
           casting
-      range:
-        units: close
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell allows you to turn ammunition (such as arrows, crossbow
+      bolts, shuriken, and sling stones) into fiery projectiles. Each piece of
+      ammunition deals an extra 1d6 points of fire damage to any target it hits.
+      A flaming projectile can easily ignite a flammable object or structure,
+      but it won't ignite a creature it strikes.</p>
   learnedAt:
     class:
+      bloodrager: 3
+      magus: 3
+      occultist: 3
       sorcerer: 3
       wizard: 3
-      magus: 3
-      bloodrager: 3
-      occultist: 3
   level: 3
-  school: trs
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of oil and a small piece of flint
+  school: trs
   sr: false
-_key: '!items!sw043b79qfk3lj2e'
+  types: fire
+type: spell
 

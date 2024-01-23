@@ -1,8 +1,31 @@
 _id: kp5zx6jqqsikq6ey
-name: Judgment Light
-type: spell
+_key: '!items!kp5zx6jqqsikq6ey'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Judgment Light
 system:
+  actions:
+    - _id: 0t63t998zdro444u
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft.-radius burst
+      duration:
+        value: instantaneous, see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An inquisitor may only cast this spell while she has a judgment active.
@@ -33,34 +56,11 @@ system:
       caster, making allies' weapons within the burst count as magic, the
       alignment her weapon is, and adamantine for purposes of overcoming damage
       reduction for 1 round per caster level.</p>
-  actions:
-    - _id: 0t63t998zdro444u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous, see text
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        description: see text
-      area: 30-ft.-radius burst
   learnedAt:
     class:
       inquisitor: 4
   level: 4
   school: evo
   types: light
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kp5zx6jqqsikq6ey'
+type: spell
 

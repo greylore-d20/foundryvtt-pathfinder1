@@ -1,8 +1,24 @@
 _id: oq1baifb9r4v00ah
-name: Fey Gate
-type: spell
+_key: '!items!oq1baifb9r4v00ah'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fey Gate
 system:
+  actions:
+    - _id: mieg72ie0xf3k50m
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as the planar travel function of <i>gate</i>,
@@ -21,36 +37,20 @@ system:
       travelers on solid ground in the First World, it conveys no protections
       against whatever creatures or environmental hazards may be present
       there.</p>
-  actions:
-    - _id: mieg72ie0xf3k50m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level; see text
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
-      cleric: 8
-      oracle: 8
-      druid: 8
       bard: 6
+      cleric: 8
+      druid: 8
+      oracle: 8
+      sorcerer: 8
       summoner: 6
-      witch: 8
       summonerUnchained: 6
+      witch: 8
+      wizard: 8
   level: 8
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!oq1baifb9r4v00ah'
+  subschool: creation
+type: spell
 

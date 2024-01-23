@@ -1,8 +1,30 @@
 _id: 3wdx7fjulsohi1lk
-name: Weird
-type: spell
+_key: '!items!3wdx7fjulsohi1lk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Weird
 system:
+  actions:
+    - _id: d5qchgcly19gunjr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will disbelief, then Fortitude partial; see text
+        type: fort
+      target:
+        value: any number of creatures, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>phantasmal killer</i>, except it can
@@ -11,45 +33,23 @@ system:
       shadowy shapes.</p><p>If a subject's Fortitude save succeeds, it still
       takes 3d6 points of damage and is stunned for 1 round. The subject also
       takes 1d4 points of Strength damage.</p>
-  actions:
-    - _id: d5qchgcly19gunjr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: any number of creatures, no two of which can be more than 30 ft. apart
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will disbelief, then Fortitude partial; see text
   learnedAt:
+    bloodline:
+      Harrow: 9
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
     domain:
       Madness: 9
     subDomain:
       Nightmare: 9
-    bloodline:
-      Harrow: 9
   level: 9
   school: ill
-  subschool: phantasm
-  types: fear, mind-affecting, emotion
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '369'
-_key: '!items!3wdx7fjulsohi1lk'
+  subschool: phantasm
+  types: fear, mind-affecting, emotion
+type: spell
 

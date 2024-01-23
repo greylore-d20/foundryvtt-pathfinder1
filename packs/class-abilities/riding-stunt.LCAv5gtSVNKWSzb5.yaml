@@ -1,8 +1,13 @@
 _id: LCAv5gtSVNKWSzb5
-name: Riding Stunt
-type: feat
+_key: '!items!LCAv5gtSVNKWSzb5'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Riding Stunt
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Rogue
+      - Ninja
   description:
     value: >-
       <p>A character with this talent takes only a –2 penalty on Ride checks
@@ -16,15 +21,10 @@ system:
       cover as a free action instead of as a move action. Failing this check
       results in the recovery requiring a move action as normal. A character
       must be trained in Ride to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_ridingStunt
   tags:
     - Rogue Talent
     - Ninja Trick
-  tag: classFeat_ridingStunt
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Ninja
-  abilityType: ex
-_key: '!items!LCAv5gtSVNKWSzb5'
+type: feat
 

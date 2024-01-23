@@ -1,8 +1,30 @@
 _id: bhmziba5gtp0yrd4
-name: Steal Breath
-type: spell
+_key: '!items!bhmziba5gtp0yrd4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Steal Breath
 system:
+  actions:
+    - _id: i0g67qc76uceiey7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates; see text
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You pull the breath from a creature's lungs, dealing damage and leaving
@@ -13,41 +35,19 @@ system:
       target's mouth and enters your mouth.  If, during the duration, the target
       moves out of range or line of effect to you, the spell immediately ends.
       This spell has no effect on creatures that do not need to breathe air.</p>
-  actions:
-    - _id: i0g67qc76uceiey7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round (see text)
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates; see text
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
       bard: 2
-      witch: 2
       bloodrager: 2
-      psychic: 2
-      mesmerist: 2
+      druid: 2
       hunter: 2
+      mesmerist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!bhmziba5gtp0yrd4'
+type: spell
 

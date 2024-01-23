@@ -1,19 +1,11 @@
 _id: at1jo3acj1rdlmrn
-name: Imbue Army Special Ability
-type: spell
+_key: '!items!at1jo3acj1rdlmrn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Imbue Army Special Ability
 system:
-  description:
-    value: >-
-      <p>You imbue the target with an army special ability (see page 242 of
-      <i>Ultimate</i> Campaign) possessed by the army's commander. The army is
-      treated as if it consists of units who all possess the chosen special
-      ability. This special ability is in addition to any special abilities the
-      army inherently possessed prior to the casting of the spell.</p>
   actions:
     - _id: p1yjb1bc2c95tx1v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
@@ -22,27 +14,35 @@ system:
           type: minute
       duration:
         value: 1 battle
-      target:
-        value: one army
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: 1 hex
         units: spec
-      actionType: spellsave
+        value: 1 hex
       save:
-        type: will
         description: none or Will negates
         harmless: true
+        type: will
+      target:
+        value: one army
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You imbue the target with an army special ability (see page 242 of
+      <i>Ultimate</i> Campaign) possessed by the army's commander. The army is
+      treated as if it consists of units who all possess the chosen special
+      ability. This special ability is in addition to any special abilities the
+      army inherently possessed prior to the casting of the spell.</p>
   learnedAt:
     class:
       cleric: 9
       oracle: 9
   level: 9
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a silver mirror worth 100 gp
-_key: '!items!at1jo3acj1rdlmrn'
+  school: evo
+type: spell
 

@@ -1,8 +1,29 @@
 _id: 3ijtwoy6sbv2i2da
-name: Rend Body I
-type: spell
+_key: '!items!3ijtwoy6sbv2i2da'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rend Body I
 system:
+  actions:
+    - _id: 2otdw6a5ck40uq3q
+      actionType: spellsave
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial (see text)
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
   description:
     value: >-
       <p>You lacerate the body of the target creature with telekinetic force,
@@ -19,31 +40,10 @@ system:
       <i>regeneration</i>. If the damage reduces the target's hit points to
       below 0, all of its limbs are affected in this fashion.  Creatures without
       discernible anatomy or limbs are unaffected by <i>rend body</i>.</p>
-  actions:
-    - _id: 2otdw6a5ck40uq3q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial (see text)
   learnedAt:
     class:
       psychic: 5
   level: 5
   school: evo
-  components:
-    somatic: true
-_key: '!items!3ijtwoy6sbv2i2da'
+type: spell
 

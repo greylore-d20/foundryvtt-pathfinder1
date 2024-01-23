@@ -1,8 +1,20 @@
 _id: nVwveeNV71Bg7YnY
-name: Studied Combat
-type: feat
+_key: '!items!nVwveeNV71Bg7YnY'
 img: systems/pf1/icons/skills/weapon_44.jpg
+name: Studied Combat
 system:
+  abilityType: ex
+  actions:
+    - _id: lb2hotzlp39lt0d3
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/weapon_44.jpg
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>With a keen eye and calculating mind, an investigator can assess the
@@ -19,19 +31,7 @@ system:
       he cannot become the target of the same investigator’s studied combat
       again for 24 hours unless the investigator expends one use of inspiration
       when taking the move action to use this ability.</p>
-  actions:
-    - _id: lb2hotzlp39lt0d3
-      name: Use
-      img: systems/pf1/icons/skills/weapon_44.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_studiedCombat
   subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!nVwveeNV71Bg7YnY'
+  tag: classFeat_studiedCombat
+type: feat
 

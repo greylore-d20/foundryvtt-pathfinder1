@@ -1,18 +1,11 @@
 _id: 45rrwvrr14hv2r4f
-name: Touch of Mercy
-type: spell
+_key: '!items!45rrwvrr14hv2r4f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Touch of Mercy
 system:
-  description:
-    value: >-
-      <p>The target creature deals only nonlethal damage with all of its weapon
-      attacks. Damage taken by creatures or objects that are not subject to
-      nonlethal damage is not converted to nonlethal and remains lethal damage.
-      The weapon retains all of its other normal properties.</p>
   actions:
     - _id: bvzsrbuv9bbx23ya
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,29 +13,36 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target creature deals only nonlethal damage with all of its weapon
+      attacks. Damage taken by creatures or objects that are not subject to
+      nonlethal damage is not converted to nonlethal and remains lethal damage.
+      The weapon retains all of its other normal properties.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
+      cleric: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: enc
   subschool: compulsion
   types: good, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!45rrwvrr14hv2r4f'
+type: spell
 

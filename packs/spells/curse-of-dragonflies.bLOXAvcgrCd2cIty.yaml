@@ -1,8 +1,31 @@
 _id: bLOXAvcgrCd2cIty
-name: Curse of Dragonflies
-type: spell
+_key: '!items!bLOXAvcgrCd2cIty'
 img: icons/creatures/invertebrates/dragonfly-teal.webp
+name: Curse of Dragonflies
 system:
+  actions:
+    - _id: 5objqdlcl1tumf8g
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent (D)
+      img: icons/creatures/invertebrates/dragonfly-teal.webp
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You invest a target with cursed elemental energy, making the open skies
@@ -16,25 +39,6 @@ system:
       <p>This spell does not affect incorporeal creatures or creatures that are
       otherwise intangible (such as a wizard using
       @Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form} to fly).</p>
-  actions:
-    - _id: 5objqdlcl1tumf8g
-      name: Use
-      img: icons/creatures/invertebrates/dragonfly-teal.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent (D)
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       arcanist: 4
@@ -43,17 +47,13 @@ system:
       magus: 3
       shaman: 4
       sorcerer: 4
-      wizard: 4
       summoner: 4
       witch: 3
+      wizard: 4
   level: 4
-  school: con
-  types: air, curse
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a paper insect
-_key: '!items!bLOXAvcgrCd2cIty'
+  school: con
+  types: air, curse
+type: spell
 

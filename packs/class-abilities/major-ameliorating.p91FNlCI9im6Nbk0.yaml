@@ -1,8 +1,45 @@
 _id: p91FNlCI9im6Nbk0
-name: Major Ameliorating
-type: feat
+_key: '!items!p91FNlCI9im6Nbk0'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Major Ameliorating
 system:
+  abilityType: su
+  actions:
+    - _id: 5brv4ndiiyhn7z53
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.witch.level'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Suppress
+      range:
+        units: touch
+      target:
+        value: creature touched
+      touch: true
+    - _id: 4RkHOIJGelqODxL9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '24'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Resist
+      range:
+        units: touch
+      target:
+        value: touched creature
+      touch: true
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can touch a creature to suppress or protect it from more
@@ -20,47 +57,10 @@ system:
       total conditions or types of effects to grant a circumstance bonus against
       each time she uses the major ameliorating hex.</p><p>Once a creature has
       benefited from this hex, it cannot benefit from it again for 24 hours.</p>
+  subType: classFeat
+  tag: classFeat_majorAmeliorating
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: 5brv4ndiiyhn7z53
-      name: Suppress
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.witch.level'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-      touch: true
-    - _id: 4RkHOIJGelqODxL9
-      name: Resist
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '24'
-        units: hour
-      target:
-        value: touched creature
-      range:
-        units: touch
-      touch: true
-  tag: classFeat_majorAmeliorating
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!p91FNlCI9im6Nbk0'
+type: feat
 

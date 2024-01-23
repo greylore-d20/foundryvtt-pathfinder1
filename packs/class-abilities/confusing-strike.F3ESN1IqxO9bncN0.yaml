@@ -1,8 +1,24 @@
 _id: F3ESN1IqxO9bncN0
-name: Confusing Strike
-type: feat
+_key: '!items!F3ESN1IqxO9bncN0'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Confusing Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: 05l9nsko56bpgpjx
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+      save:
+        description: Fortitude reduces to 1 round confusion
+        type: fort
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When the investigator deals damage with studied strike, the opponent
@@ -14,25 +30,9 @@ system:
       not affected by this ability.</p>
 
       <p>An investigator must be at least 19th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_confusingStrike
   tags:
     - Investigator Talent
-  actions:
-    - _id: 05l9nsko56bpgpjx
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude reduces to 1 round confusion
-  tag: classFeat_confusingStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!F3ESN1IqxO9bncN0'
+type: feat
 

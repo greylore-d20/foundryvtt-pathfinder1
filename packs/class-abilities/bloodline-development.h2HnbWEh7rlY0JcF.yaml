@@ -1,8 +1,26 @@
 _id: h2HnbWEh7rlY0JcF
-name: Bloodline Development
-type: feat
+_key: '!items!h2HnbWEh7rlY0JcF'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Bloodline Development
 system:
+  actions:
+    - _id: sbkamojtaskz6053
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist selects one <a
@@ -25,27 +43,9 @@ system:
       instead allows her arcanist levels to stack with the levels of the class
       that granted her access to the bloodline when determining the powers and
       abilities of her bloodline.</p>
+  subType: classFeat
+  tag: classFeat_bloodlineDevelopment
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: sbkamojtaskz6053
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_bloodlineDevelopment
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-_key: '!items!h2HnbWEh7rlY0JcF'
+type: feat
 

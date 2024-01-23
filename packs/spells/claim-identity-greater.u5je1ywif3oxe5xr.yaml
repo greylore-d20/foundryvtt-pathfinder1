@@ -1,8 +1,31 @@
 _id: u5je1ywif3oxe5xr
-name: Claim Identity, Greater
-type: spell
+_key: '!items!u5je1ywif3oxe5xr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Claim Identity, Greater
 system:
+  actions:
+    - _id: 9nrumonzy59g1qll
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: humanoid creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as per
@@ -15,48 +38,25 @@ system:
       into a flawless imitation of the spell's target, as if affected by
       <em>claim identity</em>, and reverts to its natural form upon removing the
       mask. Any damage dealt to the mask immediately ends this spell.</p>
-  actions:
-    - _id: 9nrumonzy59g1qll
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: humanoid creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 6
-      bard: 5
       alchemist: 5
-      witch: 5
-      inquisitor: 5
       antipaladin: 4
-      shaman: 6
+      bard: 5
+      druid: 6
       hunter: 6
+      inquisitor: 5
+      shaman: 6
+      sorcerer: 6
+      witch: 5
+      wizard: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a silver needle costing 100 gp
     gpValue: 100
+    value: a silver needle costing 100 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!u5je1ywif3oxe5xr'
+  school: trs
+  subschool: polymorph
+type: spell
 

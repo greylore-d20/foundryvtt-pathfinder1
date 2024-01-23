@@ -1,8 +1,46 @@
 _id: KAKysOTelOMG5c7U
-name: Dwarven Light Pelletbow
-type: weapon
+_key: '!items!KAKysOTelOMG5c7U'
 img: systems/pf1/icons/items/weapons/dwarven-pelletbow.PNG
+name: Dwarven Light Pelletbow
 system:
+  actions:
+    - _id: w5dw08jiqrpnw47q
+      ability:
+        attack: dex
+        critMult: 3
+        critRange: 19
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: slingBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/dwarven-pelletbow.PNG
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '40'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Dwarven Light Pelletbow
+    - Light Crossbow
   description:
     value: >-
       <p>The dwarven pelletbow is a crossbowlike weapon that is loaded with and
@@ -20,60 +58,22 @@ system:
       to a heavy crossbow also apply to a dwarven heavy pelletbow, and those
       that apply to a light crossbow also apply to a dwarven light
       pelletbow.</p>
-  tags:
-    - Dwarven
-  weight:
-    value: 4
-  price: 50
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: w5dw08jiqrpnw47q
-      name: Attack
-      img: systems/pf1/icons/items/weapons/dwarven-pelletbow.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '40'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        critRange: 19
-        critMult: 3
-      ammoType: slingBullet
-  baseTypes:
-    - Dwarven Light Pelletbow
-    - Light Crossbow
-  weaponGroups:
-    value:
-      - crossbows
-  subType: exotic
-  weaponSubtype: ranged
+  price: 50
   source:
     id: PZO9491
     pages: '8'
-  ammo:
-    type: slingBullet
-_key: '!items!KAKysOTelOMG5c7U'
+  subType: exotic
+  tags:
+    - Dwarven
+  weaponGroups:
+    value:
+      - crossbows
+  weaponSubtype: ranged
+  weight:
+    value: 4
+type: weapon
 

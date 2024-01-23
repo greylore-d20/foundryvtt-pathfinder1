@@ -1,8 +1,29 @@
 _id: n156m0w3nga1tyqn
-name: Improve Trap
-type: spell
+_key: '!items!n156m0w3nga1tyqn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Improve Trap
 system:
+  actions:
+    - _id: elqx5df45dvmc253
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one trap
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When this spell is cast upon a trap, it improves one specific element
@@ -15,40 +36,19 @@ system:
       and its precise location. A trap can only have one improvement from this
       spell at a time. A second casting changes the improvement on the trap, but
       does not add another improvement.</li></ul><p></p>
-  actions:
-    - _id: elqx5df45dvmc253
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one trap
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
-      ranger: 2
-      witch: 3
-      inquisitor: 3
       antipaladin: 2
+      druid: 3
       hunter: 2
+      inquisitor: 3
+      ranger: 2
+      sorcerer: 3
+      witch: 3
+      wizard: 3
     subDomain:
       Trap: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!n156m0w3nga1tyqn'
+type: spell
 

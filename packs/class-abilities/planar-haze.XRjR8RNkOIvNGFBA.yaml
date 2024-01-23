@@ -1,8 +1,21 @@
 _id: XRjR8RNkOIvNGFBA
-name: Planar haze
-type: feat
+_key: '!items!XRjR8RNkOIvNGFBA'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Planar haze
 system:
+  abilityType: su
+  actions:
+    - _id: 1j7d0bgm09bhrykw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can fill an area with the smoky miasma of the Outer Rifts. Once per
@@ -17,23 +30,10 @@ system:
 
       <p>You may use this ability one additional time per day at 7th level, and
       one additional time per day at 14th level.</p>
-  actions:
-    - _id: 1j7d0bgm09bhrykw
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 7)
-  tag: classFeat_planarHaze
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!XRjR8RNkOIvNGFBA'
+  tag: classFeat_planarHaze
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 7)
+    per: day
+type: feat
 

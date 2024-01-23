@@ -1,8 +1,30 @@
 _id: 6efjgs1qvmj6yxqv
-name: Phantasmal Killer
-type: spell
+_key: '!items!6efjgs1qvmj6yxqv'
 img: icons/magic/death/skull-energy-light-purple.webp
+name: Phantasmal Killer
 system:
+  actions:
+    - _id: a783d6z7ft9hqy1i
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will disbelief, then Fortitude partial; see text
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a phantasmal image of the most fearsome creature imaginable
@@ -17,49 +39,27 @@ system:
       attack succeeds in disbelieving and possesses telepathy or is wearing a
       <i>helm of telepathy</i>, the beast can be turned upon you. You must then
       disbelieve it or become subject to its deadly fear attack.</p>
-  actions:
-    - _id: a783d6z7ft9hqy1i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one living creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will disbelief, then Fortitude partial; see text
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 4
-      magus: 4
       bloodrager: 4
-      psychic: 4
+      magus: 4
       medium: 3
       mesmerist: 4
+      psychic: 4
+      sorcerer: 4
       spiritualist: 4
+      witch: 4
+      wizard: 4
     domain:
       Madness: 6
     subDomain:
       Nightmare: 4
   level: 4
   school: ill
-  subschool: phantasm
-  types: fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '319'
-_key: '!items!6efjgs1qvmj6yxqv'
+  subschool: phantasm
+  types: fear, mind-affecting
+type: spell
 

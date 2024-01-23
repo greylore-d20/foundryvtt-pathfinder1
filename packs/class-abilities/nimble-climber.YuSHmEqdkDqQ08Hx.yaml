@@ -1,30 +1,30 @@
 _id: YuSHmEqdkDqQ08Hx
-name: Nimble Climber
-type: feat
+_key: '!items!YuSHmEqdkDqQ08Hx'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Nimble Climber
 system:
-  description:
-    value: >-
-      <p>A catfolk character with this talent gains a +4 bonus on Climb checks.
-      If she has the climber racial trait, she can take 10 on her Climb checks
-      even when in immediate danger or distracted.</p>
-  tags:
-    - Rogue Talent
-    - Investigator Talent
-    - Ninja Trick
-  changes:
-    - _id: pfhlvl82
-      formula: '4'
-      subTarget: skill.clm
-      modifier: untyped
-      priority: null
-  tag: classFeat_nimbleClimber
-  subType: classFeat
+  abilityType: ex
   associations:
     classes:
       - Rogue
       - Investigator
       - Ninja
-  abilityType: ex
-_key: '!items!YuSHmEqdkDqQ08Hx'
+  changes:
+    - _id: pfhlvl82
+      formula: '4'
+      modifier: untyped
+      priority: null
+      subTarget: skill.clm
+  description:
+    value: >-
+      <p>A catfolk character with this talent gains a +4 bonus on Climb checks.
+      If she has the climber racial trait, she can take 10 on her Climb checks
+      even when in immediate danger or distracted.</p>
+  subType: classFeat
+  tag: classFeat_nimbleClimber
+  tags:
+    - Rogue Talent
+    - Investigator Talent
+    - Ninja Trick
+type: feat
 

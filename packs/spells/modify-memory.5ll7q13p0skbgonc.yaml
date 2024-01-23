@@ -1,8 +1,30 @@
 _id: 5ll7q13p0skbgonc
-name: Modify Memory
-type: spell
+_key: '!items!5ll7q13p0skbgonc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Modify Memory
 system:
+  actions:
+    - _id: 7n52vrno8omoap8u
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You reach into the subject's mind and modify as many as 5 minutes of
@@ -24,31 +46,12 @@ system:
       creature's natural inclinations. An illogical modified memory is dismissed
       by the creature as a bad dream, too much wine, or another similar
       excuse.</p>
-  actions:
-    - _id: 7n52vrno8omoap8u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       bard: 4
-      psychic: 5
       medium: 4
       mesmerist: 4
+      psychic: 5
     subDomain:
       Loss: 6
       Memory: 6
@@ -56,8 +59,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!5ll7q13p0skbgonc'
+type: spell
 

@@ -1,8 +1,30 @@
 _id: mv346x3o4ada240u
-name: Synaptic Scramble
-type: spell
+_key: '!items!mv346x3o4ada240u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Synaptic Scramble
 system:
+  actions:
+    - _id: l8bs0w0wkp0411kc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You scramble the synaptic connections of your target, causing it to
@@ -28,35 +50,13 @@ system:
       action)</td></tr><tr><td>81-100</td><td>Desired action (perform whatever
       standard or move action the creature desires to
       perform)</td></tr></tbody></table>
-  actions:
-    - _id: l8bs0w0wkp0411kc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      psychic: 4
       mesmerist: 3
+      psychic: 4
   level: 4
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mv346x3o4ada240u'
+type: spell
 

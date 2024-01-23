@@ -1,8 +1,28 @@
 _id: 6g6pm57u91u2r9w8
-name: Limp Lash
-type: spell
+_key: '!items!6g6pm57u91u2r9w8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Limp Lash
 system:
+  actions:
+    - _id: d8ckq7es97glneed
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: special (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      target:
+        value: 1 creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a dark whip-shaped field of energy that wraps around an
@@ -18,34 +38,14 @@ system:
       maximum length of 20 feet, 15 hit points, and a hardness of 5. The spell
       ends immediately if you let go of the whip or it is destroyed. When the
       spell ends, all penalties the target took from this spell also end.</p>
-  actions:
-    - _id: d8ckq7es97glneed
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: special (see below)
-      target:
-        value: 1 creature
-      range:
-        value: '20'
-        units: ft
   learnedAt:
     class:
       sorcerer: 2
-      wizard: 2
       witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a dead wasp
-_key: '!items!6g6pm57u91u2r9w8'
+  school: nec
+type: spell
 

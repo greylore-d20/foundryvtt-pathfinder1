@@ -1,8 +1,29 @@
 _id: 6k2vdevlvg4cu7gd
-name: Opportunistic Loyalty
-type: spell
+_key: '!items!6k2vdevlvg4cu7gd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Opportunistic Loyalty
 system:
+  actions:
+    - _id: a3qh66vzaachg02q
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Cast this spell when a creature within range casts a spell that
@@ -15,38 +36,17 @@ system:
       If this spell would raise the total number of affected targets above that
       allowed by the target spell, <i>opportunistic loyalty</i> has no
       effect.</p>
-  actions:
-    - _id: a3qh66vzaachg02q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      witch: 1
-      inquisitor: 1
       antipaladin: 1
-      psychic: 1
+      cleric: 1
+      inquisitor: 1
       mesmerist: 1
+      oracle: 1
+      psychic: 1
+      warpriest: 1
+      witch: 1
   school: enc
   subschool: compulsion
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!6k2vdevlvg4cu7gd'
+type: spell
 

@@ -1,8 +1,26 @@
 _id: 1okm1u6ig4mws6ue
-name: Bouncy Body
-type: spell
+_key: '!items!1okm1u6ig4mws6ue'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bouncy Body
 system:
+  actions:
+    - _id: dmyrt9qluxs8gk86
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target's flesh becomes flexible and rubbery. It gains a +2
@@ -13,32 +31,14 @@ system:
       the target falls against a hard surface, it can attempt an Acrobatics
       check (DC = the distance fallen) to attempt to bounce upward; success
       means the creature bounces upward half the distance fallen.</p>
-  actions:
-    - _id: dmyrt9qluxs8gk86
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       alchemist: 1
-      witch: 1
       bloodrager: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!1okm1u6ig4mws6ue'
+type: spell
 

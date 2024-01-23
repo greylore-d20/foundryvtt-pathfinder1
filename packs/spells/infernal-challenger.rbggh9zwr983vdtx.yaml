@@ -1,8 +1,27 @@
 _id: rbggh9zwr983vdtx
-name: Infernal Challenger
-type: spell
+_key: '!items!rbggh9zwr983vdtx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Infernal Challenger
 system:
+  actions:
+    - _id: 6m2lroq7nqmj2uyk
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one called bearded devil and testing ground; see text
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons a bearded devil, causing it to appear where you
@@ -26,40 +45,21 @@ system:
       Conjuring a devil is typically an evil act. If cast for any purpose
       besides the administering of a Hellknight test, this spell has the evil
       descriptor.</p>
-  actions:
-    - _id: 6m2lroq7nqmj2uyk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: close
-      spellEffect: one called bearded devil and testing ground; see text
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
       oracle: 3
+      sorcerer: 3
       summoner: 3
       summonerUnchained: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: calling
-  types: lawful, see text
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: an iron badge or medallion
+  school: con
   sr: false
-_key: '!items!rbggh9zwr983vdtx'
+  subschool: calling
+  types: lawful, see text
+type: spell
 

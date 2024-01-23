@@ -1,17 +1,11 @@
 _id: ny2qxht2aeesoi08
-name: Infernal Healing, Greater
-type: spell
+_key: '!items!ny2qxht2aeesoi08'
 img: systems/pf1/icons/spells/horror-red-2.jpg
+name: Infernal Healing, Greater
 system:
-  description:
-    value: >-
-      <p>As @Compendium[pf1.spells.r6mfw5nrc2ndkacy]{Infernal Healing}, except
-      the target gains fast healing 4 and the target detects as an evil
-      cleric.</p>
   actions:
     - _id: unio0gy2xwcyl99p
-      name: Use
-      img: systems/pf1/icons/spells/horror-red-2.jpg
+      actionType: heal
       activation:
         type: round
         unchained:
@@ -19,35 +13,41 @@ system:
           type: action
       duration:
         value: 1 minute
-      target:
-        value: creature touched
+      img: systems/pf1/icons/spells/horror-red-2.jpg
+      name: Use
       range:
         units: touch
-      actionType: heal
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>As @Compendium[pf1.spells.r6mfw5nrc2ndkacy]{Infernal Healing}, except
+      the target gains fast healing 4 and the target detects as an evil
+      cleric.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 4
-      witch: 4
       magus: 4
+      oracle: 4
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
+  materials:
+    value: 1 drop of devil blood or 1 dose of unholy water
   school: con
   subschool: healing
   types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: 1 drop of devil blood or 1 dose of unholy water
-_key: '!items!ny2qxht2aeesoi08'
+type: spell
 

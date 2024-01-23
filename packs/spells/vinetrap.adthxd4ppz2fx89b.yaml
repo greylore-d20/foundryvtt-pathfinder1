@@ -1,8 +1,31 @@
 _id: adthxd4ppz2fx89b
-name: Vinetrap
-type: spell
+_key: '!items!adthxd4ppz2fx89b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vinetrap
 system:
+  actions:
+    - _id: flkc2dca1aj3zsh7
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: radius spread of up to 10 ft./level, 90 ft. high
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex negates (see text)
+        type: ref
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Vines choked with thorns, blossoms, leaflets, and other floral debris
@@ -40,35 +63,12 @@ system:
       decrease the creature's speed to less than half). In addition, once the
       creature is slowed to half-speed, it becomes staggered until the vines are
       torn off or the spell ends.</p>
-  actions:
-    - _id: flkc2dca1aj3zsh7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (see text)
-      area: radius spread of up to 10 ft./level, 90 ft. high
   learnedAt:
     class:
       cleric: 8
-      oracle: 8
       druid: 8
+      oracle: 8
   level: 8
   school: con
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!adthxd4ppz2fx89b'
+type: spell
 

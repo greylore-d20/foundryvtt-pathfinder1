@@ -1,8 +1,20 @@
 _id: yotHT522pQoKDhID
-name: Slayer's Advance
-type: feat
+_key: '!items!yotHT522pQoKDhID'
 img: systems/pf1/icons/feats/acrobatic-step.png
+name: Slayer's Advance
 system:
+  abilityType: ex
+  actions:
+    - _id: actgemorp4k431a4
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/feats/acrobatic-step.png
+      name: Use
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>At 13th level, a slayer can once per day move up to twice his base
@@ -10,22 +22,10 @@ system:
       takes a –10 penalty to his check for doing so.</p>
 
       <p>At 17th level, he can do this twice per day.</p>
-  actions:
-    - _id: actgemorp4k431a4
-      name: Use
-      img: systems/pf1/icons/feats/acrobatic-step.png
-      activation:
-        type: move
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: '@classes.slayer.level >= 17 ? 2 : 1'
-  tag: classFeat_slayersAdvance
   subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
-_key: '!items!yotHT522pQoKDhID'
+  tag: classFeat_slayersAdvance
+  uses:
+    maxFormula: '@classes.slayer.level >= 17 ? 2 : 1'
+    per: day
+type: feat
 

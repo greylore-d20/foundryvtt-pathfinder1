@@ -1,8 +1,25 @@
 _id: 0vi272dchokb72pf
-name: Burst of Adrenaline
-type: spell
+_key: '!items!0vi272dchokb72pf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Burst of Adrenaline
 system:
+  actions:
+    - _id: 2e8ljp4sxbnnfh7i
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You draw upon your body's inner reserves of strength, leaving you
@@ -10,29 +27,12 @@ system:
       Dexterity, or Constitution, you can cast this spell to gain a +8
       enhancement bonus to Strength, Dexterity, or Constitution for that roll,
       but you are fatigued for 1 round afterward.</p>
-  actions:
-    - _id: 2e8ljp4sxbnnfh7i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      psychic: 1
       mesmerist: 1
+      psychic: 1
       spiritualist: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!0vi272dchokb72pf'
+type: spell
 

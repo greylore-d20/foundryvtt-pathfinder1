@@ -1,8 +1,17 @@
 _id: xcttF7UUhJnmwRu7
-name: Braggart
-type: feat
+_key: '!items!xcttF7UUhJnmwRu7'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Braggart
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Cavalier
+  changes:
+    - _id: DqzqvRzb
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 2nd level, the cavalier can spend a standard action to extol his own
@@ -11,20 +20,11 @@ system:
       He does not need a weapon in hand to use this ability. The cavalier
       receives a +2 morale bonus on melee attack rolls made against demoralized
       targets.</p>
-  changes:
-    - _id: DqzqvRzb
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Dazzling Display
         uuid: Compendium.pf1.feats.Item.3cq9YbgcMrAXC76j
-  tag: classFeat_braggart
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!xcttF7UUhJnmwRu7'
+  tag: classFeat_braggart
+type: feat
 

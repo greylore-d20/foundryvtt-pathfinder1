@@ -1,19 +1,11 @@
 _id: 5s8jqu87susjxarc
-name: Sotto Voce
-type: spell
+_key: '!items!5s8jqu87susjxarc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sotto Voce
 system:
-  description:
-    value: >-
-      <p>Your dry, rasping whisper fills a living creature of 4 or fewer Hit
-      Dice with unnatural dread. The affected creature must make a Will save or
-      be shaken for 1 round.</p><p>This spell originated among the followers of
-      the Whispering Way, but necromancers and other intimidating folk outside
-      that group are known to use it.</p>
   actions:
     - _id: 9c7z6ot4f7cttg5k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,27 +13,35 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one humanoid creature of 4 HD or less
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: one humanoid creature of 4 HD or less
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>Your dry, rasping whisper fills a living creature of 4 or fewer Hit
+      Dice with unnatural dread. The affected creature must make a Will save or
+      be shaken for 1 round.</p><p>This spell originated among the followers of
+      the Whispering Way, but necromancers and other intimidating folk outside
+      that group are known to use it.</p>
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
+      bard: 1
       cleric: 0
       oracle: 0
-      bard: 1
+      sorcerer: 0
+      wizard: 0
   level: 0
   school: nec
   types: fear, mind-affecting, sonic
-  components:
-    verbal: true
-_key: '!items!5s8jqu87susjxarc'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

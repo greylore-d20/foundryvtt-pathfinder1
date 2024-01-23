@@ -1,8 +1,29 @@
 _id: 8AJT0T9xGWRxxj5i
-name: Aquatic Adaptation
-type: feat
+_key: '!items!8AJT0T9xGWRxxj5i'
 img: systems/pf1/icons/skills/emerald_05.jpg
+name: Aquatic Adaptation
 system:
+  abilityType: ex
+  actions:
+    - _id: jd09r8hevsgy9q0i
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/emerald_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
+  changes:
+    - _id: vk3jemkk
+      formula: '@classes.sorcerer.level >= 15 ? 60 : 30'
+      modifier: base
+      subTarget: swimSpeed
+    - _id: uq8lnaor
+      formula: '@classes.sorcerer.level >= 9 ? 1 : 0'
+      modifier: untyped
+      subTarget: nac
   description:
     value: >-
       <p>At 3rd level, you gain a swim <em>speed</em> of 30 feet. At 9th level,
@@ -11,28 +32,7 @@ system:
       immersed in water, you gain <em>blindsense</em> 30 feet. At 15th level,
       you gain a swim <em>speed</em> of 60 feet and <em>blindsense</em> of 60
       feet in water.</p>
-  actions:
-    - _id: jd09r8hevsgy9q0i
-      name: Use
-      img: systems/pf1/icons/skills/emerald_05.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: vk3jemkk
-      formula: '@classes.sorcerer.level >= 15 ? 60 : 30'
-      subTarget: swimSpeed
-      modifier: base
-    - _id: uq8lnaor
-      formula: '@classes.sorcerer.level >= 9 ? 1 : 0'
-      subTarget: nac
-      modifier: untyped
-  tag: classFeat_aquaticAdaptation
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!8AJT0T9xGWRxxj5i'
+  tag: classFeat_aquaticAdaptation
+type: feat
 

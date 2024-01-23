@@ -1,8 +1,29 @@
 _id: du0o3d2bm2ailgpb
-name: Bowstaff
-type: spell
+_key: '!items!du0o3d2bm2ailgpb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bowstaff
 system:
+  actions:
+    - _id: camybmytwm32umg1
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: one weapon (bow)
+  components:
+    verbal: true
   description:
     value: >-
       <p>The bow that is touched takes on the rigidity and toughness of forged
@@ -12,34 +33,13 @@ system:
       enhancement bonus, if any, applies on melee attack and damage rolls.
       Additional weapon special weapon qualities also apply to melee attacks if
       such qualities can be added to a melee weapon.</p>
-  actions:
-    - _id: camybmytwm32umg1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one weapon (bow)
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      ranger: 1
-      paladin: 1
+      hunter: 1
       inquisitor: 1
       occultist: 2
-      hunter: 1
+      paladin: 1
+      ranger: 1
   school: trs
-  components:
-    verbal: true
-_key: '!items!du0o3d2bm2ailgpb'
+type: spell
 

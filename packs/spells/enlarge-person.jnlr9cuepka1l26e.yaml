@@ -1,8 +1,31 @@
 _id: jnlr9cuepka1l26e
-name: Enlarge Person
-type: spell
+_key: '!items!jnlr9cuepka1l26e'
 img: icons/magic/control/silhouette-grow-shrink-tan.webp
+name: Enlarge Person
 system:
+  actions:
+    - _id: b7wnnac30bhh9ypv
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one humanoid creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes instant growth of a humanoid creature, doubling its
@@ -28,54 +51,31 @@ system:
       size do not stack.</p><p><i>Enlarge person</i> counters and dispels
       <i>reduce person</i>.</p><p><i>Enlarge person</i> can be made permanent
       with a <i>permanency</i> spell.</p>
-  actions:
-    - _id: b7wnnac30bhh9ypv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 min./level (D)
-      target:
-        value: one humanoid creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
+    bloodline:
+      Boreal: 1
+      Efreeti: 1
     class:
-      sorcerer: 1
-      wizard: 1
       alchemist: 1
-      summoner: 1
-      witch: 1
-      magus: 1
       bloodrager: 1
-      psychic: 1
+      magus: 1
       medium: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      witch: 1
+      wizard: 1
     domain:
       Strength: 1
     subDomain:
       Growth: 1
-    bloodline:
-      Boreal: 1
-      Efreeti: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: powdered iron
+  school: trs
   source:
     id: PZO1110
     pages: '277'
-_key: '!items!jnlr9cuepka1l26e'
+type: spell
 

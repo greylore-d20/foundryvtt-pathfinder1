@@ -1,8 +1,30 @@
 _id: 2zw2ud0vprha2uvf
-name: Deceitful Veneer
-type: spell
+_key: '!items!2zw2ud0vprha2uvf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deceitful Veneer
 system:
+  actions:
+    - _id: 8g87btuqilr1ey7s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You subtly alter both the target's aura and subtle cues in its body
@@ -16,39 +38,17 @@ system:
       standard action you can suppress or resume the effects of this spell,
       allowing you to let the target seem to be telling the truth at some times
       and still seem to be lying at others.</p>
-  actions:
-    - _id: 8g87btuqilr1ey7s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      bard: 4
-      witch: 5
-      inquisitor: 4
       antipaladin: 3
-      psychic: 4
+      bard: 4
+      inquisitor: 4
       medium: 3
       mesmerist: 4
+      psychic: 4
+      witch: 5
   level: 4
   school: ill
   subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!2zw2ud0vprha2uvf'
+type: spell
 

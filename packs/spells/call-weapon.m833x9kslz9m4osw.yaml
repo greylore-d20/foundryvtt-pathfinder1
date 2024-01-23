@@ -1,8 +1,26 @@
 _id: m833x9kslz9m4osw
-name: Call Weapon
-type: spell
+_key: '!items!m833x9kslz9m4osw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Call Weapon
 system:
+  actions:
+    - _id: gxeuibzzumiw09vk
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one melee weapon wielded by an ally
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell first rose to prominence among the elves of Kyonin in the
@@ -19,31 +37,13 @@ system:
       her weapon, the spell fails. An unconscious or dying ally is considered a
       "willing" target so long as the weapon to be called is still in contact
       with the ally's body.</p>
-  actions:
-    - _id: gxeuibzzumiw09vk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one melee weapon wielded by an ally
-      range:
-        value: '30'
-        units: ft
   learnedAt:
     class:
-      ranger: 1
       bard: 1
-      magus: 1
       hunter: 1
+      magus: 1
+      ranger: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!m833x9kslz9m4osw'
+type: spell
 

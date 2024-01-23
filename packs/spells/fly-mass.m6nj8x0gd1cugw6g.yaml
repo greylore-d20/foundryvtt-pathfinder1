@@ -1,16 +1,11 @@
 _id: m6nj8x0gd1cugw6g
-name: Fly, Mass
-type: spell
+_key: '!items!m6nj8x0gd1cugw6g'
 img: icons/creatures/abilities/wings-birdlike-blue.webp
+name: Fly, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>fly</i> (<i>Core Rulebook</i> 284), save
-      that it can target numerous creatures and lasts longer.</p>
   actions:
     - _id: ljswimzsnir3orts
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,34 +13,39 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>fly</i> (<i>Core Rulebook</i> 284), save
+      that it can target numerous creatures and lasts longer.</p>
   learnedAt:
     class:
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
     domain:
       Vermin: 8
     subDomain:
       Feather: 6
   level: 7
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a wing feather
-_key: '!items!m6nj8x0gd1cugw6g'
+  school: trs
+type: spell
 

@@ -1,8 +1,34 @@
 _id: 2VvasbTU92RJJR1o
-name: Live On
-type: feat
+_key: '!items!2VvasbTU92RJJR1o'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Live On
 system:
+  abilityType: sp
+  actions:
+    - _id: 6x9yiu50yqgtswnx
+      actionType: heal
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: (ceil((@classes.psychic.level - 3) / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 5th level, you can use lay on hands as though you were a paladin of
@@ -12,36 +38,10 @@ system:
       <p>You can target only yourself with lay on hands or mercies gained from
       this discipline. This stacks with lay on hands abilities gained from other
       sources.</p>
-  actions:
-    - _id: 6x9yiu50yqgtswnx
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-      actionType: heal
-      damage:
-        parts:
-          - formula: (ceil((@classes.psychic.level - 3) / 2))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: floor((@classes.psychic.level - 3) / 2) + @abilities.cha.mod
-  tag: classFeat_liveOn
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: sp
-_key: '!items!2VvasbTU92RJJR1o'
+  tag: classFeat_liveOn
+  uses:
+    maxFormula: floor((@classes.psychic.level - 3) / 2) + @abilities.cha.mod
+    per: day
+type: feat
 

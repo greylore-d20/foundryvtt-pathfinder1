@@ -1,8 +1,27 @@
 _id: O5eXD4ylEpVWgvJr
-name: Distracting Pattern
-type: feat
+_key: '!items!O5eXD4ylEpVWgvJr'
 img: systems/pf1/icons/spells/shielding-spirit-3.jpg
+name: Distracting Pattern
 system:
+  abilityType: su
+  actions:
+    - _id: bjkynk45fii0q02g
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '@classes.sorcerer.level'
+      img: systems/pf1/icons/spells/shielding-spirit-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can distort the scenery around you for a number of
@@ -11,31 +30,12 @@ system:
       <em>Stealth</em> checks equal to 1/2 your <em>sorcerer</em> level. You can
       use this ability once per day at 9th level, twice per day at 17th level,
       and three times per day at 20th level.</p>
-  actions:
-    - _id: bjkynk45fii0q02g
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '@classes.sorcerer.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
+  subType: classFeat
+  tag: classFeat_distractingPattern
   uses:
-    per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-  tag: classFeat_distractingPattern
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!O5eXD4ylEpVWgvJr'
+    per: day
+type: feat
 

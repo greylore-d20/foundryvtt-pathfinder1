@@ -1,8 +1,30 @@
 _id: uo317ywjn95w316n
-name: Paladin's Sacrifice
-type: spell
+_key: '!items!uo317ywjn95w316n'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Paladin's Sacrifice
 system:
+  actions:
+    - _id: xxlymviosnapu51r
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    verbal: true
   description:
     value: >-
       <p>You open up a brief but powerful divine conduit between you and another
@@ -17,32 +39,10 @@ system:
       effect that also targets you or includes you in its area, you suffer the
       effects for both yourself and the target you spared, potentially taking
       damage or suffering other consequences twice.</p>
-  actions:
-    - _id: xxlymviosnapu51r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       paladin: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    divineFocus: 1
-_key: '!items!uo317ywjn95w316n'
+type: spell
 

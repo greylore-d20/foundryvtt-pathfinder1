@@ -1,8 +1,25 @@
 _id: aigibmi32id0cl65
-name: Ally Across Time
-type: spell
+_key: '!items!aigibmi32id0cl65'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ally Across Time
 system:
+  actions:
+    - _id: bkhjffjibei3glp6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one 5-ft. cube of temporal possibility/2 levels
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create one or more 5-foot cubes of temporal possibility where your
@@ -23,39 +40,22 @@ system:
       levels you have beyond 3rd, you can summon an additional duplicate before
       the spell ends, though you cannot have more than one duplicate in
       existence at once.</p>
-  actions:
-    - _id: bkhjffjibei3glp6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      spellEffect: one 5-ft. cube of temporal possibility/2 levels
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      ranger: 1
       bard: 2
-      inquisitor: 2
-      psychic: 2
-      medium: 1
+      cleric: 2
       hunter: 1
+      inquisitor: 2
+      medium: 1
+      oracle: 2
+      psychic: 2
+      ranger: 1
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!aigibmi32id0cl65'
+  subschool: summoning
+type: spell
 

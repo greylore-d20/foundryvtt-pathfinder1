@@ -1,16 +1,11 @@
 _id: r1lmrh4k1ycuowcp
-name: Hex Ward
-type: spell
+_key: '!items!r1lmrh4k1ycuowcp'
 img: icons/weapons/staves/staff-animal-skull-feathers.webp
+name: Hex Ward
 system:
-  description:
-    value: >-
-      <p>You give the target a +4 resistance bonus on saving throws against
-      witch hexes.</p>
   actions:
     - _id: e1w79d3vktl01x0n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,24 +13,29 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You give the target a +4 resistance bonus on saving throws against
+      witch hexes.</p>
   learnedAt:
     class:
-      witch: 1
       inquisitor: 1
-      shaman: 1
       occultist: 1
+      shaman: 1
+      witch: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!r1lmrh4k1ycuowcp'
+type: spell
 

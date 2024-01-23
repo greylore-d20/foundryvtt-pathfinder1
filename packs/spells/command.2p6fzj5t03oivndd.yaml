@@ -1,8 +1,29 @@
 _id: 2p6fzj5t03oivndd
-name: Command
-type: spell
+_key: '!items!2p6fzj5t03oivndd'
 img: icons/magic/sonic/scream-wail-shout-teal.webp
+name: Command
 system:
+  actions:
+    - _id: 7wq7o3eac6ooz8gf
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>You give the subject a single command, which it obeys to the best of
@@ -21,49 +42,28 @@ system:
       round. It may not take any actions but is not considered
       helpless.</p><p>If the subject can't carry out your command on its next
       turn, the spell automatically fails.</p>
-  actions:
-    - _id: 7wq7o3eac6ooz8gf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      witch: 1
-      inquisitor: 1
-      antipaladin: 1
       adept: 1
-      psychic: 1
+      antipaladin: 1
+      cleric: 1
+      inquisitor: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      oracle: 1
+      psychic: 1
+      warpriest: 1
+      witch: 1
     subDomain:
       Devil: 1
       Toil: 1
       Tyranny: 1
   school: enc
-  subschool: compulsion
-  types: language-dependent, mind-affecting
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '256'
-_key: '!items!2p6fzj5t03oivndd'
+  subschool: compulsion
+  types: language-dependent, mind-affecting
+type: spell
 

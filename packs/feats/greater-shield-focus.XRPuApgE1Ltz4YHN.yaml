@@ -1,8 +1,14 @@
 _id: XRPuApgE1Ltz4YHN
-name: Greater Shield Focus
-type: feat
+_key: '!items!XRPuApgE1Ltz4YHN'
 img: systems/pf1/icons/feats/greater-shield-focus.jpg
+name: Greater Shield Focus
 system:
+  changes:
+    - _id: qexjy8jn
+      formula: '@shield.type > 0 ? 1 : 0'
+      modifier: untyped
+      priority: null
+      subTarget: sac
   description:
     value: >-
       <p><em>You are skilled at deflecting blows with your
@@ -18,18 +24,12 @@ system:
       spent. This increase does not stack with any gained from the Shield Focus
       combat trick.</p><p><strong>Usage</strong>: add 1 to Armor Class to any
       shield in your inventory.</p>
-  tags:
-    - Combat
-    - Combat Trick
-  changes:
-    - _id: qexjy8jn
-      formula: '@shield.type > 0 ? 1 : 0'
-      subTarget: sac
-      modifier: untyped
-      priority: null
-  tag: feat_greaterShieldFocus
   source:
     id: PZO1110
     pages: 116, 125
-_key: '!items!XRPuApgE1Ltz4YHN'
+  tag: feat_greaterShieldFocus
+  tags:
+    - Combat
+    - Combat Trick
+type: feat
 

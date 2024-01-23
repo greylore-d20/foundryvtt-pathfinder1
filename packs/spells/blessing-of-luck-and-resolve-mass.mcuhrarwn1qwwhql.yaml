@@ -1,16 +1,11 @@
 _id: mcuhrarwn1qwwhql
-name: Blessing of Luck and Resolve, Mass
-type: spell
+_key: '!items!mcuhrarwn1qwwhql'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blessing of Luck and Resolve, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Blessing of Luck and Resolve</i>, except
-      that it affects multiple creatures.</p>
   actions:
     - _id: wd6xxdmgi5ux9aj7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,31 +13,36 @@ system:
           type: action
       duration:
         value: 1 minute/level (D), special see below
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Blessing of Luck and Resolve</i>, except
+      that it affects multiple creatures.</p>
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
+      inquisitor: 6
       oracle: 6
       paladin: 4
-      inquisitor: 6
+      warpriest: 6
   level: 6
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mcuhrarwn1qwwhql'
+type: spell
 

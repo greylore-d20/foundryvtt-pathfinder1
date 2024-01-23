@@ -1,8 +1,20 @@
 _id: 2Og23i3rRXu5QQlg
-name: Ki Pool
-type: feat
+_key: '!items!2Og23i3rRXu5QQlg'
 img: systems/pf1/icons/skills/red_09.jpg
+name: Ki Pool
 system:
+  abilityType: su
+  actions:
+    - _id: v97q09qo7zjo07ob
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/red_09.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk
   description:
     value: >-
       <p>At 4th level, a monk gains a pool of ki points, supernatural energy he
@@ -49,25 +61,13 @@ system:
 
       <p>The ki pool is replenished each morning after 8 hours of rest or
       meditation; these hours do not need to be consecutive.</p>
-  actions:
-    - _id: v97q09qo7zjo07ob
-      name: Use
-      img: systems/pf1/icons/skills/red_09.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: floor(@classes.monk.level / 2) + @abilities.wis.mod
-  tag: classFeat_kiPool
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-  abilityType: su
   source:
     id: PZO1110
     pages: '59'
-_key: '!items!2Og23i3rRXu5QQlg'
+  subType: classFeat
+  tag: classFeat_kiPool
+  uses:
+    maxFormula: floor(@classes.monk.level / 2) + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: mdsmhrkb7ewe25w8
-name: Mage's Decree
-type: spell
+_key: '!items!mdsmhrkb7ewe25w8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mage's Decree
 system:
+  actions:
+    - _id: lrl8n78u2hwrzbc4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: spec
+        value: up to 1 mile/level, see text
+      target:
+        value: see text
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You speak a short message (up to 25 words), and it is immediately
@@ -29,44 +49,24 @@ system:
       spell; all targeted creatures receive the message, but might not
       understand it if they don’t understand the language in which you spoke the
       message.</p>
-  actions:
-    - _id: lrl8n78u2hwrzbc4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: see text
-      range:
-        value: up to 1 mile/level, see text
-        units: spec
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 5
-      summoner: 5
-      witch: 6
+      cleric: 6
       inquisitor: 5
-      psychic: 6
       mesmerist: 5
+      oracle: 6
+      psychic: 6
+      sorcerer: 6
+      summoner: 5
       summonerUnchained: 5
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a brass cone or trumpet
+  school: evo
   sr: false
-_key: '!items!mdsmhrkb7ewe25w8'
+type: spell
 

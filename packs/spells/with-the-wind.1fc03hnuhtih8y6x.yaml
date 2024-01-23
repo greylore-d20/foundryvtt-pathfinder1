@@ -1,17 +1,11 @@
 _id: 1fc03hnuhtih8y6x
-name: With the Wind
-type: spell
+_key: '!items!1fc03hnuhtih8y6x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: With the Wind
 system:
-  description:
-    value: >-
-      <p>You create eddies in the air around the subject that protect it from
-      being checked or blown away. The target can't be moved by winds of less
-      than windstorm force unless it wishes to be.</p>
   actions:
     - _id: ll2occblbuphfjzn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,31 +13,37 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You create eddies in the air around the subject that protect it from
+      being checked or blown away. The target can't be moved by winds of less
+      than windstorm force unless it wishes to be.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 2
-      magus: 2
       bloodrager: 2
-      occultist: 2
-      spiritualist: 2
+      druid: 2
       hunter: 2
+      magus: 2
+      occultist: 2
+      ranger: 2
+      sorcerer: 2
+      spiritualist: 2
+      wizard: 2
   level: 2
   school: abj
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1fc03hnuhtih8y6x'
+type: spell
 

@@ -1,8 +1,31 @@
 _id: axl8z3mae9ydejlt
-name: Deathless
-type: spell
+_key: '!items!axl8z3mae9ydejlt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deathless
 system:
+  actions:
+    - _id: z2up8vdg5rrvo09n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target's soul is strongly anchored to its body, preventing death
@@ -11,42 +34,19 @@ system:
       prevent death from sources other than hit point damage-such as
       Constitution damage or drain, death effects, or energy drain. Spells that
       cure hit points affect the creature normally.</p>
-  actions:
-    - _id: z2up8vdg5rrvo09n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       alchemist: 4
-      witch: 4
+      cleric: 4
       inquisitor: 4
-      psychic: 4
       medium: 4
+      oracle: 4
+      psychic: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!axl8z3mae9ydejlt'
+type: spell
 

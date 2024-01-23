@@ -1,8 +1,28 @@
 _id: 3gvCSxQa145gO58b
-name: 'Repose Blessing: Gentle Rest'
-type: feat
+_key: '!items!3gvCSxQa145gO58b'
 img: systems/pf1/icons/spells/fog-air-2.jpg
+name: 'Repose Blessing: Gentle Rest'
 system:
+  actions:
+    - _id: 7qklkd00zvaz4ixi
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/fog-air-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can fill a living creature with lethargy by hitting
@@ -10,27 +30,7 @@ system:
       If the target is already staggered, it falls asleep for 1 round instead.
       An undead creature that’s touched is staggered for a number of rounds
       equal to your Wisdom modifier (minimum 1).</p>
-  actions:
-    - _id: 7qklkd00zvaz4ixi
-      name: Use
-      img: systems/pf1/icons/spells/fog-air-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-  tag: classFeat_reposeBlessingGentleRest
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!3gvCSxQa145gO58b'
+  tag: classFeat_reposeBlessingGentleRest
+type: feat
 

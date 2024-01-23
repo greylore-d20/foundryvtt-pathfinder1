@@ -1,19 +1,10 @@
 _id: bi0kwkoqetglbhdq
-name: Summon Lesser Demon
-type: spell
+_key: '!items!bi0kwkoqetglbhdq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Lesser Demon
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster</i>, except it allows you
-      to summon a single brimorak (<i>Lords of Chaos</i> 56), one incubus
-      (<i>Bestiary 3</i> 73), one thoxel demon (see page 86), 1d3 schir demons
-      (<i>Bestiary 3</i> 74), or 1d4+1 vermlek demons (<i>Lords of Chaos</i>
-      54).</p>
   actions:
     - _id: k225q9mpi6my6v0l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -21,30 +12,39 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster</i>, except it allows you
+      to summon a single brimorak (<i>Lords of Chaos</i> 56), one incubus
+      (<i>Bestiary 3</i> 73), one thoxel demon (see page 86), 1d3 schir demons
+      (<i>Bestiary 3</i> 74), or 1d4+1 vermlek demons (<i>Lords of Chaos</i>
+      54).</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
       oracle: 5
+      sorcerer: 5
       summoner: 4
-      witch: 5
       summonerUnchained: 4
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: summoning
-  types: chaotic, evil
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a tiny bag and a small candle
+  school: con
   sr: false
-_key: '!items!bi0kwkoqetglbhdq'
+  subschool: summoning
+  types: chaotic, evil
+type: spell
 

@@ -1,8 +1,32 @@
 _id: w39hhureabm27gza
-name: Tailwind
-type: spell
+_key: '!items!w39hhureabm27gza'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tailwind
 system:
+  actions:
+    - _id: 7pjwt11u2nyj7sue
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '120'
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one or more creatures, no two of which can be more than 120 feet apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You compel the wind to push the targets in a direction of your choice.
@@ -13,47 +37,23 @@ system:
       every other subject. You can change the tailwind's direction once per hour
       by concentrating as a standard action. This spell has no effect
       underwater.</p>
-  actions:
-    - _id: 7pjwt11u2nyj7sue
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one or more creatures, no two of which can be more than 120 feet apart
-      range:
-        value: '120'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 3
-      ranger: 3
-      magus: 4
       bloodrager: 4
-      shaman: 3
-      occultist: 3
-      spiritualist: 3
+      cleric: 4
+      druid: 3
       hunter: 3
+      magus: 4
+      occultist: 3
+      oracle: 4
+      ranger: 3
+      shaman: 3
+      sorcerer: 4
+      spiritualist: 3
+      warpriest: 4
+      wizard: 4
   level: 4
   school: trs
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!w39hhureabm27gza'
+type: spell
 

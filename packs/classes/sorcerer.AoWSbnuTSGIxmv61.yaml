@@ -1,8 +1,27 @@
 _id: AoWSbnuTSGIxmv61
-name: Sorcerer
-type: class
+_key: '!items!AoWSbnuTSGIxmv61'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Sorcerer
 system:
+  casting:
+    ability: cha
+    cantrips: true
+    domain: 0
+    progression: high
+    spells: arcane
+    type: spontaneous
+  classSkills:
+    apr: true
+    art: true
+    blf: true
+    crf: true
+    fly: true
+    int: true
+    kar: true
+    lor: true
+    pro: true
+    spl: true
+    umd: true
   description:
     value: >-
       <p>Scions of innately magical bloodlines, the chosen of deities, the spawn
@@ -45,54 +64,35 @@ system:
       (<em>Cha</em>).</p>
 
       <p><b>Skill Ranks per Level</b>: 2 + <em>Int</em> modifier.</p>
+  hd: 6
+  hp: 6
   links:
     classAssociations:
-      - name: Eschew Materials
-        level: 1
+      - level: 1
+        name: Eschew Materials
         uuid: Compendium.pf1.class-abilities.vVkKDPniD09W5JgO
-      - name: Sorcerer Bloodline
-        level: 1
+      - level: 1
+        name: Sorcerer Bloodline
         uuid: Compendium.pf1.class-abilities.F5mCXQR9VZfKfpTH
-      - name: Bloodline Spells (SOR)
+      - level: 3
+        name: Bloodline Spells (SOR)
         uuid: Compendium.pf1.class-abilities.Item.qlQxKPARGGdOgNWm
-        level: 3
-      - name: Exchange Spell (High)
+      - level: 4
+        name: Exchange Spell (High)
         uuid: Compendium.pf1.class-abilities.Item.dopWa3n4mgTGpTYi
-        level: 4
-      - name: Bloodline Feat (SOR)
+      - level: 7
+        name: Bloodline Feat (SOR)
         uuid: Compendium.pf1.class-abilities.Item.W1KWAZxUNxfCv8rG
-        level: 7
+  savingThrows:
+    will:
+      value: high
+  skillsPerLevel: 2
+  source:
+    id: PZO1110
+    pages: 70-77
   tag: sorcerer
   weaponProf:
     value:
       - simple
-  hd: 6
-  hp: 6
-  skillsPerLevel: 2
-  savingThrows:
-    will:
-      value: high
-  classSkills:
-    apr: true
-    art: true
-    blf: true
-    crf: true
-    fly: true
-    int: true
-    kar: true
-    lor: true
-    pro: true
-    spl: true
-    umd: true
-  casting:
-    type: spontaneous
-    progression: high
-    ability: cha
-    spells: arcane
-    domain: 0
-    cantrips: true
-  source:
-    id: PZO1110
-    pages: 70-77
-_key: '!items!AoWSbnuTSGIxmv61'
+type: class
 

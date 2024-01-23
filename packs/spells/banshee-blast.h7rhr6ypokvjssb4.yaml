@@ -1,8 +1,33 @@
 _id: h7rhr6ypokvjssb4
-name: Banshee Blast
-type: spell
+_key: '!items!h7rhr6ypokvjssb4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Banshee Blast
 system:
+  actions:
+    - _id: zmk1gh86stxgq4za
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      duration:
+        value: instantaneous and 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Reflex half and Will negates (see text)
+        type: ref
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a cone of spectral energy resembling screaming elven ghosts
@@ -10,39 +35,14 @@ system:
       successful Reflex save halves this damage. Any creature that fails its
       Reflex save must succeed at a Will save or become panicked for 1
       round/level.</p>
-  actions:
-    - _id: zmk1gh86stxgq4za
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous and 1 round/level (see text)
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '30'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half and Will negates (see text)
-      area: cone-shaped burst
   learnedAt:
     class:
       sorcerer: 6
-      wizard: 6
-      witch: 6
       spiritualist: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: nec
   types: death, fear, mind-affecting, sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!h7rhr6ypokvjssb4'
+type: spell
 

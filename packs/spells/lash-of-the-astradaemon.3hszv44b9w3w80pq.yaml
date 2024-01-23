@@ -1,8 +1,28 @@
 _id: 3hszv44b9w3w80pq
-name: Lash of the Astradaemon
-type: spell
+_key: '!items!3hszv44b9w3w80pq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lash of the Astradaemon
 system:
+  actions:
+    - _id: 6cslz1z5exopaz3y
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Fortitude negates (see text)
+        type: fort
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You draw on the essence of astradaemons to cause one of your hands to
@@ -20,37 +40,17 @@ system:
       hands. You can use your claw attack up to 1 time per 2 caster levels. Your
       claw reverts to a normal hand once you've delivered all of your potential
       attacks or after 24 hours (whichever comes first).</p>
-  actions:
-    - _id: 6cslz1z5exopaz3y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (see text)
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
       magus: 5
+      oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: nec
   types: evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3hszv44b9w3w80pq'
+type: spell
 

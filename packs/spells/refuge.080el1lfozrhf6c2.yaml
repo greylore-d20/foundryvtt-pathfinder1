@@ -1,8 +1,27 @@
 _id: 080el1lfozrhf6c2
-name: Refuge
-type: spell
+_key: '!items!080el1lfozrhf6c2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Refuge
 system:
+  actions:
+    - _id: bqffax0eurq3icg9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you create powerful magic in a specially
@@ -22,47 +41,28 @@ system:
       possessor at the time the <i>refuge</i> spell is discharged, but once you
       decide to alter the spell in this fashion, you have no choice whether or
       not to be transported.</p>
-  actions:
-    - _id: bqffax0eurq3icg9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent until discharged
-      target:
-        value: object touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 7
       oracle: 7
-      witch: 9
       psychic: 8
+      sorcerer: 9
+      witch: 9
+      wizard: 9
     domain:
       Community: 7
       Liberation: 7
   level: 9
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a prepared object worth 1,500 gp
     gpValue: 1500
+    value: a prepared object worth 1,500 gp
   preparation:
     spontaneousPrepared: false
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '331'
-_key: '!items!080el1lfozrhf6c2'
+  sr: false
+  subschool: teleportation
+type: spell
 

@@ -1,48 +1,48 @@
 _id: qwdi86zm5wbnd92l
-name: Rejuvenate Eidolon, Lesser
-type: spell
+_key: '!items!qwdi86zm5wbnd92l'
 img: systems/pf1/icons/spells/heal-royal-1.jpg
+name: Rejuvenate Eidolon, Lesser
 system:
-  description:
-    value: >-
-      <p>By laying your hand upon an eidolon, you cause its wounds to close and
-      its form to solidify. This spell cures 1d10 points of damage +1 point per
-      caster level (maximum +5).</p>
   actions:
     - _id: ymhf457drr81qbvr
-      name: Use
-      img: systems/pf1/icons/spells/heal-royal-1.jpg
+      actionType: heal
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
-      duration:
-        value: instantaneous
-      target:
-        value: eidolon touched
-      range:
-        units: touch
-      actionType: heal
       damage:
         parts:
           - formula: 1d10 + min(@cl, 5)
             type:
+              custom: ''
               values:
                 - untyped
-              custom: ''
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/spells/heal-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: eidolon touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>By laying your hand upon an eidolon, you cause its wounds to close and
+      its form to solidify. This spell cures 1d10 points of damage +1 point per
+      caster level (maximum +5).</p>
   learnedAt:
     class:
       summoner: 1
       summonerUnchained: 1
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of your blood
+  school: con
   sr: false
-_key: '!items!qwdi86zm5wbnd92l'
+  subschool: healing
+type: spell
 

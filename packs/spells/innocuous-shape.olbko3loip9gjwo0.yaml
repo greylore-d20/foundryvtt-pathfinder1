@@ -1,8 +1,32 @@
 _id: olbko3loip9gjwo0
-name: Innocuous Shape
-type: spell
+_key: '!items!olbko3loip9gjwo0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Innocuous Shape
 system:
+  actions:
+    - _id: kvm2cvfw4si0da3v
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: living creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell transforms a creature into a Medium or smaller animal or
@@ -19,42 +43,18 @@ system:
       otherwise act normally, and feels no compunction to obey or ignore the
       target; it simply assumes none of the target's actions are dangerous or
       malicious unless shown evidence that proves otherwise.</p>
-  actions:
-    - _id: kvm2cvfw4si0da3v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       alchemist: 4
-      witch: 4
-      shaman: 4
       psychic: 4
+      shaman: 4
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of dandelion seeds
-_key: '!items!olbko3loip9gjwo0'
+  school: trs
+  subschool: polymorph
+type: spell
 

@@ -1,8 +1,20 @@
 _id: kMFRrcheXCSkomnq
-name: Tribal Bond
-type: feat
+_key: '!items!kMFRrcheXCSkomnq'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Tribal Bond
 system:
+  abilityType: sp
+  actions:
+    - _id: 0ppzijjcjqgtxz6w
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman and her tribe share a transcendent bond. Once per day when
@@ -10,22 +22,10 @@ system:
       select a number of creatures equal to half her shaman level to serve as
       her honorary tribe. These creatures can constantly communicate with each
       other, as @Compendium[pf1.spells.zuqlok69lapqc6lg]{Telepathic Bond}.</p>
-  actions:
-    - _id: 0ppzijjcjqgtxz6w
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_tribalBond
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: sp
-_key: '!items!kMFRrcheXCSkomnq'
+  tag: classFeat_tribalBond
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

@@ -1,16 +1,11 @@
 _id: lamfr4u7b2f91stm
-name: Reinforce Armaments, Communal
-type: spell
+_key: '!items!lamfr4u7b2f91stm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Reinforce Armaments, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>reinforce armaments</i>, except you divide
-      the duration in 10-minute intervals among the objects touched.</p>
   actions:
     - _id: lxh1v90l18ncc1l4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,33 +13,38 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: armor suits or weapons touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: armor suits or weapons touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>reinforce armaments</i>, except you divide
+      the duration in 10-minute intervals among the objects touched.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
       magus: 2
       occultist: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a metal pin
-_key: '!items!lamfr4u7b2f91stm'
+  school: trs
+type: spell
 

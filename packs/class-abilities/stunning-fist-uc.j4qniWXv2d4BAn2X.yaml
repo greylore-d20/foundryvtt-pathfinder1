@@ -1,7 +1,22 @@
-name: Stunning Fist (UC)
-type: feat
+_id: j4qniWXv2d4BAn2X
+_key: '!items!j4qniWXv2d4BAn2X'
 img: systems/pf1/icons/skills/yellow_08.jpg
+name: Stunning Fist (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: t964ab1f99gydrqs
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      img: systems/pf1/icons/skills/yellow_08.jpg
+      name: Use
+      range:
+        units: touch
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>At 1st level, the monk gains
@@ -20,22 +35,7 @@ system:
       creature fatigued by <em>Stunning Fist</em> cannot become exhausted if hit
       by <em>Stunning Fist</em> again), but additional hits do increase the
       duration.</p>
-  actions:
-    - _id: t964ab1f99gydrqs
-      name: Use
-      img: systems/pf1/icons/skills/yellow_08.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        units: touch
-  tag: classFeat_stunningFist
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_id: j4qniWXv2d4BAn2X
-_key: '!items!j4qniWXv2d4BAn2X'
+  tag: classFeat_stunningFist
+type: feat
 

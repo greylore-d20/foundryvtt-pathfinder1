@@ -1,8 +1,29 @@
 _id: enScoyIVERU06elX
-name: Entangling Ectoplasm
-type: feat
+_key: '!items!enScoyIVERU06elX'
 img: systems/pf1/icons/skills/green_28.jpg
+name: Entangling Ectoplasm
 system:
+  abilityType: sp
+  actions:
+    - _id: 79h1eutxb65gk3ap
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 1d3
+      img: systems/pf1/icons/skills/green_28.jpg
+      name: Use
+      range:
+        units: spec
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can create a ball of ectoplasm and hurl it at targets
@@ -11,31 +32,10 @@ system:
 
       <p>The ectoplasm dissipates within 1d3 rounds. You can use this ability a
       number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: 79h1eutxb65gk3ap
-      name: Use
-      img: systems/pf1/icons/skills/green_28.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d3
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: spec
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_entanglingEctoplasm
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!enScoyIVERU06elX'
+  tag: classFeat_entanglingEctoplasm
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

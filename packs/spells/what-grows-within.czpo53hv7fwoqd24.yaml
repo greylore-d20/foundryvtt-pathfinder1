@@ -1,8 +1,26 @@
 _id: czpo53hv7fwoqd24
-name: What Grows Within
-type: spell
+_key: '!items!czpo53hv7fwoqd24'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: What Grows Within
 system:
+  actions:
+    - _id: hbxqjf2gif6i5fy6
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+      spellEffect: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>By speaking the name "Xhamen-Dor," you infuse yourself with the essence
@@ -34,40 +52,22 @@ system:
       whose Constitution is reduced to 0 by this infestation dies and rises from
       death in 1d4 rounds as a seeded creature (see page 90). This is an
       infestation <i>effect</i>.</p>
-  actions:
-    - _id: hbxqjf2gif6i5fy6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see text
-      spellEffect: you
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      druid: 6
       bard: 6
-      witch: 6
-      psychic: 6
-      mesmerist: 6
+      cleric: 6
+      druid: 6
       hunter: 6
+      mesmerist: 6
+      oracle: 6
+      psychic: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: nec
-  types: evil
-  components:
-    verbal: true
   sr: false
-_key: '!items!czpo53hv7fwoqd24'
+  types: evil
+type: spell
 

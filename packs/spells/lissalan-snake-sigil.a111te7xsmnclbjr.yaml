@@ -1,8 +1,32 @@
 _id: a111te7xsmnclbjr
-name: Lissalan Snake Sigil
-type: spell
+_key: '!items!a111te7xsmnclbjr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lissalan Snake Sigil
 system:
+  actions:
+    - _id: ao9byeqsb7977aws
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent until discharged; 1 day/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Reflex negates
+        type: ref
+      target:
+        value: one touched book or written work
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>There are seven variants of this spell, one for each of the
@@ -23,44 +47,20 @@ system:
       having <i>displacement</i>. This is a glamer effect. <i>Necromancy</i>:
       The target is exhausted. This condition cannot be removed with rest.
       <i>Transmutation</i>: Target is affected by <i>slow</i>.</p>
-  actions:
-    - _id: ao9byeqsb7977aws
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged; 1 day/level; see text
-      target:
-        value: one touched book or written work
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
       oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered amber worth 500 gp and a snake scale
     gpValue: 500
+    value: powdered amber worth 500 gp and a snake scale
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!a111te7xsmnclbjr'
+type: spell
 

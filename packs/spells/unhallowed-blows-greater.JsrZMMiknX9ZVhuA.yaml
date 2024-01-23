@@ -1,7 +1,35 @@
-name: Unhallowed Blows, Greater
-type: spell
+_id: JsrZMMiknX9ZVhuA
+_key: '!items!JsrZMMiknX9ZVhuA'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unhallowed Blows, Greater
 system:
+  actions:
+    - _id: x47bJ5VYyid0a9VH
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one undead creature/level, no two of which can be more than 30 ft.
+          apart, or one undead creature; see text
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as
@@ -13,28 +41,6 @@ system:
       @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanancy} spell. In this case,
       the caster must be at least 11th level and must expend 7,500 gp worth of
       diamond dust as a material component.</p>
-  actions:
-    - _id: x47bJ5VYyid0a9VH
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: >-
-          one undead creature/level, no two of which can be more than 30 ft.
-          apart, or one undead creature; see text
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       antipaladin: 3
@@ -47,15 +53,9 @@ system:
       witch: 3
       wizard: 3
   level: 3
-  school: trs
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pinch of dust from a destroyed undead creature
-_id: JsrZMMiknX9ZVhuA
-_key: '!items!JsrZMMiknX9ZVhuA'
+  school: trs
+  types: evil
+type: spell
 

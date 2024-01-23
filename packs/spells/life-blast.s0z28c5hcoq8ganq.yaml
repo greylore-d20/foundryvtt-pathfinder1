@@ -1,8 +1,34 @@
 _id: s0z28c5hcoq8ganq
-name: Life Blast
-type: spell
+_key: '!items!s0z28c5hcoq8ganq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Life Blast
 system:
+  actions:
+    - _id: itb7idhlfw8lit0r
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 150-ft. line
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '150'
+        type: ray
+      name: Use
+      range:
+        units: ft
+        value: '150'
+      save:
+        description: Will half
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell must be cast in an area with vegetation or it has no effect.
@@ -14,41 +40,15 @@ system:
       maximum of 60 feet at 12th level). All vegetation in that area immediately
       withers and dies. Plant creatures aren't affected.  The blast starts from
       your palm and is able to travel through solid objects and obstacles.</p>
-  actions:
-    - _id: itb7idhlfw8lit0r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '150'
-        units: ft
-      measureTemplate:
-        type: ray
-        size: '150'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will half
-      area: 150-ft. line
   learnedAt:
     class:
       druid: 4
+      hunter: 3
       ranger: 3
       shaman: 4
-      hunter: 3
   level: 4
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a dead leaf
-_key: '!items!s0z28c5hcoq8ganq'
+  school: nec
+type: spell
 

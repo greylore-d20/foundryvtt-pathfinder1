@@ -1,17 +1,11 @@
 _id: rxenoze8iyh9iyng
-name: Shield of Fortification, Greater
-type: spell
+_key: '!items!rxenoze8iyh9iyng'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield of Fortification, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>Shield of Fortification</i>, except there is
-      a 50% chance that the critical hit or sneak attack is negated and damage
-      is instead be rolled normally, rather than 25%.</p>
   actions:
     - _id: kqa7jw9s9jocog0w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,28 +13,34 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>Shield of Fortification</i>, except there is
+      a 50% chance that the critical hit or sneak attack is negated and damage
+      is instead be rolled normally, rather than 25%.</p>
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
+      inquisitor: 3
       oracle: 4
       paladin: 3
-      inquisitor: 3
       psychic: 4
+      warpriest: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!rxenoze8iyh9iyng'
+type: spell
 

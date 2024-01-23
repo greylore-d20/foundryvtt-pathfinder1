@@ -1,8 +1,12 @@
 _id: 3B1zVwRtjHr7khNN
-name: Slowing Strike (SLA)
-type: feat
+_key: '!items!3B1zVwRtjHr7khNN'
 img: systems/pf1/icons/items/weapons/rhoka.PNG
+name: Slowing Strike (SLA)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>An opponent damaged by the slayer’s sneak attack has its speed halved
@@ -19,13 +23,9 @@ system:
       extend the duration of that effect by 1d4 rounds or choose another
       movement type to affect (keeping track of the duration of each affected
       movement separately).</p>
+  subType: classFeat
+  tag: classFeat_slowingStrikeSla
   tags:
     - Slayer Talent
-  tag: classFeat_slowingStrikeSla
-  subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
-_key: '!items!3B1zVwRtjHr7khNN'
+type: feat
 

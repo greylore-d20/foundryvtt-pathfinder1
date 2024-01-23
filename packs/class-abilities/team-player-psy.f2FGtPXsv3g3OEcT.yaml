@@ -1,19 +1,19 @@
-name: Team Player (PSY)
-type: feat
+_id: f2FGtPXsv3g3OEcT
+_key: '!items!f2FGtPXsv3g3OEcT'
 img: icons/skills/social/diplomacy-handshake.webp
+name: Team Player (PSY)
 system:
-  description:
-    value: <p>At 5th level and 13th level, you gain a bonus teamwork feat.</p>
-  changes:
-    - _id: fLn6bDto
-      formula: floor((@classes.psychic.level + 3) / 8)
-      subTarget: bonusFeats
-      modifier: untyped
-  subType: classFeat
+  abilityType: ex
   associations:
     classes:
       - Psychic
-  abilityType: ex
-_id: f2FGtPXsv3g3OEcT
-_key: '!items!f2FGtPXsv3g3OEcT'
+  changes:
+    - _id: fLn6bDto
+      formula: floor((@classes.psychic.level + 3) / 8)
+      modifier: untyped
+      subTarget: bonusFeats
+  description:
+    value: <p>At 5th level and 13th level, you gain a bonus teamwork feat.</p>
+  subType: classFeat
+type: feat
 

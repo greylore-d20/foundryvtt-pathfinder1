@@ -1,8 +1,30 @@
 _id: ptgl3cw40u9i51tn
-name: Sadomasochism
-type: spell
+_key: '!items!ptgl3cw40u9i51tn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sadomasochism
 system:
+  actions:
+    - _id: rr2daxblimaq9ztq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates, see text
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>While subject to this spell, anytime you are dealt damage, your
@@ -12,41 +34,19 @@ system:
       time you deal damage to a creature demoralized by this spell, you roll
       damage twice and take the higher result. This spell originally appeared in
       <i>Pathfinder Campaign Setting</i>: <i>Inner Sea Gods</i>.</p>
-  actions:
-    - _id: rr2daxblimaq9ztq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates, see text
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 4
-      inquisitor: 3
       antipaladin: 3
+      cleric: 3
+      inquisitor: 3
       magus: 4
+      oracle: 3
+      sorcerer: 4
+      warpriest: 3
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
   types: pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ptgl3cw40u9i51tn'
+type: spell
 

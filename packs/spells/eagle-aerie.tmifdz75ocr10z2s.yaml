@@ -1,8 +1,26 @@
 _id: tmifdz75ocr10z2s
-name: Eagle Aerie
-type: spell
+_key: '!items!tmifdz75ocr10z2s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Eagle Aerie
 system:
+  actions:
+    - _id: e8oi504od0siwj5o
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: summoned eagles
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon a flight of giant eagles (one per three caster levels,
@@ -12,34 +30,16 @@ system:
       changes from 1 hour per level to 1 round per level (so if the spell had 5
       full hours left, the eagles remain in combat for 5 rounds before the spell
       ends).</p>
-  actions:
-    - _id: e8oi504od0siwj5o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: long
-      spellEffect: summoned eagles
   learnedAt:
     class:
       druid: 6
-      summoner: 6
       hunter: 6
+      summoner: 6
       summonerUnchained: 6
   level: 6
   school: con
+  sr: false
   subschool: summoning
   types: good
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_key: '!items!tmifdz75ocr10z2s'
+type: spell
 

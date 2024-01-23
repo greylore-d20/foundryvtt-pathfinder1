@@ -1,17 +1,11 @@
 _id: e2ito0vg49gmlpqi
-name: Negative Reaction
-type: spell
+_key: '!items!e2ito0vg49gmlpqi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Negative Reaction
 system:
-  description:
-    value: >-
-      <p>The target's actions and words fail to impress. The target of this
-      spell takes a -10 penalty on any Bluff, Diplomacy, and Intimidate checks
-      as well as any performance combat checks it attempts.</p>
   actions:
     - _id: 8io4m75m7g72vctc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,26 +13,32 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
-  learnedAt:
-    class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
-      witch: 1
-      magus: 1
-      psychic: 1
-      medium: 1
-  school: ill
-  subschool: glamer
+        type: will
+      target:
+        value: one creature
   components:
     somatic: true
-_key: '!items!e2ito0vg49gmlpqi'
+  description:
+    value: >-
+      <p>The target's actions and words fail to impress. The target of this
+      spell takes a -10 penalty on any Bluff, Diplomacy, and Intimidate checks
+      as well as any performance combat checks it attempts.</p>
+  learnedAt:
+    class:
+      bard: 1
+      magus: 1
+      medium: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
+  school: ill
+  subschool: glamer
+type: spell
 

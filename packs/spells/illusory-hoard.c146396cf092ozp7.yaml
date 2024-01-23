@@ -1,8 +1,30 @@
 _id: c146396cf092ozp7
-name: Illusory Hoard
-type: spell
+_key: '!items!c146396cf092ozp7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Illusory Hoard
 system:
+  actions:
+    - _id: cs4apf2vyqezuh6f
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates (and see below)
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>The spell forces the target to believe that nothing in its hoard is
@@ -18,38 +40,16 @@ system:
       merchant's strongbox, or a thief's hidden cache.  The material component
       is any item worth 10 gp or more taken from the original hoard. This item
       is consumed by the spell.</p>
-  actions:
-    - _id: cs4apf2vyqezuh6f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (and see below)
   learnedAt:
     class:
+      bard: 4
       sorcerer: 5
       wizard: 5
-      bard: 4
   level: 5
+  materials:
+    value: an item from the hoard, see below
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    somatic: true
-    material: true
-  materials:
-    value: an item from the hoard, see below
-_key: '!items!c146396cf092ozp7'
+type: spell
 

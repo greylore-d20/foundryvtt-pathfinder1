@@ -1,8 +1,28 @@
 _id: 69j5vk8wqvthshcv
-name: Psychic Image
-type: spell
+_key: '!items!69j5vk8wqvthshcv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychic Image
 system:
+  actions:
+    - _id: nfnl47ajcjkx75yb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief (if interacted with)
+        type: will
+      spellEffect: one shadow duplicate
+  components:
+    verbal: true
   description:
     value: >-
       <p>You envelop your consciousness in a quasi-real image of yourself. Your
@@ -30,31 +50,11 @@ system:
       <i>psychic image</i>, but if you cross into another plane even for an
       instant, such as via <i>blink</i>, <i>dimension door</i>, or similar
       spells, the spell ends.</p>
-  actions:
-    - _id: nfnl47ajcjkx75yb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with)
-      spellEffect: one shadow duplicate
   learnedAt:
     class:
       psychic: 9
   level: 9
   school: ill
   subschool: shadow
-  components:
-    verbal: true
-_key: '!items!69j5vk8wqvthshcv'
+type: spell
 

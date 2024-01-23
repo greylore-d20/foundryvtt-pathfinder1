@@ -1,16 +1,11 @@
 _id: nv0sl4zhusr0knmj
-name: Passing Fancy, Mass
-type: spell
+_key: '!items!nv0sl4zhusr0knmj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Passing Fancy, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as per <i>passing fancy</i> except as noted
-      above.</p>
   actions:
     - _id: dy580y1etph25h02
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 4d4 rounds (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           one living creature/level, no two of which can be more than 30 ft.
           apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as per <i>passing fancy</i> except as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 4
-      witch: 5
-      psychic: 5
       mesmerist: 4
+      psychic: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!nv0sl4zhusr0knmj'
+type: spell
 

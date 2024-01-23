@@ -1,70 +1,70 @@
 _id: kBfgnl7ccM6QLCcH
-name: Bolas
-type: weapon
+_key: '!items!kBfgnl7ccM6QLCcH'
 img: icons/weapons/thrown/bolas-stone.webp
+name: Bolas
 system:
+  actions:
+    - _id: l07tt3cwyysv44au
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/weapons/thrown/bolas-stone.webp
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Bolas
   description:
     value: >-
       <p>A bolas is a pair of wooden, stone, or metal weights connected by a
       thin rope or cord. You can whirl and throw this weapon to make a ranged
       trip attack against an opponent. You can't be tripped during your own trip
       attempt when using a bolas.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 5
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: l07tt3cwyysv44au
-      name: Throw
-      img: icons/weapons/thrown/bolas-stone.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Bolas
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 5
   properties:
-    trp: true
     nnl: true
+    trp: true
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!kBfgnl7ccM6QLCcH'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
 

@@ -1,8 +1,31 @@
 _id: phwxplqf9cop3izc
-name: Warp Metal
-type: spell
+_key: '!items!phwxplqf9cop3izc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Warp Metal
 system:
+  actions:
+    - _id: k51x9cj2p1cr5vjj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: 1 Small wooden object/level, all within a 20-ft. radius; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause metal to bend and warp, permanently destroying its
@@ -19,46 +42,23 @@ system:
       castings of <i>warp metal</i> to warp (or unwarp) an object that is too
       large for you to warp with a single casting. Until the object is
       completely warped, it suffers no ill effects.</p>
-  actions:
-    - _id: k51x9cj2p1cr5vjj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 Small wooden object/level, all within a 20-ft. radius; see text
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
       bloodrager: 4
-      psychic: 4
+      cleric: 4
+      druid: 4
+      hunter: 4
       medium: 4
       occultist: 4
-      hunter: 4
+      oracle: 4
+      psychic: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
-  school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a twisted wire
-_key: '!items!phwxplqf9cop3izc'
+  school: trs
+  types: earth
+type: spell
 

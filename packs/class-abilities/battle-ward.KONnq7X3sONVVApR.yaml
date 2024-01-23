@@ -1,8 +1,28 @@
 _id: KONnq7X3sONVVApR
-name: Battle Ward
-type: feat
+_key: '!items!KONnq7X3sONVVApR'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Battle Ward
 system:
+  abilityType: su
+  actions:
+    - _id: 3yx18lemfeow1vkc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '24'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman touches a willing creature (including herself ) and grants a
@@ -19,27 +39,7 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
-  actions:
-    - _id: 3yx18lemfeow1vkc
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '24'
-        units: hour
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_battleWard
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!KONnq7X3sONVVApR'
+  tag: classFeat_battleWard
+type: feat
 

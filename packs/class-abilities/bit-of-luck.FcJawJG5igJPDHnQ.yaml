@@ -1,41 +1,41 @@
 _id: FcJawJG5igJPDHnQ
-name: Bit of Luck
-type: feat
+_key: '!items!FcJawJG5igJPDHnQ'
 img: systems/pf1/icons/items/inventory/medal.jpg
+name: Bit of Luck
 system:
-  description:
-    value: >-
-      <p>You can touch a willing creature as a standard action, giving it a bit
-      of luck. For the next round, any time the target rolls a d20, he may roll
-      twice and take the more favorable result. You can use this ability a
-      number of times per day equal to 3 + your Wisdom modifier.</p>
+  abilityType: sp
   actions:
     - _id: xbzg0n2zpyd7hc3b
-      name: Use
-      img: systems/pf1/icons/items/inventory/medal.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: round
-      target:
-        value: creature touched
+        value: '1'
+      img: systems/pf1/icons/items/inventory/medal.jpg
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_bitOfLuck
-  subType: classFeat
+      target:
+        value: creature touched
   associations:
     classes:
       - Cleric
-  abilityType: sp
+  description:
+    value: >-
+      <p>You can touch a willing creature as a standard action, giving it a bit
+      of luck. For the next round, any time the target rolls a d20, he may roll
+      twice and take the more favorable result. You can use this ability a
+      number of times per day equal to 3 + your Wisdom modifier.</p>
   source:
     id: PZO1110
     pages: '45'
-_key: '!items!FcJawJG5igJPDHnQ'
+  subType: classFeat
+  tag: classFeat_bitOfLuck
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

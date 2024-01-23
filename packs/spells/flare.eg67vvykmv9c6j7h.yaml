@@ -1,18 +1,11 @@
 _id: eg67vvykmv9c6j7h
-name: Flare
-type: spell
+_key: '!items!eg67vvykmv9c6j7h'
 img: icons/magic/light/explosion-star-glow-yellow.webp
+name: Flare
 system:
-  description:
-    value: >-
-      <p>This cantrip creates a burst of light. If you cause the light to burst
-      in front of a single creature, that creature is dazzled for 1 minute
-      unless it makes a successful Fortitude save. Sightless creatures, as well
-      as creatures already dazzled, are not affected by flare.</p>
   actions:
     - _id: 0vecyskxe8y0agil
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,31 +13,38 @@ system:
           type: action
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
       spellEffect: burst of light
-  uses:
-    autoDeductChargesCost: '0'
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This cantrip creates a burst of light. If you cause the light to burst
+      in front of a single creature, that creature is dazzled for 1 minute
+      unless it makes a successful Fortitude save. Sightless creatures, as well
+      as creatures already dazzled, are not affected by flare.</p>
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      druid: 0
       bard: 0
+      druid: 0
+      hunter: 0
       magus: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
-      hunter: 0
+      psychic: 0
+      sorcerer: 0
+      wizard: 0
   level: 0
   school: evo
   types: light
-  components:
-    verbal: true
-_key: '!items!eg67vvykmv9c6j7h'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

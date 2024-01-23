@@ -1,8 +1,26 @@
 _id: zotzaxjui2u1y3zb
-name: Blood Crow Strike
-type: spell
+_key: '!items!zotzaxjui2u1y3zb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Crow Strike
 system:
+  actions:
+    - _id: nfpeudgpx12ks9fy
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your unarmed strikes release blasts of energy in the form of bolts of
@@ -15,31 +33,13 @@ system:
       flurry of blows to attack five times, creating one energy crow for each
       successful attack against the target, and dealing 2d6 points of damage
       (plus appropriate unarmed strike modifiers) with each crow.</p>
-  actions:
-    - _id: nfpeudgpx12ks9fy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: medium
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
+      warpriest: 4
   level: 4
   school: evo
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zotzaxjui2u1y3zb'
+type: spell
 

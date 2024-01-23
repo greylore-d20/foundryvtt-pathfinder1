@@ -1,8 +1,28 @@
 _id: 1UZPnH4DLDb04eZP
-name: Dream Walking
-type: feat
+_key: '!items!1UZPnH4DLDb04eZP'
 img: systems/pf1/icons/skills/blue_15.jpg
+name: Dream Walking
 system:
+  abilityType: sp
+  actions:
+    - _id: am2na3arg2kak2hw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: floor(@classes.sorcerer.level / 2)
+      img: systems/pf1/icons/skills/blue_15.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: Self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you can enter the ethereal plane. This functions like
@@ -13,27 +33,7 @@ system:
       ability</em> on a creature you see on the Material Plane. (This is an
       exception to the normal rule that ethereal creatures cannot affect targets
       on the Material Plane).</p>
-  actions:
-    - _id: am2na3arg2kak2hw
-      name: Use
-      img: systems/pf1/icons/skills/blue_15.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.sorcerer.level / 2)
-        units: minute
-      target:
-        value: Self
-      range:
-        units: personal
-  tag: classFeat_dreamWalking
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!1UZPnH4DLDb04eZP'
+  tag: classFeat_dreamWalking
+type: feat
 

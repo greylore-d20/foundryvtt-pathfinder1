@@ -1,7 +1,30 @@
-name: Leshy Swarm
-type: spell
+_id: dCg1ecr5Ofguqq5x
+_key: '!items!dCg1ecr5Ofguqq5x'
 img: icons/creatures/magical/humanoid-silhouette-aliens-green.webp
+name: Leshy Swarm
 system:
+  actions:
+    - _id: zdnrPY3r3BuYGSiN
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: icons/creatures/magical/humanoid-silhouette-aliens-green.webp
+      measureTemplate:
+        size: '10'
+        type: rect
+      name: Use
+      range:
+        units: close
+      spellEffect: 10-ft.-square swarm of leshys
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call out to nearby nature spirits and grant them temporary plant
@@ -18,23 +41,6 @@ system:
       that nearly any creature you direct them toward is a threat. They attack
       all creatures within their area except for you and other creatures with
       the plant type.</p>
-  actions:
-    - _id: zdnrPY3r3BuYGSiN
-      name: Use
-      img: icons/creatures/magical/humanoid-silhouette-aliens-green.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      measureTemplate:
-        type: rect
-        size: '10'
-      spellEffect: 10-ft.-square swarm of leshys
   learnedAt:
     class:
       arcanist: 3
@@ -46,16 +52,10 @@ system:
       summoner: 3
       wizard: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a bundle of seeds
+  school: con
   sr: false
-_id: dCg1ecr5Ofguqq5x
-_key: '!items!dCg1ecr5Ofguqq5x'
+  subschool: summoning
+type: spell
 

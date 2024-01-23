@@ -1,17 +1,10 @@
 _id: otw7f0je4mivm4pd
-name: Last Azlanti's Defending Sword, Mass
-type: spell
+_key: '!items!otw7f0je4mivm4pd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Last Azlanti's Defending Sword, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as Aroden's defending sword, except you can create
-      one sword per 5 caster levels, each of which must defend a different
-      creature within range.</p>
   actions:
     - _id: 7i13rbpmm5jcb3n3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,21 +12,28 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: up to one sword per 3 levels
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as Aroden's defending sword, except you can create
+      one sword per 5 caster levels, each of which must defend a different
+      creature within range.</p>
   learnedAt:
     class:
       sorcerer: 9
       wizard: 9
   level: 9
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a miniature platinum sword worth 250 gp
-_key: '!items!otw7f0je4mivm4pd'
+  school: evo
+  types: force
+type: spell
 

@@ -1,8 +1,14 @@
 _id: Vx8af8Biu7abYsDm
-name: Fighter (Rebuild)
-type: feat
+_key: '!items!Vx8af8Biu7abYsDm'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Fighter (Rebuild)
 system:
+  changes:
+    - _id: wv01qv36
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -27,12 +33,6 @@ system:
       Strength; Feats The creature gains a bonus combat feat and an additional
       combat feat for every 4 HD (to a maximum of 10 feats from this
       ability).</p>
-  changes:
-    - _id: wv01qv36
-      formula: '4'
-      subTarget: str
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!Vx8af8Biu7abYsDm'
+type: feat
 

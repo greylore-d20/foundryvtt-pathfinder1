@@ -1,8 +1,29 @@
 _id: 7c0l64pfdkgl7j5y
-name: Illusory Wall
-type: spell
+_key: '!items!7c0l64pfdkgl7j5y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Illusory Wall
 system:
+  actions:
+    - _id: ddl5g3que852b7o6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will disbelief (if interacted with)
+        type: will
+      spellEffect: image 1 ft. by 10 ft. by 10 ft.
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates the illusion of a wall, floor, ceiling, or similar
@@ -14,39 +35,18 @@ system:
       Although the caster can see through his <i>illusory wall</i>, other
       creatures cannot, even if they succeed at their will save (but they do
       learn that it is not real).</p>
-  actions:
-    - _id: ddl5g3que852b7o6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with)
-      spellEffect: image 1 ft. by 10 ft. by 10 ft.
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      psychic: 4
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 4
+      wizard: 4
     subDomain:
       Ambush: 5
   level: 4
   school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!7c0l64pfdkgl7j5y'
+  subschool: figment
+type: spell
 

@@ -1,19 +1,10 @@
 _id: kltebh5gymh6cngf
-name: Seducer's Eyes
-type: spell
+_key: '!items!kltebh5gymh6cngf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Seducer's Eyes
 system:
-  description:
-    value: >-
-      <p>You gain a bonus on Charisma-based skill checks equal to 1 + 1 for
-      every 4 caster levels you possess (to a maximum of +5), but only when
-      interacting with those who might conceivably find you sexually attractive.
-      You do not gain this bonus against those you or your allies are attacking
-      or threatening.</p>
   actions:
     - _id: i8fnh523c2damd8s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,27 +12,36 @@ system:
           type: action
       duration:
         value: 10 minutes/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You gain a bonus on Charisma-based skill checks equal to 1 + 1 for
+      every 4 caster levels you possess (to a maximum of +5), but only when
+      interacting with those who might conceivably find you sexually attractive.
+      You do not gain this bonus against those you or your allies are attacking
+      or threatening.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
+      sorcerer: 2
       witch: 2
+      wizard: 2
   level: 2
   school: enc
-  subschool: charm
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO9267
     pages: '240'
-_key: '!items!kltebh5gymh6cngf'
+  sr: false
+  subschool: charm
+  types: mind-affecting
+type: spell
 

@@ -1,8 +1,26 @@
 _id: wu4y1ilg6iq28cr6
-name: Interposing Hand
-type: spell
+_key: '!items!wu4y1ilg6iq28cr6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Interposing Hand
 system:
+  actions:
+    - _id: r6uxoc2jj59k2cvx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: 10-ft. hand
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Interposing hand</i> creates a Large magic hand that appears between
@@ -26,35 +44,17 @@ system:
       its normal speed. The hand cannot reduce the speed of a creature weighing
       more than 2,000 pounds, but it still affects the creature's
       attacks.</p><p>Directing the spell to a new target is a move action.</p>
-  actions:
-    - _id: r6uxoc2jj59k2cvx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      spellEffect: 10-ft. hand
   learnedAt:
     class:
+      magus: 5
+      occultist: 5
+      psychic: 5
       sorcerer: 5
       wizard: 5
-      magus: 5
-      psychic: 5
-      occultist: 5
   level: 5
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a soft glove
-_key: '!items!wu4y1ilg6iq28cr6'
+  school: evo
+  types: force
+type: spell
 

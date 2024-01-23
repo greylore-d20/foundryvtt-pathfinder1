@@ -1,8 +1,30 @@
 _id: f8Hab50M91djXaYl
-name: Empty Body (UC)
-type: feat
+_key: '!items!f8Hab50M91djXaYl'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Empty Body (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: xk4zl7st5kznypkf
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '3'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ki power gains the ability to assume an ethereal state
@@ -15,29 +37,7 @@ system:
 
       <p>This ability affects only the monk and cannot be used to make other
       creatures ethereal.</p>
-  actions:
-    - _id: xk4zl7st5kznypkf
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-      uses:
-        autoDeductChargesCost: '3'
-  tag: classFeat_emptyBodyUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!f8Hab50M91djXaYl'
+  tag: classFeat_emptyBodyUc
+type: feat
 

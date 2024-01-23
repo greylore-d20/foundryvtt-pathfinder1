@@ -1,8 +1,24 @@
 _id: H3ceKB8ybasY78t9
-name: Weather Master
-type: feat
+_key: '!items!H3ceKB8ybasY78t9'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Weather Master
 system:
+  abilityType: sp
+  actions:
+    - _id: 6kzyyph5j6mdz2ys
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> utility (Sp); <b>Level</b> 8;
@@ -18,23 +34,7 @@ system:
 
       <p>If you have access to the water element, you can create all other types
       of weather listed in control weather.</p>
-  actions:
-    - _id: 6kzyyph5j6mdz2ys
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_weatherMaster
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!H3ceKB8ybasY78t9'
+  tag: classFeat_weatherMaster
+type: feat
 

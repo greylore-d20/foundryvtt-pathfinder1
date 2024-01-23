@@ -1,8 +1,41 @@
 _id: bDES4OvFrtuMmPsW
-name: Acid Jet
-type: feat
+_key: '!items!bDES4OvFrtuMmPsW'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Acid Jet
 system:
+  abilityType: su
+  actions:
+    - _id: vtiozu77j6nj9nzu
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude negates sickened
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can unleash a jet of acid by expending 1 point from her
@@ -12,42 +45,9 @@ system:
       damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level).
       The target is also sickened for 1d4 rounds. It can attempt a Fortitude
       saving throw to negate the sickened condition.</p>
+  subType: classFeat
+  tag: classFeat_acidJet
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: vtiozu77j6nj9nzu
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod
-            type:
-              values:
-                - acid
-              custom: ''
-      ability:
-        attack: dex
-      save:
-        type: fort
-        description: Fortitude negates sickened
-  tag: classFeat_acidJet
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!bDES4OvFrtuMmPsW'
+type: feat
 

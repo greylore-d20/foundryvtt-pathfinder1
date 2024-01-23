@@ -1,8 +1,20 @@
 _id: hNknvwRdlPfHwZJT
-name: Primal Magic
-type: feat
+_key: '!items!hNknvwRdlPfHwZJT'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Primal Magic
 system:
+  abilityType: sp
+  actions:
+    - _id: azhcmyby63r58yfr
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>In seeking to restore formal training in magic to the world, Old-Mage
@@ -34,21 +46,9 @@ system:
       of wonder</a> table would deal 8d6, rather than the listed 6d6). In this
       case, the effect is treated as a spell with a spell level equal to the
       spell slot expended.</p>
+  subType: classFeat
+  tag: classFeat_primalMagic
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: azhcmyby63r58yfr
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  tag: classFeat_primalMagic
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: sp
-_key: '!items!hNknvwRdlPfHwZJT'
+type: feat
 

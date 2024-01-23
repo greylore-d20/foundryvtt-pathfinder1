@@ -1,8 +1,32 @@
 _id: 1mkigzpu5hohovgw
-name: Wind Walk
-type: spell
+_key: '!items!1mkigzpu5hohovgw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wind Walk
 system:
+  actions:
+    - _id: jsfi05a90bo40lnu
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none and Will negates
+        harmless: true
+        type: will
+      target:
+        value: you and one touched creature per three levels
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You alter the substance of your body to a cloudlike vapor (as the
@@ -23,43 +47,19 @@ system:
       feet per round (for a total of 600 feet), though it may descend faster if
       it wishes. This descent serves as a warning that the spell is about to
       end.</p>
-  actions:
-    - _id: jsfi05a90bo40lnu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level; see text
-      target:
-        value: you and one touched creature per three levels
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: none and Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      druid: 7
       alchemist: 6
+      cleric: 6
+      druid: 7
+      oracle: 6
       shaman: 7
+      warpriest: 6
     subDomain:
       Wind: 6
   level: 6
   school: trs
-  types: air
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!1mkigzpu5hohovgw'
+  types: air
+type: spell
 

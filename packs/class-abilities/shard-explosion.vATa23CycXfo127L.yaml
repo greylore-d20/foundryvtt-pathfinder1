@@ -1,8 +1,34 @@
 _id: vATa23CycXfo127L
-name: Shard Explosion
-type: feat
+_key: '!items!vATa23CycXfo127L'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Shard Explosion
 system:
+  abilityType: su
+  actions:
+    - _id: ym388lnihuted0qh
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: (min(1, (floor(@classes.oracle.level / 2))))d6
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: 10-ft. burst
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you can cause jagged pieces of stone to explode
@@ -13,36 +39,10 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level and every five levels thereafter.</p>
-  actions:
-    - _id: ym388lnihuted0qh
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: 10-ft. burst
-      range:
-        units: personal
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (min(1, (floor(@classes.oracle.level / 2))))d6
-            type:
-              values:
-                - piercing
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_shardExplosion
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!vATa23CycXfo127L'
+  tag: classFeat_shardExplosion
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

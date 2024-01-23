@@ -1,8 +1,30 @@
 _id: k59ax9hxy83o19bn
-name: Form of the Alien Dragon II
-type: spell
+_key: '!items!k59ax9hxy83o19bn'
 img: icons/creatures/abilities/dragon-ice-breath-blue.webp
+name: Form of the Alien Dragon II
 system:
+  actions:
+    - _id: 7a1ik13tpfw1z74x
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: see text
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as per <i>Form of the Alien Dragon I</i>, except
@@ -17,38 +39,16 @@ system:
       attacks (1d6). All breath weapons deal 6d8 points of damage unless noted
       otherwise and allow a Reflex save to halve the normal damage. Line breath
       weapons increase to 80-foot lines and cones increase to 40-foot cones.</p>
-  actions:
-    - _id: 7a1ik13tpfw1z74x
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
     class:
+      psychic: 8
       sorcerer: 7
       wizard: 7
-      psychic: 8
   level: 7
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a scale of the dragon type you plan to assume
+  school: trs
   sr: false
-_key: '!items!k59ax9hxy83o19bn'
+  subschool: polymorph
+type: spell
 

@@ -1,8 +1,29 @@
 _id: pYeDMAQYzaBL1L9E
-name: Entrancing Aura
-type: feat
+_key: '!items!pYeDMAQYzaBL1L9E'
 img: systems/pf1/icons/skills/blue_35.jpg
+name: Entrancing Aura
 system:
+  abilityType: su
+  actions:
+    - _id: rjbyq59r8fj7moc0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/blue_35.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can emit an imperceptible 30-foot aura of distraction
@@ -14,31 +35,10 @@ system:
       treated as if they had 3 fewer Hit Dice for such effects.</p>
 
       <p>This power replaces the Charming Smile power of the Charm Domain.</p>
-  actions:
-    - _id: rjbyq59r8fj7moc0
-      name: Use
-      img: systems/pf1/icons/skills/blue_35.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_entrancingAura
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!pYeDMAQYzaBL1L9E'
+  tag: classFeat_entrancingAura
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

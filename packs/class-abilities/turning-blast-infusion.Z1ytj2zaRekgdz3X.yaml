@@ -1,8 +1,23 @@
 _id: Z1ytj2zaRekgdz3X
-name: Turning Blast Infusion
-type: feat
+_key: '!items!Z1ytj2zaRekgdz3X'
 img: systems/pf1/icons/spells/rip-sky-1.jpg
+name: Turning Blast Infusion
 system:
+  actions:
+    - _id: cu775pqqb7kccqot
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/rip-sky-1.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> void, wood; <b>Type</b> substance infusion; <b>Level</b>
@@ -16,22 +31,7 @@ system:
 
       <p>An undead creature that succeeds at its saving throw against a turning
       blast is immune to this effect for 24 hours.</p>
-  actions:
-    - _id: cu775pqqb7kccqot
-      name: Use
-      img: systems/pf1/icons/spells/rip-sky-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_turningBlastInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!Z1ytj2zaRekgdz3X'
+  tag: classFeat_turningBlastInfusion
+type: feat
 

@@ -1,8 +1,31 @@
 _id: wcjlvlkpnjhx5pcf
-name: Acid Pit
-type: spell
+_key: '!items!wcjlvlkpnjhx5pcf'
 img: icons/magic/acid/dissolve-bone-white.webp
+name: Acid Pit
 system:
+  actions:
+    - _id: r7jp3ub5muqvhw25
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates; see text
+        type: ref
+      spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as create pit, except that it places a 5-footdeep
@@ -17,42 +40,19 @@ system:
       the broken condition (regardless of how they became broken) must make a
       Fortitude saving throw each round spent within the acid or be destroyed.
       The walls of the pit are quite slippery and have a Climb DC of 30.</p>
-  actions:
-    - _id: r7jp3ub5muqvhw25
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round + 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates; see text
-      spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
   learnedAt:
     class:
       sorcerer: 4
-      wizard: 4
       summoner: 4
       summonerUnchained: 4
+      wizard: 4
   level: 4
+  materials:
+    focus: Fine shovel worth 10 gp
+    value: drop of acid
   school: con
+  sr: false
   subschool: creation
   types: acid
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
-  materials:
-    value: drop of acid
-    focus: Fine shovel worth 10 gp
-  sr: false
-_key: '!items!wcjlvlkpnjhx5pcf'
+type: spell
 

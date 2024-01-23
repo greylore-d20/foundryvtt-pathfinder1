@@ -1,8 +1,21 @@
 _id: HZ2oSGU7xXLjz8Rp
-name: Targeting
-type: feat
+_key: '!items!HZ2oSGU7xXLjz8Rp'
 img: systems/pf1/icons/skills/yellow_03.jpg
+name: Targeting
 system:
+  abilityType: ex
+  actions:
+    - _id: xpMjtNJ07jsuqkL4
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/skills/yellow_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 7th level, as a full-round action, the gunslinger can make a single
@@ -22,22 +35,9 @@ system:
       effect.</p></li><li><p>Torso: Targeting the torso threatens a critical on
       a 19–20.</p></li><li><p>Wings: On a hit, the target is damaged normally,
       and must make a DC 20 Fly check or fall 20 ft.</p></li></ul>
+  subType: classFeat
+  tag: classFeat_targeting
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: xpMjtNJ07jsuqkL4
-      name: Use
-      img: systems/pf1/icons/skills/yellow_03.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_targeting
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!HZ2oSGU7xXLjz8Rp'
+type: feat
 

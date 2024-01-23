@@ -1,8 +1,20 @@
 _id: EkxAlV7mWUQTMe3q
-name: Energy Absorbtion
-type: feat
+_key: '!items!EkxAlV7mWUQTMe3q'
 img: systems/pf1/icons/items/inventory/element-water.jpg
+name: Energy Absorbtion
 system:
+  abilityType: su
+  actions:
+    - _id: q7jdx0rszccg6mv9
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/inventory/element-water.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 6th level, you gain an amount of energy absorption equal to 3 times
@@ -10,19 +22,7 @@ system:
       immunity, vulnerability (if any), and resistance first and apply the rest
       to this absorption, reducing your daily total by that amount. Any damage
       in excess of your absorption is applied to you normally.</p>
-  actions:
-    - _id: q7jdx0rszccg6mv9
-      name: Use
-      img: systems/pf1/icons/items/inventory/element-water.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_energyAbsorbtion
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!EkxAlV7mWUQTMe3q'
+  tag: classFeat_energyAbsorbtion
+type: feat
 

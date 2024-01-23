@@ -1,8 +1,25 @@
 _id: 4nqhjbhtb3cdk4oq
-name: Scoop
-type: spell
+_key: '!items!4nqhjbhtb3cdk4oq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scoop
 system:
+  actions:
+    - _id: tov6bg1bjjqyitcf
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 6 inch diameter container of force
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You will a small vessel of force into existence. As a move action, you
@@ -18,22 +35,6 @@ system:
       cantrips. A spellcaster gains access to rare cantrips only by uncovering
       their secrets in some other way. Some are guarded by jealous mages, while
       others are lost in missing libraries or molder on forgotten scrolls.</p>
-  actions:
-    - _id: tov6bg1bjjqyitcf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration
-      range:
-        units: close
-      spellEffect: 6 inch diameter container of force
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
       sorcerer: 0
@@ -41,8 +42,7 @@ system:
   level: 0
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!4nqhjbhtb3cdk4oq'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

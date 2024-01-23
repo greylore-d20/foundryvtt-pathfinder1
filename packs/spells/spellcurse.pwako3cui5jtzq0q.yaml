@@ -1,18 +1,11 @@
 _id: pwako3cui5jtzq0q
-name: Spellcurse
-type: spell
+_key: '!items!pwako3cui5jtzq0q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spellcurse
 system:
-  description:
-    value: >-
-      <p>You disrupt any spell energy affecting your target, causing that energy
-      to crackle with power and harm the target. The target takes 1d6 points of
-      damage for each spell with a duration of 1 round or greater currently
-      affecting it. The spells themselves are not dispelled or modified.</p>
   actions:
     - _id: gvie4mx9a3unwoeg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,33 +13,40 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will half
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You disrupt any spell energy affecting your target, causing that energy
+      to crackle with power and harm the target. The target takes 1d6 points of
+      damage for each spell with a duration of 1 round or greater currently
+      affecting it. The spells themselves are not dispelled or modified.</p>
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
-      inquisitor: 2
       antipaladin: 2
-      shaman: 4
-      psychic: 3
+      cleric: 3
+      inquisitor: 2
       occultist: 4
+      oracle: 3
+      psychic: 3
+      shaman: 4
+      warpriest: 3
+      witch: 3
   level: 3
-  school: nec
-  types: curse
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a fragment of a destroyed magical item
-_key: '!items!pwako3cui5jtzq0q'
+  school: nec
+  types: curse
+type: spell
 

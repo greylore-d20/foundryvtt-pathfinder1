@@ -1,8 +1,26 @@
 _id: f7b6erou3d9ds1p1
-name: Residual Tracking
-type: spell
+_key: '!items!f7b6erou3d9ds1p1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Residual Tracking
 system:
+  actions:
+    - _id: af7lz4yiu0rzwp6m
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: footprint touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By touching a footprint, you receive a clear mental image of the person
@@ -12,32 +30,14 @@ system:
       anything else the creature was carrying at the time. For example, the
       footprint of a horse would reveal both the horse and any creature riding
       it when it made the footprint.</p>
-  actions:
-    - _id: af7lz4yiu0rzwp6m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: footprint touched
-      range:
-        units: touch
   learnedAt:
     class:
-      ranger: 1
-      occultist: 2
       hunter: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      occultist: 2
+      ranger: 1
   materials:
     value: a bit of plaster
+  school: div
   sr: false
-_key: '!items!f7b6erou3d9ds1p1'
+type: spell
 

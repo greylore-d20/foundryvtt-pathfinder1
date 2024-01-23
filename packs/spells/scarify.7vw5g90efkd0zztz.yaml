@@ -1,8 +1,31 @@
 _id: 7vw5g90efkd0zztz
-name: Scarify
-type: spell
+_key: '!items!7vw5g90efkd0zztz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scarify
 system:
+  actions:
+    - _id: h5gxoszqioey3n87
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your touch causes a single creature's skin to produce fibrous tissue
@@ -15,43 +38,20 @@ system:
       of stopping bleed damage. Kuthites are especially fond of this spell, as
       it gives them permanent physical reminders of the all too brief pain they
       endured.</p>
-  actions:
-    - _id: h5gxoszqioey3n87
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      alchemist: 1
-      witch: 1
-      inquisitor: 1
-      antipaladin: 1
       adept: 1
+      alchemist: 1
+      antipaladin: 1
+      cleric: 1
+      druid: 1
+      hunter: 1
+      inquisitor: 1
+      oracle: 1
       shaman: 1
       spiritualist: 1
-      hunter: 1
+      warpriest: 1
+      witch: 1
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!7vw5g90efkd0zztz'
+type: spell
 

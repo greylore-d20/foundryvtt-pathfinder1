@@ -1,8 +1,22 @@
 _id: BI0MvUb9zxGT8Nd9
-name: Monk (Rebuild)
-type: feat
+_key: '!items!BI0MvUb9zxGT8Nd9'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Monk (Rebuild)
 system:
+  changes:
+    - _id: f4zmsahn
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+    - _id: 3ukkrzck
+      formula: '4'
+      modifier: untyped
+      subTarget: wis
+    - _id: ubil8bpk
+      formula: '@abilities.wis.mod + (2 + floor(@attributes.hd.total / 4))'
+      modifier: untyped
+      subTarget: ac
+  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -32,20 +46,6 @@ system:
       uses natural attacks increases the damage dealt by all of its natural
       attacks by one die step instead; Ability Scores +4 Dexterity and Wisdom;
       Feats Improved Unarmed Strike.</p>
-  changes:
-    - _id: f4zmsahn
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
-    - _id: 3ukkrzck
-      formula: '4'
-      subTarget: wis
-      modifier: untyped
-    - _id: ubil8bpk
-      formula: '@abilities.wis.mod + (2 + floor(@attributes.hd.total / 4))'
-      subTarget: ac
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
-_key: '!items!BI0MvUb9zxGT8Nd9'
+type: feat
 

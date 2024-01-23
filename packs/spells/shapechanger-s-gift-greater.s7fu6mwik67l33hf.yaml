@@ -1,8 +1,32 @@
 _id: s7fu6mwik67l33hf
-name: Shapechanger's Gift, Greater
-type: spell
+_key: '!items!s7fu6mwik67l33hf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shapechanger's Gift, Greater
 system:
+  actions:
+    - _id: uliiqsbsogspqmsc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: willing living creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>shapechanger's gift</i> except the chosen
@@ -11,38 +35,14 @@ system:
       per <i>alter</i> self), monstrous humanoid (as per <i>monstrous
       physique</i> IUM), or vermin (as per <i>vermin shape</i> IUM) and the
       chosen form can have a fly speed.</p>
-  actions:
-    - _id: uliiqsbsogspqmsc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: willing living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       sorcerer: 7
       wizard: 7
   level: 7
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to grant
-_key: '!items!s7fu6mwik67l33hf'
+  school: trs
+  subschool: polymorph
+type: spell
 

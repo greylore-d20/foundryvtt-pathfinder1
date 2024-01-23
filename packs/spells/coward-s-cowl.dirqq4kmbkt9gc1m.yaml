@@ -1,8 +1,31 @@
 _id: dirqq4kmbkt9gc1m
-name: Coward's Cowl
-type: spell
+_key: '!items!dirqq4kmbkt9gc1m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Coward's Cowl
 system:
+  actions:
+    - _id: rofe5uqmuecn8v42
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue the target with a compulsion to avoid threats, enhancing its
@@ -16,44 +39,21 @@ system:
       threatening creature, the spell immediately ends.  While affected by
       coward's cowl, a creature takes a -2 penalty on all saving throws against
       fear effects.</p>
-  actions:
-    - _id: rofe5uqmuecn8v42
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      bard: 1
       alchemist: 1
-      witch: 1
-      shaman: 1
-      psychic: 1
+      bard: 1
+      cleric: 1
       mesmerist: 1
+      oracle: 1
+      psychic: 1
+      shaman: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: enc
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!dirqq4kmbkt9gc1m'
+  types: mind-affecting
+type: spell
 

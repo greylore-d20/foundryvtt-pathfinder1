@@ -1,8 +1,27 @@
 _id: 7pta0efwxofbk3r1
-name: Planar Inquiry
-type: spell
+_key: '!items!7pta0efwxofbk3r1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Planar Inquiry
 system:
+  actions:
+    - _id: mhy4hian3khm8dny
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one called outsider who answers questions
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Although he was hardly the first to turn to the Outer Planes for
@@ -30,44 +49,25 @@ system:
       You cannot call an outsider whose Hit Dice exceed your caster level
       (maximum 18 HD) and you cannot use this spell to contact a unique outsider
       (such as a deity's herald) or an outsider with mythic ranks.</p>
-  actions:
-    - _id: mhy4hian3khm8dny
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous; see text
-      range:
-        units: close
-      spellEffect: one called outsider who answers questions
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      summoner: 3
-      witch: 3
-      inquisitor: 3
-      shaman: 3
       hunter: 3
+      inquisitor: 3
+      oracle: 3
+      shaman: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: calling
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: offerings worth 100 gp per HD of creature called
+  school: con
   sr: false
-_key: '!items!7pta0efwxofbk3r1'
+  subschool: calling
+type: spell
 

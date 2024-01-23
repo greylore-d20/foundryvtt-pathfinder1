@@ -1,8 +1,27 @@
 _id: suel7sgnztenv551
-name: Miracle
-type: spell
+_key: '!items!suel7sgnztenv551'
 img: icons/magic/holy/prayer-hands-glowing-yellow-white.webp
+name: Miracle
 system:
+  actions:
+    - _id: jl1jor4xeor9de1a
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: see text
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: see text
+  components:
+    verbal: true
   description:
     value: >-
       <p>You don't so much cast a <em>miracle</em> as request one. You state
@@ -28,23 +47,6 @@ system:
       resistance as normal, but the save DCs are as for a 9th-level spell. When
       a <em>miracle</em> spell duplicates a spell with a material component that
       costs more than 100 gp, you must provide that component.</p>
-  actions:
-    - _id: jl1jor4xeor9de1a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        description: see text
-      area: see text
   learnedAt:
     class:
       cleric: 9
@@ -56,10 +58,8 @@ system:
       Divine: 9
   level: 9
   school: evo
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '314'
-_key: '!items!suel7sgnztenv551'
+type: spell
 

@@ -1,8 +1,32 @@
 _id: ye3wcbdcfjiv6z6d
-name: Tears to Wine
-type: spell
+_key: '!items!ye3wcbdcfjiv6z6d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tears to Wine
 system:
+  actions:
+    - _id: txhkqkejqm0h7bxh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: 1 cu. ft./2 levels of liquid (see text)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Legend claims runelords used this spell to literally benefit from
@@ -17,48 +41,24 @@ system:
       enhancement bonus on all Intelligence- and Wisdom-based skill checks. This
       increases to a +5 bonus at caster level 9th, and to +10 (the maximum) at
       caster level 15th.</p>
-  actions:
-    - _id: txhkqkejqm0h7bxh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: 1 cu. ft./2 levels of liquid (see text)
-      range:
-        value: '10'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 1
-      bard: 1
       alchemist: 1
-      witch: 2
-      shaman: 1
+      bard: 1
+      cleric: 2
+      druid: 1
+      hunter: 1
       medium: 1
       occultist: 1
-      hunter: 1
+      oracle: 2
+      shaman: 1
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a single grape
-_key: '!items!ye3wcbdcfjiv6z6d'
+  school: trs
+type: spell
 

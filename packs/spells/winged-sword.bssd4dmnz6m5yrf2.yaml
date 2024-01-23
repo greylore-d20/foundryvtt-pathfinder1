@@ -1,19 +1,11 @@
 _id: bssd4dmnz6m5yrf2
-name: Winged Sword
-type: spell
+_key: '!items!bssd4dmnz6m5yrf2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Winged Sword
 system:
-  description:
-    value: >-
-      <p>The weapon targeted by this spell grows small feathered wings. For the
-      duration of the spell, the weapon acts as if it had the <i>throwing</i>
-      weapon special ability. This spell can be used in place of <i>magic
-      stone</i> as a prerequisite for the <i>throwing</i> weapon special
-      ability.</p>
   actions:
     - _id: uleqw6dcll9x6i4r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,28 +13,36 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: one melee weapon
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: one melee weapon
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The weapon targeted by this spell grows small feathered wings. For the
+      duration of the spell, the weapon acts as if it had the <i>throwing</i>
+      weapon special ability. This spell can be used in place of <i>magic
+      stone</i> as a prerequisite for the <i>throwing</i> weapon special
+      ability.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      paladin: 2
+      bloodrager: 2
       inquisitor: 3
       magus: 2
-      bloodrager: 2
       occultist: 2
+      paladin: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!bssd4dmnz6m5yrf2'
+type: spell
 

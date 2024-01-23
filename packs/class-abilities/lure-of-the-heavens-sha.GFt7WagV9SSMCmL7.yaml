@@ -1,7 +1,26 @@
-name: Lure of the Heavens (SHA)
-type: feat
+_id: GFt7WagV9SSMCmL7
+_key: '!items!GFt7WagV9SSMCmL7'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Lure of the Heavens (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: mkVni54QNCYSZn1c
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Fly
+      range:
+        units: personal
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman’s connection to the skies above is so strong that her feet
@@ -11,34 +30,15 @@ system:
       @UUID[Compendium.pf1.spells.7d6sv5ecvi7kho3m]{fly} (as the spell) for a
       number of minutes per day equal to her shaman level—the duration does not
       need to be consecutive, but it must be used in 1-minute increments.</p>
-  tags:
-    - Heavens Spirit
-    - Shaman Spirit Hex
-  actions:
-    - _id: mkVni54QNCYSZn1c
-      name: Fly
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.shaman.level'
-  subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
   source:
     id: PZO1129
     pages: '40'
-_id: GFt7WagV9SSMCmL7
-_key: '!items!GFt7WagV9SSMCmL7'
+  subType: classFeat
+  tags:
+    - Heavens Spirit
+    - Shaman Spirit Hex
+  uses:
+    maxFormula: '@classes.shaman.level'
+    per: day
+type: feat
 

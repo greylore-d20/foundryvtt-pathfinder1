@@ -1,16 +1,11 @@
 _id: oyb99lofcbd21vk2
-name: Bestow Planar Infusion III
-type: spell
+_key: '!items!oyb99lofcbd21vk2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bestow Planar Infusion III
 system:
-  description:
-    value: >-
-      <p>This functions as <i>bestow planar infusion I</i>, except that the
-      touched creature gains the greater infusion of the current plane.</p>
   actions:
     - _id: 3xqubzgmvh6a5ox3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,27 +13,32 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This functions as <i>bestow planar infusion I</i>, except that the
+      touched creature gains the greater infusion of the current plane.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
       oracle: 7
-      witch: 7
       psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!oyb99lofcbd21vk2'
+type: spell
 

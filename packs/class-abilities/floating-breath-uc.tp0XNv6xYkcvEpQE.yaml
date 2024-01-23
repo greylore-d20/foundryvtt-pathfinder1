@@ -1,8 +1,27 @@
 _id: tp0XNv6xYkcvEpQE
-name: Floating Breath (UC)
-type: feat
+_key: '!items!tp0XNv6xYkcvEpQE'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Floating Breath (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: 69lr0pnnfanb9vn3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ki power can spend 1 point from his ki pool as a swift
@@ -15,26 +34,7 @@ system:
       Walk}.</p>
 
       <p>A monk must be 8th level before selecting this power.</p>
-  actions:
-    - _id: 69lr0pnnfanb9vn3
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_floatingBreathUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!tp0XNv6xYkcvEpQE'
+  tag: classFeat_floatingBreathUc
+type: feat
 

@@ -1,8 +1,27 @@
 _id: pawbnw1nm4f0b98e
-name: Elemental Body I
-type: spell
+_key: '!items!pawbnw1nm4f0b98e'
 img: icons/magic/fire/elemental-fire-flying.webp
+name: Elemental Body I
 system:
+  actions:
+    - _id: zaqarqv23b90ifcu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you can assume the form of a Small air,
@@ -24,42 +43,23 @@ system:
       Small water elemental, you gain a +2 size bonus to your Constitution and a
       +4 natural armor bonus. You also gain swim 60 feet, darkvision 60 feet,
       the ability to create a vortex, and the ability to breathe water.</p>
-  actions:
-    - _id: zaqarqv23b90ifcu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      alchemist: 4
-      magus: 4
-      bloodrager: 4
     bloodline:
       Elemental: 4
+    class:
+      alchemist: 4
+      bloodrager: 4
+      magus: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: the element you plan to assume
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '275'
-_key: '!items!pawbnw1nm4f0b98e'
+  sr: false
+  subschool: polymorph
+type: spell
 

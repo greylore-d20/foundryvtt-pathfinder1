@@ -1,19 +1,10 @@
 _id: inuj1vmyo9cygt0e
-name: Bleaching Resistance
-type: spell
+_key: '!items!inuj1vmyo9cygt0e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bleaching Resistance
 system:
-  description:
-    value: >-
-      <p>Ability score drain from the Bleaching doesn't affect your ability
-      score modifiers while you're affected by this spell. This spell does not
-      remove the Bleaching's effect on your appearance, nor does it prevent you
-      from suffering further ability penalties, dying, or becoming a bleachling
-      as a result of the Bleaching.</p>
   actions:
     - _id: l04ew00ahps3r7co
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,26 +12,35 @@ system:
           type: action
       duration:
         value: 24 hours
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Ability score drain from the Bleaching doesn't affect your ability
+      score modifiers while you're affected by this spell. This spell does not
+      remove the Bleaching's effect on your appearance, nor does it prevent you
+      from suffering further ability penalties, dying, or becoming a bleachling
+      as a result of the Bleaching.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 6
       alchemist: 4
-      witch: 6
-      spiritualist: 4
+      druid: 6
       hunter: 6
+      sorcerer: 6
+      spiritualist: 4
+      witch: 6
+      wizard: 6
   level: 6
   school: enc
+  sr: false
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!inuj1vmyo9cygt0e'
+type: spell
 

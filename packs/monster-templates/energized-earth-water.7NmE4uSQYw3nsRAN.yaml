@@ -1,8 +1,22 @@
 _id: 7NmE4uSQYw3nsRAN
-name: Energized (Earth, Water)
-type: feat
+_key: '!items!7NmE4uSQYw3nsRAN'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Energized (Earth, Water)
 system:
+  changes:
+    - _id: 8xddbabx
+      formula: '3'
+      modifier: untyped
+      subTarget: nac
+    - _id: mxxfzrms
+      formula: '@attributes.hd.total > 9 ? 4 : 2'
+      modifier: untyped
+      subTarget: dex
+    - _id: sbap02gv
+      formula: '@attributes.hd.total > 9 ? 8 : 4'
+      modifier: untyped
+      subTarget: str
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -155,20 +169,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: 8xddbabx
-      formula: '3'
-      subTarget: nac
-      modifier: untyped
-    - _id: mxxfzrms
-      formula: '@attributes.hd.total > 9 ? 4 : 2'
-      subTarget: dex
-      modifier: untyped
-    - _id: sbap02gv
-      formula: '@attributes.hd.total > 9 ? 8 : 4'
-      subTarget: str
-      modifier: untyped
   subType: template
-  crOffset: '2'
-_key: '!items!7NmE4uSQYw3nsRAN'
+type: feat
 

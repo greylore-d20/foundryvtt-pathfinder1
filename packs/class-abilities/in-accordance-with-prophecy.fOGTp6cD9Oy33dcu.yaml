@@ -1,8 +1,26 @@
 _id: fOGTp6cD9Oy33dcu
-name: In Accordance with Prophecy
-type: feat
+_key: '!items!fOGTp6cD9Oy33dcu'
 img: systems/pf1/icons/spells/evil-eye-eerie-3.jpg
+name: In Accordance with Prophecy
 system:
+  abilityType: su
+  actions:
+    - _id: 5rppcgzi1lcktcfi
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/evil-eye-eerie-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>A number of times per day equal to your <em>Intelligence</em> modifier,
@@ -13,28 +31,10 @@ system:
       feat, even if you do not have that feat. At 12th level, the chance that
       the spell fizzles is reduced to 15% (1–15 on a d%). At 16th level, the
       chance is reduced to 10% (1–10 on a d%).</p>
-  actions:
-    - _id: 5rppcgzi1lcktcfi
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-eerie-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@abilities.int.mod'
-  tag: classFeat_inAccordanceWithProphecy
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!fOGTp6cD9Oy33dcu'
+  tag: classFeat_inAccordanceWithProphecy
+  uses:
+    maxFormula: '@abilities.int.mod'
+    per: day
+type: feat
 

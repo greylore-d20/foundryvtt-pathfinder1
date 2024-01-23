@@ -1,8 +1,27 @@
 _id: ifsqq71zrbbgyqwv
-name: Hidden Knowledge
-type: spell
+_key: '!items!ifsqq71zrbbgyqwv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hidden Knowledge
 system:
+  actions:
+    - _id: qn89s4fltb56rpus
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: up to 1 day/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This subtle but useful spell allows you to safeguard important
@@ -21,38 +40,19 @@ system:
       modifier) reveals an enchanted tattoo, but not its contents. The effects
       of <i>hidden knowledge</i> can be dispelled normally, in which case the
       knowledge is completely lost.</p>
-  actions:
-    - _id: qn89s4fltb56rpus
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: up to 1 day/level (see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of ink
+  school: trs
   sr: false
-_key: '!items!ifsqq71zrbbgyqwv'
+type: spell
 

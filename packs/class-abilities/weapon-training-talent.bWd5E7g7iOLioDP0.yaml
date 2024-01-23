@@ -1,32 +1,32 @@
 _id: bWd5E7g7iOLioDP0
-name: Weapon Training (Talent)
-type: feat
+_key: '!items!bWd5E7g7iOLioDP0'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Weapon Training (Talent)
 system:
-  description:
-    value: >-
-      <p>A character that selects this talent/trick gains
-      @Compendium[pf1.feats.n250dFlbykAIAg5Z]{Weapon Focus} as a bonus feat.</p>
-  tags:
-    - Rogue Talent
-    - Slayer Talent
-    - Ninja Trick
-  changes:
-    - _id: He7Dwkqu
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-  links:
-    supplements:
-      - name: Weapon Focus
-        uuid: Compendium.pf1.feats.Item.n250dFlbykAIAg5Z
-  tag: classFeat_weaponTrainingRog
-  subType: classFeat
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
       - Slayer
       - Ninja
-_key: '!items!bWd5E7g7iOLioDP0'
+  changes:
+    - _id: He7Dwkqu
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
+  description:
+    value: >-
+      <p>A character that selects this talent/trick gains
+      @Compendium[pf1.feats.n250dFlbykAIAg5Z]{Weapon Focus} as a bonus feat.</p>
+  links:
+    supplements:
+      - name: Weapon Focus
+        uuid: Compendium.pf1.feats.Item.n250dFlbykAIAg5Z
+  subType: classFeat
+  tag: classFeat_weaponTrainingRog
+  tags:
+    - Rogue Talent
+    - Slayer Talent
+    - Ninja Trick
+type: feat
 

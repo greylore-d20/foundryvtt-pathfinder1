@@ -1,8 +1,26 @@
 _id: h4nlrm44ubsyzuhz
-name: Fluid Form
-type: spell
+_key: '!items!h4nlrm44ubsyzuhz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fluid Form
 system:
+  actions:
+    - _id: ireoo9err9ht823p
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>When you cast this spell, your body takes on a slick, oily appearance.
@@ -15,40 +33,22 @@ system:
       you can move through water with a swim speed of 60 feet and can breathe
       both water and air for the duration of this effect. You are treated as if
       you had the water subtype while this spell is in effect.</p>
-  actions:
-    - _id: ireoo9err9ht823p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
+    bloodline:
+      Nanite: 6
     class:
-      sorcerer: 6
-      wizard: 6
       alchemist: 4
       psychic: 6
+      sorcerer: 6
+      wizard: 6
     subDomain:
       Flowing: 6
       Rivers: 6
-    bloodline:
-      Nanite: 6
   level: 6
-  school: trs
-  types: water
-  components:
-    somatic: true
-    material: true
   materials:
     value: a mixture of oil and water
+  school: trs
   sr: false
-_key: '!items!h4nlrm44ubsyzuhz'
+  types: water
+type: spell
 

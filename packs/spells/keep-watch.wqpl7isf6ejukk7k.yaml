@@ -1,8 +1,31 @@
 _id: wqpl7isf6ejukk7k
-name: Keep Watch
-type: spell
+_key: '!items!wqpl7isf6ejukk7k'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Keep Watch
 system:
+  actions:
+    - _id: ux88hhu1odt8kxer
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 8 hours or less; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature touched/2 levels
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell enables the subjects to stand watch or keep vigil throughout
@@ -16,38 +39,15 @@ system:
       fighting, immediately ends the effect, and the affected creatures must
       either have the spell cast on them again or <i>sleep</i> for the remaining
       hours to avoid fatigue and gain the benefits of a full night's rest.</p>
-  actions:
-    - _id: ux88hhu1odt8kxer
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 8 hours or less; see text
-      target:
-        value: one creature touched/2 levels
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      ranger: 1
-      paladin: 1
+      hunter: 1
       inquisitor: 1
       magus: 1
-      hunter: 1
+      paladin: 1
+      ranger: 1
+      sorcerer: 1
+      wizard: 1
   school: enc
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wqpl7isf6ejukk7k'
+type: spell
 

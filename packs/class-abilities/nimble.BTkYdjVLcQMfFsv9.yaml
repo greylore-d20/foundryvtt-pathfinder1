@@ -1,8 +1,25 @@
 _id: BTkYdjVLcQMfFsv9
-name: Nimble
-type: feat
+_key: '!items!BTkYdjVLcQMfFsv9'
 img: systems/pf1/icons/skills/armor_01.jpg
+name: Nimble
 system:
+  abilityType: ex
+  actions:
+    - _id: rq7b4khuonmep6ut
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/armor_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Gunslinger
+  changes:
+    - _id: 2cczatqr
+      formula: 1 + floor((@classes.gunslinger.level - 2) / 4)
+      modifier: dodge
+      subTarget: ac
   description:
     value: >-
       <p>Starting at 2nd level, a gunslinger gains a +1 dodge bonus to AC while
@@ -10,24 +27,7 @@ system:
       Dexterity bonus to AC also causes the gunslinger to lose this dodge bonus.
       This bonus increases by +1 for every four levels beyond 2nd level (to a
       maximum of +5 at 20th level).</p>
-  actions:
-    - _id: rq7b4khuonmep6ut
-      name: Use
-      img: systems/pf1/icons/skills/armor_01.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 2cczatqr
-      formula: 1 + floor((@classes.gunslinger.level - 2) / 4)
-      subTarget: ac
-      modifier: dodge
-  tag: classFeat_nimble
   subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!BTkYdjVLcQMfFsv9'
+  tag: classFeat_nimble
+type: feat
 

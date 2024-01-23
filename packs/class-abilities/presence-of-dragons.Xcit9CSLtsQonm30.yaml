@@ -1,8 +1,32 @@
 _id: Xcit9CSLtsQonm30
-name: Presence of Dragons
-type: feat
+_key: '!items!Xcit9CSLtsQonm30'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Presence of Dragons
 system:
+  abilityType: su
+  actions:
+    - _id: 43n5e5f7h2qop3j6
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: 2d6
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: you
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Those who would oppose you must overcome their fear of dragons or be
@@ -14,39 +38,15 @@ system:
       rounds. This is a mind-affecting fear effect.</p><p>You can use this
       ability once per day at 1st level, plus one additional time per day at 5th
       level and for every 5 levels beyond 5th.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: 43n5e5f7h2qop3j6
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 2d6
-        units: round
-      target:
-        value: you
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_presenceOfDragons
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!Xcit9CSLtsQonm30'
+  subType: classFeat
+  tag: classFeat_presenceOfDragons
+  tags:
+    - Dragon Mystery
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

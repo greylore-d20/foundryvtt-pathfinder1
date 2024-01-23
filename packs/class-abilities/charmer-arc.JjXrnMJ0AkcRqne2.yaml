@@ -1,8 +1,28 @@
 _id: JjXrnMJ0AkcRqne2
-name: Charmer (ARC)
-type: feat
+_key: '!items!JjXrnMJ0AkcRqne2'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Charmer (ARC)
 system:
+  abilityType: su
+  actions:
+    - _id: f9lqv32qw748pl9h
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.arcanist.level * 10'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>An arcanist can expend 1 point from her arcane reservoir as a standard
@@ -11,29 +31,9 @@ system:
       equal to her arcanist level. The arcanist must have the aspect of
       @Compendium[pf1.class-abilities.Z5urT0Y7k5SUqOeJ]{innocence exploit} to
       take this exploit.</p>
+  subType: classFeat
+  tag: classFeat_charmerArc
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: f9lqv32qw748pl9h
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.arcanist.level * 10'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_charmerArc
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!JjXrnMJ0AkcRqne2'
+type: feat
 

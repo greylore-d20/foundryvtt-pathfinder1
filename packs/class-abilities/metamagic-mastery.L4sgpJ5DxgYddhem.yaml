@@ -1,8 +1,20 @@
 _id: L4sgpJ5DxgYddhem
-name: Metamagic Mastery
-type: feat
+_key: '!items!L4sgpJ5DxgYddhem'
 img: systems/pf1/icons/skills/blue_25.jpg
+name: Metamagic Mastery
 system:
+  abilityType: su
+  actions:
+    - _id: cdkrrf3930vy3d6f
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/blue_25.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can apply any one <em>metamagic feat</em> that you
@@ -16,22 +28,10 @@ system:
       you cannot use this ability to cast a spell whose modified spell level
       would be above the level of the highest-level spell that you are capable
       of casting.</p>
-  actions:
-    - _id: cdkrrf3930vy3d6f
-      name: Use
-      img: systems/pf1/icons/skills/blue_25.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 1 + floor((@classes.wizard.level - 8) / 2)
-  tag: classFeat_metamagicMastery
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!L4sgpJ5DxgYddhem'
+  tag: classFeat_metamagicMastery
+  uses:
+    maxFormula: 1 + floor((@classes.wizard.level - 8) / 2)
+    per: day
+type: feat
 

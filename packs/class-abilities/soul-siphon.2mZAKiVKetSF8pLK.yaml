@@ -1,8 +1,28 @@
 _id: 2mZAKiVKetSF8pLK
-name: Soul Siphon
-type: feat
+_key: '!items!2mZAKiVKetSF8pLK'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Soul Siphon
 system:
+  abilityType: su
+  actions:
+    - _id: g51olhnwaoq3v9vv
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a ranged touch attack, you can unleash a ray that causes a target to
@@ -14,30 +34,10 @@ system:
       thereafter.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: g51olhnwaoq3v9vv
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_soulSiphon
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!2mZAKiVKetSF8pLK'
+  tag: classFeat_soulSiphon
+  uses:
+    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    per: day
+type: feat
 

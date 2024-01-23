@@ -1,18 +1,11 @@
 _id: eg2gwmkpoaqljkzu
-name: Spark
-type: spell
+_key: '!items!eg2gwmkpoaqljkzu'
 img: icons/magic/light/hand-sparks-glow-yellow.webp
+name: Spark
 system:
-  description:
-    value: >-
-      <p>You can make an unattended Fine flammable object catch on fire. This
-      works as if you were using flint and steel except that you can use
-      <i>spark</i> in any sort of weather and it takes much less time to
-      actually ignite an object.</p>
   actions:
     - _id: h40h8vx5cvm3azet
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,32 +13,39 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one Fine object
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates (object)
-  uses:
-    autoDeductChargesCost: '0'
+        type: fort
+      target:
+        value: one Fine object
+  components:
+    value: V or S
+  description:
+    value: >-
+      <p>You can make an unattended Fine flammable object catch on fire. This
+      works as if you were using flint and steel except that you can use
+      <i>spark</i> in any sort of weather and it takes much less time to
+      actually ignite an object.</p>
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      cleric: 0
-      oracle: 0
-      druid: 0
       bard: 0
-      witch: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
       magus: 0
       occultist: 0
-      hunter: 0
+      oracle: 0
+      sorcerer: 0
+      witch: 0
+      wizard: 0
   level: 0
   school: evo
   types: fire
-  components:
-    value: V or S
-_key: '!items!eg2gwmkpoaqljkzu'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

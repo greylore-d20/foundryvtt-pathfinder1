@@ -1,7 +1,17 @@
-name: Shield of Blades (VIG)
-type: feat
+_id: YhqnGl4fti1QvSKj
+_key: '!items!YhqnGl4fti1QvSKj'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Shield of Blades (VIG)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Vigilante
+  changes:
+    - _id: 4HdAzSv8
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>The vigilante’s wild attacks allow him to block his foes’
@@ -13,22 +23,12 @@ system:
       shield bonus to his AC until his next turn equal to his penalty on attack
       rolls from Power Attack. This bonus applies only if he actually takes that
       penalty on at least one of the attack rolls.</p>
-  tags:
-    - Vigilante Talents
-  changes:
-    - _id: 4HdAzSv8
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_shieldOfBladesVig
-  subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
   source:
     id: PZO1134
     pages: '16'
-_id: YhqnGl4fti1QvSKj
-_key: '!items!YhqnGl4fti1QvSKj'
+  subType: classFeat
+  tag: classFeat_shieldOfBladesVig
+  tags:
+    - Vigilante Talents
+type: feat
 

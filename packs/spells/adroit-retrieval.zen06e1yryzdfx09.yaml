@@ -1,8 +1,31 @@
 _id: zen06e1yryzdfx09
-name: Adroit Retrieval
-type: spell
+_key: '!items!zen06e1yryzdfx09'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Adroit Retrieval
 system:
+  actions:
+    - _id: vc2ngknd8pses7if
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You instill the target with the ability to withdraw small items from
@@ -12,35 +35,12 @@ system:
       that provokes attacks of opportunity. This effect functions only when the
       target attempts to retrieve a stored item that weighs less than 1 pound
       per caster level (maximum 15 pounds).</p>
-  actions:
-    - _id: vc2ngknd8pses7if
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
+      occultist: 3
       sorcerer: 3
       wizard: 3
-      occultist: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zen06e1yryzdfx09'
+type: spell
 

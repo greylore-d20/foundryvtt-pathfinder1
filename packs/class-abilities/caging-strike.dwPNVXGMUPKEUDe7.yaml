@@ -1,8 +1,20 @@
 _id: dwPNVXGMUPKEUDe7
-name: Caging Strike
-type: feat
+_key: '!items!dwPNVXGMUPKEUDe7'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Caging Strike
 system:
+  abilityType: su
+  actions:
+    - _id: h4x4lthit3q10dfw
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>With a devastating weapon strike, spectral chains wrap around your
@@ -11,22 +23,10 @@ system:
       rolls), you can choose to also entangle that target for 1d4 rounds
       (Fortitude negates). You may use this ability a number of times per day
       equal to 3 + your Wisdom modifier.</p>
-  actions:
-    - _id: h4x4lthit3q10dfw
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_cagingStrike
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!dwPNVXGMUPKEUDe7'
+  tag: classFeat_cagingStrike
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

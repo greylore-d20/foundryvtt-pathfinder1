@@ -1,8 +1,27 @@
 _id: 8x0y3dyxmvdku35p
-name: Intellect Fortress II
-type: spell
+_key: '!items!8x0y3dyxmvdku35p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Intellect Fortress II
 system:
+  actions:
+    - _id: bqql17k7tgror23w
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      area: 20-ft.-radius emanation centered on you
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '20'
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>intellect fortress I</i>, but in addition,
@@ -10,29 +29,10 @@ system:
       half (before any reduction due to a successful save or other effect). This
       applies to both hit point damage and ability score damage. This spell can
       be undercast.</p>
-  actions:
-    - _id: bqql17k7tgror23w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round
-      range:
-        value: '20'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: 20-ft.-radius emanation centered on you
   learnedAt:
     class:
       psychic: 5
   level: 5
   school: abj
-  components:
-    verbal: true
-_key: '!items!8x0y3dyxmvdku35p'
+type: spell
 

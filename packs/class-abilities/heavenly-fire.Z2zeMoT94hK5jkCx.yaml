@@ -1,8 +1,34 @@
 _id: Z2zeMoT94hK5jkCx
-name: Heavenly Fire
-type: feat
+_key: '!items!Z2zeMoT94hK5jkCx'
 img: systems/pf1/icons/spells/beam-red-2.jpg
+name: Heavenly Fire
 system:
+  abilityType: sp
+  actions:
+    - _id: tx77yrh1b7i5f1nf
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d4 + floor(@classes.sorcerer.level / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/beam-red-2.jpg
+      name: Use
+      range:
+        units: spec
+        value: '30'
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>Starting at 1st level, you can unleash a ray of heavenly fire as a
@@ -15,39 +41,13 @@ system:
       Neutral creatures are neither harmed nor healed by this effect. You can
       use this ability a number of times per day equal to 3 + your
       <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: tx77yrh1b7i5f1nf
-      name: Use
-      img: systems/pf1/icons/spells/beam-red-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: spec
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d4 + floor(@classes.sorcerer.level / 2)
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_heavenlyFire
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
   source:
     id: PZO1110
     pages: '74'
-_key: '!items!Z2zeMoT94hK5jkCx'
+  subType: classFeat
+  tag: classFeat_heavenlyFire
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

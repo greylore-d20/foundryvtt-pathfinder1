@@ -1,8 +1,38 @@
 _id: 9shG07fjbawoJrCP
-name: Moonfire
-type: feat
+_key: '!items!9shG07fjbawoJrCP'
 img: systems/pf1/icons/skills/shadow_12.jpg
+name: Moonfire
 system:
+  abilityType: su
+  actions:
+    - _id: rf7ejza2neqm834o
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.cleric.level / 2))d8
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/shadow_12.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as a standard action, you can shoot a blast of divine
@@ -15,40 +45,10 @@ system:
 
       <p>This power replaces the Eyes of Darkness power of the Darkness
       Domain.</p>
-  actions:
-    - _id: rf7ejza2neqm834o
-      name: Use
-      img: systems/pf1/icons/skills/shadow_12.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: (floor(@classes.cleric.level / 2))d8
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_moonfire
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!9shG07fjbawoJrCP'
+  tag: classFeat_moonfire
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

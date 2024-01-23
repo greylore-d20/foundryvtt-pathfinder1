@@ -1,8 +1,27 @@
 _id: 7QulGFMelZdF9pPl
-name: Unstable Bonds
-type: feat
+_key: '!items!7QulGFMelZdF9pPl'
 img: systems/pf1/icons/spells/horror-acid-1.jpg
+name: Unstable Bonds
 system:
+  abilityType: su
+  actions:
+    - _id: u6y8tbuhcb8e8q16
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: round
+        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
+      img: systems/pf1/icons/spells/horror-acid-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: 1 creature
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 1st level, your touch can disrupt the bonds that hold a summoned or
@@ -11,29 +30,10 @@ system:
       <em>staggered</em> for a number of rounds equal to 1/2 your wizard level
       (minimum 1). You can use this ability a number of times per day equal to 3
       + your <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: u6y8tbuhcb8e8q16
-      name: Use
-      img: systems/pf1/icons/spells/horror-acid-1.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
-        units: round
-      target:
-        value: 1 creature
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_unstableBonds
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!7QulGFMelZdF9pPl'
+  tag: classFeat_unstableBonds
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,8 +1,14 @@
 _id: cVE48is5NiDMEg8O
-name: Rogue
-type: feat
+_key: '!items!cVE48is5NiDMEg8O'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Rogue
 system:
+  changes:
+    - _id: grvmqzq9
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -26,12 +32,6 @@ system:
       two rogue talents†, one of which can be an advanced talent†;</p>
 
       <p><b>Ability Scores</b> +4 Dexterity.</p>
-  changes:
-    - _id: grvmqzq9
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!cVE48is5NiDMEg8O'
+type: feat
 

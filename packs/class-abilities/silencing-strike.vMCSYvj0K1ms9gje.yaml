@@ -1,8 +1,14 @@
 _id: vMCSYvj0K1ms9gje
-name: Silencing Strike
-type: feat
+_key: '!items!vMCSYvj0K1ms9gje'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Silencing Strike
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Ninja
   description:
     value: >-
       <p>Using magic stolen from the Hellknights, Council agents can render foes
@@ -11,15 +17,9 @@ system:
       Will save (DC = 10 + half the character’s class level + the rogue’s
       Charisma modifier). Silencing strike can be used a number of times per day
       equal to half the character’s class level.</p>
+  subType: classFeat
+  tag: classFeat_silencingStrike
   tags:
     - Ninja Trick
-  tag: classFeat_silencingStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Ninja
-  abilityType: su
-_key: '!items!vMCSYvj0K1ms9gje'
+type: feat
 

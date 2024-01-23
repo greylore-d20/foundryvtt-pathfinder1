@@ -1,18 +1,10 @@
 _id: 8u1xa5javcxc6szk
-name: Rage
-type: spell
+_key: '!items!8u1xa5javcxc6szk'
 img: icons/creatures/abilities/mouth-teeth-human.webp
+name: Rage
 system:
-  description:
-    value: >-
-      <p>Each affected creature gains a +2 morale bonus to Strength and
-      Constitution, a +1 morale bonus on Will saves, and a -2 penalty to AC. The
-      effect is otherwise identical with a barbarian's rage except that the
-      subjects aren't fatigued at the end of the rage.</p>
   actions:
     - _id: 0enlens404iugqw5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,43 +12,51 @@ system:
           type: action
       duration:
         value: concentration + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
       target:
         value: >-
           one willing living creature per three levels, no two of which may be
           more than 30 ft. apart
-      range:
-        units: medium
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Each affected creature gains a +2 morale bonus to Strength and
+      Constitution, a +1 morale bonus on Will saves, and a -2 penalty to AC. The
+      effect is otherwise identical with a barbarian's rage except that the
+      subjects aren't fatigued at the end of the rage.</p>
   learnedAt:
+    bloodline:
+      Abyssal: 3
+      Boreal: 2
+      Orc: 3
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 2
       alchemist: 3
-      summoner: 3
-      witch: 3
+      bard: 2
       bloodrager: 3
-      psychic: 3
       mesmerist: 2
+      psychic: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
     domain:
       Destruction: 3
       Madness: 3
     subDomain:
       Demon: 3
       Ferocity: 3
-    bloodline:
-      Abyssal: 3
-      Boreal: 2
-      Orc: 3
   level: 3
   school: enc
-  subschool: compulsion
-  types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '329'
-_key: '!items!8u1xa5javcxc6szk'
+  subschool: compulsion
+  types: emotion, mind-affecting
+type: spell
 

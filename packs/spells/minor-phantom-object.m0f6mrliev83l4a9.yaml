@@ -1,8 +1,31 @@
 _id: m0f6mrliev83l4a9
-name: Minor Phantom Object
-type: spell
+_key: '!items!m0f6mrliev83l4a9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Minor Phantom Object
 system:
+  actions:
+    - _id: mehqqthrvw8lll03
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will negates
+        type: will
+      spellEffect: >-
+        illusory, unattended, nonmagical object of nonliving plant matter, up to
+        1 cu. ft./level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as the
@@ -11,38 +34,15 @@ system:
       object may make a Will save, with success causing the object to cease to
       exist. A gnome casting this spell may make a Spellcraft check in place of
       any Craft check required to make a complex item.</p>
-  actions:
-    - _id: mehqqthrvw8lll03
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 10 minutes/level (D)
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: >-
-        illusory, unattended, nonmagical object of nonliving plant matter, up to
-        1 cu. ft./level
   learnedAt:
     class:
+      mesmerist: 4
+      psychic: 4
       sorcerer: 4
       wizard: 4
-      psychic: 4
-      mesmerist: 4
   level: 4
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!m0f6mrliev83l4a9'
+type: spell
 

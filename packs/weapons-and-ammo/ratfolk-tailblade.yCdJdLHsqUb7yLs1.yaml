@@ -1,8 +1,39 @@
 _id: yCdJdLHsqUb7yLs1
-name: Ratfolk Tailblade
-type: weapon
+_key: '!items!yCdJdLHsqUb7yLs1'
 img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
+name: Ratfolk Tailblade
 system:
+  actions:
+    - _id: ilr51q0v57k838bo
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Ratfolk Tailblade
   description:
     value: >-
       <p>A tailblade is a small, sharp knife designed to be strapped to the tip
@@ -17,60 +48,29 @@ system:
       effects appropriate to natural attacks to tail attacks made with a
       tailblade. If used as part of a full attack action, attacks with a
       tailblade are considered secondary attacks.</p>
-  tags:
-    - PFS
-  weight:
-    value: 0.5
-  price: 11
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: ilr51q0v57k838bo
-      name: Attack
-      img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Ratfolk Tailblade
-  weaponGroups:
-    value:
-      - bladesLight
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 11
   properties:
     fin: true
   source:
     id: PZO1121
     pages: '154'
-_key: '!items!yCdJdLHsqUb7yLs1'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesLight
+  weight:
+    value: 0.5
+type: weapon
 

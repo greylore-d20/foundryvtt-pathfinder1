@@ -1,8 +1,38 @@
 _id: 0lw8AzBtL0dL5zEA
-name: Heat Aura
-type: feat
+_key: '!items!0lw8AzBtL0dL5zEA'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Heat Aura
 system:
+  abilityType: su
+  actions:
+    - _id: mmt4shq2rld18e5h
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.oracle.level / 2))d4
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: all within range
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you can cause waves of heat to radiate from your
@@ -13,40 +43,10 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level and every five levels thereafter.</p>
-  actions:
-    - _id: mmt4shq2rld18e5h
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: all within range
-      range:
-        value: '10'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: (floor(@classes.oracle.level / 2))d4
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_heatAura
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!0lw8AzBtL0dL5zEA'
+  tag: classFeat_heatAura
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

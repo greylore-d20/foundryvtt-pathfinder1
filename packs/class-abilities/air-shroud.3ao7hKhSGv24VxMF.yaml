@@ -1,8 +1,26 @@
 _id: 3ao7hKhSGv24VxMF
-name: Air Shroud
-type: feat
+_key: '!items!3ao7hKhSGv24VxMF'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Air Shroud
 system:
+  abilityType: sp
+  actions:
+    - _id: wdpft52sqwf85ics
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.kineticist.level'
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+      target:
+        value: a number of creatures equal to your CON modifier
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> utility (Sp); <b>Level</b> 1;
@@ -14,25 +32,7 @@ system:
       <p>As a standard action, you can accept 1 point of burn to extend the
       effect to a number of additional creatures equal to your Constitution
       modifier for 1 minute per kineticist level you possess.</p>
-  actions:
-    - _id: wdpft52sqwf85ics
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.kineticist.level'
-        units: minute
-      target:
-        value: a number of creatures equal to your CON modifier
-  tag: classFeat_airShroud
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!3ao7hKhSGv24VxMF'
+  tag: classFeat_airShroud
+type: feat
 

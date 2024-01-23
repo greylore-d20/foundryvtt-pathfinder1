@@ -1,8 +1,26 @@
 _id: y8yduo3jjtiixxr7
-name: Rune Trace
-type: spell
+_key: '!items!y8yduo3jjtiixxr7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rune Trace
 system:
+  actions:
+    - _id: eyceex0n2rbwuths
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: rune touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By immersing yourself fully in the intricacies of a carved or written
@@ -26,40 +44,22 @@ system:
       that has no language, you learn that it is a unique image. <b>Purpose</b>:
       You learn the general purpose of the rune (such as whether it's a
       decoration, information, a magical defense, or a warning).</p>
-  actions:
-    - _id: eyceex0n2rbwuths
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: rune touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
-      psychic: 1
+      cleric: 1
       occultist: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   materials:
-    value: pinch of powdered gemstones worth 25 gp
     gpValue: 25
+    value: pinch of powdered gemstones worth 25 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!y8yduo3jjtiixxr7'
+type: spell
 

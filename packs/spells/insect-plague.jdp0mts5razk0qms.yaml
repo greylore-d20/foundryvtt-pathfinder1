@@ -1,8 +1,28 @@
 _id: jdp0mts5razk0qms
-name: Insect Plague
-type: spell
+_key: '!items!jdp0mts5razk0qms'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Insect Plague
 system:
+  actions:
+    - _id: ek8koh3v5tlt3lc2
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: >-
+        one swarm of wasps per three levels, each of which must be adjacent to
+        at least one other swarm
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon a number of swarms of wasps (one per three levels, to a
@@ -13,44 +33,24 @@ system:
       creatures. Each swarm attacks any creatures occupying its area. The swarms
       are stationary after being summoned, and won't pursue creatures that
       flee.</p>
-  actions:
-    - _id: ek8koh3v5tlt3lc2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: long
-      spellEffect: >-
-        one swarm of wasps per three levels, each of which must be adjacent to
-        at least one other swarm
   learnedAt:
+    bloodline:
+      Div: 7
+      Pestilence: 5
     class:
       cleric: 5
-      warpriest: 5
-      oracle: 5
       druid: 5
-      summoner: 4
-      shaman: 5
       hunter: 5
+      oracle: 5
+      shaman: 5
+      summoner: 4
       summonerUnchained: 5
+      warpriest: 5
     domain:
       Vermin: 4
-    bloodline:
-      Pestilence: 5
-      Div: 7
   level: 5
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!jdp0mts5razk0qms'
+  subschool: summoning
+type: spell
 

@@ -1,8 +1,20 @@
 _id: 4g9hYWjaXvj8nVwi
-name: Horrific Glimpse
-type: feat
+_key: '!items!4g9hYWjaXvj8nVwi'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Horrific Glimpse
 system:
+  abilityType: sp
+  actions:
+    - _id: xvglqw4jy1nynpth
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>Once per day, the shaman can gain the effects of
@@ -29,22 +41,10 @@ system:
       its saving throws. The body of a creature slain by this effect is always
       hideously mutilated and savaged, making spells like speak with dead
       useless.</p>
-  actions:
-    - _id: xvglqw4jy1nynpth
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: hour
-        unchained:
-          type: hour
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_horrificGlimpse
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: sp
-_key: '!items!4g9hYWjaXvj8nVwi'
+  tag: classFeat_horrificGlimpse
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

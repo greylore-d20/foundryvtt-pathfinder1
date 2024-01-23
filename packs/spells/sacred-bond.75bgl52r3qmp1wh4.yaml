@@ -1,8 +1,32 @@
 _id: 75bgl52r3qmp1wh4
-name: Sacred Bond
-type: spell
+_key: '!items!75bgl52r3qmp1wh4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sacred Bond
 system:
+  actions:
+    - _id: 46yrrfgcnhsaenpw
+      actionType: heal
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>To use this spell, you first touch the intended recipient, creating a
@@ -11,43 +35,19 @@ system:
       with a range of touch upon each other so long as you are within close
       range (25 ft. + 5 ft./2 levels). Should either you or the target remove
       your bracelet, the spell immediately ends.</p>
-  actions:
-    - _id: 46yrrfgcnhsaenpw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
+      inquisitor: 2
       oracle: 3
       paladin: 2
-      inquisitor: 2
+      warpriest: 3
   level: 3
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: >-
       a pair of golden bracelets worth 100 gp each worn by both you and the
       target
-_key: '!items!75bgl52r3qmp1wh4'
+  school: con
+  subschool: healing
+type: spell
 

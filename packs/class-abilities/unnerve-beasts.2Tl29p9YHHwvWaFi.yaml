@@ -1,8 +1,34 @@
 _id: 2Tl29p9YHHwvWaFi
-name: Unnerve Beasts
-type: feat
+_key: '!items!2Tl29p9YHHwvWaFi'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Unnerve Beasts
 system:
+  abilityType: su
+  actions:
+    - _id: h8vlg5toa5n1mbrn
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@abilities.int.mod'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The target becomes offensive to animals (Will negates). Animals become
@@ -12,35 +38,9 @@ system:
       the hex cannot be affected by the hex for 1 day. The reaction of the
       animals is a <em>mind-affecting charm</em> effect, but the hex on the
       target is not.</p>
+  subType: classFeat
+  tag: classFeat_unnerveBeasts
   tags:
     - Hex
-  actions:
-    - _id: h8vlg5toa5n1mbrn
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.int.mod'
-        units: hour
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-  tag: classFeat_unnerveBeasts
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!2Tl29p9YHHwvWaFi'
+type: feat
 

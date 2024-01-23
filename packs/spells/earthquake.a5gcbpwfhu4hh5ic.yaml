@@ -1,8 +1,33 @@
 _id: a5gcbpwfhu4hh5ic
-name: Earthquake
-type: spell
+_key: '!items!a5gcbpwfhu4hh5ic'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Earthquake
 system:
+  actions:
+    - _id: qxjx2vhbozoyogia
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 80-ft.-radius spread (S)
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '80'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: see text
+        type: ref
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast <i>earthquake</i>, an intense but highly localized tremor
@@ -47,50 +72,25 @@ system:
       nonlethal damage per minute while pinned. If a pinned character falls
       unconscious, he or she must make a DC 15 Constitution check or take 1d6
       points of lethal damage each minute thereafter until freed or dead.</p>
-  actions:
-    - _id: qxjx2vhbozoyogia
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '80'
-      actionType: spellsave
-      save:
-        type: ref
-        description: see text
-      area: 80-ft.-radius spread (S)
   learnedAt:
+    bloodline:
+      Div: 8
     class:
       cleric: 8
-      oracle: 8
       druid: 8
-      shaman: 8
+      oracle: 8
       psychic: 8
+      shaman: 8
     domain:
       Destruction: 8
       Earth: 8
       Ruins: 8
-    bloodline:
-      Div: 8
   level: 8
   school: evo
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
   source:
     id: PZO1110
     pages: '275'
-_key: '!items!a5gcbpwfhu4hh5ic'
+  sr: false
+  types: earth
+type: spell
 

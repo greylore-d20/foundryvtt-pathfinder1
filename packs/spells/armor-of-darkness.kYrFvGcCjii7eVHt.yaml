@@ -1,8 +1,32 @@
 _id: kYrFvGcCjii7eVHt
-name: Armor of Darkness
-type: spell
+_key: '!items!kYrFvGcCjii7eVHt'
 img: systems/pf1/icons/skills/shadow_09.jpg
+name: Armor of Darkness
 system:
+  actions:
+    - _id: eck7dlja80noldnf
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/skills/shadow_09.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell envelops the target in shadows that can, if you desire,
@@ -12,35 +36,11 @@ system:
       feet. The subject gains a +2 bonus on saving throws against any holy,
       good, or light spells or effects. Undead creatures under the effect gain
       +4 turn resistance.</p>
-  actions:
-    - _id: eck7dlja80noldnf
-      name: Use
-      img: systems/pf1/icons/skills/shadow_09.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     domain:
       Darkness: 4
   level: 4
   school: abj
   types: darkness
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!kYrFvGcCjii7eVHt'
+type: spell
 

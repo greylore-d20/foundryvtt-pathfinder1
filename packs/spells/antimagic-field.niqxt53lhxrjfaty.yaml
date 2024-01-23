@@ -1,8 +1,31 @@
 _id: niqxt53lhxrjfaty
-name: Antimagic Field
-type: spell
+_key: '!items!niqxt53lhxrjfaty'
 img: icons/skills/targeting/target-glowing-yellow.webp
+name: Antimagic Field
 system:
+  actions:
+    - _id: 18x76ifi7v7c0wyi
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation, centered on you
+      duration:
+        value: 10 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '10'
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An invisible barrier surrounds you and moves with you. The space within
@@ -38,47 +61,24 @@ system:
       as this.</p><p>Should a creature be larger than the area enclosed by the
       barrier, any part of it that lies outside the barrier is unaffected by the
       field.</p>
-  actions:
-    - _id: 18x76ifi7v7c0wyi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level (D)
-      range:
-        value: '10'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '10'
-      area: 10-ft.-radius emanation, centered on you
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 8
+      occultist: 6
       oracle: 8
       psychic: 7
-      occultist: 6
+      sorcerer: 6
+      wizard: 6
     domain:
       Magic: 6
       Protection: 6
   level: 6
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: pinch of powdered iron or iron filings
-  sr: false
+  school: abj
   source:
     id: PZO1110
     pages: '242'
-_key: '!items!niqxt53lhxrjfaty'
+  sr: false
+type: spell
 

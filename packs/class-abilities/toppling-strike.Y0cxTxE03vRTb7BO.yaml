@@ -1,8 +1,20 @@
 _id: Y0cxTxE03vRTb7BO
-name: Toppling Strike
-type: feat
+_key: '!items!Y0cxTxE03vRTb7BO'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Toppling Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: 5pyf17mbmjx5gezv
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When the investigator deals damage with studied strike, he can perform
@@ -10,21 +22,9 @@ system:
       studied strike. This trip does not provoke attacks of opportunity.</p>
 
       <p>An investigator must be at least 9th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_topplingStrike
   tags:
     - Investigator Talent
-  actions:
-    - _id: 5pyf17mbmjx5gezv
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_topplingStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!Y0cxTxE03vRTb7BO'
+type: feat
 

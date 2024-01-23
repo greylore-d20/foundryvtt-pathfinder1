@@ -1,40 +1,40 @@
 _id: iy41i8m2m42s8hp4
-name: Path of Glory, Greater
-type: spell
+_key: '!items!iy41i8m2m42s8hp4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Path of Glory, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.sugdl20lzrng97wp]{Path
-      of Glory}, except as noted above, and a square provides 5 points of
-      healing instead of 1.</p>
   actions:
     - _id: ucs2abf7qvrkl4mi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      area: four 5-ft. squares/level (see text)
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: heal
-      area: four 5-ft. squares/level (see text)
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.sugdl20lzrng97wp]{Path
+      of Glory}, except as noted above, and a square provides 5 points of
+      healing instead of 1.</p>
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
       bard: 4
+      cleric: 4
+      oracle: 4
+      warpriest: 4
   level: 4
   school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!iy41i8m2m42s8hp4'
+  subschool: healing
+type: spell
 

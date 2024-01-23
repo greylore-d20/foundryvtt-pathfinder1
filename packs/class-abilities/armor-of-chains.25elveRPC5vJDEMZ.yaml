@@ -1,8 +1,17 @@
 _id: 25elveRPC5vJDEMZ
-name: Armor of Chains
-type: feat
+_key: '!items!25elveRPC5vJDEMZ'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Armor of Chains
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Bloodrager
+  changes:
+    - _id: 8li97yz7
+      formula: '@classes.bloodrager.level >= 16 ? 8 : 4'
+      modifier: untyped
+      subTarget: aac
   description:
     value: >-
       <p>At 8th level, you gain resistance 5 to cold and the chains covering
@@ -11,16 +20,7 @@ system:
 
       <p>At 16th level, the resistance increases to 10 and the armor bonus
       increases to +8.</p>
-  changes:
-    - _id: 8li97yz7
-      formula: '@classes.bloodrager.level >= 16 ? 8 : 4'
-      subTarget: aac
-      modifier: untyped
-  tag: classFeat_armorOfChains
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!25elveRPC5vJDEMZ'
+  tag: classFeat_armorOfChains
+type: feat
 

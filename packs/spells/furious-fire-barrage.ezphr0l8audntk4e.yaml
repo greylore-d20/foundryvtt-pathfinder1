@@ -1,8 +1,29 @@
 _id: ezphr0l8audntk4e
-name: Furious Fire Barrage
-type: spell
+_key: '!items!ezphr0l8audntk4e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Furious Fire Barrage
 system:
+  actions:
+    - _id: gso15trod1996r6l
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex half
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon casting this spell, you conjure forth one or two balls of flame,
@@ -15,37 +36,16 @@ system:
       You cannot create additional balls of flame while you are under the
       effects of a <i>calm emotions</i> spell or are otherwise unable to feel
       anger or outrage.</p>
-  actions:
-    - _id: gso15trod1996r6l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level; see text
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
   learnedAt:
     class:
+      bloodrager: 4
+      magus: 5
       sorcerer: 6
       wizard: 6
-      magus: 5
-      bloodrager: 4
   level: 6
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: two balls of guano
-_key: '!items!ezphr0l8audntk4e'
+  school: evo
+  types: fire
+type: spell
 

@@ -1,8 +1,26 @@
 _id: pyy5dujaf2n4qyjg
-name: Strangling Hair
-type: spell
+_key: '!items!pyy5dujaf2n4qyjg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Strangling Hair
 system:
+  actions:
+    - _id: ib2ygnm0mhgect1j
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration, up to 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your hair animates and extends to grapple and constrict an opponent.
@@ -21,31 +39,13 @@ system:
       a new target as a move action, which causes your hair to release its
       current target (if any) and attack the new target that round. Your hair
       cannot be targeted as a separate creature, but it can be dispelled.</p>
-  actions:
-    - _id: ib2ygnm0mhgect1j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!pyy5dujaf2n4qyjg'
+type: spell
 

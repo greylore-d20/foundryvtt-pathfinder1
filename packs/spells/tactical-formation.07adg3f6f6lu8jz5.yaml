@@ -1,8 +1,33 @@
 _id: 07adg3f6f6lu8jz5
-name: Tactical Formation
-type: spell
+_key: '!items!07adg3f6f6lu8jz5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tactical Formation
 system:
+  actions:
+    - _id: dk9iq0moten0h2wc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to one creature/level, no two of which may be more than 30 ft. apart
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Editor's Note:</em> In order to prepare this spell, the caster must
@@ -21,28 +46,6 @@ system:
       the formation to the right side (whether in front of or behind the other
       targets) and not break the spell as long as he stays within 5 feet of at
       least one of them.</p>
-  actions:
-    - _id: dk9iq0moten0h2wc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: up to one creature/level, no two of which may be more than 30 ft. apart
   learnedAt:
     class:
       cleric: 3
@@ -53,8 +56,5 @@ system:
       warpriest: 3
   level: 3
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!07adg3f6f6lu8jz5'
+type: spell
 

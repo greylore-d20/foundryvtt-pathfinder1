@@ -1,70 +1,70 @@
 _id: ZDzIeyL6Zc9M6xq5
-name: Dwarven Maulaxe
-type: weapon
+_key: '!items!ZDzIeyL6Zc9M6xq5'
 img: systems/pf1/icons/items/weapons/maulaxe-dwarven.png
+name: Dwarven Maulaxe
 system:
-  description:
-    value: >-
-      <p>This versatile weapon looks like a heavy-headed axe, but a proficient
-      wielder can use the blunt back of the head to deal bludgeoning damage.</p>
-  tags:
-    - PFS
-    - Dwarven
-  weight:
-    value: 5
-  price: 25
-  hp:
-    max: 2
-    value: 2
-  hardness: 10
   actions:
     - _id: s8q5zoaruakbioe4
-      name: Attack
-      img: systems/pf1/icons/items/weapons/maulaxe-dwarven.png
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size)
             type:
+              custom: ''
               values:
                 - bludgeoning
                 - slashing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critMult: 3
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/maulaxe-dwarven.png
+      name: Attack
+      range:
+        units: melee
+        value: '10'
   baseTypes:
     - Dwarven Maulaxe
-  weaponGroups:
-    value:
-      - axes
-      - hammers
+  description:
+    value: >-
+      <p>This versatile weapon looks like a heavy-headed axe, but a proficient
+      wielder can use the blunt back of the head to deal bludgeoning damage.</p>
+  hardness: 10
+  hp:
+    max: 2
+    value: 2
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 25
   properties:
     fin: true
   source:
     id: PZO9410
     pages: '3'
-_key: '!items!ZDzIeyL6Zc9M6xq5'
+  subType: exotic
+  tags:
+    - PFS
+    - Dwarven
+  weaponGroups:
+    value:
+      - axes
+      - hammers
+  weight:
+    value: 5
+type: weapon
 

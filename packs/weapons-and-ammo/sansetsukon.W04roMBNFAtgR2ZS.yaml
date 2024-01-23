@@ -1,8 +1,41 @@
 _id: W04roMBNFAtgR2ZS
-name: Sansetsukon
-type: weapon
+_key: '!items!W04roMBNFAtgR2ZS'
 img: systems/pf1/icons/items/weapons/nunchaku.png
+name: Sansetsukon
 system:
+  actions:
+    - _id: h0hf9etdm6rr40j4
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/nunchaku.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Sansetsukon
   description:
     value: >-
       <p>Also called a three-section staff, this weapon is divided into three
@@ -10,52 +43,9 @@ system:
       flexibility than a normal staff and allowing the weapon to be swung
       rapidly to create a defensive block, wrap and catch weapons, or harness
       momentum via a whipping motion for powerful strikes.</p>
-  tags:
-    - PFS
-  weight:
-    value: 3
-  price: 8
   hardness: 10
-  actions:
-    - _id: h0hf9etdm6rr40j4
-      name: Attack
-      img: systems/pf1/icons/items/weapons/nunchaku.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critRange: 19
   held: 2h
-  baseTypes:
-    - Sansetsukon
-  weaponGroups:
-    value:
-      - flails
-      - monk
-  subType: martial
-  weaponSubtype: 2h
+  price: 8
   properties:
     blc: true
     dis: true
@@ -63,5 +53,15 @@ system:
   source:
     id: PZO1123
     pages: '19'
-_key: '!items!W04roMBNFAtgR2ZS'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - flails
+      - monk
+  weaponSubtype: 2h
+  weight:
+    value: 3
+type: weapon
 

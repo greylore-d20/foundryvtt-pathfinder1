@@ -1,22 +1,22 @@
 _id: WgCWQxR53UdVSGPB
-name: Shield of Faith
-type: buff
+_key: '!items!WgCWQxR53UdVSGPB'
 img: systems/pf1/icons/spells/protect-orange-1.jpg
+name: Shield of Faith
 system:
+  changes:
+    - _id: qrnq0w11
+      formula: 2 + min(3, floor(@item.level / 6))
+      modifier: deflection
+      subTarget: ac
   description:
     value: >-
       <p>You have a deflection bonus to AC.</p>
 
       <p><b>Usage</b>: Set this buff's level equal to the caster level of Shield
       of Faith.</p>
-  changes:
-    - _id: qrnq0w11
-      formula: 2 + min(3, floor(@item.level / 6))
-      subTarget: ac
-      modifier: deflection
-  level: '1'
   duration:
-    value: '@item.level'
     units: minute
-_key: '!items!WgCWQxR53UdVSGPB'
+    value: '@item.level'
+  level: '1'
+type: buff
 

@@ -1,8 +1,17 @@
 _id: BvPQKHTrEt4YifAL
-name: Swim (UC) (1 pt)
-type: feat
+_key: '!items!BvPQKHTrEt4YifAL'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Swim (UC) (1 pt)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Eidolon (Unchained)
+  changes:
+    - _id: 9g4d00kt
+      formula: '@attributes.speed.land.base'
+      modifier: base
+      subTarget: swimSpeed
   description:
     value: >-
       <p>The eidolon gains webbed hands, webbed feet, or powerful flippers,
@@ -11,16 +20,7 @@ system:
 
       <p>This evolution can be selected more than once. Each additional time it
       is selected, increase the eidolon’s swim speed by 20 feet.</p>
-  changes:
-    - _id: 9g4d00kt
-      formula: '@attributes.speed.land.base'
-      subTarget: swimSpeed
-      modifier: base
-  tag: classFeat_swimUc1Pt
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon (Unchained)
-  abilityType: ex
-_key: '!items!BvPQKHTrEt4YifAL'
+  tag: classFeat_swimUc1Pt
+type: feat
 

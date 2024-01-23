@@ -1,8 +1,28 @@
 _id: 1qA0W7xIIRGxOEdA
-name: Wounding Blade
-type: feat
+_key: '!items!1qA0W7xIIRGxOEdA'
 img: systems/pf1/icons/skills/red_13.jpg
+name: Wounding Blade
 system:
+  abilityType: su
+  actions:
+    - _id: vwug5hhh9e85tr8e
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/red_13.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon held
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can give a weapon that you touch the wounding special
@@ -11,30 +31,10 @@ system:
       day for every four levels beyond 8th.</p>
 
       <p>This power replaces the Weapon Master power of the War Domain.</p>
-  actions:
-    - _id: vwug5hhh9e85tr8e
-      name: Use
-      img: systems/pf1/icons/skills/red_13.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      target:
-        value: weapon held
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_woundingBlade
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!1qA0W7xIIRGxOEdA'
+  tag: classFeat_woundingBlade
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

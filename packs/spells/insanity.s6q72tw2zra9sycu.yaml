@@ -1,18 +1,11 @@
 _id: s6q72tw2zra9sycu
-name: Insanity
-type: spell
+_key: '!items!s6q72tw2zra9sycu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Insanity
 system:
-  description:
-    value: >-
-      <p>The affected creature suffers from a continuous <i>confusion</i>
-      effect, as the spell.</p><p><i>Remove curse</i> does not remove
-      <i>insanity. Greater restoration, heal, limited <i>wish</i>, miracle,</i>
-      or <i>wish</i> can restore the creature.</p>
   actions:
     - _id: 323yvuilk86ilyir
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,37 +13,44 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The affected creature suffers from a continuous <i>confusion</i>
+      effect, as the spell.</p><p><i>Remove curse</i> does not remove
+      <i>insanity. Greater restoration, heal, limited <i>wish</i>, miracle,</i>
+      or <i>wish</i> can restore the creature.</p>
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      witch: 7
-      psychic: 7
-      mesmerist: 6
-    domain:
-      Charm: 7
-      Madness: 7
     bloodline:
       Accursed: 7
       Div: 7
       Impossible: 7
+    class:
+      mesmerist: 6
+      psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
+    domain:
+      Charm: 7
+      Madness: 7
   level: 7
   school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '301'
-_key: '!items!s6q72tw2zra9sycu'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

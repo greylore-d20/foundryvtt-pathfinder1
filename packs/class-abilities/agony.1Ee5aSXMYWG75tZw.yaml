@@ -1,8 +1,34 @@
 _id: 1Ee5aSXMYWG75tZw
-name: Agony
-type: feat
+_key: '!items!1Ee5aSXMYWG75tZw'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Agony
 system:
+  abilityType: su
+  actions:
+    - _id: 0aydhkpvtdolnuuy
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.witch.level'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>With a quick incantation, a witch can place this hex on one creature
@@ -13,36 +39,10 @@ system:
 
       <p>Whether or not the save is successful, a creature cannot be the target
       of this hex again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_agony
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: 0aydhkpvtdolnuuy
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.witch.level'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '60'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: fort
-        description: Fortitude negates
-  tag: classFeat_agony
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!1Ee5aSXMYWG75tZw'
+type: feat
 

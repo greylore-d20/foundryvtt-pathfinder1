@@ -1,16 +1,11 @@
 _id: uycejie4vrf6r8ff
-name: Inveigle Monster
-type: spell
+_key: '!items!uycejie4vrf6r8ff'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Inveigle Monster
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>inveigle person</i> except as noted
-      above.</p>
   actions:
     - _id: 9spraner5whbqqqd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 1 day/level
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    material: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>inveigle person</i> except as noted
+      above.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 5
-      witch: 7
-      psychic: 6
       mesmerist: 5
+      psychic: 6
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
+  materials:
+    value: a drop of alcohol
   school: enc
   subschool: charm
   types: mind-affecting
-  components:
-    verbal: true
-    material: true
-  materials:
-    value: a drop of alcohol
-_key: '!items!uycejie4vrf6r8ff'
+type: spell
 

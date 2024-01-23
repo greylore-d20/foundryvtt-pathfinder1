@@ -1,8 +1,20 @@
 _id: 0mTk1t1TI27smPnB
-name: Primal Manipulation
-type: feat
+_key: '!items!0mTk1t1TI27smPnB'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Primal Manipulation
 system:
+  abilityType: su
+  actions:
+    - _id: tz9d2npl9myosb1q
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Whenever you cast a spell that deals acid, cold, electricity, or fire
@@ -19,22 +31,10 @@ system:
       damage is halved.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: tz9d2npl9myosb1q
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_primalManipulation
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!0mTk1t1TI27smPnB'
+  tag: classFeat_primalManipulation
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

@@ -1,8 +1,20 @@
 _id: 1fEKSNPwGg6hB1Ui
-name: Protector of the People
-type: feat
+_key: '!items!1fEKSNPwGg6hB1Ui'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Protector of the People
 system:
+  abilityType: ex
+  actions:
+    - _id: b6dal6whk1uccwvb
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, the cavalier can inspire the people around him as a swift
@@ -12,22 +24,10 @@ system:
       Charisma modifier for 1 round. This bonus doubles if a creature meets both
       requirements. The cavalier can use this ability once per day, plus one
       additional time per day at 12th level and every 4 levels thereafter.</p>
-  actions:
-    - _id: b6dal6whk1uccwvb
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: floor((@classes.cavalier.level - 4) / 4)
-  tag: classFeat_protectorOfThePeople
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!1fEKSNPwGg6hB1Ui'
+  tag: classFeat_protectorOfThePeople
+  uses:
+    maxFormula: floor((@classes.cavalier.level - 4) / 4)
+    per: day
+type: feat
 

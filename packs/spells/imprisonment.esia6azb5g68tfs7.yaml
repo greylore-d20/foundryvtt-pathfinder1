@@ -1,8 +1,30 @@
 _id: esia6azb5g68tfs7
-name: Imprisonment
-type: spell
+_key: '!items!esia6azb5g68tfs7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Imprisonment
 system:
+  actions:
+    - _id: q668xb138aqi4166
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast <i>imprisonment</i> and touch a creature, it is entombed
@@ -15,34 +37,12 @@ system:
       A <i>wish</i> or <i>miracle</i> spell will not free the recipient, but
       will reveal where it is entombed. If you know the target's name and some
       facts about its life, the target takes a -4 penalty on its save.</p>
-  actions:
-    - _id: q668xb138aqi4166
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
   level: 9
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!esia6azb5g68tfs7'
+type: spell
 

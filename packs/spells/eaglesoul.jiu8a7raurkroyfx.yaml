@@ -1,8 +1,27 @@
 _id: jiu8a7raurkroyfx
-name: Eaglesoul
-type: spell
+_key: '!items!jiu8a7raurkroyfx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Eaglesoul
 system:
+  actions:
+    - _id: 20sgo5uhj7pv8m4e
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>As the Inner Sea's bravest men and women answered the call of what
@@ -40,39 +59,20 @@ system:
       causes them to be sickened (for spellcasters who are neither good nor
       evil) or staggered (for spellcasters who are evil) for the spell's
       duration.</p></li></ul><p></p>
-  actions:
-    - _id: 20sgo5uhj7pv8m4e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (see below)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
       oracle: 6
       paladin: 4
       summoner: 5
       summonerUnchained: 5
+      warpriest: 6
   level: 6
-  school: con
-  subschool: summoning
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: vellum inscribed with good outsider's name
+  school: con
   sr: false
-_key: '!items!jiu8a7raurkroyfx'
+  subschool: summoning
+  types: good
+type: spell
 

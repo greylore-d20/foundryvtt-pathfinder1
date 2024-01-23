@@ -1,8 +1,27 @@
 _id: p2Mku7UVdWwRFJrt
-name: Aquatic Agility
-type: feat
+_key: '!items!p2Mku7UVdWwRFJrt'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Aquatic Agility
 system:
+  abilityType: su
+  actions:
+    - _id: x2tijj7ig3gdipfa
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '@classes.magus.level'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>As an immediate action, the magus can spend 1 point from his arcane
@@ -12,26 +31,7 @@ system:
 
       <p>The magus must be at least 6th level before selecting this magus
       arcana.</p>
-  actions:
-    - _id: x2tijj7ig3gdipfa
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '@classes.magus.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_aquaticAgility
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!p2Mku7UVdWwRFJrt'
+  tag: classFeat_aquaticAgility
+type: feat
 

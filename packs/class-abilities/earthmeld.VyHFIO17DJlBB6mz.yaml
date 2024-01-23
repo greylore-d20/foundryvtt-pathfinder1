@@ -1,8 +1,23 @@
 _id: VyHFIO17DJlBB6mz
-name: Earthmeld
-type: feat
+_key: '!items!VyHFIO17DJlBB6mz'
 img: systems/pf1/icons/spells/rock-sky-3.jpg
+name: Earthmeld
 system:
+  abilityType: sp
+  actions:
+    - _id: iq1wr7p3geasvia1
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> earth; <b>Type</b> utility (Sp); <b>Level</b> 4;
@@ -19,22 +34,7 @@ system:
       until the next time you recover burn. Such increased earthmelds don’t end
       if you use earthmeld again, allowing you to maintain multiple
       earthmelds.</p>
-  actions:
-    - _id: iq1wr7p3geasvia1
-      name: Use
-      img: systems/pf1/icons/spells/rock-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-  tag: classFeat_earthmeld
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!VyHFIO17DJlBB6mz'
+  tag: classFeat_earthmeld
+type: feat
 

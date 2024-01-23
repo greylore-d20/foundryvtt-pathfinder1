@@ -1,8 +1,22 @@
 _id: EbMT5qliolI2BhDt
-name: Remove Vampirism
-type: feat
+_key: '!items!EbMT5qliolI2BhDt'
 img: systems/pf1/icons/skills/blood_10.jpg
+name: Remove Vampirism
 system:
+  abilityType: su
+  actions:
+    - _id: ovirtefyjoc7ejoi
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      img: systems/pf1/icons/skills/blood_10.jpg
+      name: Use
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>At 13th level, the vampire hunter can prevent a creature killed by a
@@ -16,21 +30,7 @@ system:
       @Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish}. If the corpse is returned
       to life and subsequently killed by a vampire again might it become a
       <em>vampire spawn</em>.</p>
-  actions:
-    - _id: ovirtefyjoc7ejoi
-      name: Use
-      img: systems/pf1/icons/skills/blood_10.jpg
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-  tag: classFeat_removeVampirism
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: su
-_key: '!items!EbMT5qliolI2BhDt'
+  tag: classFeat_removeVampirism
+type: feat
 

@@ -1,8 +1,20 @@
 _id: epl6TEuObjeRekp4
-name: War Sight
-type: feat
+_key: '!items!epl6TEuObjeRekp4'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: War Sight
 system:
+  abilityType: su
+  actions:
+    - _id: v72lrc4iywrf568n
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Whenever you roll for initiative, you can roll twice and take either
@@ -14,22 +26,10 @@ system:
 
       <p>At 11th level, you can roll for initiative three times and take any one
       of the results.</p>
+  subType: classFeat
+  tag: classFeat_warSight
   tags:
     - Revelation
     - Battle Mystery
-  actions:
-    - _id: v72lrc4iywrf568n
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_warSight
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!epl6TEuObjeRekp4'
+type: feat
 

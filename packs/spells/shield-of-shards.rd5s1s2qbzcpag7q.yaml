@@ -1,8 +1,27 @@
 _id: rd5s1s2qbzcpag7q
-name: Shield Of Shards
-type: spell
+_key: '!items!rd5s1s2qbzcpag7q'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield Of Shards
 system:
+  actions:
+    - _id: z6kfbfx9o8hnno9d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: one shield you wield
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This defensive spell must be cast on a shield you are currently
@@ -22,40 +41,21 @@ system:
       their original shield form. You regain its shield bonus to AC, provided
       you still have a free hand in which to wield it. Otherwise, the shield
       falls at your feet in your square.</p>
-  actions:
-    - _id: z6kfbfx9o8hnno9d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one shield you wield
-      range:
-        units: personal
   learnedAt:
     class:
+      bloodrager: 1
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      paladin: 1
       inquisitor: 2
       magus: 2
-      bloodrager: 1
-      shaman: 2
       medium: 2
+      oracle: 2
+      paladin: 1
+      shaman: 2
+      warpriest: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a shield
+  school: trs
   sr: false
-_key: '!items!rd5s1s2qbzcpag7q'
+type: spell
 

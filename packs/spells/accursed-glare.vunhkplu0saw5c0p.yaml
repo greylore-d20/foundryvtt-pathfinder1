@@ -1,8 +1,30 @@
 _id: vunhkplu0saw5c0p
-name: Accursed Glare
-type: spell
+_key: '!items!vunhkplu0saw5c0p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Accursed Glare
 system:
+  actions:
+    - _id: c05t1aovc7h9fk6v
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You channel a fell curse through your glare. If the target fails its
@@ -14,36 +36,14 @@ system:
       success, the ally adds its own glare to yours, granting you a +2 bonus on
       your caster level check to overcome spell resistance (if any). Multiple
       allies can attempt Intimidate checks; this bonus stacks.</p>
-  actions:
-    - _id: c05t1aovc7h9fk6v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       antipaladin: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: nec
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vunhkplu0saw5c0p'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: 4amchj89pppg180r
-name: Fleshwarping Swarm
-type: spell
+_key: '!items!4amchj89pppg180r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fleshwarping Swarm
 system:
+  actions:
+    - _id: 9unuiuwla8e5z15q
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: concentration + 2 rounds and 1 hour/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one swarm of bats, rats, or spiders
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>summon swarm</i>, except that living and
@@ -11,37 +30,18 @@ system:
       susceptible to transmutations. Such creatures take a -4 penalty to
       Dexterity and on saving throws against transmutation effects for 1 hour
       per caster level.</p>
-  actions:
-    - _id: 9unuiuwla8e5z15q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: concentration + 2 rounds and 1 hour/level (see text)
-      range:
-        units: close
-      spellEffect: one swarm of bats, rats, or spiders
   learnedAt:
     class:
       sorcerer: 3
-      wizard: 3
       summoner: 3
-      witch: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a square of red cloth
+  school: con
   sr: false
-_key: '!items!4amchj89pppg180r'
+  subschool: summoning
+type: spell
 

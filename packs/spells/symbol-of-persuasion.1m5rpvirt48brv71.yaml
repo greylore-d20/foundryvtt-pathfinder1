@@ -1,8 +1,32 @@
 _id: 1m5rpvirt48brv71
-name: Symbol of Persuasion
-type: spell
+_key: '!items!1m5rpvirt48brv71'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Symbol of Persuasion
 system:
+  actions:
+    - _id: smmommb7hm205swx
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will negates
+        type: will
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i><i>symbol of</i> death</i>, except that
@@ -18,53 +42,29 @@ system:
       <i>persuasion</i></i> and Disable Device to thwart it. The DC in each case
       is 25 + spell level, or 31 for <i><i>symbol of</i>
       <i>persuasion</i></i>.</p>
-  actions:
-    - _id: smmommb7hm205swx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: one symbol
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
       mesmerist: 6
       occultist: 4
+      oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
     subDomain:
       Revolution: 6
       Tyranny: 7
   level: 6
-  school: enc
-  subschool: charm
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 5000
     value: >-
       mercury and phosphorus, plus powdered diamond and opal worth a total of
       5,000 gp
-    gpValue: 5000
   preparation:
     spontaneousPrepared: false
-_key: '!items!1m5rpvirt48brv71'
+  school: enc
+  subschool: charm
+  types: mind-affecting
+type: spell
 

@@ -1,8 +1,18 @@
 _id: rZUsmLEKdZjYdy0L
-name: Swamp Concoctions
-type: feat
+_key: '!items!rZUsmLEKdZjYdy0L'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Swamp Concoctions
 system:
+  abilityType: ex
+  actions:
+    - _id: 9upyjho1tj5qcbyx
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/feats/deceitful.jpg
+      name: Use
   description:
     value: >-
       <p>Twice per day as a full-round action, the vigilante can use the
@@ -17,20 +27,10 @@ system:
       <p>To select this talent, the vigilante must have the environment weapon
       vigilante feat, and he must have selected jungle, swamp, or water for that
       talent.</p>
-  actions:
-    - _id: 9upyjho1tj5qcbyx
-      name: Use
-      img: systems/pf1/icons/feats/deceitful.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  uses:
-    per: day
-    maxFormula: '2'
-  tag: classFeat_swampConcoctions
   subType: classFeat
-  abilityType: ex
-_key: '!items!rZUsmLEKdZjYdy0L'
+  tag: classFeat_swampConcoctions
+  uses:
+    maxFormula: '2'
+    per: day
+type: feat
 

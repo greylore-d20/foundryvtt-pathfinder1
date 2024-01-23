@@ -1,8 +1,11 @@
 _id: YAC70dRJkyWV4CJY
-name: Sticky Poison
-type: feat
+_key: '!items!YAC70dRJkyWV4CJY'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Sticky Poison
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>Any poison the alchemist creates is sticky—when the alchemist applies
@@ -11,12 +14,9 @@ system:
 
       <p>An alchemist must be at least 6th level before selecting this
       discovery.</p>
+  subType: classFeat
+  tag: classFeat_stickyPoison
   tags:
     - Alchemist Discovery
-  tag: classFeat_stickyPoison
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!YAC70dRJkyWV4CJY'
+type: feat
 

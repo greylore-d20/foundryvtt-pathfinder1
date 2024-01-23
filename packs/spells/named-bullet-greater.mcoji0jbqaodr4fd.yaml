@@ -1,17 +1,11 @@
 _id: mcoji0jbqaodr4fd
-name: Named Bullet, Greater
-type: spell
+_key: '!items!mcoji0jbqaodr4fd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Named Bullet, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.09ug139wqsyr0lu6]{Named Bullet}, except it deals 2
-      extra points of damage per caster level (maximum 40).</p>
   actions:
     - _id: xbh2joexpzehqkam
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,32 +13,38 @@ system:
           type: action
       duration:
         value: 10 minutes/level or until discharged
-      target:
-        value: one piece of ammunition or one thrown weapon
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: one piece of ammunition or one thrown weapon
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.09ug139wqsyr0lu6]{Named Bullet}, except it deals 2
+      extra points of damage per caster level (maximum 40).</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      ranger: 4
-      witch: 6
+      hunter: 4
       inquisitor: 6
       psychic: 6
-      hunter: 4
+      ranger: 4
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: an item from the selected creature or creature type
-_key: '!items!mcoji0jbqaodr4fd'
+  school: div
+type: spell
 

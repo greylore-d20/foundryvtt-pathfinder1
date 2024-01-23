@@ -1,38 +1,38 @@
 _id: Yvx22ezh4mD9NQ4p
-name: Assault Leader
-type: feat
+_key: '!items!Yvx22ezh4mD9NQ4p'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Assault Leader
 system:
-  description:
-    value: >-
-      <p>Once per day, when the character misses with an attack on a flanked
-      opponent, she can designate a single ally who is also flanking the target
-      that her attack missed. That ally can make a single melee attack against
-      the opponent as an immediate action.</p>
-  tags:
-    - Rogue Talent
-    - Investigator Talent
-    - Ninja Trick
+  abilityType: ex
   actions:
     - _id: 0DXZuF1hYXRrC04f
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
       activation:
         type: nonaction
         unchained:
           type: nonaction
       ammoType: none
-  uses:
-    per: charges
-    maxFormula: '1'
-  tag: classFeat_assaultLeader
-  subType: classFeat
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
   associations:
     classes:
       - Rogue
       - Rogue (Unchained)
       - Investigator
       - Ninja
-  abilityType: ex
-_key: '!items!Yvx22ezh4mD9NQ4p'
+  description:
+    value: >-
+      <p>Once per day, when the character misses with an attack on a flanked
+      opponent, she can designate a single ally who is also flanking the target
+      that her attack missed. That ally can make a single melee attack against
+      the opponent as an immediate action.</p>
+  subType: classFeat
+  tag: classFeat_assaultLeader
+  tags:
+    - Rogue Talent
+    - Investigator Talent
+    - Ninja Trick
+  uses:
+    maxFormula: '1'
+    per: charges
+type: feat
 

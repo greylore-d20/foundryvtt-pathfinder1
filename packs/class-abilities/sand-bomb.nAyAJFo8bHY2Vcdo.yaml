@@ -1,8 +1,12 @@
 _id: nAyAJFo8bHY2Vcdo
-name: Sand Bomb
-type: feat
+_key: '!items!nAyAJFo8bHY2Vcdo'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Sand Bomb
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>When the alchemist creates a bomb, he can pack the casing full of sand
@@ -10,13 +14,9 @@ system:
       direct hit from a sand bomb is blinded for 1 round, as are any creatures
       in the splash radius that fail a Reflex save (DC = 10 + half the
       alchemist’s level + his Intelligence modifier).</p>
+  subType: classFeat
+  tag: classFeat_sandBomb
   tags:
     - Alchemist Discovery
-  tag: classFeat_sandBomb
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-  abilityType: su
-_key: '!items!nAyAJFo8bHY2Vcdo'
+type: feat
 

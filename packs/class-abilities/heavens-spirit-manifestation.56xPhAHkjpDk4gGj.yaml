@@ -1,8 +1,16 @@
 _id: 56xPhAHkjpDk4gGj
-name: Heavens Spirit Manifestation
-type: feat
+_key: '!items!56xPhAHkjpDk4gGj'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Heavens Spirit Manifestation
 system:
+  associations:
+    classes:
+      - Shaman
+  changes:
+    - _id: 0bwhkb2c
+      formula: '@abilities.wis.mod'
+      modifier: untyped
+      subTarget: allSavingThrows
   description:
     value: >-
       <p>Upon reaching 20th level, the shaman becomes the spirit of heaven. She
@@ -11,15 +19,7 @@ system:
       immune to fear effects, and she automatically confirms all critical hits
       she threatens. If she dies, she’s reborn 3 days later in the form of a
       star child, maturing over the course of 7 days (as reincarnate).</p>
-  changes:
-    - _id: 0bwhkb2c
-      formula: '@abilities.wis.mod'
-      subTarget: allSavingThrows
-      modifier: untyped
-  tag: classFeat_heavensSpiritManifestation
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-_key: '!items!56xPhAHkjpDk4gGj'
+  tag: classFeat_heavensSpiritManifestation
+type: feat
 

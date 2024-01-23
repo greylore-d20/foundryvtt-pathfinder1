@@ -1,8 +1,29 @@
 _id: AD0cF0bBitk3VOZk
-name: Prophetic Armor
-type: feat
+_key: '!items!AD0cF0bBitk3VOZk'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Prophetic Armor
 system:
+  abilityType: ex
+  actions:
+    - _id: 3kxyieu9ef5sbko4
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 4dd281tg
+      formula: '@abilities.cha.mod - @abilities.dex.mod'
+      modifier: untyped
+      subTarget: ac
+    - _id: fblis2zj
+      formula: '@abilities.cha.mod - @abilities.dex.mod'
+      modifier: untyped
+      subTarget: ref
   description:
     value: >-
       <p>You are so in tune with your primal nature that your instincts often
@@ -10,28 +31,7 @@ system:
       You may use your Charisma modifier (instead of your Dexterity modifier) as
       part of your Armor Class and all Reflex saving throws. Your armor’s
       maximum Dexterity bonus applies to your Charisma, instead.</p>
-  actions:
-    - _id: 3kxyieu9ef5sbko4
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 4dd281tg
-      formula: '@abilities.cha.mod - @abilities.dex.mod'
-      subTarget: ac
-      modifier: untyped
-    - _id: fblis2zj
-      formula: '@abilities.cha.mod - @abilities.dex.mod'
-      subTarget: ref
-      modifier: untyped
-  tag: classFeat_propheticArmor
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!AD0cF0bBitk3VOZk'
+  tag: classFeat_propheticArmor
+type: feat
 

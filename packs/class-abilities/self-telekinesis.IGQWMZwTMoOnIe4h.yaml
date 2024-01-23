@@ -1,8 +1,25 @@
 _id: IGQWMZwTMoOnIe4h
-name: Self Telekinesis
-type: feat
+_key: '!items!IGQWMZwTMoOnIe4h'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Self Telekinesis
 system:
+  abilityType: sp
+  actions:
+    - _id: ve0jrf3b2mglc2yq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+      target:
+        value: self
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> utility (Sp); <b>Level</b> 3;
@@ -10,24 +27,7 @@ system:
 
       <p>You use your telekinetic abilities to move yourself. Otherwise, this
       wild talent functions like flame jet.</p>
-  actions:
-    - _id: ve0jrf3b2mglc2yq
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: self
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_selfTelekinesis
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!IGQWMZwTMoOnIe4h'
+  tag: classFeat_selfTelekinesis
+type: feat
 

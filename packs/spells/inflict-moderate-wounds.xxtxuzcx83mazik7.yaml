@@ -1,58 +1,58 @@
 _id: xxtxuzcx83mazik7
-name: Inflict Moderate Wounds
-type: spell
+_key: '!items!xxtxuzcx83mazik7'
 img: icons/magic/unholy/strike-beam-blood-red-teal.webp
+name: Inflict Moderate Wounds
 system:
+  actions:
+    - _id: 452k3vfmi7l1d16i
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 2d8 + min(@cl, 10)
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will half
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like
       @UUID[Compendium.pf1.spells.Item.qooag8g9dxck4lik]{inflict light wounds},
       except that you deal 2d8 points of damage + 1 point per caster level
       (maximum +10).</p>
-  actions:
-    - _id: 452k3vfmi7l1d16i
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 2d8 + min(@cl, 10)
-            type:
-              values:
-                - negative
-              custom: ''
-      save:
-        type: will
-        description: Will half
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 3
-      shaman: 2
+      cleric: 2
+      inquisitor: 2
       occultist: 2
+      oracle: 2
+      shaman: 2
       spiritualist: 2
+      warpriest: 2
+      witch: 2
   level: 2
   school: nec
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '300'
-_key: '!items!xxtxuzcx83mazik7'
+type: spell
 

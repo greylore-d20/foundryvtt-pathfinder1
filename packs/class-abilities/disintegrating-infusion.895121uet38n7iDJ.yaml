@@ -1,8 +1,23 @@
 _id: 895121uet38n7iDJ
-name: Disintegrating Infusion
-type: feat
+_key: '!items!895121uet38n7iDJ'
 img: systems/pf1/icons/spells/fire-arrows-jade-2.jpg
+name: Disintegrating Infusion
 system:
+  actions:
+    - _id: 2hecrtq3schv45va
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/fire-arrows-jade-2.jpg
+      name: Use
+      save:
+        description: Fortitude partial; see text
+        type: fort
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> substance infusion; <b>Level</b> 6;
@@ -21,22 +36,7 @@ system:
       matter you destroy in this way, you must accept 1 point of burn, which
       can’t be reduced by effects such as infusion specialization or gather
       power.</p>
-  actions:
-    - _id: 2hecrtq3schv45va
-      name: Use
-      img: systems/pf1/icons/spells/fire-arrows-jade-2.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude partial; see text
-  tag: classFeat_disintegratingInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!895121uet38n7iDJ'
+  tag: classFeat_disintegratingInfusion
+type: feat
 

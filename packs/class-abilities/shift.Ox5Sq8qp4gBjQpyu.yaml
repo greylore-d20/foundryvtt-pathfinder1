@@ -1,8 +1,25 @@
 _id: Ox5Sq8qp4gBjQpyu
-name: Shift
-type: feat
+_key: '!items!Ox5Sq8qp4gBjQpyu'
 img: systems/pf1/icons/spells/haste-sky-2.jpg
+name: Shift
 system:
+  abilityType: su
+  actions:
+    - _id: jhacwegoynxwcqkz
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/haste-sky-2.jpg
+      name: Use
+      range:
+        units: spec
+        value: 5*(@classes.wizard.level / 2)
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 1st level, you can <em>teleport</em> to a nearby space as a
@@ -13,27 +30,10 @@ system:
       feet for every two wizard levels you possess (minimum 5 feet). You can use
       this ability a number of times per day equal to 3 + your
       <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: jhacwegoynxwcqkz
-      name: Use
-      img: systems/pf1/icons/spells/haste-sky-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      range:
-        value: 5*(@classes.wizard.level / 2)
-        units: spec
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_shift
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!Ox5Sq8qp4gBjQpyu'
+  tag: classFeat_shift
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: 06d7gc96GM5Idb2o
-name: Telekinetic Deflection
-type: feat
+_key: '!items!06d7gc96GM5Idb2o'
 img: systems/pf1/icons/spells/link-blue-2.jpg
+name: Telekinetic Deflection
 system:
+  abilityType: sp
+  actions:
+    - _id: xbma5dmpmngu5v0i
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.kineticist.level'
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> aether; <b>Type</b> utility (Sp); <b>Level</b> 8;
@@ -12,27 +32,7 @@ system:
       @Compendium[pf1.spells.oldkskjzzxe6383i]{Deflection} with a duration of 1
       round. You can accept 1 point of burn to increase the duration to 1 round
       per kineticist level you possess.</p>
-  actions:
-    - _id: xbma5dmpmngu5v0i
-      name: Use
-      img: systems/pf1/icons/spells/link-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.kineticist.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_telekineticDeflection
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!06d7gc96GM5Idb2o'
+  tag: classFeat_telekineticDeflection
+type: feat
 

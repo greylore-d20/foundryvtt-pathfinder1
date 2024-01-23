@@ -1,8 +1,26 @@
 _id: avofn5q2v0f0qxjy
-name: Spiritual Weapon
-type: spell
+_key: '!items!avofn5q2v0f0qxjy'
 img: icons/weapons/hammers/hammer-double-glowing-yellow.webp
+name: Spiritual Weapon
 system:
+  actions:
+    - _id: rpg166e9d8a2utgy
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: magic weapon of force
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A weapon made of force appears and attacks foes at a distance, as you
@@ -46,40 +64,22 @@ system:
       alignment at the time. The weapons associated with each alignment are as
       follows: chaos (battleaxe), evil (light flail), good (warhammer), law
       (longsword).</p>
-  actions:
-    - _id: rpg166e9d8a2utgy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      spellEffect: magic weapon of force
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       inquisitor: 2
-      shaman: 2
       medium: 2
+      oracle: 2
+      shaman: 2
       spiritualist: 2
+      warpriest: 2
     domain:
       War: 2
   level: 2
   school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '348'
-_key: '!items!avofn5q2v0f0qxjy'
+  types: force
+type: spell
 

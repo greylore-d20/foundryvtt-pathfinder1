@@ -1,16 +1,11 @@
 _id: wa7p5zwwl1p0rt92
-name: Doom
-type: spell
+_key: '!items!wa7p5zwwl1p0rt92'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Doom
 system:
-  description:
-    value: >-
-      <p>This spell fills a single subject with a feeling of horrible dread that
-      causes it to become shaken.</p>
   actions:
     - _id: p9hvunobc7ef6g39
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,31 +13,36 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell fills a single subject with a feeling of horrible dread that
+      causes it to become shaken.</p>
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      inquisitor: 1
       antipaladin: 1
-      shaman: 1
+      cleric: 1
+      inquisitor: 1
       mesmerist: 1
+      oracle: 1
+      shaman: 1
       spiritualist: 1
+      warpriest: 1
     subDomain:
       Demon: 1
   school: nec
   types: emotion, fear, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!wa7p5zwwl1p0rt92'
+type: spell
 

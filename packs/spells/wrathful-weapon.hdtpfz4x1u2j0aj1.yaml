@@ -1,8 +1,32 @@
 _id: hdtpfz4x1u2j0aj1
-name: Wrathful Weapon
-type: spell
+_key: '!items!hdtpfz4x1u2j0aj1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wrathful Weapon
 system:
+  actions:
+    - _id: jt7g6oqgi58xxcij
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: melee weapon touched (see text)
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You grant the targeted weapon one of the following weapon special
@@ -14,37 +38,13 @@ system:
       spell fails.  If a warpriest casts this spell on his sacred weapon, the
       duration doubles. Warpriests with unarmed strike as a sacred weapon can
       cast this spell on their unarmed strike.</p>
-  actions:
-    - _id: jt7g6oqgi58xxcij
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: melee weapon touched (see text)
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
+      warpriest: 4
   level: 4
   school: trs
   types: see text
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!hdtpfz4x1u2j0aj1'
+type: spell
 

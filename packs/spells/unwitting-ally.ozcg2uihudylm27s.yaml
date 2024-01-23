@@ -1,19 +1,11 @@
 _id: ozcg2uihudylm27s
-name: Unwitting Ally
-type: spell
+_key: '!items!ozcg2uihudylm27s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unwitting Ally
 system:
-  description:
-    value: >-
-      <p>You befuddle the target's mind. The target has difficulty telling
-      friend from foe for a short period of time. The subject is considered your
-      ally and not your enemies' ally while determining flanking. The subject
-      takes no other hostile action against your enemies due to this spell's
-      effect.</p>
   actions:
     - _id: oatma8cpzlav9896
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,27 +13,35 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You befuddle the target's mind. The target has difficulty telling
+      friend from foe for a short period of time. The subject is considered your
+      ally and not your enemies' ally while determining flanking. The subject
+      takes no other hostile action against your enemies due to this spell's
+      effect.</p>
   learnedAt:
     class:
       bard: 0
-      psychic: 1
       mesmerist: 0
+      psychic: 1
   level: 0
   school: enc
   subschool: charm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ozcg2uihudylm27s'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

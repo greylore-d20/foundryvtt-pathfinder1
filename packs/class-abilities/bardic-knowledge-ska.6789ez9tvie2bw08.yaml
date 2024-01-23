@@ -1,59 +1,59 @@
 _id: 6789ez9tvie2bw08
-name: Bardic Knowledge (SKA)
-type: feat
+_key: '!items!6789ez9tvie2bw08'
 img: systems/pf1/icons/items/inventory/book-blue.jpg
+name: Bardic Knowledge (SKA)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Bard
+  changes:
+    - _id: 6sscr87o
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kar
+    - _id: 94gu8vjl
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kdu
+    - _id: bn6gr4pt
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.ken
+    - _id: fhfj3z0d
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kge
+    - _id: wz4j0u2a
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.khi
+    - _id: dbhfna7q
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.klo
+    - _id: 4f9cxfzj
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kna
+    - _id: 4qbc121d
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kno
+    - _id: 8x070v7o
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kpl
+    - _id: oymywgls
+      formula: max(1, floor(@classes.skald.level / 2))
+      modifier: untyped
+      subTarget: skill.kre
   description:
     value: >-
       <p>A skald adds half his class level (minimum 1) to all <em>Knowledge</em>
       skill checks and may make all <em>Knowledge</em> skill checks
       untrained.</p>
-  changes:
-    - _id: 6sscr87o
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kar
-      modifier: untyped
-    - _id: 94gu8vjl
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kdu
-      modifier: untyped
-    - _id: bn6gr4pt
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.ken
-      modifier: untyped
-    - _id: fhfj3z0d
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kge
-      modifier: untyped
-    - _id: wz4j0u2a
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.khi
-      modifier: untyped
-    - _id: dbhfna7q
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.klo
-      modifier: untyped
-    - _id: 4f9cxfzj
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kna
-      modifier: untyped
-    - _id: 4qbc121d
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kno
-      modifier: untyped
-    - _id: 8x070v7o
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kpl
-      modifier: untyped
-    - _id: oymywgls
-      formula: max(1, floor(@classes.skald.level / 2))
-      subTarget: skill.kre
-      modifier: untyped
-  tag: classFeat_bardicKnowledgeSka
   subType: classFeat
-  associations:
-    classes:
-      - Bard
-  abilityType: ex
-_key: '!items!6789ez9tvie2bw08'
+  tag: classFeat_bardicKnowledgeSka
+type: feat
 

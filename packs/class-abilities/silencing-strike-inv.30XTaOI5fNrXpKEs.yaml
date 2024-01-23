@@ -1,8 +1,27 @@
 _id: 30XTaOI5fNrXpKEs
-name: Silencing Strike (INV)
-type: feat
+_key: '!items!30XTaOI5fNrXpKEs'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Silencing Strike (INV)
 system:
+  abilityType: ex
+  actions:
+    - _id: zw03ahs0fmax4pym
+      actionType: save
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        units: round
+        value: 1d4 +1
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+      save:
+        description: Fortitude reduces duration to 1 round
+        type: fort
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When the investigator deals damage with a studied strike, the target
@@ -12,28 +31,9 @@ system:
       round. This talent has no effect on creatures immune to critical hits.</p>
 
       <p>An investigator must be at least 15th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_silencingStrikeInv
   tags:
     - Investigator Talent
-  actions:
-    - _id: zw03ahs0fmax4pym
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        value: 1d4 +1
-        units: round
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude reduces duration to 1 round
-  tag: classFeat_silencingStrikeInv
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!30XTaOI5fNrXpKEs'
+type: feat
 

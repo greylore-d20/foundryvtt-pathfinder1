@@ -1,8 +1,30 @@
 _id: kiplszYa0tEMMei1
-name: Elemental-Infused Creature
-type: feat
+_key: '!items!kiplszYa0tEMMei1'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Elemental-Infused Creature
 system:
+  changes:
+    - _id: sncohsxp
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+    - _id: 6uhd9uyf
+      formula: '4'
+      modifier: untyped
+      subTarget: str
+    - _id: yotoupsp
+      formula: '2'
+      modifier: untyped
+      subTarget: str
+    - _id: viucnu9b
+      formula: '2'
+      modifier: untyped
+      subTarget: str
+    - _id: s22wmkjy
+      formula: '-2'
+      modifier: untyped
+      subTarget: str
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Both<br><b>Simple Template</b>
@@ -245,28 +267,6 @@ system:
       Aquan (water), Auran (air), Ignan (fire), or Terran (earth). If the base
       creature is unable to speak, it can instead understand the acquired
       languages.</p>
-  changes:
-    - _id: sncohsxp
-      formula: '4'
-      subTarget: str
-      modifier: untyped
-    - _id: 6uhd9uyf
-      formula: '4'
-      subTarget: str
-      modifier: untyped
-    - _id: yotoupsp
-      formula: '2'
-      subTarget: str
-      modifier: untyped
-    - _id: viucnu9b
-      formula: '2'
-      subTarget: str
-      modifier: untyped
-    - _id: s22wmkjy
-      formula: '-2'
-      subTarget: str
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!kiplszYa0tEMMei1'
+type: feat
 

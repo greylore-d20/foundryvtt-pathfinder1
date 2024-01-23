@@ -1,8 +1,28 @@
 _id: 7hFLTBScf4tz8wXh
-name: Quarry (VAM)
-type: feat
+_key: '!items!7hFLTBScf4tz8wXh'
 img: systems/pf1/icons/skills/arrow_12.jpg
+name: Quarry (VAM)
 system:
+  abilityType: ex
+  actions:
+    - _id: a40f5yq0zopx4q9f
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '24'
+      img: systems/pf1/icons/skills/arrow_12.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: undead within sight
+  associations:
+    classes:
+      - Vampire Hunter
   description:
     value: >-
       <p>At 14th level, as a <em>standard action</em> a vampire hunter can
@@ -17,27 +37,7 @@ system:
       new quarry for 24 hours. If the vampire hunter sees proof that his quarry
       is <em>dead</em> or (somehow) was not actually <em>undead</em>, he can
       select a new quarry after 1 hour.</p>
-  actions:
-    - _id: a40f5yq0zopx4q9f
-      name: Use
-      img: systems/pf1/icons/skills/arrow_12.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '24'
-        units: hour
-      target:
-        value: undead within sight
-      range:
-        units: seeText
-  tag: classFeat_quarryVam
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-  abilityType: ex
-_key: '!items!7hFLTBScf4tz8wXh'
+  tag: classFeat_quarryVam
+type: feat
 

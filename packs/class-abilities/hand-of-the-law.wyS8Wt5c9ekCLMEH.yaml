@@ -1,8 +1,27 @@
 _id: wyS8Wt5c9ekCLMEH
-name: Hand of the Law
-type: feat
+_key: '!items!wyS8Wt5c9ekCLMEH'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Hand of the Law
 system:
+  abilityType: ex
+  actions:
+    - _id: dib2r8ssfgjyfivd
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, the cavalier can declare himself an enforcer of martial
@@ -15,26 +34,7 @@ system:
       throws against the cavalier’s abilities, or attempt opposed skill checks
       against the cavalier, they take a –3 penalty for being shaken (instead of
       –2). A cavalier can use this ability only once per combat.</p>
-  actions:
-    - _id: dib2r8ssfgjyfivd
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_handOfTheLaw
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!wyS8Wt5c9ekCLMEH'
+  tag: classFeat_handOfTheLaw
+type: feat
 

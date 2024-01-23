@@ -1,8 +1,34 @@
 _id: y4d021ta06s5tr72
-name: Massacre
-type: spell
+_key: '!items!y4d021ta06s5tr72'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Massacre
 system:
+  actions:
+    - _id: xth0jpm6cdezl85p
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 60-ft. line
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: ray
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        description: Fortitude negates
+        type: fort
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You unleash a wave of necromantic energy that snuffs out the life force
@@ -21,45 +47,19 @@ system:
       points of damage + 1 point per caster level to any creature in that square
       with no saving throw. If several creatures occupy the same square, roll
       randomly to determine which is affected.</p>
-  actions:
-    - _id: xth0jpm6cdezl85p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: ray
-        size: '30'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      area: 60-ft. line
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
-      witch: 9
-      shaman: 9
       psychic: 9
+      shaman: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
   level: 9
-  school: nec
-  types: death
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a flask of ectoplasmic residue
-_key: '!items!y4d021ta06s5tr72'
+  school: nec
+  types: death
+type: spell
 

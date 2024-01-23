@@ -1,8 +1,22 @@
 _id: hkPSfghbCwJd70An
-name: Subordinate Spell
-type: feat
+_key: '!items!hkPSfghbCwJd70An'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Subordinate Spell
 system:
+  abilityType: ex
+  actions:
+    - _id: t1yrx6aidwdr5l2m
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '3'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>The psychic can divide her mind to cast a less powerful spell upon
@@ -20,21 +34,7 @@ system:
       of the psychic’s spells per day of its level. The effects of the two
       spells are separate, so each might require its own concentration
       check.</p>
-  actions:
-    - _id: t1yrx6aidwdr5l2m
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      uses:
-        autoDeductChargesCost: '3'
-  tag: classFeat_subordinateSpell
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: ex
-_key: '!items!hkPSfghbCwJd70An'
+  tag: classFeat_subordinateSpell
+type: feat
 

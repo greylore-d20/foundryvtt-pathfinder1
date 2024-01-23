@@ -1,8 +1,27 @@
 _id: v9fm3tvbahmqlugg
-name: Twin Form
-type: spell
+_key: '!items!v9fm3tvbahmqlugg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Twin Form
 system:
+  actions:
+    - _id: kmuq2i2fjiqtdknw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This extract splits a perfect double of yourself from your body,
@@ -35,32 +54,13 @@ system:
       plane. If your bodies cross into separate planes (including through the
       use of <i>teleport or blink</i>), the body you inhabit survives, while
       your other body is destroyed.</p>
-  actions:
-    - _id: kmuq2i2fjiqtdknw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       alchemist: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a blend of soil and the caster's blood
+  school: trs
   sr: false
-_key: '!items!v9fm3tvbahmqlugg'
+type: spell
 

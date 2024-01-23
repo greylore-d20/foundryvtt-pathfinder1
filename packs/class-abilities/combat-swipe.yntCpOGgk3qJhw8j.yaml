@@ -1,33 +1,33 @@
 _id: yntCpOGgk3qJhw8j
-name: Combat Swipe
-type: feat
+_key: '!items!yntCpOGgk3qJhw8j'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Combat Swipe
 system:
-  description:
-    value: >-
-      <p>A character who selects this talent gains
-      @UUID[Compendium.pf1.feats.Item.Kbuy0bkPlOYz5yaO]{Improved Steal} as a
-      bonus feat.</p>
-  tags:
-    - Rogue Talent
-    - Investigator Talent
-    - Ninja Trick
-  changes:
-    - _id: gTzBpTLK
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-  links:
-    supplements:
-      - name: Improved Steal
-        uuid: Compendium.pf1.feats.Item.Kbuy0bkPlOYz5yaO
-  tag: classFeat_combatSwipe
-  subType: classFeat
+  abilityType: ex
   associations:
     classes:
       - Rogue
       - Investigator
       - Ninja
-  abilityType: ex
-_key: '!items!yntCpOGgk3qJhw8j'
+  changes:
+    - _id: gTzBpTLK
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
+  description:
+    value: >-
+      <p>A character who selects this talent gains
+      @UUID[Compendium.pf1.feats.Item.Kbuy0bkPlOYz5yaO]{Improved Steal} as a
+      bonus feat.</p>
+  links:
+    supplements:
+      - name: Improved Steal
+        uuid: Compendium.pf1.feats.Item.Kbuy0bkPlOYz5yaO
+  subType: classFeat
+  tag: classFeat_combatSwipe
+  tags:
+    - Rogue Talent
+    - Investigator Talent
+    - Ninja Trick
+type: feat
 

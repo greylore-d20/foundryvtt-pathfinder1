@@ -1,8 +1,34 @@
 _id: qq0r0sldae6ole7n
-name: Rebuke
-type: spell
+_key: '!items!qq0r0sldae6ole7n'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rebuke
 system:
+  actions:
+    - _id: 8tpb7aj533akr4if
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius burst centered on you
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        description: Fortitude partial
+        type: fort
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your wrathful words cause physical harm to your enemies.</p><p>Your
@@ -15,28 +41,6 @@ system:
       successful Fortitude save halves the damage and negates the staggering or
       stunning effect.</p><p>Enemies do not need to hear a <i>rebuke</i> to be
       harmed by it, but it is negated by magical silence.</p>
-  actions:
-    - _id: 8tpb7aj533akr4if
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '20'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
-      area: 20-ft.-radius burst centered on you
   learnedAt:
     class:
       inquisitor: 4
@@ -45,9 +49,5 @@ system:
   level: 4
   school: evo
   types: sonic
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!qq0r0sldae6ole7n'
+type: spell
 

@@ -1,17 +1,11 @@
 _id: nlovnqpe4d8rl8v0
-name: King's Castle
-type: spell
+_key: '!items!nlovnqpe4d8rl8v0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: King's Castle
 system:
-  description:
-    value: >-
-      <p>This spell allows you to switch places with an ally. When you cast this
-      spell, choose a single ally within range. You teleport to your ally's
-      space while your ally teleports to your former space.</p>
   actions:
     - _id: v0n3tuxc2veh45dk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,24 +13,30 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell allows you to switch places with an ally. When you cast this
+      spell, choose a single ally within range. You teleport to your ally's
+      space while your ally teleports to your former space.</p>
   learnedAt:
     class:
       paladin: 4
   level: 4
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!nlovnqpe4d8rl8v0'
+type: spell
 

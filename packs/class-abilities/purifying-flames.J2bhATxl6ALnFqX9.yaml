@@ -1,8 +1,27 @@
 _id: J2bhATxl6ALnFqX9
-name: Purifying Flames
-type: feat
+_key: '!items!J2bhATxl6ALnFqX9'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Purifying Flames
 system:
+  abilityType: sp
+  actions:
+    - _id: tx1kw06pkymxtcsp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 4;
@@ -19,26 +38,7 @@ system:
       the amount of damage you normally take from accepting burn in order to
       reduce the DC of one poison affecting the target by 2. This reduction
       remains until the end of your next turn.</p>
-  actions:
-    - _id: tx1kw06pkymxtcsp
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_purifyingFlames
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!J2bhATxl6ALnFqX9'
+  tag: classFeat_purifyingFlames
+type: feat
 

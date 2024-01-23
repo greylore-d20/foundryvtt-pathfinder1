@@ -1,8 +1,23 @@
 _id: DNv5i081q52hBybq
-name: Bolt Infusion
-type: feat
+_key: '!items!DNv5i081q52hBybq'
 img: systems/pf1/icons/spells/lightning-blue-1.jpg
+name: Bolt Infusion
 system:
+  actions:
+    - _id: 7ibsfx6u1an7oxfs
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/lightning-blue-1.jpg
+      name: Use
+      save:
+        description: Reflex half
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> form infusion; <b>Level</b> 3;
@@ -15,22 +30,7 @@ system:
       within the line. If all squares in the bolt’s area are outdoors and in a
       storm, the blast deals an additional 1 point of damage per die. The saving
       throw is Dexterity-based.</p>
-  actions:
-    - _id: 7ibsfx6u1an7oxfs
-      name: Use
-      img: systems/pf1/icons/spells/lightning-blue-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_boltInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!DNv5i081q52hBybq'
+  tag: classFeat_boltInfusion
+type: feat
 

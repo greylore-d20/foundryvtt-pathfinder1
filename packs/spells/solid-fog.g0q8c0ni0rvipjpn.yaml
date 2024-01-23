@@ -1,8 +1,26 @@
 _id: g0q8c0ni0rvipjpn
-name: Solid Fog
-type: spell
+_key: '!items!g0q8c0ni0rvipjpn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Solid Fog
 system:
+  actions:
+    - _id: nf62bedhv4pcopmr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: fog spreads in 20-ft. radius
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>fog cloud</i>, but in addition to
@@ -20,41 +38,23 @@ system:
       round.</p><p><i>Solid fog</i> can be made permanent with a
       <i>permanency</i> spell. A permanent <i>solid fog</i> dispersed by wind
       reforms in 10 minutes.</p>
-  actions:
-    - _id: nf62bedhv4pcopmr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: medium
-      spellEffect: fog spreads in 20-ft. radius
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 4
       magus: 4
-      shaman: 4
       mesmerist: 4
+      shaman: 4
+      sorcerer: 4
       spiritualist: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
     subDomain:
       Cloud: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: powdered peas and an animal hoof
+  school: con
   sr: false
-_key: '!items!g0q8c0ni0rvipjpn'
+  subschool: creation
+type: spell
 

@@ -1,8 +1,27 @@
 _id: TdZEzSBeiQ9BkYNO
-name: Agonizing Wound
-type: feat
+_key: '!items!TdZEzSBeiQ9BkYNO'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Agonizing Wound
 system:
+  abilityType: su
+  actions:
+    - _id: 7rwe2x9460ahbtc7
+      actionType: save
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 13th level, whenever you cast a spell that deals damage to a
@@ -16,29 +35,10 @@ system:
       Charisma modifier.</p>
 
       <p>This is a mind-affecting pain effect.</p>
-  actions:
-    - _id: 7rwe2x9460ahbtc7
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_agonizingWound
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!TdZEzSBeiQ9BkYNO'
+  tag: classFeat_agonizingWound
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

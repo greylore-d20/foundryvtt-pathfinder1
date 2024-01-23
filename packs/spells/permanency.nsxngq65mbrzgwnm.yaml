@@ -1,8 +1,28 @@
 _id: nsxngq65mbrzgwnm
-name: Permanency
-type: spell
+_key: '!items!nsxngq65mbrzgwnm'
 img: icons/magic/time/arrows-circling-pink.webp
+name: Permanency
 system:
+  actions:
+    - _id: f5xen1tmshxffzuu
+      activation:
+        cost: 2
+        type: round
+        unchained:
+          cost: 6
+          type: action
+      duration:
+        value: permanent; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell makes the duration of certain other spells
@@ -68,35 +88,15 @@ system:
       gp</td></tr></tbody></table> Spells cast on other targets are vulnerable
       to <i>dispel magic</i> as normal. The GM may allow other spells to be made
       permanent.<p></p>
-  actions:
-    - _id: f5xen1tmshxffzuu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 2
-        type: round
-        unchained:
-          cost: 6
-          type: action
-      duration:
-        value: permanent; see text
-      target:
-        value: see text
-      range:
-        units: seeText
   learnedAt:
     class:
+      psychic: 5
       sorcerer: 5
       wizard: 5
-      psychic: 5
   level: 5
-  school: uni
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see tables below
+  school: uni
   sr: false
-_key: '!items!nsxngq65mbrzgwnm'
+type: spell
 

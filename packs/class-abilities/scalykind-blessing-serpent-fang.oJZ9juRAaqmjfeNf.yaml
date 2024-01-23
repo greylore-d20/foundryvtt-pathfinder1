@@ -1,8 +1,27 @@
 _id: oJZ9juRAaqmjfeNf
-name: Scalykind Blessing; Serpent Fang
-type: feat
+_key: '!items!oJZ9juRAaqmjfeNf'
 img: systems/pf1/icons/races/vishkanya.png
+name: Scalykind Blessing; Serpent Fang
 system:
+  actions:
+    - _id: hv2y800ji84z95me
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/races/vishkanya.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, as a standard action you can manifest venomous fangs for
@@ -13,26 +32,7 @@ system:
       Venom (Ex)</b>: <em>Bite</em>—injury; save Fort negates;<em>
       frequency</em> 1/round for 4 rounds; <em>effect</em> 1d2 Con;
       <em>cure</em> 1 save.</p>
-  actions:
-    - _id: hv2y800ji84z95me
-      name: Use
-      img: systems/pf1/icons/races/vishkanya.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_scalykindBlessingSerpentFang
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!oJZ9juRAaqmjfeNf'
+  tag: classFeat_scalykindBlessingSerpentFang
+type: feat
 

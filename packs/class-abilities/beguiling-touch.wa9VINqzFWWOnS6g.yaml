@@ -1,8 +1,24 @@
 _id: wa9VINqzFWWOnS6g
-name: Beguiling Touch
-type: feat
+_key: '!items!wa9VINqzFWWOnS6g'
 img: systems/pf1/icons/skills/light_08.jpg
+name: Beguiling Touch
 system:
+  abilityType: sp
+  actions:
+    - _id: 8py47srt072pt7sw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
+      img: systems/pf1/icons/skills/light_08.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>You can charm a living creature by touching it. Creatures with more
@@ -15,26 +31,10 @@ system:
       number of rounds equal to 1/2 your wizard level (minimum 1). This is a
       mind-affecting effect. You can use this ability a number of times per day
       equal to 3 + your <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: 8py47srt072pt7sw
-      name: Use
-      img: systems/pf1/icons/skills/light_08.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
-        units: round
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_beguilingTouch
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!wa9VINqzFWWOnS6g'
+  tag: classFeat_beguilingTouch
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

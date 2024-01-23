@@ -1,8 +1,32 @@
 _id: nk55jadwbyimbp4y
-name: Corruption Resistance
-type: spell
+_key: '!items!nk55jadwbyimbp4y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Corruption Resistance
 system:
+  actions:
+    - _id: bn47d205s1yo8vrm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You grant the touched creature limited protection from magical effects
@@ -18,37 +42,13 @@ system:
       protects against damage. The subject can still suffer side effects from
       such attacks. When you use this spell to protect an alignment, it gains
       the descriptor of that alignment.</p>
-  actions:
-    - _id: bn47d205s1yo8vrm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      paladin: 2
-      inquisitor: 2
       antipaladin: 2
+      inquisitor: 2
+      paladin: 2
   level: 2
   school: abj
   types: chaotic, evil, good, or lawful
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!nk55jadwbyimbp4y'
+type: spell
 

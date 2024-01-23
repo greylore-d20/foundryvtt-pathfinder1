@@ -1,8 +1,20 @@
 _id: ZVkGZ5tfXP9ft2CU
-name: Mindshield
-type: feat
+_key: '!items!ZVkGZ5tfXP9ft2CU'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Mindshield
 system:
+  abilityType: su
+  actions:
+    - _id: qvu7yawtdhcsp2jq
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>The psychic can spend 1 point from her phrenic pool to give one target
@@ -17,19 +29,7 @@ system:
       <p>She must choose to spend either 1 point for each creature or 2 points
       for each creature; she can’t grant different bonuses to different
       targets.</p>
-  actions:
-    - _id: qvu7yawtdhcsp2jq
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_mindshield
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!ZVkGZ5tfXP9ft2CU'
+  tag: classFeat_mindshield
+type: feat
 

@@ -1,8 +1,21 @@
 _id: bQIHXFmVTfQv6rD3
-name: Quick Study (ARC)
-type: feat
+_key: '!items!bQIHXFmVTfQv6rD3'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Quick Study (ARC)
 system:
+  abilityType: ex
+  actions:
+    - _id: s8abl3vn12mcxujr
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can prepare a spell in place of an existing spell by
@@ -10,25 +23,12 @@ system:
       full-round action that provokes an attack of opportunity. The arcanist
       must be able to reference her spellbook when using this ability. The spell
       prepared must be of the same level as the spell being replaced.</p>
-  tags:
-    - Arcanist Exploit
-  actions:
-    - _id: s8abl3vn12mcxujr
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_quickStudyArc
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: ex
   source:
     id: PZO1129
     pages: '11'
-_key: '!items!bQIHXFmVTfQv6rD3'
+  subType: classFeat
+  tag: classFeat_quickStudyArc
+  tags:
+    - Arcanist Exploit
+type: feat
 

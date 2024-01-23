@@ -1,8 +1,33 @@
 _id: YxeSVRbG7lfQybfr
-name: Green Martian
-type: race
+_key: '!items!YxeSVRbG7lfQybfr'
+folder: CWHsfTdEmZohUkw1
 img: systems/pf1/icons/races/lizardfolk.png
+name: Green Martian
 system:
+  changes:
+    - _id: 0osulph1
+      formula: '2'
+      modifier: racial
+      subTarget: str
+    - _id: wts6q3pk
+      formula: '2'
+      modifier: racial
+      subTarget: wis
+    - _id: rsw1263k
+      formula: '-2'
+      modifier: racial
+      subTarget: cha
+  classSkills:
+    sur: true
+  contextNotes:
+    - formula: ''
+      modifier: ''
+      operator: add
+      priority: 0
+      subTarget: allSavingThrows
+      target: savingThrows
+      text: +[[2]] Racial vs Fear Effects
+      value: 0
   description:
     value: >-
       <h2>Standard Racial Traits</h2><ul><li><strong>+2 Strength, +2 Wisdom, -2
@@ -38,37 +63,12 @@ system:
       arms. One hand is considered its primary hand; all others are considered
       off hands. It can use any of its hands for other purposes that require
       free hands.</li></ul>
-  tags:
-    - Alien
-  changes:
-    - _id: 0osulph1
-      formula: '2'
-      subTarget: str
-      modifier: racial
-    - _id: wts6q3pk
-      formula: '2'
-      subTarget: wis
-      modifier: racial
-    - _id: rsw1263k
-      formula: '-2'
-      subTarget: cha
-      modifier: racial
-  contextNotes:
-    - formula: ''
-      operator: add
-      target: savingThrows
-      subTarget: allSavingThrows
-      modifier: ''
-      priority: 0
-      value: 0
-      text: +[[2]] Racial vs Fear Effects
-  weaponProf:
-    custom: Longsword;Spear
   languages:
     value:
       - common
-  classSkills:
-    sur: true
-folder: CWHsfTdEmZohUkw1
-_key: '!items!YxeSVRbG7lfQybfr'
+  tags:
+    - Alien
+  weaponProf:
+    custom: Longsword;Spear
+type: race
 

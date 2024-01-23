@@ -1,8 +1,20 @@
 _id: fi5PsRq1XW7MStPM
-name: Shifter Claws
-type: feat
+_key: '!items!fi5PsRq1XW7MStPM'
 img: systems/pf1/icons/items/weapons/kumade.png
+name: Shifter Claws
 system:
+  abilityType: su
+  actions:
+    - _id: 39ri2og69gcriegs
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/weapons/kumade.png
+      name: Use
+  associations:
+    classes:
+      - Shifter
   description:
     value: >-
       <p>At will, a shifter in her natural form can extend her claws as a swift
@@ -26,19 +38,7 @@ system:
       have claw attacks, she can choose up to two natural attacks that would
       deal less damage than her shifter claw damage and have those attacks
       instead deal the same damage as her shifter claws.</p>
-  actions:
-    - _id: 39ri2og69gcriegs
-      name: Use
-      img: systems/pf1/icons/items/weapons/kumade.png
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_shifterClaws
   subType: classFeat
-  associations:
-    classes:
-      - Shifter
-  abilityType: su
-_key: '!items!fi5PsRq1XW7MStPM'
+  tag: classFeat_shifterClaws
+type: feat
 

@@ -1,40 +1,40 @@
 _id: wK9bxQqe49GfT9xh
-name: Scythe of Evil
-type: feat
+_key: '!items!wK9bxQqe49GfT9xh'
 img: systems/pf1/icons/skills/violet_24.jpg
+name: Scythe of Evil
 system:
+  abilityType: su
+  actions:
+    - _id: t3f1borlajf8rms3
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/violet_24.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one weapon
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can give a weapon touched the unholy special weapon
       quality for a number of rounds equal to 1/2 your cleric level. You can use
       this ability once per day at 8th level, and an additional time per day for
       every four levels beyond 8th.</p>
-  actions:
-    - _id: t3f1borlajf8rms3
-      name: Use
-      img: systems/pf1/icons/skills/violet_24.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      target:
-        value: one weapon
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_scytheOfEvil
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '44'
-_key: '!items!wK9bxQqe49GfT9xh'
+  subType: classFeat
+  tag: classFeat_scytheOfEvil
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,35 @@
 _id: 3BKBH3GXcpi6gzkR
-name: Physical Kinetic Blade
-type: feat
+_key: '!items!3BKBH3GXcpi6gzkR'
 img: systems/pf1/icons/skills/yellow_16.jpg
+name: Physical Kinetic Blade
 system:
+  abilityType: su
+  actions:
+    - _id: 084qy58h4edozmn0
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: >-
+              (ceil(@classes.kineticist.level / 2))d6 +
+              ceil(@classes.kineticist.level / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/yellow_16.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
+  crOffset: '0'
   description:
     value: >-
       <p><b>Element(s)</b> universal; <b>Type</b> form infusion; <b>Level</b> 1;
@@ -33,34 +60,7 @@ system:
       object, the attack doesn’t use any of the magic weapon’s bonuses or
       effects and simply deals the telekineticist’s blast damage. The kinetic
       blade doesn’t add the damage bonus from elemental overflow.</p>
-  actions:
-    - _id: 084qy58h4edozmn0
-      name: Use
-      img: systems/pf1/icons/skills/yellow_16.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      actionType: msak
-      damage:
-        parts:
-          - formula: >-
-              (ceil(@classes.kineticist.level / 2))d6 +
-              ceil(@classes.kineticist.level / 2)
-            type:
-              values:
-                - untyped
-              custom: ''
-      ability:
-        attack: str
-  tag: classFeat_physicalKineticBlade
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-  crOffset: '0'
-_key: '!items!3BKBH3GXcpi6gzkR'
+  tag: classFeat_physicalKineticBlade
+type: feat
 

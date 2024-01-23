@@ -1,8 +1,30 @@
 _id: w0qned8wruhxzo8t
-name: Salvage
-type: spell
+_key: '!items!w0qned8wruhxzo8t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Salvage
 system:
+  actions:
+    - _id: tpu15tzl7x4d3v67
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: one shipwreck
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An invisible force pulls together the remains of a
@@ -28,35 +50,13 @@ system:
       new <i>salvage</i> spell is cast (but continues to age normally and
       suffers the effects of its environments). A new <i>salvage</i> spell's
       duration is modified by any repairs already begun.</p>
-  actions:
-    - _id: tpu15tzl7x4d3v67
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one shipwreck
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
+      sorcerer: 9
+      wizard: 9
   level: 9
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!w0qned8wruhxzo8t'
+type: spell
 

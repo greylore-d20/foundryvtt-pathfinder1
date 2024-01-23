@@ -1,63 +1,63 @@
 _id: JVObA6FqSBzZfikV
-name: Dwarven Longhammer
-type: weapon
+_key: '!items!JVObA6FqSBzZfikV'
 img: systems/pf1/icons/items/weapons/dwarven-long-hammer.PNG
+name: Dwarven Longhammer
 system:
+  actions:
+    - _id: 323e3aicetlv61r8
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/dwarven-long-hammer.PNG
+      name: Attack
+      range:
+        units: reach
+        value: '0'
+  baseTypes:
+    - Dwarven Longhammer
   description:
     value: >-
       <p>These heavy-headed bludgeons are often carved or cast with monstrous
       faces or drilled with tiny holes to create a menacing whistling as they
       are swung through the air.</p>
-  tags:
-    - PFS
-    - Dwarven
-  weight:
-    value: 20
-  price: 70
   hardness: 10
-  actions:
-    - _id: 323e3aicetlv61r8
-      name: Attack
-      img: systems/pf1/icons/items/weapons/dwarven-long-hammer.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: reach
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(2, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Dwarven Longhammer
-  weaponGroups:
-    value:
-      - hammers
-  subType: exotic
-  weaponSubtype: 2h
+  price: 70
   properties:
     rch: true
   source:
     id: PZO1121
     pages: '17'
-_key: '!items!JVObA6FqSBzZfikV'
+  subType: exotic
+  tags:
+    - PFS
+    - Dwarven
+  weaponGroups:
+    value:
+      - hammers
+  weaponSubtype: 2h
+  weight:
+    value: 20
+type: weapon
 

@@ -1,8 +1,26 @@
 _id: OuQEx5uUHXcxtpsf
-name: City Sight
-type: feat
+_key: '!items!OuQEx5uUHXcxtpsf'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: City Sight
 system:
+  abilityType: su
+  actions:
+    - _id: 5oqllgs77gc4s3k4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.witch.level >= 8 ? 10 : 1'
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch curses a target with the simple vision of urban mortals. On a
@@ -14,27 +32,9 @@ system:
       <p>At 8th level, this effect lasts for 10 minutes instead. Whether or not
       the creature succeeds at the saving throw, it can’t be the target of this
       hex again for 1 day.</p>
+  subType: classFeat
+  tag: classFeat_citySight
   tags:
     - Hex
-  actions:
-    - _id: 5oqllgs77gc4s3k4
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.witch.level >= 8 ? 10 : 1'
-        units: minute
-      target:
-        value: one creature
-  tag: classFeat_citySight
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!OuQEx5uUHXcxtpsf'
+type: feat
 

@@ -1,8 +1,24 @@
 _id: Ih0QO6eZ3XmrDkQS
-name: Create Gear
-type: feat
+_key: '!items!Ih0QO6eZ3XmrDkQS'
 img: systems/pf1/icons/spells/rock-acid-1.jpg
+name: Create Gear
 system:
+  abilityType: su
+  actions:
+    - _id: gbxpgfkr1kgzc2ny
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/rock-acid-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 1st level, you can create any object that weighs no more than 1
@@ -15,26 +31,10 @@ system:
       moving parts. You could use this ability to create a dagger, but not a
       vial of alchemist’s fire. You can use this ability a number of times per
       day equal to 3 + your <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: gbxpgfkr1kgzc2ny
-      name: Use
-      img: systems/pf1/icons/spells/rock-acid-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_createGear
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!Ih0QO6eZ3XmrDkQS'
+  tag: classFeat_createGear
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

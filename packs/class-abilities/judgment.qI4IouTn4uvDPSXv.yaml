@@ -1,8 +1,26 @@
 _id: qI4IouTn4uvDPSXv
-name: Judgment
-type: feat
+_key: '!items!qI4IouTn4uvDPSXv'
 img: systems/pf1/icons/skills/yellow_38.jpg
+name: Judgment
 system:
+  abilityType: su
+  actions:
+    - _id: 6oekn6mk4g4zy1y6
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/yellow_38.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>Starting at 1st level, an inquisitor can pronounce judgment upon her
@@ -63,28 +81,10 @@ system:
       she does not receive this bonus. At 10th level, the inquisitor’s weapons
       also count as adamantine for the purpose of overcoming damage reduction
       (but not for reducing hardness).</p>
-  actions:
-    - _id: 6oekn6mk4g4zy1y6
-      name: Use
-      img: systems/pf1/icons/skills/yellow_38.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 1 + floor((@classes.inquisitor.level - 1) / 3)
-  tag: classFeat_judgment
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!qI4IouTn4uvDPSXv'
+  tag: classFeat_judgment
+  uses:
+    maxFormula: 1 + floor((@classes.inquisitor.level - 1) / 3)
+    per: day
+type: feat
 

@@ -1,35 +1,35 @@
 _id: asX1tCPLkhm2UiwQ
-name: Strength of the Abyss
-type: feat
+_key: '!items!asX1tCPLkhm2UiwQ'
 img: systems/pf1/icons/skills/yellow_14.jpg
+name: Strength of the Abyss
 system:
-  description:
-    value: >-
-      <p>At 9th level, you gain a +2 inherent bonus to your <em>Strength</em>.
-      This bonus increases to +4 at 13th level, and to +6 at 17th level.</p>
+  abilityType: ex
   actions:
     - _id: rfrrzw7jzloevw59
-      name: Use
-      img: systems/pf1/icons/skills/yellow_14.jpg
       activation:
         type: passive
         unchained:
           type: passive
+      img: systems/pf1/icons/skills/yellow_14.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   changes:
     - _id: 6wg7svns
       formula: >-
         @classes.sorcerer.level >= 17 ? 6 : ((@classes.sorcerer.level > 12 &&
         @classes.sorcerer.level < 17) ? 4 : 2)
-      subTarget: str
       modifier: inherent
-  tag: classFeat_strengthOfTheAbyss
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
+      subTarget: str
+  description:
+    value: >-
+      <p>At 9th level, you gain a +2 inherent bonus to your <em>Strength</em>.
+      This bonus increases to +4 at 13th level, and to +6 at 17th level.</p>
   source:
     id: PZO1110
     pages: '73'
-_key: '!items!asX1tCPLkhm2UiwQ'
+  subType: classFeat
+  tag: classFeat_strengthOfTheAbyss
+type: feat
 

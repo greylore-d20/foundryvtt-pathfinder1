@@ -1,17 +1,10 @@
 _id: nckt6q58mhaav0uf
-name: Phantom Steed, Communal
-type: spell
+_key: '!items!nckt6q58mhaav0uf'
 img: icons/magic/fire/elemental-creature-horse.webp
+name: Phantom Steed, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>phantom steed</i>, except you can summon
-      up to six steeds, and you divide the duration in 1-hour intervals among
-      the steeds summoned.</p>
   actions:
     - _id: nmb7odgcut3oz0fi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
@@ -20,24 +13,31 @@ system:
           type: minute
       duration:
         value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: up to six quasi-real, horselike creatures
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>phantom steed</i>, except you can summon
+      up to six steeds, and you divide the duration in 1-hour intervals among
+      the steeds summoned.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      summoner: 3
       occultist: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 3
       summonerUnchained: 3
+      wizard: 4
   level: 4
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!nckt6q58mhaav0uf'
+  subschool: creation
+type: spell
 

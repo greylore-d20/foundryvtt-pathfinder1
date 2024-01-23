@@ -1,8 +1,30 @@
 _id: gjj3otzeutoykuee
-name: Death Candle
-type: spell
+_key: '!items!gjj3otzeutoykuee'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Death Candle
 system:
+  actions:
+    - _id: g0avto3mwjsv4gzc
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous/10 minutes per HD of subject; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>death knell</i>, except instead of using
@@ -12,38 +34,16 @@ system:
       behaves as if you had summoned it with <i>summon monster II</i>. The
       elemental remains for a number of rounds equal to the Hit Dice of the
       slain creature.</p>
-  actions:
-    - _id: g0avto3mwjsv4gzc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous/10 minutes per HD of subject; see text
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 1
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
+      warpriest: 2
+      witch: 2
   level: 2
   school: nec
   types: death, evil, fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!gjj3otzeutoykuee'
+type: spell
 

@@ -1,8 +1,38 @@
 _id: L5jrgNDA43dMH1wm
-name: Acid Dart (CLE)
-type: feat
+_key: '!items!L5jrgNDA43dMH1wm'
 img: systems/pf1/icons/spells/beam-acid-1.jpg
+name: Acid Dart (CLE)
 system:
+  abilityType: sp
+  actions:
+    - _id: bmgmaycmdm4c4irk
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.cleric.level / 2)
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/beam-acid-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can unleash an acid dart targeting any foe
@@ -10,43 +40,13 @@ system:
       of acid damage + 1 point for every two cleric levels you possess. You can
       use this ability a number of times per day equal to 3 + your Wisdom
       modifier.</p>
-  actions:
-    - _id: bmgmaycmdm4c4irk
-      name: Use
-      img: systems/pf1/icons/spells/beam-acid-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.cleric.level / 2)
-            type:
-              values:
-                - acid
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_acidDartCle
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '43'
-_key: '!items!L5jrgNDA43dMH1wm'
+  subType: classFeat
+  tag: classFeat_acidDartCle
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

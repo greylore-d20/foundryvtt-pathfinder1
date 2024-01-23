@@ -1,8 +1,32 @@
 _id: tyo2kqfn1j9plv90
-name: Yellow Sign
-type: spell
+_key: '!items!tyo2kqfn1j9plv90'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Yellow Sign
 system:
+  actions:
+    - _id: 7cokgd0uoa2m9mm6
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will negates
+        type: will
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as per <i>symbol of death</i>, save that creatures
@@ -31,46 +55,22 @@ system:
       the GM to determine. <i>Yellow Sign</i> can be made permanent with a
       <i>permanency</i> spell by a caster of 18th level or higher for the cost
       of 40,000 gp.</p>
-  actions:
-    - _id: 7cokgd0uoa2m9mm6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: see text
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: one symbol
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
+      bard: 6
       cleric: 9
       oracle: 9
-      bard: 6
+      sorcerer: 9
       witch: 9
+      wizard: 9
   level: 9
+  materials:
+    gpValue: 15000
+    value: ochre and sulfur, plus powdered gold worth a total of 15,000 gp
+  preparation:
+    spontaneousPrepared: false
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: ochre and sulfur, plus powdered gold worth a total of 15,000 gp
-    gpValue: 15000
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!tyo2kqfn1j9plv90'
+type: spell
 

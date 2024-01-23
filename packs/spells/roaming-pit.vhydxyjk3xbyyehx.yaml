@@ -1,8 +1,30 @@
 _id: vhydxyjk3xbyyehx
-name: Roaming Pit
-type: spell
+_key: '!items!vhydxyjk3xbyyehx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Roaming Pit
 system:
+  actions:
+    - _id: a4dluvydpjohdqkz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      spellEffect: mobile 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>create</i> pitAPG, except the pit is capable
@@ -14,48 +36,26 @@ system:
       falling into the pit when it reaches its new destination moves to the
       nearest safe space. Creatures that fall into the pit move with it if it is
       relocated.</p>
-  actions:
-    - _id: a4dluvydpjohdqkz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      spellEffect: mobile 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 6
-      warpriest: 6
-      oracle: 6
       druid: 6
-      summoner: 5
-      psychic: 6
       hunter: 6
+      oracle: 6
+      psychic: 6
+      sorcerer: 5
+      summoner: 5
       summonerUnchained: 5
+      warpriest: 6
+      wizard: 5
   level: 5
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powered diamond dust worth 10 gp
     gpValue: 10
+    value: powered diamond dust worth 10 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!vhydxyjk3xbyyehx'
+  subschool: creation
+type: spell
 

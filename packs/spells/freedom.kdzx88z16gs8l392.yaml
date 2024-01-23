@@ -1,8 +1,31 @@
 _id: kdzx88z16gs8l392
-name: Freedom
-type: spell
+_key: '!items!kdzx88z16gs8l392'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Freedom
 system:
+  actions:
+    - _id: zj2myjjarxa4bndo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject is freed from spells and effects that restrict movement,
@@ -12,40 +35,17 @@ system:
       <i>imprisonment</i> or <i>maze,</i> you must know its name and background,
       and you must cast this spell at the spot where it was entombed or banished
       into the maze.</p>
-  actions:
-    - _id: zj2myjjarxa4bndo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
     domain:
       Liberation: 9
   level: 9
   school: abj
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '287'
-_key: '!items!kdzx88z16gs8l392'
+type: spell
 

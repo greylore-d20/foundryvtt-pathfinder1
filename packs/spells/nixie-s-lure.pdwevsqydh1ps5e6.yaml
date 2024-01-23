@@ -1,8 +1,31 @@
 _id: pdwevsqydh1ps5e6
-name: Nixie's Lure
-type: spell
+_key: '!items!pdwevsqydh1ps5e6'
 img: icons/magic/water/elemental-water.webp
+name: Nixie's Lure
 system:
+  actions:
+    - _id: mduir8ihfwtrzqbp
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '300'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: all creatures within a 300-ft.-radius burst centered on you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates an unearthly and infectious song that seductively
@@ -14,44 +37,21 @@ system:
       moving into peril. Creatures lured by the spell's song can take no actions
       other than to defend themselves. A victim within 5 feet of you simply
       stands still and for the duration of the spell remains fascinated.</p>
-  actions:
-    - _id: mduir8ihfwtrzqbp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level (D)
-      target:
-        value: all creatures within a 300-ft.-radius burst centered on you
-      range:
-        value: '300'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      druid: 4
       bard: 3
-      summoner: 4
-      witch: 4
-      psychic: 3
-      mesmerist: 3
+      druid: 4
       hunter: 4
+      mesmerist: 3
+      psychic: 3
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: enc
   subschool: charm
   types: mind-affecting, sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!pdwevsqydh1ps5e6'
+type: spell
 

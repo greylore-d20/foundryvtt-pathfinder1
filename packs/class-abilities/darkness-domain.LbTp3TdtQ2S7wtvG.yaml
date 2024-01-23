@@ -1,8 +1,16 @@
 _id: LbTp3TdtQ2S7wtvG
-name: Darkness Domain
-type: feat
+_key: '!items!LbTp3TdtQ2S7wtvG'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Darkness Domain
 system:
+  associations:
+    classes:
+      - Cleric
+  changes:
+    - _id: EigEUDyq
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p><strong>Granted Powers:</strong> You manipulate shadows and darkness.
@@ -21,22 +29,14 @@ system:
       Blind}</li><li>8th—@Compendium[pf1.spells.967ur7a9xepd704y]{Shadow
       Evocation,
       Greater}</li><li>9th—@Compendium[pf1.spells.xxaycxbdsmalf5ov]{Shades}</li></ul>
-  changes:
-    - _id: EigEUDyq
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Blind-Fight
         uuid: Compendium.pf1.feats.Item.pmAO1Sni8xx71pLF
-  tag: classFeat_darknessDomain
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
   source:
     id: PZO1110
     pages: '42'
-_key: '!items!LbTp3TdtQ2S7wtvG'
+  subType: classFeat
+  tag: classFeat_darknessDomain
+type: feat
 

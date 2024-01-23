@@ -1,8 +1,27 @@
 _id: tbl88ce6qfvcemqz
-name: Spell Absorption
-type: spell
+_key: '!items!tbl88ce6qfvcemqz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spell Absorption
 system:
+  actions:
+    - _id: hw4nfuw4rb4f82c9
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>If you successfully counterspell a 3rd-level or lower level spell
@@ -13,33 +32,14 @@ system:
       prepared spells. If you're a sorcerer, you regain a single spell slot. The
       spell recovered or spell slot regained must be of an equal level or lower
       than the spell you counterspelled.</p>
-  actions:
-    - _id: hw4nfuw4rb4f82c9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 5
       wizard: 5
   level: 5
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a prism
+  school: abj
   sr: false
-_key: '!items!tbl88ce6qfvcemqz'
+type: spell
 

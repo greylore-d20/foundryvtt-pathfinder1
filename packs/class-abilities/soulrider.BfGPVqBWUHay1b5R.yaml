@@ -1,8 +1,20 @@
 _id: BfGPVqBWUHay1b5R
-name: Soulrider
-type: feat
+_key: '!items!BfGPVqBWUHay1b5R'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Soulrider
 system:
+  abilityType: su
+  actions:
+    - _id: iz1u4jrlr8qnv4lb
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can, as a swift action while he casts a spell that targets
@@ -29,21 +41,9 @@ system:
       arcanist can spend 1 point from his arcane reservoir to communicate with
       the target as per @Compendium[pf1.spells.d0d86z521shpman1]{Sending}.
       Soulrider is a mind-affecting effect.</p>
+  subType: classFeat
+  tag: classFeat_soulrider
   tags:
     - Arcanist Exploit, Outer Rift
-  actions:
-    - _id: iz1u4jrlr8qnv4lb
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_soulrider
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!BfGPVqBWUHay1b5R'
+type: feat
 

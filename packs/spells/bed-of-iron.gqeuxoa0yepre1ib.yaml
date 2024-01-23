@@ -1,17 +1,11 @@
 _id: gqeuxoa0yepre1ib
-name: Bed of Iron
-type: spell
+_key: '!items!gqeuxoa0yepre1ib'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bed of Iron
 system:
-  description:
-    value: >-
-      <p>This spell makes even the clunkiest armor feel soft as silk to the
-      wearer. The subjects of this spell are able to sleep comfortably in medium
-      or heavy armor without suffering from fatigue the following day.</p>
   actions:
     - _id: kfyemrb36deu9ixe
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,28 +13,34 @@ system:
           type: action
       duration:
         value: 8 hours
-      target:
-        value: one creature touched/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: one creature touched/level
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell makes even the clunkiest armor feel soft as silk to the
+      wearer. The subjects of this spell are able to sleep comfortably in medium
+      or heavy armor without suffering from fatigue the following day.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      paladin: 1
       inquisitor: 1
       magus: 1
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      paladin: 1
+      sorcerer: 1
+      wizard: 1
   materials:
     value: a feather or swatch of soft fabric
-_key: '!items!gqeuxoa0yepre1ib'
+  school: nec
+type: spell
 

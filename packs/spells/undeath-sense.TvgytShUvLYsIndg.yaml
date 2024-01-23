@@ -1,7 +1,34 @@
-name: Undeath Sense
-type: spell
+_id: TvgytShUvLYsIndg
+_key: '!items!TvgytShUvLYsIndg'
 img: systems/pf1/icons/skills/water_03.jpg
+name: Undeath Sense
 system:
+  actions:
+    - _id: 1shP48VopVdnzGN0
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/water_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+      touch: true
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You grant the target the ability to pick up on the subtle scents and
@@ -15,27 +42,6 @@ system:
       of rounds of concentration needed to learn about the undead auras is
       reduced by 1 (1 round to learn the number of auras, and 2 rounds to learn
       the strength and location of each aura).</p>
-  actions:
-    - _id: 1shP48VopVdnzGN0
-      name: Use
-      img: systems/pf1/icons/skills/water_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      touch: true
   learnedAt:
     class:
       alchemist: 2
@@ -50,15 +56,9 @@ system:
       warpriest: 2
       wizard: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: ashes from an urn
+  school: div
   sr: false
-_id: TvgytShUvLYsIndg
-_key: '!items!TvgytShUvLYsIndg'
+type: spell
 

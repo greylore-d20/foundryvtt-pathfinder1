@@ -1,8 +1,26 @@
 _id: g2t1NFYbyCGvr4dF
-name: Herbal Compound
-type: feat
+_key: '!items!g2t1NFYbyCGvr4dF'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Herbal Compound
 system:
+  abilityType: ex
+  actions:
+    - _id: gqjyvyc0888oazxz
+      activation:
+        type: move
+        unchained:
+          type: action
+      ammoType: none
+      duration:
+        units: minute
+        value: '10'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
+      - Rogue
+      - Rogue (Unchained)
   description:
     value: >-
       <p>A ninja with this trick can consume specially prepared herbs to
@@ -10,28 +28,10 @@ system:
       inject an herbal compound as a move action. The ninja takes a –2 penalty
       to AC and on Reflex saves but gains a +4 alchemical bonus on Will saves
       for 10 minutes per ninja level.</p>
+  subType: classFeat
+  tag: classFeat_herbalCompound
   tags:
     - Ninja Trick
     - Rogue Talent
-  actions:
-    - _id: gqjyvyc0888oazxz
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '10'
-        units: minute
-      ammoType: none
-  tag: classFeat_herbalCompound
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!g2t1NFYbyCGvr4dF'
+type: feat
 

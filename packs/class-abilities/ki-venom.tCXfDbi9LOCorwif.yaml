@@ -1,8 +1,21 @@
 _id: tCXfDbi9LOCorwif
-name: Ki Venom
-type: feat
+_key: '!items!tCXfDbi9LOCorwif'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Ki Venom
 system:
+  abilityType: ex
+  actions:
+    - _id: t2z5b52rxwhm7x3w
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>A ninja with this trick knows how to make poisons from innocuous herbs
@@ -24,20 +37,7 @@ system:
       ninja’s level + her Charisma modifier<br><b>Frequency</b> 1/round for
       rounds equal to the ninja’s Charisma modifier.<br><b>Effect</b> 1d4
       ability damage (see above); <b>Cure</b> 1 save</p>
-  actions:
-    - _id: t2z5b52rxwhm7x3w
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_kiVenom
   subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: ex
-_key: '!items!tCXfDbi9LOCorwif'
+  tag: classFeat_kiVenom
+type: feat
 

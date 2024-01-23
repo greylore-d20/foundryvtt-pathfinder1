@@ -1,8 +1,27 @@
 _id: m881pmz483rl4ks6
-name: Irriseni Mirror Sight
-type: spell
+_key: '!items!m881pmz483rl4ks6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Irriseni Mirror Sight
 system:
+  actions:
+    - _id: r7zw6ob75u3hhln9
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      spellEffect: magical sensor
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell lets you look into a mirror near you and see an image that
@@ -29,35 +48,16 @@ system:
       mirrors only; it is not effective with other reflective surfaces, such as
       still pools or polished metal shields. <b>Effect</b>s that block
       <i>scrying</i> block this spell.</p>
-  actions:
-    - _id: r7zw6ob75u3hhln9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 minute/level
-      range:
-        units: seeText
-      spellEffect: magical sensor
   learnedAt:
     class:
       sorcerer: 3
-      wizard: 3
       witch: 3
+      wizard: 3
   level: 3
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a mirror
+  school: div
   sr: false
-_key: '!items!m881pmz483rl4ks6'
+  subschool: scrying
+type: spell
 

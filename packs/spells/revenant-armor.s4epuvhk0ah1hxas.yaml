@@ -1,8 +1,27 @@
 _id: s4epuvhk0ah1hxas
-name: Revenant Armor
-type: spell
+_key: '!items!s4epuvhk0ah1hxas'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Revenant Armor
 system:
+  actions:
+    - _id: yy0xndrn3z2jrroc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level or 1 hour/level; see below
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one suit of armor
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell endows a suit of armor with a singular purpose realized only
@@ -25,44 +44,25 @@ system:
       your caster level and a CMB equal to 1 + your caster level + the armor's
       Strength modifier. If the armor's wearer is reduced to dust, made
       conscious, or removed from the armor, the spell ends.</p>
-  actions:
-    - _id: yy0xndrn3z2jrroc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level or 1 hour/level; see below
-      target:
-        value: one suit of armor
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      paladin: 3
-      witch: 3
       antipaladin: 3
+      cleric: 4
       magus: 4
-      shaman: 3
       medium: 4
       occultist: 4
+      oracle: 4
+      paladin: 3
+      shaman: 3
+      sorcerer: 4
       spiritualist: 3
+      warpriest: 4
+      witch: 3
+      wizard: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: one suit of armor
+  school: trs
   sr: false
-_key: '!items!s4epuvhk0ah1hxas'
+type: spell
 

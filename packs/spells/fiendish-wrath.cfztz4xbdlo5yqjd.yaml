@@ -1,8 +1,28 @@
 _id: cfztz4xbdlo5yqjd
-name: Fiendish Wrath
-type: spell
+_key: '!items!cfztz4xbdlo5yqjd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fiendish Wrath
 system:
+  actions:
+    - _id: u887kb2iikddrs3q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      target:
+        value: >-
+          one willing living creature per 3 levels, no two of which can be more
+          than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Each affected creature flies into a combat frenzy. The target gains a
@@ -11,40 +31,20 @@ system:
       or two unarmed strikes while in this frenzy, it can use the rend ability,
       dealing an additional amount of damage equal to its claw or unarmed strike
       damage plus 1-1/2 times its Strength bonus.</p>
-  actions:
-    - _id: u887kb2iikddrs3q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level (D)
-      target:
-        value: >-
-          one willing living creature per 3 levels, no two of which can be more
-          than 30 ft. apart
-      range:
-        units: medium
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      bard: 3
       alchemist: 3
+      bard: 3
+      bloodrager: 3
+      mesmerist: 3
+      psychic: 4
+      sorcerer: 4
       summoner: 3
       witch: 4
-      bloodrager: 3
-      psychic: 4
-      mesmerist: 3
+      wizard: 4
   level: 4
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!cfztz4xbdlo5yqjd'
+type: spell
 

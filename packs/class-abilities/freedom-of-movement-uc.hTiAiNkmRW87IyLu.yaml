@@ -1,8 +1,27 @@
 _id: hTiAiNkmRW87IyLu
-name: Freedom of Movement (UC)
-type: feat
+_key: '!items!hTiAiNkmRW87IyLu'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Freedom of Movement (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: xsszbygjsnl8e3fn
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 1 ki point as a swift action to gain
@@ -10,26 +29,7 @@ system:
       Movement} for 1 round.</p>
 
       <p>The monk must be at least 8th level before selecting this ki power.</p>
-  actions:
-    - _id: xsszbygjsnl8e3fn
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_freedomOfMovementUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!hTiAiNkmRW87IyLu'
+  tag: classFeat_freedomOfMovementUc
+type: feat
 

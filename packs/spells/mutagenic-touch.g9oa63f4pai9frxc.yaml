@@ -1,8 +1,32 @@
 _id: g9oa63f4pai9frxc
-name: Mutagenic Touch
-type: spell
+_key: '!items!g9oa63f4pai9frxc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mutagenic Touch
 system:
+  actions:
+    - _id: k10ahwo4ypm0k11j
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: special (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you are under of the effects of your  mutagen, you can cast this
@@ -20,36 +44,12 @@ system:
       a mutagen with either the greater mutagen or advance mutagen discoveries.
       When you do, you always pass on half the alchemical bonus to physical
       abilities and twice the penalty to the mental ability score.</p>
-  actions:
-    - _id: k10ahwo4ypm0k11j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: special (see below)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       alchemist: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a whole fingernail
-_key: '!items!g9oa63f4pai9frxc'
+  school: trs
+type: spell
 

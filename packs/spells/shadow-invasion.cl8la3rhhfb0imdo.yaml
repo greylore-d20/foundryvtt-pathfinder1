@@ -1,8 +1,30 @@
 _id: cl8la3rhhfb0imdo
-name: Shadow Invasion
-type: spell
+_key: '!items!cl8la3rhhfb0imdo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Invasion
 system:
+  actions:
+    - _id: dai51ou8ldt9l3ma
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft. radius emanation centered on you
+      duration:
+        value: 1 round/level (D); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Using a slashing motion with the spell's focus as part of the casting
@@ -27,39 +49,17 @@ system:
       invasion</i> would have been had it not been dismissed. Successfully
       summoning a kyton this way is a lawful and evil act, as though casting a
       spell with the lawful and evil descriptors.</p>
-  actions:
-    - _id: dai51ou8ldt9l3ma
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D); see text
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      area: 30-ft. radius emanation centered on you
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      summoner: 4
       magus: 4
+      sorcerer: 4
+      summoner: 4
+      wizard: 4
   level: 4
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a masterwork piercing or slashing weapon
+  school: con
   sr: false
-_key: '!items!cl8la3rhhfb0imdo'
+  subschool: summoning
+type: spell
 

@@ -1,8 +1,30 @@
 _id: 2yna9cslnzmuibhr
-name: Unadulterated Loathing
-type: spell
+_key: '!items!2yna9cslnzmuibhr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unadulterated Loathing
 system:
+  actions:
+    - _id: 049e469f5t4s2j7a
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fill the target with a terrible loathing aimed at a specific
@@ -15,40 +37,18 @@ system:
       physical danger, the target can attempt a second save to break the spell's
       effect.</p><p><i>Unadulterated loathing</i> counters <i>reckless
       infatuation</i>.</p>
-  actions:
-    - _id: 049e469f5t4s2j7a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 2
-      witch: 3
       antipaladin: 2
-      psychic: 3
+      bard: 2
       mesmerist: 2
+      psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!2yna9cslnzmuibhr'
+type: spell
 

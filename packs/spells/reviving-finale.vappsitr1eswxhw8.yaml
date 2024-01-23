@@ -1,44 +1,44 @@
 _id: vappsitr1eswxhw8
-name: Reviving Finale
-type: spell
+_key: '!items!vappsitr1eswxhw8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Reviving Finale
 system:
+  actions:
+    - _id: wml7lad24ch0by6n
+      actionType: heal
+      activation:
+        type: swift
+        unchained:
+          type: action
+      area: a 20-ft.-radius burst centered on you
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      save:
+        description: Will half
+        harmless: true
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You must have a bardic performance in effect to cast this
       spell.</p><p>With a flourish, you immediately end your bardic performance,
       and allies within the area of the spell regain 2d6 hit points. This spell
       has no effect on undead creatures.</p>
-  actions:
-    - _id: wml7lad24ch0by6n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '20'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '20'
-      actionType: heal
-      save:
-        type: will
-        description: Will half
-        harmless: true
-      area: a 20-ft.-radius burst centered on you
   learnedAt:
     class:
       bard: 3
   level: 3
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vappsitr1eswxhw8'
+type: spell
 

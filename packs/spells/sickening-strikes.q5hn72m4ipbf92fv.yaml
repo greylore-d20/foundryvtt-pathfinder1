@@ -1,17 +1,11 @@
 _id: q5hn72m4ipbf92fv
-name: Sickening Strikes
-type: spell
+_key: '!items!q5hn72m4ipbf92fv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sickening Strikes
 system:
-  description:
-    value: >-
-      <p>You are imbued with disease, and any creature you strike with a melee
-      attack must make a Fortitude save or be sickened for 1 minute. Creatures
-      that are immune to disease are immune to this sickened effect.</p>
   actions:
     - _id: 7tt5aztn6nwu3fgp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,28 +13,34 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates; see text
+        type: fort
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You are imbued with disease, and any creature you strike with a melee
+      attack must make a Fortitude save or be sickened for 1 minute. Creatures
+      that are immune to disease are immune to this sickened effect.</p>
   learnedAt:
     class:
-      druid: 2
-      ranger: 4
       alchemist: 2
-      witch: 2
       antipaladin: 2
-      magus: 3
+      druid: 2
       hunter: 2
+      magus: 3
+      ranger: 4
+      witch: 2
   level: 2
   school: trs
   types: disease
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!q5hn72m4ipbf92fv'
+type: spell
 

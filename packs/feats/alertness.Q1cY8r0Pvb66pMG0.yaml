@@ -1,26 +1,26 @@
 _id: Q1cY8r0Pvb66pMG0
-name: Alertness
-type: feat
+_key: '!items!Q1cY8r0Pvb66pMG0'
 img: systems/pf1/icons/feats/alertness.jpg
+name: Alertness
 system:
+  changes:
+    - _id: 4lwdra12
+      formula: '@skills.sen.rank>=10?4:2'
+      modifier: untyped
+      subTarget: skill.sen
+    - _id: 3f1srila
+      formula: '@skills.per.rank>=10?4:2'
+      modifier: untyped
+      subTarget: skill.per
   description:
     value: >-
       <i>You often notice things that others might
       miss.</i><p><strong>Benefits</strong>: You get a +2 bonus on Perception
       and Sense Motive skill checks. If you have 10 or more ranks in one of
       these skills, the bonus increases to +4 for that skill.</p>
+  tag: feat_alertness
   tags:
     - General
     - Skill
-  changes:
-    - _id: 4lwdra12
-      formula: '@skills.sen.rank>=10?4:2'
-      subTarget: skill.sen
-      modifier: untyped
-    - _id: 3f1srila
-      formula: '@skills.per.rank>=10?4:2'
-      subTarget: skill.per
-      modifier: untyped
-  tag: feat_alertness
-_key: '!items!Q1cY8r0Pvb66pMG0'
+type: feat
 

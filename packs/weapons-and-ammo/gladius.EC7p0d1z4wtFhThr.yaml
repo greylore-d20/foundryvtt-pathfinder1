@@ -1,71 +1,71 @@
 _id: EC7p0d1z4wtFhThr
-name: Gladius
-type: weapon
+_key: '!items!EC7p0d1z4wtFhThr'
 img: systems/pf1/icons/items/weapons/sword-short.PNG
+name: Gladius
 system:
+  actions:
+    - _id: rndhvflw2ap0fhxa
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/sword-short.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Gladius
+    - Shortsword
   description:
     value: >-
       <p>The gladius is the favorite sword of gladiators, with a heavier blade
       than the standard shortsword. Feats and abilities that affect shortswords
       apply to the gladius.</p>
-  tags:
-    - PFS
-  weight:
-    value: 3
-  price: 15
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: rndhvflw2ap0fhxa
-      name: Attack
-      img: systems/pf1/icons/items/weapons/sword-short.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-  baseTypes:
-    - Gladius
-    - Shortsword
-  weaponGroups:
-    value:
-      - bladesLight
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 15
   properties:
-    prf: true
     fin: true
+    prf: true
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!EC7p0d1z4wtFhThr'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesLight
+  weight:
+    value: 3
+type: weapon
 

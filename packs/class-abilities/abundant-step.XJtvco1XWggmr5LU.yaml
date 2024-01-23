@@ -1,8 +1,26 @@
 _id: XJtvco1XWggmr5LU
-name: Abundant Step
-type: feat
+_key: '!items!XJtvco1XWggmr5LU'
 img: systems/pf1/icons/spells/protect-blue-2.jpg
+name: Abundant Step
 system:
+  abilityType: su
+  actions:
+    - _id: 7fy3ikpv4x2wgee6
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/protect-blue-2.jpg
+      name: Use
+      range:
+        units: long
+      target:
+        value: Self
+  associations:
+    classes:
+      - Monk
   description:
     value: >-
       <p>At 12th level or higher, a monk can slip magically between spaces, as
@@ -11,28 +29,10 @@ system:
       from his ki pool. His <em>caster level</em> for this effect is equal to
       his monk level. He cannot take other creatures with him when he uses this
       ability.</p>
-  actions:
-    - _id: 7fy3ikpv4x2wgee6
-      name: Use
-      img: systems/pf1/icons/spells/protect-blue-2.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: Self
-      range:
-        units: long
-  tag: classFeat_abundantStep
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-  abilityType: su
   source:
     id: PZO1110
     pages: '59'
-_key: '!items!XJtvco1XWggmr5LU'
+  subType: classFeat
+  tag: classFeat_abundantStep
+type: feat
 

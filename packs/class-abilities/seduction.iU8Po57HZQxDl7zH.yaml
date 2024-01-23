@@ -1,8 +1,34 @@
 _id: iU8Po57HZQxDl7zH
-name: Seduction
-type: feat
+_key: '!items!iU8Po57HZQxDl7zH'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Seduction
 system:
+  abilityType: su
+  actions:
+    - _id: i1ex3175awk6i94f
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: concentration + 1
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      save:
+        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch uses enthralling movements to fascinate a single creature
@@ -17,35 +43,9 @@ system:
       <p>At 8th level, the fascination effect lasts for 2 additional rounds
       after the witch ceases taking a standard action to maintain it. This is a
       mind-affecting charm effect.</p>
+  subType: classFeat
+  tag: classFeat_seduction
   tags:
     - Hex
-  actions:
-    - _id: i1ex3175awk6i94f
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '60'
-        units: ft
-      actionType: save
-      save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
-        type: will
-        description: Will negates
-  tag: classFeat_seduction
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!iU8Po57HZQxDl7zH'
+type: feat
 

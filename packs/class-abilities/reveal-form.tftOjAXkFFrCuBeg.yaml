@@ -1,8 +1,28 @@
 _id: tftOjAXkFFrCuBeg
-name: Reveal Form
-type: feat
+_key: '!items!tftOjAXkFFrCuBeg'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Reveal Form
 system:
+  abilityType: su
+  actions:
+    - _id: vdg4zk683r1iy0nz
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one shapeshifter
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, once per day as a standard action, you can invoke the
@@ -14,30 +34,10 @@ system:
       ability fails its save and is for some reason unable to dispel any ongoing
       polymorph effects or innate shapechanging abilities, it is instead
       staggered for 1 round. This is a mind-affecting compulsion effect.</p>
-  actions:
-    - _id: vdg4zk683r1iy0nz
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one shapeshifter
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_revealForm
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!tftOjAXkFFrCuBeg'
+  tag: classFeat_revealForm
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

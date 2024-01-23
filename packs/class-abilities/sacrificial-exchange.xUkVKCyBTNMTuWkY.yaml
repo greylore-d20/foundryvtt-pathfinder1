@@ -1,8 +1,23 @@
 _id: xUkVKCyBTNMTuWkY
-name: Sacrificial Exchange
-type: feat
+_key: '!items!xUkVKCyBTNMTuWkY'
 img: systems/pf1/icons/skills/blood_03.jpg
+name: Sacrificial Exchange
 system:
+  abilityType: su
+  actions:
+    - _id: 3iabj0cr4m3jotyc
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: hour
+        value: '@classes.sorcerer.level'
+      img: systems/pf1/icons/skills/blood_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, as a <em>swift action</em> once per day, you can take 2
@@ -19,25 +34,10 @@ system:
       <li>At 20th level, you can use this ability twice per day.</li>
 
       </ul>
-  actions:
-    - _id: 3iabj0cr4m3jotyc
-      name: Use
-      img: systems/pf1/icons/skills/blood_03.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@classes.sorcerer.level'
-        units: hour
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level >= 20 ? 2 : 1'
-  tag: classFeat_sacrificialExchange
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!xUkVKCyBTNMTuWkY'
+  tag: classFeat_sacrificialExchange
+  uses:
+    maxFormula: '@classes.sorcerer.level >= 20 ? 2 : 1'
+    per: day
+type: feat
 

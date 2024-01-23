@@ -1,18 +1,11 @@
 _id: 71g6nmvy8qnodwyz
-name: Protection from Good
-type: spell
+_key: '!items!71g6nmvy8qnodwyz'
 img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
+name: Protection from Good
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Protection from Evil</i>, except that the
-      deflection and resistance bonuses apply to attacks made by good creatures.
-      The target receives a new saving throw against control by good creatures
-      and good summoned creatures cannot touch the target.</p>
   actions:
     - _id: 6kivsa6vv7s9is7m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,45 +13,52 @@ system:
           type: action
       duration:
         value: 1 min./level (D)
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Protection from Evil</i>, except that the
+      deflection and resistance bonuses apply to attacks made by good creatures.
+      The target receives a new saving throw against control by good creatures
+      and good summoned creatures cannot touch the target.</p>
   learnedAt:
+    bloodline:
+      Infernal: 1
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      summoner: 1
-      inquisitor: 1
-      antipaladin: 1
       adept: 1
+      antipaladin: 1
       bloodrager: 1
-      shaman: 1
+      cleric: 1
+      inquisitor: 1
       medium: 1
+      oracle: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
+      summoner: 1
       summonerUnchained: 1
+      warpriest: 1
+      wizard: 1
     domain:
       Evil: 1
     subDomain:
       Purity: 1
-    bloodline:
-      Infernal: 1
   school: abj
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '328'
-_key: '!items!71g6nmvy8qnodwyz'
+  sr: false
+  types: evil
+type: spell
 

@@ -1,8 +1,17 @@
 _id: B7jKiksy3q3nVZK8
-name: Iceplant
-type: feat
+_key: '!items!B7jKiksy3q3nVZK8'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Iceplant
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Witch
+  changes:
+    - _id: g0up39eo
+      formula: '2'
+      modifier: untyped
+      subTarget: nac
   description:
     value: >-
       <p>This hex grants the witch and her familiar a +2 natural armor bonus and
@@ -10,18 +19,9 @@ system:
       Elements}.</p>
 
       <p>The effect leaves the witch’s skin thick and stiff to the touch.</p>
+  subType: classFeat
+  tag: classFeat_iceplant
   tags:
     - Hex
-  changes:
-    - _id: g0up39eo
-      formula: '2'
-      subTarget: nac
-      modifier: untyped
-  tag: classFeat_iceplant
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!B7jKiksy3q3nVZK8'
+type: feat
 

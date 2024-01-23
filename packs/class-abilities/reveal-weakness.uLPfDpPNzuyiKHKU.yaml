@@ -1,7 +1,34 @@
-name: Reveal Weakness
-type: feat
+_id: uLPfDpPNzuyiKHKU
+_key: '!items!uLPfDpPNzuyiKHKU'
 img: icons/magic/unholy/strike-body-explode-disintegrate.webp
+name: Reveal Weakness
 system:
+  abilityType: su
+  actions:
+    - _id: Arwy1FSWoGlcX5Hk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: icons/magic/unholy/strike-body-explode-disintegrate.webp
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: One selected creature
+  associations:
+    classes:
+      - Wizard
+  contextNotes:
+    - subTarget: allSavingThrows
+      text: >-
+        +[[2 + floor(@classes.wizard.level / 5)]] insight bonus on saving throws
+        against spells and spell-like abilities.
   description:
     value: >-
       <p>When you activate this school power as a standard action, you select a
@@ -9,45 +36,18 @@ system:
       throws equal to 1/2 your caster level (minimum –1) for 1 round. You can
       use this ability a number of times per day equal to 3 + your Intelligence
       bonus.</p>
-  tags:
-    - Void School
-  actions:
-    - _id: Arwy1FSWoGlcX5Hk
-      name: Use
-      img: icons/magic/unholy/strike-body-explode-disintegrate.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: One selected creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
   effectNotes:
     - >-
       That creature takes a penalty of [[-max(1,floor(@classes.wizard.level /
       2))]] to its AC and on saving throws.
-  contextNotes:
-    - text: >-
-        +[[2 + floor(@classes.wizard.level / 5)]] insight bonus on saving throws
-        against spells and spell-like abilities.
-      subTarget: allSavingThrows
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9421
     pages: '29'
-_id: uLPfDpPNzuyiKHKU
-_key: '!items!uLPfDpPNzuyiKHKU'
+  subType: classFeat
+  tags:
+    - Void School
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

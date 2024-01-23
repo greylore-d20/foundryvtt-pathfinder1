@@ -1,8 +1,22 @@
 _id: 6QoaFhevY4s7zYfp
-name: Mimic Metamagic
-type: feat
+_key: '!items!6QoaFhevY4s7zYfp'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Mimic Metamagic
 system:
+  abilityType: ex
+  actions:
+    - _id: fvwv6nwm0n8qxw4i
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>When the psychic gains this amplification, she chooses two metamagic
@@ -32,21 +46,7 @@ system:
       <p>A psychic can select this amplification multiple times, adding two
       additional options to the list of metamagic feats she can apply using this
       amplification each time.</p>
-  actions:
-    - _id: fvwv6nwm0n8qxw4i
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_mimicMetamagic
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: ex
-_key: '!items!6QoaFhevY4s7zYfp'
+  tag: classFeat_mimicMetamagic
+type: feat
 

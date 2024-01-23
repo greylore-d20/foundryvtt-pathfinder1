@@ -1,19 +1,11 @@
 _id: qdiec9pwx6jclgla
-name: Root
-type: spell
+_key: '!items!qdiec9pwx6jclgla'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Root
 system:
-  description:
-    value: >-
-      <p>This spell strengthens the subject's connection to the ground below,
-      bolstering its defense against combat maneuvers. It gains a +2 insight
-      bonus to its CMD to resist being moved or tripped and a +2 competence
-      bonus on all Acrobatics checks made to balance or remain standing on
-      earth, sand, stone, or a similar rocky substance.</p>
   actions:
     - _id: 9em2kyky27fp70fo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,29 +13,37 @@ system:
           type: action
       duration:
         value: 1 minute (D)
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
-  uses:
-    autoDeductChargesCost: '0'
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell strengthens the subject's connection to the ground below,
+      bolstering its defense against combat maneuvers. It gains a +2 insight
+      bonus to its CMD to resist being moved or tripped and a +2 competence
+      bonus on all Acrobatics checks made to balance or remain standing on
+      earth, sand, stone, or a similar rocky substance.</p>
   learnedAt:
     class:
       sorcerer: 0
       wizard: 0
   level: 0
-  school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of dirt
-_key: '!items!qdiec9pwx6jclgla'
+  school: trs
+  types: earth
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

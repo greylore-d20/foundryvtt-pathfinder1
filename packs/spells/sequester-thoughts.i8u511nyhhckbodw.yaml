@@ -1,8 +1,28 @@
 _id: i8u511nyhhckbodw
-name: Sequester Thoughts
-type: spell
+_key: '!items!i8u511nyhhckbodw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sequester Thoughts
 system:
+  actions:
+    - _id: ok51faw4rfaszlvm
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: one willing creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Sequester thoughts</i> allows you to erase a creature's memory of
@@ -27,40 +47,20 @@ system:
       it has been affected by the spell. Note that the creature itself does not
       remember any details of what memories were removed until the gem is
       broken.</p>
-  actions:
-    - _id: ok51faw4rfaszlvm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged (see text)
-      target:
-        value: one willing creature
-      range:
-        units: personal
   learnedAt:
     class:
+      bard: 3
       sorcerer: 5
       wizard: 5
-      bard: 3
   level: 5
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a gemstone worth at least 500 gp
     gpValue: 500
+    value: a gemstone worth at least 500 gp
   preparation:
     spontaneousPrepared: false
+  school: enc
   sr: false
-_key: '!items!i8u511nyhhckbodw'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

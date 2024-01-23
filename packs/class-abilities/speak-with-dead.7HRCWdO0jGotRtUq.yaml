@@ -1,8 +1,28 @@
 _id: 7HRCWdO0jGotRtUq
-name: Speak with Dead
-type: feat
+_key: '!items!7HRCWdO0jGotRtUq'
 img: systems/pf1/icons/skills/affliction_03.jpg
+name: Speak with Dead
 system:
+  abilityType: su
+  actions:
+    - _id: amyajdu0uk8c91dc
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_03.jpg
+      name: Use
+      range:
+        units: close
+      target:
+        value: one dead creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as a standard action, you can ask one question of a dead
@@ -13,30 +33,10 @@ system:
 
       <p>This power replaces the Ward Against Death power of the Repose
       Domain.</p>
-  actions:
-    - _id: amyajdu0uk8c91dc
-      name: Use
-      img: systems/pf1/icons/skills/affliction_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: one dead creature
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_speakWithDead
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!7HRCWdO0jGotRtUq'
+  tag: classFeat_speakWithDead
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

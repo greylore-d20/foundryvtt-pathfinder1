@@ -1,8 +1,27 @@
 _id: z0KzBNCZCOPcd3rt
-name: Mending Flesh
-type: feat
+_key: '!items!z0KzBNCZCOPcd3rt'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Mending Flesh
 system:
+  abilityType: su
+  actions:
+    - _id: 322r6y70moufx2lq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can expend 1 point from her arcane reservoir as a standard
@@ -14,28 +33,9 @@ system:
       <p>At 6th level, the number of hit points granted increases to 2d8 + the
       arcanist’s Charisma modifier. A creature can benefit from mending flesh
       only once per day.</p>
+  subType: classFeat
+  tag: classFeat_mendingFlesh
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 322r6y70moufx2lq
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_mendingFlesh
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!z0KzBNCZCOPcd3rt'
+type: feat
 

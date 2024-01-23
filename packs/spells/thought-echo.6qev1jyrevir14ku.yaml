@@ -1,8 +1,30 @@
 _id: 6qev1jyrevir14ku
-name: Thought Echo
-type: spell
+_key: '!items!6qev1jyrevir14ku'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thought Echo
 system:
+  actions:
+    - _id: i93ckukofubd7c49
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: living creature touched
+  components:
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you establish a mental echo of up to 25
@@ -16,33 +38,11 @@ system:
       duration by 1 minute. <i>Thought echo</i> d oes n ot i nterfere w ith t
       elepathy o r m ind reading effects that are capable of reaching thoughts
       deeper than surface thoughts.</p>
-  actions:
-    - _id: i93ckukofubd7c49
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      psychic: 1
       mesmerist: 1
+      psychic: 1
   school: ill
   subschool: glamer
-  components:
-    verbal: true
-_key: '!items!6qev1jyrevir14ku'
+type: spell
 

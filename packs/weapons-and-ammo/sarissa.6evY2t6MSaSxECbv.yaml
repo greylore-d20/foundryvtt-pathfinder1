@@ -1,8 +1,41 @@
 _id: 6evY2t6MSaSxECbv
-name: Sarissa
-type: weapon
+_key: '!items!6evY2t6MSaSxECbv'
 img: systems/pf1/icons/items/weapons/bill.PNG
+name: Sarissa
 system:
+  actions:
+    - _id: r3kfl00utzegr8xy
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/bill.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Sarissa
   description:
     value: >-
       <p>This spearlike weapon is about 15 feet long. Its unwieldy length is
@@ -17,51 +50,9 @@ system:
       with the sarissa until your next turn. While you carry the sarissa pointed
       upward (typical for overland movement), you threaten only squares in the
       sarissa's reach in a cone pointed upward.</p>
-  tags:
-    - PFS
-  weight:
-    value: 12
-  price: 12
   hardness: 10
-  actions:
-    - _id: r3kfl00utzegr8xy
-      name: Attack
-      img: systems/pf1/icons/items/weapons/bill.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Sarissa
-  weaponGroups:
-    value:
-      - spears
-  subType: martial
-  weaponSubtype: 2h
+  price: 12
   properties:
     brc: true
     rch: true
@@ -69,5 +60,14 @@ system:
   source:
     id: PZO9453
     pages: '24'
-_key: '!items!6evY2t6MSaSxECbv'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - spears
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

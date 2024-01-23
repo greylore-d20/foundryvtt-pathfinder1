@@ -1,8 +1,30 @@
 _id: uher0sfh94mol9ta
-name: Leashed Shackles
-type: spell
+_key: '!items!uher0sfh94mol9ta'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Leashed Shackles
 system:
+  actions:
+    - _id: 3rtdrf0vap1dqp44
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create shackles of force that attach to the target's limbs. You
@@ -13,37 +35,15 @@ system:
       shackle itself cannot be attacked (though it can be dispelled), but if the
       object or area it is attached to is broken, the target is free to move
       away (though it is still entangled).</p>
-  actions:
-    - _id: 3rtdrf0vap1dqp44
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       inquisitor: 4
       psychic: 6
+      sorcerer: 6
       spiritualist: 6
+      wizard: 6
   level: 6
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!uher0sfh94mol9ta'
+type: spell
 

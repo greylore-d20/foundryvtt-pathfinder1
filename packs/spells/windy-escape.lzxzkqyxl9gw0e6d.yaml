@@ -1,8 +1,25 @@
 _id: lzxzkqyxl9gw0e6d
-name: Windy Escape
-type: spell
+_key: '!items!lzxzkqyxl9gw0e6d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Windy Escape
 system:
+  actions:
+    - _id: 05b60gphm7evvbo9
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You respond to an attack by briefly becoming vaporous and
@@ -12,34 +29,17 @@ system:
       escape</i> against an attack of opportunity you provoked by casting a
       spell, using a spell-like ability, or using any other magical ability that
       provokes an attack of opportunity when used.</p>
-  actions:
-    - _id: 05b60gphm7evvbo9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      bard: 1
+      bloodrager: 1
+      druid: 1
+      hunter: 1
+      magus: 1
       sorcerer: 1
       wizard: 1
-      druid: 1
-      bard: 1
-      magus: 1
-      bloodrager: 1
-      hunter: 1
   school: trs
-  types: air
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lzxzkqyxl9gw0e6d'
+  types: air
+type: spell
 

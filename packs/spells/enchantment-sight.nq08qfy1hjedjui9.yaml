@@ -1,8 +1,26 @@
 _id: nq08qfy1hjedjui9
-name: Enchantment Sight
-type: spell
+_key: '!items!nq08qfy1hjedjui9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Enchantment Sight
 system:
+  actions:
+    - _id: wkmmcw0b1xmzvsrw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your irises take on a purplish tinge and you can see whether creatures
@@ -20,43 +38,25 @@ system:
       spell. <i>Enchantment sight</i> can be made permanent with a
       <i>permanency</i> spell cast by a caster of 9th level or higher, at a cost
       of 2,500 gp.</p>
-  actions:
-    - _id: wkmmcw0b1xmzvsrw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      bard: 2
-      paladin: 2
       alchemist: 2
-      witch: 2
+      bard: 2
+      cleric: 2
       inquisitor: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      oracle: 2
+      paladin: 2
+      psychic: 2
+      sorcerer: 2
       spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!nq08qfy1hjedjui9'
+type: spell
 

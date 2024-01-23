@@ -1,8 +1,26 @@
 _id: stvj5zjdllpeed22
-name: Conjure Black Pudding
-type: spell
+_key: '!items!stvj5zjdllpeed22'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Conjure Black Pudding
 system:
+  actions:
+    - _id: 4is2v4rw2rizsfkm
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one summoned black pudding
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon a black pudding (<i>Bestiary</i> 35) that immediately
@@ -11,40 +29,22 @@ system:
       is treated as a summoned creature and has the extraplanar subtype. The
       black pudding's split ability works normally, but all puddings derived
       from the summoned one disappear when the spell ends.</p>
-  actions:
-    - _id: 4is2v4rw2rizsfkm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: one summoned black pudding
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      summoner: 5
       psychic: 6
+      sorcerer: 6
+      summoner: 5
       summonerUnchained: 5
+      wizard: 6
   level: 6
-  school: con
-  subschool: summoning
-  types: acid
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a flask of acid worth 10 gp
     gpValue: 10
+    value: a flask of acid worth 10 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!stvj5zjdllpeed22'
+  subschool: summoning
+  types: acid
+type: spell
 

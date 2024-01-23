@@ -1,8 +1,28 @@
 _id: 9crmpewzt1y0hk73
-name: Resounding Blow
-type: spell
+_key: '!items!9crmpewzt1y0hk73'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Resounding Blow
 system:
+  actions:
+    - _id: 3bbvdr7jg9pp6qfx
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Fortitude partial; see text
+        type: fort
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You must have a melee weapon in hand to cast this spell.</p><p>On a
@@ -17,34 +37,14 @@ system:
       only a single save against all effects.</p><p>This spell immediately ends
       if your weapon leaves your hand.</p><p><i>Resounding blow</i> stacks with
       the <i>thundering</i> weapon property.</p>
-  actions:
-    - _id: 3bbvdr7jg9pp6qfx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial; see text
   learnedAt:
     class:
-      paladin: 4
-      inquisitor: 5
       antipaladin: 4
+      inquisitor: 5
+      paladin: 4
   level: 4
   school: evo
-  types: sonic
-  components:
-    verbal: true
   sr: false
-_key: '!items!9crmpewzt1y0hk73'
+  types: sonic
+type: spell
 

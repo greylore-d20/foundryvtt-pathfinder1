@@ -1,8 +1,16 @@
 _id: 5F06HJzeAlqTOot1
-name: Amulet of Natural Armor +2
-type: equipment
+_key: '!items!5F06HJzeAlqTOot1'
 img: systems/pf1/icons/items/jewelry/pendant-green.jpg
+name: Amulet of Natural Armor +2
 system:
+  aura:
+    school: trs
+  changes:
+    - _id: 67f5zuni
+      formula: '2'
+      modifier: enh
+      subTarget: nac
+  cl: 6
   description:
     value: >-
       <p>This amulet, usually containing some type of magically preserved
@@ -11,19 +19,11 @@ system:
       bonus</em> to his <em>natural armor</em> from +1 to +5, depending on the
       kind of amulet.</p>
   price: 8000
-  size: fine
   resizing: true
+  size: fine
+  slot: neck
+  subType: wondrous
   unidentified:
     name: Amulet
-  cl: 6
-  aura:
-    school: trs
-  changes:
-    - _id: 67f5zuni
-      formula: '2'
-      subTarget: nac
-      modifier: enh
-  subType: wondrous
-  slot: neck
-_key: '!items!5F06HJzeAlqTOot1'
+type: equipment
 

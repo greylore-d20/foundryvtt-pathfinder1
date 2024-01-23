@@ -1,8 +1,32 @@
 _id: BcEPgCcl1sBMrjoV
-name: Powerful Smash
-type: feat
+_key: '!items!BcEPgCcl1sBMrjoV'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Powerful Smash
 system:
+  abilityType: ex
+  actions:
+    - _id: tl0el32fm3blhg97
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates dazed
+        type: fort
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman can attack an enemy with an unarmed
@@ -13,34 +37,10 @@ system:
 
       <p>The shaman can use this ability a number of times per day equal to 3 +
       her Charisma modifier.</p>
-  actions:
-    - _id: tl0el32fm3blhg97
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude negates dazed
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_powerfulSmash
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: ex
-_key: '!items!BcEPgCcl1sBMrjoV'
+  tag: classFeat_powerfulSmash
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

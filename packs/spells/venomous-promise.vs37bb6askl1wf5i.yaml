@@ -1,8 +1,29 @@
 _id: vs37bb6askl1wf5i
-name: Venomous Promise
-type: spell
+_key: '!items!vs37bb6askl1wf5i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Venomous Promise
 system:
+  actions:
+    - _id: 63k44zb0zsx5u2ir
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent or until triggered
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: 'yes'
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>You guard your words and person with poisonous power. You can impart a
@@ -16,38 +37,17 @@ system:
       understand why or how. <i>Neutralize poison</i> removes the effect of this
       spell; the spellcaster must succeed at a caster level check against the
       spell's save DC rather than the poison's.</p>
-  actions:
-    - _id: 63k44zb0zsx5u2ir
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent or until triggered
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: 'yes'
   learnedAt:
     class:
-      bard: 3
-      witch: 3
       antipaladin: 3
-      shaman: 3
+      bard: 3
       mesmerist: 3
+      shaman: 3
+      witch: 3
   level: 3
-  school: trs
-  types: language-dependent, poison
-  components:
-    somatic: true
-    material: true
   materials:
     value: a vial of poison
-_key: '!items!vs37bb6askl1wf5i'
+  school: trs
+  types: language-dependent, poison
+type: spell
 

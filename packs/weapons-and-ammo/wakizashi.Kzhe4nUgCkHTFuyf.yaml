@@ -1,8 +1,41 @@
 _id: Kzhe4nUgCkHTFuyf
-name: Wakizashi
-type: weapon
+_key: '!items!Kzhe4nUgCkHTFuyf'
 img: icons/weapons/swords/sword-katana.webp
+name: Wakizashi
 system:
+  actions:
+    - _id: jvxjrgiwkop1t2bi
+      ability:
+        attack: str
+        critRange: 18
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/swords/sword-katana.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Wakizashi
   description:
     value: >-
       <p>These short, slender blades are between 1 to 2 feet long. They are
@@ -10,63 +43,30 @@ system:
       commit seppuku (ritual suicide) as a matter of honor. These blades are
       specifically worn by samurai and are intended to be paired with a katana.
       Together, this set of blades is referred to as a daisho.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 35
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: jvxjrgiwkop1t2bi
-      name: Attack
-      img: icons/weapons/swords/sword-katana.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 18
-  baseTypes:
-    - Wakizashi
-  weaponGroups:
-    value:
-      - bladesLight
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 35
   properties:
     dea: true
     fin: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!Kzhe4nUgCkHTFuyf'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesLight
+  weight:
+    value: 2
+type: weapon
 

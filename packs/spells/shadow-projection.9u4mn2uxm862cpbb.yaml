@@ -1,8 +1,24 @@
 _id: 9u4mn2uxm862cpbb
-name: Shadow Projection
-type: spell
+_key: '!items!9u4mn2uxm862cpbb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Projection
 system:
+  actions:
+    - _id: hr1va7slvporbyqg
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>With this spell, you infuse your life force and psyche into your
@@ -19,29 +35,13 @@ system:
       slain, you return to your physical body and are immediately reduced to -1
       hit points.</p><p>Your condition becomes dying, and you must begin making
       Constitution checks to stabilize.</p>
-  actions:
-    - _id: hr1va7slvporbyqg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 4
       wizard: 4
   level: 4
   school: nec
-  types: evil
-  components:
-    somatic: true
   sr: false
-_key: '!items!9u4mn2uxm862cpbb'
+  types: evil
+type: spell
 

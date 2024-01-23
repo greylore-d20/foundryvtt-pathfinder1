@@ -1,8 +1,31 @@
 _id: 8eb9l0bt9esbn73l
-name: Sleepwalking Suggestion
-type: spell
+_key: '!items!8eb9l0bt9esbn73l'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sleepwalking Suggestion
 system:
+  actions:
+    - _id: 51jh1fhzhf29d3yh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates or none (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You compel the target creature to rise from its sleep as if
@@ -35,46 +58,23 @@ system:
       affected by <i>sleepwalking suggestion</i> is unaware it has been
       programmed to act in its sleep (unless awoken because it was about to
       cause harm).</p>
-  actions:
-    - _id: 51jh1fhzhf29d3yh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates or none (see text)
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 4
-      witch: 5
-      psychic: 5
       medium: 3
       mesmerist: 4
+      psychic: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
+  materials:
+    gpValue: 180
+    value: two doses of oil of taggit worth 180 gp total
+  preparation:
+    spontaneousPrepared: false
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: two doses of oil of taggit worth 180 gp total
-    gpValue: 180
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!8eb9l0bt9esbn73l'
+type: spell
 

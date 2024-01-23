@@ -1,8 +1,25 @@
 _id: h8dedg0k7wl0xw7v
-name: Dancing Darkness
-type: spell
+_key: '!items!h8dedg0k7wl0xw7v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dancing Darkness
 system:
+  actions:
+    - _id: 9l6k8r8jv543cplu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: Up to four spheres, all within a 10-ft.-radius area
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create either up to four spheres of darkness that each reduce the
@@ -14,36 +31,19 @@ system:
       round. The effect winks out if the distance between you and it exceeds the
       spell's range. <i>Dancing shadows</i> can be made permanent with a
       <i>permanency</i> spell.</p>
-  actions:
-    - _id: 9l6k8r8jv543cplu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: medium
-      spellEffect: Up to four spheres, all within a 10-ft.-radius area
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
-      witch: 1
       antipaladin: 1
+      bard: 1
       magus: 1
-      shaman: 1
       psychic: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
+      witch: 1
+      wizard: 1
   school: evo
-  types: darkness, shadow
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!h8dedg0k7wl0xw7v'
+  types: darkness, shadow
+type: spell
 

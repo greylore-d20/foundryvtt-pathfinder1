@@ -1,8 +1,40 @@
 _id: 30zWiZ47MwsViPEE
-name: Crushing Wheel
-type: weapon
+_key: '!items!30zWiZ47MwsViPEE'
 img: icons/commodities/wood/wood-carved-runes.webp
+name: Crushing Wheel
 system:
+  actions:
+    - _id: 0ukbx5m4s1v7f327
+      ability:
+        attack: str
+        critRange: null
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(4, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/commodities/wood/wood-carved-runes.webp
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Crushing Wheel
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> 4d6; <b>Critical</b> -; <b>Range</b>
@@ -18,44 +50,12 @@ system:
       only half damage and avoid falling prone. A crushing wheel has a hardness
       of 10 and 100 hit points.</p><p>A crushing wheel is a Large siege
       engine.</p>
-  price: 500
   hardness: 10
-  actions:
-    - _id: 0ukbx5m4s1v7f327
-      name: Attack
-      img: icons/commodities/wood/wood-carved-runes.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(4, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: null
-  baseTypes:
-    - Crushing Wheel
-  subType: misc
-  weaponSubtype: other
+  price: 500
   source:
     id: PZO9276
     pages: '39'
-_key: '!items!30zWiZ47MwsViPEE'
+  subType: misc
+  weaponSubtype: other
+type: weapon
 

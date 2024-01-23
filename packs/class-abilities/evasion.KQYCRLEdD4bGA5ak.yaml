@@ -1,8 +1,20 @@
 _id: KQYCRLEdD4bGA5ak
-name: Evasion
-type: feat
+_key: '!items!KQYCRLEdD4bGA5ak'
 img: systems/pf1/icons/skills/blue_06.jpg
+name: Evasion
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Monk
+      - Monk (Unchained)
+      - Rogue
+      - Rogue (Unchained)
+      - Ranger
+  contextNotes:
+    - subTarget: ref
+      target: savingThrows
+      text: Evasion
   description:
     value: >-
       <p>This character can avoid damage from many area-effect attacks. If she
@@ -12,22 +24,10 @@ system:
       or no armor. A
       @UUID[Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.6dtCytJsNkO8Hwq4]{helpless}
       character does not gain the benefit of evasion.</p>
-  contextNotes:
-    - subTarget: ref
-      target: savingThrows
-      text: Evasion
-  tag: classFeat_evasion
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-      - Monk (Unchained)
-      - Rogue
-      - Rogue (Unchained)
-      - Ranger
-  abilityType: ex
   source:
     id: PZO1110
     pages: 59, 67, 68
-_key: '!items!KQYCRLEdD4bGA5ak'
+  subType: classFeat
+  tag: classFeat_evasion
+type: feat
 

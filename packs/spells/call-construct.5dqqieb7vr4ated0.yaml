@@ -1,8 +1,28 @@
 _id: 5dqqieb7vr4ated0
-name: Call Construct
-type: spell
+_key: '!items!5dqqieb7vr4ated0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Call Construct
 system:
+  actions:
+    - _id: yy431rdcepsfyoyf
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: construct touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>instant summons</i>, except it can only
@@ -12,42 +32,22 @@ system:
       suffices.</p><p>If the construct is no longer under your control or
       destroyed, the spell fails, but you know roughly where the construct or
       its remains are located.</p>
-  actions:
-    - _id: yy431rdcepsfyoyf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged
-      target:
-        value: construct touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
+      occultist: 6
       oracle: 8
       psychic: 8
-      occultist: 6
+      sorcerer: 8
+      wizard: 8
   level: 8
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a sapphire worth 1,000 or 5,000 gp; see text
     gpValue: 5000
+    value: a sapphire worth 1,000 or 5,000 gp; see text
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!5dqqieb7vr4ated0'
+  subschool: teleportation
+type: spell
 

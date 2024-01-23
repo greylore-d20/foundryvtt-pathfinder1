@@ -1,8 +1,26 @@
 _id: N2fasf8I2icC7JTI
-name: Fighter (Quick)
-type: feat
+_key: '!items!N2fasf8I2icC7JTI'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Fighter (Quick)
 system:
+  changes:
+    - _id: rul3s5yq
+      formula: '2'
+      modifier: untyped
+      subTarget: mattack
+    - _id: gmdoa6g3
+      formula: '2'
+      modifier: untyped
+      subTarget: wdamage
+    - _id: 2vfmpyjb
+      formula: '2'
+      modifier: untyped
+      subTarget: strSkills
+    - _id: a84k4ukt
+      formula: '2'
+      modifier: untyped
+      subTarget: strChecks
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -27,24 +45,6 @@ system:
       Strength; Feats The creature gains a bonus combat feat and an additional
       combat feat for every 4 HD (to a maximum of 10 feats from this
       ability).</p>
-  changes:
-    - _id: rul3s5yq
-      formula: '2'
-      subTarget: mattack
-      modifier: untyped
-    - _id: gmdoa6g3
-      formula: '2'
-      subTarget: wdamage
-      modifier: untyped
-    - _id: 2vfmpyjb
-      formula: '2'
-      subTarget: strSkills
-      modifier: untyped
-    - _id: a84k4ukt
-      formula: '2'
-      subTarget: strChecks
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!N2fasf8I2icC7JTI'
+type: feat
 

@@ -1,7 +1,40 @@
-name: Shrapnel Burst
-type: feat
+_id: a4Dm2SgIwTOfHyVx
+_key: '!items!a4Dm2SgIwTOfHyVx'
 img: icons/magic/light/projectile-bolts-salvo-white.webp
+name: Shrapnel Burst
 system:
+  abilityType: su
+  actions:
+    - _id: uBMB2go8SycYBNBt
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      area: 10-foot-radius burst
+      damage:
+        parts:
+          - formula: max(1,floor(@classes.wizard.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        value: '1'
+      img: icons/magic/light/projectile-bolts-salvo-white.webp
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      save:
+        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        description: Reflex half
+        type: ref
+      target:
+        value: All creatures in radius
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, as a swift action, you can cause jagged pieces of metal
@@ -13,47 +46,14 @@ system:
       ability once per day, plus one additional time per day at 13th level and
       18th level. At 10th-level, the shrapnel bypasses damage reduction as if it
       were a magic weapon.</p>
-  tags:
-    - Metal School
-  actions:
-    - _id: uBMB2go8SycYBNBt
-      name: Use
-      img: icons/magic/light/projectile-bolts-salvo-white.webp
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-      target:
-        value: All creatures in radius
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: save
-      damage:
-        parts:
-          - formula: max(1,floor(@classes.wizard.level / 2))d6
-            type:
-              values:
-                - piercing
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
-        type: ref
-        description: Reflex half
-      area: 10-foot-radius burst
-  uses:
-    per: day
-    maxFormula: max(0,floor((@classes.wizard.level - 3) / 5))
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1117
     pages: '87'
-_id: a4Dm2SgIwTOfHyVx
-_key: '!items!a4Dm2SgIwTOfHyVx'
+  subType: classFeat
+  tags:
+    - Metal School
+  uses:
+    maxFormula: max(0,floor((@classes.wizard.level - 3) / 5))
+    per: day
+type: feat
 

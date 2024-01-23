@@ -1,19 +1,11 @@
 _id: rvf2gxyy1d4strae
-name: Mind Thrust I
-type: spell
+_key: '!items!rvf2gxyy1d4strae'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mind Thrust I
 system:
-  description:
-    value: >-
-      <p>You divine the most vulnerable portions of your opponent's mind and
-      overload it with a glut of psychic information. This attack deals 1d6
-      points of damage per caster level (maximum 5d6). The target receives a
-      Will save for half damage. This attack has no effect on creatures without
-      an Intelligence score.</p>
   actions:
     - _id: dkvsh1057eeil0oe
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,22 +13,30 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will half
-  learnedAt:
-    class:
-      psychic: 1
-    bloodline:
-      Psychic: 1
-  school: div
-  types: mind-affecting
+        type: will
+      target:
+        value: one creature
   components:
     somatic: true
-_key: '!items!rvf2gxyy1d4strae'
+  description:
+    value: >-
+      <p>You divine the most vulnerable portions of your opponent's mind and
+      overload it with a glut of psychic information. This attack deals 1d6
+      points of damage per caster level (maximum 5d6). The target receives a
+      Will save for half damage. This attack has no effect on creatures without
+      an Intelligence score.</p>
+  learnedAt:
+    bloodline:
+      Psychic: 1
+    class:
+      psychic: 1
+  school: div
+  types: mind-affecting
+type: spell
 

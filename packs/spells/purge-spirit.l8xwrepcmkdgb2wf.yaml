@@ -1,8 +1,30 @@
 _id: l8xwrepcmkdgb2wf
-name: Purge Spirit
-type: spell
+_key: '!items!l8xwrepcmkdgb2wf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Purge Spirit
 system:
+  actions:
+    - _id: 4ccyatz4ft6p212d
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one creature or haunt
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Purge spirit</i> rips away at the target's spiritual substance,
@@ -14,38 +36,16 @@ system:
       mediums channeling a spirit, and phantoms, and at the GM's discretion can
       affect other spirits or creatures made of ectoplasm. Incorporeal creatures
       take full damage from <i>purge spirit</i>.</p>
-  actions:
-    - _id: 4ccyatz4ft6p212d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature or haunt
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 4
-      psychic: 3
       medium: 2
       occultist: 2
+      psychic: 3
+      sorcerer: 4
       spiritualist: 2
+      witch: 4
+      wizard: 4
   level: 4
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!l8xwrepcmkdgb2wf'
+type: spell
 

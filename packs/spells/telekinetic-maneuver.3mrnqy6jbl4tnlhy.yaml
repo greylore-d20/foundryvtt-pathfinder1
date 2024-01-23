@@ -1,17 +1,10 @@
 _id: 3mrnqy6jbl4tnlhy
-name: Telekinetic Maneuver
-type: spell
+_key: '!items!3mrnqy6jbl4tnlhy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Telekinetic Maneuver
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>telekinesis</i>, but it can be used only to
-      perform a bull rush, disarm, drag, grapple (including pin), reposition,
-      steal, or trip combat maneuver.</p>
   actions:
     - _id: twxketn6g7lveh49
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,21 +12,28 @@ system:
           type: action
       duration:
         value: concentration (up to 1 round/level)
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>telekinesis</i>, but it can be used only to
+      perform a bull rush, disarm, drag, grapple (including pin), reposition,
+      steal, or trip combat maneuver.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       magus: 4
       psychic: 3
+      sorcerer: 4
       spiritualist: 4
+      wizard: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!3mrnqy6jbl4tnlhy'
+type: spell
 

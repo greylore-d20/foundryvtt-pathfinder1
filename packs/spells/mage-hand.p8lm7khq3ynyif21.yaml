@@ -1,18 +1,10 @@
 _id: p8lm7khq3ynyif21
-name: Mage Hand
-type: spell
+_key: '!items!p8lm7khq3ynyif21'
 img: icons/magic/unholy/strike-hand-glow-pink.webp
+name: Mage Hand
 system:
-  description:
-    value: >-
-      <p>You point your finger at an object and can lift it and move it at will
-      from a distance. As a move action, you can propel the object as far as 15
-      feet in any direction, though the spell ends if the distance between you
-      and the object ever exceeds the spell's range.</p>
   actions:
     - _id: 6yo42qha8w2oq8tj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,30 +12,38 @@ system:
           type: action
       duration:
         value: concentration
-      target:
-        value: one nonmagical, unattended object weighing up to 5 lbs.
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-  uses:
-    autoDeductChargesCost: '0'
+      target:
+        value: one nonmagical, unattended object weighing up to 5 lbs.
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You point your finger at an object and can lift it and move it at will
+      from a distance. As a move action, you can propel the object as far as 15
+      feet in any direction, though the spell ends if the distance between you
+      and the object ever exceeds the spell's range.</p>
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
       bard: 0
-      summoner: 0
       magus: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      psychic: 0
+      sorcerer: 0
       spiritualist: 0
+      summoner: 0
       summonerUnchained: 0
+      wizard: 0
   level: 0
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!p8lm7khq3ynyif21'
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

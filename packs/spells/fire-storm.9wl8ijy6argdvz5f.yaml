@@ -1,8 +1,29 @@
 _id: 9wl8ijy6argdvz5f
-name: Fire Storm
-type: spell
+_key: '!items!9wl8ijy6argdvz5f'
 img: icons/magic/air/wind-tornado-cyclone-red-orange.webp
+name: Fire Storm
 system:
+  actions:
+    - _id: 81gm4xmm4fu0yvo4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: two 10-ft. cubes per level (S)
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When a <i>fire storm</i> spell is cast, the whole area is shot through
@@ -13,35 +34,14 @@ system:
       their Reflex save catch on fire, taking 4d6 points of fire damage each
       round until the flames are extinguished. Extinguishing the flames is a
       full-round action that requires a DC 20 Reflex save.</p>
-  actions:
-    - _id: 81gm4xmm4fu0yvo4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
-      area: two 10-ft. cubes per level (S)
   learnedAt:
     class:
       cleric: 8
-      oracle: 8
       druid: 7
+      oracle: 8
       shaman: 8
   level: 8
   school: evo
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!9wl8ijy6argdvz5f'
+type: spell
 

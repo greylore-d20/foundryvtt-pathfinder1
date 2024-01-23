@@ -1,16 +1,11 @@
 _id: huvhdpwdmyf9ehas
-name: Unholy Ice
-type: spell
+_key: '!items!huvhdpwdmyf9ehas'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unholy Ice
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>holy ice</i>, except it is made of frozen
-      unholy water rather than holy water.</p>
   actions:
     - _id: 67hgtuachemrjlea
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,29 +13,34 @@ system:
           type: action
       duration:
         value: 1 minute/level, instantaneous, or until expended (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: medium
-      actionType: spellsave
       save:
-        type: ref
         description: Reflex negates or none (see text)
+        type: ref
       spellEffect: Wall of Ice or flying ice javelins (see text)
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>holy ice</i>, except it is made of frozen
+      unholy water rather than holy water.</p>
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
       oracle: 5
+      warpriest: 5
   level: 5
-  school: trs
-  types: cold, evil, water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a flask of unholy water or 5 pounds of powdered silver worth 25 gp
     gpValue: 25
+    value: a flask of unholy water or 5 pounds of powdered silver worth 25 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!huvhdpwdmyf9ehas'
+  school: trs
+  types: cold, evil, water
+type: spell
 

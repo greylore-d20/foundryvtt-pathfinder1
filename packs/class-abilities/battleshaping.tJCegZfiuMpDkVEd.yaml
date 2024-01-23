@@ -1,7 +1,25 @@
-name: Battleshaping
-type: feat
+_id: tJCegZfiuMpDkVEd
+_key: '!items!tJCegZfiuMpDkVEd'
 img: icons/creatures/claws/claw-bear-paw-swipe-red.webp
+name: Battleshaping
 system:
+  abilityType: su
+  actions:
+    - _id: 01IS0Psj0rJ2MUj0
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: icons/creatures/claws/claw-bear-paw-swipe-red.webp
+      name: Use
+      range:
+        units: personal
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a swift action, you grow a single natural weapon. The natural weapon
@@ -12,27 +30,9 @@ system:
       You may not grow additional limbs or a tail with this ability. You can use
       this ability a number of times per day equal to 3 + your Intelligence
       modifier.</p>
-  actions:
-    - _id: 01IS0Psj0rJ2MUj0
-      name: Use
-      img: icons/creatures/claws/claw-bear-paw-swipe-red.webp
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_id: tJCegZfiuMpDkVEd
-_key: '!items!tJCegZfiuMpDkVEd'
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

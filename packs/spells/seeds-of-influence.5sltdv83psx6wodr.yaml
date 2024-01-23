@@ -1,8 +1,30 @@
 _id: 5sltdv83psx6wodr
-name: Seeds of Influence
-type: spell
+_key: '!items!5sltdv83psx6wodr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Seeds of Influence
 system:
+  actions:
+    - _id: xlmkj9oerl8it57q
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>You leave a magical trace in the mind of a creature with an attitude of
@@ -18,42 +40,20 @@ system:
       ends for that target. A creature can  be subject to only one <i>Seeds of
       Influence</i> spell at a time; later castings of <i>Seeds of Influence</i>
       remove any previous casting.</p>
-  actions:
-    - _id: xlmkj9oerl8it57q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
-      witch: 4
-      psychic: 4
       medium: 3
       mesmerist: 3
+      psychic: 4
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
+  materials:
+    value: a rose
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    somatic: true
-    material: true
-  materials:
-    value: a rose
-_key: '!items!5sltdv83psx6wodr'
+type: spell
 

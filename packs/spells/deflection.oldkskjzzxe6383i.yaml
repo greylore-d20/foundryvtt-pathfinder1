@@ -1,8 +1,27 @@
 _id: oldkskjzzxe6383i
-name: Deflection
-type: spell
+_key: '!items!oldkskjzzxe6383i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deflection
 system:
+  actions:
+    - _id: 33s8zeiij9am2z2r
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You surround yourself in a whirling barrier of force that sends any
@@ -16,37 +35,18 @@ system:
       attacks that miss you for any reason besides a failed attack roll (such as
       concealment). Similarly, you cannot deflect attacks that actually do
       strike you but simply fail to do any harm.</p>
-  actions:
-    - _id: 33s8zeiij9am2z2r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
     subDomain:
       Defense: 7
   level: 7
-  school: abj
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of rubber dipped in glue
+  school: abj
   sr: false
-_key: '!items!oldkskjzzxe6383i'
+  types: force
+type: spell
 

@@ -1,8 +1,41 @@
 _id: NXy3C6WfJ67ZAPsy
-name: Gnome Ripsaw Glaive
-type: weapon
+_key: '!items!NXy3C6WfJ67ZAPsy'
 img: systems/pf1/icons/items/weapons/gnome-ripsaw-glaive.png
+name: Gnome Ripsaw Glaive
 system:
+  actions:
+    - _id: modlqs0566gkjaok
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/gnome-ripsaw-glaive.png
+      name: Attack
+      range:
+        units: reach
+        value: '0'
+  baseTypes:
+    - Gnome Ripsaw Glaive
   description:
     value: >-
       <p>The blade of this glaive is serrated and mounted on an axle, around
@@ -11,57 +44,24 @@ system:
       bonus. While the blade is spinning, you gain a +2 bonus on damage rolls
       with the weapon. When the blade is not spinning, treat this weapon as a
       glaive.</p>
-  tags:
-    - PFS
-    - Gnomish
-  weight:
-    value: 12
-  price: 30
   hardness: 10
-  actions:
-    - _id: modlqs0566gkjaok
-      name: Attack
-      img: systems/pf1/icons/items/weapons/gnome-ripsaw-glaive.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: reach
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Gnome Ripsaw Glaive
-  weaponGroups:
-    value:
-      - polearms
-  subType: exotic
-  weaponSubtype: 2h
+  price: 30
   properties:
     rch: true
     spc: true
   source:
     id: PZO9481
     pages: '9'
-_key: '!items!NXy3C6WfJ67ZAPsy'
+  subType: exotic
+  tags:
+    - PFS
+    - Gnomish
+  weaponGroups:
+    value:
+      - polearms
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
 

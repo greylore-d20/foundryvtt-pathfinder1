@@ -1,8 +1,26 @@
 _id: 3fe0fjpgv2qb9khz
-name: Create Holds
-type: spell
+_key: '!items!3fe0fjpgv2qb9khz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Holds
 system:
+  actions:
+    - _id: wreztjfzt5iwwh9w
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: path of handholds
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a path of handholds on earthen, plaster, stone, or wooden
@@ -15,35 +33,17 @@ system:
       lengthwise, and are perfectly suited for gripping with fingers or claws.
       At the end of the spell's duration, any creature being supported by the
       handholds immediately begins to fall.</p>
-  actions:
-    - _id: wreztjfzt5iwwh9w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: medium
-      spellEffect: path of handholds
   learnedAt:
     class:
+      druid: 4
+      hunter: 3
+      ranger: 3
       sorcerer: 4
       wizard: 4
-      druid: 4
-      ranger: 3
-      hunter: 3
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: handful of pebbles
+  school: trs
   sr: false
-_key: '!items!3fe0fjpgv2qb9khz'
+type: spell
 

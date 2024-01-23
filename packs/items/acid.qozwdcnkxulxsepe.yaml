@@ -1,8 +1,34 @@
 _id: qozwdcnkxulxsepe
-name: Acid
-type: weapon
+_key: '!items!qozwdcnkxulxsepe'
 img: systems/pf1/icons/items/potions/major-green.jpg
+name: Acid
 system:
+  actions:
+    - _id: g2rblzzkmv43el5f
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/potions/major-green.jpg
+      name: Attack
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
   description:
     value: >-
       <p>You can throw a flask of acid as a <em>splash weapon</em> with a range
@@ -28,48 +54,22 @@ system:
       Ice</em> (M): For each flask of acid used as a power component, you may
       designate one 10-foot square of ice wall that, if <em>broken</em> through,
       deals 1d6 acid damage in addition to the normal cold damage.</li></ul>
-  tags:
-    - Power Component
-  weight:
-    value: 1
-  price: 10
-  actions:
-    - _id: g2rblzzkmv43el5f
-      name: Attack
-      img: systems/pf1/icons/items/potions/major-green.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: rwak
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values:
-                - acid
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-  uses:
-    per: single
   links:
     children:
       - id: VOIeK1O7fy1zwq7s
         name: Alchemist's Fire
       - id: oaE0JqMAImcekCyU
         name: Acid
-  subType: misc
-  weaponSubtype: other
+  price: 10
   source:
     id: PZO1110
-_key: '!items!qozwdcnkxulxsepe'
+  subType: misc
+  tags:
+    - Power Component
+  uses:
+    per: single
+  weaponSubtype: other
+  weight:
+    value: 1
+type: weapon
 

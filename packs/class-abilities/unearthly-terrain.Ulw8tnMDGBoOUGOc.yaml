@@ -1,8 +1,28 @@
 _id: Ulw8tnMDGBoOUGOc
-name: Unearthly Terrain
-type: feat
+_key: '!items!Ulw8tnMDGBoOUGOc'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Unearthly Terrain
 system:
+  abilityType: su
+  actions:
+    - _id: z8xtefrz9zkr0kj5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@cl'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: 20-ft. radius around you
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can twist the material world into the harsh, jagged edges and
@@ -11,30 +31,10 @@ system:
 
       <p>You may use this ability a number of times per day equal to 3 + your
       Charisma bonus.</p>
-  actions:
-    - _id: z8xtefrz9zkr0kj5
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@cl'
-        units: round
-      target:
-        value: 20-ft. radius around you
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_unearthlyTerrain
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!Ulw8tnMDGBoOUGOc'
+  tag: classFeat_unearthlyTerrain
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

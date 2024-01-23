@@ -1,8 +1,30 @@
 _id: l01ajd0m4xgwq3fd
-name: Magic Aura
-type: spell
+_key: '!items!l01ajd0m4xgwq3fd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Magic Aura
 system:
+  actions:
+    - _id: ifk1xah6tvv0lp2x
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: one touched object weighing up to 5 lbs./level
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You alter an item's aura so that it registers to <i>detect</i> spells
@@ -17,44 +39,22 @@ system:
       aura</i> doesn't work.</p><p><i>Note:</i> A magic weapon, shield, or suit
       of armor must be a masterwork item, so a sword of average make, for
       example, looks suspicious if it has a magical aura.</p>
-  actions:
-    - _id: ifk1xah6tvv0lp2x
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one touched object weighing up to 5 lbs./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none; see text
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      psychic: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      wizard: 1
     subDomain:
       Arcane: 1
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: >-
       a small square of silk that must be passed over the object that receives
       the aura
+  school: ill
   sr: false
-_key: '!items!l01ajd0m4xgwq3fd'
+  subschool: glamer
+type: spell
 

@@ -1,8 +1,26 @@
 _id: h2r6m68142borl8k
-name: Grasping Hand
-type: spell
+_key: '!items!h2r6m68142borl8k'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Grasping Hand
 system:
+  actions:
+    - _id: gdo1x32xdkig2nco
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: 10-ft. hand
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>interposing hand</i>, except that it can
@@ -16,38 +34,20 @@ system:
       is a move action. The <i>grasping hand</i> can instead be directed to bull
       rush a target, using the same bonuses outlined above, or it can be
       directed to interpose itself, as <i>interposing hand</i> does.</p>
-  actions:
-    - _id: gdo1x32xdkig2nco
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      spellEffect: 10-ft. hand
   learnedAt:
     class:
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
     domain:
       Strength: 7
   level: 7
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a soft glove
+  school: evo
   source:
     id: PZO1110
     pages: '291'
-_key: '!items!h2r6m68142borl8k'
+  types: force
+type: spell
 

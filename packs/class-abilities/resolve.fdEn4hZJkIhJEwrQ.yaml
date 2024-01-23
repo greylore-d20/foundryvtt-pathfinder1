@@ -1,8 +1,20 @@
 _id: fdEn4hZJkIhJEwrQ
-name: Resolve
-type: feat
+_key: '!items!fdEn4hZJkIhJEwrQ'
 img: systems/pf1/icons/skills/red_04.jpg
+name: Resolve
 system:
+  abilityType: ex
+  actions:
+    - _id: 5ut5v038phvpkrgo
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/red_04.jpg
+      name: Use
+  associations:
+    classes:
+      - Samurai
   description:
     value: >-
       <p>Starting at 1st level, the samurai gains resolve that he can call upon
@@ -30,22 +42,10 @@ system:
       staggered, but he does not fall unconscious and begin dying if he takes a
       standard action. He does fall unconscious if he takes additional damage
       from any source.</p>
-  actions:
-    - _id: 5ut5v038phvpkrgo
-      name: Use
-      img: systems/pf1/icons/skills/red_04.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: ceil(@classes.samurai.level / 2)
-  tag: classFeat_resolve
   subType: classFeat
-  associations:
-    classes:
-      - Samurai
-  abilityType: ex
-_key: '!items!fdEn4hZJkIhJEwrQ'
+  tag: classFeat_resolve
+  uses:
+    maxFormula: ceil(@classes.samurai.level / 2)
+    per: day
+type: feat
 

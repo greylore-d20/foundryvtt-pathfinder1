@@ -1,8 +1,26 @@
 _id: bnfgghdvdvlea6wr
-name: Inheritor's Smite
-type: spell
+_key: '!items!bnfgghdvdvlea6wr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Inheritor's Smite
 system:
+  actions:
+    - _id: c593e3e6yh3njwku
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You channel the power of righteousness into your weapon arm, allowing
@@ -13,33 +31,15 @@ system:
       without provoking an attack of opportunity; if your combat maneuver check
       exceeds the defender's CMD by more than 5, you do not need to move with
       the target to push it back more than 5 feet.</p>
-  actions:
-    - _id: c593e3e6yh3njwku
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
+      inquisitor: 2
       oracle: 2
       paladin: 2
-      inquisitor: 2
+      warpriest: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!bnfgghdvdvlea6wr'
+type: spell
 

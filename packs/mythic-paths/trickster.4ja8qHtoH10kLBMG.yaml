@@ -1,8 +1,15 @@
 _id: 4ja8qHtoH10kLBMG
-name: Trickster
-type: class
+_key: '!items!4ja8qHtoH10kLBMG'
 img: systems/pf1/icons/items/inventory/lockpick.jpg
+name: Trickster
 system:
+  bab: ''
+  changes:
+    - _id: jy9k5vo3
+      formula: '@classes.mythicTrickster.level * 4'
+      modifier: untyped
+      priority: null
+      subTarget: mhp
   description:
     value: >-
       <p>Seen only when they choose to be seen, tricksters manipulate kings and
@@ -68,17 +75,8 @@ system:
       from being flat-footed. Once per round when you roll a natural 20 on an
       opposed skill check against a mythic foe, you regain one use of mythic
       power.</p>
-  changes:
-    - _id: jy9k5vo3
-      formula: '@classes.mythicTrickster.level * 4'
-      subTarget: mhp
-      modifier: untyped
-      priority: null
-  tag: mythicTrickster
-  subType: mythic
   hd: 0
   hp: 0
-  bab: ''
   savingThrows:
     fort:
       value: ''
@@ -89,5 +87,7 @@ system:
   source:
     id: PZO1126
     pages: '44'
-_key: '!items!4ja8qHtoH10kLBMG'
+  subType: mythic
+  tag: mythicTrickster
+type: class
 

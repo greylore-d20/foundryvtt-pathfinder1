@@ -1,8 +1,28 @@
 _id: WqVgN3PovYXZWB7A
-name: Powerful Bond
-type: feat
+_key: '!items!WqVgN3PovYXZWB7A'
 img: systems/pf1/icons/feats/improved-disarm.png
+name: Powerful Bond
 system:
+  abilityType: su
+  actions:
+    - _id: bhw0kra2csc2ojpj
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/feats/improved-disarm.png
+      name: Use
+      range:
+        units: ft
+        value: '60'
+      target:
+        value: ally within range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a free action, you can open a link to communicate telepathically
@@ -12,30 +32,10 @@ system:
       to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Touch of Good power of the Good Domain.</p>
-  actions:
-    - _id: bhw0kra2csc2ojpj
-      name: Use
-      img: systems/pf1/icons/feats/improved-disarm.png
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: ally within range
-      range:
-        value: '60'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_powerfulBond
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!WqVgN3PovYXZWB7A'
+  tag: classFeat_powerfulBond
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

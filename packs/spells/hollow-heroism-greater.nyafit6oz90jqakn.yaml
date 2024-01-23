@@ -1,8 +1,31 @@
 _id: nyafit6oz90jqakn
-name: Hollow Heroism, Greater
-type: spell
+_key: '!items!nyafit6oz90jqakn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hollow Heroism, Greater
 system:
+  actions:
+    - _id: 58lrifirk4ttwb17
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as
@@ -16,39 +39,16 @@ system:
       the spell. Attempts to identify <em>greater hollow heroism</em> with a
       skill check incorrectly identify it as <em>greater heroism</em> (see the
       ruse descriptor on page 192).</p>
-  actions:
-    - _id: 58lrifirk4ttwb17
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 6
-      witch: 7
       psychic: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
   level: 7
   school: enc
   subschool: compulsion
   types: mind-affecting, ruse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!nyafit6oz90jqakn'
+type: spell
 

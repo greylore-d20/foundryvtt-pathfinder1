@@ -1,8 +1,27 @@
 _id: 9S1QROgEy3ZyQlhX
-name: Cut the Corruption
-type: feat
+_key: '!items!9S1QROgEy3ZyQlhX'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Cut the Corruption
 system:
+  abilityType: su
+  actions:
+    - _id: cg346a1ug4llzyiu
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, an order of the Green cavalier can touch a weapon and
@@ -11,29 +30,10 @@ system:
       against aberrations and undead. This damage does not stack with the
       additional damage granted by the <em>bane</em> weapon special ability. At
       16th level, the cavalier can use this ability a second time each day.</p>
-  actions:
-    - _id: cg346a1ug4llzyiu
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: floor(@classes.cavalier.level / 8)
-  tag: classFeat_cutTheCorruption
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: su
-_key: '!items!9S1QROgEy3ZyQlhX'
+  tag: classFeat_cutTheCorruption
+  uses:
+    maxFormula: floor(@classes.cavalier.level / 8)
+    per: day
+type: feat
 

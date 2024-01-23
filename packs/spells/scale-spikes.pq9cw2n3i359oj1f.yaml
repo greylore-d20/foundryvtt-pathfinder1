@@ -1,17 +1,11 @@
 _id: pq9cw2n3i359oj1f
-name: Scale Spikes
-type: spell
+_key: '!items!pq9cw2n3i359oj1f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Scale Spikes
 system:
-  description:
-    value: >-
-      <p>When the target is affected by this spell, its scales grow jagged
-      spikes. These spikes act like <i>+1 armor spikes</i>. The subject is
-      automatically considered proficient with these scale spikes.</p>
   actions:
     - _id: c7ten6owme5d3zkq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,37 +13,43 @@ system:
           type: action
       duration:
         value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fort negates
+        harmless: true
+        type: fort
       target:
         value: >-
           one living creature/level that is a reptile, has the dragon type, or
           has the reptilian subtype, and that also has a natural armor bonus of
           at least +1
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fort negates
-        harmless: true
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>When the target is affected by this spell, its scales grow jagged
+      spikes. These spikes act like <i>+1 armor spikes</i>. The subject is
+      automatically considered proficient with these scale spikes.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 2
       alchemist: 2
-      witch: 2
       bloodrager: 2
-      shaman: 2
+      druid: 2
       hunter: 2
+      ranger: 2
+      shaman: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a small thorn
-_key: '!items!pq9cw2n3i359oj1f'
+  school: trs
+type: spell
 

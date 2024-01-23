@@ -1,8 +1,26 @@
 _id: juddwhbp6yea3p9s
-name: Unseen Engineers
-type: spell
+_key: '!items!juddwhbp6yea3p9s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unseen Engineers
 system:
+  actions:
+    - _id: ha024zgiy7rqq51x
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: a team of tiny, invisible engineers
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure an invisible team of tiny engineers to construct a trap at
@@ -19,36 +37,18 @@ system:
       construction of the desired trap. They can't attack in any way or be
       killed, and dissipate if they take 12 points of damage from area attacks
       (they get no saves against attacks).</p>
-  actions:
-    - _id: ha024zgiy7rqq51x
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: long
-      spellEffect: a team of tiny, invisible engineers
   learnedAt:
     class:
       sorcerer: 3
-      wizard: 3
       summoner: 2
-      witch: 3
       summonerUnchained: 2
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: materials required to construct the trap
+  school: con
   sr: false
-_key: '!items!juddwhbp6yea3p9s'
+  subschool: creation
+type: spell
 

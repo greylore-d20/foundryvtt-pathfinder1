@@ -1,8 +1,34 @@
 _id: 07nv5yhctnbrxxc0
-name: Contingent Scroll
-type: spell
+_key: '!items!07nv5yhctnbrxxc0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contingent Scroll
 system:
+  actions:
+    - _id: 3l4y7fikevpecoba
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 10 minutes/level (D) or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transfer the power of a scroll to the target so that it comes into
@@ -29,43 +55,17 @@ system:
       you want it occur to at that moment.  This spell counts as a
       <i>contingency</i> spell for the purpose of having multiple contingent
       effects on a creature at the same time.</p>
-  actions:
-    - _id: 3l4y7fikevpecoba
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 10 minutes/level (D) or until discharged
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
+      bard: 4
+      occultist: 4
+      psychic: 4
       sorcerer: 4
       wizard: 4
-      bard: 4
-      psychic: 4
-      occultist: 4
   level: 4
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: the scroll to be triggered; see text
     focus: a platinum quill worth 100 gp
-_key: '!items!07nv5yhctnbrxxc0'
+    value: the scroll to be triggered; see text
+  school: evo
+type: spell
 

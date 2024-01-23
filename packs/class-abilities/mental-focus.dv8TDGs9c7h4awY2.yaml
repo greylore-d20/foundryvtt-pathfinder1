@@ -1,8 +1,20 @@
 _id: dv8TDGs9c7h4awY2
-name: Mental Focus
-type: feat
+_key: '!items!dv8TDGs9c7h4awY2'
 img: systems/pf1/icons/items/inventory/scroll-magic.jpg
+name: Mental Focus
 system:
+  abilityType: su
+  actions:
+    - _id: 3x4v74tgwbh6zqbk
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/inventory/scroll-magic.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>An occultist can invest a portion of his mental focus into his chosen
@@ -38,22 +50,10 @@ system:
       expend his generic focus through an appropriate implement on any focus
       power he knows, but an implement he didn’t invest any focus in at the
       start of the day grants no resonant power.</p>
-  actions:
-    - _id: 3x4v74tgwbh6zqbk
-      name: Use
-      img: systems/pf1/icons/items/inventory/scroll-magic.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '@classes.occultist.level + @abilities.int.mod'
-  tag: classFeat_mentalFocus
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: su
-_key: '!items!dv8TDGs9c7h4awY2'
+  tag: classFeat_mentalFocus
+  uses:
+    maxFormula: '@classes.occultist.level + @abilities.int.mod'
+    per: day
+type: feat
 

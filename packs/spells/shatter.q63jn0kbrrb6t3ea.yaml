@@ -1,8 +1,61 @@
 _id: q63jn0kbrrb6t3ea
-name: Shatter
-type: spell
+_key: '!items!q63jn0kbrrb6t3ea'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shatter
 system:
+  actions:
+    - _id: 9ukcmtkvdzdhef0j
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 5-ft.-radius spread; or one solid object or one crystalline creature
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: 5-ft. Radius
+      range:
+        units: close
+      save:
+        description: >-
+          Will negates (object); Will negates (object) or Fortitude half; see
+          text
+        type: fort
+      target:
+        value: 5-ft.-radius spread; or one solid object or one crystalline creature
+    - _id: QZ9zgjERJC2IZUNl
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 5-ft.-radius spread; or one solid object or one crystalline creature
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+      name: Object / Crystaline Creature
+      range:
+        units: close
+      save:
+        description: >-
+          Will negates (object); Will negates (object) or Fortitude half; see
+          text
+        type: fort
+      target:
+        value: 5-ft.-radius spread; or one solid object or one crystalline creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Shatter</i> creates a loud, ringing noise that breaks brittle,
@@ -18,80 +71,27 @@ system:
       against a crystalline creature (of any weight), <i>shatter</i> deals 1d6
       points of sonic damage per caster level (maximum 10d6), with a Fortitude
       save for half damage.</p>
-  actions:
-    - _id: 9ukcmtkvdzdhef0j
-      name: 5-ft. Radius
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 5-ft.-radius spread; or one solid object or one crystalline creature
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '5'
-      actionType: spellsave
-      save:
-        type: fort
-        description: >-
-          Will negates (object); Will negates (object) or Fortitude half; see
-          text
-      area: 5-ft.-radius spread; or one solid object or one crystalline creature
-    - _id: QZ9zgjERJC2IZUNl
-      name: Object / Crystaline Creature
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 5-ft.-radius spread; or one solid object or one crystalline creature
-      range:
-        units: close
-      measureTemplate:
-        size: '5'
-      actionType: spellsave
-      save:
-        type: fort
-        description: >-
-          Will negates (object); Will negates (object) or Fortitude half; see
-          text
-      area: 5-ft.-radius spread; or one solid object or one crystalline creature
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      magus: 2
       bloodrager: 2
-      psychic: 2
+      cleric: 2
+      magus: 2
       occultist: 2
+      oracle: 2
+      psychic: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
     domain:
       Destruction: 2
   level: 2
-  school: evo
-  types: sonic
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a chip of mica
+  school: evo
   source:
     id: PZO1110
     pages: '341'
-_key: '!items!q63jn0kbrrb6t3ea'
+  types: sonic
+type: spell
 

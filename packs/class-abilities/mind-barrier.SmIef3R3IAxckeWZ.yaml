@@ -1,8 +1,27 @@
 _id: SmIef3R3IAxckeWZ
-name: Mind Barrier
-type: feat
+_key: '!items!SmIef3R3IAxckeWZ'
 img: systems/pf1/icons/items/armor/shield-heavy-metal.png
+name: Mind Barrier
 system:
+  abilityType: sp
+  actions:
+    - _id: rw0ekt6uk8l3c31d
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/armor/shield-heavy-metal.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a swift action, you can expend 1 point of mental focus to create a
@@ -15,26 +34,7 @@ system:
 
       <p>You can activate this ability as an immediate action, but doing so
       costs 2 points of mental focus instead of 1.</p>
-  actions:
-    - _id: rw0ekt6uk8l3c31d
-      name: Use
-      img: systems/pf1/icons/items/armor/shield-heavy-metal.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_mindBarrier
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!SmIef3R3IAxckeWZ'
+  tag: classFeat_mindBarrier
+type: feat
 

@@ -1,8 +1,30 @@
 _id: qb43PPkr3e3oi5fO
-name: 'Curse Blessing: Retributive Curse'
-type: feat
+_key: '!items!qb43PPkr3e3oi5fO'
 img: systems/pf1/icons/spells/evil-eye-red-2.jpg
+name: 'Curse Blessing: Retributive Curse'
 system:
+  actions:
+    - _id: s4kzlx8kox6q2go9
+      actionType: save
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/spells/evil-eye-red-2.jpg
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: adjacent creature
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, as a swift or immediate action, you can inflict a curse
@@ -17,29 +39,7 @@ system:
 
       <p>A creature can be subjected to only one instance of retributive curse
       at a time. This otherwise functions as bestow curse.</p>
-  actions:
-    - _id: s4kzlx8kox6q2go9
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-red-2.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: hour
-      target:
-        value: adjacent creature
-      range:
-        units: touch
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_curseBlessingRetributiveCurse
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!qb43PPkr3e3oi5fO'
+  tag: classFeat_curseBlessingRetributiveCurse
+type: feat
 

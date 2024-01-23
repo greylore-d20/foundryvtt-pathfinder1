@@ -1,8 +1,26 @@
 _id: yayqw7v1bpb370by
-name: Healing Warmth
-type: spell
+_key: '!items!yayqw7v1bpb370by'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Healing Warmth
 system:
+  actions:
+    - _id: msdhktgl5nmvoorr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell grants you temporary immunity to fire damage as
@@ -12,36 +30,18 @@ system:
       opportunity. When the spell has absorbed 12 points of fire damage per
       caster level (to a maximum of 120 points at 10th level), it is
       discharged.</p>
-  actions:
-    - _id: msdhktgl5nmvoorr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
       alchemist: 4
-      inquisitor: 4
-      psychic: 4
+      cleric: 4
+      druid: 4
       hunter: 4
+      inquisitor: 4
+      oracle: 4
+      psychic: 4
+      warpriest: 4
   level: 4
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!yayqw7v1bpb370by'
+type: spell
 

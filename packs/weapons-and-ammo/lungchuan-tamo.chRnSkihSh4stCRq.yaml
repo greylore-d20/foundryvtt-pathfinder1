@@ -1,68 +1,68 @@
 _id: chRnSkihSh4stCRq
-name: Lungchuan Tamo
-type: weapon
+_key: '!items!chRnSkihSh4stCRq'
 img: icons/weapons/thrown/dagger-simple.webp
+name: Lungchuan Tamo
 system:
-  description:
-    value: >-
-      <p>What seems to be an ordinary baton sheaths a pair of matching
-      slender-bladed daggers-perfectly balanced throwing blades.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 5
-  hp:
-    max: 2
-    value: 2
-  hardness: 10
   actions:
     - _id: s51yfrw3xzdlsdew
-      name: Attack
-      img: icons/weapons/thrown/dagger-simple.webp
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 4, @size)
             type:
+              custom: ''
               values:
                 - piercing
                 - slashing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: icons/weapons/thrown/dagger-simple.webp
+      name: Attack
+      range:
+        units: melee
+        value: '10'
   baseTypes:
     - Lungchuan Tamo
-  weaponGroups:
-    value:
-      - monk
+  description:
+    value: >-
+      <p>What seems to be an ordinary baton sheaths a pair of matching
+      slender-bladed daggers-perfectly balanced throwing blades.</p>
+  hardness: 10
+  hp:
+    max: 2
+    value: 2
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 5
   properties:
-    mnk: true
     fin: true
+    mnk: true
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!chRnSkihSh4stCRq'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - monk
+  weight:
+    value: 1
+type: weapon
 

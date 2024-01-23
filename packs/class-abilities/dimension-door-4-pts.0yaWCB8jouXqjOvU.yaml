@@ -1,8 +1,27 @@
 _id: 0yaWCB8jouXqjOvU
-name: Dimension Door (4 pts)
-type: feat
+_key: '!items!0yaWCB8jouXqjOvU'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Dimension Door (4 pts)
 system:
+  abilityType: sp
+  actions:
+    - _id: zacua5dzdobdnhn4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/blue_26.jpg
+      name: Use
+      range:
+        units: long
+      target:
+        value: self
+  associations:
+    classes:
+      - Eidolon
   description:
     value: >-
       <p>An eidolon learns to cast
@@ -14,29 +33,10 @@ system:
 
       <p>The summoner must be at least 13th level before selecting this
       evolution.</p>
-  actions:
-    - _id: zacua5dzdobdnhn4
-      name: Use
-      img: systems/pf1/icons/skills/blue_26.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: long
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_dimensionDoor4Pts
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon
-  abilityType: sp
-_key: '!items!0yaWCB8jouXqjOvU'
+  tag: classFeat_dimensionDoor4Pts
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

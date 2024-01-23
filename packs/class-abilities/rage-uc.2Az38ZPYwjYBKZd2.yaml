@@ -1,8 +1,27 @@
 _id: 2Az38ZPYwjYBKZd2
-name: Rage (UC)
-type: feat
+_key: '!items!2Az38ZPYwjYBKZd2'
 img: systems/pf1/icons/feats/extra-rage.jpg
+name: Rage (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: e43a7wykazig6797
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/feats/extra-rage.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Barbarian (Unchained)
   description:
     value: >-
       <p>A barbarian can call upon inner reserves of strength and ferocity,
@@ -28,29 +47,10 @@ system:
       can’t enter a new rage while fatigued or exhausted, but can otherwise
       enter a rage multiple times per day. If a barbarian falls unconscious, her
       rage immediately ends.</p>
-  actions:
-    - _id: e43a7wykazig6797
-      name: Use
-      img: systems/pf1/icons/feats/extra-rage.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 4 + @abilities.con.mod + (@classes.barbarianUnchained.level - 1)*2
-  tag: classFeat_rageUc
   subType: classFeat
-  associations:
-    classes:
-      - Barbarian (Unchained)
-  abilityType: ex
-_key: '!items!2Az38ZPYwjYBKZd2'
+  tag: classFeat_rageUc
+  uses:
+    maxFormula: 4 + @abilities.con.mod + (@classes.barbarianUnchained.level - 1)*2
+    per: day
+type: feat
 

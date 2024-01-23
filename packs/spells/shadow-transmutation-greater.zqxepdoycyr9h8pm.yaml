@@ -1,8 +1,30 @@
 _id: zqxepdoycyr9h8pm
-name: Shadow Transmutation, Greater
-type: spell
+_key: '!items!zqxepdoycyr9h8pm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Transmutation, Greater
 system:
+  actions:
+    - _id: qvwrssxmmtavqmij
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: Will disbelief (if interacted with); varies; see text
+        type: will
+      target:
+        value: see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>shadow transmutation</i>, except it can
@@ -11,37 +33,15 @@ system:
       <i>shadow transmutation</i> deal three-fifths (60%) damage to
       nonbelievers, and nondamaging effects are 60% likely to work against
       nonbelievers.</p>
-  actions:
-    - _id: qvwrssxmmtavqmij
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: see text
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with); varies; see text
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
-      witch: 9
       shaman: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
   level: 9
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zqxepdoycyr9h8pm'
+type: spell
 

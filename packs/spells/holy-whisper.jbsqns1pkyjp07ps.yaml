@@ -1,8 +1,33 @@
 _id: jbsqns1pkyjp07ps
-name: Holy Whisper
-type: spell
+_key: '!items!jbsqns1pkyjp07ps'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Holy Whisper
 system:
+  actions:
+    - _id: dk0xh91rfnmqudyh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude negates; see text
+        type: fort
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You whisper a single word in the primordial language of good that is
@@ -12,36 +37,11 @@ system:
       subtype, evil-aligned dragons, and undead in the burst also take 2d8
       points of damage if they fail their saves. Good-aligned creatures in the
       burst gain a +2 sacred bonus on attack and damage rolls for 1 round.</p>
-  actions:
-    - _id: dk0xh91rfnmqudyh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '30'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates; see text
-      area: cone-shaped burst
   learnedAt:
     class:
       paladin: 3
   level: 3
   school: evo
   types: good
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!jbsqns1pkyjp07ps'
+type: spell
 

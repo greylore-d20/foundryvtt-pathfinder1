@@ -1,40 +1,40 @@
 _id: lmbtofw6xaqiqppd
-name: Litany of Weakness
-type: spell
+_key: '!items!lmbtofw6xaqiqppd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Weakness
 system:
-  description:
-    value: >-
-      <p>Your litany proclaims your target weak, sapping its strength. The
-      target is fatigued for 1 round.  While subject to this spell, the target
-      cannot be the target of another spell that has the word "litany" in the
-      title.</p>
   actions:
     - _id: ce91jw4krfj1lhjy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
         description: 'no'
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Your litany proclaims your target weak, sapping its strength. The
+      target is fatigued for 1 round.  While subject to this spell, the target
+      cannot be the target of another spell that has the word "litany" in the
+      title.</p>
   learnedAt:
     class:
-      inquisitor: 1
       antipaladin: 1
+      inquisitor: 1
   school: nec
   types: language-dependent
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!lmbtofw6xaqiqppd'
+type: spell
 

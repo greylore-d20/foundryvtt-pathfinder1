@@ -1,18 +1,11 @@
 _id: 2fg73hig4umqb9h6
-name: Hidden Blades
-type: spell
+_key: '!items!2fg73hig4umqb9h6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hidden Blades
 system:
-  description:
-    value: >-
-      <p>You render a target weapon or up to 50 pieces of ammunition invisible,
-      granting the wielder a +20 bonus on Sleight of Hand checks made to conceal
-      the weapon or ammunition and a +5 circumstance bonus on Bluff checks to
-      feint with the weapon or ammunition.</p>
   actions:
     - _id: g51rhjbykkha0g2z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,34 +13,41 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: weapon or ammunition touched; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: weapon or ammunition touched; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You render a target weapon or up to 50 pieces of ammunition invisible,
+      granting the wielder a +20 bonus on Sleight of Hand checks made to conceal
+      the weapon or ammunition and a +5 circumstance bonus on Bluff checks to
+      feint with the weapon or ammunition.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
       alchemist: 2
-      summoner: 2
-      inquisitor: 2
       antipaladin: 2
+      bard: 2
+      inquisitor: 2
       magus: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a shard of glass
-_key: '!items!2fg73hig4umqb9h6'
+  school: ill
+  subschool: glamer
+type: spell
 

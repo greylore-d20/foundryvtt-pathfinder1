@@ -1,17 +1,10 @@
 _id: 4ratngmltr3z4om5
-name: Angelic Aspect, Lesser
-type: spell
+_key: '!items!4ratngmltr3z4om5'
 img: icons/magic/holy/angel-winged-humanoid-blue.webp
+name: Angelic Aspect, Lesser
 system:
-  description:
-    value: >-
-      <p>You take on an aspect of an angelic being, including some of its
-      physical characteristics. You gain low-light vision, resistance to acid 5,
-      resistance to cold 5, and the benefits of <i>Protection from Evil</i>.</p>
   actions:
     - _id: 7vtd9uvh2320274c
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,24 +12,31 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You take on an aspect of an angelic being, including some of its
+      physical characteristics. You gain low-light vision, resistance to acid 5,
+      resistance to cold 5, and the benefits of <i>Protection from Evil</i>.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
       oracle: 2
       paladin: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: trs
-  types: good
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!4ratngmltr3z4om5'
+  types: good
+type: spell
 

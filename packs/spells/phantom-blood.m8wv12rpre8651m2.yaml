@@ -1,8 +1,26 @@
 _id: m8wv12rpre8651m2
-name: Phantom Blood
-type: spell
+_key: '!items!m8wv12rpre8651m2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantom Blood
 system:
+  actions:
+    - _id: sm5vgpjr7jtnrfh4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You bolster your life energy. If the loss of hit points at the end of a
@@ -11,33 +29,15 @@ system:
       you, you gain temporary hit points equal to your caster level (maximum
       10). Each casting of this spell grants you temporary hit points only
       once.</p>
-  actions:
-    - _id: sm5vgpjr7jtnrfh4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       alchemist: 1
-      magus: 1
       bloodrager: 1
+      magus: 1
+      sorcerer: 1
       spiritualist: 1
+      wizard: 1
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!m8wv12rpre8651m2'
+type: spell
 

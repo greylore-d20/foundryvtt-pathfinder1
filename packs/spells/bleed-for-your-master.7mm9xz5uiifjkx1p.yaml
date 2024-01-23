@@ -1,8 +1,25 @@
 _id: 7mm9xz5uiifjkx1p
-name: Bleed for your Master
-type: spell
+_key: '!items!7mm9xz5uiifjkx1p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bleed for your Master
 system:
+  actions:
+    - _id: 5v2xof2aszanb4j0
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: your animal companion, familiar, or fiendish servant
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you would be hit by an attack that requires an attack roll, or
@@ -20,36 +37,19 @@ system:
       improved evasion and similar mitigating effects. After taking damage, the
       target is shaken for 1 minute. If the target was already shaken, it
       becomes frightened instead.</p>
-  actions:
-    - _id: 5v2xof2aszanb4j0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: your animal companion, familiar, or fiendish servant
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
-      ranger: 3
-      witch: 3
       antipaladin: 2
+      druid: 3
       hunter: 3
+      ranger: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: enc
+  sr: false
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!7mm9xz5uiifjkx1p'
+type: spell
 

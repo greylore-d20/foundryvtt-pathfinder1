@@ -1,8 +1,32 @@
 _id: k4bh2vyy93r4ynke
-name: Hunter's Friend
-type: spell
+_key: '!items!k4bh2vyy93r4ynke'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hunter's Friend
 system:
+  actions:
+    - _id: 8jloj66ny2uzssy6
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: your animal companion
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your animal companion works in perfect harmony with your mastery of
@@ -17,37 +41,13 @@ system:
       ability granted by an archetype that substitutes for one of the above
       abilities, such as the arctic endurance, arctic native, icewalking, and
       snowcaster abilities of an arctic druidAPG.</p>
-  actions:
-    - _id: 8jloj66ny2uzssy6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: your animal companion
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       druid: 3
-      ranger: 2
       hunter: 2
+      ranger: 2
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!k4bh2vyy93r4ynke'
+type: spell
 

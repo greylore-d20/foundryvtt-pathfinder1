@@ -1,19 +1,11 @@
 _id: hgc7a0tp3wkfmwz1
-name: Symbol of Slowing
-type: spell
+_key: '!items!hgc7a0tp3wkfmwz1'
 img: icons/magic/symbols/rune-sigil-black-pink.webp
+name: Symbol of Slowing
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>symbol of death</i>, except all creatures
-      within 60 feet of a <i>symbol of <i>slow</i>ing</i> are <i>slow</i>ed (as
-      the <i>slow</i> spell) for 1 round per caster level.</p><p>Symbol of
-      <i>slow</i>ing can be made permanent with a <i>permanency</i> spell by a
-      caster of 11th level or higher for the cost of 10,000 gp.</p>
   actions:
     - _id: ncuf8bbahmur33r3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
@@ -22,35 +14,43 @@ system:
           type: minute
       duration:
         value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
-        value: '0'
         units: ft
-      actionType: spellsave
+        value: '0'
       save:
-        type: will
         description: Will negates
+        type: will
       spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>symbol of death</i>, except all creatures
+      within 60 feet of a <i>symbol of <i>slow</i>ing</i> are <i>slow</i>ed (as
+      the <i>slow</i> spell) for 1 round per caster level.</p><p>Symbol of
+      <i>slow</i>ing can be made permanent with a <i>permanency</i> spell by a
+      caster of 11th level or higher for the cost of 10,000 gp.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      witch: 4
       occultist: 3
+      oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 1000
     value: >-
       mercury and phosphorous, plus powdered diamond and opal worth a total of
       1,000 gp
-    gpValue: 1000
   preparation:
     spontaneousPrepared: false
-_key: '!items!hgc7a0tp3wkfmwz1'
+  school: trs
+type: spell
 

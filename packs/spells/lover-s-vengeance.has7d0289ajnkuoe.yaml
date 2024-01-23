@@ -1,8 +1,30 @@
 _id: has7d0289ajnkuoe
-name: Lover's Vengeance
-type: spell
+_key: '!items!has7d0289ajnkuoe'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lover's Vengeance
 system:
+  actions:
+    - _id: yw9w7ge7mfohmc2e
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: up to 1 day/level (D) or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You inspire yourself or a lover to a vengeful <i>rage</i> against a
@@ -18,46 +40,24 @@ system:
       target for the purpose of multiple contingent effects. Worshipers of
       Calistria are fond of using this spell, and many keep the effect running
       whenever possible.</p>
-  actions:
-    - _id: yw9w7ge7mfohmc2e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: up to 1 day/level (D) or until discharged
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 3
+      cleric: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
       witch: 3
+      wizard: 3
   level: 3
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    material: true
   materials:
-    value: a piece of jewelry worth at least 100 gp
     gpValue: 100
+    value: a piece of jewelry worth at least 100 gp
   preparation:
     spontaneousPrepared: false
+  school: enc
   sr: false
-_key: '!items!has7d0289ajnkuoe'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

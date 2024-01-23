@@ -1,19 +1,11 @@
 _id: e44sv3ki2n8dndcy
-name: Agonizing Rebuke
-type: spell
+_key: '!items!e44sv3ki2n8dndcy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Agonizing Rebuke
 system:
-  description:
-    value: >-
-      <p>With a word and a gesture, you instill such apprehension in your target
-      that the thought of attacking you causes it mental distress and pain. Each
-      time the target makes an attack against you, targets you with a harmful
-      spell, or otherwise takes and action that would harm you, it takes 2d6
-      points of nonlethal damage.</p>
   actions:
     - _id: yy0ehfunwcfo4eok
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,30 +13,38 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>With a word and a gesture, you instill such apprehension in your target
+      that the thought of attacking you causes it mental distress and pain. Each
+      time the target makes an attack against you, targets you with a harmful
+      spell, or otherwise takes and action that would harm you, it takes 2d6
+      points of nonlethal damage.</p>
   learnedAt:
     class:
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
-      inquisitor: 3
       antipaladin: 2
-      psychic: 3
+      cleric: 3
+      inquisitor: 3
       mesmerist: 2
+      oracle: 3
+      psychic: 3
+      warpriest: 3
+      witch: 3
   level: 3
   school: ill
   subschool: phantasm
   types: emotion, mind-affecting, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!e44sv3ki2n8dndcy'
+type: spell
 

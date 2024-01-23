@@ -1,8 +1,27 @@
 _id: EhfHgdkicFggcUg0
-name: Dark Half
-type: feat
+_key: '!items!EhfHgdkicFggcUg0'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Dark Half
 system:
+  abilityType: su
+  actions:
+    - _id: ejwsgxvjmo5mhlni
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>By allowing the dark forces to overcome you, you can enter a state of
@@ -29,29 +48,10 @@ system:
       3 + 1/2 your psychic level + your Charisma modifier; when these rounds are
       expended, you return to your normal self without requiring a concentration
       check.</p>
-  actions:
-    - _id: ejwsgxvjmo5mhlni
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + floor(@classes.psychic.level / 2) + @abilities.cha.mod
-  tag: classFeat_darkHalf
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!EhfHgdkicFggcUg0'
+  tag: classFeat_darkHalf
+  uses:
+    maxFormula: 3 + floor(@classes.psychic.level / 2) + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,31 @@
 _id: p0s57t9kuya6ob2p
-name: Sacramental Seal
-type: spell
+_key: '!items!p0s57t9kuya6ob2p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sacramental Seal
 system:
+  actions:
+    - _id: dr39z58kd5sn1ixm
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You trap the target in an object decorated with the holy symbols of
@@ -39,36 +62,13 @@ system:
       being out of your presence but it takes ten times longer for the creature
       to manifest the above abilities (it would take 10 weeks for it to manifest
       the ability to create haunts, for example).</p>
-  actions:
-    - _id: dr39z58kd5sn1ixm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       cleric: 8
       oracle: 8
   level: 8
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: an object worth at least 2,000 gp
-_key: '!items!p0s57t9kuya6ob2p'
+  school: nec
+type: spell
 

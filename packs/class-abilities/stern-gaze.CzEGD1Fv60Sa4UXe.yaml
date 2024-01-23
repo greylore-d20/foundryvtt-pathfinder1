@@ -1,35 +1,35 @@
 _id: CzEGD1Fv60Sa4UXe
-name: Stern Gaze
-type: feat
+_key: '!items!CzEGD1Fv60Sa4UXe'
 img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
+name: Stern Gaze
 system:
+  abilityType: ex
+  actions:
+    - _id: xiw44jou2fqjxnq1
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
+  changes:
+    - _id: 9vo63x5i
+      formula: max(1, floor(@classes.inquisitor.level / 2))
+      modifier: morale
+      subTarget: skill.int
+    - _id: cvwe4abv
+      formula: max(1, floor(@classes.inquisitor.level / 2))
+      modifier: morale
+      subTarget: skill.sen
   description:
     value: >-
       <p>Inquisitors are skilled at sensing deception and intimidating their
       foes. An inquisitor receives a morale bonus on all Intimidate and Sense
       Motive checks equal to 1/2 her inquisitor level (minimum +1).</p>
-  actions:
-    - _id: xiw44jou2fqjxnq1
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-eerie-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 9vo63x5i
-      formula: max(1, floor(@classes.inquisitor.level / 2))
-      subTarget: skill.int
-      modifier: morale
-    - _id: cvwe4abv
-      formula: max(1, floor(@classes.inquisitor.level / 2))
-      subTarget: skill.sen
-      modifier: morale
-  tag: classFeat_sternGaze
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: ex
-_key: '!items!CzEGD1Fv60Sa4UXe'
+  tag: classFeat_sternGaze
+type: feat
 

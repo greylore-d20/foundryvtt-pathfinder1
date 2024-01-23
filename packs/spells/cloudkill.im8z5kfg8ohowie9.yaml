@@ -1,8 +1,29 @@
 _id: im8z5kfg8ohowie9
-name: Cloudkill
-type: spell
+_key: '!items!im8z5kfg8ohowie9'
 img: icons/magic/air/fog-gas-smoke-dense-pink.webp
+name: Cloudkill
 system:
+  actions:
+    - _id: fsqtt01a869n1ted
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude partial; see text
+        type: fort
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell generates a bank of fog, similar to a <i>fog cloud</i>,
@@ -22,42 +43,21 @@ system:
       spell.</p><p>Because the vapors are heavier than air, they sink to the
       lowest level of the land, even pouring down den or sinkhole openings. It
       cannot penetrate liquids, nor can it be cast underwater.</p>
-  actions:
-    - _id: fsqtt01a869n1ted
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial; see text
-      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      witch: 5
-      magus: 5
-      spiritualist: 5
-      summonerUnchained: 5
-    subDomain:
-      Venom: 6
     bloodline:
       Orc: 5
+    class:
+      magus: 5
+      sorcerer: 5
+      spiritualist: 5
+      summonerUnchained: 5
+      witch: 5
+      wizard: 5
+    subDomain:
+      Venom: 6
   level: 5
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!im8z5kfg8ohowie9'
+  subschool: creation
+type: spell
 

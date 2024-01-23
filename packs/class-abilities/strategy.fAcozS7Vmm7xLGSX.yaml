@@ -1,8 +1,28 @@
 _id: fAcozS7Vmm7xLGSX
-name: Strategy
-type: feat
+_key: '!items!fAcozS7Vmm7xLGSX'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Strategy
 system:
+  abilityType: ex
+  actions:
+    - _id: weuxlh65m2e12jy3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 8th level, the cavalier can spend a standard action to grant one of
@@ -13,27 +33,7 @@ system:
       as an immediate action once. The cavalier can grant a different bonus to
       each ally within range, but allies can only benefit from this ability once
       per combat.</p>
-  actions:
-    - _id: weuxlh65m2e12jy3
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: allies within range
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_strategy
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!fAcozS7Vmm7xLGSX'
+  tag: classFeat_strategy
+type: feat
 

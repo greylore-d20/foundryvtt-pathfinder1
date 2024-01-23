@@ -1,8 +1,20 @@
 _id: KKnqmYAIyqwZbnw0
-name: Lingering Pain
-type: feat
+_key: '!items!KKnqmYAIyqwZbnw0'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Lingering Pain
 system:
+  abilityType: su
+  actions:
+    - _id: tu8m5yc4zjhaobym
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can expend 1 point from his arcane pool as an immediate
@@ -11,19 +23,7 @@ system:
       is considered continuous damage for the purposes of any concentration
       checks made by the target prior to the beginning of the magus’s next
       turn.</p>
-  actions:
-    - _id: tu8m5yc4zjhaobym
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_lingeringPain
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!KKnqmYAIyqwZbnw0'
+  tag: classFeat_lingeringPain
+type: feat
 

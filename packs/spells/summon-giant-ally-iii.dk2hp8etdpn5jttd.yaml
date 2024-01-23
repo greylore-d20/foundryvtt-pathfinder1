@@ -1,17 +1,10 @@
 _id: dk2hp8etdpn5jttd
-name: Summon Giant Ally III
-type: spell
+_key: '!items!dk2hp8etdpn5jttd'
 img: icons/magic/unholy/silhouette-evil-horned-giant.webp
+name: Summon Giant Ally III
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>summon giant ally I</i>, except you can
-      summon one ash or cloud giant; 1d3 desert, fire, frost, or jungle giants;
-      or 1d4+1 cave, hill, marsh, river, slag, stone, or wood giants.</p>
   actions:
     - _id: wq9oipaouoli6b2h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,23 +12,30 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one or more giants
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>summon giant ally I</i>, except you can
+      summon one ash or cloud giant; 1d3 desert, fire, frost, or jungle giants;
+      or 1d4+1 cave, hill, marsh, river, slag, stone, or wood giants.</p>
   learnedAt:
     class:
       druid: 8
   level: 8
-  school: con
-  subschool: summoning
-  types: see text
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: bit of cloth from a giant's bag
+  school: con
   sr: false
-_key: '!items!dk2hp8etdpn5jttd'
+  subschool: summoning
+  types: see text
+type: spell
 

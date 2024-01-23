@@ -1,8 +1,35 @@
 _id: OZ1vgybloYDVfWff
-name: Force Missile
-type: feat
+_key: '!items!OZ1vgybloYDVfWff'
 img: systems/pf1/icons/spells/fireball-eerie-1.jpg
+name: Force Missile
 system:
+  abilityType: sp
+  actions:
+    - _id: undctjx4dh0rw0ch
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d4 + (floor(@classes.wizard.level / 2))
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/fireball-eerie-1.jpg
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a standard action you can unleash a force missile that automatically
@@ -11,37 +38,10 @@ system:
       intense spells evocation power. This is a force effect. You can use this
       ability a number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: undctjx4dh0rw0ch
-      name: Use
-      img: systems/pf1/icons/spells/fireball-eerie-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d4 + (floor(@classes.wizard.level / 2))
-            type:
-              values:
-                - force
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_forceMissile
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!OZ1vgybloYDVfWff'
+  tag: classFeat_forceMissile
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

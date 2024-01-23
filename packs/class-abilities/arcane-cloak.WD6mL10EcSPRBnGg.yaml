@@ -1,33 +1,33 @@
 _id: WD6mL10EcSPRBnGg
-name: Arcane Cloak
-type: feat
+_key: '!items!WD6mL10EcSPRBnGg'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Arcane Cloak
 system:
-  description:
-    value: >-
-      <p>The magus can expend 1 point from his arcane pool to add his
-      Intelligence bonus to Stealth checks and Bluff checks to create a
-      diversion in order to hide. This bonus lasts for 1 minute.</p>
+  abilityType: su
   actions:
     - _id: sn3xq2e8yk035mj4
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
       activation:
         type: swift
         unchained:
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: self
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
       range:
         units: personal
-  tag: classFeat_arcaneCloak
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Magus
-  abilityType: su
-_key: '!items!WD6mL10EcSPRBnGg'
+  description:
+    value: >-
+      <p>The magus can expend 1 point from his arcane pool to add his
+      Intelligence bonus to Stealth checks and Bluff checks to create a
+      diversion in order to hide. This bonus lasts for 1 minute.</p>
+  subType: classFeat
+  tag: classFeat_arcaneCloak
+type: feat
 

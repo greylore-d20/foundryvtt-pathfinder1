@@ -1,8 +1,27 @@
 _id: pvsomgxjyillnf6f
-name: Daggermark's Exchange
-type: spell
+_key: '!items!pvsomgxjyillnf6f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Daggermark's Exchange
 system:
+  actions:
+    - _id: du43ktg5gitvav52
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You swallow a dose of poison with no effect and regurgitate a dose of a
@@ -14,42 +33,23 @@ system:
       if you have venom immunity or a similar class feature or ability). The new
       poison's price must be the same as or less than the original poison's
       price.</p>
-  actions:
-    - _id: du43ktg5gitvav52
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      druid: 2
       alchemist: 2
-      psychic: 3
-      occultist: 3
+      cleric: 3
+      druid: 2
       hunter: 2
+      occultist: 3
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
+      warpriest: 3
+      wizard: 3
   level: 3
-  school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a dose of poison
+  school: trs
   sr: false
-_key: '!items!pvsomgxjyillnf6f'
+  types: poison
+type: spell
 

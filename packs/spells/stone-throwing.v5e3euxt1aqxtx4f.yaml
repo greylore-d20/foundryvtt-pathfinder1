@@ -1,8 +1,32 @@
 _id: v5e3euxt1aqxtx4f
-name: Stone Throwing
-type: spell
+_key: '!items!v5e3euxt1aqxtx4f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stone Throwing
 system:
+  actions:
+    - _id: 5l8ksbh3j5ermk3e
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The subject gains the rock throwing and rock catching abilities
@@ -16,45 +40,21 @@ system:
       Strength bonus.  For every size category smaller than Large the subject
       is, it receives a cumulative -5 penalty on Reflex saves to catch rocks (or
       similar projectiles) thrown at it.</p>
-  actions:
-    - _id: 5l8ksbh3j5ermk3e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 1
-      magus: 2
       bloodrager: 1
+      cleric: 2
+      druid: 2
       hunter: 1
+      magus: 2
+      oracle: 2
+      ranger: 1
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: powdered stone
-_key: '!items!v5e3euxt1aqxtx4f'
+  school: trs
+type: spell
 

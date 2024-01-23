@@ -1,8 +1,32 @@
 _id: oj9e6qjq969jpi2r
-name: Cyclic Reincarnation
-type: spell
+_key: '!items!oj9e6qjq969jpi2r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cyclic Reincarnation
 system:
+  actions:
+    - _id: rytznxf7s0qd3dvr
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none, see text
+      target:
+        value: dead creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows a dead creature that died no more than 1 year before
@@ -21,40 +45,16 @@ system:
       destroyed, but nonhumanoids so restored always return to life with the
       young creature simple template (or as a juvenile, in the case of creatures
       whose power is determined by their age category).</p>
-  actions:
-    - _id: rytznxf7s0qd3dvr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: dead creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none, see text
   learnedAt:
     class:
       druid: 6
       hunter: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
-    value: oils worth 5,000 gp
     gpValue: 5000
+    value: oils worth 5,000 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!oj9e6qjq969jpi2r'
+  school: trs
+type: spell
 

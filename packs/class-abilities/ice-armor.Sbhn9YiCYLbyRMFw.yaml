@@ -1,8 +1,28 @@
 _id: Sbhn9YiCYLbyRMFw
-name: Ice Armor
-type: feat
+_key: '!items!Sbhn9YiCYLbyRMFw'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Ice Armor
 system:
+  abilityType: su
+  actions:
+    - _id: w0izsyo2fvqmmjww
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can conjure armor of ice that grants you a +4 armor bonus.</p>
@@ -17,30 +37,10 @@ system:
       <p>You can use this armor for 1 hour per day per oracle level. This
       duration does not need to be consecutive, but it must be spent in 1-hour
       increments.</p>
-  actions:
-    - _id: w0izsyo2fvqmmjww
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_iceArmor
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!Sbhn9YiCYLbyRMFw'
+  tag: classFeat_iceArmor
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

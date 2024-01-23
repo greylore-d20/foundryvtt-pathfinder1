@@ -1,8 +1,27 @@
 _id: LBrnB5Ncpcb5oryt
-name: Shroud of Vermin
-type: feat
+_key: '!items!LBrnB5Ncpcb5oryt'
 img: systems/pf1/icons/skills/green_23.jpg
+name: Shroud of Vermin
 system:
+  abilityType: su
+  actions:
+    - _id: p0ehaqjq24twhgb0
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/green_23.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
+  changes:
+    - _id: rp0h8aqw
+      formula: >-
+        @classes.sorcerer.level >= 17 ? 3 : ((@classes.sorcerer.level > 10 &&
+        @classes.sorcerer.level < 17) ? 2 : 1)
+      modifier: untyped
+      subTarget: nac
   description:
     value: >-
       <p>At 9th level, <em>swarms</em> no longer see you as prey. You can walk
@@ -14,26 +33,7 @@ system:
       body crawls with <em>vermin</em>, and their chitinous bodies increase your
       <em>natural armor bonus</em> by +1. At 11th level, this bonus increases to
       +2, and at 17th level it increases to +3.</p>
-  actions:
-    - _id: p0ehaqjq24twhgb0
-      name: Use
-      img: systems/pf1/icons/skills/green_23.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: rp0h8aqw
-      formula: >-
-        @classes.sorcerer.level >= 17 ? 3 : ((@classes.sorcerer.level > 10 &&
-        @classes.sorcerer.level < 17) ? 2 : 1)
-      subTarget: nac
-      modifier: untyped
-  tag: classFeat_shroudOfVermin
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!LBrnB5Ncpcb5oryt'
+  tag: classFeat_shroudOfVermin
+type: feat
 

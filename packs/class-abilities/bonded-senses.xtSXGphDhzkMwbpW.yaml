@@ -1,8 +1,24 @@
 _id: xtSXGphDhzkMwbpW
-name: Bonded Senses
-type: feat
+_key: '!items!xtSXGphDhzkMwbpW'
 img: systems/pf1/icons/skills/blue_22.jpg
+name: Bonded Senses
 system:
+  abilityType: su
+  actions:
+    - _id: j5migi6sn4qnccy0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/blue_22.jpg
+      name: Use
+  associations:
+    classes:
+      - Spiritualist
   description:
     value: >-
       <p>At 2nd level, as a standard action, a spiritualist can share the senses
@@ -15,26 +31,10 @@ system:
       <p>There is no maximum range for this effect, but the phantom and the
       spiritualist must be on the same plane. The spiritualist can end this
       effect as a free action.</p>
-  actions:
-    - _id: j5migi6sn4qnccy0
-      name: Use
-      img: systems/pf1/icons/skills/blue_22.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.spiritualist.level'
-  tag: classFeat_bondedSenses
   subType: classFeat
-  associations:
-    classes:
-      - Spiritualist
-  abilityType: su
-_key: '!items!xtSXGphDhzkMwbpW'
+  tag: classFeat_bondedSenses
+  uses:
+    maxFormula: '@classes.spiritualist.level'
+    per: day
+type: feat
 

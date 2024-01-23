@@ -1,8 +1,23 @@
 _id: sQBoLxUKfDvOWnX3
-name: 'Rune Blessing: Blast Rune'
-type: feat
+_key: '!items!sQBoLxUKfDvOWnX3'
 img: systems/pf1/icons/spells/runes-magenta-2.jpg
+name: 'Rune Blessing: Blast Rune'
 system:
+  actions:
+    - _id: ky7zz869hzl17efx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.warpriest.level'
+      img: systems/pf1/icons/spells/runes-magenta-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can create a blast rune in any adjacent square. Any
@@ -16,22 +31,7 @@ system:
       <p>This rune counts as a 1st-level spell for the purposes of dispelling.
       It can be discovered with a successful DC 26 Perception skill check and
       disarmed with a successful DC 26 Disable Device skill check.</p>
-  actions:
-    - _id: ky7zz869hzl17efx
-      name: Use
-      img: systems/pf1/icons/spells/runes-magenta-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.warpriest.level'
-        units: round
-  tag: classFeat_runeBlessingBlastRune
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!sQBoLxUKfDvOWnX3'
+  tag: classFeat_runeBlessingBlastRune
+type: feat
 

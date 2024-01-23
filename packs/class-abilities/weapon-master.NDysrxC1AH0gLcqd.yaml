@@ -1,8 +1,26 @@
 _id: NDysrxC1AH0gLcqd
-name: Weapon Master
-type: feat
+_key: '!items!NDysrxC1AH0gLcqd'
 img: systems/pf1/icons/skills/gray_04.jpg
+name: Weapon Master
 system:
+  abilityType: su
+  actions:
+    - _id: 9nr1p5o6xog3hq6p
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as a swift action, you gain the use of one combat feat
@@ -10,31 +28,13 @@ system:
       not need to be consecutive and you can change the feat chosen each time
       you use this ability. You must meet the prerequisites to use this
       feat.</p>
-  actions:
-    - _id: 9nr1p5o6xog3hq6p
-      name: Use
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_weaponMaster
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '48'
-_key: '!items!NDysrxC1AH0gLcqd'
+  subType: classFeat
+  tag: classFeat_weaponMaster
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

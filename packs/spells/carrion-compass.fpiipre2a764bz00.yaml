@@ -1,8 +1,30 @@
 _id: fpiipre2a764bz00
-name: Carrion Compass
-type: spell
+_key: '!items!fpiipre2a764bz00'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Carrion Compass
 system:
+  actions:
+    - _id: rnz5m2d7634ljoi9
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one undead creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You animate one of the target's fetid organs so that it leads you to
@@ -25,40 +47,18 @@ system:
       where you cast the spell. If the undead creature to which the organ
       belonged is destroyed, the spell ends and the organ falls to the
       ground.</p>
-  actions:
-    - _id: rnz5m2d7634ljoi9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: one undead creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 1
-      warpriest: 1
+      hunter: 1
       oracle: 1
       ranger: 1
+      sorcerer: 2
+      warpriest: 1
       witch: 1
-      hunter: 1
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!fpiipre2a764bz00'
+type: spell
 

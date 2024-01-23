@@ -1,17 +1,11 @@
 _id: 0kppkhsencd6tzvh
-name: Protection from Spells
-type: spell
+_key: '!items!0kppkhsencd6tzvh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Protection from Spells
 system:
-  description:
-    value: >-
-      <p>The subject gains a +8 resistance bonus on saving throws against spells
-      and spell-like abilities (but not against supernatural and extraordinary
-      abilities).</p>
   actions:
     - _id: 8i5sye6h1prxywi9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,42 +13,48 @@ system:
           type: action
       duration:
         value: 10 min./level
-      target:
-        value: up to one creature touched per four levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: up to one creature touched per four levels
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The subject gains a +8 resistance bonus on saving throws against spells
+      and spell-like abilities (but not against supernatural and extraordinary
+      abilities).</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
-      summoner: 6
       psychic: 8
+      sorcerer: 8
+      summoner: 6
       summonerUnchained: 6
+      wizard: 8
     domain:
       Magic: 8
   level: 8
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: diamond worth 500 gp
     focus: >-
       One 1,000 gp diamond per target. Each subject must carry the gem for the
       duration of the spell. If a subject loses the gem, the spell ceases to
       affect him.
     gpValue: 500
+    value: diamond worth 500 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   source:
     id: PZO1110
     pages: '328'
-_key: '!items!0kppkhsencd6tzvh'
+type: spell
 

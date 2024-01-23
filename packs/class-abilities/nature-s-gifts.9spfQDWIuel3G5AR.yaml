@@ -1,8 +1,21 @@
 _id: 9spfQDWIuel3G5AR
-name: Nature's Gifts
-type: feat
+_key: '!items!9spfQDWIuel3G5AR'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Nature's Gifts
 system:
+  abilityType: su
+  actions:
+    - _id: v4qvc5lkphvdvcst
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>Once per day, the shaman can command trees and other plants to yield
@@ -11,23 +24,10 @@ system:
       number of hit points it can restore to a subject in a 24-hour period from
       this hex is equal to the shaman’s Charisma modifier (minimum 1 hit point
       per day).</p>
-  actions:
-    - _id: v4qvc5lkphvdvcst
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_naturesGifts
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!9spfQDWIuel3G5AR'
+  tag: classFeat_naturesGifts
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

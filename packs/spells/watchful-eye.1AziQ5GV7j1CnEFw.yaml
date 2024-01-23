@@ -1,7 +1,32 @@
-name: Watchful Eye
-type: spell
+_id: 1AziQ5GV7j1CnEFw
+_key: '!items!1AziQ5GV7j1CnEFw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Watchful Eye
 system:
+  actions:
+    - _id: PLlcpnkCOne15JCn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Editor's Note:</em> In order to prepare this spell, the caster must
@@ -11,41 +36,16 @@ system:
       functions as @Compendium[pf1.spells.menqakfoa1ftvi3f]{Shield Other},
       except as noted above, and you must maintain line of effect to the
       target.</p>
-  actions:
-    - _id: PLlcpnkCOne15JCn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 1
       oracle: 1
       paladin: 1
       warpriest: 1
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: >-
       a pair of silver or gold rings worth 10 gp, worn by both you and the
       target
-_id: 1AziQ5GV7j1CnEFw
-_key: '!items!1AziQ5GV7j1CnEFw'
+  school: abj
+type: spell
 

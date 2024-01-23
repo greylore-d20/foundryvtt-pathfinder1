@@ -1,8 +1,31 @@
 _id: jg2n48yy9pk9mpdr
-name: Transmute Blood To Acid
-type: spell
+_key: '!items!jg2n48yy9pk9mpdr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transmute Blood To Acid
 system:
+  actions:
+    - _id: bc569ujd3o4vbvaf
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration (maximum 1 round/5 levels)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude half
+        type: fort
+      target:
+        value: one living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transmute blood in the target's body to acid, dealing 1d6 points of
@@ -17,41 +40,18 @@ system:
       attack is from a piercing or slashing manufactured weapon, the weapon also
       takes this damage.</p><p>This spell has no effect on creatures immune to
       critical hits or bleed effects.</p>
-  actions:
-    - _id: bc569ujd3o4vbvaf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration (maximum 1 round/5 levels)
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude half
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
   level: 9
-  school: trs
-  types: acid, pain
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a wax doll and a vial of acid worth 10 gp
     gpValue: 10
+    value: a wax doll and a vial of acid worth 10 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!jg2n48yy9pk9mpdr'
+  school: trs
+  types: acid, pain
+type: spell
 

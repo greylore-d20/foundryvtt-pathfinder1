@@ -1,8 +1,27 @@
 _id: xK4Vdp171RVcOSIB
-name: Feed on Fear
-type: feat
+_key: '!items!xK4Vdp171RVcOSIB'
 img: systems/pf1/icons/skills/blood_10.jpg
+name: Feed on Fear
 system:
+  abilityType: su
+  actions:
+    - _id: w8rsxvx76r6ice3k
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: hour
+        value: '24'
+      img: systems/pf1/icons/skills/blood_10.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as an immediate action upon successfully landing a melee
@@ -14,29 +33,10 @@ system:
 
       <p>This power replaces the Chaos Blade power of the Chaos Domain or the
       Scythe of Evil power of the Evil Domain.</p>
-  actions:
-    - _id: w8rsxvx76r6ice3k
-      name: Use
-      img: systems/pf1/icons/skills/blood_10.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '24'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_feedOnFear
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!xK4Vdp171RVcOSIB'
+  tag: classFeat_feedOnFear
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: jj9xvDomh8WtaXwd
-name: Lullaby
-type: feat
+_key: '!items!jj9xvDomh8WtaXwd'
 img: systems/pf1/icons/items/inventory/flute.jpg
+name: Lullaby
 system:
+  abilityType: sp
+  actions:
+    - _id: 2rox1qufb6q3xqkt
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/items/inventory/flute.jpg
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can use
@@ -11,30 +31,10 @@ system:
       This effect lasts for 1 minute and does not require
       <em>concentration</em>. The penalty on saves versus sleep effects
       increases to –4.</p>
-  actions:
-    - _id: 2rox1qufb6q3xqkt
-      name: Use
-      img: systems/pf1/icons/items/inventory/flute.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: one creature
-      range:
-        units: medium
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_lullaby
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!jj9xvDomh8WtaXwd'
+  tag: classFeat_lullaby
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

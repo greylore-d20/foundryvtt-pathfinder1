@@ -1,8 +1,23 @@
 _id: fJCocyWue5osVFjS
-name: Rift Reach
-type: feat
+_key: '!items!fJCocyWue5osVFjS'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Rift Reach
 system:
+  abilityType: su
+  actions:
+    - _id: 2djhijgwvx8ihlci
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.psychic.level'
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>As a move action, you can tear open a small rent in reality just large
@@ -20,25 +35,10 @@ system:
       <p>At 11th level, the range of your rift reach increases to 20 feet.</p>
 
       <p>At 15th level, your range increases to 30 feet.</p>
-  actions:
-    - _id: 2djhijgwvx8ihlci
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@classes.psychic.level'
-        units: round
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_riftReach
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!fJCocyWue5osVFjS'
+  tag: classFeat_riftReach
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

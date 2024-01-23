@@ -1,8 +1,25 @@
 _id: ifpgt1yluxaphpil
-name: Blood Money
-type: spell
+_key: '!items!ifpgt1yluxaphpil'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Money
 system:
+  actions:
+    - _id: 8qlwgossmxn8dh49
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: 1 material component
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cast <i>blood money</i> just before casting another spell. As part
@@ -24,30 +41,13 @@ system:
       do not have blood cannot cast <i>blood money</i>, and those who are immune
       to Strength damage (such as undead spellcasters) cannot use <i>blood
       money</i> to create valuable material components.</p>
-  actions:
-    - _id: 8qlwgossmxn8dh49
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '0'
-        units: ft
-      spellEffect: 1 material component
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
       magus: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ifpgt1yluxaphpil'
+type: spell
 

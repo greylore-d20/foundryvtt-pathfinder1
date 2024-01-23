@@ -1,8 +1,26 @@
 _id: p8guuisr2o3butpj
-name: Blood Transcription
-type: spell
+_key: '!items!p8guuisr2o3butpj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Transcription
 system:
+  actions:
+    - _id: nmhovtr6s4gverap
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one dead spellcaster
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By consuming 1 pint of blood from a spellcaster killed within the last
@@ -12,34 +30,16 @@ system:
       this time, you may write it down (or teach it to your familiar, if you are
       a witch) using the normal rules for copying a spell from another source.
       Once you have learned it, you may prepare the spell normally.</p>
-  actions:
-    - _id: nmhovtr6s4gverap
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: one dead spellcaster
-      range:
-        units: touch
   learnedAt:
     class:
       alchemist: 2
-      witch: 2
       magus: 2
       sorcerer: 2
+      witch: 2
       wizard: 2
   level: 2
   school: div
-  types: evil
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!p8guuisr2o3butpj'
+  types: evil
+type: spell
 

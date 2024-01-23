@@ -1,8 +1,13 @@
 _id: 9OAxJICb7xkxnclB
-name: Tools, Thieves' (Concealable)
-type: loot
+_key: '!items!9OAxJICb7xkxnclB'
 img: systems/pf1/icons/items/inventory/lockpick.jpg
+name: Tools, Thieves' (Concealable)
 system:
+  changes:
+    - _id: l8afzshe
+      formula: '2'
+      modifier: circumstance
+      subTarget: dev
   description:
     value: >-
       <p>This kit contains lockpicks and other tools you need to use the
@@ -19,17 +24,12 @@ system:
       bonus</em> on
       @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.cSdUATLHBFfw3v4s]{Disable
       Device} checks).</p>
-  weight:
-    value: 0.5
-  price: 190
   equipped: false
-  changes:
-    - _id: l8afzshe
-      formula: '2'
-      subTarget: dev
-      modifier: circumstance
-  subType: gear
+  price: 190
   source:
     id: PZO1134
-_key: '!items!9OAxJICb7xkxnclB'
+  subType: gear
+  weight:
+    value: 0.5
+type: loot
 

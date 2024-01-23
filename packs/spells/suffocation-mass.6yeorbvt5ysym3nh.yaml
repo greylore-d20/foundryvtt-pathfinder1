@@ -1,18 +1,11 @@
 _id: 6yeorbvt5ysym3nh
-name: Suffocation, Mass
-type: spell
+_key: '!items!6yeorbvt5ysym3nh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Suffocation, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as suffocation except as noted above. Note that
-      the duration of this spell is much longer, forcing those suffering from
-      the effect to make far more Fortitude saves to stave off eventual
-      suffocation.</p>
   actions:
     - _id: 3p4lo52jgqt2bdcp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,31 +13,38 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial
+        type: fort
       target:
         value: >-
           one living creature/2 levels (no two of which may be more than 30 feet
           apart)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as suffocation except as noted above. Note that
+      the duration of this spell is much longer, forcing those suffering from
+      the effect to make far more Fortitude saves to stave off eventual
+      suffocation.</p>
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
-      witch: 9
       psychic: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
     subDomain:
       Murder: 9
   level: 9
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a vial containing a bit of the caster's breath
-_key: '!items!6yeorbvt5ysym3nh'
+  school: nec
+type: spell
 

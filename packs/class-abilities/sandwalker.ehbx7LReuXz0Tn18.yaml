@@ -1,30 +1,30 @@
 _id: ehbx7LReuXz0Tn18
-name: Sandwalker
-type: feat
+_key: '!items!ehbx7LReuXz0Tn18'
 img: systems/pf1/icons/skills/yellow_42.jpg
+name: Sandwalker
 system:
-  description:
-    value: >-
-      <p>At 15th level, you gain you gain a <em>burrow</em> speed of 30 feet and
-      <em>tremorsense</em> with a range of 60 feet.</p>
+  abilityType: ex
   actions:
     - _id: x09bezbouhfpgmik
-      name: Use
-      img: systems/pf1/icons/skills/yellow_42.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: ths7d87l
-      formula: '30'
-      subTarget: burrowSpeed
-      modifier: base
-  tag: classFeat_sandwalker
-  subType: classFeat
+      img: systems/pf1/icons/skills/yellow_42.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
-  abilityType: ex
-_key: '!items!ehbx7LReuXz0Tn18'
+  changes:
+    - _id: ths7d87l
+      formula: '30'
+      modifier: base
+      subTarget: burrowSpeed
+  description:
+    value: >-
+      <p>At 15th level, you gain you gain a <em>burrow</em> speed of 30 feet and
+      <em>tremorsense</em> with a range of 60 feet.</p>
+  subType: classFeat
+  tag: classFeat_sandwalker
+type: feat
 

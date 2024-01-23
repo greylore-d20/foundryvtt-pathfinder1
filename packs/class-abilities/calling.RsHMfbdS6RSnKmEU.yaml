@@ -1,8 +1,28 @@
 _id: RsHMfbdS6RSnKmEU
-name: Calling
-type: feat
+_key: '!items!RsHMfbdS6RSnKmEU'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Calling
 system:
+  abilityType: ex
+  actions:
+    - _id: 25r6wzukipw8v8xg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 2nd level, the cavalier can make a short prayer as a standard
@@ -14,27 +34,7 @@ system:
       roll. In addition, the cavalier adds 1/2 his cavalier level to any levels
       of paladin or cleric he might possess for the purposes of determining the
       effects of <em>channel energy</em> or <em>lay on hands</em>.</p>
-  actions:
-    - _id: 25r6wzukipw8v8xg
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_calling
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!RsHMfbdS6RSnKmEU'
+  tag: classFeat_calling
+type: feat
 

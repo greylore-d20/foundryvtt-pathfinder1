@@ -1,8 +1,38 @@
 _id: ructcpEg6rejcpYQ
-name: Icicle
-type: feat
+_key: '!items!ructcpEg6rejcpYQ'
 img: systems/pf1/icons/skills/ice_01.jpg
+name: Icicle
 system:
+  abilityType: sp
+  actions:
+    - _id: i1ku8v2fyffc199z
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.cleric.level / 2)
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/ice_01.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can fire an icicle from your finger,
@@ -10,43 +40,13 @@ system:
       deals 1d6 points of cold damage + 1 point for every two cleric levels you
       possess. You can use this ability a number of times per day equal to 3 +
       your Wisdom modifier.</p>
-  actions:
-    - _id: i1ku8v2fyffc199z
-      name: Use
-      img: systems/pf1/icons/skills/ice_01.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.cleric.level / 2)
-            type:
-              values:
-                - cold
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_icicle
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '48'
-_key: '!items!ructcpEg6rejcpYQ'
+  subType: classFeat
+  tag: classFeat_icicle
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

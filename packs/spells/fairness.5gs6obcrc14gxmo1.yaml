@@ -1,8 +1,31 @@
 _id: 5gs6obcrc14gxmo1
-name: Fairness
-type: spell
+_key: '!items!5gs6obcrc14gxmo1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fairness
 system:
+  actions:
+    - _id: qput119uvcfhdh02
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one humanoid creature per level
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Humanoid creatures affected by this spell must trade fairly with others
@@ -13,38 +36,15 @@ system:
       the influence of this spell. The symbol of Abadar appears above the heads
       of those affected by this spell, making those affected and unaffected by
       the spell immediately apparent.</p>
-  actions:
-    - _id: qput119uvcfhdh02
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one humanoid creature per level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
+      inquisitor: 2
       oracle: 1
       paladin: 2
-      inquisitor: 2
+      warpriest: 1
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!5gs6obcrc14gxmo1'
+type: spell
 

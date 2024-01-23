@@ -1,8 +1,31 @@
 _id: 2h9qfrq3kkxg5e49
-name: Replenish Ki
-type: spell
+_key: '!items!2h9qfrq3kkxg5e49'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Replenish Ki
 system:
+  actions:
+    - _id: 8gzksawx4rjxkq97
+      actionType: heal
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You attune the target's internal store of supernatural energy to the
@@ -10,36 +33,13 @@ system:
       points. If another creature is the target, it regains 1 ki point. This
       does not allow the target to exceed its ki pool's maximum. This spell has
       no effect if the target does not have a ki pool.</p>
-  actions:
-    - _id: 8gzksawx4rjxkq97
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
+      warpriest: 4
   level: 4
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!2h9qfrq3kkxg5e49'
+type: spell
 

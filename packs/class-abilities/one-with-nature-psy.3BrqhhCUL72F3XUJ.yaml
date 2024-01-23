@@ -1,7 +1,22 @@
-name: One with Nature (PSY)
-type: feat
+_id: 3BrqhhCUL72F3XUJ
+_key: '!items!3BrqhhCUL72F3XUJ'
 img: icons/magic/nature/leaf-glow-maple-teal.webp
+name: One with Nature (PSY)
 system:
+  abilityType: sp
+  associations:
+    classes:
+      - Psychic
+  changes:
+    - _id: I3ikLYUm
+      formula: '2'
+      modifier: insight
+      subTarget: skill.kna
+  contextNotes:
+    - subTarget: skill.kna
+      text: >-
+        +2 to identify a matching animal or plant creature within the area of
+        effect of detect animals or plants
   description:
     value: >-
       <p>You can cast @UUID[Compendium.pf1.spells.65i0wc0e6fq0evk5]{detect
@@ -12,24 +27,9 @@ system:
       animal you successfully identify, as per
       @UUID[Compendium.pf1.spells.ct9fhh8uawn8e4md]{speak with animals}, but
       this ability doesn’t make the creature any friendlier than normal.</p>
-  changes:
-    - _id: I3ikLYUm
-      formula: '2'
-      subTarget: skill.kna
-      modifier: insight
-  contextNotes:
-    - text: >-
-        +2 to identify a matching animal or plant creature within the area of
-        effect of detect animals or plants
-      subTarget: skill.kna
-  subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: sp
   source:
     id: PZO1140
     pages: '93'
-_id: 3BrqhhCUL72F3XUJ
-_key: '!items!3BrqhhCUL72F3XUJ'
+  subType: classFeat
+type: feat
 

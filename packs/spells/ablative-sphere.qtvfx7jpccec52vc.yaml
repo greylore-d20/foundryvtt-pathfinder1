@@ -1,8 +1,27 @@
 _id: qtvfx7jpccec52vc
-name: Ablative Sphere
-type: spell
+_key: '!items!qtvfx7jpccec52vc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ablative Sphere
 system:
+  actions:
+    - _id: 1yz6pjkvc9mv4ota
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The Garundi tenaciously protect their homes, and through the years they
@@ -20,36 +39,17 @@ system:
       sphere</i>'s hit points reach 0, the globe is destroyed. When an attack
       reduces an <i><i>ablative</i> sphere</i>'s hit points to 0, you take any
       remaining damage.</p>
-  actions:
-    - _id: 1yz6pjkvc9mv4ota
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 3
       wizard: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a crystalline sphere worth 10 gp
     gpValue: 10
+    value: a crystalline sphere worth 10 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!qtvfx7jpccec52vc'
+type: spell
 

@@ -1,8 +1,34 @@
 _id: DxKzgjuvqHZMjKz0
-name: Paladin (Quick)
-type: feat
+_key: '!items!DxKzgjuvqHZMjKz0'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Paladin (Quick)
 system:
+  changes:
+    - _id: vz4q6ofq
+      formula: '2'
+      modifier: untyped
+      subTarget: mattack
+    - _id: uaetggyj
+      formula: '2'
+      modifier: untyped
+      subTarget: wdamage
+    - _id: jm5a570v
+      formula: '2'
+      modifier: untyped
+      subTarget: strSkills
+    - _id: vrbsze5w
+      formula: '2'
+      modifier: untyped
+      subTarget: strChecks
+    - _id: v7w7db7k
+      formula: '2'
+      modifier: untyped
+      subTarget: chaSkills
+    - _id: 3tiuunci
+      formula: '2'
+      modifier: untyped
+      subTarget: chaChecks
+  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -23,32 +49,6 @@ system:
       per day (healing 1d6 hit points for every 2 HD the creature possesses
       instead of using its paladin level); Ability Scores +4 Strength and
       Charisma.</p>
-  changes:
-    - _id: vz4q6ofq
-      formula: '2'
-      subTarget: mattack
-      modifier: untyped
-    - _id: uaetggyj
-      formula: '2'
-      subTarget: wdamage
-      modifier: untyped
-    - _id: jm5a570v
-      formula: '2'
-      subTarget: strSkills
-      modifier: untyped
-    - _id: vrbsze5w
-      formula: '2'
-      subTarget: strChecks
-      modifier: untyped
-    - _id: v7w7db7k
-      formula: '2'
-      subTarget: chaSkills
-      modifier: untyped
-    - _id: 3tiuunci
-      formula: '2'
-      subTarget: chaChecks
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
-_key: '!items!DxKzgjuvqHZMjKz0'
+type: feat
 

@@ -1,8 +1,12 @@
 _id: RG1cy6Mqv8yk7vgE
-name: Dilution
-type: feat
+_key: '!items!RG1cy6Mqv8yk7vgE'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Dilution
 system:
+  associations:
+    classes:
+      - Alchemist
+      - Investigator
   description:
     value: >-
       <p>Once per day, the character can dilute any one potion or elixir,
@@ -13,14 +17,10 @@ system:
 
       <p>a character must be at least 12th level before selecting this
       discovery.</p>
+  subType: classFeat
+  tag: classFeat_dilution
   tags:
     - Alchemist Discovery
     - Investigator Talent
-  tag: classFeat_dilution
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-      - Investigator
-_key: '!items!RG1cy6Mqv8yk7vgE'
+type: feat
 

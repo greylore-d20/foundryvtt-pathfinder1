@@ -1,8 +1,29 @@
 _id: 4qriqew7d2ot7wr5
-name: Interplanetary Teleport
-type: spell
+_key: '!items!4qriqew7d2ot7wr5'
 img: icons/magic/sonic/projectile-shock-wave-blue.webp
+name: Interplanetary Teleport
 system:
+  actions:
+    - _id: xsu710zxu2k1edi5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: none and Will negates (object)
+        type: will
+      target:
+        value: you and touched objects or other touched willing creatures
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>teleport</i>, except there is truly no range
@@ -15,39 +36,18 @@ system:
       such safe landing zone exists on the world, such as someone attempting to
       travel into the sun without the proper precautions in place, the spell
       simply fails.</p>
-  actions:
-    - _id: xsu710zxu2k1edi5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you and touched objects or other touched willing creatures
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: none and Will negates (object)
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
       psychic: 9
+      sorcerer: 9
+      wizard: 9
     domain:
       Void: 9
   level: 9
   school: con
-  subschool: teleportation
-  components:
-    verbal: true
   sr: false
-_key: '!items!4qriqew7d2ot7wr5'
+  subschool: teleportation
+type: spell
 

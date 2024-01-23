@@ -1,8 +1,25 @@
 _id: s0y6bnvrqo99e2j4
-name: Firewalker's Meditation
-type: spell
+_key: '!items!s0y6bnvrqo99e2j4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Firewalker's Meditation
 system:
+  actions:
+    - _id: m40vb36qqhkwm222
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You focus your mind on blocking out pain, allowing your body to endure
@@ -21,40 +38,23 @@ system:
       10/magic, resist fire 30, and immunity to pain effects. If you do so,
       these enhanced effects persist for 3 rounds. After this time, the spell
       ends.</p>
-  actions:
-    - _id: m40vb36qqhkwm222
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
+      hunter: 4
+      oracle: 4
       paladin: 3
       shaman: 4
-      hunter: 4
+      warpriest: 4
   level: 4
-  school: abj
-  types: meditative
-  components:
-    verbal: true
-    material: true
   materials:
-    value: soothing incense worth 400 gp
     gpValue: 400
+    value: soothing incense worth 400 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!s0y6bnvrqo99e2j4'
+  types: meditative
+type: spell
 

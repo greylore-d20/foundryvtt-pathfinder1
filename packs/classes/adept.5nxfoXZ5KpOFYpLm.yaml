@@ -1,31 +1,17 @@
 _id: 5nxfoXZ5KpOFYpLm
-name: Adept
-type: class
+_key: '!items!5nxfoXZ5KpOFYpLm'
 img: systems/pf1/icons/items/inventory/book-blue.jpg
+name: Adept
 system:
-  description:
-    value: >-
-      <p><strong>Alignment:</strong> Any.</p><h2>Class Skills</h2><p>The adept’s
-      class skills (and the key ability for each skill) are <em>Craft</em>
-      (<em>Int</em>), <em>Handle Animal</em> (<em>Cha</em>), <em>Heal</em>
-      (<em>Wis</em>), <em>Knowledge</em> (all skills taken individually)
-      (<em>Int</em>), <em>Profession</em> (<em>Wis</em>), <em>Spellcraft</em>
-      (<em>Int</em>), and <em>Survival</em> (<em>Wis</em>).</p><p><strong>Skill
-      Ranks per Level</strong>: 2 + <em>Int</em> modifier.</p>
-  tag: adept
-  weaponProf:
-    value:
-      - simple
-  subType: npc
-  hd: 6
-  hp: 6
-  skillsPerLevel: 2
-  savingThrows:
-    will:
-      value: high
+  casting:
+    ability: wis
+    cantrips: true
+    progression: med
+    spells: divine
+    type: prepared
   classSkills:
-    crf: true
     art: true
+    crf: true
     han: true
     hea: true
     kar: true
@@ -42,14 +28,28 @@ system:
     pro: true
     spl: true
     sur: true
-  casting:
-    type: prepared
-    progression: med
-    ability: wis
-    spells: divine
-    cantrips: true
+  description:
+    value: >-
+      <p><strong>Alignment:</strong> Any.</p><h2>Class Skills</h2><p>The adept’s
+      class skills (and the key ability for each skill) are <em>Craft</em>
+      (<em>Int</em>), <em>Handle Animal</em> (<em>Cha</em>), <em>Heal</em>
+      (<em>Wis</em>), <em>Knowledge</em> (all skills taken individually)
+      (<em>Int</em>), <em>Profession</em> (<em>Wis</em>), <em>Spellcraft</em>
+      (<em>Int</em>), and <em>Survival</em> (<em>Wis</em>).</p><p><strong>Skill
+      Ranks per Level</strong>: 2 + <em>Int</em> modifier.</p>
+  hd: 6
+  hp: 6
+  savingThrows:
+    will:
+      value: high
+  skillsPerLevel: 2
   source:
     id: PZO1110
     pages: '448'
-_key: '!items!5nxfoXZ5KpOFYpLm'
+  subType: npc
+  tag: adept
+  weaponProf:
+    value:
+      - simple
+type: class
 

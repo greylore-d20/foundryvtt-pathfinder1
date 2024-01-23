@@ -1,8 +1,30 @@
 _id: re7x6mggirket7du
-name: Wizened Appearance
-type: spell
+_key: '!items!re7x6mggirket7du'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wizened Appearance
 system:
+  actions:
+    - _id: 0tuhmqngauommgp9
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You polymorph your target to look like an older version of itself. You
@@ -18,40 +40,18 @@ system:
       other age-related effects like dragon age categories or natural
       metamorphoses. <i>Wizened appearance</i> and <i>youthful</i> appearanceUM
       counter and dispel each other.</p>
-  actions:
-    - _id: 0tuhmqngauommgp9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      bard: 1
       alchemist: 1
-      witch: 1
-      psychic: 1
+      bard: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!re7x6mggirket7du'
+type: spell
 

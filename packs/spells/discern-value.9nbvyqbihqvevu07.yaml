@@ -1,8 +1,30 @@
 _id: 9nbvyqbihqvevu07
-name: Discern Value
-type: spell
+_key: '!items!9nbvyqbihqvevu07'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Discern Value
 system:
+  actions:
+    - _id: y0myzai5szod924s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '60'
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can quickly analyze the monetary value of objects and identify
@@ -17,37 +39,15 @@ system:
       the most valuable item in range glow slightly.  The spell's effect does
       not indicate whether an item has magical properties and does not detect
       artifacts or items that are priceless.</p>
-  actions:
-    - _id: y0myzai5szod924s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 1 minute/level (D)
-      range:
-        value: '60'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '60'
-      area: cone-shaped emanation
   learnedAt:
     class:
+      bard: 3
       sorcerer: 3
       wizard: 3
-      bard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: platinum monocle worth 100 gp
+  school: div
   sr: false
-_key: '!items!9nbvyqbihqvevu07'
+type: spell
 

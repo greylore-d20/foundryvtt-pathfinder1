@@ -1,8 +1,32 @@
 _id: 3wyqlqtiyx5c1fcf
-name: Weaponwand
-type: spell
+_key: '!items!3wyqlqtiyx5c1fcf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Weaponwand
 system:
+  actions:
+    - _id: 37psinmvjpoqpjrl
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: one weapon
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell on a weapon, you cause a portion of the weapon
@@ -26,40 +50,16 @@ system:
       ground. If the weapon housing the wand is broken or destroyed during the
       duration of <i>weaponwand</i>, the encased wand is similarly broken or
       destroyed.</p>
-  actions:
-    - _id: 37psinmvjpoqpjrl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one weapon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
       inquisitor: 1
       magus: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
+      oracle: 1
+      warpriest: 1
   materials:
     focus: a magic wand
-_key: '!items!3wyqlqtiyx5c1fcf'
+  school: trs
+type: spell
 

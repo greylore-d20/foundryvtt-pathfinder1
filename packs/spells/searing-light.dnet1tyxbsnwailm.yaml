@@ -1,8 +1,28 @@
 _id: dnet1tyxbsnwailm
-name: Searing Light
-type: spell
+_key: '!items!dnet1tyxbsnwailm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Searing Light
 system:
+  actions:
+    - _id: 6tgvmqgvf2hfr952
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: ray
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Focusing divine power like a ray of the sun, you project a blast of
@@ -13,39 +33,19 @@ system:
       creature particularly vulnerable to bright light takes 1d8 points of
       damage per caster level (maximum 10d8). A construct or inanimate object
       takes only 1d6 points of damage per two caster levels (maximum 5d6).</p>
-  actions:
-    - _id: 6tgvmqgvf2hfr952
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: medium
-      actionType: rsak
-      ability:
-        attack: dex
-      spellEffect: ray
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
       inquisitor: 3
+      oracle: 3
+      warpriest: 3
     domain:
       Glory: 3
       Sun: 3
   level: 3
   school: evo
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '338'
-_key: '!items!dnet1tyxbsnwailm'
+type: spell
 

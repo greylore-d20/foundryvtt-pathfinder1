@@ -1,8 +1,26 @@
 _id: 8p53yf2qfz5iz7mm
-name: Beanstalk
-type: spell
+_key: '!items!8p53yf2qfz5iz7mm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Beanstalk
 system:
+  actions:
+    - _id: spu3vk1g6hnqso7g
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: a 5-foot-radius beanstalk that grows to a height of 50 ft./caster level
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When casting this spell, you must plant the material components in
@@ -12,36 +30,18 @@ system:
       footholds that it can be climbed as if it were knotted rope (Climb DC 5).
       At the end of the spell's duration, the beanstalk withers and dies at an
       accelerated rate, leaving nothing more than a pile of compost.</p>
-  actions:
-    - _id: spu3vk1g6hnqso7g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 24 hours
-      range:
-        value: '0'
-        units: ft
-      spellEffect: a 5-foot-radius beanstalk that grows to a height of 50 ft./caster level
   learnedAt:
     class:
       sorcerer: 4
-      wizard: 4
       summoner: 4
-      witch: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small handful of beans
+  school: con
   sr: false
-_key: '!items!8p53yf2qfz5iz7mm'
+  subschool: creation
+type: spell
 

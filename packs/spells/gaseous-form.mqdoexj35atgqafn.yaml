@@ -1,8 +1,27 @@
 _id: mqdoexj35atgqafn
-name: Gaseous Form
-type: spell
+_key: '!items!mqdoexj35atgqafn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gaseous Form
 system:
+  actions:
+    - _id: rb1g9tex82wq6j03
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 2 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: willing corporeal creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
   description:
     value: >-
       <p>The subject and all its gear become insubstantial, misty, and
@@ -24,49 +43,30 @@ system:
       or other liquid. It also can't manipulate objects or activate items, even
       those carried along with its <i>gaseous form</i>. Continuously active
       items remain active, though in some cases their effects may be moot.</p>
-  actions:
-    - _id: rb1g9tex82wq6j03
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 2 min./level (D)
-      target:
-        value: willing corporeal creature touched
-      range:
-        units: touch
   learnedAt:
-    class:
-      sorcerer: 3
-      wizard: 3
-      bard: 3
-      alchemist: 3
-      magus: 3
-      psychic: 3
-      medium: 3
-      occultist: 3
-      spiritualist: 3
-    domain:
-      Air: 3
     bloodline:
       Marid: 3
       Nanite: 3
       Protean: 3
+    class:
+      alchemist: 3
+      bard: 3
+      magus: 3
+      medium: 3
+      occultist: 3
+      psychic: 3
+      sorcerer: 3
+      spiritualist: 3
+      wizard: 3
+    domain:
+      Air: 3
   level: 3
-  school: trs
-  components:
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a bit of gauze and a wisp of smoke
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '287'
-_key: '!items!mqdoexj35atgqafn'
+  sr: false
+type: spell
 

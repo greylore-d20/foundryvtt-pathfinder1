@@ -1,8 +1,25 @@
 _id: 4x952ltk0uwp158t
-name: Vengeful Comets
-type: spell
+_key: '!items!4x952ltk0uwp158t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vengeful Comets
 system:
+  actions:
+    - _id: aoyvi2l7ftn6jsfh
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until completely discharged (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: 1 comet per 4 levels
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes a number of miniature comets (up to one per four
@@ -20,31 +37,14 @@ system:
       additional amount of cold damage equal to the level of the spell you are
       retaliating against. If the spell you're retaliating against had the fire
       descriptor, you may opt to fire two comets instead of one.</p>
-  actions:
-    - _id: aoyvi2l7ftn6jsfh
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until completely discharged (see below)
-      range:
-        units: long
-      spellEffect: 1 comet per 4 levels
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
       hunter: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
   school: evo
   types: cold
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!4x952ltk0uwp158t'
+type: spell
 

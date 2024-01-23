@@ -1,8 +1,39 @@
 _id: Yp8tvkZep6oy5KkU
-name: Erosion Curse
-type: feat
+_key: '!items!Yp8tvkZep6oy5KkU'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Erosion Curse
 system:
+  abilityType: su
+  actions:
+    - _id: 1i1dnri0ucpntiwf
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.shaman.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Reflex half (attended objects)
+        type: ref
+      target:
+        value: one construct or object
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman summons the powers of nature to erode a construct or object
@@ -14,38 +45,7 @@ system:
 
       <p>Once an object or a construct is damaged by this erosion, it cannot be
       the target of this hex again for 24 hours.</p>
-  actions:
-    - _id: 1i1dnri0ucpntiwf
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one construct or object
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: (floor(@classes.shaman.level / 2))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half (attended objects)
-  tag: classFeat_erosionCurse
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!Yp8tvkZep6oy5KkU'
+  tag: classFeat_erosionCurse
+type: feat
 

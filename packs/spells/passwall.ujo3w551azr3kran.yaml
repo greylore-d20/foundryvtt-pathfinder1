@@ -1,8 +1,28 @@
 _id: ujo3w551azr3kran
-name: Passwall
-type: spell
+_key: '!items!ujo3w551azr3kran'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Passwall
 system:
+  actions:
+    - _id: wbssjjix8q9ee37h
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      spellEffect: >-
+        5-ft.-by-8-ft. opening, 10 ft. deep plus 5 ft. deep per three additional
+        levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a passage through wooden, plaster, or stone walls, but not
@@ -16,36 +36,16 @@ system:
       ejected out the nearest exit. If someone dispels the <i>passwall</i> or
       you dismiss it, creatures in the passage are ejected out the far exit, if
       there is one, or out the sole exit if there is only one.</p>
-  actions:
-    - _id: wbssjjix8q9ee37h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: touch
-      spellEffect: >-
-        5-ft.-by-8-ft. opening, 10 ft. deep plus 5 ft. deep per three additional
-        levels
   learnedAt:
     class:
+      mesmerist: 5
+      psychic: 5
       sorcerer: 5
       wizard: 5
-      psychic: 5
-      mesmerist: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: sesame seeds
+  school: trs
   sr: false
-_key: '!items!ujo3w551azr3kran'
+type: spell
 

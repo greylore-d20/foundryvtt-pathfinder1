@@ -1,19 +1,10 @@
 _id: 9f0jokh1rcmw36tj
-name: Deafening Song Bolt
-type: spell
+_key: '!items!9f0jokh1rcmw36tj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deafening Song Bolt
 system:
-  description:
-    value: >-
-      <p>Three notes you sing or perform become tangible bolts of arcane energy
-      that shriek across the battlefield. Each bolt requires a ranged touch
-      attack to hit and deals 3d10 points of sonic damage, deafening the target
-      for 1d6 rounds. The bolts may be fired at the same or different targets,
-      but all must be fired simultaneously.</p>
   actions:
     - _id: s4cye3t5zr5e0fqn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,19 +12,28 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: up to 3 creatures, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
+      target:
+        value: up to 3 creatures, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Three notes you sing or perform become tangible bolts of arcane energy
+      that shriek across the battlefield. Each bolt requires a ranged touch
+      attack to hit and deals 3d10 points of sonic damage, deafening the target
+      for 1d6 rounds. The bolts may be fired at the same or different targets,
+      but all must be fired simultaneously.</p>
   learnedAt:
     class:
       bard: 5
   level: 5
   school: evo
-  types: sonic
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!9f0jokh1rcmw36tj'
+  types: sonic
+type: spell
 

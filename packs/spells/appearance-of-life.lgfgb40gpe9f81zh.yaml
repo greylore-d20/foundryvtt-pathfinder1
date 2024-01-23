@@ -1,8 +1,31 @@
 _id: lgfgb40gpe9f81zh
-name: Appearance of Life
-type: spell
+_key: '!items!lgfgb40gpe9f81zh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Appearance of Life
 system:
+  actions:
+    - _id: krb7dlob4s7a6uml
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief or Will negates (see text)
+        type: will
+      target:
+        value: one or more undead creatures
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The illusion makes undead creatures of Medium size or smaller appear as
@@ -21,47 +44,24 @@ system:
       undead. <i>Appearance of Life</i> can be made permanent with a
       <i>permanency</i> spell by a caster of 12th level or higher for the cost
       of 10,000 gp.</p>
-  actions:
-    - _id: krb7dlob4s7a6uml
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: one or more undead creatures
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief or Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
-      psychic: 3
       medium: 2
       mesmerist: 3
+      oracle: 3
+      psychic: 3
+      sorcerer: 3
       spiritualist: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: ill
-  subschool: glamer
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: one Tiny or larger living creature
+  school: ill
   sr: false
-_key: '!items!lgfgb40gpe9f81zh'
+  subschool: glamer
+  types: evil
+type: spell
 

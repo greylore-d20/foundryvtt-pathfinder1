@@ -1,8 +1,20 @@
 _id: RENIeTVjWB7Mq6Mw
-name: Damage Reduction
-type: feat
+_key: '!items!RENIeTVjWB7Mq6Mw'
 img: systems/pf1/icons/items/armor/shield-light-metal.png
+name: Damage Reduction
 system:
+  abilityType: ex
+  actions:
+    - _id: 1tp00p24uzrdrthm
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/armor/shield-light-metal.png
+      name: Use
+  associations:
+    classes:
+      - Barbarian
   description:
     value: >-
       <p>At 7th level, a barbarian gains <em>damage reduction</em>. Subtract 1
@@ -11,22 +23,10 @@ system:
       levels thereafter (13th, 16th, and 19th level), this <em>damage
       reduction</em> rises by 1 point. <em>Damage reduction</em> can reduce
       damage to 0 but not below 0.</p>
-  actions:
-    - _id: 1tp00p24uzrdrthm
-      name: Use
-      img: systems/pf1/icons/items/armor/shield-light-metal.png
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_damageReduction
-  subType: classFeat
-  associations:
-    classes:
-      - Barbarian
-  abilityType: ex
   source:
     id: PZO1110
     pages: '34'
-_key: '!items!RENIeTVjWB7Mq6Mw'
+  subType: classFeat
+  tag: classFeat_damageReduction
+type: feat
 

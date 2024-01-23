@@ -1,8 +1,29 @@
 _id: 0324zq42g3fu4kko
-name: Animal Messenger
-type: spell
+_key: '!items!0324zq42g3fu4kko'
 img: icons/creatures/mammals/rodent-rat-diseaed-gray.webp
+name: Animal Messenger
 system:
+  actions:
+    - _id: nx7lagpwulsb7vwj
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none; see text
+      target:
+        value: one Tiny animal
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You compel a Tiny animal to go to a spot you designate. The most common
@@ -21,41 +42,20 @@ system:
       intended recipient gains no special ability to communicate with the animal
       or read any attached message (if it's written in a language he doesn't
       know, for example).</p>
-  actions:
-    - _id: nx7lagpwulsb7vwj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level
-      target:
-        value: one Tiny animal
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: none; see text
   learnedAt:
     class:
-      druid: 2
-      ranger: 1
       bard: 2
-      shaman: 2
-      psychic: 2
-      mesmerist: 2
+      druid: 2
       hunter: 1
+      mesmerist: 2
+      psychic: 2
+      ranger: 1
+      shaman: 2
   level: 2
+  materials:
+    value: a morsel of food the animal likes
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a morsel of food the animal likes
-_key: '!items!0324zq42g3fu4kko'
+type: spell
 

@@ -1,8 +1,40 @@
 _id: OPTlPwKg2NyQAjhe
-name: Whip
-type: weapon
+_key: '!items!OPTlPwKg2NyQAjhe'
 img: systems/pf1/icons/items/weapons/whip.png
+name: Whip
 system:
+  actions:
+    - _id: fjr976fvqz74d7p1
+      ability:
+        attack: str
+        critRange: null
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/whip.png
+      name: Attack
+      range:
+        units: reach
+        value: '0'
+  baseTypes:
+    - Whip
   description:
     value: >-
       <p>A whip deals no damage to any creature with an armor bonus of +1 or
@@ -16,66 +48,34 @@ system:
       attack rolls with a whip sized for you, even though it isn't a light
       weapon. You can't wield a whip in two hands in order to apply 1-1/2 times
       your Strength modifier to damage rolls.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 1
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: fjr976fvqz74d7p1
-      name: Attack
-      img: systems/pf1/icons/items/weapons/whip.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: reach
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 3, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: null
-  baseTypes:
-    - Whip
-  weaponGroups:
-    value:
-      - flails
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
-  weaponSubtype: 1h
+    normal:
+      value: ''
+  price: 1
   properties:
     dis: true
+    fin: true
+    nnl: true
     rch: true
     trp: true
-    nnl: true
-    fin: true
   source:
     id: PZO1123
     pages: '20'
-_key: '!items!OPTlPwKg2NyQAjhe'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - flails
+  weaponSubtype: 1h
+  weight:
+    value: 2
+type: weapon
 

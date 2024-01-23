@@ -1,8 +1,30 @@
 _id: r37k9siiazcdqkc7
-name: Word of Recall
-type: spell
+_key: '!items!r37k9siiazcdqkc7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Word of Recall
 system:
+  actions:
+    - _id: 6otyh0f2ud7c6mc2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      save:
+        description: none or Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: you and touched objects or other willing creatures
+  components:
+    verbal: true
   description:
     value: >-
       <p><i>Word of recall</i> teleports you instantly back to your sanctuary
@@ -22,38 +44,16 @@ system:
       recall.</i></p><p>Likewise, a creature's Will save (or spell resistance)
       prevents items in its possession from being teleported. Unattended,
       nonmagical objects receive no saving throw.</p>
-  actions:
-    - _id: 6otyh0f2ud7c6mc2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you and touched objects or other willing creatures
-      range:
-        units: unlimited
-      actionType: spellsave
-      save:
-        type: will
-        description: none or Will negates (object)
-        harmless: true
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
-      oracle: 6
       druid: 8
+      oracle: 6
       psychic: 7
+      warpriest: 6
   level: 6
   school: con
-  subschool: teleportation
-  components:
-    verbal: true
   sr: false
-_key: '!items!r37k9siiazcdqkc7'
+  subschool: teleportation
+type: spell
 

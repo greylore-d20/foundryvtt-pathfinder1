@@ -1,8 +1,45 @@
 _id: 1qsCQ6TiPgSsNPFj
-name: Maxim M1910 Machine Gun
-type: weapon
+_key: '!items!1qsCQ6TiPgSsNPFj'
 img: icons/weapons/guns/rifle-brown.webp
+name: Maxim M1910 Machine Gun
 system:
+  actions:
+    - _id: 0xyv722kkwjp0r3o
+      ability:
+        attack: dex
+        critMult: 4
+        damageMult: 1.5
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 8, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/guns/rifle-brown.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '120'
+  ammo:
+    type: gunBullet
+  baseTypes:
+    - Maxim M1910 Machine Gun
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> 2d8 (medium); <b>Critical</b> x4;
@@ -30,59 +67,22 @@ system:
 
       <p>The armored shield provides cover when firing the weapon from the prone
       position.</p>
-  tags:
-    - Modern Firearm
-  weight:
-    value: 140
-  price: 1500
   hardness: 10
-  actions:
-    - _id: 0xyv722kkwjp0r3o
-      name: Attack
-      img: icons/weapons/guns/rifle-brown.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '120'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(2, 8, @size)
-            type:
-              values:
-                - bludgeoning
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        damageMult: 1.5
-        critMult: 4
   held: 2h
-  baseTypes:
-    - Maxim M1910 Machine Gun
-  weaponGroups:
-    value:
-      - firearms
-  subType: exotic
-  weaponSubtype: ranged
+  price: 1500
   properties:
     ato: true
   source:
     id: PZO9071
     pages: '64'
-  ammo:
-    type: gunBullet
-_key: '!items!1qsCQ6TiPgSsNPFj'
+  subType: exotic
+  tags:
+    - Modern Firearm
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 140
+type: weapon
 

@@ -1,44 +1,44 @@
-name: Talon
-type: attack
+_id: PfmCJRQ9qOgwcUxb
+_key: '!items!PfmCJRQ9qOgwcUxb'
 img: icons/commodities/claws/claw-bird-yellow.webp
+name: Talon
 system:
+  actions:
+    - _id: rd1onybjuhk5taos
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      formulaicAttacks:
+        label: ''
+      img: icons/commodities/claws/claw-bird-yellow.webp
+      name: Attack
+      range:
+        units: melee
+        value: 'null'
+      tag: talon
+  baseTypes:
+    - Talon
   description:
     value: >-
       <p>A primary natural attack with talons on your feet.</p><p>It deals
       slashing damage.</p><hr><p>For general rules on natural attacks, see:
       @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
       Attacks} (UMR).</p>
-  actions:
-    - _id: rd1onybjuhk5taos
-      name: Attack
-      img: icons/commodities/claws/claw-bird-yellow.webp
-      tag: talon
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        value: 'null'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-        damage: str
   subType: natural
-  baseTypes:
-    - Talon
   weaponGroups:
     value:
       - natural
-_id: PfmCJRQ9qOgwcUxb
-_key: '!items!PfmCJRQ9qOgwcUxb'
+type: attack
 

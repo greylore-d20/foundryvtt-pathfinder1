@@ -1,8 +1,28 @@
 _id: pcvsgalyw4r29n5b
-name: Ironskin
-type: spell
+_key: '!items!pcvsgalyw4r29n5b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ironskin
 system:
+  actions:
+    - _id: mcz6sbyqitcevdqk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D; see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your skin hardens and takes on the color and texture of rough iron. You
@@ -16,45 +36,25 @@ system:
       sneak attack and treat it is as a normal hit. Dismissing the spell in this
       way is not an action, but you must be conscious and aware of the attack to
       do so.</p>
-  actions:
-    - _id: mcz6sbyqitcevdqk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D; see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
-      paladin: 2
       alchemist: 2
-      witch: 2
       antipaladin: 2
       bloodrager: 2
-      psychic: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      oracle: 2
+      paladin: 2
+      psychic: 2
+      ranger: 2
+      warpriest: 2
+      witch: 2
   level: 2
-  school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pinch of forge soot
+  school: trs
   sr: false
-_key: '!items!pcvsgalyw4r29n5b'
+  types: earth
+type: spell
 

@@ -1,8 +1,25 @@
 _id: g33euis7yi9pwddy
-name: Fog Cloud
-type: spell
+_key: '!items!g33euis7yi9pwddy'
 img: icons/magic/air/fog-gas-smoke-swirling-white.webp
+name: Fog Cloud
 system:
+  actions:
+    - _id: 13ilpriqwrhaj2a9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: fog spreads in 20-ft. radius
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A bank of fog billows out from the point you designate. The fog
@@ -12,42 +29,25 @@ system:
       can't use sight to locate the target).</p><p>A moderate wind (11+ mph)
       disperses the fog in 4 rounds; a strong wind (21+ mph) disperses the fog
       in 1 round.</p><p>The spell does not function underwater.</p>
-  actions:
-    - _id: 13ilpriqwrhaj2a9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      range:
-        units: medium
-      spellEffect: fog spreads in 20-ft. radius
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      witch: 2
+      hunter: 2
       magus: 2
       shaman: 2
-      hunter: 2
+      sorcerer: 2
       summonerUnchained: 2
+      witch: 2
+      wizard: 2
     domain:
       Water: 2
       Weather: 2
   level: 2
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '284'
-_key: '!items!g33euis7yi9pwddy'
+  sr: false
+  subschool: creation
+type: spell
 

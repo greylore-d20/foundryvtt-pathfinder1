@@ -1,7 +1,40 @@
-name: Cold Blast
-type: feat
+_id: nCYMi6znklN57vCz
+_key: '!items!nCYMi6znklN57vCz'
 img: icons/magic/water/projectiles-ice-explosion.webp
+name: Cold Blast
 system:
+  abilityType: su
+  actions:
+    - _id: nu0alWhEoBOQAmVm
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 5 ft radius, centered on you
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.wizard.level / 2)
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: round
+        value: '1'
+      img: icons/magic/water/projectiles-ice-explosion.webp
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Use
+      save:
+        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        description: Reflex have and negates stagger effect
+        type: ref
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>As a standard action, you can unleash a blast of freezing cold. This
@@ -11,47 +44,14 @@ system:
       halves the damage. The DC of this save is equal to 10 + 1/2 your wizard
       level + your Intelligence modifier. You can use this ability a number of
       times per day equal to 3 + your Intelligence modifier.</p>
-  tags:
-    - Water School
-  actions:
-    - _id: nu0alWhEoBOQAmVm
-      name: Use
-      img: icons/magic/water/projectiles-ice-explosion.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      measureTemplate:
-        type: circle
-        size: '5'
-      actionType: save
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.wizard.level / 2)
-            type:
-              values:
-                - cold
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
-        type: ref
-        description: Reflex have and negates stagger effect
-      area: 5 ft radius, centered on you
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1115
     pages: '142'
-_id: nCYMi6znklN57vCz
-_key: '!items!nCYMi6znklN57vCz'
+  subType: classFeat
+  tags:
+    - Water School
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

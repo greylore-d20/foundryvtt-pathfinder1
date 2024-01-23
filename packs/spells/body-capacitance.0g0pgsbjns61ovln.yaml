@@ -1,8 +1,27 @@
 _id: 0g0pgsbjns61ovln
-name: Body Capacitance
-type: spell
+_key: '!items!0g0pgsbjns61ovln'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Body Capacitance
 system:
+  actions:
+    - _id: o477lbmg3npu2rf2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level or until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>If you take electricity damage while this spell is active, some of the
@@ -18,34 +37,15 @@ system:
       touch attack to deliver its damage. If you take electricity damage
       multiple times while this spell is active, use the largest amount of
       electricity damage you took to determine your touch attack damage.</p>
-  actions:
-    - _id: o477lbmg3npu2rf2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level or until discharged (see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 1
       sorcerer: 1
       wizard: 1
-      alchemist: 1
-  school: trs
-  types: electricity
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: an iron coil
+  school: trs
   sr: false
-_key: '!items!0g0pgsbjns61ovln'
+  types: electricity
+type: spell
 

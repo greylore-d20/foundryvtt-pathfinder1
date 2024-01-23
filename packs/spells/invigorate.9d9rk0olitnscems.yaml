@@ -1,8 +1,30 @@
 _id: 9d9rk0olitnscems
-name: Invigorate
-type: spell
+_key: '!items!9d9rk0olitnscems'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invigorate
 system:
+  actions:
+    - _id: 7fh5tbyrfrqex11s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell banishes feelings of weariness. For the duration, the
@@ -13,35 +35,13 @@ system:
       original condition(s). A creature can be under the effects of only one
       <i>invigorate</i> spell at a time; if it is cast a second time on that
       creature, the first immediately ends.</p>
-  actions:
-    - _id: 7fh5tbyrfrqex11s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       bard: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      psychic: 1
   school: ill
   subschool: figment
-  components:
-    verbal: true
-_key: '!items!9d9rk0olitnscems'
+type: spell
 

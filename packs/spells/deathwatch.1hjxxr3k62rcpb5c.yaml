@@ -1,8 +1,29 @@
 _id: 1hjxxr3k62rcpb5c
-name: Deathwatch
-type: spell
+_key: '!items!1hjxxr3k62rcpb5c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deathwatch
 system:
+  actions:
+    - _id: oxuzes6ifycdaqer
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '30'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Using the powers of necromancy, you can determine the condition of
@@ -12,40 +33,19 @@ system:
       points), healthy, undead, or neither alive nor dead (such as a construct).
       <i>Deathwatch</i> sees through any spell or ability that allows creatures
       to feign death.</p>
-  actions:
-    - _id: oxuzes6ifycdaqer
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '30'
-      area: cone-shaped emanation
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
       medium: 1
+      oracle: 1
       spiritualist: 1
+      warpriest: 1
     domain:
       Repose: 1
   school: nec
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '265'
-_key: '!items!1hjxxr3k62rcpb5c'
+  sr: false
+type: spell
 

@@ -1,8 +1,30 @@
 _id: ojixtqpuc4ckg45y
-name: Languid Bomb Admixture
-type: spell
+_key: '!items!ojixtqpuc4ckg45y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Languid Bomb Admixture
 system:
+  actions:
+    - _id: roi1g02qf8mr3jqs
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates (special, see below)
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon drinking an extract created with this formula, you make a
@@ -17,25 +39,6 @@ system:
       directly, and up to three other creatures damaged by the splash
       (alchemist's choice). Those creatures must succeed at a Will saving throw
       or become fatigued.</p>
-  actions:
-    - _id: roi1g02qf8mr3jqs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (special, see below)
   learnedAt:
     class:
       alchemist: 5
@@ -43,8 +46,5 @@ system:
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ojixtqpuc4ckg45y'
+type: spell
 

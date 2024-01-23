@@ -1,8 +1,32 @@
 _id: rr4mp09juca1s5we
-name: Mindlocked Messenger
-type: spell
+_key: '!items!rr4mp09juca1s5we'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mindlocked Messenger
 system:
+  actions:
+    - _id: ax7jx2qbuwbvn38l
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one willing living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You speak a short message (up to 10 words per caster level), implanting
@@ -18,43 +42,19 @@ system:
       means that disguises, illusions, and polymorph effects might fool the
       target into delivering the message. Once the target communicates the
       message, the message is permanently erased from the target's memory.</p>
-  actions:
-    - _id: ax7jx2qbuwbvn38l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent until discharged (see text)
-      target:
-        value: one willing living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 2
-      witch: 3
-      shaman: 3
-      psychic: 3
       mesmerist: 2
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
       spiritualist: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: language-dependent, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!rr4mp09juca1s5we'
+type: spell
 

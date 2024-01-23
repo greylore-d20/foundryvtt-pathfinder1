@@ -1,8 +1,27 @@
 _id: PUOMft9SAMoityU0
-name: Blinding Flash
-type: feat
+_key: '!items!PUOMft9SAMoityU0'
 img: systems/pf1/icons/skills/light_03.jpg
+name: Blinding Flash
 system:
+  abilityType: su
+  actions:
+    - _id: p4wg1fed9ii238fk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/light_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '20'
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can emit a flash of light from your holy
@@ -14,29 +33,10 @@ system:
       per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Sun's Blessing power of the Sun Domain.</p>
-  actions:
-    - _id: p4wg1fed9ii238fk
-      name: Use
-      img: systems/pf1/icons/skills/light_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      range:
-        value: '20'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_blindingFlash
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!PUOMft9SAMoityU0'
+  tag: classFeat_blindingFlash
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

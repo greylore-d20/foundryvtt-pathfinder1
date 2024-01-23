@@ -1,8 +1,24 @@
 _id: doP0jWVIU6XRSV0f
-name: Deafening Strike
-type: feat
+_key: '!items!doP0jWVIU6XRSV0f'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Deafening Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: kxbj77tspzw7ymma
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+      save:
+        description: Fortitude reduces duration to 1 round
+        type: fort
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When an investigator deals damage with studied strike, the opponent
@@ -14,25 +30,9 @@ system:
       effects.</p>
 
       <p>An investigator must be at least 15th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_deafeningStrike
   tags:
     - Investigator Talent
-  actions:
-    - _id: kxbj77tspzw7ymma
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: fort
-        description: Fortitude reduces duration to 1 round
-  tag: classFeat_deafeningStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!doP0jWVIU6XRSV0f'
+type: feat
 

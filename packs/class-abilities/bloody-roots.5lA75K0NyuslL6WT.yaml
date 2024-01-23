@@ -1,8 +1,26 @@
 _id: 5lA75K0NyuslL6WT
-name: Bloody Roots
-type: feat
+_key: '!items!5lA75K0NyuslL6WT'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Bloody Roots
 system:
+  abilityType: sp
+  actions:
+    - _id: w7cd9ctudzt7adow
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.shaman.level'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      target:
+        value: 20-ft. redius burst
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman can cause a field of thick roots to
@@ -16,28 +34,10 @@ system:
 
       <p>She can use this ability a number of rounds per day equal to 3 + her
       Charisma modifier, but these rounds do not need to be consecutive.</p>
-  actions:
-    - _id: w7cd9ctudzt7adow
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.shaman.level'
-        units: round
-      target:
-        value: 20-ft. redius burst
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_bloodyRoots
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: sp
-_key: '!items!5lA75K0NyuslL6WT'
+  tag: classFeat_bloodyRoots
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

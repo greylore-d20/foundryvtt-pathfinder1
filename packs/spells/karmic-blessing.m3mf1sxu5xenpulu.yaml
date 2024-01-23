@@ -1,14 +1,11 @@
 _id: m3mf1sxu5xenpulu
-name: Karmic Blessing
-type: spell
+_key: '!items!m3mf1sxu5xenpulu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Karmic Blessing
 system:
-  description:
-    value: <p>The target treats one skill of your choice as a class skill.</p>
   actions:
     - _id: zgofhls5kqew2bqx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -16,25 +13,28 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: <p>The target treats one skill of your choice as a class skill.</p>
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
       oracle: 1
+      warpriest: 1
       witch: 1
   school: div
   types: good
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!m3mf1sxu5xenpulu'
+type: spell
 

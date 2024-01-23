@@ -1,8 +1,31 @@
 _id: sze19tezmd74wsjk
-name: Pyrotechnic Eruption
-type: spell
+_key: '!items!sze19tezmd74wsjk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pyrotechnic Eruption
 system:
+  actions:
+    - _id: wubhzbezf7j65ce3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex half (see text)
+        type: ref
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The caster causes jets of flame to erupt from the ground and surround
@@ -19,40 +42,17 @@ system:
       creature then automatically takes the current round's damage with no
       saving throw and can begin to attempt Reflex saves starting on its next
       turn.</p>
-  actions:
-    - _id: wubhzbezf7j65ce3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
   learnedAt:
     class:
+      bloodrager: 3
+      magus: 4
+      occultist: 4
       sorcerer: 4
       wizard: 4
-      magus: 4
-      bloodrager: 3
-      occultist: 4
   level: 4
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of coal
-_key: '!items!sze19tezmd74wsjk'
+  school: evo
+  types: fire
+type: spell
 

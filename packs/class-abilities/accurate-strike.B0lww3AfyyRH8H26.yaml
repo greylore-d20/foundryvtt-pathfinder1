@@ -1,8 +1,20 @@
 _id: B0lww3AfyyRH8H26
-name: Accurate Strike
-type: feat
+_key: '!items!B0lww3AfyyRH8H26'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Accurate Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: bkizntg9m1tvfpvm
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can expend 2 points from his arcane pool as a swift action to
@@ -10,19 +22,7 @@ system:
       touch attacks.</p>
 
       <p>The magus must be at least 9th level before selecting this arcana.</p>
-  actions:
-    - _id: bkizntg9m1tvfpvm
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_accurateStrike
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: ex
-_key: '!items!B0lww3AfyyRH8H26'
+  tag: classFeat_accurateStrike
+type: feat
 

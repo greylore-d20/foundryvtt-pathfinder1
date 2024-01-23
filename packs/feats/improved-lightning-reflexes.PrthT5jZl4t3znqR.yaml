@@ -1,7 +1,7 @@
 _id: PrthT5jZl4t3znqR
-name: Improved Lightning Reflexes
-type: feat
+_key: '!items!PrthT5jZl4t3znqR'
 img: systems/pf1/icons/feats/improved-lighting-reflexes.jpg
+name: Improved Lightning Reflexes
 system:
   description:
     value: >-
@@ -11,21 +11,21 @@ system:
       Reflexes}.</p><p><strong>Benefits</strong>: Once per day, you may reroll a
       Reflex save. You must decide to use this ability before the results are
       revealed. You must take the second roll, even if it is worse.</p>
+  scriptCalls:
+    - _id: GwdUAXxKeFyzfqsO
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Reroll reflex
+      type: script
+      value: actor.rollSavingThrow("ref");
+  tag: feat_improvedLightningReflexes
   tags:
     - General
     - Saving Throw
   uses:
+    maxFormula: '1'
     per: day
     value: 1
-    maxFormula: '1'
-  tag: feat_improvedLightningReflexes
-  scriptCalls:
-    - _id: GwdUAXxKeFyzfqsO
-      name: Reroll reflex
-      img: icons/svg/dice-target.svg
-      type: script
-      value: actor.rollSavingThrow("ref");
-      category: use
-      hidden: false
-_key: '!items!PrthT5jZl4t3znqR'
+type: feat
 

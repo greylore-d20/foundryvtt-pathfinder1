@@ -1,8 +1,31 @@
 _id: s0uh1psyg0cfd9e6
-name: Hostile Juxtaposition
-type: spell
+_key: '!items!s0uh1psyg0cfd9e6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hostile Juxtaposition
 system:
+  actions:
+    - _id: o3pqwe9p0y97j7p5
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature of your size or smaller
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a dimensional link to the target creature. When attacked or
@@ -16,41 +39,18 @@ system:
       within, the juxtaposition fails. Further, if the target is unconscious or
       dead when you attempt to switch places, the juxtaposition fails. Once you
       have used it to teleport once, this spell is discharged.</p>
-  actions:
-    - _id: o3pqwe9p0y97j7p5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged
-      target:
-        value: one creature of your size or smaller
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      summoner: 4
-      witch: 5
       psychic: 5
+      sorcerer: 5
+      summoner: 4
       summonerUnchained: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a coin
-_key: '!items!s0uh1psyg0cfd9e6'
+  school: con
+  subschool: teleportation
+type: spell
 

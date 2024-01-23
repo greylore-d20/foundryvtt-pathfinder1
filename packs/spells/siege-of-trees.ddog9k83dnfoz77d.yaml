@@ -1,8 +1,28 @@
 _id: ddog9k83dnfoz77d
-name: Siege of Trees
-type: spell
+_key: '!items!ddog9k83dnfoz77d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Siege of Trees
 system:
+  actions:
+    - _id: xnh7xuu5wqqrwc0u
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one Large plant per three caster levels
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue inanimate plants with limited mobility and a semblance of
@@ -18,31 +38,11 @@ system:
       ammunition if you desire. The tree will not load flaming ammunition, and
       these catapult trees cannot be affected by <i>energy siege shot</i> (see
       page 228) if the energy selected is fire.</p>
-  actions:
-    - _id: xnh7xuu5wqqrwc0u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one Large plant per three caster levels
-      range:
-        units: close
   learnedAt:
     class:
       druid: 7
   level: 7
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!ddog9k83dnfoz77d'
+type: spell
 

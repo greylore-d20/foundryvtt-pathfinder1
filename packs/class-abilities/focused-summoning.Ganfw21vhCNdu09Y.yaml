@@ -1,8 +1,20 @@
 _id: Ganfw21vhCNdu09Y
-name: Focused Summoning
-type: feat
+_key: '!items!Ganfw21vhCNdu09Y'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Focused Summoning
 system:
+  abilityType: su
+  actions:
+    - _id: hnbmi5alm7v4c5w6
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>When an arcanist is on a plane other than the Material Plane, she can
@@ -11,21 +23,9 @@ system:
       outsider’s attacks bypass all types of DR that it has. For example, a
       nabasu demon, which has DR/cold iron or DR/good, would bypass both DR/cold
       iron and DR/good.</p>
+  subType: classFeat
+  tag: classFeat_focusedSummoning
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: hnbmi5alm7v4c5w6
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_focusedSummoning
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!Ganfw21vhCNdu09Y'
+type: feat
 

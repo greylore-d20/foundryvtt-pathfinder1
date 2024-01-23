@@ -1,8 +1,33 @@
 _id: 6l904edkt8jv9jor
-name: Neutralize Poison
-type: spell
+_key: '!items!6l904edkt8jv9jor'
 img: icons/magic/life/cross-explosion-burst-green.webp
+name: Neutralize Poison
 system:
+  actions:
+    - _id: 9tesjpevzvg876ii
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 10 min./level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: creature or object of up to 1 cu. ft./level touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You detoxify any sort of venom in the creature or object touched. If
@@ -16,53 +41,28 @@ system:
       creature or object for 10 minutes per level, at the caster's
       option.</p><p>If cast on a creature, the creature receives a Will save to
       negate the effect.</p>
-  actions:
-    - _id: 9tesjpevzvg876ii
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 10 min./level; see text
-      target:
-        value: creature or object of up to 1 cu. ft./level touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 3
-      ranger: 3
-      bard: 4
-      paladin: 4
-      alchemist: 4
-      witch: 4
-      inquisitor: 4
       adept: 3
+      alchemist: 4
+      bard: 4
+      cleric: 4
+      druid: 3
+      hunter: 3
+      inquisitor: 4
+      oracle: 4
+      paladin: 4
+      ranger: 3
       shaman: 4
       spiritualist: 4
-      hunter: 3
+      warpriest: 4
+      witch: 4
     subDomain:
       Restoration: 4
   level: 4
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: charcoal
-_key: '!items!6l904edkt8jv9jor'
+  school: con
+  subschool: healing
+type: spell
 

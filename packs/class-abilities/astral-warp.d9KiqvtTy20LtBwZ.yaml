@@ -1,8 +1,40 @@
 _id: d9KiqvtTy20LtBwZ
-name: Astral Warp
-type: feat
+_key: '!items!d9KiqvtTy20LtBwZ'
 img: systems/pf1/icons/spells/haste-royal-1.jpg
+name: Astral Warp
 system:
+  abilityType: sp
+  actions:
+    - _id: ynnmddg3r4zprs4y
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d4 + floor(@classes.sorcerer.level / 2)
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/haste-royal-1.jpg
+      name: Use
+      range:
+        units: spec
+        value: '30'
+      save:
+        description: Negates
+        type: fort
+      target:
+        value: 5-ft. cube area
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can create a sparkling field within 30 feet that
@@ -13,42 +45,10 @@ system:
       While within the area, a creature takes a –1 penalty on <em>Reflex</em>
       saves and to AC. You can use this ability a number of times per day equal
       to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: ynnmddg3r4zprs4y
-      name: Use
-      img: systems/pf1/icons/spells/haste-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: 5-ft. cube area
-      range:
-        value: '30'
-        units: spec
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d4 + floor(@classes.sorcerer.level / 2)
-            type:
-              values:
-                - force
-              custom: ''
-      save:
-        type: fort
-        description: Negates
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_astralWarp
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!d9KiqvtTy20LtBwZ'
+  tag: classFeat_astralWarp
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

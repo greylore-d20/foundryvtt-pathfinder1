@@ -1,8 +1,20 @@
 _id: ONWPeKlLrmUaQZ5D
-name: Heat Wave
-type: feat
+_key: '!items!ONWPeKlLrmUaQZ5D'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Heat Wave
 system:
+  abilityType: sp
+  actions:
+    - _id: uyc6iczhbgkueoqj
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 3;
@@ -16,19 +28,7 @@ system:
       all attacks made by creatures within 5 feet of you suffer a 20% miss
       chance due to concealment. You are immune to these effects, as are those
       immune to fire or benefiting from endure elements.</p>
-  actions:
-    - _id: uyc6iczhbgkueoqj
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  tag: classFeat_heatWave
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!ONWPeKlLrmUaQZ5D'
+  tag: classFeat_heatWave
+type: feat
 

@@ -1,8 +1,26 @@
 _id: ezi3imjaq36895zy
-name: Brightest Light
-type: spell
+_key: '!items!ezi3imjaq36895zy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Brightest Light
 system:
+  actions:
+    - _id: 6brn2nstkabcxnwj
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This trademark spell of the Lantern Bearers functions as
@@ -14,43 +32,25 @@ system:
       darkness effect ends. Regardless of whether you are successful, the light
       from this spell dims to the brightness of a torch for the spell's
       remaining duration.</p>
-  actions:
-    - _id: 6brn2nstkabcxnwj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: object touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
-      ranger: 4
       bard: 4
-      paladin: 4
+      cleric: 4
+      druid: 4
+      hunter: 4
       inquisitor: 4
       magus: 4
-      shaman: 4
       occultist: 4
-      hunter: 4
+      oracle: 4
+      paladin: 4
+      ranger: 4
+      shaman: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
   school: evo
-  types: light
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ezi3imjaq36895zy'
+  types: light
+type: spell
 

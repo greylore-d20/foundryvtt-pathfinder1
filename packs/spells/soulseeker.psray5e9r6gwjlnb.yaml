@@ -1,8 +1,31 @@
 _id: psray5e9r6gwjlnb
-name: Soulseeker
-type: spell
+_key: '!items!psray5e9r6gwjlnb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Soulseeker
 system:
+  actions:
+    - _id: x1lko216nw495y10
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous or 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one soul
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You identify the stage of a given soul's judgment, or determine its
@@ -26,46 +49,23 @@ system:
       petitioner form currently exists, it guides you along the shortest, most
       direct physical route to the petitioner, as described in <i>find the
       path</i>. In this case, the spell's duration is 1 hour per level.</p>
-  actions:
-    - _id: x1lko216nw495y10
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous or 1 hour/level
-      target:
-        value: one soul
-      range:
-        units: unlimited
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
       cleric: 8
-      oracle: 8
-      witch: 8
-      shaman: 8
       medium: 4
       occultist: 6
+      oracle: 8
+      shaman: 8
       spiritualist: 6
+      witch: 8
   level: 8
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth 250 gp
     focus: see text
     gpValue: 250
+    value: incense worth 250 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!psray5e9r6gwjlnb'
+type: spell
 

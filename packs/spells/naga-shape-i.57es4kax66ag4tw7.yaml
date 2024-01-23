@@ -1,8 +1,27 @@
 _id: 57es4kax66ag4tw7
-name: Naga Shape I
-type: spell
+_key: '!items!57es4kax66ag4tw7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Naga Shape I
 system:
+  actions:
+    - _id: c5wseyp51bfuowbk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Whenever you cast this spell, you can assume the form of any type of
@@ -16,37 +35,18 @@ system:
       abilities, you gain the listed ability: climb 60 feet, fly 60 feet (good
       maneuverability), swim 60 feet, darkvision 60 feet, low-light vision, and
       scent.</p>
-  actions:
-    - _id: c5wseyp51bfuowbk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 4
+      bloodrager: 4
+      magus: 4
       sorcerer: 4
       wizard: 4
-      alchemist: 4
-      magus: 4
-      bloodrager: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you want to assume
+  school: trs
   sr: false
-_key: '!items!57es4kax66ag4tw7'
+  subschool: polymorph
+type: spell
 

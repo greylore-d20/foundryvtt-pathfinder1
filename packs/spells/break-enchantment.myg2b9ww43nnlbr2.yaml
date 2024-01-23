@@ -1,8 +1,28 @@
 _id: myg2b9ww43nnlbr2
-name: Break Enchantment
-type: spell
+_key: '!items!myg2b9ww43nnlbr2'
 img: icons/magic/symbols/runes-star-pentagon-blue.webp
+name: Break Enchantment
 system:
+  actions:
+    - _id: kcm88cwzfrfd3opa
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+      target:
+        value: up to one creature per level, all within 30 ft. of each other
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell frees victims from enchantments, transmutations, and curses.
@@ -16,56 +36,36 @@ system:
       level or lower.</p><p>If the effect comes from a permanent magic item,
       <i>break enchantment</i> does not remove the curse from the item, but it
       does free the victim from the item's effects.</p>
-  actions:
-    - _id: kcm88cwzfrfd3opa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: up to one creature per level, all within 30 ft. of each other
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: see text
   learnedAt:
+    bloodline:
+      Destined: 5
     class:
-      sorcerer: 5
-      wizard: 5
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      bard: 4
-      paladin: 4
-      witch: 5
-      inquisitor: 5
       adept: 5
-      shaman: 5
-      psychic: 4
+      bard: 4
+      cleric: 5
+      inquisitor: 5
       medium: 4
       mesmerist: 4
       occultist: 4
+      oracle: 5
+      paladin: 4
+      psychic: 4
+      shaman: 5
+      sorcerer: 5
       spiritualist: 5
+      warpriest: 5
+      witch: 5
+      wizard: 5
     domain:
       Liberation: 5
       Luck: 5
     subDomain:
       Restoration: 5
-    bloodline:
-      Destined: 5
   level: 5
   school: abj
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '251'
-_key: '!items!myg2b9ww43nnlbr2'
+  sr: false
+type: spell
 

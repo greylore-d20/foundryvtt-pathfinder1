@@ -1,8 +1,27 @@
 _id: nugmUICGM5mxJr3U
-name: 'Weather Blessing: Storm Strike'
-type: feat
+_key: '!items!nugmUICGM5mxJr3U'
 img: systems/pf1/icons/spells/lightning-blue-1.jpg
+name: 'Weather Blessing: Storm Strike'
 system:
+  actions:
+    - _id: mwbsvz8wyffxwhpv
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/lightning-blue-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can touch one weapon and grant it a blessing of
@@ -12,26 +31,7 @@ system:
 
       <p>This additional damage doesn’t stack with the additional damage from
       the shock or shocking burst weapon special abilities.</p>
-  actions:
-    - _id: mwbsvz8wyffxwhpv
-      name: Use
-      img: systems/pf1/icons/spells/lightning-blue-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: weapon touched
-      range:
-        units: touch
-  tag: classFeat_weatherBlessingStormStrike
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!nugmUICGM5mxJr3U'
+  tag: classFeat_weatherBlessingStormStrike
+type: feat
 

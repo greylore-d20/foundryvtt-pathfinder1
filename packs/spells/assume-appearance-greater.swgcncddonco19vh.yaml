@@ -1,8 +1,26 @@
 _id: swgcncddonco19vh
-name: Assume Appearance, Greater
-type: spell
+_key: '!items!swgcncddonco19vh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Assume Appearance, Greater
 system:
+  actions:
+    - _id: 86vwb1re6yjclt0u
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions similar to
@@ -20,44 +38,26 @@ system:
       the aura of greater <em>assume appearance</em> is redirected to the
       likeness instead of to you, similar to a reverse application of the
       @Compendium[pf1.spells.8nrt26t37v7koqr8]{misdirection} spell.</p>
-  actions:
-    - _id: 86vwb1re6yjclt0u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      bard: 4
       alchemist: 4
-      summoner: 4
-      witch: 4
-      shaman: 4
-      psychic: 4
+      bard: 4
       medium: 4
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      shaman: 4
+      sorcerer: 4
       spiritualist: 4
+      summoner: 4
       summonerUnchained: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: corpse or likeness of the deceased creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!swgcncddonco19vh'
+  subschool: polymorph
+type: spell
 

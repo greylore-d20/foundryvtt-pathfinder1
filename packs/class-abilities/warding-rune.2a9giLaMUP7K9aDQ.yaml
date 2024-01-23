@@ -1,8 +1,20 @@
 _id: 2a9giLaMUP7K9aDQ
-name: Warding Rune
-type: feat
+_key: '!items!2a9giLaMUP7K9aDQ'
 img: systems/pf1/icons/spells/runes-magenta-2.jpg
+name: Warding Rune
 system:
+  abilityType: su
+  actions:
+    - _id: 5c9vxqyyaz6tm3jz
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/runes-magenta-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 6th level, when a creature is damaged by your blast rune, it cannot
@@ -14,22 +26,10 @@ system:
       level, plus one additional time per day at 14th level and 20th level.</p>
 
       <p>This power replaces the Spell Rune power of the Rune Domain.</p>
-  actions:
-    - _id: 5c9vxqyyaz6tm3jz
-      name: Use
-      img: systems/pf1/icons/spells/runes-magenta-2.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 2) / 6)
-  tag: classFeat_wardingRune
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!2a9giLaMUP7K9aDQ'
+  tag: classFeat_wardingRune
+  uses:
+    maxFormula: floor((@classes.cleric.level - 2) / 6)
+    per: day
+type: feat
 

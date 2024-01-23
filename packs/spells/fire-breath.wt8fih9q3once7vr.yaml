@@ -1,8 +1,34 @@
 _id: wt8fih9q3once7vr
-name: Fire Breath
-type: spell
+_key: '!items!wt8fih9q3once7vr'
 img: icons/creatures/abilities/dragon-fire-breath-orange.webp
+name: Fire Breath
 system:
+  actions:
+    - _id: sjj46fdflnvkkon3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      duration:
+        value: 1 round/level or until discharged; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: cone
+      name: Use
+      range:
+        units: ft
+        value: '15'
+      save:
+        description: Reflex half; see text
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Up to thrice during this spell's duration, you can belch forth a cone
@@ -12,43 +38,17 @@ system:
       flame deals 1d6 points of fire damage to every creature in the area. A
       successful Reflex save halves this damage. After the third cone of flame,
       the spell ends.</p>
-  actions:
-    - _id: sjj46fdflnvkkon3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged; see text
-      range:
-        value: '15'
-        units: ft
-      measureTemplate:
-        type: cone
-        size: '15'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half; see text
-      area: cone-shaped burst
   learnedAt:
     class:
+      alchemist: 2
+      bloodrager: 2
+      magus: 2
       sorcerer: 2
       wizard: 2
-      alchemist: 2
-      magus: 2
-      bloodrager: 2
   level: 2
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chili pepper
-_key: '!items!wt8fih9q3once7vr'
+  school: evo
+  types: fire
+type: spell
 

@@ -1,8 +1,25 @@
 _id: igywbaedbeor6tfq
-name: Die for Your Master
-type: spell
+_key: '!items!igywbaedbeor6tfq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Die for Your Master
 system:
+  actions:
+    - _id: 4gt4oipl2uxruybx
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: your animal companion, familiar, or fiendish servant
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>Bleed for your Master</i>, but it allows
@@ -11,34 +28,17 @@ system:
       lightning</i>, <i>hold monster</i>, and <i>magic</i> missile). Your
       companion or familiar cannot intercept effects that do not affect
       creatures of its type (e.g., <i>dominate</i> person).</p>
-  actions:
-    - _id: 4gt4oipl2uxruybx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: instantaneous
-      target:
-        value: your animal companion, familiar, or fiendish servant
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      druid: 5
-      witch: 5
       antipaladin: 4
+      druid: 5
       hunter: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
   school: enc
-  subschool: compulsion
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!igywbaedbeor6tfq'
+  subschool: compulsion
+type: spell
 

@@ -1,18 +1,11 @@
 _id: jjsqzp8kfjl1mxvd
-name: Resist Starvation
-type: spell
+_key: '!items!jjsqzp8kfjl1mxvd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Resist Starvation
 system:
-  description:
-    value: >-
-      <p>If the target doesn't eat on the day this spell is cast on it, the DC
-      to avoid taking nonlethal damage from starvation on the following day
-      doesn't increase by 1. This spell fails if the target hasn't already
-      attempted at least one Constitution check to avoid starvation.</p>
   actions:
     - _id: stwp1m98z5ck08u1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,28 +13,35 @@ system:
           type: action
       duration:
         value: 1 day/level
-      target:
-        value: one living creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one living creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>If the target doesn't eat on the day this spell is cast on it, the DC
+      to avoid taking nonlethal damage from starvation on the following day
+      doesn't increase by 1. This spell fails if the target hasn't already
+      attempted at least one Constitution check to avoid starvation.</p>
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       antipaladin: 1
+      cleric: 1
+      oracle: 1
       shaman: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      warpriest: 1
   materials:
     value: crumb of food
-_key: '!items!jjsqzp8kfjl1mxvd'
+  school: trs
+type: spell
 

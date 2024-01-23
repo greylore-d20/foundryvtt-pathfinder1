@@ -1,8 +1,26 @@
 _id: 25bv1s6jwr8imm1o
-name: Insect Spies
-type: spell
+_key: '!items!25bv1s6jwr8imm1o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Insect Spies
 system:
+  actions:
+    - _id: nypu5lcx3wr72zvo
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: up to one insect spy/4 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon one or more glossy black beetles, which have a measure of
@@ -35,38 +53,20 @@ system:
       allows you to sense where they are. As a full-round action, you can
       concentrate on the spell in order to learn the direction and relative
       distance of each of the insects.</p>
-  actions:
-    - _id: nypu5lcx3wr72zvo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      range:
-        units: close
-      spellEffect: up to one insect spy/4 levels
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       druid: 3
-      ranger: 3
-      summoner: 3
-      witch: 4
       hunter: 3
+      ranger: 3
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 3
+      witch: 4
+      wizard: 4
   level: 4
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of honey
+  school: div
   sr: false
-_key: '!items!25bv1s6jwr8imm1o'
+type: spell
 

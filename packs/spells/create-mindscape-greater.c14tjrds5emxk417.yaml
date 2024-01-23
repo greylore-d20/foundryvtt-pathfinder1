@@ -1,8 +1,30 @@
 _id: c14tjrds5emxk417
-name: Create Mindscape, Greater
-type: spell
+_key: '!items!c14tjrds5emxk417'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Mindscape, Greater
 system:
+  actions:
+    - _id: a3xmmu2dovmlsdx7
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief; see text
+        type: will
+      target:
+        value: one creature/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like
@@ -15,37 +37,15 @@ system:
       15th level or higher at a cost of 17,500 gp. You and other creatures aware
       of a permanent mindscape can come and go using the
       @Compendium[pf1.spells.90xaelj2ncuzq62n]{mindscape door} spell.</p>
-  actions:
-    - _id: a3xmmu2dovmlsdx7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature/level
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief; see text
   learnedAt:
     class:
+      mesmerist: 6
+      psychic: 6
       sorcerer: 7
       wizard: 7
-      psychic: 6
-      mesmerist: 6
   level: 7
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!c14tjrds5emxk417'
+type: spell
 

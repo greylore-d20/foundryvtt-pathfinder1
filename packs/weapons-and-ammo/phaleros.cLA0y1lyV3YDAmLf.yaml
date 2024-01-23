@@ -1,8 +1,38 @@
 _id: cLA0y1lyV3YDAmLf
-name: Phaleros
-type: weapon
+_key: '!items!cLA0y1lyV3YDAmLf'
 img: systems/pf1/icons/items/weapons/javelin.PNG
+name: Phaleros
 system:
+  actions:
+    - _id: zujn4vrse49go4s2
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/javelin.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Phaleros
   description:
     value: >-
       <p>A phaleros is a type of metal javelin that stores a splash weapon in a
@@ -13,57 +43,27 @@ system:
       treat the target as though it had suffered a direct hit from the splash
       weapon. A phaleros is reusable, and reloading one with a splash weapon is
       a process that takes two rounds and provokes attacks of opportunity.</p>
-  weight:
-    value: 3
-  price: 5
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: zujn4vrse49go4s2
-      name: Throw
-      img: systems/pf1/icons/items/weapons/javelin.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Phaleros
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: martial
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 5
   source:
     id: PZO9285
     pages: '12'
-_key: '!items!cLA0y1lyV3YDAmLf'
+  subType: martial
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 3
+type: weapon
 

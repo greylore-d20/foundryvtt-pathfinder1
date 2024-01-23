@@ -1,8 +1,30 @@
 _id: e5kr1ggh1k4c2i8z
-name: Wither Limb
-type: spell
+_key: '!items!e5kr1ggh1k4c2i8z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wither Limb
 system:
+  actions:
+    - _id: 52tdsx1tfh6x5n8b
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause one limb of the target to shrivel and weaken. The target
@@ -26,40 +48,18 @@ system:
       spell wither all of a creature's legs, it can only crawl at a speed of 5
       feet each round. <i>Wing</i>: The creature loses access to any fly speed
       that depends on its wings if even a single wing is withered.</p>
-  actions:
-    - _id: 52tdsx1tfh6x5n8b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: living creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
       inquisitor: 6
+      oracle: 6
       shaman: 6
+      sorcerer: 6
       spiritualist: 5
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: nec
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!e5kr1ggh1k4c2i8z'
+type: spell
 

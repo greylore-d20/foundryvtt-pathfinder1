@@ -1,8 +1,28 @@
 _id: yM8xfml1Xrccfwux
-name: Samurai
-type: class
+_key: '!items!yM8xfml1Xrccfwux'
 img: systems/pf1/icons/items/weapons/katana.png
+name: Samurai
 system:
+  armorProf:
+    value:
+      - lgt
+      - med
+      - hvy
+      - shl
+  bab: high
+  classSkills:
+    art: true
+    blf: true
+    clm: true
+    crf: true
+    dip: true
+    han: true
+    int: true
+    lor: true
+    pro: true
+    rid: true
+    sen: true
+    swm: true
   description:
     value: >-
       <p>Few warriors are more dedicated to honor and the code of the warrior
@@ -41,81 +61,61 @@ system:
       <em>Swim</em> (<em>Str</em>).</p>
 
       <p><b>Skill Ranks per Level</b>: 4 + <em>Int</em> modifier.</p>
-  links:
-    classAssociations:
-      - name: Challenge (SAM)
-        level: 1
-        uuid: Compendium.pf1.class-abilities.AOasku7u72NB0q3J
-      - name: Mount (SAM)
-        level: 1
-        uuid: Compendium.pf1.class-abilities.EpDI0Qi5SDRmL4lK
-      - name: Order (SAM)
-        level: 1
-        uuid: Compendium.pf1.class-abilities.Uo3yrfkyguM5wkI2
-      - name: Resolve
-        level: 1
-        uuid: Compendium.pf1.class-abilities.fdEn4hZJkIhJEwrQ
-      - name: Weapon Expertise
-        level: 3
-        uuid: Compendium.pf1.class-abilities.SDe1qkWV2217wSao
-      - name: Mounted Archer
-        level: 4
-        uuid: Compendium.pf1.class-abilities.IA4Z4xwEeubcDqF4
-      - name: Banner (SAM)
-        level: 5
-        uuid: Compendium.pf1.class-abilities.QyW6ly6dN84Ev6AY
-      - name: Bonus Feat (SAM)
-        level: 6
-        uuid: Compendium.pf1.class-abilities.lKnfkRSOpPjT4qRy
-      - name: Greater Resolve
-        level: 9
-        uuid: Compendium.pf1.class-abilities.5yPVt0Gip4Q1TTs4
-      - name: Honorable Stand
-        level: 11
-        uuid: Compendium.pf1.class-abilities.t2XEI2AKkv1CY8to
-      - name: Demanding Challenge (SAM)
-        level: 12
-        uuid: Compendium.pf1.class-abilities.BDP3HgB0vmZ9vbQY
-      - name: Greater Banner (SAM)
-        level: 14
-        uuid: Compendium.pf1.class-abilities.f2Xg4pkJelnVyTCH
-      - name: True Resolve
-        level: 17
-        uuid: Compendium.pf1.class-abilities.CZrFfvYMX3HK03lC
-      - name: Last Stand
-        level: 20
-        uuid: Compendium.pf1.class-abilities.k2CQRwlyblNHuius
-  tag: samurai
-  armorProf:
-    value:
-      - lgt
-      - med
-      - hvy
-      - shl
-  weaponProf:
-    value:
-      - simple
-      - martial
-    custom: Katana;Naginata;Wakizashi
   hd: 10
   hp: 10
-  bab: high
-  skillsPerLevel: 4
+  links:
+    classAssociations:
+      - level: 1
+        name: Challenge (SAM)
+        uuid: Compendium.pf1.class-abilities.AOasku7u72NB0q3J
+      - level: 1
+        name: Mount (SAM)
+        uuid: Compendium.pf1.class-abilities.EpDI0Qi5SDRmL4lK
+      - level: 1
+        name: Order (SAM)
+        uuid: Compendium.pf1.class-abilities.Uo3yrfkyguM5wkI2
+      - level: 1
+        name: Resolve
+        uuid: Compendium.pf1.class-abilities.fdEn4hZJkIhJEwrQ
+      - level: 3
+        name: Weapon Expertise
+        uuid: Compendium.pf1.class-abilities.SDe1qkWV2217wSao
+      - level: 4
+        name: Mounted Archer
+        uuid: Compendium.pf1.class-abilities.IA4Z4xwEeubcDqF4
+      - level: 5
+        name: Banner (SAM)
+        uuid: Compendium.pf1.class-abilities.QyW6ly6dN84Ev6AY
+      - level: 6
+        name: Bonus Feat (SAM)
+        uuid: Compendium.pf1.class-abilities.lKnfkRSOpPjT4qRy
+      - level: 9
+        name: Greater Resolve
+        uuid: Compendium.pf1.class-abilities.5yPVt0Gip4Q1TTs4
+      - level: 11
+        name: Honorable Stand
+        uuid: Compendium.pf1.class-abilities.t2XEI2AKkv1CY8to
+      - level: 12
+        name: Demanding Challenge (SAM)
+        uuid: Compendium.pf1.class-abilities.BDP3HgB0vmZ9vbQY
+      - level: 14
+        name: Greater Banner (SAM)
+        uuid: Compendium.pf1.class-abilities.f2Xg4pkJelnVyTCH
+      - level: 17
+        name: True Resolve
+        uuid: Compendium.pf1.class-abilities.CZrFfvYMX3HK03lC
+      - level: 20
+        name: Last Stand
+        uuid: Compendium.pf1.class-abilities.k2CQRwlyblNHuius
   savingThrows:
     fort:
       value: high
-  classSkills:
-    art: true
-    blf: true
-    clm: true
-    crf: true
-    dip: true
-    han: true
-    int: true
-    lor: true
-    pro: true
-    rid: true
-    sen: true
-    swm: true
-_key: '!items!yM8xfml1Xrccfwux'
+  skillsPerLevel: 4
+  tag: samurai
+  weaponProf:
+    custom: Katana;Naginata;Wakizashi
+    value:
+      - simple
+      - martial
+type: class
 

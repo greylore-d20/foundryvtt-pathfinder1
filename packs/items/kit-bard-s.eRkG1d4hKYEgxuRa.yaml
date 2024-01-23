@@ -1,30 +1,38 @@
 _id: eRkG1d4hKYEgxuRa
-name: Kit, Bard's
-type: container
+_key: '!items!eRkG1d4hKYEgxuRa'
 img: icons/containers/chest/chest-reinforced-steel-red.webp
+name: Kit, Bard's
 system:
   items:
-    MKMa5KBNXZU4oLTM:
-      name: Backpack
-      type: container
-      img: systems/pf1/icons/items/inventory/backpack.jpg
+    0knejgHKvvzByqNH:
+      _id: 0knejgHKvvzByqNH
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.iegwwsarycqwoezj
+      img: systems/pf1/icons/items/inventory/cloth-blue.jpg
+      name: Bedroll
       system:
         description:
           value: >-
-            <p>This leather knapsack has one large pocket that closes with a
-            buckled strap and holds about 2 cubic feet of material. Some may
-            have one or more smaller pockets on the sides.</p>
+            <p>This consists of two woolen sheets sewn together along the bottom
+            and one side to create a bag for sleeping in. Some have cloth straps
+            along the open side so the bedroll can be tied closed while you are
+            sleeping. It can be rolled and tied into a tight coil for storage or
+            transport. Most people use a <em>blanket</em> with the bedroll to
+            stay warm or provide a ground cushion.</p>
+        equipped: false
+        price: 0.1
+        subType: gear
         weight:
-          value: 2
-        price: 2
+          value: 5
+      type: loot
+    1uAhlrTeUscItWSp:
+      _id: 1uAhlrTeUscItWSp
       flags:
         core:
-          sourceId: Compendium.pf1.items.lSCPUK5Ea6R0t4fz
-      _id: MKMa5KBNXZU4oLTM
-    1uAhlrTeUscItWSp:
-      name: Pouch, Belt
-      type: loot
+          sourceId: Compendium.pf1.items.wjvxmolafiegvesl
       img: icons/containers/bags/coinpouch-simple-leather-tan.webp
+      name: Pouch, Belt
       system:
         description:
           value: >-
@@ -41,95 +49,43 @@ system:
             Weighs twice the normal amount when made for Large characters.
             Containers carry one-quarter the normal amount when made for Small
             characters.</p>
+        equipped: false
+        price: 1
+        subType: gear
         weight:
           value: 0.5
-        price: 1
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.wjvxmolafiegvesl
-      _id: 1uAhlrTeUscItWSp
-    BX8ycRZTOS7GbpRq:
-      name: Flint And Steel
       type: loot
-      img: icons/commodities/stone/rock-chunk-grey.webp
+    A2r030SbtEkqASaz:
+      _id: A2r030SbtEkqASaz
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.pjbwjzojocninnhz
+      img: systems/pf1/icons/items/inventory/lute.jpg
+      name: Musical Instrument, Common
       system:
         description:
           value: >-
-            <p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a
-            full-round action. Lighting any other fire with them takes at least
-            that long.</p>
-        price: 1
+            <p>If you want to perform using a
+            @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.emzBKDFNkNnC7N8u]{Perform}
+            skill associated with a musical instrument (keyboard, percussion,
+            string, or wind), you must have an appropriate musical instrument;
+            otherwise you can't use the skill. The listed cost and weight is for
+            a typical small instrument you could carry by hand, such as a drum,
+            lyre, bell, harp, or flute; larger instruments such as a cello or
+            piano are of course larger and more expensive.</p>
         equipped: false
+        price: 5
         subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.ygmrcisvftnvjyob
-      _id: BX8ycRZTOS7GbpRq
-    ExFfsUjQ2s8SfMFy:
-      name: Soap
-      type: consumable
-      img: systems/pf1/icons/items/inventory/soap.jpg
-      system:
-        description:
-          value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
-            <p>You can use this thick block of soap to scrub clothes, pots,
-            linens, or anything else that might be dirty. A bar of soap has
-            approximately 50 uses.</p>
         weight:
-          value: 0.5
-        price: 0.01
-        actions:
-          - _id: ootoocddr3l2eoat
-            name: Use
-            img: systems/pf1/icons/items/inventory/soap.jpg
-            activation:
-              type: special
-              unchained:
-                type: special
-        uses:
-          per: charges
-          value: 50
-          maxFormula: '50'
-        tag: soap
-        subType: misc
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.yMoclCylbCRKyaZF
-      _id: ExFfsUjQ2s8SfMFy
-    qmPwMvwpKtK4TYSX:
-      name: Torch
+          value: 3
       type: loot
-      img: systems/pf1/icons/items/inventory/torch.jpg
-      system:
-        description:
-          value: >-
-            <p><b>Price</b> 1 cp; <b>Weight</b> 1 lb.</p>
-
-            <p>A torch burns for 1 hour, shedding normal light in a 20-foot
-            radius and increasing the light level by one step for an additional
-            20 feet beyond that area (darkness becomes dim light and dim light
-            becomes normal light). A torch does not increase the light level in
-            normal light or bright light. If a torch is used in combat, treat it
-            as a one-handed improvised weapon that deals bludgeoning damage
-            equal to that of a gauntlet of its size, plus 1 point of fire
-            damage.</p>
-        weight:
-          value: 1
-        price: 0.01
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.snfogneawzopfzzl
-      _id: qmPwMvwpKtK4TYSX
     AlJVispC5kYKL4IM:
-      name: Waterskin
-      type: loot
+      _id: AlJVispC5kYKL4IM
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.bsztkhkrhgmsbqpt
       img: systems/pf1/icons/items/inventory/waterskin.jpg
+      name: Waterskin
       system:
         description:
           value: >-
@@ -238,44 +194,69 @@ system:
             </tbody>
 
             </table>
+        equipped: false
+        price: 1
+        subType: gear
         weight:
           value: 4
-        price: 1
-        equipped: false
-        subType: gear
+      type: loot
+    BX8ycRZTOS7GbpRq:
+      _id: BX8ycRZTOS7GbpRq
       flags:
         core:
-          sourceId: Compendium.pf1.items.bsztkhkrhgmsbqpt
-      _id: AlJVispC5kYKL4IM
-    u5phXrCRiKIbfA9r:
-      name: Rations, Trail
-      type: loot
-      img: systems/pf1/icons/items/inventory/meat.jpg
+          sourceId: Compendium.pf1.items.ygmrcisvftnvjyob
+      img: icons/commodities/stone/rock-chunk-grey.webp
+      name: Flint And Steel
       system:
         description:
           value: >-
-            <h4>Rations, Trail</h4>
-
-            <p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>
-
-            <p>The listed price is for a day's worth of food. This bland food is
-            usually some kind of hard tack, jerky, and dried fruit, though the
-            contents vary from region to region and the race of those creating
-            it. As long as it stays dry, it can go for months without
-            spoiling.</p>
-        weight:
-          value: 1
-        price: 0.5
+            <p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a
+            full-round action. Lighting any other fire with them takes at least
+            that long.</p>
         equipped: false
+        price: 1
         subType: gear
+      type: loot
+    ExFfsUjQ2s8SfMFy:
+      _id: ExFfsUjQ2s8SfMFy
       flags:
         core:
-          sourceId: Compendium.pf1.items.manvtbznrwjmnrua
-      _id: u5phXrCRiKIbfA9r
+          sourceId: Compendium.pf1.items.yMoclCylbCRKyaZF
+      img: systems/pf1/icons/items/inventory/soap.jpg
+      name: Soap
+      system:
+        actions:
+          - _id: ootoocddr3l2eoat
+            activation:
+              type: special
+              unchained:
+                type: special
+            img: systems/pf1/icons/items/inventory/soap.jpg
+            name: Use
+        description:
+          value: >-
+            <p class="source"><b>Source</b> <em>PZO9410</em></p>
+
+            <p>You can use this thick block of soap to scrub clothes, pots,
+            linens, or anything else that might be dirty. A bar of soap has
+            approximately 50 uses.</p>
+        price: 0.01
+        subType: misc
+        tag: soap
+        uses:
+          maxFormula: '50'
+          per: charges
+          value: 50
+        weight:
+          value: 0.5
+      type: consumable
     HDQwDB4hoouwRQCf:
-      name: Rope
-      type: loot
+      _id: HDQwDB4hoouwRQCf
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.qlmtnppwxkubqyhp
       img: systems/pf1/icons/items/inventory/dice.jpg
+      name: Rope
       system:
         description:
           value: >-
@@ -315,65 +296,19 @@ system:
             than 10 feet long) occasionally appear among goblins. Spider's silk
             rope has 6 hit points and can be broken with a DC 25 Strength check.
             <b>Price</b> 100 gp; <b>Weight</b> 4 lbs.</p>
+        equipped: false
+        price: 1
+        subType: gear
         weight:
           value: 10
-        price: 1
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.qlmtnppwxkubqyhp
-      _id: HDQwDB4hoouwRQCf
-    0knejgHKvvzByqNH:
-      name: Bedroll
       type: loot
-      img: systems/pf1/icons/items/inventory/cloth-blue.jpg
-      system:
-        description:
-          value: >-
-            <p>This consists of two woolen sheets sewn together along the bottom
-            and one side to create a bag for sleeping in. Some have cloth straps
-            along the open side so the bedroll can be tied closed while you are
-            sleeping. It can be rolled and tied into a tight coil for storage or
-            transport. Most people use a <em>blanket</em> with the bedroll to
-            stay warm or provide a ground cushion.</p>
-        weight:
-          value: 5
-        price: 0.1
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.iegwwsarycqwoezj
-      _id: 0knejgHKvvzByqNH
-    A2r030SbtEkqASaz:
-      name: Musical Instrument, Common
-      type: loot
-      img: systems/pf1/icons/items/inventory/lute.jpg
-      system:
-        description:
-          value: >-
-            <p>If you want to perform using a
-            @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.emzBKDFNkNnC7N8u]{Perform}
-            skill associated with a musical instrument (keyboard, percussion,
-            string, or wind), you must have an appropriate musical instrument;
-            otherwise you can't use the skill. The listed cost and weight is for
-            a typical small instrument you could carry by hand, such as a drum,
-            lyre, bell, harp, or flute; larger instruments such as a cello or
-            piano are of course larger and more expensive.</p>
-        weight:
-          value: 3
-        price: 5
-        equipped: false
-        subType: gear
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.pjbwjzojocninnhz
-      _id: A2r030SbtEkqASaz
     IqWzdSwdeHxeKRVa:
-      name: Journal, blank
-      type: loot
+      _id: IqWzdSwdeHxeKRVa
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.hdK27WBFJFUNODbx
       img: systems/pf1/icons/items/inventory/book.jpg
+      name: Journal, blank
       system:
         description:
           value: >-
@@ -387,37 +322,54 @@ system:
 
             <p>This is a blank, lightweight book with an oilskin cover. It has
             50 paper pages.</p>
+        equipped: false
+        price: 10
+        subType: gear
         weight:
           value: 1
-        price: 10
-        equipped: false
-        subType: gear
+      type: loot
+    MKMa5KBNXZU4oLTM:
+      _id: MKMa5KBNXZU4oLTM
       flags:
         core:
-          sourceId: Compendium.pf1.items.hdK27WBFJFUNODbx
-      _id: IqWzdSwdeHxeKRVa
+          sourceId: Compendium.pf1.items.lSCPUK5Ea6R0t4fz
+      img: systems/pf1/icons/items/inventory/backpack.jpg
+      name: Backpack
+      system:
+        description:
+          value: >-
+            <p>This leather knapsack has one large pocket that closes with a
+            buckled strap and holds about 2 cubic feet of material. Some may
+            have one or more smaller pockets on the sides.</p>
+        price: 2
+        weight:
+          value: 2
+      type: container
     hPmtDPY0kUkqzKiu:
-      name: Mirror
-      type: loot
+      _id: hPmtDPY0kUkqzKiu
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.gjtuklwkrbqykmdk
       img: icons/tools/scribal/lens-grey-brown.webp
+      name: Mirror
       system:
         description:
           value: |-
             <p class="source"><b>Source</b> <em>PZO1110</em></p>
             <p>A small steel mirror.</p>
+        equipped: false
+        price: 10
+        subType: gear
         weight:
           value: 0.5
-        price: 10
-        equipped: false
-        subType: gear
+      type: loot
+    o7mYL29v2yJ8rjxs:
+      _id: o7mYL29v2yJ8rjxs
       flags:
         core:
-          sourceId: Compendium.pf1.items.gjtuklwkrbqykmdk
-      _id: hPmtDPY0kUkqzKiu
-    o7mYL29v2yJ8rjxs:
-      name: Pot, Cooking (Iron)
-      type: loot
+          sourceId: Compendium.pf1.items.habofoapdifirevm
       img: icons/tools/cooking/cauldron-empty.webp
+      name: Pot, Cooking (Iron)
       system:
         description:
           value: >-
@@ -429,14 +381,62 @@ system:
             <p>A mithral cooking pot weighs 2 lbs. and costs 2,001 gp.</p>
 
             <p><b>Empty Weight</b>: 2 lb.; <b>Capacity</b>: 1 gallon/8 lb.</p>
+        equipped: false
+        price: 0.8
+        subType: gear
         weight:
           value: 4
-        price: 0.8
-        equipped: false
-        subType: gear
+      type: loot
+    qmPwMvwpKtK4TYSX:
+      _id: qmPwMvwpKtK4TYSX
       flags:
         core:
-          sourceId: Compendium.pf1.items.habofoapdifirevm
-      _id: o7mYL29v2yJ8rjxs
-_key: '!items!eRkG1d4hKYEgxuRa'
+          sourceId: Compendium.pf1.items.snfogneawzopfzzl
+      img: systems/pf1/icons/items/inventory/torch.jpg
+      name: Torch
+      system:
+        description:
+          value: >-
+            <p><b>Price</b> 1 cp; <b>Weight</b> 1 lb.</p>
+
+            <p>A torch burns for 1 hour, shedding normal light in a 20-foot
+            radius and increasing the light level by one step for an additional
+            20 feet beyond that area (darkness becomes dim light and dim light
+            becomes normal light). A torch does not increase the light level in
+            normal light or bright light. If a torch is used in combat, treat it
+            as a one-handed improvised weapon that deals bludgeoning damage
+            equal to that of a gauntlet of its size, plus 1 point of fire
+            damage.</p>
+        equipped: false
+        price: 0.01
+        subType: gear
+        weight:
+          value: 1
+      type: loot
+    u5phXrCRiKIbfA9r:
+      _id: u5phXrCRiKIbfA9r
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.manvtbznrwjmnrua
+      img: systems/pf1/icons/items/inventory/meat.jpg
+      name: Rations, Trail
+      system:
+        description:
+          value: >-
+            <h4>Rations, Trail</h4>
+
+            <p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>
+
+            <p>The listed price is for a day's worth of food. This bland food is
+            usually some kind of hard tack, jerky, and dried fruit, though the
+            contents vary from region to region and the race of those creating
+            it. As long as it stays dry, it can go for months without
+            spoiling.</p>
+        equipped: false
+        price: 0.5
+        subType: gear
+        weight:
+          value: 1
+      type: loot
+type: container
 

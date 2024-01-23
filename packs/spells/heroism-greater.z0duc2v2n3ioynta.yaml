@@ -1,19 +1,11 @@
 _id: z0duc2v2n3ioynta
-name: Heroism, Greater
-type: spell
+_key: '!items!z0duc2v2n3ioynta'
 img: icons/magic/control/buff-strength-muscle-damage-orange.webp
+name: Heroism, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.vqfrp8t0c1lw1jna]{Heroism}<em>,</em> except the
-      creature gains a +4 morale bonus on attack rolls, saves, and skill checks,
-      immunity to fear effects, and temporary hit points equal to your caster
-      level (maximum 20).</p>
   actions:
     - _id: 7sczi7u0wbiinij9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,36 +13,44 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.vqfrp8t0c1lw1jna]{Heroism}<em>,</em> except the
+      creature gains a +4 morale bonus on attack rolls, saves, and skill checks,
+      immunity to fear effects, and temporary hit points equal to your caster
+      level (maximum 20).</p>
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      bard: 5
-      summoner: 5
-      witch: 6
-      psychic: 6
-      spiritualist: 6
-      summonerUnchained: 6
-    subDomain:
-      Heroism: 6
-      Competition: 6
     bloodline:
       Martyred: 6
+    class:
+      bard: 5
+      psychic: 6
+      sorcerer: 6
+      spiritualist: 6
+      summoner: 5
+      summonerUnchained: 6
+      witch: 6
+      wizard: 6
+    subDomain:
+      Competition: 6
+      Heroism: 6
   level: 6
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!z0duc2v2n3ioynta'
+type: spell
 

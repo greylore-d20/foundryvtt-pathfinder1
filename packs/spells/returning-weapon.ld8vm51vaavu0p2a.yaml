@@ -1,18 +1,11 @@
 _id: ld8vm51vaavu0p2a
-name: Returning Weapon
-type: spell
+_key: '!items!ld8vm51vaavu0p2a'
 img: icons/magic/movement/pinwheel-turning-blue.webp
+name: Returning Weapon
 system:
-  description:
-    value: >-
-      <p>For the duration of the spell, the target weapon acts as if it had the
-      <i>returning</i> weapon special ability (see page 471 of the <i>Core</i>
-      Rulebook).  This spell can be used as the prerequisite for the
-      <i>returning</i> weapon special ability.</p>
   actions:
     - _id: we35e4fb8opug2jn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,36 +13,43 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one weapon that can be thrown
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
         harmless: true
+        type: will
+      target:
+        value: one weapon that can be thrown
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>For the duration of the spell, the target weapon acts as if it had the
+      <i>returning</i> weapon special ability (see page 471 of the <i>Core</i>
+      Rulebook).  This spell can be used as the prerequisite for the
+      <i>returning</i> weapon special ability.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      ranger: 1
       bard: 2
-      witch: 2
+      bloodrager: 1
+      cleric: 2
+      hunter: 1
       inquisitor: 1
       magus: 1
-      bloodrager: 1
-      psychic: 2
       occultist: 1
-      hunter: 1
+      oracle: 2
+      psychic: 2
+      ranger: 1
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ld8vm51vaavu0p2a'
+type: spell
 

@@ -1,8 +1,29 @@
 _id: Edat9QID9gD5xrrg
-name: Tribal Cooperation
-type: feat
+_key: '!items!Edat9QID9gD5xrrg'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Tribal Cooperation
 system:
+  abilityType: su
+  actions:
+    - _id: ay3jjygj47kc9650
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 3 + floor(@classes.shaman.level / 2)
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman gains a <em>teamwork feat</em> as a bonus feat. She must
@@ -12,31 +33,10 @@ system:
       round for every 2 levels the shaman has. Allies do not need to meet the
       prerequisites of this bonus feat.</p><p>The shaman can use this ability a
       number of times per day equal to 3 + her Charisma modifier.</p>
-  actions:
-    - _id: ay3jjygj47kc9650
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 + floor(@classes.shaman.level / 2)
-        units: round
-      target:
-        value: allies
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_tribalCooperation
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!Edat9QID9gD5xrrg'
+  tag: classFeat_tribalCooperation
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

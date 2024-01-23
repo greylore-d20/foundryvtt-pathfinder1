@@ -1,8 +1,34 @@
 _id: 3p5s2rkpe7u7ifzn
-name: Chill Metal
-type: spell
+_key: '!items!3p5s2rkpe7u7ifzn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Chill Metal
 system:
+  actions:
+    - _id: bpoyuhksm4teknfm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 7 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: >-
+          metal equipment of one creature per two levels, no two of which can be
+          more than 30 ft. apart; or 25 lbs. of metal/level, none of which can
+          be more than 30 ft. away from any of the rest
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Chill metal</i> makes metal extremely cold. Unattended, nonmagical
@@ -28,40 +54,14 @@ system:
       <i>chill metal</i> deals no damage, but ice immediately forms around the
       affected metal, making it float if unattended.</p><p><i>Chill metal</i>
       counters and dispels <i>heat metal</i>.</p>
-  actions:
-    - _id: bpoyuhksm4teknfm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 7 rounds
-      target:
-        value: >-
-          metal equipment of one creature per two levels, no two of which can be
-          more than 30 ft. apart; or 25 lbs. of metal/level, none of which can
-          be more than 30 ft. away from any of the rest
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
       druid: 2
-      psychic: 2
-      occultist: 2
       hunter: 2
+      occultist: 2
+      psychic: 2
   level: 2
   school: trs
   types: cold
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!3p5s2rkpe7u7ifzn'
+type: spell
 

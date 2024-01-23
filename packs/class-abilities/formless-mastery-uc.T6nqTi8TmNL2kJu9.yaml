@@ -1,8 +1,23 @@
 _id: T6nqTi8TmNL2kJu9
-name: Formless Mastery (UC)
-type: feat
+_key: '!items!T6nqTi8TmNL2kJu9'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Formless Mastery (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: c8e1lhm13168evpm
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability varies his styles, never repeating the same
@@ -18,22 +33,7 @@ system:
       with the same immediate action for a total cost of 3 ki points.</p>
 
       <p>A monk must be at least 7th level before selecting this ki power.</p>
-  actions:
-    - _id: c8e1lhm13168evpm
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: round
-  tag: classFeat_formlessMasteryUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!T6nqTi8TmNL2kJu9'
+  tag: classFeat_formlessMasteryUc
+type: feat
 

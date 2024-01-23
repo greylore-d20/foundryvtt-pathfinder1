@@ -1,8 +1,12 @@
 _id: Oyxrd5pd7kkzsuJq
-name: Elixir of Life
-type: feat
+_key: '!items!Oyxrd5pd7kkzsuJq'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Elixir of Life
 system:
+  associations:
+    classes:
+      - Alchemist
+      - Investigator
   description:
     value: >-
       <p>Once per day, the character can brew an elixir of life. This special
@@ -18,14 +22,10 @@ system:
       modifier; if he does not die before that time expires, the effects of the
       elixir of life end. An alchemist must be at least 16th level before
       selecting this discovery.</p>
+  subType: classFeat
+  tag: classFeat_elixirOfLife
   tags:
     - Alchemist Discovery
     - Investigator Talent
-  tag: classFeat_elixirOfLife
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-      - Investigator
-_key: '!items!Oyxrd5pd7kkzsuJq'
+type: feat
 

@@ -1,16 +1,11 @@
 _id: opdh00yu3ud5z867
-name: Protection from Law, Communal
-type: spell
+_key: '!items!opdh00yu3ud5z867'
 img: icons/magic/defensive/barrier-shield-dome-deflect-teal.webp
+name: Protection from Law, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Protection from Law</i>, except you divide
-      the duration in 1-minute intervals among the creatures touched.</p>
   actions:
     - _id: 1p14oifbqklved45
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,36 +13,41 @@ system:
           type: action
       duration:
         value: 1 min./level (D)
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Protection from Law</i>, except you divide
+      the duration in 1-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
-      arcanist: 2
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      oracle: 2
-      summoner: 2
-      inquisitor: 2
       antipaladin: 2
+      arcanist: 2
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
       warpriest: 2
+      wizard: 2
   level: 2
   school: abj
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1118
     pages: '240'
-_key: '!items!opdh00yu3ud5z867'
+  sr: false
+  types: evil
+type: spell
 

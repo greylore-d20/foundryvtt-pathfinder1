@@ -1,8 +1,39 @@
 _id: QXs5iZ1gpobwCNp9
-name: Dwarven Boulder Helmet
-type: weapon
+_key: '!items!QXs5iZ1gpobwCNp9'
 img: systems/pf1/icons/items/weapons/helmet-dwarven-bolder.PNG
+name: Dwarven Boulder Helmet
 system:
+  actions:
+    - _id: r2lzhf4bfqbktor7
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/helmet-dwarven-bolder.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Dwarven Boulder Helmet
   description:
     value: >-
       <p>This heavy, reinforced helmet can be used to make melee attacks. The
@@ -16,62 +47,31 @@ system:
       that it can be crafted from unusual materials as a metal weapon. A dwarven
       boulder helmet can be enchanted as a weapon (not as armor, despite
       providing some protection).</p>
-  tags:
-    - PFS
-    - Dwarven
-  weight:
-    value: 10
-  price: 20
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: r2lzhf4bfqbktor7
-      name: Attack
-      img: systems/pf1/icons/items/weapons/helmet-dwarven-bolder.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Dwarven Boulder Helmet
-  weaponGroups:
-    value:
-      - close
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 20
   properties:
-    spc: true
     fin: true
+    spc: true
   source:
     id: PZO1121
     pages: '17'
-_key: '!items!QXs5iZ1gpobwCNp9'
+  subType: exotic
+  tags:
+    - PFS
+    - Dwarven
+  weaponGroups:
+    value:
+      - close
+  weight:
+    value: 10
+type: weapon
 

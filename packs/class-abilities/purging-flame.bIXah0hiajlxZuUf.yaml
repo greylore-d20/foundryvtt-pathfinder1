@@ -1,8 +1,27 @@
 _id: bIXah0hiajlxZuUf
-name: Purging Flame
-type: feat
+_key: '!items!bIXah0hiajlxZuUf'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Purging Flame
 system:
+  abilityType: sp
+  actions:
+    - _id: gappsq7zsvi54s7m
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 6;
@@ -20,26 +39,7 @@ system:
       100 gp or 1,000 gp as part of using purging flame, your target also
       benefits from restoration, as if the spell were cast using diamonds of
       equal value as a material component.</p>
-  actions:
-    - _id: gappsq7zsvi54s7m
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        units: close
-  tag: classFeat_purgingFlame
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!bIXah0hiajlxZuUf'
+  tag: classFeat_purgingFlame
+type: feat
 

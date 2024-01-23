@@ -1,7 +1,14 @@
-name: Flexible Enhancement
-type: feat
+_id: 5awkon2RsvmNHcwb
+_key: '!items!5awkon2RsvmNHcwb'
 img: icons/magic/nature/root-vine-entangle-foot-green.webp
+name: Flexible Enhancement
 system:
+  abilityType: su
+  changes:
+    - _id: NZFSXX4B
+      formula: 1 + floor(@classes.wizard.level / 5)
+      modifier: enh
+      subTarget: dex
   description:
     value: >-
       <p>A master of the wood element is able to bend like bamboo when stressed
@@ -12,18 +19,11 @@ system:
       spells. At 20th level, this bonus applies to two of these ability scores
       of your choice.</p><p><em>Editor's note: select corresponding ability
       score in changes tab</em></p>
-  tags:
-    - Wood School
-  changes:
-    - _id: NZFSXX4B
-      formula: 1 + floor(@classes.wizard.level / 5)
-      subTarget: dex
-      modifier: enh
-  subType: classFeat
-  abilityType: su
   source:
     id: PZO1117
     pages: '88'
-_id: 5awkon2RsvmNHcwb
-_key: '!items!5awkon2RsvmNHcwb'
+  subType: classFeat
+  tags:
+    - Wood School
+type: feat
 

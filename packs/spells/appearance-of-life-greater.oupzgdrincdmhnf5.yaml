@@ -1,8 +1,31 @@
 _id: oupzgdrincdmhnf5
-name: Appearance of Life, Greater
-type: spell
+_key: '!items!oupzgdrincdmhnf5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Appearance of Life, Greater
 system:
+  actions:
+    - _id: hczn9xkqu95f25c0
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will disbelief or Will negates (see text)
+        type: will
+      target:
+        value: one willing undead creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as
@@ -14,46 +37,23 @@ system:
       creatures that interact with the target take a -5 penalty on their Will
       saving throws to disbelieve the illusion, though if the target attacks a
       creature, the attacked creature no longer takes this penalty.</p>
-  actions:
-    - _id: hczn9xkqu95f25c0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one willing undead creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief or Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
-      oracle: 5
-      witch: 5
-      psychic: 5
       medium: 4
       mesmerist: 5
+      oracle: 5
+      psychic: 5
+      sorcerer: 5
       spiritualist: 4
+      warpriest: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: one Tiny or larger living creature
+  school: ill
   sr: false
-_key: '!items!oupzgdrincdmhnf5'
+  subschool: glamer
+type: spell
 

@@ -1,8 +1,26 @@
 _id: Y7FSWKwsogyfXlyF
-name: Monstrous Insight
-type: feat
+_key: '!items!Y7FSWKwsogyfXlyF'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Monstrous Insight
 system:
+  abilityType: su
+  actions:
+    - _id: 2vdu738xcgltl5cu
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can identify creatures and gain insight into their strengths
@@ -16,28 +34,10 @@ system:
 
       <p>The shaman can use this ability a number of times per day equal to 3 +
       her Charisma modifier.</p>
-  actions:
-    - _id: 2vdu738xcgltl5cu
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: one creature
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_monstrousInsight
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!Y7FSWKwsogyfXlyF'
+  tag: classFeat_monstrousInsight
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,27 @@
 _id: HBs6rAt0CjPvO5K6
-name: Feral Shifting
-type: feat
+_key: '!items!HBs6rAt0CjPvO5K6'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Feral Shifting
 system:
+  abilityType: su
+  actions:
+    - _id: h2nk57nq8xiu63zq
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>As a swift action, the arcanist can spend 1 point from her arcane
@@ -11,28 +30,9 @@ system:
       points of damage (1d3 points of damage if she is Small) for a number of
       minutes equal to her Charisma modifier (minimum 1). These are primary
       natural attacks.</p>
+  subType: classFeat
+  tag: classFeat_feralShifting
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: h2nk57nq8xiu63zq
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_feralShifting
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!HBs6rAt0CjPvO5K6'
+type: feat
 

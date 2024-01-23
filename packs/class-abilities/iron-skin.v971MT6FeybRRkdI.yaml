@@ -1,8 +1,28 @@
 _id: v971MT6FeybRRkdI
-name: Iron Skin
-type: feat
+_key: '!items!v971MT6FeybRRkdI'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Iron Skin
 system:
+  abilityType: su
+  actions:
+    - _id: 5xzhxg66qvo91i4g
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.oracle.level * 10'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, your skin hardens and takes on the appearance of iron,
@@ -12,34 +32,14 @@ system:
       per day.</p>
 
       <p>You must be at least 11th level to select this revelation.</p>
+  subType: classFeat
+  tag: classFeat_ironSkin
   tags:
     - Revelation
     - Battle Mystery
     - Metal Mystery
-  actions:
-    - _id: 5xzhxg66qvo91i4g
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level * 10'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: '@classes.oracle.level >= 15 ? 2 : 1'
-  tag: classFeat_ironSkin
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!v971MT6FeybRRkdI'
+    per: day
+type: feat
 

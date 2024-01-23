@@ -1,8 +1,27 @@
 _id: 7gfuexp9mi45zkut
-name: Ooze Form III
-type: spell
+_key: '!items!7gfuexp9mi45zkut'
 img: icons/creatures/slimes/slime-face-skull-green.webp
+name: Ooze Form III
 system:
+  actions:
+    - _id: hs2ee36qn1f9kfik
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>ooze form II</i> except you can also assume
@@ -13,34 +32,15 @@ system:
       penalty to your Dexterity score, base speed 20 feet, climb speed 20 feet,
       swim speed 30 feet, a slam attack (2d6 plus 2d6 acid and grab), and
       constrict (2d6).</p>
-  actions:
-    - _id: hs2ee36qn1f9kfik
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       sorcerer: 7
       wizard: 7
   level: 7
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a bit of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!7gfuexp9mi45zkut'
+  subschool: polymorph
+type: spell
 

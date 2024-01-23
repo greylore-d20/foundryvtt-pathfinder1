@@ -1,8 +1,23 @@
 _id: 2kZOIsaV2a5Nrgbj
-name: Tabris's Step
-type: feat
+_key: '!items!2kZOIsaV2a5Nrgbj'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Tabris's Step
 system:
+  abilityType: sp
+  actions:
+    - _id: 76nqjwtha9xwk8hn
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '@cl * 10'
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>As a swift action, a magus can spend 1 point from his arcane pool and
@@ -11,22 +26,7 @@ system:
       touched creatures equal to his magus level.</p>
 
       <p>The magus must be at least 6th level to select this arcana.</p>
-  actions:
-    - _id: 76nqjwtha9xwk8hn
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '@cl * 10'
-        units: minute
-  tag: classFeat_tabrissStep
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: sp
-_key: '!items!2kZOIsaV2a5Nrgbj'
+  tag: classFeat_tabrissStep
+type: feat
 

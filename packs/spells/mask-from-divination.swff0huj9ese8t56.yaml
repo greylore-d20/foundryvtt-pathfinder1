@@ -1,8 +1,33 @@
 _id: swff0huj9ese8t56
-name: Mask from Divination
-type: spell
+_key: '!items!swff0huj9ese8t56'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mask from Divination
 system:
+  actions:
+    - _id: 1gwxu1afq3thq7co
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>As part of the action used to cast this spell, you place the mask used
@@ -24,47 +49,22 @@ system:
       the duration of the spell, and the fact that the target is wearing the
       focus mask cannot be hidden in any way from creatures that observe the
       target.</p>
-  actions:
-    - _id: 1gwxu1afq3thq7co
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       alchemist: 5
-      witch: 5
-      magus: 5
       bloodrager: 4
+      magus: 5
       shaman: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: diamond dust worth 200 gp
     focus: an eyeless mask
     gpValue: 200
+    value: diamond dust worth 200 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!swff0huj9ese8t56'
+  school: div
+type: spell
 

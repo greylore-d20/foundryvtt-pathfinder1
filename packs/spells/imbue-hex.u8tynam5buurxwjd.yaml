@@ -1,8 +1,33 @@
 _id: u8tynam5buurxwjd
-name: Imbue Hex
-type: spell
+_key: '!items!u8tynam5buurxwjd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Imbue Hex
 system:
+  actions:
+    - _id: nfk2hkex0zfy6elk
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: permanent or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transfer a single hex you know to the target, and give that target
@@ -15,38 +40,13 @@ system:
       major or grand hex-with this ability.  Once you cast <i>imbue hex</i>, you
       cannot use the transferred hex until the spell is discharged, dispelled,
       or dismissed.</p>
-  actions:
-    - _id: nfk2hkex0zfy6elk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: permanent or until discharged
-      target:
-        value: creature touched; see text
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      witch: 5
       shaman: 5
+      witch: 5
   level: 5
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a hag's whisker
-_key: '!items!u8tynam5buurxwjd'
+  school: evo
+type: spell
 

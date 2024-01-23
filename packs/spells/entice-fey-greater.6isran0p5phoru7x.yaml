@@ -1,18 +1,10 @@
 _id: 6isran0p5phoru7x
-name: Entice Fey, Greater
-type: spell
+_key: '!items!6isran0p5phoru7x'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Entice Fey, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as @Compendium[pf1.spells.fv17a5jsmapb0wcz]{lesser
-      entice fey}, except the spell's whimsical calling can produce a single fey
-      of 18 Hit Dice or less, or up to three fey of the same kind whose Hit Dice
-      total no more than 18.</p>
   actions:
     - _id: qd9srysrr3m57pm9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
@@ -21,28 +13,36 @@ system:
           type: minute
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: >-
         up to three called fey, totaling no more than 18 Hit Dice, no two of
         which can appear more than 30 ft. apart
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as @Compendium[pf1.spells.fv17a5jsmapb0wcz]{lesser
+      entice fey}, except the spell's whimsical calling can produce a single fey
+      of 18 Hit Dice or less, or up to three fey of the same kind whose Hit Dice
+      total no more than 18.</p>
   learnedAt:
     class:
       druid: 9
       shaman: 9
   level: 9
-  school: con
-  subschool: calling
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: offerings worth 2,500 gp plus payment
     gpValue: 2500
+    value: offerings worth 2,500 gp plus payment
   preparation:
     spontaneousPrepared: false
+  school: con
   sr: false
-_key: '!items!6isran0p5phoru7x'
+  subschool: calling
+type: spell
 

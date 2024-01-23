@@ -1,8 +1,26 @@
 _id: tzxcrtp320hrc1ju
-name: True Appraisal
-type: spell
+_key: '!items!tzxcrtp320hrc1ju'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: True Appraisal
 system:
+  actions:
+    - _id: 6n6xt6p7cdpwsuub
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 8 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    verbal: true
   description:
     value: >-
       <p>You gain temporary insight into the value of objects. You gain a +5
@@ -11,36 +29,18 @@ system:
       Appraise check even if stress or distractions would normally prevent you
       from doing so. You know if you fail an Appraise check, and you never
       determine a wildly inaccurate price.</p>
-  actions:
-    - _id: 6n6xt6p7cdpwsuub
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 8 hours
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
-      witch: 1
+      cleric: 1
       inquisitor: 1
       occultist: 1
-  school: div
-  components:
-    verbal: true
-    focus: true
+      oracle: 1
+      warpriest: 1
+      witch: 1
   materials:
     focus: gold coin
+  school: div
   sr: false
-_key: '!items!tzxcrtp320hrc1ju'
+type: spell
 

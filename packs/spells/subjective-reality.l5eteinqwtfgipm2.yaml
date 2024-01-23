@@ -1,8 +1,25 @@
 _id: l5eteinqwtfgipm2
-name: Subjective Reality
-type: spell
+_key: '!items!l5eteinqwtfgipm2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Subjective Reality
 system:
+  actions:
+    - _id: 1uj0h8imx9q0mopd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>Choose one object, creature, or force you can see within long range
@@ -20,35 +37,18 @@ system:
       direct effects of your <i>earthquake</i> spell, if the spell caused a
       room's ceiling to collapse, the target would not be immune to the effects
       of the collapse.</p>
-  actions:
-    - _id: 1uj0h8imx9q0mopd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 6
-      psychic: 6
       medium: 5
       mesmerist: 5
+      psychic: 6
+      sorcerer: 7
+      wizard: 7
   level: 7
   school: ill
+  sr: false
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-  sr: false
-_key: '!items!l5eteinqwtfgipm2'
+type: spell
 

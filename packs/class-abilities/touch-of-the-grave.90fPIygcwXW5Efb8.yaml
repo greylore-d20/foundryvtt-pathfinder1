@@ -1,8 +1,35 @@
 _id: 90fPIygcwXW5Efb8
-name: Touch of the Grave
-type: feat
+_key: '!items!90fPIygcwXW5Efb8'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Touch of the Grave
 system:
+  abilityType: su
+  actions:
+    - _id: kz3kwgdpi1817po4
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d4 + floor(@classes.shaman.level / 2)
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman can make a melee touch attack infused
@@ -15,37 +42,10 @@ system:
 
       <p>At 11th level, any weapon that the shaman wields is treated as an
       unholy weapon.</p>
-  actions:
-    - _id: kz3kwgdpi1817po4
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: 1d4 + floor(@classes.shaman.level / 2)
-            type:
-              values:
-                - negative
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_touchOfTheGrave
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!90fPIygcwXW5Efb8'
+  tag: classFeat_touchOfTheGrave
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

@@ -1,8 +1,32 @@
 _id: vdmsaodgnbo8wjfx
-name: Gentle Repose
-type: spell
+_key: '!items!vdmsaodgnbo8wjfx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Gentle Repose
 system:
+  actions:
+    - _id: 9bvroga96m8gpnk0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: corpse touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You preserve the remains of a dead creature so that they do not decay.
@@ -12,50 +36,26 @@ system:
       makes transporting a slain (and thus decaying) comrade less
       unpleasant.</p><p>The spell also works on severed body parts and the
       like.</p>
-  actions:
-    - _id: 9bvroga96m8gpnk0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: corpse touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
-      shaman: 2
       medium: 2
       occultist: 3
+      oracle: 2
+      shaman: 2
+      sorcerer: 3
       spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 3
     domain:
       Repose: 2
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: salt and a copper piece for each of the corpse's eyes
+  school: nec
   source:
     id: PZO1110
     pages: '289'
-_key: '!items!vdmsaodgnbo8wjfx'
+type: spell
 

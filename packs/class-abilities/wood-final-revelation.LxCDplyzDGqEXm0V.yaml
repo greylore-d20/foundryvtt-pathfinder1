@@ -1,8 +1,17 @@
 _id: LxCDplyzDGqEXm0V
-name: Wood Final Revelation
-type: feat
+_key: '!items!LxCDplyzDGqEXm0V'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wood Final Revelation
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: v8mhdg8m
+      formula: '4'
+      modifier: untyped
+      priority: null
+      subTarget: nac
   description:
     value: >-
       <p>Upon reaching 20th level, you become a living creature of wood. You are
@@ -15,21 +24,12 @@ system:
       you can meld with any tree or single block of wood (as meld into stone,
       except wood only, and with no limit to how long you can remain in the
       wood).</p>
-  tags:
-    - Wood Mystery
-  changes:
-    - _id: v8mhdg8m
-      formula: '4'
-      subTarget: nac
-      modifier: untyped
-      priority: null
-  tag: classFeat_woodFinalRevelation
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
   source:
     id: PZO1117
     pages: '57'
-_key: '!items!LxCDplyzDGqEXm0V'
+  subType: classFeat
+  tag: classFeat_woodFinalRevelation
+  tags:
+    - Wood Mystery
+type: feat
 

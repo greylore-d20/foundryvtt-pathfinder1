@@ -1,8 +1,28 @@
 _id: 9Jr67vS43CgGUm5N
-name: Disorienting Touch
-type: feat
+_key: '!items!9Jr67vS43CgGUm5N'
 img: systems/pf1/icons/skills/ice_16.jpg
+name: Disorienting Touch
 system:
+  abilityType: sp
+  actions:
+    - _id: m854dg7cynqc071y
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.sorcerer.level / 2))
+      img: systems/pf1/icons/skills/ice_16.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, as a melee <em>touch attack</em>, you can cause a
@@ -11,30 +31,10 @@ system:
       <em>sorcerer</em> level (minimum 1). Multiple touches do not stack, but
       they do add to the duration. You can use this ability a number of times
       per day equal to 3 + your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: m854dg7cynqc071y
-      name: Use
-      img: systems/pf1/icons/skills/ice_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.sorcerer.level / 2))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_disorientingTouch
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!9Jr67vS43CgGUm5N'
+  tag: classFeat_disorientingTouch
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

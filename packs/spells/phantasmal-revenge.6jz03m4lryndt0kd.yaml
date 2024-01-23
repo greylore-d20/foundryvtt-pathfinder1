@@ -1,8 +1,30 @@
 _id: 6jz03m4lryndt0kd
-name: Phantasmal Revenge
-type: spell
+_key: '!items!6jz03m4lryndt0kd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantasmal Revenge
 system:
+  actions:
+    - _id: ed6iectj47avpzhn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will disbelief then Fortitude partial; see text
+        type: fort
+      target:
+        value: dead body touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this eerie spell upon a recently slain creature, you
@@ -26,37 +48,15 @@ system:
       <i>Phantasmal revenge</i> makes no moral judgments; it targets winners of
       fair fights just as easily as murderers. Any given body can only be
       targeted by a <i>phantasmal revenge</i> spell once.</p>
-  actions:
-    - _id: ed6iectj47avpzhn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: dead body touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will disbelief then Fortitude partial; see text
   learnedAt:
     class:
+      mesmerist: 6
+      psychic: 7
       sorcerer: 7
       wizard: 7
-      psychic: 7
-      mesmerist: 6
   level: 7
   school: ill
   subschool: phantasm
   types: fear, mind-affecting, emotion
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!6jz03m4lryndt0kd'
+type: spell
 

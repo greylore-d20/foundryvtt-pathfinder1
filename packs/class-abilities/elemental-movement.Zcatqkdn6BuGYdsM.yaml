@@ -1,8 +1,20 @@
 _id: Zcatqkdn6BuGYdsM
-name: Elemental Movement
-type: feat
+_key: '!items!Zcatqkdn6BuGYdsM'
 img: systems/pf1/icons/spells/fog-sky-2.jpg
+name: Elemental Movement
 system:
+  abilityType: su
+  actions:
+    - _id: qatqodsvrd063bx2
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/fog-sky-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, you gain a special movement type or bonus. This ability
@@ -69,22 +81,10 @@ system:
       </tbody>
 
       </table>
-  actions:
-    - _id: qatqodsvrd063bx2
-      name: Use
-      img: systems/pf1/icons/spells/fog-sky-2.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_elementalMovement
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
   source:
     id: PZO1110
     pages: '76'
-_key: '!items!Zcatqkdn6BuGYdsM'
+  subType: classFeat
+  tag: classFeat_elementalMovement
+type: feat
 

@@ -1,18 +1,10 @@
 _id: xpbgovfguxskvniy
-name: Reduce Animal
-type: spell
+_key: '!items!xpbgovfguxskvniy'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Reduce Animal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>reduce person,</i> except that it affects
-      a single willing animal. Reduce the damage dealt by the animal's natural
-      attacks as appropriate for its new size (see Chapter 6 how to adjust
-      damage for size).</p>
   actions:
     - _id: pg9c51cokjbv25e3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,20 +12,28 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: one willing animal of Small, Medium, Large, or Huge size
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: one willing animal of Small, Medium, Large, or Huge size
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>reduce person,</i> except that it affects
+      a single willing animal. Reduce the damage dealt by the animal's natural
+      attacks as appropriate for its new size (see Chapter 6 how to adjust
+      damage for size).</p>
   learnedAt:
     class:
       druid: 2
-      ranger: 3
       hunter: 2
+      ranger: 3
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!xpbgovfguxskvniy'
+type: spell
 

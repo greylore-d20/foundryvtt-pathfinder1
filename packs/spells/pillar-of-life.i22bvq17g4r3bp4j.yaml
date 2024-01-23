@@ -1,8 +1,27 @@
 _id: i22bvq17g4r3bp4j
-name: Pillar of Life
-type: spell
+_key: '!items!i22bvq17g4r3bp4j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pillar of Life
 system:
+  actions:
+    - _id: ku0fxuw4cc89awru
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: 5-ft.-square pillar of positive energy, 20 ft. high
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a pillar of positive energy in a single 5-foot square
@@ -14,34 +33,15 @@ system:
       level (maximum 10d6). Undead creatures vulnerable to bright light take 1d8
       points if damage per caster level (maximum 10d8). A creature cannot
       benefit or suffer more than once from a single casting of this spell.</p>
-  actions:
-    - _id: ku0fxuw4cc89awru
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: heal
-      spellEffect: 5-ft.-square pillar of positive energy, 20 ft. high
   learnedAt:
     class:
       cleric: 5
-      warpriest: 5
       oracle: 5
+      warpriest: 5
   level: 5
   school: con
+  sr: false
   subschool: healing
   types: light
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-  sr: false
-_key: '!items!i22bvq17g4r3bp4j'
+type: spell
 

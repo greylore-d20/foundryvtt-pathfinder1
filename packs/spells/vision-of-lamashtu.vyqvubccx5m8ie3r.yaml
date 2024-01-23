@@ -1,8 +1,31 @@
 _id: vyqvubccx5m8ie3r
-name: Vision of Lamashtu
-type: spell
+_key: '!items!vyqvubccx5m8ie3r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vision of Lamashtu
 system:
+  actions:
+    - _id: hbz4l0a28u64og37
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions exactly as the spell <i>nightmare</i>. In addition
@@ -24,38 +47,15 @@ system:
       <i>bestow curse</i> along as part of a <i>vision of Lamashtu</i>, but not
       <i>blade barrier</i> (affects an area), <i>destruction</i> (too high
       level), or <i>inflict moderate wounds</i> (deals hit point damage).</p>
-  actions:
-    - _id: hbz4l0a28u64og37
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: one living creature
-      range:
-        units: unlimited
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
       cleric: 7
+      inquisitor: 6
       oracle: 7
       witch: 7
-      inquisitor: 6
   level: 7
   school: ill
   subschool: phantasm
   types: evil, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vyqvubccx5m8ie3r'
+type: spell
 

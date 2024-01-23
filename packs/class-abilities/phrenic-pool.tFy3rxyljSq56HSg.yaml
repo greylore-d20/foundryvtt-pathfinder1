@@ -1,8 +1,20 @@
 _id: tFy3rxyljSq56HSg
-name: Phrenic Pool
-type: feat
+_key: '!items!tFy3rxyljSq56HSg'
 img: systems/pf1/icons/spells/air-burst-jade-3.jpg
+name: Phrenic Pool
 system:
+  abilityType: su
+  actions:
+    - _id: tr7vyevvpam9e0lw
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/air-burst-jade-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>A psychic has a pool of supernatural mental energy that she can draw
@@ -16,22 +28,10 @@ system:
       dictated by her psychic discipline.</p>
 
       <p>Points gained in excess of the pool’s maximum are lost.</p>
-  actions:
-    - _id: tr7vyevvpam9e0lw
-      name: Use
-      img: systems/pf1/icons/spells/air-burst-jade-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: floor(@classes.psychic.level / 2) + @abilities.cha.mod
-  tag: classFeat_phrenicPool
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!tFy3rxyljSq56HSg'
+  tag: classFeat_phrenicPool
+  uses:
+    maxFormula: floor(@classes.psychic.level / 2) + @abilities.cha.mod
+    per: day
+type: feat
 

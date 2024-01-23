@@ -1,8 +1,36 @@
 _id: 2bmiwnoqt41kgqp1
-name: Hammer of Mending
-type: spell
+_key: '!items!2bmiwnoqt41kgqp1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hammer of Mending
 system:
+  actions:
+    - _id: qthorhog3j5aaawy
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft.-radius burst centered on you
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+  components:
+    divineFocus: 1
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon striking a piece of solid ground with the spell's focus or a holy
@@ -15,46 +43,18 @@ system:
       the item if your caster level is at least twice that of the
       item.</p><p>Items with charges (such as wands) and single-use items (such
       as potions and scrolls) cannot be repaired in this way.</p>
-  actions:
-    - _id: qthorhog3j5aaawy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '30'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
-      area: 30-ft.-radius burst centered on you
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 5
       summoner: 5
       summonerUnchained: 5
+      warpriest: 6
+      wizard: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 1
   materials:
     focus: a small mithral hammer worth 300 gp
-_key: '!items!2bmiwnoqt41kgqp1'
+  school: trs
+type: spell
 

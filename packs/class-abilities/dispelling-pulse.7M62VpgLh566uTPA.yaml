@@ -1,8 +1,22 @@
 _id: 7M62VpgLh566uTPA
-name: Dispelling Pulse
-type: feat
+_key: '!items!7M62VpgLh566uTPA'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Dispelling Pulse
 system:
+  abilityType: su
+  actions:
+    - _id: 9hfaqgknug7kcv2b
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '3'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>The psychic can spend 3 points from her phrenic pool to entwine
@@ -17,21 +31,7 @@ system:
 
       <p>This amplification can be linked only to a spell that targets one
       creature or object.</p>
-  actions:
-    - _id: 9hfaqgknug7kcv2b
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      uses:
-        autoDeductChargesCost: '3'
-  tag: classFeat_dispellingPulse
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!7M62VpgLh566uTPA'
+  tag: classFeat_dispellingPulse
+type: feat
 

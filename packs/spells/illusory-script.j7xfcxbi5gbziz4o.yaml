@@ -1,8 +1,30 @@
 _id: j7xfcxbi5gbziz4o
-name: Illusory Script
-type: spell
+_key: '!items!j7xfcxbi5gbziz4o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Illusory Script
 system:
+  actions:
+    - _id: s0xdg5jfbze0adjj
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: one day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one touched object weighing no more than 10 lbs.
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You write instructions or other information on parchment, paper, or any
@@ -21,44 +43,22 @@ system:
       and its secret message disappear.</p><p>The hidden message can be read by
       a combination of the <i>true seeing</i> spell with the <i>read magic</i>
       or <i>comprehend languages</i> spell.</p>
-  actions:
-    - _id: s0xdg5jfbze0adjj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: one day/level
-      target:
-        value: one touched object weighing no more than 10 lbs.
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      psychic: 3
       mesmerist: 3
       occultist: 3
+      psychic: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
+  materials:
+    gpValue: 50
+    value: lead-based ink worth 50 gp
+  preparation:
+    spontaneousPrepared: false
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: lead-based ink worth 50 gp
-    gpValue: 50
-  preparation:
-    spontaneousPrepared: false
-_key: '!items!j7xfcxbi5gbziz4o'
+type: spell
 

@@ -1,8 +1,32 @@
 _id: vvbi3truugjpoa2y
-name: Weaken Powder
-type: spell
+_key: '!items!vvbi3truugjpoa2y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Weaken Powder
 system:
+  actions:
+    - _id: llwa2bp8jeyxhfie
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: 1 loaded firearm
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Ammunition in the target firearm generates less of an explosive charge
@@ -12,39 +36,15 @@ system:
       identify the spell being cast or similar effect), the firearm's user can
       spend a standard action to clear the altered ammunition from the firearm.
       Doing so destroys that ammunition.</p>
-  actions:
-    - _id: llwa2bp8jeyxhfie
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 loaded firearm
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       druid: 1
-      witch: 1
       hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   materials:
     value: an empty paper cartridge
-_key: '!items!vvbi3truugjpoa2y'
+  school: trs
+type: spell
 

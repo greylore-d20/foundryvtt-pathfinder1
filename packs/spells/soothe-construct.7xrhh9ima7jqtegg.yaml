@@ -1,19 +1,10 @@
 _id: 7xrhh9ima7jqtegg
-name: Soothe Construct
-type: spell
+_key: '!items!7xrhh9ima7jqtegg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Soothe Construct
 system:
-  description:
-    value: >-
-      <p>You soothe the elemental spirit of a targeted construct, reducing its
-      chance of going berserk by 1d4% per four caster levels (maximum 5d4%). If
-      cast on a construct that has already gone berserk and you are its master,
-      you may immediately roll d% to end the construct's berserk state, it
-      returns to normal functioning, and its berserk chance returns to 0%.</p>
   actions:
     - _id: ji0i1jqdem2r7fev
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -21,23 +12,32 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one construct
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
+      target:
+        value: one construct
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You soothe the elemental spirit of a targeted construct, reducing its
+      chance of going berserk by 1d4% per four caster levels (maximum 5d4%). If
+      cast on a construct that has already gone berserk and you are its master,
+      you may immediately roll d% to end the construct's berserk state, it
+      returns to normal functioning, and its berserk chance returns to 0%.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 4
-      warpriest: 4
-      oracle: 4
       occultist: 4
+      oracle: 4
+      sorcerer: 5
+      warpriest: 4
+      wizard: 5
   level: 5
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!7xrhh9ima7jqtegg'
+type: spell
 

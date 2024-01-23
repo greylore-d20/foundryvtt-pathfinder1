@@ -1,8 +1,31 @@
 _id: QY3KFLg2SQnmITE2
-name: Curse of Faltering
-type: feat
+_key: '!items!QY3KFLg2SQnmITE2'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Curse of Faltering
 system:
+  abilityType: su
+  actions:
+    - _id: 5zaep4gsoy41yixy
+      actionType: save
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As an immediate action when an enemy within 30 feet threatens a
@@ -12,30 +35,7 @@ system:
 
       <p>Whether or not the save is successful, the creature cannot be the
       target of this hex again for 24 hours. This is a curse effect.</p>
-  actions:
-    - _id: 5zaep4gsoy41yixy
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_curseOfFaltering
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!QY3KFLg2SQnmITE2'
+  tag: classFeat_curseOfFaltering
+type: feat
 

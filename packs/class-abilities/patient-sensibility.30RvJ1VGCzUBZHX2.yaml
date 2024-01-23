@@ -1,38 +1,38 @@
 _id: 30RvJ1VGCzUBZHX2
-name: Patient Sensibility
-type: feat
+_key: '!items!30RvJ1VGCzUBZHX2'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Patient Sensibility
 system:
-  description:
-    value: >-
-      <p>You gain a +2 bonus on Diplomacy, Perception, and Sense Motive
-      checks.</p>
+  abilityType: su
   actions:
     - _id: y1genhi9hpeoit5u
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: passive
         unchained:
           type: passive
-  changes:
-    - _id: m6rzjw47
-      formula: '2'
-      subTarget: skill.dip
-      modifier: untyped
-    - _id: 3fq58ybt
-      formula: '2'
-      subTarget: skill.per
-      modifier: untyped
-    - _id: hai7c0f0
-      formula: '2'
-      subTarget: skill.sen
-      modifier: untyped
-  tag: classFeat_patientSensibility
-  subType: classFeat
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
   associations:
     classes:
       - Inquisitor
-  abilityType: su
-_key: '!items!30RvJ1VGCzUBZHX2'
+  changes:
+    - _id: m6rzjw47
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.dip
+    - _id: 3fq58ybt
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.per
+    - _id: hai7c0f0
+      formula: '2'
+      modifier: untyped
+      subTarget: skill.sen
+  description:
+    value: >-
+      <p>You gain a +2 bonus on Diplomacy, Perception, and Sense Motive
+      checks.</p>
+  subType: classFeat
+  tag: classFeat_patientSensibility
+type: feat
 

@@ -1,16 +1,11 @@
 _id: co0mc49xhtf7aczt
-name: Invigorate, Mass
-type: spell
+_key: '!items!co0mc49xhtf7aczt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invigorate, Mass
 system:
-  description:
-    value: >-
-      <p>This spell work as <i>invigorate</i>, except it affects multiple
-      creatures.</p>
   actions:
     - _id: ioj0gk372dpyyw71
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,24 +13,29 @@ system:
           type: action
       duration:
         value: 10 minutes/level (D)
-      target:
-        value: creatures touched, up to one/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched, up to one/level
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This spell work as <i>invigorate</i>, except it affects multiple
+      creatures.</p>
   learnedAt:
     class:
       bard: 3
-      psychic: 4
       mesmerist: 3
+      psychic: 4
   level: 3
   school: ill
   subschool: figment
-  components:
-    verbal: true
-_key: '!items!co0mc49xhtf7aczt'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: 578t0lra5ll3aifs
-name: Control Weather
-type: spell
+_key: '!items!578t0lra5ll3aifs'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Control Weather
 system:
+  actions:
+    - _id: mkpkklbd23de6kop
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: 2-mile-radius circle, centered on you; see text
+      duration:
+        value: 4d12 hours; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '2'
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You change the weather in the local area. It takes 10 minutes to cast
@@ -27,45 +46,26 @@ system:
       atmospheric phenomena (naturally occurring or otherwise) as well as create
       them.</p><p>A druid casting this spell doubles the duration and affects a
       circle with a 3-mile radius.</p>
-  actions:
-    - _id: mkpkklbd23de6kop
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 4d12 hours; see text
-      range:
-        value: '2'
-        units: mi
-      area: 2-mile-radius circle, centered on you; see text
   learnedAt:
+    bloodline:
+      Stormborn: 7
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
       druid: 7
-      witch: 7
+      oracle: 7
       shaman: 7
+      sorcerer: 7
+      witch: 7
+      wizard: 7
     domain:
       Weather: 7
     subDomain:
       Catastrophe: 7
-    bloodline:
-      Stormborn: 7
   level: 7
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '261'
-_key: '!items!578t0lra5ll3aifs'
+  sr: false
+type: spell
 

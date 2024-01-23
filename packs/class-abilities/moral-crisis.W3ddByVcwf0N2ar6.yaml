@@ -1,8 +1,33 @@
 _id: W3ddByVcwf0N2ar6
-name: Moral Crisis
-type: feat
+_key: '!items!W3ddByVcwf0N2ar6'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Moral Crisis
 system:
+  abilityType: su
+  actions:
+    - _id: kqseq08hj8ryf01n
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can target a living creature within 30 feet
@@ -10,37 +35,12 @@ system:
       Will save or be staggered for a number of rounds equal to your oracle
       level. The target can attempt a new saving throw at the end of each of its
       turns to end this effect. This is a mind-affecting emotion effect.</p>
-  tags:
-    - Reaper Mystery
-  actions:
-    - _id: kqseq08hj8ryf01n
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_moralCrisis
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO90139
     pages: '66'
-_key: '!items!W3ddByVcwf0N2ar6'
+  subType: classFeat
+  tag: classFeat_moralCrisis
+  tags:
+    - Reaper Mystery
+type: feat
 

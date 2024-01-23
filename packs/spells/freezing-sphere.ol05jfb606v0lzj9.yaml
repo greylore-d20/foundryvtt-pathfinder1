@@ -1,8 +1,31 @@
 _id: ol05jfb606v0lzj9
-name: Freezing Sphere
-type: spell
+_key: '!items!ol05jfb606v0lzj9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Freezing Sphere
 system:
+  actions:
+    - _id: oh6m01aa9yid3o37
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 1 round/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex half; see text
+        type: ref
+      target:
+        value: see Text
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Freezing sphere</i> creates a frigid globe of cold energy that
@@ -23,41 +46,18 @@ system:
       round per level, at the end of which time the <i>freezing sphere</i>
       bursts centered on you (and you receive no saving throw to resist its
       effect). Firing the globe in a later round is a standard action.</p>
-  actions:
-    - _id: oh6m01aa9yid3o37
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 1 round/level; see text
-      target:
-        value: see Text
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half; see text
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       magus: 6
       occultist: 6
+      sorcerer: 6
+      wizard: 6
     subDomain:
       Ice: 7
   level: 6
-  school: evo
-  types: cold
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a small crystal sphere
-_key: '!items!ol05jfb606v0lzj9'
+  school: evo
+  types: cold
+type: spell
 

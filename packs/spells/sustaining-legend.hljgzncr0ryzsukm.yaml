@@ -1,8 +1,34 @@
 _id: hljgzncr0ryzsukm
-name: Sustaining Legend
-type: spell
+_key: '!items!hljgzncr0ryzsukm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sustaining Legend
 system:
+  actions:
+    - _id: ccw01s2hjv6u1ri7
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The rulers of Azlant are thought to have used this spell to amplify the
@@ -22,40 +48,14 @@ system:
       can benefit from the effects of <i>sustaining legend</i> only once per
       round, even if the target expends multiple uses of mythic power during
       that time.</p>
-  actions:
-    - _id: ccw01s2hjv6u1ri7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: heal
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 5
+      cleric: 6
+      oracle: 6
+      warpriest: 6
   level: 6
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!hljgzncr0ryzsukm'
+type: spell
 

@@ -1,8 +1,29 @@
 _id: tl732ncb8487p4yh
-name: Resonating Word
-type: spell
+_key: '!items!tl732ncb8487p4yh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Resonating Word
 system:
+  actions:
+    - _id: sl8fb9bc47vm2f7a
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 3 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude partial
+        type: fort
+      target:
+        value: one creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>You speak a terrible word of power, setting up potentially lethal
@@ -17,35 +38,14 @@ system:
       successful save halves the damage and negates the stunning effect.  The
       resonating word has no power after the third round, even if the spell's
       duration is increased.</p>
-  actions:
-    - _id: sl8fb9bc47vm2f7a
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 rounds
-      target:
-        value: one creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 5
       psychic: 7
+      sorcerer: 7
+      wizard: 7
   level: 7
   school: trs
   types: sonic
-  components:
-    verbal: true
-_key: '!items!tl732ncb8487p4yh'
+type: spell
 

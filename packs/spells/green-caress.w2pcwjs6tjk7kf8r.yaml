@@ -1,8 +1,31 @@
 _id: w2pcwjs6tjk7kf8r
-name: Green Caress
-type: spell
+_key: '!items!w2pcwjs6tjk7kf8r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Green Caress
 system:
+  actions:
+    - _id: 2zvb4af4hvhfcldn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 7 days (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude partial (see text)
+        type: fort
+      target:
+        value: one living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the target to transform into a plant over time. You must
@@ -50,39 +73,16 @@ system:
       from <i><i>green</i> caress</i> to one of its three physical ability
       scores (chosen randomly); this doesn't stack with multiple castings of
       <i>diminish plants</i>.</p>
-  actions:
-    - _id: 2zvb4af4hvhfcldn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 7 days (see text)
-      target:
-        value: one living creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial (see text)
   learnedAt:
     class:
       druid: 6
-      ranger: 4
-      witch: 6
-      shaman: 6
       hunter: 4
+      ranger: 4
+      shaman: 6
+      witch: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: pinch of moss or a kudzu leaf
-_key: '!items!w2pcwjs6tjk7kf8r'
+  school: trs
+type: spell
 

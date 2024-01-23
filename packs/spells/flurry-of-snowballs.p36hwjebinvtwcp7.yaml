@@ -1,57 +1,57 @@
 _id: p36hwjebinvtwcp7
-name: Flurry of Snowballs
-type: spell
+_key: '!items!p36hwjebinvtwcp7'
 img: systems/pf1/icons/spells/fireball-sky-1.jpg
+name: Flurry of Snowballs
 system:
-  description:
-    value: >-
-      <p>You send a Flurry of Snowballs hurtling at your foes. Any creature in
-      the area takes 4d6 points of cold damage from being pelted with the icy
-      spheres.</p>
   actions:
     - _id: t9x2tat5bh2btiv5
-      name: Use
-      img: systems/pf1/icons/spells/fireball-sky-1.jpg
+      actionType: spellsave
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-      measureTemplate:
-        type: cone
-        size: '30'
-      actionType: spellsave
+      area: cone-shaped burst
       damage:
         parts:
           - formula: 4d6
             type:
+              custom: ''
               values:
                 - cold
-              custom: ''
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/spells/fireball-sky-1.jpg
+      measureTemplate:
+        size: '30'
+        type: cone
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
       save:
-        type: ref
         description: Reflex half
-      area: cone-shaped burst
+        type: ref
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You send a Flurry of Snowballs hurtling at your foes. Any creature in
+      the area takes 4d6 points of cold damage from being pelted with the icy
+      spheres.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      witch: 2
-      magus: 2
       hunter: 2
+      magus: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: evo
-  types: cold, water
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!p36hwjebinvtwcp7'
+  types: cold, water
+type: spell
 

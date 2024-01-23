@@ -1,8 +1,32 @@
 _id: 34niukp5dho42r12
-name: Lockjaw
-type: spell
+_key: '!items!34niukp5dho42r12'
 img: icons/creatures/abilities/fangs-teeth-bite.webp
+name: Lockjaw
 system:
+  actions:
+    - _id: vl8bxzoy1fk0vk89
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You give a creature the ability to use one of its natural attacks to
@@ -12,38 +36,14 @@ system:
       maneuver checks to start or maintain a grapple. A creature with multiple
       natural attacks can strike at its grappled opponent with its other natural
       attacks, but cannot attack any other creature.</p>
-  actions:
-    - _id: vl8bxzoy1fk0vk89
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       druid: 2
-      ranger: 2
       hunter: 2
+      ranger: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: sticky tree gum
-_key: '!items!34niukp5dho42r12'
+  school: trs
+type: spell
 

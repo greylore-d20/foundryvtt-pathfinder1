@@ -1,69 +1,69 @@
 _id: igwRYyXsVoDgIPSi
-name: Dogslicer
-type: weapon
+_key: '!items!igwRYyXsVoDgIPSi'
 img: systems/pf1/icons/items/weapons/dogslicer.png
+name: Dogslicer
 system:
+  actions:
+    - _id: jg4rm349amg6h79w
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/dogslicer.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Dogslicer
   description:
     value: >-
       <p>This short, curved blade was created by goblins, who often drill
       numerous holes into it in an attempt to reduce its weight. Most dogslicers
       are sized for Small creatures.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 8
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: jg4rm349amg6h79w
-      name: Attack
-      img: systems/pf1/icons/items/weapons/dogslicer.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-  baseTypes:
-    - Dogslicer
-  weaponGroups:
-    value:
-      - bladesLight
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 8
   properties:
-    frg: true
     fin: true
+    frg: true
   source:
     id: PZO1123
     pages: '18'
-_key: '!items!igwRYyXsVoDgIPSi'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesLight
+  weight:
+    value: 1
+type: weapon
 

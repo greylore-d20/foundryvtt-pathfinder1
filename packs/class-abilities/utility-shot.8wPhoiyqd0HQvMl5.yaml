@@ -1,8 +1,29 @@
 _id: 8wPhoiyqd0HQvMl5
-name: Utility Shot
-type: feat
+_key: '!items!8wPhoiyqd0HQvMl5'
 img: systems/pf1/icons/skills/yellow_12.jpg
+name: Utility Shot
 system:
+  abilityType: ex
+  actions:
+    - _id: ehuhoh8keb8cg2aa
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/yellow_12.jpg
+      name: Use
+      range:
+        minUnits: seeText
+        units: seeText
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Gunslinger
   description:
     value: >-
       <p>At 3rd level, if the gunslinger has at least 1 grit point, she can
@@ -46,33 +67,12 @@ system:
       up ammunition normally.</li>
 
       </ul>
+  subType: classFeat
+  tag: classFeat_utilityShot
   tags:
     - Gunslinger Deed
-  actions:
-    - _id: ehuhoh8keb8cg2aa
-      name: Use
-      img: systems/pf1/icons/skills/yellow_12.jpg
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        units: seeText
-        minUnits: seeText
-      uses:
-        autoDeductChargesCost: '0'
-      formulaicAttacks:
-        label: ''
   uses:
-    per: charges
     maxFormula: '@resources.classFeat_gritGun.value'
-  tag: classFeat_utilityShot
-  subType: classFeat
-  associations:
-    classes:
-      - Gunslinger
-  abilityType: ex
-_key: '!items!8wPhoiyqd0HQvMl5'
+    per: charges
+type: feat
 

@@ -1,16 +1,13 @@
 _id: Z2Jpbju6A5ASxiE2
-name: Bolts of Bedevilment
-type: spell
+_key: '!items!Z2Jpbju6A5ASxiE2'
 img: icons/magic/unholy/beam-ringed-impact-purple.webp
+name: Bolts of Bedevilment
 system:
-  description:
-    value: >-
-      <p>You can fire one ray per round that dazes one living creature for 1d3
-      rounds.</p>
   actions:
     - _id: n3dm728weqo4nts3
-      name: Use
-      img: icons/magic/unholy/beam-ringed-impact-purple.webp
+      ability:
+        attack: dex
+      actionType: rsak
       activation:
         type: standard
         unchained:
@@ -18,30 +15,33 @@ system:
           type: action
       duration:
         value: 1 round/level
-      range:
-        units: medium
-      actionType: rsak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      save:
-        type: will
-        description: Will negates
       effectNotes:
         - >-
           <b>Save Fail Effect</b>
           @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.2A6Gk60pLDKR2zT0]{Dazed}
           for [[1d3]] rounds
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/unholy/beam-ringed-impact-purple.webp
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
       spellEffect: ray
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You can fire one ray per round that dazes one living creature for 1d3
+      rounds.</p>
   learnedAt:
     domain:
       Madness: 5
   level: 5
   school: enc
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!Z2Jpbju6A5ASxiE2'
+type: spell
 

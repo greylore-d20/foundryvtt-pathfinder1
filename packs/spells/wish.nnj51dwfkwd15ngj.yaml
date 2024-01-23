@@ -1,8 +1,32 @@
 _id: nnj51dwfkwd15ngj
-name: Wish
-type: spell
+_key: '!items!nnj51dwfkwd15ngj'
 img: icons/magic/symbols/runes-star-pentagon-blue.webp
+name: Wish
 system:
+  actions:
+    - _id: degg0fykrqd5mb69
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: see text
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: none; see text
+      spellEffect: see text
+      target:
+        value: see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Wish is</em> the mightiest spell a wizard or sorcerer can cast. By
@@ -57,53 +81,29 @@ system:
       spells).</p><p>When a <em>wish</em> duplicates a spell with a material
       component that costs more than 10,000 gp, you must provide that component
       (in addition to the 25,000 gp diamond component for this spell).</p>
-  actions:
-    - _id: degg0fykrqd5mb69
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: see text
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        description: none; see text
-      spellEffect: see text
-      area: see text
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-      psychic: 9
     bloodline:
       Arcane: 9
+      Div: 9
       Djinni: 9
       Draconic: 9
       Efreeti: 9
+      Impossible: 9
       Marid: 9
       Shaitan: 9
-      Div: 9
-      Impossible: 9
+    class:
+      psychic: 9
+      sorcerer: 9
+      wizard: 9
   level: 9
-  school: uni
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: diamond worth 25,000 gp
     gpValue: 25000
+    value: diamond worth 25,000 gp
   preparation:
     spontaneousPrepared: false
+  school: uni
   source:
     id: PZO1110
     pages: '370'
-_key: '!items!nnj51dwfkwd15ngj'
+type: spell
 

@@ -1,8 +1,32 @@
 _id: zy57obfx0z741g3o
-name: Storm Sight
-type: spell
+_key: '!items!zy57obfx0z741g3o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Storm Sight
 system:
+  actions:
+    - _id: t0taubqhz8m039ix
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You step into any magical or naturally occurring storm and commune
@@ -27,45 +51,21 @@ system:
       direction of each life form. Once you've concentrated in this way for 3
       rounds, you gain a bonus equal to half your caster level on your next
       initiative check during the spell's duration.</p>
-  actions:
-    - _id: t0taubqhz8m039ix
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      witch: 2
-      shaman: 2
       hunter: 2
+      oracle: 2
+      shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a storm, either natural or magical
-_key: '!items!zy57obfx0z741g3o'
+  school: div
+  subschool: scrying
+type: spell
 

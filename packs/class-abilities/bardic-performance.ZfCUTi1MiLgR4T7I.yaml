@@ -1,8 +1,25 @@
 _id: ZfCUTi1MiLgR4T7I
-name: Bardic Performance
-type: feat
+_key: '!items!ZfCUTi1MiLgR4T7I'
 img: systems/pf1/icons/items/inventory/flute.jpg
+name: Bardic Performance
 system:
+  actions:
+    - _id: ohyjhnb4bta2gy9g
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: ''
+      img: systems/pf1/icons/items/inventory/flute.jpg
+      name: Use
+      range:
+        units: seeText
+  associations:
+    classes:
+      - Bard
   description:
     value: >-
       <p>A bard is trained to use the <em>Perform</em> skill to create magical
@@ -44,30 +61,13 @@ system:
       bardic performance with a visual component. If he fails this check, the
       attempt still counts against his daily limit. Blind creatures are immune
       to bardic performances with visual components.</p>
-  actions:
-    - _id: ohyjhnb4bta2gy9g
-      name: Use
-      img: systems/pf1/icons/items/inventory/flute.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: ''
-        units: round
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 4 + @abilities.cha.mod + ((@classes.bard.level * 2) - 2)
-  tag: classFeat_bardicPerformance
-  subType: classFeat
-  associations:
-    classes:
-      - Bard
   source:
     id: PZO1110
     pages: '35'
-_key: '!items!ZfCUTi1MiLgR4T7I'
+  subType: classFeat
+  tag: classFeat_bardicPerformance
+  uses:
+    maxFormula: 4 + @abilities.cha.mod + ((@classes.bard.level * 2) - 2)
+    per: day
+type: feat
 

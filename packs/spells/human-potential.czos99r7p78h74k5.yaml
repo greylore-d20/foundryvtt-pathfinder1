@@ -1,19 +1,11 @@
 _id: czos99r7p78h74k5
-name: Human Potential
-type: spell
+_key: '!items!czos99r7p78h74k5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Human Potential
 system:
-  description:
-    value: >-
-      <p>The target shares in humanity's great potential as encouraged by
-      Aroden. The target chooses one ability score and gains a +2 enhancement
-      bonus to that ability score. The bonus confers the usual benefit to skills
-      and abilities based on the ability enhanced, but does not affect bonus
-      spells or skill ranks.</p>
   actions:
     - _id: o7t4xeg5vcns4tl3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,30 +13,38 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target shares in humanity's great potential as encouraged by
+      Aroden. The target chooses one ability score and gains a +2 enhancement
+      bonus to that ability score. The bonus confers the usual benefit to skills
+      and abilities based on the ability enhanced, but does not affect bonus
+      spells or skill ranks.</p>
   learnedAt:
     class:
+      alchemist: 2
+      bard: 2
+      medium: 2
+      psychic: 2
       sorcerer: 2
       wizard: 2
-      bard: 2
-      alchemist: 2
-      psychic: 2
-      medium: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a human hair
-_key: '!items!czos99r7p78h74k5'
+  school: trs
+type: spell
 

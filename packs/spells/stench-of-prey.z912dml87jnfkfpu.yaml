@@ -1,8 +1,31 @@
 _id: z912dml87jnfkfpu
-name: Stench of Prey
-type: spell
+_key: '!items!z912dml87jnfkfpu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Stench of Prey
 system:
+  actions:
+    - _id: mekn6x2o1lgy5nua
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates (see text)
+        type: fort
+      target:
+        value: one creature (see text)
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target exudes a strong odor that most predators recognize as the
@@ -14,36 +37,13 @@ system:
       dispels emotion or rage effects.</p><p>This spell has no effect on
       constructs, undead, or creatures with the unnatural aura ability or
       effects that repel animals.</p>
-  actions:
-    - _id: mekn6x2o1lgy5nua
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature (see text)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (see text)
   learnedAt:
     class:
       druid: 3
+      hunter: 3
       ranger: 3
       shaman: 3
-      hunter: 3
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!z912dml87jnfkfpu'
+type: spell
 

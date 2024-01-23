@@ -1,8 +1,41 @@
 _id: ci6r8zasm4exo85c
-name: Thundering Drums
-type: spell
+_key: '!items!ci6r8zasm4exo85c'
 img: systems/pf1/icons/items/inventory/drum.jpg
+name: Thundering Drums
 system:
+  actions:
+    - _id: 0dzvmcwnn0c5qt5v
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      damage:
+        parts:
+          - formula: (min(5, @cl))d8
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/items/inventory/drum.jpg
+      measureTemplate:
+        size: '15'
+        type: cone
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '15'
+      save:
+        description: Fortitude partial
+        type: fort
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You strike the ground in front of you, filling the area in front of you
@@ -10,44 +43,11 @@ system:
       points of sonic damage per caster level (maximum 5d8) and is knocked
       prone. A successful Fortitude save halves the damage and negates being
       knocked prone.</p>
-  actions:
-    - _id: 0dzvmcwnn0c5qt5v
-      name: Use
-      img: systems/pf1/icons/items/inventory/drum.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '15'
-        units: ft
-        maxIncrements: '1'
-      measureTemplate:
-        type: cone
-        size: '15'
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (min(5, @cl))d8
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: fort
-        description: Fortitude partial
-      area: cone-shaped burst
   learnedAt:
     class:
       bard: 3
   level: 3
   school: evo
   types: sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ci6r8zasm4exo85c'
+type: spell
 

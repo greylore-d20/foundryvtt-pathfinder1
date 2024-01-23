@@ -1,8 +1,28 @@
 _id: GjICbiRbXqc1Ol5b
-name: Nidalese Shadow Veil
-type: feat
+_key: '!items!GjICbiRbXqc1Ol5b'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Nidalese Shadow Veil
 system:
+  abilityType: su
+  actions:
+    - _id: xhoi8fkj9nyhav5l
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 1 + @abilities.cha.mod
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>By expending 1 point from her arcane reservoir, an arcanist can pull a
@@ -10,29 +30,9 @@ system:
       The arcanist gains concealment (20% miss chance) and a +5 bonus on Stealth
       checks. This effect lasts a number of rounds equal to 1 + the arcanist’s
       Charisma bonus.</p>
+  subType: classFeat
+  tag: classFeat_nidaleseShadowVeil
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: xhoi8fkj9nyhav5l
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 + @abilities.cha.mod
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_nidaleseShadowVeil
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!GjICbiRbXqc1Ol5b'
+type: feat
 

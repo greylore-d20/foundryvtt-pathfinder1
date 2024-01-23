@@ -1,8 +1,40 @@
 _id: 5GqOcC49oDGe7VRH
-name: Estoc
-type: weapon
+_key: '!items!5GqOcC49oDGe7VRH'
 img: systems/pf1/icons/items/weapons/estoc.PNG
+name: Estoc
 system:
+  actions:
+    - _id: d4wheqwbelvqwfau
+      ability:
+        attack: str
+        critRange: 18
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/estoc.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Estoc
   description:
     value: >-
       <p>An estoc is a sword about as long as a bastard sword, but designed
@@ -16,62 +48,30 @@ system:
       apply your Dexterity modifier instead of your Strength modifier on attack
       rolls when wielding an estoc sized for you with one or two hands, even
       though it isn't a light weapon.</p>
-  tags:
-    - PFS
-  weight:
-    value: 4
-  price: 50
+  hardness: 10
   hp:
     max: 5
     value: 5
-  hardness: 10
-  actions:
-    - _id: d4wheqwbelvqwfau
-      name: Attack
-      img: systems/pf1/icons/items/weapons/estoc.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(2, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        critRange: 18
-  baseTypes:
-    - Estoc
-  weaponGroups:
-    value:
-      - bladesHeavy
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
-  weaponSubtype: 1h
+    normal:
+      value: ''
+  price: 50
   properties:
     fin: true
   source:
     id: PZO9455
     pages: '19'
-_key: '!items!5GqOcC49oDGe7VRH'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 1h
+  weight:
+    value: 4
+type: weapon
 

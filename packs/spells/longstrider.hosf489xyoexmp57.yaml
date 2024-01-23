@@ -1,17 +1,10 @@
 _id: hosf489xyoexmp57
-name: Longstrider
-type: spell
+_key: '!items!hosf489xyoexmp57'
 img: icons/skills/movement/feet-winged-boots-blue.webp
+name: Longstrider
 system:
-  description:
-    value: >-
-      <p>This spell gives you a +10 foot enhancement bonus to your base speed.
-      It has no effect on other modes of movement, such as burrow, climb, fly,
-      or swim.</p>
   actions:
     - _id: rfs55tlax2azw4h1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,27 +12,34 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell gives you a +10 foot enhancement bonus to your base speed.
+      It has no effect on other modes of movement, such as burrow, climb, fly,
+      or swim.</p>
   learnedAt:
     class:
       druid: 1
-      ranger: 1
       hunter: 1
+      ranger: 1
     domain:
       Travel: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of dirt
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '305'
-_key: '!items!hosf489xyoexmp57'
+  sr: false
+type: spell
 

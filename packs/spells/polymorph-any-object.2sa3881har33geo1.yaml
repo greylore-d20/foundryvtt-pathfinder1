@@ -1,8 +1,32 @@
 _id: 2sa3881har33geo1
-name: Polymorph Any Object
-type: spell
+_key: '!items!2sa3881har33geo1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Polymorph Any Object
 system:
+  actions:
+    - _id: q8pisy864re2h6b1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates (object); see text
+        type: fort
+      target:
+        value: one creature, or one nonmagical object of up to 100 cu. ft./level
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like
@@ -184,43 +208,19 @@ system:
       polymorph, <em>greater polymorph,</em> flesh to stone, stone to flesh,
       transmute mud to rock, transmute metal to wood, or transmute rock to
       mud.</p>
-  actions:
-    - _id: q8pisy864re2h6b1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one creature, or one nonmagical object of up to 100 cu. ft./level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object); see text
   learnedAt:
+    bloodline:
+      Impossible: 8
+      Protean: 8
     class:
       sorcerer: 8
       wizard: 8
     subDomain:
       Construct: 8
-    bloodline:
-      Impossible: 8
-      Protean: 8
   level: 8
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: mercury, gum arabic, and smoke
-_key: '!items!2sa3881har33geo1'
+  school: trs
+  subschool: polymorph
+type: spell
 

@@ -1,8 +1,24 @@
 _id: dvwgvy2b4v92tugv
-name: Thought Shield III
-type: spell
+_key: '!items!dvwgvy2b4v92tugv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Thought Shield III
 system:
+  actions:
+    - _id: tyjd2lknjabek0ta
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This functions as <i>thought shield I</i>, but the circumstance bonus
@@ -10,27 +26,11 @@ system:
       addition, any creature that tries to read your thoughts while this spell
       lasts must succeed at a Will save or be stunned for 1 round. This spell
       can be undercast.</p>
-  actions:
-    - _id: tyjd2lknjabek0ta
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       psychic: 4
   level: 4
   school: abj
-  components:
-    verbal: true
   sr: false
-_key: '!items!dvwgvy2b4v92tugv'
+type: spell
 

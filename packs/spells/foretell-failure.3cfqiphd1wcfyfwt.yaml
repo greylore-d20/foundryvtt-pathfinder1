@@ -1,8 +1,25 @@
 _id: 3cfqiphd1wcfyfwt
-name: Foretell Failure
-type: spell
+_key: '!items!3cfqiphd1wcfyfwt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Foretell Failure
 system:
+  actions:
+    - _id: 3xryazm2ychnewdi
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cast this spell immediately before you would take an action that
@@ -12,33 +29,16 @@ system:
       better on the d20 roll involved. If the action would be successful under
       those circumstances, you must take the action. If the action would not be
       successful, you can take a different action.</p>
-  actions:
-    - _id: 3xryazm2ychnewdi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 4
-      witch: 4
-      psychic: 4
       occultist: 5
+      psychic: 4
+      sorcerer: 5
+      witch: 4
+      wizard: 5
   level: 5
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!3cfqiphd1wcfyfwt'
+type: spell
 

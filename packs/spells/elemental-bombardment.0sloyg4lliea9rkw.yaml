@@ -1,8 +1,25 @@
 _id: 0sloyg4lliea9rkw
-name: Elemental Bombardment
-type: spell
+_key: '!items!0sloyg4lliea9rkw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Elemental Bombardment
 system:
+  actions:
+    - _id: il6a1goi2ci7qsas
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/2 levels (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      spellEffect: one or more summoned elementals
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon elementals from their elemental planes and hurl them onto
@@ -38,32 +55,15 @@ system:
       fire</td></tr><tr><td>Mud B2</td><td>Bludgeoning and
       entrap*</td></tr><tr><td>Water</td><td>Bludgeoning and
       drench*</td></tr></tbody></table>
-  actions:
-    - _id: il6a1goi2ci7qsas
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/2 levels (D)
-      range:
-        units: long
-      spellEffect: one or more summoned elementals
   learnedAt:
     class:
+      druid: 7
       sorcerer: 7
       wizard: 7
-      druid: 7
   level: 7
   school: con
+  sr: false
   subschool: summoning
   types: see text
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!0sloyg4lliea9rkw'
+type: spell
 

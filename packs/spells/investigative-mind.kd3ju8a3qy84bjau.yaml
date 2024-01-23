@@ -1,8 +1,26 @@
 _id: kd3ju8a3qy84bjau
-name: Investigative Mind
-type: spell
+_key: '!items!kd3ju8a3qy84bjau'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Investigative Mind
 system:
+  actions:
+    - _id: m75ny12bvdk95b49
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your mind is able to correlate information effectively. When attempting
@@ -11,39 +29,21 @@ system:
       to roll twice, you cannot use that ability and this benefit on the same
       roll.</p><p>The spell is discharged once you have used its benefit a
       number of times equal to your caster level.</p>
-  actions:
-    - _id: m75ny12bvdk95b49
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
       alchemist: 2
-      witch: 2
-      psychic: 2
+      bard: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
+  sr: false
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!kd3ju8a3qy84bjau'
+type: spell
 

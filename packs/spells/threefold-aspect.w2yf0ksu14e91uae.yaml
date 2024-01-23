@@ -1,8 +1,26 @@
 _id: w2yf0ksu14e91uae
-name: Threefold Aspect
-type: spell
+_key: '!items!w2yf0ksu14e91uae'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Threefold Aspect
 system:
+  actions:
+    - _id: bgssmxdzl4hfom1d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
   description:
     value: >-
       <p><i>Threefold aspect</i> allows you to shift your appearance between
@@ -26,35 +44,17 @@ system:
       a resemblance (as though family) with a successful DC 20 Perception
       check.</p><p><i>Threefold aspect</i> does not alter your clothing or
       equipment, and does not heal any deformity or injury unrelated to age.</p>
-  actions:
-    - _id: bgssmxdzl4hfom1d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      druid: 5
-      witch: 4
-      hunter: 5
     bloodline:
       Imperious: 4
+    class:
+      druid: 5
+      hunter: 5
+      witch: 4
   level: 5
-  school: trs
-  components:
-    somatic: true
-    focus: true
   materials:
     focus: silver crescent worth 5 gp
+  school: trs
   sr: false
-_key: '!items!w2yf0ksu14e91uae'
+type: spell
 

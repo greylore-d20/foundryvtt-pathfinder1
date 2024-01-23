@@ -1,38 +1,38 @@
 _id: ia7FdrQcmfdmCwaZ
-name: Feather Fall
-type: feat
+_key: '!items!ia7FdrQcmfdmCwaZ'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Feather Fall
 system:
-  description:
-    value: >-
-      <p>As an immediate action, the character can slow her descent as if using
-      feather fall. This ability uses her class level as the caster level. Each
-      use of this ability uses up 1 ki point.</p>
-  tags:
-    - Ninja Trick
-    - Rogue Talent
+  abilityType: su
   actions:
     - _id: pk68adin3uimp4o2
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
-        value: '@classes.ninja.level'
         units: round
-      target:
-        value: self
+        value: '@classes.ninja.level'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
       range:
         units: personal
-  tag: classFeat_featherFall
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Ninja
       - Rogue
       - Rogue (Unchained)
-  abilityType: su
-_key: '!items!ia7FdrQcmfdmCwaZ'
+  description:
+    value: >-
+      <p>As an immediate action, the character can slow her descent as if using
+      feather fall. This ability uses her class level as the caster level. Each
+      use of this ability uses up 1 ki point.</p>
+  subType: classFeat
+  tag: classFeat_featherFall
+  tags:
+    - Ninja Trick
+    - Rogue Talent
+type: feat
 

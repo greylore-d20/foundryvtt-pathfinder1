@@ -1,8 +1,21 @@
 _id: 3YQfylSAmGkToU6o
-name: Globe of Negation
-type: feat
+_key: '!items!3YQfylSAmGkToU6o'
 img: systems/pf1/icons/items/armor/shield-heavy-metal.png
+name: Globe of Negation
 system:
+  abilityType: sp
+  actions:
+    - _id: c6oluef90omfvhei
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/items/armor/shield-heavy-metal.png
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can expend 3 points of mental focus to create
@@ -20,20 +33,7 @@ system:
       enter its area as or after they are cast.</p>
 
       <p>You must be at least 11th level to select this focus power.</p>
-  actions:
-    - _id: c6oluef90omfvhei
-      name: Use
-      img: systems/pf1/icons/items/armor/shield-heavy-metal.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_globeOfNegation
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!3YQfylSAmGkToU6o'
+  tag: classFeat_globeOfNegation
+type: feat
 

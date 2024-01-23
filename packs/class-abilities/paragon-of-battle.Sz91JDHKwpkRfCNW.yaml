@@ -1,8 +1,28 @@
 _id: Sz91JDHKwpkRfCNW
-name: Paragon of Battle
-type: feat
+_key: '!items!Sz91JDHKwpkRfCNW'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Paragon of Battle
 system:
+  abilityType: su
+  actions:
+    - _id: sgkjz7pyecbwen0w
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman assumes a form that combines the
@@ -12,30 +32,10 @@ system:
 
       <p>The shaman can use this ability a number of times per day equal to 3 +
       her Charisma modifier.</p>
-  actions:
-    - _id: sgkjz7pyecbwen0w
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_paragonOfBattle
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!Sz91JDHKwpkRfCNW'
+  tag: classFeat_paragonOfBattle
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

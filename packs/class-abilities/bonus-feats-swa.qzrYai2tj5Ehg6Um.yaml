@@ -1,8 +1,16 @@
 _id: qzrYai2tj5Ehg6Um
-name: Bonus Feats (SWA)
-type: feat
+_key: '!items!qzrYai2tj5Ehg6Um'
 img: systems/pf1/icons/skills/affliction_18.jpg
+name: Bonus Feats (SWA)
 system:
+  associations:
+    classes:
+      - Swashbuckler
+  changes:
+    - _id: ow4ai6bb
+      formula: floor(@classes.swashbuckler.level / 4)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 4th level and every 4 levels thereafter, a swashbuckler gains a
@@ -17,15 +25,7 @@ system:
       prestige class, or other ability. A swashbuckler can only change one feat
       at any given level, and must choose whether or not to swap the feat at the
       time she gains a new bonus feat for the level.</p>
-  changes:
-    - _id: ow4ai6bb
-      formula: floor(@classes.swashbuckler.level / 4)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_bonusFeatsSwa
   subType: classFeat
-  associations:
-    classes:
-      - Swashbuckler
-_key: '!items!qzrYai2tj5Ehg6Um'
+  tag: classFeat_bonusFeatsSwa
+type: feat
 

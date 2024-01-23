@@ -1,8 +1,38 @@
 _id: F5ZLN44A3QWL8S7k
-name: Pilum
-type: weapon
+_key: '!items!F5ZLN44A3QWL8S7k'
 img: systems/pf1/icons/items/weapons/pilum.PNG
+name: Pilum
 system:
+  actions:
+    - _id: uiml8jeye4dvmi5f
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/pilum.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Pilum
   description:
     value: >-
       <p>The tip of this heavy javelin is designed to break off and embed itself
@@ -10,62 +40,32 @@ system:
       target is destroyed. If you hit a shieldbearing opponent with a pilum, he
       loses the AC bonuses from that shield until he takes a standard action to
       pry the remnants of the pilum from his shield.</p>
-  tags:
-    - PFS
-  weight:
-    value: 4
-  price: 5
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: uiml8jeye4dvmi5f
-      name: Throw
-      img: systems/pf1/icons/items/weapons/pilum.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Pilum
-  weaponGroups:
-    value:
-      - spears
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: martial
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 5
   properties:
     spc: true
   source:
     id: PZO9452
     pages: '0'
-_key: '!items!F5ZLN44A3QWL8S7k'
+  subType: martial
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - spears
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 4
+type: weapon
 

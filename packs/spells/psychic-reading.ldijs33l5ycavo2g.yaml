@@ -1,8 +1,25 @@
 _id: ldijs33l5ycavo2g
-name: Psychic Reading
-type: spell
+_key: '!items!ldijs33l5ycavo2g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Psychic Reading
 system:
+  actions:
+    - _id: pica2vmix6q4fhn5
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one humanoid creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>You are able to read a person's surface thoughts and take cues from the
@@ -23,35 +40,18 @@ system:
       two, and on a roll of 91-100 you receive three. You can't get more false
       information than the total number of pieces of information you
       discover.</p>
-  actions:
-    - _id: pica2vmix6q4fhn5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: one humanoid creature
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
       inquisitor: 2
-      psychic: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 2
       spiritualist: 1
+      wizard: 2
   level: 2
   school: div
-  components:
-    verbal: true
-_key: '!items!ldijs33l5ycavo2g'
+type: spell
 

@@ -1,8 +1,29 @@
 _id: RGVUWMi9hxULzXLX
-name: Malign Eye
-type: feat
+_key: '!items!RGVUWMi9hxULzXLX'
 img: systems/pf1/icons/spells/evil-eye-red-1.jpg
+name: Malign Eye
 system:
+  abilityType: su
+  actions:
+    - _id: 9xk0cb7uzz7d2u7q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/evil-eye-red-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can afflict one target within 30 feet with
@@ -12,31 +33,10 @@ system:
       per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Bit of Luck power of the Luck Domain.</p>
-  actions:
-    - _id: 9xk0cb7uzz7d2u7q
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-red-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_malignEye
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!RGVUWMi9hxULzXLX'
+  tag: classFeat_malignEye
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

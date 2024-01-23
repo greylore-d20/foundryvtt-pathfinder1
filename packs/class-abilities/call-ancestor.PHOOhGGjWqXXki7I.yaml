@@ -1,8 +1,28 @@
 _id: PHOOhGGjWqXXki7I
-name: Call Ancestor
-type: feat
+_key: '!items!PHOOhGGjWqXXki7I'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Call Ancestor
 system:
+  abilityType: sp
+  actions:
+    - _id: 9kr5m2mex1pelzjk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.sorcerer.level'
+      img: systems/pf1/icons/skills/blue_26.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, once per day, you can spend a <em>standard action</em> to
@@ -20,32 +40,12 @@ system:
       day. At 20th level, you can use this ability three times per day. You
       cannot have more than one ancestor <em>simulacrum</em> active at any one
       time.</p>
-  actions:
-    - _id: 9kr5m2mex1pelzjk
-      name: Use
-      img: systems/pf1/icons/skills/blue_26.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.sorcerer.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
+  subType: classFeat
+  tag: classFeat_callAncestor
   uses:
-    per: day
     maxFormula: >-
       @classes.sorcerer.level >= 20 ? 3 : ((@classes.sorcerer.level < 20 &&
       @classes.sorcerer.level > 16) ? 2 : 1)
-  tag: classFeat_callAncestor
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!PHOOhGGjWqXXki7I'
+    per: day
+type: feat
 

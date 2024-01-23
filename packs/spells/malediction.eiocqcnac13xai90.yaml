@@ -1,8 +1,35 @@
 _id: eiocqcnac13xai90
-name: Malediction
-type: spell
+_key: '!items!eiocqcnac13xai90'
 img: icons/magic/death/skeleton-skull-soul-blue.webp
+name: Malediction
 system:
+  actions:
+    - _id: bve3wpv6r56um272
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute and instantaneous (see text)
+      formulaicAttacks:
+        label: ''
+      img: icons/magic/death/skeleton-skull-soul-blue.webp
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: 1 creature touched
+      touch: true
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Channeling the blasphemy of fiends into your hand, you mark your target
@@ -30,30 +57,6 @@ system:
       @Compendium[pf1.spells.gmgwyjfpeuuc4t4o]{dispel magic}, and
       @UUID[Compendium.pf1.spells.o87h8gjxevcbztgd]{remove curse} negate this
       spell if successfully cast before the target dies.</p>
-  actions:
-    - _id: bve3wpv6r56um272
-      name: Use
-      img: icons/magic/death/skeleton-skull-soul-blue.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute and instantaneous (see text)
-      target:
-        value: 1 creature touched
-      range:
-        units: touch
-      actionType: msak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-      save:
-        type: will
-        description: Will negates
-      touch: true
   learnedAt:
     class:
       antipaladin: 4
@@ -66,8 +69,5 @@ system:
   level: 4
   school: nec
   types: curse, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!eiocqcnac13xai90'
+type: spell
 

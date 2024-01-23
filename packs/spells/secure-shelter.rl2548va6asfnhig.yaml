@@ -1,8 +1,27 @@
 _id: rl2548va6asfnhig
-name: Secure Shelter
-type: spell
+_key: '!items!rl2548va6asfnhig'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Secure Shelter
 system:
+  actions:
+    - _id: njr4s7v2h6rszod1
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 2 hours/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 20-ft.-square structure
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a sturdy cottage or lodge made of material that is common
@@ -21,36 +40,17 @@ system:
       servant</i> is conjured to provide service to you for the duration of the
       shelter.</p><p>The <i>secure shelter</i> contains crude furnishings-eight
       bunks, a trestle table, eight stools, and a writing desk.</p>
-  actions:
-    - _id: njr4s7v2h6rszod1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 2 hours/level
-      range:
-        units: close
-      spellEffect: 20-ft.-square structure
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
+      sorcerer: 4
       witch: 4
+      wizard: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chip of stone, sand, a drop of water, and a wood splinter
+  school: con
   sr: false
-_key: '!items!rl2548va6asfnhig'
+  subschool: creation
+type: spell
 

@@ -1,8 +1,23 @@
 _id: ypWY5Tdn01rT2W2T
-name: Demand Subjugation
-type: feat
+_key: '!items!ypWY5Tdn01rT2W2T'
 img: systems/pf1/icons/skills/red_06.jpg
+name: Demand Subjugation
 system:
+  abilityType: sp
+  actions:
+    - _id: juibhlag3n8fxq63
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/red_06.jpg
+      name: Use
+      target:
+        value: defeated creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can force a defeated creature to accept a binding
@@ -13,25 +28,10 @@ system:
       + your Wisdom modifier.</p>
 
       <p>This power replaces the Staff of Order power of the Law Domain.</p>
-  actions:
-    - _id: juibhlag3n8fxq63
-      name: Use
-      img: systems/pf1/icons/skills/red_06.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: defeated creature
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_demandSubjugation
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
-_key: '!items!ypWY5Tdn01rT2W2T'
+  tag: classFeat_demandSubjugation
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

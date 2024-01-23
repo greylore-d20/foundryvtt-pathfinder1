@@ -1,8 +1,27 @@
 _id: zpwd0f19q1lm04p3
-name: Phantom Steed
-type: spell
+_key: '!items!zpwd0f19q1lm04p3'
 img: icons/magic/fire/elemental-creature-horse.webp
+name: Phantom Steed
 system:
+  actions:
+    - _id: 0ji09f33qsie8r2w
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: one quasi-real, horselike creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a Large, quasi-real, horselike creature (the exact
@@ -26,39 +45,20 @@ system:
       ability) for up to 1 round at a time, after which it falls to the
       ground.</p><p><i>14th Level</i>: The mount can fly at its speed with a
       bonus on Fly skill checks equal to your caster level.</p>
-  actions:
-    - _id: 0ji09f33qsie8r2w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: one quasi-real, horselike creature
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      summoner: 2
-      magus: 3
       bloodrager: 3
+      magus: 3
       occultist: 3
+      sorcerer: 3
       spiritualist: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 3
   level: 3
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!zpwd0f19q1lm04p3'
+  subschool: creation
+type: spell
 

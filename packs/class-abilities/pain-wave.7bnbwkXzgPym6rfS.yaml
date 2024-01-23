@@ -1,8 +1,21 @@
 _id: 7bnbwkXzgPym6rfS
-name: Pain Wave
-type: feat
+_key: '!items!7bnbwkXzgPym6rfS'
 img: systems/pf1/icons/skills/affliction_08.jpg
+name: Pain Wave
 system:
+  abilityType: sp
+  actions:
+    - _id: q65ee2ddm20vsuu6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/affliction_08.jpg
+      name: Use
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can expend 1 point of mental focus to unleash
@@ -14,20 +27,7 @@ system:
       This is a mind-affecting pain effect.</p>
 
       <p>You must be at least 7th level to select this focus power.</p>
-  actions:
-    - _id: q65ee2ddm20vsuu6
-      name: Use
-      img: systems/pf1/icons/skills/affliction_08.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_painWave
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!7bnbwkXzgPym6rfS'
+  tag: classFeat_painWave
+type: feat
 

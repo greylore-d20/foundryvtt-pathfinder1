@@ -1,8 +1,27 @@
 _id: ksjfNe1Hz123HFqP
-name: Cryokinetic Stasis
-type: feat
+_key: '!items!ksjfNe1Hz123HFqP'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: Cryokinetic Stasis
 system:
+  abilityType: sp
+  actions:
+    - _id: rskzy4s065ncxlt8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 8;
@@ -14,26 +33,7 @@ system:
       spells and spell-like abilities of 3rd level or higher count as if the
       caster used dispel magic against the stasis. Otherwise, no other force or
       effect can harm the target.</p>
-  actions:
-    - _id: rskzy4s065ncxlt8
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_cryokineticStasis
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!ksjfNe1Hz123HFqP'
+  tag: classFeat_cryokineticStasis
+type: feat
 

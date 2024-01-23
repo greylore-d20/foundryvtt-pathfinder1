@@ -1,8 +1,20 @@
 _id: y4nP7W9asEPjLxJP
-name: Rune Shift
-type: feat
+_key: '!items!y4nP7W9asEPjLxJP'
 img: systems/pf1/icons/spells/enchant-sky-1.jpg
+name: Rune Shift
 system:
+  abilityType: su
+  actions:
+    - _id: r52n31zcumbswzpx
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/enchant-sky-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 6th level, as a swift action, you can change the location of one of
@@ -11,19 +23,7 @@ system:
       creature.</p>
 
       <p>This power replaces the Spell Rune power of the Rune Domain.</p>
-  actions:
-    - _id: r52n31zcumbswzpx
-      name: Use
-      img: systems/pf1/icons/spells/enchant-sky-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_runeShift
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!y4nP7W9asEPjLxJP'
+  tag: classFeat_runeShift
+type: feat
 

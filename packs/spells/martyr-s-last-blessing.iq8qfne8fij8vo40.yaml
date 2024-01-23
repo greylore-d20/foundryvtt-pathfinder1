@@ -1,8 +1,33 @@
 _id: iq8qfne8fij8vo40
-name: Martyr's Last Blessing
-type: spell
+_key: '!items!iq8qfne8fij8vo40'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Martyr's Last Blessing
 system:
+  actions:
+    - _id: n5856v8lz6nn5hwd
+      actionType: heal
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level or instantaneous (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will half (see text)
+        harmless: true
+        type: will
+      target:
+        value: >-
+          you and one ally/level, no two of which can be more than 30 ft. apart
+          (see text)
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You charge your body with healing energy, which erupts from you if you
@@ -14,40 +39,15 @@ system:
       affected first. Among allies with equal HD, those closest to you are
       affected first. If the duration ends, the stored healing energy dissipates
       with no effect.</p>
-  actions:
-    - _id: n5856v8lz6nn5hwd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level or instantaneous (see text)
-      target:
-        value: >-
-          you and one ally/level, no two of which can be more than 30 ft. apart
-          (see text)
-      range:
-        units: personal
-      actionType: heal
-      save:
-        type: will
-        description: Will half (see text)
-        harmless: true
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
+      hunter: 3
       oracle: 3
       ranger: 3
-      hunter: 3
+      warpriest: 3
   level: 3
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!iq8qfne8fij8vo40'
+type: spell
 

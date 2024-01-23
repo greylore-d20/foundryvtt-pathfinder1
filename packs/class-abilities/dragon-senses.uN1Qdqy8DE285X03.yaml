@@ -1,8 +1,20 @@
 _id: uN1Qdqy8DE285X03
-name: Dragon Senses
-type: feat
+_key: '!items!uN1Qdqy8DE285X03'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Dragon Senses
 system:
+  abilityType: ex
+  actions:
+    - _id: axdtsulvb8yjndkm
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your senses take on a keen draconic edge. You gain either darkvision
@@ -13,24 +25,12 @@ system:
       feet. If you already have blindsense, you instead increase its range by 30
       feet.</p><p>At 15th level, you gain either the scent ability or a +4 bonus
       on Perception checks.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: axdtsulvb8yjndkm
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_dragonSenses
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!uN1Qdqy8DE285X03'
+  subType: classFeat
+  tag: classFeat_dragonSenses
+  tags:
+    - Dragon Mystery
+type: feat
 

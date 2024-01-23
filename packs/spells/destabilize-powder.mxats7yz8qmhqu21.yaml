@@ -1,8 +1,31 @@
 _id: mxats7yz8qmhqu21
-name: Destabilize Powder
-type: spell
+_key: '!items!mxats7yz8qmhqu21'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Destabilize Powder
 system:
+  actions:
+    - _id: 1iz5cu5qdp9v9fx1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: 1 loaded firearm
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell makes the ammunition in the target firearm is prone to
@@ -12,37 +35,14 @@ system:
       17 Spellcraft check to identify the spell being cast or similar effect),
       the firearm's user can spend a standard action to clear the altered
       ammunition from the firearm. Doing so destroys that ammunition.</p>
-  actions:
-    - _id: 1iz5cu5qdp9v9fx1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: 1 loaded firearm
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
       sorcerer: 2
-      wizard: 2
       witch: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a few drops of liquor
-_key: '!items!mxats7yz8qmhqu21'
+  school: trs
+type: spell
 

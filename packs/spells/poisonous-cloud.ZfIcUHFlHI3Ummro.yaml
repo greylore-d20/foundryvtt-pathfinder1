@@ -1,7 +1,36 @@
-name: Poisonous Cloud
-type: spell
+_id: ZfIcUHFlHI3Ummro
+_key: '!items!ZfIcUHFlHI3Ummro'
 img: systems/pf1/icons/spells/fog-acid-2.jpg
+name: Poisonous Cloud
 system:
+  actions:
+    - _id: Wim8LCVpILVQc9pm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d2
+            type:
+              custom: Constitution damage
+              values: []
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/spells/fog-acid-2.jpg
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates; see text
+        type: fort
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><em>Poisonous cloud</em> creates a bank of fog like that created by
@@ -14,30 +43,6 @@ system:
       @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanency} spell cast by a
       caster of 13th level or higher, at a cost of 12,500 gp. A permanent
       <em>poisonous cloud</em> dispersed by wind re-forms in 10 minutes.</p>
-  actions:
-    - _id: Wim8LCVpILVQc9pm
-      name: Use
-      img: systems/pf1/icons/spells/fog-acid-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d2
-            type:
-              values: []
-              custom: Constitution damage
-      save:
-        type: fort
-        description: Fortitude negates; see text
-      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
       arcanist: 4
@@ -50,15 +55,10 @@ system:
       witch: 4
       wizard: 4
   level: 4
+  materials:
+    value: small drop of poison
   school: con
   subschool: creation
   types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: small drop of poison
-_id: ZfIcUHFlHI3Ummro
-_key: '!items!ZfIcUHFlHI3Ummro'
+type: spell
 

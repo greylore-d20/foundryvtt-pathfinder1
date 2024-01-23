@@ -1,8 +1,31 @@
 _id: kh6c6d2rdreat2x3
-name: Arcane Concordance
-type: spell
+_key: '!items!kh6c6d2rdreat2x3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Arcane Concordance
 system:
+  actions:
+    - _id: 2ldr0fexx653d41q
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation centered on you
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A shimmering, blue and gold radiance surrounds you, enhancing arcane
@@ -13,36 +36,13 @@ system:
       level or casting time): Enlarge Spell, Extend Spell, Silent Spell, or
       Still Spell (you choose the metamagic feat when you cast <i>arcane
       concordance</i>).</p>
-  actions:
-    - _id: 2ldr0fexx653d41q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '10'
-      area: 10-ft.-radius emanation centered on you
   learnedAt:
     class:
       bard: 3
   level: 3
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a spent wand
+  school: evo
   sr: false
-_key: '!items!kh6c6d2rdreat2x3'
+type: spell
 

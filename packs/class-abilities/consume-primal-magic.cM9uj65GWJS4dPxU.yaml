@@ -1,8 +1,22 @@
 _id: cM9uj65GWJS4dPxU
-name: Consume Primal Magic
-type: feat
+_key: '!items!cM9uj65GWJS4dPxU'
 img: systems/pf1/icons/spells/runes-blue-3.jpg
+name: Consume Primal Magic
 system:
+  abilityType: su
+  actions:
+    - _id: kwz75yhusge36z6p
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/runes-blue-3.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>When the arcanist encounters a primal magic event, as an immediate
@@ -13,23 +27,9 @@ system:
 
       <p>The arcanist must have the swift consume exploit to select this
       exploit.</p>
+  subType: classFeat
+  tag: classFeat_consumePrimalMagic
   tags:
     - Arcanist Exploit, Greater
-  actions:
-    - _id: kwz75yhusge36z6p
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_consumePrimalMagic
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!cM9uj65GWJS4dPxU'
+type: feat
 

@@ -1,8 +1,21 @@
 _id: BnbRdRnMftVioNiE
-name: Age Out
-type: feat
+_key: '!items!BnbRdRnMftVioNiE'
 img: systems/pf1/icons/spells/rip-acid-1.jpg
+name: Age Out
 system:
+  abilityType: su
+  actions:
+    - _id: oyairopsdcnorw0k
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/rip-acid-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you gain the ability to instantly recover from most
@@ -19,20 +32,7 @@ system:
       You return to your actual age 24 hours after the last time you used this
       ability, and all penalties to ability scores as a result of advanced age
       are then removed.</p>
-  actions:
-    - _id: oyairopsdcnorw0k
-      name: Use
-      img: systems/pf1/icons/spells/rip-acid-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_ageOut
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!BnbRdRnMftVioNiE'
+  tag: classFeat_ageOut
+type: feat
 

@@ -1,8 +1,30 @@
 _id: o22i19b6ufnfidnt
-name: Beacon of Guilt
-type: spell
+_key: '!items!o22i19b6ufnfidnt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Beacon of Guilt
 system:
+  actions:
+    - _id: ay32f0fu21ecqdzc
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours or until discharged, then instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object); see text
+        type: will
+      target:
+        value: one object
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You place an invisible ward upon an object that is triggered the first
@@ -14,37 +36,15 @@ system:
       but a <i>break enchantment</i>, <i>limited <i>wish</i></i>,
       <i>miracle</i>, <i>remove curse</i>, or <i>wish</i> spell can remove
       it.</p>
-  actions:
-    - _id: ay32f0fu21ecqdzc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours or until discharged, then instantaneous
-      target:
-        value: one object
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object); see text
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
       inquisitor: 2
       occultist: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
   school: evo
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!o22i19b6ufnfidnt'
+type: spell
 

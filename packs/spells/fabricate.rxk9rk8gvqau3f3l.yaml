@@ -1,8 +1,27 @@
 _id: rxk9rk8gvqau3f3l
-name: Fabricate
-type: spell
+_key: '!items!rxk9rk8gvqau3f3l'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fabricate
 system:
+  actions:
+    - _id: eTM5wch2j5pg6vHS
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: up to 10 cu. ft./level; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You convert material of one sort into a product that is of the same
@@ -14,44 +33,25 @@ system:
       Craft check to <i>fabricate</i> articles requiring a high degree of
       craftsmanship. Casting requires 1 round per 10 cubic feet of material to
       be affected by the spell.</p>
-  actions:
-    - _id: eTM5wch2j5pg6vHS
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: up to 10 cu. ft./level; see text
-      range:
-        units: close
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      psychic: 5
-      occultist: 5
-    domain:
-      Artifice: 5
     bloodline:
       Impossible: 5
+    class:
+      occultist: 5
+      psychic: 5
+      sorcerer: 5
+      wizard: 5
+    domain:
+      Artifice: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       the original material, which costs the same amount as the raw materials
       required to craft the item to be created
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '280'
-_key: '!items!rxk9rk8gvqau3f3l'
+  sr: false
+type: spell
 

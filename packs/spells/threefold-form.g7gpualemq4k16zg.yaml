@@ -1,8 +1,27 @@
 _id: g7gpualemq4k16zg
-name: Threefold Form
-type: spell
+_key: '!items!g7gpualemq4k16zg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Threefold Form
 system:
+  actions:
+    - _id: n8y3qdbuqfcyj5w9
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 9 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You pull forth idealized versions of yourself at various ages from your
@@ -13,34 +32,15 @@ system:
       idealized age. Other than the differences from <i>threefold</i> aspect,
       each body shares all other effects with you, as normal for
       <i>bilocation</i>.</p>
-  actions:
-    - _id: n8y3qdbuqfcyj5w9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 9 rounds
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       druid: 9
-      witch: 9
       psychic: 9
+      witch: 9
   level: 9
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a green, three-pointed knot made of mithral worth 729 gp
+  school: div
   sr: false
-_key: '!items!g7gpualemq4k16zg'
+type: spell
 

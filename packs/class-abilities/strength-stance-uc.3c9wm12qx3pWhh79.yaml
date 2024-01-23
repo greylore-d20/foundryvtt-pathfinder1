@@ -1,8 +1,22 @@
 _id: 3c9wm12qx3pWhh79
-name: Strength Stance (UC)
-type: feat
+_key: '!items!3c9wm12qx3pWhh79'
 img: systems/pf1/icons/feats/deafening-critical.jpg
+name: Strength Stance (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: 5d4up0dlyawlesyb
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Barbarian (Unchained)
   description:
     value: >-
       <p>The barbarian can summon mighty strength. She gains a +1 competence
@@ -12,21 +26,7 @@ system:
       not apply to combat maneuvers).</p>
 
       <p>This is a stance rage power.</p>
-  actions:
-    - _id: 5d4up0dlyawlesyb
-      name: Use
-      img: systems/pf1/icons/feats/deafening-critical.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_strengthStanceUc
   subType: classFeat
-  associations:
-    classes:
-      - Barbarian (Unchained)
-  abilityType: ex
-_key: '!items!3c9wm12qx3pWhh79'
+  tag: classFeat_strengthStanceUc
+type: feat
 

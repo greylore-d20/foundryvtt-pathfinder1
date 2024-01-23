@@ -1,17 +1,10 @@
 _id: n5lw3r6hr4t5e8bc
-name: Widen Auras
-type: spell
+_key: '!items!n5lw3r6hr4t5e8bc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Widen Auras
 system:
-  description:
-    value: >-
-      <p>The range of your antipaladin or paladin auras doubles. For example, if
-      you're a paladin, your aura of courage affects allies within 20 feet
-      instead of within 10 feet.</p>
   actions:
     - _id: vieu9jpo1qjvyjcc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,18 +12,25 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-  learnedAt:
-    class:
-      paladin: 2
-      antipaladin: 2
-  level: 2
-  school: trs
+      target:
+        value: you
   components:
     verbal: true
+  description:
+    value: >-
+      <p>The range of your antipaladin or paladin auras doubles. For example, if
+      you're a paladin, your aura of courage affects allies within 20 feet
+      instead of within 10 feet.</p>
+  learnedAt:
+    class:
+      antipaladin: 2
+      paladin: 2
+  level: 2
+  school: trs
   sr: false
-_key: '!items!n5lw3r6hr4t5e8bc'
+type: spell
 

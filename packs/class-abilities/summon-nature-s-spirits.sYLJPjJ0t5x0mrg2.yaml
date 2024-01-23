@@ -1,8 +1,26 @@
 _id: sYLJPjJ0t5x0mrg2
-name: Summon Nature's Spirits
-type: feat
+_key: '!items!sYLJPjJ0t5x0mrg2'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Summon Nature's Spirits
 system:
+  abilityType: sp
+  actions:
+    - _id: f42k5nfsqrbvy09j
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: close
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, as a standard action, you may cast a summon monster spell
@@ -12,28 +30,10 @@ system:
       do so.</p>
 
       <p>You must be at least 5th level to select this revelation.</p>
-  actions:
-    - _id: f42k5nfsqrbvy09j
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: round
-      range:
-        units: close
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_summonNaturesSpirits
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!sYLJPjJ0t5x0mrg2'
+  tag: classFeat_summonNaturesSpirits
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

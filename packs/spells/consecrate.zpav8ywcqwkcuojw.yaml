@@ -1,8 +1,30 @@
 _id: zpav8ywcqwkcuojw
-name: Consecrate
-type: spell
+_key: '!items!zpav8ywcqwkcuojw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Consecrate
 system:
+  actions:
+    - _id: b436zf07mf47t7li
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 20-ft.-radius emanation
+      duration:
+        value: 2 hours/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: close
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell blesses an area with positive energy. The DC to resist
@@ -20,42 +42,20 @@ system:
       deity or power.</p><p>This secondary function, if used, does not also
       grant the bonuses and penalties relating to undead, as given
       above.</p><p><i>Consecrate</i> counters and dispels <i>desecrate</i>.</p>
-  actions:
-    - _id: b436zf07mf47t7li
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 2 hours/level
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: 20-ft.-radius emanation
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
       inquisitor: 2
+      oracle: 2
+      warpriest: 2
   level: 2
-  school: evo
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: a vial of holy water and 25 gp worth of silver dust
     gpValue: 50
+    value: a vial of holy water and 25 gp worth of silver dust
   preparation:
     spontaneousPrepared: false
+  school: evo
   sr: false
-_key: '!items!zpav8ywcqwkcuojw'
+  types: good
+type: spell
 

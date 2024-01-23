@@ -1,8 +1,29 @@
 _id: vn14w3h9pfp7f5l0
-name: Staggering Fall
-type: spell
+_key: '!items!vn14w3h9pfp7f5l0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Staggering Fall
 system:
+  actions:
+    - _id: atj3i6p7q5o7wqs0
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round/level (see below)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fort. partial (see below)
+        type: fort
+      target:
+        value: one falling creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell must be cast on a creature as it falls, either from a height
@@ -14,36 +35,15 @@ system:
       creature may attempt a new Will save as a free action to end the staggered
       effect early. A creature under the effects of this spell must take a
       standard action to stand up.</p>
-  actions:
-    - _id: atj3i6p7q5o7wqs0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round/level (see below)
-      target:
-        value: one falling creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fort. partial (see below)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
       oracle: 2
+      sorcerer: 2
+      warpriest: 2
       witch: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vn14w3h9pfp7f5l0'
+type: spell
 

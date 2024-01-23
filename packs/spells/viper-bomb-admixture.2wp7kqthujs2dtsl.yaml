@@ -1,8 +1,26 @@
 _id: 2wp7kqthujs2dtsl
-name: Viper Bomb Admixture
-type: spell
+_key: '!items!2wp7kqthujs2dtsl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Viper Bomb Admixture
 system:
+  actions:
+    - _id: 6nrme9vr94u3copm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Upon drinking an extract created with this formula, you make a
@@ -22,30 +40,12 @@ system:
       Hit or miss, the conjured vipers disappear after they make the attack. The
       conjured snakes are not damaged or adversely affected by the bombs you
       throw.</p>
-  actions:
-    - _id: 6nrme9vr94u3copm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       alchemist: 4
   level: 4
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!2wp7kqthujs2dtsl'
+  subschool: creation
+type: spell
 

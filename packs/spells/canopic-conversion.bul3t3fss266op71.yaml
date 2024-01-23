@@ -1,8 +1,32 @@
 _id: bul3t3fss266op71
-name: Canopic Conversion
-type: spell
+_key: '!items!bul3t3fss266op71'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Canopic Conversion
 system:
+  actions:
+    - _id: qeroqsk8fsk3sao0
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous and see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude half
+        type: fort
+      target:
+        value: one living humanoid
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell eviscerates the target, drawing forth its life essence as
@@ -26,41 +50,17 @@ system:
       does not use the spell (though they have access to it), preferring
       trustworthy living guardians for the Ruby Prince. The Whispering Way may
       have copies of the spell.</p>
-  actions:
-    - _id: qeroqsk8fsk3sao0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: instantaneous and see text
-      target:
-        value: one living humanoid
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude half
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
+      sorcerer: 9
+      wizard: 9
   level: 9
+  materials:
+    focus: four alabaster canopic jars worth 100 gp each
+    value: black onyx worth 100 gp per hit die of the target
   school: nec
   types: death, evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
-  materials:
-    value: black onyx worth 100 gp per hit die of the target
-    focus: four alabaster canopic jars worth 100 gp each
-_key: '!items!bul3t3fss266op71'
+type: spell
 

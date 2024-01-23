@@ -1,8 +1,20 @@
 _id: M4bXVPXouXroIt90
-name: Slow Fall
-type: feat
+_key: '!items!M4bXVPXouXroIt90'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Slow Fall
 system:
+  abilityType: ex
+  actions:
+    - _id: 8syxw88s9dy2xjzy
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk
   description:
     value: >-
       <p>At 4th level or higher, a monk within arm’s reach of a wall can use it
@@ -12,22 +24,10 @@ system:
       when next to a wall) improves with his monk level until at 20th level he
       can use a nearby wall to slow his descent and fall any distance without
       harm.</p>
-  actions:
-    - _id: 8syxw88s9dy2xjzy
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_slowFall
-  subType: classFeat
-  associations:
-    classes:
-      - Monk
-  abilityType: ex
   source:
     id: PZO1110
     pages: '59'
-_key: '!items!M4bXVPXouXroIt90'
+  subType: classFeat
+  tag: classFeat_slowFall
+type: feat
 

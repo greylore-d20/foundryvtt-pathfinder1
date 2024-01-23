@@ -1,8 +1,30 @@
 _id: dimv86oryvi030uv
-name: Genius Avaricious
-type: spell
+_key: '!items!dimv86oryvi030uv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Genius Avaricious
 system:
+  actions:
+    - _id: s0a7wbraadamswfo
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      spellEffect: >-
+        a vestige of the archdevil Mammon imbues a coin with a negotiable degree
+        of power
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Casting this spell constitutes performing a rite of sacrifice to the
@@ -41,42 +63,20 @@ system:
       effects of any of these offerings, should the focus coin be swallowed, any
       being sired or conceived by the creature while the magic is in effect is
       born as a tie?ing (bearing an indirect relation to Mammon himself).</p>
-  actions:
-    - _id: s0a7wbraadamswfo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous (see text)
-      range:
-        units: touch
-      spellEffect: >-
-        a vestige of the archdevil Mammon imbues a coin with a negotiable degree
-        of power
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
+  materials:
+    focus: one gold coin
+    value: valuable offerings; see text
   school: con
+  sr: false
   subschool: creation
   types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
-  materials:
-    value: valuable offerings; see text
-    focus: one gold coin
-  sr: false
-_key: '!items!dimv86oryvi030uv'
+type: spell
 

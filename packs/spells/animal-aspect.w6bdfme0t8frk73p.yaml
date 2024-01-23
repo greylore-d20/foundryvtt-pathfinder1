@@ -1,8 +1,28 @@
 _id: w6bdfme0t8frk73p
-name: Animal Aspect
-type: spell
+_key: '!items!w6bdfme0t8frk73p'
 img: icons/creatures/amphibians/frog-water-teal.webp
+name: Animal Aspect
 system:
+  actions:
+    - _id: vpj97rljq3q85vt2
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain some of the beneficial qualities of an animal. Your base form
@@ -33,41 +53,21 @@ system:
       Lizard</i>: Your hands and feet gain climbing claws and climbing pads. You
       gain a climb speed equal to half your normal speed and all the benefits of
       having a natural climb speed.</p>
-  actions:
-    - _id: vpj97rljq3q85vt2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 2
+      bloodrager: 2
+      druid: 2
+      hunter: 2
+      magus: 2
+      psychic: 2
+      ranger: 2
       sorcerer: 2
       wizard: 2
-      druid: 2
-      ranger: 2
-      alchemist: 2
-      magus: 2
-      bloodrager: 2
-      psychic: 2
-      hunter: 2
   level: 2
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a part of the animal
-_key: '!items!w6bdfme0t8frk73p'
+  school: trs
+  subschool: polymorph
+type: spell
 

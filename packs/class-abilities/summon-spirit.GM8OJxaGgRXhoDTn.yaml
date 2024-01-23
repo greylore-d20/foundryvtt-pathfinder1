@@ -1,8 +1,34 @@
 _id: GM8OJxaGgRXhoDTn
-name: Summon Spirit
-type: feat
+_key: '!items!GM8OJxaGgRXhoDTn'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Summon Spirit
 system:
+  abilityType: sp
+  actions:
+    - _id: OtYIGatPh6Zpum2L
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Seal Bargain
+      tag: start
+    - _id: pp2yj60g1XyfGxu8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: End Agreement
+      range:
+        units: unlimited
+      tag: end
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch calls forth the ghost of a humanoid creature with no more
@@ -16,36 +42,12 @@ system:
       <p>This negative level persists as long as the ghost remains in the
       service of the witch; the witch can end the agreement as a standard
       action, immediately removing the negative level.</p>
-  tags:
-    - Hex
-    - Grand Hex
-  actions:
-    - _id: OtYIGatPh6Zpum2L
-      name: Seal Bargain
-      img: systems/pf1/icons/skills/violet_02.jpg
-      tag: start
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-    - _id: pp2yj60g1XyfGxu8
-      name: End Agreement
-      img: systems/pf1/icons/skills/violet_02.jpg
-      tag: end
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        units: unlimited
-  tag: classFeat_summonSpirit
   scriptCalls:
     - _id: 4gd4mYGD61Urb28B
-      name: Bargain Negative Level Adjust
+      category: use
+      hidden: false
       img: icons/svg/dice-target.svg
+      name: Bargain Negative Level Adjust
       type: script
       value: |-
         const tag = shared.attackData.action.tag;
@@ -56,12 +58,10 @@ system:
         else if (tag === "end") {
         actor.update({"system.attributes.energyDrain": Math.max(0, nl - 1)})  
         }
-      category: use
-      hidden: false
   subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: sp
-_key: '!items!GM8OJxaGgRXhoDTn'
+  tag: classFeat_summonSpirit
+  tags:
+    - Hex
+    - Grand Hex
+type: feat
 

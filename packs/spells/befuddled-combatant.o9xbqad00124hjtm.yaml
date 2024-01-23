@@ -1,8 +1,31 @@
 _id: o9xbqad00124hjtm
-name: Befuddled Combatant
-type: spell
+_key: '!items!o9xbqad00124hjtm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Befuddled Combatant
 system:
+  actions:
+    - _id: u4c8u54id1q27bz9
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>As a way to befuddle your target, you fill its mind with all manner of
@@ -18,43 +41,20 @@ system:
       ongoing damage of effects previously created by the target (such as an
       <i>incendiary cloud</i> spell that was cast before the target became
       affected by this spell).</p>
-  actions:
-    - _id: u4c8u54id1q27bz9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 5
-      witch: 5
-      shaman: 5
-      psychic: 5
       mesmerist: 5
+      psychic: 5
+      shaman: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
+  materials:
+    value: cooked noodles
   school: enc
   subschool: compulsion
   types: curse, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: cooked noodles
-_key: '!items!o9xbqad00124hjtm'
+type: spell
 

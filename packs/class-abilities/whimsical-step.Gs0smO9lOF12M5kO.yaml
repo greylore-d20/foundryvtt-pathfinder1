@@ -1,8 +1,27 @@
 _id: Gs0smO9lOF12M5kO
-name: Whimsical Step
-type: feat
+_key: '!items!Gs0smO9lOF12M5kO'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Whimsical Step
 system:
+  abilityType: su
+  actions:
+    - _id: 74v1yw2qvoy20q4x
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: 10*@classes.oracle.level
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day as a move action, you can teleport up to 10 feet per
@@ -12,29 +31,10 @@ system:
       time per day for every 4 levels beyond 7th.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: 74v1yw2qvoy20q4x
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        value: 10*@classes.oracle.level
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_whimsicalStep
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!Gs0smO9lOF12M5kO'
+  tag: classFeat_whimsicalStep
+  uses:
+    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    per: day
+type: feat
 

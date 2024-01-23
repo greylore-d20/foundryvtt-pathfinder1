@@ -1,8 +1,27 @@
 _id: g3DptNZksB9HU80M
-name: Fossil Form
-type: feat
+_key: '!items!g3DptNZksB9HU80M'
 img: systems/pf1/icons/skills/yellow_29.jpg
+name: Fossil Form
 system:
+  abilityType: su
+  actions:
+    - _id: 3ldl5i3vq0435pkc
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/yellow_29.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At the beginning of your turn as a swift action, you can infuse your
@@ -14,29 +33,10 @@ system:
       Wisdom modifier.</p>
 
       <p>This power replaces the Acid Dart power of the Earth Domain.</p>
-  actions:
-    - _id: 3ldl5i3vq0435pkc
-      name: Use
-      img: systems/pf1/icons/skills/yellow_29.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_fossilForm
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!g3DptNZksB9HU80M'
+  tag: classFeat_fossilForm
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: egxUKbPrgVhlBziP
-name: Ancestral Blessing
-type: feat
+_key: '!items!egxUKbPrgVhlBziP'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Ancestral Blessing
 system:
+  abilityType: su
+  actions:
+    - _id: ir6ao0zrdvf455st
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one ally
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can grant the blessings of her ancestors to any ally within
@@ -14,27 +34,7 @@ system:
 
       <p>At 8th level and 16th level, the bonuses provided by this blessing
       increase by 1.</p>
-  actions:
-    - _id: ir6ao0zrdvf455st
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: one ally
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_ancestralBlessing
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!egxUKbPrgVhlBziP'
+  tag: classFeat_ancestralBlessing
+type: feat
 

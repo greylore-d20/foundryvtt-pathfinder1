@@ -1,8 +1,33 @@
 _id: 1msv71n204g06fbe
-name: Explosion of Rot
-type: spell
+_key: '!items!1msv71n204g06fbe'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Explosion of Rot
 system:
+  actions:
+    - _id: 5eglkbuw67nniav8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius burst
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Reflex half (see text)
+        type: ref
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You call forth a burst of decay that ravages all creatures in the area.
@@ -14,38 +39,13 @@ system:
       particularly susceptible to this rotting effect; a plant creature caught
       in the burst takes a -2 penalty on the saving throw and takes 1 extra
       point of damage per die.</p>
-  actions:
-    - _id: 5eglkbuw67nniav8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
-      area: 10-ft.-radius burst
   learnedAt:
     class:
       druid: 4
       hunter: 4
   level: 4
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a rotting flower
-_key: '!items!1msv71n204g06fbe'
+  school: nec
+type: spell
 

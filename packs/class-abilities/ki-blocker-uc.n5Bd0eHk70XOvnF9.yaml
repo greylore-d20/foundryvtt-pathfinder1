@@ -1,8 +1,24 @@
 _id: n5Bd0eHk70XOvnF9
-name: Ki Blocker (UC)
-type: feat
+_key: '!items!n5Bd0eHk70XOvnF9'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Ki Blocker (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: hyrdvdsrzf7sh94g
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 1 ki point as a free action before
@@ -18,23 +34,7 @@ system:
       for each hit.</p>
 
       <p>A monk must be at least 10th level before selecting this ki power.</p>
-  actions:
-    - _id: hyrdvdsrzf7sh94g
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_kiBlockerUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!n5Bd0eHk70XOvnF9'
+  tag: classFeat_kiBlockerUc
+type: feat
 

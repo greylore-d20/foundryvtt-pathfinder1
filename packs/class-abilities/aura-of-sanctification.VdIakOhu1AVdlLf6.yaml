@@ -1,8 +1,28 @@
 _id: VdIakOhu1AVdlLf6
-name: Aura of Sanctification
-type: feat
+_key: '!items!VdIakOhu1AVdlLf6'
 img: systems/pf1/icons/spells/runes-orange-3.jpg
+name: Aura of Sanctification
 system:
+  abilityType: su
+  actions:
+    - _id: es6in653bll3tq87
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/runes-orange-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, as an immediate action, you can emit a 30-foot-radius
@@ -14,30 +34,10 @@ system:
       creatures instead become beneficial only to good creatures.</p>
 
       <p>This power replaces the Holy Lance power of the Good Domain</p>
-  actions:
-    - _id: es6in653bll3tq87
-      name: Use
-      img: systems/pf1/icons/spells/runes-orange-3.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_auraOfSanctification
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!VdIakOhu1AVdlLf6'
+  tag: classFeat_auraOfSanctification
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

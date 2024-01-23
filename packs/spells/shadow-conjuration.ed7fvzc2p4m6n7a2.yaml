@@ -1,8 +1,29 @@
 _id: ed7fvzc2p4m6n7a2
-name: Shadow Conjuration
-type: spell
+_key: '!items!ed7fvzc2p4m6n7a2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Conjuration
 system:
+  actions:
+    - _id: mj8er3xpl4km4fk7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: Will disbelief (if interacted with); varies; see text
+        type: will
+      spellEffect: see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You use material from the Plane of Shadow to shape quasi-real illusions
@@ -36,45 +57,24 @@ system:
       conjuration</i>s</i> as transparent images superimposed on vague, shadowy
       forms.</p><p>Objects automatically succeed on their Will saves against
       this spell.</p>
-  actions:
-    - _id: mj8er3xpl4km4fk7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with); varies; see text
-      spellEffect: see text
   learnedAt:
+    bloodline:
+      Harrow: 4
+      Shadow: 4
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
       mesmerist: 4
+      sorcerer: 4
       spiritualist: 4
+      wizard: 4
     domain:
       Darkness: 4
-    bloodline:
-      Shadow: 4
-      Harrow: 4
   level: 4
   school: ill
-  subschool: shadow
-  types: shadow
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '340'
-_key: '!items!ed7fvzc2p4m6n7a2'
+  subschool: shadow
+  types: shadow
+type: spell
 

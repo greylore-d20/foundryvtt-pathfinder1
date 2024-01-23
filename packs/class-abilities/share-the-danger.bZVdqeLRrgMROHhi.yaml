@@ -1,8 +1,21 @@
 _id: bZVdqeLRrgMROHhi
-name: Share the Danger
-type: feat
+_key: '!items!bZVdqeLRrgMROHhi'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Share the Danger
 system:
+  abilityType: su
+  actions:
+    - _id: s2e7jxluf5g1uwl4
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 15th level, an order of the eel cavalier can form a pact to share
@@ -22,20 +35,7 @@ system:
       move more than 1,000 feet apart, or if either partner in the pact takes a
       swift action to dissolve the partnership. Damage already divided is not
       reassigned when the pact ends.</p>
-  actions:
-    - _id: s2e7jxluf5g1uwl4
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-  tag: classFeat_shareTheDanger
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: su
-_key: '!items!bZVdqeLRrgMROHhi'
+  tag: classFeat_shareTheDanger
+type: feat
 

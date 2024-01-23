@@ -1,8 +1,15 @@
 _id: W8EoiiYjATuBa52i
-name: Guardian
-type: class
+_key: '!items!W8EoiiYjATuBa52i'
 img: systems/pf1/icons/spells/protect-blue-3.jpg
+name: Guardian
 system:
+  bab: ''
+  changes:
+    - _id: rhpckb0u
+      formula: '@classes.mythicGuardian.level * 5'
+      modifier: untyped
+      priority: null
+      subTarget: mhp
   description:
     value: >-
       <p>Not all mythic characters seek glory and fame for themselves. Some take
@@ -78,17 +85,8 @@ system:
       all other reductions in damage, such as energy resistance or damage
       reduction. Once per round, when an enemy scores a critical hit against
       you, you regain one use of mythic power.</p>
-  changes:
-    - _id: rhpckb0u
-      formula: '@classes.mythicGuardian.level * 5'
-      subTarget: mhp
-      modifier: untyped
-      priority: null
-  tag: mythicGuardian
-  subType: mythic
   hd: 0
   hp: 0
-  bab: ''
   savingThrows:
     fort:
       value: ''
@@ -99,5 +97,7 @@ system:
   source:
     id: PZO1126
     pages: '26'
-_key: '!items!W8EoiiYjATuBa52i'
+  subType: mythic
+  tag: mythicGuardian
+type: class
 

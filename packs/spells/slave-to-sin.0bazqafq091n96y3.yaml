@@ -1,8 +1,32 @@
 _id: 0bazqafq091n96y3
-name: Slave to Sin
-type: spell
+_key: '!items!0bazqafq091n96y3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Slave to Sin
 system:
+  actions:
+    - _id: w85n3tm6tcnbq6gf
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (see below)
+        type: will
+      target:
+        value: one living creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to reach into an evil creature's mind to expose
@@ -21,47 +45,23 @@ system:
       profanity, while a slothful victim might merely be slow and hesitant, and
       a lustful victim could well spend precious moments ogling or fawning over
       something of beauty).</p>
-  actions:
-    - _id: w85n3tm6tcnbq6gf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see below)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 2
-      paladin: 2
-      witch: 3
+      cleric: 3
       inquisitor: 3
       mesmerist: 2
+      oracle: 3
+      paladin: 2
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
+  materials:
+    value: a scrap of paper inscribed with the Sihedron rune
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: a scrap of paper inscribed with the Sihedron rune
-_key: '!items!0bazqafq091n96y3'
+type: spell
 

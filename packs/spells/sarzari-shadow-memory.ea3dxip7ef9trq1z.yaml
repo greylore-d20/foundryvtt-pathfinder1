@@ -1,8 +1,31 @@
 _id: ea3dxip7ef9trq1z
-name: Sarzari Shadow Memory
-type: spell
+_key: '!items!ea3dxip7ef9trq1z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sarzari Shadow Memory
 system:
+  actions:
+    - _id: ih5s7gbwfhmgq5n2
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 1 month
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>While casting this spell, you slowly destroy a piece of art bearing
@@ -34,47 +57,24 @@ system:
       <i>Sarzari shadow memory</i> at any one time; if you cast this spell a
       second time while a previous casting is still active, the effects of the
       new spell replace the effects of the old one.</p>
-  actions:
-    - _id: ih5s7gbwfhmgq5n2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 1 month
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 6
-      witch: 6
+      cleric: 6
       inquisitor: 6
+      oracle: 6
       psychic: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a work of art bearing your target's likeness worth at least 1,500 gp
     gpValue: 1500
+    value: a work of art bearing your target's likeness worth at least 1,500 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!ea3dxip7ef9trq1z'
+type: spell
 

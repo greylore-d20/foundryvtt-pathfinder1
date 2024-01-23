@@ -1,8 +1,29 @@
 _id: khfprkujokr9uigq
-name: Energy Drain
-type: spell
+_key: '!items!khfprkujokr9uigq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Energy Drain
 system:
+  actions:
+    - _id: c3y1st9brss18uwd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial; see text for enervation
+        type: fort
+      spellEffect: ray of negative energy
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>enervation</i>, except that the creature
@@ -12,44 +33,23 @@ system:
       succeeds, that negative level is removed. If it fails, that negative level
       becomes permanent.</p><p>An undead creature struck by the ray gains 2d4x5
       temporary hit points for 1 hour.</p>
-  actions:
-    - _id: c3y1st9brss18uwd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial; see text for enervation
-      spellEffect: ray of negative energy
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-      cleric: 9
-      oracle: 9
-      shaman: 9
-    subDomain:
-      Loss: 9
-      Undead: 9
     bloodline:
       Accursed: 9
       Undead: 9
+    class:
+      cleric: 9
+      oracle: 9
+      shaman: 9
+      sorcerer: 9
+      wizard: 9
+    subDomain:
+      Loss: 9
+      Undead: 9
   level: 9
   school: nec
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '277'
-_key: '!items!khfprkujokr9uigq'
+type: spell
 

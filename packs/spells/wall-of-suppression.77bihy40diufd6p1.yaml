@@ -1,8 +1,26 @@
 _id: 77bihy40diufd6p1
-name: Wall of Suppression
-type: spell
+_key: '!items!77bihy40diufd6p1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wall of Suppression
 system:
+  actions:
+    - _id: phmq4lehredjyeg3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: anti-magic wall occupying up to two 5 ft. cubes/level (S)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a <i>wall of</i> glittering motes that suppresses or even
@@ -27,36 +45,18 @@ system:
       caster level than yours are unaffected by the <i>wall of</i> suppression.
       The wall does not affect artifacts, anything stemming from the direct
       action of a deity, or similarly powerful sorts of magic.</p>
-  actions:
-    - _id: phmq4lehredjyeg3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level; see text
-      range:
-        units: medium
-      spellEffect: anti-magic wall occupying up to two 5 ft. cubes/level (S)
   learnedAt:
     class:
+      psychic: 9
       sorcerer: 9
       wizard: 9
-      psychic: 9
   level: 9
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered adamantine worth 1,000 gp
     gpValue: 1000
+    value: powdered adamantine worth 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!77bihy40diufd6p1'
+type: spell
 

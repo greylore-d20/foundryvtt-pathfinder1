@@ -1,8 +1,26 @@
 _id: 039n0f2rc4lohdik
-name: Beloved of the Forge
-type: spell
+_key: '!items!039n0f2rc4lohdik'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Beloved of the Forge
 system:
+  actions:
+    - _id: v9l7aiz444fggud3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain an innate sense of the direction to your home or to the place
@@ -12,34 +30,16 @@ system:
       items in your possession gain a +2 luck bonus on saving throws against
       spells and effects, and you gain a +5 luck bonus on Craft checks to create
       or repair objects with Craft skills in which you are trained.</p>
-  actions:
-    - _id: v9l7aiz444fggud3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      bard: 2
       alchemist: 2
+      bard: 2
+      cleric: 2
+      oracle: 2
       shaman: 2
+      warpriest: 2
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!039n0f2rc4lohdik'
+type: spell
 

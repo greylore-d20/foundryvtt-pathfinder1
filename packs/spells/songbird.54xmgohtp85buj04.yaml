@@ -1,8 +1,24 @@
 _id: 54xmgohtp85buj04
-name: Songbird
-type: spell
+_key: '!items!54xmgohtp85buj04'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Songbird
 system:
+  actions:
+    - _id: txtx82oixasf3kjf
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>You conjure uplifting music from the wilds of Elysium, Heaven, or
@@ -14,35 +30,19 @@ system:
       count against your total rounds of bardic performance available for the
       day.  If you cast <i>songbird</i> in the same round in which you cast a
       spell with the sonic descriptor, that spell's save DC increases by 1.</p>
-  actions:
-    - _id: txtx82oixasf3kjf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
+      mesmerist: 1
+      oracle: 1
       paladin: 1
       psychic: 1
-      mesmerist: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   school: con
-  types: good
-  components:
-    somatic: true
   sr: false
-_key: '!items!54xmgohtp85buj04'
+  types: good
+type: spell
 

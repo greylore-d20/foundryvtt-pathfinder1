@@ -1,8 +1,26 @@
 _id: g17ayjso7j8s8l2l
-name: Masterwork Transformation
-type: spell
+_key: '!items!g17ayjso7j8s8l2l'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Masterwork Transformation
 system:
+  actions:
+    - _id: os57h5vydak3kqjr
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one weapon, suit of armor, shield, tool, or skill kit touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You convert a non-masterwork item into its masterwork equivalent. A
@@ -19,42 +37,24 @@ system:
       that could be made masterwork as a weapon or armor), you choose one option
       of the object to affect (though you can cast the spell again to affect
       another option).</p>
-  actions:
-    - _id: os57h5vydak3kqjr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: one weapon, suit of armor, shield, tool, or skill kit touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
       bard: 2
-      witch: 2
-      occultist: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      occultist: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
     subDomain:
       Greed: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see below
+  school: trs
   sr: false
-_key: '!items!g17ayjso7j8s8l2l'
+type: spell
 

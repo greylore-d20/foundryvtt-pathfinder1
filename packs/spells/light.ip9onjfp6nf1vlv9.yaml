@@ -1,8 +1,27 @@
 _id: ip9onjfp6nf1vlv9
-name: Light
-type: spell
+_key: '!items!ip9onjfp6nf1vlv9'
 img: icons/magic/light/beam-explosion-orange.webp
+name: Light
 system:
+  actions:
+    - _id: e97eb3l11nmlstsx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: object touched
+  components:
+    divineFocus: 2
+    material: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes a touched object to glow like a torch, shedding
@@ -16,53 +35,34 @@ system:
       you make this spell permanent (through permanency or a similar effect), it
       does not count against this limit. Light can be used to counter or dispel
       any darkness spell of equal or lower spell level.</p>
-  actions:
-    - _id: e97eb3l11nmlstsx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: object touched
-      range:
-        units: touch
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
-      cleric: 0
-      oracle: 0
-      druid: 0
+      adept: 0
       bard: 0
-      summoner: 0
-      witch: 0
+      cleric: 0
+      druid: 0
+      hunter: 0
       inquisitor: 0
       magus: 0
-      adept: 0
-      shaman: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      oracle: 0
+      psychic: 0
+      shaman: 0
+      sorcerer: 0
       spiritualist: 0
-      hunter: 0
+      summoner: 0
       summonerUnchained: 0
+      witch: 0
+      wizard: 0
   level: 0
-  school: evo
-  types: light
-  components:
-    verbal: true
-    material: true
-    divineFocus: 2
   materials:
     value: a firefly
+  school: evo
   sr: false
-_key: '!items!ip9onjfp6nf1vlv9'
+  types: light
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

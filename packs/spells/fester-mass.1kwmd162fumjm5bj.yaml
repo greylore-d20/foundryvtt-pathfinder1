@@ -1,16 +1,11 @@
 _id: 1kwmd162fumjm5bj
-name: Fester, Mass
-type: spell
+_key: '!items!1kwmd162fumjm5bj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fester, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>fester</i>, except that it affects multiple
-      foes.</p>
   actions:
     - _id: t6ceb3aw1njtkkgd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,28 +13,33 @@ system:
           type: action
       duration:
         value: 1 round/level or 1 round; see text
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude partial
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>fester</i>, except that it affects multiple
+      foes.</p>
   learnedAt:
     class:
-      witch: 6
       inquisitor: 6
+      witch: 6
   level: 6
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: rotted meat
-_key: '!items!1kwmd162fumjm5bj'
+  school: nec
+type: spell
 

@@ -1,8 +1,21 @@
 _id: tlvQVJUUFUVQ92EH
-name: Spell Kenning
-type: feat
+_key: '!items!tlvQVJUUFUVQ92EH'
 img: systems/pf1/icons/feats/extra-lay-on-hands.jpg
+name: Spell Kenning
 system:
+  abilityType: su
+  actions:
+    - _id: 1p6bknrqar6tyj5i
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/feats/extra-lay-on-hands.jpg
+      name: Use
+  associations:
+    classes:
+      - Skald
   description:
     value: >-
       <p>At 5th level, a skald is learned in the magic of other spellcasters,
@@ -15,25 +28,12 @@ system:
       skald can use this ability twice per day.</p>
 
       <p>At 17th level, he can use this ability three times per day.</p>
-  actions:
-    - _id: 1p6bknrqar6tyj5i
-      name: Use
-      img: systems/pf1/icons/feats/extra-lay-on-hands.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
+  subType: classFeat
+  tag: classFeat_spellKenning
   uses:
-    per: day
     maxFormula: >-
       @classes.skald.level >= 17 ? 3 : ((@classes.skald.level < 17 &&
       @classes.skald.level >= 11) ? 2 : 1)
-  tag: classFeat_spellKenning
-  subType: classFeat
-  associations:
-    classes:
-      - Skald
-  abilityType: su
-_key: '!items!tlvQVJUUFUVQ92EH'
+    per: day
+type: feat
 

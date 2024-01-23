@@ -1,8 +1,34 @@
 _id: spni4gy84sp8ftkv
-name: Hide Campsite
-type: spell
+_key: '!items!spni4gy84sp8ftkv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hide Campsite
 system:
+  actions:
+    - _id: c4uvwy4buadkdv42
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: one 20-ft. cube
+      duration:
+        value: 2 hours/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: rect
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will disbelief (if interacted with)
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make the area around a campsite appear to be a thicket of untouched
@@ -13,42 +39,16 @@ system:
       cannot even feel heat or a rush of wind coming from the area. Those inside
       the area can see out normally. Once a creature steps into the area of the
       spell, it can see everything in and around the area normally.</p>
-  actions:
-    - _id: c4uvwy4buadkdv42
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 2 hours/level (D)
-      range:
-        units: close
-      measureTemplate:
-        type: rect
-        size: '20'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with)
-      area: one 20-ft. cube
   learnedAt:
     class:
       druid: 3
-      ranger: 2
       hunter: 2
+      ranger: 2
   level: 3
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a sprig of mistletoe, and a vial of quicksilver
+  school: ill
   sr: false
-_key: '!items!spni4gy84sp8ftkv'
+  subschool: glamer
+type: spell
 

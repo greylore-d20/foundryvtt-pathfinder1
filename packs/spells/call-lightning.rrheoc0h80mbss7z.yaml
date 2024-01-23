@@ -1,8 +1,29 @@
 _id: rrheoc0h80mbss7z
-name: Call Lightning
-type: spell
+_key: '!items!rrheoc0h80mbss7z'
 img: icons/magic/lightning/bolt-forked-blue.webp
+name: Call Lightning
 system:
+  actions:
+    - _id: r1ui6wsdhf8oasxj
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
+      spellEffect: one or more 30-ft.-long vertical lines of lightning
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Immediately upon completion of the spell, and once per round
@@ -21,42 +42,21 @@ system:
       Large size)-each bolt deals 3d10 points of electricity damage instead of
       3d6.</p><p>This spell functions indoors or underground but not
       underwater.</p>
-  actions:
-    - _id: r1ui6wsdhf8oasxj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 min./level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
-      spellEffect: one or more 30-ft.-long vertical lines of lightning
   learnedAt:
     class:
       druid: 3
-      shaman: 3
-      occultist: 3
       hunter: 3
+      occultist: 3
+      shaman: 3
     domain:
       Weather: 3
     subDomain:
       Catastrophe: 3
   level: 3
   school: evo
-  types: electricity
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '251'
-_key: '!items!rrheoc0h80mbss7z'
+  types: electricity
+type: spell
 

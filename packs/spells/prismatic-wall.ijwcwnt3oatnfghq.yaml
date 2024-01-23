@@ -1,8 +1,28 @@
 _id: ijwcwnt3oatnfghq
-name: Prismatic Wall
-type: spell
+_key: '!items!ijwcwnt3oatnfghq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Prismatic Wall
 system:
+  actions:
+    - _id: dze2zpmfwwdz3sdb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+      spellEffect: wall 4 ft./level wide, 2 ft./level high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Prismatic wall</i> creates a vertical, opaque wall-a shimmering,
@@ -52,36 +72,16 @@ system:
       are included here because certain magic items can create prismatic effects
       one color at a time, and spell resistance might render some colors
       ineffective (see above).</td></tr></tbody></table>
-  actions:
-    - _id: dze2zpmfwwdz3sdb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: see text
-      spellEffect: wall 4 ft./level wide, 2 ft./level high
   learnedAt:
     class:
+      psychic: 8
       sorcerer: 8
       wizard: 8
-      psychic: 8
     subDomain:
       Fortifications: 9
       Isolation: 8
   level: 8
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!ijwcwnt3oatnfghq'
+type: spell
 

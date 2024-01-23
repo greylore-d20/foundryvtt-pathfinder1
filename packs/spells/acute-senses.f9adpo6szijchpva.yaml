@@ -1,17 +1,11 @@
 _id: f9adpo6szijchpva
-name: Acute Senses
-type: spell
+_key: '!items!f9adpo6szijchpva'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Acute Senses
 system:
-  description:
-    value: >-
-      <p>The target gains a +10 enhancement bonus on Perception checks. The
-      bonus increases to +20 at caster level 8th, and +30 (the maximum) at
-      caster level 16th.</p>
   actions:
     - _id: jhdqg7sqvjrni8nf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,30 +13,36 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target gains a +10 enhancement bonus on Perception checks. The
+      bonus increases to +20 at caster level 8th, and +30 (the maximum) at
+      caster level 16th.</p>
   learnedAt:
     class:
-      ranger: 2
-      bard: 2
       alchemist: 2
+      bard: 2
+      hunter: 2
       inquisitor: 2
       psychic: 2
-      hunter: 2
+      ranger: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a glass lens
-_key: '!items!f9adpo6szijchpva'
+  school: trs
+type: spell
 

@@ -1,16 +1,11 @@
 _id: kvfggbo0tr5gklxu
-name: Plague Carrier
-type: spell
+_key: '!items!kvfggbo0tr5gklxu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Plague Carrier
 system:
-  description:
-    value: >-
-      <p>The target's natural attacks carry filth fever (DC 10 + 1/2 of the
-      creature's Hit Dice + creature's Con modifier)</p>
   actions:
     - _id: rtjfokrn739m12oq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,30 +13,35 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target's natural attacks carry filth fever (DC 10 + 1/2 of the
+      creature's Hit Dice + creature's Con modifier)</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      witch: 5
       hunter: 4
+      oracle: 4
+      sorcerer: 5
+      warpriest: 4
+      witch: 5
+      wizard: 5
   level: 5
   school: nec
   types: disease, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kvfggbo0tr5gklxu'
+type: spell
 

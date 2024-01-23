@@ -1,8 +1,32 @@
 _id: c21adykehhoj8d6j
-name: Symbol of Exsanguination
-type: spell
+_key: '!items!c21adykehhoj8d6j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Symbol of Exsanguination
 system:
+  actions:
+    - _id: zbifz9zry4bo8h47
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Fortitude negates
+        type: fort
+      spellEffect: one symbol
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>symbol of death</i>, except that each
@@ -25,47 +49,23 @@ system:
       class feature can use Disable Device to disarm it. The DC in each case is
       equal to 25 + spell level, or 28 (27 for a bloodrager) for <i>Symbol of
       Exsanguination</i>.</p>
-  actions:
-    - _id: zbifz9zry4bo8h47
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 10 minutes/level
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      spellEffect: one symbol
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      witch: 3
       bloodrager: 2
+      cleric: 3
       occultist: 2
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered garnet and bloodstone worth a total of 500 gp
     gpValue: 500
+    value: powdered garnet and bloodstone worth a total of 500 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!c21adykehhoj8d6j'
+  school: nec
+  types: evil
+type: spell
 

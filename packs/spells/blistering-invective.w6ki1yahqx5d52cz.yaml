@@ -1,8 +1,29 @@
 _id: w6ki1yahqx5d52cz
-name: Blistering Invective
-type: spell
+_key: '!items!w6ki1yahqx5d52cz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blistering Invective
 system:
+  actions:
+    - _id: 9c194z2fnqhi0ynn
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 30-ft. radius
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex partial, see text
+        type: ref
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You unleash an insulting tirade so vicious and spiteful that enemies
@@ -13,36 +34,15 @@ system:
       at a Reflex save or catch fire. Spell resistance can negate the fire
       damage caused by this spell, but does not protect the creature from the
       demoralizing effect.</p>
-  actions:
-    - _id: 9c194z2fnqhi0ynn
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial, see text
-      area: 30-ft. radius
   learnedAt:
     class:
-      bard: 2
       alchemist: 2
+      bard: 2
       inquisitor: 2
       mesmerist: 2
   level: 2
   school: evo
-  types: fire, language-dependent
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!w6ki1yahqx5d52cz'
+  types: fire, language-dependent
+type: spell
 

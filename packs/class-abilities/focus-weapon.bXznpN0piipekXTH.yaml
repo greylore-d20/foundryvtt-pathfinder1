@@ -1,27 +1,27 @@
 _id: bXznpN0piipekXTH
-name: Focus Weapon
-type: feat
+_key: '!items!bXznpN0piipekXTH'
 img: systems/pf1/icons/skills/light_09.jpg
+name: Focus Weapon
 system:
+  associations:
+    classes:
+      - Warpriest
+  changes:
+    - _id: tx5wg18k
+      formula: '1'
+      modifier: untyped
+      priority: null
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 1st level, a warpriest receives
       @Compendium[pf1.feats.n250dFlbykAIAg5Z]{Weapon Focus} as a bonus feat (he
       can choose any weapon, not just his deity’s favored weapon).</p>
-  changes:
-    - _id: tx5wg18k
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
-      priority: null
   links:
     supplements:
       - name: Weapon Focus
         uuid: Compendium.pf1.feats.Item.n250dFlbykAIAg5Z
-  tag: classFeat_focusWeapon
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!bXznpN0piipekXTH'
+  tag: classFeat_focusWeapon
+type: feat
 

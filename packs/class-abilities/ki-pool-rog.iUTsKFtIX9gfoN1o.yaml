@@ -1,8 +1,20 @@
 _id: iUTsKFtIX9gfoN1o
-name: Ki Pool (ROG)
-type: feat
+_key: '!items!iUTsKFtIX9gfoN1o'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Ki Pool (ROG)
 system:
+  abilityType: ex
+  actions:
+    - _id: h6ymx34h6mt7ndw2
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
   description:
     value: >-
       <p>A rogue with this talent gains a small ki pool. This ki pool is similar
@@ -13,24 +25,12 @@ system:
       Wisdom bonus (minimum 1) as bonus ki points to her ki pool. She can spend
       a ki point to gain a +10-foot bonus to movement until the end of her
       turn.</p>
+  subType: classFeat
+  tag: classFeat_kiPoolRog
   tags:
     - Rogue Talent
-  actions:
-    - _id: h6ymx34h6mt7ndw2
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: free
-        unchained:
-          type: free
   uses:
-    per: day
     maxFormula: max(1, @abilities.wis.mod)
-  tag: classFeat_kiPoolRog
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-  abilityType: ex
-_key: '!items!iUTsKFtIX9gfoN1o'
+    per: day
+type: feat
 

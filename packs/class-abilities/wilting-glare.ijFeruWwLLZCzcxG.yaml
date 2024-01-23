@@ -1,8 +1,36 @@
 _id: ijFeruWwLLZCzcxG
-name: Wilting Glare
-type: feat
+_key: '!items!ijFeruWwLLZCzcxG'
 img: systems/pf1/icons/spells/leaf-orange-1.jpg
+name: Wilting Glare
 system:
+  abilityType: su
+  actions:
+    - _id: t2xj9nobrh8jb5k3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.cleric.level / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/leaf-orange-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can leach moisture and vitality from a
@@ -15,38 +43,10 @@ system:
       times per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Sun's Blessing power of the Sun Domain.</p>
-  actions:
-    - _id: t2xj9nobrh8jb5k3
-      name: Use
-      img: systems/pf1/icons/spells/leaf-orange-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.cleric.level / 2)
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_wiltingGlare
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!ijFeruWwLLZCzcxG'
+  tag: classFeat_wiltingGlare
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

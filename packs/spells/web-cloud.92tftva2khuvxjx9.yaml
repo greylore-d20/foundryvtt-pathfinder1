@@ -1,8 +1,29 @@
 _id: 92tftva2khuvxjx9
-name: Web Cloud
-type: spell
+_key: '!items!92tftva2khuvxjx9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Web Cloud
 system:
+  actions:
+    - _id: divq9ajonmdqralr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex partial; see text
+        type: ref
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a cloud of flame-resistant strands of adhesive
@@ -20,35 +41,14 @@ system:
       at the start of its turn must save against the cloud or be affected. The
       <i>web</i>bing of this spell is flammable (see the <i>web</i> spell), but
       has fire resistance 5.</p>
-  actions:
-    - _id: divq9ajonmdqralr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial; see text
-      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
   learnedAt:
     class:
       sorcerer: 4
-      wizard: 4
       witch: 4
+      wizard: 4
   level: 4
   school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!92tftva2khuvxjx9'
+  subschool: creation
+type: spell
 

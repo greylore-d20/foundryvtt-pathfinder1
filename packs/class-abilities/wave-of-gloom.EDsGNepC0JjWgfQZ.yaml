@@ -1,8 +1,24 @@
 _id: EDsGNepC0JjWgfQZ
-name: Wave of Gloom
-type: feat
+_key: '!items!EDsGNepC0JjWgfQZ'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Wave of Gloom
 system:
+  abilityType: su
+  actions:
+    - _id: ahn742bkljigytew
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>At 5th level, by expending 1 use of your despair ability as a standard
@@ -15,23 +31,7 @@ system:
 
       <p>You’re immune to your own wave of gloom. This is a mind-affecting
       emotion effect.</p>
-  actions:
-    - _id: ahn742bkljigytew
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_waveOfGloom
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!EDsGNepC0JjWgfQZ'
+  tag: classFeat_waveOfGloom
+type: feat
 

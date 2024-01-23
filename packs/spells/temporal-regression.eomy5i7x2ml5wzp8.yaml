@@ -1,8 +1,25 @@
 _id: eomy5i7x2ml5wzp8
-name: Temporal Regression
-type: spell
+_key: '!items!eomy5i7x2ml5wzp8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Temporal Regression
 system:
+  actions:
+    - _id: c6fxr8y57xw7kisd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you complete this spell, note your current location and condition,
@@ -23,35 +40,18 @@ system:
       spell to transport yourself back to your beacon as an immediate action
       instead of a standard action, but doing so utterly and entirely consumes
       the spell's focus.</p>
-  actions:
-    - _id: c6fxr8y57xw7kisd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level or until discharged
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       druid: 9
-      witch: 8
       psychic: 8
+      sorcerer: 8
+      witch: 8
+      wizard: 8
   level: 8
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: hourglass filled with powdered horacalcum worth 1,500 gp
+  school: con
   sr: false
-_key: '!items!eomy5i7x2ml5wzp8'
+  subschool: teleportation
+type: spell
 

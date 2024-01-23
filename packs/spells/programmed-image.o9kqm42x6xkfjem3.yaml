@@ -1,8 +1,32 @@
 _id: o9kqm42x6xkfjem3
-name: Programmed Image
-type: spell
+_key: '!items!o9kqm42x6xkfjem3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Programmed Image
 system:
+  actions:
+    - _id: n3mad0t8o67dwj7n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent until triggered, then 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief (if interacted with)
+        type: will
+      spellEffect: >-
+        visual figment that cannot extend beyond a 20-ft. cube + one 10-ft.
+        cube/level (S)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>silent image,</i> except that this spell's
@@ -15,45 +39,21 @@ system:
       based on some quality not normally obvious to the senses, such as
       alignment. See <i>magic mouth</i> for more details about such
       triggers.</p>
-  actions:
-    - _id: n3mad0t8o67dwj7n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent until triggered, then 1 round/level
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with)
-      spellEffect: >-
-        visual figment that cannot extend beyond a 20-ft. cube + one 10-ft.
-        cube/level (S)
   learnedAt:
     class:
+      bard: 6
+      mesmerist: 6
+      psychic: 6
       sorcerer: 6
       wizard: 6
-      bard: 6
-      psychic: 6
-      mesmerist: 6
   level: 6
-  school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: fleece and jade dust worth 25 gp
     gpValue: 25
+    value: fleece and jade dust worth 25 gp
   preparation:
     spontaneousPrepared: false
+  school: ill
   sr: false
-_key: '!items!o9kqm42x6xkfjem3'
+  subschool: figment
+type: spell
 

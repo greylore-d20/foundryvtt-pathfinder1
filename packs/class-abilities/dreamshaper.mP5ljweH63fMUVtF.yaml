@@ -1,8 +1,21 @@
 _id: mP5ljweH63fMUVtF
-name: Dreamshaper
-type: feat
+_key: '!items!mP5ljweH63fMUVtF'
 img: systems/pf1/icons/skills/affliction_08.jpg
+name: Dreamshaper
 system:
+  abilityType: sp
+  actions:
+    - _id: ysorxxhno6fkabxr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/affliction_08.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can manipulate the dreamscape of others, drawing
@@ -16,25 +29,12 @@ system:
       @Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare} spell. You can use
       this ability once per day at 9th level. At 17th level you can use this
       ability twice per day, and at 20th, three times per day.</p>
-  actions:
-    - _id: ysorxxhno6fkabxr
-      name: Use
-      img: systems/pf1/icons/skills/affliction_08.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
+  subType: classFeat
+  tag: classFeat_dreamshaper
   uses:
-    per: day
     maxFormula: >-
       floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
       / 20)
-  tag: classFeat_dreamshaper
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!mP5ljweH63fMUVtF'
+    per: day
+type: feat
 

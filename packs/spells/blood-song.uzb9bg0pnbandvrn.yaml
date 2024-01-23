@@ -1,8 +1,33 @@
 _id: uzb9bg0pnbandvrn
-name: Blood Song
-type: spell
+_key: '!items!uzb9bg0pnbandvrn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blood Song
 system:
+  actions:
+    - _id: vfqzn5qqjlxdhs7b
+      actionType: spellsave
+      activation:
+        cost: 2
+        type: minute
+        unchained:
+          cost: 2
+          type: minute
+      duration:
+        value: 1 day or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>imbue with spell ability</i>, with the
@@ -15,37 +40,12 @@ system:
       <i>blood song</i>. For each spell that is imbued using <i>blood song</i>,
       the caster loses 5 hit points, which can't be regained by any means until
       the spell ends or is discharged.</p>
-  actions:
-    - _id: vfqzn5qqjlxdhs7b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 2
-        type: minute
-        unchained:
-          cost: 2
-          type: minute
-      duration:
-        value: 1 day or until discharged (D)
-      target:
-        value: creature touched; see text
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       bard: 4
   level: 4
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: the caster's blood
-_key: '!items!uzb9bg0pnbandvrn'
+  school: evo
+type: spell
 

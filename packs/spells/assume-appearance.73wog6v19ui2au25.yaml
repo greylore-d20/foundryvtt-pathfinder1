@@ -1,8 +1,26 @@
 _id: 73wog6v19ui2au25
-name: Assume Appearance
-type: spell
+_key: '!items!73wog6v19ui2au25'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Assume Appearance
 system:
+  actions:
+    - _id: a53ds31ea1egxjlj
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions similarly to <i>alter self</i>, except for the
@@ -16,44 +34,26 @@ system:
       speech patterns. The spell grants a +10 bonus on Disguise checks to appear
       as the imitated creature.  If the assumed creature is returned to life
       while this spell is active, <i>assume appearance</i> immediately ends.</p>
-  actions:
-    - _id: a53ds31ea1egxjlj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      bard: 3
       alchemist: 3
-      summoner: 3
-      witch: 3
-      shaman: 3
-      psychic: 3
+      bard: 3
       medium: 3
       mesmerist: 3
       occultist: 3
+      psychic: 3
+      shaman: 3
+      sorcerer: 3
       spiritualist: 3
+      summoner: 3
       summonerUnchained: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: corpse of the deceased creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!73wog6v19ui2au25'
+  subschool: polymorph
+type: spell
 

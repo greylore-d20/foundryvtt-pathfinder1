@@ -1,18 +1,10 @@
 _id: ti1bntd9k8ni2c15
-name: Summon Minor Ally
-type: spell
+_key: '!items!ti1bntd9k8ni2c15'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Minor Ally
 system:
-  description:
-    value: >-
-      <p>This spell functions as summon nature's ally I, except you can summon
-      1d3 Tiny or smaller animals, such as bats, lizards, monkeys, rats, ravens,
-      toads, or weasels. The summoned animals must all be the same type of
-      creature.</p>
   actions:
     - _id: mwc05omr8p93ef85
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -20,20 +12,28 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: 1d3 summoned creatures
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as summon nature's ally I, except you can summon
+      1d3 Tiny or smaller animals, such as bats, lizards, monkeys, rats, ravens,
+      toads, or weasels. The summoned animals must all be the same type of
+      creature.</p>
   learnedAt:
     class:
       druid: 1
-      ranger: 1
       hunter: 1
+      ranger: 1
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!ti1bntd9k8ni2c15'
+  subschool: summoning
+type: spell
 

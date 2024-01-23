@@ -1,8 +1,29 @@
 _id: qj15nnuiu6ntrkg2
-name: Creeping Ice
-type: spell
+_key: '!items!qj15nnuiu6ntrkg2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Creeping Ice
 system:
+  actions:
+    - _id: riwfnstyy4faw6g1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates (see text)
+        type: ref
+      spellEffect: anchored plane of ice, up to one 10-ft. square/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell covers the floor, the ground, or some other calm horizontal
@@ -23,37 +44,16 @@ system:
       the ice. If the growing ice completely covers a creature's square, the
       creature must choose whether it moves onto the sheet of ice, is knocked
       prone on the sheet of ice, or is bull rushed into an adjacent square.</p>
-  actions:
-    - _id: riwfnstyy4faw6g1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates (see text)
-      spellEffect: anchored plane of ice, up to one 10-ft. square/level
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       druid: 4
-      summoner: 3
       hunter: 4
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 4
+      wizard: 4
   level: 4
   school: evo
   types: cold
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!qj15nnuiu6ntrkg2'
+type: spell
 

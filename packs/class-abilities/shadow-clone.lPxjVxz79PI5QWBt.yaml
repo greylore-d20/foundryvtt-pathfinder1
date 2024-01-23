@@ -1,8 +1,24 @@
 _id: lPxjVxz79PI5QWBt
-name: Shadow Clone
-type: feat
+_key: '!items!lPxjVxz79PI5QWBt'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Shadow Clone
 system:
+  abilityType: su
+  actions:
+    - _id: r69i2urpcek3wjek
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.ninja.level'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
   description:
     value: >-
       <p>The ninja can create 1d4 shadowy duplicates of herself that conceal her
@@ -11,25 +27,9 @@ system:
       level as her caster level.</p>
 
       <p>Using this ability is a standard action that uses up 1 ki point.</p>
+  subType: classFeat
+  tag: classFeat_shadowClone
   tags:
     - Ninja Trick
-  actions:
-    - _id: r69i2urpcek3wjek
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.ninja.level'
-        units: minute
-  tag: classFeat_shadowClone
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-  abilityType: su
-_key: '!items!lPxjVxz79PI5QWBt'
+type: feat
 

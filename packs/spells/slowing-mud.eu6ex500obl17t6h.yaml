@@ -1,8 +1,34 @@
 _id: eu6ex500obl17t6h
-name: Slowing Mud
-type: spell
+_key: '!items!eu6ex500obl17t6h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Slowing Mud
 system:
+  actions:
+    - _id: 1ufo7g34ty31b42e
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You coat the targets in thick, sticky mud. The mud acts as a
@@ -16,41 +42,15 @@ system:
       <i>slow</i>ed by the mud allows it to act normally for the duration of the
       <i>haste</i>. <i>Slow</i> does not stack with the effects of
       <i>slow</i>ing mud. This spell cannot counter or dispel <i>haste</i>.</p>
-  actions:
-    - _id: 1ufo7g34ty31b42e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (see text)
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       druid: 4
-      shaman: 4
       hunter: 4
+      shaman: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: earth and water
-_key: '!items!eu6ex500obl17t6h'
+  school: con
+  subschool: creation
+type: spell
 

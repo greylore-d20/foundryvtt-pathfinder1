@@ -1,8 +1,31 @@
 _id: h4n6jfsc64csekxh
-name: Steal Years
-type: spell
+_key: '!items!h4n6jfsc64csekxh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Steal Years
 system:
+  actions:
+    - _id: hm7hsi520qy3ophz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You temporarily drain youth and vitality from the target and channel it
@@ -17,42 +40,19 @@ system:
       to the target's true age, and cannot make the target die of old age.  When
       the spell ends, the sudden weight of aging makes you fatigued for 1d4
       hours.</p>
-  actions:
-    - _id: hm7hsi520qy3ophz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      witch: 3
       hunter: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a handful of ash
-_key: '!items!h4n6jfsc64csekxh'
+  school: trs
+type: spell
 

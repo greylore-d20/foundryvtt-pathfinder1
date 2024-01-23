@@ -1,8 +1,20 @@
 _id: zHOV0GMi31u7zgOk
-name: Combat Healer
-type: feat
+_key: '!items!zHOV0GMi31u7zgOk'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Combat Healer
 system:
+  abilityType: su
+  actions:
+    - _id: ueimt1lc4wfh7mwq
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Whenever you cast a cure spell (a spell with “cure” in its name), you
@@ -12,26 +24,14 @@ system:
       per day for every four levels beyond 7th.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
+  subType: classFeat
+  tag: classFeat_combatHealer
   tags:
     - Revelation
     - Battle Mystery
     - Life Mystery
-  actions:
-    - _id: ueimt1lc4wfh7mwq
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
   uses:
-    per: day
     maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_combatHealer
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!zHOV0GMi31u7zgOk'
+    per: day
+type: feat
 

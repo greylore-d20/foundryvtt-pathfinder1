@@ -1,8 +1,16 @@
 _id: 1gKaluTk5z6U2nZM
-name: Technique Feat
-type: feat
+_key: '!items!1gKaluTk5z6U2nZM'
 img: systems/pf1/icons/skills/red_11.jpg
+name: Technique Feat
 system:
+  associations:
+    classes:
+      - Vampire Hunter
+  changes:
+    - _id: h17xzys9
+      formula: 1 + floor(@classes.vampireHunter.level / 3)
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>Due to the inherent deadliness of hunting vampires, the methods and
@@ -33,15 +41,7 @@ system:
       <em>Liberating Critical</em>, <em>Locked Will</em>, <em>Resolute
       Steed</em>, <em>Revealing Waters</em>, <em>Soured Soul</em>, and
       <em>Vampire Scholar</em>.</p>
-  changes:
-    - _id: h17xzys9
-      formula: 1 + floor(@classes.vampireHunter.level / 3)
-      subTarget: bonusFeats
-      modifier: untyped
-  tag: classFeat_techniqueFeat
   subType: classFeat
-  associations:
-    classes:
-      - Vampire Hunter
-_key: '!items!1gKaluTk5z6U2nZM'
+  tag: classFeat_techniqueFeat
+type: feat
 

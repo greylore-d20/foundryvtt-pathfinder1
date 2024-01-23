@@ -1,8 +1,30 @@
 _id: 7aq3g5gcbviba7hq
-name: Ethereal Envelopment
-type: spell
+_key: '!items!7aq3g5gcbviba7hq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ethereal Envelopment
 system:
+  actions:
+    - _id: 4wbmeb8rtbry3gll
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates, see text
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>This spell is similar to <i>ethereal envelope</i>, but it allows you to
@@ -21,36 +43,14 @@ system:
       is returned to its prior location on the Material Plane, as described for
       <i>ethereal envelope</i>, but if the target is conscious at the time, it
       doesn't spend a round asleep or staggered.</p>
-  actions:
-    - _id: 4wbmeb8rtbry3gll
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates, see text
   learnedAt:
     class:
       psychic: 7
       spiritualist: 5
   level: 7
-  school: con
-  subschool: teleportation
-  components:
-    somatic: true
-    material: true
   materials:
     value: empty crystal box
-_key: '!items!7aq3g5gcbviba7hq'
+  school: con
+  subschool: teleportation
+type: spell
 

@@ -1,8 +1,22 @@
 _id: plsS6DM60YDf2NmU
-name: Ki Visions (UC)
-type: feat
+_key: '!items!plsS6DM60YDf2NmU'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Ki Visions (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: skwyjcf99nxjr5m5
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability often sees visions of spirits or hears the
@@ -12,21 +26,7 @@ system:
       spends 2 ki points from the next day’s total.</p>
 
       <p>A monk must be at least 10th level before selecting this ki power.</p>
-  actions:
-    - _id: skwyjcf99nxjr5m5
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_kiVisionsUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!plsS6DM60YDf2NmU'
+  tag: classFeat_kiVisionsUc
+type: feat
 

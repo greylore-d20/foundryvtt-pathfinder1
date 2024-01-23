@@ -1,16 +1,11 @@
 _id: 8kd54d2ho1fywj2u
-name: Protection from Good, Communal
-type: spell
+_key: '!items!8kd54d2ho1fywj2u'
 img: icons/magic/defensive/barrier-shield-dome-deflect-teal.webp
+name: Protection from Good, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Protection from Good</i>, except you
-      divide the duration in 1-minute intervals among the creatures touched.</p>
   actions:
     - _id: m1qj4w5zkpmor0yk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,36 +13,41 @@ system:
           type: action
       duration:
         value: 1 min./level (D)
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Protection from Good</i>, except you
+      divide the duration in 1-minute intervals among the creatures touched.</p>
   learnedAt:
     class:
-      arcanist: 2
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      oracle: 2
-      summoner: 2
-      inquisitor: 2
       antipaladin: 2
+      arcanist: 2
+      cleric: 2
+      inquisitor: 2
+      oracle: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
       warpriest: 2
+      wizard: 2
   level: 2
   school: abj
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1118
     pages: '240'
-_key: '!items!8kd54d2ho1fywj2u'
+  sr: false
+  types: evil
+type: spell
 

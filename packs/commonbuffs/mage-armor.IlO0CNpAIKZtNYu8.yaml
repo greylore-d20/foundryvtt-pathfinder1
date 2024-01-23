@@ -1,8 +1,13 @@
 _id: IlO0CNpAIKZtNYu8
-name: Mage Armor
-type: buff
+_key: '!items!IlO0CNpAIKZtNYu8'
 img: systems/pf1/icons/spells/protect-sky-1.jpg
+name: Mage Armor
 system:
+  changes:
+    - _id: o4qpth3y
+      formula: '4'
+      modifier: base
+      subTarget: aac
   description:
     value: >-
       <p>An invisible but tangible field of force surrounds you, providing a +4
@@ -10,14 +15,9 @@ system:
 
       <p>Since mage armor is made of force, <em>incorporeal</em> creatures can’t
       bypass it the way they do normal armor.</p>
-  changes:
-    - _id: o4qpth3y
-      formula: '4'
-      subTarget: aac
-      modifier: base
-  level: '1'
   duration:
-    value: '@item.level'
     units: hour
-_key: '!items!IlO0CNpAIKZtNYu8'
+    value: '@item.level'
+  level: '1'
+type: buff
 

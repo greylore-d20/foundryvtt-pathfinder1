@@ -1,8 +1,30 @@
 _id: DIUWjY7cK6Uqg9j6
-name: Forced Alliance
-type: feat
+_key: '!items!DIUWjY7cK6Uqg9j6'
 img: systems/pf1/icons/feats/leadership.jpg
+name: Forced Alliance
 system:
+  abilityType: sp
+  actions:
+    - _id: cdz1akhyj4njm6mu
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.occultist.level'
+      img: systems/pf1/icons/feats/leadership.jpg
+      name: Use
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can alter a living creature’s mind, causing
@@ -19,29 +41,7 @@ system:
       This is a mind-affecting charm effect.</p>
 
       <p>You must be at least 5th level to select this focus power.</p>
-  actions:
-    - _id: cdz1akhyj4njm6mu
-      name: Use
-      img: systems/pf1/icons/feats/leadership.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.occultist.level'
-        units: round
-      target:
-        value: one creature
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_forcedAlliance
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!DIUWjY7cK6Uqg9j6'
+  tag: classFeat_forcedAlliance
+type: feat
 

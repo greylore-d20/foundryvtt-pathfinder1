@@ -1,8 +1,30 @@
 _id: rrat3w2pl146n4qn
-name: Flickering Lights
-type: spell
+_key: '!items!rrat3w2pl146n4qn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Flickering Lights
 system:
+  actions:
+    - _id: l1u7tfvl6zrydy9b
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      area: contiguous area consisting of one 10-foot cube/level (S)
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the illumination in the area to seem to flicker erratically,
@@ -21,44 +43,22 @@ system:
       <i>flickering lights</i> counts as a light spell when it increases the
       ambient light level and a darkness spell when it decreases the ambient
       light level.<p></p>
-  actions:
-    - _id: l1u7tfvl6zrydy9b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: contiguous area consisting of one 10-foot cube/level (S)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
+      cleric: 2
       inquisitor: 2
       magus: 2
-      shaman: 2
       occultist: 2
+      oracle: 2
+      shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
-  school: evo
-  types: darkness, light
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a patch of white cloth and a patch of black cloth
-_key: '!items!rrat3w2pl146n4qn'
+  school: evo
+  types: darkness, light
+type: spell
 

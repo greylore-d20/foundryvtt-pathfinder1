@@ -1,18 +1,11 @@
 _id: t5scfttkcnaupqm9
-name: Interrogation, Greater
-type: spell
+_key: '!items!t5scfttkcnaupqm9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Interrogation, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as
-      @Compendium[pf1.spells.mgliu7tgbwazm3w1]{Interrogation}, except you may
-      ask one question per caster level and the spell deals damage equal to 1d8
-      points plus your Wisdom bonus if the target doesn't answer a question.</p>
   actions:
     - _id: r4zj3gjfpwizi7au
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: round
         unchained:
@@ -20,14 +13,24 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: living creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: living creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as
+      @Compendium[pf1.spells.mgliu7tgbwazm3w1]{Interrogation}, except you may
+      ask one question per caster level and the spell deals damage equal to 1d8
+      points plus your Wisdom bonus if the target doesn't answer a question.</p>
   learnedAt:
     class:
       inquisitor: 4
@@ -35,8 +38,5 @@ system:
   level: 4
   school: nec
   types: evil, pain
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!t5scfttkcnaupqm9'
+type: spell
 

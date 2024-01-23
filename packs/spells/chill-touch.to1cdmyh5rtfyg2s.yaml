@@ -1,8 +1,30 @@
 _id: to1cdmyh5rtfyg2s
-name: Chill Touch
-type: spell
+_key: '!items!to1cdmyh5rtfyg2s'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Chill Touch
 system:
+  actions:
+    - _id: y2lf3wyczk8nbwtu
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude partial or Will negates; see text
+        type: fort
+      target:
+        value: creature or creatures touched (up to one/level)
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A touch from your hand, which glows with blue energy, disrupts the life
@@ -13,42 +35,20 @@ system:
       you touch takes no damage of either sort, but it must make a successful
       Will saving throw or flee as if panicked for 1d4 rounds + 1 round per
       caster level.</p>
-  actions:
-    - _id: y2lf3wyczk8nbwtu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: creature or creatures touched (up to one/level)
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude partial or Will negates; see text
   learnedAt:
-    class:
-      sorcerer: 1
-      wizard: 1
-      witch: 1
-      magus: 1
-      bloodrager: 1
-      shaman: 1
-      spiritualist: 1
     bloodline:
       Undead: 1
+    class:
+      bloodrager: 1
+      magus: 1
+      shaman: 1
+      sorcerer: 1
+      spiritualist: 1
+      witch: 1
+      wizard: 1
   school: nec
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '255'
-_key: '!items!to1cdmyh5rtfyg2s'
+type: spell
 

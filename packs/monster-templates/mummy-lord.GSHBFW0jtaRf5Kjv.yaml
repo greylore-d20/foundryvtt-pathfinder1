@@ -1,8 +1,36 @@
 _id: GSHBFW0jtaRf5Kjv
-name: Mummy Lord
-type: feat
+_key: '!items!GSHBFW0jtaRf5Kjv'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Mummy Lord
 system:
+  changes:
+    - _id: 4qvp061g
+      formula: >-
+        (@ac.natural.total > @attributes.hd.total / 2) ? 0 :
+        (@attributes.hd.total / 2)
+      modifier: untyped
+      subTarget: nac
+    - _id: qjxpngza
+      formula: '8'
+      modifier: untyped
+      subTarget: str
+    - _id: ngsgatst
+      formula: '6'
+      modifier: untyped
+      subTarget: cha
+    - _id: t61bmvar
+      formula: '8'
+      modifier: untyped
+      subTarget: skill.int
+    - _id: 0er0ufjf
+      formula: '8'
+      modifier: untyped
+      subTarget: skill.sen
+    - _id: 40glq5d9
+      formula: '8'
+      modifier: untyped
+      subTarget: skill.ste
+  crOffset: '2'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -113,34 +141,6 @@ system:
       creature.<p><b>Feats</b>: A mummy lord gains <a
       href="https://aonprd.com/FeatDisplay.aspx?ItemName=Toughness">Toughness</a>as
       a bonus feat.</p>
-  changes:
-    - _id: 4qvp061g
-      formula: >-
-        (@ac.natural.total > @attributes.hd.total / 2) ? 0 :
-        (@attributes.hd.total / 2)
-      subTarget: nac
-      modifier: untyped
-    - _id: qjxpngza
-      formula: '8'
-      subTarget: str
-      modifier: untyped
-    - _id: ngsgatst
-      formula: '6'
-      subTarget: cha
-      modifier: untyped
-    - _id: t61bmvar
-      formula: '8'
-      subTarget: skill.int
-      modifier: untyped
-    - _id: 0er0ufjf
-      formula: '8'
-      subTarget: skill.sen
-      modifier: untyped
-    - _id: 40glq5d9
-      formula: '8'
-      subTarget: skill.ste
-      modifier: untyped
   subType: template
-  crOffset: '2'
-_key: '!items!GSHBFW0jtaRf5Kjv'
+type: feat
 

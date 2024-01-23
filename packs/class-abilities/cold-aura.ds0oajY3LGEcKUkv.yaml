@@ -1,8 +1,38 @@
 _id: ds0oajY3LGEcKUkv
-name: Cold Aura
-type: feat
+_key: '!items!ds0oajY3LGEcKUkv'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Cold Aura
 system:
+  abilityType: su
+  actions:
+    - _id: wfioc6qco4id9ig7
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: (max(1, floor(@classes.oracle.level / 2)))d6
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Fortitude half
+        type: fort
+      target:
+        value: 10 ft.
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you can cause waves of cold to radiate from your
@@ -13,40 +43,10 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level and every 5 levels thereafter.</p>
-  actions:
-    - _id: wfioc6qco4id9ig7
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: 10 ft.
-      range:
-        units: personal
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (max(1, floor(@classes.oracle.level / 2)))d6
-            type:
-              values:
-                - cold
-              custom: ''
-      save:
-        type: fort
-        description: Fortitude half
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_coldAura
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!ds0oajY3LGEcKUkv'
+  tag: classFeat_coldAura
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

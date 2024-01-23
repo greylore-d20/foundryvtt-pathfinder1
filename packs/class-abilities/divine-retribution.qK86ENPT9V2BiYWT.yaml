@@ -1,8 +1,39 @@
 _id: qK86ENPT9V2BiYWT
-name: Divine Retribution
-type: feat
+_key: '!items!qK86ENPT9V2BiYWT'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Divine Retribution
 system:
+  abilityType: sp
+  actions:
+    - _id: m2hlwoanew5xmp6n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.inquisitor.level / 2)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Reflex Half
+        type: ref
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>As a standard action, you can point at one creature within 30 feet to
@@ -14,41 +45,10 @@ system:
       GM decides whether this damage is bludgeoning, piercing, or slashing
       damage. You can use this ability a number of times per day equal to 3 +
       your Wisdom modifier.</p>
-  actions:
-    - _id: m2hlwoanew5xmp6n
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.inquisitor.level / 2)
-            type:
-              values:
-                - slashing
-              custom: ''
-      save:
-        type: ref
-        description: Reflex Half
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_divineRetribution
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: sp
-_key: '!items!qK86ENPT9V2BiYWT'
+  tag: classFeat_divineRetribution
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,28 +1,28 @@
 _id: SUACufUXl12sUvnQ
-name: Deceitful
-type: feat
+_key: '!items!SUACufUXl12sUvnQ'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Deceitful
 system:
+  changes:
+    - _id: d6rirc2a
+      formula: '@skills.blf.rank >= 10 ? 4 : 2'
+      modifier: untyped
+      subTarget: skill.blf
+    - _id: u9gcikyo
+      formula: '@skills.dis.rank >= 10 ? 4 : 2'
+      modifier: untyped
+      subTarget: skill.dis
   description:
     value: >-
       <em>You are skilled at deceiving others, both with the spoken word and
       with physical disguises.</em><p><strong>Benefits</strong>: You get a +2
       bonus on all Bluff and Disguise skill checks. If you have 10 or more ranks
       in one of these skills, the bonus increases to +4 for that skill.
-  tags:
-    - General
-  changes:
-    - _id: d6rirc2a
-      formula: '@skills.blf.rank >= 10 ? 4 : 2'
-      subTarget: skill.blf
-      modifier: untyped
-    - _id: u9gcikyo
-      formula: '@skills.dis.rank >= 10 ? 4 : 2'
-      subTarget: skill.dis
-      modifier: untyped
-  tag: feat_deceitful
   source:
     id: PZO1110
     pages: 114, 121
-_key: '!items!SUACufUXl12sUvnQ'
+  tag: feat_deceitful
+  tags:
+    - General
+type: feat
 

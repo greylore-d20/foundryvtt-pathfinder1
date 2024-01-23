@@ -1,8 +1,20 @@
 _id: X9sRDZwuTOaCYWt3
-name: Shroud of Retribution
-type: feat
+_key: '!items!X9sRDZwuTOaCYWt3'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Shroud of Retribution
 system:
+  abilityType: su
+  actions:
+    - _id: 3jdlqrm1jeuwvj11
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As an immediate action, you can summon a shroud of spirits that
@@ -15,22 +27,10 @@ system:
       at 11th level and every 4 levels thereafter.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: 3jdlqrm1jeuwvj11
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
-  tag: classFeat_shroudOfRetribution
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!X9sRDZwuTOaCYWt3'
+  tag: classFeat_shroudOfRetribution
+  uses:
+    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,28 @@
 _id: 2hvmdscy72tsrh5p
-name: Contact Nalfeshnee
-type: spell
+_key: '!items!2hvmdscy72tsrh5p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contact Nalfeshnee
 system:
+  actions:
+    - _id: f6fg3noj3pev1xtf
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: concentration
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you fall into a trance and become helpless as
@@ -21,42 +41,22 @@ system:
       additional question you ask with this spell over the course of a single
       24-hour period imparts a cumulative -1 penalty on this saving throw.
       Chaotic evil spellcasters always gain a +4 bonus on this saving throw.</p>
-  actions:
-    - _id: f6fg3noj3pev1xtf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: concentration
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 6
+      warpriest: 6
       witch: 6
+      wizard: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: powdered sapphire worth 250 gp
     focus: bejeweled cold iron mirror worth at least 2,000 gp
     gpValue: 250
+    value: powdered sapphire worth 250 gp
   preparation:
     spontaneousPrepared: false
+  school: div
   sr: false
-_key: '!items!2hvmdscy72tsrh5p'
+type: spell
 

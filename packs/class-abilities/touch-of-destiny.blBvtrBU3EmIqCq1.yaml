@@ -1,19 +1,11 @@
 _id: blBvtrBU3EmIqCq1
-name: Touch of Destiny
-type: feat
+_key: '!items!blBvtrBU3EmIqCq1'
 img: systems/pf1/icons/skills/ice_16.jpg
+name: Touch of Destiny
 system:
-  description:
-    value: >-
-      <p>At 1st level, you can touch a creature as a standard action, giving it
-      an insight bonus on attack rolls, <em>skill checks</em>, ability checks,
-      and <em>saving throws</em> equal to 1/2 your sorcerer level (minimum 1)
-      for 1 round. You can use this ability a number of times per day equal to 3
-      + your <em>Charisma</em> modifier.</p>
+  abilityType: sp
   actions:
     - _id: 9l0cro8xzqncros9
-      name: Use
-      img: systems/pf1/icons/skills/ice_16.jpg
       activation:
         type: standard
         unchained:
@@ -21,17 +13,25 @@ system:
           type: action
       duration:
         value: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_touchOfDestiny
-  subType: classFeat
+      img: systems/pf1/icons/skills/ice_16.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
-  abilityType: sp
+  description:
+    value: >-
+      <p>At 1st level, you can touch a creature as a standard action, giving it
+      an insight bonus on attack rolls, <em>skill checks</em>, ability checks,
+      and <em>saving throws</em> equal to 1/2 your sorcerer level (minimum 1)
+      for 1 round. You can use this ability a number of times per day equal to 3
+      + your <em>Charisma</em> modifier.</p>
   source:
     id: PZO1110
     pages: '74'
-_key: '!items!blBvtrBU3EmIqCq1'
+  subType: classFeat
+  tag: classFeat_touchOfDestiny
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

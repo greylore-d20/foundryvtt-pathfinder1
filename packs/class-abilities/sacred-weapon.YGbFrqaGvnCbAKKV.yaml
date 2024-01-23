@@ -1,8 +1,23 @@
 _id: YGbFrqaGvnCbAKKV
-name: Sacred Weapon
-type: feat
+_key: '!items!YGbFrqaGvnCbAKKV'
 img: systems/pf1/icons/spells/enchant-royal-3.jpg
+name: Sacred Weapon
 system:
+  abilityType: su
+  actions:
+    - _id: lwyjn9g18hsmrqlq
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-royal-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, weapons wielded by a warpriest are charged with the power
@@ -122,25 +137,10 @@ system:
       duration, unless the ability is resumed during the same round). If the
       warpriest uses this ability on a double weapon, the effects apply to only
       one end of the weapon.</p>
-  actions:
-    - _id: lwyjn9g18hsmrqlq
-      name: Use
-      img: systems/pf1/icons/spells/enchant-royal-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.warpriest.level >= 4 ? @classes.warpriest.level : 0'
-  tag: classFeat_sacredWeapon
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-  abilityType: su
-_key: '!items!YGbFrqaGvnCbAKKV'
+  tag: classFeat_sacredWeapon
+  uses:
+    maxFormula: '@classes.warpriest.level >= 4 ? @classes.warpriest.level : 0'
+    per: day
+type: feat
 

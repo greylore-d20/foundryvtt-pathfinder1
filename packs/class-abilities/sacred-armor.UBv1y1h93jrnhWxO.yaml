@@ -1,8 +1,27 @@
 _id: UBv1y1h93jrnhWxO
-name: Sacred Armor
-type: feat
+_key: '!items!UBv1y1h93jrnhWxO'
 img: systems/pf1/icons/feats/arcane-armor-mastery.jpg
+name: Sacred Armor
 system:
+  abilityType: su
+  actions:
+    - _id: gf55dpo3p6h3sj6e
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/feats/arcane-armor-mastery.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 7th level, the warpriest gains the ability to enhance his armor with
@@ -30,29 +49,10 @@ system:
       warpriest’s turn. This ability cannot be applied to a shield.<p>When the
       warpriest uses this ability, he can also use his sacred weapon ability as
       a free action by expending one use of his fervor.</p>
-  actions:
-    - _id: gf55dpo3p6h3sj6e
-      name: Use
-      img: systems/pf1/icons/feats/arcane-armor-mastery.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.warpriest.level'
-  tag: classFeat_sacredArmor
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-  abilityType: su
-_key: '!items!UBv1y1h93jrnhWxO'
+  tag: classFeat_sacredArmor
+  uses:
+    maxFormula: '@classes.warpriest.level'
+    per: day
+type: feat
 

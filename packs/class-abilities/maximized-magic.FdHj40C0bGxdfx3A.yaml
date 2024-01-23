@@ -1,8 +1,20 @@
 _id: FdHj40C0bGxdfx3A
-name: Maximized Magic
-type: feat
+_key: '!items!FdHj40C0bGxdfx3A'
 img: systems/pf1/icons/spells/enchant-red-3.jpg
+name: Maximized Magic
 system:
+  abilityType: su
+  actions:
+    - _id: eqmiyqi79rkemvfq
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/enchant-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Magus
   description:
     value: >-
       <p>The magus can cast one spell per day as if it were modified by the
@@ -11,22 +23,10 @@ system:
 
       <p>The magus must be at least 12th level before selecting this magus
       arcana.</p>
-  actions:
-    - _id: eqmiyqi79rkemvfq
-      name: Use
-      img: systems/pf1/icons/spells/enchant-red-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_maximizedMagic
   subType: classFeat
-  associations:
-    classes:
-      - Magus
-  abilityType: su
-_key: '!items!FdHj40C0bGxdfx3A'
+  tag: classFeat_maximizedMagic
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

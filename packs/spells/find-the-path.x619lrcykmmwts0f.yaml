@@ -1,8 +1,33 @@
 _id: x619lrcykmmwts0f
-name: Find the Path
-type: spell
+_key: '!items!x619lrcykmmwts0f'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Find the Path
 system:
+  actions:
+    - _id: 6a8rf6n3v0r9ch5z
+      actionType: spellsave
+      activation:
+        cost: 3
+        type: round
+        unchained:
+          cost: 9
+          type: action
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: none or Will negates
+        harmless: true
+        type: will
+      target:
+        value: you or creature touched
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The recipient of this spell can find the shortest, most direct physical
@@ -24,55 +49,30 @@ system:
       effect does not predict or allow for the actions of creatures (including
       guardians) who might take action to oppose the caster as he follows the
       path revealed by this spell.</p>
-  actions:
-    - _id: 6a8rf6n3v0r9ch5z
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 3
-        type: round
-        unchained:
-          cost: 9
-          type: action
-      duration:
-        value: 10 min./level
-      target:
-        value: you or creature touched
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: none or Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      druid: 6
       bard: 6
-      witch: 6
-      inquisitor: 6
-      shaman: 6
-      psychic: 6
-      occultist: 6
-      spiritualist: 6
+      cleric: 6
+      druid: 6
       hunter: 6
+      inquisitor: 6
+      occultist: 6
+      oracle: 6
+      psychic: 6
+      shaman: 6
+      spiritualist: 6
+      warpriest: 6
+      witch: 6
     domain:
       Knowledge: 6
       Travel: 6
   level: 6
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a set of divination counters
-  sr: false
+  school: div
   source:
     id: PZO1110
     pages: '281'
-_key: '!items!x619lrcykmmwts0f'
+  sr: false
+type: spell
 

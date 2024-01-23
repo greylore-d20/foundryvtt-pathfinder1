@@ -1,8 +1,24 @@
 _id: TRu1NMreURd0IPpe
-name: Fiendish Probiscus
-type: feat
+_key: '!items!TRu1NMreURd0IPpe'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Fiendish Probiscus
 system:
+  abilityType: su
+  actions:
+    - _id: ucfbjioqvp4lst7g
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.arcanist.level'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can spend 1 point from his arcane reservoir as a standard
@@ -24,25 +40,9 @@ system:
       the target’s ability to use magic, the tongue’s unnerving siphoning of
       magical or life energy causes the struck creature to become sickened for 1
       round.</p>
+  subType: classFeat
+  tag: classFeat_fiendishProbiscus
   tags:
     - Arcanist Exploit, Outer Rift
-  actions:
-    - _id: ucfbjioqvp4lst7g
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.arcanist.level'
-        units: round
-  tag: classFeat_fiendishProbiscus
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!TRu1NMreURd0IPpe'
+type: feat
 

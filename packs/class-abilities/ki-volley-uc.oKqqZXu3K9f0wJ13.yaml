@@ -1,8 +1,22 @@
 _id: oKqqZXu3K9f0wJ13
-name: Ki Volley (UC)
-type: feat
+_key: '!items!oKqqZXu3K9f0wJ13'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Ki Volley (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: 5t6xf2zm31n7f71x
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>When a targeted spell or spell-like ability fails to overcome the
@@ -12,21 +26,7 @@ system:
 
       <p>A monk must be 16th level or higher and possess the diamond soul ki
       power before selecting this ki power.</p>
-  actions:
-    - _id: 5t6xf2zm31n7f71x
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_kiVolleyUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: su
-_key: '!items!oKqqZXu3K9f0wJ13'
+  tag: classFeat_kiVolleyUc
+type: feat
 

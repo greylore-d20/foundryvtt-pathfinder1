@@ -1,8 +1,28 @@
 _id: 9ub3kiRu9ylgTa2r
-name: Ascetic Armor
-type: feat
+_key: '!items!9ub3kiRu9ylgTa2r'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Ascetic Armor
 system:
+  abilityType: su
+  actions:
+    - _id: djqvmj0e8mw7osmg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can use meditative techniques that temporarily cause attacks to
@@ -17,30 +37,10 @@ system:
       natural attacks. You can gain the benefits of ascetic armor for 1 hour per
       day per oracle level. The hours do not need to be consecutive, but you
       must spend them in 1-hour increments.</p>
-  actions:
-    - _id: djqvmj0e8mw7osmg
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_asceticArmor
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!9ub3kiRu9ylgTa2r'
+  tag: classFeat_asceticArmor
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

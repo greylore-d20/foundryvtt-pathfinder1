@@ -1,8 +1,21 @@
 _id: GkaUE9fgyMkiLlOH
-name: Flame Control
-type: feat
+_key: '!items!GkaUE9fgyMkiLlOH'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Flame Control
 system:
+  abilityType: su
+  actions:
+    - _id: 7ysk88zeq44vo7j0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can spend 1 point from her arcane reservoir to move or
@@ -12,22 +25,9 @@ system:
       least 3rd level when activating this ability, she can attempt to dispel a
       magical fire effect, as @Compendium[pf1.spells.gmgwyjfpeuuc4t4o]{Dispel
       Magic}.</p>
+  subType: classFeat
+  tag: classFeat_flameControl
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 7ysk88zeq44vo7j0
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_flameControl
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!GkaUE9fgyMkiLlOH'
+type: feat
 

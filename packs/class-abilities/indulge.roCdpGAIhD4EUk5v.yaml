@@ -1,8 +1,21 @@
 _id: roCdpGAIhD4EUk5v
-name: Indulge
-type: feat
+_key: '!items!roCdpGAIhD4EUk5v'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Indulge
 system:
+  abilityType: su
+  actions:
+    - _id: tp3pzphakzanpm5c
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, once per day as a standard action, you can awaken a
@@ -13,23 +26,10 @@ system:
       creature is given an opportunity to indulge in its favored sin, that
       creature must yield to the impulse or make a second Will saving throw to
       avoid becoming sickened for 1 minute. This is a mind-affecting effect.</p>
-  actions:
-    - _id: tp3pzphakzanpm5c
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_indulge
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!roCdpGAIhD4EUk5v'
+  tag: classFeat_indulge
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

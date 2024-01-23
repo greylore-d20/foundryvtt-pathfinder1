@@ -1,8 +1,36 @@
 _id: 4n9gp6b46h74y70m
-name: Restful Sleep
-type: spell
+_key: '!items!4n9gp6b46h74y70m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Restful Sleep
 system:
+  actions:
+    - _id: wfvkf99kzdhp4yxa
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 8 hours or 24 hours; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cast this spell immediately prior to resting. While under the
@@ -16,39 +44,11 @@ system:
       acquired while under the effects of <i>restful sleep</i> is considered
       natural healing, and has no affect on effects requiring magical healing to
       cure.</p>
-  actions:
-    - _id: wfvkf99kzdhp4yxa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 8 hours or 24 hours; see text
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
       bard: 1
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of sand
-_key: '!items!4n9gp6b46h74y70m'
+  school: nec
+type: spell
 

@@ -1,8 +1,30 @@
 _id: 91pzm8db3fbusr76
-name: Final Sacrifice
-type: spell
+_key: '!items!91pzm8db3fbusr76'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Final Sacrifice
 system:
+  actions:
+    - _id: n1h5iz0kv641wj5l
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates, then Reflex half (see text)
+        type: ref
+      target:
+        value: one summoned creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You disrupt the conjuring energies within a summoned creature, causing
@@ -18,42 +40,20 @@ system:
       eidolon, creatures within 20 feet of the eidolon take an amount of damage
       equal to 1d4 + 1/2 the caster level of the summoner who controlled the
       eidolon.</p>
-  actions:
-    - _id: n1h5iz0kv641wj5l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one summoned creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: ref
-        description: Fortitude negates, then Reflex half (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      summoner: 2
-      witch: 4
       antipaladin: 3
       bloodrager: 2
+      cleric: 3
+      oracle: 3
       shaman: 3
+      sorcerer: 3
+      summoner: 2
       summonerUnchained: 2
+      warpriest: 3
+      witch: 4
+      wizard: 3
   level: 3
   school: evo
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!91pzm8db3fbusr76'
+type: spell
 

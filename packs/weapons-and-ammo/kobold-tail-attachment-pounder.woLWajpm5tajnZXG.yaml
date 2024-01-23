@@ -1,8 +1,40 @@
 _id: woLWajpm5tajnZXG
-name: Kobold Tail Attachment (Pounder)
-type: weapon
+_key: '!items!woLWajpm5tajnZXG'
 img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
+name: Kobold Tail Attachment (Pounder)
 system:
+  actions:
+    - _id: azvltmsrlsf3bh86
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Kobold Tail Attachment (Pounder)
+    - Kobold Tail Attachment
   description:
     value: >-
       <p>A kobold with the Tail Terror feat (see below) can slip this device
@@ -21,56 +53,24 @@ system:
       items. There are five types of common tail
       attachments.</p><p><strong>Pounder</strong>: This squat ball is made from
       some sort of dull metal.</p>
-  weight:
-    value: 4
-  price: 1
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: azvltmsrlsf3bh86
-      name: Attack
-      img: systems/pf1/icons/items/weapons/kobold-tail-attachment.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Kobold Tail Attachment (Pounder)
-    - Kobold Tail Attachment
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 1
   properties:
     fin: true
   source:
     id: PZO1121
     pages: '135'
-_key: '!items!woLWajpm5tajnZXG'
+  subType: exotic
+  weight:
+    value: 4
+type: weapon
 

@@ -1,16 +1,10 @@
 _id: amrtqcyc53je6wbt
-name: Linebreaker
-type: spell
+_key: '!items!amrtqcyc53je6wbt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Linebreaker
 system:
-  description:
-    value: >-
-      <p>You gain a +20 foot bonus to your base speed when charging and a +2
-      bonus on combat maneuver checks made to bull rush or overrun.</p>
   actions:
     - _id: sectk5dg3ifh55xd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -18,26 +12,32 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You gain a +20 foot bonus to your base speed when charging and a +2
+      bonus on combat maneuver checks made to bull rush or overrun.</p>
   learnedAt:
     class:
-      ranger: 1
-      paladin: 1
       alchemist: 1
-      inquisitor: 1
       antipaladin: 1
-      magus: 1
       hunter: 1
+      inquisitor: 1
+      magus: 1
+      paladin: 1
+      ranger: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1121
     pages: '59'
-_key: '!items!amrtqcyc53je6wbt'
+  sr: false
+type: spell
 

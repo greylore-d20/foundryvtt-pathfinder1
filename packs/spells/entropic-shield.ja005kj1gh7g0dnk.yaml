@@ -1,8 +1,26 @@
 _id: ja005kj1gh7g0dnk
-name: Entropic Shield
-type: spell
+_key: '!items!ja005kj1gh7g0dnk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Entropic Shield
 system:
+  actions:
+    - _id: 4g7vyhuastw56qim
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A magical field appears around you, glowing with a chaotic blast of
@@ -11,38 +29,20 @@ system:
       must make an attack roll has a 20% miss chance (similar to the effects of
       concealment). Other attacks that simply work at a distance are not
       affected.</p>
-  actions:
-    - _id: 4g7vyhuastw56qim
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      psychic: 1
-    subDomain:
-      Entropy: 1
     bloodline:
       Protean: 1
+    class:
+      cleric: 1
+      oracle: 1
+      psychic: 1
+      warpriest: 1
+    subDomain:
+      Entropy: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '278'
-_key: '!items!ja005kj1gh7g0dnk'
+  sr: false
+type: spell
 

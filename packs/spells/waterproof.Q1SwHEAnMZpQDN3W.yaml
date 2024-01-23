@@ -1,7 +1,30 @@
-name: Waterproof
-type: spell
+_id: Q1SwHEAnMZpQDN3W
+_key: '!items!Q1SwHEAnMZpQDN3W'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Waterproof
 system:
+  actions:
+    - _id: xuvSBRItRct4AAYQ
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+      target:
+        value: one touched creature, or one touched object of up to 10 lbs./level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell renders a touched object waterproof for the duration of the
@@ -13,25 +36,6 @@ system:
       an item, the item is no longer protected by this spell, even if the
       targeted creature picks it up later.</p><p>Mundane combustibles under the
       effects of this spell still need exposure to air in order to ignite.</p>
-  actions:
-    - _id: xuvSBRItRct4AAYQ
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours
-      target:
-        value: one touched creature, or one touched object of up to 10 lbs./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       alchemist: 1
@@ -53,9 +57,5 @@ system:
       wizard: 1
   school: abj
   types: water
-  components:
-    verbal: true
-    somatic: true
-_id: Q1SwHEAnMZpQDN3W
-_key: '!items!Q1SwHEAnMZpQDN3W'
+type: spell
 

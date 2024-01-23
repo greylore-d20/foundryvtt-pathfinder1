@@ -1,19 +1,11 @@
 _id: q2r6jrgsbwjgssdg
-name: Charm Monster, Mass
-type: spell
+_key: '!items!q2r6jrgsbwjgssdg'
 img: icons/magic/control/mouth-smile-deception-purple.webp
+name: Charm Monster, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>charm monster</i>, except that mass charm
-      monster affects a number of creatures whose combined HD do not exceed
-      twice your level, or at least one creature regardless of HD. If there are
-      more potential targets than you can affect, you choose them one at a time
-      until you must choose a creature with too many HD to affect.</p>
   actions:
     - _id: zwctk9onrbblh0l2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,30 +13,38 @@ system:
           type: action
       duration:
         value: 1 day/level
-      target:
-        value: One or more creatures, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: One or more creatures, no two of which can be more than 30 ft. apart
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>charm monster</i>, except that mass charm
+      monster affects a number of creatures whose combined HD do not exceed
+      twice your level, or at least one creature regardless of HD. If there are
+      more potential targets than you can affect, you choose them one at a time
+      until you must choose a creature with too many HD to affect.</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       bard: 6
-      summoner: 6
-      witch: 8
-      psychic: 8
       mesmerist: 6
       occultist: 6
+      psychic: 8
+      sorcerer: 8
+      summoner: 6
       summonerUnchained: 6
+      witch: 8
+      wizard: 8
   level: 8
   school: enc
   subschool: charm
   types: mind-affecting
-  components:
-    verbal: true
-_key: '!items!q2r6jrgsbwjgssdg'
+type: spell
 

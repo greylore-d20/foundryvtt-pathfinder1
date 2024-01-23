@@ -1,8 +1,38 @@
 _id: vsPPygCVgWzGdVbN
-name: Eldritch Bolt
-type: feat
+_key: '!items!vsPPygCVgWzGdVbN'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Eldritch Bolt
 system:
+  abilityType: su
+  actions:
+    - _id: y8vet7095p4beufa
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d8 + floor(@classes.oracle.level / 2)
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '@classes.oracle.level >= 10 ? 60 : 30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can damage foes with a bolt of raw magical energy. Make a ranged
@@ -12,40 +42,10 @@ system:
 
       <p>You may use this revelation a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  actions:
-    - _id: y8vet7095p4beufa
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '@classes.oracle.level >= 10 ? 60 : 30'
-        units: ft
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d8 + floor(@classes.oracle.level / 2)
-            type:
-              values:
-                - force
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_eldritchBolt
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!vsPPygCVgWzGdVbN'
+  tag: classFeat_eldritchBolt
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

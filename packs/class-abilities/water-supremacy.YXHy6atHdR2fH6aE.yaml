@@ -1,7 +1,23 @@
-name: Water Supremacy
-type: feat
+_id: YXHy6atHdR2fH6aE
+_key: '!items!YXHy6atHdR2fH6aE'
 img: icons/magic/water/barrier-ice-wall-snow.webp
+name: Water Supremacy
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: RVa7BO1Z
+      formula: 2 + floor(@classes.wizard.level / 5)
+      modifier: enh
+      priority: null
+      subTarget: skill.swm
+    - _id: AkFyhVCy
+      formula: min(1, floor(@classes.wizard.level / 10)) * @attributes.speed.land.total
+      modifier: untyped
+      priority: null
+      subTarget: swimSpeed
   description:
     value: >-
       <p>You gain a +2 enhancement bonus on Swim skill checks. This bonus
@@ -11,27 +27,11 @@ system:
       At 10th level, you gain a swim speed equal to your base speed. At 20th
       level, whenever you make a Swim skill check, assume the roll resulted in a
       natural 20.</p>
-  tags:
-    - Water School
-  changes:
-    - _id: RVa7BO1Z
-      formula: 2 + floor(@classes.wizard.level / 5)
-      subTarget: skill.swm
-      modifier: enh
-      priority: null
-    - _id: AkFyhVCy
-      formula: min(1, floor(@classes.wizard.level / 10)) * @attributes.speed.land.total
-      subTarget: swimSpeed
-      modifier: untyped
-      priority: null
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO1115
     pages: '142'
-_id: YXHy6atHdR2fH6aE
-_key: '!items!YXHy6atHdR2fH6aE'
+  subType: classFeat
+  tags:
+    - Water School
+type: feat
 

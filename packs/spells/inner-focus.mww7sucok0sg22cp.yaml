@@ -1,17 +1,11 @@
 _id: mww7sucok0sg22cp
-name: Inner Focus
-type: spell
+_key: '!items!mww7sucok0sg22cp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Inner Focus
 system:
-  description:
-    value: >-
-      <p>For the duration of this spell, you may ignore any divine focus
-      components of your spells, allowing you to cast such spells without
-      holding or revealing your holy or unholy symbol.</p>
   actions:
     - _id: ob522sht8qzsf3u9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,33 +13,39 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
         description: none
         harmless: true
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>For the duration of this spell, you may ignore any divine focus
+      components of your spells, allowing you to cast such spells without
+      holding or revealing your holy or unholy symbol.</p>
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 1
-      paladin: 1
-      inquisitor: 2
-      antipaladin: 1
       adept: 2
+      antipaladin: 1
+      cleric: 2
+      druid: 2
       hunter: 1
+      inquisitor: 2
+      oracle: 2
+      paladin: 1
+      ranger: 1
+      warpriest: 2
   level: 2
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!mww7sucok0sg22cp'
+  subschool: glamer
+type: spell
 

@@ -1,8 +1,28 @@
 _id: 0u8da953k6lgk784
-name: Transmute Golem
-type: spell
+_key: '!items!0u8da953k6lgk784'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transmute Golem
 system:
+  actions:
+    - _id: oce2meo58a9gojgq
+      activation:
+        cost: 8
+        type: hour
+        unchained:
+          cost: 8
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: golem touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You turn one type of golem into another. The golem must be willing-it
@@ -18,36 +38,16 @@ system:
       including its magic immunities and special attacks. The new golem is still
       affected by any damage or conditions it suffered before the spell was
       cast.</p>
-  actions:
-    - _id: oce2meo58a9gojgq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 8
-        type: hour
-        unchained:
-          cost: 8
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: golem touched
-      range:
-        units: touch
   learnedAt:
     class:
+      alchemist: 6
       sorcerer: 9
       wizard: 9
-      alchemist: 6
   level: 9
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: powdered metals with a variable cost, see text
+  school: trs
   sr: false
-_key: '!items!0u8da953k6lgk784'
+  subschool: polymorph
+type: spell
 

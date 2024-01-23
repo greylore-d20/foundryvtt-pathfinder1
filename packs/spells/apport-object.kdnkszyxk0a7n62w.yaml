@@ -1,8 +1,29 @@
 _id: kdnkszyxk0a7n62w
-name: Apport Object
-type: spell
+_key: '!items!kdnkszyxk0a7n62w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Apport Object
 system:
+  actions:
+    - _id: s61ne06qtmg31nwm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one touched object of up to 1 lb. and 1 cu. ft.
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell allows you to instantaneously transport a small nonliving
@@ -34,39 +55,18 @@ system:
       <i>antimagic field</i>, <i>Globe of Invulnerability</i>, or similar effect
       that keeps magical effects out; if you attempt to do so, the spell is
       lost.</p>
-  actions:
-    - _id: s61ne06qtmg31nwm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous or 1 hour/level
-      target:
-        value: one touched object of up to 1 lb. and 1 cu. ft.
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: con
   subschool: teleportation
-  components:
-    verbal: true
-_key: '!items!kdnkszyxk0a7n62w'
+type: spell
 

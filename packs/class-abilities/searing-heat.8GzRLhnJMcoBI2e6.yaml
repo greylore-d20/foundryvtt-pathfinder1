@@ -1,8 +1,26 @@
 _id: 8GzRLhnJMcoBI2e6
-name: Searing Heat
-type: feat
+_key: '!items!8GzRLhnJMcoBI2e6'
 img: systems/pf1/icons/skills/fire_10.jpg
+name: Searing Heat
 system:
+  abilityType: su
+  actions:
+    - _id: u3daj1mj7zfs43zz
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: seeText
+      img: systems/pf1/icons/skills/fire_10.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, your body becomes as hot as a <em>salamander’s</em>. You
@@ -11,25 +29,7 @@ system:
       points of fire damage per round to any creature you <em>grapple</em>. This
       heat does not damage your equipment. You can <em>activate</em> or
       deactivate this effect as a <em>free action</em>.</p>
-  actions:
-    - _id: u3daj1mj7zfs43zz
-      name: Use
-      img: systems/pf1/icons/skills/fire_10.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_searingHeat
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
-_key: '!items!8GzRLhnJMcoBI2e6'
+  tag: classFeat_searingHeat
+type: feat
 

@@ -1,8 +1,30 @@
 _id: zd8nh365xvrebioj
-name: Phantasmal Web
-type: spell
+_key: '!items!zd8nh365xvrebioj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantasmal Web
 system:
+  actions:
+    - _id: 5larwotg9zo25iat
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will disbelief, then Fortitude partial; see text
+        type: fort
+      target:
+        value: one creature/level, no two of which may be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You implant within the minds of your targets the illusion that they are
@@ -20,41 +42,19 @@ system:
       them to be engulfed in <i>web</i>s and swarming spiders, but the spell has
       no visible effect to other creatures (who may assist allies to disbelieve
       the effect).</p>
-  actions:
-    - _id: 5larwotg9zo25iat
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature/level, no two of which may be more than 30 ft. apart
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will disbelief, then Fortitude partial; see text
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 5
-      psychic: 5
       mesmerist: 5
+      psychic: 5
+      sorcerer: 5
       spiritualist: 5
+      wizard: 5
     subDomain:
       Insanity: 6
   level: 5
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zd8nh365xvrebioj'
+type: spell
 

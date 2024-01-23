@@ -1,8 +1,22 @@
 _id: 7IWuHgUb9KNRkraM
-name: Flurry of Stars
-type: feat
+_key: '!items!7IWuHgUb9KNRkraM'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Flurry of Stars
 system:
+  abilityType: ex
+  actions:
+    - _id: cd4cy437ksqrr0md
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
+      - Rogue
+      - Rogue (Unchained)
   description:
     value: >-
       <p>A character with this ability can expend 1 ki point from her ki pool as
@@ -10,24 +24,10 @@ system:
       that attack, she can throw two additional shuriken at her highest attack
       bonus, but all of her shuriken attacks are made at a –2 penalty, including
       the two extra attacks.</p>
+  subType: classFeat
+  tag: classFeat_flurryOfStars
   tags:
     - Ninja Trick
     - Rogue Talent
-  actions:
-    - _id: cd4cy437ksqrr0md
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-  tag: classFeat_flurryOfStars
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-      - Rogue (Unchained)
-  abilityType: ex
-_key: '!items!7IWuHgUb9KNRkraM'
+type: feat
 

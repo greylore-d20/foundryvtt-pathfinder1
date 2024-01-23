@@ -1,8 +1,26 @@
 _id: Gj8813SbJZqCnhps
-name: 'Strength Blessing: Strength of Will'
-type: feat
+_key: '!items!Gj8813SbJZqCnhps'
 img: systems/pf1/icons/feats/intimidating-prowess.jpg
+name: 'Strength Blessing: Strength of Will'
 system:
+  actions:
+    - _id: pe7ye4l6f0qvjxki
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/feats/intimidating-prowess.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, as a swift action you can ignore the movement penalties
@@ -10,25 +28,7 @@ system:
       load. This effect lasts for 1 minute. During this time, you can add your
       Strength modifier on saving throws against effects that would cause you to
       become entangled, staggered, or paralyzed.</p>
-  actions:
-    - _id: pe7ye4l6f0qvjxki
-      name: Use
-      img: systems/pf1/icons/feats/intimidating-prowess.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_strengthBlessingStrengthOfWill
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!Gj8813SbJZqCnhps'
+  tag: classFeat_strengthBlessingStrengthOfWill
+type: feat
 

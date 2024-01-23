@@ -1,8 +1,24 @@
 _id: 4awBxRCmPYsjzmUt
-name: Raise the Dead
-type: feat
+_key: '!items!4awBxRCmPYsjzmUt'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Raise the Dead
 system:
+  abilityType: su
+  actions:
+    - _id: xayzjnlfk9i8n979
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can summon a single skeleton or zombie to
@@ -15,26 +31,10 @@ system:
       <p>At 15th level, you can summon an advanced skeleton or zombie. You can
       use this ability once per day plus one additional time per day at 10th
       level.</p>
-  actions:
-    - _id: xayzjnlfk9i8n979
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.cha.mod'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level >= 10 ? 2 : 1'
-  tag: classFeat_raiseTheDead
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!4awBxRCmPYsjzmUt'
+  tag: classFeat_raiseTheDead
+  uses:
+    maxFormula: '@classes.oracle.level >= 10 ? 2 : 1'
+    per: day
+type: feat
 

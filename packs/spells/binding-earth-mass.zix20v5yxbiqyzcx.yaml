@@ -1,16 +1,11 @@
 _id: zix20v5yxbiqyzcx
-name: Binding Earth, Mass
-type: spell
+_key: '!items!zix20v5yxbiqyzcx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Binding Earth, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>binding earth</i>, except as noted
-      above.</p>
   actions:
     - _id: r5ijoeq4qnodxacr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,27 +13,32 @@ system:
           type: action
       duration:
         value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
       target:
         value: >-
           one creature or object/level, no two of which can be more than 30 ft.
           apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>binding earth</i>, except as noted
+      above.</p>
   learnedAt:
     class:
       druid: 6
-      witch: 6
       hunter: 6
+      witch: 6
   level: 6
   school: trs
   types: earth
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!zix20v5yxbiqyzcx'
+type: spell
 

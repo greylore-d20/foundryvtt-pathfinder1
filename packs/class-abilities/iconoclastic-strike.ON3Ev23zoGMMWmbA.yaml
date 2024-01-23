@@ -1,8 +1,20 @@
 _id: ON3Ev23zoGMMWmbA
-name: Iconoclastic Strike
-type: feat
+_key: '!items!ON3Ev23zoGMMWmbA'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Iconoclastic Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: xw36iajsr1fkr8ko
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When the investigator deals damage with a studied strike, she can
@@ -12,21 +24,9 @@ system:
       maximum damage on a successful check.</p>
 
       <p>An investigator must be at least 13th level to select this talent.</p>
+  subType: classFeat
+  tag: classFeat_iconoclasticStrike
   tags:
     - Investigator Talent
-  actions:
-    - _id: xw36iajsr1fkr8ko
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_iconoclasticStrike
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!ON3Ev23zoGMMWmbA'
+type: feat
 

@@ -1,8 +1,41 @@
 _id: PmiF2bF8uhzghtuz
-name: Orc Double Axe
-type: weapon
+_key: '!items!PmiF2bF8uhzghtuz'
 img: systems/pf1/icons/items/weapons/axe-orc-double.png
+name: Orc Double Axe
 system:
+  actions:
+    - _id: rk818kjoq6d3vkpb
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/axe-orc-double.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Orc Double Axe
   description:
     value: >-
       <p>A cruel weapon with blades placed at opposite ends of a long haft, an
@@ -13,57 +46,24 @@ system:
       must hold an orc double axe in the middle of its haft, and utilize a
       weaving, slashing fighting style more akin to that of a quarterstaff than
       to that of a greataxe or battleaxe.</p>
-  tags:
-    - PFS
-    - Orcish
-  weight:
-    value: 15
-  price: 60
   hardness: 10
-  actions:
-    - _id: rk818kjoq6d3vkpb
-      name: Attack
-      img: systems/pf1/icons/items/weapons/axe-orc-double.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 8, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Orc Double Axe
-  weaponGroups:
-    value:
-      - axes
-      - double
-  subType: exotic
-  weaponSubtype: 2h
+  price: 60
   properties:
     dbl: true
   source:
     id: PZO1123
     pages: '21'
-_key: '!items!PmiF2bF8uhzghtuz'
+  subType: exotic
+  tags:
+    - PFS
+    - Orcish
+  weaponGroups:
+    value:
+      - axes
+      - double
+  weaponSubtype: 2h
+  weight:
+    value: 15
+type: weapon
 

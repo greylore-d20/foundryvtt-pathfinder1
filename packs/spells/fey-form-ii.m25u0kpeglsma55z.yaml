@@ -1,8 +1,27 @@
 _id: m25u0kpeglsma55z
-name: Fey Form II
-type: spell
+_key: '!items!m25u0kpeglsma55z'
 img: icons/creatures/magical/fae-fairy-winged-glowing-green.webp
+name: Fey Form II
 system:
+  actions:
+    - _id: dmoff68ta5c3p6w3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>fey form I</i>, except it also allows you to
@@ -24,40 +43,21 @@ system:
       score.</p><p><b>Large Fey</b>: If you assume this form, you gain a +4 size
       bonus to your Strength and Constitution scores and take a -2 penalty to
       your Dexterity score.</p>
-  actions:
-    - _id: dmoff68ta5c3p6w3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 5
       alchemist: 5
-      witch: 6
+      druid: 5
+      hunter: 5
       magus: 6
       shaman: 5
-      hunter: 5
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you plan to assume
+  school: trs
   sr: false
-_key: '!items!m25u0kpeglsma55z'
+  subschool: polymorph
+type: spell
 

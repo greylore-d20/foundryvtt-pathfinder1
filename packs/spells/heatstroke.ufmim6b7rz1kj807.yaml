@@ -1,8 +1,32 @@
 _id: ufmim6b7rz1kj807
-name: Heatstroke
-type: spell
+_key: '!items!ufmim6b7rz1kj807'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Heatstroke
 system:
+  actions:
+    - _id: zwn1xp977pmqx0ku
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude partial, see text
+        type: fort
+      spellEffect: ray
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A wavering red ray projects from your finger. You must succeed on a
@@ -12,40 +36,16 @@ system:
       above, this spell otherwise functions as <i>ray of
       exhaustion</i>.</p><p>Characters wearing heavy clothing or armor of any
       sort take a -4 penalty on their saves.</p>
-  actions:
-    - _id: zwn1xp977pmqx0ku
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: close
-      actionType: rsak
-      ability:
-        attack: dex
-      save:
-        type: fort
-        description: Fortitude partial, see text
-      spellEffect: ray
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
       hunter: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of sweat
-_key: '!items!ufmim6b7rz1kj807'
+  school: evo
+  types: fire
+type: spell
 

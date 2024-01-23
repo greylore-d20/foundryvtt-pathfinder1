@@ -1,8 +1,33 @@
 _id: j2y1uga5fwg8deqq
-name: Invisibility, Mass
-type: spell
+_key: '!items!j2y1uga5fwg8deqq'
 img: icons/magic/perception/silhouette-stealth-shadow.webp
+name: Invisibility, Mass
 system:
+  actions:
+    - _id: eh1m4b34m8kboro2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          any number of creatures, no two of which can be more than 180 ft.
+          apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>invisibility,</i> except that the effect
@@ -13,46 +38,21 @@ system:
       away from the other one loses its invisibility. If both are moving away
       from each other, they both become visible when the distance between them
       exceeds 180 feet.</p>
-  actions:
-    - _id: eh1m4b34m8kboro2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level
-      target:
-        value: >-
-          any number of creatures, no two of which can be more than 180 ft.
-          apart
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      summoner: 5
-      psychic: 7
       mesmerist: 6
+      psychic: 7
+      sorcerer: 7
+      summoner: 5
       summonerUnchained: 6
+      wizard: 7
     domain:
       Trickery: 8
   level: 7
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '302'
-_key: '!items!j2y1uga5fwg8deqq'
+  subschool: glamer
+type: spell
 

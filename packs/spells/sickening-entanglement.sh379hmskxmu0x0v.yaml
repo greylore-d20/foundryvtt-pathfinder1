@@ -1,8 +1,33 @@
 _id: sh379hmskxmu0x0v
-name: Sickening Entanglement
-type: spell
+_key: '!items!sh379hmskxmu0x0v'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sickening Entanglement
 system:
+  actions:
+    - _id: aea1t0h1vkijafx8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: plants in a 40-ft.-radius spread
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: Reflex partial and Fortitude negates (see  text)
+        type: ref
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>entangle</i>, except the plants are coated
@@ -10,40 +35,15 @@ system:
       that touch them. Any creature that enters the area or ends its turn there
       must succeed at a Fortitude save or be sickened as long as it remains in
       the area and for 1d4 rounds afterward. This is a poison effect.</p>
-  actions:
-    - _id: aea1t0h1vkijafx8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '40'
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial and Fortitude negates (see  text)
-      area: plants in a 40-ft.-radius spread
   learnedAt:
     class:
       druid: 2
+      hunter: 2
       ranger: 2
       shaman: 2
-      hunter: 2
   level: 2
   school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!sh379hmskxmu0x0v'
+  types: poison
+type: spell
 

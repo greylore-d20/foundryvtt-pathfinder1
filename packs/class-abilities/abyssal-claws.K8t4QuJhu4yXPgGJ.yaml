@@ -1,8 +1,20 @@
 _id: K8t4QuJhu4yXPgGJ
-name: Abyssal Claws
-type: feat
+_key: '!items!K8t4QuJhu4yXPgGJ'
 img: systems/pf1/icons/skills/blood_06.jpg
+name: Abyssal Claws
 system:
+  abilityType: su
+  actions:
+    - _id: yx3go0z1g8axcr1j
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/blood_06.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can grow claws as a free action. These claws are
@@ -16,22 +28,10 @@ system:
       additional 1d6 points of fire damage on a successful hit. You can use your
       claws for a number of rounds per day equal to 3 + your <em>Charisma</em>
       modifier. These rounds do not need to be consecutive.</p>
-  actions:
-    - _id: yx3go0z1g8axcr1j
-      name: Use
-      img: systems/pf1/icons/skills/blood_06.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_abyssalClaws
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: su
   source:
     id: PZO1110
     pages: '73'
-_key: '!items!K8t4QuJhu4yXPgGJ'
+  subType: classFeat
+  tag: classFeat_abyssalClaws
+type: feat
 

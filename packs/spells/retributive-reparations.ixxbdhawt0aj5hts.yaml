@@ -1,8 +1,30 @@
 _id: ixxbdhawt0aj5hts
-name: Retributive Reparations
-type: spell
+_key: '!items!ixxbdhawt0aj5hts'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Retributive Reparations
 system:
+  actions:
+    - _id: 21671flsg6ppfz0e
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level or until triggered, and permanent; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object) and Will negates; see text
+        type: will
+      target:
+        value: one object
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>If a creature successfully takes the item targeted by this spell while
@@ -17,37 +39,15 @@ system:
       as normal.  This curse can be ended with <i>remove curse</i> or by
       returning the item to you. You can have this spell active on one item at a
       time.</p>
-  actions:
-    - _id: 21671flsg6ppfz0e
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level or until triggered, and permanent; see text
-      target:
-        value: one object
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object) and Will negates; see text
   learnedAt:
     class:
-      witch: 4
-      inquisitor: 3
       antipaladin: 3
+      inquisitor: 3
       occultist: 3
       spiritualist: 3
+      witch: 4
   level: 4
   school: nec
   types: curse
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!ixxbdhawt0aj5hts'
+type: spell
 

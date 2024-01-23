@@ -1,8 +1,26 @@
 _id: 14eYLZcghqZr1F8R
-name: More for Me
-type: feat
+_key: '!items!14eYLZcghqZr1F8R'
 img: systems/pf1/icons/skills/mech_9.jpg
+name: More for Me
 system:
+  abilityType: su
+  actions:
+    - _id: t4cf4jp2fmrzb541
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/mech_9.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>When another character within 30 feet casts a spell with a range
@@ -17,28 +35,10 @@ system:
       Wisdom modifier.</p>
 
       <p>This power replaces the Copycat power of the Trickery Domain.</p>
-  actions:
-    - _id: t4cf4jp2fmrzb541
-      name: Use
-      img: systems/pf1/icons/skills/mech_9.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_moreForMe
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!14eYLZcghqZr1F8R'
+  tag: classFeat_moreForMe
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

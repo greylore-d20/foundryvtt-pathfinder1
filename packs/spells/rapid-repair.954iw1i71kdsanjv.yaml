@@ -1,17 +1,11 @@
 _id: 954iw1i71kdsanjv
-name: Rapid Repair
-type: spell
+_key: '!items!954iw1i71kdsanjv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rapid Repair
 system:
-  description:
-    value: >-
-      <p>The targeted construct gains fast healing 5. This does not stack with
-      any fast healing the construct already has. Fast healing has no effect on
-      a construct that has been brought to 0 hit points or destroyed.</p>
   actions:
     - _id: q7dsgmcw99quykyb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,28 +13,34 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: construct touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: construct touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The targeted construct gains fast healing 5. This does not stack with
+      any fast healing the construct already has. Fast healing has no effect on
+      a construct that has been brought to 0 hit points or destroyed.</p>
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       cleric: 5
-      warpriest: 5
-      oracle: 5
       occultist: 4
+      oracle: 5
+      sorcerer: 5
+      warpriest: 5
+      wizard: 5
   level: 5
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!954iw1i71kdsanjv'
+type: spell
 

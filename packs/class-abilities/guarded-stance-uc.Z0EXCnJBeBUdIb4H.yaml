@@ -1,8 +1,22 @@
 _id: Z0EXCnJBeBUdIb4H
-name: Guarded Stance (UC)
-type: feat
+_key: '!items!Z0EXCnJBeBUdIb4H'
 img: systems/pf1/icons/feats/deafening-critical.jpg
+name: Guarded Stance (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: ka6b5iocryndsvd3
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Barbarian (Unchained)
   description:
     value: >-
       <p>The barbarian can take on a more defensive posture. This grants her a
@@ -10,21 +24,7 @@ system:
       This bonus increases by 1 for every 4 levels the barbarian has.</p>
 
       <p>This is a stance rage power.</p>
-  actions:
-    - _id: ka6b5iocryndsvd3
-      name: Use
-      img: systems/pf1/icons/feats/deafening-critical.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_guardedStanceUc
   subType: classFeat
-  associations:
-    classes:
-      - Barbarian (Unchained)
-  abilityType: ex
-_key: '!items!Z0EXCnJBeBUdIb4H'
+  tag: classFeat_guardedStanceUc
+type: feat
 

@@ -1,8 +1,26 @@
 _id: rAXKZrrdKNJdXbWC
-name: Elemental Blast
-type: feat
+_key: '!items!rAXKZrrdKNJdXbWC'
 img: systems/pf1/icons/spells/explosion-sky-3.jpg
+name: Elemental Blast
 system:
+  abilityType: sp
+  actions:
+    - _id: uvvkgxcfu6i2ee4y
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/explosion-sky-3.jpg
+      name: Use
+      range:
+        units: spec
+        value: '20'
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, you can unleash a blast of elemental power once per day.
@@ -15,33 +33,15 @@ system:
       per day. At 17th level, you can use this ability twice per day. At 20th
       level, you can use this ability three times per day. This power has a
       range of 60 feet.</p>
-  actions:
-    - _id: uvvkgxcfu6i2ee4y
-      name: Use
-      img: systems/pf1/icons/spells/explosion-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: spec
-  uses:
-    per: day
-    maxFormula: >-
-      floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
-      / 20)
-  tag: classFeat_elementalBlast
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
   source:
     id: PZO1110
     pages: '76'
-_key: '!items!rAXKZrrdKNJdXbWC'
+  subType: classFeat
+  tag: classFeat_elementalBlast
+  uses:
+    maxFormula: >-
+      floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
+      / 20)
+    per: day
+type: feat
 

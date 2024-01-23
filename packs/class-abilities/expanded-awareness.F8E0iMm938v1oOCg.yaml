@@ -1,8 +1,27 @@
 _id: F8E0iMm938v1oOCg
-name: Expanded Awareness
-type: feat
+_key: '!items!F8E0iMm938v1oOCg'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Expanded Awareness
 system:
+  abilityType: su
+  actions:
+    - _id: 4srtlaxarwrgn738
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.psychic.level'
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>As a move action, you can focus on your senses and gain one of the
@@ -17,26 +36,7 @@ system:
 
       <p>You can use this ability a number of times per day equal to your Wisdom
       modifier.</p>
-  actions:
-    - _id: 4srtlaxarwrgn738
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@classes.psychic.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_expandedAwareness
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: su
-_key: '!items!F8E0iMm938v1oOCg'
+  tag: classFeat_expandedAwareness
+type: feat
 

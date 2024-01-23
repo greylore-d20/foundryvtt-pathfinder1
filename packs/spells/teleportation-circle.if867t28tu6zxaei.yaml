@@ -1,8 +1,27 @@
 _id: if867t28tu6zxaei
-name: Teleportation Circle
-type: spell
+_key: '!items!if867t28tu6zxaei'
 img: icons/magic/symbols/ring-circle-smoke-blue.webp
+name: Teleportation Circle
 system:
+  actions:
+    - _id: jx50g0nvrsrgk25s
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: 5-ft.-radius circle that teleports those who activate it
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You create a circle on the floor or other horizontal surface that
@@ -21,45 +40,26 @@ system:
       trapfinding class feature can use the Disable Device to disarm magic
       traps. The DC in each case is 25 + spell level, or 34 in the case of
       <i>teleportation circle</i>.</p>
-  actions:
-    - _id: jx50g0nvrsrgk25s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 10 min./level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: 5-ft.-radius circle that teleports those who activate it
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
-      summoner: 6
-      witch: 9
       psychic: 9
+      sorcerer: 9
+      summoner: 6
       summonerUnchained: 6
+      witch: 9
+      wizard: 9
     domain:
       Rune: 9
   level: 9
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    material: true
   materials:
-    value: amber dust to cover circle worth 1,000 gp
     gpValue: 1000
+    value: amber dust to cover circle worth 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: con
   source:
     id: PZO1110
     pages: '359'
-_key: '!items!if867t28tu6zxaei'
+  subschool: teleportation
+type: spell
 

@@ -1,8 +1,20 @@
 _id: yTfzAVpEYSJaPQVZ
-name: Summoner's Charm
-type: feat
+_key: '!items!yTfzAVpEYSJaPQVZ'
 img: systems/pf1/icons/spells/haste-sky-1.jpg
+name: Summoner's Charm
 system:
+  abilityType: su
+  actions:
+    - _id: 6mkcnenxw6wkg6nx
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/haste-sky-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>Whenever you cast a conjuration (<em>summoning</em>) spell, increase
@@ -13,19 +25,7 @@ system:
       permanent. You can have no more than one summon monster spell made
       permanent in this way at one time. If you designate another <em>summon
       monster</em> spell as permanent, the previous spell immediately ends.</p>
-  actions:
-    - _id: 6mkcnenxw6wkg6nx
-      name: Use
-      img: systems/pf1/icons/spells/haste-sky-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_summonersCharm
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!yTfzAVpEYSJaPQVZ'
+  tag: classFeat_summonersCharm
+type: feat
 

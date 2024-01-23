@@ -1,8 +1,17 @@
 _id: qolr4xYig9tY8rcQ
-name: Dragon Wings
-type: feat
+_key: '!items!qolr4xYig9tY8rcQ'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Dragon Wings
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Bloodrager
+  changes:
+    - _id: ib7i7j1s
+      formula: '@classes.bloodrager.level >= 16 ? 80 : 60'
+      modifier: base
+      subTarget: flySpeed
   description:
     value: >-
       <p>At 12th level, when entering a bloodrage, you can choose to have
@@ -11,16 +20,7 @@ system:
 
       <p>At 16th level, your fly speed increases to 80 feet with good
       maneuverability.</p>
-  changes:
-    - _id: ib7i7j1s
-      formula: '@classes.bloodrager.level >= 16 ? 80 : 60'
-      subTarget: flySpeed
-      modifier: base
-  tag: classFeat_dragonWings
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!qolr4xYig9tY8rcQ'
+  tag: classFeat_dragonWings
+type: feat
 

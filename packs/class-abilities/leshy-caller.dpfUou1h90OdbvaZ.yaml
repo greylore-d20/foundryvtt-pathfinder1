@@ -1,8 +1,29 @@
 _id: dpfUou1h90OdbvaZ
-name: Leshy Caller
-type: feat
+_key: '!items!dpfUou1h90OdbvaZ'
 img: systems/pf1/icons/skills/green_04.jpg
+name: Leshy Caller
 system:
+  abilityType: sp
+  actions:
+    - _id: 022rgnzfwh8mlrrm
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/green_04.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one leshy
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can spontaneously swap out any of your domain spells for a summon
@@ -17,31 +38,10 @@ system:
       of times per day equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Wooden Fist power of the Plant Domain.</p>
-  actions:
-    - _id: 022rgnzfwh8mlrrm
-      name: Use
-      img: systems/pf1/icons/skills/green_04.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: one leshy
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_leshyCaller
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
-_key: '!items!dpfUou1h90OdbvaZ'
+  tag: classFeat_leshyCaller
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

@@ -1,8 +1,29 @@
 _id: 5cdmojmydhwowzy1
-name: Teleport, Greater
-type: spell
+_key: '!items!5cdmojmydhwowzy1'
 img: icons/environment/settlement/watchtower-city.webp
+name: Teleport, Greater
 system:
+  actions:
+    - _id: e9yq29rw03w79pfq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: none and Will negates (object)
+        type: will
+      target:
+        value: you and touched objects or other touched willing creatures
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>teleport,</i> except that there is no
@@ -12,47 +33,26 @@ system:
       you attempt to teleport with insufficient information (or with misleading
       information), you disappear and simply reappear in your original location.
       Interplanar travel is not possible.</p>
-  actions:
-    - _id: e9yq29rw03w79pfq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: you and touched objects or other touched willing creatures
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: none and Will negates (object)
   learnedAt:
-    class:
-      sorcerer: 7
-      wizard: 7
-      summoner: 5
-      witch: 7
-      psychic: 7
-      summonerUnchained: 6
-    domain:
-      Travel: 7
     bloodline:
       Abyssal: 7
       Arcane: 7
       Infernal: 7
+    class:
+      psychic: 7
+      sorcerer: 7
+      summoner: 5
+      summonerUnchained: 6
+      witch: 7
+      wizard: 7
+    domain:
+      Travel: 7
   level: 7
   school: con
-  subschool: teleportation
-  components:
-    verbal: true
-  sr: false
   source:
     id: PZO1110
     pages: '359'
-_key: '!items!5cdmojmydhwowzy1'
+  sr: false
+  subschool: teleportation
+type: spell
 

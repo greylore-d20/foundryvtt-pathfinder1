@@ -1,8 +1,28 @@
 _id: w1bmtplbrddgzv2m
-name: Abundant Ammunition
-type: spell
+_key: '!items!w1bmtplbrddgzv2m'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Abundant Ammunition
 system:
+  actions:
+    - _id: rd9vv5y0nwljmg86
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one container touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When cast on a container such as a quiver or a pouch that contains
@@ -14,41 +34,21 @@ system:
       casting this spell, you cast a spell that enhances projectiles, such as
       <i>align weapon</i> or <i>greater magic weapon</i>, on the same container,
       all projectiles this spell conjures are affected by that spell.</p>
-  actions:
-    - _id: rd9vv5y0nwljmg86
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one container touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      ranger: 1
       bard: 1
-      psychic: 1
+      cleric: 1
       hunter: 1
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      oracle: 1
+      psychic: 1
+      ranger: 1
+      sorcerer: 1
+      warpriest: 1
+      wizard: 1
   materials:
     value: a single piece of ammunition
+  school: con
   sr: false
-_key: '!items!w1bmtplbrddgzv2m'
+  subschool: summoning
+type: spell
 

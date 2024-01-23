@@ -1,19 +1,11 @@
 _id: Y1Blrx6vP14T5G6G
-name: Antitoxin Touch
-type: spell
+_key: '!items!Y1Blrx6vP14T5G6G'
 img: icons/magic/nature/beam-hand-leaves-green.webp
+name: Antitoxin Touch
 system:
-  description:
-    value: >-
-      <p>The target's skin secretes a small amount of venom-resistant oils for
-      the spell's duration. The target cannot accidentally poison itself while
-      applying poison. Additionally, the target does not risk exposure to a
-      creature's poison when attempting to milk venom (<em>Ultimate
-      Wilderness</em> 142).</p>
   actions:
     - _id: md805i4mo1q20ah1
-      name: Use
-      img: icons/magic/nature/beam-hand-leaves-green.webp
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,15 +13,27 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: creature touched
+      img: icons/magic/nature/beam-hand-leaves-green.webp
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target's skin secretes a small amount of venom-resistant oils for
+      the spell's duration. The target cannot accidentally poison itself while
+      applying poison. Additionally, the target does not risk exposure to a
+      creature's poison when attempting to milk venom (<em>Ultimate
+      Wilderness</em> 142).</p>
   learnedAt:
     class:
       alchemist: 1
@@ -39,12 +43,8 @@ system:
       ranger: 1
       shaman: 1
       witch: 1
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small drop of antitoxin
-_key: '!items!Y1Blrx6vP14T5G6G'
+  school: abj
+type: spell
 

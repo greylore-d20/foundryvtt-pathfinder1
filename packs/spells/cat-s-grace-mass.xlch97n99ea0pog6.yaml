@@ -1,16 +1,11 @@
 _id: xlch97n99ea0pog6
-name: Cat's Grace, Mass
-type: spell
+_key: '!items!xlch97n99ea0pog6'
 img: icons/creatures/abilities/cougar-roar-rush-orange.webp
+name: Cat's Grace, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>cat's grace</i>, except that it affects
-      multiple creatures.</p>
   actions:
     - _id: o0yygnk8iwp7eeal
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,36 +13,41 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>cat's grace</i>, except that it affects
+      multiple creatures.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 6
       bard: 6
-      summoner: 4
+      druid: 6
+      hunter: 6
       magus: 6
       psychic: 6
-      hunter: 6
+      sorcerer: 6
+      summoner: 4
       summonerUnchained: 6
+      wizard: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: pinch of cat fur
-_key: '!items!xlch97n99ea0pog6'
+  school: trs
+type: spell
 

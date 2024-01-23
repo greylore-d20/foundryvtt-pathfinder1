@@ -1,7 +1,34 @@
-name: Sting
-type: attack
+_id: cuOCNj2vlx0Q1X3J
+_key: '!items!cuOCNj2vlx0Q1X3J'
 img: icons/commodities/biological/stinger-insect-grey.webp
+name: Sting
 system:
+  actions:
+    - _id: z4v148zqm8otbmnh
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      formulaicAttacks:
+        label: ''
+      img: icons/commodities/biological/stinger-insect-grey.webp
+      name: Attack
+      range:
+        units: melee
+      tag: sting
+  baseTypes:
+    - Sting
   description:
     value: >-
       <p>A primary natural weapon attack with a sharp stinger attached to some
@@ -9,36 +36,9 @@ system:
       natural attacks, see:
       @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
       Attacks} (UMR).</p>
-  actions:
-    - _id: z4v148zqm8otbmnh
-      name: Attack
-      img: icons/commodities/biological/stinger-insect-grey.webp
-      tag: sting
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      range:
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: str
-        damage: str
   subType: natural
-  baseTypes:
-    - Sting
   weaponGroups:
     value:
       - natural
-_id: cuOCNj2vlx0Q1X3J
-_key: '!items!cuOCNj2vlx0Q1X3J'
+type: attack
 

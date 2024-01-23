@@ -1,46 +1,46 @@
 _id: dhh45nl8h2p9q5es
-name: Hymn of Mercy
-type: spell
+_key: '!items!dhh45nl8h2p9q5es'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hymn of Mercy
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>Touch of Mercy</i>, except as noted
-      above.</p>
   actions:
     - _id: ifc36nczpdfnd8jk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      area: 30-ft.-radius burst centered on you
       duration:
         value: 1 round/level (D)
-      range:
-        value: '30'
-        units: ft
+      img: systems/pf1/icons/misc/magic-swirl.png
       measureTemplate:
-        type: circle
         size: '30'
-      actionType: spellsave
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '30'
       save:
-        type: will
         description: Will negates
-      area: 30-ft.-radius burst centered on you
+        type: will
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>Touch of Mercy</i>, except as noted
+      above.</p>
   learnedAt:
     class:
-      cleric: 5
-      warpriest: 5
-      oracle: 5
       bard: 5
+      cleric: 5
+      oracle: 5
+      warpriest: 5
   level: 5
   school: enc
   subschool: compulsion
   types: good, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!dhh45nl8h2p9q5es'
+type: spell
 

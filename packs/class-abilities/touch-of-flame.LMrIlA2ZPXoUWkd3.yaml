@@ -1,8 +1,37 @@
 _id: LMrIlA2ZPXoUWkd3
-name: Touch of Flame
-type: feat
+_key: '!items!LMrIlA2ZPXoUWkd3'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Touch of Flame
 system:
+  abilityType: su
+  actions:
+    - _id: g3jrdv9wemted001
+      ability:
+        attack: dex
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + floor(@classes.oracle.level / 2)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can perform a melee touch attack that deals
@@ -14,39 +43,10 @@ system:
 
       <p>At 11th level, any weapon that you wield is treated as a flaming
       weapon.</p>
-  actions:
-    - _id: g3jrdv9wemted001
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: 1d6 + floor(@classes.oracle.level / 2)
-            type:
-              values:
-                - fire
-              custom: ''
-      ability:
-        attack: dex
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_touchOfFlame
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!LMrIlA2ZPXoUWkd3'
+  tag: classFeat_touchOfFlame
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

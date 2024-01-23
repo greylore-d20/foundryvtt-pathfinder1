@@ -1,8 +1,30 @@
 _id: b3koss885z9u6ecl
-name: Shared Sacrifice
-type: spell
+_key: '!items!b3koss885z9u6ecl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shared Sacrifice
 system:
+  actions:
+    - _id: 1v57i1o4wgfugqti
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a link to a target and can direct pain and damage through
@@ -17,39 +39,17 @@ system:
       you, but damage already split is not reassigned back to you.</p><p>If you
       and the target of the spell move out of range of each other, the spell
       immediately ends.</p>
-  actions:
-    - _id: 1v57i1o4wgfugqti
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      antipaladin: 3
       cleric: 2
-      warpriest: 2
       oracle: 2
       summoner: 3
-      witch: 2
-      antipaladin: 3
       summonerUnchained: 3
+      warpriest: 2
+      witch: 2
   level: 2
   school: nec
   types: evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!b3koss885z9u6ecl'
+type: spell
 

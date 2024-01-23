@@ -1,8 +1,32 @@
 _id: aq4cspb2nxh71pm8
-name: Flaming Aura
-type: spell
+_key: '!items!aq4cspb2nxh71pm8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Flaming Aura
 system:
+  actions:
+    - _id: a1bq1c13d5a1tbck
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: none (see text)
+        harmless: true
+      target:
+        value: you (see text)
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The spell allows you channel fire into your very being. If you don't
@@ -13,48 +37,24 @@ system:
       Fortitude saving throw or take 1d8 points of fire damage.  Multiple
       castings of this spell stack; you can cast it once on yourself to gain the
       fire subtype, then again to manifest the aura of flames around you.</p>
-  actions:
-    - _id: a1bq1c13d5a1tbck
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you (see text)
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: none (see text)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 4
-      witch: 4
-      magus: 4
       bloodrager: 4
+      cleric: 4
+      magus: 4
+      oracle: 4
       shaman: 4
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: trs
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a small piece of charcoal
+  school: trs
   sr: false
-_key: '!items!aq4cspb2nxh71pm8'
+  types: fire
+type: spell
 

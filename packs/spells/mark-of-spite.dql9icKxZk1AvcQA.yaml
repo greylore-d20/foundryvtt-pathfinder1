@@ -1,7 +1,35 @@
-name: Mark of Spite
-type: spell
+_id: dql9icKxZk1AvcQA
+_key: '!items!dql9icKxZk1AvcQA'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mark of Spite
 system:
+  actions:
+    - _id: qtZlhbyrBw5qcG2k
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackName: Ranged touch
+      duration:
+        value: 1 round/level
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      nonlethal: true
+      range:
+        units: close
+      target:
+        value: one living creature
+      touch: true
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Half-drow take substantial pains to ensure their enemies’ defeat. You
@@ -11,29 +39,6 @@ system:
       modifier. The recipient of the mark automatically takes twice the amount
       of damage that you deal to yourself, bypassing any damage reduction,
       immunities, or resistances.</p>
-  actions:
-    - _id: qtZlhbyrBw5qcG2k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      attackName: Ranged touch
-      actionType: rsak
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-      nonlethal: true
-      touch: true
   learnedAt:
     class:
       arcanist: 3
@@ -43,15 +48,10 @@ system:
       witch: 3
       wizard: 3
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of blood
   preparation:
     spontaneousPrepared: false
-_id: dql9icKxZk1AvcQA
-_key: '!items!dql9icKxZk1AvcQA'
+  school: nec
+type: spell
 

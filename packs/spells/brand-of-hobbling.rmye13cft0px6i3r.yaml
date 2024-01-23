@@ -1,8 +1,31 @@
 _id: rmye13cft0px6i3r
-name: Brand of Hobbling
-type: spell
+_key: '!items!rmye13cft0px6i3r'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Brand of Hobbling
 system:
+  actions:
+    - _id: wxe6uvvjy2plww3g
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: creature touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell etches a symbol of chains, a particular prison, or a lawful
@@ -14,34 +37,11 @@ system:
       brand away (the latter deals 1d6 points of damage, though the brand
       returns if that damage is healed), but in either case the effects of a
       Brand of Hobbling continue to function.</p>
-  actions:
-    - _id: wxe6uvvjy2plww3g
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       inquisitor: 2
   level: 2
   school: trs
   types: curse
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!rmye13cft0px6i3r'
+type: spell
 

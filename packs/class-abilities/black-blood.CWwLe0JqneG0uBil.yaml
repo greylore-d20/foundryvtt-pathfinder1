@@ -1,8 +1,23 @@
 _id: CWwLe0JqneG0uBil
-name: Black Blood
-type: feat
+_key: '!items!CWwLe0JqneG0uBil'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Black Blood
 system:
+  abilityType: su
+  actions:
+    - _id: yum0fk2ctkxkvz74
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '2'
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 1st level, your blood runs black with the blood of Orv. You are
@@ -12,25 +27,10 @@ system:
       immediate action you can grant your melee attacks the <em>frost</em>
       weapon special ability for 2 rounds. You can use this ability three times
       per day.</p>
-  actions:
-    - _id: yum0fk2ctkxkvz74
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '2'
-        units: round
-  uses:
-    per: day
-    maxFormula: '3'
-  tag: classFeat_blackBlood
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!CWwLe0JqneG0uBil'
+  tag: classFeat_blackBlood
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

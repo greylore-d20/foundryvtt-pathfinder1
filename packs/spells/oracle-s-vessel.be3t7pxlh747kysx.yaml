@@ -1,18 +1,11 @@
 _id: be3t7pxlh747kysx
-name: Oracle's Vessel
-type: spell
+_key: '!items!be3t7pxlh747kysx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Oracle's Vessel
 system:
-  description:
-    value: >-
-      <p>The target gains all the benefits of your oracle's curse, with none of
-      the penalties. In some cases, this has no effect (for example, a fighter
-      with your haunted curse can't cast spells and doesn't gain any benefit
-      from having additional spells known).</p>
   actions:
     - _id: 4tmvjmcj4tualdlv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,22 +13,29 @@ system:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The target gains all the benefits of your oracle's curse, with none of
+      the penalties. In some cases, this has no effect (for example, a fighter
+      with your haunted curse can't cast spells and doesn't gain any benefit
+      from having additional spells known).</p>
   learnedAt:
     class:
       oracle: 4
   level: 4
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!be3t7pxlh747kysx'
+type: spell
 

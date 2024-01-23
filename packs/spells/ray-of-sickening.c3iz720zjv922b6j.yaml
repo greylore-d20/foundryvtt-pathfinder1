@@ -1,16 +1,13 @@
 _id: c3iz720zjv922b6j
-name: Ray of Sickening
-type: spell
+_key: '!items!c3iz720zjv922b6j'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ray of Sickening
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>ray of exhaustion</i>, except the target is
-      sickened if it fails its save and unaffected if it makes its save.</p>
   actions:
     - _id: mrrbckfz3o1c4g3b
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      ability:
+        attack: dex
+      actionType: rsak
       activation:
         type: standard
         unchained:
@@ -18,37 +15,40 @@ system:
           type: action
       duration:
         value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: rsak
-      ability:
-        attack: dex
       save:
-        type: fort
         description: Fortitude partial; see text
+        type: fort
       spellEffect: ray
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>ray of exhaustion</i>, except the target is
+      sickened if it fails its save and unaffected if it makes its save.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      druid: 1
-      summoner: 1
-      witch: 1
       bloodrager: 1
-      mesmerist: 1
+      cleric: 1
+      druid: 1
       hunter: 1
+      mesmerist: 1
+      oracle: 1
+      sorcerer: 1
+      summoner: 1
       summonerUnchained: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
     subDomain:
       Plague: 1
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of sweat
-_key: '!items!c3iz720zjv922b6j'
+  school: nec
+type: spell
 

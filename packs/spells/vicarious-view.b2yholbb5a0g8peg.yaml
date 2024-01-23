@@ -1,8 +1,29 @@
 _id: b2yholbb5a0g8peg
-name: Vicarious View
-type: spell
+_key: '!items!b2yholbb5a0g8peg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vicarious View
 system:
+  actions:
+    - _id: n0oc74tt5gj8qggd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      spellEffect: magical sensor
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You plant a scrying sensor on a touched creature, object, or point in
@@ -11,41 +32,20 @@ system:
       object on moves, the sensor moves with it. Unlike other scrying spells,
       <i>vicarious view</i> doesn't allow magically or supernaturally enhanced
       senses to work through it.</p>
-  actions:
-    - _id: n0oc74tt5gj8qggd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-      spellEffect: magical sensor
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 4
-      witch: 4
-      shaman: 4
-      psychic: 4
       medium: 3
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      shaman: 4
+      sorcerer: 4
       spiritualist: 4
+      witch: 4
+      wizard: 4
   level: 4
   school: div
   subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!b2yholbb5a0g8peg'
+type: spell
 

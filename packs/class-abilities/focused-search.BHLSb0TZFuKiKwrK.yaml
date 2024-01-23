@@ -1,8 +1,22 @@
 _id: BHLSb0TZFuKiKwrK
-name: Focused Search
-type: feat
+_key: '!items!BHLSb0TZFuKiKwrK'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Focused Search
 system:
+  abilityType: ex
+  actions:
+    - _id: eytj7mxvqm933p4k
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      target:
+        value: one object or person
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>Once per day, you may designate a person or object as your focus. This
@@ -13,24 +27,10 @@ system:
       hear your focus, or when using Survival to track your focus or a creature
       with your focus in its possession. This bonus stacks with that gained from
       the track special ability.</p>
-  actions:
-    - _id: eytj7mxvqm933p4k
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      target:
-        value: one object or person
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_focusedSearch
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: ex
-_key: '!items!BHLSb0TZFuKiKwrK'
+  tag: classFeat_focusedSearch
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

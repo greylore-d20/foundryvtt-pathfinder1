@@ -1,8 +1,29 @@
 _id: 7dj9r94gfjvnwh7e
-name: Bone Flense
-type: spell
+_key: '!items!7dj9r94gfjvnwh7e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bone Flense
 system:
+  actions:
+    - _id: jwzdzdimwale7hl2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one living creature
+  components:
+    focus: true
   description:
     value: >-
       <p>Choose a creature that you can see. When that creature is struck by a
@@ -15,43 +36,22 @@ system:
       bleed damage for 1 round per 2 caster levels. The victim is sickened by
       the pain for the duration of the bleeding. If the target creature has no
       bones, this spell has no effect.</p>
-  actions:
-    - _id: jwzdzdimwale7hl2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
+      bloodrager: 2
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      witch: 3
+      hunter: 3
       inquisitor: 3
       magus: 3
-      bloodrager: 2
-      hunter: 3
+      oracle: 3
+      sorcerer: 3
+      warpriest: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    focus: true
   materials:
     focus: a jagged shard of bone from a humanoid creature
-_key: '!items!7dj9r94gfjvnwh7e'
+  school: trs
+type: spell
 

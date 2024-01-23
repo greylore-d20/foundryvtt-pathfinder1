@@ -1,8 +1,32 @@
 _id: 3zi4ie97hxr1d3ng
-name: Word of Chaos
-type: spell
+_key: '!items!3zi4ie97hxr1d3ng'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Word of Chaos
 system:
+  actions:
+    - _id: ghvyr0koctq9nwwz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: nonchaotic creatures in a 40-ft.-radius spread centered on you
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '40'
+      save:
+        description: none or Will negates; see text
+        type: will
+  components:
+    verbal: true
   description:
     value: >-
       <p>Any nonchaotic creature within the area of a <i>Word of Chaos</i> spell
@@ -30,42 +54,18 @@ system:
       effect allows a Will save (at a -4 penalty) to negate.</p><p>Creatures
       whose HD exceed your caster level are unaffected by <i>Word of
       Chaos</i>.</p>
-  actions:
-    - _id: ghvyr0koctq9nwwz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        value: '40'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '40'
-      actionType: spellsave
-      save:
-        type: will
-        description: none or Will negates; see text
-      area: nonchaotic creatures in a 40-ft.-radius spread centered on you
   learnedAt:
     class:
       cleric: 7
-      oracle: 7
       inquisitor: 6
+      oracle: 7
     domain:
       Chaos: 7
   level: 7
   school: evo
-  types: chaotic, sonic
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '371'
-_key: '!items!3zi4ie97hxr1d3ng'
+  types: chaotic, sonic
+type: spell
 

@@ -1,8 +1,30 @@
 _id: HLd4skGtB4uTjuwU
-name: Resiliency
-type: feat
+_key: '!items!HLd4skGtB4uTjuwU'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Resiliency
 system:
+  abilityType: ex
+  actions:
+    - _id: 40ajgnje13caxe85
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Investigator
+      - Ninja
   description:
     value: >-
       <p>Once per day, a character with this ability can gain a number of
@@ -12,36 +34,14 @@ system:
       from dying. These temporary hit points last for 1 minute. If the
       character's hit points drop below 0 due to the loss of these temporary hit
       points, she falls unconscious and is dying as normal.</p>
+  subType: classFeat
+  tag: classFeat_resiliency
   tags:
     - Rogue Talent
     - Investigator Talent
     - Ninja Trick
-  actions:
-    - _id: 40ajgnje13caxe85
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_resiliency
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Investigator
-      - Ninja
-  abilityType: ex
-_key: '!items!HLd4skGtB4uTjuwU'
+    per: day
+type: feat
 

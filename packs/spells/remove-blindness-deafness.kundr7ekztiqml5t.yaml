@@ -1,19 +1,11 @@
 _id: kundr7ekztiqml5t
-name: Remove Blindness/Deafness
-type: spell
+_key: '!items!kundr7ekztiqml5t'
 img: icons/creatures/eyes/human-single-blue.webp
+name: Remove Blindness/Deafness
 system:
-  description:
-    value: >-
-      <p><i>Remove blindness/deafness</i> cures blindness or deafness (your
-      choice), whether the effect is normal or magical in nature. The spell does
-      not restore ears or eyes that have been lost, but it repairs them if they
-      are damaged.</p><p><i>Remove blindness/deafness</i> counters and dispels
-      blindness/deafness.</p>
   actions:
     - _id: grb4poy6soirfmjp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: heal
       activation:
         type: standard
         unchained:
@@ -21,33 +13,41 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: heal
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p><i>Remove blindness/deafness</i> cures blindness or deafness (your
+      choice), whether the effect is normal or magical in nature. The spell does
+      not restore ears or eyes that have been lost, but it repairs them if they
+      are damaged.</p><p><i>Remove blindness/deafness</i> counters and dispels
+      blindness/deafness.</p>
   learnedAt:
     class:
+      alchemist: 3
       cleric: 3
-      warpriest: 3
+      mesmerist: 3
       oracle: 3
       paladin: 3
-      alchemist: 3
-      witch: 3
       shaman: 3
-      mesmerist: 3
       spiritualist: 3
+      warpriest: 3
+      witch: 3
     subDomain:
       Purity: 3
   level: 3
   school: con
   subschool: healing
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kundr7ekztiqml5t'
+type: spell
 

@@ -1,14 +1,11 @@
 _id: ud4xukzhan89qhm4
-name: Confusion, Lesser
-type: spell
+_key: '!items!ud4xukzhan89qhm4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Confusion, Lesser
 system:
-  description:
-    value: <p>This spell causes a single creature to become confused for 1 round.</p>
   actions:
     - _id: fhyqy81hapofblpe
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -16,35 +13,38 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: <p>This spell causes a single creature to become confused for 1 round.</p>
   learnedAt:
+    bloodline:
+      Impossible: 1
     class:
       bard: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
+      psychic: 1
     domain:
       Madness: 1
     subDomain:
       Protean: 1
-    bloodline:
-      Impossible: 1
   school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '258'
-_key: '!items!ud4xukzhan89qhm4'
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

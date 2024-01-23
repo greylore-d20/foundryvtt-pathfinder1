@@ -1,8 +1,25 @@
 _id: 3dvrfgpj9zhavfdk
-name: Enlightened Step
-type: spell
+_key: '!items!3dvrfgpj9zhavfdk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Enlightened Step
 system:
+  actions:
+    - _id: 0s96zmy4i64py8vr
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>Through careful regulation of your body's mystical energies, thoughtful
@@ -13,39 +30,22 @@ system:
       can expend the spell's remaining duration as a swift action in order to
       gain a fly speed of 120 feet with perfect maneuverability for 1 minute.
       After this time, the spell ends.</p>
-  actions:
-    - _id: 0s96zmy4i64py8vr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
-      oracle: 6
       druid: 6
-      shaman: 6
       hunter: 6
+      oracle: 6
+      shaman: 6
+      warpriest: 6
   level: 6
-  school: trs
-  types: air, meditative
-  components:
-    verbal: true
-    material: true
   materials:
-    value: soothing incense worth 600 gp
     gpValue: 600
+    value: soothing incense worth 600 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!3dvrfgpj9zhavfdk'
+  types: air, meditative
+type: spell
 

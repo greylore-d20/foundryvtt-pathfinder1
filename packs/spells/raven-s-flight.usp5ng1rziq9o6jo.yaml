@@ -1,8 +1,24 @@
 _id: usp5ng1rziq9o6jo
-name: Raven's Flight
-type: spell
+_key: '!items!usp5ng1rziq9o6jo'
 img: icons/creatures/birds/corvid-flying-wings-purple.webp
+name: Raven's Flight
 system:
+  actions:
+    - _id: w0w43zbpvoqb1ikx
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: 1 round
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You can cast this spell only if it is the first action you take on your
@@ -14,36 +30,20 @@ system:
       move, run, or withdraw actions. If the spell is dispelled while you are
       still aloft, the power of flight dissipates slowly; you float downward 60
       feet on your next turn, then fall any remaining distance.</p>
-  actions:
-    - _id: w0w43zbpvoqb1ikx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: 1 round
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 3
-      ranger: 2
       bard: 3
-      witch: 2
+      druid: 3
+      hunter: 2
       inquisitor: 3
       magus: 2
+      ranger: 2
       shaman: 2
-      hunter: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
   sr: false
-_key: '!items!usp5ng1rziq9o6jo'
+type: spell
 

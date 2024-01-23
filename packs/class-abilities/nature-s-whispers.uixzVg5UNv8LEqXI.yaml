@@ -1,8 +1,21 @@
 _id: uixzVg5UNv8LEqXI
-name: Nature's Whispers
-type: feat
+_key: '!items!uixzVg5UNv8LEqXI'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Nature's Whispers
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 6m5362vy
+      formula: '@abilities.cha.mod - @abilities.dex.mod'
+      modifier: untyped
+      subTarget: ac
+    - _id: t3bpvqhe
+      formula: '@abilities.cha.mod - @abilities.dex.mod'
+      modifier: untyped
+      subTarget: cmd
   description:
     value: >-
       <p>You have become so attuned to the whispers of the natural world, from
@@ -12,20 +25,7 @@ system:
       Armor Class and CMD. Any condition that would cause you to lose your
       Dexterity modifier to your Armor Class instead causes you to lose your
       Charisma modifier to your Armor Class.</p>
-  changes:
-    - _id: 6m5362vy
-      formula: '@abilities.cha.mod - @abilities.dex.mod'
-      subTarget: ac
-      modifier: untyped
-    - _id: t3bpvqhe
-      formula: '@abilities.cha.mod - @abilities.dex.mod'
-      subTarget: cmd
-      modifier: untyped
-  tag: classFeat_naturesWhispers
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!uixzVg5UNv8LEqXI'
+  tag: classFeat_naturesWhispers
+type: feat
 

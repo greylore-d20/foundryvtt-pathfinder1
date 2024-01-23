@@ -1,18 +1,11 @@
 _id: 5eg2f7nek9cjmv0n
-name: Memory Lapse
-type: spell
+_key: '!items!5eg2f7nek9cjmv0n'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Memory Lapse
 system:
-  description:
-    value: >-
-      <p>You cause the target to forget what happened from the casting of the
-      spell back to the beginning of its last turn. This may allow a retry on a
-      Diplomacy, Intimidate, or opposed skill check, though only with respect to
-      the target, not other creatures that may be present.</p>
   actions:
     - _id: uk9letvj5yjj593s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,27 +13,34 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You cause the target to forget what happened from the casting of the
+      spell back to the beginning of its last turn. This may allow a retry on a
+      Diplomacy, Intimidate, or opposed skill check, though only with respect to
+      the target, not other creatures that may be present.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
       mesmerist: 1
       occultist: 1
+      sorcerer: 1
+      wizard: 1
     subDomain:
       Memory: 2
   school: enc
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!5eg2f7nek9cjmv0n'
+type: spell
 

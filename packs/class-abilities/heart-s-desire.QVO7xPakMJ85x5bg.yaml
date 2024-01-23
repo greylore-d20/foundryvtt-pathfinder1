@@ -1,19 +1,11 @@
 _id: QVO7xPakMJ85x5bg
-name: Heart's Desire
-type: feat
+_key: '!items!QVO7xPakMJ85x5bg'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Heart's Desire
 system:
-  description:
-    value: >-
-      <p>At 8th level, you receive divine guidance on the goals of your
-      political allies and rivals. Once per day, you can use
-      @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune} as a spell-like ability
-      using your inquisitor level as your caster level, but only to ask
-      questions about others’ goals.</p>
+  abilityType: sp
   actions:
     - _id: o0vfxuxsb8jzice5
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: standard
         unchained:
@@ -21,18 +13,26 @@ system:
           type: action
       duration:
         units: inst
-      target:
-        value: self
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
       range:
         units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_heartsDesire
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Inquisitor
-  abilityType: sp
-_key: '!items!QVO7xPakMJ85x5bg'
+  description:
+    value: >-
+      <p>At 8th level, you receive divine guidance on the goals of your
+      political allies and rivals. Once per day, you can use
+      @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune} as a spell-like ability
+      using your inquisitor level as your caster level, but only to ask
+      questions about others’ goals.</p>
+  subType: classFeat
+  tag: classFeat_heartsDesire
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

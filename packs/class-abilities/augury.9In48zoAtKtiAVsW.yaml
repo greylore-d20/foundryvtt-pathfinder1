@@ -1,35 +1,35 @@
 _id: 9In48zoAtKtiAVsW
-name: Augury
-type: feat
+_key: '!items!9In48zoAtKtiAVsW'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Augury
 system:
-  description:
-    value: >-
-      <p>Once per day, you can use
-      @Compendium[pf1.spells.d1wxnax51cecplm4]{Augury} as a spell-like
-      ability.</p>
+  abilityType: sp
   actions:
     - _id: 313j2omnm3ef0oex
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         units: inst
-      target:
-        value: self
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
       range:
         units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_augury
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Inquisitor
-  abilityType: sp
-_key: '!items!9In48zoAtKtiAVsW'
+  description:
+    value: >-
+      <p>Once per day, you can use
+      @Compendium[pf1.spells.d1wxnax51cecplm4]{Augury} as a spell-like
+      ability.</p>
+  subType: classFeat
+  tag: classFeat_augury
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

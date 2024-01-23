@@ -1,8 +1,27 @@
 _id: f4t3x8ook90XQNwf
-name: Tremorsense
-type: feat
+_key: '!items!f4t3x8ook90XQNwf'
 img: systems/pf1/icons/spells/rock-sky-3.jpg
+name: Tremorsense
 system:
+  abilityType: su
+  actions:
+    - _id: o8ful7lto0i6crbh
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.kineticist.level'
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> earth; <b>Type</b> utility (Su); <b>Level</b> 3;
@@ -16,26 +35,7 @@ system:
       blasts that include earth components don’t suffer a miss chance from
       concealment or total concealment against creatures you detect with your
       tremorsense.</p>
-  actions:
-    - _id: o8ful7lto0i6crbh
-      name: Use
-      img: systems/pf1/icons/spells/rock-sky-3.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@classes.kineticist.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_tremorsense
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-_key: '!items!f4t3x8ook90XQNwf'
+  tag: classFeat_tremorsense
+type: feat
 

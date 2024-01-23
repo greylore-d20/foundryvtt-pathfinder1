@@ -1,8 +1,34 @@
 _id: wy9knmff355kb7iv
-name: Invisibility Sphere
-type: spell
+_key: '!items!wy9knmff355kb7iv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invisibility Sphere
 system:
+  actions:
+    - _id: 410ctaqtghuho9at
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation around the creature
+      duration:
+        value: 1 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: spec
+        value: personal or touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>invisibility</i>, except that this spell
@@ -15,43 +41,17 @@ system:
       (other than the recipient) who attack negate the <i>invisibility</i> only
       for themselves. If the spell recipient attacks, the <i>invisibility</i>
       sphere ends.</p>
-  actions:
-    - _id: 410ctaqtghuho9at
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 min./level (D)
-      range:
-        value: personal or touch
-        units: spec
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: 10-ft.-radius emanation around the creature
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
-      psychic: 3
       mesmerist: 3
       occultist: 3
+      psychic: 3
+      sorcerer: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
   school: ill
   subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wy9knmff355kb7iv'
+type: spell
 

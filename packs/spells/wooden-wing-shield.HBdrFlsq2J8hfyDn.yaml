@@ -1,26 +1,29 @@
-name: Wooden Wing Shield
-type: spell
+_id: HBdrFlsq2J8hfyDn
+_key: '!items!HBdrFlsq2J8hfyDn'
 img: icons/magic/nature/barrier-shield-wood-vines.webp
+name: Wooden Wing Shield
 system:
-  description:
-    value: >-
-      <p>Your wings transmute into a wooden barrier resembling a tower shield to
-      block attacks, granting you a +4 shield bonus to AC. If you move, the
-      spell ends immediately.</p>
   actions:
     - _id: kQB8v3uQjhcwKzrm
-      name: Use
-      img: icons/magic/nature/barrier-shield-wood-vines.webp
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         value: 1 round/level or until you move
-      target:
-        value: you
+      img: icons/magic/nature/barrier-shield-wood-vines.webp
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+  description:
+    value: >-
+      <p>Your wings transmute into a wooden barrier resembling a tower shield to
+      block attacks, granting you a +4 shield bonus to AC. If you move, the
+      spell ends immediately.</p>
   learnedAt:
     class:
       bloodrager: 4
@@ -31,9 +34,6 @@ system:
       summoner: 4
   level: 4
   school: trs
-  components:
-    somatic: true
   sr: false
-_id: HBdrFlsq2J8hfyDn
-_key: '!items!HBdrFlsq2J8hfyDn'
+type: spell
 

@@ -1,8 +1,26 @@
 _id: pfv5zv744x9dwg38
-name: Geas/Quest
-type: spell
+_key: '!items!pfv5zv744x9dwg38'
 img: icons/magic/control/energy-stream-link-large-orange.webp
+name: Geas/Quest
 system:
+  actions:
+    - _id: e0sjk450htrmmm6l
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one living creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions similarly to <i>lesser <i>geas,</i></i> except
@@ -17,34 +35,18 @@ system:
       does not end a <i>geas/quest</i>, but limited <i>wish</i>, miracle, and
       <i>wish</i> do.</p><p>Bards, sorcerers, and wizards usually refer to this
       spell as <i>geas,</i> while clerics call the same spell quest.</p>
-  actions:
-    - _id: e0sjk450htrmmm6l
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level or until discharged
-      target:
-        value: one living creature
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 6
-      witch: 6
+      cleric: 6
       inquisitor: 5
-      psychic: 6
       mesmerist: 6
+      oracle: 6
+      psychic: 6
+      sorcerer: 6
+      warpriest: 6
+      witch: 6
+      wizard: 6
     domain:
       Charm: 6
       Nobility: 6
@@ -53,12 +55,10 @@ system:
       Honor: 6
   level: 6
   school: enc
-  subschool: compulsion
-  types: language-dependent, mind-affecting, curse
-  components:
-    verbal: true
   source:
     id: PZO1110
     pages: '288'
-_key: '!items!pfv5zv744x9dwg38'
+  subschool: compulsion
+  types: language-dependent, mind-affecting, curse
+type: spell
 

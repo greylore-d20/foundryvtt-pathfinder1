@@ -1,8 +1,31 @@
 _id: tziyew0s5ufahcmv
-name: Earth Glide
-type: spell
+_key: '!items!tziyew0s5ufahcmv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Earth Glide
 system:
+  actions:
+    - _id: 7vuq3g1bciryr7qq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target can pass through stone, dirt, or almost any other sort of
@@ -16,40 +39,17 @@ system:
       round (DC 15 Fortitude negates). This spell does not give the target the
       ability to breathe underground, so when passing through solid material,
       the creature must hold its breath.</p>
-  actions:
-    - _id: 7vuq3g1bciryr7qq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      druid: 4
       alchemist: 4
       bloodrager: 4
-      shaman: 4
+      druid: 4
       hunter: 4
+      shaman: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
   school: trs
   types: earth
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!tziyew0s5ufahcmv'
+type: spell
 

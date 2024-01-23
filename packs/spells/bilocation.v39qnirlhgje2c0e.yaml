@@ -1,8 +1,24 @@
 _id: v39qnirlhgje2c0e
-name: Bilocation
-type: spell
+_key: '!items!v39qnirlhgje2c0e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Bilocation
 system:
+  actions:
+    - _id: 5bqm03lkma5p8f3c
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one duplicate
+  components:
+    verbal: true
   description:
     value: >-
       <p>The spell creates an identical copy of you, along with everything you
@@ -51,32 +67,16 @@ system:
       your duplicate disappears. If you disappear, you become your duplicate. If
       you are carrying artifacts when you do this, they transfer with your
       consciousness.</p>
-  actions:
-    - _id: 5bqm03lkma5p8f3c
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: one duplicate
   learnedAt:
-    class:
-      sorcerer: 9
-      wizard: 9
-      psychic: 8
     bloodline:
       Psychic: 8
+    class:
+      psychic: 8
+      sorcerer: 9
+      wizard: 9
   level: 9
   school: con
-  subschool: creation
-  components:
-    verbal: true
   sr: false
-_key: '!items!v39qnirlhgje2c0e'
+  subschool: creation
+type: spell
 

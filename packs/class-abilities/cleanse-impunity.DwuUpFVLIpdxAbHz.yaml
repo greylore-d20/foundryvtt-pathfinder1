@@ -1,8 +1,20 @@
 _id: DwuUpFVLIpdxAbHz
-name: Cleanse Impunity
-type: feat
+_key: '!items!DwuUpFVLIpdxAbHz'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Cleanse Impunity
 system:
+  abilityType: su
+  actions:
+    - _id: upib3x4xrarvt3kt
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 8th level, choose an alignment (chaotic, evil, good, or lawful) that
@@ -12,19 +24,7 @@ system:
       with the chosen alignment descriptor; and remove curses, diseases, and
       poisons. A neutral inquisitor gains only the bonus on caster level checks
       to remove curses, diseases, and poisons.</p>
-  actions:
-    - _id: upib3x4xrarvt3kt
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_cleanseImpunity
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!DwuUpFVLIpdxAbHz'
+  tag: classFeat_cleanseImpunity
+type: feat
 

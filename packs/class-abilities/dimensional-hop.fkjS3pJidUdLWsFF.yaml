@@ -1,8 +1,20 @@
 _id: fkjS3pJidUdLWsFF
-name: Dimensional Hop
-type: feat
+_key: '!items!fkjS3pJidUdLWsFF'
 img: systems/pf1/icons/spells/link-eerie-1.jpg
+name: Dimensional Hop
 system:
+  abilityType: sp
+  actions:
+    - _id: c5a3427e9bbywvv7
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/spells/link-eerie-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can teleport up to 10 feet per cleric level per day
@@ -11,22 +23,10 @@ system:
       of sight to your destination to use this ability. You can bring other
       willing creatures with you, but you must expend an equal amount of
       distance for each creature brought.</p>
-  actions:
-    - _id: c5a3427e9bbywvv7
-      name: Use
-      img: systems/pf1/icons/spells/link-eerie-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  tag: classFeat_dimensionalHop
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '47'
-_key: '!items!fkjS3pJidUdLWsFF'
+  subType: classFeat
+  tag: classFeat_dimensionalHop
+type: feat
 

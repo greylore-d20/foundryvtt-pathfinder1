@@ -1,8 +1,36 @@
 _id: o4vWDCKqxbn9Gelq
-name: Snag Net
-type: weapon
+_key: '!items!o4vWDCKqxbn9Gelq'
 img: systems/pf1/icons/items/weapons/net.png
+name: Snag Net
 system:
+  actions:
+    - _id: scw8j4hgqein18kr
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 'NULL'
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks: null
+      img: systems/pf1/icons/items/weapons/net.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Snag Net
   description:
     value: >-
       <p>This short, wide net is covered in barbed loops and slipknots. It works
@@ -13,60 +41,32 @@ system:
       piercing damage to it. The concentration DC to cast while entangled in a
       snag net is 17 + the spell's level. The Escape Artist DC to escape a snag
       net is 22.</p>
-  tags:
-    - PFS
-  weight:
-    value: 10
-  price: 30
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: scw8j4hgqein18kr
-      name: Throw
-      img: systems/pf1/icons/items/weapons/net.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: 'NULL'
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks: null
-      ability:
-        attack: dex
-        damage: str
-  uses:
-    per: day
-  baseTypes:
-    - Snag Net
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 30
   properties:
-    trp: true
     spc: true
+    trp: true
   source:
     id: PZO9452
     pages: '33'
-_key: '!items!o4vWDCKqxbn9Gelq'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: day
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 10
+type: weapon
 

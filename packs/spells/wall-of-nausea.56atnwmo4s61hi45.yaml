@@ -1,8 +1,29 @@
 _id: 56atnwmo4s61hi45
-name: Wall of Nausea
-type: spell
+_key: '!items!56atnwmo4s61hi45'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Wall of Nausea
 system:
+  actions:
+    - _id: hydv91eb2op8d02u
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: see text
+        type: fort
+      spellEffect: transparent wall whose area is up to one 10-ft. square/level
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a transparent, shimmering wall through which creatures and
@@ -15,37 +36,16 @@ system:
       and rectangular. It need not touch the ground. The wall must be continuous
       and unbroken when formed. If its surface is broken by any object or
       creature when it is cast, the spell fails.</p>
-  actions:
-    - _id: hydv91eb2op8d02u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: see text
-      spellEffect: transparent wall whose area is up to one 10-ft. square/level
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
       psychic: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
   school: ill
+  sr: false
   subschool: pattern
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!56atnwmo4s61hi45'
+type: spell
 

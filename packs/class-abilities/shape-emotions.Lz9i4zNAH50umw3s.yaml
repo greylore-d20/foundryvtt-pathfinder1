@@ -1,8 +1,25 @@
 _id: Lz9i4zNAH50umw3s
-name: Shape Emotions
-type: feat
+_key: '!items!Lz9i4zNAH50umw3s'
 img: systems/pf1/icons/spells/protect-magenta-3.jpg
+name: Shape Emotions
 system:
+  abilityType: su
+  actions:
+    - _id: v45bg788ri0oc0c0
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/protect-magenta-3.jpg
+      name: Use
+      range:
+        units: seeText
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can emit a 30-foot aura to either ward off or welcome
@@ -15,27 +32,10 @@ system:
       you chose to enhance emotional influence, enemies within the aura receive
       a –2 penalty on saves against mind-affecting spells and effects. These
       rounds do not need to be consecutive.</p>
-  actions:
-    - _id: v45bg788ri0oc0c0
-      name: Use
-      img: systems/pf1/icons/spells/protect-magenta-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '1'
-        units: round
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: '@classes.wizard.level'
-  tag: classFeat_shapeEmotions
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!Lz9i4zNAH50umw3s'
+  tag: classFeat_shapeEmotions
+  uses:
+    maxFormula: '@classes.wizard.level'
+    per: day
+type: feat
 

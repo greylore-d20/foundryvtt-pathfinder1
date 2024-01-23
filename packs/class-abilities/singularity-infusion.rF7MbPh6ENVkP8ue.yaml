@@ -1,8 +1,23 @@
 _id: rF7MbPh6ENVkP8ue
-name: Singularity Infusion
-type: feat
+_key: '!items!rF7MbPh6ENVkP8ue'
 img: systems/pf1/icons/spells/rip-sky-1.jpg
+name: Singularity Infusion
 system:
+  actions:
+    - _id: 1ys4o8oucwvdjjf4
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/rip-sky-1.jpg
+      name: Use
+      save:
+        description: Reflex half
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> void; <b>Type</b> form infusion; <b>Level</b> 4;
@@ -17,22 +32,7 @@ system:
       <p>On your next turn, the singularity deals damage in a 10-foot-radius
       burst, and on your turn after that, it deals damage in a 15-foot-radius
       burst. The DC is Dexterity-based.</p>
-  actions:
-    - _id: 1ys4o8oucwvdjjf4
-      name: Use
-      img: systems/pf1/icons/spells/rip-sky-1.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_singularityInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!rF7MbPh6ENVkP8ue'
+  tag: classFeat_singularityInfusion
+type: feat
 

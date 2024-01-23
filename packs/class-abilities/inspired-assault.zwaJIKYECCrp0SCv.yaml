@@ -1,8 +1,28 @@
 _id: zwaJIKYECCrp0SCv
-name: Inspired Assault
-type: feat
+_key: '!items!zwaJIKYECCrp0SCv'
 img: systems/pf1/icons/feats/leadership.jpg
+name: Inspired Assault
 system:
+  abilityType: sp
+  actions:
+    - _id: sg1hezehaojnjc7d
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/feats/leadership.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>As a standard action, you can inspire a living creature with a touch by
@@ -10,27 +30,7 @@ system:
       attack rolls equal to 1 + 1 for every 6 occultist levels you possess (to a
       maximum bonus of +4 at 18th level). This bonus also applies on saving
       throws against fear effects. This bonus lasts for 1 minute.</p>
-  actions:
-    - _id: sg1hezehaojnjc7d
-      name: Use
-      img: systems/pf1/icons/feats/leadership.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_inspiredAssault
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: sp
-_key: '!items!zwaJIKYECCrp0SCv'
+  tag: classFeat_inspiredAssault
+type: feat
 

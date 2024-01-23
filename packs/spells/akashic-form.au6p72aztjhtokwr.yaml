@@ -1,8 +1,28 @@
 _id: au6p72aztjhtokwr
-name: Akashic Form
-type: spell
+_key: '!items!au6p72aztjhtokwr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Akashic Form
 system:
+  actions:
+    - _id: 5yhm8cf68k59mzum
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: 24 hours
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: 'no'
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a perfect record of your physical body in the Akashic Record
@@ -30,31 +50,11 @@ system:
       of old age. Casting this spell again replaces any previous version you
       cast; you can't store more than one copy of yourself in the Akashic
       Record.</p>
-  actions:
-    - _id: 5yhm8cf68k59mzum
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: 24 hours
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        description: 'no'
   learnedAt:
     class:
       psychic: 9
   level: 9
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!au6p72aztjhtokwr'
+type: spell
 

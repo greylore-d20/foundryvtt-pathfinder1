@@ -1,16 +1,11 @@
 _id: q986nbkaq8kwbcy2
-name: Crime of Opportunity
-type: spell
+_key: '!items!q986nbkaq8kwbcy2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Crime of Opportunity
 system:
-  description:
-    value: >-
-      <p>You awaken a sudden criminal impulse in the target, compelling it to
-      commit a criminal act as if affected by the <i>crime wave</i> spell.</p>
   actions:
     - _id: bpm0zr48nth0g5nc
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,26 +13,31 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You awaken a sudden criminal impulse in the target, compelling it to
+      commit a criminal act as if affected by the <i>crime wave</i> spell.</p>
   learnedAt:
     class:
       antipaladin: 1
       mesmerist: 1
+  materials:
+    value: a slit purse
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a slit purse
-_key: '!items!q986nbkaq8kwbcy2'
+type: spell
 

@@ -1,8 +1,20 @@
 _id: B88ezy1DOXZ03vam
-name: Sudden Sting
-type: feat
+_key: '!items!B88ezy1DOXZ03vam'
 img: systems/pf1/icons/skills/green_23.jpg
+name: Sudden Sting
 system:
+  abilityType: sp
+  actions:
+    - _id: y0p62rrhjjqcsv2w
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/green_23.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 9th level, when you are able to act in the <em>surprise</em> round,
@@ -11,22 +23,10 @@ system:
       @Compendium[pf1.spells.3fkwj6d8s65ufwar]{Accelerate Poison} and
       @Compendium[pf1.spells.l7e01shgg8c44zfg]{Delay Poison} as <em>spell-like
       abilities</em> a total of three times per day.</p>
-  actions:
-    - _id: y0p62rrhjjqcsv2w
-      name: Use
-      img: systems/pf1/icons/skills/green_23.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: '3'
-  tag: classFeat_suddenSting
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!B88ezy1DOXZ03vam'
+  tag: classFeat_suddenSting
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

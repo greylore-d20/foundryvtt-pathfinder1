@@ -1,49 +1,49 @@
 _id: cyzbticmitktat5v
-name: Bless Water
-type: spell
+_key: '!items!cyzbticmitktat5v'
 img: icons/magic/holy/chalice-glowing-gold-water.webp
+name: Bless Water
 system:
-  description:
-    value: >-
-      <p>This transmutation imbues a flask (1 pint) of water with positive
-      energy, turning it into holy water.</p>
   actions:
     - _id: 6uldznxy2snp4frs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: minute
         unchained:
           type: minute
       duration:
         value: instantaneous
-      target:
-        value: flask of water touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
+        type: will
+      target:
+        value: flask of water touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This transmutation imbues a flask (1 pint) of water with positive
+      energy, turning it into holy water.</p>
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
+      inquisitor: 1
       oracle: 1
       paladin: 1
-      inquisitor: 1
+      warpriest: 1
     subDomain:
       Divine: 2
-  school: trs
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: 5 pounds of powdered silver worth 25 gp
     gpValue: 25
+    value: 5 pounds of powdered silver worth 25 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!cyzbticmitktat5v'
+  school: trs
+  types: good
+type: spell
 

@@ -1,8 +1,25 @@
 _id: dvQdP8QfrDA9Lxzk
-name: Fast Movement (BLO)
-type: feat
+_key: '!items!dvQdP8QfrDA9Lxzk'
 img: systems/pf1/icons/skills/armor_01.jpg
+name: Fast Movement (BLO)
 system:
+  abilityType: ex
+  actions:
+    - _id: ofe4scc82bky5gjk
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/armor_01.jpg
+      name: Use
+  associations:
+    classes:
+      - Bloodrager
+  changes:
+    - _id: 8e1bsiz2
+      formula: '@armor.type <= 2 && @attributes.encumbrance.level < 2 ? 10 : 0'
+      modifier: base
+      subTarget: landSpeed
   description:
     value: >-
       <p>A bloodrager’s land speed is faster than is normal for his race by 10
@@ -11,24 +28,7 @@ system:
       load. Apply this bonus before modifying the bloodrager’s speed due to any
       armor worn or load carried. This bonus stacks with any other bonuses to
       the bloodrager’s land speed.</p>
-  actions:
-    - _id: ofe4scc82bky5gjk
-      name: Use
-      img: systems/pf1/icons/skills/armor_01.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 8e1bsiz2
-      formula: '@armor.type <= 2 && @attributes.encumbrance.level < 2 ? 10 : 0'
-      subTarget: landSpeed
-      modifier: base
-  tag: classFeat_fastMovementBlo
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: ex
-_key: '!items!dvQdP8QfrDA9Lxzk'
+  tag: classFeat_fastMovementBlo
+type: feat
 

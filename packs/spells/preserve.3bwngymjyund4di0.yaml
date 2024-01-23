@@ -1,8 +1,32 @@
 _id: 3bwngymjyund4di0
-name: Preserve
-type: spell
+_key: '!items!3bwngymjyund4di0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Preserve
 system:
+  actions:
+    - _id: slo3xlmvbpkzq31t
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 week
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one or more objects touched, up to 1 lb./level
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You imbue one or more objects with magic that dramatically slows down
@@ -17,47 +41,23 @@ system:
       the creature or part does not exceed the spell's limit. <i>Preserve</i>
       can be made permanent with a <i>permanency</i> spell by a caster of 9th
       level or higher for 500 gp.</p>
-  actions:
-    - _id: slo3xlmvbpkzq31t
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 week
-      target:
-        value: one or more objects touched, up to 1 lb./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      ranger: 1
-      witch: 1
       adept: 1
-      shaman: 1
+      cleric: 1
+      hunter: 1
       medium: 1
       occultist: 1
+      oracle: 1
+      ranger: 1
+      shaman: 1
+      sorcerer: 1
       spiritualist: 1
-      hunter: 1
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a pinch of salt
-_key: '!items!3bwngymjyund4di0'
+  school: nec
+type: spell
 

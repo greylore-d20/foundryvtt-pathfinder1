@@ -1,8 +1,17 @@
 _id: axEpMHL2UesfGucF
-name: Adaptive Strike
-type: feat
+_key: '!items!axEpMHL2UesfGucF'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Adaptive Strike
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Cavalier
+  changes:
+    - _id: qV8AqHCm
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 2nd level, the cavalier receives
@@ -10,20 +19,11 @@ system:
       As a swift action, he can cause an armed opponent to become flat-footed
       against any attacks he makes during that round with an improvised weapon.
       This ability can be used once per combat.</p>
-  changes:
-    - _id: qV8AqHCm
-      formula: '1'
-      subTarget: bonusFeats
-      modifier: untyped
   links:
     supplements:
       - name: Catch Off-Guard
         uuid: Compendium.pf1.feats.Item.bZ1YdzkT8NtRIEJ4
-  tag: classFeat_adaptiveStrike
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: ex
-_key: '!items!axEpMHL2UesfGucF'
+  tag: classFeat_adaptiveStrike
+type: feat
 

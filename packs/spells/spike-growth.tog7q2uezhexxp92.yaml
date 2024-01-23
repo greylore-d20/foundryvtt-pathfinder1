@@ -1,8 +1,30 @@
 _id: tog7q2uezhexxp92
-name: Spike Growth
-type: spell
+_key: '!items!tog7q2uezhexxp92'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Spike Growth
 system:
+  actions:
+    - _id: 5o58l5l9mklfzvy3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: one 20-ft. square/level
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex partial
+        type: ref
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Any ground-covering vegetation in the spell's area becomes very hard
@@ -23,37 +45,15 @@ system:
       growth</i> (or DC 27 for <i>spike growth</i> cast by a
       ranger).</p><p><i>Spike growth</i> can't be disabled with the Disable
       Device skill.</p>
-  actions:
-    - _id: 5o58l5l9mklfzvy3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex partial
-      area: one 20-ft. square/level
   learnedAt:
     class:
       druid: 3
-      ranger: 2
       hunter: 2
+      ranger: 2
   level: 3
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   source:
     id: PZO1110
     pages: '347'
-_key: '!items!tog7q2uezhexxp92'
+type: spell
 

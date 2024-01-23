@@ -1,8 +1,31 @@
 _id: crq6etku9g9o2imx
-name: Devolution
-type: spell
+_key: '!items!crq6etku9g9o2imx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Devolution
 system:
+  actions:
+    - _id: b4pfif8kbg9y3n0v
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one eidolon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes an eidolon to lose one evolution plus one additional
@@ -11,39 +34,16 @@ system:
       If this spell causes an eidolon to fail to meet the prerequisites for
       other evolutions or abilities, those evolutions or abilities are lost as
       long as this spell persists.</p>
-  actions:
-    - _id: b4pfif8kbg9y3n0v
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one eidolon
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      summoner: 3
       psychic: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chameleon scale
-_key: '!items!crq6etku9g9o2imx'
+  school: trs
+type: spell
 

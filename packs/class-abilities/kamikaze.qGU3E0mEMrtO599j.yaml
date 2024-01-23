@@ -1,8 +1,26 @@
 _id: qGU3E0mEMrtO599j
-name: Kamikaze
-type: feat
+_key: '!items!qGU3E0mEMrtO599j'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Kamikaze
 system:
+  abilityType: su
+  actions:
+    - _id: 2729kptvz4k16dje
+      activation:
+        type: free
+        unchained:
+          type: free
+      ammoType: none
+      duration:
+        units: round
+        value: '@class.level'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
+  associations:
+    classes:
+      - Ninja
+      - Rogue
+      - Rogue (Unchained)
   description:
     value: >-
       <p>A character with this ability strikes without concern for her own
@@ -10,28 +28,10 @@ system:
       unarmed strikes and any weapons she wields the vicious weapon special
       ability for 1 round per level.</p><p>The character can spend 1 ki point to
       dismiss this effect.</p>
+  subType: classFeat
+  tag: classFeat_kamikaze
   tags:
     - Ninja Trick
     - Rogue Talent
-  actions:
-    - _id: 2729kptvz4k16dje
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: '@class.level'
-        units: round
-      ammoType: none
-  tag: classFeat_kamikaze
-  subType: classFeat
-  associations:
-    classes:
-      - Ninja
-      - Rogue
-      - Rogue (Unchained)
-  abilityType: su
-_key: '!items!qGU3E0mEMrtO599j'
+type: feat
 

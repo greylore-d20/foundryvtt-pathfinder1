@@ -1,8 +1,37 @@
 _id: aabyB4FV9OH7hcYZ
-name: Touch of Corruption
-type: feat
+_key: '!items!aabyB4FV9OH7hcYZ'
 img: systems/pf1/icons/skills/green_15.jpg
+name: Touch of Corruption
 system:
+  abilityType: su
+  actions:
+    - _id: 0dtnw9yjzmhqmp97
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.antipaladin.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_15.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Antipaladin
   description:
     value: >-
       <p>Beginning at 2nd level, an antipaladin surrounds his hand with a
@@ -17,39 +46,10 @@ system:
       effect that specifically works with the lay on hands paladin class
       feature. For example, the Extra Lay On Hands feat grants an antipaladin 2
       additional uses of the touch of corruption class feature.</p>
-  actions:
-    - _id: 0dtnw9yjzmhqmp97
-      name: Use
-      img: systems/pf1/icons/skills/green_15.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: msak
-      damage:
-        parts:
-          - formula: (floor(@classes.antipaladin.level / 2))d6
-            type:
-              values:
-                - negative
-              custom: ''
-      ability:
-        attack: str
-  uses:
-    per: day
-    maxFormula: floor(@classes.antipaladin.level / 2) + @abilities.cha.mod
-  tag: classFeat_touchOfCorruption
   subType: classFeat
-  associations:
-    classes:
-      - Antipaladin
-  abilityType: su
-_key: '!items!aabyB4FV9OH7hcYZ'
+  tag: classFeat_touchOfCorruption
+  uses:
+    maxFormula: floor(@classes.antipaladin.level / 2) + @abilities.cha.mod
+    per: day
+type: feat
 

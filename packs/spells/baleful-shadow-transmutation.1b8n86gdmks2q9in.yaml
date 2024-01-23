@@ -1,8 +1,30 @@
 _id: 1b8n86gdmks2q9in
-name: Baleful Shadow Transmutation
-type: spell
+_key: '!items!1b8n86gdmks2q9in'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Baleful Shadow Transmutation
 system:
+  actions:
+    - _id: ugx120q0jexyv0cm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will disbelief, then Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You infuse a target's shadow with energies from the Shadow Plane,
@@ -33,44 +55,22 @@ system:
       are immune to <i>baleful shadow transmutation</i>, and a creature with the
       shapechanger subtype can revert to its natural form as a standard
       action.</p>
-  actions:
-    - _id: ugx120q0jexyv0cm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will disbelief, then Fortitude negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      druid: 7
-      bard: 6
       alchemist: 6
-      summoner: 6
-      witch: 6
-      shaman: 6
+      bard: 6
+      druid: 7
       medium: 6
+      shaman: 6
+      sorcerer: 6
       spiritualist: 6
+      summoner: 6
       summonerUnchained: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!1b8n86gdmks2q9in'
+type: spell
 

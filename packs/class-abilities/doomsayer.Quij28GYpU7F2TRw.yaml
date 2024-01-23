@@ -1,8 +1,28 @@
 _id: Quij28GYpU7F2TRw
-name: Doomsayer
-type: feat
+_key: '!items!Quij28GYpU7F2TRw'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Doomsayer
 system:
+  abilityType: su
+  actions:
+    - _id: j0behmi45gsahhl3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can utter a dire prophecy that strikes fear
@@ -18,27 +38,7 @@ system:
       instead.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: j0behmi45gsahhl3
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_doomsayer
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!Quij28GYpU7F2TRw'
+  tag: classFeat_doomsayer
+type: feat
 

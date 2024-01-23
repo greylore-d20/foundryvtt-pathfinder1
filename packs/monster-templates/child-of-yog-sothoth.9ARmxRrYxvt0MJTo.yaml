@@ -1,8 +1,38 @@
 _id: 9ARmxRrYxvt0MJTo
-name: Child of Yog-Sothoth
-type: feat
+_key: '!items!9ARmxRrYxvt0MJTo'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Child of Yog-Sothoth
 system:
+  changes:
+    - _id: wuhaiy8c
+      formula: floor(@attributes.hd.total / 2)
+      modifier: base
+      subTarget: nac
+    - _id: 5qn1qhdl
+      formula: '2'
+      modifier: untyped
+      subTarget: str
+    - _id: e4qjyr2p
+      formula: '4'
+      modifier: untyped
+      subTarget: con
+    - _id: muo1i3vo
+      formula: '4'
+      modifier: untyped
+      subTarget: int
+    - _id: nz4dqfmu
+      formula: '-2'
+      modifier: untyped
+      subTarget: cha
+    - _id: 769tyzqm
+      formula: '4'
+      modifier: untyped
+      subTarget: skill.kar
+    - _id: 6e5dr8pv
+      formula: '4'
+      modifier: untyped
+      subTarget: skill.spl
+  crOffset: '1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Inherited<br><b>Simple Template</b>
@@ -96,36 +126,6 @@ system:
       Spellcraft are class skills for a child of Yog-Sothoth; a child of
       Yog-Sothoth gains a +4 racial bonus on Knowledge (arcana) and Spellcraft
       checks.</p>
-  changes:
-    - _id: wuhaiy8c
-      formula: floor(@attributes.hd.total / 2)
-      subTarget: nac
-      modifier: base
-    - _id: 5qn1qhdl
-      formula: '2'
-      subTarget: str
-      modifier: untyped
-    - _id: e4qjyr2p
-      formula: '4'
-      subTarget: con
-      modifier: untyped
-    - _id: muo1i3vo
-      formula: '4'
-      subTarget: int
-      modifier: untyped
-    - _id: nz4dqfmu
-      formula: '-2'
-      subTarget: cha
-      modifier: untyped
-    - _id: 769tyzqm
-      formula: '4'
-      subTarget: skill.kar
-      modifier: untyped
-    - _id: 6e5dr8pv
-      formula: '4'
-      subTarget: skill.spl
-      modifier: untyped
   subType: template
-  crOffset: '1'
-_key: '!items!9ARmxRrYxvt0MJTo'
+type: feat
 

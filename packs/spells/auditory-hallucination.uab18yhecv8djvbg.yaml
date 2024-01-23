@@ -1,8 +1,32 @@
 _id: uab18yhecv8djvbg
-name: Auditory Hallucination
-type: spell
+_key: '!items!uab18yhecv8djvbg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Auditory Hallucination
 system:
+  actions:
+    - _id: evx88up6gdq26fdb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will disbelief
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
   description:
     value: >-
       <p>You cause the targets to believe they hear any sound you imagine. The
@@ -14,42 +38,18 @@ system:
       even if the chieftain speaks in a language you don't understand. All
       targets hear the same hallucination. You can change the sound as part of
       concentrating on the spell.</p>
-  actions:
-    - _id: evx88up6gdq26fdb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
       magus: 1
-      psychic: 1
       medium: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      wizard: 1
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    somatic: true
-_key: '!items!uab18yhecv8djvbg'
+type: spell
 

@@ -1,8 +1,38 @@
 _id: eb1hp9kwcz8r8btk
-name: Invisibility Bubble, Mass
-type: spell
+_key: '!items!eb1hp9kwcz8r8btk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invisibility Bubble, Mass
 system:
+  actions:
+    - _id: nq6m4p8r7a8x13gv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation centered on the touched creature's space
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '90'
+        type: circle
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          any number of creatures, no two of which can be more than 180 ft.
+          apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This functions as per <i>invisibility bubble</i>, but the spell affects
@@ -14,48 +44,18 @@ system:
       away from the other one loses its invisibility. If both are moving away
       from each other simultaneously, they both become visible when the distance
       between them exceeds 180 feet.</p>
-  actions:
-    - _id: nq6m4p8r7a8x13gv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: >-
-          any number of creatures, no two of which can be more than 180 ft.
-          apart
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '90'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: 10-ft.-radius emanation centered on the touched creature's space
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      summoner: 6
-      psychic: 7
       mesmerist: 6
+      psychic: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      wizard: 7
   level: 7
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a needle from a sea urchin
-_key: '!items!eb1hp9kwcz8r8btk'
+  school: ill
+  subschool: glamer
+type: spell
 

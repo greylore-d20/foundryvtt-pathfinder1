@@ -1,8 +1,30 @@
 _id: od89dpg76ubvbkyh
-name: Sympathetic Aura
-type: spell
+_key: '!items!od89dpg76ubvbkyh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sympathetic Aura
 system:
+  actions:
+    - _id: y58quw1zc5k5b829
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none (see text)
+      target:
+        value: one touched object weighing up to 5 lbs./level
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>magic aura</i>, except it extends its
@@ -13,43 +35,21 @@ system:
       elixirs, and oils, as well as flasks. Items other than the targeted item
       retain their altered aura for 1 round per caster level after being removed
       from the spell's area.</p>
-  actions:
-    - _id: y58quw1zc5k5b829
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: one touched object weighing up to 5 lbs./level
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none (see text)
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      psychic: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: >-
       a small square of silk that must be passed over the object that receives
       the aura
+  school: ill
   sr: false
-_key: '!items!od89dpg76ubvbkyh'
+  subschool: glamer
+type: spell
 

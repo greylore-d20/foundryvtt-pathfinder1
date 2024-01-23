@@ -1,8 +1,33 @@
 _id: 1jvikwzrr06uwtzp
-name: Garden of Peril
-type: spell
+_key: '!items!1jvikwzrr06uwtzp'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Garden of Peril
 system:
+  actions:
+    - _id: g7o0jun77tkxwedb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Fortitude negates
+        type: fort
+      spellEffect: >-
+        one poisonous mushroom/level, no two of which can be more than 30 ft.
+        apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Vividly colored poisonous mushrooms instantly spring into existence in
@@ -18,47 +43,22 @@ system:
       but they are fairly sturdy (AC 7, hp 30, break DC 20). Creatures can  move
       through squares containing mushrooms as normal. When destroyed, a mushroom
       evaporates and releases one last cloud of spores.</p>
-  actions:
-    - _id: g7o0jun77tkxwedb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-      spellEffect: >-
-        one poisonous mushroom/level, no two of which can be more than 30 ft.
-        apart
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       druid: 2
-      ranger: 2
-      summoner: 2
-      witch: 2
       hunter: 2
+      ranger: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: con
-  subschool: creation
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pinch of spores
+  school: con
   sr: false
-_key: '!items!1jvikwzrr06uwtzp'
+  subschool: creation
+  types: poison
+type: spell
 

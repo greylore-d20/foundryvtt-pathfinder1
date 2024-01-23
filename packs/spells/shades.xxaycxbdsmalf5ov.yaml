@@ -1,18 +1,11 @@
 _id: xxaycxbdsmalf5ov
-name: Shades
-type: spell
+_key: '!items!xxaycxbdsmalf5ov'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shades
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>shadow conjuration,</i> except that it
-      mimics conjuration spells of 8th level or lower. The illusory conjurations
-      created deal four-fifths (80%) damage to nonbelievers, and nondamaging
-      effects are 80% likely to work against nonbelievers.</p>
   actions:
     - _id: qox1e6eztjhpp3vy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,30 +13,37 @@ system:
           type: action
       duration:
         value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: seeText
-      actionType: spellsave
       save:
-        type: will
         description: Will disbelief (if interacted with); varies; see text
+        type: will
       spellEffect: see text
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>shadow conjuration,</i> except that it
+      mimics conjuration spells of 8th level or lower. The illusory conjurations
+      created deal four-fifths (80%) damage to nonbelievers, and nondamaging
+      effects are 80% likely to work against nonbelievers.</p>
   learnedAt:
+    bloodline:
+      Shadow: 9
     class:
       sorcerer: 9
       wizard: 9
     domain:
       Darkness: 9
-    bloodline:
-      Shadow: 9
   level: 9
   school: ill
-  subschool: shadow
-  types: shadow
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '340'
-_key: '!items!xxaycxbdsmalf5ov'
+  subschool: shadow
+  types: shadow
+type: spell
 

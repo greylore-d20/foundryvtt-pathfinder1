@@ -1,8 +1,31 @@
 _id: 34hsni5inji07r01
-name: Crusader's Edge
-type: spell
+_key: '!items!34hsni5inji07r01'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Crusader's Edge
 system:
+  actions:
+    - _id: v5gdufyetukgafxa
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: melee weapon touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell was created by the paladins of the Mendevian Crusades, and
@@ -15,41 +38,18 @@ system:
       critical damage with the weapon but also nauseate the outsider for 1d3
       rounds-the outsider can reduce this nauseated condition to sickened for 1
       round with a successful Fortitude save.</p>
-  actions:
-    - _id: v5gdufyetukgafxa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: melee weapon touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
+      inquisitor: 4
       oracle: 4
       paladin: 4
-      inquisitor: 4
+      warpriest: 4
   level: 4
-  school: trs
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: dried blood from an evil outsider, sprinkled on the weapon
+  school: trs
   sr: false
-_key: '!items!34hsni5inji07r01'
+  types: good
+type: spell
 

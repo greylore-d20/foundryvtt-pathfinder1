@@ -1,8 +1,32 @@
 _id: awia42zci8nufpfl
-name: Nondetection
-type: spell
+_key: '!items!awia42zci8nufpfl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nondetection
 system:
+  actions:
+    - _id: wbwila0abb7j7jh0
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: creature or object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The warded creature or object becomes difficult to <i>detect</i> by
@@ -16,57 +40,33 @@ system:
       item currently in your possession, the DC is 15 + your caster
       level.</p><p>If cast on a creature, <i>nondetection</i> wards the
       creature's gear as well as the creature itself.</p>
-  actions:
-    - _id: wbwila0abb7j7jh0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: creature or object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      ranger: 4
       alchemist: 3
-      summoner: 3
-      inquisitor: 3
       antipaladin: 3
-      psychic: 3
+      hunter: 4
+      inquisitor: 3
       medium: 2
       mesmerist: 3
       occultist: 3
+      psychic: 3
+      ranger: 4
+      sorcerer: 3
       spiritualist: 3
-      hunter: 4
+      summoner: 3
       summonerUnchained: 3
+      wizard: 3
     domain:
       Trickery: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: diamond dust worth 50 gp
     gpValue: 50
+    value: diamond dust worth 50 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   source:
     id: PZO1110
     pages: '317'
-_key: '!items!awia42zci8nufpfl'
+type: spell
 

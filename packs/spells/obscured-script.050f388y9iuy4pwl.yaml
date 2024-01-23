@@ -1,8 +1,32 @@
 _id: 050f388y9iuy4pwl
-name: Obscured Script
-type: spell
+_key: '!items!050f388y9iuy4pwl'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Obscured Script
 system:
+  actions:
+    - _id: h9hkdwcaji728si4
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 24 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: >-
+          one touched page, scroll, inscription, book, or other document no more
+          than 3 feet in any dimension
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a latent illusion that clouds the judgment and reading
@@ -20,45 +44,21 @@ system:
       find such traps by an amount equal to half your caster level (maximum +5).
       <i>Obscured script</i> can be made permanent with a <i>permanency</i>
       spell by a caster of 10th level or higher for the cost of 5,000 gp.</p>
-  actions:
-    - _id: h9hkdwcaji728si4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 24 hours (D)
-      target:
-        value: >-
-          one touched page, scroll, inscription, book, or other document no more
-          than 3 feet in any dimension
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none; see text
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      psychic: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: ill
-  subschool: phantasm
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       a scrap of paper bearing a simple sentence written in at least five
       languages
+  school: ill
   sr: false
-_key: '!items!050f388y9iuy4pwl'
+  subschool: phantasm
+type: spell
 

@@ -1,8 +1,27 @@
 _id: spmmt3l9ch7t3zfj
-name: Tiny Hut
-type: spell
+_key: '!items!spmmt3l9ch7t3zfj'
 img: icons/environment/settlement/hut.webp
+name: Tiny Hut
 system:
+  actions:
+    - _id: bsw319zvzfuqnmwd
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 2 hours/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      spellEffect: 20-ft.-radius sphere centered on your location
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create an unmoving, opaque sphere of force of any color you desire
@@ -22,36 +41,17 @@ system:
       transparent from within. Missiles, weapons, and most spell effects can
       pass through the hut without affecting it, although the occupants cannot
       be seen from outside the hut (they have total concealment).</p>
-  actions:
-    - _id: bsw319zvzfuqnmwd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 2 hours/level
-      range:
-        value: '20'
-        units: ft
-      spellEffect: 20-ft.-radius sphere centered on your location
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 3
       occultist: 3
+      sorcerer: 3
+      wizard: 3
   level: 3
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small crystal bead
+  school: evo
   sr: false
-_key: '!items!spmmt3l9ch7t3zfj'
+  types: force
+type: spell
 

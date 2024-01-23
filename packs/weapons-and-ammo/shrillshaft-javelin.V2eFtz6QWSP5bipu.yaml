@@ -1,8 +1,38 @@
 _id: V2eFtz6QWSP5bipu
-name: Shrillshaft Javelin
-type: weapon
+_key: '!items!V2eFtz6QWSP5bipu'
 img: systems/pf1/icons/items/weapons/javelin.PNG
+name: Shrillshaft Javelin
 system:
+  actions:
+    - _id: begtov9g65wwlxfo
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/javelin.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '30'
+  baseTypes:
+    - Shrillshaft Javelin
   description:
     value: >-
       <p>This single-use javelin bears a thunderstone in its haft, just behind
@@ -11,61 +41,31 @@ system:
       If you miss, roll to see where the javelin lands (as if determining a miss
       with a splash weapon); that square becomes the center of the
       thunderstone's effect.</p>
-  tags:
-    - PFS
-  weight:
-    value: 3
-  price: 35
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: begtov9g65wwlxfo
-      name: Throw
-      img: systems/pf1/icons/items/weapons/javelin.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Shrillshaft Javelin
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: exotic
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 35
   properties:
     spc: true
   source:
     id: PZO9411
     pages: '22'
-_key: '!items!V2eFtz6QWSP5bipu'
+  subType: exotic
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 3
+type: weapon
 

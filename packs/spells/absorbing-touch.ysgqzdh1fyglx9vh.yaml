@@ -1,8 +1,29 @@
 _id: ysgqzdh1fyglx9vh
-name: Absorbing Touch
-type: spell
+_key: '!items!ysgqzdh1fyglx9vh'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Absorbing Touch
 system:
+  actions:
+    - _id: 09x5rdcg6gcgedpv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: object touched
+  components:
+    somatic: true
   description:
     value: >-
       <p>You absorb the next object your hand touches into your body. If you are
@@ -18,32 +39,11 @@ system:
       hand that absorbed it, or falls to the ground if that hand is full.
       Multiple castings let you absorb additional items, but you can only store
       a single item per hand.</p>
-  actions:
-    - _id: 09x5rdcg6gcgedpv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
       alchemist: 3
   level: 3
   school: trs
-  components:
-    somatic: true
   sr: false
-_key: '!items!ysgqzdh1fyglx9vh'
+type: spell
 

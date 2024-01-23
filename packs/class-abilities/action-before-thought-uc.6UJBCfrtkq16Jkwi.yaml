@@ -1,8 +1,22 @@
 _id: 6UJBCfrtkq16Jkwi
-name: Action Before Thought (UC)
-type: feat
+_key: '!items!6UJBCfrtkq16Jkwi'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: Action Before Thought (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: c4p7zhztgzoqtqux
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>A monk with this ability can spend 2 ki points as a free action as part
@@ -10,21 +24,7 @@ system:
       higher result.</p>
 
       <p>A monk must be at least 6th level before selecting this ki power.</p>
-  actions:
-    - _id: c4p7zhztgzoqtqux
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      uses:
-        autoDeductChargesCost: '2'
-  tag: classFeat_actionBeforeThoughtUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!6UJBCfrtkq16Jkwi'
+  tag: classFeat_actionBeforeThoughtUc
+type: feat
 

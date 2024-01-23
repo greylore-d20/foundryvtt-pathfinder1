@@ -1,37 +1,37 @@
 _id: 8kqajvwnbv9psq1h
-name: Instant Enemy
-type: spell
+_key: '!items!8kqajvwnbv9psq1h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instant Enemy
 system:
-  description:
-    value: >-
-      <p>With this spell you designate the target as your favored enemy for the
-      remainder of its duration. Select one of your favored enemy types. For the
-      duration of the spell, you treat the target as if it were that type of
-      favored enemy for all purposes.</p>
   actions:
     - _id: u0dd6e8icamquuy9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 minute/level
-      target:
-        value: one creature that is not your favored enemy.
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
+      target:
+        value: one creature that is not your favored enemy.
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>With this spell you designate the target as your favored enemy for the
+      remainder of its duration. Select one of your favored enemy types. For the
+      duration of the spell, you treat the target as if it were that type of
+      favored enemy for all purposes.</p>
   learnedAt:
     class:
-      ranger: 3
       hunter: 3
+      ranger: 3
   level: 3
   school: enc
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!8kqajvwnbv9psq1h'
+type: spell
 

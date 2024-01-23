@@ -1,8 +1,36 @@
 _id: NpZbdMOBzmmIFRNx
-name: Acidic Ray
-type: feat
+_key: '!items!NpZbdMOBzmmIFRNx'
 img: systems/pf1/icons/spells/beam-acid-1.jpg
+name: Acidic Ray
 system:
+  abilityType: sp
+  actions:
+    - _id: lgiagu5ni7fdgyoc
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6 + (floor(@classes.sorcerer.level / 2))
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/beam-acid-1.jpg
+      name: Use
+      range:
+        units: spec
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>Starting at 1st level, you can fire an acidic ray as a standard action,
@@ -10,41 +38,13 @@ system:
       deals 1d6 points of acid damage + 1 for every two sorcerer levels you
       possess. You can use this ability a number of times per day equal to 3 +
       your <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: lgiagu5ni7fdgyoc
-      name: Use
-      img: systems/pf1/icons/spells/beam-acid-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: spec
-      actionType: rsak
-      damage:
-        parts:
-          - formula: 1d6 + (floor(@classes.sorcerer.level / 2))
-            type:
-              values:
-                - acid
-              custom: ''
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_acidicRay
-  subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
   source:
     id: PZO1110
     pages: '72'
-_key: '!items!NpZbdMOBzmmIFRNx'
+  subType: classFeat
+  tag: classFeat_acidicRay
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

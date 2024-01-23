@@ -1,8 +1,30 @@
 _id: 7yf67b7y4byj96w7
-name: Control Water
-type: spell
+_key: '!items!7yf67b7y4byj96w7'
 img: icons/magic/water/wave-water-teal.webp
+name: Control Water
 system:
+  actions:
+    - _id: 4wakq22f99qc004u
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: water in a volume of 10 ft./level by 10 ft./level by 2 ft./level
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: none; see text
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell has two different applications, both of which control water
@@ -27,50 +49,28 @@ system:
       land.</p><p>With either version of this spell, you may reduce one
       horizontal dimension by half and double the other horizontal dimension to
       change the overall area of effect.</p>
-  actions:
-    - _id: 4wakq22f99qc004u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        description: none; see text
-      area: water in a volume of 10 ft./level by 10 ft./level by 2 ft./level
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
-      shaman: 4
-      hunter: 4
-    domain:
-      Water: 4
     bloodline:
       Aquatic: 5
+    class:
+      cleric: 4
+      druid: 4
+      hunter: 4
+      oracle: 4
+      shaman: 4
+      sorcerer: 6
+      warpriest: 4
+      wizard: 6
+    domain:
+      Water: 4
   level: 6
-  school: trs
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a pinch of dust for lower water or a drop of water for raise water
-  sr: false
+  school: trs
   source:
     id: PZO1110
     pages: '260'
-_key: '!items!7yf67b7y4byj96w7'
+  sr: false
+  types: water
+type: spell
 

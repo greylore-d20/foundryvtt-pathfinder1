@@ -1,8 +1,26 @@
 _id: ip70uslfhmjl0vo0
-name: Mage's Crawl Space
-type: spell
+_key: '!items!ip70uslfhmjl0vo0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mage's Crawl Space
 system:
+  actions:
+    - _id: 7py334s5kig1hdxf
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      spellEffect: 5-foot sphere centered on yourself
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, you merge with an adjacent natural stone
@@ -13,34 +31,16 @@ system:
       one additional Tiny or smaller creature, such as a familiar. At the end of
       the spell's duration, you are immediately expelled into the nearest
       available open space adjacent to the surface you merged with.</p>
-  actions:
-    - _id: 7py334s5kig1hdxf
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      range:
-        units: personal
-      spellEffect: 5-foot sphere centered on yourself
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
       shaman: 2
+      sorcerer: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of clay
+  school: trs
   sr: false
-_key: '!items!ip70uslfhmjl0vo0'
+type: spell
 

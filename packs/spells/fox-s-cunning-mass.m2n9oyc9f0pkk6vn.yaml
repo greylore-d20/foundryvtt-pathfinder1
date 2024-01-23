@@ -1,16 +1,11 @@
 _id: m2n9oyc9f0pkk6vn
-name: Fox's Cunning, Mass
-type: spell
+_key: '!items!m2n9oyc9f0pkk6vn'
 img: icons/creatures/magical/humanoid-silhouette-dashing-blue.webp
+name: Fox's Cunning, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like fox's cunning, except that it affects
-      multiple creatures.</p>
   actions:
     - _id: 3ct3jmcgc2ofd4i0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,34 +13,39 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like fox's cunning, except that it affects
+      multiple creatures.</p>
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 6
-      summoner: 4
       psychic: 6
+      sorcerer: 6
+      summoner: 4
       summonerUnchained: 6
+      wizard: 6
   level: 6
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: hairs or dung from a fox
-_key: '!items!m2n9oyc9f0pkk6vn'
+  school: trs
+type: spell
 

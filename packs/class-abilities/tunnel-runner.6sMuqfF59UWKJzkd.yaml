@@ -1,8 +1,28 @@
 _id: 6sMuqfF59UWKJzkd
-name: Tunnel Runner
-type: feat
+_key: '!items!6sMuqfF59UWKJzkd'
 img: systems/pf1/icons/skills/yellow_26.jpg
+name: Tunnel Runner
 system:
+  abilityType: su
+  actions:
+    - _id: urvrym7y6skdcb5g
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/yellow_26.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can move through tunnels and caves with ease.
@@ -17,30 +37,10 @@ system:
       they must be spent in 1-minute increments.</p>
 
       <p>This power replaces the Acid Resistance power of the Earth Domain.</p>
-  actions:
-    - _id: urvrym7y6skdcb5g
-      name: Use
-      img: systems/pf1/icons/skills/yellow_26.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.cleric.level'
-  tag: classFeat_tunnelRunner
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!6sMuqfF59UWKJzkd'
+  tag: classFeat_tunnelRunner
+  uses:
+    maxFormula: '@classes.cleric.level'
+    per: day
+type: feat
 

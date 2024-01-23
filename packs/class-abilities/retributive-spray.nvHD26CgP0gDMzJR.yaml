@@ -1,8 +1,36 @@
 _id: nvHD26CgP0gDMzJR
-name: Retributive Spray
-type: feat
+_key: '!items!nvHD26CgP0gDMzJR'
 img: systems/pf1/icons/skills/red_05.jpg
+name: Retributive Spray
 system:
+  abilityType: su
+  actions:
+    - _id: kbnm8jtuaazp9a5p
+      actionType: save
+      activation:
+        type: special
+        unchained:
+          type: special
+      damage:
+        parts:
+          - formula: 1d8 + floor(@classes.bloodrager.level / 2)
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/red_05.jpg
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: Reflex half
+        type: ref
+  associations:
+    classes:
+      - Bloodrager
   description:
     value: >-
       <p>At 12th level, whenever you’re hit by an attack or spell that deals
@@ -12,35 +40,7 @@ system:
       every 2 bloodrager levels you possess. A successful Reflex save (DC = 10 +
       1/2 your bloodrager level + your Constitution modifier) halves the
       damage.</p>
-  actions:
-    - _id: kbnm8jtuaazp9a5p
-      name: Use
-      img: systems/pf1/icons/skills/red_05.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-      actionType: save
-      damage:
-        parts:
-          - formula: 1d8 + floor(@classes.bloodrager.level / 2)
-            type:
-              values:
-                - cold
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half
-  tag: classFeat_retributiveSpray
   subType: classFeat
-  associations:
-    classes:
-      - Bloodrager
-  abilityType: su
-_key: '!items!nvHD26CgP0gDMzJR'
+  tag: classFeat_retributiveSpray
+type: feat
 

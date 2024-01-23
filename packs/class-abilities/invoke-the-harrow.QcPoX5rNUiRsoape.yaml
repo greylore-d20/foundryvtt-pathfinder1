@@ -1,8 +1,25 @@
 _id: QcPoX5rNUiRsoape
-name: Invoke the Harrow
-type: feat
+_key: '!items!QcPoX5rNUiRsoape'
 img: systems/pf1/icons/skills/emerald_11.jpg
+name: Invoke the Harrow
 system:
+  abilityType: su
+  actions:
+    - _id: if20n11mbmsq9hwp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/emerald_11.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
   description:
     value: >-
       <p>At 9th level, you can draw a random harrow card from a complete harrow
@@ -12,27 +29,10 @@ system:
       with the card’s suit. You can invoke the harrow for a number of minutes
       per day equal to your <em>sorcerer</em> level; the duration need not be
       continuous, but it must be used in 1-minute increments.</p>
-  actions:
-    - _id: if20n11mbmsq9hwp
-      name: Use
-      img: systems/pf1/icons/skills/emerald_11.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.sorcerer.level'
-  tag: classFeat_invokeTheHarrow
   subType: classFeat
-  abilityType: su
-_key: '!items!QcPoX5rNUiRsoape'
+  tag: classFeat_invokeTheHarrow
+  uses:
+    maxFormula: '@classes.sorcerer.level'
+    per: day
+type: feat
 

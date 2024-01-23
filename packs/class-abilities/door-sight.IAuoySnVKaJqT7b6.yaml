@@ -1,8 +1,27 @@
 _id: IAuoySnVKaJqT7b6
-name: Door Sight
-type: feat
+_key: '!items!IAuoySnVKaJqT7b6'
 img: systems/pf1/icons/skills/emerald_11.jpg
+name: Door Sight
 system:
+  abilityType: su
+  actions:
+    - _id: i3zuxbbn7t3kwa81
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        units: minute
+        value: '10'
+      img: systems/pf1/icons/skills/emerald_11.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: surface touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can lay your hand upon any surface and see what is on the other
@@ -15,29 +34,10 @@ system:
       your Wisdom modifier.</p>
 
       <p>This power replaces the Agile Feet power of the Travel Domain.</p>
-  actions:
-    - _id: i3zuxbbn7t3kwa81
-      name: Use
-      img: systems/pf1/icons/skills/emerald_11.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: '10'
-        units: minute
-      target:
-        value: surface touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_doorSight
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!IAuoySnVKaJqT7b6'
+  tag: classFeat_doorSight
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

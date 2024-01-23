@@ -1,8 +1,42 @@
 _id: VWsM44QuzCrRDw65
-name: Shadow Animal
-type: feat
+_key: '!items!VWsM44QuzCrRDw65'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Shadow Animal
 system:
+  changes:
+    - _id: nxi7spwa
+      formula: '(@ac.natural.total > 0) ? -1 : 0'
+      modifier: untyped
+      subTarget: nac
+    - _id: ue6ocv11
+      formula: '10'
+      modifier: base
+      subTarget: allSpeeds
+    - _id: mllujmbk
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+    - _id: hxki93vt
+      formula: '2'
+      modifier: untyped
+      subTarget: int
+    - _id: ar65ur0o
+      formula: '2'
+      modifier: untyped
+      subTarget: wis
+    - _id: j0kisojx
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+    - _id: a5fn9oes
+      formula: '4'
+      modifier: racial
+      subTarget: skill.int
+    - _id: hefcltvz
+      formula: '4'
+      modifier: racial
+      subTarget: skill.ste
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Both<br><b>Simple Template</b>
@@ -98,40 +132,6 @@ system:
       Stealth, and Swim.<p><b>Languages:</b> Shadow animals gain Common and
       Infernal, but if the base creature is unable to speak, it can only
       understand these languages.</p>
-  changes:
-    - _id: nxi7spwa
-      formula: '(@ac.natural.total > 0) ? -1 : 0'
-      subTarget: nac
-      modifier: untyped
-    - _id: ue6ocv11
-      formula: '10'
-      subTarget: allSpeeds
-      modifier: base
-    - _id: mllujmbk
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
-    - _id: hxki93vt
-      formula: '2'
-      subTarget: int
-      modifier: untyped
-    - _id: ar65ur0o
-      formula: '2'
-      subTarget: wis
-      modifier: untyped
-    - _id: j0kisojx
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
-    - _id: a5fn9oes
-      formula: '4'
-      subTarget: skill.int
-      modifier: racial
-    - _id: hefcltvz
-      formula: '4'
-      subTarget: skill.ste
-      modifier: racial
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!VWsM44QuzCrRDw65'
+type: feat
 

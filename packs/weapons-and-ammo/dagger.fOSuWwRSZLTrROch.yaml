@@ -1,8 +1,71 @@
 _id: fOSuWwRSZLTrROch
-name: Dagger
-type: weapon
+_key: '!items!fOSuWwRSZLTrROch'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Dagger
 system:
+  actions:
+    - _id: 3d5k15aepyp5sclw
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Melee
+      range:
+        units: melee
+        value: '10'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: BKWFiAgRhYnG51Zr
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks: null
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+  baseTypes:
+    - Dagger
   description:
     value: >-
       <p>A dagger is a fighting knife. Its blade is usually less than 1 foot
@@ -10,95 +73,32 @@ system:
       vary widely, and can have many different names (such as a thrusting dagger
       being called a "dirk"). You get a +2 bonus on Sleight of Hand skill checks
       made to conceal a dagger on your body.</p>
-  tags:
-    - PFS
-  weight:
-    value: 1
-  price: 2
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: 3d5k15aepyp5sclw
-      name: Melee
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: melee
-      uses:
-        autoDeductChargesCost: '0'
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: str
-        damage: str
-        critRange: 19
-      ammoType: none
-    - _id: BKWFiAgRhYnG51Zr
-      name: Throw
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '10'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-                - slashing
-              custom: ''
-      formulaicAttacks: null
-      ability:
-        attack: dex
-        damage: str
-  uses:
-    per: single
-  baseTypes:
-    - Dagger
-  weaponGroups:
-    value:
-      - bladesLight
-      - thrown
-      - tribal
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
+    normal:
+      value: ''
+  price: 2
   properties:
     fin: true
   source:
     id: PZO1123
     pages: '17'
-_key: '!items!fOSuWwRSZLTrROch'
+  tags:
+    - PFS
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - bladesLight
+      - thrown
+      - tribal
+  weight:
+    value: 1
+type: weapon
 

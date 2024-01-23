@@ -1,8 +1,25 @@
 _id: 65i0wc0e6fq0evk5
-name: Detect Animals or Plants
-type: spell
+_key: '!items!65i0wc0e6fq0evk5'
 img: icons/magic/perception/eye-ringed-glow-angry-small-teal.webp
+name: Detect Animals or Plants
 system:
+  actions:
+    - _id: sr0wgb5bjkpifm18
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped emanation
+      duration:
+        value: concentration, up to 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can detect a particular kind of animal or plant in a cone emanating
@@ -28,31 +45,14 @@ system:
       kind of animal or plant in a new area. The spell can penetrate barriers,
       but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3
       feet of wood or dirt blocks it.</p>
-  actions:
-    - _id: sr0wgb5bjkpifm18
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration, up to 10 min./level
-      range:
-        units: long
-      area: cone-shaped emanation
   learnedAt:
     class:
       druid: 1
+      hunter: 1
+      psychic: 1
       ranger: 1
       shaman: 1
-      psychic: 1
-      hunter: 1
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!65i0wc0e6fq0evk5'
+type: spell
 

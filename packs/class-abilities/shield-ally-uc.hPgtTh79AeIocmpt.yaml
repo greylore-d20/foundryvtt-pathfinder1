@@ -1,8 +1,20 @@
 _id: hPgtTh79AeIocmpt
-name: Shield Ally (UC)
-type: feat
+_key: '!items!hPgtTh79AeIocmpt'
 img: systems/pf1/icons/spells/protect-blue-1.jpg
+name: Shield Ally (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: c41g74a1zwkwmf5o
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/protect-blue-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Summoner (Unchained)
   description:
     value: >-
       <p>At 4th level, whenever a summoner is within his eidolon's reach, the
@@ -14,19 +26,7 @@ system:
       @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.ZgsBPY0uVCVl6SGh]{stunned},
       or
       @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.kHwbZ38VHCa1wkUF]{unconscious}.</p>
-  actions:
-    - _id: c41g74a1zwkwmf5o
-      name: Use
-      img: systems/pf1/icons/spells/protect-blue-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_shieldAllyUc
   subType: classFeat
-  associations:
-    classes:
-      - Summoner (Unchained)
-  abilityType: ex
-_key: '!items!hPgtTh79AeIocmpt'
+  tag: classFeat_shieldAllyUc
+type: feat
 

@@ -1,8 +1,20 @@
 _id: sOwXPOtI5IlEBKwr
-name: Martial Flexibility
-type: feat
+_key: '!items!sOwXPOtI5IlEBKwr'
 img: systems/pf1/icons/skills/yellow_27.jpg
+name: Martial Flexibility
 system:
+  abilityType: ex
+  actions:
+    - _id: nh3affxtt0joew0s
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/skills/yellow_27.jpg
+      name: Use
+  associations:
+    classes:
+      - Brawler
   description:
     value: >-
       <p>A brawler can take a move action to gain the benefit of a combat feat
@@ -32,22 +44,10 @@ system:
       level, a brawler can use this ability to gain the benefit of any number of
       combat feats as a swift action. Each feat selected counts toward her daily
       uses of this ability.</p>
-  actions:
-    - _id: nh3affxtt0joew0s
-      name: Use
-      img: systems/pf1/icons/skills/yellow_27.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: 3 + floor(@classes.brawler.level / 2)
-  tag: classFeat_martialFlexibility
   subType: classFeat
-  associations:
-    classes:
-      - Brawler
-  abilityType: ex
-_key: '!items!sOwXPOtI5IlEBKwr'
+  tag: classFeat_martialFlexibility
+  uses:
+    maxFormula: 3 + floor(@classes.brawler.level / 2)
+    per: day
+type: feat
 

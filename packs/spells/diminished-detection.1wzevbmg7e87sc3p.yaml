@@ -1,8 +1,27 @@
 _id: 1wzevbmg7e87sc3p
-name: Diminished Detection
-type: spell
+_key: '!items!1wzevbmg7e87sc3p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Diminished Detection
 system:
+  actions:
+    - _id: x4rklqycams4bs39
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can avoid being <i>detect</i>ed when you are on the edges of some
@@ -13,36 +32,17 @@ system:
       you or your possessions. The caster of the <i>detect</i> spell is unaware
       of this reduction in her spell's range; she simply does not <i>detect</i>
       you.</p>
-  actions:
-    - _id: x4rklqycams4bs39
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
       alchemist: 2
+      bard: 2
+      sorcerer: 2
       witch: 2
+      wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of wool
+  school: abj
   sr: false
-_key: '!items!1wzevbmg7e87sc3p'
+type: spell
 

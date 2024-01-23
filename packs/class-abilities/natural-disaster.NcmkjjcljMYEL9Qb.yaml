@@ -1,8 +1,28 @@
 _id: NcmkjjcljMYEL9Qb
-name: Natural Disaster
-type: feat
+_key: '!items!NcmkjjcljMYEL9Qb'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Natural Disaster
 system:
+  abilityType: su
+  actions:
+    - _id: 3c4hp9p2gwa5atvy
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      area: 360-ft. radius area
+      duration:
+        units: seeText
+        value: ''
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: 100 + 40*@classes.witch.level
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>A witch using this hex calls down the forces of nature to wreak havoc
@@ -14,33 +34,13 @@ system:
       immediately ends.</p>
 
       <p>A witch can only use this ability once per day.</p>
+  subType: classFeat
+  tag: classFeat_naturalDisaster
   tags:
     - Hex
     - Grand Hex
-  actions:
-    - _id: 3c4hp9p2gwa5atvy
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: ''
-        units: seeText
-      range:
-        value: 100 + 40*@classes.witch.level
-        units: ft
-      area: 360-ft. radius area
   uses:
-    per: day
     maxFormula: '1'
-  tag: classFeat_naturalDisaster
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!NcmkjjcljMYEL9Qb'
+    per: day
+type: feat
 

@@ -1,8 +1,27 @@
 _id: 97w0wbamqk0fzani
-name: Elemental Assessor
-type: spell
+_key: '!items!97w0wbamqk0fzani'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Elemental Assessor
 system:
+  actions:
+    - _id: taraohmdtl3korrg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1d4+1 rounds (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one elemental ray
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Azata champions developed this spell to deal with fiends with unknown
@@ -13,36 +32,17 @@ system:
       damage. The type of energy that does the most points of damage to the
       target then persists, dealing another 4d6 points of that type of damage
       per round for 1d4 rounds.</p>
-  actions:
-    - _id: taraohmdtl3korrg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d4+1 rounds (see text)
-      range:
-        units: close
-      spellEffect: one elemental ray
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       cleric: 6
-      warpriest: 6
       oracle: 6
+      sorcerer: 6
+      warpriest: 6
+      wizard: 6
   level: 6
-  school: evo
-  types: acid, cold, electricity, fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: four needles
-_key: '!items!97w0wbamqk0fzani'
+  school: evo
+  types: acid, cold, electricity, fire
+type: spell
 

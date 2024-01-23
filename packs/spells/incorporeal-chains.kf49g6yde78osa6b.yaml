@@ -1,8 +1,28 @@
 _id: kf49g6yde78osa6b
-name: Incorporeal Chains
-type: spell
+_key: '!items!kf49g6yde78osa6b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Incorporeal Chains
 system:
+  actions:
+    - _id: xe0quxzvemlq5jmo
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: >-
+          one incorporeal creature/level, no two of which can be more than 30
+          ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon ghostly chains to bind incorporeal creatures. The chains'
@@ -24,23 +44,6 @@ system:
       <i>incorporeal chains</i>, for the purposes of escaping the grapple, is
       equal to 10 + its CMB. If you move out of range of any of the grappled
       creatures, the chains cease grappling those creatures.</p>
-  actions:
-    - _id: xe0quxzvemlq5jmo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration
-      target:
-        value: >-
-          one incorporeal creature/level, no two of which can be more than 30
-          ft. apart
-      range:
-        units: close
   learnedAt:
     class:
       psychic: 6
@@ -48,8 +51,5 @@ system:
   level: 6
   school: evo
   types: force
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kf49g6yde78osa6b'
+type: spell
 

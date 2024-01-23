@@ -1,8 +1,24 @@
 _id: r6oba3j1p6ul0phv
-name: Deceptive Redundancy
-type: spell
+_key: '!items!r6oba3j1p6ul0phv'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deceptive Redundancy
 system:
+  actions:
+    - _id: qzqjpn6a9ss38rwv
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until triggered, then 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a contingent ward that defies those who would dispel your
@@ -17,32 +33,16 @@ system:
       <i>Deceptive redundancy</i> is most effective when hiding auras for spells
       that don't have easily perceived effects, rather than visually obvious
       spells such as <i>enlarge person</i> or <i>fire shield</i>.</p>
-  actions:
-    - _id: qzqjpn6a9ss38rwv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level or until triggered, then 1 round/level
-      range:
-        units: personal
   learnedAt:
     class:
+      bard: 5
+      mesmerist: 5
+      psychic: 5
       sorcerer: 5
       wizard: 5
-      bard: 5
-      psychic: 5
-      mesmerist: 5
   level: 5
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!r6oba3j1p6ul0phv'
+  subschool: glamer
+type: spell
 

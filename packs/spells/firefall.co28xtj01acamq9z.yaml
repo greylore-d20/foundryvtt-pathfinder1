@@ -1,8 +1,31 @@
 _id: co28xtj01acamq9z
-name: Firefall
-type: spell
+_key: '!items!co28xtj01acamq9z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Firefall
 system:
+  actions:
+    - _id: endepyf4q4bsix9o
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates and Reflex negates; see text
+        type: ref
+      target:
+        value: one fire source, up to a 20-foot cube
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Firefall</i> causes a fire to erupt into a geyser of dazzlingly
@@ -16,40 +39,17 @@ system:
       Rulebook</i> 444).</p><p>Creatures who make successful Reflex saves take
       half damage and don't catch on fire. Creatures within 120 feet of the
       original fire source are blinded for 1d4+1 rounds (Will negates).</p>
-  actions:
-    - _id: endepyf4q4bsix9o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one fire source, up to a 20-foot cube
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: ref
-        description: Will negates and Reflex negates; see text
   learnedAt:
     class:
+      bloodrager: 4
+      magus: 4
       sorcerer: 4
       wizard: 4
-      magus: 4
-      bloodrager: 4
   level: 4
-  school: trs
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: one fire source
+  school: trs
   sr: false
-_key: '!items!co28xtj01acamq9z'
+  types: fire
+type: spell
 

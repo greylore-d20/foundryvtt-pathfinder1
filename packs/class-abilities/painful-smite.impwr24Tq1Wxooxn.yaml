@@ -1,8 +1,26 @@
 _id: impwr24Tq1Wxooxn
-name: Painful Smite
-type: feat
+_key: '!items!impwr24Tq1Wxooxn'
 img: systems/pf1/icons/skills/arrow_11.jpg
+name: Painful Smite
 system:
+  abilityType: su
+  actions:
+    - _id: wnrpu52xzxekm509
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/arrow_11.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>Prior to making a melee attack roll, you can choose to convert all
@@ -15,28 +33,10 @@ system:
 
       <p>This power replaces the Destructive Smite power of the Destruction
       Domain.</p>
-  actions:
-    - _id: wnrpu52xzxekm509
-      name: Use
-      img: systems/pf1/icons/skills/arrow_11.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_painfulSmite
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!impwr24Tq1Wxooxn'
+  tag: classFeat_painfulSmite
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

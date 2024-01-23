@@ -1,8 +1,30 @@
 _id: pgxpdq6q7783u5oo
-name: Inveigle Person
-type: spell
+_key: '!items!pgxpdq6q7783u5oo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Inveigle Person
 system:
+  actions:
+    - _id: mrypdhj4pc9fdvrz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one humanoid creature
+  components:
+    material: true
+    verbal: true
   description:
     value: >-
       <p>You cause the target to become extremely amiable. The target treats all
@@ -14,41 +36,19 @@ system:
       preference requires succeeding at an opposed Charisma check, as if under
       multiple forms of mental control (<i>Pathfinder RPG Core Rulebook</i>
       209).</p>
-  actions:
-    - _id: mrypdhj4pc9fdvrz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one humanoid creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       bard: 3
-      witch: 4
-      psychic: 3
       mesmerist: 3
+      psychic: 3
+      sorcerer: 4
+      witch: 4
+      wizard: 4
   level: 4
+  materials:
+    value: a drop of alcohol
   school: enc
   subschool: charm
   types: mind-affecting
-  components:
-    verbal: true
-    material: true
-  materials:
-    value: a drop of alcohol
-_key: '!items!pgxpdq6q7783u5oo'
+type: spell
 

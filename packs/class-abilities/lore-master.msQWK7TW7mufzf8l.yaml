@@ -1,8 +1,20 @@
 _id: msQWK7TW7mufzf8l
-name: Lore Master
-type: feat
+_key: '!items!msQWK7TW7mufzf8l'
 img: systems/pf1/icons/items/inventory/book-tan.jpg
+name: Lore Master
 system:
+  abilityType: ex
+  actions:
+    - _id: vdpeu8pfvgw0werj
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/items/inventory/book-tan.jpg
+      name: Use
+  associations:
+    classes:
+      - Bard
   description:
     value: >-
       <p>At 5th level, the bard becomes a master of lore and can take 10 on any
@@ -12,22 +24,10 @@ system:
       action</em>. He can use this ability one additional time per day for every
       six levels he possesses beyond 5th, to a maximum of three times per day at
       17th level.</p>
-  actions:
-    - _id: vdpeu8pfvgw0werj
-      name: Use
-      img: systems/pf1/icons/items/inventory/book-tan.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_loreMaster
-  subType: classFeat
-  associations:
-    classes:
-      - Bard
-  abilityType: ex
   source:
     id: PZO1110
     pages: '38'
-_key: '!items!msQWK7TW7mufzf8l'
+  subType: classFeat
+  tag: classFeat_loreMaster
+type: feat
 

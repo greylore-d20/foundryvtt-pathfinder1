@@ -1,8 +1,29 @@
 _id: vrzgrnmiz8kmz6di
-name: Mind Probe
-type: spell
+_key: '!items!vrzgrnmiz8kmz6di'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mind Probe
 system:
+  actions:
+    - _id: lfc45fwr1s5iutep
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You gain access to the subject's memories and knowledge. You can
@@ -16,37 +37,16 @@ system:
       imparted directly to your mind. You and the target don't need to speak the
       same language, though less intelligent creatures may yield up only
       appropriate sensory images in answer to your questions.</p>
-  actions:
-    - _id: lfc45fwr1s5iutep
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      psychic: 4
       medium: 3
       mesmerist: 4
       occultist: 4
+      psychic: 4
+      sorcerer: 5
+      wizard: 5
   level: 5
   school: div
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vrzgrnmiz8kmz6di'
+type: spell
 

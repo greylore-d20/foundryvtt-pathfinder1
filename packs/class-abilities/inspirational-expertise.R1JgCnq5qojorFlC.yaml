@@ -1,8 +1,28 @@
 _id: R1JgCnq5qojorFlC
-name: Inspirational Expertise
-type: feat
+_key: '!items!R1JgCnq5qojorFlC'
 img: systems/pf1/icons/items/weapons/sword-cane.png
+name: Inspirational Expertise
 system:
+  abilityType: ex
+  actions:
+    - _id: qob4v33rgj642rd6
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies
+  associations:
+    classes:
+      - Investigator
   description:
     value: >-
       <p>When an investigator succeeds at a Knowledge check to identify a
@@ -12,29 +32,9 @@ system:
       monster for 1 round.</p>
 
       <p>An investigator must be at least 7th level to take this talent.</p>
+  subType: classFeat
+  tag: classFeat_inspirationalExpertise
   tags:
     - Investigator Talent
-  actions:
-    - _id: qob4v33rgj642rd6
-      name: Use
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: allies
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_inspirationalExpertise
-  subType: classFeat
-  associations:
-    classes:
-      - Investigator
-  abilityType: ex
-_key: '!items!R1JgCnq5qojorFlC'
+type: feat
 

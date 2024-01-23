@@ -1,8 +1,30 @@
 _id: vxt8zx57agd6a3lj
-name: Dream Scan
-type: spell
+_key: '!items!vxt8zx57agd6a3lj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Dream Scan
 system:
+  actions:
+    - _id: dhobs1t5u1njrbb1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>dream</i>, but rather than sending a message
@@ -25,38 +47,16 @@ system:
       choice and believe that wrong answer to be true.  Unlike with
       <i>dream</i>, you can't cast this spell on another creature to have it
       serve as your messenger.</p>
-  actions:
-    - _id: dhobs1t5u1njrbb1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: one living creature
-      range:
-        units: unlimited
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 6
-      psychic: 5
       medium: 4
       mesmerist: 5
+      psychic: 5
+      sorcerer: 6
+      wizard: 6
   level: 6
   school: div
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vxt8zx57agd6a3lj'
+type: spell
 

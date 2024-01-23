@@ -1,23 +1,23 @@
-name: Ward
-type: buff
+_id: e6LhyzMnHZc5Vlni
+_key: '!items!e6LhyzMnHZc5Vlni'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Ward
 system:
+  changes:
+    - _id: yXliK2TX
+      formula: 2 + clamped(floor(@item.level / 8), 0, 2)
+      modifier: deflection
+      subTarget: ac
+    - _id: ztHP3if0
+      formula: 2 + clamped(floor(@item.level / 8), 0, 2)
+      modifier: resist
+      subTarget: allSavingThrows
   description:
     value: >-
       <p>Gain +2 deflection bonus to AC and +2 resistance bonus to saving
       throws.</p><p>This lasts until you are hit or you fail a saving throw.</p>
-  changes:
-    - _id: yXliK2TX
-      formula: 2 + clamped(floor(@item.level / 8), 0, 2)
-      subTarget: ac
-      modifier: deflection
-    - _id: ztHP3if0
-      formula: 2 + clamped(floor(@item.level / 8), 0, 2)
-      subTarget: allSavingThrows
-      modifier: resist
-  level: 1
   duration:
     value: ''
-_id: e6LhyzMnHZc5Vlni
-_key: '!items!e6LhyzMnHZc5Vlni'
+  level: 1
+type: buff
 

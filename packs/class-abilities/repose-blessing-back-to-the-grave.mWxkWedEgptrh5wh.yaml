@@ -1,8 +1,21 @@
 _id: mWxkWedEgptrh5wh
-name: 'Repose Blessing: Back to the Grave'
-type: feat
+_key: '!items!mWxkWedEgptrh5wh'
 img: systems/pf1/icons/spells/fog-air-3.jpg
+name: 'Repose Blessing: Back to the Grave'
 system:
+  actions:
+    - _id: yc8nletm3zevbwrw
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/fog-air-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, when using channel energy to heal living creatures, you
@@ -10,20 +23,7 @@ system:
       creatures (as your channel energy ability). Undead take an amount of
       damage equal to half the amount healed, and can attempt the normal saving
       throw to halve this damage.</p>
-  actions:
-    - _id: yc8nletm3zevbwrw
-      name: Use
-      img: systems/pf1/icons/spells/fog-air-3.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-  tag: classFeat_reposeBlessingBackToTheGrave
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!mWxkWedEgptrh5wh'
+  tag: classFeat_reposeBlessingBackToTheGrave
+type: feat
 

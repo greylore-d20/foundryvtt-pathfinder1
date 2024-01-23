@@ -1,8 +1,29 @@
 _id: lwem09uijk4ziunm
-name: Reflexive Barrier
-type: spell
+_key: '!items!lwem09uijk4ziunm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Reflexive Barrier
 system:
+  actions:
+    - _id: vp9zh289toj0a4ea
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: none
+        harmless: true
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>In the blink of an eye, you erect a deflective barrier of force to
@@ -10,34 +31,13 @@ system:
       half your caster level. This bonus lasts until the beginning of your next
       turn. You can cast this spell as a reaction to an attack, but you must do
       so before the result of the attack is revealed.</p>
-  actions:
-    - _id: vp9zh289toj0a4ea
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: 1 round (see text)
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        description: none
-        harmless: true
   learnedAt:
     class:
       magus: 3
       psychic: 3
   level: 3
   school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lwem09uijk4ziunm'
+  types: force
+type: spell
 

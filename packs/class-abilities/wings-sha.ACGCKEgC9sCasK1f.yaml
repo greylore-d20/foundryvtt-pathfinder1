@@ -1,8 +1,28 @@
 _id: ACGCKEgC9sCasK1f
-name: Wings (SHA)
-type: feat
+_key: '!items!ACGCKEgC9sCasK1f'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Wings (SHA)
 system:
+  abilityType: su
+  actions:
+    - _id: nvzm27u3zbmg6hsh
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman can grow a pair of wings for a number of minutes per day
@@ -24,30 +44,10 @@ system:
       This doubles the number of minutes per day the shaman can use her wings (2
       minutes per level), and allows her to fly with average maneuverability and
       a fly speed of 30 feet while the wings are active.</p>
-  actions:
-    - _id: nvzm27u3zbmg6hsh
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.shaman.level'
-  tag: classFeat_wingsSha
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!ACGCKEgC9sCasK1f'
+  tag: classFeat_wingsSha
+  uses:
+    maxFormula: '@classes.shaman.level'
+    per: day
+type: feat
 

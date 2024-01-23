@@ -1,8 +1,33 @@
 _id: mvgg3g6zs5iutjj9
-name: Envious Urge
-type: spell
+_key: '!items!mvgg3g6zs5iutjj9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Envious Urge
 system:
+  actions:
+    - _id: bubkjwrq6bgbz0jv
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You fill creatures with feelings of seething envy. Affected targets
@@ -11,41 +36,16 @@ system:
       it and strip it of something it prizes (your choice). Affected targets can
       attempt a new Will save each round as a free action to end this
       effect.</p>
-  actions:
-    - _id: bubkjwrq6bgbz0jv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
-      range:
-        units: medium
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
+      bard: 4
+      mesmerist: 4
+      psychic: 6
       sorcerer: 6
       wizard: 6
-      bard: 4
-      psychic: 6
-      mesmerist: 4
   level: 6
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mvgg3g6zs5iutjj9'
+type: spell
 

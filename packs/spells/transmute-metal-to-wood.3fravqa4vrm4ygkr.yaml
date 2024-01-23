@@ -1,8 +1,29 @@
 _id: 3fravqa4vrm4ygkr
-name: Transmute Metal to Wood
-type: spell
+_key: '!items!3fravqa4vrm4ygkr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transmute Metal to Wood
 system:
+  actions:
+    - _id: spyapwbruzlvid3o
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: all metal objects within a 40-ft.-radius burst
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Use
+      range:
+        units: long
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell enables you to change all metal objects within its area to
@@ -17,31 +38,10 @@ system:
       it is struck with a natural attack roll of 19 or 20.</p><p>Only <i>limited
       wish, miracle, wish,</i> or similar magic can restore a transmuted object
       to its metallic state.</p>
-  actions:
-    - _id: spyapwbruzlvid3o
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: long
-      measureTemplate:
-        type: circle
-        size: '40'
-      area: all metal objects within a 40-ft.-radius burst
   learnedAt:
     class:
       druid: 7
   level: 7
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!3fravqa4vrm4ygkr'
+type: spell
 

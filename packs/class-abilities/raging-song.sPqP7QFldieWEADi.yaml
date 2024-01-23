@@ -1,8 +1,20 @@
 _id: sPqP7QFldieWEADi
-name: Raging Song
-type: feat
+_key: '!items!sPqP7QFldieWEADi'
 img: systems/pf1/icons/skills/affliction_24.jpg
+name: Raging Song
 system:
+  abilityType: su
+  actions:
+    - _id: k2ew0jkpm4b7x2tt
+      activation:
+        type: move
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/affliction_24.jpg
+      name: Use
+  associations:
+    classes:
+      - Skald
   description:
     value: >-
       <p>A skald is trained to use music, oration, and similar performances to
@@ -31,22 +43,10 @@ system:
 
       <p>At 13th level, a skald can start a raging song as a swift action
       instead.</p>
-  actions:
-    - _id: k2ew0jkpm4b7x2tt
-      name: Use
-      img: systems/pf1/icons/skills/affliction_24.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod + (floor(@classes.skald.level - 1) * 2)
-  tag: classFeat_ragingSong
   subType: classFeat
-  associations:
-    classes:
-      - Skald
-  abilityType: su
-_key: '!items!sPqP7QFldieWEADi'
+  tag: classFeat_ragingSong
+  uses:
+    maxFormula: 3 + @abilities.cha.mod + (floor(@classes.skald.level - 1) * 2)
+    per: day
+type: feat
 

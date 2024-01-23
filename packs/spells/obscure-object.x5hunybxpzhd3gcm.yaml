@@ -1,19 +1,11 @@
 _id: x5hunybxpzhd3gcm
-name: Obscure Object
-type: spell
+_key: '!items!x5hunybxpzhd3gcm'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Obscure Object
 system:
-  description:
-    value: >-
-      <p>This spell hides an object from location by divination (<i>scrying</i>)
-      effects, such as the <i>scrying</i> spell or a <i>crystal ball</i>. Such
-      an attempt automatically fails (if the divination is targeted on the
-      object) or fails to perceive the object (if the divination is targeted on
-      a nearby location, object, or person).</p>
   actions:
     - _id: pwqneskm45sqgpqy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,35 +13,43 @@ system:
           type: action
       duration:
         value: 8 hours
-      target:
-        value: one object touched of up to 100 lbs./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates (object)
+        type: will
+      target:
+        value: one object touched of up to 100 lbs./level
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell hides an object from location by divination (<i>scrying</i>)
+      effects, such as the <i>scrying</i> spell or a <i>crystal ball</i>. Such
+      an attempt automatically fails (if the divination is targeted on the
+      object) or fails to perceive the object (if the divination is targeted on
+      a nearby location, object, or person).</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 3
-      warpriest: 3
-      oracle: 3
       bard: 1
+      cleric: 3
       inquisitor: 3
-      psychic: 2
       mesmerist: 1
       occultist: 2
+      oracle: 3
+      psychic: 2
+      sorcerer: 2
       spiritualist: 3
+      warpriest: 3
+      wizard: 2
   level: 2
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: chameleon skin
-_key: '!items!x5hunybxpzhd3gcm'
+  school: abj
+type: spell
 

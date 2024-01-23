@@ -1,8 +1,16 @@
 _id: GiP6E1ohZlWq8xUY
-name: Deep One Curse
-type: feat
+_key: '!items!GiP6E1ohZlWq8xUY'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Deep One Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: a123bebl
+      formula: '@classes.oracle.level >= 5 ? 1 : 0'
+      modifier: untyped
+      subTarget: nac
   description:
     value: >-
       <p>The lure of the ocean tugs at your soul. You reduce your base land
@@ -17,15 +25,7 @@ system:
 
       <p>At 15th level, you gain the benefits of freedom of movement while
       underwater.</p>
-  changes:
-    - _id: a123bebl
-      formula: '@classes.oracle.level >= 5 ? 1 : 0'
-      subTarget: nac
-      modifier: untyped
-  tag: classFeat_deepOneCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!GiP6E1ohZlWq8xUY'
+  tag: classFeat_deepOneCurse
+type: feat
 

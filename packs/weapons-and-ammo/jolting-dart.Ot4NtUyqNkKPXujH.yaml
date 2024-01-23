@@ -1,72 +1,72 @@
 _id: Ot4NtUyqNkKPXujH
-name: Jolting Dart
-type: weapon
+_key: '!items!Ot4NtUyqNkKPXujH'
 img: systems/pf1/icons/items/weapons/dart-jolting.png
+name: Jolting Dart
 system:
+  actions:
+    - _id: g8smmzehf5fclmsi
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: none
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/dart-jolting.png
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '20'
+  baseTypes:
+    - Jolting Dart
   description:
     value: >-
       <p>This alchemically grown crystal dart builds up an electrical charge
       when thrown. A creature struck by the dart takes normal piercing damage
       and 1d6 points of electricity damage. Anyone proficient in darts can use a
       jolting dart. Once thrown, the dart is destroyed.</p>
-  weight:
-    value: 0.5
-  price: 100
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: g8smmzehf5fclmsi
-      name: Throw
-      img: systems/pf1/icons/items/weapons/dart-jolting.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-          - formula: 1d6
-            type:
-              values:
-                - electric
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-      ammoType: none
-  uses:
-    per: single
-  baseTypes:
-    - Jolting Dart
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: martial
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 100
   properties:
     spc: true
   source:
     id: PZO1121
     pages: '205'
-_key: '!items!Ot4NtUyqNkKPXujH'
+  subType: martial
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 0.5
+type: weapon
 

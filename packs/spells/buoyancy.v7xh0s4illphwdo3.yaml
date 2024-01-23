@@ -1,8 +1,31 @@
 _id: v7xh0s4illphwdo3
-name: Buoyancy
-type: spell
+_key: '!items!v7xh0s4illphwdo3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Buoyancy
 system:
+  actions:
+    - _id: gb7a5a0sxse4cvkj
+      actionType: spellsave
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: up to 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates or Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one Medium or smaller object or creature/level, no two of which can be
+          more than 20 ft. apart
+  components:
+    verbal: true
   description:
     value: >-
       <p>The affected targets become incredibly buoyant, floating naturally on
@@ -10,38 +33,15 @@ system:
       deliberately tries to submerge must succeed at a DC 20 Swim check every
       round to stay underwater. If a target spends at least 1 round on dry land,
       the spell ends for that creature only.</p>
-  actions:
-    - _id: gb7a5a0sxse4cvkj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: up to 1 round/level (see text)
-      target:
-        value: >-
-          one Medium or smaller object or creature/level, no two of which can be
-          more than 20 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates or Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 2
-      witch: 2
-      shaman: 2
       psychic: 2
+      shaman: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-_key: '!items!v7xh0s4illphwdo3'
+type: spell
 

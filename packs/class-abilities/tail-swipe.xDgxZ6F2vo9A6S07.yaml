@@ -1,8 +1,22 @@
 _id: xDgxZ6F2vo9A6S07
-name: Tail Swipe
-type: feat
+_key: '!items!xDgxZ6F2vo9A6S07'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Tail Swipe
 system:
+  abilityType: ex
+  actions:
+    - _id: 300mgta4hsg34j3t
+      ability:
+        attack: str
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You express your wrath through sweeps of a wicked tail. You can grow a
@@ -12,26 +26,12 @@ system:
       if you are Small) + your Strength modifier.</p><p>At 10th level, you can
       attempt a free trip combat maneuver check against any creature damaged by
       your tail attack. This does not provoke an attack of opportunity.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: 300mgta4hsg34j3t
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      ability:
-        attack: str
-  tag: classFeat_tailSwipe
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!xDgxZ6F2vo9A6S07'
+  subType: classFeat
+  tag: classFeat_tailSwipe
+  tags:
+    - Dragon Mystery
+type: feat
 

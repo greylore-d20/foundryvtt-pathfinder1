@@ -1,19 +1,11 @@
 _id: v1r5d2ictma8xbdg
-name: Detoxify
-type: spell
+_key: '!items!v1r5d2ictma8xbdg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Detoxify
 system:
-  description:
-    value: >-
-      <p>You remove a creature's ability to poison others, whether inherent or
-      via poisoned weapons. Whenever an affected creature would inflict poison
-      with an attack, spell, or other method (including auras and other constant
-      methods), that poison is automatically neutralized. This does not grant
-      the subject of the spell any resistance to poison itself.</p>
   actions:
     - _id: 6ov6q0hhn0jwnw5m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,33 +13,41 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You remove a creature's ability to poison others, whether inherent or
+      via poisoned weapons. Whenever an affected creature would inflict poison
+      with an attack, spell, or other method (including auras and other constant
+      methods), that poison is automatically neutralized. This does not grant
+      the subject of the spell any resistance to poison itself.</p>
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      ranger: 2
-      paladin: 3
-      witch: 3
-      inquisitor: 3
-      shaman: 3
       hunter: 2
+      inquisitor: 3
+      oracle: 3
+      paladin: 3
+      ranger: 2
+      shaman: 3
+      warpriest: 3
+      witch: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a dandelion stem
-_key: '!items!v1r5d2ictma8xbdg'
+  school: trs
+type: spell
 

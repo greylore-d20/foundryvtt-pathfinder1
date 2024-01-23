@@ -1,8 +1,41 @@
 _id: rWtJpp7d6d3BTO8a
-name: Seven-Branched Sword
-type: weapon
+_key: '!items!rWtJpp7d6d3BTO8a'
 img: systems/pf1/icons/items/weapons/sword-two-bladed.png
+name: Seven-Branched Sword
 system:
+  actions:
+    - _id: j4962fhm4bcxovw2
+      ability:
+        attack: str
+        critMult: 3
+        damage: str
+        damageMult: 1.5
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/sword-two-bladed.png
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Seven-Branched Sword
   description:
     value: >-
       <p>This unusual sword has a straight 2-foot-long blade with six shorter
@@ -12,57 +45,24 @@ system:
       clothing, the attacker makes a trip attempt. If successful, the victim
       doesn't fall prone, but instead is snagged and stumbles forward, leaving
       the victim flat-footed for the remainder of the round.</p>
-  tags:
-    - PFS
-  weight:
-    value: 7
-  price: 50
   hardness: 10
-  actions:
-    - _id: j4962fhm4bcxovw2
-      name: Attack
-      img: systems/pf1/icons/items/weapons/sword-two-bladed.png
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 10, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-        damageMult: 1.5
-        critMult: 3
   held: 2h
-  baseTypes:
-    - Seven-Branched Sword
-  weaponGroups:
-    value:
-      - bladesHeavy
-      - monk
-  subType: exotic
-  weaponSubtype: 2h
+  price: 50
   properties:
     dis: true
     mnk: true
   source:
     id: PZO1123
     pages: '21'
-_key: '!items!rWtJpp7d6d3BTO8a'
+  subType: exotic
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - bladesHeavy
+      - monk
+  weaponSubtype: 2h
+  weight:
+    value: 7
+type: weapon
 

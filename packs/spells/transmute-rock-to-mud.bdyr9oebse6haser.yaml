@@ -1,8 +1,30 @@
 _id: bdyr9oebse6haser
-name: Transmute Rock to Mud
-type: spell
+_key: '!items!bdyr9oebse6haser'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transmute Rock to Mud
 system:
+  actions:
+    - _id: vrpj26ci83cb5opq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to two 10-ft. cubes/level
+      duration:
+        value: permanent; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: see text
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell turns natural, uncut, or unworked rock of any sort into an
@@ -28,42 +50,20 @@ system:
       mud to normal dirt over a period of days. The exact time depends on
       exposure to the sun, wind, and normal drainage.</p><p><i>Transmute rock to
       mud</i> counters and dispels <i>transmute mud to rock</i>.</p>
-  actions:
-    - _id: vrpj26ci83cb5opq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: permanent; see text
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        description: see text
-      area: up to two 10-ft. cubes/level
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      druid: 5
-      occultist: 5
-      hunter: 5
     bloodline:
       Kobold: 5
+    class:
+      druid: 5
+      hunter: 5
+      occultist: 5
+      sorcerer: 5
+      wizard: 5
   level: 5
-  school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: clay and water
+  school: trs
   sr: false
-_key: '!items!bdyr9oebse6haser'
+  types: earth
+type: spell
 

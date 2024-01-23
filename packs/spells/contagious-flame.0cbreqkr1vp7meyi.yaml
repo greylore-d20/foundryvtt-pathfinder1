@@ -1,8 +1,26 @@
 _id: 0cbreqkr1vp7meyi
-name: Contagious Flame
-type: spell
+_key: '!items!0cbreqkr1vp7meyi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contagious Flame
 system:
+  actions:
+    - _id: mqsfv9er7rpkf85n
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 3 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: three or more rays
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You blast several enemies with beams of fire. You may fire three rays,
@@ -19,32 +37,14 @@ system:
       contagion of flame continues for a total of three rounds-a creature can be
       struck more than once by this spell over the course of these three rounds,
       although never by a ray of fire that launches from itself.</p>
-  actions:
-    - _id: mqsfv9er7rpkf85n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 3 rounds
-      target:
-        value: three or more rays
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       magus: 6
       occultist: 6
+      sorcerer: 6
+      wizard: 6
   level: 6
   school: evo
   types: fire
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!0cbreqkr1vp7meyi'
+type: spell
 

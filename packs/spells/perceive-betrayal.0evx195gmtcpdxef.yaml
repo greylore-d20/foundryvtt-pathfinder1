@@ -1,8 +1,27 @@
 _id: 0evx195gmtcpdxef
-name: Perceive Betrayal
-type: spell
+_key: '!items!0evx195gmtcpdxef'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Perceive Betrayal
 system:
+  actions:
+    - _id: 9abnuprjdkoiq8ka
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By donning a silver circlet anointed with blood, you gain the ability
@@ -17,39 +36,20 @@ system:
       your liege.  Creatures that are immune to mind-affecting or
       thought-detecting effects cannot have their intent detected by <i>perceive
       betrayal</i>.</p>
-  actions:
-    - _id: 9abnuprjdkoiq8ka
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 6
-      warpriest: 6
-      oracle: 6
-      witch: 6
       inquisitor: 4
+      oracle: 6
+      sorcerer: 7
+      warpriest: 6
+      witch: 6
+      wizard: 7
   level: 7
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: 12 drops of blood
     focus: a silver circlet worth 500 gp
+    value: 12 drops of blood
+  school: div
   sr: false
-_key: '!items!0evx195gmtcpdxef'
+type: spell
 

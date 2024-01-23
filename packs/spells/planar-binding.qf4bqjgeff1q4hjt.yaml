@@ -1,20 +1,11 @@
 _id: qf4bqjgeff1q4hjt
-name: Planar Binding
-type: spell
+_key: '!items!qf4bqjgeff1q4hjt'
 img: icons/magic/control/sihouette-hold-beam-green.webp
+name: Planar Binding
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      @Compendium[pf1.spells.y4b1zmhmsa0gvf06]{Lesser Planar Binding}, except
-      that you may call a single creature of 12 HD or less, or up to three
-      creatures of the same kind whose Hit Dice total no more than 12. Each
-      creature gets a saving throw, makes an independent attempt to escape, and
-      must be individually persuaded to aid you.</p>
   actions:
     - _id: tv3dwm5murk1jjjz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
@@ -23,46 +14,55 @@ system:
           type: minute
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
       target:
         value: >-
           up to three elementals or outsiders, totaling no more than 12 HD, no
           two of which can be more than 30 ft. apart when they appear
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      @Compendium[pf1.spells.y4b1zmhmsa0gvf06]{Lesser Planar Binding}, except
+      that you may call a single creature of 12 HD or less, or up to three
+      creatures of the same kind whose Hit Dice total no more than 12. Each
+      creature gets a saving throw, makes an independent attempt to escape, and
+      must be individually persuaded to aid you.</p>
   learnedAt:
+    bloodline:
+      Efreeti: 6
+      Infernal: 6
     class:
-      sorcerer: 6
-      wizard: 6
-      summoner: 5
-      psychic: 6
       occultist: 6
+      psychic: 6
+      sorcerer: 6
+      summoner: 5
       summonerUnchained: 6
+      wizard: 6
     domain:
       Void: 6
     subDomain:
+      Aeon: 6
       Daemon: 6
       Demon: 6
       Devil: 6
       Inevitable: 6
       Protean: 6
-      Aeon: 6
-    bloodline:
-      Efreeti: 6
-      Infernal: 6
   level: 6
   school: con
-  subschool: calling
-  types: see text for lesser planar binding
-  components:
-    verbal: true
-    somatic: true
-  sr: false
   source:
     id: PZO1110
     pages: '321'
-_key: '!items!qf4bqjgeff1q4hjt'
+  sr: false
+  subschool: calling
+  types: see text for lesser planar binding
+type: spell
 

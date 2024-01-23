@@ -1,8 +1,25 @@
 _id: q68qh9292419ko45
-name: Entomb
-type: spell
+_key: '!items!q68qh9292419ko45'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Entomb
 system:
+  actions:
+    - _id: vzw8cqnbgupu0ucm
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: permanent
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      spellEffect: up to three 10-ft. cubes/level (S)
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You designate an aboveground area and send it deep within the earth.
@@ -27,37 +44,20 @@ system:
       have been displaced by the vault returns to its original place. If there
       is something already on the surface that blocks the vault's path, the
       vault pushes it harmlessly aside when returning.</p>
-  actions:
-    - _id: vzw8cqnbgupu0ucm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: permanent
-      range:
-        units: medium
-      spellEffect: up to three 10-ft. cubes/level (S)
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       druid: 8
       shaman: 8
+      sorcerer: 8
+      wizard: 8
   level: 8
-  school: trs
-  types: earth
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: a pristine geode worth at least 1,000 gp
     gpValue: 1000
+    value: a pristine geode worth at least 1,000 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!q68qh9292419ko45'
+  types: earth
+type: spell
 

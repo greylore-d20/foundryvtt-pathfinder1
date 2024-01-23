@@ -1,18 +1,11 @@
 _id: 4rjud9uoofhbwhht
-name: Badger's Ferocity
-type: spell
+_key: '!items!4rjud9uoofhbwhht'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Badger's Ferocity
 system:
-  description:
-    value: >-
-      <p>This functions like <i>keen edge</i>, except it affects multiple
-      weapons and requires your concentration. You select the weapons to be
-      affected, and can only affect one weapon per creature. If a creature's
-      weapon exceeds the spell's range, the spell ends for that weapon.</p>
   actions:
     - _id: cri980zlf0jwmg7y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,30 +13,37 @@ system:
           type: action
       duration:
         value: concentration
-      target:
-        value: one weapon/3 levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one weapon/3 levels
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This functions like <i>keen edge</i>, except it affects multiple
+      weapons and requires your concentration. You select the weapons to be
+      affected, and can only affect one weapon per creature. If a creature's
+      weapon exceeds the spell's range, the spell ends for that weapon.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 3
-      warpriest: 3
-      oracle: 3
       druid: 3
-      ranger: 2
-      occultist: 2
       hunter: 2
+      occultist: 2
+      oracle: 3
+      ranger: 2
+      sorcerer: 2
+      warpriest: 3
+      wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!4rjud9uoofhbwhht'
+type: spell
 

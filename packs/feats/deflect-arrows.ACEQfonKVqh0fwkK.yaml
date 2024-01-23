@@ -1,8 +1,21 @@
 _id: ACEQfonKVqh0fwkK
-name: Deflect Arrows
-type: feat
+_key: '!items!ACEQfonKVqh0fwkK'
 img: systems/pf1/icons/feats/deflect-arrows.jpg
+name: Deflect Arrows
 system:
+  actions:
+    - _id: q00cixwhykshnyq6
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/feats/deflect-arrows.jpg
+      name: Use
+  contextNotes:
+    - subTarget: ac
+      text: >-
+        Deflect Arrows: avoid one ranged attack per round. You must have at
+        least one free hand.
   description:
     value: >-
       <p><em>You can knock arrows and other projectiles off course, preventing
@@ -18,25 +31,12 @@ system:
       can't be deflected.</p><h3>Combat Trick</h3><p>You can spend 5 stamina
       points to deflect an arrow while you're flat-footed. You must still be
       aware of the attack.</p>
-  tags:
-    - Combat
-    - Combat Trick
-  actions:
-    - _id: q00cixwhykshnyq6
-      name: Use
-      img: systems/pf1/icons/feats/deflect-arrows.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  contextNotes:
-    - subTarget: ac
-      text: >-
-        Deflect Arrows: avoid one ranged attack per round. You must have at
-        least one free hand.
-  tag: feat_deflectArrows
   source:
     id: PZO1110
     pages: 115, 121
-_key: '!items!ACEQfonKVqh0fwkK'
+  tag: feat_deflectArrows
+  tags:
+    - Combat
+    - Combat Trick
+type: feat
 

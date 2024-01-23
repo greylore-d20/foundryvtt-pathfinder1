@@ -1,8 +1,26 @@
 _id: pr7mgfj4oylrd26u
-name: Sentry Skull
-type: spell
+_key: '!items!pr7mgfj4oylrd26u'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sentry Skull
 system:
+  actions:
+    - _id: f1oy806asjgnwb2f
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: permanent (D); see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: severed head touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You restore the senses to the severed head of a humanoid or monstrous
@@ -29,41 +47,23 @@ system:
       head any ability to speak, think, or take any kind of action other than to
       turn itself, though it is a suitable target for other spells such as
       <i>magic mouth</i>.</p>
-  actions:
-    - _id: f1oy806asjgnwb2f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: permanent (D); see text
-      target:
-        value: severed head touched
-      range:
-        units: touch
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
       antipaladin: 1
+      cleric: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: an onyx gem worth at least 10 gp
     gpValue: 10
+    value: an onyx gem worth at least 10 gp
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!pr7mgfj4oylrd26u'
+  types: evil
+type: spell
 

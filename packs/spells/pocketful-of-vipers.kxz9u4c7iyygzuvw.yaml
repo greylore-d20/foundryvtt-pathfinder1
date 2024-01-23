@@ -1,8 +1,31 @@
 _id: kxz9u4c7iyygzuvw
-name: Pocketful of Vipers
-type: spell
+_key: '!items!kxz9u4c7iyygzuvw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pocketful of Vipers
 system:
+  actions:
+    - _id: wm1v7pp2iicv50h0
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour/level or until discharged (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        type: fort
+      target:
+        value: object touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You set a magical ward upon the object touched, which must be a
@@ -12,42 +35,19 @@ system:
       container and attacking that creature for 1 round/level before
       disappearing. They attack other creatures only if they themselves are
       attacked.</p>
-  actions:
-    - _id: wm1v7pp2iicv50h0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level or until discharged (D)
-      target:
-        value: object touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
   learnedAt:
     class:
       druid: 3
-      ranger: 3
-      witch: 3
-      shaman: 3
-      occultist: 3
       hunter: 3
+      occultist: 3
+      ranger: 3
+      shaman: 3
+      witch: 3
   level: 3
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a snake scale and fang
+  school: con
   sr: false
-_key: '!items!kxz9u4c7iyygzuvw'
+  subschool: summoning
+type: spell
 

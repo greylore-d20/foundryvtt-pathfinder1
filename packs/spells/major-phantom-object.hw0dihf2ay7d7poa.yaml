@@ -1,20 +1,11 @@
 _id: hw0dihf2ay7d7poa
-name: Major Phantom Object
-type: spell
+_key: '!items!hw0dihf2ay7d7poa'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Major Phantom Object
 system:
-  description:
-    value: >-
-      <p>This spell functions as the <i>major creation spell</i>, except as
-      noted above and the object created is a semi-real illusion. Any creature
-      that interacts with the object may make a Will save, with success causing
-      the object to cease to exist. A gnome casting this spell may make a
-      Spellcraft check in place of any Craft check required to make a complex
-      item.</p>
   actions:
     - _id: a9k2uxkegicf0r0d
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         cost: 10
         type: minute
@@ -23,25 +14,34 @@ system:
           type: minute
       duration:
         value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
       spellEffect: illusory, unattended, nonmagical object, up to 1 cu. ft./level
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as the <i>major creation spell</i>, except as
+      noted above and the object created is a semi-real illusion. Any creature
+      that interacts with the object may make a Will save, with success causing
+      the object to cease to exist. A gnome casting this spell may make a
+      Spellcraft check in place of any Craft check required to make a complex
+      item.</p>
   learnedAt:
     class:
+      mesmerist: 5
+      psychic: 5
       sorcerer: 5
       wizard: 5
-      psychic: 5
-      mesmerist: 5
   level: 5
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!hw0dihf2ay7d7poa'
+type: spell
 

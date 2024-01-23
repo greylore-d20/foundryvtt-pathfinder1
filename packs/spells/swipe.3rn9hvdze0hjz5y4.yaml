@@ -1,8 +1,26 @@
 _id: 3rn9hvdze0hjz5y4
-name: Swipe
-type: spell
+_key: '!items!3rn9hvdze0hjz5y4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Swipe
 system:
+  actions:
+    - _id: rt4fnknagjghbszw
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one held item
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By flicking a finger in the appropriate direction and proclaiming
@@ -13,32 +31,14 @@ system:
       you fail this check, the target retains the item and the spell fails. If
       you succeed, the item teleports into one of your free hands or comes to
       rest at your feet.</p>
-  actions:
-    - _id: rt4fnknagjghbszw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one held item
-      range:
-        units: close
   learnedAt:
     class:
+      bard: 2
       sorcerer: 3
       wizard: 3
-      bard: 2
   level: 3
   school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!3rn9hvdze0hjz5y4'
+  subschool: teleportation
+type: spell
 

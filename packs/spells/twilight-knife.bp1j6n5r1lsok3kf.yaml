@@ -1,8 +1,26 @@
 _id: bp1j6n5r1lsok3kf
-name: Twilight Knife
-type: spell
+_key: '!items!bp1j6n5r1lsok3kf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Twilight Knife
 system:
+  actions:
+    - _id: 9s2ypgih3a4aih76
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: floating knife of force
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a darkly sinister floating knife that attacks the same
@@ -28,37 +46,19 @@ system:
       knife is successfully resisted, the spell is dispelled. If not, the weapon
       has its normal full effect on that creature for the duration of the
       spell.</p>
-  actions:
-    - _id: 9s2ypgih3a4aih76
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: floating knife of force
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       bloodrager: 3
-      psychic: 3
       occultist: 3
+      psychic: 3
+      sorcerer: 3
       spiritualist: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: evo
-  types: force
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a small knife
-_key: '!items!bp1j6n5r1lsok3kf'
+  school: evo
+  types: force
+type: spell
 

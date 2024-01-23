@@ -1,8 +1,32 @@
 _id: 5m7ci3da78ugjwkz
-name: Air Bubble
-type: spell
+_key: '!items!5m7ci3da78ugjwkz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Air Bubble
 system:
+  actions:
+    - _id: fixg0ct6k564jpr2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature or one object no larger than a Large two-handed weapon
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
   description:
     value: >-
       <p><i>Air bubble</i> creates a small pocket of breathable air that
@@ -16,45 +40,21 @@ system:
       of water the bullet passes through, in addition to normal penalties due to
       range. If a firearm within the <i>air bubble</i> explodes, the explosion
       occurs normally.</p>
-  actions:
-    - _id: fixg0ct6k564jpr2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one creature or one object no larger than a Large two-handed weapon
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      ranger: 1
-      witch: 1
-      psychic: 1
       hunter: 1
-  school: con
-  subschool: creation
-  components:
-    somatic: true
-    material: true
-    divineFocus: 2
+      oracle: 1
+      psychic: 1
+      ranger: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     value: a small bladder filled with air
-_key: '!items!5m7ci3da78ugjwkz'
+  school: con
+  subschool: creation
+type: spell
 

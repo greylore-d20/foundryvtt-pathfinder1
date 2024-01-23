@@ -1,8 +1,32 @@
 _id: rm9o0r8qqrf2x2yc
-name: Pied Piping
-type: spell
+_key: '!items!rm9o0r8qqrf2x2yc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pied Piping
 system:
+  actions:
+    - _id: 3a30u55c7atk0y1n
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 90-ft.-radius emanation, centered on you
+      duration:
+        value: concentration + 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '90'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '90'
+      save:
+        description: Will partial; see text
+        type: will
+  components:
+    focus: true
   description:
     value: >-
       <p>You call forth a melody so compelling and attractive that creatures
@@ -37,38 +61,14 @@ system:
       spell persist for 1 round/ level even after you stop concentrating. Once
       the spell ceases, the affected creatures continue to stay near you until
       the effects of the spell wear off.</p>
-  actions:
-    - _id: 3a30u55c7atk0y1n
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level
-      range:
-        value: '90'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '90'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial; see text
-      area: 90-ft.-radius emanation, centered on you
   learnedAt:
     class:
       bard: 6
   level: 6
+  materials:
+    focus: musical instrument
   school: enc
   subschool: compulsion
   types: mind-affecting, sonic
-  components:
-    focus: true
-  materials:
-    focus: musical instrument
-_key: '!items!rm9o0r8qqrf2x2yc'
+type: spell
 

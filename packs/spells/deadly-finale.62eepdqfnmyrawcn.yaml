@@ -1,19 +1,11 @@
 _id: 62eepdqfnmyrawcn
-name: Deadly Finale
-type: spell
+_key: '!items!62eepdqfnmyrawcn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Deadly Finale
 system:
-  description:
-    value: >-
-      <p>You must have a bardic performance in effect to cast this
-      spell.</p><p>With a flourish, you immediately end your performance,
-      dealing 2d8 points of sonic damage to each target. In addition, each
-      target takes 3d6 points of bleed damage for 1d6 rounds. A save negates the
-      bleed damage but not the sonic damage.</p>
   actions:
     - _id: ghnfs1b0ria5rheq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,22 +13,30 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: 1 creature/3 levels no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude partial
+        type: fort
+      target:
+        value: 1 creature/3 levels no two of which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You must have a bardic performance in effect to cast this
+      spell.</p><p>With a flourish, you immediately end your performance,
+      dealing 2d8 points of sonic damage to each target. In addition, each
+      target takes 3d6 points of bleed damage for 1d6 rounds. A save negates the
+      bleed damage but not the sonic damage.</p>
   learnedAt:
     class:
       bard: 6
   level: 6
   school: evo
   types: sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!62eepdqfnmyrawcn'
+type: spell
 

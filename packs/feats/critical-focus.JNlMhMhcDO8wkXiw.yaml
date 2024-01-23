@@ -1,8 +1,14 @@
 _id: JNlMhMhcDO8wkXiw
-name: Critical Focus
-type: feat
+_key: '!items!JNlMhMhcDO8wkXiw'
 img: systems/pf1/icons/feats/critical-focus.jpg
+name: Critical Focus
 system:
+  changes:
+    - _id: bXK25AYp
+      formula: '4'
+      modifier: circumstance
+      priority: null
+      subTarget: critConfirm
   description:
     value: >-
       <p><em>You are trained in the art of causing
@@ -15,19 +21,13 @@ system:
       by 1 for this attack, and you can roll again. If you continue to roll 19
       or 20, you can continue to spend stamina points for additional rolls, and
       the increases to the critical multiplier stack.</p>
+  source:
+    id: PZO1110
+    pages: 114, 120
+  tag: feat_criticalFocus
   tags:
     - Combat
     - Critical
     - Combat Trick
-  changes:
-    - _id: bXK25AYp
-      formula: '4'
-      subTarget: critConfirm
-      modifier: circumstance
-      priority: null
-  tag: feat_criticalFocus
-  source:
-    id: PZO1110
-    pages: 114, 120
-_key: '!items!JNlMhMhcDO8wkXiw'
+type: feat
 

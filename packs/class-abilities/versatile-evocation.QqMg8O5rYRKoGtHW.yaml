@@ -1,8 +1,20 @@
 _id: QqMg8O5rYRKoGtHW
-name: Versatile Evocation
-type: feat
+_key: '!items!QqMg8O5rYRKoGtHW'
 img: systems/pf1/icons/spells/vines-acid-2.jpg
+name: Versatile Evocation
 system:
+  abilityType: su
+  actions:
+    - _id: 7r2mfr0hky9z02gc
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/vines-acid-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>When you cast an <em>evocation</em> spell that does acid, cold,
@@ -15,22 +27,10 @@ system:
       but it would not create difficult terrain). Such effects are subject to GM
       discretion. You can use this ability a number of times per day equal to 3
       + your <em>Intelligence</em> modifier.</p>
-  actions:
-    - _id: 7r2mfr0hky9z02gc
-      name: Use
-      img: systems/pf1/icons/spells/vines-acid-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_versatileEvocation
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!QqMg8O5rYRKoGtHW'
+  tag: classFeat_versatileEvocation
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

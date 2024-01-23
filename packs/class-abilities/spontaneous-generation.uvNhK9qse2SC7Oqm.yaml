@@ -1,8 +1,19 @@
 _id: uvNhK9qse2SC7Oqm
-name: Spontaneous Generation
-type: feat
+_key: '!items!uvNhK9qse2SC7Oqm'
 img: systems/pf1/icons/skills/arrow_11.jpg
+name: Spontaneous Generation
 system:
+  actions:
+    - _id: 050iyeefo3udsodt
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/arrow_11.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 3rd level, you gain @Compendium[pf1.feats.tD76K8QGco9scT0r]{Craft
@@ -11,18 +22,7 @@ system:
       item), you may ignore one spell prerequisite without increasing the
       creation DC. You can ignore an additional spell prerequisite at 9th, 15th,
       and 20th levels.</p>
-  actions:
-    - _id: 050iyeefo3udsodt
-      name: Use
-      img: systems/pf1/icons/skills/arrow_11.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_spontaneousGeneration
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-_key: '!items!uvNhK9qse2SC7Oqm'
+  tag: classFeat_spontaneousGeneration
+type: feat
 

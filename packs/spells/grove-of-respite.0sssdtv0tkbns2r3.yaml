@@ -1,8 +1,28 @@
 _id: 0sssdtv0tkbns2r3
-name: Grove of Respite
-type: spell
+_key: '!items!0sssdtv0tkbns2r3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Grove of Respite
 system:
+  actions:
+    - _id: mldqa26awhg9urdu
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 2 hours/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: 20-ft.-radius grove
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a sheltered grove of trees surrounding a shallow spring.
@@ -18,37 +38,17 @@ system:
       the grove vanishes, including all fruit, water, and other materials from
       it, although any nourishment or healing gained from its effects
       remains.</p>
-  actions:
-    - _id: mldqa26awhg9urdu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 2 hours/level (D)
-      range:
-        units: close
-      spellEffect: 20-ft.-radius grove
   learnedAt:
     class:
       druid: 4
+      hunter: 4
       ranger: 4
       shaman: 5
-      hunter: 4
   level: 4
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a leaf or blade of grass and a drop of water
+  school: con
   sr: false
-_key: '!items!0sssdtv0tkbns2r3'
+  subschool: creation
+type: spell
 

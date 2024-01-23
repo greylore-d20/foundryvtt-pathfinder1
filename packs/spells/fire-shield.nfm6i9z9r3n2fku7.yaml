@@ -1,8 +1,27 @@
 _id: nfm6i9z9r3n2fku7
-name: Fire Shield
-type: spell
+_key: '!items!nfm6i9z9r3n2fku7'
 img: icons/magic/defensive/armor-shield-barrier-steel.webp
+name: Fire Shield
 system:
+  actions:
+    - _id: kl80oys15cmc29lx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell wreathes you in flame and causes damage to each creature
@@ -27,46 +46,27 @@ system:
       Shield</i>: The flames are <i>warm</i> to the touch. You take only half
       damage from cold-based attacks. If such an attack allows a Reflex save for
       half damage, you take no damage on a successful saving throw.</p>
-  actions:
-    - _id: kl80oys15cmc29lx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       alchemist: 4
-      summoner: 3
-      magus: 4
       bloodrager: 4
+      magus: 4
       occultist: 4
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 4
+      wizard: 4
     domain:
       Fire: 5
       Sun: 4
   level: 4
-  school: evo
-  types: fire or cold
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: phosphorus for the warm shield; a firefly or glowworm for the chill shield
-  sr: false
+  school: evo
   source:
     id: PZO1110
     pages: '282'
-_key: '!items!nfm6i9z9r3n2fku7'
+  sr: false
+  types: fire or cold
+type: spell
 

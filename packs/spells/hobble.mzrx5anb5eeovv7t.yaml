@@ -1,8 +1,31 @@
 _id: mzrx5anb5eeovv7t
-name: Hobble
-type: spell
+_key: '!items!mzrx5anb5eeovv7t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hobble
 system:
+  actions:
+    - _id: 2sfjnq5j8swpi7c7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature/level, no two of which can be more than 20 feet apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell disrupts the method a target uses for movement. Creatures
@@ -11,45 +34,22 @@ system:
       normal. Incorporeal creatures and creatures flying with perfect
       maneuverability are immune to the effects of this spell. Each round, a
       target receives another save to end the effect.</p>
-  actions:
-    - _id: 2sfjnq5j8swpi7c7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 20 feet apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      ranger: 1
       bard: 1
+      bloodrager: 1
+      hunter: 1
       inquisitor: 1
       magus: 1
-      bloodrager: 1
       mesmerist: 1
-      hunter: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      ranger: 1
+      sorcerer: 1
+      wizard: 1
   materials:
     value: a drop of glue
+  school: trs
   source:
     id: PZO1136
     pages: '200'
-_key: '!items!mzrx5anb5eeovv7t'
+type: spell
 

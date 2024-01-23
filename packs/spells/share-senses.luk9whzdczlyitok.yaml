@@ -1,8 +1,32 @@
 _id: luk9whzdczlyitok
-name: Share Senses
-type: spell
+_key: '!items!luk9whzdczlyitok'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Share Senses
 system:
+  actions:
+    - _id: x5n5j4ndrfq2u3dx
+      actionType: spellsave
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: your familiar
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Spending a moment in meditation and conjuring an image of the creature
@@ -19,41 +43,17 @@ system:
       unless your familiar possesses the ability to see in such
       conditions.</p><p>The sensory link with your familiar can be detected as
       though it were a scrying sensor.</p>
-  actions:
-    - _id: x5n5j4ndrfq2u3dx
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: your familiar
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      witch: 3
-      psychic: 3
       medium: 3
+      psychic: 3
+      sorcerer: 4
+      witch: 3
+      wizard: 4
   level: 4
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a hair, scale, or feather from your familiar
-_key: '!items!luk9whzdczlyitok'
+  school: div
+  subschool: scrying
+type: spell
 

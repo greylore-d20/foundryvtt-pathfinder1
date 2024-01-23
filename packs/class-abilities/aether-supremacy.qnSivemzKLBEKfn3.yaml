@@ -1,7 +1,17 @@
-name: Aether Supremacy
-type: feat
+_id: qnSivemzKLBEKfn3
+_key: '!items!qnSivemzKLBEKfn3'
 img: icons/magic/unholy/hand-grasping-green.webp
+name: Aether Supremacy
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: OiVwIcqB
+      formula: 2 + floor(@classes.wizard.level / 5)
+      modifier: untyped
+      subTarget: skill.slt
   description:
     value: >-
       <p>You gain a +2 enhancement bonus on
@@ -18,21 +28,11 @@ system:
       Hand check as a move action with only a –10 penalty. At 20th level,
       whenever you attempt a Sleight of Hand check, assume the roll resulted in
       a natural 20.</p>
-  tags:
-    - Aether School
-  changes:
-    - _id: OiVwIcqB
-      formula: 2 + floor(@classes.wizard.level / 5)
-      subTarget: skill.slt
-      modifier: untyped
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9483
     pages: '20'
-_id: qnSivemzKLBEKfn3
-_key: '!items!qnSivemzKLBEKfn3'
+  subType: classFeat
+  tags:
+    - Aether School
+type: feat
 

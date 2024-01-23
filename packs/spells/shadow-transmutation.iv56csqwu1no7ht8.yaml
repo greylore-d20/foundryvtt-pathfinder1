@@ -1,8 +1,30 @@
 _id: iv56csqwu1no7ht8
-name: Shadow Transmutation
-type: spell
+_key: '!items!iv56csqwu1no7ht8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Transmutation
 system:
+  actions:
+    - _id: alafz2sqru7gq6fo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      save:
+        description: Will disbelief (if interacted with); varies; see text
+        type: will
+      target:
+        value: see text
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You suffuse one subject's body with energy from the Shadow Plane,
@@ -26,42 +48,20 @@ system:
       abilities that don't deal damage have only a 20% chance of working against
       them. Creatures that succeed at their saves see the <i>shadow
       transmutation</i> as transparent images superimposed over the target.</p>
-  actions:
-    - _id: alafz2sqru7gq6fo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: see text
-      range:
-        units: seeText
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelief (if interacted with); varies; see text
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 6
-      summoner: 6
-      witch: 6
-      shaman: 6
       medium: 6
+      shaman: 6
+      sorcerer: 6
       spiritualist: 6
+      summoner: 6
       summonerUnchained: 6
+      witch: 6
+      wizard: 6
   level: 6
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!iv56csqwu1no7ht8'
+type: spell
 

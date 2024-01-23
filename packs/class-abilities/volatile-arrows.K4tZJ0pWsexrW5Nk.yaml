@@ -1,8 +1,22 @@
 _id: K4tZJ0pWsexrW5Nk
-name: Volatile Arrows
-type: feat
+_key: '!items!K4tZJ0pWsexrW5Nk'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Volatile Arrows
 system:
+  abilityType: ex
+  actions:
+    - _id: 669izyzik6bec4t8
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/deceitful.jpg
+      name: Use
+  associations:
+    classes:
+      - Vigilante
   description:
     value: >-
       <p>A vigilante with this talent gains the ability to attach an alchemist
@@ -17,24 +31,10 @@ system:
       alchemist discovery that can modify bombs, treating his vigilante level as
       his alchemist level for any prerequisites. He can apply these discoveries
       to his bombs as normal.</p>
-  actions:
-    - _id: 669izyzik6bec4t8
-      name: Use
-      img: systems/pf1/icons/feats/deceitful.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        units: inst
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_volatileArrows
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!K4tZJ0pWsexrW5Nk'
+  tag: classFeat_volatileArrows
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

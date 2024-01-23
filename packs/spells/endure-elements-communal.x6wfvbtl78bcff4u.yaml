@@ -1,16 +1,11 @@
 _id: x6wfvbtl78bcff4u
-name: Endure Elements, Communal
-type: spell
+_key: '!items!x6wfvbtl78bcff4u'
 img: icons/magic/defensive/armor-shield-barrier-steel.webp
+name: Endure Elements, Communal
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>endure elements</i>, except you divide the
-      duration in 1-hour increments among the creatures touched.</p>
   actions:
     - _id: agxp2r1j1y7zlso4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,32 +13,37 @@ system:
           type: action
       duration:
         value: 24 hours
-      target:
-        value: creatures touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creatures touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>endure elements</i>, except you divide the
+      duration in 1-hour increments among the creatures touched.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
-      druid: 2
-      ranger: 2
-      paladin: 2
       alchemist: 3
-      psychic: 2
+      cleric: 2
+      druid: 2
       hunter: 2
+      oracle: 2
+      paladin: 2
+      psychic: 2
+      ranger: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!x6wfvbtl78bcff4u'
+type: spell
 

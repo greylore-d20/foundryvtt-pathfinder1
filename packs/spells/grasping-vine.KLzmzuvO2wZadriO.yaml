@@ -1,7 +1,26 @@
-name: Grasping Vine
-type: spell
+_id: KLzmzuvO2wZadriO
+_key: '!items!KLzmzuvO2wZadriO'
 img: icons/magic/nature/root-vine-entangled-hand.webp
+name: Grasping Vine
 system:
+  actions:
+    - _id: OUgnRnMEkUCZtLSF
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: icons/magic/nature/root-vine-entangled-hand.webp
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a long, thin vine to sprout from your body—typically from the
@@ -15,21 +34,6 @@ system:
       Device} modifier with a –2 penalty, or perform any other task that the GM
       deems reasonable. The vine does not threaten squares and cannot make
       attacks of opportunity, nor can it wield weapons.</p>
-  actions:
-    - _id: OUgnRnMEkUCZtLSF
-      name: Use
-      img: icons/magic/nature/root-vine-entangled-hand.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       alchemist: 2
@@ -45,10 +49,6 @@ system:
       wizard: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_id: KLzmzuvO2wZadriO
-_key: '!items!KLzmzuvO2wZadriO'
+type: spell
 

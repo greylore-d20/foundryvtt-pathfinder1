@@ -1,8 +1,12 @@
 _id: RxHkKGrifrW40Hzv
-name: Blizzard (ORA)
-type: feat
+_key: '!items!RxHkKGrifrW40Hzv'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Blizzard (ORA)
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can create a blizzard of snow and ice. You
@@ -16,15 +20,11 @@ system:
       beyond 5 feet, providing total concealment. A creature within 5 feet has
       concealment. You can use this ability once per day. You must be 11th level
       to select this revelation.</p>
+  subType: classFeat
+  tag: classFeat_blizzardOra
   uses:
+    maxFormula: '1'
     per: day
     value: 1
-    maxFormula: '1'
-  tag: classFeat_blizzardOra
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!RxHkKGrifrW40Hzv'
+type: feat
 

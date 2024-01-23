@@ -1,8 +1,25 @@
 _id: wuispaydz8jvw3io
-name: Echolocation
-type: spell
+_key: '!items!wuispaydz8jvw3io'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Echolocation
 system:
+  actions:
+    - _id: 39gtw9ygdj843fsy
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>You can perceive the world by creating high-pitched noises and
@@ -12,38 +29,21 @@ system:
       ability (such as bats), and creatures with hearing-based blindsense or
       blindsight. You cannot use this ability if you are deaf, and cannot detect
       anything in an area of <i>silence</i>.</p>
-  actions:
-    - _id: 39gtw9ygdj843fsy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
-    class:
-      sorcerer: 5
-      wizard: 5
-      druid: 4
-      bard: 4
-      alchemist: 4
-      psychic: 5
-      occultist: 4
-      hunter: 4
     bloodline:
       Nanite: 5
+    class:
+      alchemist: 4
+      bard: 4
+      druid: 4
+      hunter: 4
+      occultist: 4
+      psychic: 5
+      sorcerer: 5
+      wizard: 5
   level: 5
   school: trs
-  types: sonic
-  components:
-    verbal: true
   sr: false
-_key: '!items!wuispaydz8jvw3io'
+  types: sonic
+type: spell
 

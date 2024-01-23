@@ -1,8 +1,78 @@
 _id: dy9heupz99aivfrr
-name: Ice Spears
-type: spell
+_key: '!items!dy9heupz99aivfrr'
 img: systems/pf1/icons/skills/ice_02.jpg
+name: Ice Spears
 system:
+  actions:
+    - _id: sz3v938msvrbaexs
+      ability:
+        critMult: null
+        critRange: null
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackName: Trip
+      damage:
+        parts:
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - piercing
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        value: instantaneous
+      formulaicAttacks:
+        count:
+          formula: floor(@cl / 4) - 1
+        label: 'Ice Spear #{0}'
+      img: systems/pf1/icons/skills/ice_02.jpg
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Spears
+      range:
+        units: close
+      save:
+        description: Reflex half and see below
+        type: ref
+      spellEffect: 1 ice spear/4 levels
+    - _id: iHyUmzP8XzXlU7fo
+      ability:
+        critMult: null
+        critRange: null
+      actionType: rcman
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      attackBonus: >-
+        -@attributes.bab.total[Base Attack Bonus] + @cl[Caster Level] +
+        @ablMod[Caster Ability Mod]
+      attackName: Trip
+      duration:
+        value: ''
+      effectNotes:
+        - >-
+          Each additional ice spear beyond the first that strikes a single foe
+          grants a +10 bonus on this combat maneuver check.
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/skills/ice_02.jpg
+      name: Trip
+      uses:
+        autoDeductChargesCost: '0'
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Favored by the spellcasters of Irrisen, this potent spell can disrupt
@@ -31,88 +101,18 @@ system:
       They melt as normal depending on the surrounding environment. They no
       longer damage foes in their square, but can provide cover. An <i>ice
       spear</i> has hardness 5 and 30 hit points.</p>
-  actions:
-    - _id: sz3v938msvrbaexs
-      name: Spears
-      img: systems/pf1/icons/skills/ice_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      range:
-        units: close
-      measureTemplate:
-        type: rect
-        size: '5'
-      attackName: Trip
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 2d6
-            type:
-              values:
-                - piercing
-              custom: ''
-          - formula: 2d6
-            type:
-              values:
-                - cold
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: floor(@cl / 4) - 1
-        label: 'Ice Spear #{0}'
-      ability:
-        critRange: null
-        critMult: null
-      save:
-        type: ref
-        description: Reflex half and see below
-      spellEffect: 1 ice spear/4 levels
-    - _id: iHyUmzP8XzXlU7fo
-      name: Trip
-      img: systems/pf1/icons/skills/ice_02.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      duration:
-        value: ''
-      uses:
-        autoDeductChargesCost: '0'
-      attackName: Trip
-      actionType: rcman
-      attackBonus: >-
-        -@attributes.bab.total[Base Attack Bonus] + @cl[Caster Level] +
-        @ablMod[Caster Ability Mod]
-      formulaicAttacks:
-        label: ''
-      ability:
-        critRange: null
-        critMult: null
-      effectNotes:
-        - >-
-          Each additional ice spear beyond the first that strikes a single foe
-          grants a +10 bonus on this combat maneuver check.
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
-      witch: 3
       hunter: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  types: cold
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a small stalagmite-shaped crystal
+  school: con
   sr: false
-_key: '!items!dy9heupz99aivfrr'
+  types: cold
+type: spell
 

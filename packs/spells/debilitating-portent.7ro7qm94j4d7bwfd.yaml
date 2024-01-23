@@ -1,8 +1,27 @@
 _id: 7ro7qm94j4d7bwfd
-name: Debilitating Portent
-type: spell
+_key: '!items!7ro7qm94j4d7bwfd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Debilitating Portent
 system:
+  actions:
+    - _id: 8jqg0k5wo1svmbpk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D) see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      target:
+        value: one creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target is surrounded by a glowing green aura of ill fate. Each time
@@ -14,36 +33,17 @@ system:
       when the target confirms a critical hit; doing so negates the critical
       hit. The attack that you negated still hits, but only deals half
       damage.</p>
-  actions:
-    - _id: 8jqg0k5wo1svmbpk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D) see text
-      target:
-        value: one creature
-      range:
-        units: medium
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
       oracle: 4
-      witch: 4
       psychic: 4
       spiritualist: 4
+      warpriest: 4
+      witch: 4
   level: 4
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!7ro7qm94j4d7bwfd'
+type: spell
 

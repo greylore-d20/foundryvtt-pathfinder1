@@ -1,8 +1,30 @@
 _id: i9Jwvqs0A7dUPYKd
-name: Damnation Susurrus
-type: feat
+_key: '!items!i9Jwvqs0A7dUPYKd'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Damnation Susurrus
 system:
+  abilityType: su
+  actions:
+    - _id: yjsynqbftk9xv4rj
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can spend 1 point from his arcane reservoir as a standard
@@ -15,31 +37,9 @@ system:
       <p>At 3rd level, and again at every 3 levels thereafter, the arcanist can
       target an additional creature with this exploit, to a maximum of 7 targets
       at 18th level. Damnation susurrus is a mind-affecting effect.</p>
+  subType: classFeat
+  tag: classFeat_damnationSusurrus
   tags:
     - Arcanist Exploit, Outer Rift
-  actions:
-    - _id: yjsynqbftk9xv4rj
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_damnationSusurrus
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!i9Jwvqs0A7dUPYKd'
+type: feat
 

@@ -1,8 +1,24 @@
 _id: 7a95u92t5y8zjwrl
-name: Ether Step
-type: spell
+_key: '!items!7a95u92t5y8zjwrl'
 img: icons/magic/defensive/illusion-evasion-echo-purple.webp
+name: Ether Step
 system:
+  actions:
+    - _id: tlha8lbcllouubn5
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
   description:
     value: >-
       <p>You step into the Ethereal Plane long enough to dodge a blow or
@@ -12,30 +28,14 @@ system:
       become ethereal until the beginning of your next turn. On the turn after
       you cast this spell and return to your starting point, you can take only
       move actions or free actions.</p>
-  actions:
-    - _id: tlha8lbcllouubn5
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: see text
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
-      summoner: 5
       magus: 5
+      sorcerer: 6
+      summoner: 5
+      wizard: 6
   level: 6
   school: trs
-  components:
-    somatic: true
   sr: false
-_key: '!items!7a95u92t5y8zjwrl'
+type: spell
 

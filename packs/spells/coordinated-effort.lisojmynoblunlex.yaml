@@ -1,8 +1,28 @@
 _id: lisojmynoblunlex
-name: Coordinated Effort
-type: spell
+_key: '!items!lisojmynoblunlex'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Coordinated Effort
 system:
+  actions:
+    - _id: sifonjsng6wpv22m
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: >-
+          you plus one willing creature per 3 levels, no two of which can be
+          more than 30 ft. part
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Choose a single teamwork feat that you possess. You forge a link with
@@ -13,23 +33,6 @@ system:
       feat, but an ally flanking the orc with you would. Your allies'
       positioning and actions must still meet the prerequisites listed in the
       teamwork feat for either of you to receive the listed bonus.</p>
-  actions:
-    - _id: sifonjsng6wpv22m
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: >-
-          you plus one willing creature per 3 levels, no two of which can be
-          more than 30 ft. part
-      range:
-        units: close
   learnedAt:
     class:
       bard: 3
@@ -39,9 +42,6 @@ system:
       Cooperation: 3
   level: 3
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!lisojmynoblunlex'
+type: spell
 

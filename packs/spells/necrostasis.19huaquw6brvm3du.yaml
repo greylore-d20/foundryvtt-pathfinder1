@@ -1,19 +1,11 @@
 _id: 19huaquw6brvm3du
-name: Necrostasis
-type: spell
+_key: '!items!19huaquw6brvm3du'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Necrostasis
 system:
-  description:
-    value: >-
-      <p>You drain necromantic energy from an undead creature, inducing a
-      sluggish stupor. The target becomes staggered. For the duration of the
-      spell, dark wisps of energy seep out of the target creature. If the target
-      already has the staggered condition (as a zombie does), it becomes dazed
-      for 1 round instead.</p>
   actions:
     - _id: ht2jt79q1gauvt8j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,33 +13,41 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
-      target:
-        value: one undead creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one undead creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You drain necromantic energy from an undead creature, inducing a
+      sluggish stupor. The target becomes staggered. For the duration of the
+      spell, dark wisps of energy seep out of the target creature. If the target
+      already has the staggered condition (as a zombie does), it becomes dazed
+      for 1 round instead.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 2
       inquisitor: 2
+      oracle: 2
       shaman: 2
+      sorcerer: 3
       spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 3
   level: 3
-  school: nec
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a finger bone
-_key: '!items!19huaquw6brvm3du'
+  school: nec
+type: spell
 

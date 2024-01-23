@@ -1,8 +1,27 @@
 _id: ky8ufep3j4d91bho
-name: Release the Hounds
-type: spell
+_key: '!items!ky8ufep3j4d91bho'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Release the Hounds
 system:
+  actions:
+    - _id: oa2gln119ordghuq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one pack of canines
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons a pack of canines that respond to the spellcaster's
@@ -18,41 +37,22 @@ system:
       specific number of creatures, though such attacks deal 1/4 the normal
       amount of damage (25%) and effects that don't deal hit point damage are
       only 25% likely to work.</p>
-  actions:
-    - _id: oa2gln119ordghuq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      range:
-        units: close
-      spellEffect: one pack of canines
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
-      druid: 5
       bard: 5
-      summoner: 5
-      witch: 5
-      shaman: 5
+      druid: 5
       hunter: 5
+      shaman: 5
+      sorcerer: 5
+      summoner: 5
       summonerUnchained: 5
+      witch: 5
+      wizard: 5
   level: 5
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: shards of a canine's fang
+  school: con
   sr: false
-_key: '!items!ky8ufep3j4d91bho'
+  subschool: summoning
+type: spell
 

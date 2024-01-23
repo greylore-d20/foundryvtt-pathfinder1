@@ -1,7 +1,29 @@
-name: Knell of the Depths
-type: spell
+_id: wcKbbzudKI2A2cUc
+_key: '!items!wcKbbzudKI2A2cUc'
 img: icons/magic/water/waves-water-blue.webp
+name: Knell of the Depths
 system:
+  actions:
+    - _id: RJIjR59ZSCWXvznu
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: permanent
+      img: icons/magic/water/waves-water-blue.webp
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      touch: true
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You invest a target with cursed elemental energy, causing nearby bodies
@@ -11,24 +33,6 @@ system:
       checks and automatically sinks 15 feet per round when in any body of
       liquid. The creature does not sink if standing upon a solid surface
       capable of supporting its weight, even if it is submerged.</p>
-  actions:
-    - _id: RJIjR59ZSCWXvznu
-      name: Use
-      img: icons/magic/water/waves-water-blue.webp
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: permanent
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      touch: true
   learnedAt:
     class:
       arcanist: 3
@@ -43,9 +47,5 @@ system:
   level: 3
   school: con
   types: curse, water
-  components:
-    verbal: true
-    somatic: true
-_id: wcKbbzudKI2A2cUc
-_key: '!items!wcKbbzudKI2A2cUc'
+type: spell
 

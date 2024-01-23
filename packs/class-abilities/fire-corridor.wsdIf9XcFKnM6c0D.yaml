@@ -1,8 +1,24 @@
 _id: wsdIf9XcFKnM6c0D
-name: Fire Corridor
-type: feat
+_key: '!items!wsdIf9XcFKnM6c0D'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Fire Corridor
 system:
+  abilityType: sp
+  actions:
+    - _id: 57w3jqnvwrd6o2w6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 5;
@@ -17,23 +33,7 @@ system:
       <p>The passage lasts for 1 hour, though you can end the effect at any time
       as a free action. If this effect ends while a creature is inside the
       tunnel, that creature is affected by the fire or lava as normal.</p>
-  actions:
-    - _id: 57w3jqnvwrd6o2w6
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: hour
-  tag: classFeat_fireCorridor
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!wsdIf9XcFKnM6c0D'
+  tag: classFeat_fireCorridor
+type: feat
 

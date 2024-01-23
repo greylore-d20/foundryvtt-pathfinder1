@@ -1,8 +1,21 @@
 _id: hbttw8IQ2kKnpOnB
-name: Shadow Step
-type: feat
+_key: '!items!hbttw8IQ2kKnpOnB'
 img: systems/pf1/icons/spells/fog-orange-1.jpg
+name: Shadow Step
 system:
+  abilityType: sp
+  actions:
+    - _id: rh4khcgcdyhq7ymk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/fog-orange-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you can use this ability to walk through the Shadow Plane
@@ -20,20 +33,7 @@ system:
       distance for each additional creature brought with you. They likewise
       re-enter off target (roll location for each creature) and are cloaked in
       shadow for 1 round.</p>
-  actions:
-    - _id: rh4khcgcdyhq7ymk
-      name: Use
-      img: systems/pf1/icons/spells/fog-orange-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_shadowStep
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: sp
-_key: '!items!hbttw8IQ2kKnpOnB'
+  tag: classFeat_shadowStep
+type: feat
 

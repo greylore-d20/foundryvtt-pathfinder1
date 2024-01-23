@@ -1,8 +1,27 @@
 _id: m1huu174stgdj3tb
-name: Naga Shape II
-type: spell
+_key: '!items!m1huu174stgdj3tb'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Naga Shape II
 system:
+  actions:
+    - _id: mhn54i3pe0suu8co
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>naga shape I</i>. Additionally, if the form
@@ -11,37 +30,18 @@ system:
       maneuverability), swim 90 feet, blindsense 30 feet, darkvision 60 feet,
       low-light vision, compression, constrict, detect thoughts, dreamsight,
       grab, hypnosis, poison, sneak attack +2d6, and spit.</p>
-  actions:
-    - _id: mhn54i3pe0suu8co
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 5
+      bloodrager: 5
+      magus: 5
       sorcerer: 5
       wizard: 5
-      alchemist: 5
-      magus: 5
-      bloodrager: 5
   level: 5
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a piece of the creature whose form you want to assume
+  school: trs
   sr: false
-_key: '!items!m1huu174stgdj3tb'
+  subschool: polymorph
+type: spell
 

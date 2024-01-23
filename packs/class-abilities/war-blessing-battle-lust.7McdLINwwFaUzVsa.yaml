@@ -1,8 +1,27 @@
 _id: 7McdLINwwFaUzVsa
-name: 'War Blessing: Battle Lust'
-type: feat
+_key: '!items!7McdLINwwFaUzVsa'
 img: systems/pf1/icons/spells/enchant-sky-3.jpg
+name: 'War Blessing: Battle Lust'
 system:
+  actions:
+    - _id: d2thjjbe54pd91ys
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/enchant-sky-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ally touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can touch an ally and grant it a thirst for battle.
@@ -12,26 +31,7 @@ system:
       insight bonus on attack rolls made to confirm critical hits.</p>
 
       <p>These benefits last for 1 minute.</p>
-  actions:
-    - _id: d2thjjbe54pd91ys
-      name: Use
-      img: systems/pf1/icons/spells/enchant-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: ally touched
-      range:
-        units: touch
-  tag: classFeat_warBlessingBattleLust
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!7McdLINwwFaUzVsa'
+  tag: classFeat_warBlessingBattleLust
+type: feat
 

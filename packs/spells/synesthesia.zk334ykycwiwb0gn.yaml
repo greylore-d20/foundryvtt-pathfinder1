@@ -1,8 +1,30 @@
 _id: zk334ykycwiwb0gn
-name: Synesthesia
-type: spell
+_key: '!items!zk334ykycwiwb0gn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Synesthesia
 system:
+  actions:
+    - _id: less7ogf5jh1rytu
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You overstimulate the senses of the affected creature, causing its
@@ -16,35 +38,13 @@ system:
       addition, the affected creature is considered distracted for the purpose
       of attempting Perception checks. Effects that negate or reduce concealment
       do not affect the miss chance from <i>synesthesia</i>.</p>
-  actions:
-    - _id: less7ogf5jh1rytu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      psychic: 3
       mesmerist: 3
+      psychic: 3
   level: 3
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!zk334ykycwiwb0gn'
+type: spell
 

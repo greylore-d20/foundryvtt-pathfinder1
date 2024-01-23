@@ -1,18 +1,10 @@
 _id: jajy0sk9jq0tnwlj
-name: Strand of the Tangled Knot
-type: spell
+_key: '!items!jajy0sk9jq0tnwlj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Strand of the Tangled Knot
 system:
-  description:
-    value: >-
-      <p>You mimic tugging at the Green Mother's legendary Tangled Knot to
-      subtly alter your fate. The next single attack made against you takes a
-      -10 penalty. If that attack is a critical hit, it is instead treated as a
-      normal hit.</p>
   actions:
     - _id: dtzm1qkcff9jyji2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -20,26 +12,34 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You mimic tugging at the Green Mother's legendary Tangled Knot to
+      subtly alter your fate. The next single attack made against you takes a
+      -10 penalty. If that attack is a critical hit, it is instead treated as a
+      normal hit.</p>
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
-      oracle: 1
-      witch: 1
       inquisitor: 1
+      oracle: 1
       shaman: 1
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      warpriest: 1
+      witch: 1
   materials:
     value: a small knot of twine
+  school: abj
   sr: false
-_key: '!items!jajy0sk9jq0tnwlj'
+type: spell
 

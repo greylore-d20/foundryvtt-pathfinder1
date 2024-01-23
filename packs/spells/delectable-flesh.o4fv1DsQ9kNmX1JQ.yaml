@@ -1,8 +1,32 @@
 _id: o4fv1DsQ9kNmX1JQ
-name: Delectable Flesh
-type: spell
+_key: '!items!o4fv1DsQ9kNmX1JQ'
 img: icons/consumables/meat/hock-leg-red-brown.webp
+name: Delectable Flesh
 system:
+  actions:
+    - _id: knmyabmtxum5p0wd
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: icons/consumables/meat/hock-leg-red-brown.webp
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: >-
+          all creatures in a 15-foot-radius burst centered on a single living
+          creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Choose a creature within range as the object of hunger. All other
@@ -24,40 +48,16 @@ system:
       nourishment succeeds at a save to end the depraved effect early, it takes
       a -2 penalty on ability checks, attack rolls, concentration checks, saving
       throws, and skill checks whenever it is within 15 feet of the target.</p>
-  actions:
-    - _id: knmyabmtxum5p0wd
-      name: Use
-      img: icons/consumables/meat/hock-leg-red-brown.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: >-
-          all creatures in a 15-foot-radius burst centered on a single living
-          creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       arcanist: 6
       druid: 7
       shaman: 7
       sorcerer: 6
-      wizard: 6
       witch: 6
+      wizard: 6
   level: 6
   school: trs
   types: mind-affecting, polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!o4fv1DsQ9kNmX1JQ'
+type: spell
 

@@ -1,8 +1,27 @@
 _id: hVrmBvlqeeLbwVxn
-name: Copycat
-type: feat
+_key: '!items!hVrmBvlqeeLbwVxn'
 img: systems/pf1/icons/skills/violet_03.jpg
+name: Copycat
 system:
+  abilityType: sp
+  actions:
+    - _id: rmep55cvcmijqya9
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '@classes.cleric.level'
+      img: systems/pf1/icons/skills/violet_03.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can create an illusory double of yourself as a move action. This
@@ -13,32 +32,13 @@ system:
       at a time. This ability does not stack with the mirror image spell. You
       can use this ability a number of times per day equal to 3 + your Wisdom
       modifier.</p>
-  actions:
-    - _id: rmep55cvcmijqya9
-      name: Use
-      img: systems/pf1/icons/skills/violet_03.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '@classes.cleric.level'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_copycat
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
   source:
     id: PZO1110
     pages: '48'
-_key: '!items!hVrmBvlqeeLbwVxn'
+  subType: classFeat
+  tag: classFeat_copycat
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

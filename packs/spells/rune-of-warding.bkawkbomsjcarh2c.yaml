@@ -1,8 +1,30 @@
 _id: bkawkbomsjcarh2c
-name: Rune of Warding
-type: spell
+_key: '!items!bkawkbomsjcarh2c'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Rune of Warding
 system:
+  actions:
+    - _id: 683jnc5wtl6qdzx7
+      actionType: spellsave
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: permanent until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: doorway or portal touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You inscribe a series of runes upon the surface of a door or around the
@@ -11,39 +33,17 @@ system:
       visible. The runes count as a <i>Glyph of Warding</i> for the purpose of
       what spells can defeat it, placing multiple glyphs in the same area, and
       so on.</p>
-  actions:
-    - _id: 683jnc5wtl6qdzx7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: permanent until discharged
-      target:
-        value: doorway or portal touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half
   learnedAt:
     class:
       sorcerer: 3
       wizard: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
-    value: powdered adamantine, diamond, or mithral worth 200 gp
     gpValue: 200
+    value: powdered adamantine, diamond, or mithral worth 200 gp
   preparation:
     spontaneousPrepared: false
+  school: abj
   sr: false
-_key: '!items!bkawkbomsjcarh2c'
+type: spell
 

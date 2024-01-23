@@ -1,8 +1,26 @@
 _id: sh0sci8zflhtmaqx
-name: Talismanic Implement
-type: spell
+_key: '!items!sh0sci8zflhtmaqx'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Talismanic Implement
 system:
+  actions:
+    - _id: yjpfyre7pbed4ld7
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 hour/level (D) or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>contingency</i>, but you invest a spell
@@ -19,29 +37,11 @@ system:
       <i>talismanic implement</i> spell, and if you have any <i>talismanic
       implement</i>s, you can't have any other kind of <i>contingency</i> in
       effect.</p>
-  actions:
-    - _id: yjpfyre7pbed4ld7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 hour/level (D) or until discharged
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       occultist: 3
   level: 3
   school: evo
-  components:
-    verbal: true
   sr: false
-_key: '!items!sh0sci8zflhtmaqx'
+type: spell
 

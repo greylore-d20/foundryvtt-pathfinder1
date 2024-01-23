@@ -1,8 +1,30 @@
 _id: aTUEmCxUcbdAqgRO
-name: Fey Creature
-type: feat
+_key: '!items!aTUEmCxUcbdAqgRO'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Fey Creature
 system:
+  changes:
+    - _id: 52jqw8b9
+      formula: '(@ac.natural.total >= 1) ? -1 : 0'
+      modifier: penalty
+      subTarget: nac
+    - _id: 49zh108t
+      formula: '4'
+      modifier: untyped
+      subTarget: dex
+    - _id: 3ioq7jh6
+      formula: '2'
+      modifier: untyped
+      subTarget: int
+    - _id: wte49dpe
+      formula: '2'
+      modifier: untyped
+      subTarget: cha
+    - _id: 84rjwfkb
+      formula: '-2'
+      modifier: untyped
+      subTarget: str
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Both<br><b>Simple Template</b>
@@ -223,28 +245,6 @@ system:
 
       <p><b>Languages:</b> Fey creatures speak Sylvan as well as any languages
       spoken by the base creature.</p>
-  changes:
-    - _id: 52jqw8b9
-      formula: '(@ac.natural.total >= 1) ? -1 : 0'
-      subTarget: nac
-      modifier: penalty
-    - _id: 49zh108t
-      formula: '4'
-      subTarget: dex
-      modifier: untyped
-    - _id: 3ioq7jh6
-      formula: '2'
-      subTarget: int
-      modifier: untyped
-    - _id: wte49dpe
-      formula: '2'
-      subTarget: cha
-      modifier: untyped
-    - _id: 84rjwfkb
-      formula: '-2'
-      subTarget: str
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!aTUEmCxUcbdAqgRO'
+type: feat
 

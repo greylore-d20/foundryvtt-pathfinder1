@@ -1,8 +1,32 @@
 _id: k58e2tjgcvbdrlsw
-name: Unfetter
-type: spell
+_key: '!items!k58e2tjgcvbdrlsw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Unfetter
 system:
+  actions:
+    - _id: e5njknjzqyvcsx55
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: your eidolon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell breaks the life link between you and your eidolon. This
@@ -16,37 +40,13 @@ system:
       transferred. If you attempt to use the transposition ability while this
       spell is in effect, you must roll on the <i>teleport</i> mishap table,
       using the "studied carefully" row.</p>
-  actions:
-    - _id: e5njknjzqyvcsx55
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: your eidolon
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
       summoner: 1
       summonerUnchained: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a broken chain
+  school: trs
   sr: false
-_key: '!items!k58e2tjgcvbdrlsw'
+type: spell
 

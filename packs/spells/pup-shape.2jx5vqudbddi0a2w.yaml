@@ -1,8 +1,31 @@
 _id: 2jx5vqudbddi0a2w
-name: Pup Shape
-type: spell
+_key: '!items!2jx5vqudbddi0a2w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Pup Shape
 system:
+  actions:
+    - _id: 2jp8sbpum0mijky1
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates (and Will special, see text)
+        type: fort
+      target:
+        value: one animal
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You transform the subject animal into a Small magical beast (or a
@@ -22,40 +45,17 @@ system:
       creatures have no qualms about attacking the target of this spell, in
       fact, some particularly heinous creatures might go out of their ways to do
       the target harm.</p>
-  actions:
-    - _id: 2jp8sbpum0mijky1
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one animal
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (and Will special, see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       druid: 3
-      witch: 3
       hunter: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a rag doll
-_key: '!items!2jx5vqudbddi0a2w'
+  school: trs
+  subschool: polymorph
+type: spell
 

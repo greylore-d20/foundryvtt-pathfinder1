@@ -1,8 +1,26 @@
 _id: XJkWVYULYvSUAgLw
-name: Irori's Boon
-type: feat
+_key: '!items!XJkWVYULYvSUAgLw'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Irori's Boon
 system:
+  abilityType: su
+  actions:
+    - _id: oscbpxh6scd5gdjp
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day as an immediate action, whenever you fail a saving throw
@@ -13,30 +31,12 @@ system:
 
       <p>At 7th and 15th level, you can use this ability one additional time per
       day.</p>
-  actions:
-    - _id: oscbpxh6scd5gdjp
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
+  subType: classFeat
+  tag: classFeat_irorisBoon
   uses:
-    per: day
     maxFormula: >-
       @classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level > 6 &&
       @classes.oracle.level < 15) ? 2 : 1)
-  tag: classFeat_irorisBoon
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!XJkWVYULYvSUAgLw'
+    per: day
+type: feat
 

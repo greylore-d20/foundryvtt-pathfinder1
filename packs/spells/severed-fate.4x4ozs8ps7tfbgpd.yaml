@@ -1,18 +1,11 @@
 _id: 4x4ozs8ps7tfbgpd
-name: Severed Fate
-type: spell
+_key: '!items!4x4ozs8ps7tfbgpd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Severed Fate
 system:
-  description:
-    value: >-
-      <p>You curse the target, preventing it from drawing upon the powers of
-      destiny. The target is shaken and cannot use hero points for the duration
-      of the spell. This effect can be removed by <i>dispel magic</i>, <i>remove
-      curse</i>, or other similar effects.</p>
   actions:
     - _id: kmwjsbycfpsyklak
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,24 +13,31 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You curse the target, preventing it from drawing upon the powers of
+      destiny. The target is shaken and cannot use hero points for the duration
+      of the spell. This effect can be removed by <i>dispel magic</i>, <i>remove
+      curse</i>, or other similar effects.</p>
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
       oracle: 3
+      warpriest: 3
       witch: 2
   level: 3
   school: enc
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!4x4ozs8ps7tfbgpd'
+type: spell
 

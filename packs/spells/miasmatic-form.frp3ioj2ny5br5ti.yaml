@@ -1,8 +1,29 @@
 _id: frp3ioj2ny5br5ti
-name: Miasmatic Form
-type: spell
+_key: '!items!frp3ioj2ny5br5ti'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Miasmatic Form
 system:
+  actions:
+    - _id: s7odw7v86xguvzcy
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: willing corporeal creature touched
+  components:
+    material: true
+    somatic: true
   description:
     value: >-
       <p>This spell functions like <i>gaseous form</i>, except the target's
@@ -16,42 +37,21 @@ system:
       poison, dealing 1d2 points of Constitution damage to creatures that fail
       their saves (Fortitude halves). This form of the spell requires a material
       component.</p>
-  actions:
-    - _id: s7odw7v86xguvzcy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: willing corporeal creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        description: none; see text
   learnedAt:
-    class:
-      sorcerer: 4
-      wizard: 4
-      alchemist: 4
     bloodline:
       Nanite: 4
+    class:
+      alchemist: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: trs
-  types: air, poison
-  components:
-    somatic: true
-    material: true
   materials:
-    value: contact or inhaled poison worth 100 gp
     gpValue: 100
+    value: contact or inhaled poison worth 100 gp
   preparation:
     spontaneousPrepared: false
+  school: trs
   sr: false
-_key: '!items!frp3ioj2ny5br5ti'
+  types: air, poison
+type: spell
 

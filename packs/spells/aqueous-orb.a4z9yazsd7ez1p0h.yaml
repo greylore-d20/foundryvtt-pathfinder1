@@ -1,8 +1,30 @@
 _id: a4z9yazsd7ez1p0h
-name: Aqueous Orb
-type: spell
+_key: '!items!a4z9yazsd7ez1p0h'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aqueous Orb
 system:
+  actions:
+    - _id: z0d0vvi0wfhu5kzo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex negates
+        type: ref
+      spellEffect: 10-ft.-diameter sphere
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a rolling sphere of churning water that can engulf those it
@@ -25,46 +47,24 @@ system:
       as long as you actively direct it (a move action for you); otherwise, it
       merely stays at rest and churns in place. An <i><i>aqueous</i> orb</i>
       stops if it moves outside the spell's range.</p>
-  actions:
-    - _id: z0d0vvi0wfhu5kzo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex negates
-      spellEffect: 10-ft.-diameter sphere
   learnedAt:
-    class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
-      summoner: 3
-      magus: 3
-      bloodrager: 3
-      hunter: 3
-      summonerUnchained: 3
     bloodline:
       Aquatic: 3
+    class:
+      bloodrager: 3
+      druid: 3
+      hunter: 3
+      magus: 3
+      sorcerer: 3
+      summoner: 3
+      summonerUnchained: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: creation
-  types: water
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of water and a glass bead
+  school: con
   sr: false
-_key: '!items!a4z9yazsd7ez1p0h'
+  subschool: creation
+  types: water
+type: spell
 

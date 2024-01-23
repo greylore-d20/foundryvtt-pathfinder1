@@ -1,18 +1,11 @@
 _id: gDHMXzZhprJpf0OJ
-name: Alter Self
-type: feat
+_key: '!items!gDHMXzZhprJpf0OJ'
 img: systems/pf1/icons/skills/blue_34.jpg
+name: Alter Self
 system:
-  description:
-    value: >-
-      <p>At 15th level, you can change your shape into that of any
-      <em>humanoid</em> at will. This ability acts like
-      @Compendium[pf1.spells.kouqz0pm1xl8xilm]{Alter Self}, except you may
-      remain in a chosen form as long as you want.</p>
+  abilityType: sp
   actions:
     - _id: 9ly2zkl7msrj7zby
-      name: Use
-      img: systems/pf1/icons/skills/blue_34.jpg
       activation:
         type: standard
         unchained:
@@ -20,15 +13,22 @@ system:
           type: action
       duration:
         units: seeText
-      target:
-        value: self
+      img: systems/pf1/icons/skills/blue_34.jpg
+      name: Use
       range:
         units: personal
-  tag: classFeat_alterSelf
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Sorcerer
-  abilityType: sp
-_key: '!items!gDHMXzZhprJpf0OJ'
+  description:
+    value: >-
+      <p>At 15th level, you can change your shape into that of any
+      <em>humanoid</em> at will. This ability acts like
+      @Compendium[pf1.spells.kouqz0pm1xl8xilm]{Alter Self}, except you may
+      remain in a chosen form as long as you want.</p>
+  subType: classFeat
+  tag: classFeat_alterSelf
+type: feat
 

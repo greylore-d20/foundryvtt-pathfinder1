@@ -1,8 +1,33 @@
 _id: 6wz8eno1m5iopn2z
-name: Nature's Paths
-type: spell
+_key: '!items!6wz8eno1m5iopn2z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nature's Paths
 system:
+  actions:
+    - _id: ek7adbtvt5qt8ppj
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 8 hours (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one creature
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target instinctively knows the shortest, easiest, and fastest way
@@ -13,42 +38,17 @@ system:
       caster level traveling with the target can also benefit from the effect.
       The spell functions only outdoors and does not function in magically
       altered terrain.</p>
-  actions:
-    - _id: ek7adbtvt5qt8ppj
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 8 hours (D)
-      target:
-        value: one creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      druid: 1
-      ranger: 1
       bard: 1
-      witch: 1
-      inquisitor: 1
-      shaman: 1
+      druid: 1
       hunter: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
+      inquisitor: 1
+      ranger: 1
+      shaman: 1
+      witch: 1
   materials:
     value: a smooth stone
-_key: '!items!6wz8eno1m5iopn2z'
+  school: div
+type: spell
 

@@ -1,17 +1,11 @@
 _id: isfcr7k77gppxnwq
-name: Enlarge Person, Mass
-type: spell
+_key: '!items!isfcr7k77gppxnwq'
 img: icons/magic/control/silhouette-grow-shrink-tan.webp
+name: Enlarge Person, Mass
 system:
-  description:
-    value: >-
-      <p>This spell functions like
-      <em>@UUID[Compendium.pf1.spells.jnlr9cuepka1l26e]{enlarge person}</em>,
-      except that it affects multiple creatures.</p>
   actions:
     - _id: j2d7zs4xijer3f1p
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: round
         unchained:
@@ -19,34 +13,40 @@ system:
           type: action
       duration:
         value: 1 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
       target:
         value: >-
           One humanoid creature/level, no two of which can be more than 30 ft.
           apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like
+      <em>@UUID[Compendium.pf1.spells.jnlr9cuepka1l26e]{enlarge person}</em>,
+      except that it affects multiple creatures.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      summoner: 3
       bloodrager: 4
       psychic: 4
+      sorcerer: 4
+      summoner: 3
       summonerUnchained: 4
+      wizard: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: powdered iron
+  school: trs
   source:
     id: PZO1110
     pages: '278'
-_key: '!items!isfcr7k77gppxnwq'
+type: spell
 

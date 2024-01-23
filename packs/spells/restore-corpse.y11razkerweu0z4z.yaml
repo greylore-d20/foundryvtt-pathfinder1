@@ -1,19 +1,10 @@
 _id: y11razkerweu0z4z
-name: Restore Corpse
-type: spell
+_key: '!items!y11razkerweu0z4z'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Restore Corpse
 system:
-  description:
-    value: >-
-      <p>You grow flesh on a decomposed or skeletonized corpse of a Medium or
-      smaller creature, providing it with sufficient flesh that it can be
-      animated as a zombie rather than a skeleton. The corpse looks as it did
-      when the creature died. The new flesh is somewhat rotted and not fit for
-      eating.</p>
   actions:
     - _id: sfaj2cjtcgf5nkx6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -21,27 +12,36 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: corpse touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
+      target:
+        value: corpse touched
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You grow flesh on a decomposed or skeletonized corpse of a Medium or
+      smaller creature, providing it with sufficient flesh that it can be
+      animated as a zombie rather than a skeleton. The corpse looks as it did
+      when the creature died. The new flesh is somewhat rotted and not fit for
+      eating.</p>
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       cleric: 1
-      warpriest: 1
-      oracle: 1
       druid: 1
-      witch: 1
-      psychic: 1
+      hunter: 1
       medium: 1
       occultist: 1
-      hunter: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
+      warpriest: 1
+      witch: 1
+      wizard: 1
   school: nec
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!y11razkerweu0z4z'
+type: spell
 

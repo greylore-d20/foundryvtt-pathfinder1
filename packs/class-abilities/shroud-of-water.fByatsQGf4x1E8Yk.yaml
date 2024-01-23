@@ -1,8 +1,20 @@
 _id: fByatsQGf4x1E8Yk
-name: Shroud of Water
-type: feat
+_key: '!items!fByatsQGf4x1E8Yk'
 img: systems/pf1/icons/spells/ice-blue-2.jpg
+name: Shroud of Water
 system:
+  abilityType: su
+  actions:
+    - _id: 0busrhixp22necl2
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> water; <b>Type</b> defense (Su); <b>Level</b> —;
@@ -26,19 +38,7 @@ system:
       coalescing around you allows your shroud to grant both the armor bonus and
       the shield bonus for 1 round. You can dismiss or restore this effect as an
       immediate action.</p>
-  actions:
-    - _id: 0busrhixp22necl2
-      name: Use
-      img: systems/pf1/icons/spells/ice-blue-2.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_shroudOfWater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: su
-_key: '!items!fByatsQGf4x1E8Yk'
+  tag: classFeat_shroudOfWater
+type: feat
 

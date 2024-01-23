@@ -1,18 +1,11 @@
 _id: ncijcs7iaf9apm69
-name: Perfect Placement
-type: spell
+_key: '!items!ncijcs7iaf9apm69'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Perfect Placement
 system:
-  description:
-    value: >-
-      <p>Affected creatures gain tactical knowledge and maximize their
-      efficiency on the field of battle. Each gains a +1 insight bonus to AC and
-      Reflex saves. Against attacks of opportunity, the insight bonus to AC
-      increases to +3.</p>
   actions:
     - _id: kbalzzv82dpx4973
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,37 +13,44 @@ system:
           type: action
       duration:
         value: 1 round/level
-      target:
-        value: one creature/level, no two of which can be more than 30 ft. apart
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Use
       range:
         units: close
-      measureTemplate:
-        type: circle
-        size: '15'
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Affected creatures gain tactical knowledge and maximize their
+      efficiency on the field of battle. Each gains a +1 insight bonus to AC and
+      Reflex saves. Against attacks of opportunity, the insight bonus to AC
+      increases to +3.</p>
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
       bard: 2
-      witch: 3
-      magus: 3
       bloodrager: 2
+      magus: 3
       psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a chess piece
+  school: div
   source:
     id: PZO9465
     pages: '24'
-_key: '!items!ncijcs7iaf9apm69'
+type: spell
 

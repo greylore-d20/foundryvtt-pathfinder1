@@ -1,59 +1,59 @@
 _id: hIKoJ07Ykvh9IWQU
-name: Shield Spikes (Light)
-type: weapon
+_key: '!items!hIKoJ07Ykvh9IWQU'
 img: systems/pf1/icons/items/weapons/shield-spikes.PNG
+name: Shield Spikes (Light)
 system:
-  description:
-    value: "<p>These spikes turn a shield into a martial piercing weapon and increase the damage dealt by a\_<em>shield bash</em>\_as if the shield were designed for a creature one size category larger than you. You can’t put spikes on a buckler or a tower shield. Otherwise, attacking with a spiked shield is like making a shield bash attack.</p><p>An enhancement bonus on a spiked shield does not improve the effectiveness of a shield bash made with it, but a spiked shield can be made into a magic weapon in its own right.</p>"
-  weight:
-    value: 5
-  price: 10
-  hp:
-    max: 2
-    value: 2
-  hardness: 10
   actions:
     - _id: imhu9gg515eh0g19
-      name: Attack
-      img: systems/pf1/icons/items/weapons/shield-spikes.PNG
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
       activation:
         type: attack
         unchained:
           type: attack
-      duration:
-        units: inst
-      range:
-        units: melee
-      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 4, @size)
             type:
+              custom: ''
               values:
                 - piercing
-              custom: ''
+      duration:
+        units: inst
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         label: ''
-      ability:
-        attack: str
-        damage: str
+      img: systems/pf1/icons/items/weapons/shield-spikes.PNG
+      name: Attack
+      range:
+        units: melee
   baseTypes:
     - Shield Spikes (Light)
-  weaponGroups:
-    value:
-      - close
+  description:
+    value: "<p>These spikes turn a shield into a martial piercing weapon and increase the damage dealt by a\_<em>shield bash</em>\_as if the shield were designed for a creature one size category larger than you. You can’t put spikes on a buckler or a tower shield. Otherwise, attacking with a spiked shield is like making a shield bash attack.</p><p>An enhancement bonus on a spiked shield does not improve the effectiveness of a shield bash made with it, but a spiked shield can be made into a magic weapon in its own right.</p>"
+  hardness: 10
+  hp:
+    max: 2
+    value: 2
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: martial
+    normal:
+      value: ''
+  price: 10
   properties:
     fin: true
-_key: '!items!hIKoJ07Ykvh9IWQU'
+  subType: martial
+  weaponGroups:
+    value:
+      - close
+  weight:
+    value: 5
+type: weapon
 

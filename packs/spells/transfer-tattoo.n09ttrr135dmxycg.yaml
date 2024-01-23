@@ -1,8 +1,31 @@
 _id: n09ttrr135dmxycg
-name: Transfer Tattoo
-type: spell
+_key: '!items!n09ttrr135dmxycg'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Transfer Tattoo
 system:
+  actions:
+    - _id: 2y7hgymbf6mtjuyq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one magic tattoo
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>With this spell, you can transfer one magic tattoo from one creature to
@@ -12,37 +35,14 @@ system:
       staggered for 1 round by the backlash of magical energy. A tattoo can be
       transferred from a dead creature in this manner to a living host, provided
       the body has been dead no longer than one hour per caster level.</p>
-  actions:
-    - _id: 2y7hgymbf6mtjuyq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one magic tattoo
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
+      sorcerer: 1
       witch: 1
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
+      wizard: 1
   materials:
     value: tattooing needle
-_key: '!items!n09ttrr135dmxycg'
+  school: trs
+type: spell
 

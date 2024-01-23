@@ -1,8 +1,27 @@
 _id: EzZ8XZHjMCBwaL5o
-name: Assume Control
-type: feat
+_key: '!items!EzZ8XZHjMCBwaL5o'
 img: systems/pf1/icons/spells/evil-eye-eerie-3.jpg
+name: Assume Control
 system:
+  abilityType: su
+  actions:
+    - _id: lp5ht6x91in3034v
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: floor(@classes.wizard.level / 2)
+      img: systems/pf1/icons/spells/evil-eye-eerie-3.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: Summoned Creature
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 1st level, you can attempt to gain control over a summoned creature
@@ -22,29 +41,10 @@ system:
       as if you were the caster who conjured them. You can use this ability a
       number of times per day equal to 3 + your <em>Intelligence</em>
       modifier.</p>
-  actions:
-    - _id: lp5ht6x91in3034v
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-eerie-3.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: floor(@classes.wizard.level / 2)
-        units: round
-      target:
-        value: Summoned Creature
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.int.mod
-  tag: classFeat_assumeControl
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!EzZ8XZHjMCBwaL5o'
+  tag: classFeat_assumeControl
+  uses:
+    maxFormula: 3 + @abilities.int.mod
+    per: day
+type: feat
 

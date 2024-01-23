@@ -1,16 +1,11 @@
 _id: rwb3qouy55azwvf3
-name: Tireless Pursuers
-type: spell
+_key: '!items!rwb3qouy55azwvf3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tireless Pursuers
 system:
-  description:
-    value: >-
-      <p>This spell functions as <i>tireless pursuit</i>, except as noted
-      above.</p>
   actions:
     - _id: unh2kcsa5xo0o3ih
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -18,27 +13,32 @@ system:
           type: action
       duration:
         value: 1 hour/level (D)
-      target:
-        value: you plus one touched creature/3 levels
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude negates
         harmless: true
+        type: fort
+      target:
+        value: you plus one touched creature/3 levels
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as <i>tireless pursuit</i>, except as noted
+      above.</p>
   learnedAt:
     class:
-      ranger: 3
-      inquisitor: 4
       hunter: 3
+      inquisitor: 4
+      ranger: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a hard biscuit broken into pieces
-_key: '!items!rwb3qouy55azwvf3'
+  school: trs
+type: spell
 

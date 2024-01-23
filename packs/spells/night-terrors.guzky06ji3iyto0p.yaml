@@ -1,8 +1,32 @@
 _id: guzky06ji3iyto0p
-name: Night Terrors
-type: spell
+_key: '!items!guzky06ji3iyto0p'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Night Terrors
 system:
+  actions:
+    - _id: 59q0tu5xkz64enc8
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: intelligent creature touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target of this spell gains no benefit from normal or magical sleep,
@@ -31,43 +55,19 @@ system:
       gains the benefits of only that night's rest, not any benefits missed on
       previous nights.  If your campaign uses the sanity system (see page 12),
       the target takes 1d8 points of sanity damage instead of Wisdom damage.</p>
-  actions:
-    - _id: 59q0tu5xkz64enc8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level (D)
-      target:
-        value: intelligent creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 6
-      witch: 6
-      psychic: 6
       mesmerist: 6
+      psychic: 6
+      sorcerer: 6
+      witch: 6
+      wizard: 6
   level: 6
+  materials:
+    value: a drop of black ink
   school: ill
   subschool: phantasm
   types: emotion, evil, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
-  materials:
-    value: a drop of black ink
-_key: '!items!guzky06ji3iyto0p'
+type: spell
 

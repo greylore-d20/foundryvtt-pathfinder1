@@ -1,8 +1,26 @@
 _id: l34wua4zw580fs39
-name: Lightfingers
-type: spell
+_key: '!items!l34wua4zw580fs39'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Lightfingers
 system:
+  actions:
+    - _id: lkxjsaghf3mthf2r
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A flutter of subtle, telekinetic force causes your target to drop a
@@ -20,29 +38,11 @@ system:
       of opportunity and cannot be affected by feats or other means of altering
       a combat maneuver's effects. This use of the spell is immediately
       obvious.</p>
-  actions:
-    - _id: lkxjsaghf3mthf2r
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one creature
-      range:
-        units: close
   learnedAt:
     class:
-      witch: 1
       psychic: 1
       spiritualist: 1
+      witch: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!l34wua4zw580fs39'
+type: spell
 

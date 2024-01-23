@@ -1,8 +1,21 @@
 _id: 6sP6SpP5BclCYS32
-name: One Touch (UC)
-type: feat
+_key: '!items!6sP6SpP5BclCYS32'
 img: systems/pf1/icons/skills/fire_07.jpg
+name: One Touch (UC)
 system:
+  abilityType: ex
+  actions:
+    - _id: u4spx7383xk6trqb
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/fire_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Monk (Unchained)
   description:
     value: >-
       <p>As long as he has at least 1 point remaining in his ki pool, as a
@@ -12,20 +25,7 @@ system:
       attack.</p>
 
       <p>A monk must be at least 12th level before selecting this ki power.</p>
-  actions:
-    - _id: u4spx7383xk6trqb
-      name: Use
-      img: systems/pf1/icons/skills/fire_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-  tag: classFeat_oneTouchUc
   subType: classFeat
-  associations:
-    classes:
-      - Monk (Unchained)
-  abilityType: ex
-_key: '!items!6sP6SpP5BclCYS32'
+  tag: classFeat_oneTouchUc
+type: feat
 

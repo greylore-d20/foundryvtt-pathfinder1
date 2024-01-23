@@ -1,8 +1,34 @@
 _id: u5ss3ac14t6h5l50
-name: Huntmaster's Spear
-type: spell
+_key: '!items!u5ss3ac14t6h5l50'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Huntmaster's Spear
 system:
+  actions:
+    - _id: e8vdp19o2jdrmrfr
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 24 hours or until discharged
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates (object)
+        harmless: true
+        type: will
+      target:
+        value: nonmagical spear touched
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Choose one creature type (and subtype, if applicable) from the ranger's
@@ -24,47 +50,21 @@ system:
       immediately ends. If you expend a monster trophy of the type selected as
       an optional material component for this spell, you reduce the casting time
       to 1 round.</p>
-  actions:
-    - _id: e8vdp19o2jdrmrfr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 24 hours or until discharged
-      target:
-        value: nonmagical spear touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-        harmless: true
   learnedAt:
     class:
-      druid: 2
-      ranger: 1
-      paladin: 1
-      inquisitor: 2
       antipaladin: 1
-      magus: 2
       bloodrager: 2
-      shaman: 2
-      occultist: 2
+      druid: 2
       hunter: 1
+      inquisitor: 2
+      magus: 2
+      occultist: 2
+      paladin: 1
+      ranger: 1
+      shaman: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: see text
-_key: '!items!u5ss3ac14t6h5l50'
+  school: trs
+type: spell
 

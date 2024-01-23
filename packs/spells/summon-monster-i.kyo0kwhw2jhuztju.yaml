@@ -1,8 +1,27 @@
 _id: kyo0kwhw2jhuztju
-name: Summon Monster I
-type: spell
+_key: '!items!kyo0kwhw2jhuztju'
 img: icons/creatures/magical/humanoid-silhouette-glowing-pink.webp
+name: Summon Monster I
 system:
+  actions:
+    - _id: llqt6oeyp68zbpvr
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: one summoned creature
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell summons an extraplanar creature (typically an outsider,
@@ -26,48 +45,29 @@ system:
       Creatures marked with an "*" always have an alignment that matches yours,
       regardless of their usual alignment.</p><p>Summoning these creatures makes
       the summoning spell's type match your alignment.</p>
-  actions:
-    - _id: llqt6oeyp68zbpvr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      spellEffect: one summoned creature
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      bard: 1
-      summoner: 1
-      witch: 1
       antipaladin: 1
-      psychic: 1
+      bard: 1
+      cleric: 1
       medium: 1
+      oracle: 1
+      psychic: 1
+      sorcerer: 1
       spiritualist: 1
+      summoner: 1
       summonerUnchained: 1
-  school: con
-  subschool: summoning
-  types: see text
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
+      warpriest: 1
+      witch: 1
+      wizard: 1
   materials:
     focus: a tiny bag and a small candle
-  sr: false
+  school: con
   source:
     id: PZO1110
     pages: '350'
-_key: '!items!kyo0kwhw2jhuztju'
+  sr: false
+  subschool: summoning
+  types: see text
+type: spell
 

@@ -1,18 +1,11 @@
 _id: ns8jbp0ilbvbvuif
-name: Cat's Grace
-type: spell
+_key: '!items!ns8jbp0ilbvbvuif'
 img: icons/creatures/abilities/cougar-roar-rush-orange.webp
+name: Cat's Grace
 system:
-  description:
-    value: >-
-      <p>The transmuted creature becomes more graceful, agile, and coordinated.
-      The spell grants a +4 enhancement bonus to Dexterity, adding the usual
-      benefits to AC, Reflex saves, and other uses of the Dexterity
-      modifier.</p>
   actions:
     - _id: nychlkiop71r4ikk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,41 +13,48 @@ system:
           type: action
       duration:
         value: 1 min./level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>The transmuted creature becomes more graceful, agile, and coordinated.
+      The spell grants a +4 enhancement bonus to Dexterity, adding the usual
+      benefits to AC, Reflex saves, and other uses of the Dexterity
+      modifier.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      druid: 2
-      ranger: 2
-      bard: 2
-      alchemist: 2
-      summoner: 2
-      magus: 2
       adept: 2
+      alchemist: 2
+      bard: 2
       bloodrager: 2
-      psychic: 2
+      druid: 2
+      hunter: 2
+      magus: 2
       medium: 2
       mesmerist: 2
-      hunter: 2
+      psychic: 2
+      ranger: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
     subDomain:
       Flowing: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: pinch of cat fur
-_key: '!items!ns8jbp0ilbvbvuif'
+  school: trs
+type: spell
 

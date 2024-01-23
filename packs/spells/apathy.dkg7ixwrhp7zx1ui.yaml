@@ -1,8 +1,31 @@
 _id: dkg7ixwrhp7zx1ui
-name: Apathy
-type: spell
+_key: '!items!dkg7ixwrhp7zx1ui'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Apathy
 system:
+  actions:
+    - _id: 7pwjtv36sklwyhqw
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a creature to temporarily lose interest in a passion or
@@ -24,42 +47,19 @@ system:
       condition. If you directly interact with the target of this spell (such as
       engaging it in combat or targeting it with another spell or effect), the
       spell immediately ends.</p>
-  actions:
-    - _id: 7pwjtv36sklwyhqw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level
-      target:
-        value: one creature
-      range:
-        units: long
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 5
-      wizard: 5
       bard: 4
-      witch: 5
-      psychic: 5
       mesmerist: 4
+      psychic: 5
+      sorcerer: 5
+      witch: 5
+      wizard: 5
   level: 5
+  materials:
+    value: a shiny bead
   school: enc
   subschool: compulsion
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a shiny bead
-_key: '!items!dkg7ixwrhp7zx1ui'
+type: spell
 

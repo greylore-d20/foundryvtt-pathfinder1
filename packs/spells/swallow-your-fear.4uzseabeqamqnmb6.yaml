@@ -1,8 +1,33 @@
 _id: 4uzseabeqamqnmb6
-name: Swallow Your Fear
-type: spell
+_key: '!items!4uzseabeqamqnmb6'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Swallow Your Fear
 system:
+  actions:
+    - _id: ika2nl03n68gei1x
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: >-
+          one creature plus one additional creature per four levels, no two of
+          which can be more than 30 ft. apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make the affected subjects ready for battle despite their fear. If
@@ -14,39 +39,14 @@ system:
       "attack nearest creature" as "act normally." If the subject is panicked,
       he remains in place and gains the confused condition for the duration of
       the fear effect.</p>
-  actions:
-    - _id: ika2nl03n68gei1x
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes; see text
-      target:
-        value: >-
-          one creature plus one additional creature per four levels, no two of
-          which can be more than 30 ft. apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
       bard: 1
+      cleric: 1
+      oracle: 1
+      warpriest: 1
   school: enc
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO9035
-_key: '!items!4uzseabeqamqnmb6'
+type: spell
 

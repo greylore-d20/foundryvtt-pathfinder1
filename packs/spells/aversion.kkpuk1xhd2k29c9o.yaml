@@ -1,8 +1,30 @@
 _id: kkpuk1xhd2k29c9o
-name: Aversion
-type: spell
+_key: '!items!kkpuk1xhd2k29c9o'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aversion
 system:
+  actions:
+    - _id: p8fml259ksytubjr
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will partial
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You plant a revulsion in the mind of the subject, causing her to avoid
@@ -20,42 +42,20 @@ system:
       violating the aversion.  If the target succeeds at her saving throw, she
       is instead sickened while within 60 feet of the object or place, but isn't
       compelled to stay away from it.</p>
-  actions:
-    - _id: p8fml259ksytubjr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will partial
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       bard: 2
-      witch: 3
-      psychic: 2
+      druid: 3
+      hunter: 3
       mesmerist: 2
       occultist: 2
-      hunter: 3
+      psychic: 2
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!kkpuk1xhd2k29c9o'
+type: spell
 

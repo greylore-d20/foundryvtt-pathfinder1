@@ -1,8 +1,27 @@
 _id: 6he78hfz1j4c8ba3
-name: See Alignment
-type: spell
+_key: '!items!6he78hfz1j4c8ba3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: See Alignment
 system:
+  actions:
+    - _id: h4qfks74fqua6diz
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you cast this spell, select a single alignment (such as lawful
@@ -11,35 +30,16 @@ system:
       radiance, other creatures cannot.  Spells and effects that obscure
       alignment, like <i>undetectable alignment</i>, also obscure the effects of
       this spell.</p>
-  actions:
-    - _id: h4qfks74fqua6diz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
+      alchemist: 1
+      bard: 1
+      psychic: 1
       sorcerer: 1
       wizard: 1
-      bard: 1
-      alchemist: 1
-      psychic: 1
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: eye of newt
+  school: div
   sr: false
-_key: '!items!6he78hfz1j4c8ba3'
+type: spell
 

@@ -1,19 +1,11 @@
 _id: gc3kp62t8ut2wiqz
-name: Shadow Enchantment, Greater
-type: spell
+_key: '!items!gc3kp62t8ut2wiqz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Enchantment, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>shadow enchantment</i>, except that it
-      enables you to create partially real, illusory versions of psychic,
-      sorcerer, or wizard enchantment spells of 5th level or lower. If the spell
-      is recognized as a greater <i>shadow enchantment</i>, it's only
-      three-fifths (60%) as effective.</p>
   actions:
     - _id: p7mad0fgxsrv6vvr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,26 +13,34 @@ system:
           type: action
       duration:
         value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: seeText
-      actionType: spellsave
       save:
-        type: will
         description: Will disbelief; see text
+        type: will
       spellEffect: see text
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>shadow enchantment</i>, except that it
+      enables you to create partially real, illusory versions of psychic,
+      sorcerer, or wizard enchantment spells of 5th level or lower. If the spell
+      is recognized as a greater <i>shadow enchantment</i>, it's only
+      three-fifths (60%) as effective.</p>
   learnedAt:
     class:
+      bard: 6
+      mesmerist: 6
+      psychic: 6
       sorcerer: 6
       wizard: 6
-      bard: 6
-      psychic: 6
-      mesmerist: 6
   level: 6
   school: ill
   subschool: shadow
   types: shadow
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!gc3kp62t8ut2wiqz'
+type: spell
 

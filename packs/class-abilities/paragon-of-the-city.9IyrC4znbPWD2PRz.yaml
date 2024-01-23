@@ -1,8 +1,28 @@
 _id: 9IyrC4znbPWD2PRz
-name: Paragon of the City
-type: feat
+_key: '!items!9IyrC4znbPWD2PRz'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Paragon of the City
 system:
+  abilityType: su
+  actions:
+    - _id: gfipxg96b25bpkre
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman assumes a spirit-infused paragon form
@@ -12,30 +32,10 @@ system:
 
       <p>She can use this ability a number of times per day equal to 3 + her
       Charisma modifier.</p>
-  actions:
-    - _id: gfipxg96b25bpkre
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_paragonOfTheCity
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!9IyrC4znbPWD2PRz'
+  tag: classFeat_paragonOfTheCity
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

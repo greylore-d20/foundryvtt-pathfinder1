@@ -1,8 +1,26 @@
 _id: kxqp3ol6rtrmq56w
-name: Remote Viewing
-type: spell
+_key: '!items!kxqp3ol6rtrmq56w'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Remote Viewing
 system:
+  actions:
+    - _id: xs7p0iaqizqzymdv
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Your body enters a trance as you send your psychic senses to a distant
@@ -18,35 +36,17 @@ system:
       insubstantial chains.  During the 1 hour casting time of <i>remote
       viewing</i>, your real body is unconscious and helpless, and you are
       unaware of its surroundings.</p>
-  actions:
-    - _id: xs7p0iaqizqzymdv
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: hour
-        unchained:
-          type: hour
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: seeText
   learnedAt:
     class:
-      psychic: 5
       medium: 4
       occultist: 5
+      psychic: 5
       spiritualist: 5
   level: 5
-  school: div
-  subschool: scrying
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: incense
+  school: div
   sr: false
-_key: '!items!kxqp3ol6rtrmq56w'
+  subschool: scrying
+type: spell
 

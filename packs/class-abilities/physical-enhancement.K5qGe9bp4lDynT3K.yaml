@@ -1,8 +1,22 @@
 _id: K5qGe9bp4lDynT3K
-name: Physical Enhancement
-type: feat
+_key: '!items!K5qGe9bp4lDynT3K'
 img: systems/pf1/icons/skills/blue_23.jpg
+name: Physical Enhancement
 system:
+  abilityType: su
+  actions:
+    - _id: 4s256tf8fp25jwc1
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/blue_23.jpg
+      name: Use
+  changes:
+    - _id: 7ufw57l2
+      formula: 1 + floor(@classes.wizard.level / 5)
+      modifier: enh
+      subTarget: str
   description:
     value: >-
       <p>You gain a +1 enhancement bonus to one physical ability score
@@ -12,21 +26,7 @@ system:
       +5 at 20th level. You can change this bonus to a new ability score when
       you prepare spells. At 20th level, this bonus applies to two physical
       ability scores of your choice.</p>
-  actions:
-    - _id: 4s256tf8fp25jwc1
-      name: Use
-      img: systems/pf1/icons/skills/blue_23.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 7ufw57l2
-      formula: 1 + floor(@classes.wizard.level / 5)
-      subTarget: str
-      modifier: enh
-  tag: classFeat_physicalEnhancement
   subType: classFeat
-  abilityType: su
-_key: '!items!K5qGe9bp4lDynT3K'
+  tag: classFeat_physicalEnhancement
+type: feat
 

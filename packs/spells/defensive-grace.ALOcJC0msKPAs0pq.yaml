@@ -1,8 +1,27 @@
 _id: ALOcJC0msKPAs0pq
-name: Defensive Grace
-type: spell
+_key: '!items!ALOcJC0msKPAs0pq'
 img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
+name: Defensive Grace
 system:
+  actions:
+    - _id: 9oc4cw505idwq74a
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D; see below)
+      img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>Each round you can roll an inspiration die without expending a use of
@@ -14,32 +33,13 @@ system:
       <p> If a critical hit is confirmed against you, you can dismiss this spell
       as an immediate action to negate the critical and make the attack instead
       deal normal damage.</p>
-  actions:
-    - _id: 9oc4cw505idwq74a
-      name: Use
-      img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D; see below)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       investigator: 5
   level: 5
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a living fly
+  school: trs
   sr: false
-_key: '!items!ALOcJC0msKPAs0pq'
+type: spell
 

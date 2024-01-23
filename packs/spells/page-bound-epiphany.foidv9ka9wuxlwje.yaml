@@ -1,8 +1,25 @@
 _id: foidv9ka9wuxlwje
-name: Page-Bound Epiphany
-type: spell
+_key: '!items!foidv9ka9wuxlwje'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Page-Bound Epiphany
 system:
+  actions:
+    - _id: d1p4wjw40amducec
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You magically scour the world's libraries for information that might
@@ -14,36 +31,19 @@ system:
       you spent studying the book (maximum +10). The writing disappears when the
       spell ends, and if you fail to succeed at a Knowledge check on the round
       you stop reading the notes, you don't gain the benefits of this spell.</p>
-  actions:
-    - _id: d1p4wjw40amducec
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level (see text)
-      range:
-        units: personal
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
+      cleric: 2
       magus: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a book with blank pages
+  school: div
   sr: false
-_key: '!items!foidv9ka9wuxlwje'
+type: spell
 

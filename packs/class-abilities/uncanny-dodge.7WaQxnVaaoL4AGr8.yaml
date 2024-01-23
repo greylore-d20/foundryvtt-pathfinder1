@@ -1,8 +1,32 @@
 _id: 7WaQxnVaaoL4AGr8
-name: Uncanny Dodge
-type: feat
+_key: '!items!7WaQxnVaaoL4AGr8'
 img: systems/pf1/icons/feats/wind-stance.jpg
+name: Uncanny Dodge
 system:
+  abilityType: ex
+  actions:
+    - _id: k3e9rgfallg2lq1f
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/feats/wind-stance.jpg
+      name: Use
+  associations:
+    classes:
+      - Barbarian
+      - Rogue (Unchained)
+  changes:
+    - _id: 1yiag0iu
+      formula: '@abilities.dex.maxBonus'
+      modifier: untyped
+      priority: null
+      subTarget: ffac
+    - _id: ub84g9h5
+      formula: '@abilities.dex.maxBonus'
+      modifier: untyped
+      priority: null
+      subTarget: ffcmd
   description:
     value: >-
       <p>This character gains the ability to react to danger before her senses
@@ -16,34 +40,10 @@ system:
       <p>If a character already has <em>uncanny dodge</em> from a different
       class, she automatically gains <em>improved uncanny dodge</em> (see below)
       instead.</p>
-  actions:
-    - _id: k3e9rgfallg2lq1f
-      name: Use
-      img: systems/pf1/icons/feats/wind-stance.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 1yiag0iu
-      formula: '@abilities.dex.maxBonus'
-      subTarget: ffac
-      modifier: untyped
-      priority: null
-    - _id: ub84g9h5
-      formula: '@abilities.dex.maxBonus'
-      subTarget: ffcmd
-      modifier: untyped
-      priority: null
-  tag: classFeat_uncannyDodge
-  subType: classFeat
-  associations:
-    classes:
-      - Barbarian
-      - Rogue (Unchained)
-  abilityType: ex
   source:
     id: PZO1110
     pages: '34'
-_key: '!items!7WaQxnVaaoL4AGr8'
+  subType: classFeat
+  tag: classFeat_uncannyDodge
+type: feat
 

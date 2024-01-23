@@ -1,8 +1,24 @@
 _id: k9ZGUwUB9yJiz4Ea
-name: Merge Forms (UC)
-type: feat
+_key: '!items!k9ZGUwUB9yJiz4Ea'
 img: systems/pf1/icons/skills/blue_37.jpg
+name: Merge Forms (UC)
 system:
+  abilityType: su
+  actions:
+    - _id: pre5wwl7yah9caib
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/blue_37.jpg
+      name: Use
+  associations:
+    classes:
+      - Summoner (Unchained)
   description:
     value: >-
       <p>At 16th level, as a full-round action, a summoner can touch his eidolon
@@ -23,26 +39,10 @@ system:
       eidolon if able. If the eidolon is returned to its home plane while the
       summoner is merged with it, the summoner is immediately ejected, taking
       4d6 points of damage, and is stunned for 1 round.</p>
-  actions:
-    - _id: pre5wwl7yah9caib
-      name: Use
-      img: systems/pf1/icons/skills/blue_37.jpg
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: '@classes.summonerUnchained.level'
-  tag: classFeat_mergeFormsUc
   subType: classFeat
-  associations:
-    classes:
-      - Summoner (Unchained)
-  abilityType: su
-_key: '!items!k9ZGUwUB9yJiz4Ea'
+  tag: classFeat_mergeFormsUc
+  uses:
+    maxFormula: '@classes.summonerUnchained.level'
+    per: day
+type: feat
 

@@ -1,8 +1,20 @@
 _id: 6XidHLbnjyQjICL4
-name: Spiritual Shield
-type: feat
+_key: '!items!6XidHLbnjyQjICL4'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Spiritual Shield
 system:
+  abilityType: su
+  actions:
+    - _id: nxk3p3gogrhlyp68
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+  associations:
+    classes:
+      - Cavalier
   description:
     value: >-
       <p>At 2nd level, the cavalier can call upon the spirits of the fallen for
@@ -10,22 +22,10 @@ system:
       target of his challenge, the cavalier can gain a deflection bonus equal to
       his Charisma modifier to his AC against that attack. The cavalier must
       decide to use this ability before the attack roll.</p>
-  actions:
-    - _id: nxk3p3gogrhlyp68
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_spiritualShield
   subType: classFeat
-  associations:
-    classes:
-      - Cavalier
-  abilityType: su
-_key: '!items!6XidHLbnjyQjICL4'
+  tag: classFeat_spiritualShield
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

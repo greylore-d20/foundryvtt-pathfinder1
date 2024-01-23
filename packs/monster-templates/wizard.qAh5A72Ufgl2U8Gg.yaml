@@ -1,8 +1,16 @@
 _id: qAh5A72Ufgl2U8Gg
-name: Wizard
-type: feat
+_key: '!items!qAh5A72Ufgl2U8Gg'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Wizard
 system:
+  changes:
+    - _id: o4asm6lz
+      formula: '4'
+      modifier: untyped
+      subTarget: int
+  crOffset: >-
+    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
+    @attributes.hd.total < 13) ? 2 : 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -295,14 +303,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: o4asm6lz
-      formula: '4'
-      subTarget: int
-      modifier: untyped
   subType: template
-  crOffset: >-
-    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
-    @attributes.hd.total < 13) ? 2 : 1)
-_key: '!items!qAh5A72Ufgl2U8Gg'
+type: feat
 

@@ -1,8 +1,29 @@
 _id: H6qZ8QjVBWGyucTK
-name: Fey Blight
-type: spell
+_key: '!items!H6qZ8QjVBWGyucTK'
 img: icons/magic/nature/thorns-hand-glow-green.webp
+name: Fey Blight
 system:
+  actions:
+    - _id: reg6v0fl93jh4ztf
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: see below (D)
+      img: icons/magic/nature/thorns-hand-glow-green.webp
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+      target:
+        value: one living non-fey, non-plant creature
+  components:
+    verbal: true
   description:
     value: >-
       <p>The target is cursed, gaining the bane of the caster's fey race (see
@@ -303,28 +324,7 @@ system:
       pleasure, you must succeed at a Will save (with a DC equal to the DC of
       the <em>fey blight</em> spell-like ability) or be compelled to
       ecstatically indulge yourself to the fullest. This bane is permanent.</p>
-  actions:
-    - _id: reg6v0fl93jh4ztf
-      name: Use
-      img: icons/magic/nature/thorns-hand-glow-green.webp
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: see below (D)
-      target:
-        value: one living non-fey, non-plant creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
   school: trs
   types: curse, ruse
-  components:
-    verbal: true
-_key: '!items!H6qZ8QjVBWGyucTK'
+type: spell
 

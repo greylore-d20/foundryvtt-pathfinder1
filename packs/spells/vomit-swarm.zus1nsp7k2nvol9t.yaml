@@ -1,8 +1,24 @@
 _id: zus1nsp7k2nvol9t
-name: Vomit Swarm
-type: spell
+_key: '!items!zus1nsp7k2nvol9t'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Vomit Swarm
 system:
+  actions:
+    - _id: 6ix5hlt4fbjeqmfs
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      spellEffect: one swarm of spiders
+  components:
+    somatic: true
   description:
     value: >-
       <p>You vomit forth a swarm of spiders (<i>Bestiary</i>, page 258) that
@@ -15,20 +31,6 @@ system:
       swarm of wasps instead (<i>Bestiary</i> 275). Finally, if your caster
       level is at least 13th, you can vomit forth a swarm of army ants
       (<i>Bestiary</i> 16).</p>
-  actions:
-    - _id: 6ix5hlt4fbjeqmfs
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: personal
-      spellEffect: one swarm of spiders
   learnedAt:
     class:
       alchemist: 2
@@ -37,9 +39,7 @@ system:
       Vermin: 2
   level: 2
   school: con
-  subschool: summoning
-  components:
-    somatic: true
   sr: false
-_key: '!items!zus1nsp7k2nvol9t'
+  subschool: summoning
+type: spell
 

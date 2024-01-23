@@ -1,8 +1,27 @@
 _id: 5Uih99H8c4Ed1mmz
-name: Wood Sight
-type: feat
+_key: '!items!5Uih99H8c4Ed1mmz'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Wood Sight
 system:
+  abilityType: su
+  actions:
+    - _id: e4swnym06uv824rt
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a move action, you can alter your vision to see through underbrush
@@ -16,34 +35,15 @@ system:
 
       <p>You can use this ability a number of rounds per day equal to your
       oracle level, but these rounds do not need to be consecutive.</p>
-  tags:
-    - Wood Mystery
-  actions:
-    - _id: e4swnym06uv824rt
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_woodSight
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO1117
     pages: '57'
-_key: '!items!5Uih99H8c4Ed1mmz'
+  subType: classFeat
+  tag: classFeat_woodSight
+  tags:
+    - Wood Mystery
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

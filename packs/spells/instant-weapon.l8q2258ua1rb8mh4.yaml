@@ -1,8 +1,26 @@
 _id: l8q2258ua1rb8mh4
-name: Instant Weapon
-type: spell
+_key: '!items!l8q2258ua1rb8mh4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Instant Weapon
 system:
+  actions:
+    - _id: 4eh95trksznx2yq4
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: melee weapon of opaque force
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a melee weapon sized appropriately for you from opaque
@@ -12,39 +30,21 @@ system:
       its type. As a force effect, it can strike and damage incorporeal
       creatures. If the <i>instant weapon</i> leaves your hand at any time, the
       spell ends at the beginning of your next turn.</p>
-  actions:
-    - _id: 4eh95trksznx2yq4
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        value: '0'
-        units: ft
-      spellEffect: melee weapon of opaque force
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
+      bloodrager: 2
+      cleric: 2
       inquisitor: 2
       magus: 2
-      bloodrager: 2
+      oracle: 2
+      sorcerer: 2
+      warpriest: 2
+      wizard: 2
   level: 2
   school: con
+  sr: false
   subschool: creation
   types: force
-  components:
-    verbal: true
-    somatic: true
-  sr: false
-_key: '!items!l8q2258ua1rb8mh4'
+type: spell
 

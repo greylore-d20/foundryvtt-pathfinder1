@@ -1,8 +1,28 @@
 _id: q5432hyeds4pncxn
-name: Getaway
-type: spell
+_key: '!items!q5432hyeds4pncxn'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Getaway
 system:
+  actions:
+    - _id: 3pbs6fis1fcwbg53
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: unlimited
+      target:
+        value: >-
+          you and one willing creature/2 levels, all of which must be within 30
+          feet of you
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p><i>Getaway</i> teleports you and allies you designate at the time of
@@ -16,40 +36,20 @@ system:
       feet of you who do not wish to travel with you at that time can simply
       choose not to go. You can be transported any distance within a plane but
       cannot travel between planes.</p>
-  actions:
-    - _id: 3pbs6fis1fcwbg53
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: 1 hour/level
-      target:
-        value: >-
-          you and one willing creature/2 levels, all of which must be within 30
-          feet of you
-      range:
-        units: unlimited
   learnedAt:
     class:
-      sorcerer: 6
-      wizard: 6
       bard: 6
-      psychic: 6
       mesmerist: 6
       occultist: 6
+      psychic: 6
+      sorcerer: 6
       spiritualist: 6
+      wizard: 6
   level: 6
-  school: con
-  subschool: teleportation
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a brass doorknob
+  school: con
   sr: false
-_key: '!items!q5432hyeds4pncxn'
+  subschool: teleportation
+type: spell
 

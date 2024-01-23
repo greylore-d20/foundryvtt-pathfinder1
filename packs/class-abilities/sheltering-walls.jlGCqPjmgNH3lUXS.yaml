@@ -1,8 +1,28 @@
 _id: jlGCqPjmgNH3lUXS
-name: Sheltering Walls
-type: feat
+_key: '!items!jlGCqPjmgNH3lUXS'
 img: systems/pf1/icons/skills/ice_09.jpg
+name: Sheltering Walls
 system:
+  abilityType: sp
+  actions:
+    - _id: vhxx11ok5sk0k65s
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: 1 + (floor(@classes.cleric.level / 6))
+      img: systems/pf1/icons/skills/ice_09.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: ally touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can touch an ally to summon a floating
@@ -16,30 +36,10 @@ system:
 
       <p>This pwoer replaces the Resistant Touch power of the Protection
       Domain.</p>
-  actions:
-    - _id: vhxx11ok5sk0k65s
-      name: Use
-      img: systems/pf1/icons/skills/ice_09.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 + (floor(@classes.cleric.level / 6))
-        units: round
-      target:
-        value: ally touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_shelteringWalls
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
-_key: '!items!jlGCqPjmgNH3lUXS'
+  tag: classFeat_shelteringWalls
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

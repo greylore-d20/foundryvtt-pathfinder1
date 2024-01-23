@@ -1,8 +1,34 @@
 _id: r696gayroq1pwaik
-name: Invisibility Bubble
-type: spell
+_key: '!items!r696gayroq1pwaik'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Invisibility Bubble
 system:
+  actions:
+    - _id: e2o689jtkgzfni4s
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: touched creature's space, up to one 5-foot-cube
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        harmless: true
+        type: will
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A glamered bubble surrounds the target's space, rendering her
@@ -21,52 +47,26 @@ system:
       <i>invisibility</i>, the inside of the bubble blocks light from escaping
       the bubble, meaning that light sources inside the bubble don't illuminate
       past its edges, but also don't reveal a telltale glow.</p>
-  actions:
-    - _id: e2o689jtkgzfni4s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      range:
-        units: touch
-      measureTemplate:
-        type: rect
-        size: '5'
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-        harmless: true
-      area: touched creature's space, up to one 5-foot-cube
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      bard: 2
       alchemist: 2
-      summoner: 2
-      inquisitor: 2
       antipaladin: 2
+      bard: 2
+      inquisitor: 2
       magus: 2
-      psychic: 2
       medium: 2
       mesmerist: 2
       occultist: 2
+      psychic: 2
+      sorcerer: 2
       spiritualist: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
-  school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a needle from a sea urchin
-_key: '!items!r696gayroq1pwaik'
+  school: ill
+  subschool: glamer
+type: spell
 

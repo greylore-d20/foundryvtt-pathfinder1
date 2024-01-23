@@ -1,7 +1,23 @@
-name: Precise Strike
-type: feat
+_id: NdrNsfFKYGy3VXDF
+_key: '!items!NdrNsfFKYGy3VXDF'
 img: icons/skills/melee/strike-sword-dagger-runes-yellow.webp
+name: Precise Strike
 system:
+  actions:
+    - _id: b9xTPk7q6OOLVZCz
+      activation:
+        type: special
+        unchained:
+          type: special
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - precision
+      img: icons/skills/melee/strike-sword-dagger-runes-yellow.webp
+      name: Use
   description:
     value: >-
       <p><em>You are skilled at striking where it counts, as long as an ally
@@ -13,28 +29,12 @@ system:
       bonus damage is not multiplied on a critical hit.</p><h2>Combat
       Trick</h2><p>When dealing precision damage with this feat, you can spend 2
       stamina points to increase that precision damage to 2d6.</p>
+  source:
+    id: PZO1115
+    pages: '167'
   tags:
     - Combat
     - Teamwork
     - Combat Trick
-  actions:
-    - _id: b9xTPk7q6OOLVZCz
-      name: Use
-      img: icons/skills/melee/strike-sword-dagger-runes-yellow.webp
-      activation:
-        type: special
-        unchained:
-          type: special
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values:
-                - precision
-              custom: ''
-  source:
-    id: PZO1115
-    pages: '167'
-_id: NdrNsfFKYGy3VXDF
-_key: '!items!NdrNsfFKYGy3VXDF'
+type: feat
 

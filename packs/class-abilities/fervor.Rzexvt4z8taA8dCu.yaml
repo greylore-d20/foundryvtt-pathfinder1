@@ -1,8 +1,35 @@
 _id: Rzexvt4z8taA8dCu
-name: Fervor
-type: feat
+_key: '!items!Rzexvt4z8taA8dCu'
 img: systems/pf1/icons/spells/heal-jade-2.jpg
+name: Fervor
 system:
+  abilityType: su
+  actions:
+    - _id: fh9ra7x0xkoauc1m
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (floor((@classes.warpriest.level + 1) / 3))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/heal-jade-2.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 2nd level, a warpriest can draw upon the power of his faith to heal
@@ -32,37 +59,10 @@ system:
       other or multiple targets. Spells cast in this way ignore somatic
       components and do not provoke attacks of opportunity. The warpriest does
       not need to have a free hand to cast a spell in this way.</p>
-  actions:
-    - _id: fh9ra7x0xkoauc1m
-      name: Use
-      img: systems/pf1/icons/spells/heal-jade-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: heal
-      damage:
-        parts:
-          - formula: (floor((@classes.warpriest.level + 1) / 3))d6
-            type:
-              values:
-                - positive
-              custom: ''
-  uses:
-    per: day
-    maxFormula: floor(@classes.warpriest.level / 2) + @abilities.wis.mod
-  tag: classFeat_fervor
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-  abilityType: su
-_key: '!items!Rzexvt4z8taA8dCu'
+  tag: classFeat_fervor
+  uses:
+    maxFormula: floor(@classes.warpriest.level / 2) + @abilities.wis.mod
+    per: day
+type: feat
 

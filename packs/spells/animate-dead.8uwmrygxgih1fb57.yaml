@@ -1,8 +1,27 @@
 _id: 8uwmrygxgih1fb57
-name: Animate Dead
-type: spell
+_key: '!items!8uwmrygxgih1fb57'
 img: icons/magic/death/skull-humanoid-white-red.webp
+name: Animate Dead
 system:
+  actions:
+    - _id: 8rebtq3jtyemdpbk
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one or more corpses touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell turns corpses into undead skeletons or zombies (see the
@@ -26,51 +45,32 @@ system:
       bones.</p><p><i>Zombies</i>: A zombie can be created only from a mostly
       intact corpse.</p><p>The corpse must be that of a creature with a physical
       anatomy.</p>
-  actions:
-    - _id: 8rebtq3jtyemdpbk
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one or more corpses touched
-      range:
-        units: touch
   learnedAt:
+    bloodline:
+      Undead: 4
     class:
-      sorcerer: 4
-      wizard: 4
-      cleric: 3
-      warpriest: 3
-      oracle: 3
-      antipaladin: 3
       adept: 3
-      shaman: 3
+      antipaladin: 3
+      cleric: 3
       occultist: 3
+      oracle: 3
+      shaman: 3
+      sorcerer: 4
       spiritualist: 3
+      warpriest: 3
+      wizard: 4
     domain:
       Death: 3
     subDomain:
       Souls: 3
-    bloodline:
-      Undead: 4
   level: 4
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: an onyx gem worth at least 25 gp per Hit Die of the undead
-  sr: false
+  school: nec
   source:
     id: PZO1110
     pages: '241'
-_key: '!items!8uwmrygxgih1fb57'
+  sr: false
+  types: evil
+type: spell
 

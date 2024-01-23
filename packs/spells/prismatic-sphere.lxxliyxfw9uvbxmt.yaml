@@ -1,8 +1,28 @@
 _id: lxxliyxfw9uvbxmt
-name: Prismatic Sphere
-type: spell
+_key: '!items!lxxliyxfw9uvbxmt'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Prismatic Sphere
 system:
+  actions:
+    - _id: f5disnyayz7rytoy
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 min./level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: see text
+      spellEffect: 10-ft.-radius sphere centered on you
+  components:
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>prismatic wall</i>, except you conjure up
@@ -20,24 +40,6 @@ system:
       on.</p><p>The colors of the sphere have the same effects as the colors of
       a <i>prismatic wall</i>.</p><p><i>Prismatic sphere</i> can be made
       permanent with a <i>permanency</i> spell.</p>
-  actions:
-    - _id: f5disnyayz7rytoy
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level (D)
-      range:
-        value: '10'
-        units: ft
-      actionType: spellsave
-      save:
-        description: see text
-      spellEffect: 10-ft.-radius sphere centered on you
   learnedAt:
     class:
       sorcerer: 9
@@ -48,11 +50,9 @@ system:
       Sun: 9
   level: 9
   school: abj
-  components:
-    verbal: true
-  sr: false
   source:
     id: PZO1110
     pages: '325'
-_key: '!items!lxxliyxfw9uvbxmt'
+  sr: false
+type: spell
 

@@ -1,8 +1,43 @@
 _id: MppbibIym3XqWhnf
-name: Erupt
-type: feat
+_key: '!items!MppbibIym3XqWhnf'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Erupt
 system:
+  abilityType: su
+  actions:
+    - _id: lncj43mc4pau8rku
+      actionType: spellsave
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: (max(1, floor(@classes.oracle.level / 2)))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      measureTemplate:
+        customColor: '#000000'
+        overrideColor: true
+        overrideTexture: true
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Reflex half
+        type: ref
+      target:
+        value: 10-ft. radius burst
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a swift action, you cause flaming shards of rock to erupt from your
@@ -13,45 +48,10 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level and every 5 levels thereafter.</p>
-  actions:
-    - _id: lncj43mc4pau8rku
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: 10-ft. radius burst
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '10'
-        overrideColor: true
-        customColor: '#000000'
-        overrideTexture: true
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: (max(1, floor(@classes.oracle.level / 2)))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-      save:
-        type: ref
-        description: Reflex half
-  uses:
-    per: day
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
-  tag: classFeat_erupt
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!MppbibIym3XqWhnf'
+  tag: classFeat_erupt
+  uses:
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    per: day
+type: feat
 

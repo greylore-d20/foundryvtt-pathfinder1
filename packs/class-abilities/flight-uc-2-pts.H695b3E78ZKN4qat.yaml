@@ -1,8 +1,17 @@
 _id: H695b3E78ZKN4qat
-name: Flight (UC) (2 pts)
-type: feat
+_key: '!items!H695b3E78ZKN4qat'
 img: systems/pf1/icons/skills/blue_26.jpg
+name: Flight (UC) (2 pts)
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Eidolon (Unchained)
+  changes:
+    - _id: sdjibtk1
+      formula: '@attributes.speed.land.base'
+      modifier: base
+      subTarget: flySpeed
   description:
     value: >-
       <p><b>Requirements:</b> Summoner level 5th.</p>
@@ -20,16 +29,7 @@ system:
       <p>The eidolon can increase its fly speed by spending additional evolution
       points, gaining a 20-foot increase to its fly speed for each additional
       point spent.</p>
-  changes:
-    - _id: sdjibtk1
-      formula: '@attributes.speed.land.base'
-      subTarget: flySpeed
-      modifier: base
-  tag: classFeat_flightUc2Pts
   subType: classFeat
-  associations:
-    classes:
-      - Eidolon (Unchained)
-  abilityType: ex
-_key: '!items!H695b3E78ZKN4qat'
+  tag: classFeat_flightUc2Pts
+type: feat
 

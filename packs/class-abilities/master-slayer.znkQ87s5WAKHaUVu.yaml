@@ -1,8 +1,25 @@
 _id: znkQ87s5WAKHaUVu
-name: Master Slayer
-type: feat
+_key: '!items!znkQ87s5WAKHaUVu'
 img: systems/pf1/icons/feats/cleave.jpg
+name: Master Slayer
 system:
+  abilityType: ex
+  actions:
+    - _id: 8kg4u8t2aalpsdrt
+      actionType: mwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/feats/cleave.jpg
+      name: Use
+      save:
+        description: Fortitude negates secondary effect
+        type: fort
+  associations:
+    classes:
+      - Slayer
   description:
     value: >-
       <p>At 20th level, the slayer becomes a master at capturing or killing his
@@ -14,24 +31,7 @@ system:
       DC for this save is 10 + 1/2 the slayer’s level + the slayer’s
       Intelligence modifier. Whether or not the target succeeds, it cannot be
       targeted by this ability again (by any slayer) for 24 hours.</p>
-  actions:
-    - _id: 8kg4u8t2aalpsdrt
-      name: Use
-      img: systems/pf1/icons/feats/cleave.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      actionType: mwak
-      save:
-        type: fort
-        description: Fortitude negates secondary effect
-  tag: classFeat_masterSlayer
   subType: classFeat
-  associations:
-    classes:
-      - Slayer
-  abilityType: ex
-_key: '!items!znkQ87s5WAKHaUVu'
+  tag: classFeat_masterSlayer
+type: feat
 

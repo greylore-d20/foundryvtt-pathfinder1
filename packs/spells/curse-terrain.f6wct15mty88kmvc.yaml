@@ -1,53 +1,53 @@
 _id: f6wct15mty88kmvc
-name: Curse Terrain
-type: spell
+_key: '!items!f6wct15mty88kmvc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Curse Terrain
 system:
-  description:
-    value: >-
-      <p>By touching the ground, you curse the land with four unnatural hazards.
-      This functions as <i>lesser curse terrain</i>, but with the effects of the
-      major perilous demesne curse (see page 145).</p>
   actions:
     - _id: 8cb1y438aarjclzr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         cost: 10
         type: minute
         unchained:
           cost: 10
           type: minute
+      area: 1-mile radius emanating from the touched point
       duration:
         value: 1 day (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      area: 1-mile radius emanating from the touched point
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>By touching the ground, you curse the land with four unnatural hazards.
+      This functions as <i>lesser curse terrain</i>, but with the effects of the
+      major perilous demesne curse (see page 145).</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      witch: 4
-      shaman: 4
       hunter: 4
+      oracle: 4
+      shaman: 4
+      sorcerer: 4
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: nec
-  types: curse, evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 700
     value: >-
       the heart of a creature that dwelled in the area and powdered onyx worth
       700 gp
-    gpValue: 700
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!f6wct15mty88kmvc'
+  types: curse, evil
+type: spell
 

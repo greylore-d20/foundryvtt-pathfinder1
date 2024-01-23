@@ -1,8 +1,30 @@
 _id: v3d3lnjj7ks0ztii
-name: Enthrall
-type: spell
+_key: '!items!v3d3lnjj7ks0ztii'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Enthrall
 system:
+  actions:
+    - _id: mpqqusajb0if1qqb
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 hour or less
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: any number of creatures
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>If you have the attention of a group of creatures, you can use this
@@ -31,36 +53,17 @@ system:
       spell ends and the previously enthralled members become immediately
       unfriendly toward you. Each creature with 4 or more HD or with a Wisdom
       score of 16 or higher becomes hostile.</p>
-  actions:
-    - _id: mpqqusajb0if1qqb
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour or less
-      target:
-        value: any number of creatures
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 2
-      witch: 2
+      cleric: 2
       inquisitor: 2
-      shaman: 2
-      psychic: 2
       mesmerist: 2
+      oracle: 2
+      psychic: 2
+      shaman: 2
+      warpriest: 2
+      witch: 2
     domain:
       Nobility: 2
     subDomain:
@@ -68,13 +71,10 @@ system:
       Revolution: 2
   level: 2
   school: enc
-  subschool: charm
-  types: language-dependent, mind-affecting, sonic
-  components:
-    verbal: true
-    somatic: true
   source:
     id: PZO1110
     pages: '278'
-_key: '!items!v3d3lnjj7ks0ztii'
+  subschool: charm
+  types: language-dependent, mind-affecting, sonic
+type: spell
 

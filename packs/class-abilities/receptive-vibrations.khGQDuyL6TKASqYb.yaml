@@ -1,7 +1,15 @@
-name: Receptive Vibrations
-type: feat
+_id: khGQDuyL6TKASqYb
+_key: '!items!khGQDuyL6TKASqYb'
 img: icons/magic/control/silhouette-hold-change-green.webp
+name: Receptive Vibrations
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  contextNotes:
+    - subTarget: skill.per
+      text: +[[floor(@classes.wizard.level / 2)]] bonus to avoid being surprised.
   description:
     value: >-
       <p>At 8th level, you are constantly surrounded by ephemeral and invisible
@@ -10,19 +18,11 @@ system:
       feet of you because you are flat-footed or because your assailant is
       unseen. In addition, you gain a bonus on Perception checks to avoid being
       surprised equal to half your wizard level.</p>
-  tags:
-    - Aether School
-  contextNotes:
-    - text: +[[floor(@classes.wizard.level / 2)]] bonus to avoid being surprised.
-      subTarget: skill.per
-  subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
   source:
     id: PZO9483
     pages: '20'
-_id: khGQDuyL6TKASqYb
-_key: '!items!khGQDuyL6TKASqYb'
+  subType: classFeat
+  tags:
+    - Aether School
+type: feat
 

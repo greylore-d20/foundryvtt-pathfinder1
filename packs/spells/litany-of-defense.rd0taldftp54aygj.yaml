@@ -1,41 +1,41 @@
 _id: rd0taldftp54aygj
-name: Litany of Defense
-type: spell
+_key: '!items!rd0taldftp54aygj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Litany of Defense
 system:
-  description:
-    value: >-
-      <p>Invoking this litany strengthens your defenses. Any enhancement bonus
-      your armor has is doubled and you are immune to fear.  While subject to
-      this spell, the target cannot be the target of another spell that has the
-      word "litany" in the title.</p>
   actions:
     - _id: fgldspnsx57094hp
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: 1 round
-      target:
-        value: you
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: personal
-      actionType: spellsave
       save:
         description: 'no'
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>Invoking this litany strengthens your defenses. Any enhancement bonus
+      your armor has is doubled and you are immune to fear.  While subject to
+      this spell, the target cannot be the target of another spell that has the
+      word "litany" in the title.</p>
   learnedAt:
     class:
-      paladin: 2
-      inquisitor: 2
       antipaladin: 2
+      inquisitor: 2
+      paladin: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!rd0taldftp54aygj'
+type: spell
 

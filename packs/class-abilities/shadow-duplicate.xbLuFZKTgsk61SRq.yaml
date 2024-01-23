@@ -1,8 +1,38 @@
 _id: xbLuFZKTgsk61SRq
-name: Shadow Duplicate
-type: feat
+_key: '!items!xbLuFZKTgsk61SRq'
 img: systems/pf1/icons/items/weapons/dagger.PNG
+name: Shadow Duplicate
 system:
+  abilityType: sp
+  actions:
+    - _id: dq9oqddg2ii474v3
+      ability:
+        critMult: null
+        critRange: null
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      ammoType: none
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      name: Use
+      powerAttack:
+        critMultiplier: null
+        damageBonus: null
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
   description:
     value: >-
       <p>Once per day as an immediate action when the character is hit, the
@@ -15,47 +45,17 @@ system:
       this ability is equal to the character's class level. A character can use
       this ability one additional time per day for every 5 class levels she
       has.</p>
+  source:
+    id: PZO9466
+    pages: '8'
+  subType: classFeat
+  tag: classFeat_shadowDuplicate
   tags:
     - Rogue Talent
     - Slayer Talent
     - Ninja Trick
-  actions:
-    - _id: dq9oqddg2ii474v3
-      name: Use
-      img: systems/pf1/icons/items/weapons/dagger.PNG
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-      formulaicAttacks:
-        label: ''
-      ability:
-        critRange: null
-        critMult: null
-      powerAttack:
-        damageBonus: null
-        critMultiplier: null
-      ammoType: none
   uses:
-    per: day
     maxFormula: 1 + floor(@class.level / 5)
-  tag: classFeat_shadowDuplicate
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Slayer
-      - Ninja
-  abilityType: sp
-  source:
-    id: PZO9466
-    pages: '8'
-_key: '!items!xbLuFZKTgsk61SRq'
+    per: day
+type: feat
 

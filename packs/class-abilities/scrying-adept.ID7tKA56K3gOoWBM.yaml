@@ -1,8 +1,20 @@
 _id: ID7tKA56K3gOoWBM
-name: Scrying Adept
-type: feat
+_key: '!items!ID7tKA56K3gOoWBM'
 img: systems/pf1/icons/spells/evil-eye-red-3.jpg
+name: Scrying Adept
 system:
+  abilityType: su
+  actions:
+    - _id: 1rdjhg2gep7hfl9z
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/evil-eye-red-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Wizard
   description:
     value: >-
       <p>At 8th level, you are always aware when you are being observed via
@@ -11,19 +23,7 @@ system:
       whenever you scry on a subject, treat the subject as one step more
       familiar to you. Very familiar subjects get a –10 penalty on their save to
       avoid your scrying attempts.</p>
-  actions:
-    - _id: 1rdjhg2gep7hfl9z
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-red-3.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_scryingAdept
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!ID7tKA56K3gOoWBM'
+  tag: classFeat_scryingAdept
+type: feat
 

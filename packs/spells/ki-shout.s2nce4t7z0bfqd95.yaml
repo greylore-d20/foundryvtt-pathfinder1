@@ -1,18 +1,11 @@
 _id: s2nce4t7z0bfqd95
-name: Ki Shout
-type: spell
+_key: '!items!s2nce4t7z0bfqd95'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ki Shout
 system:
-  description:
-    value: >-
-      <p>With a guttural bark, you unleash a sudden blast of sonic energy that
-      strikes your opponent. The target takes 1d6 points of sonic damage per
-      level (maximum 20d6) and is stunned for 1 round; a successful Fortitude
-      save reduces the damage by half and negates the stun.</p>
   actions:
     - _id: 579xrt7gs73vdvxw
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -20,25 +13,32 @@ system:
           type: action
       duration:
         value: instantaneous
-      target:
-        value: one living creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: fort
         description: Fortitude partial (see text)
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>With a guttural bark, you unleash a sudden blast of sonic energy that
+      strikes your opponent. The target takes 1d6 points of sonic damage per
+      level (maximum 20d6) and is stunned for 1 round; a successful Fortitude
+      save reduces the damage by half and negates the stun.</p>
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       bard: 5
       psychic: 7
+      sorcerer: 7
+      wizard: 7
   level: 7
   school: evo
   types: sonic
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!s2nce4t7z0bfqd95'
+type: spell
 

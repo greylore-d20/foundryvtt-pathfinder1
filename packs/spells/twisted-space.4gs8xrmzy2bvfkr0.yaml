@@ -1,19 +1,11 @@
 _id: 4gs8xrmzy2bvfkr0
-name: Twisted Space
-type: spell
+_key: '!items!4gs8xrmzy2bvfkr0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Twisted Space
 system:
-  description:
-    value: >-
-      <p>You distort the space around a creature, twisting the path of its melee
-      attacks unpredictably, but always toward a nearby creature that the target
-      threatens. Until the start of your next turn, melee attacks made by the
-      target creature affect a random target instead of their intended
-      target.</p>
   actions:
     - _id: kjqnu6o34dnpcjpr
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,29 +13,37 @@ system:
           type: action
       duration:
         value: 1 round
-      target:
-        value: one creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You distort the space around a creature, twisting the path of its melee
+      attacks unpredictably, but always toward a nearby creature that the target
+      threatens. Until the start of your next turn, melee attacks made by the
+      target creature affect a random target instead of their intended
+      target.</p>
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      summoner: 2
       magus: 2
       psychic: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      wizard: 2
   level: 2
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a length of wire bent into a circle
-_key: '!items!4gs8xrmzy2bvfkr0'
+  school: trs
+type: spell
 

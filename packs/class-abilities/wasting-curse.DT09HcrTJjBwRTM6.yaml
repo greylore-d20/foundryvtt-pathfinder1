@@ -1,8 +1,16 @@
 _id: DT09HcrTJjBwRTM6
-name: Wasting Curse
-type: feat
+_key: '!items!DT09HcrTJjBwRTM6'
 img: systems/pf1/icons/spells/horror-eerie-1.jpg
+name: Wasting Curse
 system:
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: gm73pnz9
+      formula: '-4'
+      modifier: penalty
+      subTarget: chaSkills
   description:
     value: >-
       <p>Your body is slowly rotting away. You take a –4 penalty on
@@ -15,15 +23,7 @@ system:
       <p>At 10th level, you gain immunity to disease.</p>
 
       <p>At 15th level, you are immune to the nauseated condition.</p>
-  changes:
-    - _id: gm73pnz9
-      formula: '-4'
-      subTarget: chaSkills
-      modifier: penalty
-  tag: classFeat_wastingCurse
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-_key: '!items!DT09HcrTJjBwRTM6'
+  tag: classFeat_wastingCurse
+type: feat
 

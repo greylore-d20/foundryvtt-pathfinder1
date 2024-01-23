@@ -1,18 +1,11 @@
 _id: iv3eNHISB84mHLox
-name: Lore Keeper
-type: feat
+_key: '!items!iv3eNHISB84mHLox'
 img: systems/pf1/icons/items/inventory/book-grey.jpg
+name: Lore Keeper
 system:
-  description:
-    value: >-
-      <p>You can touch a creature to learn about its abilities and weaknesses.
-      With a successful touch attack, you gain information as if you made the
-      appropriate Knowledge skill check with a result equal to 15 + your cleric
-      level + your Wisdom modifier.</p>
+  abilityType: sp
   actions:
     - _id: eliuplljjuhh80pn
-      name: Use
-      img: systems/pf1/icons/items/inventory/book-grey.jpg
       activation:
         type: standard
         unchained:
@@ -20,21 +13,28 @@ system:
           type: action
       duration:
         units: inst
-      target:
-        value: creature touched
+      img: systems/pf1/icons/items/inventory/book-grey.jpg
+      name: Use
       range:
         units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_loreKeeper
-  subType: classFeat
+      target:
+        value: creature touched
   associations:
     classes:
       - Cleric
-  abilityType: sp
+  description:
+    value: >-
+      <p>You can touch a creature to learn about its abilities and weaknesses.
+      With a successful touch attack, you gain information as if you made the
+      appropriate Knowledge skill check with a result equal to 15 + your cleric
+      level + your Wisdom modifier.</p>
   source:
     id: PZO1110
     pages: '45'
-_key: '!items!iv3eNHISB84mHLox'
+  subType: classFeat
+  tag: classFeat_loreKeeper
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

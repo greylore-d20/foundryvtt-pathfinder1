@@ -1,8 +1,28 @@
 _id: ykdHgS9XFLje3DON
-name: Breaching the Gulf
-type: feat
+_key: '!items!ykdHgS9XFLje3DON'
 img: systems/pf1/icons/spells/light-eerie-1.jpg
+name: Breaching the Gulf
 system:
+  abilityType: sp
+  actions:
+    - _id: 1r8y48lvn0pdo50m
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: perm
+      img: systems/pf1/icons/spells/light-eerie-1.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 15th level, your <em>caster level</em> is increased by 3 when
@@ -14,30 +34,10 @@ system:
       round to return. While trapped in the airless void, the target suffers 6d6
       points of cold damage per round and must hold its breath or begin to
       suffocate.</p>
-  actions:
-    - _id: 1r8y48lvn0pdo50m
-      name: Use
-      img: systems/pf1/icons/spells/light-eerie-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: perm
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_breachingTheGulf
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: sp
-_key: '!items!ykdHgS9XFLje3DON'
+  tag: classFeat_breachingTheGulf
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

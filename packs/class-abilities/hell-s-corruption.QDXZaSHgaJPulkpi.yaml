@@ -1,8 +1,28 @@
 _id: QDXZaSHgaJPulkpi
-name: Hell's Corruption
-type: feat
+_key: '!items!QDXZaSHgaJPulkpi'
 img: systems/pf1/icons/skills/violet_25.jpg
+name: Hell's Corruption
 system:
+  abilityType: su
+  actions:
+    - _id: h2m1fxlnvliule19
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.cleric.level / 2))
+      img: systems/pf1/icons/skills/violet_25.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can cause a creature to become more susceptible to corruption as a
@@ -13,30 +33,10 @@ system:
       equal to 3 + your Wisdom modifier.</p>
 
       <p>This power replaces the Touch of Evil power of the Evil Domain.</p>
-  actions:
-    - _id: h2m1fxlnvliule19
-      name: Use
-      img: systems/pf1/icons/skills/violet_25.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.cleric.level / 2))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_hellsCorruption
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!QDXZaSHgaJPulkpi'
+  tag: classFeat_hellsCorruption
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

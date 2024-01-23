@@ -1,8 +1,39 @@
 _id: IuMbrWJqt6pLLmbz
-name: Atlatl
-type: weapon
+_key: '!items!IuMbrWJqt6pLLmbz'
 img: icons/weapons/thrown/dart-feathered.webp
+name: Atlatl
 system:
+  actions:
+    - _id: 5jn0p8lb2udg9mmw
+      ability:
+        attack: dex
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        label: ''
+      img: icons/weapons/thrown/dart-feathered.webp
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '50'
+  ammo:
+    type: dart
+  baseTypes:
+    - Atlatl
   description:
     value: >-
       <p>This Stone Age weapon is a thin piece of wood or antler used as a lever
@@ -13,58 +44,27 @@ system:
       atlatl is a move action that requires two hands and provokes attacks of
       opportunity. The Rapid Reload feat can be taken for atlatls, allowing you
       to load a dart as a free action.</p>
-  tags:
-    - PFS
-  weight:
-    value: 2
-  price: 2
+  hardness: 5
   hp:
     max: 5
     value: 5
-  hardness: 5
-  actions:
-    - _id: 5jn0p8lb2udg9mmw
-      name: Throw
-      img: icons/weapons/thrown/dart-feathered.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '50'
-        units: ft
-        maxIncrements: 5
-      actionType: twak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        label: ''
-      ability:
-        attack: dex
-        damage: str
-  baseTypes:
-    - Atlatl
-  weaponGroups:
-    value:
-      - thrown
   material:
-    normal:
-      value: ''
     addon:
       - null
-  subType: martial
-  weaponSubtype: ranged
+    normal:
+      value: ''
+  price: 2
   source:
     id: PZO9452
     pages: '0'
-  ammo:
-    type: dart
-_key: '!items!IuMbrWJqt6pLLmbz'
+  subType: martial
+  tags:
+    - PFS
+  weaponGroups:
+    value:
+      - thrown
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
 

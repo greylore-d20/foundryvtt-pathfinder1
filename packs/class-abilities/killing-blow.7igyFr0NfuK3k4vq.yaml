@@ -1,8 +1,20 @@
 _id: 7igyFr0NfuK3k4vq
-name: Killing Blow
-type: feat
+_key: '!items!7igyFr0NfuK3k4vq'
 img: systems/pf1/icons/skills/arrow_02.jpg
+name: Killing Blow
 system:
+  abilityType: su
+  actions:
+    - _id: d2k0juib98pc4x40
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/arrow_02.jpg
+      name: Use
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, weapons you use become infused with the power of death.
@@ -12,22 +24,10 @@ system:
       additional time per day for every four levels beyond 8th.</p>
 
       <p>This power replaces the Death's Embrace power of the Death Domain.</p>
-  actions:
-    - _id: d2k0juib98pc4x40
-      name: Use
-      img: systems/pf1/icons/skills/arrow_02.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_killingBlow
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!7igyFr0NfuK3k4vq'
+  tag: classFeat_killingBlow
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

@@ -1,8 +1,24 @@
 _id: avoOms22N0Z0zjv4
-name: Unwitting Ally
-type: feat
+_key: '!items!avoOms22N0Z0zjv4'
 img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+name: Unwitting Ally
 system:
+  abilityType: ex
+  actions:
+    - _id: jT5qKyCjpXntUE05
+      activation:
+        type: swift
+        unchained:
+          type: action
+      ammoType: none
+      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+      name: Use
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+      - Slayer
+      - Ninja
   description:
     value: >-
       <p>A character with this talent can spend a swift action to attempt to
@@ -15,27 +31,11 @@ system:
       same opponent for the next 24 hours. If the character fails the check by 5
       or more, she cannot use the unwitting ally ability on any opponent within
       line of sight of the failed attempt for 24 hours.</p>
+  subType: classFeat
+  tag: classFeat_unwittingAlly
   tags:
     - Rogue Talent, Advanced
     - Slayer Talent
     - Ninja Trick, Master
-  actions:
-    - _id: jT5qKyCjpXntUE05
-      name: Use
-      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
-      activation:
-        type: swift
-        unchained:
-          type: action
-      ammoType: none
-  tag: classFeat_unwittingAlly
-  subType: classFeat
-  associations:
-    classes:
-      - Rogue
-      - Rogue (Unchained)
-      - Slayer
-      - Ninja
-  abilityType: ex
-_key: '!items!avoOms22N0Z0zjv4'
+type: feat
 

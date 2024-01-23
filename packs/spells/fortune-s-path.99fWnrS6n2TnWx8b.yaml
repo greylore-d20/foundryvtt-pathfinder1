@@ -1,7 +1,29 @@
-name: Fortune's Path
-type: spell
+_id: 99fWnrS6n2TnWx8b
+_key: '!items!99fWnrS6n2TnWx8b'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fortune's Path
 system:
+  actions:
+    - _id: ieW9UXGuue68Dud6
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    focus: true
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You predict events in your near future. Visions of the foretold events
@@ -30,22 +52,6 @@ system:
       weather causing significant travel delay (though this spell would not show
       you the event’s exact details). At the GM’s discretion, the vision might
       depict the location of the event.</td></tr></tbody></table>
-  actions:
-    - _id: ieW9UXGuue68Dud6
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       arcanist: 3
@@ -56,17 +62,11 @@ system:
       warpriest: 3
       wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    focus: true
   materials:
-    value: incense worth 50 gp
     focus: silver mirror worth at least 100 gp
     gpValue: 50
+    value: incense worth 50 gp
+  school: div
   sr: false
-_id: 99fWnrS6n2TnWx8b
-_key: '!items!99fWnrS6n2TnWx8b'
+type: spell
 

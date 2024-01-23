@@ -1,8 +1,33 @@
 _id: gm6k0elwjnuplfwd
-name: Daybreak Arrow
-type: spell
+_key: '!items!gm6k0elwjnuplfwd'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Daybreak Arrow
 system:
+  actions:
+    - _id: 0qlynbxzchyakjhg
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates (object)
+        harmless: true
+        type: fort
+      target:
+        value: >-
+          up to 50 pieces of ammunition, all of which must be together at the
+          time of casting
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause ammunition, including shuriken, to exude radiant energy.
@@ -13,41 +38,16 @@ system:
       projectile results directly from radiant energy and is not subject to
       damage resistance. Such a projectile sheds light as if it were a sunrod
       for 1 round after it is fired or thrown.</p>
-  actions:
-    - _id: 0qlynbxzchyakjhg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level
-      target:
-        value: >-
-          up to 50 pieces of ammunition, all of which must be together at the
-          time of casting
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object)
-        harmless: true
   learnedAt:
     class:
       cleric: 3
-      warpriest: 3
-      oracle: 3
-      paladin: 3
       inquisitor: 3
       occultist: 3
+      oracle: 3
+      paladin: 3
+      warpriest: 3
   level: 3
   school: evo
   types: light
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!gm6k0elwjnuplfwd'
+type: spell
 

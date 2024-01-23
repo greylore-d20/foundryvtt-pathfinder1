@@ -1,8 +1,27 @@
 _id: 08kr5yl1w77kc3qu
-name: Profane Nimbus
-type: spell
+_key: '!items!08kr5yl1w77kc3qu'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Profane Nimbus
 system:
+  actions:
+    - _id: o0v2smdqpxlrr8d3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You are surrounded by a nimbus of shadow shaped like your god's unholy
@@ -15,35 +34,16 @@ system:
       magical attacks with the good descriptor. If such an attack allows a
       Reflex save for half damage, you take no damage on a successful saving
       throw.</p>
-  actions:
-    - _id: o0v2smdqpxlrr8d3
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 5
-      warpriest: 5
-      oracle: 5
-      inquisitor: 5
       antipaladin: 4
+      cleric: 5
+      inquisitor: 5
+      oracle: 5
+      warpriest: 5
   level: 5
   school: evo
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!08kr5yl1w77kc3qu'
+  types: evil
+type: spell
 

@@ -1,8 +1,31 @@
 _id: 8h84spdczbsi69gr
-name: Hostile Levitation
-type: spell
+_key: '!items!8h84spdczbsi69gr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Hostile Levitation
 system:
+  actions:
+    - _id: njqd4tsxl0g53417
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You levitate the target a few inches off the ground, removing solid
@@ -13,43 +36,20 @@ system:
       the second -2, and so on, to a maximum penalty of -5. A full-round action
       spent stabilizing allows the creature to begin again at -1.  This spell
       fails if cast on a flying creature.</p>
-  actions:
-    - _id: njqd4tsxl0g53417
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       bloodrager: 3
-      psychic: 3
       medium: 2
       mesmerist: 3
       occultist: 3
+      psychic: 3
+      sorcerer: 3
       spiritualist: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a leather loop studded with lodestones
-_key: '!items!8h84spdczbsi69gr'
+  school: trs
+type: spell
 

@@ -1,35 +1,35 @@
 _id: ajtvhtntlkv3hpuk
-name: Tower of Iron Will V
-type: spell
+_key: '!items!ajtvhtntlkv3hpuk'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Tower of Iron Will V
 system:
-  description:
-    value: >-
-      <p>This functions as <i>Tower of Iron Will I</i>, except as noted above.
-      This spell can be undercast.</p>
   actions:
     - _id: 8pg36jjun7py0cwt
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: immediate
         unchained:
           type: reaction
+      area: 10-ft.-radius emanation centered on you
       duration:
         value: 5 rounds
-      range:
-        value: '10'
-        units: ft
+      img: systems/pf1/icons/misc/magic-swirl.png
       measureTemplate:
-        type: circle
         size: '10'
-      area: 10-ft.-radius emanation centered on you
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '10'
+  components:
+    verbal: true
+  description:
+    value: >-
+      <p>This functions as <i>Tower of Iron Will I</i>, except as noted above.
+      This spell can be undercast.</p>
   learnedAt:
     class:
       psychic: 9
   level: 9
   school: abj
-  components:
-    verbal: true
-_key: '!items!ajtvhtntlkv3hpuk'
+type: spell
 

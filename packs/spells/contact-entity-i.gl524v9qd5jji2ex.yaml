@@ -1,8 +1,27 @@
 _id: gl524v9qd5jji2ex
-name: Contact Entity I
-type: spell
+_key: '!items!gl524v9qd5jji2ex'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Contact Entity I
 system:
+  actions:
+    - _id: it3ellqau3bsxszq
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: mi
+        value: '100'
+      target:
+        value: up to 20 entities of 6 HD or fewer; see text
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You send out a magical message to any eldritch entities of a particular
@@ -34,43 +53,24 @@ system:
       Entity on page 112. Some of these components are expensive or might
       require quests to acquire. Contacting certain types of creatures makes the
       spell chaotic, evil, or both, as indicated on the table.</p>
-  actions:
-    - _id: it3ellqau3bsxszq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: up to 20 entities of 6 HD or fewer; see text
-      range:
-        value: '100'
-        units: mi
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      summoner: 2
-      witch: 2
-      shaman: 2
-      psychic: 2
       medium: 1
       occultist: 2
+      oracle: 2
+      psychic: 2
+      shaman: 2
+      sorcerer: 2
+      summoner: 2
       summonerUnchained: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: evo
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: see text
+  school: evo
   sr: false
-_key: '!items!gl524v9qd5jji2ex'
+type: spell
 

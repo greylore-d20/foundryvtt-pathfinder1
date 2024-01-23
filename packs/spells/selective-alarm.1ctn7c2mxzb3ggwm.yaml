@@ -1,8 +1,30 @@
 _id: 1ctn7c2mxzb3ggwm
-name: Selective Alarm
-type: spell
+_key: '!items!1ctn7c2mxzb3ggwm'
 img: icons/magic/sonic/bell-alarm-red-purple.webp
+name: Selective Alarm
 system:
+  actions:
+    - _id: ffvbixqns4hx61ko
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to 20-ft.-radius emanation centered on a point in space
+      duration:
+        value: 2 hours/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Use
+      range:
+        units: close
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>alarm</i>, except that you can tweak the
@@ -20,45 +42,23 @@ system:
       more than 5,000 gp" entering the area, or even "a weapon" entering the
       area, because an item's value and classification as a weapon is
       subjective, and might vary from one person to the next.</p>
-  actions:
-    - _id: ffvbixqns4hx61ko
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 2 hours/level (D)
-      range:
-        units: close
-      measureTemplate:
-        type: circle
-        size: '20'
-      area: up to 20-ft.-radius emanation centered on a point in space
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      ranger: 2
       bard: 3
-      summoner: 3
-      inquisitor: 3
-      psychic: 3
-      occultist: 3
-      spiritualist: 3
       hunter: 2
+      inquisitor: 3
+      occultist: 3
+      psychic: 3
+      ranger: 2
+      sorcerer: 3
+      spiritualist: 3
+      summoner: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a slender iron rod 1 foot in length
+  school: abj
   sr: false
-_key: '!items!1ctn7c2mxzb3ggwm'
+type: spell
 

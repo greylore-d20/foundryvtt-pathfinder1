@@ -1,7 +1,38 @@
-name: Veil of Ash (3.5)
-type: spell
+_id: O8h91bExN8WP93WW
+_key: '!items!O8h91bExN8WP93WW'
 img: icons/magic/air/fog-gas-smoke-gray.webp
+name: Veil of Ash (3.5)
 system:
+  actions:
+    - _id: 4wb1m25ofxRpbves
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        value: 1 round/level
+      img: icons/magic/air/fog-gas-smoke-gray.webp
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes a small cloud of searing, choking ash to appear
@@ -16,46 +47,15 @@ system:
       moderate wind (11+ mph) disperses the ash cloud in 2 rounds; a strong wind
       (21+ mph) disperses the cloud in 1 round.</p><p>This spell does not
       function underwater.</p>
-  actions:
-    - _id: 4wb1m25ofxRpbves
-      name: Use
-      img: icons/magic/air/fog-gas-smoke-gray.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values:
-                - fire
-              custom: ''
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
       arcanist: 2
       sorcerer: 2
       wizard: 2
   level: 2
-  school: evo
-  types: fire
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a pinch of ash
-_id: O8h91bExN8WP93WW
-_key: '!items!O8h91bExN8WP93WW'
+  school: evo
+  types: fire
+type: spell
 

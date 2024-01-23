@@ -1,8 +1,31 @@
 _id: pej5x7q95dsgmomr
-name: Ironbeard
-type: spell
+_key: '!items!pej5x7q95dsgmomr'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Ironbeard
 system:
+  actions:
+    - _id: aptv4v9wwolsck84
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell causes a brushy beard of stiff iron to erupt from the face
@@ -11,39 +34,16 @@ system:
       <i>ironbeard</i> may also be used as a weapon equivalent to cold iron
       armor spikes. The <i>ironbeard</i> makes it difficult to speak, so any
       spellcasting with a verbal component has a 20% spell failure chance.</p>
-  actions:
-    - _id: aptv4v9wwolsck84
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      cleric: 1
-      warpriest: 1
-      oracle: 1
-      ranger: 1
-      paladin: 1
       antipaladin: 1
-      magus: 1
+      cleric: 1
       hunter: 1
+      magus: 1
+      oracle: 1
+      paladin: 1
+      ranger: 1
+      warpriest: 1
   school: trs
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!pej5x7q95dsgmomr'
+type: spell
 

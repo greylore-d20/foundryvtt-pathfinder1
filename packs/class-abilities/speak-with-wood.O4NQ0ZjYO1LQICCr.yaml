@@ -1,8 +1,25 @@
 _id: O4NQ0ZjYO1LQICCr
-name: Speak with Wood
-type: feat
+_key: '!items!O4NQ0ZjYO1LQICCr'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Speak with Wood
 system:
+  abilityType: sp
+  actions:
+    - _id: 2o0qwq3k6ny2vdxx
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>You can talk to wood and learn what it knows. You must spend 1 minute
@@ -16,32 +33,15 @@ system:
       increments. You can speak with natural or worked wood.</p>
 
       <p>You must be at least 11th level to select this revelation.</p>
-  tags:
-    - Wood Mystery
-  actions:
-    - _id: 2o0qwq3k6ny2vdxx
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: '1'
-        units: minute
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '@classes.oracle.level'
-  tag: classFeat_speakWithWood
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
   source:
     id: PZO1117
     pages: '57'
-_key: '!items!O4NQ0ZjYO1LQICCr'
+  subType: classFeat
+  tag: classFeat_speakWithWood
+  tags:
+    - Wood Mystery
+  uses:
+    maxFormula: '@classes.oracle.level'
+    per: day
+type: feat
 

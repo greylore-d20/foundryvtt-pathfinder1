@@ -1,8 +1,26 @@
 _id: m0T3SqjRbPgxRNBZ
-name: Spiritual Defense
-type: feat
+_key: '!items!m0T3SqjRbPgxRNBZ'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Spiritual Defense
 system:
+  abilityType: sp
+  actions:
+    - _id: mweiz0p98ioqqm68
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your chanting grants protection against your enemies. As a move action,
@@ -20,28 +38,10 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
-  actions:
-    - _id: mweiz0p98ioqqm68
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: move
-        unchained:
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_spiritualDefense
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: sp
-_key: '!items!m0T3SqjRbPgxRNBZ'
+  tag: classFeat_spiritualDefense
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

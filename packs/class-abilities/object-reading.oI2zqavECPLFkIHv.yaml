@@ -1,8 +1,22 @@
 _id: oI2zqavECPLFkIHv
-name: Object Reading
-type: feat
+_key: '!items!oI2zqavECPLFkIHv'
 img: systems/pf1/icons/items/inventory/rune-purple.jpg
+name: Object Reading
 system:
+  abilityType: su
+  actions:
+    - _id: x83olky3n4ko4da3
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      img: systems/pf1/icons/items/inventory/rune-purple.jpg
+      name: Use
+      uses:
+        autoDeductChargesCost: '0'
+  associations:
+    classes:
+      - Occultist
   description:
     value: >-
       <p>At 2nd level, an occultist learns how to read information from items he
@@ -24,21 +38,7 @@ system:
 
       <p>This functions like the psychometry occult skill unlock, but doesn’t
       require a skill check and can be used at will.</p>
-  actions:
-    - _id: x83olky3n4ko4da3
-      name: Use
-      img: systems/pf1/icons/items/inventory/rune-purple.jpg
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      uses:
-        autoDeductChargesCost: '0'
-  tag: classFeat_objectReading
   subType: classFeat
-  associations:
-    classes:
-      - Occultist
-  abilityType: su
-_key: '!items!oI2zqavECPLFkIHv'
+  tag: classFeat_objectReading
+type: feat
 

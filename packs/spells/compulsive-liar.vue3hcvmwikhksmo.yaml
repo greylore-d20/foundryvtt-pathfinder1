@@ -1,8 +1,30 @@
 _id: vue3hcvmwikhksmo
-name: Compulsive Liar
-type: spell
+_key: '!items!vue3hcvmwikhksmo'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Compulsive Liar
 system:
+  actions:
+    - _id: lilf7fzc3qog06lo
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: creature touched
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target becomes unable to speak the truth. Lies the target speaks
@@ -15,39 +37,17 @@ system:
       If the target of this spell is simultaneously compelled to tell the truth
       (for instance, by being within a <i>zone of</i> truth), the target is only
       able to say things that are neither true nor false.</p>
-  actions:
-    - _id: lilf7fzc3qog06lo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 hour/level (D)
-      target:
-        value: creature touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       bard: 1
-      witch: 2
-      psychic: 2
       mesmerist: 1
+      psychic: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!vue3hcvmwikhksmo'
+type: spell
 

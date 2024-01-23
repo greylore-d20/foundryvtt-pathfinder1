@@ -1,8 +1,31 @@
 _id: ug7ycubjoxgp7ppc
-name: Open/Close
-type: spell
+_key: '!items!ug7ycubjoxgp7ppc'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Open/Close
 system:
+  actions:
+    - _id: 7o2z4n58m634lgen
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: object weighing up to 30 lbs. or portal that can be opened or closed
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You can open or close (your choice) a door, chest, box, window, bag,
@@ -11,47 +34,24 @@ system:
       In addition, the spell can only open and close things weighing 30 pounds
       or less. Thus, doors, chests, and similar objects sized for enormous
       creatures may be beyond this spell's ability to affect.</p>
-  actions:
-    - _id: 7o2z4n58m634lgen
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: object weighing up to 30 lbs. or portal that can be opened or closed
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
-  uses:
-    autoDeductChargesCost: '0'
   learnedAt:
     class:
-      sorcerer: 0
-      wizard: 0
       bard: 0
-      summoner: 0
       magus: 0
-      psychic: 0
       medium: 0
       mesmerist: 0
       occultist: 0
+      psychic: 0
+      sorcerer: 0
       spiritualist: 0
+      summoner: 0
       summonerUnchained: 0
+      wizard: 0
   level: 0
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a brass key
-_key: '!items!ug7ycubjoxgp7ppc'
+  school: trs
+  uses:
+    autoDeductChargesCost: '0'
+type: spell
 

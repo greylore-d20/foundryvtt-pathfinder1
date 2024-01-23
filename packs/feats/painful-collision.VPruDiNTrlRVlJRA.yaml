@@ -1,7 +1,23 @@
-name: Painful Collision
-type: feat
+_id: VPruDiNTrlRVlJRA
+_key: '!items!VPruDiNTrlRVlJRA'
 img: icons/skills/wounds/injury-pain-body-orange.webp
+name: Painful Collision
 system:
+  actions:
+    - _id: 1wduG7UiNLPVl4D0
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      img: icons/skills/wounds/injury-pain-body-orange.webp
+      name: Use
   description:
     value: >-
       <p><em>You shove your opponents into each other, causing painful and
@@ -15,26 +31,10 @@ system:
       you successfully bull rush a goblin 10 feet and it then collides with
       another goblin, both creatures would take 3d6 points of bludgeoning
       damage.</p>
-  tags:
-    - Combat
-  actions:
-    - _id: 1wduG7UiNLPVl4D0
-      name: Use
-      img: icons/skills/wounds/injury-pain-body-orange.webp
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      damage:
-        parts:
-          - formula: 1d6
-            type:
-              values:
-                - bludgeoning
-              custom: ''
   source:
     id: PZO9493
     pages: '24'
-_id: VPruDiNTrlRVlJRA
-_key: '!items!VPruDiNTrlRVlJRA'
+  tags:
+    - Combat
+type: feat
 

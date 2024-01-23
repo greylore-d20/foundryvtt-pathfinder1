@@ -1,8 +1,30 @@
 _id: nju9j6zlv9sbiznw
-name: Illusion of Calm
-type: spell
+_key: '!items!nju9j6zlv9sbiznw'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Illusion of Calm
 system:
+  actions:
+    - _id: sm3ggxkmevcx0uqi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will disbelieve (on hit; see below)
+        type: will
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When casting this spell, you create an illusory double that takes the
@@ -15,39 +37,17 @@ system:
       saving throw to disbelieve the figment. On a successful saving throw, it
       successfully disbelieves and the spell's effect ends for that
       creature.</p>
-  actions:
-    - _id: sm3ggxkmevcx0uqi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: you
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will disbelieve (on hit; see below)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       alchemist: 1
       magus: 1
-      psychic: 1
       mesmerist: 1
       occultist: 1
+      psychic: 1
+      sorcerer: 1
+      wizard: 1
   school: ill
-  subschool: figment
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!nju9j6zlv9sbiznw'
+  subschool: figment
+type: spell
 

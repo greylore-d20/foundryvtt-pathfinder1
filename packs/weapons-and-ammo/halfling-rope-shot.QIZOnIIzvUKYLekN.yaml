@@ -1,8 +1,41 @@
 _id: QIZOnIIzvUKYLekN
-name: Halfling Rope-Shot
-type: weapon
+_key: '!items!QIZOnIIzvUKYLekN'
 img: systems/pf1/icons/items/weapons/halfling-hope-shot.PNG
+name: Halfling Rope-Shot
 system:
+  actions:
+    - _id: 1gehl5rdmr8uhnvv
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/halfling-hope-shot.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  ammo:
+    type: slingBullet
+  baseTypes:
+    - Halfling Rope-Shot
   description:
     value: >-
       <p>One end of this short rope has a sling bullet wrapped in a monkey's
@@ -13,64 +46,31 @@ system:
       the weapon's loop is a full-round action. You get a +2 bonus on Sleight of
       Hand checks made to conceal a rope-shot on your body. Halflings treat
       rope-shots as martial weapons.</p>
-  tags:
-    - PFS
-    - Halfling
-  weight:
-    value: 1
-  price: 1
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: 1gehl5rdmr8uhnvv
-      name: Attack
-      img: systems/pf1/icons/items/weapons/halfling-hope-shot.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Halfling Rope-Shot
-  weaponGroups:
-    value:
-      - flails
   material:
-    normal:
-      value: ''
     addon:
       - null
       - null
-  subType: exotic
+    normal:
+      value: ''
+  price: 1
   properties:
     dis: true
     fin: true
   source:
     id: PZO9455
     pages: '19'
-  ammo:
-    type: slingBullet
-_key: '!items!QIZOnIIzvUKYLekN'
+  subType: exotic
+  tags:
+    - PFS
+    - Halfling
+  weaponGroups:
+    value:
+      - flails
+  weight:
+    value: 1
+type: weapon
 

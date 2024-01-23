@@ -1,8 +1,28 @@
 _id: eePluGK6bx2mJSfK
-name: Draconic Resistance
-type: feat
+_key: '!items!eePluGK6bx2mJSfK'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Draconic Resistance
 system:
+  abilityType: ex
+  actions:
+    - _id: l3n1et62f5dhmmwo
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+  associations:
+    classes:
+      - Oracle
+  changes:
+    - _id: 6u666ieo
+      formula: >-
+        @classes.oracle.level >= 15 ? 4 : ((@classes.oracle.level > 8 &&
+        @classes.oracle.level < 15) ? 2 : 1)
+      modifier: untyped
+      priority: null
+      subTarget: nac
   description:
     value: >-
       <p>Like the great dragons, you are not easily harmed by common means of
@@ -11,32 +31,12 @@ system:
       to 10 and your natural armor bonus increases to +2.</p><p>At 15th level,
       your energy resistance increases to 20 and your natural armor bonus
       increases to +4.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: l3n1et62f5dhmmwo
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  changes:
-    - _id: 6u666ieo
-      formula: >-
-        @classes.oracle.level >= 15 ? 4 : ((@classes.oracle.level > 8 &&
-        @classes.oracle.level < 15) ? 2 : 1)
-      subTarget: nac
-      modifier: untyped
-      priority: null
-  tag: classFeat_draconicResistance
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!eePluGK6bx2mJSfK'
+  subType: classFeat
+  tag: classFeat_draconicResistance
+  tags:
+    - Dragon Mystery
+type: feat
 

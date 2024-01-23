@@ -1,22 +1,22 @@
 _id: J8n678vtcDpTt1ae
-name: Rooftop Infiltrator
-type: feat
+_key: '!items!J8n678vtcDpTt1ae'
 img: systems/pf1/icons/feats/deceitful.jpg
+name: Rooftop Infiltrator
 system:
+  abilityType: ex
+  associations:
+    classes:
+      - Vigilante
+  changes:
+    - _id: aj92z6b4
+      formula: floor(@attributes.land.speed.base / 2)
+      modifier: base
+      subTarget: climbSpeed
   description:
     value: >-
       <p>The vigilante gains a climb speed equal to half his base speed, which
       increases to his full base speed when climbing a rope.</p>
-  changes:
-    - _id: aj92z6b4
-      formula: floor(@attributes.land.speed.base / 2)
-      subTarget: climbSpeed
-      modifier: base
-  tag: classFeat_rooftopInfiltrator
   subType: classFeat
-  associations:
-    classes:
-      - Vigilante
-  abilityType: ex
-_key: '!items!J8n678vtcDpTt1ae'
+  tag: classFeat_rooftopInfiltrator
+type: feat
 

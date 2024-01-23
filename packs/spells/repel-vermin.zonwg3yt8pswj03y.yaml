@@ -1,8 +1,34 @@
 _id: zonwg3yt8pswj03y
-name: Repel Vermin
-type: spell
+_key: '!items!zonwg3yt8pswj03y'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Repel Vermin
 system:
+  actions:
+    - _id: 35gq22rh0pw7zg2y
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: 10-ft.-radius emanation centered on you
+      duration:
+        value: 10 min./level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '10'
+        type: circle
+      name: Use
+      range:
+        units: ft
+        value: '10'
+      save:
+        description: none or Will negates; see text
+        type: will
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An invisible barrier holds back vermin. A vermin with HD of less than
@@ -11,46 +37,20 @@ system:
       on a Will save. Even so, crossing the barrier deals the vermin 2d6 points
       of damage, and pressing against the barrier causes pain, which deters most
       vermin.</p>
-  actions:
-    - _id: 35gq22rh0pw7zg2y
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 min./level
-      range:
-        value: '10'
-        units: ft
-      measureTemplate:
-        type: circle
-        size: '10'
-      actionType: spellsave
-      save:
-        type: will
-        description: none or Will negates; see text
-      area: 10-ft.-radius emanation centered on you
   learnedAt:
-    class:
-      cleric: 4
-      warpriest: 4
-      oracle: 4
-      druid: 4
-      ranger: 3
-      bard: 4
-      shaman: 4
-      hunter: 3
     bloodline:
       Pestilence: 4
+    class:
+      bard: 4
+      cleric: 4
+      druid: 4
+      hunter: 3
+      oracle: 4
+      ranger: 3
+      shaman: 4
+      warpriest: 4
   level: 4
   school: abj
   types: pain
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!zonwg3yt8pswj03y'
+type: spell
 

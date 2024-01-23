@@ -1,16 +1,10 @@
 _id: hv2ptafk0j3jwqda
-name: Summon Erodaemon
-type: spell
+_key: '!items!hv2ptafk0j3jwqda'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Erodaemon
 system:
-  description:
-    value: >-
-      <p>This spell functions like <i>summon monster</i>, except it summons a
-      single erodaemon.</p>
   actions:
     - _id: 2nhsm72qhdbhljns
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: round
         unchained:
@@ -18,28 +12,34 @@ system:
           type: action
       duration:
         value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
       spellEffect: one summoned creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions like <i>summon monster</i>, except it summons a
+      single erodaemon.</p>
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
       cleric: 8
       oracle: 8
+      sorcerer: 8
       summoner: 6
-      witch: 8
       summonerUnchained: 6
+      witch: 8
+      wizard: 8
   level: 8
-  school: con
-  subschool: summoning
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a bent or tarnished wedding band
+  school: con
   sr: false
-_key: '!items!hv2ptafk0j3jwqda'
+  subschool: summoning
+  types: evil
+type: spell
 

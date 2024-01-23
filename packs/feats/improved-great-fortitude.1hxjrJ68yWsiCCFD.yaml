@@ -1,7 +1,7 @@
 _id: 1hxjrJ68yWsiCCFD
-name: Improved Great Fortitude
-type: feat
+_key: '!items!1hxjrJ68yWsiCCFD'
 img: systems/pf1/icons/feats/improved-great-fortitude.jpg
+name: Improved Great Fortitude
 system:
   description:
     value: >-
@@ -11,21 +11,21 @@ system:
       Fortitude}.</p><p><strong>Benefits</strong>: Once per day, you may reroll
       a Fortitude save. You must decide to use this ability before the results
       are revealed. You must take the second roll, even if it is worse.</p>
+  scriptCalls:
+    - _id: eebdWLhnbjWeTrbj
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Reroll fortitude
+      type: script
+      value: actor.rollSavingThrow("fort");
+  tag: feat_improvedGreatFortitude
   tags:
     - General
     - Saving Throw
   uses:
+    maxFormula: '1'
     per: day
     value: 1
-    maxFormula: '1'
-  tag: feat_improvedGreatFortitude
-  scriptCalls:
-    - _id: eebdWLhnbjWeTrbj
-      name: Reroll fortitude
-      img: icons/svg/dice-target.svg
-      type: script
-      value: actor.rollSavingThrow("fort");
-      category: use
-      hidden: false
-_key: '!items!1hxjrJ68yWsiCCFD'
+type: feat
 

@@ -1,8 +1,31 @@
 _id: a1yur84hxw6i9w24
-name: Shadow Barbs
-type: spell
+_key: '!items!a1yur84hxw6i9w24'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shadow Barbs
 system:
+  actions:
+    - _id: mzbov4vyeyq1qf2j
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Will negates (see text)
+        type: will
+      spellEffect: spiked chain-like shadowy weapon
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell, developed originally by priests of Zon-Kuthon in Nidal's
@@ -27,43 +50,20 @@ system:
       barbs</i>' vicious weapon quality vanishes, unless you are dead or
       unconscious at the time the spell ends, in which case you automatically
       fail this Will save and the vicious weapon damage remains.</p>
-  actions:
-    - _id: mzbov4vyeyq1qf2j
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
-      spellEffect: spiked chain-like shadowy weapon
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
       inquisitor: 4
+      oracle: 4
+      sorcerer: 4
+      warpriest: 4
+      wizard: 4
   level: 4
-  school: ill
-  subschool: shadow
-  types: darkness
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a single link from a spiked chain
+  school: ill
   sr: false
-_key: '!items!a1yur84hxw6i9w24'
+  subschool: shadow
+  types: darkness
+type: spell
 

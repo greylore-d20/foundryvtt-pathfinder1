@@ -1,8 +1,30 @@
 _id: 5f2v4g28iebx0hkq
-name: Summon Stampede
-type: spell
+_key: '!items!5f2v4g28iebx0hkq'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Summon Stampede
 system:
+  actions:
+    - _id: 1dfzmm6bglsasjxa
+      actionType: spellsave
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Reflex halves (see text)
+        type: ref
+      spellEffect: 20-ft.-radius herd of animals
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You conjure a herd of aurochs or similar herd animal that immediately
@@ -15,42 +37,20 @@ system:
       through a fire) or force it to move through a solid barrier, the herd
       stops at the obstacle and moves in a new randomly determined direction
       until it reaches another obstacle or the spell's duration ends.</p>
-  actions:
-    - _id: 1dfzmm6bglsasjxa
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex halves (see text)
-      spellEffect: 20-ft.-radius herd of animals
   learnedAt:
     class:
       cleric: 6
-      warpriest: 6
-      oracle: 6
       druid: 6
-      summoner: 4
       hunter: 6
+      oracle: 6
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 6
   level: 6
-  school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: piece of fur from a herd animal
+  school: con
   sr: false
-_key: '!items!5f2v4g28iebx0hkq'
+  subschool: summoning
+type: spell
 

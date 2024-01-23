@@ -1,8 +1,31 @@
 _id: 118e7kl304qi23ap
-name: Phantasmal Affliction
-type: spell
+_key: '!items!118e7kl304qi23ap'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Phantasmal Affliction
 system:
+  actions:
+    - _id: d32k52qp48g58wpq
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will disbelief, then Fortitude or Will negates (see text)
+        type: fort
+      target:
+        value: living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause the creature to believe she has a debilitating affliction.
@@ -31,41 +54,18 @@ system:
       affliction</i> is a spell effect and can be dispelled normally.
       <i>Placebo</i> effectOA counters and dispels <i>phantasmal
       affliction</i>.</p>
-  actions:
-    - _id: d32k52qp48g58wpq
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: see text
-      target:
-        value: living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Will disbelief, then Fortitude or Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
-      psychic: 3
       mesmerist: 2
+      psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
+  materials:
+    value: a drop of cod liver oil
   school: ill
   subschool: phantasm
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a drop of cod liver oil
-_key: '!items!118e7kl304qi23ap'
+type: spell
 

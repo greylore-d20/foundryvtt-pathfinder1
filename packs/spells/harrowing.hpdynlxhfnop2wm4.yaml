@@ -1,8 +1,28 @@
 _id: hpdynlxhfnop2wm4
-name: Harrowing
-type: spell
+_key: '!items!hpdynlxhfnop2wm4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Harrowing
 system:
+  actions:
+    - _id: km3sosr7zumovily
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level or until fulfilled
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one creature
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You use a Harrow deck to tell a fortune for yourself or someone else.
@@ -49,38 +69,18 @@ system:
       Alignments</th></tr><tr><th>Alignment</th><th>Opposition</th></tr><tr><td>LG</td><td>CE</td></tr><tr><td>NG</td><td>NE</td></tr><tr><td>CG</td><td>LE</td></tr><tr><td>LN</td><td>CN</td></tr><tr><td>N</td><td>LG,
       LE, CG, or CE (pick one when spell is
       cast)</td></tr><tr><td>CN</td><td>LN</td></tr><tr><td>LE</td><td>CG</td></tr><tr><td>NE</td><td>NG</td></tr><tr><td>CE</td><td>LG</td></tr></tbody></table>
-  actions:
-    - _id: km3sosr7zumovily
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level or until fulfilled
-      target:
-        value: one creature
-      range:
-        units: touch
   learnedAt:
-    class:
-      sorcerer: 3
-      wizard: 3
-      bard: 3
-      witch: 3
     bloodline:
       Harrow: 3
+    class:
+      bard: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a Harrow deck
+  school: div
   sr: false
-_key: '!items!hpdynlxhfnop2wm4'
+type: spell
 

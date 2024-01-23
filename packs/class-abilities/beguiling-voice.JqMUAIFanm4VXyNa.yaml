@@ -1,8 +1,24 @@
 _id: JqMUAIFanm4VXyNa
-name: Beguiling Voice
-type: feat
+_key: '!items!JqMUAIFanm4VXyNa'
 img: systems/pf1/icons/skills/light_07.jpg
+name: Beguiling Voice
 system:
+  abilityType: ex
+  actions:
+    - _id: pn8rmzg9p4hsq1fx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/light_07.jpg
+      name: Use
+  associations:
+    classes:
+      - Sorcerer
   description:
     value: >-
       <p>At 1st level, you can use the sound of your voice to lull a target
@@ -12,26 +28,10 @@ system:
       creature whose <em>Hit Dice</em> do not exceed your sorcerer level. You
       can use this ability a number of times per day equal to 3 + your
       <em>Charisma</em> modifier.</p>
-  actions:
-    - _id: pn8rmzg9p4hsq1fx
-      name: Use
-      img: systems/pf1/icons/skills/light_07.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.cha.mod
-  tag: classFeat_beguilingVoice
   subType: classFeat
-  associations:
-    classes:
-      - Sorcerer
-  abilityType: ex
-_key: '!items!JqMUAIFanm4VXyNa'
+  tag: classFeat_beguilingVoice
+  uses:
+    maxFormula: 3 + @abilities.cha.mod
+    per: day
+type: feat
 

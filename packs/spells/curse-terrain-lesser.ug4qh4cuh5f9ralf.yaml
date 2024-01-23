@@ -1,8 +1,27 @@
 _id: ug4qh4cuh5f9ralf
-name: Curse Terrain, Lesser
-type: spell
+_key: '!items!ug4qh4cuh5f9ralf'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Curse Terrain, Lesser
 system:
+  actions:
+    - _id: l07b1zi3bgnpfq2w
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      area: 300-ft. radius emanating from the touched point
+      duration:
+        value: 1 day (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By touching the ground, you curse the land with three unnatural
@@ -18,46 +37,27 @@ system:
       terrain</td><td>11th</td><td>7,500 gp</td></tr><tr><td>Greater curse
       terrain</td><td>15th</td><td>17,500 gp</td></tr><tr><td>Supreme curse
       terrain</td><td>19th</td><td>27,500 gp</td></tr></tbody></table>
-  actions:
-    - _id: l07b1zi3bgnpfq2w
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day (D)
-      range:
-        units: touch
-      area: 300-ft. radius emanating from the touched point
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
       cleric: 2
-      warpriest: 2
-      oracle: 2
       druid: 2
-      witch: 2
-      shaman: 2
       hunter: 2
+      oracle: 2
+      shaman: 2
+      sorcerer: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  types: curse, evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 350
     value: >-
       the heart of a creature that dwelled in the area and powdered onyx worth
       350 gp
-    gpValue: 350
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!ug4qh4cuh5f9ralf'
+  types: curse, evil
+type: spell
 

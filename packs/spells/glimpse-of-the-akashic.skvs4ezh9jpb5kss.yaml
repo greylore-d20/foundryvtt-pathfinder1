@@ -1,8 +1,26 @@
 _id: skvs4ezh9jpb5kss
-name: Glimpse of the Akashic
-type: spell
+_key: '!items!skvs4ezh9jpb5kss'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Glimpse of the Akashic
 system:
+  actions:
+    - _id: pjfxt3jldvcz7bju
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 day or until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You expand your consciousness in an attempt to tap into the perfect
@@ -18,29 +36,11 @@ system:
       checks for 1 minute. At the end of this time, the overwhelming nature of
       the Akashic Record assaults your psyche, causing you to be stunned for 2
       rounds and then sickened for 1 minute.</p>
-  actions:
-    - _id: pjfxt3jldvcz7bju
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 day or until discharged (see text)
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
       psychic: 8
   level: 8
   school: div
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!skvs4ezh9jpb5kss'
+type: spell
 

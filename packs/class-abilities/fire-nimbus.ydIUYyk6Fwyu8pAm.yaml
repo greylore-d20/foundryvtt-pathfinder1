@@ -1,8 +1,33 @@
 _id: ydIUYyk6Fwyu8pAm
-name: Fire Nimbus
-type: feat
+_key: '!items!ydIUYyk6Fwyu8pAm'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Fire Nimbus
 system:
+  abilityType: su
+  actions:
+    - _id: 26sxxp0vmkeyrfed
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@classes.shaman.level'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman causes a creature within 30 feet to gain a nimbus of fire.
@@ -15,32 +40,7 @@ system:
 
       <p>Whether or not the save is successful, the creature cannot be the
       target of this hex again for 24 hours.</p>
-  actions:
-    - _id: 26sxxp0vmkeyrfed
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.shaman.level'
-        units: round
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-      actionType: save
-      save:
-        type: will
-        description: Will negates
-  tag: classFeat_fireNimbus
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!ydIUYyk6Fwyu8pAm'
+  tag: classFeat_fireNimbus
+type: feat
 

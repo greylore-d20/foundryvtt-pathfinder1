@@ -1,42 +1,42 @@
 _id: d8ok0wwf6twlqiho
-name: Venomous Bolt
-type: spell
+_key: '!items!d8ok0wwf6twlqiho'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Venomous Bolt
 system:
-  description:
-    value: >-
-      <p>You infuse a single arrow or crossbow bolt with natural venom as you
-      fire it. In addition to its normal damage, anyone struck by this arrow or
-      bolt is affected as if by the <i>poison</i> spell. If the arrow is not
-      fired immediately, the spell ends with no effect.</p>
   actions:
     - _id: 3l23nqc3htsrth2q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: swift
         unchained:
           type: action
       duration:
         value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      save:
+        description: Fortitude negates; see text
+        type: fort
       target:
         value: one arrow or bolt
-      range:
-        value: '0'
-        units: ft
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates; see text
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>You infuse a single arrow or crossbow bolt with natural venom as you
+      fire it. In addition to its normal damage, anyone struck by this arrow or
+      bolt is affected as if by the <i>poison</i> spell. If the arrow is not
+      fired immediately, the spell ends with no effect.</p>
   learnedAt:
     class:
-      ranger: 3
       hunter: 3
+      ranger: 3
   level: 3
   school: nec
   types: poison
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!d8ok0wwf6twlqiho'
+type: spell
 

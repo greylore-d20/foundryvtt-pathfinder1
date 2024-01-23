@@ -1,8 +1,31 @@
 _id: 55m6rzymtt3toun7
-name: Nauseating Trail
-type: spell
+_key: '!items!55m6rzymtt3toun7'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Nauseating Trail
 system:
+  actions:
+    - _id: prizu5q1z6l5lvc7
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: none and Fortitude negates (see text)
+        type: fort
+      target:
+        value: one willing creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target exudes stinking vapors that fill its space. The vapors do
@@ -14,45 +37,22 @@ system:
       Each creature that enters or ends its turn in the area filled with these
       vapors must succeed at a Fortitude save or become nauseated for as long as
       it remains in the square and for 1d4+1 rounds after it leaves.</p>
-  actions:
-    - _id: prizu5q1z6l5lvc7
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one willing creature
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: none and Fortitude negates (see text)
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       alchemist: 3
-      witch: 3
+      druid: 3
+      hunter: 3
       magus: 3
       shaman: 3
-      hunter: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
-  school: con
-  subschool: creation
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a rotten egg or cabbage leaves
+  school: con
   sr: false
-_key: '!items!55m6rzymtt3toun7'
+  subschool: creation
+  types: poison
+type: spell
 

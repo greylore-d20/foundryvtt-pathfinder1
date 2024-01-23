@@ -1,8 +1,32 @@
 _id: mxqi375ya2rka7cp
-name: True Resurrection
-type: spell
+_key: '!items!mxqi375ya2rka7cp'
 img: icons/magic/life/ankh-gold-blue.webp
+name: True Resurrection
 system:
+  actions:
+    - _id: 5q9q9it912kjn151
+      actionType: heal
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: none; see text
+      target:
+        value: dead creature touched
+  components:
+    divineFocus: 1
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions like <i>raise dead,</i> except that you can
@@ -19,25 +43,6 @@ system:
       elementals or outsiders, but it can't resurrect constructs or undead
       creatures.</p><p>Even <i>true resurrection</i> can't restore to life a
       creature who has died of old age.</p>
-  actions:
-    - _id: 5q9q9it912kjn151
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: instantaneous
-      target:
-        value: dead creature touched
-      range:
-        units: touch
-      actionType: heal
-      save:
-        description: none; see text
   learnedAt:
     class:
       cleric: 9
@@ -45,17 +50,12 @@ system:
     subDomain:
       Resurrection: 9
   level: 9
-  school: con
-  subschool: healing
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 1
   materials:
-    value: diamond worth 25,000 gp
     gpValue: 25000
+    value: diamond worth 25,000 gp
   preparation:
     spontaneousPrepared: false
-_key: '!items!mxqi375ya2rka7cp'
+  school: con
+  subschool: healing
+type: spell
 

@@ -1,8 +1,28 @@
 _id: ghBRrL2bsMAn6ySL
-name: Draconic Resilience
-type: feat
+_key: '!items!ghBRrL2bsMAn6ySL'
 img: systems/pf1/icons/skills/green_03.jpg
+name: Draconic Resilience
 system:
+  abilityType: ex
+  actions:
+    - _id: e67flo4zipnefx1p
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '@abilities.wis.mod'
+      img: systems/pf1/icons/skills/green_03.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>The shaman grants a creature she touches some of the magically
@@ -14,27 +34,7 @@ system:
 
       <p>Once a creature has benefited from the draconic resilience hex, it
       cannot benefit from this hex again for 24 hours.</p>
-  actions:
-    - _id: e67flo4zipnefx1p
-      name: Use
-      img: systems/pf1/icons/skills/green_03.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@abilities.wis.mod'
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_draconicResilience
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: ex
-_key: '!items!ghBRrL2bsMAn6ySL'
+  tag: classFeat_draconicResilience
+type: feat
 

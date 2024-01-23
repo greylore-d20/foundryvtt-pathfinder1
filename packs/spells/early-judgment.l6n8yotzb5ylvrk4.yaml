@@ -1,8 +1,31 @@
 _id: l6n8yotzb5ylvrk4
-name: Early Judgment
-type: spell
+_key: '!items!l6n8yotzb5ylvrk4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Early Judgment
 system:
+  actions:
+    - _id: qttpi138xrndqpyz
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1d4 rounds
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one humanoid creature
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You show one creature the effect of its life so far and what it might
@@ -14,37 +37,14 @@ system:
       for 1d4 rounds on a failed save. If the target is neutral-aligned, it is
       confused for 1d4 rounds on a failed save. If the target is evil-aligned,
       it is shaken for 1d4 rounds on a failed save.</p>
-  actions:
-    - _id: qttpi138xrndqpyz
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1d4 rounds
-      target:
-        value: one humanoid creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       cleric: 2
-      warpriest: 2
-      oracle: 2
-      witch: 1
       inquisitor: 2
+      oracle: 2
+      warpriest: 2
+      witch: 1
   level: 2
   school: div
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
-_key: '!items!l6n8yotzb5ylvrk4'
+type: spell
 

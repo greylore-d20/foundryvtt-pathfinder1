@@ -1,8 +1,14 @@
 _id: vsanawzysjtywomw
-name: Alchemist's Lab
-type: loot
+_key: '!items!vsanawzysjtywomw'
 img: icons/tools/laboratory/vials-blue-pink.webp
+name: Alchemist's Lab
 system:
+  changes:
+    - _id: 495kqpu8
+      formula: '2'
+      modifier: circumstance
+      priority: null
+      subTarget: crf
   description:
     value: >-
       <p>This lab is used for making alchemical items, and provides a +2
@@ -10,19 +16,13 @@ system:
       costs related to the Craft (alchemy) skill. Without this lab, a character
       with the Craft (alchemy) skill is assumed to have enough tools to use the
       skill but not enough to get the +2 bonus that the lab provides.</p>
-  weight:
-    value: 40
-  price: 200
   equipped: false
-  changes:
-    - _id: 495kqpu8
-      formula: '2'
-      subTarget: crf
-      modifier: circumstance
-      priority: null
-  subType: gear
+  price: 200
   source:
     id: PZO1123
     pages: '77'
-_key: '!items!vsanawzysjtywomw'
+  subType: gear
+  weight:
+    value: 40
+type: loot
 

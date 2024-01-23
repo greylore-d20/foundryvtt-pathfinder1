@@ -1,8 +1,28 @@
 _id: EpQbZKdLIbzYbMB3
-name: Form of the Dragon
-type: feat
+_key: '!items!EpQbZKdLIbzYbMB3'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Form of the Dragon
 system:
+  abilityType: su
+  actions:
+    - _id: bw4n18u6rtc4jreq
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.oracle.level * 10'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Your kinship with dragonkind allows you to take on the form of a
@@ -27,35 +47,15 @@ system:
       and @Compendium[pf1.spells.0nm8l17dcr7oi7c3]{Form Of The Exotic Dragon
       III}. This choice must be made when you first gain this revelation, and
       cannot be changed.</p>
-  tags:
-    - Dragon Mystery
-  actions:
-    - _id: bw4n18u6rtc4jreq
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level * 10'
-        units: minute
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_formOfTheDragon
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
   source:
     id: PZO9470
     pages: '9'
-_key: '!items!EpQbZKdLIbzYbMB3'
+  subType: classFeat
+  tag: classFeat_formOfTheDragon
+  tags:
+    - Dragon Mystery
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

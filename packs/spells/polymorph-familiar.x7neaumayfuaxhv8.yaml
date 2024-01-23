@@ -1,8 +1,26 @@
 _id: x7neaumayfuaxhv8
-name: Polymorph Familiar
-type: spell
+_key: '!items!x7neaumayfuaxhv8'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Polymorph Familiar
 system:
+  actions:
+    - _id: sapv26tpvj8lcbts
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      target:
+        value: your familiar
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as <i>beast shape I</i>, except it grants your
@@ -12,32 +30,14 @@ system:
       checks).</p><p>At caster level 7th, this spell functions as <i>beast shape
       II</i>.</p><p>At caster level 9th, it functions as <i>beast shape III</i>.
       At caster level 11th, it functions as <i>beast shape IV</i>.</p>
-  actions:
-    - _id: sapv26tpvj8lcbts
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: your familiar
-      range:
-        units: close
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
       shaman: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
   school: trs
   subschool: polymorph
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!x7neaumayfuaxhv8'
+type: spell
 

@@ -1,8 +1,32 @@
 _id: 6rndjc976yelg14e
-name: Speak with Plane
-type: spell
+_key: '!items!6rndjc976yelg14e'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Speak with Plane
 system:
+  actions:
+    - _id: 1kjkh9kuh63ha1v9
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one plane with a sentient structure
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You tap into the awareness and consciousness of a plane with a sentient
@@ -19,44 +43,20 @@ system:
       past week, a new casting of this spell targeting the same plane fails. If
       <i>Speak with Plane</i> targets a plane that does not have a sentient
       structure, the spell fails.</p>
-  actions:
-    - _id: 1kjkh9kuh63ha1v9
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one plane with a sentient structure
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
-      summoner: 3
-      witch: 4
-      shaman: 4
       medium: 3
+      oracle: 4
+      shaman: 4
+      sorcerer: 4
+      summoner: 3
+      warpriest: 4
+      witch: 4
+      wizard: 4
   level: 4
-  school: div
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a small glass bead
-_key: '!items!6rndjc976yelg14e'
+  school: div
+type: spell
 

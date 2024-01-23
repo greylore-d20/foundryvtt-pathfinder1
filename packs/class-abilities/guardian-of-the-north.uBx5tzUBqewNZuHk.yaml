@@ -1,8 +1,28 @@
 _id: uBx5tzUBqewNZuHk
-name: Guardian of the North
-type: feat
+_key: '!items!uBx5tzUBqewNZuHk'
 img: systems/pf1/icons/skills/violet_20.jpg
+name: Guardian of the North
 system:
+  abilityType: su
+  actions:
+    - _id: 8muulpaww578vtcr
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.shaman.level'
+      img: systems/pf1/icons/skills/violet_20.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Shaman
   description:
     value: >-
       <p>As a standard action, the shaman assumes the form, as
@@ -18,30 +38,10 @@ system:
       <p>The duration of this transformation is 1 hour per level.</p>
 
       <p>The shaman can use this ability once per day.</p>
-  actions:
-    - _id: 8muulpaww578vtcr
-      name: Use
-      img: systems/pf1/icons/skills/violet_20.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.shaman.level'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_guardianOfTheNorth
   subType: classFeat
-  associations:
-    classes:
-      - Shaman
-  abilityType: su
-_key: '!items!uBx5tzUBqewNZuHk'
+  tag: classFeat_guardianOfTheNorth
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

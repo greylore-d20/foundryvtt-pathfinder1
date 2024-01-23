@@ -1,8 +1,32 @@
 _id: 5w1zrztwbvd6xkgj
-name: Repulsion
-type: spell
+_key: '!items!5w1zrztwbvd6xkgj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Repulsion
 system:
+  actions:
+    - _id: b5pjbx4ky1kr7g54
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: up to 10-ft.-radius/level emanation centered on you
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: spec
+        value: up to 10 ft./level
+      save:
+        description: Will negates
+        type: will
+  components:
+    divineFocus: 3
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>An invisible, mobile field surrounds you and prevents creatures from
@@ -17,54 +41,30 @@ system:
       reach. If a repelled creature moves away from you and then tries to turn
       back toward you, it cannot move any closer if it is still within the
       spell's area.</p>
-  actions:
-    - _id: b5pjbx4ky1kr7g54
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        value: up to 10 ft./level
-        units: spec
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      area: up to 10-ft.-radius/level emanation centered on you
   learnedAt:
-    class:
-      sorcerer: 6
-      wizard: 6
-      cleric: 7
-      oracle: 7
-      summoner: 5
-      inquisitor: 6
-      psychic: 7
-      occultist: 6
-      spiritualist: 6
-      summonerUnchained: 6
-    domain:
-      Nobility: 7
-      Protection: 7
     bloodline:
       Imperious: 6
       Starsoul: 6
+    class:
+      cleric: 7
+      inquisitor: 6
+      occultist: 6
+      oracle: 7
+      psychic: 7
+      sorcerer: 6
+      spiritualist: 6
+      summoner: 5
+      summonerUnchained: 6
+      wizard: 6
+    domain:
+      Nobility: 7
+      Protection: 7
   level: 6
-  school: abj
-  components:
-    verbal: true
-    somatic: true
-    focus: true
-    divineFocus: 3
   materials:
     focus: a pair of canine statuettes worth 50 gp
+  school: abj
   source:
     id: PZO1110
     pages: '333'
-_key: '!items!5w1zrztwbvd6xkgj'
+type: spell
 

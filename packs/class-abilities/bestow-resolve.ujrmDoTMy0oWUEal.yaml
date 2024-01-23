@@ -1,8 +1,28 @@
 _id: ujrmDoTMy0oWUEal
-name: Bestow Resolve
-type: feat
+_key: '!items!ujrmDoTMy0oWUEal'
 img: systems/pf1/icons/skills/gray_08.jpg
+name: Bestow Resolve
 system:
+  abilityType: su
+  actions:
+    - _id: v5kp1vo991m45vz0
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/skills/gray_08.jpg
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      target:
+        value: allies in range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, you can bless creatures with the boldness of your deity.
@@ -14,30 +34,10 @@ system:
 
       <p>This power replaces the Might of the Gods power of the Strength
       Domain.</p>
-  actions:
-    - _id: v5kp1vo991m45vz0
-      name: Use
-      img: systems/pf1/icons/skills/gray_08.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: allies in range
-      range:
-        value: '20'
-        units: ft
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_bestowResolve
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!ujrmDoTMy0oWUEal'
+  tag: classFeat_bestowResolve
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

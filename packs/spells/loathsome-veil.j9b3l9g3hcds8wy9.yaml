@@ -1,8 +1,30 @@
 _id: j9b3l9g3hcds8wy9
-name: Loathsome Veil
-type: spell
+_key: '!items!j9b3l9g3hcds8wy9'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Loathsome Veil
 system:
+  actions:
+    - _id: wu3bcea9y97n62hm
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration + 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      spellEffect: transparent pattern 40 ft. long, 20 ft. high
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell creates a transparent veil of shifting, multicolored strands
@@ -25,40 +47,18 @@ system:
       attack.</p><p><i>Loathsome veil</i> can be made permanent with the
       <i>permanency</i> spell by a caster of 10th level or higher for the cost
       of 7,500 gp.</p>
-  actions:
-    - _id: wu3bcea9y97n62hm
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: concentration + 1 round/level (D)
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: transparent pattern 40 ft. long, 20 ft. high
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      witch: 3
-      psychic: 3
       mesmerist: 3
+      psychic: 3
+      sorcerer: 3
+      witch: 3
+      wizard: 3
   level: 3
+  materials:
+    value: a tangle of multicolored threads
   school: ill
   subschool: pattern
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
-  materials:
-    value: a tangle of multicolored threads
-_key: '!items!j9b3l9g3hcds8wy9'
+type: spell
 

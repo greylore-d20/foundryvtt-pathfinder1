@@ -1,8 +1,28 @@
 _id: twsu9QGH0QXU1LUZ
-name: Eclipsing Blade
-type: feat
+_key: '!items!twsu9QGH0QXU1LUZ'
 img: systems/pf1/icons/items/inventory/banner-red.jpg
+name: Eclipsing Blade
 system:
+  abilityType: sp
+  actions:
+    - _id: 0cz1iut1gdno56y8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@classes.samurai.level'
+      img: systems/pf1/icons/items/inventory/banner-red.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: weapon held
+  associations:
+    classes:
+      - Samurai
   description:
     value: >-
       <p>At 8th level, the samurai can cast
@@ -13,30 +33,10 @@ system:
       hand. He may do this once per day, plus one additional time per day for
       every four levels he possesses above 8th (to a maximum of four times per
       day at 20th level).</p>
-  actions:
-    - _id: 0cz1iut1gdno56y8
-      name: Use
-      img: systems/pf1/icons/items/inventory/banner-red.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.samurai.level'
-        units: minute
-      target:
-        value: weapon held
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: floor((@classes.samurai.level - 4) / 4)
-  tag: classFeat_eclipsingBlade
   subType: classFeat
-  associations:
-    classes:
-      - Samurai
-  abilityType: sp
-_key: '!items!twsu9QGH0QXU1LUZ'
+  tag: classFeat_eclipsingBlade
+  uses:
+    maxFormula: floor((@classes.samurai.level - 4) / 4)
+    per: day
+type: feat
 

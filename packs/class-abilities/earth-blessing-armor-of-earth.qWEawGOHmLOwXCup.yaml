@@ -1,8 +1,27 @@
 _id: qWEawGOHmLOwXCup
-name: 'Earth Blessing: Armor of Earth'
-type: feat
+_key: '!items!qWEawGOHmLOwXCup'
 img: systems/pf1/icons/spells/rock-acid-3.jpg
+name: 'Earth Blessing: Armor of Earth'
 system:
+  actions:
+    - _id: prg4a2m0vls574h6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/rock-acid-3.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can touch an ally and harden its armor or clothing.
@@ -10,26 +29,7 @@ system:
       DR increases by 1 (to a maximum of DR 5/— at 18th level).</p>
 
       <p>This doesn’t stack with any other damage resistance.</p>
-  actions:
-    - _id: prg4a2m0vls574h6
-      name: Use
-      img: systems/pf1/icons/spells/rock-acid-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-      target:
-        value: creature touched
-      range:
-        units: touch
-  tag: classFeat_earthBlessingArmorOfEarth
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!qWEawGOHmLOwXCup'
+  tag: classFeat_earthBlessingArmorOfEarth
+type: feat
 

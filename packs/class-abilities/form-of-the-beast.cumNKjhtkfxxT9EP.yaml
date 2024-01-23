@@ -1,8 +1,28 @@
 _id: cumNKjhtkfxxT9EP
-name: Form of the Beast
-type: feat
+_key: '!items!cumNKjhtkfxxT9EP'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Form of the Beast
 system:
+  abilityType: su
+  actions:
+    - _id: 9b8i2mvaqehrulf3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '@classes.oracle.level'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>As a standard action, you can assume the form of a Small or Medium
@@ -22,30 +42,10 @@ system:
       hour/level.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
-  actions:
-    - _id: 9b8i2mvaqehrulf3
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '@classes.oracle.level'
-        units: hour
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_formOfTheBeast
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!cumNKjhtkfxxT9EP'
+  tag: classFeat_formOfTheBeast
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

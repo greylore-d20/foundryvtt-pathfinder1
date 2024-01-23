@@ -1,8 +1,20 @@
 _id: XmALhWqXdN9yOmtd
-name: Favored Enemy
-type: feat
+_key: '!items!XmALhWqXdN9yOmtd'
 img: systems/pf1/icons/skills/blood_13.jpg
+name: Favored Enemy
 system:
+  abilityType: ex
+  actions:
+    - _id: fgg1f6k561yq6and
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      img: systems/pf1/icons/skills/blood_13.jpg
+      name: Use
+  associations:
+    classes:
+      - Ranger
   description:
     value: >-
       <p>At 1st level, a ranger selects a creature type from the ranger
@@ -26,22 +38,10 @@ system:
       the most common.) If a specific creature falls into more than one category
       of <em>favored enemy</em>, the ranger’s bonuses do not stack; he simply
       uses whichever bonus is higher.</p>
-  actions:
-    - _id: fgg1f6k561yq6and
-      name: Use
-      img: systems/pf1/icons/skills/blood_13.jpg
-      activation:
-        type: passive
-        unchained:
-          type: passive
-  tag: classFeat_favoredEnemy
-  subType: classFeat
-  associations:
-    classes:
-      - Ranger
-  abilityType: ex
   source:
     id: PZO1110
     pages: '64'
-_key: '!items!XmALhWqXdN9yOmtd'
+  subType: classFeat
+  tag: classFeat_favoredEnemy
+type: feat
 

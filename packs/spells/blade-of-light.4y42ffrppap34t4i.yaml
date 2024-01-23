@@ -1,8 +1,26 @@
 _id: 4y42ffrppap34t4i
-name: Blade of Light
-type: spell
+_key: '!items!4y42ffrppap34t4i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blade of Light
 system:
+  actions:
+    - _id: ro2ga23karhgdmo0
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one melee weapon
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell infuses a weapon with pure sunlight (the weapon need not be
@@ -14,34 +32,16 @@ system:
       it functions as if it had the <i>ghost touch</i> weapon special ability.
       The weapon automatically confirms critical hits against foes that are
       vulnerable to sunlight.</p>
-  actions:
-    - _id: ro2ga23karhgdmo0
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one melee weapon
-      range:
-        units: touch
   learnedAt:
     class:
       cleric: 4
-      warpriest: 4
+      inquisitor: 4
       oracle: 4
       paladin: 4
-      inquisitor: 4
+      warpriest: 4
   level: 4
   school: trs
-  types: good
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!4y42ffrppap34t4i'
+  types: good
+type: spell
 

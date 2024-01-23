@@ -1,17 +1,10 @@
-name: Influence Wild Magic
-type: spell
+_id: 4iT5C0izh25ADJk0
+_key: '!items!4iT5C0izh25ADJk0'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Influence Wild Magic
 system:
-  description:
-    value: >-
-      <p>This spell creates an area of stabilizing magical energy that emanates
-      from you. Any creature within this area that fails a concentration check
-      to cast a spell normally in an area of wild magic rolls twice to determine
-      the wild magic effect and choose its preferred result.</p>
   actions:
     - _id: Bn52E4cinmKToQZC
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
       activation:
         type: standard
         unchained:
@@ -19,13 +12,24 @@ system:
           type: action
       duration:
         value: 10 minutes/level
-      target:
-        value: you
-      range:
-        units: personal
       formulaicAttacks:
         label: ''
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
       spellEffect: 20-foot-radius burst of stabilizing magic centered on you
+      target:
+        value: you
+  components:
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell creates an area of stabilizing magical energy that emanates
+      from you. Any creature within this area that fails a concentration check
+      to cast a spell normally in an area of wild magic rolls twice to determine
+      the wild magic effect and choose its preferred result.</p>
   learnedAt:
     class:
       arcanist: 2
@@ -46,10 +50,6 @@ system:
       wizard: 2
   level: 2
   school: abj
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_id: 4iT5C0izh25ADJk0
-_key: '!items!4iT5C0izh25ADJk0'
+type: spell
 

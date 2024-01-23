@@ -1,8 +1,39 @@
 _id: 4ygv4epeaYaWk8q6
-name: Hook Hand
-type: weapon
+_key: '!items!4ygv4epeaYaWk8q6'
 img: systems/pf1/icons/items/weapons/hook-hand.PNG
+name: Hook Hand
 system:
+  actions:
+    - _id: g8mcy6xgi5nyvppd
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      img: systems/pf1/icons/items/weapons/hook-hand.PNG
+      name: Attack
+      range:
+        units: melee
+        value: '0'
+  baseTypes:
+    - Hook Hand
   description:
     value: >-
       <p>Pirates who lose a hand in the course of their adventures sometimes
@@ -10,51 +41,20 @@ system:
       don't interfere with day-to-day activities, but can't be used for tasks
       that would require an actual hand (such as completing somatic components,
       drawing arrows, or holding a weapon with both hands).</p>
-  weight:
-    value: 1
-  price: 10
+  hardness: 10
   hp:
     max: 2
     value: 2
-  hardness: 10
-  actions:
-    - _id: g8mcy6xgi5nyvppd
-      name: Attack
-      img: systems/pf1/icons/items/weapons/hook-hand.PNG
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '0'
-        units: melee
-      actionType: mwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 4, @size)
-            type:
-              values:
-                - slashing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-      ability:
-        attack: str
-        damage: str
-  baseTypes:
-    - Hook Hand
-  weaponGroups:
-    value:
-      - close
+  price: 10
   properties:
     dis: true
   source:
     id: PZO1136
     pages: '188'
-_key: '!items!4ygv4epeaYaWk8q6'
+  weaponGroups:
+    value:
+      - close
+  weight:
+    value: 1
+type: weapon
 

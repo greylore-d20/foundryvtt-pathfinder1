@@ -1,17 +1,11 @@
 _id: nntvnla4qnawr0xn
-name: Darkvision, Greater
-type: spell
+_key: '!items!nntvnla4qnawr0xn'
 img: icons/creatures/eyes/humanoid-single-blind.webp
+name: Darkvision, Greater
 system:
-  description:
-    value: >-
-      <p>This spell functions as
-      @Compendium[pf1.spells.mz9yr5yhr0f3oqtp]{darkvision}, except the target's
-      <em>darkvision</em> has a range of 120 feet.</p>
   actions:
     - _id: w36ac94rta3g6tmo
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -19,33 +13,39 @@ system:
           type: action
       duration:
         value: 1 hour/level
-      target:
-        value: creature touched
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: touch
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
         harmless: true
+        type: will
+      target:
+        value: creature touched
+  components:
+    material: true
+    somatic: true
+    verbal: true
+  description:
+    value: >-
+      <p>This spell functions as
+      @Compendium[pf1.spells.mz9yr5yhr0f3oqtp]{darkvision}, except the target's
+      <em>darkvision</em> has a range of 120 feet.</p>
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
-      ranger: 4
       alchemist: 4
       antipaladin: 4
-      psychic: 4
+      hunter: 4
       medium: 4
       occultist: 4
-      hunter: 4
+      psychic: 4
+      ranger: 4
+      sorcerer: 4
+      wizard: 4
   level: 4
-  school: trs
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: either a pinch of dried carrot or an agate
-_key: '!items!nntvnla4qnawr0xn'
+  school: trs
+type: spell
 

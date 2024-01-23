@@ -1,8 +1,26 @@
 _id: wR1Bt84ZulSKzvj4
-name: Clobbering Strike
-type: feat
+_key: '!items!wR1Bt84ZulSKzvj4'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Clobbering Strike
 system:
+  abilityType: ex
+  actions:
+    - _id: kdb5yvq0sii2rsk6
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Whenever you score a critical hit against an opponent with a spell that
@@ -10,25 +28,7 @@ system:
       as a swift action. You do not provoke an attack of opportunity as normal
       for this trip attempt. You cannot be tripped in return when using this
       ability.</p>
-  actions:
-    - _id: kdb5yvq0sii2rsk6
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        units: touch
-  tag: classFeat_clobberingStrike
   subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: ex
-_key: '!items!wR1Bt84ZulSKzvj4'
+  tag: classFeat_clobberingStrike
+type: feat
 

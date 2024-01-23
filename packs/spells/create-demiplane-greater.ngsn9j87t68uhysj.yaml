@@ -1,8 +1,29 @@
 _id: ngsn9j87t68uhysj
-name: Create Demiplane, Greater
-type: spell
+_key: '!items!ngsn9j87t68uhysj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Create Demiplane, Greater
 system:
+  actions:
+    - _id: 1ia8v3013oym652h
+      activation:
+        cost: 6
+        type: hour
+        unchained:
+          cost: 6
+          type: hour
+      duration:
+        value: 1 day/level or instantaneous (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '0'
+      spellEffect: extradimensional demiplane, up to 20 10-ft. cubes/level (S)
+  components:
+    focus: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell functions as @Compendium[pf1.spells.wniqskqkk0cubu9u]{create
@@ -55,45 +76,24 @@ system:
       22,500 gp. If you have cast <em>create</em> greater demiplane multiple
       times to enlarge the demiplane, each casting's area requires its own
       <em>permanency</em> spell.</p>
-  actions:
-    - _id: 1ia8v3013oym652h
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 6
-        type: hour
-        unchained:
-          cost: 6
-          type: hour
-      duration:
-        value: 1 day/level or instantaneous (see text)
-      range:
-        value: '0'
-        units: ft
-        maxIncrements: '1'
-      spellEffect: extradimensional demiplane, up to 20 10-ft. cubes/level (S)
   learnedAt:
     class:
-      sorcerer: 9
-      wizard: 9
       cleric: 9
       oracle: 9
-      witch: 9
       psychic: 9
+      sorcerer: 9
+      witch: 9
+      wizard: 9
     subDomain:
       Solitude: 9
   level: 9
-  school: con
-  subschool: creation
-  components:
-    verbal: true
-    somatic: true
-    focus: true
   materials:
     focus: a forked metal rod worth at least 500 gp
-  sr: false
+  school: con
   source:
     id: PZO1117
     pages: '214'
-_key: '!items!ngsn9j87t68uhysj'
+  sr: false
+  subschool: creation
+type: spell
 

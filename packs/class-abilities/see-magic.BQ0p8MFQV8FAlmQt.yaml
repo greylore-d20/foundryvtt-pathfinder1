@@ -1,8 +1,24 @@
 _id: BQ0p8MFQV8FAlmQt
-name: See Magic
-type: feat
+_key: '!items!BQ0p8MFQV8FAlmQt'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: See Magic
 system:
+  abilityType: su
+  actions:
+    - _id: 1ev99kgbtwj9ffnl
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '1'
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>The arcanist can see magical auras. If she expends 1 point from her
@@ -15,25 +31,9 @@ system:
       Spellcraft without needing to spend 3 rounds examining the object. If an
       enemy possesses the object, the arcanist must first succeed at a melee
       touch attack to identify the item.</p>
+  subType: classFeat
+  tag: classFeat_seeMagic
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 1ev99kgbtwj9ffnl
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: minute
-  tag: classFeat_seeMagic
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!BQ0p8MFQV8FAlmQt'
+type: feat
 

@@ -1,35 +1,35 @@
 _id: 3nfMITHr7xLEhEXY
-name: Occulted Soul
-type: feat
+_key: '!items!3nfMITHr7xLEhEXY'
 img: systems/pf1/icons/items/weapons/kunai.png
+name: Occulted Soul
 system:
-  description:
-    value: >-
-      <p>A ninja with this trick can still her mind to bypass magical detection.
-      The ninja can spend 1 ki point to cast
-      @Compendium[pf1.spells.awia42zci8nufpfl]{Nondetection} on herself as a
-      spell-like ability, with a caster level equal to her ninja level.</p>
+  abilityType: su
   actions:
     - _id: 39ohqjkdw3u1tv9j
-      name: Use
-      img: systems/pf1/icons/items/weapons/kunai.png
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '@classes.ninja.level'
         units: hour
-      target:
-        value: self
+        value: '@classes.ninja.level'
+      img: systems/pf1/icons/items/weapons/kunai.png
+      name: Use
       range:
         units: personal
-  tag: classFeat_occultedSoul
-  subType: classFeat
+      target:
+        value: self
   associations:
     classes:
       - Ninja
-  abilityType: su
-_key: '!items!3nfMITHr7xLEhEXY'
+  description:
+    value: >-
+      <p>A ninja with this trick can still her mind to bypass magical detection.
+      The ninja can spend 1 ki point to cast
+      @Compendium[pf1.spells.awia42zci8nufpfl]{Nondetection} on herself as a
+      spell-like ability, with a caster level equal to her ninja level.</p>
+  subType: classFeat
+  tag: classFeat_occultedSoul
+type: feat
 

@@ -1,8 +1,23 @@
 _id: jq9veKHhIybXs7ms
-name: Burning Infusion
-type: feat
+_key: '!items!jq9veKHhIybXs7ms'
 img: systems/pf1/icons/spells/fireball-red-3.jpg
+name: Burning Infusion
 system:
+  actions:
+    - _id: 8845kjl429ugqybq
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      name: Use
+      save:
+        description: Reflex negates
+        type: ref
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> fire; <b>Type</b> substance infusion; <b>Level</b> 1;
@@ -17,22 +32,7 @@ system:
       <p>Against a creature on fire from this infusion, any fire kinetic blasts
       gain a +2 bonus on attack rolls, to DCs, and on caster level checks to
       overcome spell resistance.</p>
-  actions:
-    - _id: 8845kjl429ugqybq
-      name: Use
-      img: systems/pf1/icons/spells/fireball-red-3.jpg
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      actionType: save
-      save:
-        type: ref
-        description: Reflex negates
-  tag: classFeat_burningInfusion
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-_key: '!items!jq9veKHhIybXs7ms'
+  tag: classFeat_burningInfusion
+type: feat
 

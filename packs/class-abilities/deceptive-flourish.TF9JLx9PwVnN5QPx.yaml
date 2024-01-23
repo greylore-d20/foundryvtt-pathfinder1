@@ -1,8 +1,21 @@
 _id: TF9JLx9PwVnN5QPx
-name: Deceptive Flourish
-type: feat
+_key: '!items!TF9JLx9PwVnN5QPx'
 img: systems/pf1/icons/skills/violet_03.jpg
+name: Deceptive Flourish
 system:
+  abilityType: su
+  associations:
+    classes:
+      - Wizard
+  changes:
+    - _id: ij6c0rgl
+      formula: 2 + (floor(@classes.wizard.level / 5))
+      modifier: enh
+      subTarget: skill.blf
+    - _id: h39o8dbh
+      formula: 2 + (floor(@classes.wizard.level / 5))
+      modifier: enh
+      subTarget: skill.dis
   description:
     value: >-
       <p>You gain a +2 <em>enhancement bonus</em> on <em>Bluff</em> and
@@ -16,20 +29,7 @@ system:
       is active, and each time you <em>activate</em>
       @Compendium[pf1.spells.8nrt26t37v7koqr8]{Misdirection}, you can choose a
       new creature or object as the secondary object.</p>
-  changes:
-    - _id: ij6c0rgl
-      formula: 2 + (floor(@classes.wizard.level / 5))
-      subTarget: skill.blf
-      modifier: enh
-    - _id: h39o8dbh
-      formula: 2 + (floor(@classes.wizard.level / 5))
-      subTarget: skill.dis
-      modifier: enh
-  tag: classFeat_deceptiveFlourish
   subType: classFeat
-  associations:
-    classes:
-      - Wizard
-  abilityType: su
-_key: '!items!TF9JLx9PwVnN5QPx'
+  tag: classFeat_deceptiveFlourish
+type: feat
 

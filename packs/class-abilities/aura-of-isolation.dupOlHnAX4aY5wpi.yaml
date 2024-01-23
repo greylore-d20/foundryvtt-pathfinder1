@@ -1,8 +1,29 @@
 _id: dupOlHnAX4aY5wpi
-name: Aura of Isolation
-type: feat
+_key: '!items!dupOlHnAX4aY5wpi'
 img: systems/pf1/icons/skills/affliction_02.jpg
+name: Aura of Isolation
 system:
+  abilityType: su
+  actions:
+    - _id: 6gt1ws3pnmdlb0f3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '20'
+      target:
+        value: enemies in range
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can create a 20-foot aura that causes enemies
@@ -15,31 +36,10 @@ system:
       emotion effect.</p>
 
       <p>This power replaces the Part the Veil power of the Void Domain.</p>
-  actions:
-    - _id: 6gt1ws3pnmdlb0f3
-      name: Use
-      img: systems/pf1/icons/skills/affliction_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: enemies in range
-      range:
-        value: '20'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_auraOfIsolation
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!dupOlHnAX4aY5wpi'
+  tag: classFeat_auraOfIsolation
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

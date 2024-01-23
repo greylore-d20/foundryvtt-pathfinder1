@@ -1,34 +1,34 @@
 _id: Yq1BaEV5Y2b9Nqqm
-name: Earthquake Blessing; Earth Hammer
-type: feat
+_key: '!items!Yq1BaEV5Y2b9Nqqm'
 img: systems/pf1/icons/spells/rock-plain-3.jpg
+name: Earthquake Blessing; Earth Hammer
 system:
-  description:
-    value: >-
-      <p>At 10th level, you can touch a weapon to bless it with the force of a
-      mighty earthquake for 1 minute. When the weapon hits a creature, the
-      target must succeed at a Reflex save or fall prone; either way, the
-      creature is immune to this ability for 24 hours.</p>
   actions:
     - _id: xty21mwmyix2qvme
-      name: Use
-      img: systems/pf1/icons/spells/rock-plain-3.jpg
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       duration:
-        value: '1'
         units: minute
-      target:
-        value: weapon toched
+        value: '1'
+      img: systems/pf1/icons/spells/rock-plain-3.jpg
+      name: Use
       range:
         units: touch
-  tag: classFeat_earthquakeBlessingEarthHammer
-  subType: classFeat
+      target:
+        value: weapon toched
   associations:
     classes:
       - Warpriest
-_key: '!items!Yq1BaEV5Y2b9Nqqm'
+  description:
+    value: >-
+      <p>At 10th level, you can touch a weapon to bless it with the force of a
+      mighty earthquake for 1 minute. When the weapon hits a creature, the
+      target must succeed at a Reflex save or fall prone; either way, the
+      creature is immune to this ability for 24 hours.</p>
+  subType: classFeat
+  tag: classFeat_earthquakeBlessingEarthHammer
+type: feat
 

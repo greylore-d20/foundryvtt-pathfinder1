@@ -1,8 +1,25 @@
 _id: nmn3X677xzFZ0KkY
-name: 'Godclaw Blessing: Tactical Readiness'
-type: feat
+_key: '!items!nmn3X677xzFZ0KkY'
 img: systems/pf1/icons/spells/evil-eye-eerie-2.jpg
+name: 'Godclaw Blessing: Tactical Readiness'
 system:
+  actions:
+    - _id: eu1yz9o4n1vhm411
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/spells/evil-eye-eerie-2.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: allies within range
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 10th level, you can rally your allies within 30 feet, allowing each
@@ -12,24 +29,7 @@ system:
       for 1 round. You can affect a number of allies equal to your Wisdom bonus.
       These actions do not count against your allies’ total movement or actions
       on their next turn.</p>
-  actions:
-    - _id: eu1yz9o4n1vhm411
-      name: Use
-      img: systems/pf1/icons/spells/evil-eye-eerie-2.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      target:
-        value: allies within range
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_godclawBlessingTacticalReadiness
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!nmn3X677xzFZ0KkY'
+  tag: classFeat_godclawBlessingTacticalReadiness
+type: feat
 

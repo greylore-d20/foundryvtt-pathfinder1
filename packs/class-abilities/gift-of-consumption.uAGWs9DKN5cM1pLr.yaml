@@ -1,8 +1,27 @@
 _id: uAGWs9DKN5cM1pLr
-name: Gift of Consumption
-type: feat
+_key: '!items!uAGWs9DKN5cM1pLr'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Gift of Consumption
 system:
+  abilityType: su
+  actions:
+    - _id: tpf0828jrksffh28
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch curses a creature to share any effects that target her
@@ -16,28 +35,9 @@ system:
 
       <p>This hex does not function with effects that require additional types
       of saves, such as phantasmal killer.</p>
+  subType: classFeat
+  tag: classFeat_giftOfConsumption
   tags:
     - Hex
-  actions:
-    - _id: tpf0828jrksffh28
-      name: Use
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        value: '30'
-        units: ft
-  tag: classFeat_giftOfConsumption
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: su
-_key: '!items!uAGWs9DKN5cM1pLr'
+type: feat
 

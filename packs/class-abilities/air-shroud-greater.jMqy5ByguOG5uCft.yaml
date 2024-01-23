@@ -1,8 +1,23 @@
 _id: jMqy5ByguOG5uCft
-name: Air Shroud, Greater
-type: feat
+_key: '!items!jMqy5ByguOG5uCft'
 img: systems/pf1/icons/spells/wind-sky-3.jpg
+name: Air Shroud, Greater
 system:
+  abilityType: sp
+  actions:
+    - _id: 82zbzwx16aekxou6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> air; <b>Type</b> utility (Sp); <b>Level</b> 5;
@@ -12,22 +27,7 @@ system:
       @Compendium[pf1.spells.f6lqt3ju8m7r5la2]{Life Bubble}. When you accept
       burn to grant the benefit to others, the benefit lasts until the next time
       your burn is removed.</p>
-  actions:
-    - _id: 82zbzwx16aekxou6
-      name: Use
-      img: systems/pf1/icons/spells/wind-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-  tag: classFeat_airShroudGreater
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!jMqy5ByguOG5uCft'
+  tag: classFeat_airShroudGreater
+type: feat
 

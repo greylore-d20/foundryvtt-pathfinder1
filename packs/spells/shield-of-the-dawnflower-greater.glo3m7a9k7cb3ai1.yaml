@@ -1,8 +1,27 @@
 _id: glo3m7a9k7cb3ai1
-name: Shield of the Dawnflower, Greater
-type: spell
+_key: '!items!glo3m7a9k7cb3ai1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield of the Dawnflower, Greater
 system:
+  actions:
+    - _id: 7lnvhjq0vtmmyjow
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      target:
+        value: you
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a disk of sunlight on one arm. Any creature that strikes you
@@ -17,35 +36,16 @@ system:
       with similar damaging aura spells such as <i>fire shield</i> or <i>shield
       of the</i> <i><b>Dawnflower</b></i> (The <i>Inner Sea World Guide</i>
       296).</p>
-  actions:
-    - _id: 7lnvhjq0vtmmyjow
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: you
-      range:
-        units: personal
   learnedAt:
     class:
-      cleric: 6
-      warpriest: 6
-      oracle: 6
       bard: 6
+      cleric: 6
       magus: 6
+      oracle: 6
+      warpriest: 6
   level: 6
   school: evo
-  types: fire, good, light
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!glo3m7a9k7cb3ai1'
+  types: fire, good, light
+type: spell
 

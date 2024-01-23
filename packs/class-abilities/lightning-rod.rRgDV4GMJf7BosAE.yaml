@@ -1,8 +1,26 @@
 _id: rRgDV4GMJf7BosAE
-name: Lightning Rod
-type: feat
+_key: '!items!rRgDV4GMJf7BosAE'
 img: systems/pf1/icons/spells/lighting-fire-1.jpg
+name: Lightning Rod
 system:
+  abilityType: su
+  actions:
+    - _id: 64tsdkoejo8y35xl
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/lighting-fire-1.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: one creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a swift action when you cast a spell with the electricity
@@ -18,31 +36,13 @@ system:
 
       <p>This power replaces the Electricity Resistance power granted by the Air
       Domain.</p>
-  actions:
-    - _id: 64tsdkoejo8y35xl
-      name: Use
-      img: systems/pf1/icons/spells/lighting-fire-1.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: one creature
-      range:
-        units: seeText
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_lightningRod
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '48'
-_key: '!items!rRgDV4GMJf7BosAE'
+  subType: classFeat
+  tag: classFeat_lightningRod
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

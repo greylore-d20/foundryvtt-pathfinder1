@@ -1,8 +1,27 @@
 _id: lLt8B9vVLlItSaa1
-name: Jagged Flesh
-type: feat
+_key: '!items!lLt8B9vVLlItSaa1'
 img: systems/pf1/icons/spells/rock-sky-3.jpg
+name: Jagged Flesh
 system:
+  abilityType: sp
+  actions:
+    - _id: jxts90pqt5hpvvtg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Kineticist
   description:
     value: >-
       <p><b>Element</b> earth; <b>Type</b> utility (Sp); <b>Level</b> 3;
@@ -14,26 +33,7 @@ system:
       that grapples you takes 1d6 points of piercing damage. Weapons that strike
       you also take this damage, though the damage is unlikely to penetrate the
       weapon’s hardness.</p>
-  actions:
-    - _id: jxts90pqt5hpvvtg
-      name: Use
-      img: systems/pf1/icons/spells/rock-sky-3.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: seeText
-      target:
-        value: self
-      range:
-        units: personal
-  tag: classFeat_jaggedFlesh
   subType: classFeat
-  associations:
-    classes:
-      - Kineticist
-  abilityType: sp
-_key: '!items!lLt8B9vVLlItSaa1'
+  tag: classFeat_jaggedFlesh
+type: feat
 

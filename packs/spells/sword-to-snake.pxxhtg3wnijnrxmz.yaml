@@ -1,8 +1,32 @@
 _id: pxxhtg3wnijnrxmz
-name: Sword to Snake
-type: spell
+_key: '!items!pxxhtg3wnijnrxmz'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Sword to Snake
 system:
+  actions:
+    - _id: 7qwouzap7yfypjly
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (object)
+        type: will
+      target:
+        value: one Medium or smaller item
+  components:
+    divineFocus: 2
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>When you make an undulating gesture using your hand, the target item
@@ -26,46 +50,22 @@ system:
       bite is affected as if by a venomous snake's poison (<i>frequency</i>
       1/round for 6 rounds; <i>effect</i> 1d2 Con; <i>cure</i> 1 save). The
       poison's save DC is equal to this spell's DC.</p>
-  actions:
-    - _id: 7qwouzap7yfypjly
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level (D)
-      target:
-        value: one Medium or smaller item
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (object)
   learnedAt:
     class:
-      sorcerer: 4
-      wizard: 4
       cleric: 4
-      warpriest: 4
-      oracle: 4
       druid: 4
-      summoner: 4
-      shaman: 4
       hunter: 4
+      oracle: 4
+      shaman: 4
+      sorcerer: 4
+      summoner: 4
       summonerUnchained: 4
+      warpriest: 4
+      wizard: 4
   level: 4
-  school: trs
-  types: poison
-  components:
-    verbal: true
-    somatic: true
-    material: true
-    divineFocus: 2
   materials:
     value: a hair from a spider
-_key: '!items!pxxhtg3wnijnrxmz'
+  school: trs
+  types: poison
+type: spell
 

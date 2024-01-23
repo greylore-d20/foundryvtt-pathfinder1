@@ -1,8 +1,36 @@
 _id: X7T3ExpwqtUnyNPd
-name: Hidden Home
-type: feat
+_key: '!items!X7T3ExpwqtUnyNPd'
 img: systems/pf1/icons/skills/violet_02.jpg
+name: Hidden Home
 system:
+  abilityType: sp
+  actions:
+    - _id: rVP9SXevh85YTg6O
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Change Appearance
+    - _id: dis6p9ja9gjrx1sl
+      activation:
+        type: special
+        unchained:
+          type: special
+      area: 40,000 sq ft
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Define Territory
+    - _id: okfMTA9SZzdEC0SZ
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/skills/violet_02.jpg
+      name: Dismiss Illusion
+  associations:
+    classes:
+      - Witch
   description:
     value: >-
       <p>The witch can conceal or disguise her home and the area around it as if
@@ -15,38 +43,10 @@ system:
 
       <p>For the purpose of this ability, a witch can only have one “home” at a
       time.</p>
+  subType: classFeat
+  tag: classFeat_hiddenHome
   tags:
     - Hex
     - Major Hex
-  actions:
-    - _id: rVP9SXevh85YTg6O
-      name: Change Appearance
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-    - _id: dis6p9ja9gjrx1sl
-      name: Define Territory
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-      area: 40,000 sq ft
-    - _id: okfMTA9SZzdEC0SZ
-      name: Dismiss Illusion
-      img: systems/pf1/icons/skills/violet_02.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_hiddenHome
-  subType: classFeat
-  associations:
-    classes:
-      - Witch
-  abilityType: sp
-_key: '!items!X7T3ExpwqtUnyNPd'
+type: feat
 

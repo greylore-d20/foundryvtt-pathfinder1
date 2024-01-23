@@ -1,8 +1,32 @@
 _id: iHZBsGfMXQj74Wud
-name: Debilitating Speech
-type: spell
+_key: '!items!iHZBsGfMXQj74Wud'
 img: icons/skills/social/intimidation-impressing.webp
+name: Debilitating Speech
 system:
+  actions:
+    - _id: tfrzzfnlgin52afh
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: icons/skills/social/intimidation-impressing.webp
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: >-
+          1 or more living creatures/level, no two of which may be more than 30
+          feet apart
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By speaking eloquently on the subject of your opponents’ ineptitude in
@@ -17,27 +41,6 @@ system:
       @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.eNW5geiJqrnAjjNu]{cowering},
       and enemies with more than 8 Hit Dice are
       @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.XxLUswkCuXnXmA5T]{shaken}.</p>
-  actions:
-    - _id: tfrzzfnlgin52afh
-      name: Use
-      img: icons/skills/social/intimidation-impressing.webp
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: >-
-          1 or more living creatures/level, no two of which may be more than 30
-          feet apart
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       arcanist: 4
@@ -46,8 +49,5 @@ system:
   level: 4
   school: enc
   types: language-dependent, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!iHZBsGfMXQj74Wud'
+type: spell
 

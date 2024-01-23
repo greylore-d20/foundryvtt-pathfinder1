@@ -1,8 +1,11 @@
 _id: 8CJ0cwfMaUyttrDC
-name: Penetrating Charge
-type: feat
+_key: '!items!8CJ0cwfMaUyttrDC'
 img: systems/pf1/icons/items/potions/unique-3.jpg
+name: Penetrating Charge
 system:
+  associations:
+    classes:
+      - Alchemist
   description:
     value: >-
       <p>A penetrating charge is a bomb specifically designed to disable locks
@@ -14,12 +17,9 @@ system:
       checks against the mechanism. A creature can spend 10 minutes and attempt
       an appropriate Craft check (DC 15) to fix the lock and remove this
       bonus.</p>
+  subType: classFeat
+  tag: classFeat_penetratingCharge
   tags:
     - Alchemist Discovery
-  tag: classFeat_penetratingCharge
-  subType: classFeat
-  associations:
-    classes:
-      - Alchemist
-_key: '!items!8CJ0cwfMaUyttrDC'
+type: feat
 

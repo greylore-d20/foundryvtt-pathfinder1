@@ -1,8 +1,31 @@
 _id: tvv8fqfi8i2zwbll
-name: Shield the Banner
-type: spell
+_key: '!items!tvv8fqfi8i2zwbll'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shield the Banner
 system:
+  actions:
+    - _id: lsgq952dmzprbo7u
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: standard touched
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>This spell is used to protect one of a tribe's most valuable
@@ -12,35 +35,12 @@ system:
       sanctuary, but only protects a standard or banner. In addition, the spell
       grants a +2 bonus to the standard's hardness, and +10 to the standard's
       hit points for the duration of the spell.</p>
-  actions:
-    - _id: lsgq952dmzprbo7u
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: standard touched
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
       cleric: 1
-      warpriest: 1
       oracle: 1
+      warpriest: 1
   school: abj
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!tvv8fqfi8i2zwbll'
+type: spell
 

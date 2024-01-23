@@ -1,8 +1,20 @@
 _id: XA1q9Y0BUyyKjSvY
-name: Philanthropic Magic
-type: feat
+_key: '!items!XA1q9Y0BUyyKjSvY'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
+name: Philanthropic Magic
 system:
+  abilityType: su
+  actions:
+    - _id: 7tdyrc3u45qo50ej
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Arcanist
   description:
     value: >-
       <p>Whenever the arcanist targets one or more allies (excluding herself)
@@ -12,21 +24,9 @@ system:
       from other sources, but temporary hit points from multiple uses of this
       exploit don’t stack with each other. The temporary hit points last 1
       minute per caster level or until expended.</p>
+  subType: classFeat
+  tag: classFeat_philanthropicMagic
   tags:
     - Arcanist Exploit
-  actions:
-    - _id: 7tdyrc3u45qo50ej
-      name: Use
-      img: systems/pf1/icons/spells/runes-blue-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_philanthropicMagic
-  subType: classFeat
-  associations:
-    classes:
-      - Arcanist
-  abilityType: su
-_key: '!items!XA1q9Y0BUyyKjSvY'
+type: feat
 

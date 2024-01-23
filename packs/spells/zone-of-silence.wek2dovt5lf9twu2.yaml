@@ -1,8 +1,28 @@
 _id: wek2dovt5lf9twu2
-name: Zone of Silence
-type: spell
+_key: '!items!wek2dovt5lf9twu2'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Zone of Silence
 system:
+  actions:
+    - _id: pd6tcgh7ezz8py6q
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      area: 5-ft.-radius emanation centered on you
+      duration:
+        value: 1 hour/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Use
+      range:
+        units: personal
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>By casting <i>zone of silence</i>, you manipulate sound waves in your
@@ -14,23 +34,6 @@ system:
       are no longer affected. Note, however, that a successful DC 20 Linguistics
       check to read lips can still reveal what's said inside a <i>zone of
       silence</i>.</p>
-  actions:
-    - _id: pd6tcgh7ezz8py6q
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 hour/level
-      range:
-        units: personal
-      measureTemplate:
-        type: circle
-        size: '5'
-      area: 5-ft.-radius emanation centered on you
   learnedAt:
     class:
       bard: 4
@@ -39,10 +42,7 @@ system:
       Espionage: 4
   level: 4
   school: ill
-  subschool: glamer
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!wek2dovt5lf9twu2'
+  subschool: glamer
+type: spell
 

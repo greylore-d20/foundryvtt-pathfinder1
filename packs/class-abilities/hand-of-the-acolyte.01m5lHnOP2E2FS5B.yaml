@@ -1,8 +1,28 @@
 _id: 01m5lHnOP2E2FS5B
-name: Hand of the Acolyte
-type: feat
+_key: '!items!01m5lHnOP2E2FS5B'
 img: systems/pf1/icons/skills/light_10.jpg
+name: Hand of the Acolyte
 system:
+  abilityType: su
+  actions:
+    - _id: afnz5qdr435iv4to
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/light_10.jpg
+      name: Use
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: single creature
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can cause your melee weapon to fly from your grasp and strike a foe
@@ -13,33 +33,13 @@ system:
       still relies on Strength). This ability cannot be used to perform a combat
       maneuver. You can use this ability a number of times per day equal to 3 +
       your Wisdom modifier.</p>
-  actions:
-    - _id: afnz5qdr435iv4to
-      name: Use
-      img: systems/pf1/icons/skills/light_10.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: single creature
-      range:
-        value: '30'
-        units: ft
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_handOfTheAcolyte
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
   source:
     id: PZO1110
     pages: '46'
-_key: '!items!01m5lHnOP2E2FS5B'
+  subType: classFeat
+  tag: classFeat_handOfTheAcolyte
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

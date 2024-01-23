@@ -1,8 +1,30 @@
 _id: gb7pxobi1za67p7g
-name: Binding
-type: spell
+_key: '!items!gb7pxobi1za67p7g'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Binding
 system:
+  actions:
+    - _id: 6rne4hu8ntt86lch
+      actionType: spellsave
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates; see text
+        type: will
+      target:
+        value: one living creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A <i>binding</i> spell creates a magical restraint to hold a creature.
@@ -71,44 +93,22 @@ system:
       affects it normally. A bound extraplanar creature cannot be sent back to
       its home plane by <i>dismissal</i>, <i>banishment</i>, or a similar
       effect.</p>
-  actions:
-    - _id: 6rne4hu8ntt86lch
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: minute
-        unchained:
-          type: minute
-      duration:
-        value: see text
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates; see text
   learnedAt:
     class:
-      sorcerer: 8
-      wizard: 8
-      summoner: 6
       psychic: 8
+      sorcerer: 8
+      summoner: 6
       summonerUnchained: 6
+      wizard: 8
     subDomain:
       Slavery: 8
   level: 8
-  school: enc
-  subschool: compulsion
-  types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: >-
       opals worth 500 gp per HD of the target creature, plus other components as
       specified below
-_key: '!items!gb7pxobi1za67p7g'
+  school: enc
+  subschool: compulsion
+  types: mind-affecting
+type: spell
 

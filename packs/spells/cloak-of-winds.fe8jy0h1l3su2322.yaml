@@ -1,8 +1,31 @@
 _id: fe8jy0h1l3su2322
-name: Cloak of Winds
-type: spell
+_key: '!items!fe8jy0h1l3su2322'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Cloak of Winds
 system:
+  actions:
+    - _id: u1wxnuj1d5ibnpqu
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        harmless: true
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You shroud a creature in a whirling screen of strong, howling wind. The
@@ -16,42 +39,19 @@ system:
       provoke attacks of opportunity, but the creature takes 3d6 points of
       nonlethal damage, plus 1d6 if the creature strikes a solid object that
       blocks its movement.</p>
-  actions:
-    - _id: u1wxnuj1d5ibnpqu
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      target:
-        value: one living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
-        harmless: true
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
-      ranger: 3
-      magus: 3
       bloodrager: 3
-      occultist: 3
-      spiritualist: 3
+      druid: 3
       hunter: 3
+      magus: 3
+      occultist: 3
+      ranger: 3
+      sorcerer: 3
+      spiritualist: 3
+      wizard: 3
   level: 3
   school: abj
   types: air
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!fe8jy0h1l3su2322'
+type: spell
 

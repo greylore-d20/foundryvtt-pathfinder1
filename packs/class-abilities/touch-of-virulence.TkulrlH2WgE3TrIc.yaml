@@ -1,8 +1,27 @@
 _id: TkulrlH2WgE3TrIc
-name: Touch of Virulence
-type: feat
+_key: '!items!TkulrlH2WgE3TrIc'
 img: systems/pf1/icons/skills/green_15.jpg
+name: Touch of Virulence
 system:
+  abilityType: su
+  actions:
+    - _id: 54dige90qxqahuan
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/green_15.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>As a standard action, you can touch a diseased creature and exacerbate
@@ -14,31 +33,12 @@ system:
 
       <p>This power replaces the Death's Embrace power of the Death Domain or
       the Touch of Evil power of the Evil Domain.</p>
-  actions:
-    - _id: 54dige90qxqahuan
-      name: Use
-      img: systems/pf1/icons/skills/green_15.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: creature touched
-      range:
-        units: touch
+  subType: classFeat
+  tag: classFeat_touchOfVirulence
   uses:
-    per: day
     maxFormula: >-
       @classes.cleric.level >= 20 ? 3 : ((@classes.cleric.level > 13 &&
       @classes.cleric.level < 20) ? 2 : 1)
-  tag: classFeat_touchOfVirulence
-  subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!TkulrlH2WgE3TrIc'
+    per: day
+type: feat
 

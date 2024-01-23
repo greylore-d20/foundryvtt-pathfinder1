@@ -1,8 +1,27 @@
 _id: FDCBEgVbfJ5uid3f
-name: Momentary Glimpse
-type: feat
+_key: '!items!FDCBEgVbfJ5uid3f'
 img: systems/pf1/icons/spells/light-royal-1.jpg
+name: Momentary Glimpse
 system:
+  abilityType: su
+  actions:
+    - _id: 9q4q8ce7ivubzl04
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Oracle
   description:
     value: >-
       <p>Once per day, you can gain a glimpse into your immediate future. On the
@@ -12,32 +31,13 @@ system:
 
       <p>At 5th level, and every four levels thereafter, you can use this
       ability one additional time per day.</p>
+  subType: classFeat
+  tag: classFeat_momentaryGlimpse
   tags:
     - Revelation
     - Time Mystery
-  actions:
-    - _id: 9q4q8ce7ivubzl04
-      name: Use
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      activation:
-        type: immediate
-        unchained:
-          type: reaction
-      duration:
-        value: '1'
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
   uses:
-    per: day
     maxFormula: 1 + floor((@classes.oracle.level - 1) / 4)
-  tag: classFeat_momentaryGlimpse
-  subType: classFeat
-  associations:
-    classes:
-      - Oracle
-  abilityType: su
-_key: '!items!FDCBEgVbfJ5uid3f'
+    per: day
+type: feat
 

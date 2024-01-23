@@ -1,8 +1,30 @@
 _id: wueg9fxln3z761m1
-name: Epidemic
-type: spell
+_key: '!items!wueg9fxln3z761m1'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Epidemic
 system:
+  actions:
+    - _id: a7qckywnzqoxound
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates
+        type: fort
+      target:
+        value: living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>The target contracts one of the following diseases: blinding sickness,
@@ -16,40 +38,18 @@ system:
       required number of saving throws, it remains a carrier of the disease for
       a length of time equal to the disease's frequency, and can continue to
       infect others during this time.</p>
-  actions:
-    - _id: a7qckywnzqoxound
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: living creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 6
-      warpriest: 6
-      oracle: 6
       druid: 6
-      witch: 6
       hunter: 6
+      oracle: 6
+      sorcerer: 7
+      warpriest: 6
+      witch: 6
+      wizard: 7
   level: 7
   school: nec
   types: disease, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!wueg9fxln3z761m1'
+type: spell
 

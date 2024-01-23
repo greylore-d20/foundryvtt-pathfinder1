@@ -1,8 +1,28 @@
 _id: 55zTdnRHBD4QwCHd
-name: Synergistic Touch
-type: feat
+_key: '!items!55zTdnRHBD4QwCHd'
 img: systems/pf1/icons/skills/arrow_16.jpg
+name: Synergistic Touch
 system:
+  abilityType: sp
+  actions:
+    - _id: 6rtdmorj3bf3cxp8
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: round
+        value: max(1, floor(@classes.cleric.level / 2))
+      img: systems/pf1/icons/skills/arrow_16.jpg
+      name: Use
+      range:
+        units: touch
+      target:
+        value: creature touched
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>You can touch a creature as a standard action to confer upon it the
@@ -13,30 +33,10 @@ system:
 
       <p>This power replaces the Calming Touch power of the Community
       Domain.</p>
-  actions:
-    - _id: 6rtdmorj3bf3cxp8
-      name: Use
-      img: systems/pf1/icons/skills/arrow_16.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: max(1, floor(@classes.cleric.level / 2))
-        units: round
-      target:
-        value: creature touched
-      range:
-        units: touch
-  uses:
-    per: day
-    maxFormula: 3 + @abilities.wis.mod
-  tag: classFeat_synergisticTouch
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: sp
-_key: '!items!55zTdnRHBD4QwCHd'
+  tag: classFeat_synergisticTouch
+  uses:
+    maxFormula: 3 + @abilities.wis.mod
+    per: day
+type: feat
 

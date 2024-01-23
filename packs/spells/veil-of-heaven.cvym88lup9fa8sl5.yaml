@@ -1,8 +1,31 @@
 _id: cvym88lup9fa8sl5
-name: Veil of Heaven
-type: spell
+_key: '!items!cvym88lup9fa8sl5'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Veil of Heaven
 system:
+  actions:
+    - _id: m7996exkownrhfay
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: personal
+      save:
+        description: Will half
+        type: will
+      target:
+        value: you or all creatures within 5 ft.; see text
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You surround yourself with a veil of positive energy, making it harder
@@ -12,34 +35,11 @@ system:
       can dismiss this spell as a swift action to deal 1d8 points of damage + 1
       point per paladin level to all such outsiders within 5 feet. A Will save
       halves this damage.</p>
-  actions:
-    - _id: m7996exkownrhfay
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 10 minutes/level (D)
-      target:
-        value: you or all creatures within 5 ft.; see text
-      range:
-        units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will half
   learnedAt:
     class:
       paladin: 1
   school: abj
-  types: good
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!cvym88lup9fa8sl5'
+  types: good
+type: spell
 

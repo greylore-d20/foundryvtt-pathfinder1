@@ -1,8 +1,29 @@
 _id: krgcstszyvso1zuj
-name: Intensify Psyche
-type: spell
+_key: '!items!krgcstszyvso1zuj'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Intensify Psyche
 system:
+  actions:
+    - _id: 56hnwp8b5mqox23k
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: medium
+      save:
+        description: Will negates
+        type: will
+      spellEffect: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>A sense of euphoria suffuses the target, amplifying all sensations,
@@ -13,42 +34,21 @@ system:
       spell. However, increased sensitivity causes the target to take a -2
       penalty on saving throws against spells and effects with the emotion or
       pain descriptor.</p>
-  actions:
-    - _id: 56hnwp8b5mqox23k
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level
-      range:
-        units: medium
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
-      spellEffect: one creature
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      cleric: 2
-      warpriest: 2
-      oracle: 2
       bard: 1
-      witch: 2
-      psychic: 2
+      cleric: 2
       medium: 2
       mesmerist: 1
+      oracle: 2
+      psychic: 2
+      sorcerer: 2
       spiritualist: 2
+      warpriest: 2
+      witch: 2
+      wizard: 2
   level: 2
   school: enc
   types: emotion, mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!krgcstszyvso1zuj'
+type: spell
 

@@ -1,8 +1,30 @@
 _id: 0uxs1dj28glc9o8i
-name: Aphasia
-type: spell
+_key: '!items!0uxs1dj28glc9o8i'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Aphasia
 system:
+  actions:
+    - _id: 3zr9xd8x305jqlfi
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates (see text)
+        type: will
+      target:
+        value: one creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You render the target unable to understand any language, including
@@ -15,38 +37,16 @@ system:
       a creature with the <i>tongues</i> spell active is immune to
       <i>aphasia</i>. Oracles with the <i>tongues</i> curse ignore
       <i>aphasia</i> in combat.</p>
-  actions:
-    - _id: 3zr9xd8x305jqlfi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (see text)
   learnedAt:
     class:
-      sorcerer: 1
-      wizard: 1
       bard: 1
-      witch: 1
-      psychic: 1
       mesmerist: 1
+      psychic: 1
+      sorcerer: 1
+      witch: 1
+      wizard: 1
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!0uxs1dj28glc9o8i'
+type: spell
 

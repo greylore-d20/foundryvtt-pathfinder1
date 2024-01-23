@@ -1,8 +1,19 @@
 _id: u4zOXdHxtw39PGJw
-name: Divine Energy
-type: feat
+_key: '!items!u4zOXdHxtw39PGJw'
 img: systems/pf1/icons/spells/slice-spirit-3.jpg
+name: Divine Energy
 system:
+  actions:
+    - _id: 96lxybak17cmvunh
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>You can channel spell energy into cure or inflict spells. This ability
@@ -16,21 +27,10 @@ system:
       <p>Each time you use this ability to convert a spell, you regain 1 point
       in your phrenic pool. The maximum number of points you can regain in this
       way per day is equal to your Wisdom modifier.</p>
-  actions:
-    - _id: 96lxybak17cmvunh
-      name: Use
-      img: systems/pf1/icons/spells/slice-spirit-3.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: day
-    maxFormula: '@abilities.wis.mod'
-  tag: classFeat_divineEnergy
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-_key: '!items!u4zOXdHxtw39PGJw'
+  tag: classFeat_divineEnergy
+  uses:
+    maxFormula: '@abilities.wis.mod'
+    per: day
+type: feat
 

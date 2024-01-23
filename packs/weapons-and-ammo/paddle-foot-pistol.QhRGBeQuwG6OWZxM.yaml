@@ -1,8 +1,45 @@
 _id: QhRGBeQuwG6OWZxM
-name: Paddle-Foot Pistol
-type: weapon
+_key: '!items!QhRGBeQuwG6OWZxM'
 img: icons/weapons/guns/gun-pistol-wood.webp
+name: Paddle-Foot Pistol
 system:
+  actions:
+    - _id: ljd4otk2q4sfyy7r
+      ability:
+        attack: dex
+        critMult: 3
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      ammoType: gunBullet
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - piercing
+      duration:
+        units: inst
+      formulaicAttacks:
+        bonus:
+          formula: '@formulaicAttack * -5'
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        label: ''
+      img: icons/weapons/guns/gun-pistol-wood.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '20'
+  ammo:
+    type: gunBullet
+  baseTypes:
+    - Paddle-Foot Pistol
   description:
     value: >-
       <h3>Statistics</h3><p><b>Damage</b> 1d4 (small), 1d6 (medium);
@@ -21,59 +58,22 @@ system:
       increments. Each barrel of a paddle-foot pistol can hold 1 dose of black
       powder, along with either pellets or a bullet, or it can hold a single
       alchemical cartridge.</p>
-  tags:
-    - PFS
-    - Early Firearm
-  weight:
-    value: 5
-  price: 2500
   hardness: 10
-  actions:
-    - _id: ljd4otk2q4sfyy7r
-      name: Attack
-      img: icons/weapons/guns/gun-pistol-wood.webp
-      activation:
-        type: attack
-        unchained:
-          type: attack
-      duration:
-        units: inst
-      range:
-        value: '20'
-        units: ft
-        maxIncrements: 10
-      actionType: rwak
-      damage:
-        parts:
-          - formula: sizeRoll(1, 6, @size)
-            type:
-              values:
-                - bludgeoning
-                - piercing
-              custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
-        label: ''
-      ability:
-        attack: dex
-        critMult: 3
-      ammoType: gunBullet
-  baseTypes:
-    - Paddle-Foot Pistol
-  weaponGroups:
-    value:
-      - firearms
-  subType: exotic
-  weaponSubtype: ranged
+  price: 2500
   properties:
     sct: true
   source:
     id: PZO9486
     pages: '15'
-  ammo:
-    type: gunBullet
-_key: '!items!QhRGBeQuwG6OWZxM'
+  subType: exotic
+  tags:
+    - PFS
+    - Early Firearm
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 5
+type: weapon
 

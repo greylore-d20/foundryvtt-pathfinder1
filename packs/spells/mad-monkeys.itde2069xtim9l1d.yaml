@@ -1,8 +1,26 @@
 _id: itde2069xtim9l1d
-name: Mad Monkeys
-type: spell
+_key: '!items!itde2069xtim9l1d'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Mad Monkeys
 system:
+  actions:
+    - _id: iot99xkj5m90rc5s
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      spellEffect: swarm of monkeys
+  components:
+    divineFocus: 1
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You summon a swarm of screeching, mischievous monkeys. The swarm
@@ -17,36 +35,18 @@ system:
       requires a successful disarm or steal attempt against that CMB + 10. An
       object stolen by the monkeys takes swarm damage each round the swarm is in
       possession of the object.</p>
-  actions:
-    - _id: iot99xkj5m90rc5s
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 round/level
-      range:
-        units: close
-      spellEffect: swarm of monkeys
   learnedAt:
     class:
-      sorcerer: 3
-      wizard: 3
-      druid: 3
       bard: 3
-      summoner: 3
+      druid: 3
       hunter: 3
+      sorcerer: 3
+      summoner: 3
       summonerUnchained: 3
+      wizard: 3
   level: 3
   school: con
-  subschool: summoning
-  components:
-    verbal: true
-    somatic: true
-    divineFocus: 1
   sr: false
-_key: '!items!itde2069xtim9l1d'
+  subschool: summoning
+type: spell
 

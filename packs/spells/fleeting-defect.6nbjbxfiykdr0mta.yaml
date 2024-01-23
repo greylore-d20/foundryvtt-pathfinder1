@@ -1,8 +1,33 @@
 _id: 6nbjbxfiykdr0mta
-name: Fleeting Defect
-type: spell
+_key: '!items!6nbjbxfiykdr0mta'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Fleeting Defect
 system:
+  actions:
+    - _id: hl9uhk6z9cocdmi2
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Fortitude negates (object); see text
+        harmless: true
+        type: fort
+      target:
+        value: >-
+          one solid object that does not have the broken condition, or one
+          construct
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You cause a single object to temporarily gain the broken condition. The
@@ -15,40 +40,15 @@ system:
       saving throw takes a -2 circumstance penalty on attack rolls, saving
       throws, skill checks, and ability checks for the duration of the
       spell.</p>
-  actions:
-    - _id: hl9uhk6z9cocdmi2
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 minute/level (D)
-      target:
-        value: >-
-          one solid object that does not have the broken condition, or one
-          construct
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (object); see text
-        harmless: true
   learnedAt:
     class:
+      bard: 2
+      bloodrager: 2
+      magus: 2
       sorcerer: 2
       wizard: 2
-      bard: 2
-      magus: 2
-      bloodrager: 2
   level: 2
   school: trs
-  components:
-    verbal: true
-    somatic: true
   sr: false
-_key: '!items!6nbjbxfiykdr0mta'
+type: spell
 

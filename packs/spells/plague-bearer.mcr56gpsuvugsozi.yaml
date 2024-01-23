@@ -1,8 +1,30 @@
 _id: mcr56gpsuvugsozi
-name: Plague Bearer
-type: spell
+_key: '!items!mcr56gpsuvugsozi'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Plague Bearer
 system:
+  actions:
+    - _id: z3dmuixlqyjgtrpg
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level; see text
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: touch
+      save:
+        description: Fortitude negates; see text
+        type: fort
+      target:
+        value: one living creature
+  components:
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You make the target an asymptomatic carrier for a host of virulent
@@ -12,43 +34,21 @@ system:
       no ill effects from this spell. Once <i>plague bearer</i> ends, the target
       is no longer contagious, though any creature it infected remains
       diseased.</p>
-  actions:
-    - _id: z3dmuixlqyjgtrpg
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: 1 round/level; see text
-      target:
-        value: one living creature
-      range:
-        units: touch
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates; see text
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
-      cleric: 6
-      warpriest: 6
-      oracle: 6
-      druid: 6
       alchemist: 6
-      witch: 6
-      inquisitor: 6
       antipaladin: 6
+      cleric: 6
+      druid: 6
       hunter: 6
+      inquisitor: 6
+      oracle: 6
+      sorcerer: 7
+      warpriest: 6
+      witch: 6
+      wizard: 7
   level: 7
   school: nec
   types: disease, evil
-  components:
-    verbal: true
-    somatic: true
-_key: '!items!mcr56gpsuvugsozi'
+type: spell
 

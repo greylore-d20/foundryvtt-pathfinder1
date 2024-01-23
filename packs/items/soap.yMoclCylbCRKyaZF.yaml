@@ -1,31 +1,31 @@
 _id: yMoclCylbCRKyaZF
-name: Soap
-type: consumable
+_key: '!items!yMoclCylbCRKyaZF'
 img: systems/pf1/icons/items/inventory/soap.jpg
+name: Soap
 system:
+  actions:
+    - _id: ootoocddr3l2eoat
+      activation:
+        type: special
+        unchained:
+          type: special
+      img: systems/pf1/icons/items/inventory/soap.jpg
+      name: Use
   description:
     value: >-
       <p>You can use this thick block of soap to scrub clothes, pots, linens, or
       anything else that might be dirty. A bar of soap has approximately 50
       uses.</p>
-  weight:
-    value: 0.5
   price: 0.01
-  actions:
-    - _id: ootoocddr3l2eoat
-      name: Use
-      img: systems/pf1/icons/items/inventory/soap.jpg
-      activation:
-        type: special
-        unchained:
-          type: special
-  uses:
-    per: charges
-    value: 50
-    maxFormula: '50'
-    pricePerUse: '0'
-  subType: misc
   source:
     id: PZO9410
-_key: '!items!yMoclCylbCRKyaZF'
+  subType: misc
+  uses:
+    maxFormula: '50'
+    per: charges
+    pricePerUse: '0'
+    value: 50
+  weight:
+    value: 0.5
+type: consumable
 

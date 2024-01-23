@@ -1,8 +1,20 @@
 _id: DSMRBSKIzcZzChjA
-name: Dual Amplification
-type: feat
+_key: '!items!DSMRBSKIzcZzChjA'
 img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+name: Dual Amplification
 system:
+  abilityType: ex
+  actions:
+    - _id: uhveuk2gain4fpq2
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Psychic
   description:
     value: >-
       <p>When the psychic uses this major amplification, she chooses two other
@@ -11,19 +23,7 @@ system:
       the full cost of the two other amplifications. She can’t apply the same
       amplification to the linked spell more than once, even if she can use that
       amplification for multiple different effects.</p>
-  actions:
-    - _id: uhveuk2gain4fpq2
-      name: Use
-      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_dualAmplification
   subType: classFeat
-  associations:
-    classes:
-      - Psychic
-  abilityType: ex
-_key: '!items!DSMRBSKIzcZzChjA'
+  tag: classFeat_dualAmplification
+type: feat
 

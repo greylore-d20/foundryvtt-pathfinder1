@@ -1,8 +1,14 @@
 _id: VBHPKsaj8qPHd6Rs
-name: Fey-Touched Creature
-type: feat
+_key: '!items!VBHPKsaj8qPHd6Rs'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Fey-Touched Creature
 system:
+  changes:
+    - _id: mrsplyh6
+      formula: '2'
+      modifier: untyped
+      subTarget: will
+  crOffset: '@attributes.hd.total >= 5 ? 1 : 0'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Inherited<br><b>Simple Template</b>
@@ -78,12 +84,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: mrsplyh6
-      formula: '2'
-      subTarget: will
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 5 ? 1 : 0'
-_key: '!items!VBHPKsaj8qPHd6Rs'
+type: feat
 

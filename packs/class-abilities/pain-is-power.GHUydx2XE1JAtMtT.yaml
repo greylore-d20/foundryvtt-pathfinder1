@@ -1,8 +1,27 @@
 _id: GHUydx2XE1JAtMtT
-name: Pain is Power
-type: feat
+_key: '!items!GHUydx2XE1JAtMtT'
 img: systems/pf1/icons/skills/red_12.jpg
+name: Pain is Power
 system:
+  abilityType: su
+  actions:
+    - _id: 5imu7eb8tn43ydwa
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: round
+        value: floor(@classes.cleric.level / 2)
+      img: systems/pf1/icons/skills/red_12.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Cleric
   description:
     value: >-
       <p>At 8th level, after taking damage from any source, you may attempt a DC
@@ -14,29 +33,10 @@ system:
 
       <p>This power replaces the Scythe of Evil power of the Evil Domain or the
       Staff of Order power of the Law Domain.</p>
-  actions:
-    - _id: 5imu7eb8tn43ydwa
-      name: Use
-      img: systems/pf1/icons/skills/red_12.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-      duration:
-        value: floor(@classes.cleric.level / 2)
-        units: round
-      target:
-        value: self
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
-  tag: classFeat_painIsPower
   subType: classFeat
-  associations:
-    classes:
-      - Cleric
-  abilityType: su
-_key: '!items!GHUydx2XE1JAtMtT'
+  tag: classFeat_painIsPower
+  uses:
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    per: day
+type: feat
 

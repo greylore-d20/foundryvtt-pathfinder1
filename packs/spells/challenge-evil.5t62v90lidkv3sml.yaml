@@ -1,19 +1,11 @@
 _id: 5t62v90lidkv3sml
-name: Challenge Evil
-type: spell
+_key: '!items!5t62v90lidkv3sml'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Challenge Evil
 system:
-  description:
-    value: >-
-      <p>You challenge an evil creature to bring the fight to you, or suffer the
-      consequences. You gain a +2 sacred bonus on all melee attacks against the
-      subject of the spell. At the end of its turn, if the target has not made
-      at least one attack on you, it becomes sickened. If you move away from the
-      target, the spell ends.</p>
   actions:
     - _id: rzyhskoj6cyyp0jd
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -21,22 +13,30 @@ system:
           type: action
       duration:
         value: 1 minute/level (D)
-      target:
-        value: one evil creature
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
       range:
         units: close
-      actionType: spellsave
       save:
-        type: will
         description: Will negates
+        type: will
+      target:
+        value: one evil creature
+  components:
+    divineFocus: 1
+    verbal: true
+  description:
+    value: >-
+      <p>You challenge an evil creature to bring the fight to you, or suffer the
+      consequences. You gain a +2 sacred bonus on all melee attacks against the
+      subject of the spell. At the end of its turn, if the target has not made
+      at least one attack on you, it becomes sickened. If you move away from the
+      target, the spell ends.</p>
   learnedAt:
     class:
       paladin: 1
   school: enc
   subschool: compulsion
   types: mind-affecting
-  components:
-    verbal: true
-    divineFocus: 1
-_key: '!items!5t62v90lidkv3sml'
+type: spell
 

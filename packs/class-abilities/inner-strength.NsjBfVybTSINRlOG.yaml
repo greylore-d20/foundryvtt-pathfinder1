@@ -1,8 +1,34 @@
 _id: NsjBfVybTSINRlOG
-name: Inner Strength
-type: feat
+_key: '!items!NsjBfVybTSINRlOG'
 img: systems/pf1/icons/items/inventory/badge-cross.jpg
+name: Inner Strength
 system:
+  abilityType: su
+  actions:
+    - _id: yr70596qqvkje6pj
+      actionType: heal
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: (floor(@classes.inquisitor.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      name: Use
+      range:
+        units: personal
+      target:
+        value: self
+  associations:
+    classes:
+      - Inquisitor
   description:
     value: >-
       <p>At 6th level, once per day, you may heal yourself as a swift action,
@@ -10,36 +36,10 @@ system:
       you use this ability, you can also remove one of the following conditions
       from yourself: blinded, confused, dazzled, deafened, frightened,
       nauseated, shaken, sickened, or staggered.</p>
-  actions:
-    - _id: yr70596qqvkje6pj
-      name: Use
-      img: systems/pf1/icons/items/inventory/badge-cross.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        units: inst
-      target:
-        value: self
-      range:
-        units: personal
-      actionType: heal
-      damage:
-        parts:
-          - formula: (floor(@classes.inquisitor.level / 2))d6
-            type:
-              values:
-                - untyped
-              custom: ''
-  uses:
-    per: day
-    maxFormula: '1'
-  tag: classFeat_innerStrength
   subType: classFeat
-  associations:
-    classes:
-      - Inquisitor
-  abilityType: su
-_key: '!items!NsjBfVybTSINRlOG'
+  tag: classFeat_innerStrength
+  uses:
+    maxFormula: '1'
+    per: day
+type: feat
 

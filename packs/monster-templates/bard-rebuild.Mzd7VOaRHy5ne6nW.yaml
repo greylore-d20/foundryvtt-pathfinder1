@@ -1,8 +1,14 @@
 _id: Mzd7VOaRHy5ne6nW
-name: Bard (Rebuild)
-type: feat
+_key: '!items!Mzd7VOaRHy5ne6nW'
 img: systems/pf1/icons/skills/violet_07.jpg
+name: Bard (Rebuild)
 system:
+  changes:
+    - _id: xlpt0yzw
+      formula: '4'
+      modifier: untyped
+      subTarget: cha
+  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
@@ -172,12 +178,6 @@ system:
       </tbody>
 
       </table>
-  changes:
-    - _id: xlpt0yzw
-      formula: '4'
-      subTarget: cha
-      modifier: untyped
   subType: template
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
-_key: '!items!Mzd7VOaRHy5ne6nW'
+type: feat
 

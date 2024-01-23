@@ -1,8 +1,27 @@
 _id: hxgnuvkeh18untb4
-name: Blazing Rainbow
-type: spell
+_key: '!items!hxgnuvkeh18untb4'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Blazing Rainbow
 system:
+  actions:
+    - _id: xxs3qzq7l0f253pi
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level or until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: ft
+        value: '0'
+      spellEffect: bow or bridge of light
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You create a spectrum of multicolored solid light that can be used for
@@ -19,34 +38,15 @@ system:
       resist being moved from the bridge against their will.</p><p>Enemies take
       a penalty equal to your Wisdom modifier (minimum 1) checks, saves, and to
       their CMD to resist being moved from the bridge against their will.</p>
-  actions:
-    - _id: xxs3qzq7l0f253pi
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: round
-        unchained:
-          cost: 3
-          type: action
-      duration:
-        value: 1 minute/level or until discharged (see text)
-      range:
-        value: '0'
-        units: ft
-      spellEffect: bow or bridge of light
   learnedAt:
     class:
       druid: 6
       hunter: 6
   level: 6
-  school: evo
-  types: light
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
     value: a drop of rainwater
+  school: evo
   sr: false
-_key: '!items!hxgnuvkeh18untb4'
+  types: light
+type: spell
 

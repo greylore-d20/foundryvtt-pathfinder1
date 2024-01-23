@@ -1,7 +1,21 @@
-name: Caster's Champion
-type: feat
+_id: XhGkCdqvLjdyET0n
+_key: '!items!XhGkCdqvLjdyET0n'
 img: systems/pf1/icons/skills/affliction_18.jpg
+name: Caster's Champion
 system:
+  actions:
+    - _id: uv6MZ3q2PL6t6E9U
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: '1'
+      img: systems/pf1/icons/skills/affliction_18.jpg
+      name: Use
+      range:
+        units: personal
   description:
     value: >-
       <p><em>You draw upon the power of an allied arcane spellcaster to enhance
@@ -14,29 +28,15 @@ system:
       thereafter, this bonus increases by 1, to a maximum of +5 at 16th
       level.</p><p><b>Special</b>: This feat counts as Arcane Strike for the
       purposes of prerequisites.</p>
-  tags:
-    - Combat
-  actions:
-    - _id: uv6MZ3q2PL6t6E9U
-      name: Use
-      img: systems/pf1/icons/skills/affliction_18.jpg
-      activation:
-        type: swift
-        unchained:
-          type: action
-      duration:
-        value: '1'
-        units: round
-      range:
-        units: personal
-  uses:
-    per: day
-    maxFormula: '3'
   effectNotes:
     - +[[(1 + floor(@attributes.bab.total / 4))[1 + BAB/4]]] bonus
   source:
     id: PZO9293
     pages: '21'
-_id: XhGkCdqvLjdyET0n
-_key: '!items!XhGkCdqvLjdyET0n'
+  tags:
+    - Combat
+  uses:
+    maxFormula: '3'
+    per: day
+type: feat
 

@@ -1,8 +1,26 @@
 _id: cfh0wper7uo3kit3
-name: Shared Suffering
-type: spell
+_key: '!items!cfh0wper7uo3kit3'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Shared Suffering
 system:
+  actions:
+    - _id: gj9ny6z1jbbrodzl
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: long
+      target:
+        value: one living creature
+  components:
+    focus: true
+    verbal: true
   description:
     value: >-
       <p>You infuse a dagger with necromantic energy, then plunge the dagger
@@ -15,35 +33,17 @@ system:
       Damage from this spell cannot be divided by effects such as <i>shield
       other</i> or <i>unwilling</i> shieldAPG; it cuts through such protections
       completely.</p>
-  actions:
-    - _id: gj9ny6z1jbbrodzl
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        value: instantaneous
-      target:
-        value: one living creature
-      range:
-        units: long
   learnedAt:
     class:
-      sorcerer: 2
-      wizard: 2
-      witch: 2
-      inquisitor: 2
       antipaladin: 2
+      inquisitor: 2
+      sorcerer: 2
+      witch: 2
+      wizard: 2
   level: 2
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    focus: true
   materials:
     focus: a silver dagger inlaid with onyx and jade worth 100 gp
-_key: '!items!cfh0wper7uo3kit3'
+  school: nec
+  types: evil
+type: spell
 

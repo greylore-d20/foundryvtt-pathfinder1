@@ -1,8 +1,40 @@
 _id: ieww7CP6JK5pwtpg
-name: Alignment Channel
-type: feat
+_key: '!items!ieww7CP6JK5pwtpg'
 img: systems/pf1/icons/feats/alignment-channel.jpg
+name: Alignment Channel
 system:
+  actions:
+    - _id: 7sgpni7m2zp0t01f
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@classes.cleric.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: systems/pf1/icons/feats/alignment-channel.jpg
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Use
+      range:
+        maxIncrements: '1'
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@classes.cleric.level / 2) + @abilities.cha.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: Outsiders of chosen alignment subtype
   description:
     value: >-
       <em>Choose chaos, evil, good, or law. You can channel divine energy to
@@ -18,43 +50,11 @@ system:
       multiple times. Its effects do not stack. Each time you take this feat, it
       applies to a new alignment subtype. Whenever you channel energy, you must
       choose which type to effect.
+  tag: feat_alignmentChannel
   tags:
     - Channeling
-  actions:
-    - _id: 7sgpni7m2zp0t01f
-      name: Use
-      img: systems/pf1/icons/feats/alignment-channel.jpg
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
-      duration:
-        units: inst
-      target:
-        value: Outsiders of chosen alignment subtype
-      range:
-        value: '30'
-        units: ft
-        maxIncrements: '1'
-      measureTemplate:
-        type: circle
-        size: '30'
-      actionType: save
-      damage:
-        parts:
-          - formula: (ceil(@classes.cleric.level / 2))d6
-            type:
-              values:
-                - positive
-              custom: ''
-      save:
-        dc: 10 + floor(@classes.cleric.level / 2) + @abilities.cha.mod
-        type: will
-        description: Will halves damage
   uses:
-    per: day
     maxFormula: 3 + @abilities.cha.mod
-  tag: feat_alignmentChannel
-_key: '!items!ieww7CP6JK5pwtpg'
+    per: day
+type: feat
 

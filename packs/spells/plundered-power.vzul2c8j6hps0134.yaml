@@ -1,8 +1,32 @@
 _id: vzul2c8j6hps0134
-name: Plundered Power
-type: spell
+_key: '!items!vzul2c8j6hps0134'
 img: systems/pf1/icons/misc/magic-swirl.png
+name: Plundered Power
 system:
+  actions:
+    - _id: 1hu77ttphesadue8
+      actionType: spellsave
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: 1 day/level
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Use
+      range:
+        units: close
+      save:
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+  components:
+    material: true
+    somatic: true
+    verbal: true
   description:
     value: >-
       <p>You must sacrifice a creature just as you finish casting this spell.
@@ -37,52 +61,28 @@ system:
       bloodstone loses its magical power. The fragment of the creature's spirit
       trapped in the bloodstone does not hinder attempts to restore the creature
       to life.</p>
-  actions:
-    - _id: 1hu77ttphesadue8
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
-      activation:
-        cost: 10
-        type: minute
-        unchained:
-          cost: 10
-          type: minute
-      duration:
-        value: 1 day/level
-      target:
-        value: one creature
-      range:
-        units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates
   learnedAt:
     class:
-      sorcerer: 7
-      wizard: 7
       cleric: 7
-      oracle: 7
       druid: 7
-      summoner: 6
-      witch: 7
-      shaman: 7
       occultist: 6
+      oracle: 7
+      shaman: 7
+      sorcerer: 7
+      summoner: 6
       summonerUnchained: 6
+      witch: 7
+      wizard: 7
   level: 7
-  school: nec
-  types: evil
-  components:
-    verbal: true
-    somatic: true
-    material: true
   materials:
+    gpValue: 2500
     value: >-
       crushed rubies worth 2,500 gp and a major organ from the sacrificed
       target, see text
-    gpValue: 2500
   preparation:
     spontaneousPrepared: false
+  school: nec
   sr: false
-_key: '!items!vzul2c8j6hps0134'
+  types: evil
+type: spell
 

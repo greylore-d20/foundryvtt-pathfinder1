@@ -1,8 +1,19 @@
 _id: mg5HH9O732OopnHW
-name: 'Healing Blessing: Powerful Healer'
-type: feat
+_key: '!items!mg5HH9O732OopnHW'
 img: systems/pf1/icons/spells/heal-jade-2.jpg
+name: 'Healing Blessing: Powerful Healer'
 system:
+  actions:
+    - _id: 2bo96rh1ayowkvjl
+      activation:
+        type: free
+        unchained:
+          type: free
+      img: systems/pf1/icons/spells/heal-jade-2.jpg
+      name: Use
+  associations:
+    classes:
+      - Warpriest
   description:
     value: >-
       <p>At 1st level, you can add power to a cure spell as you cast it. As a
@@ -12,18 +23,7 @@ system:
       undead).</p>
 
       <p>This ability doesn’t stack with itself or the Empower Spell feat.</p>
-  actions:
-    - _id: 2bo96rh1ayowkvjl
-      name: Use
-      img: systems/pf1/icons/spells/heal-jade-2.jpg
-      activation:
-        type: free
-        unchained:
-          type: free
-  tag: classFeat_healingBlessingPowerfulHealer
   subType: classFeat
-  associations:
-    classes:
-      - Warpriest
-_key: '!items!mg5HH9O732OopnHW'
+  tag: classFeat_healingBlessingPowerfulHealer
+type: feat
 

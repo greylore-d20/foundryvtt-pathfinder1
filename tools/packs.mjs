@@ -247,6 +247,9 @@ async function extractPack(packName, options = {}) {
       return filename;
     },
     yaml: true,
+    yamlOptions: {
+      sortKeys: true, // Prevent random key drift
+    },
   });
 
   const filesAfter = fs.readdirSync(directory).map((f) => resolveSource(directory, f));

@@ -1995,7 +1995,7 @@ const _migrateItemChargeCost = function (item, updateData) {
     const defaultAction = item.system.actions?.[0];
     // Check for presence of obsoleted autoDeductCharges in first action
     if (
-      defaultAction?.uses.autoDeductCharges === true &&
+      defaultAction?.uses?.autoDeductCharges === true &&
       updateData["system.uses.autoDeductChargesCost"] === undefined
     ) {
       updateData["system.uses.autoDeductChargesCost"] = "0";

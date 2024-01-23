@@ -843,6 +843,12 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   return updateData;
 }
 
+// Migrate empty action type to "other"
+// Added with PF1 vNEXT
+const _migrateActionType = (action, itemData) => {
+  action.actionType ||= "other";
+};
+
 // Migrate unlimited to empty selection, as the two are identical in meaning
 // Added with PF1 vNEXT
 const _migrateActionLimitedUses = (action, itemData) => {
@@ -879,6 +885,7 @@ const _migrateActionRange = (action, itemData) => {
 export const migrateItemActionData = function (action, updateData, { itemData, item = null } = {}) {
   action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
+  _migrateActionType(action, itemData);
   _migrateActionLimitedUses(action, itemData);
   _migrateActionRange(action, itemData);
   _migrateActionDamageParts(action, itemData);

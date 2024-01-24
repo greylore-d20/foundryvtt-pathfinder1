@@ -551,7 +551,7 @@ export class ItemSpellPF extends ItemPF {
       defaultAction.name = game.i18n.localize("PF1.Use");
       itemData.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
       itemData.system.uses.pricePerUse =
-        Math.floor(((Math.max(0.5, level) * cl * 750 + materialPrice) / 50) * 100) / 100;
+        Math.floor(((Math.max(0.5, level) * cl * 750) / 50) * 100) / 100 + materialPrice;
       itemData.system.hardness = 5;
       itemData.system.hp.max = 5;
       itemData.system.hp.value = 5;

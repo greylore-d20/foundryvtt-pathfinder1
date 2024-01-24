@@ -1,6 +1,6 @@
 _id: EKF5SHvuXhOjf2K6
 _key: '!items!EKF5SHvuXhOjf2K6'
-img: systems/pf1/icons/feats/deafening-critical.jpg
+img: icons/skills/social/intimidation-impressing.webp
 name: Elemental Stance (UC)
 system:
   abilityType: ex
@@ -14,6 +14,14 @@ system:
       name: Use
       uses:
         autoDeductChargesCost: '0'
+    - _id: HDbfaOoeL6REkJ7R
+      activation:
+        type: free
+        unchained:
+          type: free
+      ammoType: none
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: End
   associations:
     classes:
       - Barbarian (Unchained)
@@ -32,8 +40,18 @@ system:
 
       <p>This is a stance rage power.</p>
 
+      <p>Activating a stance rage power is a move action. A barbarian can’t have
+      more than one stance rage power active at a time. If she activates a
+      stance rage power while another one is active, the current stance
+      immediately ends. The stance can be intentionally ended at the beginning
+      of the barbarian’s turn as a free action; otherwise, it lasts until the
+      rage ends.</p>
+
       <p>A barbarian must be at least 4th level to select this rage power.</p>
   subType: classFeat
   tag: classFeat_elementalStanceUc
+  tags:
+    - Rage Power
+    - Rage Power, Stance
 type: feat
 

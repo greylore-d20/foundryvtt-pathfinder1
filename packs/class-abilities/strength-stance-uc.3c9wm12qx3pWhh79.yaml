@@ -1,6 +1,6 @@
 _id: 3c9wm12qx3pWhh79
 _key: '!items!3c9wm12qx3pWhh79'
-img: systems/pf1/icons/feats/deafening-critical.jpg
+img: icons/skills/social/intimidation-impressing.webp
 name: Strength Stance (UC)
 system:
   abilityType: ex
@@ -14,6 +14,14 @@ system:
       name: Use
       uses:
         autoDeductChargesCost: '0'
+    - _id: aHgGB1ZF2DX02qrk
+      activation:
+        type: free
+        unchained:
+          type: free
+      ammoType: none
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      name: End
   associations:
     classes:
       - Barbarian (Unchained)
@@ -26,7 +34,17 @@ system:
       not apply to combat maneuvers).</p>
 
       <p>This is a stance rage power.</p>
+
+      <p>Activating a stance rage power is a move action. A barbarian can’t have
+      more than one stance rage power active at a time. If she activates a
+      stance rage power while another one is active, the current stance
+      immediately ends. The stance can be intentionally ended at the beginning
+      of the barbarian’s turn as a free action; otherwise, it lasts until the
+      rage ends.</p>
   subType: classFeat
   tag: classFeat_strengthStanceUc
+  tags:
+    - Rage Power
+    - Rage Power, Stance
 type: feat
 

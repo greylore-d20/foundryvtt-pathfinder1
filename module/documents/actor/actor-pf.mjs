@@ -2361,6 +2361,7 @@ export class ActorPF extends ActorBasePF {
     if (item.type === "spell") return false;
     if (!item.isCharged) return false;
     if (item.isSingleUse) return false;
+    if (item.isPhysical) return false;
 
     const tag = item.system.tag;
     if (!tag) console.error("Attempting create resource on tagless item", item);

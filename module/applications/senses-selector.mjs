@@ -55,8 +55,8 @@ export class SensesSelector extends DocumentSheet {
       senses,
       gridUnits:
         getDistanceSystem() === "imperial"
-          ? game.i18n.localize("PF1.DistFtShort")
-          : game.i18n.localize("PF1.DistMShort"),
+          ? game.i18n.localize("PF1.Distance.ftShort")
+          : game.i18n.localize("PF1.Distance.mShort"),
     };
   }
 

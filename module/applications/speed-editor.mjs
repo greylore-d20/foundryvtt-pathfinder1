@@ -33,7 +33,7 @@ export class SpeedEditor extends DocumentSheet {
     const context = {
       system: itemData,
       speeds: {},
-      units: game.i18n.localize(getDistanceSystem() === "imperial" ? "PF1.DistFtShort" : "PF1.DistMShort"),
+      units: game.i18n.localize(getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"),
     };
 
     this.constructor.movementKeys.forEach((key) => {

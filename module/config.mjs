@@ -1049,32 +1049,32 @@ export const stackingBonusModifiers = ["untyped", "untypedPerm", "dodge", "racia
  */
 export const distanceUnits = {
   none: "PF1.None",
-  personal: "PF1.DistPersonal",
-  touch: "PF1.DistTouch",
-  melee: "PF1.DistMelee",
-  reach: "PF1.DistReach",
-  close: "PF1.DistClose",
-  medium: "PF1.DistMedium",
-  long: "PF1.DistLong",
-  ft: "PF1.DistFt",
-  mi: "PF1.DistMi",
+  personal: "PF1.Distance.personal",
+  touch: "PF1.Distance.touch",
+  melee: "PF1.Distance.melee",
+  reach: "PF1.Distance.reach",
+  close: "PF1.Distance.close",
+  medium: "PF1.Distance.medium",
+  long: "PF1.Distance.long",
+  ft: "PF1.Distance.ft",
+  mi: "PF1.Distance.mi",
   spec: "PF1.Special",
   seeText: "PF1.SeeText",
   unlimited: "PF1.Unlimited",
 };
 
 export const measureUnits = {
-  ft: "PF1.DistFt",
-  mi: "PF1.DistMi",
-  m: "PF1.DistM",
-  km: "PF1.DistKM",
+  ft: "PF1.Distance.ft",
+  mi: "PF1.Distance.mi",
+  m: "PF1.Distance.m",
+  km: "PF1.Distance.km",
 };
 
 export const measureUnitsShort = {
-  ft: "PF1.DistFtShort",
-  mi: "PF1.DistMiShort",
-  m: "PF1.DistMShort",
-  km: "PF1.DistKMShort",
+  ft: "PF1.Distance.ftShort",
+  mi: "PF1.Distance.miShort",
+  m: "PF1.Distance.mShort",
+  km: "PF1.Distance.kmShort",
 };
 
 export const actorStatures = {

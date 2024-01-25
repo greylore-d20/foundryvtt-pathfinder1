@@ -642,7 +642,7 @@ export class ItemSheetPF extends ItemSheet {
     this._prepareActions(context);
 
     context.distanceUnit = game.i18n.localize(
-      getDistanceSystem() === "imperial" ? "PF1.DistFtShort" : "PF1.DistMShort"
+      getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"
     );
 
     // Prepare speeds

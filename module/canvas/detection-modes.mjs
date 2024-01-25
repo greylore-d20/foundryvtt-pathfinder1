@@ -17,7 +17,7 @@ export class DetectionModeInvisibilityPF extends DetectionModeInvisibility {
 
 export class DetectionModeBlindSensePF extends DetectionMode {
   static ID = "blindSense";
-  static LABEL = "PF1.SenseBSense";
+  static LABEL = "PF1.Sense.blindsense";
   static DETECTION_TYPE = DetectionMode.DETECTION_TYPES.OTHER;
   static PRIORITY = 200100;
 
@@ -43,7 +43,7 @@ export class DetectionModeBlindSensePF extends DetectionMode {
 
 export class DetectionModeBlindSightPF extends DetectionModeBlindSensePF {
   static ID = "blindSight";
-  static LABEL = "PF1.SenseBS";
+  static LABEL = "PF1.Sense.blindsight";
   static DETECTION_TYPE = DetectionMode.DETECTION_TYPES.OTHER;
   static PRIORITY = 200000;
 

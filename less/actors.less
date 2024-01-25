@@ -15,553 +15,558 @@
     }
   }
 
-  footer {
-    flex: 0;
-  }
+  .tab {
+    overflow-y: hidden;
 
-  /* ----------------------------------------- */
-  /*  Summary Tab                              */
-  /* ----------------------------------------- */
-
-  .tab.summary {
-    .summary-header {
-      display: flex;
-      flex-flow: row nowrap;
-
+    footer {
       flex: 0;
-      border-bottom: @borderGroove;
-
-      display: flex;
-      flex-flow: row nowrap;
-      gap: 2px;
-
-      .basic-info {
-        flex: 4;
-      }
-
-      .name-xp {
-        flex: 0;
-        gap: 3px;
-
-        > div {
-          &.hd-level {
-            flex: 2 0 200px;
-          }
-        }
-
-        h1.char-name {
-          flex: 3 0 300px;
-          line-height: 1.5em;
-          margin: 0;
-          input {
-            height: 100%;
-            padding: 0;
-          }
-        }
-      }
-
-      .character-summary {
-        flex: 0;
-
-        & > div {
-          flex: 0 0 33%;
-          //height: 32px;
-          line-height: 2;
-          border-right: @borderGroove;
-          border-bottom: @borderGroove;
-          align-content: center;
-
-          &:nth-child(3n + 0) {
-            border-right: none;
-          }
-
-          &.alignment {
-            padding: 1px 3px;
-          }
-        }
-      }
     }
 
-    .pseudo-table {
-      background: var(--pf1-bg-dark-0);
-      border-top: 1px solid #7a7971;
-      border-bottom: 1px solid #7a7971;
+    /* ----------------------------------------- */
+    /*  Summary Tab                              */
+    /* ----------------------------------------- */
 
-      ul {
-        margin: 0;
-        padding: 0;
-      }
-
-      .header,
-      .sub-header {
-        margin: 0;
-        color: #f0f0e0;
-        text-shadow: 1px 1px #000;
-      }
-      .header,
-      .sub-header,
-      .value {
-        width: 100%;
-        text-align: center;
-        line-height: 1.5;
-        flex: 0;
-      }
-      .value {
-        flex: 1;
-        line-height: 2;
-        padding: 0;
-        margin: 0;
-      }
-      .header {
-        font-weight: bold;
-        background: var(--pf1-bg-dark-4);
-      }
-      .sub-header {
-        background: var(--pf1-bg-dark-3);
-      }
-    }
-
-    .attributes > .attribute {
-      margin: 0;
-      border-left: none;
-      border-bottom: none;
-      border-top: @borderGroove;
-      border-right: @borderGroove;
-      border-radius: 0;
-      height: auto;
-    }
-
-    img.profile {
-      flex: 0 0 160px;
-      width: 160px;
-      height: 160px;
-      padding: 0 3px;
-      object-fit: contain;
-      border: none;
-      border-right: @borderGroove;
-    }
-
-    .misc-header-items {
-      flex: 0.5;
-
-      .actor-quick-actions {
+    &.summary {
+      .summary-header {
         display: flex;
-        justify-content: space-evenly;
-        flex-flow: row wrap;
+        flex-flow: row nowrap;
 
-        button {
-          min-height: 24px;
-          line-height: 1.5;
+        flex: 0;
+        border-bottom: @borderGroove;
+
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 2px;
+
+        .basic-info {
+          flex: 4;
+        }
+
+        .name-xp {
+          flex: 0;
+          gap: 3px;
+
+          > div {
+            &.hd-level {
+              flex: 2 0 200px;
+            }
+          }
+
+          h1.char-name {
+            flex: 3 0 300px;
+            line-height: 1.5em;
+            margin: 0;
+            input {
+              height: 100%;
+              padding: 0;
+            }
+          }
+        }
+
+        .character-summary {
+          flex: 0;
+
+          & > div {
+            flex: 0 0 33%;
+            //height: 32px;
+            line-height: 2;
+            border-right: @borderGroove;
+            border-bottom: @borderGroove;
+            align-content: center;
+
+            &:nth-child(3n + 0) {
+              border-right: none;
+            }
+
+            &.alignment {
+              padding: 1px 3px;
+            }
+          }
         }
       }
-    }
 
-    .attributes {
-      display: flex;
-      flex-flow: row;
-      gap: 3px;
+      .pseudo-table {
+        background: var(--pf1-bg-dark-0);
+        border-top: 1px solid #7a7971;
+        border-bottom: 1px solid #7a7971;
 
-      flex: 0;
+        ul {
+          margin: 0;
+          padding: 0;
+        }
 
-      .wounds-vigor {
+        .header,
+        .sub-header {
+          margin: 0;
+          color: #f0f0e0;
+          text-shadow: 1px 1px #000;
+        }
+        .header,
+        .sub-header,
+        .value {
+          width: 100%;
+          text-align: center;
+          line-height: 1.5;
+          flex: 0;
+        }
+        .value {
+          flex: 1;
+          line-height: 2;
+          padding: 0;
+          margin: 0;
+        }
+        .header {
+          font-weight: bold;
+          background: var(--pf1-bg-dark-4);
+        }
+        .sub-header {
+          background: var(--pf1-bg-dark-3);
+        }
+      }
+
+      .attributes > .attribute {
+        margin: 0;
+        border-left: none;
+        border-bottom: none;
+        border-top: @borderGroove;
+        border-right: @borderGroove;
+        border-radius: 0;
+        height: auto;
+      }
+
+      img.profile {
+        flex: 0 0 160px;
+        width: 160px;
+        height: 160px;
+        padding: 0 3px;
+        object-fit: contain;
+        border: none;
+        border-right: @borderGroove;
+      }
+
+      .misc-header-items {
+        flex: 0.5;
+
+        .actor-quick-actions {
+          display: flex;
+          justify-content: space-evenly;
+          flex-flow: row wrap;
+
+          button {
+            min-height: 24px;
+            line-height: 1.5;
+          }
+        }
+      }
+
+      .attributes {
         display: flex;
         flex-flow: row;
         gap: 3px;
-      }
 
-      .health-details {
-        flex: 4;
+        flex: 0;
 
-        .wounds {
-          flex: 2;
+        .wounds-vigor {
+          display: flex;
+          flex-flow: row;
+          gap: 3px;
         }
-        .vigor {
-          flex: 3;
-        }
-        .speed-details {
-          flex: 3.5;
-        }
-      }
 
-      .speed-details {
-        flex: 5;
+        .health-details {
+          flex: 4;
 
-        .fly-details {
-          flex: 3;
-
-          .maneuverability-details {
+          .wounds {
             flex: 2;
+          }
+          .vigor {
+            flex: 3;
+          }
+          .speed-details {
+            flex: 3.5;
+          }
+        }
+
+        .speed-details {
+          flex: 5;
+
+          .fly-details {
+            flex: 3;
+
+            .maneuverability-details {
+              flex: 2;
+            }
+          }
+        }
+
+        .health-details {
+          &.wounds-vigor {
+            flex: 5;
+          }
+        }
+
+        li {
+          padding: 0;
+          border-top: @borderGroove;
+
+          &:not(:last-child) {
+            border-right: @borderGroove;
           }
         }
       }
 
-      .health-details {
-        &.wounds-vigor {
-          flex: 5;
+      .subdetails-body {
+        h2 {
+          // Override Foundry bottom margin (0.5rem)
+          margin-bottom: 0.2rem;
         }
       }
 
-      li {
-        padding: 0;
-        border-top: @borderGroove;
-
-        &:not(:last-child) {
-          border-right: @borderGroove;
+      .quick-info {
+        .generic-defenses {
+          h3 {
+            margin: 0;
+            border: unset;
+          }
         }
       }
-    }
 
-    .subdetails-body {
-      h2 {
-        // Override Foundry bottom margin (0.5rem)
-        margin-bottom: 0.2rem;
-      }
-    }
-
-    .quick-info {
-      .generic-defenses {
-        h3 {
-          margin: 0;
-          border: unset;
-        }
-      }
-    }
-
-    // Note: Only used by alignment selection
-    .controls {
-      .control {
-        flex: 0;
-        visibility: hidden;
-        margin-right: 4px;
-      }
-
-      &:hover {
+      // Note: Only used by alignment selection
+      .controls {
         .control {
-          visibility: visible;
+          flex: 0;
+          visibility: hidden;
+          margin-right: 4px;
+        }
+
+        &:hover {
+          .control {
+            visibility: visible;
+          }
         }
       }
     }
-  }
 
-  .alignment {
-    color: black;
-  }
-
-  .attributes {
-    input[type="text"] {
-      height: 24px;
+    .alignment {
+      color: black;
     }
 
-    input.temphp {
-      width: 48%;
-    }
-  }
-
-  /* ----------------------------------------- */
-  /*  General Styles                           */
-  /* ----------------------------------------- */
-
-  // Box Headers
-  h4.box-title {
-    line-height: 16px;
-    margin: 4px 8px 2px;
-    font-size: @fontSizeSubHeader;
-    border-bottom: 1px solid var(--color-border-light-secondary);
-  }
-
-  /* ----------------------------------------- */
-  /*  Attributes                               */
-  /* ----------------------------------------- */
-
-  .attributes {
-    .traits {
-      overflow-y: auto;
-      height: 100%;
-
-      > * {
-        flex: 0 0 24px;
-
-        .itemBackground();
-      }
-    }
-
-    table {
-      margin: 0;
-    }
-  }
-
-  ul.attributes.misc-base,
-  ul.attributes.misc-defenses {
-    .attribute-footer input {
-      width: 100%;
-    }
-  }
-
-  .attributes-root {
-    flex: 0 0 30%;
-  }
-
-  ul.attributes {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    flex: 0;
-
-    h3 {
-      margin: 0;
-    }
-
-    table {
-      span.text-box,
-      input[type="text"] {
-        height: 20px;
-        padding: 1px 3px;
-      }
-    }
-  }
-
-  /* ----------------------------------------- */
-  /*  Defenses                                 */
-  /* ----------------------------------------- */
-
-  .defenses {
     .attributes {
-      flex: 0;
+      input[type="text"] {
+        height: 24px;
+      }
+
+      input.temphp {
+        width: 48%;
+      }
     }
 
-    .attribute .attribute-footer input {
-      width: 32px;
+    /* ----------------------------------------- */
+    /*  General Styles                           */
+    /* ----------------------------------------- */
+
+    // Box Headers
+    h4.box-title {
+      line-height: 16px;
+      margin: 4px 8px 2px;
+      font-size: @fontSizeSubHeader;
+      border-bottom: 1px solid var(--color-border-light-secondary);
     }
 
-    .defense-rolls,
-    .defense-notes {
-      label {
-        line-height: 20px;
-        white-space: nowrap;
+    /* ----------------------------------------- */
+    /*  Attributes                               */
+    /* ----------------------------------------- */
 
-        h3 {
-          .modesto();
-          font-size: @fontSizeHeader;
+    &.attributes {
+      .traits {
+        overflow-y: auto;
+        height: 100%;
+
+        > * {
+          flex: 0 0 24px;
+
+          .itemBackground();
         }
       }
-    }
 
-    .defense-notes {
-      margin-top: 5px;
-      overflow-y: scroll;
-      flex: 1;
-
-      h3 {
-        border-bottom: unset;
-      }
-
-      label {
-        flex: 1;
-      }
-
-      textarea {
-        flex: 3;
+      table {
+        margin: 0;
       }
     }
-  }
 
-  /* ----------------------------------------- */
-  /*  Ability Scores                           */
-  /* ----------------------------------------- */
-
-  .tab.attributes {
-    .ability-scores {
-      flex: 0;
-      display: flex;
-      flex-flow: column nowrap;
-      gap: 2px;
-    }
-  }
-
-  .bottom {
-    overflow-y: auto;
-  }
-
-  /* ----------------------------------------- */
-  /*  Buffs & Conditions                       */
-  /* ----------------------------------------- */
-
-  .condition {
-    flex: 0;
-    margin: 2px;
-    flex-basis: calc(20% - 4px);
-
-    display: flex;
-    align-items: center;
-
-    > a {
-      font-size: @fontSizeNormal;
-      flex: 1;
-    }
-
-    > .compendium-entry {
-      display: none;
-      flex: 0;
-    }
-
-    &:hover {
-      > .compendium-entry {
-        display: inline;
+    ul.attributes.misc-base,
+    ul.attributes.misc-defenses {
+      .attribute-footer input {
+        width: 100%;
       }
     }
-  }
 
-  /* ----------------------------------------- */
-  /*  Traits                                   */
-  /* ----------------------------------------- */
-
-  .traits {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    margin: 0 5px;
-
-    .form-group,
-    .form-group-stacked {
-      margin: 0;
-      justify-content: space-between;
+    .attributes-root {
+      flex: 0 0 30%;
     }
 
-    .trait-selector,
-    .senses-selector,
-    .resistance-selector {
-      flex: 0 0 16px;
-      padding: 2px 0;
-      color: var(--color-text-dark-5);
-      font-size: @fontSizeLarge;
-    }
-
-    .configure-flags {
-      flex: 1;
-    }
-
-    .traits-list {
+    ul.attributes {
       list-style: none;
       margin: 0;
       padding: 0;
-      text-align: right;
-      justify-content: end;
+      flex: 0;
+
+      h3 {
+        margin: 0;
+      }
+
+      table {
+        span.text-box,
+        input[type="text"] {
+          height: 20px;
+          padding: 1px 3px;
+        }
+      }
+    }
+
+    /* ----------------------------------------- */
+    /*  Defenses                                 */
+    /* ----------------------------------------- */
+
+    .defenses {
+      .attributes {
+        flex: 0;
+      }
+
+      .attribute .attribute-footer input {
+        width: 32px;
+      }
+
+      .defense-rolls,
+      .defense-notes {
+        label {
+          line-height: 20px;
+          white-space: nowrap;
+
+          h3 {
+            .modesto();
+            font-size: @fontSizeHeader;
+          }
+        }
+      }
+
+      .defense-notes {
+        margin-top: 5px;
+        overflow-y: scroll;
+        flex: 1;
+
+        h3 {
+          border-bottom: unset;
+        }
+
+        label {
+          flex: 1;
+        }
+
+        textarea {
+          flex: 3;
+        }
+      }
+    }
+
+    /* ----------------------------------------- */
+    /*  Ability Scores                           */
+    /* ----------------------------------------- */
+
+    &.attributes {
+      .ability-scores {
+        flex: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 2px;
+      }
+    }
+
+    .bottom {
+      overflow-y: auto;
+    }
+
+    /* ----------------------------------------- */
+    /*  Buffs & Conditions                       */
+    /* ----------------------------------------- */
+
+    .condition {
+      flex: 0;
+      margin: 2px;
+      flex-basis: calc(20% - 4px);
+
+      display: flex;
       align-items: center;
-    }
 
-    select {
-      flex: 0 0 180px;
-    }
+      > a {
+        font-size: @fontSizeNormal;
+        flex: 1;
+      }
 
-    label {
-      flex: 0 0 150px;
-      line-height: 20px;
-      font-weight: bold;
-      margin: 0;
-      text-align: right;
-    }
-
-    input {
-      text-align: right;
-    }
-
-    i.fas {
-      margin-right: 3px;
-      text-align: right;
+      > .compendium-entry {
+        display: none;
+        flex: 0;
+      }
 
       &:hover {
-        text-shadow: 0 0 10px red;
+        > .compendium-entry {
+          display: inline;
+        }
       }
     }
 
-    .inactive {
-      color: @colorTan;
+    /* ----------------------------------------- */
+    /*  Traits                                   */
+    /* ----------------------------------------- */
+
+    .traits {
+      overflow-x: hidden;
+      overflow-y: hidden;
+      margin: 0 5px;
+
+      .form-group,
+      .form-group-stacked {
+        margin: 0;
+        justify-content: space-between;
+      }
+
+      .trait-selector,
+      .senses-selector,
+      .resistance-selector {
+        flex: 0 0 16px;
+        padding: 2px 0;
+        color: var(--color-text-dark-5);
+        font-size: @fontSizeLarge;
+      }
+
+      .configure-flags {
+        flex: 1;
+      }
+
+      .checkbox {
+        text-align: right;
+        justify-content: end;
+      }
+
+      .traits-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: right;
+        justify-content: end;
+        align-items: center;
+      }
+
+      select {
+        flex: 0 0 180px;
+      }
+
+      label {
+        flex: 0 0 150px;
+        line-height: 20px;
+        font-weight: bold;
+        margin: 0;
+        text-align: right;
+      }
+
+      input {
+        text-align: right;
+      }
+
+      i.fas {
+        margin-right: 3px;
+        text-align: right;
+
+        &:hover {
+          text-shadow: 0 0 10px red;
+        }
+      }
+
+      .inactive {
+        color: @colorTan;
+      }
     }
-  }
 
-  /* ----------------------------------------- */
-  /*  Inventory Lists                          */
-  /* ----------------------------------------- */
+    /* ----------------------------------------- */
+    /*  Inventory Lists                          */
+    /* ----------------------------------------- */
 
-  /* Encumbrance Bar */
-  .encumbrance {
-    height: 12px;
-    background: @colorTan;
-    margin: 1px 15px 0 1px;
-    border: 1px solid var(--color-border-dark-2);
-    border-radius: 3px;
-    position: relative;
+    /* Encumbrance Bar */
+    .encumbrance {
+      height: 12px;
+      background: @colorTan;
+      margin: 1px 15px 0 1px;
+      border: 1px solid var(--color-border-dark-2);
+      border-radius: 3px;
+      position: relative;
 
-    .encumbrance-bar {
-      position: absolute;
-      top: 1px;
-      left: 1px;
-      background: #6c8aa5;
-      height: 8px;
-      border: 1px solid #cde4ff;
-      border-radius: 2px;
-    }
-
-    .encumbrance-label {
-      height: 10px;
-      padding: 0 5px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: @fontSizeNormal;
-      line-height: 1;
-      text-align: right;
-      color: #eee;
-      text-shadow: 0 0 5px #000;
-    }
-
-    &.encumbered {
       .encumbrance-bar {
-        background: #a80d0d;
-        border-color: #e14949;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        background: #6c8aa5;
+        height: 8px;
+        border: 1px solid #cde4ff;
+        border-radius: 2px;
       }
-    }
 
-    .encumbrance-breakpoint {
-      position: absolute;
-      left: 66%;
-    }
+      .encumbrance-label {
+        height: 10px;
+        padding: 0 5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: @fontSizeNormal;
+        line-height: 1;
+        text-align: right;
+        color: #eee;
+        text-shadow: 0 0 5px #000;
+      }
 
-    .arrow-up {
-      bottom: 0;
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-bottom: 4px solid var(--color-border-dark-5);
-    }
+      &.encumbered {
+        .encumbrance-bar {
+          background: #a80d0d;
+          border-color: #e14949;
+        }
+      }
 
-    .arrow-down {
-      top: 0;
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 4px solid var(--color-border-dark-5);
-    }
+      .encumbrance-breakpoint {
+        position: absolute;
+        left: 66%;
+      }
 
-    &.encumbered {
       .arrow-up {
-        border-bottom: 4px solid #000;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-bottom: 4px solid var(--color-border-dark-5);
       }
+
       .arrow-down {
-        border-top: 4px solid #000;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid var(--color-border-dark-5);
+      }
+
+      &.encumbered {
+        .arrow-up {
+          border-bottom: 4px solid #000;
+        }
+        .arrow-down {
+          border-top: 4px solid #000;
+        }
       }
     }
-  }
 
-  footer {
-    .tag {
-      flex: 0 1 auto;
+    footer {
+      .tag {
+        flex: 0 1 auto;
+      }
     }
-  }
-
-  .tab {
-    overflow-y: hidden;
 
     label.checkbox {
       flex: 1;
@@ -621,172 +626,172 @@
         height: 18px;
       }
     }
-  }
 
-  .tab.combat {
-    .combat-attacks {
-      flex: 1 1 320px;
-      overflow-y: auto;
-    }
-
-    .combat-defenses {
-      h3 {
-        border-bottom: unset;
+    &.combat {
+      .combat-attacks {
+        flex: 1 1 320px;
+        overflow-y: auto;
       }
 
-      table {
-        margin-bottom: 4px;
+      .combat-defenses {
+        h3 {
+          border-bottom: unset;
+        }
+
+        table {
+          margin-bottom: 4px;
+        }
       }
     }
-  }
 
-  div.attributes-traits {
-    align-items: flex-start;
-    margin: 0;
-    overflow-y: hidden;
-  }
-
-  /* Inventory List Filters */
-  .inventory-filters {
-    flex: 0;
-
-    h3,
-    .filter-title {
-      .modesto();
-      color: @colorOlive;
-      font-size: @fontSizeHeader;
+    div.attributes-traits {
+      align-items: flex-start;
       margin: 0;
+      overflow-y: hidden;
     }
-  }
 
-  .tab.inventory {
-    footer {
-      display: flex;
-      flex-flow: row wrap;
-      gap: 3px;
-
-      .inventory-tags,
-      .carry-bonus {
-        flex: 1;
-        align-self: center;
-      }
-
-      .inventory-tags {
-        justify-content: flex-end;
-      }
-
-      .carry-capacity,
-      .lift {
-        flex: 1 100%;
-      }
-    }
-  }
-
-  .carry-label {
-    flex: 0 0 24px;
-  }
-
-  .carry-bonus {
-    label {
+    /* Inventory List Filters */
+    .inventory-filters {
       flex: 0;
-      margin-left: 8px;
-      text-align: right;
-      line-height: 20px;
-      color: @colorTan;
-      white-space: nowrap;
-    }
-    input[type="text"],
-    span.text-box {
-      height: 20px;
-      flex: 0 0 48px;
-      text-align: center;
-      margin-left: 8px;
-      border-bottom: @borderGroove;
-    }
-  }
 
-  /* ----------------------------------------- */
-  /*  Features                                 */
-  /* ----------------------------------------- */
-
-  section.feats-body {
-    overflow-y: auto;
-
-    .feats-group {
-      .item-detail.item-type {
-        flex: 0 0 40px;
+      h3,
+      .filter-title {
+        .modesto();
+        color: @colorOlive;
+        font-size: @fontSizeHeader;
+        margin: 0;
       }
     }
-  }
 
-  /* ----------------------------------------- */
-  /*  Spellbook                                */
-  /* ----------------------------------------- */
+    &.inventory {
+      footer {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 3px;
 
-  a.rollable {
-    display: inline-flex;
-    gap: 2px;
-  }
+        .inventory-tags,
+        .carry-bonus {
+          flex: 1;
+          align-self: center;
+        }
 
-  /* ----------------------------------------- */
-  /*  TinyMCE                                  */
-  /* ----------------------------------------- */
+        .inventory-tags {
+          justify-content: flex-end;
+        }
 
-  .editor {
-    padding: 0 8px;
-  }
-
-  /* ----------------------------------------- */
-  /*  Misc                                     */
-  /* ----------------------------------------- */
-
-  hr {
-    margin: 2px 0;
-    flex: 0;
-  }
-
-  .tab.actor-notes {
-    overflow: hidden scroll;
-
-    .primary-content {
-      flex: 1 0 320px;
-
-      display: flex;
-
-      .editor {
-        flex: 1;
+        .carry-capacity,
+        .lift {
+          flex: 1 100%;
+        }
       }
     }
-  }
 
-  table {
-    table-layout: fixed;
-    overflow: hidden;
+    .carry-label {
+      flex: 0 0 24px;
+    }
 
-    &.ability-table {
-      input[type="text"] {
+    .carry-bonus {
+      label {
+        flex: 0;
+        margin-left: 8px;
+        text-align: right;
+        line-height: 20px;
+        color: @colorTan;
+        white-space: nowrap;
+      }
+      input[type="text"],
+      span.text-box {
         height: 20px;
+        flex: 0 0 48px;
+        text-align: center;
+        margin-left: 8px;
+        border-bottom: @borderGroove;
       }
     }
 
-    td {
-      img {
-        vertical-align: middle;
-        margin-right: 2px;
+    /* ----------------------------------------- */
+    /*  Features                                 */
+    /* ----------------------------------------- */
+
+    section.feats-body {
+      overflow-y: auto;
+
+      .feats-group {
+        .item-detail.item-type {
+          flex: 0 0 40px;
+        }
       }
     }
-  }
 
-  .skill-lock-button {
-    flex: 0;
-    &:before {
-      font-family: "Font Awesome 5 Free";
-      font-weight: 900;
-      content: "\f023";
-      margin-right: 0.5em;
+    /* ----------------------------------------- */
+    /*  Spellbook                                */
+    /* ----------------------------------------- */
+
+    a.rollable {
+      display: inline-flex;
+      gap: 2px;
     }
-    &.unlocked:before {
-      content: "\f3c1";
+
+    /* ----------------------------------------- */
+    /*  TinyMCE                                  */
+    /* ----------------------------------------- */
+
+    .editor {
+      padding: 0 8px;
+    }
+
+    /* ----------------------------------------- */
+    /*  Misc                                     */
+    /* ----------------------------------------- */
+
+    hr {
+      margin: 2px 0;
+      flex: 0;
+    }
+
+    &.actor-notes {
+      overflow: hidden scroll;
+
+      .primary-content {
+        flex: 1 0 320px;
+
+        display: flex;
+
+        .editor {
+          flex: 1;
+        }
+      }
+    }
+
+    table {
+      table-layout: fixed;
+      overflow: hidden;
+
+      &.ability-table {
+        input[type="text"] {
+          height: 20px;
+        }
+      }
+
+      td {
+        img {
+          vertical-align: middle;
+          margin-right: 2px;
+        }
+      }
+    }
+
+    .skill-lock-button {
+      flex: 0;
+      &:before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f023";
+        margin-right: 0.5em;
+      }
+      &.unlocked:before {
+        content: "\f3c1";
+      }
     }
   }
 }

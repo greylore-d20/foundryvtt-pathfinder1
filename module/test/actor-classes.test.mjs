@@ -86,6 +86,7 @@ export const registerActorItemClassTests = () => {
                   { inplace: false }
                 )
               );
+              actor.reset(); // Ensure setting change takes hold
             });
             after(async () => {
               await game.settings.set("pf1", "healthConfig", previousHealthConfig);
@@ -145,6 +146,7 @@ export const registerActorItemClassTests = () => {
                   { inplace: false }
                 )
               );
+              actor.reset();
             });
             after(async () => {
               await game.settings.set("pf1", "healthConfig", previousHealthConfig);
@@ -178,6 +180,7 @@ export const registerActorItemClassTests = () => {
                   }
                 )
               );
+              actor.reset();
             });
             after(async () => {
               await game.settings.set("pf1", "healthConfig", previousHealthConfig);
@@ -201,6 +204,7 @@ export const registerActorItemClassTests = () => {
               const prevSetting = game.settings.get("pf1", "useFractionalBaseBonuses");
               before(async () => {
                 if (prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", false);
+                actor.reset();
               });
               after(async () => {
                 if (prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", true);
@@ -215,6 +219,7 @@ export const registerActorItemClassTests = () => {
               const prevSetting = game.settings.get("pf1", "useFractionalBaseBonuses");
               before(async () => {
                 if (!prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", true);
+                actor.reset();
               });
               after(async () => {
                 if (!prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", false);
@@ -231,6 +236,7 @@ export const registerActorItemClassTests = () => {
               const prevSetting = game.settings.get("pf1", "useFractionalBaseBonuses");
               before(async () => {
                 if (prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", false);
+                actor.reset();
               });
               after(async () => {
                 if (prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", true);
@@ -251,6 +257,7 @@ export const registerActorItemClassTests = () => {
               const prevSetting = game.settings.get("pf1", "useFractionalBaseBonuses");
               before(async () => {
                 if (!prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", true);
+                actor.reset();
               });
               after(async () => {
                 if (!prevSetting) await game.settings.set("pf1", "useFractionalBaseBonuses", false);

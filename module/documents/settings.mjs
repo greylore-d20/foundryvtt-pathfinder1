@@ -6,7 +6,6 @@ import { TooltipWorldConfig, TokenTooltipWorldConfigModel } from "../application
 import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
 import { PerformanceConfig, PerformanceModel } from "module/applications/settings/performance.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
-import { setDefaultSceneScaling } from "@utils";
 
 export const registerSystemSettings = function () {
   /**
@@ -61,7 +60,7 @@ export const registerSystemSettings = function () {
     default: new HealthConfigModel(),
     type: HealthConfigModel,
     config: false,
-    onChange: () => pf1.utils.refreshActors(),
+    requiresReload: true,
   });
 
   // Experience configuration
@@ -99,7 +98,7 @@ export const registerSystemSettings = function () {
     default: new AccessibilityConfigModel(),
     type: AccessibilityConfigModel,
     config: false,
-    onChange: () => pf1.utils.refreshActors(),
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
   // Tooltip configuration
@@ -212,10 +211,7 @@ export const registerSystemSettings = function () {
       imperial: "PF1.SETTINGS.Units.Imperial",
       metric: "PF1.SETTINGS.Units.Metric",
     },
-    onChange: () => {
-      pf1.utils.refreshActors();
-      setDefaultSceneScaling();
-    },
+    requiresReload: true,
   });
 
   /**
@@ -233,10 +229,7 @@ export const registerSystemSettings = function () {
       imperial: "PF1.SETTINGS.Units.ImperialDistance",
       metric: "PF1.SETTINGS.Units.MetricDistance",
     },
-    onChange: () => {
-      pf1.utils.refreshActors({ renderOnly: true });
-      setDefaultSceneScaling();
-    },
+    requiresReload: true,
   });
 
   /**
@@ -254,7 +247,7 @@ export const registerSystemSettings = function () {
       imperial: "PF1.SETTINGS.Units.ImperialWeight",
       metric: "PF1.SETTINGS.Units.MetricWeight",
     },
-    onChange: () => pf1.utils.refreshActors(),
+    requiresReload: true,
   });
 
   /**
@@ -297,7 +290,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors(),
+    requiresReload: true,
   });
 
   /**
@@ -448,7 +441,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: 50,
     type: Number,
-    onChange: () => pf1.utils.refreshActors(),
+    requiresReload: true,
   });
 
   /**

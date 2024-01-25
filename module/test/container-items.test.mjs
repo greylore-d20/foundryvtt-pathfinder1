@@ -70,7 +70,7 @@ export const registerContainerItemTests = () => {
         it("should render a sheet", async function () {
           await items.container.sheet._render(true);
           expect(items.container.sheet.rendered).to.be.true;
-          items.container.sheet.close({ force: true });
+          items.container.sheet.close({ submit: false });
         });
       });
 
@@ -80,6 +80,7 @@ export const registerContainerItemTests = () => {
           before(async () => {
             await game.settings.set("pf1", "units", units);
             await game.settings.set("pf1", "weightUnits", weightUnits);
+            actor.reset();
           });
 
           it("Settings should be applied correctly", function () {

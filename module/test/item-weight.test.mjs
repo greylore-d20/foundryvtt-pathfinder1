@@ -33,11 +33,12 @@ export const registerItemWeightTests = () => {
         settingUnits = game.settings.get("pf1", "units");
         settingWeightUnits = game.settings.get("pf1", "weightUnits");
       });
+
       after(async () => {
-        await items.embeddedAcid?.sheet?.close({ force: true });
-        await items.worldAcid.sheet?.close({ force: true });
+        await items.embeddedAcid.sheet.close({ submit: false });
+        await items.worldAcid.sheet.close({ submit: false });
         await items.worldAcid.delete();
-        await actor.sheet.close({ force: true });
+        await actor.sheet.close({ submit: false });
         await actor.delete();
 
         await game.settings.set("pf1", "units", settingUnits);
@@ -50,6 +51,7 @@ export const registerItemWeightTests = () => {
           before(async () => {
             await game.settings.set("pf1", "units", units);
             await game.settings.set("pf1", "weightUnits", weightUnits);
+            actor.reset();
           });
 
           it("Settings should be applied correctly", function () {
@@ -62,6 +64,7 @@ export const registerItemWeightTests = () => {
 
           for (const kind of ["world", "embedded"]) {
             describe(`${kind.capitalize()} item 'Acid'`, function () {
+              this.timeout(15_000); // These are slow tests
               let item, getItemSheetWeight, getActorSheetCarried;
               before(async () => {
                 item = items[`${kind}Acid`];
@@ -76,12 +79,15 @@ export const registerItemWeightTests = () => {
                   return actor.sheet._element.find(".inventory-tags.tag-list span").first().text();
                 };
               });
-
-              it("should have a weight of 1 lbs/0.5 kg", async function () {
+              it("should have quantity of 1", function () {
                 expect(item.system.quantity).to.equal(1);
+              });
+              it("should have a weight of 1 lbs/0.5 kg", function () {
                 expect(item.system.weight.total).to.equal(1);
                 expect(item.system.weight.converted.value).to.equal(convertWeight(1));
                 expect(item.system.weight.converted.total).to.equal(convertWeight(1));
+              });
+              it("should display correct weight", async function () {
                 expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(1));
               });
               it("should have a price of 10g", function () {

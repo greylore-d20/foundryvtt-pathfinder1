@@ -1,7 +1,7 @@
 <form autocomplete="off">
   {{! Disable Tooltips globally }}
   <div class="form-group">
-    <label>{{localize "PF1.TooltipWorldConfigDisable"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Disable"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="disable" data-dtype="Boolean" {{checked data.disable}}>
     </div>
@@ -9,47 +9,47 @@
 
   {{! Hide Portraits globally }}
   <div class="form-group">
-    <label>{{localize "PF1.TooltipWorldConfigHidePortraits"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Portraits"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="portrait.hide" data-dtype="Boolean" {{checked data.portrait.hide}}>
     </div>
   </div>
 
   {{! Hide Held items globally }}
-  <div class="form-group" data-tooltip="PF1.TooltipWorldConfigHideHeld_Hint" data-tooltip-direction="UP">
-    <label>{{localize "PF1.TooltipWorldConfigHideHeld"}}</label>
+  <div class="form-group" data-tooltip="PF1.SETTINGS.TokenTooltip.Hide.HeldHint" data-tooltip-direction="UP">
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Held"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="hideHeld" data-dtype="Boolean" {{checked data.hideHeld}}>
     </div>
   </div>
 
   {{! Hide Armor globally }}
-  <div class="form-group" data-tooltip="PF1.TooltipWorldConfigHideArmor_Hint" data-tooltip-direction="UP">
-    <label>{{localize "PF1.TooltipWorldConfigHideArmor"}}</label>
+  <div class="form-group" data-tooltip="PF1.SETTINGS.TokenTooltip.Hide.ArmorHint" data-tooltip-direction="UP">
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Armor"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="hideArmor" data-dtype="Boolean" {{checked data.hideArmor}}>
     </div>
   </div>
 
   {{! Hide Buffs globally }}
-  <div class="form-group" data-tooltip="PF1.TooltipWorldConfigHideBuffs_Hint" data-tooltip-direction="UP">
-    <label>{{localize "PF1.TooltipWorldConfigHideBuffs"}}</label>
+  <div class="form-group" data-tooltip="PF1.SETTINGS.TokenTooltip.Hide.BuffsHint" data-tooltip-direction="UP">
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Buffs"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="hideBuffs" data-dtype="Boolean" {{checked data.hideBuffs}}>
     </div>
   </div>
 
   {{! Hide Conditions globally }}
-  <div class="form-group" data-tooltip="PF1.TooltipWorldConfigHideConditions_Hint" data-tooltip-direction="UP">
-    <label>{{localize "PF1.TooltipWorldConfigHideConditions"}}</label>
+  <div class="form-group" data-tooltip="PF1.SETTINGS.TokenTooltip.Hide.ConditionsHint" data-tooltip-direction="UP">
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Conditions"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="hideConditions" data-dtype="Boolean" {{checked data.hideConditions}}>
     </div>
   </div>
 
   {{! Hide Name globally }}
-  <div class="form-group" data-tooltip="PF1.TooltipWorldConfigNameMinimumPermission_Hint" data-tooltip-direction="UP">
-    <label>{{localize "PF1.TooltipWorldConfigNameMinimumPermission"}}</label>
+  <div class="form-group" data-tooltip="PF1.SETTINGS.TokenTooltip.Hide.ActorName.MinimumPermissionHint" data-tooltip-direction="UP">
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.ActorName.MinimumPermission"}}</label>
     <div class="form-fields">
       <select data-dtype="Number" name="minimumPermission">
         {{selectOptions permissions selected=data.minimumPermission localize=true}}
@@ -59,10 +59,10 @@
 
   <div
     class="form-group"
-    data-tooltip="PF1.TooltipWorldConfigHideActorNameByDisposition_Hint"
+    data-tooltip="PF1.SETTINGS.TokenTooltip.Hide.ActorName.ByDispositionHint"
     data-tooltip-direction="UP"
   >
-    <label for="hideActorNameByDisposition">{{localize "PF1.TooltipWorldConfigHideActorNameByDisposition"}}</label>
+    <label for="hideActorNameByDisposition">{{localize "PF1.SETTINGS.TokenTooltip.Hide.ActorName.ByDisposition"}}</label>
     <div class="form-fields">
       <select data-dtype="Number" name="hideActorNameByDisposition" id="hideActorNameByDisposition">
         {{#select data.hideActorNameByDisposition}}
@@ -76,7 +76,7 @@
   </div>
 
   <div class="form-group">
-    <label>{{localize "PF1.TooltipWorldConfigHideActorNameReplacement"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.ActorName.Replacement"}}</label>
     <div class="form-fields">
       <input type="text" name="hideActorNameReplacement" value="{{data.hideActorNameReplacement}}">
     </div>

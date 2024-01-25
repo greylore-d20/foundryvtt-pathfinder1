@@ -83,7 +83,7 @@ export class TooltipConfig extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      title: game.i18n.localize("PF1.TooltipConfigName"),
+      title: game.i18n.localize("PF1.SETTINGS.TokenTooltip.Name"),
       id: "tooltip-config",
       template: "systems/pf1/templates/settings/tooltip.hbs",
       width: 640,
@@ -130,7 +130,7 @@ export class TooltipConfig extends FormApplication {
     event.preventDefault();
     await game.settings.set("pf1", "tooltipConfig", this.constructor.defaultSettings);
     this._cachedData = null;
-    ui.notifications.info(game.i18n.localize("PF1.TooltipConfigResetInfo"));
+    ui.notifications.info(game.i18n.localize("PF1.SETTINGS.TokenTooltip.ResetInfo"));
     return this.render();
   }
 
@@ -138,6 +138,6 @@ export class TooltipConfig extends FormApplication {
     const settings = foundry.utils.expandObject(formData);
 
     await game.settings.set("pf1", "tooltipConfig", settings);
-    ui.notifications.info(game.i18n.localize("PF1.TooltipConfigUpdateInfo"));
+    ui.notifications.info(game.i18n.localize("PF1.SETTINGS.TokenTooltip.UpdateInfo"));
   }
 }

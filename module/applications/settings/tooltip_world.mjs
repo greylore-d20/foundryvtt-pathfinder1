@@ -48,7 +48,7 @@ export class TooltipWorldConfig extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      title: game.i18n.localize("PF1.TooltipWorldConfigName"),
+      title: game.i18n.localize("PF1.SETTINGS.TokenTooltip.World.Name"),
       id: "tooltip-world-config",
       template: "systems/pf1/templates/settings/tooltip_world.hbs",
       width: 540,
@@ -64,7 +64,7 @@ export class TooltipWorldConfig extends FormApplication {
   async _onReset(event) {
     event.preventDefault();
     await game.settings.set("pf1", "tooltipWorldConfig", new TokenTooltipWorldConfigModel());
-    ui.notifications.info(game.i18n.localize("PF1.TooltipConfigResetInfo"));
+    ui.notifications.info(game.i18n.localize("PF1.SETTINGS.TokenTooltip.ResetInfo"));
     return this.render();
   }
 
@@ -72,6 +72,6 @@ export class TooltipWorldConfig extends FormApplication {
     const settings = foundry.utils.expandObject(formData);
 
     await game.settings.set("pf1", "tooltipWorldConfig", settings);
-    ui.notifications.info(game.i18n.localize("PF1.TooltipConfigUpdateInfo"));
+    ui.notifications.info(game.i18n.localize("PF1.SETTINGS.TokenTooltip.UpdateInfo"));
   }
 }

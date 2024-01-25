@@ -104,15 +104,14 @@ export const registerSystemSettings = function () {
 
   // Tooltip configuration
   game.settings.registerMenu("pf1", "tooltipConfig", {
-    name: "PF1.TooltipConfigName",
-    label: "PF1.TooltipConfigLabel",
-    hint: "PF1.TooltipConfigHint",
+    name: "PF1.SETTINGS.TokenTooltip.Name",
+    label: "PF1.SETTINGS.TokenTooltip.Label",
+    hint: "PF1.SETTINGS.TokenTooltip.Hint",
     restricted: false,
     icon: "fas fa-window-maximize",
     type: TooltipConfig,
   });
   game.settings.register("pf1", "tooltipConfig", {
-    name: "PF1.TooltipConfigName",
     scope: "client",
     default: new TokenTooltipConfigModel(),
     type: TokenTooltipConfigModel,
@@ -125,16 +124,7 @@ export const registerSystemSettings = function () {
   });
 
   // Tooltip World configuration
-  /* game.settings.registerMenu("pf1", "tooltipWorldConfig", {
-    name: "PF1.TooltipWorldConfigName",
-    label: "PF1.TooltipWorldConfigLabel",
-    hint: "PF1.TooltipWorldConfigHint",
-    restricted: true,
-    icon: "fas fa-window-maximize",
-    type: TooltipWorldConfig,
-  }); */
   game.settings.register("pf1", "tooltipWorldConfig", {
-    name: "PF1.TooltipWorldConfigName",
     scope: "world",
     default: new TokenTooltipWorldConfigModel(),
     type: TokenTooltipWorldConfigModel,

@@ -1,7 +1,7 @@
 <form autocomplete="off">
   {{! Disable Tooltips globally }}
   <div class="form-group">
-    <label>{{localize "PF1.TooltipConfigDisable"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Disable"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="disable" data-dtype="Boolean" {{checked data.disable}}>
     </div>
@@ -9,7 +9,7 @@
 
   {{! Anchor }}
   <div class="flexrow">
-    <label>{{localize "PF1.TooltipConfigAnchor"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Anchor"}}</label>
 
     <div class="form-group">
       <label>{{localize "PF1.Horizontal"}}</label>
@@ -34,7 +34,7 @@
 
   {{! Offset }}
   <div class="flexrow">
-    <label>{{localize "PF1.TooltipConfigOffset"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Offset"}}</label>
 
     <div class="form-group">
       <label>{{localize "PF1.Horizontal"}}</label>
@@ -66,7 +66,7 @@
   </div>
 
   <div class="form-group">
-    <label>{{localize "PF1.TooltipConfigHidePortraits"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Portraits"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="portrait.hide" data-dtype="Boolean" {{checked data.portrait.hide}}>
     </div>
@@ -74,7 +74,7 @@
 
   {{! Portrait Settings }}
   <div class="flexrow">
-    <label>{{localize "PF1.TooltipConfigMaxPortraitSize"}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.MaxPortraitSize"}}</label>
 
     <div class="form-group">
       <label>{{localize "PF1.Horizontal"}}</label>
@@ -99,16 +99,16 @@
 
   {{! Hide without key press }}
   <div class="form-group">
-    <label>{{localize "PF1.TooltipConfigHideWithoutKey" key=hideKey}}</label>
+    <label>{{localize "PF1.SETTINGS.TokenTooltip.HideWithoutKey" key=hideKey}}</label>
 
     <div class="form-fields">
       <input type="checkbox" name="hideWithoutKey" data-dtype="Boolean" {{checked data.hideWithoutKey}}>
     </div>
   </div>
 
-  <button class="world-settings" type="button" data-tooltip="PF1.TooltipWorldConfigHint" data-tooltip-direction="UP">
+  <button class="world-settings" type="button" data-tooltip="PF1.SETTINGS.TokenTooltip.World.Hint" data-tooltip-direction="UP">
     <span class="fas fa-window-maximize"></span>
-    {{localize "PF1.TooltipWorldConfigLabel"}}
+    {{localize "PF1.SETTINGS.TokenTooltip.World.Label"}}
   </button>
 
   <div class="form-group">

@@ -223,10 +223,12 @@ export class TokenPF extends Token {
    * @param {number} [options.maxRange=Infinity] - Maximum range (in scene scale units) to seek relevant lights from.
    * @param {boolean} [options.visualize=false] - Draw debug visualizations.
    * @param {number} [options.tolerance=0.05] - Extra distance granted to lights, relative to scene scale. Max 0.3, min 0.
-   * @returns {0|1|2} Light level. 0 for dark, 1 for dim, 2 for bright.
+   * @returns {-1|0|1|2} Light level. 0 for dark, 1 for dim, 2 for bright. -1 is returned if token is not visible.
    * @todo Allow defining observer token for darkvision handling.
    */
   getLightLevel({ points = 2, maxRange = Infinity, tolerance = 0.05, visualize = false } = {}) {
+    if (!this.isVisible) return -1;
+
     const tokenCenter = this.center;
 
     tolerance = Math.clamped(tolerance, 0, 0.3);

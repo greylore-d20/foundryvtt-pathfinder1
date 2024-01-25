@@ -390,10 +390,10 @@ export const abilityActivationTypesPlurals_unchained = {
  * The possible conditions when using Wound Threshold rules
  */
 export const woundThresholdConditions = {
-  0: "PF1.WoundLevelHealthy",
-  1: "PF1.WoundLevelGrazed",
-  2: "PF1.WoundLevelWounded",
-  3: "PF1.WoundLevelCritical",
+  0: "PF1.WoundLevel.healthy",
+  1: "PF1.WoundLevel.grazed",
+  2: "PF1.WoundLevel.wounded",
+  3: "PF1.WoundLevel.critical",
 };
 
 /**

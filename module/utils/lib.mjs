@@ -948,9 +948,16 @@ export function refreshActors({ renderOnly = false, renderForEveryone = false } 
     actor.render();
   };
 
+  // Reset base actors
   game.actors.forEach(resetOrRender);
 
-  Object.values(game.actors.tokens).forEach(resetOrRender);
+  // Reset unlinked actors in all scenes
+  game.scenes.forEach((scene) =>
+    scene.tokens
+      .filter((t) => t.actor && !t.isLinked)
+      .map((t) => t.actor)
+      .forEach(resetOrRender)
+  );
 
   if (renderForEveryone) {
     game.socket.emit("pf1", "refreshActorSheets");

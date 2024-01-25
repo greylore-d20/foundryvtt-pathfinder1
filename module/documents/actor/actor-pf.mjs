@@ -1,7 +1,7 @@
 import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
-import { createTag, fractionalToString, enrichHTMLUnrolled, openJournal } from "../../utils/lib.mjs";
+import { createTag, fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
   applyChanges,
   addDefaultChanges,
@@ -1246,8 +1246,21 @@ export class ActorPF extends ActorBasePF {
       this.updateItemResources(item, { warnOnDuplicate: false });
     });
 
+    this._prepareOverlandSpeeds();
+
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
+  }
+
+  /**
+   * Calculate overland speeds.
+   *
+   * @protected
+   */
+  _prepareOverlandSpeeds() {
+    for (const speed of Object.values(this.system.attributes?.speed ?? {})) {
+      speed.overland = speed.total > 0 ? pf1.utils.overlandSpeed(speed.total).speed : 0;
+    }
   }
 
   /**

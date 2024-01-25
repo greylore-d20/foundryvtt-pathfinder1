@@ -173,6 +173,8 @@ export class ActorSheetPF extends ActorSheet {
   async getData(options) {
     const isOwner = this.document.isOwner;
 
+    const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
+
     const data = {
       actor: this.actor,
       document: this.actor,
@@ -195,6 +197,10 @@ export class ActorSheetPF extends ActorSheet {
       skillsLocked: this._skillsLocked,
       units: {
         weight: getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+        distance: {
+          tactical: isMetricDist ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft,
+          overland: isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi,
+        },
       },
     };
 

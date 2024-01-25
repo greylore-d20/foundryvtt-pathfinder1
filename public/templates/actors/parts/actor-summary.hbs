@@ -185,7 +185,10 @@
     <div class="info-box-joined">
       <div class="info-box land tooltip">
         <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.land.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.total}}</span>
+          <span class="span2 align-left">@attributes.speed.land.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.total}} {{@root.units.distance.tactical}}</span>
+          {{#if system.attributes.speed.land.total}}
+          <span class="span2 align-left">@attributes.speed.land.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.overland}} {{@root.units.distance.overland}}</span>
+          {{/if}}
           {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.base forceLabel=1 isDistance=true skipLabel=0}}
 
           {{#if sourceDetails.system.attributes.speed.land.base.length}}
@@ -201,7 +204,10 @@
       </div>
       <div class="info-box climb tooltip">
         <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.climb.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.total}}</span>
+          <span class="span2 align-left">@attributes.speed.climb.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.total}} {{@root.units.distance.tactical}}</span>
+          {{#if system.attributes.speed.climb.total}}
+          <span class="span2 align-left">@attributes.speed.climb.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.overland}} {{@root.units.distance.overland}}</span>
+          {{/if}}
           {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.base forceLabel=1 isDistance=true skipLabel=0}}
 
           {{#if sourceDetails.system.attributes.speed.climb.base.length}}
@@ -217,7 +223,10 @@
       </div>
       <div class="info-box swim tooltip">
         <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.swim.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.total}}</span>
+          <span class="span2 align-left">@attributes.speed.swim.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.total}} {{@root.units.distance.tactical}}</span>
+          {{#if system.attributes.speed.swim.total}}
+          <span class="span2 align-left">@attributes.speed.swim.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.overland}} {{@root.units.distance.overland}}</span>
+          {{/if}}
           {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.base forceLabel=1 isDistance=true skipLabel=0}}
 
           {{#if sourceDetails.system.attributes.speed.swim.base.length}}
@@ -234,7 +243,10 @@
       </div>
       <div class="info-box burrow tooltip">
         <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.burrow.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.total}}</span>
+          <span class="span2 align-left">@attributes.speed.burrow.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.total}} {{@root.units.distance.tactical}}</span>
+          {{#if system.attributes.speed.burrow.total}}
+          <span class="span2 align-left">@attributes.speed.burrow.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.overland}} {{@root.units.distance.overland}}</span>
+          {{/if}}
           {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.base forceLabel=1 isDistance=true skipLabel=0}}
 
           {{#if sourceDetails.system.attributes.speed.burrow.base.length}}
@@ -257,7 +269,10 @@
         </span>
 
         <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.fly.total :</span><span class="span1 align-right"> {{system.attributes.speed.fly.total}}</span>
+          <span class="span2 align-left">@attributes.speed.fly.total :</span><span class="span1 align-right"> {{system.attributes.speed.fly.total}} {{@root.units.distance.tactical}}</span>
+          {{#if system.attributes.speed.fly.total}}
+          <span class="span2 align-left">@attributes.speed.fly.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.fly.overland}} {{@root.units.distance.overland}}</span>
+          {{/if}}
           {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.base forceLabel=1 isDistance=true skipLabel=0}}
 
           {{#if sourceDetails.system.attributes.speed.fly.base.length}}

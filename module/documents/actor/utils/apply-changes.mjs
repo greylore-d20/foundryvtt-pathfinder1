@@ -622,18 +622,17 @@ const getAbilityMod = function (ability) {
  */
 function calculateHealth(actor, allClasses, changes) {
   // Categorize classes
-  const [classes, racialHD] = allClasses.reduce(
+  const [pcClasses, npcClasses, racialHD] = allClasses.reduce(
     (all, cls) => {
-      if (cls.subType === "racial") all[1].push(cls);
+      if (cls.subType === "racial") all[2].push(cls);
+      else if (cls.subType === "npc") all[1].push(cls);
       else all[0].push(cls);
       return all;
     },
-    [[], []]
+    [[], [], []]
   );
 
   const healthConfig = game.settings.get("pf1", "healthConfig");
-  const classOptions = actor.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
-  const raceOptions = healthConfig.hitdice.Racial;
 
   /**
    * @function
@@ -679,16 +678,18 @@ function calculateHealth(actor, allClasses, changes) {
   }
 
   /**
-   * @param {ItemPF} healthSource
-   * @param {object} options
-   * @param {number} options.rate
-   * @param {boolean} options.maximized
+   * @param {ItemPF} healthSource - Class granting health
+   * @param {object} config - Class type configuration
+   * @param {number} config.rate - Automatic HP rate
+   * @param {boolean} config.maximized - Is this class allowed to grant maximized HP
+   * @param {object} state - State tracking
    */
-  function autoHealth(healthSource, { rate, maximized } = {}) {
+  function autoHealth(healthSource, { rate, maximized } = {}, state) {
     const hpPerHD = healthSource.system.hd ?? 0;
     if (hpPerHD === 0) return;
 
     let health = 0;
+
     // Mythic
     if (healthSource.subType === "mythic") {
       const hpPerTier = hpPerHD ?? 0;
@@ -704,8 +705,13 @@ function calculateHealth(actor, allClasses, changes) {
 
       const hitDice = healthSource.hitDice;
 
-      const maxedHp = Math.min(hitDice, maximized) * hpPerHD;
-      const levelHp = Math.max(0, hitDice - maximized) * dieHealth;
+      let maxedHD = 0;
+      if (maximized) {
+        maxedHD = Math.min(hitDice, state.maximized.remaining);
+        state.maximized.value += maxedHD;
+      }
+      const maxedHp = maxedHD * hpPerHD;
+      const levelHp = Math.max(0, hitDice - maxedHD) * dieHealth;
       const fcbHp = healthSource.subType === "base" ? healthSource.system.fc.hp.value || 0 : 0;
       health = maxedHp + levelHp + fcbHp;
     }
@@ -713,25 +719,36 @@ function calculateHealth(actor, allClasses, changes) {
   }
 
   /**
-   * @param {ItemPF[]} sources
-   * @param {object} options
-   * @param {boolean} [options.auto=false]
-   * @param {number} [options.rate=0.5]
-   * @param {number} [options.maximized=1]
+   * Compute and push health, tracking the remaining maximized levels.
+   *
+   * @param {ItemPF[]} sources - Health source classes
+   * @param {object} config - Configuration for this class type
+   * @param {boolean} config.auto - Automatic health enabled
+   * @param config
+   * @param state
    */
-  function computeHealth(sources, { auto = false, rate = 0.5, maximized = 1 } = {}) {
-    // Compute and push health, tracking the remaining maximized levels.
-    if (auto) {
-      for (const cls of sources) {
-        autoHealth(cls, { rate, maximized });
-        const hitDice = cls.hitDice || 0;
-        maximized = Math.max(0, maximized - hitDice);
-      }
-    } else sources.forEach((cls) => manualHealth(cls));
+  function computeHealth(sources, config, state) {
+    if (config.auto) {
+      for (const cls of sources) autoHealth(cls, config, state);
+    } else {
+      for (const cls of sources) manualHealth(cls);
+    }
   }
 
-  computeHealth(racialHD, raceOptions);
-  computeHealth(classes, classOptions);
+  // State tracking
+  const state = {
+    maximized: {
+      value: 0,
+      max: healthConfig.maximized,
+      get remaining() {
+        return this.max - this.value;
+      },
+    },
+  };
+
+  computeHealth(racialHD, healthConfig.hitdice.Racial, state);
+  computeHealth(pcClasses, healthConfig.hitdice.PC, state);
+  computeHealth(npcClasses, healthConfig.hitdice.NPC, state);
 }
 
 export const addDefaultChanges = function (changes) {

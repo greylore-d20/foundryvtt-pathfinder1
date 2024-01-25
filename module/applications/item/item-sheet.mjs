@@ -508,15 +508,14 @@ export class ItemSheetPF extends ItemSheet {
 
       context.isBaseClass = itemData.subType === "base";
       context.isRacialHD = itemData.subType === "racial";
+      context.isPCClass = itemData.subType !== "npc";
 
-      if (actor) {
-        const healthConfig = game.settings.get("pf1", "healthConfig");
-        context.healthConfig = context.isRacialHD
-          ? healthConfig.hitdice.Racial
-          : actor.type === "character"
-            ? healthConfig.hitdice.PC
-            : healthConfig.hitdice.NPC;
-      } else context.healthConfig = { auto: false };
+      const healthConfig = game.settings.get("pf1", "healthConfig");
+      context.healthConfig = context.isRacialHD
+        ? healthConfig.hitdice.Racial
+        : context.isPCClass
+          ? healthConfig.hitdice.PC
+          : healthConfig.hitdice.NPC;
 
       // Add skill list
       if (!actor) {

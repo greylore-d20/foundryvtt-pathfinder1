@@ -3,22 +3,23 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
     const fields = foundry.data.fields;
     return {
       hitdice: new fields.SchemaField({
+        Racial: new fields.SchemaField({
+          auto: new fields.BooleanField({ initial: false }),
+          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          maximized: new fields.BooleanField({ initial: false }),
+        }),
         PC: new fields.SchemaField({
           auto: new fields.BooleanField({ initial: false }),
           rate: new fields.NumberField({ min: 0, initial: 0.5 }),
-          maximized: new fields.NumberField({ integer: true, min: 0, initial: 1 }),
+          maximized: new fields.BooleanField({ initial: true }),
         }),
         NPC: new fields.SchemaField({
           auto: new fields.BooleanField({ initial: false }),
           rate: new fields.NumberField({ min: 0, initial: 0.5 }),
-          maximized: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
-        }),
-        Racial: new fields.SchemaField({
-          auto: new fields.BooleanField({ initial: false }),
-          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
-          maximized: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
+          maximized: new fields.BooleanField({ initial: false }),
         }),
       }),
+      maximized: new fields.NumberField({ integer: true, min: 0, initial: 1 }),
       rounding: new fields.StringField({ blank: false, nullable: false, initial: "up" }),
       continuity: new fields.StringField({ blank: false, nullable: false, initial: "discrete" }),
       variants: new fields.SchemaField({

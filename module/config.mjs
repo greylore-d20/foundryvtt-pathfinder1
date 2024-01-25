@@ -2131,19 +2131,19 @@ export const languages = {
  * Creature types
  */
 export const creatureTypes = {
-  aberration: "PF1.CreatureTypeAberration",
-  animal: "PF1.CreatureTypeAnimal",
-  construct: "PF1.CreatureTypeConstruct",
-  dragon: "PF1.CreatureTypeDragon",
-  fey: "PF1.CreatureTypeFey",
-  humanoid: "PF1.CreatureTypeHumanoid",
-  magicalBeast: "PF1.CreatureTypeMagicalBeast",
-  monstrousHumanoid: "PF1.CreatureTypeMonstrousHumanoid",
-  ooze: "PF1.CreatureTypeOoze",
-  outsider: "PF1.CreatureTypeOutsider",
-  plant: "PF1.CreatureTypePlant",
-  undead: "PF1.CreatureTypeUndead",
-  vermin: "PF1.CreatureTypeVermin",
+  aberration: "PF1.CreatureTypes.aberration",
+  animal: "PF1.CreatureTypes.animal",
+  construct: "PF1.CreatureTypes.construct",
+  dragon: "PF1.CreatureTypes.dragon",
+  fey: "PF1.CreatureTypes.fey",
+  humanoid: "PF1.CreatureTypes.humanoid",
+  magicalBeast: "PF1.CreatureTypes.magicalBeast",
+  monstrousHumanoid: "PF1.CreatureTypes.monstrousHumanoid",
+  ooze: "PF1.CreatureTypes.ooze",
+  outsider: "PF1.CreatureTypes.outsider",
+  plant: "PF1.CreatureTypes.plant",
+  undead: "PF1.CreatureTypes.undead",
+  vermin: "PF1.CreatureTypes.vermin",
 };
 
 export const spellRangeFormulas = {

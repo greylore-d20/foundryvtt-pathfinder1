@@ -1845,25 +1845,28 @@ export const spellLevels = {
 
 /* -------------------------------------------- */
 
+/**
+ * Condition types for condition immunities and resistances selection
+ */
 export const conditionTypes = {
-  bleed: "PF1.CondTypeBleed",
-  blind: "PF1.CondTypeBlind",
-  confuse: "PF1.CondTypeConfuse",
-  daze: "PF1.CondTypeDaze",
-  dazzle: "PF1.CondTypeDazzle",
-  deaf: "PF1.CondTypeDeaf",
-  deathEffects: "PF1.CondTypeDeathEffects",
-  disease: "PF1.CondTypeDisease",
-  energyDrain: "PF1.CondTypeEnergyDrain",
-  fatigue: "PF1.CondTypeFatigue",
-  fear: "PF1.CondTypeFear",
-  mindAffecting: "PF1.CondTypeMindAffecting",
-  poison: "PF1.CondTypePoison",
-  sicken: "PF1.CondTypeSicken",
-  paralyze: "PF1.CondTypeParalyze",
-  petrify: "PF1.CondTypePetrify",
-  stun: "PF1.CondTypeStun",
-  sleep: "PF1.CondTypeSleep",
+  bleed: "PF1.Condition.bleed",
+  blind: "PF1.Condition.blind",
+  confuse: "PF1.Condition.confused",
+  daze: "PF1.Condition.dazed",
+  dazzle: "PF1.Condition.dazzled",
+  deaf: "PF1.Condition.deaf",
+  deathEffects: "PF1.Condition.deathEffects",
+  disease: "PF1.Condition.disease",
+  energyDrain: "PF1.Condition.energyDrain",
+  fatigue: "PF1.Condition.fatigued",
+  fear: "PF1.Condition.fear",
+  mindAffecting: "PF1.Condition.mindAffecting",
+  poison: "PF1.Condition.poison",
+  sicken: "PF1.Condition.sickened",
+  paralyze: "PF1.Condition.paralyzed",
+  petrify: "PF1.Condition.petrified",
+  stun: "PF1.Condition.stunned",
+  sleep: "PF1.Condition.sleep",
 };
 
 export const buffTypes = {

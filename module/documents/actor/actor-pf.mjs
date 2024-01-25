@@ -823,7 +823,7 @@ export class ActorPF extends ActorBasePF {
         setSourceInfoByName(
           this.sourceInfo,
           key,
-          game.i18n.localize("PF1.CondTypeEnergyDrain"),
+          game.i18n.localize("PF1.Condition.energyDrain"),
           -Math.abs(rollData.attributes.energyDrain),
           false
         );

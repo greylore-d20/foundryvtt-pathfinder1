@@ -885,7 +885,7 @@ export const addDefaultChanges = function (changes) {
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
-        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
     // ACP to attack
@@ -935,7 +935,7 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
-        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
   }
@@ -1025,7 +1025,7 @@ export const addDefaultChanges = function (changes) {
         target: "savingThrows",
         subTarget: "allSavingThrows",
         modifier: "penalty",
-        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
   }
@@ -1207,7 +1207,7 @@ export const addDefaultChanges = function (changes) {
         target: "skills",
         subTarget: "skills",
         modifier: "untypedPerm",
-        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
   }
@@ -1292,7 +1292,7 @@ export const addDefaultChanges = function (changes) {
         subTarget: "mhp",
         modifier: "untyped",
         priority: -750,
-        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
 
@@ -1303,7 +1303,7 @@ export const addDefaultChanges = function (changes) {
         subTarget: "vigor",
         modifier: "untyped",
         priority: -750,
-        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
   }

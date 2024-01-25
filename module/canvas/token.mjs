@@ -270,7 +270,7 @@ export class TokenPF extends Token {
     };
 
     const drawings = [];
-    if (visualize) for (const point of offsets) drawDot(point.x, point.y, 0xff0000, { r: 5, z: 500 });
+    if (visualize) offsets.forEach((point) => drawDot(point.x, point.y, 0xff0000, { r: 5, z: 500 }));
 
     const getSceneDistance = (p0, p1) => (new Ray(p0, p1).distance / gridPx) * gridScale;
 
@@ -315,10 +315,7 @@ export class TokenPF extends Token {
           const source = { x: light.x, y: light.y };
           // Ignore points too far away
           const distance = getSceneDistance(source, target);
-          if (distance > light.range) {
-            console.log("-FAR:", idx, light.light.id, { distance, range: light.range });
-            return;
-          }
+          if (distance > light.range) return;
 
           // Test light blocking walls
           if (!ClockwiseSweepPolygon.testCollision(source, target, { type: "light", mode: "any" })) {
@@ -339,11 +336,7 @@ export class TokenPF extends Token {
 
               drawDot(target, 0x00ff00, { r: 3, z: 1200 });
             }
-
-            console.log("+HIT:", idx, light.light.id, { distance, range: light.range });
           } else {
-            console.log("-HIT:", idx, light.light.id, { distance, range: light.range });
-
             if (visualize) drawDot(target, 0x773300, { r: 5, z: 700 });
           }
         });
@@ -369,15 +362,7 @@ export class TokenPF extends Token {
       });
 
     // Remove visualizations after a period
-    if (visualize) {
-      setTimeout(() => {
-        for (const p of drawings) {
-          canvas.interface.removeChild(p);
-        }
-      }, 5_000);
-    }
-
-    console.log({ relevantLights });
+    if (visualize) setTimeout(() => drawings.forEach((p) => canvas.interface.removeChild(p)), 5_000);
 
     // Without this loop, we may incorrectly return dim light when they in fact are not in such
     for (const light of relevantLights) {

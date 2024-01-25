@@ -256,30 +256,30 @@ export const ac = {
  * Character alignment options
  */
 export const alignments = {
-  lg: "PF1.AlignmentLG",
-  ng: "PF1.AlignmentNG",
-  cg: "PF1.AlignmentCG",
-  ln: "PF1.AlignmentLN",
-  tn: "PF1.AlignmentTN",
-  cn: "PF1.AlignmentCN",
-  le: "PF1.AlignmentLE",
-  ne: "PF1.AlignmentNE",
-  ce: "PF1.AlignmentCE",
+  lg: "PF1.Alignments.lg",
+  ng: "PF1.Alignments.ng",
+  cg: "PF1.Alignments.cg",
+  ln: "PF1.Alignments.ln",
+  tn: "PF1.Alignments.tn",
+  cn: "PF1.Alignments.cn",
+  le: "PF1.Alignments.le",
+  ne: "PF1.Alignments.ne",
+  ce: "PF1.Alignments.ce",
 };
 
 /**
  * Character alignment options in their short form
  */
 export const alignmentsShort = {
-  lg: "PF1.AlignmentShortLG",
-  ng: "PF1.AlignmentShortNG",
-  cg: "PF1.AlignmentShortCG",
-  ln: "PF1.AlignmentShortLN",
-  tn: "PF1.AlignmentShortTN",
-  cn: "PF1.AlignmentShortCN",
-  le: "PF1.AlignmentShortLE",
-  ne: "PF1.AlignmentShortNE",
-  ce: "PF1.AlignmentShortCE",
+  lg: "PF1.Alignments.Short.lg",
+  ng: "PF1.Alignments.Short.ng",
+  cg: "PF1.Alignments.Short.cg",
+  ln: "PF1.Alignments.Short.ln",
+  tn: "PF1.Alignments.Short.tn",
+  cn: "PF1.Alignments.Short.cn",
+  le: "PF1.Alignments.Short.le",
+  ne: "PF1.Alignments.Short.ne",
+  ce: "PF1.Alignments.Short.ce",
 };
 
 /**

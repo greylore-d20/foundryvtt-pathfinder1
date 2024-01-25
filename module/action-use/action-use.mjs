@@ -1093,14 +1093,14 @@ export class ActionUse {
             itemAlignments[alignment])
         ) {
           // The item has the alignment)
-          properties.push(game.i18n.localize(`PF1.Alignment${alignment.charAt(0).toUpperCase()}`));
+          properties.push(game.i18n.localize(`PF1.Alignments.${alignment}`));
         }
       }
     } else {
       // Honestly, this should never happen. An action should always have an alignment now.
       for (const alignment of Object.keys(itemAlignments)) {
         if (itemAlignments[alignment]) {
-          properties.push(game.i18n.localize(`PF1.Alignment${alignment.charAt(0).toUpperCase()}`));
+          properties.push(game.i18n.localize(`PF1.Alignments.${alignment}`));
         }
       }
     }

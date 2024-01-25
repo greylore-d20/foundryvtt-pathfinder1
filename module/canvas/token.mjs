@@ -276,12 +276,15 @@ export class TokenPF extends Token {
 
     const halfGrid = gridScale / 2;
 
+    const lights = [...canvas.effects.lightSources].filter((light) => light.active && !light.isDarkness);
+    /* global GlobalLightSource */
+    const globalLight = lights.findSplice((l) => l instanceof GlobalLightSource);
+
     // TODO: Account for token lights, too.
-    const relevantLights = this.scene.lights
-      .filter((light) => !light.hidden)
+    const relevantLights = lights
       .map((light) => {
         const distance = getSceneDistance(tokenCenter, light);
-        const { bright, dim } = light.config;
+        const { bright, dim } = light.data;
         // Treat the light somewhat closer based on how large the token is
         const relaxedDistance = distance - errorMarginScaled;
 
@@ -312,13 +315,15 @@ export class TokenPF extends Token {
 
         // Test if there's sufficiently many points we can get no collision with
         offsets.forEach((target, idx) => {
-          const source = { x: light.x, y: light.y };
           // Ignore points too far away
-          const distance = getSceneDistance(source, target);
+          const distance = getSceneDistance(light, target);
           if (distance > light.range) return;
 
+          // TODO: Consider testing if the point is within the light polygon instead.
+          const contained = !ClockwiseSweepPolygon.testCollision(light, target, { type: "light", mode: "any" });
+
           // Test light blocking walls
-          if (!ClockwiseSweepPolygon.testCollision(source, target, { type: "light", mode: "any" })) {
+          if (contained) {
             light.points += 1;
             const isBright = distance <= light.bright;
 
@@ -327,10 +332,10 @@ export class TokenPF extends Token {
 
             if (visualize) {
               const line = new PIXI.Graphics();
-              line.position.set(source.x, source.y);
+              line.position.set(light.x, light.y);
               line.lineStyle(isBright ? 3 : 2, isBright ? 0xf9ee13 : 0x795e13);
               line.zIndex = isBright ? 1050 : 1000;
-              line.lineTo(target.x - source.x, target.y - source.y);
+              line.lineTo(target.x - light.x, target.y - light.y);
               canvas.interface.addChild(line);
               drawings.push(line);
 
@@ -369,6 +374,9 @@ export class TokenPF extends Token {
       if (light.isBright) return 2;
       if (light.isDim) return 1;
     }
+
+    // If global light is present, the token is in dim light at least
+    if (globalLight) return 1;
 
     // Alternative (and probably incorrect):
     // const bestLight = relevantLights[0];

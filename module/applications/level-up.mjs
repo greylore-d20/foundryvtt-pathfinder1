@@ -58,7 +58,7 @@ export class LevelUpForm extends FormApplication {
   }
 
   get title() {
-    return game.i18n.format("PF1.LevelUpForm_Title", { className: this.object.name });
+    return game.i18n.format("PF1.LevelUp.Title", { className: this.object.name });
   }
 
   static async addClassWizard(actor, rawData) {
@@ -114,20 +114,20 @@ export class LevelUpForm extends FormApplication {
     if (hpOptions.auto !== true) {
       result.push({
         name: "health",
-        label: "PF1.LevelUpForm_Health",
+        label: "PF1.LevelUp.Health.Label",
         choice: null,
         manualValue: Math.ceil(1 + (this.object.system.hd - 1) / 2),
         items: [
           {
             img: "systems/pf1/icons/items/inventory/dice.jpg",
-            name: game.i18n.localize("PF1.LevelUpForm_Health_Roll"),
+            name: game.i18n.localize("PF1.LevelUp.Health.Roll.Label"),
             id: "roll",
             type: "html",
             target: "systems/pf1/templates/apps/level-up/health_roll.hbs",
           },
           {
             img: "systems/pf1/icons/skills/green_19.jpg",
-            name: game.i18n.localize("PF1.LevelUpForm_Health_Manual"),
+            name: game.i18n.localize("PF1.LevelUp.Health.Manual.Label"),
             id: "manual",
             type: "html",
             target: "systems/pf1/templates/apps/level-up/health_manual.hbs",

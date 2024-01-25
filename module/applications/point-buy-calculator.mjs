@@ -30,7 +30,7 @@ export class PointBuyCalculator extends DocumentSheet {
   }
 
   get title() {
-    return `${game.i18n.localize("PF1.PointBuyCalculator")}: ${this.object.name}`;
+    return `${game.i18n.localize("PF1.Application.PointBuy.Title")}: ${this.object.name}`;
   }
 
   get actor() {

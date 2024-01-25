@@ -1222,7 +1222,7 @@ export const addDefaultChanges = function (changes) {
         target: "ac",
         subTarget: "ac",
         modifier: "size",
-        flavor: game.i18n.localize("PF1.BonusModifierSize"),
+        flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
     // Stealth skill
@@ -1232,7 +1232,7 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.ste",
         modifier: "size",
-        flavor: game.i18n.localize("PF1.BonusModifierSize"),
+        flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
     // Fly skill
@@ -1242,7 +1242,7 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.fly",
         modifier: "size",
-        flavor: game.i18n.localize("PF1.BonusModifierSize"),
+        flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
     // CMD
@@ -1252,7 +1252,7 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "cmd",
         modifier: "size",
-        flavor: game.i18n.localize("PF1.BonusModifierSize"),
+        flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
   }

@@ -182,95 +182,97 @@
   {{! Movement }}
   <div class="info-box-header speed-details flexcol">
     <h3>{{localize "PF1.Movement.Speed"}}</h3>
-    <div class="info-box land tooltip">
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.speed.land.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.total}}</span>
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.base forceLabel=1 isDistance=true skipLabel=0}}
+    <div class="info-box-joined">
+      <div class="info-box land tooltip">
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@attributes.speed.land.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.total}}</span>
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.base forceLabel=1 isDistance=true skipLabel=0}}
 
-        {{#if sourceDetails.system.attributes.speed.land.base.length}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.total skipLabel=1 skipLine=true isDistance=true}}
-        {{else}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.total skipLabel=0 isDistance=true}}
-        {{/if}}
+          {{#if sourceDetails.system.attributes.speed.land.base.length}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.total skipLabel=1 skipLine=true isDistance=true}}
+          {{else}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.total skipLabel=0 isDistance=true}}
+          {{/if}}
+        </div>
+        <h5>{{localize "PF1.Movement.Mode.land"}}</h5>
+        <span class="value text-box direct speed" name="system.attributes.speed.land.base" data-dtype="Number">
+          {{#if system.attributes.speed.land.total}}{{convertDistance system.attributes.speed.land.total}}{{/if}}
+        </span>
       </div>
-      <h5>{{localize "PF1.Movement.Mode.land"}}</h5>
-      <span class="value text-box direct speed" name="system.attributes.speed.land.base" data-dtype="Number">
-        {{#if system.attributes.speed.land.total}}{{convertDistance system.attributes.speed.land.total}}{{/if}}
-      </span>
-    </div>
-    <div class="info-box climb tooltip">
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.speed.climb.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.total}}</span>
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.base forceLabel=1 isDistance=true skipLabel=0}}
+      <div class="info-box climb tooltip">
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@attributes.speed.climb.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.total}}</span>
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.base forceLabel=1 isDistance=true skipLabel=0}}
 
-        {{#if sourceDetails.system.attributes.speed.climb.base.length}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.total skipLabel=1 skipLine=true isDistance=true}}
-        {{else}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.total skipLabel=0 isDistance=true}}
-        {{/if}}
+          {{#if sourceDetails.system.attributes.speed.climb.base.length}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.total skipLabel=1 skipLine=true isDistance=true}}
+          {{else}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.total skipLabel=0 isDistance=true}}
+          {{/if}}
+        </div>
+        <h5>{{localize "PF1.Movement.Mode.climb"}}</h5>
+        <span class="value text-box direct speed" name="system.attributes.speed.climb.base" data-dtype="Number">
+          {{#if system.attributes.speed.climb.total}}{{convertDistance system.attributes.speed.climb.total}}{{/if}}
+        </span>
       </div>
-      <h5>{{localize "PF1.Movement.Mode.climb"}}</h5>
-      <span class="value text-box direct speed" name="system.attributes.speed.climb.base" data-dtype="Number">
-        {{#if system.attributes.speed.climb.total}}{{convertDistance system.attributes.speed.climb.total}}{{/if}}
-      </span>
-    </div>
-    <div class="info-box swim tooltip">
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.speed.swim.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.total}}</span>
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.base forceLabel=1 isDistance=true skipLabel=0}}
+      <div class="info-box swim tooltip">
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@attributes.speed.swim.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.total}}</span>
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.base forceLabel=1 isDistance=true skipLabel=0}}
 
-        {{#if sourceDetails.system.attributes.speed.swim.base.length}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.total skipLabel=1 skipLine=true isDistance=true}}
-        {{else}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.total skipLabel=0 isDistance=true}}
-        {{/if}}
+          {{#if sourceDetails.system.attributes.speed.swim.base.length}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.total skipLabel=1 skipLine=true isDistance=true}}
+          {{else}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.total skipLabel=0 isDistance=true}}
+          {{/if}}
+        </div>
+
+        <h5>{{localize "PF1.Movement.Mode.swim"}}</h5>
+        <span class="value text-box direct speed" name="system.attributes.speed.swim.base" data-dtype="Number">
+          {{#if system.attributes.speed.swim.total}}{{convertDistance system.attributes.speed.swim.total}}{{/if}}
+        </span>
+      </div>
+      <div class="info-box burrow tooltip">
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@attributes.speed.burrow.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.total}}</span>
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.base forceLabel=1 isDistance=true skipLabel=0}}
+
+          {{#if sourceDetails.system.attributes.speed.burrow.base.length}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.total skipLabel=1 skipLine=true isDistance=true}}
+          {{else}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.total skipLabel=0 isDistance=true}}
+          {{/if}}
+        </div>
+        <h5>{{localize "PF1.Movement.Mode.burrow"}}</h5>
+        <span class="value text-box direct speed" name="system.attributes.speed.burrow.base" data-dtype="Number">
+          {{#if system.attributes.speed.burrow.total}}{{convertDistance system.attributes.speed.burrow.total}}{{/if}}
+        </span>
       </div>
 
-      <h5>{{localize "PF1.Movement.Mode.swim"}}</h5>
-      <span class="value text-box direct speed" name="system.attributes.speed.swim.base" data-dtype="Number">
-        {{#if system.attributes.speed.swim.total}}{{convertDistance system.attributes.speed.swim.total}}{{/if}}
-      </span>
-    </div>
-    <div class="info-box burrow tooltip">
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.speed.burrow.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.total}}</span>
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.base forceLabel=1 isDistance=true skipLabel=0}}
-
-        {{#if sourceDetails.system.attributes.speed.burrow.base.length}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.total skipLabel=1 skipLine=true isDistance=true}}
-        {{else}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.total skipLabel=0 isDistance=true}}
-        {{/if}}
-      </div>
-      <h5>{{localize "PF1.Movement.Mode.burrow"}}</h5>
-      <span class="value text-box direct speed" name="system.attributes.speed.burrow.base" data-dtype="Number">
-        {{#if system.attributes.speed.burrow.total}}{{convertDistance system.attributes.speed.burrow.total}}{{/if}}
-      </span>
-    </div>
-
-    {{! Fly }}
-    <div class="info-box-joined fly-details tooltip">
-      <div class="info-box fly">
+      {{! Fly }}
+      <div class="info-box fly tooltip">
         <h5>{{localize "PF1.Movement.Mode.fly"}}</h5>
         <span class="value text-box direct speed" name="system.attributes.speed.fly.base" data-dtype="Number">
           {{#if system.attributes.speed.fly.total}}{{convertDistance system.attributes.speed.fly.total}}{{/if}}
         </span>
+
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@attributes.speed.fly.total :</span><span class="span1 align-right"> {{system.attributes.speed.fly.total}}</span>
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.base forceLabel=1 isDistance=true skipLabel=0}}
+
+          {{#if sourceDetails.system.attributes.speed.fly.base.length}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.total skipLabel=1 skipLine=true isDistance=true}}
+          {{else}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.total skipLabel=0 isDistance=true}}
+          {{/if}}
+        </div>
       </div>
 
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.speed.fly.total :</span><span class="span1 align-right"> {{system.attributes.speed.fly.total}}</span>
-        <span class="span2 align-left">@attributes.speed.fly.maneuverability :</span><span class="span1 align-right"> "{{system.attributes.speed.fly.maneuverability}}"</span>
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.base forceLabel=1 isDistance=true skipLabel=0}}
-
-        {{#if sourceDetails.system.attributes.speed.fly.base.length}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.total skipLabel=1 skipLine=true isDistance=true}}
-        {{else}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.total skipLabel=0 isDistance=true}}
-        {{/if}}
-      </div>
-
-      <div class="info-box maneuverability-details">
+      <div class="info-box maneuverability-details tooltip">
         <h5>{{localize "PF1.Movement.FlyManeuverability.Abbr"}}</h5>
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@attributes.speed.fly.maneuverability :</span><span class="span1 align-right"> "{{system.attributes.speed.fly.maneuverability}}"</span>
+        </div>
         <span class="value">
           <select name="system.attributes.speed.fly.maneuverability">
             {{selectOptions config.flyManeuverabilities selected=system.attributes.speed.fly.maneuverability}}

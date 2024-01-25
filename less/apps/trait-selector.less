@@ -1,0 +1,75 @@
+.app.pf1.trait-selector {
+  max-height: 720px;
+
+  form {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: fit-content 2em 2em;
+
+    .trait-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+    }
+
+    .custom-tags {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 0.5em;
+
+      > h3 {
+        margin: 0;
+      }
+
+      .custom-tag-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        flex-flow: row wrap;
+        gap: 1px 3px;
+
+        > .custom-tag {
+          line-height: 1.5;
+          font-size: var(--font-size-12);
+
+          > a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+
+            > span {
+              background-color: rgba(0, 0, 0, 0.05);
+              border-radius: 5px;
+              padding: 0 5px;
+            }
+
+            > i {
+              opacity: 0.4;
+            }
+            &:hover {
+              > i {
+                opacity: 1;
+              }
+            }
+          }
+
+          &.pre-delete {
+            > a {
+              text-shadow: 0 0 5px red;
+              > span {
+                background-color: rgba(255, 0, 0, 0.3);
+              }
+              > i {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

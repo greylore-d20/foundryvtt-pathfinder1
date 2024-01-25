@@ -8,6 +8,22 @@ export class ActorTraitSelector extends DocumentSheet {
     super(doc, options);
     // Enrich dialog identity
     this.options.classes.push(options.subject);
+
+    // Get current values
+    let { value, custom } = deepClone(foundry.utils.getProperty(doc, this.attribute) ?? { value: [], custom: "" });
+    value ||= [];
+    custom ??= "";
+
+    custom = this.splitCustom(custom);
+
+    this.attributes = { value, custom };
+  }
+
+  splitCustom(value) {
+    return value
+      .split(pf1.config.re.traitSeparator)
+      .map((c) => c.trim())
+      .filter((c) => !!c);
   }
 
   get title() {
@@ -15,17 +31,21 @@ export class ActorTraitSelector extends DocumentSheet {
   }
 
   get id() {
-    return `trait-selector-${this.document.uuid}-${this.options.subject}`;
+    return `trait-selector-${this.document.uuid.replaceAll(".", "-")}-${this.options.subject}`;
   }
 
   static get defaultOptions() {
+    const options = super.defaultOptions;
     return {
-      ...super.defaultOptions,
-      classes: ["pf1", "trait-selector"],
+      ...options,
+      classes: [...options.classes, "pf1", "trait-selector"],
       template: "systems/pf1/templates/apps/trait-selector.hbs",
       width: 320,
       height: "auto",
       sheetConfig: false,
+      submitOnClose: false,
+      submitOnChange: true,
+      closeOnSubmit: false,
     };
   }
 
@@ -48,15 +68,14 @@ export class ActorTraitSelector extends DocumentSheet {
    * @type {object}
    */
   getData() {
-    // Get current values
-    const attr = foundry.utils.getProperty(this.object, this.attribute) ?? { value: [], custom: "" };
+    const { value, custom } = this.attributes;
 
     // Populate choices
     const choices = foundry.utils.deepClone(this.options.choices);
     for (const [k, v] of Object.entries(choices)) {
       choices[k] = {
         label: v,
-        chosen: attr.value?.includes(k),
+        chosen: value.includes(k),
       };
     }
 
@@ -65,13 +84,88 @@ export class ActorTraitSelector extends DocumentSheet {
 
     // Return data
     return {
-      choices: choices,
-      custom: attr.custom,
+      choices,
+      custom: Array.from(new Set(custom)),
       updateButton,
     };
   }
 
   /* -------------------------------------------- */
+
+  async _updateDocument(event) {
+    await this._onSubmit(event, { preventRender: true });
+
+    const { custom, value } = this.attributes;
+    const updateData = { [this.attribute]: { value, custom: Array.from(new Set(custom)).join(";") } };
+    this.object.update(updateData);
+
+    this.close({ force: true });
+  }
+
+  _onCustomInput(event) {
+    // Consume input if semicolon is inserted
+    const value = event.target.value;
+    if (/;/.test(value)) {
+      this.attributes.custom.push(...this.splitCustom(value));
+      this.render();
+    }
+  }
+
+  _onActiveCustomInput(event) {
+    if (event.isComposing) return;
+
+    switch (event.key) {
+      case "Enter": {
+        event.preventDefault();
+        const elem = event.target;
+        this.attributes.custom.push(...this.splitCustom(elem.value));
+        this.render();
+        break;
+      }
+      case "Backspace": {
+        if (event.target.value !== "") return;
+        if (event.repeat) return; // Ignore when backspace is held down
+        const last = this.form.querySelector(".custom-tags .custom-tag:last-of-type");
+        if (!last) return;
+        if (last.classList.contains("pre-delete")) {
+          const tag = last.dataset.customTag;
+          this.attributes.custom = this.attributes.custom.filter((t) => t !== tag);
+          this.render();
+        } else {
+          last.classList.add("pre-delete");
+        }
+        break;
+      }
+      default:
+        this.form.querySelector(".custom-tags .custom-tag:last-of-type")?.classList.remove("pre-delete");
+        break;
+    }
+  }
+
+  _deleteCustomTag(event) {
+    const elem = event.target;
+    const tag = elem.dataset.customTag;
+    this.attributes.custom = this.attributes.custom.filter((t) => t !== tag);
+    this.render();
+  }
+
+  /**
+   * @param {JQuery<HTMLElement>} jq
+   */
+  activateListeners(jq) {
+    super.activateListeners(jq);
+
+    // Custom tag handling
+    const customInput = this.form.querySelector("input[name='custom']");
+    customInput.addEventListener("input", this._onCustomInput.bind(this), { passive: true });
+    customInput.addEventListener("keydown", this._onActiveCustomInput.bind(this));
+    this.form.querySelectorAll(".custom-tags .custom-tag > a[data-action='delete']").forEach((el) => {
+      el.addEventListener("click", this._deleteCustomTag.bind(this), { passive: true });
+    });
+
+    // Submit button
+    this.form.querySelector("button[type='submit']").addEventListener("click", this._updateDocument.bind(this));
+  }
 
   /**
    * Update the Actor object with new trait data processed from the form
@@ -81,13 +175,16 @@ export class ActorTraitSelector extends DocumentSheet {
    * @private
    */
   _updateObject(event, formData) {
-    const choices = [];
-    for (const [k, v] of Object.entries(formData)) {
-      if (k !== "custom" && v) choices.push(k);
-    }
-    this.object.update({
-      [`${this.attribute}.value`]: choices,
-      [`${this.attribute}.custom`]: formData.custom,
-    });
+    let { choices, custom } = foundry.utils.expandObject(formData);
+
+    choices = Object.entries(choices)
+      .filter(([_, v]) => v)
+      .map(([k]) => k);
+
+    if (custom) this.attributes.custom.push(...this.splitCustom(custom));
+
+    this.attributes.value = choices;
+
+    this.render();
   }
 }

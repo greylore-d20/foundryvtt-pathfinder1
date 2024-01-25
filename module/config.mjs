@@ -2035,7 +2035,7 @@ export const contextNoteTargets = {
   intChecks: { label: "PF1.BuffTarIntChecks", category: "abilityChecks" },
   wisChecks: { label: "PF1.BuffTarWisChecks", category: "abilityChecks" },
   chaChecks: { label: "PF1.BuffTarChaChecks", category: "abilityChecks" },
-  spellEffect: { label: "PF1.SpellBuffEffect", category: "spell" },
+  spellEffect: { label: "PF1.BuffTarSpellEffect", category: "spell" },
   concentration: { label: "PF1.Concentration", category: "spell" },
   cl: { label: "PF1.CasterLevel", category: "spell" },
   ac: { label: "PF1.ACNormal", category: "defense" },

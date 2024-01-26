@@ -15,17 +15,17 @@ system:
         unchained:
           cost: 2
           type: action
-      attackBonus: floor(@classes.wizard.level / 6)[Enhancement]
+      attackBonus: floor(@class.level / 6)[Enhancement]
       damage:
         parts:
           - formula: >-
-              sizeRoll(1, 6, @size) + floor(@classes.wizard.level /
+              sizeRoll(1, 6, @size) + floor(@class.level /
               6)[Enhancement]
             type:
               custom: ''
               values:
                 - piercing
-          - formula: 1 + floor(@classes.wizard.level / 6)
+          - formula: 1 + floor(@class.level / 6)
             type:
               custom: Bleed
               values: []

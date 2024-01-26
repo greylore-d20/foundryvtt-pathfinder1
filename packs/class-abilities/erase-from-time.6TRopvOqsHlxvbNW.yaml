@@ -12,7 +12,7 @@ system:
           type: attack
       duration:
         units: round
-        value: max(1, floor(@classes.oracle.level / 2))
+        value: max(1, floor(@class.level / 2))
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -42,7 +42,7 @@ system:
     - Revelation
     - Time Mystery
   uses:
-    maxFormula: '@classes.oracle.level >= 11 ? 2 : 1'
+    maxFormula: '@class.level >= 11 ? 2 : 1'
     per: day
 type: feat
 

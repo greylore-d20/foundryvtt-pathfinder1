@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (min(floor(@classes.oracle.level / 2),10))d6
+          - formula: (min(floor(@class.level / 2),10))d6
             type:
               custom: ''
               values:
@@ -34,7 +34,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortitude half
         type: fort
       target:
@@ -61,7 +61,7 @@ system:
   subType: classFeat
   tag: classFeat_lifeLeach
   uses:
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    maxFormula: floor((@class.level - 3) / 4)
     per: day
 type: feat
 

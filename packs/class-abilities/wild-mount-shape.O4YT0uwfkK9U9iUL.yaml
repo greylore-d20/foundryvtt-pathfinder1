@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: hour
-        value: '@classes.cavalier.level'
+        value: '@class.level'
       img: systems/pf1/icons/items/inventory/banner-red.jpg
       name: Use
       range:
@@ -48,7 +48,7 @@ system:
   subType: classFeat
   tag: classFeat_wildMountShape
   uses:
-    maxFormula: 1 + floor((@classes.cavalier.level - 6) / 4)
+    maxFormula: 1 + floor((@class.level - 6) / 4)
     per: day
 type: feat
 

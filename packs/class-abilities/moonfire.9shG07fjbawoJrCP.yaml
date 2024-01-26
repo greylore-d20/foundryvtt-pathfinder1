@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (floor(@classes.cleric.level / 2))d8
+          - formula: (floor(@class.level / 2))d8
             type:
               custom: ''
               values:
@@ -48,7 +48,7 @@ system:
   subType: classFeat
   tag: classFeat_moonfire
   uses:
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    maxFormula: floor((@class.level - 4) / 4)
     per: day
 type: feat
 

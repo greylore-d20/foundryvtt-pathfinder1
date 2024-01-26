@@ -14,8 +14,8 @@ system:
       duration:
         units: round
         value: >-
-          @classes.shaman.level <= 16 ? 3 : ((@classes.shaman.level >= 8 &&
-          @classes.shaman.level < 16) ? 2 : 1)
+          @class.level <= 16 ? 3 : ((@class.level >= 8 &&
+          @class.level < 16) ? 2 : 1)
       img: systems/pf1/icons/skills/green_03.jpg
       name: Use
       range:

@@ -11,19 +11,19 @@ system:
     - subTarget: ref
       target: savingThrows
       text: >-
-        +[[@classes.barbarianUnchained.level < 3 ? 1 :
-        (floor(@classes.barbarianUnchained.level / 3))]] vs Traps
+        +[[@class.level < 3 ? 1 :
+        (floor(@class.level / 3))]] vs Traps
     - subTarget: skill.per
       target: skill
       text: >-
-        +[[@classes.barbarianUnchained.level < 3 ? 1 :
-        (floor(@classes.barbarianUnchained.level / 3))]] to avoid being
+        +[[@class.level < 3 ? 1 :
+        (floor(@class.level / 3))]] to avoid being
         surprised by a foe
     - subTarget: ac
       target: misc
       text: >-
-        +[[@classes.barbarianUnchained.level < 3 ? 1 :
-        (floor(@classes.barbarianUnchained.level / 3))]] vs attacks made by
+        +[[@class.level < 3 ? 1 :
+        (floor(@class.level / 3))]] vs attacks made by
         traps
   description:
     value: >-

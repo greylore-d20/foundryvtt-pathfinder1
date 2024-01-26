@@ -14,7 +14,7 @@ system:
       area: 20 feet high and 5 feet long per level
       img: icons/magic/water/projectile-water-wave-teal.webp
       measureTemplate:
-        size: 5 * @classes.wizard.level
+        size: 5 * @class.level
         type: ray
       name: Use
       range:
@@ -48,7 +48,7 @@ system:
   tags:
     - Water School
   uses:
-    maxFormula: floor(@classes.wizard.level / 2)
+    maxFormula: floor(@class.level / 2)
     per: day
 type: feat
 

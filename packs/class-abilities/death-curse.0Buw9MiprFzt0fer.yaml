@@ -20,7 +20,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Will negates
         type: will
       target:
@@ -32,14 +32,14 @@ system:
           type: nonaction
       damage:
         parts:
-          - formula: 4d6 + @classes.witch.level
+          - formula: 4d6 + @class.level
             type:
               custom: ''
               values: []
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Third Round
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude partial
         type: fort
   associations:

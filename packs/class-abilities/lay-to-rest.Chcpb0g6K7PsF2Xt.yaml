@@ -12,7 +12,7 @@ system:
         unchained:
           cost: 2
           type: action
-      description: <p>Slays [[/r (@classes.witch.level)d4]] HD undead creature.</p>
+      description: <p>Slays [[/r (@class.level)d4]] HD undead creature.</p>
       duration:
         units: inst
       img: systems/pf1/icons/skills/violet_02.jpg
@@ -21,7 +21,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Will negates
         type: will
       target:

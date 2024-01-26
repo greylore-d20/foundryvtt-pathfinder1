@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (floor((@classes.warpriest.level + 1) / 3))d6
+          - formula: (floor((@class.level + 1) / 3))d6
             type:
               custom: ''
               values:
@@ -62,7 +62,7 @@ system:
   subType: classFeat
   tag: classFeat_fervor
   uses:
-    maxFormula: floor(@classes.warpriest.level / 2) + @abilities.wis.mod
+    maxFormula: floor(@class.level / 2) + @abilities.wis.mod
     per: day
 type: feat
 

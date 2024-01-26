@@ -11,19 +11,19 @@ system:
     - subTarget: ref
       target: savingThrows
       text: >-
-        +[[@classes.rogueUnchained.level < 3 ? 1 :
-        (floor(@classes.rogueUnchained.level / 3))]] vs Traps
+        +[[@class.level < 3 ? 1 :
+        (floor(@class.level / 3))]] vs Traps
     - subTarget: skill.per
       target: skill
       text: >-
-        +[[@classes.rogueUnchained.level < 3 ? 1 :
-        (floor(@classes.rogueUnchained.level / 3))]] to avoid being surprised by
+        +[[@class.level < 3 ? 1 :
+        (floor(@class.level / 3))]] to avoid being surprised by
         a foe
     - subTarget: ac
       target: misc
       text: >-
-        +[[@classes.rogueUnchained.level < 3 ? 1 :
-        (floor(@classes.rogueUnchained.level / 3))]] vs attacks made by traps
+        +[[@class.level < 3 ? 1 :
+        (floor(@class.level / 3))]] vs attacks made by traps
   description:
     value: >-
       <p>At 3rd level, a rogue gains a +1 bonus on <em>Reflex</em> saves to

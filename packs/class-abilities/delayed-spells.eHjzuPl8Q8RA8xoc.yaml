@@ -12,7 +12,7 @@ system:
           type: free
       duration:
         units: round
-        value: '@classes.inquisitor.level'
+        value: '@class.level'
       img: systems/pf1/icons/items/inventory/badge-cross.jpg
       name: Use
   associations:
@@ -29,7 +29,7 @@ system:
   subType: classFeat
   tag: classFeat_delayedSpells
   uses:
-    maxFormula: floor((@classes.inquisitor.level - 4) / 4)
+    maxFormula: floor((@class.level - 4) / 4)
     per: day
 type: feat
 

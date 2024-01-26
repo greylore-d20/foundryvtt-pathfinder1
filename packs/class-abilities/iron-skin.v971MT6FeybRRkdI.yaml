@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: minute
-        value: '@classes.oracle.level * 10'
+        value: '@class.level * 10'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -39,7 +39,7 @@ system:
     - Battle Mystery
     - Metal Mystery
   uses:
-    maxFormula: '@classes.oracle.level >= 15 ? 2 : 1'
+    maxFormula: '@class.level >= 15 ? 2 : 1'
     per: day
 type: feat
 

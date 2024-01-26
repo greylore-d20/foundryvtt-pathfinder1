@@ -24,7 +24,7 @@ system:
         type: cone
       name: Use
       save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex negates
         type: ref
   associations:

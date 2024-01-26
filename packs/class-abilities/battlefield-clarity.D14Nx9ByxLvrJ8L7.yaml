@@ -38,8 +38,8 @@ system:
     - Battle Mystery
   uses:
     maxFormula: >-
-      @classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level > 6 &&
-      @classes.oracle.level < 15) ? 2 : 1)
+      @class.level >= 15 ? 3 : ((@class.level > 6 &&
+      @class.level < 15) ? 2 : 1)
     per: day
 type: feat
 

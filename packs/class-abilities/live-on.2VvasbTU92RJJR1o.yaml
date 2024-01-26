@@ -13,7 +13,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (ceil((@classes.psychic.level - 3) / 2))d6
+          - formula: (ceil((@class.level - 3) / 2))d6
             type:
               custom: ''
               values:
@@ -41,7 +41,7 @@ system:
   subType: classFeat
   tag: classFeat_liveOn
   uses:
-    maxFormula: floor((@classes.psychic.level - 3) / 2) + @abilities.cha.mod
+    maxFormula: floor((@class.level - 3) / 2) + @abilities.cha.mod
     per: day
 type: feat
 

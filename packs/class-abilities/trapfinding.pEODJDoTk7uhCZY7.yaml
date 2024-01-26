@@ -16,13 +16,13 @@ system:
       - Rogue
   changes:
     - _id: vhodw42z
-      formula: max(1, floor(@classes.rogue.level / 2))
+      formula: max(1, floor(@class.level / 2))
       modifier: untyped
       subTarget: skill.dev
   contextNotes:
     - subTarget: skill.per
       target: skill
-      text: +[[max(1, floor(@classes.rogue.level / 2))]] vs Traps
+      text: +[[max(1, floor(@class.level / 2))]] vs Traps
   description:
     value: >-
       <p>A rogue adds 1/2 her level to <em>Perception</em> <em>skill checks</em>

@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@classes.oracle.level)d6
+          - formula: (@class.level)d6
             type:
               custom: ''
               values:
@@ -52,7 +52,7 @@ system:
   subType: classFeat
   tag: classFeat_interstellarVoid
   uses:
-    maxFormula: '@classes.oracle.level >= 10 ? 2 : 1'
+    maxFormula: '@class.level >= 10 ? 2 : 1'
     per: day
 type: feat
 

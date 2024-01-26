@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: '@classes.witch.level'
+          - formula: '@class.level'
             type:
               custom: ''
               values:
@@ -28,7 +28,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude halves damage and negates fatigue
         type: fort
       target:

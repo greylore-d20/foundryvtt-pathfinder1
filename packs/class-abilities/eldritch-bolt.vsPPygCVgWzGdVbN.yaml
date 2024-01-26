@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: 1d8 + floor(@classes.oracle.level / 2)
+          - formula: 1d8 + floor(@class.level / 2)
             type:
               custom: ''
               values:
@@ -27,7 +27,7 @@ system:
       name: Use
       range:
         units: ft
-        value: '@classes.oracle.level >= 10 ? 60 : 30'
+        value: '@class.level >= 10 ? 60 : 30'
       target:
         value: one creature
   associations:

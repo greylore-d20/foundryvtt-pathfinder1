@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@classes.sorcerer.level)d6
+          - formula: (@class.level)d6
             type:
               custom: ''
               values:
@@ -48,7 +48,7 @@ system:
   subType: classFeat
   tag: classFeat_righteousFury
   uses:
-    maxFormula: floor((@classes.sorcerer.level - 1) / 4) -1
+    maxFormula: floor((@class.level - 1) / 4) -1
     per: day
 type: feat
 

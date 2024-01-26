@@ -17,7 +17,7 @@ system:
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Use
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Will negates
         type: will
       target:

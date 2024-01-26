@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: floor(@classes.cleric.level / 2)
+        value: floor(@class.level / 2)
       img: systems/pf1/icons/skills/red_13.jpg
       name: Use
       range:
@@ -34,7 +34,7 @@ system:
   subType: classFeat
   tag: classFeat_woundingBlade
   uses:
-    maxFormula: floor((@classes.cleric.level - 4) / 4)
+    maxFormula: floor((@class.level - 4) / 4)
     per: day
 type: feat
 

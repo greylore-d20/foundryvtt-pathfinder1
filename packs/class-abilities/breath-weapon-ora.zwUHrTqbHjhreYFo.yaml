@@ -15,7 +15,7 @@ system:
       area: 30-foot cone
       damage:
         parts:
-          - formula: max(1, floor(@classes.oracle.level / 2))d6
+          - formula: max(1, floor(@class.level / 2))d6
             type:
               custom: ''
               values: []
@@ -25,7 +25,7 @@ system:
         type: cone
       name: Cone
       save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Relfex half
         type: ref
     - _id: HuYnkkcNojTDvqdJ
@@ -38,7 +38,7 @@ system:
       area: 60-foot line
       damage:
         parts:
-          - formula: max(1, floor(@classes.oracle.level / 2))d6
+          - formula: max(1, floor(@class.level / 2))d6
             type:
               custom: ''
               values: []
@@ -48,7 +48,7 @@ system:
         type: ray
       name: Line
       save:
-        dc: 10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Relfex half
         type: ref
   associations:
@@ -71,7 +71,7 @@ system:
   tags:
     - Dragon Mystery
   uses:
-    maxFormula: ceil(@classes.oracle.level/5)
+    maxFormula: ceil(@class.level/5)
     per: day
 type: feat
 

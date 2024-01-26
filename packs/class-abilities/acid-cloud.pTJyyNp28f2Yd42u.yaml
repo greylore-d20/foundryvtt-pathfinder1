@@ -15,7 +15,7 @@ system:
       area: 5 ft. radius
       damage:
         parts:
-          - formula: 1d6 + floor(@classes.wizard.level / 2)
+          - formula: 1d6 + floor(@class.level / 2)
             type:
               custom: ''
               values:
@@ -36,7 +36,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude halfes and negates sickend effect
         type: fort
   associations:
@@ -61,7 +61,7 @@ system:
   tags:
     - Earth School
   uses:
-    maxFormula: 3 + @classes.wizard.level
+    maxFormula: 3 + @class.level
     per: day
 type: feat
 

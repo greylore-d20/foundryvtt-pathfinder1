@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: '@classes.oracle.level'
+        value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
   associations:
@@ -36,8 +36,8 @@ system:
     - Time Mystery
   uses:
     maxFormula: >-
-      @classes.oracle.level >= 17 ? 3 : ((@classes.oracle.level > 11 &&
-      @classes.oracle.level < 17) ? 2 : 1)
+      @class.level >= 17 ? 3 : ((@class.level > 11 &&
+      @class.level < 17) ? 2 : 1)
     per: day
 type: feat
 

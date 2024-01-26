@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: minute
-        value: '@classes.oracle.level'
+        value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -35,7 +35,7 @@ system:
   subType: classFeat
   tag: classFeat_tracerTouch
   uses:
-    maxFormula: '@classes.oracle.level >= 15 ? 2 : 1'
+    maxFormula: '@class.level >= 15 ? 2 : 1'
     per: day
 type: feat
 

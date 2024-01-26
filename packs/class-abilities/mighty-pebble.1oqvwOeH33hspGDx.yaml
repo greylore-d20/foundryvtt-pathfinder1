@@ -14,11 +14,11 @@ system:
         unchained:
           cost: 2
           type: action
-      attackBonus: floor(@classes.oracle.level / 4)
+      attackBonus: floor(@class.level / 4)
       damage:
         parts:
           - formula: >-
-              (floor(@classes.oracle.level / 2))d6 + floor(@classes.oracle.level
+              (floor(@class.level / 2))d6 + floor(@class.level
               / 4)
             type:
               custom: ''
@@ -53,7 +53,7 @@ system:
   subType: classFeat
   tag: classFeat_mightyPebble
   uses:
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    maxFormula: 1 + floor(@class.level / 5)
     per: day
 type: feat
 

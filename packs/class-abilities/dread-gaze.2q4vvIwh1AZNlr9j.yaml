@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: floor(@classes.sorcerer.level / 2)
+        value: floor(@class.level / 2)
       img: icons/svg/mystery-man.svg
       name: Use
   associations:
@@ -33,7 +33,7 @@ system:
   tag: classFeat_dreadGaze
   uses:
     maxFormula: >-
-      floor((@classes.sorcerer.level - 1) / 8)  + floor(@classes.sorcerer.level
+      floor((@class.level - 1) / 8)  + floor(@class.level
       / 20)
     per: day
 type: feat

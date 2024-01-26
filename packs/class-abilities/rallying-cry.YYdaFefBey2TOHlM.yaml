@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: max(1, floor(@classes.sorcerer.level / 2))
+        value: max(1, floor(@class.level / 2))
       img: systems/pf1/icons/skills/affliction_24.jpg
       name: Use
       range:
@@ -36,7 +36,7 @@ system:
   subType: classFeat
   tag: classFeat_rallyingCry
   uses:
-    maxFormula: floor((@classes.sorcerer.level + 1) / 4)
+    maxFormula: floor((@class.level + 1) / 4)
     per: day
 type: feat
 

@@ -20,7 +20,7 @@ system:
               custom: ''
               values:
                 - piercing
-          - formula: 1d6 + floor(@classes.wizard.level / 2)
+          - formula: 1d6 + floor(@class.level / 2)
             type:
               custom: ''
               values:
@@ -37,7 +37,7 @@ system:
         type: circle
       name: Use
       save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex negates piercing and halfs cold
         type: ref
   associations:

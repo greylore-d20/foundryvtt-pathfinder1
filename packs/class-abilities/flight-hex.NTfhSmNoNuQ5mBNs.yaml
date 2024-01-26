@@ -26,7 +26,7 @@ system:
       name: Levitate
       uses:
         self:
-          maxFormula: min(1, floor(@classes.witch.level / 3))
+          maxFormula: min(1, floor(@class.level / 3))
           per: day
     - _id: 1DDufZkGHYbBC9JY
       activation:
@@ -40,7 +40,7 @@ system:
       name: Fly
       uses:
         self:
-          maxFormula: '(@classes.witch.level > 4) ? (@classes.witch.level) : 0'
+          maxFormula: '(@class.level > 4) ? (@class.level) : 0'
           per: day
   associations:
     classes:

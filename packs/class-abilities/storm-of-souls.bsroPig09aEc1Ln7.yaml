@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (floor(@classes.oracle.level / 2))d8
+          - formula: (floor(@class.level / 2))d8
             type:
               custom: ''
               values:
@@ -57,7 +57,7 @@ system:
     - Revelation
     - Ancestor Mystery
   uses:
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    maxFormula: floor((@class.level - 3) / 4)
     per: day
 type: feat
 

@@ -15,7 +15,7 @@ system:
       area: 5 ft radius, centered on you
       damage:
         parts:
-          - formula: 1d6 + floor(@classes.wizard.level / 2)
+          - formula: 1d6 + floor(@class.level / 2)
             type:
               custom: ''
               values:
@@ -29,7 +29,7 @@ system:
         type: circle
       name: Use
       save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex have and negates stagger effect
         type: ref
   associations:

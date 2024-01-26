@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: '@classes.sorcerer.level'
+        value: '@class.level'
       img: systems/pf1/icons/skills/blue_26.jpg
       name: Use
       range:
@@ -44,8 +44,8 @@ system:
   tag: classFeat_callAncestor
   uses:
     maxFormula: >-
-      @classes.sorcerer.level >= 20 ? 3 : ((@classes.sorcerer.level < 20 &&
-      @classes.sorcerer.level > 16) ? 2 : 1)
+      @class.level >= 20 ? 3 : ((@class.level < 20 &&
+      @class.level > 16) ? 2 : 1)
     per: day
 type: feat
 

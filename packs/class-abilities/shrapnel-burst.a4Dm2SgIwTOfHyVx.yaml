@@ -14,7 +14,7 @@ system:
       area: 10-foot-radius burst
       damage:
         parts:
-          - formula: max(1,floor(@classes.wizard.level / 2))d6
+          - formula: max(1,floor(@class.level / 2))d6
             type:
               custom: ''
               values:
@@ -27,7 +27,7 @@ system:
         type: circle
       name: Use
       save:
-        dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex half
         type: ref
       target:
@@ -53,7 +53,7 @@ system:
   tags:
     - Metal School
   uses:
-    maxFormula: max(0,floor((@classes.wizard.level - 3) / 5))
+    maxFormula: max(0,floor((@class.level - 3) / 5))
     per: day
 type: feat
 

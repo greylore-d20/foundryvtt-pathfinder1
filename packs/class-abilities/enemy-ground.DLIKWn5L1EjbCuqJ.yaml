@@ -18,7 +18,7 @@ system:
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Use
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Will half and duration reduced to 1 round
         type: will
       target:

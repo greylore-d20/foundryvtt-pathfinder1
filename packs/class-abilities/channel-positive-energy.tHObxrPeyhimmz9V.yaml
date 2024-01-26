@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (ceil(@classes.paladin.level / 2))d6
+          - formula: (ceil(@class.level / 2))d6
             type:
               custom: ''
               values:
@@ -31,7 +31,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.paladin.level / 2) + @abilities.cha.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Will halves damage
         type: will
       target:

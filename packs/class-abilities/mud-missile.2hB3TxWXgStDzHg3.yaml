@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: floor(@classes.wizard.level / 2)d6
+          - formula: floor(@class.level / 2)d6
             type:
               custom: ''
               values:
@@ -54,7 +54,7 @@ system:
   tags:
     - Mud School
   uses:
-    maxFormula: floor(@classes.wizard.level / 2)
+    maxFormula: floor(@class.level / 2)
     per: day
 type: feat
 

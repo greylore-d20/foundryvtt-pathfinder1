@@ -11,12 +11,12 @@ system:
     mediumArmorFullSpeed: true
   changes:
     - _id: pv0gclyb
-      formula: '-clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)'
+      formula: '-clamped(floor((@class.level + 1) / 4), 0, 4)'
       modifier: untyped
       priority: null
       subTarget: acpA
     - _id: e0zzcqzk
-      formula: clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)
+      formula: clamped(floor((@class.level + 1) / 4), 0, 4)
       modifier: untyped
       priority: null
       subTarget: mDexA

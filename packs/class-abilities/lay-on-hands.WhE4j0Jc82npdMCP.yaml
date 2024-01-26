@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (floor(@classes.paladin.level / 2))d6
+          - formula: (floor(@class.level / 2))d6
             type:
               custom: ''
               values:
@@ -47,7 +47,7 @@ system:
   subType: classFeat
   tag: classFeat_layOnHands
   uses:
-    maxFormula: floor(@classes.paladin.level / 2) + @abilities.cha.mod
+    maxFormula: floor(@class.level / 2) + @abilities.cha.mod
     per: day
 type: feat
 

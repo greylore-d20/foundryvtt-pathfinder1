@@ -21,7 +21,7 @@ system:
         units: ft
         value: '100'
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Will negates; see text
         type: will
       target:
@@ -52,7 +52,7 @@ system:
     - Hex
     - Major Hex
   uses:
-    maxFormula: '@classes.witch.level'
+    maxFormula: '@class.level'
     per: day
 type: feat
 

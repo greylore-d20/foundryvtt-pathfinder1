@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: minute
-        value: '@classes.oracle.level'
+        value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -48,8 +48,8 @@ system:
   tag: classFeat_shellOfSuccor
   uses:
     maxFormula: >-
-      @classes.oracle.level >= 19 ? 3 : ((@classes.oracle.level > 10 &&
-      @classes.oracle.level < 19) ? 2 : 1)
+      @class.level >= 19 ? 3 : ((@class.level > 10 &&
+      @class.level < 19) ? 2 : 1)
     per: day
 type: feat
 

@@ -9,12 +9,12 @@ system:
       - Bloodrager
   changes:
     - _id: 8c5qur3o
-      formula: '@classes.bloodrager.level >= 9 ? 8 : 4'
+      formula: '@class.level >= 9 ? 8 : 4'
       modifier: untyped
       subTarget: skill.clm
     - _id: ow8gnugm
       formula: >-
-        @classes.bloodrager.level >= 9 ? (floor(@attributes.speed.land.base /
+        @class.level >= 9 ? (floor(@attributes.speed.land.base /
         2)) : 0
       modifier: base
       subTarget: climbSpeed

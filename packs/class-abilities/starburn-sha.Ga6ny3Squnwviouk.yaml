@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: ' floor(@classes.shaman.level / 2)d6'
+          - formula: ' floor(@class.level / 2)d6'
             type:
               custom: ''
               values:
@@ -30,7 +30,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.shaman.level / 2) + @abilities.wis.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
         description: Fortitude half and see note
         type: fort
       target:

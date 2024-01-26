@@ -27,7 +27,7 @@ system:
       img: systems/pf1/icons/items/weapons/rhoka.png
       name: Assasinate
       save:
-        dc: 10 + floor(@classes.slayer.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates
         type: fort
   associations:

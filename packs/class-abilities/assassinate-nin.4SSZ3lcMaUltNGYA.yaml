@@ -27,7 +27,7 @@ system:
       img: systems/pf1/icons/items/weapons/kunai.png
       name: Assasinate
       save:
-        dc: 10 + floor(@classes.ninja.level / 2) + @abilities.cha.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortitude negates
         type: fort
   associations:

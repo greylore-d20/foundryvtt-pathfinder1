@@ -9,7 +9,7 @@ system:
       - Wizard
   changes:
     - _id: xia1jsup
-      formula: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
+      formula: '@class.level < 4 ? 1 : (floor(@class.level / 2))'
       modifier: untyped
       subTarget: init
   description:

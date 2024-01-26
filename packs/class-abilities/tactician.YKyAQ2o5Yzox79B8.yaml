@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: 3 + floor(@classes.cavalier.level / 2)
+        value: 3 + floor(@class.level / 2)
       img: systems/pf1/icons/feats/strike-back.jpg
       name: Use
       range:
@@ -39,7 +39,7 @@ system:
   subType: classFeat
   tag: classFeat_tactician
   uses:
-    maxFormula: 1 + floor(@classes.cavalier.level / 5)
+    maxFormula: 1 + floor(@class.level / 5)
     per: day
 type: feat
 

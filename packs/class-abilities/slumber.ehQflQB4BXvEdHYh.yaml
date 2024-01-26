@@ -14,14 +14,14 @@ system:
           type: action
       duration:
         units: round
-        value: '@classes.witch.level'
+        value: '@class.level'
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Use
       range:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Will negates
         type: will
       target:

@@ -8,13 +8,13 @@ system:
       - Investigator
   changes:
     - _id: vhodw42z
-      formula: max(1, floor(@classes.investigator.level / 2))
+      formula: max(1, floor(@class.level / 2))
       modifier: untyped
       subTarget: skill.dev
   contextNotes:
     - subTarget: skill.per
       target: skill
-      text: +[[max(1, floor(@classes.investigator.level / 2))]] vs Traps
+      text: +[[max(1, floor(@class.level / 2))]] vs Traps
   description:
     value: >-
       <p>An investigator adds 1/2 his level to

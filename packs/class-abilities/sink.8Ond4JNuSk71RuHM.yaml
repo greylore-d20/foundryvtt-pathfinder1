@@ -21,7 +21,7 @@ system:
         units: ft
         value: '30'
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude reduces duration to 1 round
         type: fort
       target:

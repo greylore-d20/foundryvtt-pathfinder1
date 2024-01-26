@@ -13,7 +13,7 @@ system:
           type: action
       duration:
         units: minute
-        value: '@classes.witch.level'
+        value: '@class.level'
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Grant Claw
       range:
@@ -30,7 +30,7 @@ system:
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Witch Toxin
       save:
-        dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fort cures
         type: fort
   associations:

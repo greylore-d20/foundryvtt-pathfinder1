@@ -15,15 +15,15 @@ system:
           cost: 2
           type: action
       attackBonus: >-
-        min(@resources.classFeat_burn.value, floor(@classes.kineticist.level /
+        min(@resources.classFeat_burn.value, floor(@class.level /
         3))
       damage:
         parts:
           - formula: >-
-              (2 * ceil(@classes.kineticist.level / 2))d6 + 2 *
-              (ceil(@classes.kineticist.level / 2)) +
+              (2 * ceil(@class.level / 2))d6 + 2 *
+              (ceil(@class.level / 2)) +
               min(@resources.classFeat_burn.value,
-              floor(@classes.kineticist.level / 3)) * 2
+              floor(@class.level / 3)) * 2
             type:
               custom: ''
               values:

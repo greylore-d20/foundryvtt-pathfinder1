@@ -15,10 +15,10 @@ system:
       damage:
         parts:
           - formula: >-
-              floor(((ceil(@classes.kineticist.level / 2))d6 +
+              floor(((ceil(@class.level / 2))d6 +
               floor(@abilities.con.mod / 2) +
               min(@resources.classFeat_burn.value,
-              floor(@classes.kineticist.level / 3) ) * 2) / 2)
+              floor(@class.level / 3) ) * 2) / 2)
             type:
               custom: ''
               values:

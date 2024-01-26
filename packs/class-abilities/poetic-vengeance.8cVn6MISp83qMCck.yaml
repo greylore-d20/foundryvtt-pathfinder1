@@ -44,8 +44,8 @@ system:
   tag: classFeat_poeticVengeance
   uses:
     maxFormula: >-
-      @classes.oracle.level >= 20 ? 3 : ((@classes.oracle.level < 20 &&
-      @classes.oracle.level > 9) ? 2 : 1)
+      @class.level >= 20 ? 3 : ((@class.level < 20 &&
+      @class.level > 9) ? 2 : 1)
     per: day
 type: feat
 

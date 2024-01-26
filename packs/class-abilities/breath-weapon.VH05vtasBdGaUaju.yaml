@@ -13,7 +13,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@classes.sorcerer.level)d6
+          - formula: (@class.level)d6
             type:
               custom: ''
               values: []
@@ -24,7 +24,7 @@ system:
       range:
         units: seeText
       save:
-        dc: 10 + floor(@classes.sorcerer.level / 2) + @abilities.cha.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Reflex half
         type: ref
   associations:
@@ -62,7 +62,7 @@ system:
     - Draconic Bloodline
     - Sorcerer Bloodline
   uses:
-    maxFormula: clamped(floor((@classes.sorcerer.level - 11) / 3), 1, 3)
+    maxFormula: clamped(floor((@class.level - 11) / 3), 1, 3)
     per: day
 type: feat
 

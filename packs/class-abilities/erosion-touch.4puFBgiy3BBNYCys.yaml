@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@classes.oracle.level)d6
+          - formula: (@class.level)d6
             type:
               custom: ''
               values:
@@ -43,7 +43,7 @@ system:
   subType: classFeat
   tag: classFeat_erosionTouch
   uses:
-    maxFormula: 1 + floor(@classes.oracle.level / 3)
+    maxFormula: 1 + floor(@class.level / 3)
     per: day
 type: feat
 

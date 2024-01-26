@@ -16,7 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (floor(@classes.oracle.level / 2))d8
+          - formula: (floor(@class.level / 2))d8
             type:
               custom: ''
               values:
@@ -54,7 +54,7 @@ system:
   subType: classFeat
   tag: classFeat_blisteredCaress
   uses:
-    maxFormula: '@classes.oracle.level >= 10 ? 2 : 1'
+    maxFormula: '@class.level >= 10 ? 2 : 1'
     per: day
 type: feat
 

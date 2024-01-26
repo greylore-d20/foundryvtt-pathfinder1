@@ -37,8 +37,8 @@ system:
   tag: classFeat_snowShroud
   uses:
     maxFormula: >-
-      @classes.sorcerer.level >= 20 ? 3 : (@classes.sorcerer.level < 20 &&
-      @classes.sorcerer.level > 16 ? 2 : 1)
+      @class.level >= 20 ? 3 : (@class.level < 20 &&
+      @class.level > 16 ? 2 : 1)
     per: day
 type: feat
 

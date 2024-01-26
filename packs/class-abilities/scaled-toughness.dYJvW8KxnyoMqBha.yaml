@@ -12,7 +12,7 @@ system:
           type: action
       duration:
         units: round
-        value: '@classes.oracle.level'
+        value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -39,7 +39,7 @@ system:
   tags:
     - Dragon Mystery
   uses:
-    maxFormula: '@classes.oracle.level >= 13 ? 2 : 1'
+    maxFormula: '@class.level >= 13 ? 2 : 1'
     per: day
 type: feat
 

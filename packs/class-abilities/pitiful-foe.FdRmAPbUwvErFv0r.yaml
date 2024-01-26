@@ -14,7 +14,7 @@ system:
           type: action
       duration:
         units: round
-        value: max(1, floor(@classes.oracle.level / 2))
+        value: max(1, floor(@class.level / 2))
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -49,8 +49,8 @@ system:
   tag: classFeat_pitifulFoe
   uses:
     maxFormula: >-
-      @classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level > 6 &&
-      @classes.oracle.level < 15) ? 2 : 1)
+      @class.level >= 15 ? 3 : ((@class.level > 6 &&
+      @class.level < 15) ? 2 : 1)
     per: day
 type: feat
 

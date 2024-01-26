@@ -16,7 +16,7 @@ system:
       name: Use
       range:
         units: ft
-        value: 10*@classes.oracle.level
+        value: 10*@class.level
       target:
         value: self
   associations:
@@ -34,7 +34,7 @@ system:
   subType: classFeat
   tag: classFeat_whimsicalStep
   uses:
-    maxFormula: floor((@classes.oracle.level - 3) / 4)
+    maxFormula: floor((@class.level - 3) / 4)
     per: day
 type: feat
 

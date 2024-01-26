@@ -9,7 +9,7 @@ system:
       - Slayer
   changes:
     - _id: dzjkz8b1
-      formula: max(1, floor(@classes.slayer.level / 2))
+      formula: max(1, floor(@class.level / 2))
       modifier: untyped
       subTarget: skill.dev
   classSkills:
@@ -17,7 +17,7 @@ system:
   contextNotes:
     - subTarget: skill.per
       target: skill
-      text: +[[max(1, floor(@classes.slayer.level / 2))]] vs Traps
+      text: +[[max(1, floor(@class.level / 2))]] vs Traps
   description:
     value: >-
       <p>The slayer gains Disable Device as a class skill. The slayer also gains

@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@classes.oracle.level)d4
+          - formula: (@class.level)d4
             type:
               custom: ''
               values:
@@ -45,7 +45,7 @@ system:
   subType: classFeat
   tag: classFeat_lightningBreath
   uses:
-    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    maxFormula: 1 + floor(@class.level / 5)
     per: day
 type: feat
 

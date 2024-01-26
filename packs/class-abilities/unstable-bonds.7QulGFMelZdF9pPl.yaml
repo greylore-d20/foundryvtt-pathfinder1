@@ -12,7 +12,7 @@ system:
           type: attack
       duration:
         units: round
-        value: '@classes.wizard.level < 4 ? 1 : (floor(@classes.wizard.level / 2))'
+        value: '@class.level < 4 ? 1 : (floor(@class.level / 2))'
       img: systems/pf1/icons/spells/horror-acid-1.jpg
       name: Use
       range:

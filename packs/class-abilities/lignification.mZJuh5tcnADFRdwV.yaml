@@ -14,7 +14,7 @@ system:
           type: action
       duration:
         units: round
-        value: floor(@classes.oracle.level / 2)
+        value: floor(@class.level / 2)
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
@@ -49,7 +49,7 @@ system:
   tags:
     - Wood Mystery
   uses:
-    maxFormula: '@classes.oracle.level >= 15 ? 2 : 1'
+    maxFormula: '@class.level >= 15 ? 2 : 1'
     per: day
 type: feat
 

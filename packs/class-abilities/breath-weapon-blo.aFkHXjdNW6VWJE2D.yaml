@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@classes.bloodrager.level)d6
+          - formula: (@class.level)d6
             type:
               custom: ''
               values:
@@ -44,8 +44,8 @@ system:
   tag: classFeat_breathWeaponBlo
   uses:
     maxFormula: >-
-      @classes.bloodrager.level >= 20 ? 3 : ((@classes.bloodrager.level < 20 &&
-      @classes.bloodrager.level >= 16) ? 2 : 1)
+      @class.level >= 20 ? 3 : ((@class.level < 20 &&
+      @class.level >= 16) ? 2 : 1)
     per: day
 type: feat
 

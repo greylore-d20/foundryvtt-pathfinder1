@@ -36,7 +36,7 @@ export class ItemSelector extends FormApplication {
   getData() {
     if (this.actor) this.items = this.actor.items;
 
-    const items = this.items.filter(this.filterFunc);
+    const items = this.filterFunc ? this.items.filter(this.filterFunc) : [...this.items];
     if (this.empty) {
       items.unshift({
         id: "",

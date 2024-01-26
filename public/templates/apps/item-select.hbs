@@ -9,6 +9,8 @@
           <h3 class="item-name">{{name}}</h3>
           {{#if system.quantity}}
           <span>{{localize "PF1.Quantity"}}: {{system.quantity}}</span>
+          {{else if system.level}}
+          <span>{{localize "PF1.Level"}}: {{system.level}}</span>
           {{/if}}
         </div>
       </label>

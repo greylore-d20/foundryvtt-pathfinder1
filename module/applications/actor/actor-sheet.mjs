@@ -3063,10 +3063,34 @@ export class ActorSheetPF extends ActorSheet {
       delete itemData._id;
 
       // Assign associated class if actor has only one class
-      // TODO: Query which class if multiple classes exist
       if (itemData.type === "feat" && itemData.system?.subType === "classFeat") {
-        if (this.actor.itemTypes.class?.length === 1) {
-          itemData.system.class = this.actor.itemTypes.class[0].system.tag;
+        // Available classes ordered by level
+        const classes = [...this.actor.itemTypes.class].sort((a, b) => (b.system.level || 0) - (a.system.level || 0));
+        if (classes.length === 0) {
+          // Nothing to do
+        }
+        // Only one choice
+        else if (classes.length === 1) {
+          itemData.system.class = classes[0].system.tag;
+        }
+        // Query which class to associate with
+        else {
+          const options = {
+            actor: this.actor,
+            empty: true,
+            items: classes,
+            selected: classes[0]?._id,
+          };
+
+          const appOptions = {
+            title: `${game.i18n.format("PF1.SelectSpecific", {
+              specifier: game.i18n.localize("TYPES.Item.class"),
+            })} - ${itemData.name} - ${this.actor.name}`,
+          };
+
+          const cls = await pf1.applications.ItemSelector.wait(options, appOptions);
+          if (cls) itemData.system.class = cls.system.tag;
+          // TODO: Cancel if dialog was closed or no class was selected?
         }
       }
 

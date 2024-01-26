@@ -4652,12 +4652,13 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @param {object} [options] Additional options
-   * @param {boolean} [options.commit=true] If false, return update data object instead of directly updating the actor.
-   * @param {object} [options.updateData] Update data to complement or read changed values from.
-   * @returns {Promise<Item[]|object[]>} Result of an update or the update data.
+   * Recharge all owned items.
+   *
+   * @see {@link pf1.documents.item.ItemPF.recharge}
+   * @param {RechargeActorItemsOptions} [options] - Additional options
+   * @returns {Promise<Item[]|object[]>} - Result of an update or the update data.
    */
-  async rechargeItems({ updateData = {}, commit = true } = {}) {
+  async rechargeItems({ updateData = {}, commit = true, ...rechargeOptions } = {}) {
     const actorData = this.system;
     const itemUpdates = [];
 
@@ -4667,7 +4668,7 @@ export class ActorPF extends ActorBasePF {
 
     // Update charged items
     for (const item of this.items) {
-      const itemUpdate = (await item.recharge({ period: "day", commit: false })) ?? {};
+      const itemUpdate = (await item.recharge({ ...rechargeOptions, commit: false })) ?? {};
       itemUpdate.system ??= {};
 
       const itemData = item.system;
@@ -4701,6 +4702,7 @@ export class ActorPF extends ActorBasePF {
       }
 
       // Update charged actions
+      // TODO: Move to ItemPF.recharge()
       if (item.system.actions?.length > 0) {
         const actions = item.toObject().system.actions;
         let _changed = false;

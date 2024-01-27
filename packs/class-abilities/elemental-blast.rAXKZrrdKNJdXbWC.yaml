@@ -11,9 +11,13 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: inst
       img: systems/pf1/icons/spells/explosion-sky-3.jpg
+      measureTemplate:
+        size: '20'
+        type: circle
       name: Use
       range:
         units: spec
@@ -38,6 +42,9 @@ system:
     pages: '76'
   subType: classFeat
   tag: classFeat_elementalBlast
+  tags:
+    - Bloodline Power
+    - Elemental Bloodline
   uses:
     maxFormula: >-
       floor((@class.level - 1) / 8)  + floor(@class.level

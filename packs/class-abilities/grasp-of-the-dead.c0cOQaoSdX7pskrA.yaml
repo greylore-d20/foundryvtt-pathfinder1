@@ -11,12 +11,29 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      damage:
+        parts:
+          - formula: (@class.level)d6
+            type:
+              custom: ''
+              values:
+                - slashing
       duration:
-        units: inst
+        units: round
+        value: '1'
       img: systems/pf1/icons/skills/affliction_04.jpg
+      measureTemplate:
+        size: '20'
+        type: circle
       name: Use
       range:
-        units: personal
+        units: ft
+        value: '60'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Reflex half
+        type: ref
       target:
         value: 20-ft. radius burst
   associations:
@@ -40,6 +57,9 @@ system:
     pages: '77'
   subType: classFeat
   tag: classFeat_graspOfTheDead
+  tags:
+    - Bloodline Power
+    - Undead Bloodline
   uses:
     maxFormula: >-
       @class.level >= 20 ? 3 : ((@class.level < 20 &&

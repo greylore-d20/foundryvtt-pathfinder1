@@ -4,6 +4,14 @@ img: systems/pf1/icons/spells/protect-sky-1.jpg
 name: Metamagic Adept
 system:
   abilityType: ex
+  actions:
+    - _id: 52P74A0ZlTAiaQN7
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/protect-sky-1.jpg
+      name: Use
   associations:
     classes:
       - Sorcerer
@@ -21,5 +29,11 @@ system:
     pages: '73'
   subType: classFeat
   tag: classFeat_metamagicAdept
+  tags:
+    - Bloodline Power
+    - Arcane Bloodline
+  uses:
+    maxFormula: min(5, floor((@class.level + 1) / 4))
+    per: day
 type: feat
 

@@ -12,6 +12,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       damage:
         parts:
           - formula: 1d6 + (floor(@class.level / 2))
@@ -21,6 +22,8 @@ system:
                 - acid
       duration:
         units: inst
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/spells/beam-acid-1.jpg
       name: Use
       range:
@@ -43,6 +46,9 @@ system:
     pages: '72'
   subType: classFeat
   tag: classFeat_acidicRay
+  tags:
+    - Bloodline Power
+    - Aberrant Bloodline
   uses:
     maxFormula: 3 + @abilities.cha.mod
     per: day

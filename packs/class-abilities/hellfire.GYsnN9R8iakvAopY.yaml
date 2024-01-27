@@ -11,12 +11,28 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      damage:
+        parts:
+          - formula: (@class.level)d6
+            type:
+              custom: ''
+              values:
+                - fire
       duration:
         units: inst
       img: systems/pf1/icons/spells/explosion-red-3.jpg
+      measureTemplate:
+        size: '10'
+        type: circle
       name: Use
       range:
-        units: personal
+        units: ft
+        value: '60'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Reflex half
+        type: ref
       target:
         value: 10-ft. radius burst
   associations:
@@ -27,17 +43,21 @@ system:
       <p>At 9th level, you can call down a column of hellfire. This
       10-foot-radius burst does 1d6 points of fire damage per sorcerer level.
       Those caught in the area of your blast receive a <em>Reflex</em> save for
-      half damage. Good creatures that fail their saves are <em>shaken</em> for
-      a number of rounds equal to your sorcerer level. The DC of this save is
-      equal to 10 + 1/2 your sorcerer level + your <em>Charisma</em> modifier.
-      At 9th level, you can use this ability once per day. At 17th level, you
-      can use this ability twice per day. At 20th level, you can use this
-      ability three times per day. This power has a range of 60 feet.</p>
+      half damage. Good creatures that fail their saves are
+      <em>@UUID[Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.XxLUswkCuXnXmA5T]{shaken}</em>
+      for a number of rounds equal to your sorcerer level. The DC of this save
+      is equal to 10 + 1/2 your sorcerer level + your <em>Charisma</em>
+      modifier. At 9th level, you can use this ability once per day. At 17th
+      level, you can use this ability twice per day. At 20th level, you can use
+      this ability three times per day. This power has a range of 60 feet.</p>
   source:
     id: PZO1110
     pages: '77'
   subType: classFeat
   tag: classFeat_hellfire
+  tags:
+    - Bloodline Power
+    - Infernal Bloodline
   uses:
     maxFormula: >-
       floor((@class.level - 1) / 8)  + floor(@class.level

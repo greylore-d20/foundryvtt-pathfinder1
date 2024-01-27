@@ -13,7 +13,7 @@ import "./module/chatlog.mjs";
 
 // Import Modules
 import { tinyMCEInit } from "./module/mce/mce.mjs";
-import { measureDistances, getConditions } from "./module/utils/canvas.mjs";
+import { measureDistances } from "./module/utils/canvas.mjs";
 import { getFirstActiveGM, moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
 import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
@@ -296,7 +296,7 @@ Hooks.once("init", function () {
   }
 
   //Calculate conditions for world
-  CONFIG.statusEffects = getConditions();
+  CONFIG.statusEffects = pf1.utils.init.getConditions();
 
   // Define getter for config properties moved into registries
   Object.defineProperty(pf1.config, "damageTypes", {

@@ -6,6 +6,7 @@ export * as currency from "./currency.mjs";
 export { SemanticVersion } from "./semver.mjs";
 export * as formula from "./formulas.mjs";
 export * as roll from "./roll-functions.mjs";
+export * as init from "./initialization.mjs";
 
 export {
   binarySearch,

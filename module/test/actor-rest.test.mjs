@@ -17,10 +17,49 @@ export const registerActorRestTests = () => {
       const hp = 100;
       const conBonus = 2 * hd;
 
+      let healthConfig;
+
       before(async () => {
+        healthConfig = game.settings.get("pf1", "healthConfig").toObject();
+        await game.settings.set(
+          "pf1",
+          "healthConfig",
+          foundry.utils.mergeObject(
+            healthConfig,
+            {
+              hitdice: {
+                Racial: {
+                  auto: true,
+                  rate: 1,
+                  maximized: false,
+                },
+                PC: {
+                  auto: true,
+                  rate: 1,
+                  maximized: true,
+                },
+                NPC: {
+                  auto: true,
+                  rate: 1,
+                  maximized: false,
+                },
+              },
+              variants: {
+                pc: {
+                  useWoundsAndVigor: false,
+                },
+                npc: {
+                  useWoundsAndVigor: false,
+                },
+              },
+            },
+            { inplace: false }
+          )
+        );
         actor = await createTestActor({ system: { abilities: { con: { value: 14 } } } }, { temporary: false });
       });
       after(async () => {
+        await game.settings.set("pf1", "healthConfig", healthConfig);
         await actor.delete();
       });
 
@@ -34,10 +73,10 @@ export const registerActorRestTests = () => {
           );
 
           items.sFireball = await addCompendiumItemToActor(actor, "pf1.spells", "Fireball", {
-            system: { spellbook: "primary" },
+            system: { spellbook: "primary", level: 3 },
           });
           items.sShield = await addCompendiumItemToActor(actor, "pf1.spells", "Shield", {
-            system: { spellbook: "primary" },
+            system: { spellbook: "primary", level: 1 },
           });
           items.fBurn = await addCompendiumItemToActor(actor, "pf1.class-abilities", "Burn");
           items.fFleet = await addCompendiumItemToActor(actor, "pf1.feats", "Fleet");
@@ -85,7 +124,7 @@ export const registerActorRestTests = () => {
             await actor.performRest();
           });
 
-          it("should have restored HD worth of hit points", function () {
+          it(`should have restored HD (${hd}) worth of hit points`, function () {
             expect(actor.system.attributes.hp.value).to.equal(oldHP + hd);
           });
         });

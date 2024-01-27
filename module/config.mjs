@@ -1798,6 +1798,8 @@ export const weaponProperties = {
   prf: "PF1.WeaponPropPerformance",
   rch: "PF1.WeaponPropReach",
   sct: "PF1.WeaponPropScatter",
+  sma: "PF1.WeaponPropSemiAutomatic",
+  slf: "PF1.WeaponPropSlowFiring",
   snd: "PF1.WeaponPropSunder",
   spc: "PF1.WeaponPropSpecial",
   thr: "PF1.WeaponPropThrown",

@@ -3,14 +3,18 @@ _key: '!items!Zeq6RWYv5otvg8q7'
 img: systems/pf1/icons/feats/cleave.jpg
 name: Cleave
 system:
-  contextNotes:
-    - subTarget: attack
-      text: >-
-        Cleave: if you hit, you deal damage normally and can make an additional
-        attack (using your full base attack bonus) against a foe that is
-        adjacent to the first and also within reach.
-    - subTarget: ac
-      text: 'Cleave: [[-2]] penalty until your next turn.'
+  actions:
+    - _id: YKPDCAoDrghiYAzi
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      ammoType: none
+      effectNotes:
+        - '[[-2]] penalty to your Armor Class until your next turn.'
+      img: systems/pf1/icons/feats/cleave.jpg
+      name: Use
   description:
     value: >-
       <p><em>You can strike two adjacent foes with a single

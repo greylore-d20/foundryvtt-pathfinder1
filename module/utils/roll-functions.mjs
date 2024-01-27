@@ -13,7 +13,12 @@
  * @param {string|number} [initialSize="M"] - The initial size of the creature. See targetSize above.
  * @returns {Die[]|NumericTerm[]} The resulting die roll.
  */
-export const sizeRoll = function (origCount, origSides, targetSize = "M", initialSize = "M") {
+export function sizeRoll(origCount, origSides, targetSize = "M", initialSize = "M") {
+  // Return NaN from invalid input
+  if (!Number.isFinite(origCount) || !Number.isFinite(origSides)) {
+    return [new NumericTerm({ number: NaN })];
+  }
+
   const _getSizeIndex = function (size) {
     if (typeof size === "string") return Object.values(pf1.config.sizeChart).indexOf(size.toUpperCase());
     return size;
@@ -23,6 +28,8 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
 
   // Do no conversion if no size change is occurring
   if (targetSize === initialSize) {
+    // Special case for 1d1
+    if (origCount === 1 && origSides === 1) return [new NumericTerm({ number: 1 })];
     return [new Die({ number: origCount, faces: origSides })];
   }
 
@@ -83,6 +90,7 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
 
   // Pick an index from the chart
   let index = c.indexOf(currentDie);
+  if (index === -1 && currentDie === "1d1") index = 0;
   let formula = currentDie;
   // If found, shift size
   if (index >= 0) {
@@ -124,10 +132,10 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
     ui.notifications.warn(game.i18n.format("PF1.WarningNoSizeDie", { fallback: currentDie, formula }));
   }
 
-  const [number, faces] = formula.split("d");
-  if (!faces) return [new NumericTerm({ number: parseInt(number) })];
-  return [new Die({ number: parseInt(number), faces: parseInt(faces) })];
-};
+  const [number, faces] = formula.split("d").map((n) => parseInt(n));
+  if (!faces || (number === 1 && faces === 1)) return [new NumericTerm({ number: number })];
+  return [new Die({ number: number, faces: faces })];
+}
 
 /**
  * Return reach information for defined size and stature.

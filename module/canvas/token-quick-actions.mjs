@@ -28,7 +28,7 @@ export class TokenQuickActions {
       if (qi.isCharged) {
         qi.uses = qi.charges;
 
-        let chargeCost = qi.item.firstAction.getChargeCost();
+        let chargeCost = qi.item.firstAction?.getChargeCost() ?? qi.item.getDefaultChargeCost();
         if (chargeCost == 0) qi.isCharged = false;
         qi.recharging = chargeCost < 0;
         chargeCost = Math.abs(chargeCost);

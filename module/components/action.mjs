@@ -182,7 +182,7 @@ export class ItemAction {
   }
 
   get isSelfCharged() {
-    return ["single", "day", "week", "charges"].includes(this.data.uses.self?.per);
+    return ["single", "round", "day", "week", "charges"].includes(this.data.uses.self?.per);
   }
 
   /**

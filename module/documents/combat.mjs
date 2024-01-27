@@ -358,6 +358,12 @@ export class CombatPF extends Combat {
     } catch (error) {
       console.error(error, actor);
     }
+
+    try {
+      await actor.rechargeItems?.({ period: "round", exact: true });
+    } catch (error) {
+      console.error(error, actor);
+    }
   }
 
   _onDelete(options, userId) {

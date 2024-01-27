@@ -330,7 +330,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get isCharged() {
-    return this.isSingleUse || ["day", "week", "charges"].includes(this.system.uses?.per);
+    return this.isSingleUse || ["round", "day", "week", "charges"].includes(this.system.uses?.per);
   }
 
   /** @type {boolean} Does the item has finite number of charges */
@@ -398,7 +398,7 @@ export class ItemPF extends ItemBasePF {
    * Recharges item's uses, if any.
    *
    * @param {object} options Options
-   * @param {string} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
+   * @param {"round"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
    * @param {boolean} [options.exact=false] Use exact time period. Otherwise "week" for example will also recharge items with "day" period.
    * @param {number} [options.value] Recharge to specific value, respecting maximum and minimum bounds.
    * @param {boolean} [options.maximize=false] Recharge to full regardless of recharge formula.
@@ -417,9 +417,11 @@ export class ItemPF extends ItemBasePF {
     // No update when period does not match usage
     if (["charges", "single"].includes(uses.per)) {
       // Ignore, no constraints
-    } else if (period === "week" && !exact) {
-      // Recharge "day" with "week" with inexact recharging
-      if (!["day", "week"].includes(uses.per)) return;
+    } else if (pf1.config.limitedUsePeriodOrder.includes(period) && !exact) {
+      // Recharge lesser time periods when using inexact matching
+      const idx = pf1.config.limitedUsePeriodOrder.indexOf(period);
+      const validPeriods = pf1.config.limitedUsePeriodOrder.slice(0, idx + 1);
+      if (!validPeriods.includes(uses.per)) return;
     }
     // Otherwise test if "any" period is used
     else if (uses.per !== period && period !== "any") return;

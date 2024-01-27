@@ -156,7 +156,7 @@ export class ItemSheetPF extends ItemSheet {
     context.itemProperties = this._getItemProperties();
     context.itemName = item.name;
     if (item.links.charges) context.inheritCharges = item.links.charges;
-    context.isCharged = ["day", "week", "charges"].includes(itemData.uses?.per);
+    context.isCharged = !["single", "", undefined].includes(itemData.uses?.per);
     context.defaultChargeFormula = item.getDefaultChargeFormula();
     context.isPhysical = itemData.quantity !== undefined;
     context.isNaturalAttack = itemData.subType === "natural";

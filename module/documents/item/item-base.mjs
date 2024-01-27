@@ -21,7 +21,7 @@ export class ItemBasePF extends Item {
    */
   prepareData() {
     // To combat Foundry's weird out-of-order initialization bug
-    if (this.actor && !this.actor._initializing) return;
+    if (this.id && this.actor && !this.actor._initializing) return;
 
     super.prepareData();
   }

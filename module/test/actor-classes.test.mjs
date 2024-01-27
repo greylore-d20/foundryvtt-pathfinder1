@@ -68,7 +68,7 @@ export const registerActorItemClassTests = () => {
           });
 
           describe("has appropriate hit points", function () {
-            const previousHealthConfig = game.settings.get("pf1", "healthConfig");
+            const previousHealthConfig = game.settings.get("pf1", "healthConfig").toObject();
             before(async () => {
               // Set HP to automatic calculation
               await game.settings.set(
@@ -127,7 +127,7 @@ export const registerActorItemClassTests = () => {
           });
 
           describe("has appropriate hit points", function () {
-            const previousHealthConfig = game.settings.get("pf1", "healthConfig");
+            const previousHealthConfig = game.settings.get("pf1", "healthConfig").toObject();
             before(async () => {
               // Set HP to automatic calculation
               await game.settings.set(
@@ -159,7 +159,7 @@ export const registerActorItemClassTests = () => {
           });
 
           describe("has appropriate wounds/vigor", function () {
-            const previousHealthConfig = game.settings.get("pf1", "healthConfig");
+            const previousHealthConfig = game.settings.get("pf1", "healthConfig").toObject();
             before(async () => {
               // Set wounds/vigor
               await game.settings.set(

@@ -79,6 +79,7 @@ export class ItemActionSheet extends FormApplication {
     data.hasAttackRoll = action.hasAttack;
     data.actionType = data.data.actionType;
     data.isHealing = data.actionType === "heal";
+    data.hasDamage = action.hasDamage;
     data.isCombatManeuver = ["mcman", "rcman"].includes(data.actionType);
     data.hasAttack = ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(data.actionType);
     // Can have crit and non-crit damage, or simply show them if they've been defined.

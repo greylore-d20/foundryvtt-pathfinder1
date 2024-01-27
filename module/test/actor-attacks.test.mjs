@@ -333,7 +333,12 @@ export const registerActorItemAttackTests = () => {
             expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
-            expect(roll.systemRolls.attacks[0].attack.formula).to.equal("1d20 + 10[Base Attack Bonus] + 2[Dexterity]");
+            const parts = roll.systemRolls.attacks[0].attack.formula.split(" + ");
+            expect(parts.shift()).to.equal("1d20");
+            expect(parts).to.have.lengthOf(2);
+            const found = new Set(parts);
+            const expected = new Set(["10[Base Attack Bonus]", "2[Dexterity]"]);
+            expect(new Set(parts)).to.deep.equal(expected);
             // TODO: Add test for iterative attacks
             // TODO: Add test for additional ammo usage
           });

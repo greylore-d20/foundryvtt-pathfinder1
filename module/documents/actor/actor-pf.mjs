@@ -2543,7 +2543,7 @@ export class ActorPF extends ActorBasePF {
     // Add contextual attack string
     const rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`skill.${skillId}`);
-    if (haveParentSkill) noteObjects.push(...this.getContextNotes(`skill.${mainSkillId}`));
+    if (haveParentSkill) noteObjects.push(...this.getContextNotes(`skill.${mainSkillId}`, false));
     const notes = this.formatContextNotes(noteObjects, rollData);
 
     // Add untrained note
@@ -3841,8 +3841,9 @@ export class ActorPF extends ActorBasePF {
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
    * @param {string|Handlebars.SafeString} context - The context to draw from.
+   * @param {boolean} [all=true] - Retrieve notes meant for all.
    */
-  getContextNotes(context) {
+  getContextNotes(context, all = true) {
     if (context.string) context = context.string;
     const result = this.allNotes;
 
@@ -3870,7 +3871,10 @@ export class ActorPF extends ActorBasePF {
       for (const note of result) {
         note.notes = note.notes
           .filter(
-            (note) => note.subTarget === context || note.subTarget === `${ability}Skills` || note.subTarget === "skills"
+            (note) =>
+              note.subTarget === context ||
+              note.subTarget === `${ability}Skills` ||
+              (all && note.subTarget === "skills")
           )
           .map((note) => note.text);
       }

@@ -1179,10 +1179,6 @@ export class ItemPF extends ItemBasePF {
       });
       rollMode = shared.rollMode || rollMode;
       if (shared.reject) return shared;
-      if (shared.hideChat !== true && chatMessage) {
-        shared.descriptionOnly = true;
-        await this.displayCard({ rollMode });
-      }
 
       // Deduct charges
       if (this.isCharged) {
@@ -1195,6 +1191,11 @@ export class ItemPF extends ItemBasePF {
         }
 
         await this.addCharges(-chargeCost);
+      }
+
+      if (shared.hideChat !== true && chatMessage) {
+        shared.descriptionOnly = true;
+        shared.chatCard = await this.displayCard({ rollMode });
       }
 
       return shared;

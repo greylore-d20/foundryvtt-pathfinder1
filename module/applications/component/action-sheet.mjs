@@ -508,7 +508,7 @@ export class ItemActionSheet extends FormApplication {
    */
   _onEditImage(event) {
     const attr = event.currentTarget.dataset.edit;
-    const current = foundry.utils.getProperty(this.actor, attr);
+    const current = foundry.utils.getProperty(this.action.data, attr);
     const fp = new FilePicker({
       type: "image",
       current,

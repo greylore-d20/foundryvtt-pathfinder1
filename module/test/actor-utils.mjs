@@ -18,7 +18,7 @@ import { fetchPackEntryData } from "./utils.mjs";
 export const createTestActor = async (data = {}, options = {}) => {
   const createData = foundry.utils.mergeObject(
     {
-      name: "Dummy",
+      name: "PF1 Crash Test Dummy",
       type: "character",
       system: {
         abilities: {
@@ -47,12 +47,12 @@ export const createTestActor = async (data = {}, options = {}) => {
  * @param {ActorPF} actor - The actor to which the item will be added
  * @param {string} packName - The compendium's name in which the item can be found
  * @param {string} itemName - The name of the item to be added
- * @param {object} [extraData] - Additional data to be merged into the item's data
+ * @param {object} [extraData={}] - Additional data to be merged into the item's data
  * @returns {Promise<ItemPF>} The item added to the actor
  */
-export const addCompendiumItemToActor = async (actor, packName, itemName, extraData) => {
+export const addCompendiumItemToActor = async (actor, packName, itemName, extraData = {}) => {
   const packItemData = await fetchPackEntryData(packName, itemName, true);
-  const data = foundry.utils.mergeObject(packItemData, extraData ?? {});
+  const data = foundry.utils.mergeObject(packItemData, extraData, { inplace: false });
   const isTemporaryActor = !actor.id;
   const item = await Item.implementation.create(data, { parent: actor, temporary: isTemporaryActor });
   if (isTemporaryActor) actor.reset();

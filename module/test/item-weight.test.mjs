@@ -69,14 +69,13 @@ export const registerItemWeightTests = () => {
               before(async () => {
                 item = items[`${kind}Acid`];
                 await item.update({ "system.quantity": 1, "system.weight.value": 1 });
-                item.reset(); // Force reset for weight system change
                 getItemSheetWeight = async () => {
                   await item.sheet._render(true);
-                  return item.sheet._element.find("input[name='system.weight.value']").val();
+                  return item.sheet.element.find("input[name='system.weight.value']").val();
                 };
                 getActorSheetCarried = async () => {
                   await actor.sheet._render(true);
-                  return actor.sheet._element.find(".inventory-tags.tag-list span").first().text();
+                  return actor.sheet.element.find(".inventory-tags.tag-list span").first().text();
                 };
               });
               it("should have quantity of 1", function () {

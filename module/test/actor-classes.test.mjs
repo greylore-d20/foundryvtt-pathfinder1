@@ -32,15 +32,16 @@ export const registerActorItemClassTests = () => {
         // ---------------------------------- //
         // Fighter                            //
         // ---------------------------------- //
-        describe("add Fighter", async function () {
+        describe("test Fighter single-class", async function () {
           const cls = {};
           before(async () => {
             cls.fighter = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter");
           });
           after(async () => {
-            for (const c of Object.values(cls)) {
-              await c.delete();
-            }
+            await actor.deleteEmbeddedDocuments(
+              "Item",
+              Object.values(cls).map((cls) => cls.id)
+            );
           });
 
           it("add Fighter", function () {
@@ -80,7 +81,16 @@ export const registerActorItemClassTests = () => {
                     continuity: "continuous",
                     rounding: "up",
                     hitdice: {
-                      PC: { auto: true, rate: 0.5, maximized: 1 },
+                      PC: { auto: true, rate: 0.5, maximized: true },
+                    },
+                    maximized: 1,
+                    variants: {
+                      pc: {
+                        useWoundsAndVigor: false,
+                      },
+                      npc: {
+                        useWoundsAndVigor: false,
+                      },
                     },
                   },
                   { inplace: false }
@@ -104,17 +114,18 @@ export const registerActorItemClassTests = () => {
         // ---------------------------------- //
         // Wizard/Fighter/Hunter              //
         // ---------------------------------- //
-        describe("add Wizard/Fighter/Hunter", function () {
+        describe("add Wizard/Fighter/Hunter multiclass", function () {
           const cls = {};
           before(async () => {
-            cls.fighter = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter", { data: { level: 2 } });
-            cls.wizard = await addCompendiumItemToActor(actor, "pf1.classes", "Wizard", { data: { level: 5 } });
-            cls.hunter = await addCompendiumItemToActor(actor, "pf1.classes", "Hunter", { data: { level: 9 } });
+            cls.fighter = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter", { system: { level: 2 } });
+            cls.wizard = await addCompendiumItemToActor(actor, "pf1.classes", "Wizard", { system: { level: 5 } });
+            cls.hunter = await addCompendiumItemToActor(actor, "pf1.classes", "Hunter", { system: { level: 9 } });
           });
           after(async () => {
-            for (const c of Object.values(cls)) {
-              await c.delete();
-            }
+            await actor.deleteEmbeddedDocuments(
+              "Item",
+              Object.values(cls).map((cls) => cls.id)
+            );
           });
 
           it("add classes", function () {
@@ -122,9 +133,15 @@ export const registerActorItemClassTests = () => {
             expect(actor.itemTypes.class.find((o) => o === cls.fighter).name).to.equal("Fighter");
             expect(actor.itemTypes.class.find((o) => o === cls.wizard).name).to.equal("Wizard");
             expect(actor.itemTypes.class.find((o) => o === cls.hunter).name).to.equal("Hunter");
-            expect(cls.fighter.system.level).to.equal(2);
-            expect(cls.wizard.system.level).to.equal(5);
-            expect(cls.hunter.system.level).to.equal(9);
+            it("fighter is level 2", function () {
+              expect(cls.fighter.system.level).to.equal(2);
+            });
+            it("wizard is level 5", function () {
+              expect(cls.wizard.system.level).to.equal(5);
+            });
+            it("hunter is level 9", function () {
+              expect(cls.hunter.system.level).to.equal(9);
+            });
           });
 
           describe("has appropriate hit points", function () {
@@ -140,7 +157,16 @@ export const registerActorItemClassTests = () => {
                     continuity: "continuous",
                     rounding: "up",
                     hitdice: {
-                      PC: { auto: true, rate: 0.5, maximized: 1 },
+                      PC: { auto: true, rate: 0.5, maximized: true },
+                    },
+                    maximized: 1,
+                    variants: {
+                      pc: {
+                        useWoundsAndVigor: false,
+                      },
+                      npc: {
+                        useWoundsAndVigor: false,
+                      },
                     },
                   },
                   { inplace: false }

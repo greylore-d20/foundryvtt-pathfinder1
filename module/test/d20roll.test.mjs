@@ -181,7 +181,6 @@ export function registerD20RollTests() {
             // HTML
             const element = document.createElement("div");
             element.innerHTML = message.content;
-            console.log(element);
             expect(element.querySelector(".flavor-text").textContent).to.include("Test");
             expect(element.querySelector(".flavor-text i.abnormal.take-x")).to.exist;
             expect(element.querySelector(".flavor-text i.abnormal.take-x").dataset.tooltip).to.equal(

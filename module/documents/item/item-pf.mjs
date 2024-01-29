@@ -686,11 +686,11 @@ export class ItemPF extends ItemBasePF {
    * @returns {Record<string, string>} This item's labels
    */
   getLabels({ actionId, rollData } = {}) {
-    const labels = {};
-    const itemData = this.system;
-
     const action = actionId ? this.actions.get(actionId) : this.firstAction;
-    return { ...labels, ...(action?.getLabels({ rollData }) ?? {}) };
+    return {
+      activation: pf1.config.abilityActivationTypes.passive, // Default passive if no action is present
+      ...(action?.getLabels({ rollData }) ?? {}),
+    };
   }
 
   prepareLinks() {

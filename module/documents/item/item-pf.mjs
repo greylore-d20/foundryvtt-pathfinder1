@@ -1545,6 +1545,14 @@ export class ItemPF extends ItemBasePF {
       result.level = 1;
     }
 
+    // Remove name from class associations and supplements if they point to system packs
+    if (["classAssociations", "supplements"].includes(linkType)) {
+      const pack = game.packs.get(targetItem.pack);
+      if (pack?.metadata.packageType === "system") {
+        delete result.name;
+      }
+    }
+
     return result;
   }
 

@@ -1620,17 +1620,20 @@ export class ItemPF extends ItemBasePF {
    * Get item links of type
    *
    * @param {string} type - Link type
-   * @param {boolean} extraData - Include link data, return value changes from item to ojbect
+   * @param {boolean} includeLinkData - Include link data, return value changes from item array to object array
    * @returns {Item[]|object[]} - Linked items, or objects with linked items and additional data
    */
-  async getLinkedItems(type, extraData = false) {
+  async getLinkedItems(type, includeLinkData = false) {
     const items = this.system.links?.[type];
     if (!items) return [];
 
     const result = [];
     for (const l of items) {
-      const item = await this.getLinkItem(l, extraData);
-      if (item) result.push(item);
+      const item = await this.getLinkItem(l);
+      if (item) {
+        if (includeLinkData) result.push({ item, linkData: l });
+        else result.push(item);
+      }
     }
 
     return result;
@@ -1704,14 +1707,25 @@ export class ItemPF extends ItemBasePF {
   /**
    *
    * @param {object} linkData - Link data
-   * @param {boolean} extraData - Include link data in return value
-   * @returns {Item|object}
+   * @param {boolean} [extraData=false] - Deprecated: Include link data in return value
+   * @returns {Item|null} - Linked item if it exists
    */
   async getLinkItem(linkData, extraData = false) {
     const item = await fromUuid(linkData.uuid, { relative: this.actor });
 
     // Package extra data
-    if (extraData) return { item, linkData };
+    if (extraData) {
+      // Deprecated: "Extra data" is just the first parameter. Caller can bundle that if they want it.
+      foundry.utils.logCompatibilityWarning(
+        "ItemPF.getLinkeItem() extraData parameter is deprecated with no replacement",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+
+      return { item, linkData };
+    }
 
     return item;
   }

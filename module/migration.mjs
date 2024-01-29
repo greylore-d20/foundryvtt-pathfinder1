@@ -668,7 +668,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   for (const item of actorData.items ?? []) {
     // Migrate the Owned Item
     const itemData = item instanceof Item ? item.toObject() : item;
-    const itemUpdate = await migrateItemData(itemData, actor ?? actorData);
+    const itemUpdate = await migrateItemData(itemData, actor, { item: actor?.items.get(itemData._id) });
 
     // Update the Owned Item
     if (!foundry.utils.isEmpty(itemUpdate)) {
@@ -983,7 +983,7 @@ export async function migrateSceneActors(scene, { state = null, tracker = null }
     if (!actor?.isOwner) continue;
 
     try {
-      const updateData = await migrateActorData(actor.toObject(), token);
+      const updateData = await migrateActorData(actor.toObject(), token, { actor });
       if (!foundry.utils.isEmpty(updateData)) {
         const items = updateData.items;
         delete updateData.items;

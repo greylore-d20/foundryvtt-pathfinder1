@@ -750,7 +750,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateEquipmentSize(itemData, updateData);
   _migrateSpellCosts(itemData, updateData);
   _migrateLootEquip(itemData, updateData);
-  _migrateItemLinks(itemData, updateData);
+  _migrateItemLinks(itemData, updateData, { item, actor });
   _migrateItemProficiencies(itemData, updateData);
   _migrateItemNotes(itemData, updateData);
   _migrateScriptCalls(itemData, updateData);
@@ -1712,15 +1712,15 @@ const _migrateUnchainedActionEconomy = (action, item) => {
   }
 };
 
-const _migrateItemLinks = function (ent, updateData) {
+const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
   if (
-    ["attack", "consumable", "equipment"].includes(ent.type) &&
-    !foundry.utils.hasProperty(ent.system, "links.charges")
+    ["attack", "consumable", "equipment"].includes(itemData.type) &&
+    !foundry.utils.hasProperty(itemData.system, "links.charges")
   ) {
     updateData["system.links.charges"] = [];
   }
 
-  const linkData = ent.system.links ?? {};
+  const linkData = itemData.system.links ?? {};
   for (const [linkType, oldLinks] of Object.entries(linkData)) {
     let updated = false;
     const links = foundry.utils.deepClone(oldLinks);
@@ -1744,6 +1744,13 @@ const _migrateItemLinks = function (ent, updateData) {
         updated = true;
       }
 
+      // Convert ID to relative UUID
+      if (link.id !== undefined) {
+        link.uuid = actor?.items.get(link.id)?.getRelativeUUID(actor);
+        if (link.uuid) delete link.id;
+      }
+
+      // Remove unused data
       if (link._index !== undefined) {
         delete link._index;
         updated = true;

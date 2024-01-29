@@ -25,8 +25,7 @@
         <th class="links-controls"></th>
       </tr>
       {{#each link.items as |item index|}}
-      <tr class="links-item{{#if item.broken}} broken-link{{/if}}" {{#if item.id}}data-item-id="{{item.id}}"{{/if}} {{#if item.uuid}}data-uuid="{{item.uuid}}" data-tooltip="UUID: {{item.uuid}}"{{/if}}>
-
+      <tr class="links-item{{#if item.broken}} broken-link{{/if}}" data-uuid="{{item.uuid}}" data-tooltip="UUID: {{item.uuid}}">
         {{!-- Link name and image --}}
         <td class="links-item-name">
           <div>

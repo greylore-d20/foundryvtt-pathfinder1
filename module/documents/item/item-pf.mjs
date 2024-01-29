@@ -1538,8 +1538,7 @@ export class ItemPF extends ItemBasePF {
       name: targetItem.name,
     };
 
-    if (dataType === "data") result.id = itemLink;
-    else result.uuid = itemLink;
+    result.uuid = itemLink;
 
     if (linkType === "classAssociations") {
       result.level = 1;
@@ -1586,7 +1585,10 @@ export class ItemPF extends ItemBasePF {
 
       // Clear value, maxFormula and per from link target to avoid odd behaviour
       if (linkType === "charges") {
-        itemUpdates.push({ _id: itemLink, system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null } } });
+        itemUpdates.push({
+          _id: targetItem.id,
+          system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null } },
+        });
       }
 
       if (this.actor && itemUpdates.length > 0) {
@@ -1614,6 +1616,13 @@ export class ItemPF extends ItemBasePF {
     return false;
   }
 
+  /**
+   * Get item links of type
+   *
+   * @param {string} type - Link type
+   * @param {boolean} extraData - Include link data, return value changes from item to ojbect
+   * @returns {Item[]|object[]} - Linked items, or objects with linked items and additional data
+   */
   async getLinkedItems(type, extraData = false) {
     const items = this.system.links?.[type];
     if (!items) return [];
@@ -1649,6 +1658,11 @@ export class ItemPF extends ItemBasePF {
     return result;
   }
 
+  /**
+   * Get all items linked by any means.
+   *
+   * @returns {Item[]}
+   */
   async getAllLinkedItems() {
     const result = [];
 
@@ -1687,22 +1701,17 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /**
+   *
+   * @param {object} linkData - Link data
+   * @param {boolean} extraData - Include link data in return value
+   * @returns {Item|object}
+   */
   async getLinkItem(linkData, extraData = false) {
-    let item;
-
-    // Compendium entry
-    if (linkData.uuid) {
-      item = await fromUuid(linkData.uuid);
-    }
-    // Same actor's item
-    else {
-      item = this.actor?.items?.get(linkData.id);
-    }
+    const item = await fromUuid(linkData.uuid, { relative: this.actor });
 
     // Package extra data
-    if (extraData) {
-      item = { item, linkData };
-    }
+    if (extraData) return { item, linkData };
 
     return item;
   }
@@ -1717,10 +1726,9 @@ export class ItemPF extends ItemBasePF {
    * @returns {Item|object|undefined} Linked item, undefined, or compendium index data
    */
   getLinkedItemSync(linkData = {}) {
-    const { id, uuid } = linkData;
+    const { uuid } = linkData;
     const actor = this.actor;
-    if (uuid) return fromUuidSync(uuid, { relative: actor });
-    else return actor?.items.get(id);
+    return fromUuidSync(uuid, { relative: actor });
   }
 
   /**

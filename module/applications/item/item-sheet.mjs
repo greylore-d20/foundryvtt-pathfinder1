@@ -1539,7 +1539,7 @@ export class ItemSheetPF extends ItemSheet {
     // Case 2 - Import from same actor
     else if (targetItem.actor === this.document.actor) {
       dataType = "data";
-      itemLink = targetItem.id;
+      itemLink = targetItem.getRelativeUUID(this.actor);
     }
 
     // Case 3 - Import from World Document
@@ -1713,11 +1713,9 @@ export class ItemSheetPF extends ItemSheet {
   async _openLinkedItem(event) {
     event.preventDefault();
     const el = event.target.closest(".links-item[data-uuid],.links-item[data-item-id]");
-    const { uuid, itemId } = el.dataset;
+    const { uuid } = el.dataset;
 
-    let item;
-    if (itemId) item = this.item.actor.items.get(itemId);
-    else item = await fromUuid(uuid);
+    const item = await fromUuid(uuid, { relative: this.actor });
     item.sheet.render(true, { focus: true });
   }
 

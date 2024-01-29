@@ -1545,12 +1545,20 @@ export class ItemPF extends ItemBasePF {
       result.level = 1;
     }
 
-    // Remove name from class associations and supplements if they point to system packs
-    if (["classAssociations", "supplements"].includes(linkType)) {
-      const pack = game.packs.get(targetItem.pack);
-      if (pack?.metadata.packageType === "system") {
+    // Remove name for various links
+    switch (linkType) {
+      case "classAssociations":
+      case "supplements":
+        // System packs are assumed static
+        if (game.packs.get(targetItem.pack)?.metadata.packageType === "system") {
+          delete result.name;
+        }
+        break;
+      case "charges":
+      case "children":
+        // Actor local links
         delete result.name;
-      }
+        break;
     }
 
     return result;

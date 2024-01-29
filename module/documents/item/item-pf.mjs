@@ -1717,7 +1717,7 @@ export class ItemPF extends ItemBasePF {
     if (extraData) {
       // Deprecated: "Extra data" is just the first parameter. Caller can bundle that if they want it.
       foundry.utils.logCompatibilityWarning(
-        "ItemPF.getLinkeItem() extraData parameter is deprecated with no replacement",
+        "ItemPF.getLinkItem() extraData parameter is deprecated with no replacement",
         {
           since: "PF1 vNEXT",
           until: "PF1 vNEXT+1",

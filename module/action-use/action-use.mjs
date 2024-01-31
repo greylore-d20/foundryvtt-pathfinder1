@@ -724,7 +724,9 @@ export class ActionUse {
    */
   async promptMeasureTemplate() {
     // Determine size
-    const dist = RollPF.safeRoll(this.shared.action.data.measureTemplate.size, this.shared.rollData).total;
+    let dist = RollPF.safeRoll(this.shared.action.data.measureTemplate.size, this.shared.rollData).total;
+    // Apply system of units conversion
+    dist = convertDistance(dist)[0];
 
     // Create data object
     const templateOptions = {

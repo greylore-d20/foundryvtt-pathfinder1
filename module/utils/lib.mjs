@@ -950,3 +950,25 @@ export function setDefaultSceneScaling(system) {
     game.system.gridDistance = 5;
   }
 }
+
+/**
+ * Create throttling function.
+ *
+ * Returned function will execute after defined delayed. Multiple calls will be discarded until the callback is executed and new timeout can start.
+ *
+ * @param {Function} callback - Callback function
+ * @param {number} delay - Delay in milliseconds
+ * @returns {Function}
+ */
+export function throttle(callback, delay) {
+  let timeoutId = -1;
+  return () => {
+    if (timeoutId <= 0) {
+      timeoutId = setTimeout(() => {
+        timeoutId = -1;
+        callback();
+      }, delay);
+    }
+    return timeoutId;
+  };
+}

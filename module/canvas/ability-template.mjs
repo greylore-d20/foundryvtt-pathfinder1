@@ -1,4 +1,5 @@
 import { MeasuredTemplatePF } from "./measure.mjs";
+import { throttle } from "@utils";
 
 /**
  * A helper class for building MeasuredTemplates for PF1 spells and abilities
@@ -6,6 +7,13 @@ import { MeasuredTemplatePF } from "./measure.mjs";
  * @augments {MeasuredTemplate}
  */
 export class AbilityTemplate extends MeasuredTemplatePF {
+  /**
+   * Preview movement and rotation re-render throttle time in milliseconds.
+   *
+   * @private
+   */
+  static RENDER_THROTTLE = 30;
+
   /**
    * A factory method to create an AbilityTemplate instance using provided data
    *
@@ -91,7 +99,6 @@ export class AbilityTemplate extends MeasuredTemplatePF {
   activatePreviewListeners(initialLayer) {
     return new Promise((resolve) => {
       const handlers = {};
-      let moveTime = 0;
 
       const pfStyle = game.settings.get("pf1", "measureStyle") === true;
 
@@ -100,27 +107,31 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         this.destroy();
       };
 
+      const throttleRefresh = throttle(() => {
+        this.refresh();
+        canvas.app.render();
+      }, this.constructor.RENDER_THROTTLE);
+
       // Update placement (mouse-move)
       handlers.mm = (event) => {
         event.stopPropagation();
-        const now = Date.now(); // Apply a 20ms throttle
-        if (now - moveTime <= 20) return;
         const center = event.data.getLocalPosition(this.layer);
         const pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
         this.document.x = pos.x;
         this.document.y = pos.y;
-        this.refresh();
-        canvas.app.render();
-        moveTime = now;
+        throttleRefresh();
       };
 
       // Cancel the workflow (right-click)
       handlers.rc = (event, canResolve = true) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         this.layer.preview.removeChildren();
         canvas.stage.off("mousemove", handlers.mm);
         canvas.stage.off("mousedown", handlers.lc);
-        canvas.app.view.oncontextmenu = null;
-        canvas.app.view.onwheel = null;
+        canvas.app.view.removeEventListener("contextmenu", handlers.rc);
+        canvas.app.view.removeEventListener("wheel", handlers.mw);
         // Clear highlight
         this.active = false;
         const hl = canvas.grid.getHighlightLayer(this.highlightId);
@@ -128,23 +139,23 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         _clear();
 
         initialLayer.activate();
-        if (canResolve)
-          resolve({
-            result: false,
-          });
+        if (canResolve) resolve({ result: false });
       };
 
       // Confirm the workflow (left-click)
       handlers.lc = async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         handlers.rc(event, false);
 
         // Create the template
         const result = {
           result: true,
           place: async () => {
-            const doc = (
-              await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.document.toObject(false)])
-            )[0];
+            const [doc] = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [
+              this.document.toObject(false),
+            ]);
             this.document = doc;
             return doc;
           },
@@ -158,8 +169,9 @@ export class AbilityTemplate extends MeasuredTemplatePF {
 
       // Rotate the template by 3 degree increments (mouse-wheel)
       handlers.mw = (event) => {
-        if (event.ctrlKey) event.preventDefault(); // Avoid zooming the browser window
-        event.stopPropagation();
+        event.preventDefault(); // Prevent browser zoom
+        event.stopPropagation(); // Prevent other handlers
+
         let delta, snap;
         if (event.ctrlKey) {
           delta = canvas.dimensions.distance;
@@ -179,15 +191,16 @@ export class AbilityTemplate extends MeasuredTemplatePF {
             this.document.direction += snap * Math.sign(event.deltaY);
           }
         }
-        this.refresh();
+
+        throttleRefresh();
       };
 
       // Activate listeners
       if (this.controlIcon) this.controlIcon.removeAllListeners();
       canvas.stage.on("mousemove", handlers.mm);
       canvas.stage.on("mousedown", handlers.lc);
-      canvas.app.view.oncontextmenu = handlers.rc;
-      canvas.app.view.onwheel = handlers.mw;
+      canvas.app.view.addEventListener("contextmenu", handlers.rc);
+      canvas.app.view.addEventListener("wheel", handlers.mw);
       this.hitArea = new PIXI.Polygon([]);
     });
   }

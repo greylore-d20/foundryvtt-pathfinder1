@@ -151,7 +151,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
 
         // Create the template
         const result = {
-          result: true,
+          result: this.document.distance != 0, // Only if template size is creater than 0
           place: async () => {
             const [doc] = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [
               this.document.toObject(false),
@@ -174,8 +174,9 @@ export class AbilityTemplate extends MeasuredTemplatePF {
 
         let delta, snap;
         if (event.ctrlKey) {
-          delta = canvas.dimensions.distance;
-          this.document.distance += delta * -Math.sign(event.deltaY);
+          delta = canvas.dimensions.distance * -Math.sign(event.deltaY);
+          this.document.distance += delta;
+          if (this.document.distance < 0) this.document.distance = 0;
         } else {
           if (pfStyle && this.document.t === "cone") {
             delta = 90;

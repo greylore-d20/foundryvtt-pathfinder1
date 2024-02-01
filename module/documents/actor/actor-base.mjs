@@ -7,26 +7,35 @@ export class ActorBasePF extends Actor {
   constructor(...args) {
     super(...args);
 
+    // Init .itemTypes cache
     this._itemTypes ??= null;
   }
 
   /**
    * Resets internal itemTypes cache.
    *
+   * @protected
    * @override
    */
   prepareBaseData() {
-    super.prepareBaseData();
-
     // Reset item types cache
     this._itemTypes = null;
+
+    super.prepareBaseData();
   }
 
+  /**
+   * Get item by its identifier tag.
+   *
+   * @param {string} tag - Desired tag.
+   * @returns {Item|undefined} - Matching item or undefined if no item is found.
+   */
   getItemByTag(tag) {
     return this.items.find((o) => o.system.tag === tag);
   }
 
   /**
+   * @protected
    * @override
    */
   prepareData() {

@@ -109,6 +109,7 @@ export class ActorPF extends ActorBasePF {
    * Meant to be overridden.
    *
    * @abstract
+   * @protected
    * @augments _preCreate
    * @param data
    * @param options
@@ -202,8 +203,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Returns an array of all selected tokens, along with their actors.
    *
+   * @deprecated - Use `canvas.tokens.controlled` instead.
    * @returns {Array.<ActorPF, Token>[]}
-   * @deprecated
    */
   static getSelectedActors() {
     foundry.utils.logCompatibilityWarning(
@@ -223,15 +224,13 @@ export class ActorPF extends ActorBasePF {
 
   /* -------------------------------------------- */
 
+  /**
+   * @type {number} - Effective spell failure percentage as number from 0 to 100.
+   */
   get spellFailure() {
-    return this.items
-      .filter((o) => {
-        return o.type === "equipment" && o.system.equipped === true;
-      })
-      .reduce((cur, o) => {
-        if (typeof o.system.spellFailure === "number") return cur + o.system.spellFailure;
-        return cur;
-      }, 0);
+    return this.itemTypes.equipment
+      .filter((o) => o.system.equipped === true)
+      .reduce((cur, o) => cur + (o.system.spellFailure || 0), 0);
   }
 
   /**
@@ -257,6 +256,12 @@ export class ActorPF extends ActorBasePF {
     this.system.traits.humanoid = creatureType === "humanoid";
   }
 
+  /**
+   * @internal
+   * @param type
+   * @param subtype
+   * @param name
+   */
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
     if (type === "size") result = game.i18n.localize("PF1.SourceInfoSize");
@@ -286,11 +291,11 @@ export class ActorPF extends ActorBasePF {
     return `${result} (${name})`;
   }
 
-  static _getChangeItemSubtype(item) {
-    if (item.type === "buff" || item.type === "feat") return item.system.subType;
-    return "";
-  }
-
+  /**
+   * Retrieve valid skill change targets for this actor.
+   *
+   * @internal
+   */
   get _skillTargets() {
     const skills = [];
     for (const [sklKey, skl] of Object.entries(this.system.skills)) {
@@ -305,6 +310,9 @@ export class ActorPF extends ActorBasePF {
     return skills;
   }
 
+  /**
+   * @internal
+   */
   _prepareContainerItems() {
     const collection = [];
 
@@ -327,7 +335,13 @@ export class ActorPF extends ActorBasePF {
     this.containerItems = collection;
   }
 
-  _prepareItemFlags(items) {
+  /**
+   * Prepare boolean and dictionary flags.
+   *
+   * @internal
+   */
+  _prepareItemFlags() {
+    const items = this.allItems;
     const bFlags = {};
     const dFlags = {};
 
@@ -372,6 +386,9 @@ export class ActorPF extends ActorBasePF {
     };
   }
 
+  /**
+   * @internal
+   */
   _prepareChanges() {
     this.changeItems = this.items.filter(
       (item) =>
@@ -395,6 +412,10 @@ export class ActorPF extends ActorBasePF {
     this.changes = c;
   }
 
+  /**
+   * @internal
+   * @override
+   */
   applyActiveEffects() {
     // Apply active effects. Required for status effects in v11 and onward, such as blind and invisible.
     super.applyActiveEffects();
@@ -402,7 +423,7 @@ export class ActorPF extends ActorBasePF {
     this.prepareConditions();
 
     this._prepareContainerItems();
-    this._prepareItemFlags(this.allItems);
+    this._prepareItemFlags();
     this._prepareChanges();
   }
 
@@ -560,6 +581,11 @@ export class ActorPF extends ActorBasePF {
     foundry.utils.setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
   }
 
+  /**
+   * Prepare actor.system.conditions for use.
+   *
+   * @protected
+   */
   prepareConditions() {
     this.system.conditions = {};
     const conditions = this.system.conditions;
@@ -703,6 +729,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Update specific spellbook.
    *
+   * @internal
    * @param {string} bookId Spellbook identifier
    * @param {object} [rollData] Roll data instance
    * @param {object} cache Pre-calculated data for re-use from _generateSpellbookCache
@@ -1119,6 +1146,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Collect some basic spellbook info so it doesn't need to be gathered again for each spellbook.
    *
+   * @internal
    * @returns {object} Spellbook cache
    */
   _generateSpellbookCache() {
@@ -1149,6 +1177,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Update all spellbooks
    *
+   * @internal
    * @param {object} [rollData] Roll data instance
    * @param {object} [cache] Spellbook cache
    */
@@ -1170,6 +1199,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Called just before the first change is applied, and after every change is applied.
    * Sets additional variables (such as spellbook range)
+   *
+   * @internal
    */
   refreshDerivedData() {
     // Reset maximum dexterity bonus
@@ -1204,6 +1235,8 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Augment the basic actor data with additional dynamic data.
+   *
+   * @override
    */
   prepareDerivedData() {
     super.prepareDerivedData();
@@ -1265,6 +1298,8 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Prepare armor, weapon, and language proficiencies.
+   *
+   * @protected
    */
   prepareProficiencies() {
     const actorData = this.system;
@@ -1334,6 +1369,13 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
+  /**
+   * Prepare total CMB value.
+   *
+   * @todo Move all the logic here to the Change system.
+   *
+   * @protected
+   */
   prepareCMB() {
     const shrAtk = this.system.attributes.attack.shared ?? 0,
       genAtk = this.system.attributes.attack.general ?? 0,
@@ -1346,6 +1388,9 @@ export class ActorPF extends ActorBasePF {
     this.system.attributes.cmb.total = cmb;
   }
 
+  /**
+   * @protected
+   */
   prepareSpecificDerivedData() {
     if (Hooks.events.pf1PrepareDerivedActorData?.length) {
       Hooks.callAll("pf1PrepareDerivedActorData", this);
@@ -1549,8 +1594,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Returns this actor's labels
+   * Returns this actor's labels for use with sheets.
    *
+   * @protected
    * @returns {Record<string, string>}
    */
   getLabels() {
@@ -1571,6 +1617,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Computes armor penalties for this actor.
    *
+   * @internal
    * @returns {MobilityPenaltyResult} The resulting penalties from armor.
    */
   _applyArmorPenalties() {
@@ -1681,6 +1728,9 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
+  /**
+   * @internal
+   */
   prepareItemLinks() {
     for (const item of this.items) {
       const links = item.system.links;
@@ -1707,6 +1757,10 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
+  /**
+   * @internal
+   * @param {*} extraData
+   */
   _setSourceDetails(extraData) {
     const actorData = this.system;
     const sourceDetails = {};
@@ -1798,6 +1852,9 @@ export class ActorPF extends ActorBasePF {
     this.sourceDetails = sourceDetails;
   }
 
+  /**
+   * @internal
+   */
   _getInherentTotalsKeys() {
     // Determine base keys
     const keys = {
@@ -1920,6 +1977,9 @@ export class ActorPF extends ActorBasePF {
     ];
   }
 
+  /**
+   * @protected
+   */
   _resetInherentTotals() {
     const keys = this._getInherentTotalsKeys();
 
@@ -1942,6 +2002,9 @@ export class ActorPF extends ActorBasePF {
   /**
    * Return reduced movement speed.
    *
+   * @example
+   * pf1.documents.actor.ActorPF.getReducedMovementSpeed(30); // => 20
+   *
    * @param {number} value - The non-reduced movement speed.
    * @returns {number} The reduced movement speed.
    */
@@ -1951,6 +2014,11 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Return increased amount of spell slots by ability score modifier.
+   *
+   * @example
+   * pf1.documents.actor.ActorPF.getSpellSlotIncrease(2, 1); // => 1
+   * pf1.documents.actor.ActorPF.getSpellSlotIncrease(6, 1); // => 2
+   * pf1.documents.actor.ActorPF.getSpellSlotIncrease(6, 7); // => 0
    *
    * @param {number} mod - The associated ability modifier.
    * @param {number} level - Spell level.
@@ -1966,8 +2034,8 @@ export class ActorPF extends ActorBasePF {
    * Return the amount of experience required to gain a certain character level.
    *
    * @abstract
-   * @param {number} level The desired level
-   * @returns {number} The XP required
+   * @param {number} level - The desired level
+   * @returns {number} - The XP required
    */
   getLevelExp(level) {
     return 0; // Only used by PCs
@@ -2060,6 +2128,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Sync images in _preUpdate when moving away from default
    *
+   * @internal
    * @param {object} changed Update data
    */
   _syncTokenImage(changed) {
@@ -2078,7 +2147,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Synchronize prototype token sizing with actor size.
    *
-   * @protected
+   * @internal
    * @param {object} changed - Pre-uppdate data
    */
   _syncProtoTokenSize(changed) {
@@ -2169,6 +2238,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @todo Add option to update token size on all scenes.
    *
+   * @internal
    * @param {string} sizeKey - New size key
    * @param {object} [options] - Additional options
    * @returns {Promise<TokenDocument[]>|null} - Updated token documents, or null if no update was performed.
@@ -2232,6 +2302,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Handle condition track toggling post active effect creation if there's still some issues.
    *
+   * @internal
    * @param {ActiveEffect[]} documents Updated active effect documents
    * @returns {Promise}
    */
@@ -2352,7 +2423,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * TODO: The condition notification needs to be smarter.
+   * @todo - The condition notification needs to be smarter.
    *
    * @internal
    * @param conditions
@@ -2364,6 +2435,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * @internal
    * @param {ItemPF} item - the item to add to the actor's resources
    * @param {object} [options] - extra options
    * @param {boolean} [options.warnOnDuplicate] - Skips warning if item tag already exists in dictionary flags
@@ -2399,6 +2471,11 @@ export class ActorPF extends ActorBasePF {
   /*  Rolls                                       */
   /* -------------------------------------------- */
 
+  /**
+   * @deprecated - See {@link pf1.documents.item.ItemAttackPF.fromItem ItemAttackPF.fromItem()}
+   * @param {pf1.documents.item.ItemWeaponPF} item - Weapon to create attack from
+   * @returns {Item|undefined} - Created item.
+   */
   async createAttackFromWeapon(item) {
     foundry.utils.logCompatibilityWarning(
       "ActorPF.createAttackFromWeapon() is deprecated in favor of ItemAttackPF.fromItem()",
@@ -2432,6 +2509,10 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Enable and configure a new spellbook.
+   *
+   * @example
+   * // Create spellbook for inquisitor
+   * actor.createSpellbook({ type: "spontaneous", progression: "med", ability: "wis", spells: "divine", class: "inquisitor", cantrips: true, domain: 0 });
    *
    * @param {object} [casting] - Book casting configuration
    * @param {"prepared"|"spontaneous"|"hybrid"} [casting.type="prepared"] - Spellbook type
@@ -2492,6 +2573,18 @@ export class ActorPF extends ActorBasePF {
 
   /* -------------------------------------------- */
 
+  /**
+   * Retrieve information about a skill.
+   *
+   * @example
+   * actor.getSkillInfo("per"); // Perception skill info
+   * actor.getSkillInfo("crf.subSkills.alchemy"); // Craft (Alchemy) subskill info
+   *
+   * @param {string} skillId - Skill ID
+   * @param {object} [options] - Additional options
+   * @param {object} [options.rollData] - Roll data instance to use.
+   * @returns {object}
+   */
   getSkillInfo(skillId, { rollData } = {}) {
     let skill, skillName, parentSkill;
     const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
@@ -2524,6 +2617,9 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Roll a Skill Check
+   *
+   * @example
+   * await actor.rollSkill("per", { skipDialog: true, bonus: "1d6", dice: "2d20kh" });
    *
    * @param {string} skillId      The skill id (e.g. "per", or "prf.subSkills.prf1")
    * @param {ActorRollOptions} [options={}]      Options which configure how the skill check is rolled
@@ -2625,9 +2721,9 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   /**
-   * Roll a 1d20 adding the actor's BAB
+   * Roll basic BAB check
    *
-   * @param {ActorRollOptions} [options]
+   * @param {ActorRollOptions} [options] - Additional options
    * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollBAB(options = {}) {
@@ -2671,6 +2767,10 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Roll a generic attack
+   *
+   * @example
+   * await actor.rollAttack({ ranged: true }); // Basic ranged attack
+   * await actor.rollAttack({ maneuver: true }); // Basic melee maneuver
    *
    * @param {ActorRollOptions} [options={}]
    * @param {boolean} [options.maneuver=false] - Whether this is weapon or maneuver check.
@@ -2735,13 +2835,16 @@ export class ActorPF extends ActorBasePF {
   /**
    * Roll a Caster Level check using a particular spellbook of this actor
    *
+   * @example
+   * await actor.rollCL("primary");
+   *
    * @param {string} bookId Spellbook identifier
    * @param {ActorRollOptions} [options={}] Roll options
    * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollCL(bookId, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
-    const rollData = this.getRollData();
+    const rollData = options.rollData || this.getRollData();
     rollData.cl = spellbook.cl.total;
 
     // Set up roll parts
@@ -2787,7 +2890,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollConcentration(bookId, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
-    const rollData = this.getRollData();
+    const rollData = options.rollData || this.getRollData();
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.system.abilities[spellbook.ability]?.mod ?? 0;
 
@@ -2838,6 +2941,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * @protected
    * @param {object} [options] Additional options
    * @param {boolean} [options.damageResistances=true] If false, damage resistances (DR, ER) are omitted.
    * @param {boolean} [options.damageVulnerabilities=true] If false, damage vulnerabilities are omitted.
@@ -2901,6 +3005,10 @@ export class ActorPF extends ActorBasePF {
     return headers;
   }
 
+  /**
+   * @protected
+   * @returns
+   */
   getInitiativeContextNotes() {
     const notes = this.getContextNotes("misc.init").reduce((arr, o) => {
       for (const n of o.notes) arr.push(...n.split(/[\n\r]+/));
@@ -2928,6 +3036,9 @@ export class ActorPF extends ActorBasePF {
    * If no combat exists, GMs have the option to create one.
    * If viewing a full Actor document, all Tokens which map to that actor will be targeted for initiative rolls.
    * If viewing a synthetic Token actor, only that particular Token will be targeted for an initiative roll.
+   *
+   * @example
+   * await actor.rollInitiative({ dice: "2d20kh", createCombatants: true, skipDialog: true });
    *
    * @override
    * @see {@link pf1.documents.CombatPF#rollInitiative}
@@ -2997,6 +3108,9 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Roll a specific saving throw
+   *
+   * @example
+   * await actor.rollSavingThrow("ref", { skipDialog: true, dice: "2d20kh", bonus: "4" });
    *
    * @param {"ref"|"fort"|"will"} savingThrowId Identifier for saving throw type.
    * @param {ActorRollOptions} [options={}] Roll options.
@@ -3079,8 +3193,11 @@ export class ActorPF extends ActorBasePF {
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    *
-   * @param {string} abilityId    The ability ID (e.g. "str")
-   * @param {object} [options={}]      Options which configure how ability tests are rolled
+   * @example
+   * await actor.rollAbilityTest("str");
+   *
+   * @param {string} abilityId - The ability ID (e.g. "str")
+   * @param {object} [options={}] - Additional options
    * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollAbilityTest(abilityId, options = {}) {
@@ -3089,7 +3206,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add contextual notes
-    const rollData = this.getRollData();
+    const rollData = options.rollData || this.getRollData();
     const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
     const notes = this.formatContextNotes(noteObjects, rollData);
 
@@ -3261,6 +3378,10 @@ export class ActorPF extends ActorBasePF {
     return ChatMessage.implementation.create(chatData);
   }
 
+  /**
+   * @internal
+   * @param key
+   */
   _deprecatePF1PrefixConditions(key) {
     if (/^pf1_/.test(key)) {
       const newKey = key.replace(/^pf1_/, "");
@@ -3277,7 +3398,8 @@ export class ActorPF extends ActorBasePF {
    * Easy way to toggle a condition.
    *
    * @example
-   * actor.toggleCondition("dazzled");
+   * await actor.toggleCondition("dazzled");
+   *
    * @param {boolean} conditionId - A direct condition key, as per PF1.registry.conditions, such as `shaken` or `dazed`.
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
@@ -3289,7 +3411,8 @@ export class ActorPF extends ActorBasePF {
    * Easy way to set a condition.
    *
    * @example
-   * actor.setCondition("dazzled", true);
+   * await actor.setCondition("dazzled", true);
+   *
    * @param {string} conditionId - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
    * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
    * @param {object} [context] Update context
@@ -3305,7 +3428,8 @@ export class ActorPF extends ActorBasePF {
    * Also handles condition tracks to minimize number of updates.
    *
    * @example
-   * actor.setConditions({ blind: true, sleep: false, shaken:true });
+   * await actor.setConditions({ blind: true, sleep: false, shaken:true });
+   *
    * @param {object} conditions Condition ID to boolean mapping of new condition states.
    * @param {object} [context] Update context
    * @returns {object} Condition ID to boolean mapping of actual updates.
@@ -3404,6 +3528,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @example
    * actor.hasCondition("grappled");
+   *
    * @param {string} conditionId - A direct condition key, as per pf1.registry.conditions, such as `shaken` or `dazed`.
    * @returns {boolean} Condition state
    */
@@ -3417,6 +3542,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Helper function for actor energy resistance and damage reduction feedback.
    *
+   * @protected
    * @param {string} damage Value to check resistances for. Either "dr" or "eres".
    * @returns {object} Entry to label mapping of resistances or reductions.
    */
@@ -3481,6 +3607,13 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Wrapper for the static function, taking this actor as the only target.
+   *
+   * @see {@link ActorPF.applyDamage}
+   *
+   * @example
+   * await actor.applyDamage(10); // Cause 10 damage
+   * await actor.applyDamage(-10): // Heal 10 damage
+   * await actor.applyDamage(3, { asWounds: true }); // Apply 3 damage directly to Wounds instead of Vigor
    *
    * @param {number} value Value to adjust health by.
    * @param {object} options Additional options.
@@ -3732,6 +3865,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    *
+   * @protected
    * @param {object} [data]
    * @returns {number} Multiplier
    */
@@ -3747,6 +3881,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Returns Wound Threshold relevant data.
    *
+   * @protected
    * @param {object} data Provided valid rollData
    * @returns {{level:number,penalty:number,multiplier:number,valid:boolean}}
    */
@@ -3766,6 +3901,8 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Updates attributes.woundThresholds.level variable.
+   *
+   * @protected
    */
   updateWoundThreshold() {
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
@@ -3805,6 +3942,9 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
+  /**
+   * @type {Array<string>} - Array of all skill IDs relevant to this actor.
+   */
   get allSkills() {
     const result = [];
     for (const [k, s] of Object.entries(this.system.skills)) {
@@ -4036,6 +4176,14 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
+  /**
+   * @protected
+   * @override
+   * @param {*} embeddedName
+   * @param {*} createData
+   * @param {*} context
+   * @returns
+   */
   async createEmbeddedDocuments(embeddedName, createData, context = {}) {
     createData = createData instanceof Array ? createData : [createData];
 
@@ -4065,6 +4213,12 @@ export class ActorPF extends ActorBasePF {
     return rv;
   }
 
+  /**
+   * @internal
+   * @param {*} items
+   * @param {*} options
+   * @returns {Collection<string, *>}
+   */
   async _collectItemSupplements(items, options) {
     const allSupplements = new Collection();
 
@@ -4137,6 +4291,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Update item child links with supplements.
    *
+   * @internal
    * @param {Item[]} items
    * @param {*} supplements
    */
@@ -4177,6 +4332,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Computes encumbrance values for this actor.
    *
+   * @internal
    * @returns {MobilityPenaltyResult} The resulting penalties from encumbrance.
    */
   _computeEncumbrance() {
@@ -4221,12 +4377,21 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
+  /**
+   * @internal
+   * @returns {number} - Total coin weight in lbs
+   */
   _calculateCoinWeight() {
     const divisor = game.settings.get("pf1", "coinWeight");
     if (!divisor) return 0;
     return Object.values(this.system.currency || {}).reduce((total, coins) => total + (coins || 0), 0) / divisor;
   }
 
+  /**
+   * Calculate current carry capacity limits.
+   *
+   * @returns {{light:number,medium:number,heavy:number}}
+   */
   getCarryCapacity() {
     // Determine carrying capacity
     const carryCapacity = this.system.details.carryCapacity;
@@ -4288,7 +4453,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Get total currency in category.
    *
-   * @param {"currency"|"altCurrency"} category - Currency category.
+   * @param {"currency"|"altCurrency"} [category="currency"] - Currency category.
    * @param {object} [options] - Additional options
    * @param {boolean} [options.inLowestDenomination=true] - Return result in lowest denomination. If false, returns gold instead.
    * @returns {number} - Total currency in category.
@@ -4360,11 +4525,11 @@ export class ActorPF extends ActorBasePF {
   /**
    * Prepare armor/shield data for roll data
    *
+   * @internal
    * @param {object} equipment Equipment info
    * @param {string} equipment.id Item ID
    * @param {string} equipment.type Armor/Shield type
    * @param {object} armorData Armor data object
-   * @private
    */
   _prepareArmorData({ id, type } = {}, armorData) {
     armorData.type = type ?? null;
@@ -4378,6 +4543,16 @@ export class ActorPF extends ActorBasePF {
     if (!Number.isFinite(armorData.total)) armorData.total = 0;
   }
 
+  /**
+   * Retrieve data used to fill in roll variables.
+   *
+   * @example
+   * await new Roll("1d20 + \@abilities.wis.mod[Wis]", actor.getRollData()).toMessage();
+   *
+   * @override
+   * @param {object} [options] - Additional options
+   * @returns {object}
+   */
   getRollData(options = { refresh: false }) {
     // Return cached data, if applicable
     const skipRefresh = !options.refresh && this._rollData;
@@ -4487,6 +4662,10 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
+  /**
+   * @protected
+   * @returns
+   */
   getQuickActions() {
     return this.items
       .filter(
@@ -4512,6 +4691,9 @@ export class ActorPF extends ActorBasePF {
       });
   }
 
+  /**
+   * @internal
+   */
   refreshAbilityModifiers() {
     for (const k of Object.keys(this.system.abilities)) {
       const total = this.system.abilities[k].total;
@@ -4522,6 +4704,12 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
+  /**
+   * @override
+   * @protected
+   * @param {object} json
+   * @returns {Promise<this>}
+   */
   async importFromJSON(json) {
     // Set _initialized flag to prevent faults (such as HP changing incorrectly)
     this._initialized = false;
@@ -4536,6 +4724,8 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Return feat counts.
+   *
    * @typedef FeatCounts
    * @type {object}
    * @property {number} max - The maximum allowed feats.
@@ -4621,6 +4811,8 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Check if actor has item with specified boolean flag.
+   *
    * @param {string} flagName - The name/key of the flag to search for.
    * @returns {boolean} Whether this actor has any owned item with the given flag.
    */
@@ -4672,6 +4864,11 @@ export class ActorPF extends ActorBasePF {
    * Recharge all owned items.
    *
    * @see {@link pf1.documents.item.ItemPF.recharge}
+   *
+   * @example
+   * await actor.rechargeItems(); // Recharge items with default settings.
+   * await actor.rechargeItems({ period: "week" }); // Recharge items as if week had passed.
+   *
    * @param {RechargeActorItemsOptions} [options] - Additional options
    * @returns {Promise<Item[]|object[]>} - Result of an update or the update data.
    */
@@ -4754,6 +4951,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Handler for character healing during rest.
    *
+   * @protected
    * @param {object} options Resting options.
    * @returns {object} Update data object
    */
@@ -4786,6 +4984,9 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Perform all changes related to an actor resting, including restoring HP, ability scores, item uses, etc.
+   *
+   * @example
+   * await actor.performRest();
    *
    * @see {@link hookEvents!pf1PreActorRest pf1PreActorRest hook}
    * @see {@link hookEvents!pf1ActorRest pf1ActorRest hook}
@@ -4832,6 +5033,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * @protected
    * @override
    */
   async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {

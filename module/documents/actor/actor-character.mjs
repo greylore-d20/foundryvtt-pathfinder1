@@ -3,6 +3,7 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ActorCharacterPF extends ActorPF {
   /**
+   * @protected
    * @override
    * @param {object} data
    * @param {object} context
@@ -36,6 +37,7 @@ export class ActorCharacterPF extends ActorPF {
   }
 
   /**
+   * @protected
    * @override
    * @param {object} changed
    * @param {object} context
@@ -53,7 +55,7 @@ export class ActorCharacterPF extends ActorPF {
   /**
    * Handle relative XP change and constrain it to appropriate minimum value.
    *
-   * @private
+   * @protected
    * @param {object} changed
    */
   _updateExp(changed) {
@@ -110,6 +112,10 @@ export class ActorCharacterPF extends ActorPF {
     return Math.max(1, totalXP);
   }
 
+  /**
+   * @protected
+   * @override
+   */
   prepareDerivedData() {
     super.prepareDerivedData();
     const actorData = this.system;

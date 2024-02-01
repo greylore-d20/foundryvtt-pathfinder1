@@ -1,4 +1,4 @@
-import { degtorad, measureDistance } from "../utils/lib.mjs";
+import { measureDistance } from "../utils/lib.mjs";
 
 const withinAngle = (min, max, value) => {
   min = Math.normalizeDegrees(min);
@@ -176,9 +176,9 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       const dir = (direction >= 0 ? 360 - direction : -direction) % 360;
       // If we're not on a border for X, offset by 0.5 or -0.5 to the border of the cell in the direction we're looking on X axis
       // /2 turns from 1/0/-1 to 0.5/0/-0.5
-      offsetMult.x = x % gridSizePxBase != 0 ? Math.sign(Math.round(Math.cos(degtorad(dir)))) / 2 : 0;
+      offsetMult.x = x % gridSizePxBase != 0 ? Math.sign(Math.round(Math.cos(Math.toRadians(dir)))) / 2 : 0;
       // Same for Y, but cos Y goes down on screens, we invert
-      offsetMult.y = y % gridSizePxBase != 0 ? -Math.sign(Math.round(Math.sin(degtorad(dir)))) / 2 : 0;
+      offsetMult.y = y % gridSizePxBase != 0 ? -Math.sign(Math.round(Math.sin(Math.toRadians(dir)))) / 2 : 0;
     }
 
     // Determine point of origin

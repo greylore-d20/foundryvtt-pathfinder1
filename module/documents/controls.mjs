@@ -11,6 +11,8 @@ const CTRL_KEYS = getLeftRight("Control");
 
 /**
  * Registers the system's keybindings
+ *
+ * @internal
  */
 export const registerSystemControls = () => {
   game.keybindings.register("pf1", "skipConfirmPrompt", {
@@ -63,6 +65,7 @@ export const registerSystemControls = () => {
 /**
  * Toggle the display of GM/Player info in the token tooltip
  *
+ * @internal
  * @param {boolean} keyDown - Whether the key is pressed down
  * @returns {Promise<void>|void} A Promise that is resolved when the tooltip render handling is done
  */
@@ -72,6 +75,10 @@ export const _hideTokenTooltipGMInfo = (keyDown) => {
   pf1.tooltip.refresh();
 };
 
+/**
+ * @internal
+ * @param {*} stickify
+ */
 export const _stickyTokenTooltip = (stickify) => {
   if (!pf1.tooltip) return;
   pf1.tooltip.sticky = stickify;
@@ -80,6 +87,7 @@ export const _stickyTokenTooltip = (stickify) => {
 /**
  * Toggle the display of the token tooltip
  *
+ * @internal
  * @param {boolean} keyDown - Whether the key is pressed down
  * @returns {Promise<void>|void} A Promise that is resolved when the tooltip render handling is done
  */

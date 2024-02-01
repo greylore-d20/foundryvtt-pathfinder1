@@ -3,9 +3,11 @@ import { RollPF } from "../dice/roll.mjs";
 
 /**
  * Creates a tag from a string.
- * For example, if you input the string "Wizard of Oz 2", you will get "wizardOfOz2"
  *
- * @param str
+ * @example
+ * pf1.utils.createTag("Wizard of Oz 2"); // => "wizardOfOz2"
+ *
+ * @param {string} str
  */
 export const createTag = function (str) {
   if (str.length === 0) str = "tag";
@@ -21,56 +23,19 @@ export const createTag = function (str) {
 };
 
 /**
- * Alters a roll in string form.
- *
- * @param str
- * @param add
- * @param multiply
- */
-export const alterRoll = function (str, add, multiply) {
-  const rgx = /^([0-9]+)d([0-9]+)/;
-  // const rgx = new RegExp(Die.rgx.die, "g");
-  // if (str.match(/^([0-9]+)d([0-9]+)/)) {
-  return str.replace(rgx, (match, nd, d, mods) => {
-    nd = nd * (multiply || 1) + (add || 0);
-    mods = mods || "";
-    return (nd == null || Number.isNaN(nd) ? "" : nd) + "d" + d + mods;
-  });
-  // }
-};
-
-/**
- * @param {string} version - A version string to unpack. Must be something like '0.5.1'.
- * @returns {object} An object containing the keys 'release', 'major', and 'minor', which are numbers.
- */
-export const unpackVersion = function (version) {
-  if (version.match(/^([0-9]+)\.([0-9]+)(?:\.([0-9]+))?$/)) {
-    return {
-      release: parseInt(RegExp.$1),
-      major: parseInt(RegExp.$2),
-      minor: parseInt(RegExp.$3) || null,
-    };
-  }
-};
-
-/**
+ * @deprecated
  * @param {string} version - The minimum core version to compare to. Must be something like '0.5.1'.
  * @returns {boolean} Whether the current core version is at least the given version.
  */
 export const isMinimumCoreVersion = function (version) {
-  // TODO: Remove after 0.8.X
+  foundry.utils.logCompatibilityWarning("pf1.utils.isMinimumCoreVersion is deprecated with no replacement", {
+    since: "PF1 vNEXT",
+    until: "PF1 vNEXT+1",
+  });
   const coreVersion = SemanticVersion.fromString(game.version);
   const compareVersion = SemanticVersion.fromString(version);
 
   return !coreVersion.isLowerThan(compareVersion);
-};
-
-export const degtorad = function (degrees) {
-  return (degrees * Math.PI) / 180;
-};
-
-export const radtodeg = function (radians) {
-  return (radians / 180) * Math.PI;
 };
 
 /**
@@ -153,6 +118,10 @@ export const getActorFromId = function (id) {
 /**
  * Converts feet to what the world is using as a measurement unit.
  *
+ * @example
+ * // With metric enabled
+ * pf1.utils.convertDistance(30); // => [9, "m"]
+ *
  * @param {number} value - The value (in feet) to convert.
  * @param {"ft"|"mi"} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
  * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in PF1.measureUnits, for example)
@@ -198,7 +167,7 @@ export const convertDistanceBack = function (value, type = "ft") {
 /**
  * Calculate overland speed per hour
  *
- * @see {@link https://www.aonprd.com/Rules.aspx?Name=Movement&Category=Exploration}
+ * @see {@link https://www.aonprd.com/Rules.aspx?Name=Movement&Category=Exploration Exploration Movement rules}
  *
  * @example
  * // metric
@@ -250,13 +219,16 @@ export const getWeightSystem = () => {
 /**
  * Measure distance between two points.
  *
- * @param {Point} p0 Start point on canvas
- * @param {Point} p1 End point on canvas
- * @param {object} options Measuring options.
- * @param {"5105"|"555"} options.diagonalRule Used diagonal rule. Defaults to 5/10/5 PF measuring.
- * @param {Ray} options.ray Pre-generated ray to use instead of the points.
- * @param {MeasureState} options.state Optional state tracking across multiple measures.
- * @returns {number} Grid distance between the two points.
+ * @example
+ * pf1.utils.measureDistance(token, game.user.targets.first());
+ *
+ * @param {Point} p0 - Start point on canvas
+ * @param {Point} p1 - End point on canvas
+ * @param {object} [options] - Measuring options.
+ * @param {"5105"|"555"} [options.diagonalRule="5105"] - Used diagonal rule. Defaults to 5/10/5 PF measuring.
+ * @param {Ray} [options.ray=null] - Pre-generated ray to use instead of the points.
+ * @param {MeasureState} [options.state] - Optional state tracking across multiple measures.
+ * @returns {number} - Grid distance between the two points.
  */
 export const measureDistance = function (
   p0,
@@ -307,6 +279,12 @@ export const convertWeight = function (value) {
 
 /**
  * Converts back to lbs from what the world is using as a measurement unit.
+ *
+ * @example
+ * // Assuming metric is enabled
+ * pf1.utils.convertWeightBack(10); // => 20
+ * // With metric disabled
+ * pf1.utils.convertWeightBack(10); // => 10
  *
  * @param {number} value - The value to convert back to lbs.
  * @returns {number} The converted value. In the case of the metric system, converts from kg.
@@ -1064,6 +1042,10 @@ export const diffObjectAndArray = function (original, other, { inner = false, ke
 /**
  * Determines what ability modifier is appropriate for a given score.
  *
+ * @example
+ * pf1.utils.getAbilityModifier(15); // => 2
+ * pf1.utils.getAbilityModifier(6, { damage: 1 }); // => -2
+ *
  * @param {number} [score] - The score to find the modifier for.
  * @param {object} [options={}] - Options for this function.
  * @param {number} [options.penalty=0] - A penalty value to take into account.
@@ -1082,6 +1064,7 @@ export function getAbilityModifier(score = null, options = {}) {
 /**
  * Recursively transforms an ES module to a regular, writable object.
  *
+ * @internal
  * @template T
  * @param {T} module - The ES module to transform.
  * @returns {T} The transformed module.

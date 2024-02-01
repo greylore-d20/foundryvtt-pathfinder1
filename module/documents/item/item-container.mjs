@@ -17,6 +17,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context
@@ -84,6 +85,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} context
    * @param {User} user

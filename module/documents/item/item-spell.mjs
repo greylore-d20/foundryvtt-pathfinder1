@@ -13,6 +13,7 @@ export class ItemSpellPF extends ItemPF {
   });
 
   /**
+   * @internal
    * @override
    * @param {object} data Creation data
    * @param {object} options Context options
@@ -23,6 +24,13 @@ export class ItemSpellPF extends ItemPF {
     this._assignLevelOnCreate(data, options);
   }
 
+  /**
+   * @internal
+   * @override
+   * @param {object} changed
+   * @param {object} options
+   * @param {User} user
+   */
   async _preUpdate(changed, options, user) {
     await super._preUpdate(changed, options, user);
 

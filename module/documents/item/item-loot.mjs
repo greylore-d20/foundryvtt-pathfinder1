@@ -6,6 +6,7 @@ export class ItemLootPF extends ItemPhysicalPF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context
@@ -27,6 +28,7 @@ export class ItemLootPF extends ItemPhysicalPF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} context
    * @param {User} user

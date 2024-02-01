@@ -3,6 +3,7 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ItemBuffPF extends ItemPF {
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context
@@ -123,6 +124,7 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} context
    * @param {User} user

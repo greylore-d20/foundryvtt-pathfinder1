@@ -4,6 +4,7 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ItemClassPF extends ItemPF {
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context

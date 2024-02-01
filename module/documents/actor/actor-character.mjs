@@ -3,7 +3,7 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ActorCharacterPF extends ActorPF {
   /**
-   * @protected
+   * @internal
    * @override
    * @param {object} data
    * @param {object} context
@@ -37,7 +37,7 @@ export class ActorCharacterPF extends ActorPF {
   }
 
   /**
-   * @protected
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context

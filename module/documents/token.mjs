@@ -1,5 +1,6 @@
 export class TokenDocumentPF extends TokenDocument {
   /**
+   * @internal
    * @override
    * @param {object} data
    * @param {object} context
@@ -12,6 +13,7 @@ export class TokenDocumentPF extends TokenDocument {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context

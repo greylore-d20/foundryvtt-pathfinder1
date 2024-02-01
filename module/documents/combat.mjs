@@ -264,6 +264,7 @@ export class CombatPF extends Combat {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context

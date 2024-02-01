@@ -65,6 +65,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} data
    * @param {object} context
@@ -132,6 +133,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context

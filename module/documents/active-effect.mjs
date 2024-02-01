@@ -1,5 +1,6 @@
 export class ActiveEffectPF extends ActiveEffect {
   /**
+   * @internal
    * @override
    * @param {object} data - Creation data
    * @param {object} context - Creation context

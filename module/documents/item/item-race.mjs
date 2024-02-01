@@ -10,6 +10,7 @@ export class ItemRacePF extends ItemPF {
   });
 
   /**
+   * @internal
    * @override
    * @param {object} data
    * @param {object} context
@@ -35,6 +36,7 @@ export class ItemRacePF extends ItemPF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context

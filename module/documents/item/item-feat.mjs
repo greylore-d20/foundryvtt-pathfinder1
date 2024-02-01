@@ -2,6 +2,7 @@ import { ItemPF } from "./item-pf.mjs";
 
 export class ItemFeatPF extends ItemPF {
   /**
+   * @internal
    * @override
    * @param {object} context
    * @param {User} user

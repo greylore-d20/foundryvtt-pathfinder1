@@ -59,6 +59,7 @@ export class ActorPF extends ActorBasePF {
       /**
        * Cached roll data for this item.
        *
+       * @internal
        * @type {object}
        */
       this._rollData = null;
@@ -86,6 +87,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * @internal
    * @override
    * @param {object} data
    * @param {object} context
@@ -2048,6 +2050,7 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   /**
+   * @internal
    * @override
    * @param {object} changed
    * @param {object} context
@@ -2271,6 +2274,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * @internal
    * @override
    * @param {Item|Actor} parent - Parent document
    * @param {"items"|"effects"} collection - Collection name
@@ -2340,6 +2344,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * @internal
    * @override
    * @param {*} parent
    * @param {"items"|"effects"} collection
@@ -4177,7 +4182,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @protected
+   * @internal
    * @override
    * @param {*} embeddedName
    * @param {*} createData

@@ -3,6 +3,7 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ActorNPCPF extends ActorPF {
   /**
+   * @internal
    * @override
    * @param {object} data
    * @param {object} context

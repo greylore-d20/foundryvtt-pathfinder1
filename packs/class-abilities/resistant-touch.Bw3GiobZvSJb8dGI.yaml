@@ -11,6 +11,8 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      description: <p>+[[1 + floor(@class.level / 5)]] resistance bonus to ally touched</p>
       duration:
         units: minute
         value: '1'
@@ -35,6 +37,9 @@ system:
     pages: '46'
   subType: classFeat
   tag: classFeat_resistantTouch
+  tags:
+    - Domain Power
+    - Protection Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

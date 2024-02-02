@@ -7,9 +7,10 @@ system:
   actions:
     - _id: c2t0othmu54ccufz
       activation:
-        type: free
+        type: passive
         unchained:
-          type: free
+          type: passive
+      ammoType: none
       duration:
         units: round
         value: '1'
@@ -34,6 +35,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_liberation
+  tags:
+    - Domain Power
+    - Liberation Domain
   uses:
     maxFormula: '@class.level'
     per: day

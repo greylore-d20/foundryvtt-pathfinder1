@@ -6,20 +6,25 @@ system:
   abilityType: sp
   actions:
     - _id: viyvdnyxrxige8js
+      actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: minute
         value: '1'
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/skills/ice_16.jpg
       name: Use
       range:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -35,6 +40,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_touchOfLaw
+  tags:
+    - Domain Power
+    - Law Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

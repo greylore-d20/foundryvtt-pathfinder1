@@ -6,13 +6,19 @@ system:
   abilityType: su
   actions:
     - _id: afnz5qdr435iv4to
+      ability:
+        attack: wis
+      actionType: twak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: inst
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/skills/light_10.jpg
       name: Use
       range:
@@ -38,6 +44,9 @@ system:
     pages: '46'
   subType: classFeat
   tag: classFeat_handOfTheAcolyte
+  tags:
+    - Domain Power
+    - Magic Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

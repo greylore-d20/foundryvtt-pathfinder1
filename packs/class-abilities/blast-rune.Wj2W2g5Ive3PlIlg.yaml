@@ -11,10 +11,14 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: round
         value: '@class.level'
       img: systems/pf1/icons/spells/runes-orange-2.jpg
+      measureTemplate:
+        size: '5'
+        type: rect
       name: Use
       range:
         units: ft
@@ -42,6 +46,9 @@ system:
     pages: '47'
   subType: classFeat
   tag: classFeat_blastRune
+  tags:
+    - Domain Power
+    - Rune Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

@@ -4,22 +4,23 @@ img: systems/pf1/icons/spells/protect-jade-1.jpg
 name: Guarded Mind
 system:
   abilityType: ex
-  actions:
-    - _id: kyqzoaxhyl9hrqr6
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/spells/protect-jade-1.jpg
-      name: Use
   associations:
     classes:
       - Cleric
+  contextNotes:
+    - subTarget: allSavingThrows
+      text: +2 Insight bonus against all mind-affecting effects.
   description:
     value: >-
       <p>You gain a +2 insight bonus on saving throws against all mind-affecting
       effects.</p>
+  source:
+    id: PZO1139
+    pages: '182'
   subType: classFeat
   tag: classFeat_guardedMind
+  tags:
+    - Domain Power
+    - Void Domain
 type: feat
 

@@ -12,6 +12,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       damage:
         parts:
           - formula: 1d4 + floor(@class.level / 2)
@@ -27,6 +28,7 @@ system:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -42,6 +44,9 @@ system:
     pages: '44'
   subType: classFeat
   tag: classFeat_rebukeDeath
+  tags:
+    - Domain Power
+    - Healing Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

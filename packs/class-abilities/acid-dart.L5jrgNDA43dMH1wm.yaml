@@ -1,7 +1,7 @@
 _id: L5jrgNDA43dMH1wm
 _key: '!items!L5jrgNDA43dMH1wm'
 img: systems/pf1/icons/spells/beam-acid-1.jpg
-name: Acid Dart (CLE)
+name: Acid Dart
 system:
   abilityType: sp
   actions:
@@ -14,6 +14,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       damage:
         parts:
           - formula: 1d6 + floor(@class.level / 2)
@@ -23,6 +24,8 @@ system:
                 - acid
       duration:
         units: inst
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/spells/beam-acid-1.jpg
       name: Use
       range:
@@ -30,9 +33,11 @@ system:
         value: '30'
       target:
         value: one creature
+      touch: true
   associations:
     classes:
       - Cleric
+      - Druid
   description:
     value: >-
       <p>As a standard action, you can unleash an acid dart targeting any foe
@@ -44,7 +49,10 @@ system:
     id: PZO1110
     pages: '43'
   subType: classFeat
-  tag: classFeat_acidDartCle
+  tag: classFeat_acidDart
+  tags:
+    - Domain Power
+    - Earth Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

@@ -7,9 +7,14 @@ system:
   actions:
     - _id: 099m3r7zv70rdzc9
       activation:
-        type: free
+        type: standard
         unchained:
-          type: free
+          cost: 2
+          type: action
+      ammoType: none
+      duration:
+        units: minute
+        value: '@class.level'
       img: systems/pf1/icons/skills/emerald_06.jpg
       name: Use
       range:
@@ -19,15 +24,20 @@ system:
   associations:
     classes:
       - Cleric
+      - Druid
   description:
     value: >-
-      <p>You can speak with animals, as per the spell, for a number of rounds
-      per day equal to 3 + your cleric level.</p>
+      <p>You can speak with animals, as per the
+      @UUID[Compendium.pf1.spells.Item.ct9fhh8uawn8e4md]{spell}, for a number of
+      rounds per day equal to 3 + your cleric level.</p>
   source:
     id: PZO1110
     pages: '41'
   subType: classFeat
   tag: classFeat_speakWithAnimals
+  tags:
+    - Domain Power
+    - Animal Domain
   uses:
     maxFormula: 3 + @class.level
     per: day

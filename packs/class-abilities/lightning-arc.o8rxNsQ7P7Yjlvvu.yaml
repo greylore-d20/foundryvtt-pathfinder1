@@ -14,6 +14,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       damage:
         parts:
           - formula: 1d6 + (floor(@class.level / 2))
@@ -23,6 +24,8 @@ system:
                 - electric
       duration:
         units: inst
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/spells/lightning-blue-1.jpg
       name: Use
       range:
@@ -33,6 +36,7 @@ system:
   associations:
     classes:
       - Cleric
+      - Druid
   description:
     value: >-
       <p>As a standard action, you can unleash an arc of electricity targeting
@@ -45,6 +49,9 @@ system:
     pages: '41'
   subType: classFeat
   tag: classFeat_lightningArc
+  tags:
+    - Domain Power
+    - Air Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

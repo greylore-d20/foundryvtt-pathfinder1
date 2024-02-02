@@ -6,20 +6,32 @@ system:
   abilityType: sp
   actions:
     - _id: ix4r5k1d8rsoh2lp
+      actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: round
         value: max(1, floor(@class.level / 2))
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/skills/blood_03.jpg
       name: Use
       range:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -35,6 +47,9 @@ system:
     pages: '42'
   subType: classFeat
   tag: classFeat_bleedingTouch
+  tags:
+    - Domain Power
+    - Death Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

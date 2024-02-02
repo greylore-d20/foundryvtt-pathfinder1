@@ -7,9 +7,12 @@ system:
   actions:
     - _id: lrei12zfzl8y1705
       activation:
-        type: swift
+        type: standard
         unchained:
+          cost: 2
           type: action
+      ammoType: none
+      area: 30-foot aura
       duration:
         units: round
         value: '1'
@@ -19,7 +22,7 @@ system:
         units: ft
         value: '30'
       target:
-        value: aura
+        value: All creatures in the aura (including you)
   associations:
     classes:
       - Cleric
@@ -35,6 +38,9 @@ system:
     pages: '43'
   subType: classFeat
   tag: classFeat_destructiveAura
+  tags:
+    - Domain Power
+    - Destruction Domain
   uses:
     maxFormula: floor(@class.level / 2)
     per: day

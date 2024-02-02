@@ -6,19 +6,26 @@ system:
   abilityType: sp
   actions:
     - _id: eliuplljjuhh80pn
+      ability:
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: inst
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/items/inventory/book-grey.jpg
       name: Use
       range:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -33,6 +40,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_loreKeeper
+  tags:
+    - Domain Power
+    - Knowledge Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

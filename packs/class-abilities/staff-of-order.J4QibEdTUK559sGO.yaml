@@ -11,6 +11,16 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      description: >-
+        <p>An axiomatic weapon is infused with lawful power. It makes the weapon
+        law-aligned and thus bypasses the corresponding damage reduction. It
+        deals an extra 2d6 points of damage against chaotic creatures. It
+        bestows one permanent negative level (Core Rulebook 562) on any chaotic
+        creature attempting to wield it. The negative level remains as long as
+        the weapon is in hand and disappears when the weapon is no longer
+        wielded. This negative level cannot be overcome in any way (including
+        restoration spells) while the weapon is wielded.</p>
       duration:
         units: round
         value: floor(@class.level / 2)
@@ -20,6 +30,7 @@ system:
         units: touch
       target:
         value: weapon touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -34,6 +45,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_staffOfOrder
+  tags:
+    - Domain Power
+    - Law Domain
   uses:
     maxFormula: floor((@class.level - 4) / 4)
     per: day

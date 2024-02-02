@@ -6,19 +6,31 @@ system:
   abilityType: sp
   actions:
     - _id: qxs2f13i3f23ojuy
+      actionType: heal
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      damage:
+        parts:
+          - formula: 1d6 + @class.level
+            type:
+              custom: ''
+              values:
+                - nonlethal
       duration:
         units: inst
+      effectNotes:
+        - Removes the fatigued, shaken, and sickened.
       img: systems/pf1/icons/skills/light_10.jpg
       name: Use
       range:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -34,6 +46,9 @@ system:
     pages: '42'
   subType: classFeat
   tag: classFeat_calmingTouch
+  tags:
+    - Domain Power
+    - Community Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

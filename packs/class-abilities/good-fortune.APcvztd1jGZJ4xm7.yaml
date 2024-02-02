@@ -10,6 +10,7 @@ system:
         type: immediate
         unchained:
           type: reaction
+      ammoType: none
       duration:
         units: inst
       img: systems/pf1/icons/items/inventory/ore-gold.jpg
@@ -33,6 +34,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_goodFortune
+  tags:
+    - Domain Power
+    - Luck Domain
   uses:
     maxFormula: floor(@class.level / 6)
     per: day

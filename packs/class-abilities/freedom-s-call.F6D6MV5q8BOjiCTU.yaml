@@ -9,14 +9,15 @@ system:
       activation:
         type: standard
         unchained:
-          type: standard
+          cost: 2
+          type: action
+      ammoType: none
       duration:
         units: round
         value: '1'
       img: systems/pf1/icons/skills/red_10.jpg
       name: Use
       range:
-        maxIncrements: '1'
         units: ft
         value: '30'
       target:
@@ -37,6 +38,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_freedomsCall
+  tags:
+    - Domain Power
+    - Liberation Domain
   uses:
     maxFormula: '@class.level'
     per: day

@@ -11,6 +11,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: hour
         value: '1'
@@ -20,6 +21,7 @@ system:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -36,6 +38,9 @@ system:
     pages: '44'
   subType: classFeat
   tag: classFeat_touchOfGlory
+  tags:
+    - Domain Power
+    - Glory Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

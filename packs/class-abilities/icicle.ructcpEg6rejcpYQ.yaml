@@ -14,6 +14,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       damage:
         parts:
           - formula: 1d6 + floor(@class.level / 2)
@@ -23,6 +24,8 @@ system:
                 - cold
       duration:
         units: inst
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/skills/ice_01.jpg
       name: Use
       range:
@@ -30,9 +33,11 @@ system:
         value: '30'
       target:
         value: one creature
+      touch: true
   associations:
     classes:
       - Cleric
+      - Druid
   description:
     value: >-
       <p>As a standard action, you can fire an icicle from your finger,
@@ -45,6 +50,9 @@ system:
     pages: '48'
   subType: classFeat
   tag: classFeat_icicle
+  tags:
+    - Domain Power
+    - Water Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

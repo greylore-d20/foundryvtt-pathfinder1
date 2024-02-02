@@ -7,9 +7,11 @@ system:
   actions:
     - _id: mpwxv57ysm7yarav
       activation:
-        type: swift
+        type: standard
         unchained:
+          cost: 2
           type: action
+      ammoType: none
       duration:
         units: round
         value: '1'
@@ -33,6 +35,9 @@ system:
     pages: '42'
   subType: classFeat
   tag: classFeat_eyesOfDarkness
+  tags:
+    - Domain Power
+    - Darkness Domain
   uses:
     maxFormula: floor(@class.level / 2)
     per: day

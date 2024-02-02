@@ -10,6 +10,7 @@ system:
         type: move
         unchained:
           type: action
+      ammoType: none
       duration:
         units: round
         value: '@class.level'
@@ -37,6 +38,9 @@ system:
     pages: '48'
   subType: classFeat
   tag: classFeat_copycat
+  tags:
+    - Domain Power
+    - Trickery Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

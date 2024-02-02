@@ -10,8 +10,17 @@ system:
         type: move
         unchained:
           type: action
+      ammoType: none
+      duration:
+        units: inst
       img: systems/pf1/icons/spells/link-eerie-1.jpg
       name: Use
+      range:
+        maxIncrements: null
+        units: ft
+        value: 10 * @class.level
+      target:
+        value: You and other willing creatures
   associations:
     classes:
       - Cleric
@@ -28,5 +37,8 @@ system:
     pages: '47'
   subType: classFeat
   tag: classFeat_dimensionalHop
+  tags:
+    - Domain Power
+    - Travel Domain
 type: feat
 

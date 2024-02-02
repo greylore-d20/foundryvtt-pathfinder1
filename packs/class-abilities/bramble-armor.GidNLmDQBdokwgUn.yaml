@@ -10,18 +10,44 @@ system:
         type: free
         unchained:
           type: free
+      ammoType: none
       duration:
         units: round
         value: '1'
       img: systems/pf1/icons/skills/green_26.jpg
-      name: Use
+      name: Activate
       range:
         units: personal
       target:
         value: self
+    - _id: hWfEfeToQy9S6Hpm
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      damage:
+        parts:
+          - formula: 1d6 + floor(@class.level / 2)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+        value: ''
+      img: systems/pf1/icons/skills/green_26.jpg
+      name: Apply damage to enemy
+      target:
+        value: >-
+          foes striking you with an unarmed strike or a melee weapon without
+          reach
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Cleric
+      - Druid
   description:
     value: >-
       <p>At 6th level, you can cause a host of wooden thorns to burst from your
@@ -35,6 +61,9 @@ system:
     pages: '46'
   subType: classFeat
   tag: classFeat_brambleArmor
+  tags:
+    - Domain Power
+    - Plant Domain
   uses:
     maxFormula: '@class.level'
     per: day

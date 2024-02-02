@@ -10,6 +10,7 @@ system:
         type: free
         unchained:
           type: free
+      ammoType: none
       duration:
         units: round
         value: '1'
@@ -22,6 +23,7 @@ system:
   associations:
     classes:
       - Cleric
+      - Druid
   description:
     value: >-
       <p>As a free action, your hands can become as hard as wood, covered in
@@ -35,6 +37,9 @@ system:
     pages: '46'
   subType: classFeat
   tag: classFeat_woodenFist
+  tags:
+    - Domain Power
+    - Plant Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

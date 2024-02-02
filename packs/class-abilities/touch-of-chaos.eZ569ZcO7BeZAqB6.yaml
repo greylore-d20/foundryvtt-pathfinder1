@@ -6,20 +6,27 @@ system:
   abilityType: sp
   actions:
     - _id: mpzmhg8k1ck6fqfo
+      ability:
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: round
         value: '1'
+      formulaicAttacks:
+        label: ''
       img: systems/pf1/icons/spells/rip-water-1.jpg
       name: Use
       range:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -34,6 +41,9 @@ system:
     pages: '42'
   subType: classFeat
   tag: classFeat_touchOfChaos
+  tags:
+    - Domain Power
+    - Chaos Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

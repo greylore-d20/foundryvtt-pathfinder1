@@ -6,10 +6,13 @@ system:
   abilityType: su
   actions:
     - _id: mc81owbvxuhas70b
+      actionType: save
       activation:
-        type: swift
+        type: standard
         unchained:
+          cost: 2
           type: action
+      ammoType: none
       duration:
         units: round
         value: '1'
@@ -18,6 +21,10 @@ system:
       range:
         units: ft
         value: '30'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
+        description: Will negates
+        type: will
       target:
         value: enemies in range
   associations:
@@ -37,6 +44,9 @@ system:
     pages: '45'
   subType: classFeat
   tag: classFeat_auraOfMadness
+  tags:
+    - Domain Power
+    - Madness Domain
   uses:
     maxFormula: '@class.level'
     per: day

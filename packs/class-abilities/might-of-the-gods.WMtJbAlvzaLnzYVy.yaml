@@ -7,9 +7,11 @@ system:
   actions:
     - _id: 8jutek7gr29meuok
       activation:
-        type: free
+        type: standard
         unchained:
-          type: free
+          cost: 2
+          type: action
+      ammoType: none
       duration:
         units: round
         value: '1'
@@ -33,6 +35,9 @@ system:
     pages: '47'
   subType: classFeat
   tag: classFeat_mightOfTheGods
+  tags:
+    - Domain Power
+    - Strength Domain
   uses:
     maxFormula: '@class.level'
     per: day

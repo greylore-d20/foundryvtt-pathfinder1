@@ -6,27 +6,29 @@ system:
   abilityType: sp
   actions:
     - _id: rl9rumjg9s25uq65
-      actionType: spellsave
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      ammoType: none
       damage:
         parts:
           - formula: 1d6 + floor(@class.level / 2)
             type:
               custom: ''
               values:
-                - untyped
+                - nonlethal
       duration:
-        units: inst
+        units: round
+        value: '1'
       img: systems/pf1/icons/skills/green_29.jpg
       name: Use
       range:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
         description: Will negates
         type: will
       target:
@@ -44,8 +46,14 @@ system:
       levels you possess and are fascinated until the beginning of your next
       turn. You can use this ability a number of times per day equal to 3 + your
       Wisdom modifier. This is a mind-affecting effect.</p>
+  source:
+    id: PZO1139
+    pages: '181'
   subType: classFeat
   tag: classFeat_venomousStare
+  tags:
+    - Domain Power
+    - Scalykind Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

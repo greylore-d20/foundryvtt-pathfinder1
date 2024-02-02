@@ -10,9 +10,13 @@ system:
         type: immediate
         unchained:
           type: reaction
+      ammoType: none
       duration:
         units: inst
       img: systems/pf1/icons/skills/violet_03.jpg
+      measureTemplate:
+        size: '30'
+        type: circle
       name: Use
       range:
         units: personal
@@ -35,6 +39,9 @@ system:
     pages: '42'
   subType: classFeat
   tag: classFeat_unity
+  tags:
+    - Domain Power
+    - Community Domain
   uses:
     maxFormula: floor((@class.level - 4) / 4)
     per: day

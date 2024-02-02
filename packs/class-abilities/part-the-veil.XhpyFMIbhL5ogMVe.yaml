@@ -10,6 +10,7 @@ system:
         type: swift
         unchained:
           type: action
+      ammoType: none
       img: systems/pf1/icons/spells/rip-acid-2.jpg
       name: Use
   associations:
@@ -30,8 +31,14 @@ system:
       confusion effect and not to the original spell effect. Part the veil is a
       mind-affecting effect. You can use this ability a number of times per day
       equal to 1/2 your class level.</p>
+  source:
+    id: PZO1139
+    pages: '182'
   subType: classFeat
   tag: classFeat_partTheVeil
+  tags:
+    - Domain Power
+    - Void Domain
   uses:
     maxFormula: floor(@class.level / 2)
     per: day

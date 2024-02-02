@@ -11,6 +11,17 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
+      description: >-
+        <p>An anarchic weapon is infused with the power of chaos. It makes the
+        weapon chaotically aligned and thus bypasses the corresponding damage
+        reduction. It deals an extra 2d6 points of damage against all creatures
+        of lawful alignment. It bestows one permanent negative level (Core
+        Rulebook 562) on any lawful creature attempting to wield it. The
+        negative level remains as long as the weapon is in hand and disappears
+        when the weapon is no longer wielded. This negative level cannot be
+        overcome in any way (including restoration spells) while the weapon is
+        wielded.</p>
       duration:
         units: round
         value: floor(@class.level / 2)
@@ -20,6 +31,7 @@ system:
         units: touch
       target:
         value: weapon touched
+      touch: true
   associations:
     classes:
       - Cleric
@@ -34,6 +46,9 @@ system:
     pages: '42'
   subType: classFeat
   tag: classFeat_chaosBlade
+  tags:
+    - Domain Power
+    - Chaos Domain
   uses:
     maxFormula: floor((@class.level - 4) / 4)
     per: day

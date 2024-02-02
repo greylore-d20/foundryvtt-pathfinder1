@@ -11,6 +11,7 @@ system:
         unchained:
           cost: 2
           type: action
+      ammoType: none
       duration:
         units: round
         value: floor(@class.level / 2)
@@ -36,6 +37,9 @@ system:
     pages: '46'
   subType: classFeat
   tag: classFeat_inspiringWord
+  tags:
+    - Domain Power
+    - Nobility Domain
   uses:
     maxFormula: 3 + @abilities.wis.mod
     per: day

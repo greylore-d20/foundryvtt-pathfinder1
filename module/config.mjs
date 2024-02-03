@@ -1503,15 +1503,15 @@ export const casterProgression = {
  * Character senses options
  */
 export const senses = {
-  bs: "PF1.SenseBS",
-  bse: "PF1.SenseBSense",
-  dv: "PF1.SenseDV",
-  ts: "PF1.SenseTS",
-  tr: "PF1.SenseTR",
-  ll: "PF1.SenseLL",
-  si: "PF1.SenseSI",
-  sid: "PF1.SenseSID",
-  sc: "PF1.SenseSC",
+  bs: "PF1.Sense.blindsight",
+  bse: "PF1.Sense.blindsense",
+  dv: "PF1.Sense.darkvision",
+  ts: "PF1.Sense.tremorsense",
+  tr: "PF1.Sense.truesight",
+  ll: "PF1.Sense.lowlight",
+  si: "PF1.Sense.seeInvis",
+  sid: "PF1.Sense.seeInDark",
+  sc: "PF1.Sense.scent",
 };
 
 /* -------------------------------------------- */

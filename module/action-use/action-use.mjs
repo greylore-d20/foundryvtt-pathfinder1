@@ -1095,14 +1095,14 @@ export class ActionUse {
             itemAlignments[alignment])
         ) {
           // The item has the alignment)
-          properties.push(game.i18n.localize(`PF1.Alignments.${alignment}`));
+          properties.push(game.i18n.localize(`PF1.Alignments.${alignment[0]}`));
         }
       }
     } else {
       // Honestly, this should never happen. An action should always have an alignment now.
       for (const alignment of Object.keys(itemAlignments)) {
         if (itemAlignments[alignment]) {
-          properties.push(game.i18n.localize(`PF1.Alignments.${alignment}`));
+          properties.push(game.i18n.localize(`PF1.Alignments.${alignment[0]}`));
         }
       }
     }

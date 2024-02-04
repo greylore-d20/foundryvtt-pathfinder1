@@ -7,11 +7,13 @@ system:
   actions:
     - _id: vdpeu8pfvgw0werj
       activation:
-        type: passive
+        type: standard
         unchained:
-          type: passive
+          cost: 2
+          type: action
+      ammoType: none
       img: systems/pf1/icons/items/inventory/book-tan.jpg
-      name: Use
+      name: Take 20
   associations:
     classes:
       - Bard
@@ -29,5 +31,8 @@ system:
     pages: '38'
   subType: classFeat
   tag: classFeat_loreMaster
+  uses:
+    maxFormula: floor((@class.level + 1) / 6)
+    per: day
 type: feat
 

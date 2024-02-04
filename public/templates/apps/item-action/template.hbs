@@ -1,9 +1,11 @@
 {{!-- Template Type --}}
 <div class="form-group select">
   <label>{{localize "PF1.TemplateType"}}</label>
-  <select name="measureTemplate.type">
-    {{selectOptions config.measureTemplateTypes selected=data.measureTemplate.type blank=""}}
-  </select>
+    <div class="form-fields">
+    <select name="measureTemplate.type">
+      {{selectOptions config.measureTemplateTypes selected=data.measureTemplate.type blank=""}}
+    </select>
+  </div>
 </div>
 
 {{#if data.measureTemplate.type}}

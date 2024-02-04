@@ -76,10 +76,12 @@
       {{#if (eq system.subType "trait")}}
       <div class="form-group select">
         <label>{{localize "PF1.TraitType"}}</label>
-        <select name="system.traitType">
-          <option value=""></option>
-          {{selectOptions config.traitTypes selected=system.traitType}}
-        </select>
+        <div class="form-fields">
+          <select name="system.traitType">
+            <option value=""></option>
+            {{selectOptions config.traitTypes selected=system.traitType}}
+          </select>
+        </div>
       </div>
       {{/if}}
 

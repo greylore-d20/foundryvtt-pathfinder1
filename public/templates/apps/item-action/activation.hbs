@@ -84,6 +84,20 @@
   </div>
 </div>
 
+<div class="form-group">
+  <label></label>
+  <div class="form-fields">
+    <label class="checkbox duration-concentration">
+      <input type="checkbox" name="duration.concentration" {{checked data.duration.concentration}}>
+      {{localize "PF1.Concentration"}}
+    </label>
+    <label class="checkbox duration-dismissable">
+      <input type="checkbox" name="duration.dismiss" {{checked data.duration.dismiss}}>
+      {{localize "PF1.Dismissable"}}
+    </label>
+  </div>
+</div>
+
 {{!-- Ammunition --}}
 {{#if canUseAmmo}}
 <h3 class="form-header">{{localize "PF1.Ammunition"}}</h3>

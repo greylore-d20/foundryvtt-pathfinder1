@@ -876,6 +876,12 @@ export class ItemSpellPF extends ItemPF {
           }
           break;
       }
+
+      // Dismissable
+      // TODO: Better i18n support
+      if (label.duration && duration.dismiss) {
+        label.duration += " " + game.i18n.localize("PF1.DismissableMark");
+      }
     }
 
     // Set effect label

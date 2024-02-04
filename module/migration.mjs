@@ -1965,34 +1965,46 @@ const _migrateActionSpellArea = (action, itemData) => {
   delete action.spellArea;
 };
 
-// Migrate spell duration units to special
+// Action duration
 // Added with PF1 vNEXT
 const _migrateActionDuration = (action, itemData) => {
-  // Swap units to special if undefined and formula exists
-  if (!action.duration?.units && !!action.duration?.value) {
+  action.duration ??= {};
+
+  // Something has caused "null" string durations for some people, this clears it.
+  if (action.duration.value === "null") action.duration.value = "";
+
+  // Swap units to "special" if undefined and formula exists
+  if (!action.duration.units && !!action.duration.value) {
     action.duration.units = "spec";
   }
 
   // Swap "instantaneous" formula to instantaneous unit
-  if (action.duration?.value === "instantaneous") {
+  if (action.duration.value === "instantaneous") {
     delete action.duration.value;
     action.duration.units = "inst";
   }
 
   // Convert easy special values to actual duration info
-  if (action.duration?.units === "spec") {
-    switch (action.duration?.value) {
+  if (action.duration.units === "spec") {
+    const value = action.duration.value || "";
+
+    switch (value) {
       case "1 round":
       case "1 full round":
         action.duration.value = "1";
         action.duration.units = "round";
         break;
+      case "1 min.":
       case "1 minute":
         action.duration.value = "1";
         action.duration.units = "minute";
         break;
       case "1 hour":
         action.duration.value = "1";
+        action.duration.units = "hour";
+        break;
+      case "8 hours":
+        action.duration.value = "8";
         action.duration.units = "hour";
         break;
       case "24 hours":
@@ -2007,6 +2019,7 @@ const _migrateActionDuration = (action, itemData) => {
         delete action.duration.value;
         action.duration.units = "perm";
         break;
+      case "see below":
       case "see text":
         delete action.duration.value;
         action.duration.units = "seeText";

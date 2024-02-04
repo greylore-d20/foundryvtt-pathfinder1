@@ -21,6 +21,8 @@ export function getActionDefaultData() {
     duration: {
       value: null,
       units: "",
+      dismiss: false,
+      concentration: false,
     },
     target: {
       value: "",

@@ -788,6 +788,8 @@ export class ItemSpellPF extends ItemPF {
     const firstAction = this.firstAction;
     const actionData = firstAction?.data ?? {};
 
+    const rollData = firstAction?.getRollData();
+
     const label = {
       school: pf1.config.spellSchools[srcData.school],
       subschool: srcData.subschool || "",
@@ -842,10 +844,40 @@ export class ItemSpellPF extends ItemPF {
     label.components = this.getSpellComponents().join(", ");
 
     // Set duration label
-    {
-      const duration = actionData.duration?.value;
-      if (duration) label.duration = duration;
+    const duration = actionData.duration;
+    if (duration?.units) {
+      switch (duration.units) {
+        case "spec":
+          label.duration = duration.value;
+          break;
+        case "seeText":
+        case "inst":
+        case "perm":
+          label.duration = pf1.config.timePeriods[duration.units];
+          break;
+        case "turn": {
+          const unit = pf1.config.timePeriods[duration.units];
+          label.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
+          break;
+        }
+        case "round":
+        case "minute":
+        case "hour":
+        case "day":
+        case "month":
+        case "year":
+          if (duration.value) {
+            const unit = pf1.config.timePeriods[duration.units];
+            const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
+            const value = roll.total;
+            if (!roll.err) {
+              label.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+            }
+          }
+          break;
+      }
     }
+
     // Set effect label
     {
       const effect = actionData.spellEffect;

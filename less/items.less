@@ -109,8 +109,15 @@
       }
 
       .form-group.input-select {
-        select {
-          flex: 1.8;
+        &.activation-cost {
+          select {
+            flex: 1.8;
+          }
+        }
+        &.duration {
+          select {
+            flex: 1;
+          }
         }
       }
 
@@ -466,7 +473,8 @@
       }
     }
 
-    .formula {
+    .formula,
+    .text-input {
       flex: 10 0 80px;
 
       .result {

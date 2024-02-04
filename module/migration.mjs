@@ -898,6 +898,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionAmmunitionUsage(action, itemData, updateData);
   _migrateActionHarmlessSpell(action, itemData);
   _migrateActionSpellArea(action, itemData);
+  _migrateActionDuration(action, itemData);
   _migrateActionObsoleteTypes(action, itemData);
 
   // Return the migrated update data
@@ -1962,6 +1963,56 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
 const _migrateActionSpellArea = (action, itemData) => {
   action.area ||= action.spellArea;
   delete action.spellArea;
+};
+
+// Migrate spell duration units to special
+// Added with PF1 vNEXT
+const _migrateActionDuration = (action, itemData) => {
+  // Swap units to special if undefined and formula exists
+  if (!action.duration?.units && !!action.duration?.value) {
+    action.duration.units = "spec";
+  }
+
+  // Swap "instantaneous" formula to instantaneous unit
+  if (action.duration?.value === "instantaneous") {
+    delete action.duration.value;
+    action.duration.units = "inst";
+  }
+
+  // Convert easy special values to actual duration info
+  if (action.duration?.units === "spec") {
+    switch (action.duration?.value) {
+      case "1 round":
+      case "1 full round":
+        action.duration.value = "1";
+        action.duration.units = "round";
+        break;
+      case "1 minute":
+        action.duration.value = "1";
+        action.duration.units = "minute";
+        break;
+      case "1 hour":
+        action.duration.value = "1";
+        action.duration.units = "hour";
+        break;
+      case "24 hours":
+        action.duration.value = "24";
+        action.duration.units = "hour";
+        break;
+      case "1 day":
+        action.duration.value = "1";
+        action.duration.units = "day";
+        break;
+      case "permanent":
+        delete action.duration.value;
+        action.duration.units = "perm";
+        break;
+      case "see text":
+        delete action.duration.value;
+        action.duration.units = "seeText";
+        break;
+    }
+  }
 };
 
 /**

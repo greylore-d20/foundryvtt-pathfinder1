@@ -1,5 +1,5 @@
 {{!-- Activation Cost --}}
-<div class="form-group input-select">
+<div class="form-group input-select activation-cost">
   <label>{{localize "PF1.ActivationCost"}}</label>
   <div class="form-fields">
     <input type="number" name="activation{{#if unchainedActionEconomy}}.unchained{{/if}}.cost"
@@ -72,17 +72,15 @@
 </div>
 
 {{!-- Effect Duration --}}
-<div class="form-group input-select">
+<div class="form-group input-select duration">
   <label>{{localize "PF1.Duration"}}</label>
   <div class="form-fields">
-    {{#if isSpell}}
-    <input type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.SpellDurationExample"}}">
-    {{else}}
-    {{#if canInputDuration}}<input class="formula" type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}">{{/if}}
-    <select name="duration.units">
-      {{selectOptions config.timePeriods selected=data.duration.units blank=""}}
-    </select>
+    {{#if canInputDuration}}
+    <input class="{{#if (eq data.duration.units "spec")}}text-input{{else}}formula{{/if}}" type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}">
     {{/if}}
+    <select name="duration.units">
+      {{selectOptions @root.config.timePeriods selected=data.duration.units blank=""}}
+    </select>
   </div>
 </div>
 

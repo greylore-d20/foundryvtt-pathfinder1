@@ -692,7 +692,7 @@ export class ItemAction {
       }
     }
 
-    await this.item.update({ "system.actions": { [idx]: newUpdateData } });
+    await this.item.update({ "system.actions": { [idx]: newUpdateData } }, options);
   }
 
   /* -------------------------------------------- */

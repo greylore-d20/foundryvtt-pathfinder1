@@ -275,14 +275,7 @@ export class ItemClassPF extends ItemPF {
 
     if (!itemData.subType) console.warn(`${this.name} lacks class type`, this);
 
-    let healthConfig = game.settings.get("pf1", "healthConfig");
-    const hasPlayerOwner = this.hasPlayerOwner;
-    healthConfig =
-      itemData.subType === "racial"
-        ? healthConfig.hitdice.Racial
-        : hasPlayerOwner
-          ? healthConfig.hitdice.PC
-          : healthConfig.hitdice.NPC;
+    const healthConfig = game.settings.get("pf1", "healthConfig").getClassHD(this);
 
     const isBaseClass = (itemData.subType || "base") === "base";
 

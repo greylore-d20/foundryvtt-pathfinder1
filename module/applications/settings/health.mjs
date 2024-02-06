@@ -36,6 +36,24 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
       }),
     };
   }
+
+  /**
+   * Retrieve hit die configuration relevant to given class.
+   *
+   * @param {ItemClassPF} item
+   * @returns {object} -
+   */
+  getClassHD(item) {
+    const subtype = item.system.subType;
+    switch (item.system.subType) {
+      case "npc":
+        return this.hitdice.NPC;
+      case "racial":
+        return this.hitdice.Racial;
+      default:
+        return this.hitdice.PC;
+    }
+  }
 }
 
 export class HealthConfig extends FormApplication {

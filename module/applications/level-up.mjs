@@ -109,8 +109,8 @@ export class LevelUpForm extends FormApplication {
     const result = [];
 
     // Add health section
-    const hpSettings = game.settings.get("pf1", "healthConfig");
-    const hpOptions = this.actor.type === "character" ? hpSettings.hitdice.PC : hpSettings.hitdice.NPC;
+    const hpOptions = game.settings.get("pf1", "healthConfig").getClassHD(this.object);
+
     if (hpOptions.auto !== true) {
       result.push({
         name: "health",

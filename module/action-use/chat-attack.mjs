@@ -97,27 +97,25 @@ export class ChatAttack {
     if (data.action.ability.damageMult != null) data.ablMult = data.action.ability.damageMult;
   }
 
-  setAttackNotesHTML() {
+  async setAttackNotesHTML() {
     if (this.attackNotes.length === 0) {
       this.attackNotesHTML = "";
       return;
     }
 
-    let result = "";
-    for (const n of this.attackNotes) {
-      if (n.length > 0) {
-        result += `<span class="tag">${n}</span>`;
-      }
-    }
-
-    const inner = TextEditor.enrichHTML(result, {
+    const enrichOptions = {
       rollData: this.rollData,
-      async: false,
+      async: true,
       relativeTo: this.action.actor,
+    };
+
+    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
+      notes: this.attackNotes,
+      css: "attack-notes",
+      title: "PF1.AttackNotes",
     });
-    this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive attack-notes"><label>${game.i18n.localize(
-      "PF1.AttackNotes"
-    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
+
+    this.attackNotesHTML = await TextEditor.enrichHTML(content, enrichOptions);
   }
 
   async setEffectNotesHTML() {
@@ -129,18 +127,17 @@ export class ChatAttack {
     const rollData = this.rollData;
     const enrichOptions = {
       rollData,
-      async: false,
+      async: true,
       relativeTo: this.action.actor,
     };
-    const notes = this.effectNotes.map((note) => TextEditor.enrichHTML(note, enrichOptions));
 
     const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
-      notes,
+      notes: this.effectNotes,
       css: "effect-notes",
       title: "PF1.EffectNotes",
     });
 
-    this.effectNotesHTML = content;
+    this.effectNotesHTML = await TextEditor.enrichHTML(content, enrichOptions);
   }
 
   async addAttack({ noAttack = false, bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
@@ -200,10 +197,10 @@ export class ChatAttack {
     // Add tooltip
     roll.options.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
 
-    if (this.attackNotes === "") this.addAttackNotes();
+    if (this.attackNotes.length === 0) await this.addAttackNotes();
   }
 
-  addAttackNotes() {
+  async addAttackNotes() {
     if (!this.action.item) return;
 
     const type = this.action.data.actionType;
@@ -243,7 +240,7 @@ export class ChatAttack {
     }
 
     this.attackNotes = notes;
-    this.setAttackNotesHTML();
+    await this.setAttackNotesHTML();
   }
 
   async addDamage({ flavor = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {

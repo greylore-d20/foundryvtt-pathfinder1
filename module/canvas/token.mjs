@@ -150,17 +150,22 @@ export class TokenPF extends Token {
   }
 
   /**
-   * Return origins of cells the token occupies.
+   * Return coordinates of cells the token occupies.
    *
    * Bug: Does not work with hex grid.
    * Bug: Does not account for rotation.
    *
-   * @returns {Point[]} - Occupied cell origins.
+   * @param {object} [options={}] - Additional options
+   * @param {boolean} [options.center=false] - Return cell centers instead of origins
+   * @returns {Point[]} - Occupied cell coordinates.
    */
-  getOccupiedCells() {
+  getOccupiedCells({ center = false } = {}) {
     const doc = this.document;
     const gridSizePx = this.scene.grid.size ?? 1;
     const { x, y, width, height } = doc;
+
+    // Offset for returning cell center
+    const offset = center ? gridSizePx / 2 : 0;
 
     const squares = [];
 
@@ -169,7 +174,7 @@ export class TokenPF extends Token {
 
     for (let x0 = 0; x0 <= wr; x0++) {
       for (let y0 = 0; y0 <= hr; y0++) {
-        squares.push({ x: x + x0 * gridSizePx, y: y + y0 * gridSizePx });
+        squares.push({ x: x + x0 * gridSizePx + offset, y: y + y0 * gridSizePx + offset });
       }
     }
 

@@ -249,6 +249,26 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
     const results = new Set();
 
+    const isLargeToken = (t) => t.document.width > 1 || t.document.height > 1;
+
+    const withinCircle = (target) => {
+      const ray = new Ray(tCenter, target);
+      // Calculate ray length in relation to circle radius
+      const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
+      // Include this token if its center is within template radius
+      return raySceneLength <= distance + 1;
+    };
+
+    const withinCone = (target, minAngle, maxAngle) => {
+      const ray = new Ray(tCenter, target);
+      const rayAngle = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+      const rayWithinAngle = withinAngle(minAngle, maxAngle, rayAngle);
+      // Calculate ray length in relation to circle radius
+      const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
+      // Include token if its within template distance and within the cone's angle
+      return rayWithinAngle && raySceneLength <= distance + 1;
+    };
+
     // Rectangle has same handling everywhere
     if (shape === "rect") {
       const rect = {
@@ -259,37 +279,34 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       };
 
       for (const t of relevantTokens) {
-        if (withinRect(t.center, rect)) results.add(t);
+        if (isLargeToken(t)) {
+          const cells = t.getOccupiedCells({ center: true });
+          if (cells.some((c) => withinRect(c, rect))) results.add(t);
+        } else {
+          if (withinRect(t.center, rect)) results.add(t);
+        }
       }
     }
     // Special handling for gridless
     else if (canvas.grid.type === CONST.GRID_TYPES.GRIDLESS && ["circle", "cone"].includes(shape)) {
+      // Pre-calc cone data
+      let minAngle, maxAngle;
+      if (shape === "cone") {
+        minAngle = Math.normalizeDegrees(direction - angle / 2);
+        maxAngle = Math.normalizeDegrees(direction + angle / 2);
+      }
+
       // TODO: Test against vision points and ensure ~third of them are inside the template instead.
-      // BUG: Behaves incorrectly with large tokens
       for (const t of relevantTokens) {
+        const cells = isLargeToken(t) ? t.getOccupiedCells({ center: true }) : [t.center];
+
         switch (shape) {
           case "circle": {
-            const ray = new Ray(tCenter, t.center);
-            // Calculate ray length in relation to circle radius
-            const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
-            // Include this token if its center is within template radius
-            if (raySceneLength <= distance + 1) results.add(t);
+            if (cells.some((c) => withinCircle(c))) results.add(t);
             break;
           }
           case "cone": {
-            const templateDirection = direction;
-            const templateAngle = angle,
-              minAngle = Math.normalizeDegrees(templateDirection - templateAngle / 2),
-              maxAngle = Math.normalizeDegrees(templateDirection + templateAngle / 2);
-
-            const ray = new Ray(tCenter, t.center);
-            const rayAngle = Math.normalizeDegrees(Math.toDegrees(ray.angle));
-
-            const rayWithinAngle = withinAngle(minAngle, maxAngle, rayAngle);
-            // Calculate ray length in relation to circle radius
-            const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
-            // Include token if its within template distance and within the cone's angle
-            if (rayWithinAngle && raySceneLength <= distance + 1) results.add(t);
+            if (cells.some((c) => withinCone(c, minAngle, maxAngle))) results.add(t);
             break;
           }
         }
@@ -305,7 +322,9 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       const highlightSquares = this._getGridHighlightPositions().map(mapCoordsToCell);
       for (const cell of highlightSquares) {
         for (const t of relevantTokens) {
-          if (withinRect(t.center, cell)) {
+          const cells = isLargeToken(t) ? t.getOccupiedCells({ center: true }) : [t.center];
+
+          if (cells.some((tc) => withinRect(tc, cell))) {
             results.add(t);
             relevantTokens.delete(t);
           }

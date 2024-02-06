@@ -11,25 +11,81 @@ system:
         unchained:
           cost: 3
           type: action
+      ammoType: none
       duration:
         units: spec
         value: 1 min./level
-      img: systems/pf1/icons/spells/lighting-sky-3.jpg
-      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Cast
       range:
         units: long
       save:
         description: Reflex half
         type: ref
       spellEffect: one or more 30-ft.-long vertical lines of lightning
+    - _id: dU8uifVmmLJOTo0o
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      damage:
+        parts:
+          - formula: 5d6
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/lighting-sky-3.jpg
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Damage
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
+      spellEffect: One 5-foot-wide, 30-foot-long, vertical bolt of lightning
+    - _id: QeKVLLe17azIKruk
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      damage:
+        parts:
+          - formula: 5d10
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/lighting-sky-3.jpg
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Damage (in stormy area)
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
+      spellEffect: One 5-foot-wide, 30-foot-long, vertical bolt of lightning
   components:
     somatic: true
     verbal: true
   description:
     value: >-
-      <p>This spell functions like <i>call lightning</i>, except that each bolt
-      deals 5d6 points of electricity damage (or 5d10 if created outdoors in a
-      stormy area), and you may call a maximum of 15 bolts.</p>
+      <p>This spell functions like
+      @UUID[Compendium.pf1.spells.Item.rrheoc0h80mbss7z]{call lightning}, except
+      that each bolt deals 5d6 points of electricity damage (or 5d10 if created
+      outdoors in a stormy area), and you may call a maximum of 15 bolts.</p>
   learnedAt:
     bloodline:
       Starsoul: 4
@@ -42,6 +98,9 @@ system:
       Storms: 5
   level: 5
   school: evo
+  source:
+    id: PZO1110
+    pages: '252'
   types: electricity
 type: spell
 

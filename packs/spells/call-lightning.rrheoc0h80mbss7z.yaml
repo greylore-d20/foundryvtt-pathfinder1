@@ -11,17 +11,72 @@ system:
         unchained:
           cost: 3
           type: action
+      ammoType: none
       duration:
         units: spec
         value: 1 min./level
       img: systems/pf1/icons/misc/magic-swirl.png
-      name: Use
+      name: Cast
       range:
         units: medium
       save:
         description: Reflex half
         type: ref
       spellEffect: one or more 30-ft.-long vertical lines of lightning
+    - _id: EDeqKlC2jqXDqj5I
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      damage:
+        parts:
+          - formula: 3d6
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: icons/magic/lightning/bolt-forked-blue.webp
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Damage
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
+      spellEffect: One 5-foot-wide, 30-foot-long, vertical bolt of lightning
+    - _id: SBkcTsb35vHR0m45
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammoType: none
+      damage:
+        parts:
+          - formula: 3d10
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: icons/magic/lightning/bolt-forked-blue.webp
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Damage (in stormy area)
+      range:
+        units: medium
+      save:
+        description: Reflex half
+        type: ref
+      spellEffect: One 5-foot-wide, 30-foot-long, vertical bolt of lightning
   components:
     somatic: true
     verbal: true

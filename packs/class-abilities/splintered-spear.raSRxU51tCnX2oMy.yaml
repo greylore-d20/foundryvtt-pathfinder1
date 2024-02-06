@@ -18,9 +18,7 @@ system:
       attackBonus: floor(@class.level / 6)[Enhancement]
       damage:
         parts:
-          - formula: >-
-              sizeRoll(1, 6, @size) + floor(@class.level /
-              6)[Enhancement]
+          - formula: sizeRoll(1, 6, @size) + floor(@class.level / 6)[Enhancement]
             type:
               custom: ''
               values:

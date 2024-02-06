@@ -32,9 +32,7 @@ system:
   subType: classFeat
   tag: classFeat_delayAffliction
   uses:
-    maxFormula: >-
-      @class.level >= 15 ? 3 : ((@class.level > 6 &&
-      @class.level < 15) ? 2 : 1)
+    maxFormula: '@class.level >= 15 ? 3 : ((@class.level > 6 && @class.level < 15) ? 2 : 1)'
     per: day
 type: feat
 

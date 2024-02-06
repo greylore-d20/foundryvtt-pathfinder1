@@ -14,14 +14,11 @@ system:
         unchained:
           cost: 2
           type: action
-      attackBonus: >-
-        min(@resources.classFeat_burn.value, floor(@class.level /
-        3))
+      attackBonus: min(@resources.classFeat_burn.value, floor(@class.level / 3))
       damage:
         parts:
           - formula: >-
-              (ceil(@class.level / 2))d6 +
-              min(@resources.classFeat_burn.value,
+              (ceil(@class.level / 2))d6 + min(@resources.classFeat_burn.value,
               floor(@class.level / 3)) * 2
             type:
               custom: ''

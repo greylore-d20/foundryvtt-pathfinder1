@@ -14,9 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: >-
-              (@class.level >= 15 ? 4 : 3)d8 + min(20,
-              @class.level)
+          - formula: '(@class.level >= 15 ? 4 : 3)d8 + min(20, @class.level)'
             type:
               custom: ''
               values:

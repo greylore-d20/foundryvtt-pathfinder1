@@ -36,9 +36,7 @@ system:
   subType: classFeat
   tag: classFeat_snowShroud
   uses:
-    maxFormula: >-
-      @class.level >= 20 ? 3 : (@class.level < 20 &&
-      @class.level > 16 ? 2 : 1)
+    maxFormula: '@class.level >= 20 ? 3 : (@class.level < 20 && @class.level > 16 ? 2 : 1)'
     per: day
 type: feat
 

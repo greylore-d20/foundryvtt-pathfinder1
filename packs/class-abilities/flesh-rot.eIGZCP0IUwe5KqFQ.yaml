@@ -16,9 +16,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: >-
-              (1 + floor((@class.level - 3) / 4))d8 +
-              @class.level
+          - formula: (1 + floor((@class.level - 3) / 4))d8 + @class.level
             type:
               custom: ''
               values:

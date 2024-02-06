@@ -45,9 +45,7 @@ system:
   subType: classFeat
   tag: classFeat_curseOfDampening
   uses:
-    maxFormula: >-
-      @class.level >= 15 ? 3 : ((@class.level < 15 &&
-      @class.level > 6) ? 2 : 1)
+    maxFormula: '@class.level >= 15 ? 3 : ((@class.level < 15 && @class.level > 6) ? 2 : 1)'
     per: day
 type: feat
 

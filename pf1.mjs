@@ -535,9 +535,14 @@ Hooks.once("ready", async function () {
   );
 
   if (needMigration) {
-    await pf1.migrations.migrateWorld({ dialog: {} });
+    const options = {};
+    // Omit dialog for new worlds with presumably nothing to migrate
+    if (PREVIOUS_MIGRATION_VERSION === "0.0.0") options.dialog = false;
+
+    await pf1.migrations.migrateWorld(options);
   }
 
+  // Inform users who aren't running migration
   if (!game.user.isGM && game.settings.get("pf1", "migrating")) {
     ui.notifications.warn("PF1.Migration.InProgress", { localize: true });
   }

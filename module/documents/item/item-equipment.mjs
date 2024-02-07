@@ -19,16 +19,23 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
       // Set subtype
       const subtype = changed.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
       const subtypes = Object.keys(pf1.config.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
-      if (!subtype || !subtypes.includes(subtype)) {
-        changed.system.equipmentSubtype = subtypes[0];
-      } else {
-        // Clear otherwise
-        changed.system.equipmentSubtype = "";
+
+      // Current subtype is not valid for current type
+      if (!subtypes.includes(subtype)) {
+        // Clear if no subtypes exist
+        if (subtypes.length === 0) {
+          changed.system.equipmentSubtype = "";
+        }
+        // Set to first subtype if no valid subtype is set
+        else if (subtypes.length > 0) {
+          changed.system.equipmentSubtype = subtypes[0];
+        }
       }
 
       // Set slot
       const slot = changed.system?.slot ?? this.system.slot ?? "";
-      const slotTypes = Object.keys(pf1.config.equipmentSlots[type] ?? {});
+      const slotType = type === "other" ? "wondrous" : type; // Fix "other" item default slot type
+      const slotTypes = Object.keys(pf1.config.equipmentSlots[slotType] ?? {});
       if (!slot || !slotTypes.includes(slot)) {
         changed.system.slot = slotTypes[0];
       }

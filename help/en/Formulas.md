@@ -78,6 +78,18 @@ Alters a damage roll to that of another size category.
 
 **Example:** `sizeRoll(1, 4, 6, 2)` – Translates a damage roll of `1d4` from a tiny actor (size `2`) to a huge actor (size `6`); Output: `3d6`
 
+| `@size` | Actual     |
+| :------ | :--------- |
+| `0`     | Fine       |
+| `1`     | Diminutive |
+| `2`     | Tiny       |
+| `3`     | Small      |
+| `4`     | Small      |
+| `5`     | Large      |
+| `6`     | Huge       |
+| `7`     | Gargantuan |
+| `8`     | Colossal   |
+
 ### `sizeReach`
 
 Generates a number equal to the reach of a creature of a certain size and stature.

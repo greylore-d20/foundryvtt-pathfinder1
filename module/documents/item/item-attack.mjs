@@ -72,7 +72,7 @@ export class ItemAttackPF extends ItemPF {
         masterwork: srcData.masterwork,
         proficient: srcData.proficient,
         enh: srcData.enh,
-        broken: srcData.broken,
+        broken: item.isBroken,
         timeworn: srcData.timeworn,
         cursed: srcData.cursed,
         artifact: srcData.artifact,

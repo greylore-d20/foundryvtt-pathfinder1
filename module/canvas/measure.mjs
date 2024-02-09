@@ -114,7 +114,9 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       gridSizePx = gridSizePxBase + gridSizePxOffset,
       gridSizeUnits = canvas.dimensions.distance; // feet, meters, etc.
 
-    const { direction, angle, distance } = this.document;
+    const { direction, angle: docAngle, distance } = this.document;
+    // If angle is 0, swap to default angle. Constrain it to 359 degrees, too. Angle of 360 is same as 0 for Foundry.
+    const angle = Math.min(Math.abs(docAngle || CONFIG.MeasuredTemplate.defaults.angle), 359);
 
     // Parse rays as per Bresenham's algorithm
     if (isRay) {

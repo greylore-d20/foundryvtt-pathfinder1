@@ -1582,7 +1582,7 @@ export class ItemPF extends ItemBasePF {
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
       const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
       const itemData = this.toObject();
-      const links = itemData.system.links?.[linkType] ?? [];
+      const links = foundry.utils.deepClone(itemData.system.links?.[linkType] ?? []);
       links.push(link);
       const itemUpdate = { _id: this.id, [`system.links.${linkType}`]: links };
       const itemUpdates = [];
@@ -1607,14 +1607,13 @@ export class ItemPF extends ItemBasePF {
       return true;
     } else if (linkType === "children" && dataType !== "data") {
       const itemData = targetItem.toObject();
-      delete itemData._id;
 
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
       if (itemData.type === "spell") itemData.system.spellbook = "spelllike";
 
-      const newItem = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+      const [newItem] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
 
-      await this.createItemLink("children", "data", newItem, newItem._id);
+      await this.createItemLink("children", "data", newItem, newItem.getRelativeUUID(this.actor));
     }
 
     return false;

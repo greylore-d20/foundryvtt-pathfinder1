@@ -1973,7 +1973,7 @@ export class ItemSheetPF extends ItemSheet {
     await sourceItem.update({ "system.showInQuickbar": false });
 
     // Create link
-    await sourceItem.createItemLink("children", "data", newItem, newItem.id);
+    await sourceItem.createItemLink("children", "data", newItem, newItem.getRelativeUUID(this.actor));
 
     // Notify user
     ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: sourceItem.name }));

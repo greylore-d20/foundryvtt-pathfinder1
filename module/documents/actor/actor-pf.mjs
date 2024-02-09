@@ -1740,7 +1740,7 @@ export class ActorPF extends ActorBasePF {
 
       for (const type of Object.keys(links)) {
         for (const link of links[type]) {
-          const linkedItem = this.items.get(link.id);
+          const linkedItem = fromUuidSync(link.uuid, { relative: this });
           if (!linkedItem) continue;
 
           switch (type) {

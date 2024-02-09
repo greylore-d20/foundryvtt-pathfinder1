@@ -89,6 +89,22 @@ export class ActorPF extends ActorBasePF {
   /**
    * @internal
    * @override
+   * @param {object} [actorData]
+   * @returns {object}
+   */
+  static getDefaultArtwork(actorData) {
+    const result = super.getDefaultArtwork(actorData);
+    const image = pf1.config.defaultIcons.actors[actorData?.type];
+    if (image) {
+      result.img = image;
+      result.texture.src = image;
+    }
+    return result;
+  }
+
+  /**
+   * @internal
+   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user
@@ -97,12 +113,6 @@ export class ActorPF extends ActorBasePF {
     await super._preCreate(data, context, user);
 
     const updates = this.preCreateData(data, context, user);
-
-    // Set typed image
-    if (data.img === undefined) {
-      const image = pf1.config.defaultIcons.actors[this.type];
-      if (image) this.updateSource({ img: image });
-    }
 
     if (Object.keys(updates).length) this.updateSource(updates);
   }
@@ -2059,8 +2069,6 @@ export class ActorPF extends ActorBasePF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
-    this._syncTokenImage(changed);
-
     if (!changed.system) return; // No system updates.
 
     const oldData = this.system;
@@ -2126,25 +2134,6 @@ export class ActorPF extends ActorBasePF {
       // Toggle AEs
       await this.setConditions(conditions);
     }
-  }
-
-  /**
-   * Sync images in _preUpdate when moving away from default
-   *
-   * @internal
-   * @param {object} changed Update data
-   */
-  _syncTokenImage(changed) {
-    // No image update
-    if (!changed.img) return;
-    // Explicit token image update
-    if (changed.prototypeToken?.texture?.src !== undefined) return;
-    // Old token image mismatch with default
-    if (this.prototypeToken.texture.src !== pf1.config.defaultIcons.actors[this.type]) return;
-    // Portrait and token image mismatch
-    if (this.img !== this.prototypeToken.texture.src) return;
-
-    foundry.utils.setProperty(changed, "prototypeToken.texture.src", changed.img);
   }
 
   /**

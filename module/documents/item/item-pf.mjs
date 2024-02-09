@@ -67,19 +67,25 @@ export class ItemPF extends ItemBasePF {
   /**
    * @internal
    * @override
+   * @param {object} [itemData]
+   * @returns {object}
+   */
+  static getDefaultArtwork(itemData) {
+    const result = super.getDefaultArtwork(itemData);
+    const image = pf1.config.defaultIcons.items[itemData?.type];
+    if (image) result.img = image;
+    return result;
+  }
+
+  /**
+   * @internal
+   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user
    */
   async _preCreate(data, context, user) {
     await super._preCreate(data, context, user);
-
-    // Set typed image
-    // The test against DEFAULT_ICON is to deal with a Foundry bug with unlinked actors.
-    if (data.img === undefined || data.img === Item.DEFAULT_ICON) {
-      const image = pf1.config.defaultIcons.items[this.type];
-      if (image) this.updateSource({ img: image });
-    }
 
     // Ensure unique Change IDs
     const actor = this.actor;

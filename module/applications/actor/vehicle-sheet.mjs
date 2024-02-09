@@ -127,7 +127,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
   _prepareItems(data) {
     const [attacks] = data.items.reduce(
       (arr, item) => {
-        item.img = item.img || foundry.data.ItemData.DEFAULT_ICON;
+        item.img = item.img || Item.implementation.getDefaultArtwork(item);
         item.hasUses = item.uses && item.uses.max > 0;
         item.isCharged = ["day", "week", "charges"].includes(foundry.utils.getProperty(item, "uses.per"));
 

@@ -2376,7 +2376,7 @@ export class ActorPF extends ActorBasePF {
     if (game.user.id !== userId) return;
 
     if (collection === "items") {
-      this._cleanItemLinksTo(ids);
+      this._cleanItemLinksTo(documents);
 
       // Delete child linked items
       const toRemove = new Set();
@@ -2406,19 +2406,19 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @internal
-   * @param {string[]} ids - Item IDs to clean links to.
+   * @param {pf1.documents.item.ItemPF[]} items - Item documents to clean links to.
    */
-  async _cleanItemLinksTo(ids) {
+  async _cleanItemLinksTo(items) {
     const updates = [];
     // Clean up references to this item
-    for (const itemId of ids) {
-      const item = this.items.get(itemId);
-      if (!item) continue;
-
-      const update = await item.removeItemLink(item, { commit: false });
-      if (update) {
-        update._id = item.id;
-        updates.push(update);
+    for (const deleted of items) {
+      const uuid = deleted.getRelativeUUID(this);
+      for (const item of this.items) {
+        const updateData = await item.removeItemLink(uuid, { commit: false });
+        if (updateData) {
+          updateData._id = item.id;
+          updates.push(updateData);
+        }
       }
     }
 

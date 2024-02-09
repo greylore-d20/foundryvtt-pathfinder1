@@ -1474,6 +1474,8 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
+   * Test if specified link can be created.
+   *
    * @param {string} linkType - The type of link.
    * @param {string} dataType - Either "compendium", "data" or "world".
    * @param {object} targetItem - The target item to link to.
@@ -1685,16 +1687,16 @@ export class ItemPF extends ItemBasePF {
   /**
    * Removes all link references to an item.
    *
-   * @param {string} id - The id of the item to remove links to.
+   * @param {string} uuid - The UUID of the item to remove links to.
    * @param {object} [options={}] - Additional options
    * @param {boolean} [options.commit=true] - Commit changes to database. If false, resulting update data is returned instead.
    * @returns {Promise<Item|object|undefined>}
    */
-  async removeItemLink(id, { commit = true } = {}) {
+  async removeItemLink(uuid, { commit = true } = {}) {
     const updateData = {};
     for (const [type, linkItems] of Object.entries(this.system.links ?? {})) {
       const items = foundry.utils.deepClone(linkItems);
-      const idx = items.findIndex((item) => item.id === id || item.uuid === id);
+      const idx = items.findIndex((item) => item.uuid === uuid);
       if (idx >= 0) {
         items.splice(idx, 1);
         updateData[`system.links.${type}`] = items;

@@ -829,10 +829,10 @@ export class ItemSheetPF extends ItemSheet {
 
         const linkedItem = item.getLinkedItemSync(linkData);
         if (!linkedItem) linkData.broken = true;
-        linkData.img = linkedItem?.img || ItemPF.DEFAULT_ICON;
+        linkData.img = linkedItem?.img || Item.implementation.getDefaultArtwork(linkedItem);
 
         // Fill in name if it's not in the local data
-        linkData.name ||= linkedItem.name;
+        linkData.name ||= linkedItem?.name;
 
         // Add item to stack
         links.items.push(linkData);

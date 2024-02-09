@@ -30,7 +30,14 @@
         <td class="links-item-name">
           <div>
             <img src="{{item.img}}" width="24" height="24">
-            <span>{{item.name}}{{#if item.broken}} [×]{{/if}}</span>
+            <span>
+              {{#if item.name}}
+              {{item.name}}
+              {{else}}
+              {{item.uuid}}
+              {{/if}}
+              {{#if item.broken}} [×]{{/if}}
+            </span>
           </div>
         </td>
 

@@ -646,10 +646,7 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Update script calls
-    if (itemData.scriptCalls instanceof Array) {
-      this.scriptCalls = this._prepareScriptCalls(itemData.scriptCalls);
-    }
+    this._prepareScriptCalls();
 
     if (!this.actor) {
       this.prepareDerivedItemData();
@@ -756,19 +753,29 @@ export class ItemPF extends ItemBasePF {
     return collection;
   }
 
-  _prepareScriptCalls(scriptCalls) {
+  /**
+   * Prepare `ItemPF.scriptCalls` collection.
+   *
+   * @internal
+   */
+  _prepareScriptCalls() {
+    const scriptCalls = this.system.scriptCalls;
+    if (!scriptCalls) return;
+
+    // TODO: Remove constant re-creation of the collection to retain the reference.
     const prior = this.scriptCalls;
     const collection = new Collection();
     for (const s of scriptCalls) {
-      let scriptCall = null;
-      if (prior && prior.has(s.id)) {
-        scriptCall = prior.get(s.id);
-        scriptCall.data = s;
-      } else scriptCall = new pf1.components.ItemScriptCall(s, this);
+      const sid = s._id;
+      let scriptCall = prior?.get(sid);
+      if (scriptCall) scriptCall.data = s;
+      else scriptCall = new pf1.components.ItemScriptCall(s, this);
 
-      collection.set(s._id || scriptCall.data._id, scriptCall);
+      collection.set(sid, scriptCall);
     }
-    return collection;
+
+    /** @type {Collection<string,pf1.components.ItemScriptCall>} */
+    this.scriptCalls = collection;
   }
 
   /**
@@ -779,6 +786,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise.<object>} The shared object between calls which may have been given data.
    */
   async executeScriptCalls(category, extraParams = {}) {
+    /** @type {pf1.components.ItemScriptCall[]} */
     const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
     const shared = { category };
     if (extraParams.attackData) {
@@ -919,7 +927,13 @@ export class ItemPF extends ItemBasePF {
     };
   }
 
-  // Fetches all this item's script calls of a specified category
+  /**
+   * Fetches all this item's script calls of a specified category
+   *
+   * @internal
+   * @param {string} category
+   * @returns {pf1.components.ItemScriptCall[]}
+   */
   getScriptCalls(category) {
     return this.scriptCalls?.filter((s) => s.category === category) ?? [];
   }

@@ -926,8 +926,8 @@ export class ActorPF extends ActorBasePF {
     const useSpellPoints = book.spellPoints.useSystem === true;
 
     // Set base "spontaneous" based on spell prep mode when using auto slots or spell points
-    if (useAuto || useSpellPoints) book.spontaneous = mode.isSemiSpontaneous;
-    const isSpontaneous = book.spontaneous ?? false;
+    book.spontaneous = mode.isSemiSpontaneous;
+    const isSpontaneous = book.spontaneous;
 
     if (useAuto) {
       let casterType = book.casterType;
@@ -976,21 +976,21 @@ export class ActorPF extends ActorBasePF {
       }
     } else {
       for (let level = book.hasCantrips ? 0 : 1; level < 10; level++) {
-        const spellLevel = book.spells[`spell${level}`];
-        let base = spellLevel.base;
-        if (Number.isNaN(base)) {
-          spellLevel.base = null;
-          spellLevel.max = 0;
-        } else if (book.autoSpellLevels) {
+        const levelData = book.spells[`spell${level}`];
+        let base = levelData.base;
+        if (Number.isNaN(base) || base === null) {
+          levelData.base = null;
+          levelData.max = 0;
+        } else if (book.autoSpellLevels && base >= 0) {
           base += getAbilityBonus(level);
-          spellLevel.max = base;
+          levelData.max = base;
         } else {
-          spellLevel.max = base;
+          levelData.max = base || 0;
         }
 
-        const max = spellLevel.max;
-        const oldval = spellLevel.value;
-        if (!Number.isFinite(oldval)) spellLevel.value = max;
+        const max = levelData.max;
+        const oldval = levelData.value;
+        if (!Number.isFinite(oldval)) levelData.value = max;
       }
     }
 

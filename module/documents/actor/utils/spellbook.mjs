@@ -149,7 +149,7 @@ export class SpellbookMode {
   }
 
   get isSemiSpontaneous() {
-    return this.isSpontaneous || this.isHybrid || this.isPrestige || this.usesSpellpoints;
+    return this.isSpontaneous || this.isHybrid || this.isPrestige || this.usesSpellpoints || false;
   }
 
   constructor(book) {

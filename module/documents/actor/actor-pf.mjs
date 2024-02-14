@@ -809,7 +809,7 @@ export class ActorPF extends ActorBasePF {
       }
       // Add class levels
       else if (book.class && rollData.classes[book.class]) {
-        const value = rollData.classes[book.class].level;
+        const value = rollData.classes[book.class].unlevel;
         total += value;
         clTotal += value;
 

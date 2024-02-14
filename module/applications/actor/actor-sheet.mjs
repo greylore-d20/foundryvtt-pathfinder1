@@ -2486,17 +2486,18 @@ export class ActorSheetPF extends ActorSheet {
     const spellbooks = data.system.attributes.spells.spellbooks;
     for (const [bookId, spellbook] of Object.entries(spellbooks)) {
       // Required for spellbook selection in settings
-      spellbookData[bookId] = { orig: spellbook, inUse: spellbook.inUse };
+      spellbookData[bookId] = { ...spellbook };
       // The rest are unnecssary processing if spellbook is not enabled
       if (!spellbook.inUse) continue;
       const book = spellbookData[bookId];
       let spellbookSpells = spells.filter((obj) => obj.spellbook === bookId);
       spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${bookId}`]);
-      book.data = this._prepareSpellbook(data, spellbookSpells, bookId);
+      book.section = this._prepareSpellbook(data, spellbookSpells, bookId);
       book.prepared = spellbookSpells.filter(
         (obj) => obj.preparation.mode === "prepared" && obj.preparation.prepared
       ).length;
       book.rollData = data.rollData.spells[bookId];
+      book.classId = spellbook.class;
       book.class = data.rollData.classes[spellbook.class];
       if (spellbook.arcaneSpellFailure) hasASF = true;
     }
@@ -2677,7 +2678,7 @@ export class ActorSheetPF extends ActorSheet {
       ];
       for (const [k, sb] of Object.entries(spellbookData)) {
         if (!sb.inUse) continue;
-        sections.push({ key: `spellbook-${k}`, section: sb.data });
+        sections.push({ key: `spellbook-${k}`, section: sb.section });
       }
 
       for (const section of sections) {

@@ -9,7 +9,7 @@ export class DetectionModeInvisibilityPF extends DetectionModeInvisibility {
     if (this._testRange(visionSource, mode, target, test)) return true;
     for (const lightSource of canvas.effects.lightSources.values()) {
       if (!lightSource.active || lightSource.disabled) continue;
-      if (lightSource.los.contains(test.point.x, test.point.y)) return true;
+      if (lightSource.shape.contains(test.point.x, test.point.y)) return true;
     }
     return false;
   }

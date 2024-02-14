@@ -1224,7 +1224,7 @@ export class ActorSheetPF extends ActorSheet {
       });
     // Set base amount of spell uses for a given spell level
     html.find(".spell-uses .spell-max span.text-box").on("click", (event) => {
-      this._onSpanTextInput(event, this._onSubmit.bind(this));
+      this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this));
     });
 
     // Set spell point amount

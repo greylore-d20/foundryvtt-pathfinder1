@@ -634,6 +634,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorSpeed(actorData, updateData);
   _migrateActorSpellbookCL(actorData, updateData);
   _migrateActorSpellbookSlots(actorData, updateData);
+  _migrateActorSpellbookPrep(actorData, updateData);
   _migrateActorSpellbookKind(actorData, updateData, actor);
   _migrateActorConcentration(actorData, updateData);
   _migrateActorBaseStats(actorData, updateData);
@@ -1130,6 +1131,31 @@ const _migrateActorSpellbookSlots = function (ent, updateData) {
     }
   }
 };
+
+// Remove inconsistently used .spontaneous permanently recorded boolean
+// Added with PF1 vNEXT
+function _migrateActorSpellbookPrep(actorData, updateData) {
+  for (const [bookId, book] of Object.entries(
+    foundry.utils.getProperty(actorData.system, "attributes.spells.spellbooks") || {}
+  )) {
+    const wasSpontaneous = book.spontaneous;
+    if (wasSpontaneous === undefined) continue;
+
+    const usesAuto = book.autoSpellLevelCalculation ?? false;
+    const usesSpellpoints = book.spellPoints.useSystem === true;
+    if (!usesAuto && !usesSpellpoints) {
+      // Set prep type to match old spontaneous toggle
+      updateData[`system.attributes.spells.spellbooks.${bookId}.spellPreparationMode`] = wasSpontaneous
+        ? "spontaneous"
+        : "prepared";
+
+      // Set progression type to high to match old behaviour
+      updateData[`system.attributes.spells.spellbooks.${bookId}.casterType`] = "high";
+    }
+
+    updateData[`system.attributes.spells.spellbooks.${bookId}.-=spontaneous`] = null;
+  }
+}
 
 /**
  * Migrate spellbook kind (arcane, divine, psychic, ...)

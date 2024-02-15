@@ -205,35 +205,30 @@
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.arcaneSpellFailure"
             {{checked spellbook.arcaneSpellFailure}}> {{localize "PF1.ArcaneSpellFailure"}}
         </label>
-        <label class="checkbox">
-          <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevelCalculation"
-            {{checked spellbook.autoSpellLevelCalculation}}> {{localize "PF1.AutoCalculateSpellSlots"}}
-        </label>
+        <div class="flexrow stacked autoslots">
+          <label class="checkbox">
+            <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevelCalculation"
+              {{checked spellbook.autoSpellLevelCalculation}}> {{localize "PF1.AutoCalculateSpellSlots"}}
+          </label>
+          {{#unless spellbook.autoSpellLevelCalculation}}
+          <label class="checkbox">
+            <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevels"
+              {{checked spellbook.autoSpellLevels}}> {{localize "PF1.AutomaticSpellSlots"}}
+          </label>
+          {{/unless}}
+        </div>
         <label class="checkbox">
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.psychic"
            {{checked spellbook.psychic}}> {{localize "PF1.Psychic"}}
-        </label>
-        {{#unless spellbook.autoSpellLevelCalculation}}
-        {{#unless spellbook.spellPoints.useSystem}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.spontaneous"
-            {{checked spellbook.spontaneous}}> {{localize "PF1.SpellPrepSpontaneous"}}
-        </label>
-        {{/unless}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevels"
-            {{checked spellbook.autoSpellLevels}}> {{localize "PF1.AutomaticSpellSlots"}}
         </label>
         <label class="checkbox">
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.spellPoints.useSystem"
             {{checked spellbook.spellPoints.useSystem}}> {{localize "PF1.UseSpellPoints"}}
         </label>
-        {{/unless}}
         <label class="checkbox">
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.hasCantrips"
             {{checked spellbook.hasCantrips}}> {{localize "PF1.HasCantrips"}}
         </label>
-        {{#if spellbook.autoSpellLevelCalculation}}
         <div class="radios">
           <label class="checkbox">
             <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.spellPreparationMode "prepared")}}>
@@ -269,6 +264,7 @@
         </div>
         {{/unless}}
 
+        {{#if spellbook.autoSpellLevelCalculation}}
         <section class="spell-level-mod-container {{#if (eq spellbook.spellPreparationMode "prepared")}}hide-cpd{{/if}}">
           <h3>{{localize "PF1.Modifications"}}</h3>
           <div class="spell-mod-formulas">
@@ -414,7 +410,7 @@
         <span class="sep"> / </span>
         {{/unless}}
         <div class="spell-max" data-tooltip="PF1.SpellsTotalEachDay">
-          <span class="{{#if ../spellbook.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.base">{{section.slots.max}}</span>
+          <span class="base-slots {{#if ../spellbook.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.base">{{section.slots.max}}</span>
           {{#if (gt preparation.domain 0)}}
           <span class="domain-bonus-slots">{{numberFormat preparation.domain sign=true}}</span>
           {{/if}}

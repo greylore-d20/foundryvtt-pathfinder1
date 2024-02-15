@@ -988,17 +988,15 @@ export class ActorPF extends ActorBasePF {
           levelData.max = base || 0;
         }
 
-        const max = levelData.max;
-        const oldval = levelData.value;
-        if (!Number.isFinite(oldval)) levelData.value = max;
+        if (!Number.isFinite(levelData.value)) {
+          levelData.value = levelData.max;
+        }
       }
     }
 
     // Set spontaneous spell slots to something sane
     for (let a = 0; a < 10; a++) {
-      const spellLevel = book.spells[`spell${a}`];
-      const current = spellLevel.value;
-      spellLevel.value = current || 0;
+      book.spells[`spell${a}`].value ||= 0;
     }
 
     // Update spellbook slots
@@ -1007,8 +1005,8 @@ export class ActorPF extends ActorBasePF {
       for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
         slots[spellLevel] = new SpellbookSlots({
           level: spellLevel,
-          max: book.spells[`spell${spellLevel}`].max ?? 0,
-          domain: book.domainSlotValue ?? 0,
+          max: book.spells[`spell${spellLevel}`].max || 0,
+          domain: book.domainSlotValue || 0,
         });
       }
 
@@ -1052,84 +1050,84 @@ export class ActorPF extends ActorBasePF {
       }
 
       // Spells available hint text if auto spell levels is enabled
-      const useAuto = book.autoSpellLevelCalculation;
-      if (useAuto) {
-        const maxLevelByAblScore = (spellbookAbility?.total ?? 0) - 10;
+      const maxLevelByAblScore = (spellbookAbility?.total ?? 0) - 10;
 
-        const allLevelModFormula = book.preparedAllOffsetFormula || "0";
-        const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+      const allLevelModFormula = book.preparedAllOffsetFormula || "0";
+      const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
-        const casterType = book.casterType || "high";
-        const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
+      const casterType = book.casterType || "high";
+      const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
 
-        for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
-          const spellLevelData = book.spells[`spell${spellLevel}`];
-          // Insufficient ability score for the level
-          if (maxLevelByAblScore < spellLevel) {
-            spellLevelData.hasIssues = true;
-            spellLevelData.lowAbilityScore = true;
-            continue;
-          }
-
-          spellLevelData.known = { unused: 0, max: 0 };
-          const domainSlotMax = spellLevel > 0 ? slots[spellLevel].domainMax ?? 0 : 0;
-          spellLevelData.preparation = { unused: 0, max: 0, domain: domainSlotMax };
-
-          let remaining = 0;
-          if (mode.isPrepared) {
-            // for prepared casters, just use the 'value' calculated above
-            remaining = spellLevelData.value;
-            spellLevelData.preparation.max = spellLevelData.max + domainSlotMax;
-          } else {
-            // spontaneous or hybrid
-            // if not prepared then base off of casts per day
-            let available =
-              pf1.config.casterProgression.spellsPreparedPerDay[mode.raw][casterType]?.[classLevel - 1][spellLevel];
-            available += allLevelMod;
-
-            const formula = spellLevelData.preparedOffsetFormula || "0";
-            available += RollPF.safeTotal(formula, rollData);
-
-            // Leave record of max known
-            spellLevelData.known.max = available;
-
-            // Count spell slots used
-            let dSlots = slots[spellLevel].domain;
-            const used =
-              bookInfo.level[spellLevel]?.spells.reduce((acc, /** @type {pf1.documents.item.ItemSpellPF} */ i) => {
-                const { preparation, atWill, domain } = i.system;
-                if (!atWill && preparation.spontaneousPrepared) {
-                  const slotCost = i.slotCost;
-                  if (domain && dSlots > 0) dSlots -= slotCost;
-                  else acc += slotCost;
-                }
-                return acc;
-              }, 0) ?? 0;
-            slots[spellLevel].domainUnused = dSlots;
-            slots[spellLevel].used = used;
-
-            remaining = available - used;
-          }
-
-          const lvlSlots = slots[spellLevel];
-          // Detect domain slot problems
-          const domainSlotsRemaining = spellLevel > 0 ? lvlSlots.domain : 0;
-
-          spellLevelData.remaining = remaining;
-
-          // No more processing needed
-          if (remaining == 0 && domainSlotsRemaining <= 0) continue;
-
+      for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
+        const spellLevelData = book.spells[`spell${spellLevel}`];
+        // Insufficient ability score for the level
+        if (maxLevelByAblScore < spellLevel) {
           spellLevelData.hasIssues = true;
+          spellLevelData.lowAbilityScore = true;
+          continue;
+        }
 
-          if (isSpontaneous) {
-            spellLevelData.known.unused = Math.max(0, remaining);
-            spellLevelData.known.excess = -Math.min(0, remaining);
+        spellLevelData.known = { unused: 0, max: 0 };
+        const domainSlotMax = spellLevel > 0 ? slots[spellLevel].domainMax ?? 0 : 0;
+        spellLevelData.preparation = { unused: 0, max: 0, domain: domainSlotMax };
+
+        let remaining = 0;
+        if (mode.isPrepared) {
+          // for prepared casters, just use the 'value' calculated above
+          remaining = spellLevelData.value;
+          spellLevelData.preparation.max = spellLevelData.max + domainSlotMax;
+        } else {
+          // spontaneous or hybrid
+          // if not prepared then base off of casts per day
+          let available = useAuto
+            ? pf1.config.casterProgression.spellsPreparedPerDay[mode.raw][casterType]?.[classLevel - 1][spellLevel]
+            : spellLevelData.max;
+          available += allLevelMod;
+
+          const formula = spellLevelData.preparedOffsetFormula || "0";
+          available += RollPF.safeTotal(formula, rollData);
+
+          // Leave record of max known
+          spellLevelData.known.max = available;
+
+          // Count spell slots used
+          let dSlots = slots[spellLevel].domain;
+          const used =
+            bookInfo.level[spellLevel]?.spells.reduce((acc, /** @type {pf1.documents.item.ItemSpellPF} */ i) => {
+              const { preparation, atWill, domain } = i.system;
+              if (!atWill && preparation.spontaneousPrepared) {
+                const slotCost = i.slotCost;
+                if (domain && dSlots > 0) dSlots -= slotCost;
+                else acc += slotCost;
+              }
+              return acc;
+            }, 0) ?? 0;
+          slots[spellLevel].domainUnused = dSlots;
+          slots[spellLevel].used = used;
+
+          remaining = available - used;
+        }
+
+        const lvlSlots = slots[spellLevel];
+        // Detect domain slot problems
+        const domainSlotsRemaining = spellLevel > 0 ? lvlSlots.domain : 0;
+
+        spellLevelData.remaining = remaining;
+
+        // No more processing needed
+        if (remaining == 0 && domainSlotsRemaining <= 0) continue;
+
+        spellLevelData.hasIssues = true;
+
+        if (isSpontaneous) {
+          spellLevelData.known.unused = Math.max(0, remaining);
+          spellLevelData.known.excess = -Math.min(0, remaining);
+          if (useAuto) {
             spellLevelData.invalidKnown = spellLevelData.known.unused != 0 || spellLevelData.known.excess != 0;
             spellLevelData.mismatchKnown = remaining;
-          } else {
-            spellLevelData.preparation.unused = Math.max(0, remaining);
           }
+        } else {
+          spellLevelData.preparation.unused = Math.max(0, remaining);
         }
       }
     }

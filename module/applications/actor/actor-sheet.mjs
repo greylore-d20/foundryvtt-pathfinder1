@@ -848,7 +848,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Count from intelligence
     const intMod = context.system.abilities?.int?.mod;
-    if (intMod !== 0 && isMindless) {
+    if (intMod !== 0 && !isMindless) {
       sourceData.push({
         name: game.i18n.localize("PF1.AbilityInt"),
         value: intMod * context.system.attributes?.hd?.total,

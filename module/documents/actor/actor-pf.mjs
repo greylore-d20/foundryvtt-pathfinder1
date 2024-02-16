@@ -4746,6 +4746,7 @@ export class ActorPF extends ActorBasePF {
       active: feats.filter((o) => o.isActive).length,
       owned: feats.length,
       levels: 0,
+      mythic: 0,
       formula: 0,
       changes: 0,
       disabled: 0,
@@ -4764,15 +4765,22 @@ export class ActorPF extends ActorBasePF {
       },
     });
 
-    // Add feat count by level
-    result.levels = Math.ceil(this.system.attributes.hd.total / 2);
-    result.max += result.levels;
+    const isMindless = this.system.abilities?.int?.value === null;
 
-    // Mythic feats
-    // https://aonprd.com/Rules.aspx?Name=Mythic%20Heroes&Category=Mythic%20Rules
-    // Gained at 1, 3, 5, etc.
-    result.mythic = Math.ceil(this.system.details.mythicTier / 2);
-    result.max += result.mythic;
+    // Ignore classes for feats with mindless
+    // Mindless gets other bonuses to feats beyond these...
+    // ... since they can be explicit "gains X feat", homebrew, or other impossible to account for.
+    if (!isMindless) {
+      // Add feat count by level
+      result.levels = Math.ceil(this.system.attributes.hd.total / 2);
+      result.max += result.levels;
+
+      // Mythic feats
+      // https://aonprd.com/Rules.aspx?Name=Mythic%20Heroes&Category=Mythic%20Rules
+      // Gained at 1, 3, 5, etc.
+      result.mythic = Math.ceil(this.system.details.mythicTier / 2);
+      result.max += result.mythic;
+    }
 
     // Bonus feat formula
     const bonusRoll = RollPF.safeRoll(this.system.details.bonusFeatFormula || "0", this.getRollData());

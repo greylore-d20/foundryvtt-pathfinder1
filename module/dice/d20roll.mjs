@@ -424,10 +424,12 @@ export async function d20Roll(options = {}) {
     dice = "1d20",
     rollData = {},
     subject,
-    rollMode,
     bonus = "",
     speaker,
   } = options;
+
+  let rollMode = options.rollMode;
+
   const formula = [dice, ...parts].join("+");
 
   const roll = new pf1.dice.D20RollPF(formula, rollData, { flavor, staticRoll, bonus });
@@ -435,6 +437,10 @@ export async function d20Roll(options = {}) {
     const title = speaker?.alias ? `${speaker.alias}: ${flavor}` : flavor;
     const dialogResult = await roll.promptDialog({ title, rollMode, subject });
     if (dialogResult === null) return;
+
+    // Move roll mode selection from roll data
+    rollMode = roll.options.rollMode;
+    delete roll.options.rollMode;
   }
 
   return roll.toMessage({ speaker }, { create: chatMessage, noSound, chatTemplateData, compendium, subject, rollMode });

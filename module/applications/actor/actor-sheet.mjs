@@ -189,7 +189,6 @@ export class ActorSheetPF extends ActorSheet {
       hasHD: true,
       config: pf1.config,
       conditions: pf1.registry.conditions,
-      useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.toObject() : null,
       usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
@@ -380,107 +379,9 @@ export class ActorSheetPF extends ActorSheet {
     data.encumbrance = this._computeEncumbrance(data.system);
 
     // Prepare skillsets
-    data.skillsets = this._prepareSkillsets(data.system.skills);
+    this._prepareSkillsets(data);
 
-    // Skill rank counting
-    const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
-    // Count used skill ranks
-    for (const skl of Object.values(data.rollData.skills)) {
-      if (skl.subSkills != null) {
-        for (const subSkl of Object.values(skl.subSkills)) {
-          if (data.useBGSkills && skl.background) {
-            skillRanks.bgUsed += subSkl.rank;
-          } else {
-            skillRanks.used += subSkl.rank;
-          }
-        }
-      } else if (data.useBGSkills && skl.background) {
-        skillRanks.bgUsed += skl.rank;
-      } else {
-        skillRanks.used += skl.rank;
-      }
-    }
-    // Count allowed skill ranks
-    const sourceData = [],
-      bgSourceData = [];
-    data.sourceData.skillRanks = sourceData;
-    data.sourceData.bgSkillRanks = bgSourceData;
-    this.document.itemTypes.class
-      .filter((cls) => cls.system.subType !== "mythic")
-      .forEach((cls) => {
-        const clsLevel = cls.system.hitDice;
-        const clsSkillsPerLevel = cls.system.skillsPerLevel;
-        const fcSkills = cls.system.fc.skill.value;
-        skillRanks.allowed +=
-          Math.max(1, clsSkillsPerLevel + this.document.system.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.system.subType)) {
-          const bgranks = clsLevel * pf1.config.backgroundSkillsPerLevel;
-          skillRanks.bgAllowed += bgranks;
-          if (bgranks > 0) {
-            bgSourceData.push({
-              name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
-              value: bgranks,
-            });
-          }
-        }
-
-        sourceData.push({
-          name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
-          value: clsSkillsPerLevel * clsLevel,
-        });
-        if (fcSkills > 0) {
-          sourceData.push({
-            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
-            value: fcSkills,
-          });
-        }
-      });
-    // Count from intelligence
-    const intMod = this.actor.system.abilities?.int?.mod;
-    if (intMod !== 0) {
-      sourceData.push({
-        name: game.i18n.localize("PF1.AbilityInt"),
-        value: intMod * this.actor.system.attributes?.hd?.total,
-      });
-    }
-    // Count from bonus skill rank formula
-    if (this.actor.system.details.bonusSkillRankFormula !== "") {
-      const roll = RollPF.safeRoll(this.actor.system.details.bonusSkillRankFormula, rollData);
-      if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
-      skillRanks.allowed += roll.total;
-      sourceData.push({
-        name: game.i18n.localize("PF1.SkillBonusRankFormula"),
-        value: roll.total,
-      });
-    }
-    // Calculate from changes
-    this.actor.changes
-      .filter((o) => o.subTarget === "bonusSkillRanks")
-      .forEach((o) => {
-        if (!o.value) return;
-
-        skillRanks.allowed += o.value;
-        sourceData.push({
-          name: o.parent?.name ?? game.i18n.localize("PF1.Change"),
-          value: o.value,
-        });
-      });
-    // Calculate used background skills
-    if (data.useBGSkills) {
-      if (skillRanks.bgUsed > skillRanks.bgAllowed) {
-        skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
-        skillRanks.allowed -= skillRanks.sentToBG;
-        skillRanks.bgAllowed += skillRanks.sentToBG;
-
-        if (skillRanks.sentToBG > 0) {
-          bgSourceData.push({
-            name: game.i18n.localize("PF1.Transferred"),
-            value: skillRanks.sentToBG,
-          });
-        }
-      }
-    }
-    data.skillRanks = skillRanks;
+    this._prepareSkills(data, rollData);
 
     // Feat count
     {
@@ -831,29 +732,168 @@ export class ActorSheetPF extends ActorSheet {
     return spellbook;
   }
 
-  _prepareSkillsets(skillset) {
-    const result = {
+  /**
+   * Prepare adventure/background skill distinction if needed.
+   *
+   * @internal
+   * @param {object} context
+   */
+  _prepareSkillsets(context) {
+    const skills = context.system.skills;
+
+    const sets = {
       all: { skills: {} },
       adventure: { skills: {} },
       background: { skills: {} },
     };
 
     // sort skills by label
-    const keys = Object.keys(skillset).sort(function (a, b) {
-      if (skillset[a].custom && !skillset[b].custom) return 1;
-      if (!skillset[a].custom && skillset[b].custom) return -1;
-      return ("" + skillset[a].label).localeCompare(skillset[b].label);
+    const keys = Object.keys(skills).sort(function (a, b) {
+      if (skills[a].custom && !skills[b].custom) return 1;
+      if (!skills[a].custom && skills[b].custom) return -1;
+      return ("" + skills[a].label).localeCompare(skills[b].label);
     });
 
     keys.forEach((a) => {
-      const skl = skillset[a];
-      // Include all bute Lore and Artistry in all
-      if (!pf1.config.backgroundOnlySkills.includes(a)) result.all.skills[a] = skl;
-      if (skl.background) result.background.skills[a] = skl;
-      else result.adventure.skills[a] = skl;
+      const skl = skills[a];
+      // Include all but Lore and Artistry in all
+      if (!pf1.config.backgroundOnlySkills.includes(a)) sets.all.skills[a] = skl;
+      if (skl.background) sets.background.skills[a] = skl;
+      else sets.adventure.skills[a] = skl;
     });
 
-    return result;
+    context.skillsets = sets;
+  }
+
+  /**
+   * @internal
+   * @param {object} context
+   * @param {object} rollData
+   */
+  _prepareSkills(context, rollData) {
+    context.useBGSkills = game.settings.get("pf1", "allowBackgroundSkills");
+
+    const isMindless = context.system.abilities?.int?.value === null;
+
+    // Rank counting
+    const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
+
+    // Count used skill ranks
+    for (const skl of Object.values(context.rollData.skills)) {
+      if (skl.subSkills != null) {
+        for (const subSkl of Object.values(skl.subSkills)) {
+          if (context.useBGSkills && skl.background) {
+            skillRanks.bgUsed += subSkl.rank;
+          } else {
+            skillRanks.used += subSkl.rank;
+          }
+        }
+      } else if (context.useBGSkills && skl.background) {
+        skillRanks.bgUsed += skl.rank;
+      } else {
+        skillRanks.used += skl.rank;
+      }
+    }
+
+    // Allowed skill ranks from HD, classes, intelligence, FCB, etc.
+    const sourceData = [],
+      bgSourceData = [];
+    context.sourceData.skillRanks = sourceData;
+    context.sourceData.bgSkillRanks = bgSourceData;
+    this.document.itemTypes.class
+      .filter((cls) => cls.system.subType !== "mythic")
+      .forEach((cls) => {
+        // Favored Class Bonus
+        // Apply FCB regardless if mindless if user applied such
+        const fcSkills = cls.system.fc?.skill?.value ?? 0;
+        if (fcSkills > 0) {
+          skillRanks.allowed += fcSkills;
+
+          sourceData.push({
+            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
+            value: fcSkills,
+          });
+        }
+
+        // Mindless get nothing else
+        if (isMindless) return;
+
+        const hd = cls.hitDice;
+        if (hd === 0) return;
+
+        const perLevel = cls.system.skillsPerLevel || 0;
+
+        // Allow 0 skills per HD class configuration to function, ignoring minimum skills rule
+        if (perLevel > 0) {
+          skillRanks.allowed += Math.max(1, perLevel + this.document.system.abilities.int.mod) * hd;
+        }
+
+        // Background skills
+        if (context.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.subType)) {
+          const bgranks = hd * pf1.config.backgroundSkillsPerLevel;
+          if (bgranks > 0) {
+            skillRanks.bgAllowed += bgranks;
+            bgSourceData.push({
+              name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+              value: bgranks,
+            });
+          }
+        }
+
+        sourceData.push({
+          name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+          value: perLevel * hd,
+        });
+      });
+
+    // Count from intelligence
+    const intMod = context.system.abilities?.int?.mod;
+    if (intMod !== 0 && isMindless) {
+      sourceData.push({
+        name: game.i18n.localize("PF1.AbilityInt"),
+        value: intMod * context.system.attributes?.hd?.total,
+      });
+    }
+
+    // Count from bonus skill rank formula
+    if (context.system.details.bonusSkillRankFormula !== "") {
+      const roll = RollPF.safeRoll(context.system.details.bonusSkillRankFormula, rollData);
+      if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+      skillRanks.allowed += roll.total;
+      sourceData.push({
+        name: game.i18n.localize("PF1.SkillBonusRankFormula"),
+        value: roll.total,
+      });
+    }
+
+    // Calculate from changes
+    this.actor.changes
+      .filter((o) => o.subTarget === "bonusSkillRanks")
+      .forEach((o) => {
+        if (!o.value) return;
+
+        skillRanks.allowed += o.value;
+        sourceData.push({
+          name: o.parent?.name ?? game.i18n.localize("PF1.Change"),
+          value: o.value,
+        });
+      });
+
+    // Adventure skills transferred to background skills
+    if (context.useBGSkills && skillRanks.bgUsed > skillRanks.bgAllowed) {
+      skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
+      skillRanks.allowed -= skillRanks.sentToBG;
+      skillRanks.bgAllowed += skillRanks.sentToBG;
+
+      if (skillRanks.sentToBG > 0) {
+        bgSourceData.push({
+          name: game.i18n.localize("PF1.Transferred"),
+          value: skillRanks.sentToBG,
+        });
+      }
+    }
+
+    context.skillRanks = skillRanks;
   }
 
   /**

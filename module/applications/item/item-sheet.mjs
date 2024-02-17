@@ -11,7 +11,6 @@ import { ActorTraitSelector } from "../trait-selector.mjs";
 import { SpeedEditor } from "../speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
-import { ContentSourceEditor } from "../content-source.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -657,21 +656,35 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Content source, fill in from registry
-    context.bookSource = foundry.utils.deepClone(itemData.source);
-    if (context.bookSource?.id) {
-      const rsource = pf1.registry.sources.get(itemData.source.id);
-      if (rsource) {
-        context.bookSource.title ||= rsource.name;
-        context.bookSource.publisher ||= rsource.publisher;
-        context.bookSource.errata ||= rsource.errata;
-        context.bookSource.edition ||= rsource.edition;
-        // Data only in registry
-        context.bookSource.date = rsource.date;
-        context.bookSource.abbr = rsource.abbr;
-      }
-    }
+    this._prepareContentSource(context);
 
     return context;
+  }
+
+  _prepareContentSource(context) {
+    let source = this._selectContentSource();
+    if (!source) return;
+
+    source = { ...source }; // Shallow copy to avoid tampering
+    context.bookSource = source;
+    if (!source?.id) return;
+
+    const rsource = pf1.registry.sources.get(context.bookSource.id);
+    if (!rsource) return;
+
+    source.title ||= rsource.name;
+    source.publisher ||= rsource.publisher;
+    source.errata ||= rsource.errata;
+    source.edition ||= rsource.edition;
+    // Data only in registry
+    source.date = rsource.date;
+    source.abbr = rsource.abbr;
+  }
+
+  _selectContentSource() {
+    const sources = this.document.system.sources ?? [];
+    if (sources?.length === 0) return null;
+    return sources[0];
   }
 
   _prepareMaterialsAndAddons(itemType, itemSubtype, subType, chosenMaterial = "") {
@@ -1153,7 +1166,7 @@ export class ItemSheetPF extends ItemSheet {
     // Content source editor
     html
       .find(".content-source .control .edit")
-      .click(() => ContentSourceEditor.open(this.document, { editable: this.isEditable }));
+      .click(() => pf1.applications.ContentSourceEditor.open(this.document, { editable: this.isEditable }));
 
     // Mark proficiency in indeterminate state if not forced but actor has it.
     if (

@@ -352,6 +352,16 @@ export class ItemSheetPF extends ItemSheet {
         value: itemData.carried,
         disabled: item.inContainer,
       });
+
+      // Add identified flag for GM
+      if (game.user.isGM) {
+        context.descriptionAttributes.push({
+          isBoolean: true,
+          name: "system.identified",
+          label: game.i18n.localize("PF1.Identified"),
+          value: itemData.identified,
+        });
+      }
     }
 
     // Prepare feat specific stuff

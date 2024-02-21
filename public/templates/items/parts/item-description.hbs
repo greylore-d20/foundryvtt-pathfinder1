@@ -17,24 +17,28 @@
       {{else if isNumber}}
       <div class="form-group">
         <label>{{label}}</label>
-        <input data-action="input-text" name="{{name}}" class="select-on-click{{#if tooltip}} details-tooptip{{/if}}" type="number" readonly data-dtype="Number"
+        <input data-action="input-text" name="{{name}}"
+          class="select-on-click{{#if tooltip}} details-tooptip{{/if}}"
           value="{{numberFormat value decimals=decimals}}"{{#if tooltip}} data-tooltip-type="{{tooltip}}"{{/if}}
           {{#if fakeValue}}data-input-value="{{inputValue}}"{{/if}}
-          {{disabled disabled}}>
+          type="number" data-dtype="Number" {{disabled disabled}} readonly>
       </div>
       {{else if isString}}
       <div class="form-group">
         <label>{{label}}</label>
-        <input data-action="input-text" name="{{name}}" type="text" readonly value="{{value}}" {{disabled disabled}}>
+        <input data-action="input-text" name="{{name}}"
+          type="text" value="{{value}}" {{disabled disabled}} readonly>
       </div>
       {{else if isRange}}
       <div class="form-group range-value">
         <label>{{label}}</label>
         {{!-- Value --}}
-        <input class="select-on-click" name="{{value.name}}" type="number" data-dtype="Number" readonly value="{{value.value}}">
+        <input data-action="input-text" class="select-on-click" name="{{value.name}}"
+          type="number" data-dtype="Number" value="{{value.value}}" {{disabled disabled}} readonly>
         <span class="separator">/</span>
         {{!-- Max --}}
-        <input data-action="input-text" class="select-on-click" name="{{max.name}}" type="text" data-dtype="Number" readonly value="{{max.value}}">
+        <input data-action="input-text" class="select-on-click" name="{{max.name}}"
+          type="number" data-dtype="Number" value="{{max.value}}" {{disabled disabled}} readonly>
       </div>
       {{/if}}
       {{/each}}

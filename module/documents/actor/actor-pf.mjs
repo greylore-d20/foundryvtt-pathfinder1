@@ -4783,17 +4783,17 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Bonus feat formula
-    const bonusRoll = RollPF.safeRoll(this.system.details.bonusFeatFormula || "0", this.getRollData());
+    const bonusRoll = RollPF.safeRoll(this.system.details?.bonusFeatFormula || "0", this.getRollData());
     result.formula = bonusRoll.total;
     result.max += result.formula;
     if (bonusRoll.err) {
       console.error(
-        game.i18n.format("PF1.ErrorActorFormula", {
-          context: game.i18n.localize("PF1.BonusFeatFormula"),
-          name: this.actor.name,
-        }),
-        bonusRoll.formula,
-        this
+        `An error occurred in the Bonus Feat Formula of actor "${this.name}" [${this.id}].`,
+        {
+          formula: this.system.details?.bonusFeatFormula,
+          actor: this,
+        },
+        bonusRoll.err
       );
     }
 

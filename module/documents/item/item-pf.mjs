@@ -517,7 +517,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   testUserPermission(user, permission, { exact = false } = {}) {
-    if (this.actor) return this.actor.testUserPermission(user, permission, { exact });
+    if (this.isEmbedded) return this.parent.testUserPermission(user, permission, { exact });
     if (this.parentItem) return this.parentItem.testUserPermission(user, permission, { exact });
     return super.testUserPermission(user, permission, { exact });
   }

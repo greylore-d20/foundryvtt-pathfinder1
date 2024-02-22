@@ -288,6 +288,35 @@ async function extractPack(packName, options = {}) {
   return { packName, addedFiles, removedFiles, conflicts };
 }
 
+function pruneObject(obj, { allowNull = false, allowBlank = false, allowKeys = [] } = {}) {
+  for (const [key, value] of Object.entries(obj)) {
+    if (allowKeys.includes(key)) continue;
+
+    if (value === null) {
+      if (!allowNull) delete obj[key];
+    } else if (value === "") {
+      if (!allowBlank) delete obj[key];
+    } else if (typeof value === "object") {
+      pruneObject(value, { allowNull, allowBlank });
+      if (utils.isEmpty(value)) delete obj[key];
+    }
+  }
+}
+
+function sanitizeActiveEffects(effects) {
+  for (const ae of effects) {
+    delete ae.changes;
+    delete ae.origin;
+    delete ae.transfer;
+    delete ae.disabled;
+
+    pruneObject(ae);
+
+    if (ae.flags && utils.isEmpty(ae.flags)) delete ae.flags;
+    if (ae.duration && utils.isEmpty(ae.duration)) delete ae.duration;
+  }
+}
+
 /**
  * Santize pack entry.
  *
@@ -301,7 +330,11 @@ function sanitizePackEntry(entry, documentType = "") {
   // Delete unwanted fields
   delete entry.ownership;
   delete entry._stats;
-  if ("effects" in entry && entry.effects.length === 0) delete entry.effects;
+
+  if ("effects" in entry) {
+    if (entry.effects.length === 0) delete entry.effects;
+    else sanitizeActiveEffects(entry.effects);
+  }
 
   // Ignore folders; not present on inventoryItems
   if (entry._key?.startsWith("!folders")) return entry;
@@ -318,7 +351,19 @@ function sanitizePackEntry(entry, documentType = "") {
 
   // Remove top-level keys not part of Foundry's core data model
   // For usual documents, this is enforced by Foundry. For inventoy items, it is not.
-  const allowedCoreFields = ["name", "type", "img", "data", "flags", "items", "system", "_id", "_key", "folder"];
+  const allowedCoreFields = [
+    "name",
+    "type",
+    "img",
+    "data",
+    "flags",
+    "items",
+    "effects",
+    "system",
+    "_id",
+    "_key",
+    "folder",
+  ];
   if (["Actor", "Item"].includes(documentType)) {
     for (const key of Object.keys(entry)) {
       if (!allowedCoreFields.includes(key)) delete entry[key];

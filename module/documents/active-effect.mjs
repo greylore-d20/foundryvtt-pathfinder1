@@ -110,4 +110,9 @@ export class ActiveEffectPF extends ActiveEffect {
   get isTracker() {
     return this.getFlag("pf1", "tracker") ?? false;
   }
+
+  get isSuppressed() {
+    if (this.parent instanceof Item) return this.parent?.isActive === false;
+    return false;
+  }
 }

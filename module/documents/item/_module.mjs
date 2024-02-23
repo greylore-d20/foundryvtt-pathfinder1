@@ -8,6 +8,7 @@ export { ItemEquipmentPF } from "./item-equipment.mjs";
 export { ItemFeatPF } from "./item-feat.mjs";
 export { ItemLootPF } from "./item-loot.mjs";
 export { ItemPF } from "./item-pf.mjs";
+export { ItemPhysicalPF } from "./item-physical.mjs";
 export { ItemRacePF } from "./item-race.mjs";
 export { ItemSpellPF } from "./item-spell.mjs";
 export { ItemWeaponPF } from "./item-weapon.mjs";

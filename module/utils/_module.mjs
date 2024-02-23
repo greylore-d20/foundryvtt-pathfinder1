@@ -21,6 +21,7 @@ export {
   getDistanceSystem,
   overlandSpeed,
   getWeightSystem,
+  getActors,
   getActorFromId,
   getFirstActiveGM,
   getItemOwner,

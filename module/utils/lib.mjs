@@ -972,3 +972,68 @@ export function throttle(callback, delay) {
     return timeoutId;
   };
 }
+
+/**
+ * Get iterator for all actors.
+ *
+ * @param {object} [options] - Options for which actors to fetch.
+ * @param {Array<string>|null} [options.types=null] - Array of actor types to accept. Returns all if null.
+ * @param {boolean} [options.base=true] - Return base actors (from game.actors).
+ * @param {string|Scene|null} [options.scene=null] - Specific scene. Sets `scenes` and `base` to false.
+ * @param {boolean} [options.scenes=false] - All scenes.
+ * @param {boolean} [options.linked=true] - Get linked actors from scenes.
+ * @param {boolean} [options.unlinked=true] - Get unlinked actors from scenes.
+ * @param {Array<string|User>} [options.users=[game.user]] - Test specific users permission, either User instances or user IDs. Defaults to current user.
+ * @param {*} [options.ownership=CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER] - What permission level (`CONST.DOCUMENT_OWNERSHIP_LEVELS`) to test user for, if user is defined.
+ *
+ * @yields {Actor} - Relevant actors
+ */
+export function* getActors({
+  base = true,
+  types = null,
+  scene = null,
+  scenes = false,
+  linked = true,
+  unlinked = true,
+  users = [game.user],
+  ownership = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+} = {}) {
+  users = users.map((user) => (user instanceof User ? user : game.users.get(user)));
+
+  const testUsers = (actor) => (users.length ? users.some((user) => actor.testUserPermission(user, ownership)) : true);
+
+  let actors;
+  if (base) {
+    for (const actor of [...game.actors]) {
+      if (types && !types.includes(actor.type)) continue;
+      if (!testUsers(actor)) continue;
+      yield actor;
+    }
+  }
+
+  let sceneList;
+  if (scene) {
+    if (scene instanceof Scene) sceneList = [scene];
+    else sceneList = [game.scenes.get(scene)];
+  } else if (scenes) {
+    sceneList = [...game.scenes];
+  }
+
+  for (const scene of sceneList) {
+    for (const token of [...scene.tokens]) {
+      const actor = token.actor;
+      if (!actor) continue;
+
+      if (types && !types.includes(actor.type)) continue;
+
+      // Test at least one user has appropriate ownership
+      if (!testUsers(actor)) continue;
+
+      const isLinked = token.isLinked;
+      // Yield linked only if such are desired and we didn't already return base actors
+      if (isLinked && linked && !base) yield actor;
+      // Yield unlinked only if desired
+      else if (!isLinked && unlinked) yield actor;
+    }
+  }
+}

@@ -1199,18 +1199,20 @@ export class ItemPF extends ItemBasePF {
     if (!this.hasAction) {
       // Use
       const sharedData = { event: ev, skipDialog, chatMessage, rollMode };
-      Object.defineProperty(sharedData, "attackData", {
-        get: () => {
-          foundry.utils.logCompatibilityWarning(
-            "shared.attackData is deprecated in favor of directly accessing shared",
-            {
-              since: "PF1 vNEXT",
-              until: "PF1 vNEXT+2",
-            }
-          );
-          return sharedData;
-        },
-      });
+      if (!("attackData" in sharedData)) {
+        Object.defineProperty(sharedData, "attackData", {
+          get: () => {
+            foundry.utils.logCompatibilityWarning(
+              "shared.attackData is deprecated in favor of directly accessing shared",
+              {
+                since: "PF1 vNEXT",
+                until: "PF1 vNEXT+2",
+              }
+            );
+            return sharedData;
+          },
+        });
+      }
 
       const shared = await this.executeScriptCalls("use", {}, sharedData);
       rollMode = shared.rollMode || rollMode;

@@ -1240,15 +1240,20 @@ export class ActionUse {
   async executeScriptCalls(category = "use") {
     const shared = this.shared;
 
-    Object.defineProperty(shared, "attackData", {
-      get: () => {
-        foundry.utils.logCompatibilityWarning("shared.attackData is deprecated in favor of directly accessing shared", {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+2",
-        });
-        return shared;
-      },
-    });
+    if (!("attackData" in shared)) {
+      Object.defineProperty(shared, "attackData", {
+        get: () => {
+          foundry.utils.logCompatibilityWarning(
+            "shared.attackData is deprecated in favor of directly accessing shared",
+            {
+              since: "PF1 vNEXT",
+              until: "PF1 vNEXT+2",
+            }
+          );
+          return shared;
+        },
+      });
+    }
 
     const rv = await this.item.executeScriptCalls(category, {}, shared);
 

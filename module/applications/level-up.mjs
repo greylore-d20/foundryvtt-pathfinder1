@@ -504,6 +504,11 @@ export class LevelUpForm extends FormApplication {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       speaker: ChatMessage.getSpeaker({ actor: this.actor, token: this.token }),
       rolls: [formData.hp?.roll ?? RollPF.safeRoll("0")],
+      flags: {
+        pf1: {
+          subject: { class: "levelUp" },
+        },
+      },
     };
 
     ChatMessage.implementation.applyRollMode(messageData, game.settings.get("core", "rollMode"));

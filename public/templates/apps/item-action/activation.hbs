@@ -102,20 +102,31 @@
 {{#if canUseAmmo}}
 <h3 class="form-header">{{localize "PF1.Ammunition"}}</h3>
 
-<div class="form-group">
+<div class="form-group ammo-type">
   <label>{{localize "PF1.AmmunitionType"}}</label>
-  <select name="ammoType">
-  {{#select data.ammoType}}
-    <option value="none">{{localize "PF1.None"}}</option>
-    {{#if inheritedAmmoType}}
-    <option value="">{{localize "PF1.InheritAs" inherited=(lookup @root.config.ammoTypes inheritedAmmoType)}}</option>
-    {{/if}}
-    {{#each @root.config.ammoTypes as |name type|}}
-    <option value="{{type}}">{{name}}</option>
-    {{/each}}
-  {{/select}}
-  </select>
+  <div class="form-fields">
+    <select name="ammo.type">
+    {{#select data.ammo.type}}
+      <option value="none">{{localize "PF1.None"}}</option>
+      {{#if inheritedAmmoType}}
+      <option value="">{{localize "PF1.InheritAs" inherited=(lookup @root.config.ammoTypes inheritedAmmoType)}}</option>
+      {{/if}}
+      {{#each @root.config.ammoTypes as |name type|}}
+      <option value="{{type}}">{{name}}</option>
+      {{/each}}
+    {{/select}}
+    </select>
+  </div>
 </div>
+
+{{#if usesAmmo}}
+<div class="form-group ammo-cost">
+  <label>{{localize "PF1.AmmunitionPerAttack"}}</label>
+  <div class="form-fields">
+    <input type="number" name="ammo.cost" data-dtype="Number" value="{{data.ammo.cost}}" placeholder="1">
+  </div>
+</div>
+{{/if}}
 {{/if}}
 
 {{!-- Uses and charges --}}

@@ -131,6 +131,7 @@ export class ItemActionSheet extends FormApplication {
     }
 
     data.canUseAmmo = data.isNaturalAttack !== true;
+    data.usesAmmo = !!action.ammoType;
     data.inheritedAmmoType = item?.system.ammo?.type;
 
     // Add distance units

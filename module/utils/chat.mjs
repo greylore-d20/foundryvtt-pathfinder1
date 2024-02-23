@@ -125,12 +125,15 @@ export function alterAmmoRecovery(cm, jq) {
     const ammoId = el.dataset.ammoId;
     const data = recoveryData[attackIndex]?.[ammoId];
     if (!data) return;
+    const { recovered } = data;
     $(el)
       .find(".inline-action")
       .each((i, ia) => {
         // TODO: Disable button & track proper quantities
-        if (data.recovered) ia.classList.add("recovered");
-        if (data.failed) ia.classList.add("recovery-failed");
+        // TODO: Mark partial recovery
+        if (recovered === undefined) return;
+        else if (recovered > 0) ia.classList.add("recovered");
+        else ia.classList.add("recovery-failed");
       });
   });
 }

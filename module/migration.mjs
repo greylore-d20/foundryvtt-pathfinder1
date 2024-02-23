@@ -1960,11 +1960,21 @@ const _migrateActionAmmunitionUsage = function (action, itemData, updateData) {
 
     // Same as base item
     if (itemData.system.ammo?.type == action.ammoType) delete action.ammoType;
-
-    // Delete the key in general if it's empty (inherited)
-    if (!action.ammoType) delete action.ammoType;
   }
 
+  // Migrate .ammoType to .ammo.type
+  if (action.ammoType) {
+    action.ammo ??= {};
+    action.ammo.type = action.ammoType;
+  }
+  delete action.ammoType;
+
+  // Delete empty ammo type (inherited)
+  if (action.ammo && !action.ammo.type) {
+    delete action.ammo.type;
+  }
+
+  // Uses ammo is no longer used
   delete action.usesAmmo;
 };
 

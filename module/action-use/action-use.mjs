@@ -320,15 +320,16 @@ export class ActionUse {
     }
 
     // Set ammo usage
-    const ammoType = this.action.ammoType;
+    const ammoType = this.action.ammo?.type;
     if (ammoType) {
       const ammoId = this.item.getFlag("pf1", "defaultAmmo");
       const item = this.item.actor?.items.get(ammoId);
       const quantity = item?.system.quantity ?? 0;
+      const ammoCost = this.action.ammoCost;
       const abundant = item?.flags.pf1?.abundant ?? false;
       for (let a = 0; a < allAttacks.length; a++) {
         const atk = allAttacks[a];
-        if (abundant || quantity >= a + 1) atk.ammo = ammoId;
+        if (abundant || quantity >= a + ammoCost) atk.ammo = ammoId;
         else atk.ammo = null;
       }
     }
@@ -340,16 +341,18 @@ export class ActionUse {
     const ammoType = this.shared.action.ammoType;
     if (!ammoType) return;
 
+    const ammoCost = this.action.ammoCost;
+
     const ammoId = this.item.getFlag("pf1", "defaultAmmo");
     const item = this.item.actor?.items.get(ammoId);
-    if (item) return;
+    if (item && (item.system.quantity || 0) >= ammoCost) return;
 
     const ammo = this.actor.itemTypes.loot
       .filter(
         (i) =>
           i.subType === "ammo" &&
           i.system.extraType === ammoType &&
-          i.system.quantity > 0 &&
+          i.system.quantity >= ammoCost &&
           i.system.identified !== false
       )
       .sort((a, b) => a.system.price - b.system.price);
@@ -378,7 +381,7 @@ export class ActionUse {
         if (item.flags?.pf1?.abundant) continue;
 
         ammoUsage[atk.ammo] ??= 0;
-        ammoUsage[atk.ammo]++;
+        ammoUsage[atk.ammo] += value;
       }
     }
 
@@ -405,11 +408,13 @@ export class ActionUse {
    */
   updateAmmoUsage() {
     const actor = this.actor;
+    const ammoCost = this.action.ammoCost;
     for (const atk of this.shared.attacks) {
       if (!atk.ammo) continue;
       const attack = atk.chatAttack;
       const ammo = actor.items.get(atk.ammo)?.system.quantity ?? 0;
       attack.ammo.remaining = ammo;
+      attack.ammo.quantity = ammoCost;
     }
   }
 
@@ -1399,7 +1404,8 @@ export class ActionUse {
     premessage_promises.push(this.handleDiceSoNice());
 
     // Subtract uses
-    premessage_promises.push(this.subtractAmmo());
+    const ammoCost = this.action.ammoCost;
+    if (ammoCost != 0) premessage_promises.push(this.subtractAmmo(ammoCost));
 
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
       premessage_promises.push(this.item.addCharges(-shared.rollData.chargeCost));

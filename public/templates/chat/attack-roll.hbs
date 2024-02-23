@@ -147,9 +147,12 @@
 
   {{!-- Ammo --}}
   {{#if atk.ammo}}
-    <div class="ammo group-container" data-ammo-id="{{atk.ammo.id}}" data-tooltip="{{localize "PF1.AmmoRemaining" quantity=atk.ammo.remaining}}">
+    <div class="ammo group-container" data-ammo-id="{{atk.ammo.id}}" data-ammo-quantity="{{atk.ammo.quantity}}" data-tooltip="{{localize "PF1.AmmoRemaining" quantity=atk.ammo.remaining}}">
       <label class="group-title">{{localize "PF1.Subtypes.Item.loot.ammo.Single"}}</label>
       <img src="{{atk.ammo.img}}">
+      {{#if (gt atk.ammo.quantity 1)}}
+      <span class="quantity">{{atk.ammo.quantity}}×</span>
+      {{/if}}
       <span class="name">{{atk.ammo.name}}</span>
 
       {{!-- Recover --}}

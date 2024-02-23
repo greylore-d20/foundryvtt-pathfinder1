@@ -138,7 +138,8 @@ export class AttackDialog extends Application {
 
   getAmmo() {
     const actor = this.action.actor;
-    const ammo = actor.itemTypes.loot.filter(this._filterAmmo.bind(this));
+    const ammoCost = this.action.ammoCost;
+    const ammo = actor.itemTypes.loot.filter((item) => this._filterAmmo(item, ammoCost));
 
     return ammo.map((o) => {
       return {
@@ -148,15 +149,14 @@ export class AttackDialog extends Application {
     });
   }
 
-  _filterAmmo(item) {
+  _filterAmmo(item, ammoCost = 1) {
     if (!(item.type === "loot" && item.subType === "ammo")) return false;
-    if (item.system.quantity <= 0) return false;
+    if (item.system.quantity < ammoCost) return false;
 
     const ammoType = item.system.extraType;
     if (!ammoType) return true;
 
-    const type = this.action.ammoType;
-    if (type === ammoType) return true;
+    return this.action.ammoType === ammoType;
   }
 
   activateListeners(html) {

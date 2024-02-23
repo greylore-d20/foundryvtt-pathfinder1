@@ -1436,39 +1436,45 @@ export class ItemPF extends ItemBasePF {
 
       // Check for recovery state
       const attackIndex = button.closest(".chat-attack").dataset.index;
+      if (!attackIndex) return;
       const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
       const ammoId = button.closest(".ammo")?.dataset.ammoId || button.dataset.ammoId;
+      const ammoQuantity = button.closest(".ammo")?.dataset.ammoQuantity || button.dataset.ammoQuantity || 1;
+      if (ammoQuantity == 0) return;
       const recoveryData = card.getFlag("pf1", "ammoRecovery");
       const ammoRecovery = recoveryData?.[attackIndex]?.[ammoId];
-      if (ammoRecovery?.failed || ammoRecovery?.recovered) return;
-
-      let recovered = false;
-      let failed = false;
-      const promises = [];
+      // Backwards compatibility (PF1 vNEXT) with old messages
+      if (ammoRecovery?.failed === true) return;
+      // Recovered is the number recovered, the rest failed
+      if (ammoRecovery?.recovered !== undefined) return;
 
       // Find ammo item
       const ammoItem = item.actor.items.get(ammoId);
       if (!ammoItem) return;
       if (ammoItem.getFlag("pf1", "abundant")) return; // Abundant is unrecoverable
+
       let chance = 100;
       if (action === "recoverAmmo") {
         chance = ammoItem.system.recoverChance ?? 50;
       }
 
       // (Try to) recover ammo
-      if (chance >= Math.random() * 100) {
-        recovered = true;
-        promises.push(ammoItem.addCharges(1));
-      } else {
-        failed = true;
-      }
-
-      // Update chat card
-      if (recovered || failed) {
-        if (attackIndex) {
-          promises.push(card.setFlag("pf1", "ammoRecovery", { [attackIndex]: { [ammoId]: { failed, recovered } } }));
+      let recovered = 0;
+      if (chance > 0) {
+        for (let i = 0; i < ammoQuantity; i++) {
+          if (chance <= Math.random() * 100) {
+            recovered += 1;
+          }
         }
       }
+
+      const promises = [];
+
+      // Update ammo if any were recovered
+      if (recovered > 0) promises.push(ammoItem.addCharges(recovered));
+
+      // Update chat card
+      promises.push(card.setFlag("pf1", "ammoRecovery", { [attackIndex]: { [ammoId]: { recovered } } }));
 
       await Promise.all(promises);
 

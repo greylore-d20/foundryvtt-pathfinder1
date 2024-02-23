@@ -579,7 +579,10 @@ export class ItemAction {
       held: "",
       nonlethal: false,
       touch: false,
-      ammoType: "",
+      ammo: {
+        type: "",
+        cost: 1,
+      },
       spellEffect: "",
       area: "",
       conditionals: [],
@@ -1288,9 +1291,19 @@ export class ItemAction {
    * @type {string|null} - Ammo type string or null if this doesn't use ammo.
    */
   get ammoType() {
-    const type = this.data.ammoType;
+    const type = this.data.ammo?.type;
     if (type === "none") return null;
     return type || this.item.system.ammo?.type || null;
+  }
+
+  /**
+   * Effective per-attack ammo cost.
+   *
+   * @type {number} - Number of ammo each attack consumes. Defaults to 1 if using ammo, 0 if not.
+   */
+  get ammoCost() {
+    if (this.ammoType) return this.data.ammo?.cost ?? 1;
+    return 0;
   }
 
   /**

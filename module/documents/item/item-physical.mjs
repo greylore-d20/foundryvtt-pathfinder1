@@ -127,6 +127,9 @@ export class ItemPhysicalPF extends ItemPF {
       this.name = this._source.name;
     }
 
+    // Ensure size is something
+    this.system.size ||= "med";
+
     super.prepareBaseData();
 
     const itemData = this.system;

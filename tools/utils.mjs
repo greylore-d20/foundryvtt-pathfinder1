@@ -174,6 +174,30 @@ export function mergeObject(first, second) {
   }
   return result;
 }
+
+/**
+ * Prune useless data from object.
+ *
+ * @param {object} obj - Object to prune
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.allowNull=false] - Allow nulls
+ * @param {boolean} [options.allowBlank=false] - Allow blank string values
+ */
+export function pruneObject(obj, { allowNull = false, allowBlank = false } = {}) {
+  for (const [key, value] of Object.entries(obj)) {
+    if (value === undefined) {
+      delete obj[key];
+    } else if (value === null) {
+      if (!allowNull) delete obj[key];
+    } else if (value === "") {
+      if (!allowBlank) delete obj[key];
+    } else if (typeof value === "object") {
+      pruneObject(value, { allowNull, allowBlank });
+      if (isEmpty(value)) delete obj[key];
+    }
+  }
+}
+
 /**
  * Sluggify a string.
  *

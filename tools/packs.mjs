@@ -288,21 +288,6 @@ async function extractPack(packName, options = {}) {
   return { packName, addedFiles, removedFiles, conflicts };
 }
 
-function pruneObject(obj, { allowNull = false, allowBlank = false, allowKeys = [] } = {}) {
-  for (const [key, value] of Object.entries(obj)) {
-    if (allowKeys.includes(key)) continue;
-
-    if (value === null) {
-      if (!allowNull) delete obj[key];
-    } else if (value === "") {
-      if (!allowBlank) delete obj[key];
-    } else if (typeof value === "object") {
-      pruneObject(value, { allowNull, allowBlank });
-      if (utils.isEmpty(value)) delete obj[key];
-    }
-  }
-}
-
 function sanitizeActiveEffects(effects) {
   for (const ae of effects) {
     delete ae.changes;
@@ -310,10 +295,7 @@ function sanitizeActiveEffects(effects) {
     delete ae.transfer;
     delete ae.disabled;
 
-    pruneObject(ae);
-
-    if (ae.flags && utils.isEmpty(ae.flags)) delete ae.flags;
-    if (ae.duration && utils.isEmpty(ae.duration)) delete ae.duration;
+    utils.pruneObject(ae);
   }
 }
 
@@ -343,11 +325,13 @@ function sanitizePackEntry(entry, documentType = "") {
   delete entry.flags?.pf1?.migration;
 
   // Remove non-system/non-core flags
-  for (const key of Object.keys(entry.flags ?? {})) {
-    if (utils.isEmpty(entry.flags[key])) delete entry.flags[key];
-    else if (!["pf1", "core"].includes(key)) delete entry.flags[key];
+  if (entry.flags) {
+    utils.pruneObject(entry.flags);
+    for (const key of Object.keys(entry.flags)) {
+      if (!["pf1", "core"].includes(key)) delete entry.flags[key];
+    }
+    if (utils.isEmpty(entry.flags)) delete entry.flags;
   }
-  if (utils.isEmpty(entry.flags)) delete entry.flags;
 
   // Remove top-level keys not part of Foundry's core data model
   // For usual documents, this is enforced by Foundry. For inventoy items, it is not.

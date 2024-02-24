@@ -819,7 +819,7 @@ export class ActorPF extends ActorBasePF {
       // Set auto spell level calculation offset
       if (book.autoSpellLevelCalculation) {
         const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
-        const autoBonus = RollPF.safeTotal(autoFormula, rollData);
+        const autoBonus = RollPF.safeRoll(autoFormula, rollData).total ?? 0;
         const autoTotal = Math.clamped(total + autoBonus, 1, 20);
         book.cl.autoSpellLevelTotal = autoTotal;
 
@@ -953,7 +953,7 @@ export class ActorPF extends ActorBasePF {
       rollData.ablMod = spellSlotAbilityMod;
 
       const allLevelModFormula = book[isSpontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
-      const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+      const allLevelMod = RollPF.safeRoll(allLevelModFormula, rollData).total ?? 0;
 
       for (let level = 0; level < 10; level++) {
         const levelData = book.spells[`spell${level}`];
@@ -968,7 +968,10 @@ export class ActorPF extends ActorBasePF {
 
         const max =
           (level === 0 && book.hasCantrips) || Number.isFinite(spellsForLevel)
-            ? spellsForLevel + getAbilityBonus(level) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
+            ? spellsForLevel +
+              getAbilityBonus(level) +
+              allLevelMod +
+              (RollPF.safeRoll(offsetFormula, rollData).total ?? 0)
             : NaN;
 
         levelData.max = max;
@@ -1053,7 +1056,7 @@ export class ActorPF extends ActorBasePF {
       const maxLevelByAblScore = (spellbookAbility?.total ?? 0) - 10;
 
       const allLevelModFormula = book.preparedAllOffsetFormula || "0";
-      const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+      const allLevelMod = RollPF.safeRoll(allLevelModFormula, rollData).total ?? 0;
 
       const casterType = book.casterType || "high";
       const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
@@ -1085,7 +1088,7 @@ export class ActorPF extends ActorBasePF {
           available += allLevelMod;
 
           const formula = spellLevelData.preparedOffsetFormula || "0";
-          available += RollPF.safeTotal(formula, rollData);
+          available += RollPF.safeRoll(formula, rollData).total ?? 0;
 
           // Leave record of max known
           spellLevelData.known.max = available;

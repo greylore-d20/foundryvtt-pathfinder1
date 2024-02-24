@@ -603,10 +603,8 @@ export class ItemSpellPF extends ItemPF {
         // Convert spell-only ranges
         if (["close", "medium", "long"].includes(action.range?.units)) {
           const rlabel = pf1.config.distanceUnits[action.range.units];
-          action.range.value = `${RollPF.safeTotal(
-            pf1.config.spellRangeFormulas[action.range.units],
-            rollData
-          )}[${rlabel}]`;
+          const rvalue = RollPF.safeRoll(pf1.config.spellRangeFormulas[action.range.units], rollData).total ?? 0;
+          action.range.value = `${rvalue}[${rlabel}]`;
           action.range.units = "ft";
         }
       }

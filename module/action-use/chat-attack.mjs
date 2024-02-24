@@ -92,7 +92,7 @@ export class ChatAttack {
     data.critMult = 1;
     data.critCount = 0;
     // Add critical confirmation bonus
-    data.critConfirmBonus = RollPF.safeTotal(data.action.critConfirmBonus || "0") ?? 0;
+    data.critConfirmBonus = RollPF.safeRoll(data.action.critConfirmBonus || "0").total ?? 0;
     // Determine ability multiplier
     if (data.action.ability.damageMult != null) data.ablMult = data.action.ability.damageMult;
   }

@@ -2119,7 +2119,7 @@ export class ItemPF extends ItemBasePF {
     // Add secondary natural attack penalty
     if (actionData.naturalAttack.primaryAttack !== true && itemData.subType === "natural") {
       const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
-      const secondaryModifier = RollPF.safeTotal(`${attackBonus}`, rollData);
+      const secondaryModifier = RollPF.safeRoll(`${attackBonus}`, rollData).total ?? 0;
       describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), "untyped", -400);
     }
 

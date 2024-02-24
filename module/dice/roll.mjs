@@ -24,12 +24,25 @@ export class RollPF extends Roll {
     );
   }
 
-  static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
+  /**
+   * Synchronous and thrown error consuming roll evaluation.
+   *
+   * @remarks
+   * - Returned roll has `.err` set if an error occurred during evaluation.
+   * - If error occurs, the returned roll will have its formula replaced.
+   * @param {string} formula - Roll formula
+   * @param {object} rollData - Data supplied to roll
+   * @param {object} context - If error occurs, this will be included in the error message.
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.suppressError=false] - If true, no error will be printed even if one occurs.
+   * @returns {RollPF} - Evaluated roll, or placeholder if error occurred.
+   */
+  static safeRoll(formula, rollData = {}, context, options = { suppressError: false }) {
     let roll;
     try {
-      roll = this.create(formula, data).evaluate({ async: false });
+      roll = this.create(formula, rollData).evaluate({ async: false });
     } catch (err) {
-      roll = this.create("0", data).evaluate({ async: false });
+      roll = this.create("0", rollData).evaluate({ async: false });
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
@@ -41,7 +54,12 @@ export class RollPF extends Roll {
   }
 
   static safeTotal(formula, data) {
-    return isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula;
+    foundry.utils.logCompatibilityWarning("RollPF.safeTotal() is deprecated in favor of RollPF.safeRoll().total", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return RollPF.safeRoll(formula, data).total;
   }
 
   /**

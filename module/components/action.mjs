@@ -618,7 +618,7 @@ export class ItemAction {
     // Prepare max personal charges
     if (this.data.uses.self?.per) {
       const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;
-      const maxUses = RollPF.safeTotal(maxFormula, rollData);
+      const maxUses = RollPF.safeRoll(maxFormula, rollData).total ?? 0;
       foundry.utils.setProperty(this.data, "uses.self.max", maxUses);
     }
 

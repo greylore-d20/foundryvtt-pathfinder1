@@ -352,7 +352,7 @@ export class AttackDialog extends Application {
         label,
         attackBonus,
         // Reduce formula to a single number for easier display
-        attackBonusTotal: RollPF.safeTotal(attackBonus, this.rollData),
+        attackBonusTotal: RollPF.safeRoll(attackBonus, this.rollData).total ?? 0,
         // Ammo data is discarded in favour of specialised handling via setAttackAmmo
         ammo: null,
       }));

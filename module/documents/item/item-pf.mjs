@@ -1100,7 +1100,7 @@ export class ItemPF extends ItemBasePF {
           range > 0 ? game.i18n.format("PF1.RangeNote", { distance: range, units: distanceValues[1] }) : null;
       }
 
-      // Add Difficulty Modifier (DC) label
+      // Add Difficulty Class (DC) label
       props.push(labels.save);
       const saveDesc = actionData.save?.description;
       if (saveDesc?.length > 0) props.push(saveDesc);

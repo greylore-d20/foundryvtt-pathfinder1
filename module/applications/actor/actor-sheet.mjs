@@ -1798,7 +1798,8 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = elem.dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    rollData ??= item.getRollData();
+    rollData ??= item.firstAction?.getRollData() ?? item.getRollData();
+
     const { description, properties } = await item.getChatData({ chatcard: false, rollData });
 
     // Toggle summary

@@ -1,6 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { getDistanceSystem } from "@utils";
+import { getDistanceSystem, calculateRangeFormula } from "@utils";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 export class ItemSpellPF extends ItemPF {
@@ -770,23 +770,23 @@ export class ItemSpellPF extends ItemPF {
   /**
    * @inheritdoc
    */
-  getDescription({ chatcard = false, data = {} } = {}) {
+  getDescription({ chatcard = false, data = {}, rollData } = {}) {
     return (
       renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
         ...data,
-        ...this.spellDescriptionData,
+        ...this.getDescriptionData({ rollData }),
         chatcard: chatcard === true,
       }) + this.system.description.value
     );
   }
 
-  get spellDescriptionData() {
+  getDescriptionData({ rollData } = {}) {
     const reSplit = pf1.config.re.traitSeparator;
     const srcData = this.system;
     const firstAction = this.firstAction;
     const actionData = firstAction?.data ?? {};
 
-    const rollData = firstAction?.getRollData();
+    rollData ??= firstAction?.getRollData();
 
     const label = {
       school: pf1.config.spellSchools[srcData.school],
@@ -919,7 +919,13 @@ export class ItemSpellPF extends ItemPF {
           case "ft":
           case "mi":
             if (!rangeValue) label.range = "";
-            else label.range = `${rangeValue} ${label.range}`;
+            else {
+              let rf = calculateRangeFormula(rangeValue, rangeUnit, rollData);
+              if (rangeUnit === "mi") rf /= 5_280; // Convert feet back to miles
+              const [r, rt] = pf1.utils.convertDistance(rf, rangeUnit);
+              const rl = pf1.config.measureUnitsShort[rt];
+              label.range = `${r} ${rl}`;
+            }
             break;
           case "spec":
             label.range = rangeValue || label.range;

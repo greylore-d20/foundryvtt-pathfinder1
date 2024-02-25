@@ -203,7 +203,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    const description = this.document.getDescription();
+    const description = this.document.getDescription({ rollData });
 
     // Add descriptions
     context.descriptionHTML = {
@@ -477,7 +477,7 @@ export class ItemSheetPF extends ItemSheet {
 
       const desc = await renderTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",
-        item.spellDescriptionData
+        item.getDescriptionData({ rollData })
       );
       context.topDescription = await TextEditor.enrichHTML(desc, {
         rollData,

@@ -534,10 +534,11 @@ export class ItemPF extends ItemBasePF {
   /**
    * Get full description.
    *
-   * @param {object} options Item type dependant options for rendering the description.
-   * @param {boolean} [options.chatcard=false] Instruct template to render chat card in mind.
-   * @param {object} [options.data={}] Template data for rendering
-   * @returns {string} Full description.
+   * @param {object} options - Item type dependant options for rendering the description.
+   * @param {boolean} [options.chatcard=false] - Instruct template to render chat card in mind.
+   * @param {object} [options.data={}] - Template data for rendering
+   * @param {object} [options.rollData] - Roll data for transforming description
+   * @returns {string} - Full description.
    */
   getDescription(options) {
     return this.system.description.value;
@@ -1074,7 +1075,7 @@ export class ItemPF extends ItemBasePF {
     const labels = this.getLabels({ actionId, rollData });
 
     // Rich text descriptions
-    data.identifiedDescription = this.getDescription({ chatcard });
+    data.identifiedDescription = this.getDescription({ chatcard, rollData });
 
     data.unidentifiedDescription = itemData.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;

@@ -761,7 +761,7 @@ export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {
  */
 export function calculateRange(formula, type = "ft", rollData = {}) {
   const value = calculateRangeFormula(formula, type, rollData);
-  return convertDistance(value);
+  return convertDistance(value, type);
 }
 
 /**

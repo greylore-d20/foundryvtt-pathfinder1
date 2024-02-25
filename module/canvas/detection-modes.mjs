@@ -1,15 +1,28 @@
+/**
+ * See invisibility detection mode with respect to sight (light & darkvision)
+ */
 export class DetectionModeInvisibilityPF extends DetectionModeInvisibility {
   static ID = "seeInvisibility";
-  static LABEL = "DETECTION.SeeInvisibility";
+  static LABEL = "PF1.Sense.seeInvis";
   static PRIORITY = 100000;
 
-  /** @override */
+  /**
+   * Copy of DetectionModeBasicSight._testPoint instead of the one inherited from DetectionMode.
+   *
+   * Allows seeing invisible in lit areas.
+   *
+   * @override
+   */
   _testPoint(visionSource, mode, target, test) {
+    // Blocked by walls
     if (!this._testLOS(visionSource, mode, target, test)) return false;
+    // Otherwise allowed within range
     if (this._testRange(visionSource, mode, target, test)) return true;
+    // Allowed outside of range if lit
+    const { x, y } = test.point;
     for (const lightSource of canvas.effects.lightSources.values()) {
-      if (!lightSource.active || lightSource.disabled) continue;
-      if (lightSource.shape.contains(test.point.x, test.point.y)) return true;
+      if (!lightSource.active) continue;
+      if (lightSource.shape.contains(x, y)) return true;
     }
     return false;
   }

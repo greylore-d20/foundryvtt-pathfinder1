@@ -136,6 +136,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: data.item.system.price,
+            decimals: 2,
             id: "data-price",
           },
           {
@@ -144,6 +145,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: data.item.system.unidentified?.price,
+            decimals: 2,
             id: "data-unidentifiedPrice",
           }
         );
@@ -155,6 +157,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: data.item.system.unidentified?.price,
+            decimals: 2,
             id: "data-price",
           });
         } else {
@@ -164,6 +167,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: data.item.system.price,
+            decimals: 2,
             id: "data-price",
           });
         }

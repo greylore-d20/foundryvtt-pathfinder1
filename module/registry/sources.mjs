@@ -33,6 +33,7 @@ export class Source extends RegistryEntry {
 // companion: Player companion
 // setting: Campaign setting book
 // ap: Adventure path
+// pg: Adventure path - player guide
 // module: Module
 
 export class Sources extends Registry {
@@ -1068,6 +1069,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-593-8",
       url: "https://paizo.com/products/btpy97av",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-15E",
+      name: "Iron Gods Player's Guide",
+      date: "2014-08-05",
+      pages: 12,
+      url: "https://paizo.com/products/btpy98lf",
+      type: "pg",
     },
     {
       _id: "PZO9085",

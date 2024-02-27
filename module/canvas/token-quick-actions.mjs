@@ -13,44 +13,8 @@ export class TokenQuickActions {
     const token = app.object;
     const actor = token.actor;
 
-    const items = actor?.getQuickActions?.();
-    if (!items?.length) return;
-
-    const quickActions = [];
-    for (const qi of items) {
-      qi.id = qi.item.id;
-      qi.name = qi.item.name;
-      qi.img = qi.item.img;
-      qi.max = qi.maxCharge;
-      qi.type = qi.item.type;
-
-      qi.isCharged = qi.haveAnyCharges;
-      if (qi.isCharged) {
-        qi.uses = qi.charges;
-
-        let chargeCost = qi.item.firstAction?.getChargeCost() ?? qi.item.getDefaultChargeCost();
-        if (chargeCost == 0) qi.isCharged = false;
-        qi.recharging = chargeCost < 0;
-        chargeCost = Math.abs(chargeCost);
-
-        qi.max = qi.maxCharge;
-
-        if (chargeCost != 0) {
-          // Maximum charging
-          if (qi.recharging) {
-            qi.uses = Math.ceil((qi.max - qi.uses) / chargeCost);
-            qi.max = Math.ceil(qi.max / chargeCost);
-          }
-          // Actual uses
-          else {
-            qi.uses = Math.floor(qi.uses / chargeCost);
-            qi.max = Math.floor(qi.max / chargeCost);
-          }
-        }
-      }
-
-      quickActions.push(qi);
-    }
+    const quickActions = actor?.getQuickActions?.();
+    if (!quickActions?.length) return;
 
     const templateData = {
       actions: quickActions,

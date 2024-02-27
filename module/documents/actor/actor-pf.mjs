@@ -4684,18 +4684,54 @@ export class ActorPF extends ActorBasePF {
           !o.showUnidentifiedData
       )
       .sort((a, b) => a.sort - b.sort)
-      .map((o) => {
-        return {
-          item: o,
-          isSingleUse: o.isSingleUse,
-          get haveAnyCharges() {
-            return this.item.isCharged;
+      .map((item) => {
+        const qi = {
+          item,
+          name: item.name,
+          id: item.id,
+          type: item.type,
+          img: item.img,
+          get isSingleUse() {
+            return item.isSingleUse;
           },
-          maxCharge: o.maxCharges,
+          get haveAnyCharges() {
+            return this.item.isCharged && Number.isFinite(this.maxCharge);
+          },
+          get maxCharge() {
+            return item.maxCharges;
+          },
           get charges() {
             return this.item.charges;
           },
         };
+
+        // Fill in charge details
+        qi.isCharged = qi.haveAnyCharges;
+        if (qi.isCharged) {
+          let chargeCost = qi.item.firstAction?.getChargeCost() ?? qi.item.getDefaultChargeCost();
+          if (chargeCost == 0) qi.isCharged = false;
+
+          qi.recharging = chargeCost < 0;
+          chargeCost = Math.abs(chargeCost);
+
+          if (chargeCost != 0) {
+            qi.max = qi.maxCharge;
+            qi.uses = qi.charges;
+
+            // Maximum charging
+            if (qi.recharging) {
+              qi.uses = Math.ceil((qi.max - qi.uses) / chargeCost);
+              qi.max = Math.ceil(qi.max / chargeCost);
+            }
+            // Actual uses
+            else {
+              qi.uses = Math.floor(qi.uses / chargeCost);
+              qi.max = Math.floor(qi.max / chargeCost);
+            }
+          }
+        }
+
+        return qi;
       });
   }
 

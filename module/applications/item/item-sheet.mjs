@@ -850,7 +850,7 @@ export class ItemSheetPF extends ItemSheet {
         const linkData = foundry.utils.deepClone(items[index]);
         linkData.index = index; // Record index so sorted lists maintain data cohesion
 
-        const linkedItem = item.getLinkedItemSync(linkData);
+        const linkedItem = fromUuidSync(linkData.uuid, { relative: actor });
         if (!linkedItem) linkData.broken = true;
         linkData.img = linkedItem?.img || Item.implementation.getDefaultArtwork(linkedItem);
 

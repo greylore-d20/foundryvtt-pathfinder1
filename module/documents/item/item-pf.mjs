@@ -1659,22 +1659,35 @@ export class ItemPF extends ItemBasePF {
    *
    * @param {string} type - Link type
    * @param {boolean} includeLinkData - Include link data, return value changes from item array to object array
+   * @param {object} [options={}] - Additional options
+   * @param {Set} [options._results] - Internal use only.
+   * @param {boolean} [options.recursive=false] - Retrieved linked items recursively.
    * @returns {Item[]|object[]} - Linked items, or objects with linked items and additional data
    */
-  async getLinkedItems(type, includeLinkData = false) {
+  async getLinkedItems(type, includeLinkData = false, { recursive = false, _results } = {}) {
     const items = this.system.links?.[type];
     if (!items) return [];
 
-    const result = [];
+    const results = _results ?? new Set();
     for (const l of items) {
-      const item = await this.getLinkItem(l);
+      if (!l.uuid) continue;
+      const item = await fromUuid(l.uuid, { relative: this.actor });
       if (item) {
-        if (includeLinkData) result.push({ item, linkData: l });
-        else result.push(item);
+        if (includeLinkData) {
+          if (results.some((i) => i.item === item)) continue;
+        } else if (results.has(item)) continue;
+
+        if (includeLinkData) results.add({ item, linkData: l });
+        else results.add(item);
+
+        // Recursive
+        if (type !== "charges" && recursive) {
+          await item.getLinkedItems(type, { recursive, _results: results });
+        }
       }
     }
 
-    return result;
+    return Array.from(results);
   }
 
   /**
@@ -1684,19 +1697,31 @@ export class ItemPF extends ItemBasePF {
    * @example
    * const childItems = item.getLinkedItemsSync("children");
    * @param {string} type Link type, e.g. "children", "charges", or "classAssociations"
+   * @param {object} [options={}] - Additional options
+   * @param {boolean} [options.recursive=false] - Retrieve links recursively.
+   * @param {Set<string>} [options._results] - Internal use only
    * @returns {Item[]|object[]} Linked items or their compendium index data
    */
-  getLinkedItemsSync(type) {
+  getLinkedItemsSync(type, { recursive = false, _results } = {}) {
     const links = this.system.links?.[type];
     if (!links) return [];
 
-    const result = [];
+    const results = _results ?? new Set();
     for (const linkData of links) {
-      const item = this.getLinkedItemSync(linkData);
-      if (item) result.push(item);
+      if (!linkData.uuid) continue;
+      const item = fromUuidSync(linkData.uuid, { relative: this.actor });
+      if (item) {
+        if (results.has(item)) continue;
+        results.add(item);
+
+        // Recursive
+        if (type !== "charges" && recursive) {
+          item.getLinkedItemsSync(type, { recursive, _results: results });
+        }
+      }
     }
 
-    return result;
+    return Array.from(results);
   }
 
   /**
@@ -1709,7 +1734,8 @@ export class ItemPF extends ItemBasePF {
 
     for (const items of Object.values(this.system.links ?? {})) {
       for (const l of items) {
-        const item = await this.getLinkItem(l);
+        if (!l.uuid) continue;
+        const item = await fromUuid(l.uuid, { relative: this.actor });
         if (item) result.push(item);
       }
     }
@@ -1743,25 +1769,24 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   *
+   * @deprecated
    * @param {object} linkData - Link data
    * @param {boolean} [extraData=false] - Deprecated: Include link data in return value
    * @returns {Item|null} - Linked item if it exists
    */
   async getLinkItem(linkData, extraData = false) {
+    foundry.utils.logCompatibilityWarning(
+      "ItemPF.getLinkItem() is deprecated in favor of fromUuid(linkData.uuid, {relative:actor})",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+
     const item = await fromUuid(linkData.uuid, { relative: this.actor });
 
     // Package extra data
     if (extraData) {
-      // Deprecated: "Extra data" is just the first parameter. Caller can bundle that if they want it.
-      foundry.utils.logCompatibilityWarning(
-        "ItemPF.getLinkItem() extraData parameter is deprecated with no replacement",
-        {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
-        }
-      );
-
       return { item, linkData };
     }
 
@@ -1771,16 +1796,20 @@ export class ItemPF extends ItemBasePF {
   /**
    * Retrieve item referred to by a link in .system.links data
    *
-   * @example
-   * const items = (item.system.links?.children ?? [])
-   *   .map(link => item.getLinkedItemSync(link));
+   * @deprecated
    * @param {object} linkData Link data
    * @returns {Item|object|undefined} Linked item, undefined, or compendium index data
    */
   getLinkedItemSync(linkData = {}) {
-    const { uuid } = linkData;
-    const actor = this.actor;
-    return fromUuidSync(uuid, { relative: actor });
+    foundry.utils.logCompatibilityWarning(
+      "ItemPF.getLinkedItemSync() is deprecated in favor of fromUuidSync(linkData.uuid, {relative:actor})",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+
+    return fromUuidSync(linkData.uuid, { relative: this.actor });
   }
 
   /**

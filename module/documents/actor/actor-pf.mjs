@@ -4708,7 +4708,7 @@ export class ActorPF extends ActorBasePF {
         // Fill in charge details
         qi.isCharged = qi.haveAnyCharges;
         if (qi.isCharged) {
-          let chargeCost = qi.item.firstAction?.getChargeCost() ?? qi.item.getDefaultChargeCost();
+          let chargeCost = item.firstAction?.getChargeCost() ?? item.getDefaultChargeCost();
           if (chargeCost == 0) qi.isCharged = false;
 
           qi.recharging = chargeCost < 0;
@@ -4727,6 +4727,16 @@ export class ActorPF extends ActorBasePF {
             else {
               qi.uses = Math.floor(qi.uses / chargeCost);
               qi.max = Math.floor(qi.max / chargeCost);
+            }
+          }
+        } else {
+          const action = item.firstAction;
+          // Add fake charges for ammo using items
+          if (action?.ammoType) {
+            const ammo = item.defaultAmmo;
+            if (ammo) {
+              qi.isCharged = true;
+              qi.uses = ammo.system.quantity || 0;
             }
           }
         }

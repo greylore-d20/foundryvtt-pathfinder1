@@ -103,7 +103,10 @@ export function getActionDefaultData() {
     enh: {
       value: null,
     },
-    ammoType: "",
+    ammo: {
+      type: "none",
+      cost: 1,
+    },
   };
 }
 

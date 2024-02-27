@@ -2086,6 +2086,8 @@ export class ActorPF extends ActorBasePF {
           const max = hp.max ?? oldData.attributes[key]?.max;
           hp.offset = hp.value - max;
         }
+        // Do not ever keep .value
+        delete hp.value;
       }
     }
 

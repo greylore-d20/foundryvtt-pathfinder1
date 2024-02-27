@@ -2484,10 +2484,17 @@ const _migrateSpellbookUsage = function (ent, updateData) {
 const _migrateActorHP = function (ent, updateData) {
   // Migrate HP, Wounds and Vigor values from absolutes to relatives, which is a change in 0.80.16
   for (const k of ["system.attributes.hp", "system.attributes.wounds", "system.attributes.vigor"]) {
+    const value = foundry.utils.getProperty(ent, `${k}.value`);
+
+    // Fill offset if missing
     if (foundry.utils.getProperty(ent, `${k}.offset`) == null) {
       const max = foundry.utils.getProperty(ent, `${k}.max`) ?? 0;
-      const value = foundry.utils.getProperty(ent, `${k}.value`) ?? 0;
-      updateData[`${k}.offset`] = value - max;
+      updateData[`${k}.offset`] = (value ?? 0) - max;
+    }
+    // Value is no longer used if it exists
+
+    if (value !== undefined) {
+      updateData[`${k}.-=value`] = null;
     }
   }
 };

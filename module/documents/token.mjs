@@ -133,13 +133,25 @@ export class TokenDocumentPF extends TokenDocument {
       basicMode.range = Math.max(baseRange, pf1.utils.convertDistance(darkvision)[0]);
     }
 
-    this.sight.range = Math.max(baseRange, basicMode.range);
-
     // -----------------------
-    // See invisibility or Truesight
-    if (senses.si || senses.tr) {
+
+    // See invisibility
+    if (senses.si) {
       this.detectionModes.push({ id: "seeInvisibility", enabled: true, range: basicMode.range });
     }
+
+    // True seeing
+    const trueseeing = senses.tr ?? 0;
+    if (trueseeing > 0) {
+      // Add normal vision within range of true seeing
+      const trr = pf1.utils.convertDistance(trueseeing)[0];
+      basicMode.range = Math.max(trr, basicMode.range);
+      if (trueseeing > darkvision) this.sight.visionMode = "basic";
+
+      this.detectionModes.push({ id: "seeInvisibility", enabled: true, range: trr, limited: true });
+    }
+
+    this.sight.range = Math.max(baseRange, basicMode.range);
 
     // Tremor sense
     if (senses.ts) {

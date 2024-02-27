@@ -2510,7 +2510,7 @@ const _migrateActorSenses = function (ent, updateData, token) {
         },
       },
       sid: false,
-      tr: false,
+      tr: 0,
       si: false,
       sc: 0,
       custom: oldSenses,
@@ -2520,6 +2520,11 @@ const _migrateActorSenses = function (ent, updateData, token) {
   // Migrate boolean Scent sense to number
   if (typeof oldSenses?.sc === "boolean") {
     updateData["system.traits.senses.sc"] = oldSenses.sc ? 30 : 0;
+  }
+
+  // Migrate boolean true seeing to number
+  if (typeof oldSenses?.tr === "boolean") {
+    updateData["system.traits.senses.tr"] = oldSenses.tr ? 120 : 0;
   }
 };
 

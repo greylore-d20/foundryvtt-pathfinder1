@@ -32,6 +32,7 @@ export class SensesSelector extends DocumentSheet {
       bse: "distance",
       bs: "distance",
       sc: "distance",
+      tr: "distance",
     };
   }
 
@@ -46,6 +47,8 @@ export class SensesSelector extends DocumentSheet {
       }
     }
 
+    const isMetric = getDistanceSystem() !== "imperial";
+
     return {
       noSystemVision:
         !game.settings.get("pf1", "systemVision") ||
@@ -53,10 +56,8 @@ export class SensesSelector extends DocumentSheet {
           actor.prototypeToken?.getFlag("pf1", "customVisionRules")) ||
         false,
       senses,
-      gridUnits:
-        getDistanceSystem() === "imperial"
-          ? game.i18n.localize("PF1.Distance.ftShort")
-          : game.i18n.localize("PF1.Distance.mShort"),
+      isMetric,
+      gridUnits: isMetric ? game.i18n.localize("PF1.Distance.mShort") : game.i18n.localize("PF1.Distance.ftShort"),
     };
   }
 

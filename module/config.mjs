@@ -1507,7 +1507,7 @@ export const senses = {
   bse: "PF1.Sense.blindsense",
   dv: "PF1.Sense.darkvision",
   ts: "PF1.Sense.tremorsense",
-  tr: "PF1.Sense.truesight",
+  tr: "PF1.Sense.trueseeing",
   ll: "PF1.Sense.lowlight",
   si: "PF1.Sense.seeInvis",
   sid: "PF1.Sense.seeInDark",

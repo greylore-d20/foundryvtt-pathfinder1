@@ -5,46 +5,6 @@ import { RollPF } from "../dice/roll.mjs";
 /* -------------------------------------------- */
 
 /**
- * This function is used to hook into the Chat Log context menu to add additional options to each message
- * These options make it easy to conveniently apply damage to controlled tokens based on the value of a Roll
- *
- * @param {HTMLElement} html    The Chat Message being rendered
- * @param {Array} options       The Array of Context Menu options
- * @returns {Array}              The extended options Array including new context choices
- */
-export const addChatMessageContextOptions = function (html, options) {
-  const canApply = (li) => canvas.tokens.controlled.length && li.find(".damage-roll .dice-total").length;
-  const canApplyCritical = (li) => canvas.tokens.controlled.length && li.find(".crit-damage-roll .dice-total").length;
-  options.push(
-    {
-      name: game.i18n.localize("PF1.ApplyDamage"),
-      icon: '<i class="fas fa-user-minus"></i>',
-      condition: canApply,
-      callback: (li) => ActorPF.applyDamage(li, 1),
-    },
-    {
-      name: game.i18n.localize("PF1.ApplyHealing"),
-      icon: '<i class="fas fa-user-plus"></i>',
-      condition: canApply,
-      callback: (li) => ActorPF.applyDamage(li, -1),
-    },
-    {
-      name: game.i18n.localize("PF1.ApplyCriticalDamage"),
-      icon: '<i class="fas fa-user-minus"></i>',
-      condition: canApplyCritical,
-      callback: (li) => ActorPF.applyDamage(li, 1, true),
-    },
-    {
-      name: game.i18n.localize("PF1.ApplyCriticalHealing"),
-      icon: '<i class="fas fa-user-minus"></i>',
-      condition: canApplyCritical,
-      callback: (li) => ActorPF.applyDamage(li, -1, true),
-    }
-  );
-  return options;
-};
-
-/**
  * @internal
  * @param {string} combatantId - Combatant ID
  */

@@ -355,6 +355,8 @@ export class ItemPF extends ItemBasePF {
     const link = this.links?.charges;
     if (link) return link.charges;
 
+    if (!this.system.uses?.per) return Infinity;
+
     // Get own charges
     if (this.isSingleUse) return this.system.quantity ?? 0;
     return this.system.uses?.value ?? 0;

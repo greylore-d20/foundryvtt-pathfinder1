@@ -361,7 +361,7 @@ export function onHealth(event, target) {
   for (const actor of actors) {
     let value = RollPF.safeRoll(formula, actor.getRollData()).total;
     if (command === "heal") value = -value;
-    actor.applyDamage(value, deepClone(options));
+    actor.applyDamage(value, { ...options, event, element: target });
   }
 }
 

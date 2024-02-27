@@ -1402,7 +1402,7 @@ export class ItemPF extends ItemBasePF {
     if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
 
     if (action === "applyDamage") {
-      await this._onChatCardAction(action, { button });
+      await this._onChatCardAction(action, { button, event });
       button.disabled = false;
       return;
     }
@@ -1414,26 +1414,25 @@ export class ItemPF extends ItemBasePF {
     const item = actor.items.get(card.dataset.itemId);
 
     // Perform action
-    if (!(await this._onChatCardAction(action, { button, item }))) {
+    if (!(await this._onChatCardAction(action, { button, item, event }))) {
       button.disabled = false;
     }
   }
 
-  static async _onChatCardAction(action, { button = null, item = null } = {}) {
+  static async _onChatCardAction(action, { button = null, item = null, event } = {}) {
     // Apply damage
     if (action === "applyDamage") {
-      let asNonlethal = [...(button.closest(".chat-message")?.querySelectorAll(".tag") ?? [])]
-        .map((o) => o.innerText)
-        .includes(game.i18n.localize("PF1.Nonlethal"));
+      let asNonlethal = false;
       if (button.dataset.tags?.split(" ").includes("nonlethal")) asNonlethal = true;
 
-      const value = button.dataset.value;
-      if (!isNaN(parseInt(value))) pf1.documents.actor.ActorPF.applyDamage(parseInt(value), { asNonlethal });
+      const value = parseInt(button.dataset.value);
+      if (isNaN(value)) return void console.warn("Invalid damage value:", value, { button });
+
+      pf1.documents.actor.ActorPF.applyDamage(value, { asNonlethal, event, element: button });
     }
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {
-      if (!item) return;
-      if (!item.isOwner) return;
+      if (!item?.isOwner) return;
 
       // Check for recovery state
       const attackIndex = button.closest(".chat-attack").dataset.index;
@@ -1475,8 +1474,10 @@ export class ItemPF extends ItemBasePF {
 
       return true;
     } else if (action === "concentration") {
+      // TODO: Apply bonuses on card if any
       item.actor.rollConcentration(item.system.spellbook);
     } else if (action === "caster-level-check") {
+      // TODO: Apply bonuses on card (e.g. CL increase in dialog, conditional modifiers, etc.)
       item.actor.rollCL(item.system.spellbook);
     }
 

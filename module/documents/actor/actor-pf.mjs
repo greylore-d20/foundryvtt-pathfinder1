@@ -3629,10 +3629,12 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} [options.forceDialog=true] - Forces the opening of a Dialog as if Shift was pressed
    * @param {string} [options.reductionDefault] - Default value for Damage Reduction
    * @param {boolean} [options.asNonlethal] - Marks the damage as non-lethal
-   * @param {Array.<Token|Actor>} [options.targets] - Override the targets to apply damage to
-   * @param {number} options.critMult - Critical multiplier as needed for Wounds & Vigor variant health rule. Set to 0 for non-critical hits.
-   * @param {boolean} options.asWounds - Apply damage to wounds directly instead of vigor, as needed for Wounds & Vigor variant health rule.
-   * @returns {Promise}
+   * @param {Array.<Token|Actor>} [options.targets=null] - Override the targets to apply damage to
+   * @param {number} [options.critMult=0] - Critical multiplier as needed for Wounds & Vigor variant health rule. Set to 0 for non-critical hits.
+   * @param {boolean} [options.asWounds=false] - Apply damage to wounds directly instead of vigor, as needed for Wounds & Vigor variant health rule.
+   * @param {Event} [options.event] - Triggering event, if any
+   * @param {Element} [options.element] - Triggering element, if any.
+   * @returns {Promise<false|Actor[]>} - False if cancelled or array of updated actors.
    */
   static async applyDamage(
     value = 0,
@@ -3643,9 +3645,11 @@ export class ActorPF extends ActorBasePF {
       targets = null,
       critMult = 0,
       asWounds = false,
+      event,
+      element,
     } = {}
   ) {
-    if (value == 0 || !Number.isFinite(value)) return;
+    if (value == 0 || !Number.isFinite(value)) return void console.warn("Attempting to apply 0 damage.");
 
     const promises = [];
     let controlled = canvas.tokens.controlled,
@@ -3678,7 +3682,7 @@ export class ActorPF extends ActorBasePF {
         controlled = controlled.filter((con) => checked.includes(con.id));
       }
 
-      if (value == 0) return; // Early exit
+      if (value == 0) return void console.warn("Attempting to apply 0 damage."); // Early exit
 
       for (const t of controlled) {
         const a = t instanceof Token ? t.actor : t;
@@ -3693,7 +3697,7 @@ export class ActorPF extends ActorBasePF {
           hp = !useWoundsAndVigor ? a.system.attributes.hp : a.system.attributes.vigor,
           tmp = hp.temp || 0;
 
-        const update = {};
+        const updateData = {};
 
         if (useWoundsAndVigor) {
           const currentHealth = hp.value;
@@ -3719,7 +3723,7 @@ export class ActorPF extends ActorBasePF {
           }
 
           // Create update data
-          if (dt != 0) update["system.attributes.vigor.temp"] = tmp - dt;
+          if (dt != 0) updateData["system.attributes.vigor.temp"] = tmp - dt;
           if (value != 0) {
             let newHP = Math.min(currentHealth - value, hp.max);
             if (value > 0) {
@@ -3730,12 +3734,12 @@ export class ActorPF extends ActorBasePF {
               }
             }
 
-            if (newHP != hp.value) update["system.attributes.vigor.value"] = newHP;
+            if (newHP != hp.value) updateData["system.attributes.vigor.value"] = newHP;
           }
 
           if (woundAdjust != 0) {
             const wounds = a.system.attributes.wounds;
-            update["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);
+            updateData["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);
           }
         }
         // Normal Hit Points
@@ -3751,12 +3755,13 @@ export class ActorPF extends ActorBasePF {
           const dt = value > 0 ? Math.min(tmp, value) : 0;
 
           // Create update data
-          update["system.attributes.hp.nonlethal"] = hp.nonlethal + nld;
-          update["system.attributes.hp.temp"] = tmp - dt;
-          update["system.attributes.hp.value"] = Math.min(hp.value - (value - dt), hp.max);
+          if (nld != 0) updateData["system.attributes.hp.nonlethal"] = hp.nonlethal + nld;
+          if (dt != 0) updateData["system.attributes.hp.temp"] = tmp - dt;
+          const newHp = Math.min(hp.value - (value - dt), hp.max);
+          if (newHp != hp.value) updateData["system.attributes.hp.value"] = newHp;
         }
 
-        promises.push(a.update(update));
+        promises.push(a.update(updateData));
       }
       return Promise.all(promises);
     };

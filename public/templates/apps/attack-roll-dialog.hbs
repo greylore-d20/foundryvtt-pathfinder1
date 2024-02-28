@@ -87,10 +87,9 @@
   </div>
   {{/if}}{{/if}}
 
-  {{#if (or isAttack isWeapon)}}
-  {{#unless isNaturalAttack}}
+  {{#if canConfigurePowerAttack}}
   <div class="form-group select">
-    <label>{{localize "PF1.Held"}}</label>
+    <label>{{localize "PF1.PowerAttackMode"}}</label>
     <div class="form-fields">
       <i class="fa-solid fa-hands fa-fw"></i>
       <select name="held">
@@ -98,7 +97,6 @@
       </select>
     </div>
   </div>
-  {{/unless}}
   {{/if}}
 
   {{#if isSpell}}

@@ -123,7 +123,7 @@ export class AttackDialog extends Application {
     const action = this.action,
       item = action.item;
 
-    return {
+    const context = {
       data: this.rollData,
       item,
       action,
@@ -135,8 +135,9 @@ export class AttackDialog extends Application {
       hasDamageAbility: action.data.ability?.damage ?? "" !== "",
       isNaturalAttack: item.system.subType === "natural",
       isWeaponAttack: item.system.subType === "weapon",
+      isRanged: action.isRanged,
       isMeleeWeaponAttackAction: action.data.actionType === "mwak",
-      isRangedWeaponAttackAction: ["rwak", "twak"].includes(action.data.actionType),
+      isRangedWeaponAttackAction: action.isRanged && !action.isCombatManeuver,
       isAttack: item.type === "attack",
       isWeapon: item.type === "weapon",
       isSpell: item.type === "spell",
@@ -150,6 +151,15 @@ export class AttackDialog extends Application {
       usesAmmo: !!this.action.ammoType,
       ammo: this.getAmmo(),
     };
+
+    // Determine if power attack mode should be displayed
+    context.canConfigurePowerAttack =
+      context.flags["power-attack"] &&
+      !context.isRanged &&
+      (context.isAttack || context.isWeapon) &&
+      !context.isNaturalAttack;
+
+    return context;
   }
 
   getAmmo() {

@@ -398,6 +398,10 @@ export class ItemAction {
     return ["rwak", "twak", "rsak", "rcman"].includes(this.data.actionType);
   }
 
+  get isSpell() {
+    return ["rsak", "msak"].includes(this.data.actionType);
+  }
+
   /**
    * An array of changes affecting this action's damage
    *

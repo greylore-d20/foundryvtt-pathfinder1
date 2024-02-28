@@ -74,6 +74,7 @@
       {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
 
       {{!-- Weapon Hold Type --}}
+      {{#unless isRanged}}
       <div class="form-group">
         <label>{{localize "PF1.Held"}}</label>
         <div class="form-fields">
@@ -82,6 +83,7 @@
           </select>
         </div>
       </div>
+      {{/unless}}
 
       {{!-- Base Material --}}
       {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Base" value_ref="system.material.base.value" value=system.material.base.value custom_ref="system.material.base.custom" custom=system.material.base.custom choices=materialCategories.basics}}

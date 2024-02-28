@@ -1174,6 +1174,7 @@ export class ItemPF extends ItemBasePF {
    * @param {string} [dice="1d20"] - The base dice to roll for this action
    * @param {string} [rollMode] - The roll mode to use for the chat message
    * @param {TokenDocument} [token] Token this action is for, if any.
+   * @param {UseOptions} [options={}] Additional use options
    * @throws {Error} - On some invalid inputs.
    * @returns {Promise<SharedActionData | void | ChatMessage>}
    */
@@ -1187,6 +1188,7 @@ export class ItemPF extends ItemBasePF {
     dice = "1d20",
     rollMode,
     token,
+    options = {},
   } = {}) {
     rollMode ||= game.settings.get("core", "rollMode");
 
@@ -1199,6 +1201,12 @@ export class ItemPF extends ItemBasePF {
       });
 
       actionId ||= actionID;
+    }
+
+    if (options.held) {
+      // Convert human friendly options to internal types
+      if (options.held === "twohanded") options.held = "2h";
+      else if (options.held === "offhand") options.held = "oh";
     }
 
     // Old use method
@@ -1273,6 +1281,7 @@ export class ItemPF extends ItemBasePF {
       dice,
       cost,
       fullAttack: true,
+      useOptions: options,
       attackBonus: [],
       damageBonus: [],
       attacks: [],
@@ -1292,6 +1301,14 @@ export class ItemPF extends ItemBasePF {
       item: { value: this, writable: false, enumerable: true },
       token: { value: token, writable: false, enumerable: true },
     });
+
+    if (shared.useOptions.ammo) {
+      if (action.data.usesAmmo) {
+        await this.setFlag("pf1", "defaultAmmo", shared.useOptions.ammo);
+      } else {
+        console.error("Attempted to set ammo for action that does not use ammo");
+      }
+    }
 
     const actionUse = new ActionUse(shared);
 
@@ -2256,4 +2273,20 @@ export class ItemPF extends ItemBasePF {
  * @property {object} chatData - Data to be passed to {@link ChatMessage.create}, excluding `content` rendered using {@link templateData} and {@link template}.
  * @property {string} [chatTemplate] - The template to be used for the creation of the chat message.
  * @property {object} templateData - Data used to render the chat card, passed to {@link foundry.utils.renderTemplate}.
+ */
+
+/**
+ * Additional options for (action) use.
+ *
+ * @typedef {object} UseOptions
+ * @property {boolean} [primaryAttack] - Set primary attack state
+ * @property {boolean} [clCheck] - Set caster level check state
+ * @property {boolean} [measureTemplate] - Set measure template state
+ * @property {boolean} [powerAttack] - Set power attack state
+ * @property {"normal"|"2h"|"twohanded"|"oh"|"offhand"} [held] - Set held option (for power attack mode).
+ * @property {number} [abilityMult] - Ability score damage multiplier
+ * @property {string} [ammo] - Ammo item ID to use.
+ * @property {boolean} [haste] - Enable Haste
+ * @property {boolean} [manyshot] - Enable Manyshot
+ * @property {boolean} [rapidShot] - Enable Rapid Shot
  */

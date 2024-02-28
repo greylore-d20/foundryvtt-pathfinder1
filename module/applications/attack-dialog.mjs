@@ -6,12 +6,15 @@ export class AttackDialog extends Application {
    * @param {pf1.components.ItemAction} action
    * @param {object} rollData
    * @param {object} shared
+   * @param options
    * @param {object} appOptions
    */
   constructor(action, rollData = null, shared = {}, appOptions = {}) {
     super(appOptions);
 
     this.object = action;
+
+    this.useOptions = shared.useOptions ?? {};
 
     this.rollData = rollData ? rollData : action.getRollData();
 
@@ -26,11 +29,20 @@ export class AttackDialog extends Application {
     const isNaturalAttack = action.item.subType === "natural",
       isPrimaryAttack = isNaturalAttack ? action.data.naturalAttack.primaryAttack !== false : true;
 
+    const useOptions = this.useOptions;
+
     this.flags = {
-      "primary-attack": isPrimaryAttack,
-      "cl-check": action.clCheck === true,
-      "measure-template": true,
+      "power-attack": useOptions.powerAttack ?? false,
+      "primary-attack": useOptions.primaryAttack ?? isPrimaryAttack,
+      "cl-check": useOptions.clCheck ?? action.clCheck === true,
+      "measure-template": useOptions.measureTemplate ?? true,
+      "haste-attack": useOptions.haste,
+      manyshot: useOptions.manyshot,
+      "rapid-shot": useOptions.rapidShot,
     };
+
+    let damageMult = this.damageMult;
+    if (useOptions.abilityMult != null) damageMult = useOptions.abilityMult;
 
     this.attributes = {
       d20: this.rollData.d20 ?? "",
@@ -39,14 +51,18 @@ export class AttackDialog extends Application {
       "cl-offset": "0",
       "sl-offset": "0",
       rollMode: shared.rollMode || game.settings.get("core", "rollMode"),
-      "damage-ability-multiplier": this.damageMult,
-      held: this.rollData.action?.held || this.rollData.item?.held || "normal",
+      "damage-ability-multiplier": damageMult,
+      held: useOptions.held || this.rollData.action?.held || this.rollData.item?.held || "normal",
     };
 
     this.conditionals = {};
     action.conditionals?.contents.forEach((conditional, idx) => {
       this.conditionals[`conditional.${idx}`] = conditional.data.default === true;
     });
+
+    if (useOptions.haste) this._toggleExtraAttack("haste-attack", true);
+    if (useOptions.manyshot) this._toggleExtraAttack("manyshot", true);
+    if (useOptions.rapidShot) this._toggleExtraAttack("rapid-shot", true);
 
     // Callback for AttackDialog.show()
     this._callbacks = {
@@ -201,8 +217,14 @@ export class AttackDialog extends Application {
     this.element.find(".attacks .attack").removeClass("disabled");
   }
 
+  /**
+   * @internal
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.render=true] - Call render
+   * @param {Event} event
+   */
   _onToggleFlag(event) {
-    event.preventDefault();
+    if (event?.cancelable) event.preventDefault();
 
     const elem = event.currentTarget;
     this.flags[elem.name] = elem.checked === true;
@@ -212,29 +234,7 @@ export class AttackDialog extends Application {
       case "haste-attack":
       case "rapid-shot":
       case "manyshot": {
-        if (elem.checked) {
-          const translationString = {
-            "haste-attack": "PF1.Haste",
-            "rapid-shot": "PF1.RapidShot",
-            manyshot: "PF1.Manyshot",
-          };
-
-          // Correlate manyshot with the first attack, add the others at the end
-          const place = elem.name === "manyshot" ? 1 : this.attacks.length;
-
-          this.attacks.splice(
-            place,
-            0,
-            foundry.utils.mergeObject(this.constructor.defaultAttack, {
-              id: elem.name,
-              label: game.i18n.localize(translationString[elem.name]),
-              attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
-            })
-          );
-          this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
-        } else {
-          this.attacks = this.attacks.filter((o) => o.id !== elem.name);
-        }
+        this._toggleExtraAttack(elem.name, elem.checked);
         break;
       }
       case "primary-attack":
@@ -244,6 +244,32 @@ export class AttackDialog extends Application {
     }
 
     this.render();
+  }
+
+  _toggleExtraAttack(type, enabled = true) {
+    if (enabled) {
+      const translationString = {
+        "haste-attack": "PF1.Haste",
+        "rapid-shot": "PF1.RapidShot",
+        manyshot: "PF1.Manyshot",
+      };
+
+      // Correlate manyshot with the first attack, add the others at the end
+      const place = type === "manyshot" ? 1 : this.attacks.length;
+
+      this.attacks.splice(
+        place,
+        0,
+        foundry.utils.mergeObject(this.constructor.defaultAttack, {
+          id: type,
+          label: game.i18n.localize(translationString[type]),
+          attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
+        })
+      );
+      this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
+    } else {
+      this.attacks = this.attacks.filter((o) => o.id !== type);
+    }
   }
 
   _onToggleConditional(event) {

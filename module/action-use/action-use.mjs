@@ -138,6 +138,17 @@ export class ActionUse {
     let formData;
     if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).object;
     else formData = form;
+
+    const useOptions = this.shared.useOptions;
+    formData["power-attack"] ??= useOptions.powerAttack;
+    formData["primary-attack"] ??= useOptions.primaryAttack;
+    formData["cl-check"] ??= useOptions.clCheck;
+    formData["measure-template"] ??= useOptions.measureTemplate;
+    formData["haste-attack"] ??= useOptions.haste;
+    formData["manyshot"] ??= useOptions.manyshot;
+    formData["rapid-shot"] ??= useOptions.rapidShot;
+    formData["damage-ability-multiplier"] ??= useOptions.abilityMult;
+
     if (formData["d20"]) this.shared.rollData.d20 = formData["d20"];
     const atkBonus = formData["attack-bonus"];
     if (atkBonus) {
@@ -269,6 +280,8 @@ export class ActionUse {
   generateAttacks(forceFullAttack = false) {
     const rollData = this.shared.rollData;
     const action = rollData.action;
+
+    const useOptions = this.shared.useOptions;
 
     /**
      * Counter for unnamed or other numbered attacks, to be incremented with each usage.

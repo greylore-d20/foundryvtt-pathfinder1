@@ -1382,16 +1382,17 @@ export class ItemPF extends ItemBasePF {
     if (classTag) result.class = result.classes[classTag];
 
     // Add dictionary flag
-    if (this.system.tag) {
-      result.item.dFlags = foundry.utils.getProperty(result, `dFlags.${this.system.tag}`);
-    }
+    const tag = this.system.tag;
+    result.item.dFlags = result.dFlags?.[tag];
 
     // Set aura strength
-    foundry.utils.setProperty(result, "item.auraStrength", this.auraStrength);
+    if (this.isPhysical) {
+      result.item.auraStrength = this.auraStrength;
 
-    // Resize item
-    if (this.system.resizing && result.size !== undefined) {
-      result.item.size = result.size;
+      // Resize item
+      if (this.system.resizing && result.size !== undefined) {
+        result.item.size = result.size;
+      }
     }
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);

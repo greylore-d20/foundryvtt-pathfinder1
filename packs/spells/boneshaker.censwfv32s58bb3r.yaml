@@ -11,9 +11,16 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: 3d6 + floor(@cl / 2)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
-      img: systems/pf1/icons/misc/magic-swirl.png
+      img: icons/skills/wounds/anatomy-bone-joint.webp
       name: Use
       range:
         units: medium
@@ -59,5 +66,8 @@ system:
   materials:
     focus: human-shaped fetish made of bones
   school: nec
+  sources:
+    - id: PZO1135
+      pages: '110'
 type: spell
 

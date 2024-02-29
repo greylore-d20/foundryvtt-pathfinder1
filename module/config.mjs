@@ -1873,6 +1873,7 @@ export const conditionTypes = {
   sicken: "PF1.Condition.sickened",
   paralyze: "PF1.Condition.paralyzed",
   petrify: "PF1.Condition.petrified",
+  polymorph: "PF1.Condition.polymorph",
   stun: "PF1.Condition.stunned",
   sleep: "PF1.Condition.sleep",
 };

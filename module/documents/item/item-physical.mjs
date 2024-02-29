@@ -203,6 +203,8 @@ export class ItemPhysicalPF extends ItemPF {
    * @param {boolean} [options.inLowestDenomination=false] - Whether the value should be returned in the lowest denomination
    * @param {boolean} [options.forceUnidentified=false] - Override whether the value should use the unidentified price
    * @param {boolean} [options.single=false] - Return value of singular item instead of the actual stack. Disables recursive option.
+   * @param {boolean} [options.identical=false] - Treat all items in stack as identical (same number of charges).
+   * @param {boolean} [options.maximized=false] - Pretend as if the items were fresh  (full charges)
    * @returns {number} The item's value
    */
   getValue({
@@ -211,11 +213,14 @@ export class ItemPhysicalPF extends ItemPF {
     inLowestDenomination = false,
     forceUnidentified = false,
     single = false,
+    identical = false,
+    maximized = false,
   } = {}) {
     if (single) recursive = false;
 
     const hasFiniteCharges = this.hasFiniteCharges;
-    const remainingCharges = hasFiniteCharges ? this.charges : 0;
+    const maxChargesValue = hasFiniteCharges ? this.maxCharges : 0;
+    const remainingCharges = hasFiniteCharges ? (maximized ? maxChargesValue : this.charges) : 0;
 
     const getActualValue = (identified = true, maxCharges = false) => {
       let value = 0;
@@ -224,7 +229,7 @@ export class ItemPhysicalPF extends ItemPF {
 
       // Add charge price
       if (identified && hasFiniteCharges) {
-        let charges = maxCharges ? this.maxCharges : remainingCharges;
+        let charges = maxCharges ? maxChargesValue : remainingCharges;
         if (!Number.isFinite(charges) || charges < 0) charges = 0;
         value += (this.system.uses?.pricePerUse ?? 0) * charges;
       }
@@ -244,7 +249,7 @@ export class ItemPhysicalPF extends ItemPF {
     let result = getActualValue(isIdentified);
     if (quantity > 1) {
       // If charged item, add rest of the stack as if they had full charges
-      if (hasFiniteCharges) result += getActualValue(isIdentified, true) * (quantity - 1);
+      if (hasFiniteCharges && identical !== true) result += getActualValue(isIdentified, true) * (quantity - 1);
       // Otherwise just multiply
       else result *= quantity;
     }

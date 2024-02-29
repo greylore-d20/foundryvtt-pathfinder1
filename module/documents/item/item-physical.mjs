@@ -214,26 +214,40 @@ export class ItemPhysicalPF extends ItemPF {
   } = {}) {
     if (single) recursive = false;
 
-    const getActualValue = (identified = true) => {
+    const hasFiniteCharges = this.hasFiniteCharges;
+    const remainingCharges = hasFiniteCharges ? this.charges : 0;
+
+    const getActualValue = (identified = true, maxCharges = false) => {
       let value = 0;
       if (identified) value = this.system.price;
       else value = this.system.unidentified.price;
 
       // Add charge price
-      if (identified) value += (this.system.uses?.pricePerUse ?? 0) * (this.system.uses?.value ?? 0);
+      if (identified && hasFiniteCharges) {
+        let charges = maxCharges ? this.maxCharges : remainingCharges;
+        if (!Number.isFinite(charges) || charges < 0) charges = 0;
+        value += (this.system.uses?.pricePerUse ?? 0) * charges;
+      }
 
       if (inLowestDenomination) value *= 100;
       if (this.isBroken) value *= 0.75; // TODO: Make broken value configurable
       if (this.system.timeworn) {
-        if (this.hasFiniteCharges && this.charges === 0) value *= 0.01;
+        if (hasFiniteCharges && remainingCharges === 0) value *= 0.01;
         else value *= 0.5;
       }
       return value;
     };
 
+    // Increase value by quantity
+    const isIdentified = forceUnidentified ? false : !this.showUnidentifiedData;
     const quantity = single ? 1 : this.system.quantity || 0;
-
-    let result = getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
+    let result = getActualValue(isIdentified);
+    if (quantity > 1) {
+      // If charged item, add rest of the stack as if they had full charges
+      if (hasFiniteCharges) result += getActualValue(isIdentified, true) * (quantity - 1);
+      // Otherwise just multiply
+      else result *= quantity;
+    }
 
     // Modify sell value
     if (!(this.type === "loot" && ["tradeGoods", "treasure"].includes(this.subType))) result *= sellValue;

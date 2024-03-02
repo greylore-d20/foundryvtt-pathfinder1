@@ -2066,6 +2066,74 @@ const _migrateActionDuration = (action, itemData) => {
 };
 
 /**
+ * Added with PF1 vNEXT
+ *
+ * @param {object} action
+ * @param {object} itemData
+ */
+const _migrateActionExtraAttacks = (action, itemData) => {
+  // Convert tuples into objects
+  if (action.attackParts?.length) {
+    const parts = action.attackParts ?? [];
+    if (parts.some((p) => Array.isArray(p))) {
+      action.attackParts = parts.map((part) => (Array.isArray(part) ? { formula: part[0], name: part[1] } : part));
+    }
+
+    // Ensure formulas are strings
+    for (const part of action.attackParts) part.formula = `${part.formula}`;
+  }
+
+  // Unify extra attacks structure
+  action.extraAttacks ??= {};
+
+  if (action.attackParts !== undefined) {
+    action.extraAttacks.manual = action.attackParts ?? [];
+    delete action.attackParts;
+  }
+
+  if (action.formulaicAttacks !== undefined) {
+    action.extraAttacks.formula ??= {};
+    action.extraAttacks.formula.count = action.formulaicAttacks.count?.formula || "";
+    action.extraAttacks.formula.bonus = action.formulaicAttacks.bonus?.formula || "";
+    action.extraAttacks.formula.label = action.formulaicAttacks.label || "";
+    delete action.formulaicAttacks;
+  }
+
+  if (!action.extraAttacks.type) {
+    // Convert existing formulas to standard options
+    if (
+      action.extraAttacks.formula?.count === "min(3, ceil(@attributes.bab.total / 5) - 1)" &&
+      action.extraAttacks.formula?.bonus === "@formulaicAttack * -5"
+    ) {
+      action.extraAttacks.type = "standard";
+      delete action.extraAttacks.formula.count;
+      delete action.extraAttacks.formula.bonus;
+      delete action.extraAttacks.formula.label;
+
+      if (action.extraAttacks.manual?.length) {
+        action.extraAttacks.type = "advanced";
+      } else {
+        delete action.extraAttacks.manual;
+      }
+    } else {
+      if (action.extraAttacks.formula?.count?.length || action.extraAttacks.manual?.length) {
+        action.extraAttacks.type = "custom";
+      }
+    }
+
+    // Delete unused data
+    if (!action.extraAttacks.formula?.count) delete action.extraAttacks.formula.count;
+    if (!action.extraAttacks.formula?.bonus) delete action.extraAttacks.formula.bonus;
+    if (!action.extraAttacks.formula?.label) delete action.extraAttacks.formula.label;
+    if (!(action.extraAttacks.manual?.length > 0)) delete action.extraAttacks.manual;
+  }
+
+  if (foundry.utils.isEmpty(action.extraAttacks.formula)) {
+    delete action.extraAttacks.formula;
+  }
+};
+
+/**
  * Migrate value types that should never have been those types.
  *
  * This may be only correcting macro/module errors and not things caused by the system.
@@ -2087,23 +2155,6 @@ const _migrateActionObsoleteTypes = (action, itemData) => {
       action.duration.value = `${durVal}`;
     }
   }
-};
-
-const _migrateActionExtraAttacks = function (action, item) {
-  const parts = action.attackParts ?? [];
-  // Convert tuples into objects (0.83.0)
-  if (parts.some((p) => Array.isArray(p))) {
-    action.attackParts = parts.map((part) => {
-      if (Array.isArray(part)) {
-        return { formula: part[0], name: part[1] };
-      } else {
-        return part;
-      }
-    });
-  }
-
-  // Ensure formulas are strings
-  for (const part of action.attackParts) part.formula = `${part.formula}`;
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

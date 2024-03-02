@@ -1888,6 +1888,55 @@ export const buffTypes = {
 };
 
 /**
+ * Formula for determining extra attacks for BAB iteratives
+ */
+export const iterativeExtraAttacks = "min(3, ceil(@bab / 5) - 1)";
+
+/**
+ * Formula for determining attack modifier for BAB iteratives
+ */
+export const iterativeAttackModifier = "@attackCount * -5";
+
+/**
+ * Extra Attacks configurations
+ *
+ * @example
+ * Custom additional option
+ * ```js
+ * turboMonk: {
+ *   label: "Turbo Monk",
+ *   iteratives: true,
+ *   count: "floor(@bab / 3)",
+ *   bonus: "@attackCount * -2",
+ *   manual: true,
+ * }
+ * ```
+ */
+export const extraAttacks = {
+  // Standard: BAB iteratives
+  standard: {
+    label: "PF1.ExtraAttacks.Standard",
+    iteratives: true,
+    manual: false,
+    formula: false,
+  },
+  // Advanced: BAB iteratives + manual extra attacks and custom formula
+  advanced: {
+    label: "PF1.ExtraAttacks.Advanced",
+    iteratives: true,
+    manual: true,
+    formula: true,
+  },
+  // Custom: No BAB iteratives but with manual extra attacks and custom formula
+  custom: {
+    label: "PF1.ExtraAttacks.Custom",
+    iteratives: false,
+    manual: true,
+    formula: true,
+  },
+};
+
+/**
  * Dictionaries of conditional modifier targets, each with a label and sub-categories
  */
 export const conditionalTargets = {

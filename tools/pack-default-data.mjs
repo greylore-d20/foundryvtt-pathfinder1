@@ -59,11 +59,14 @@ export function getActionDefaultData() {
       critParts: [],
       nonCritParts: [],
     },
-    attackParts: [],
-    formulaicAttacks: {
-      count: { formula: "" },
-      bonus: { formula: "" },
-      label: null,
+    extraAttacks: {
+      type: "",
+      manual: [],
+      formula: {
+        count: "",
+        bonus: "",
+        label: "",
+      },
     },
     formula: "",
     ability: {

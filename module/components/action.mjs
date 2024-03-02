@@ -166,7 +166,9 @@ export class ItemAction {
   }
 
   get hasMultiAttack() {
-    return this.hasAttack && (this.data.attackParts?.length > 0 || this.data.formulaicAttacks?.count?.value > 0);
+    if (!this.hasAttack) return false;
+    const exAtk = this.data.extraAttacks ?? {};
+    return exAtk.manual?.length > 0 || !!exAtk.type;
   }
 
   get autoDeductCharges() {
@@ -542,11 +544,14 @@ export class ItemAction {
         critParts: [],
         nonCritParts: [],
       },
-      attackParts: [],
-      formulaicAttacks: {
-        count: { formula: "" },
-        bonus: { formula: "" },
-        label: null,
+      extraAttacks: {
+        type: "",
+        manual: [],
+        formula: {
+          count: "",
+          bonus: "",
+          label: "",
+        },
       },
       formula: "",
       ability: {
@@ -681,7 +686,7 @@ export class ItemAction {
     // Make sure stuff remains an array
     {
       const keepPaths = [
-        "attackParts",
+        "extraAttacks.manual",
         "damage.parts",
         "damage.critParts",
         "damage.nonCritParts",
@@ -782,7 +787,7 @@ export class ItemAction {
   parseFormulaicAttacks({ formula = null, rollData } = {}) {
     if (!this.actor) return;
 
-    const exAtkCountFormula = formula || this.data.formulaicAttacks?.count?.formula || "0";
+    const exAtkCountFormula = formula || this.data.extraAttacks?.formula?.count || "0";
     let extraAttacks = 0,
       xaroll;
     rollData ??= this.getRollData();
@@ -801,7 +806,7 @@ export class ItemAction {
     }
 
     // Test bonus attack formula
-    const exAtkBonusFormula = this.data.formulaicAttacks?.bonus?.formula || "0";
+    const exAtkBonusFormula = this.data.extraAttacks?.formula?.bonus || "0";
     try {
       if (exAtkBonusFormula.length > 0 && exAtkBonusFormula != 0) {
         rollData.attackCount = 1;
@@ -819,7 +824,7 @@ export class ItemAction {
     }
 
     // Update item
-    foundry.utils.setProperty(this.data, "formulaicAttacks.count.value", extraAttacks);
+    foundry.utils.setProperty(this.data, "extraAttacks.formula.countValue", extraAttacks);
 
     return extraAttacks;
   }
@@ -1214,13 +1219,15 @@ export class ItemAction {
       // Add specific attacks
       if (this.hasAttack) {
         result["attack_0"] = `${game.i18n.localize("PF1.Attack")} 1`;
+
+        const exAtk = this.data.extraAttacks;
+        if (exAtk?.manual?.length) {
+          exAtk.manual.forEach((part, index) => {
+            result[`attack_${index + 1}`] = part.name;
+          });
+        }
       } else {
         delete result["rapidShotDamage"];
-      }
-      if (this.hasMultiAttack) {
-        this.data.attackParts.forEach((part, index) => {
-          result[`attack_${index + 1}`] = part.name;
-        });
       }
     }
     // Add subtargets affecting effects

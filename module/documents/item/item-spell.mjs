@@ -615,16 +615,16 @@ export class ItemSpellPF extends ItemPF {
       }
 
       // Convert extra attacks
-      const frmAtk = action.formulaicAttacks;
-      if (frmAtk) {
-        if (frmAtk.count?.formula?.length)
-          frmAtk.count.formula = this._replaceConsumableConversionString(frmAtk.count.formula, rollData);
-        if (frmAtk.bonus?.formula?.length)
-          frmAtk.bonus.formula = this._replaceConsumableConversionString(frmAtk.bonus.formula, rollData);
-      }
+      const exAtk = action.extraAttacks;
+      if (exAtk) {
+        if (exAtk.formula?.count?.length)
+          exAtk.formula.count = this._replaceConsumableConversionString(exAtk.formula.count, rollData);
+        if (exAtk.formula?.bonus?.length)
+          exAtk.formula.bonus = this._replaceConsumableConversionString(exAtk.formula.bonus, rollData);
 
-      for (const bAtk of action.attackParts ?? []) {
-        bAtk[0] = this._replaceConsumableConversionString(bAtk[0], rollData);
+        for (const bAtk of exAtk.manual ?? []) {
+          bAtk.formula = this._replaceConsumableConversionString(bAtk.formula, rollData);
+        }
       }
 
       // Set damage formula

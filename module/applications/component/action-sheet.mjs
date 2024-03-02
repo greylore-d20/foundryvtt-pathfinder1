@@ -56,97 +56,97 @@ export class ItemActionSheet extends FormApplication {
   }
 
   async getData() {
-    const data = await super.getData();
+    const context = await super.getData();
     const action = this.action;
     const item = this.item;
     const actor = this.actor;
-    data.action = action;
-    data.item = item;
-    data.actor = actor;
-    data.data = foundry.utils.mergeObject(action.constructor.defaultData, foundry.utils.deepClone(action.data), {
+    context.action = action;
+    context.item = item;
+    context.actor = actor;
+    context.data = foundry.utils.mergeObject(action.constructor.defaultData, foundry.utils.deepClone(action.data), {
       inplace: false,
     });
-    data.damageTypes = pf1.registry.damageTypes.toObject();
-    data.rollData = action.getRollData();
+    context.damageTypes = pf1.registry.damageTypes.toObject();
+    context.rollData = action.getRollData();
 
     // Tag placeholder
-    data.tag = createTag(action.name);
+    context.tag = createTag(action.name);
 
     // Include CONFIG values
-    data.config = pf1.config;
+    context.config = pf1.config;
 
     // Action Details
-    data.hasAttackRoll = action.hasAttack;
-    data.actionType = data.data.actionType;
-    data.isHealing = data.actionType === "heal";
-    data.hasDamage = action.hasDamage;
-    data.isCombatManeuver = ["mcman", "rcman"].includes(data.actionType);
-    data.hasAttack = ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(data.actionType);
+    context.hasAttackRoll = action.hasAttack;
+    context.actionType = context.data.actionType;
+    context.isHealing = context.actionType === "heal";
+    context.hasDamage = action.hasDamage;
+    context.isCombatManeuver = ["mcman", "rcman"].includes(context.actionType);
+    context.hasAttack = ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(context.actionType);
     // Can have crit and non-crit damage, or simply show them if they've been defined.
-    data.hasCritDamage = data.hasAttack || data.data.damage?.critParts?.length > 0;
-    data.hasNonCritDamage = data.hasAttack || data.data.damage?.nonCritParts?.length > 0;
+    context.hasCritDamage = context.hasAttack || context.data.damage?.critParts?.length > 0;
+    context.hasNonCritDamage = context.hasAttack || context.data.damage?.nonCritParts?.length > 0;
 
-    data.isCharged = action.isCharged;
-    data.isSelfCharged = action.isSelfCharged;
-    data.showMaxChargeFormula = ["day", "week", "charges"].includes(data.data.uses.self.per);
+    context.isCharged = action.isCharged;
+    context.isSelfCharged = action.isSelfCharged;
+    context.showMaxChargeFormula = ["day", "week", "charges"].includes(context.data.uses.self.per);
     if (action.hasRange) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.data.range.minUnits);
+      context.canInputRange = ["ft", "mi", "spec"].includes(context.data.range.units);
+      context.canInputMinRange = ["ft", "mi", "spec"].includes(context.data.range.minUnits);
     }
 
-    data.canInputDuration = !["", "turn", "inst", "perm", "seeText"].includes(data.data.duration?.units || "");
+    context.canInputDuration = !["", "turn", "inst", "perm", "seeText"].includes(context.data.duration?.units || "");
 
     // Action Details
-    data.itemName = item.name;
-    data.itemEnh = item.system.enh || 0;
-    data.isSpell = item.type === "spell";
-    data.usesSpellPoints = item.spellbook?.spellPoints.useSystem;
-    data.defaultChargeFormula = item.getDefaultChargeFormula();
-    data.owned = actor != null;
-    data.parentOwned = actor != null;
-    data.owner = item.isOwner;
-    data.isGM = game.user.isGM;
-    data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-    data.activation = action.activation;
-    data.hasActivationType = data.activation.type;
-    data.abilityActivationTypes = data.unchainedActionEconomy
+    context.itemName = item.name;
+    context.itemEnh = item.system.enh || 0;
+    context.isSpell = item.type === "spell";
+    context.usesSpellPoints = item.spellbook?.spellPoints.useSystem;
+    context.defaultChargeFormula = item.getDefaultChargeFormula();
+    context.owned = actor != null;
+    context.parentOwned = actor != null;
+    context.owner = item.isOwner;
+    context.isGM = game.user.isGM;
+    context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+    context.activation = action.activation;
+    context.hasActivationType = context.activation.type;
+    context.abilityActivationTypes = context.unchainedActionEconomy
       ? pf1.config.abilityActivationTypes_unchained
       : pf1.config.abilityActivationTypes;
 
     // Add description
-    data.descriptionHTML = await TextEditor.enrichHTML(data.data.description, {
-      secrets: data.owner,
-      rollData: data.rollData,
+    context.descriptionHTML = await TextEditor.enrichHTML(context.data.description, {
+      secrets: context.owner,
+      rollData: context.rollData,
       async: true,
       relativeTo: this.actor,
     });
 
     // Show additional ranged properties
-    data.showMaxRangeIncrements = data.data.range.units === "ft";
+    context.showMaxRangeIncrements = context.data.range.units === "ft";
 
     // Prepare attack specific stuff
     if (item.type === "attack") {
-      data.isWeaponAttack = item.system.subType === "weapon";
-      data.isNaturalAttack = item.system.subType === "natural";
+      context.isWeaponAttack = item.system.subType === "weapon";
+      context.isNaturalAttack = item.system.subType === "natural";
     }
 
-    data.canUseAmmo = data.isNaturalAttack !== true;
-    data.usesAmmo = !!action.ammoType;
-    data.inheritedAmmoType = item?.system.ammo?.type;
+    context.canUseAmmo = context.isNaturalAttack !== true;
+    context.usesAmmo = !!action.ammoType;
+    context.inheritedAmmoType = item?.system.ammo?.type;
 
     // Add distance units
-    data.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
+    context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
-        delete data.distanceUnits[d];
+        delete context.distanceUnits[d];
       }
     }
     // Set whether to show minimum range input
-    data.minRangeAvailable = ["reach", "ft", "mi", "seeText"].includes(data.data.range.units);
+    context.minRangeAvailable = ["reach", "ft", "mi", "seeText"].includes(context.data.range.units);
 
     // Prepare stuff for actions with conditionals
-    if (data.data.conditionals) {
-      for (const conditional of data.data.conditionals) {
+    if (context.data.conditionals) {
+      for (const conditional of context.data.conditionals) {
         for (const modifier of conditional.modifiers) {
           modifier.targets = action.getConditionalTargets();
           modifier.subTargets = action.getConditionalSubTargets(modifier.target);
@@ -157,18 +157,27 @@ export class ItemActionSheet extends FormApplication {
     }
 
     // Add materials and addons
-    data.materialCategories = this._prepareMaterialsAndAddons();
+    context.materialCategories = this._prepareMaterialsAndAddons();
     // Inherited held option's name if any
-    data.inheritedHeld = pf1.config.weaponHoldTypes[data.item.system.held];
+    context.inheritedHeld = pf1.config.weaponHoldTypes[context.item.system.held];
 
     // Add alignments
-    data.alignmentTypes = this._prepareAlignments(this.action.alignments);
-    this.alignments = data.alignmentTypes?.values; // Use a deep clone we've already made to track our progress.
+    context.alignmentTypes = this._prepareAlignments(this.action.alignments);
+    this.alignments = context.alignmentTypes?.values; // Use a deep clone we've already made to track our progress.
 
     // Power attack multiplier if inherited
-    data.paMultiplier = action.getPowerAttackMult({ rollData: data.rollData });
+    context.paMultiplier = action.getPowerAttackMult({ rollData: context.rollData });
 
-    return data;
+    // Prepare attack configuration
+    context.extraAttacksTypes = Object.fromEntries([
+      ...Object.entries(pf1.config.extraAttacks).map(([key, { label }]) => [key, label]),
+      ["custom", "PF1.Custom"],
+    ]);
+
+    context.extraAttacksConfig = { ...pf1.config.extraAttacks[action.data.extraAttacks?.type] };
+    context.extraAttacksConfig.allowCustom = context.extraAttacksConfig.manual || context.extraAttacksConfig.formula;
+
+    return context;
   }
 
   _prepareMaterialsAndAddons() {
@@ -484,19 +493,19 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
 
+    const manualExtraAttacks = foundry.utils.deepClone(this.action.data.extraAttacks?.manual ?? []);
+
     // Add new attack component
     if (a.classList.contains("add-attack")) {
-      const attackParts = foundry.utils.deepClone(this.action.data.attackParts ?? []);
-      attackParts.push({ formula: "", name: "" });
-      return this._onSubmit(event, { updateData: { attackParts } });
+      manualExtraAttacks.push({ formula: "", name: "" });
+      return this._onSubmit(event, { updateData: { extraAttacks: { manual: manualExtraAttacks } } });
     }
 
     // Remove an attack component
     if (a.classList.contains("delete-attack")) {
       const li = a.closest(".attack-part");
-      const attackParts = foundry.utils.deepClone(this.action.data.attackParts ?? []);
-      attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this._onSubmit(event, { updateData: { attackParts } });
+      manualExtraAttacks.splice(Number(li.dataset.attackPart), 1);
+      return this._onSubmit(event, { updateData: { extraAttacks: { manual: manualExtraAttacks } } });
     }
   }
 

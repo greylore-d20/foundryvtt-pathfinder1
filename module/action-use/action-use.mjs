@@ -289,46 +289,83 @@ export class ActionUse {
      */
     let unnamedAttackIndex = 1;
 
-    const attackName = action.attackName || game.i18n.format("PF1.FormulaAttack", { 0: unnamedAttackIndex });
+    const attackName =
+      action.attackName || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttackIndex });
     // Use either natural fullAttack state, or force generation of all attacks via override
     const fullAttack = forceFullAttack || this.shared.fullAttack;
 
-    const allAttacks = fullAttack
-      ? action.attackParts.reduce(
-          (cur, part) => {
-            cur.push({
-              attackBonus: part.formula,
-              // Use defined label, or fall back to continuously numbered default attack name
-              label: part.name || game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
-            });
-            return cur;
-          },
-          [{ attackBonus: "", label: attackName }]
-        )
-      : [{ attackBonus: "", label: attackName }];
+    const exAtkCfg = pf1.config.extraAttacks[action.extraAttacks?.type] ?? {};
 
-    // Formulaic extra attacks
+    const allAttacks = [{ attackBonus: exAtkCfg.bonus || "", label: attackName }];
+
+    // Extra attacks
     if (fullAttack) {
-      const exAtkCountFormula = action.formulaicAttacks?.count?.formula,
-        exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
-        exAtkBonusFormula = action.formulaicAttacks?.bonus?.formula || "0";
-      if (exAtkCount > 0) {
+      const unchainedEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+
+      let attackCount = 1;
+
+      const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
+        rollData.bab = rollData.attributes?.bab?.total; // TODO: BAB override/modifier
+        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
+        if (!(exAtkCount > 0)) {
+          delete rollData.bab;
+          return;
+        }
+
         try {
           for (let i = 0; i < exAtkCount; i++) {
+            rollData.attackCount = attackCount += i;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
-            delete rollData.formulaicAttack;
+            const bonus = RollPF.safeRoll(bonusFormula || "0", rollData).total;
             allAttacks.push({
-              attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
+              attackBonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
-              label: action.formulaicAttacks.label
-                ? action.formulaicAttacks.label.replace("{0}", i + 1)
-                : game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
+              label:
+                label?.replace("{0}", i + 1) ||
+                game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
             });
           }
         } catch (err) {
           console.error(err);
         }
+
+        // Cleanup roll data
+        delete rollData.formulaicAttack;
+        delete rollData.attackCount;
+        delete rollData.bab;
+      };
+
+      if (exAtkCfg.iteratives && !unchainedEconomy)
+        parseAttacks(
+          pf1.config.iterativeExtraAttacks,
+          pf1.config.iterativeAttackModifier,
+          null,
+          true,
+          game.i18n.localize("PF1.Iterative")
+        );
+
+      // Add attacks defined by configuration
+      if (exAtkCfg.count) parseAttacks(exAtkCfg.count, exAtkCfg.bonus);
+
+      // Add manually entered explicit extra attacks
+      if (exAtkCfg.manual) {
+        const extraAttacks = action.extraAttacks?.manual ?? [];
+        for (const { name, formula } of extraAttacks) {
+          allAttacks.push({
+            attackBonus: formula,
+            // Use defined label, or fall back to continuously numbered default attack name
+            label: name || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+          });
+        }
+      }
+
+      // Add custom extra attack formula
+      if (exAtkCfg.formula) {
+        parseAttacks(
+          action.extraAttacks.formula?.count,
+          action.extraAttacks.formula?.bonus,
+          action.extraAttacks.formula?.label
+        );
       }
     }
 

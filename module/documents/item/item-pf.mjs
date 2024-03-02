@@ -2053,19 +2053,34 @@ export class ItemPF extends ItemBasePF {
     };
 
     // Static extra attacks
-    const extraAttacks = actionData.attackParts.filter((n) => n.formula?.length).map((n) => n.formula);
-    for (const formula of extraAttacks) appendAttack(formula);
+    if (actionData.extraAttacks.type) {
+      const exAtkCfg = pf1.config.extraAttacks[actionData.extraAttacks?.type] ?? {};
 
-    // Formula-based extra attacks
-    const fmAtk = actionData.formulaicAttacks?.count?.formula?.trim();
-    if (fmAtk?.length > 0) {
-      const fmAtkBonus = actionData.formulaicAttacks?.bonus?.formula?.trim() || "0";
-      const count = RollPF.safeRoll(fmAtk, rollData);
-      for (let i = 0; i < count.total; i++) {
-        rollData.formulaicAttack = i + 1;
-        appendAttack(fmAtkBonus);
+      if (exAtkCfg.manual && actionData.extraAttacks?.manual?.length) {
+        const extraAttacks =
+          actionData.extraAttacks.manual.filter((n) => n.formula?.length).map((n) => n.formula) ?? [];
+        for (const formula of extraAttacks) appendAttack(formula);
       }
-      delete rollData.formulaicAttack;
+
+      if (exAtkCfg.formula) {
+        // Formula-based extra attacks
+        const fmAtk = actionData.extraAttacks?.formula?.count?.trim();
+        if (fmAtk?.length > 0) {
+          const fmAtkBonus = actionData.extraAttacks?.formula?.bonus?.trim() || "0";
+          rollData.bab = rollData.attributes?.bab?.total;
+
+          const count = RollPF.safeRoll(fmAtk, rollData);
+          for (let i = 0; i < count.total; i++) {
+            rollData.attackCount = i + 1;
+            rollData.formulaicAttack = rollData.attackCount;
+            appendAttack(fmAtkBonus);
+          }
+
+          delete rollData.attackCount;
+          delete rollData.formulaicAttack;
+          delete rollData.bab;
+        }
+      }
     }
 
     // Conditional modifiers

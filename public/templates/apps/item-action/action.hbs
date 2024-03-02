@@ -111,43 +111,57 @@
 {{/if}}
 
 {{#if hasAttackRoll}}
-<h3 class="form-header">{{localize "PF1.ExtraAttacks"}}</h3>
+<div class="form-group multi-attack-type">
+  <label>{{localize "PF1.ExtraAttacks.Label"}}</label>
+  <div class="form-fields">
+    <select name="extraAttacks.type">
+      {{selectOptions extraAttacksTypes selected=data.extraAttacks.type blank="PF1.None" localize=true}}
+    </select>
+  </div>
+</div>
+
+{{#if extraAttacksConfig.allowCustom}}
+<h3 class="form-header">{{localize "PF1.ExtraAttacks.Label"}}</h3>
+
+{{#if extraAttacksConfig.manual}}
 <ol class="attack-parts form-group">
-  {{#each data.attackParts as |part idx|}}
+  {{#each data.extraAttacks.manual as |part idx|}}
   <li class="attack-part flexrow" data-attack-part="{{idx}}">
-    <input class="formula" type="text" name="attackParts.{{idx}}.formula" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{formula}}">
-    <input type="text" name="attackParts.{{idx}}.name" placeholder="{{localize "PF1.Name"}}" value="{{name}}">
+    <input class="formula" type="text" name="extraAttacks.manual.{{idx}}.formula" placeholder="{{localize "PF1.ExtraAttacks.ModifierFormula"}}" value="{{formula}}">
+    <input type="text" name="extraAttacks.manual.{{idx}}.name" placeholder="{{localize "PF1.Name"}}" value="{{name}}">
     <a class="attack-control delete-attack"><i class="fas fa-trash"></i></a>
   </li>
   {{/each}}
-  <li class="attack-part flexrow"><a class="attack-control add-attack"><i class="fas fa-plus"></i> {{localize "PF1.AddAttack"}}</a></li>
+  <li class="attack-part flexrow"><a class="attack-control add-attack"><i class="fas fa-plus"></i> {{localize "PF1.ExtraAttacks.Add"}}</a></li>
 </ol>
+{{/if}}
 <hr>
 
-{{!-- Formulaic Extra Attacks --}}
-<h4 class="attack-header">{{localize 'PF1.FormulaicExtraAttacks'}}</h4>
+{{#if extraAttacksConfig.formula}}
+{{!-- Formula-based Extra Attacks --}}
+<h4 class="attack-header">{{localize 'PF1.ExtraAttacks.Formula.Label'}}</h4>
 <div class="formulaic-attacks-box">
   <div class="form-group">
-    <label>{{localize 'PF1.FormulaicAttacksCount'}}</label>
+    <label>{{localize 'PF1.ExtraAttacks.Formula.Count'}}</label>
     <div class="form-fields">
-      <input type="text" class="formulaic-attacks formula" name="formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="e.g. ceil(@attributes.bab.total / 5) - 1">
-      {{!-- to avoid disappearance of .value --}}
-      <input type="text" disabled class="formula-result small" name="formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" data-tooltip="PF1.FormulaResult" placeholder="0" data-dtype="Number">
+      <input type="text" class="formulaic-attacks formula" name="extraAttacks.formula.count" value="{{data.extraAttacks.formula.count}}" data-dtype="String" placeholder="{{localize "PF1.Formula"}}">
     </div>
   </div>
   <div class="form-group">
-    <label>{{localize 'PF1.AttackBonusFormula'}}</label>
+    <label>{{localize 'PF1.ExtraAttacks.ModifierFormula'}}</label>
     <div class="form-fields">
-      <input type="text" class="formula" name="formulaicAttacks.bonus.formula" value="{{data.formulaicAttacks.bonus.formula}}" data-dtype="String" placeholder="e.g. @formulaicAttack * -5">
+      <input type="text" class="formula" name="extraAttacks.formula.bonus" value="{{data.extraAttacks.formula.bonus}}" data-tooltip="PF1.ExtraAttacks.ModifierTooltip" data-dtype="String" placeholder="{{localize "PF1.Formula"}}">
     </div>
   </div>
   <div class="form-group">
     <label>{{localize 'PF1.AttackName'}}</label>
     <div class="form-fields">
-      <input type="text" name="formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" data-tooltip="PF1.FormulaAttackHint" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}">
+      <input type="text" name="extraAttacks.formula.label" value="{{data.extraAttacks.formula.label}}" data-tooltip="PF1.ExtraAttacks.Formula.LabelTooltip" data-dtype="String" placeholder="{{localize 'PF1.ExtraAttacks.Formula.LabelDefault'}}">
     </div>
   </div>
 </div>
+{{/if}}
+{{/if}}
 {{/if}}
 
 {{!-- Damage Ability --}}

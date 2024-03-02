@@ -16,13 +16,24 @@ Attack Roll Bonus is used to define any modifiers specific to this attack, such 
 
 ### Extra Attacks
 
+You configure iteratives and other additional attacks that are performed on full-attack here.
+
 You can add static extra attacks here with specific modifiers that are performed on full attack always, for example if you have multiple identical claw attacks, defining them in the static top part is an easy way to deal with them.
 
-The formula-based extra attacks below is for more advanced cases, but commonly holds extra attacks from iteratives or any other more complicated case.
+The formula-based extra attacks below is for more advanced cases that previously were used for BAB iterative handling or other similar complex or automatically scaling cases.
 
-#### Iteratives
+#### Formula-based extra attacks
 
-|              | Formula                                       |
+**Variables**
+
+| Variable       | Use                                                                                             |
+| :------------- | :---------------------------------------------------------------------------------------------- |
+| `@bab`         | Short-hand for `@attributes.bab.total` and may later has more meaning.                          |
+| `@attackCount` | How manyth attack in the defined set it is, starting with `0`. Only accounting for the formula. |
+
+Historically the following were the BAB iterative formulas.
+
+| Use          | Formula                                       |
 | :----------- | :-------------------------------------------- |
 | Attack count | `min(3, ceil(@attributes.bab.total / 5) - 1)` |
 | Attack bonus | `@formulaicAttack * -5`                       |

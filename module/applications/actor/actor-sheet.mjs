@@ -1330,7 +1330,10 @@ export class ActorSheetPF extends ActorSheet {
     // Replace span element with an input (text) element
     const newEl = document.createElement("INPUT");
     newEl.type = "text";
-    if (el.dataset?.dtype) newEl.dataset.dtype = el.dataset.dtype;
+    if (el.dataset?.dtype) {
+      newEl.dataset.dtype = el.dataset.dtype;
+      if (el.dataset.dtype === "Number") newEl.size = 12; // HTML defaults to 20
+    }
 
     const noCap = el.classList.contains("no-value-cap");
     const name = el.getAttribute("name"); // span has no .name attribute even if name="" is used

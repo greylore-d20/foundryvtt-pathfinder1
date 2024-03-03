@@ -27,13 +27,15 @@ The formula-based extra attacks below is for more advanced cases, but commonly h
 | Attack count | `min(3, ceil(@attributes.bab.total / 5) - 1)` |
 | Attack bonus | `@formulaicAttack * -5`                       |
 
-### Damage
+### Damage / Healing
 
-**Damage Formula** is for the base damage of the action. This is multiplied on critical if the action has an attack roll.
+**Base Formula** is for the base damage or healing of the action. This is multiplied on critical if the action has an attack roll.
 
-**Critical Damage Bonus Formula** is damage added _only_ to critical damage rolls. This is multiplied by critical multiplier with one subtracted, so Flaming Burst for example should only be entered simply as `1d10`.
+**On-critical Bonus Formula** is damage added _only_ to critical damage rolls. This is multiplied by critical multiplier with one subtracted, so _Flaming Burst_ for example should be entered simply as `1d10` for all weapons.
 
-**Non-critical Damage Bonus Formula** is damage added to base damage that is unaffected by critical hits, usually this is elemental and precision bonus damge, such as from magical weapon qualities.
+**Non-multiplying Bonus Formula** is damage added to base damage that is unaffected by critical hits, usually this is elemental and precision bonus damge, such as from magical weapon qualities.
+
+_Historical note: Formerly these were labeled in order: Damage Formula, Critical Damage Bonus Formula, and Non-critical Damage Bonus Formula_
 
 See [Formulas](Help/Formulas) article for more help in how to write damage formulas.
 

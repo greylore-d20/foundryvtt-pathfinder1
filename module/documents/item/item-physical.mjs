@@ -127,8 +127,11 @@ export class ItemPhysicalPF extends ItemPF {
       this.name = this._source.name;
     }
 
-    // Ensure size is something
+    // Ensure some base data has values
     this.system.size ||= "med";
+    this.system.weight ??= {};
+    this.system.weight.value ||= 0;
+    this.system.quantity ??= 1;
 
     super.prepareBaseData();
 
@@ -165,6 +168,7 @@ export class ItemPhysicalPF extends ItemPF {
     // Altering weight.value directly will corrupt the weight
     const baseWeight = weight.value * this.getWeightMultiplier();
 
+    weight.total ||= 0; // In case item subclass didn't prepare it
     weight.total += baseWeight * itemData.quantity;
 
     // Convert weight according metric system (lb vs kg)

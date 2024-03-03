@@ -155,11 +155,11 @@ export class ItemContainerPF extends ItemPhysicalPF {
         let item = prior?.get(itemId);
         if (item) {
           item.updateSource(itemData, { recursive: false });
-          item.reset();
         } else {
           item = new Item.implementation(itemData, { parent: this.actor });
           item.parentItem = this;
         }
+        item.reset();
         collection.set(itemId, item);
       } catch (err) {
         console.error("Error preparing contained item:", { id: itemId, data: itemData }, this);
@@ -172,21 +172,23 @@ export class ItemContainerPF extends ItemPhysicalPF {
 
   /** @inheritDoc */
   prepareWeight() {
+    this.system.weight ??= {};
     /** @type {ItemWeightData} */
     const weight = this.system.weight;
+    weight.total = 0; // Reset
 
     // Percentile weight reduction
-    const reductionPCt = (100 - (weight.reduction?.percent ?? 0)) / 100;
+    const weightMult = (100 - (weight.reduction?.percent || 0)) / 100;
 
     const currencyWeight = this._calculateCoinWeight();
-    weight.currency = currencyWeight * reductionPCt;
+    weight.currency = currencyWeight * weightMult;
 
     // Total unreduced weight of contents
     weight.contents = this.items.reduce((total, item) => total + item.system.weight.total, 0);
     weight.contents += currencyWeight;
 
     const reductionFlat = weight.reduction?.value ?? 0;
-    weight.total += Math.max(0, weight.contents * reductionPCt - reductionFlat);
+    weight.total += Math.max(0, weight.contents * weightMult - reductionFlat);
 
     weight.converted.reduction = pf1.utils.convertWeight(reductionFlat);
     weight.converted.contents = pf1.utils.convertWeight(weight.contents);
@@ -338,8 +340,8 @@ export class ItemContainerPF extends ItemPhysicalPF {
    * @returns {number} The total amount of currency this item contains, in gold pieces
    */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
-    const currency = this.system.currency;
-    const total = currency.pp * 1000 + currency.gp * 100 + currency.sp * 10 + currency.cp;
+    const currency = this.system.currency || {};
+    const total = (currency.pp || 0) * 1000 + (currency.gp || 0) * 100 + (currency.sp || 0) * 10 + (currency.cp || 0);
     return inLowestDenomination ? total : total / 100;
   }
 

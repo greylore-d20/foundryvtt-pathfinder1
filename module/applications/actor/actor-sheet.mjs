@@ -2459,7 +2459,7 @@ export class ActorSheetPF extends ActorSheet {
       gear: {
         label: pf1.config.lootTypes["gear"],
         canCreate: true,
-        hasActions: false,
+        hasActions: true,
         items: [],
         canEquip: true,
         dataset: {

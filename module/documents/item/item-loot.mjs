@@ -75,28 +75,6 @@ export class ItemLootPF extends ItemPhysicalPF {
     return this.subType === "ammo" || super.isSingleUse;
   }
 
-  /**
-   * Simplified addCharges for items that can't have charges.
-   *
-   * @inheritdoc
-   * @override
-   */
-  async addCharges(value) {
-    const quantity = this.system.quantity;
-    if (!Number.isFinite(quantity)) return;
-    return this.update({ "system.quantity": quantity + value });
-  }
-
-  /**
-   * Simplified charges
-   *
-   * @override
-   * @type {number} Quantity
-   */
-  get charges() {
-    return this.system.quantity ?? 0;
-  }
-
   adjustContained() {
     super.adjustContained();
 

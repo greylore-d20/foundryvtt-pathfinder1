@@ -23,11 +23,8 @@ system:
                 - piercing
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      extraAttacks:
+        type: standard
       img: icons/weapons/fist/punch-dagger-flared-brown.webp
       name: Attack
       range:

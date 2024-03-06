@@ -22,8 +22,6 @@ system:
                 - piercing
       duration:
         units: inst
-      formulaicAttacks:
-        label: ''
       img: systems/pf1/icons/items/weapons/javelin.PNG
       name: Throw
       range:
@@ -49,12 +47,11 @@ system:
                 - piercing
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: ceil(@attributes.bab.total / 5) -1
-        label: ''
+      extraAttacks:
+        formula:
+          bonus: '@formulaicAttack * -5'
+          count: ceil(@attributes.bab.total / 5) -1
+        type: custom
       img: systems/pf1/icons/items/weapons/javelin.PNG
       name: Melee
       range:

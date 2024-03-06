@@ -17,11 +17,8 @@ system:
           type: attack
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+      extraAttacks:
+        type: standard
       img: icons/commodities/wood/framing-reinforced-brown.webp
       name: Attack
       range:

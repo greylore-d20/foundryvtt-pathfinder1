@@ -23,12 +23,8 @@ system:
                 - bludgeoning
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        label: ''
+      extraAttacks:
+        type: standard
       img: systems/pf1/icons/items/weapons/chain-hammer.png
       name: Melee
       range:
@@ -52,8 +48,6 @@ system:
                 - bludgeoning
       duration:
         units: inst
-      formulaicAttacks:
-        label: ''
       img: systems/pf1/icons/items/weapons/chain-hammer.png
       name: Throw
       range:
@@ -69,8 +63,6 @@ system:
           type: action
       duration:
         units: inst
-      formulaicAttacks:
-        label: ''
       img: systems/pf1/icons/items/weapons/chain-hammer.png
       name: Retrieve one Hammer
       range:

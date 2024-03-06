@@ -24,12 +24,8 @@ system:
                 - piercing
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        label: ''
+      extraAttacks:
+        type: standard
       img: icons/weapons/artillery/ballista-wood-green.webp
       name: Attack
       range:

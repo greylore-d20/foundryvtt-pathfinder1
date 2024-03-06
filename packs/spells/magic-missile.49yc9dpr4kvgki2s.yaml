@@ -25,10 +25,11 @@ system:
                 - force
       duration:
         units: inst
-      formulaicAttacks:
-        count:
-          formula: min(4, ceil(@cl / 2) - 1)
-        label: 'Missile #{0}'
+      extraAttacks:
+        formula:
+          count: min(4, ceil(@cl / 2) - 1)
+          label: 'Missile #{0}'
+        type: custom
       img: systems/pf1/icons/spells/fire-arrows-sky-1.jpg
       name: Use
       range:

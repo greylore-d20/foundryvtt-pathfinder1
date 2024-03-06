@@ -23,8 +23,6 @@ system:
                 - slashing
       duration:
         units: inst
-      formulaicAttacks:
-        label: ''
       img: systems/pf1/icons/items/weapons/hurlbat.png
       name: Throw
       range:
@@ -52,12 +50,11 @@ system:
                 - slashing
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: ceil(@attributes.bab.total / 5) - 1
-        label: ''
+      extraAttacks:
+        formula:
+          bonus: '@formulaicAttack * -5'
+          count: ceil(@attributes.bab.total / 5) - 1
+        type: custom
       img: systems/pf1/icons/items/weapons/hurlbat.png
       name: Melee
       range:

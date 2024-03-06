@@ -24,12 +24,8 @@ system:
                 - slashing
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '@formulaicAttack * -5'
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        label: ''
+      extraAttacks:
+        type: standard
       img: systems/pf1/icons/items/weapons/dagger.PNG
       name: Melee
       range:
@@ -56,7 +52,6 @@ system:
                 - slashing
       duration:
         units: inst
-      formulaicAttacks: null
       img: systems/pf1/icons/items/weapons/dagger.PNG
       name: Throw
       range:

@@ -22,12 +22,12 @@ system:
                 - untyped
       duration:
         units: inst
-      formulaicAttacks:
-        bonus:
-          formula: '0'
-        count:
-          formula: min(floor((@cl - 3) / 4), 3)
-        label: 'Ray #{0}'
+      extraAttacks:
+        formula:
+          bonus: '0'
+          count: min(floor((@cl - 3) / 4), 3)
+          label: 'Ray #{0}'
+        type: custom
       img: systems/pf1/icons/spells/beam-sky-1.jpg
       name: Use
       range:

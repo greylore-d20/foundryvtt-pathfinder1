@@ -2093,9 +2093,9 @@ const _migrateActionExtraAttacks = (action, itemData) => {
 
   if (action.formulaicAttacks !== undefined) {
     action.extraAttacks.formula ??= {};
-    action.extraAttacks.formula.count = action.formulaicAttacks.count?.formula || "";
-    action.extraAttacks.formula.bonus = action.formulaicAttacks.bonus?.formula || "";
-    action.extraAttacks.formula.label = action.formulaicAttacks.label || "";
+    action.extraAttacks.formula.count = action.formulaicAttacks?.count?.formula || "";
+    action.extraAttacks.formula.bonus = action.formulaicAttacks?.bonus?.formula || "";
+    action.extraAttacks.formula.label = action.formulaicAttacks?.label || "";
     delete action.formulaicAttacks;
   }
 

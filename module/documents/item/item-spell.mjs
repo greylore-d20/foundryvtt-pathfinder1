@@ -666,9 +666,10 @@ export class ItemSpellPF extends ItemPF {
    * @param {object} [options] - Additional options
    * @param {boolean} [options.allowSpell=true] - Allow spell creation
    * @param {string} [options.spellType="arcane"] - Spell type
+   * @param {object} [options.actor=undefined] - The actor the consumable is being created on.
    * @returns {Promise<null|false|object>} - Returns null if cancelled, false if no conversion is to take place, or converted data.
    */
-  static async toConsumablePrompt(itemData, { allowSpell = true, spellType = "arcane" } = {}) {
+  static async toConsumablePrompt(itemData, { allowSpell = true, spellType = "arcane", actor = undefined } = {}) {
     const [sl, cl] = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
 
     const getFormData = (html) => {
@@ -716,6 +717,8 @@ export class ItemSpellPF extends ItemPF {
           isGM: game.user.isGM,
           config: pf1.config,
           spellType,
+          // We assume every other check done at `ActorSheetPF._alterDropItemData` has passed
+          isNPC: actor?.type === "npc",
         }),
         itemData,
         buttons,

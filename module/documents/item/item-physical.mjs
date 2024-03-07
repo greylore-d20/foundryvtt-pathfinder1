@@ -50,6 +50,15 @@ export class ItemPhysicalPF extends ItemPF {
     }
   }
 
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
+
+    // Items for NPC should be unidentified by default
+    if (this.actor?.type === "npc" && data.system?.identified === undefined) {
+      this.updateSource({ "system.identified": false });
+    }
+  }
+
   _onCreate(data, context, userId) {
     super._onCreate(data, context, userId);
 

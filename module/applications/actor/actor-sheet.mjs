@@ -3041,13 +3041,24 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * @internal
    * @param {object} data - Item data
-   * @param {Item} source - Source item
+   * @param {pf1.documents.item.ItemPF} source - Source item
    */
   _alterDropItemData(data, source) {
     // Identify source location
     const fromCompendium = !!source.pack;
     const fromActor = !!source.parent;
     const fromItemsDir = !fromCompendium && !fromActor && !!source.id;
+
+    // Items for NPC should be unidentified by default
+    if (
+      this.actor.type === "npc" &&
+      source.isPhysical &&
+      fromCompendium &&
+      // We need to check if the item either have Caster Level beyond 0 or it's a drug or poison
+      (source.system?.cl > 0 || ["drug", "poison"].includes(source.system.subType))
+    ) {
+      data.system.identified = false;
+    }
 
     // Set spellbook to currently viewed one
     if (data.type === "spell") {
@@ -3146,7 +3157,10 @@ export class ActorSheetPF extends ActorSheet {
       if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
         const spellType =
           this.actor.system.attributes?.spells?.spellbooks?.[this.currentSpellbookKey]?.kind || "arcane";
-        const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, { spellType });
+        const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, {
+          spellType,
+          actor: this.actor,
+        });
         if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
         else if (resultData === null) return false;
         // else continue with spell creation

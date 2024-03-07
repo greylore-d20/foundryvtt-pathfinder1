@@ -584,7 +584,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Create consumable from spell
     if (itemData.type === "spell") {
-      const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, { allowSpell: false });
+      const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, {
+        allowSpell: false,
+        actor: this.item.actor,
+      });
       if (resultData) return this.item.createContainerContent(resultData);
       else return false;
     }

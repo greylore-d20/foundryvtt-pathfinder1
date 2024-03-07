@@ -27,7 +27,12 @@
   {{#if isGM}}
   <div class="form-group">
     <label class="checkbox">
-      <input type="checkbox" data-dtype="Boolean" name="identified" checked>
+      <input
+        type="checkbox"
+        data-dtype="Boolean"
+        name="identified"
+        {{checked (not isNPC)}}
+      >
       {{localize "PF1.Identified"}}
     </label>
   </div>

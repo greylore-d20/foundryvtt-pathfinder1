@@ -522,6 +522,11 @@
     {{! Spell Level Issues }}
     {{#if hasIssues}}
       <div class="spell-notifications">
+      {{#if lowLevel}}
+        <div class="notification-box warning">
+          <h5>{{localize "PF1.Spellbook.InsufficientLevel"}}</h5>
+        </div>
+      {{/if}}
       {{#if lowAbilityScore}}
         <div class="notification-box warning">
           <h5>{{localize "PF1.Spellbook.InsufficientAbility"}}</h5>

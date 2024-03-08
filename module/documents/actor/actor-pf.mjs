@@ -1067,7 +1067,6 @@ export class ActorPF extends ActorBasePF {
         if (maxLevelByAblScore < spellLevel) {
           spellLevelData.hasIssues = true;
           spellLevelData.lowAbilityScore = true;
-          continue;
         }
 
         spellLevelData.known = { unused: 0, max: 0 };
@@ -1092,6 +1091,11 @@ export class ActorPF extends ActorBasePF {
 
           // Leave record of max known
           spellLevelData.known.max = available;
+
+          if (Number.isNaN(available)) {
+            spellLevelData.hasIssues = true;
+            spellLevelData.lowLevel = true;
+          }
 
           // Count spell slots used
           let dSlots = slots[spellLevel].domain;

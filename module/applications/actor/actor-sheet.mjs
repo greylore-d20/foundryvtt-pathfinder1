@@ -694,32 +694,36 @@ export class ActorSheetPF extends ActorSheet {
         console.error(`Bad data for spell level ${level} in spellbook "${bookKey}" for actor "${this.actor.name}"`);
         continue;
       }
-      if (!isNaN(spellLevel.max)) {
-        spellbook[level] = {
-          level,
-          usesSlots: true,
-          spontaneous: book.spontaneous,
-          canCreate: editable,
-          canPrepare: data.actor.type === "character",
-          label: pf1.config.spellLevels[level],
-          items: [],
-          uses: spellLevel.value || 0,
-          dataset: { type: "spell", level: level, spellbook: bookKey },
-          hasIssues: spellLevel.hasIssues,
-          lowAbilityScore: spellLevel.lowAbilityScore,
-          known: spellLevel.known,
-          preparation: spellLevel.preparation,
-          slots: spellLevel.slots,
-          invalidSlots: spellLevel.invalidSlots,
-          mismatchSlots: spellLevel.mismatchSlots,
-          invalidKnown: spellLevel.invalidKnown,
-          mismatchKnown: spellLevel.mismatchKnown,
-          domain: spellLevel.domain,
-          data: spellLevel,
-          isSchool: book.isSchool,
-        };
-      }
+
+      const valid = !isNaN(spellLevel.max);
+
+      spellbook[level] = {
+        level,
+        valid,
+        usesSlots: true,
+        spontaneous: book.spontaneous,
+        canCreate: editable,
+        canPrepare: data.actor.type === "character",
+        label: pf1.config.spellLevels[level],
+        items: [],
+        uses: spellLevel.value || 0,
+        dataset: { type: "spell", level: level, spellbook: bookKey },
+        hasIssues: spellLevel.hasIssues,
+        lowAbilityScore: spellLevel.lowAbilityScore,
+        lowLevel: spellLevel.lowLevel,
+        known: spellLevel.known,
+        preparation: spellLevel.preparation,
+        slots: spellLevel.slots,
+        invalidSlots: spellLevel.invalidSlots,
+        mismatchSlots: spellLevel.mismatchSlots,
+        invalidKnown: spellLevel.invalidKnown,
+        mismatchKnown: spellLevel.mismatchKnown,
+        domain: spellLevel.domain,
+        data: spellLevel,
+        isSchool: book.isSchool,
+      };
     }
+
     spells.forEach((spell) => {
       const lvl = spell.level ?? min;
       spellbook[lvl]?.items.push(spell);

@@ -7,16 +7,26 @@ system:
   actions:
     - _id: t964ab1f99gydrqs
       activation:
-        type: attack
+        type: nonaction
         unchained:
-          type: attack
+          type: nonaction
       img: systems/pf1/icons/skills/yellow_08.jpg
       name: Use
       range:
         units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
+        description: Fortitude negates
+        type: fort
   associations:
     classes:
       - Monk
+      - Monk (Unchained)
+  changes:
+    - _id: QhK37Pp0
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 1st level, the monk gains
@@ -36,9 +46,14 @@ system:
       themselves (a creature sickened by <em>Stunning Fist</em> cannot become
       nauseated if hit by <em>Stunning Fist</em> again), but additional hits do
       increase the duration.</p>
+  links:
+    supplements:
+      - uuid: Compendium.pf1.feats.Item.GsjouI6B8X7BA5wN
   sources:
     - id: PZO1110
       pages: '59'
+    - id: PZO1131
+      pages: '14'
   subType: classFeat
   tag: classFeat_stunningFist
   uses:

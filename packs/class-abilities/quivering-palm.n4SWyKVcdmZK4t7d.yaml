@@ -6,12 +6,20 @@ system:
   abilityType: su
   actions:
     - _id: dq63xu5d56ntlace
+      actionType: save
       activation:
-        type: attack
+        type: free
         unchained:
-          type: attack
+          type: free
+      duration:
+        units: inst
+        value: ''
       img: systems/pf1/icons/feats/combat-casting.jpg
       name: Use
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
+        description: Fortitude negates
+        type: fort
   associations:
     classes:
       - Monk
@@ -39,5 +47,9 @@ system:
       pages: '60'
   subType: classFeat
   tag: classFeat_quiveringPalm
+  uses:
+    maxFormula: '1'
+    per: day
+    value: 1
 type: feat
 

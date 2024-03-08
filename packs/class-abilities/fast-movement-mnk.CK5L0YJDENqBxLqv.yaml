@@ -4,21 +4,15 @@ img: systems/pf1/icons/feats/dodge.jpg
 name: Fast Movement (MNK)
 system:
   abilityType: ex
-  actions:
-    - _id: ahgba2vnv3deaxd4
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/feats/dodge.jpg
-      name: Use
   associations:
     classes:
       - Monk
+      - Monk (Unchained)
   changes:
     - _id: jgegdopu
       formula: 10 * (floor(@class.level / 3))
       modifier: enh
+      priority: null
       subTarget: landSpeed
   description:
     value: >-
@@ -28,6 +22,8 @@ system:
   sources:
     - id: PZO1110
       pages: '59'
+    - id: PZO1131
+      pages: '15'
   subType: classFeat
   tag: classFeat_fastMovementMnk
 type: feat

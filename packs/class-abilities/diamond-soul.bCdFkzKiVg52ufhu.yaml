@@ -4,17 +4,14 @@ img: systems/pf1/icons/spells/ice-blue-1.jpg
 name: Diamond Soul
 system:
   abilityType: su
-  actions:
-    - _id: xhm7wgsbdvjx5yjc
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/spells/ice-blue-1.jpg
-      name: Use
   associations:
     classes:
       - Monk
+  changes:
+    - _id: kLktwrwl
+      formula: 10 + @class.level
+      modifier: base
+      subTarget: spellResist
   description:
     value: >-
       <p>At 13th level, a monk gains <em>spell resistance</em> equal to his

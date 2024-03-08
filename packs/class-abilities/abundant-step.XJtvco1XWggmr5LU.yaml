@@ -13,9 +13,10 @@ system:
       duration:
         units: inst
       img: systems/pf1/icons/spells/protect-blue-2.jpg
-      name: Use
+      name: 'Ki Pool: Dimension Door (self only)'
       range:
-        units: long
+        units: ft
+        value: 400 + (@class.level * 40)
       target:
         value: Self
   associations:

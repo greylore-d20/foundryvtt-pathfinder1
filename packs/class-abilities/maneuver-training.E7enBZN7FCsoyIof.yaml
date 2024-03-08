@@ -4,14 +4,6 @@ img: systems/pf1/icons/feats/athletic.jpg
 name: Maneuver Training
 system:
   abilityType: ex
-  actions:
-    - _id: jwt8qyh1zyj3l3i4
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/feats/athletic.jpg
-      name: Use
   associations:
     classes:
       - Monk
@@ -19,6 +11,7 @@ system:
     - _id: 0iguyvon
       formula: '@class.level - @attributes.bab.total'
       modifier: untyped
+      priority: null
       subTarget: cmb
   description:
     value: >-

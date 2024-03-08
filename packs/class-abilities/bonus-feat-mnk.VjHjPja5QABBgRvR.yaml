@@ -6,10 +6,12 @@ system:
   associations:
     classes:
       - Monk
+      - Monk (Unchained)
   changes:
     - _id: fjkapxbj
       formula: 1 + floor((@class.level + 2) / 4)
       modifier: untyped
+      priority: null
       subTarget: bonusFeats
   description:
     value: >-
@@ -43,6 +45,11 @@ system:
 
       <p>A monk need not have any of the prerequisites normally required for
       these feats to select them.</p>
+  sources:
+    - id: PZO1110
+      pages: '58'
+    - id: PZO1131
+      pages: '14'
   subType: classFeat
   tag: classFeat_bonusFeatMnk
 type: feat

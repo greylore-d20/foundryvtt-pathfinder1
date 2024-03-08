@@ -1,6 +1,6 @@
 _id: Be1muvlBxg2m2E7j
 _key: '!items!Be1muvlBxg2m2E7j'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Blinding Strike (INV)
 system:
   abilityType: ex
@@ -11,10 +11,13 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      img: systems/pf1/icons/items/weapons/sword-cane.png
+      duration:
+        units: perm
+      img: icons/skills/wounds/injury-pain-body-orange.webp
       name: Use
       save:
-        description: Fortitude reduces condition to 1d4 rounds of dazzled
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortitude reduces condition to [[1d4]] rounds of dazzled
         type: fort
   associations:
     classes:
@@ -32,9 +35,13 @@ system:
       abilities.</p>
 
       <p>An investigator must be at least 17th level to select this talent.</p>
+  sources:
+    - id: PZO1129
+      pages: '32'
   subType: classFeat
   tag: classFeat_blindingStrikeInv
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

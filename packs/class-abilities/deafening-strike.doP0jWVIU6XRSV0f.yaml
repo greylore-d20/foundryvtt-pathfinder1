@@ -1,6 +1,6 @@
 _id: doP0jWVIU6XRSV0f
 _key: '!items!doP0jWVIU6XRSV0f'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Deafening Strike
 system:
   abilityType: ex
@@ -11,9 +11,12 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      img: systems/pf1/icons/items/weapons/sword-cane.png
+      duration:
+        units: perm
+      img: icons/skills/wounds/injury-pain-body-orange.webp
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude reduces duration to 1 round
         type: fort
   associations:
@@ -30,9 +33,13 @@ system:
       effects.</p>
 
       <p>An investigator must be at least 15th level to select this talent.</p>
+  sources:
+    - id: PZO1129
+      pages: '32'
   subType: classFeat
   tag: classFeat_deafeningStrike
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

@@ -1,6 +1,6 @@
 _id: ihe9gLYx5fDzL5Ly
 _key: '!items!ihe9gLYx5fDzL5Ly'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Slowing Strike
 system:
   abilityType: ex
@@ -11,9 +11,10 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      img: systems/pf1/icons/items/weapons/sword-cane.png
+      img: icons/skills/wounds/injury-pain-body-orange.webp
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates slow
         type: fort
   associations:
@@ -23,16 +24,19 @@ system:
     value: >-
       <p>When the investigator deals damage with studied strike, the opponent
       must succeed at a Fortitude save (DC = 10 + 1/2 the investigator’s class
-      level + his Intelligence modif ier) or be slowed by the crippling blow. A
+      level + his Intelligence modifier) or be slowed by the crippling blow. A
       slowed opponent’s movement speeds are each reduced by 5 feet (to a minimum
       of 5 feet) until the creature is healed through the application of any
       spell that cures hit point damage or with a successful DC 15 Heal check.
-      Multiple slowing strikes stack, to a minimum of 5 feet.</p>
-
-      <p>An investigator must be at least 7th level to select this talent.</p>
+      Multiple slowing strikes stack, to a minimum of 5 feet.</p><p>An
+      investigator must be at least 7th level to select this talent.</p>
+  sources:
+    - id: PZO9451
+      pages: '15'
   subType: classFeat
   tag: classFeat_slowingStrike
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

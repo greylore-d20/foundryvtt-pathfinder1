@@ -4,6 +4,29 @@ img: systems/pf1/icons/items/potions/minor-green.jpg
 name: Poison Lore
 system:
   abilityType: ex
+  actions:
+    - _id: C1h5azMC12yBZJP9
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/potions/minor-green.jpg
+      name: Identify poison
+      target:
+        value: Any natural or magical poison
+    - _id: dJdPwIpn5B5C268n
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/potions/minor-green.jpg
+      name: Neutralize poison
+      target:
+        value: Any natural or magical poison
   associations:
     classes:
       - Investigator
@@ -21,6 +44,9 @@ system:
       DC) to neutralize 1 dose of the <em>poison</em>. Success renders the dose
       harmless. The investigator has no chance of accidentally poisoning himself
       when examining or attempting to neutralize a <em>poison</em>.</p>
+  sources:
+    - id: PZO1129
+      pages: '31'
   subType: classFeat
   tag: classFeat_poisonLore
 type: feat

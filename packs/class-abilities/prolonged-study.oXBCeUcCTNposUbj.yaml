@@ -1,20 +1,9 @@
 _id: oXBCeUcCTNposUbj
 _key: '!items!oXBCeUcCTNposUbj'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Prolonged Study
 system:
   abilityType: ex
-  actions:
-    - _id: j6g2ozvmz9shfey4
-      activation:
-        type: special
-        unchained:
-          type: special
-      duration:
-        units: round
-        value: max(2, @abilities.int.mod)
-      img: systems/pf1/icons/items/weapons/sword-cane.png
-      name: Use
   associations:
     classes:
       - Investigator
@@ -23,12 +12,19 @@ system:
       <p>The investigator can study his opponents for long periods of time. The
       effects of his studied combat ability last for a number of rounds equal to
       twice his Intelligence modifier (minimum 2) or until he deals damage with
-      a studied strike, whichever comes f irst.</p>
-
-      <p>The investigator must be at least 13th level to select this talent.</p>
+      a studied strike, whichever comes first.</p><p>The investigator must be at
+      least 13th level to select this talent.</p><hr
+      /><p><strong>Usage</strong>: adjust duration formula of
+      @UUID[Compendium.pf1.class-abilities.Item.nVwveeNV71Bg7YnY]{Studied
+      Combat} class ability as follows:</p><p><code>2 * max(1,
+      @abilities.int.mod)</code></p>
+  sources:
+    - id: PZO9451
+      pages: '15'
   subType: classFeat
   tag: classFeat_prolongedStudy
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

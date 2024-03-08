@@ -1,21 +1,30 @@
 _id: N4FVmlVMHFihF2pF
 _key: '!items!N4FVmlVMHFihF2pF'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Sapping Offensive
 system:
   abilityType: ex
   associations:
     classes:
       - Investigator
+  contextNotes:
+    - subTarget: attack
+      text: >-
+        When hit a studied creature cannot make attacks of opportunity for 1
+        round.
   description:
     value: >-
       <p>When the investigator damages a studied target, that creature cannot
       make attacks of opportunity for 1 round.</p>
 
       <p>An investigator must be at least 5th level to select this talent.</p>
+  sources:
+    - id: PZO1129
+      pages: '32'
   subType: classFeat
   tag: classFeat_sappingOffensive
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

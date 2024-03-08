@@ -10,8 +10,38 @@ system:
         type: free
         unchained:
           type: free
+      damage:
+        parts:
+          - formula: floor((@class.level - 2) / 2)
+            type:
+              custom: ''
+              values:
+                - precision
+      duration:
+        units: inst
       img: systems/pf1/icons/skills/weapon_29.jpg
       name: Use
+      target:
+        value: Studied target
+    - _id: 3Mhm1UaJlJ3jJY2m
+      activation:
+        type: free
+        unchained:
+          type: free
+      damage:
+        parts:
+          - formula: floor((@class.level - 2) / 2)
+            type:
+              custom: ''
+              values:
+                - nonlethal
+                - precision
+      duration:
+        units: inst
+      img: systems/pf1/icons/skills/weapon_29.jpg
+      name: Use nonlethal
+      target:
+        value: Studied target
   associations:
     classes:
       - Investigator
@@ -33,6 +63,9 @@ system:
       investigator must be able to see the target well enough to pick out a
       vital spot and must be able to reach such a spot. An investigator cannot
       use studied strike against a creature with concealment.</p>
+  sources:
+    - id: PZO1129
+      pages: '34'
   subType: classFeat
   tag: classFeat_studiedStrike
 type: feat

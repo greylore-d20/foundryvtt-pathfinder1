@@ -1,21 +1,28 @@
 _id: jknDwqjwCusrIi4d
 _key: '!items!jknDwqjwCusrIi4d'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Sickening Offensive
 system:
   abilityType: ex
   associations:
     classes:
       - Investigator
+  contextNotes:
+    - subTarget: attack
+      text: When hit a studied creature is sickened for 1 round
   description:
     value: >-
       <p>When the investigator damages a studied target, that creature is also
       sickened for 1 round.</p>
 
       <p>An investigator must be at least 7th level to select this talent.</p>
+  sources:
+    - id: PZO1129
+      pages: '32'
   subType: classFeat
   tag: classFeat_sickeningOffensive
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

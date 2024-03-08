@@ -1,6 +1,6 @@
 _id: F3ESN1IqxO9bncN0
 _key: '!items!F3ESN1IqxO9bncN0'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Confusing Strike
 system:
   abilityType: ex
@@ -11,9 +11,13 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      img: systems/pf1/icons/items/weapons/sword-cane.png
+      duration:
+        units: round
+        value: 1d4+1
+      img: icons/skills/wounds/injury-pain-body-orange.webp
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude reduces to 1 round confusion
         type: fort
   associations:
@@ -30,9 +34,13 @@ system:
       not affected by this ability.</p>
 
       <p>An investigator must be at least 19th level to select this talent.</p>
+  sources:
+    - id: PZO1129
+      pages: '32'
   subType: classFeat
   tag: classFeat_confusingStrike
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

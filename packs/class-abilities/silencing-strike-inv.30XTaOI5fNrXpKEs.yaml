@@ -1,6 +1,6 @@
 _id: 30XTaOI5fNrXpKEs
 _key: '!items!30XTaOI5fNrXpKEs'
-img: systems/pf1/icons/items/weapons/sword-cane.png
+img: icons/skills/wounds/injury-pain-body-orange.webp
 name: Silencing Strike (INV)
 system:
   abilityType: ex
@@ -14,9 +14,10 @@ system:
       duration:
         units: round
         value: 1d4 +1
-      img: systems/pf1/icons/items/weapons/sword-cane.png
+      img: icons/skills/wounds/injury-pain-body-orange.webp
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude reduces duration to 1 round
         type: fort
   associations:
@@ -31,9 +32,13 @@ system:
       round. This talent has no effect on creatures immune to critical hits.</p>
 
       <p>An investigator must be at least 15th level to select this talent.</p>
+  sources:
+    - id: PZO9292
+      pages: '31'
   subType: classFeat
   tag: classFeat_silencingStrikeInv
   tags:
     - Investigator Talent
+    - Studied Combat/Strike
 type: feat
 

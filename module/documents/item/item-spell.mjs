@@ -794,17 +794,23 @@ export class ItemSpellPF extends ItemPF {
     const label = {
       school: pf1.config.spellSchools[srcData.school],
       subschool: srcData.subschool || "",
-      types: "",
+      descriptors: "",
     };
     const data = {
       data: foundry.utils.mergeObject(this.system, srcData, { inplace: false }),
       label: label,
     };
 
-    // Set subschool and types label
-    const types = srcData.types;
-    if (typeof types === "string" && types.length > 0) {
-      label.types = types.split(reSplit).join(", ");
+    // Set subschool and descriptors label
+    {
+      const value = srcData.descriptors?.value ?? [];
+      const custom = (srcData.descriptors?.custom ?? "").split(reSplit);
+      label.descriptors = [
+        ...value.map((descriptor) => pf1.config.spellDescriptors[descriptor] ?? descriptor),
+        ...custom,
+      ]
+        .filter((x) => x)
+        .join(", ");
     }
     // Set information about when the spell is learned
     data.learnedAt = {};

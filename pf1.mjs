@@ -389,6 +389,7 @@ Hooks.once("i18nInit", function () {
     "weaponTypes",
     "weaponProperties",
     "spellComponents",
+    "spellDescriptors",
     "spellSchools",
     "spellLevels",
     "favouredClassBonuses",

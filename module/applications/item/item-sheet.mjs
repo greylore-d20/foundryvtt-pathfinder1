@@ -553,12 +553,13 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Prepare proficiencies & languages
+    // Prepare {value: [], custom: string} objects
     const profs = {
       armorProf: pf1.config.armorProficiencies,
-      weaponProf: pf1.config.weaponProficiencies,
+      descriptors: pf1.config.spellDescriptors,
       languages: pf1.config.languages,
       weaponGroups: pf1.config.weaponGroups,
+      weaponProf: pf1.config.weaponProficiencies,
     };
 
     for (const [t, choices] of Object.entries(profs)) {

@@ -122,12 +122,7 @@
       </div>
 
       {{!-- Descriptors --}}
-      <div class="form-group flexrow">
-        <label>{{localize "PF1.DescriptorPlural"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.types" value="{{system.types}}" Placeholder="{{localize "PF1.SpellTypesExample"}}">
-        </div>
-      </div>
+      {{> "systems/pf1/templates/items/parts/spell-descriptors.hbs"}}
 
       {{!-- Misc --}}
       <h3 class="form-header">{{localize "PF1.Misc"}}</h3>

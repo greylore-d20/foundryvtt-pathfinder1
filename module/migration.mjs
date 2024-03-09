@@ -766,6 +766,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemLearnedAt(itemData, updateData);
   _migrateItemTuples(itemData, updateData);
   _migrateEquipmentCategories(itemData, updateData);
+  _migrateSpellDescriptors(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
 
   // Migrate action data
@@ -1496,6 +1497,32 @@ const _migrateEquipmentCategories = (item, updateData) => {
       updateData["system.-=equipmentSubtype"] = null;
       break;
   }
+};
+
+const _migrateSpellDescriptors = (item, updateData) => {
+  if (item.type !== "spell" || item.system.types === undefined) return;
+
+  const current = item.system.types
+    .split(",")
+    .flatMap((x) => x.split(";"))
+    .filter((x) => x)
+    .map((x) => x.trim());
+
+  const value = [];
+  const custom = [];
+  const entries = Object.entries(pf1.config.spellDescriptors);
+  current.forEach((c) => {
+    const exists = entries.find(([k, v]) => c.toLowerCase() === k.toLowerCase() || c.toLowerCase() === v.toLowerCase());
+    if (exists) {
+      value.push(exists[0]);
+    } else {
+      custom.push(c);
+    }
+  });
+
+  updateData["system.-=types"] = null;
+  updateData["system.descriptors.value"] = value;
+  updateData["system.descriptors.custom"] = custom.join("; ");
 };
 
 const _migrateItemSize = function (ent, updateData) {

@@ -60,6 +60,17 @@ export class Conditions extends Registry {
    */
   static TRACKS = /** @type {const} */ (["fear", "lethargy"]);
 
+  /**
+   * @internal
+   */
+  static SET_TO_ZERO = {
+    formula: 0,
+    modifier: "untypedPerm",
+    operator: "set",
+    priority: 1001,
+    continuous: true,
+  };
+
   /** @inheritdoc */
   static _defaultData = [
     {
@@ -106,6 +117,7 @@ export class Conditions extends Registry {
             modifier: "penalty",
           },
         ],
+        flags: ["loseDexToAC"],
       },
       showInAction: false,
     },
@@ -272,12 +284,8 @@ export class Conditions extends Registry {
       mechanics: {
         changes: [
           {
-            formula: 0,
+            ...this.SET_TO_ZERO,
             subTarget: "dex",
-            modifier: "untypedPerm",
-            operator: "set",
-            priority: 1001,
-            continuous: true,
           },
         ],
       },
@@ -360,20 +368,12 @@ export class Conditions extends Registry {
       mechanics: {
         changes: [
           {
-            formula: 0,
+            ...this.SET_TO_ZERO,
             subTarget: "dex",
-            modifier: "untypedPerm",
-            operator: "set",
-            priority: 1001,
-            continuous: true,
           },
           {
-            formula: 0,
+            ...this.SET_TO_ZERO,
             subTarget: "str",
-            modifier: "untypedPerm",
-            operator: "set",
-            priority: 1001,
-            continuous: true,
           },
         ],
       },
@@ -502,12 +502,8 @@ export class Conditions extends Registry {
       mechanics: {
         changes: [
           {
-            formula: 0,
+            ...this.SET_TO_ZERO,
             subTarget: "dex",
-            modifier: "untypedPerm",
-            operator: "set",
-            priority: 1001,
-            continuous: true,
           },
         ],
       },

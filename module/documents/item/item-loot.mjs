@@ -47,6 +47,16 @@ export class ItemLootPF extends ItemPhysicalPF {
     await super._preDelete(context, user);
   }
 
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels();
+
+    if (!this.showUnidentifiedData) {
+      labels.subType = pf1.config.lootTypes[this.subType];
+    }
+
+    return labels;
+  }
+
   /**
    * @param {boolean} active
    * @param {object} context Optional update context

@@ -59,10 +59,18 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     const subtypeKeys = Object.keys(weaponTypes[wType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
 
-    labels.weaponType = weaponTypes[wType]._label;
-    labels.weaponSubtype = weaponTypes[wType][wSubtype];
+    labels.subType = weaponTypes[wType]._label;
+    labels.childType = weaponTypes[wType][wSubtype];
 
     return labels;
+  }
+
+  getTypeChatData(data, labels, props, rollData, { actionId = null, chatcard = false } = {}) {
+    super.getTypeChatData(data, labels, props, rollData, { actionId, chatcard });
+
+    if (this.showUnidentifiedData) return;
+
+    if (labels.weaponSubtype) props.push(labels.weaponSubtype);
   }
 
   adjustContained() {

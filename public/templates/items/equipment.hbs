@@ -12,10 +12,14 @@
           {{itemType}}
         </li>
         <li>
-          {{#unless showUnidentifiedData}}{{labels.equipmentSubtype}}{{/unless}}
+          {{#if labels.childTypeDistinct}}
+          {{labels.childType}}
+          {{else}}
+          {{labels.subType}}
+          {{/if}}
         </li>
         <li>
-          {{#if hasMultipleSlots}}{{#unless showUnidentifiedData}}{{labels.slot}}{{/unless}}{{/if}}
+          {{#if hasMultipleSlots}}{{labels.slot}}{{/if}}
         </li>
       </ul>
     </div>

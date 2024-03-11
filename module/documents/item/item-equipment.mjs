@@ -75,13 +75,23 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     const subtypeKeys = Object.keys(pf1.config.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
-    const subtypeLabels = pf1.config.equipmentTypes[eType];
-    labels.equipmentType = subtypeLabels._label;
-    labels.equipmentSubtype = subtypeLabels[eSubtype] ?? subtypeLabels._label;
+    const showIdentified = !this.showUnidentifiedData;
 
-    const ac = this.showUnidentifiedData
-      ? itemData.armor.value || 0
-      : (itemData.armor.value || 0) + (itemData.armor.enh || 0);
+    const subtypeLabels = pf1.config.equipmentTypes[eType];
+    labels.subType = subtypeLabels._label;
+    if (showIdentified) {
+      labels.childType = subtypeLabels[eSubtype];
+    } else {
+      // Obfuscate wondrous as other
+      if (this.subType === "wondrous") labels.subType = pf1.config.equipmentTypes.other._label;
+    }
+
+    if (["armor", "shield"].includes(this.subType) && labels.childType) {
+      labels.childTypeDistinct = true;
+    }
+
+    let ac = itemData.armor.value || 0;
+    if (showIdentified) ac += itemData.armor?.enh || 0;
 
     if (ac > 0) {
       labels.armor = `${ac} ${game.i18n.localize("PF1.ACNormal")}`;

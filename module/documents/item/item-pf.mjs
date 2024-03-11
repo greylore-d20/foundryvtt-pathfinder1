@@ -1063,7 +1063,8 @@ export class ItemPF extends ItemBasePF {
    *                                              `rollData` defaults to {@link ItemAction#getRollData}/{@link ItemPF#getRollData}.
    *                                              `secrets` defaults to {@link Item#isOwner}.
    * @param {object} [options] - Additional options affecting the chat data generation
-   * @param {boolean} [options.chatcard=false] Is this actually for chat card.
+   * @param {boolean} [options.chatcard=false] - Is this actually for chat card.
+   * @param {boolean} [options.extended=false] - Include extended information that may not be useful in all circumstances.
    * @param {string} [options.actionId] - The ID of an action on this item to generate chat data for,
    *                                      defaults to {@link ItemPF.firstAction}
    * @returns {ChatData} The chat data for this item (+action)
@@ -1088,40 +1089,44 @@ export class ItemPF extends ItemBasePF {
 
     // General equipment properties
     const props = [];
-    if (Object.prototype.hasOwnProperty.call(itemData, "equipped") && ["weapon", "equipment"].includes(this.type)) {
+    if (this.isPhysical) {
       props.push(itemData.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"));
     }
 
+    if (chatcard !== true) {
+      if (labels.subType && labels.childTypeDistinct !== true) props.push(labels.subType);
+      if (labels.childType) props.push(labels.childType);
+    }
+
     if (!this.showUnidentifiedData) {
-      // Gather dynamic labels
-      const dynamicLabels = {};
-      dynamicLabels.range = labels.range || "";
-      dynamicLabels.level = labels.sl || "";
+      if (labels.activation) props.push(labels.activation);
       // Range
       if (actionData.range != null) {
         const range = action.getRange({ type: "max", rollData }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = convertDistance(range, units);
-        dynamicLabels.range =
+        const rangeLabel =
           range > 0 ? game.i18n.format("PF1.RangeNote", { distance: range, units: distanceValues[1] }) : null;
+        if (rangeLabel) props.push(rangeLabel);
       }
 
       // Add Difficulty Class (DC) label
-      props.push(labels.save);
-      const saveDesc = actionData.save?.description;
-      if (saveDesc?.length > 0) props.push(saveDesc);
+      if (labels.save) {
+        props.push(labels.save);
+        const saveDesc = actionData.save?.description;
+        if (saveDesc) props.push(saveDesc);
+      }
 
       // Duration
       if (actionData.duration != null) {
-        if (!["inst", "perm"].includes(actionData.duration.units)) {
-          const duration = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
-          dynamicLabels.duration = [duration, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
+        let duration;
+        if (actionData.duration.units === "spec") {
+          duration = actionData.duration.value;
+        } else if (!["inst", "perm"].includes(actionData.duration.units)) {
+          const value = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
+          duration = [value, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
-      }
-
-      // Ability activation properties
-      if (labels.activation) {
-        props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
+        if (duration) props.push(duration);
       }
 
       // Enhancement Bonus
@@ -1132,13 +1137,13 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Get per item type chat data
-    this.getTypeChatData(data, labels, props, rollData);
+    this.getTypeChatData(data, labels, props, rollData, { actionId, chatcard });
 
     const harmless = actionData.save?.harmless;
     if (harmless) props.push(game.i18n.localize("PF1.Harmless"));
 
     // Filter properties and return
-    data.properties = props.filter((p) => !!p);
+    data.properties = props;
     return data;
   }
 
@@ -1149,11 +1154,16 @@ export class ItemPF extends ItemBasePF {
    * @param {Object<string, string>} labels - The labels for this item.
    * @param {string[]} props - Additional property strings
    * @param {object} rollData - A rollData object to be used for checks
+   * @param {object} [options] - Additional options
+   * @param {string} [options.actionId=null] - Action this pertains to, if any.
+   * @param {boolean} [options.chatcard=false] - Is this for a chat card?
    */
-  getTypeChatData(data, labels, props, rollData) {
+  getTypeChatData(data, labels, props, rollData, { actionId = null, chatcard = false } = {}) {
     // Charges as used by most item types, except spells
     if (this.isCharged) {
-      props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+      const charges = this.charges;
+      if (Number.isFinite(charges))
+        props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${charges}/${this.maxCharges}`);
     }
   }
 

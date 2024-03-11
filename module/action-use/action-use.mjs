@@ -965,7 +965,7 @@ export class ActionUse {
     this.shared.templateData = foundry.utils.mergeObject(
       this.shared.templateData,
       {
-        tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
+        tokenUuid: token?.uuid,
         actionId: this.shared.action?.id,
         extraText: extraText,
         identified: identified,
@@ -1036,19 +1036,12 @@ export class ActionUse {
 
     // Get target info
     if (!game.settings.get("pf1", "disableAttackCardTargets")) {
-      const targets = metadata.targets?.length
-        ? metadata.targets.map((o) => canvas.tokens.get(o)).filter((o) => o != null)
-        : [];
-      if (targets.length) {
-        this.shared.templateData.targets = targets.map((o) => {
-          return {
-            img: o.document.texture.src,
-            actorData: o.actor?.toObject(false),
-            tokenData: o.document.toObject(false),
-            uuid: o.document.uuid,
-          };
-        });
-      }
+      this.shared.templateData.targets = this.shared.targets.map((t) => ({
+        img: t.document.texture.src,
+        actorData: t.actor?.toObject(false),
+        tokenData: t.document.toObject(false),
+        uuid: t.document.id,
+      }));
     }
 
     this.shared.chatData["flags.pf1.metadata"] = metadata;
@@ -1231,23 +1224,12 @@ export class ActionUse {
     if (this.actor && game.combat?.combatants.some((c) => c.actor === this.actor)) {
       metadata.combat = game.combat.id;
     }
-    metadata.template = this.shared.template ? this.shared.template.id : null;
+    metadata.template = this.shared.template?.id ?? null;
     metadata.rolls = {
       attacks: [],
     };
 
-    // Get template for later variables
-    const template = this.shared.template;
-
-    // Add targets
-    if (template) {
-      metadata.targets = template.object
-        .getTokensWithin()
-        .filter((t) => t.combatant?.isDefeated !== true)
-        .map((o) => o.id);
-    } else {
-      metadata.targets = Array.from(game.user.targets).map((o) => o.id);
-    }
+    metadata.targets = this.shared.targets.map((t) => t.document.uuid);
 
     // Add attack rolls
     for (let attackIndex = 0; attackIndex < this.shared.chatAttacks.length; attackIndex++) {
@@ -1372,6 +1354,19 @@ export class ActionUse {
   }
 
   /**
+   * Collect valid targets.
+   */
+  getTargets() {
+    // Get targets from template, and if no template is present, from explicitly targeted tokens list
+    const targets = this.shared.template?.object.getTokensWithin() ?? Array.from(game.user.targets);
+
+    // Ignore defeated and secret tokens
+    this.shared.targets = targets.filter(
+      (t) => t.document.disposition !== CONST.TOKEN_DISPOSITIONS.SECRET && t.combatant?.isDefeated !== true
+    );
+  }
+
+  /**
    * Process everything
    *
    * @param {object} [options] - Additional options
@@ -1442,6 +1437,8 @@ export class ActionUse {
       await measureResult?.delete();
       return;
     }
+
+    this.getTargets();
 
     // Call script calls
     await this.executeScriptCalls();

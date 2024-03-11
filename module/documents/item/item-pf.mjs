@@ -2290,6 +2290,7 @@ export class ItemPF extends ItemBasePF {
  * @property {string} [chatTemplate] - The template to be used for the creation of the chat message.
  * @property {MeasuredTemplateDocument} template - Template document.
  * @property {object} templateData - Data used to render the chat card, passed to {@link foundry.utils.renderTemplate}.
+ * @property {Token[]} targets - Targeted tokens
  */
 
 /**

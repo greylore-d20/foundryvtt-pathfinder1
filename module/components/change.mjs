@@ -283,6 +283,9 @@ export class ItemChange {
             if (typeof value === "string") break;
 
             if (typeof base === "number") {
+              // Skip positive dodge modifiers if lose dex to AC is in effect
+              if (actor.changeFlags.loseDexToAC && value > 0 && this.modifier === "dodge" && this.isAC) continue;
+
               if (pf1.config.stackingBonusModifiers.includes(this.modifier)) {
                 // Add stacking bonus
                 foundry.utils.setProperty(actor, t, base + value);
@@ -316,6 +319,10 @@ export class ItemChange {
         });
       }
     }
+  }
+
+  get isAC() {
+    return ["ac", "aac", "sac", "nac", "tac", "ffac"].includes(this.subTarget);
   }
 
   /**

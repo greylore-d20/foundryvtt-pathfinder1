@@ -1833,29 +1833,33 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
+    const dexDenied = this.changeFlags.loseDexToAC === true;
+
     // Add extra data
     const rollData = this.getRollData();
     for (const [changeTarget, changeGrp] of Object.entries(extraData)) {
       for (const grp of Object.values(changeGrp)) {
-        if (grp.length > 0) {
-          sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
-          for (const src of grp) {
-            if (!src.operator) src.operator = "add";
-            const srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
-            let srcValue =
-              src.value != null
-                ? src.value
-                : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
-                    suppressError: !this.testUserPermission(game.user, "OWNER"),
-                  }).total;
-            if (src.operator === "set") srcValue = game.i18n.format("PF1.SetTo", { value: srcValue });
-            if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
-              sourceDetails[changeTarget].push({
-                name: srcInfo.replace(/[[\]]/g, ""),
-                modifier: src.modifier || "",
-                value: srcValue,
-              });
-            }
+        sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
+        for (const src of grp) {
+          if (!src.operator) src.operator = "add";
+          const srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
+          let srcValue =
+            src.value != null
+              ? src.value
+              : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
+                  suppressError: !this.testUserPermission(game.user, "OWNER"),
+                }).total;
+          if (src.operator === "set") srcValue = game.i18n.format("PF1.SetTo", { value: srcValue });
+          if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
+            // Account for dex denied denying dodge bonuses
+            if (dexDenied && srcValue > 0 && src.modifier === "dodge" && src.operator === "add" && src.change?.isAC)
+              continue;
+
+            sourceDetails[changeTarget].push({
+              name: srcInfo.replace(/[[\]]/g, ""),
+              modifier: src.modifier || "",
+              value: srcValue,
+            });
           }
         }
       }

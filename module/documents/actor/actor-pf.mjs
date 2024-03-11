@@ -704,7 +704,7 @@ export class ActorPF extends ActorBasePF {
     if (aprof.total.includes(item.baseArmorProficiency)) return true;
 
     // Base types with custom proficiencies
-    const profs = aprof.customTotal?.split(pf1.config.re.traitSeparator).map((p) => p.trim()) ?? [];
+    const profs = aprof.customTotal ?? [];
     if (profs.length == 0) return false;
     const baseTypes = item.system.baseTypes ?? [];
     if (baseTypes.length == 0) return false;
@@ -730,7 +730,7 @@ export class ActorPF extends ActorBasePF {
     if (item.type === "weapon" && wprof.total.includes(item.subType)) return true;
 
     // Match base types
-    const profs = wprof.customTotal?.split(pf1.config.re.traitSeparator).map((p) => p.trim()) ?? [];
+    const profs = wprof.customTotal ?? [];
     if (profs.length == 0) return false;
     const baseTypes = item.system.baseTypes ?? [];
     if (baseTypes.length == 0) return false;

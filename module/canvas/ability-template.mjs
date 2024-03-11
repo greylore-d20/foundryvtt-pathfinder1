@@ -94,7 +94,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
    * Activate listeners for the template preview
    *
    * @param {CanvasLayer} initialLayer  The initially active CanvasLayer to re-activate after the workflow is complete
-   * @returns {Promise<boolean>} Returns true if placed, or false if cancelled
+   * @returns {Promise<object>} Returns result object
    */
   activatePreviewListeners(initialLayer) {
     return new Promise((resolve) => {

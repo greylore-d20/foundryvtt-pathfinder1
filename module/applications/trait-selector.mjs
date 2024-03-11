@@ -179,7 +179,7 @@ export class ActorTraitSelector extends DocumentSheet {
       .filter(([_, v]) => v)
       .map(([k]) => k);
 
-    if (custom?.length) this.attributes.custom.push(...custom);
+    if (custom?.length) this.attributes.custom.push(...this.splitCustom(custom));
 
     this.attributes.value = choices;
 

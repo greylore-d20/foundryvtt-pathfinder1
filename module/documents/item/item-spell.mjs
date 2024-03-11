@@ -804,7 +804,7 @@ export class ItemSpellPF extends ItemPF {
     // Set subschool and descriptors label
     {
       const value = srcData.descriptors?.value ?? [];
-      const custom = (srcData.descriptors?.custom ?? "").split(reSplit);
+      const custom = srcData.descriptors?.custom ?? [];
       label.descriptors = [
         ...value.map((descriptor) => pf1.config.spellDescriptors[descriptor] ?? descriptor),
         ...custom,

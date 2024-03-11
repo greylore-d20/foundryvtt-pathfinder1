@@ -1330,8 +1330,7 @@ export class ActorPF extends ActorBasePF {
     };
     for (const [prof, translations] of Object.entries(proficiencies)) {
       // Custom proficiency baseline from actor
-      const customProficiencies =
-        actorData.traits[prof]?.custom?.split(pf1.config.re.traitSeparator).filter((item) => item.length > 0) || [];
+      const customProficiencies = actorData.traits[prof]?.custom || [];
 
       // Iterate over all items to create one array of non-custom proficiencies
       const proficiencies = this.items.reduce(
@@ -1356,11 +1355,7 @@ export class ActorPF extends ActorBasePF {
             }
 
             // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
-            const customProfs =
-              item.system[prof].custom
-                ?.split(pf1.config.re.traitSeparator)
-                .map((i) => i.trim())
-                .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
+            const customProfs = item.system[prof].custom || [];
             // Add readable custom profs to sources and overall collection
             sInfo.value.push(...customProfs);
             customProficiencies.push(...customProfs);
@@ -1382,7 +1377,7 @@ export class ActorPF extends ActorBasePF {
       // Save collected proficiencies in actor's data
       actorData.traits[prof] ??= {}; // In case the data structure is missing
       actorData.traits[prof].total = [...proficiencies];
-      actorData.traits[prof].customTotal = customProficiencies.join(";");
+      actorData.traits[prof].customTotal = [...customProficiencies];
     }
   }
 
@@ -2970,7 +2965,7 @@ export class ActorPF extends ActorBasePF {
       if (actorData.traits.dv.value.length || actorData.traits.dv.custom.length) {
         const value = [
           ...actorData.traits.dv.value.map((obj) => damageTypes[obj]),
-          ...(actorData.traits.dv.custom.length > 0 ? actorData.traits.dv.custom.split(";") : []),
+          ...(actorData.traits.dv.custom || []),
         ];
         headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
       }
@@ -2988,9 +2983,9 @@ export class ActorPF extends ActorBasePF {
     ) {
       const value = [
         ...actorData.traits.di.value.map((obj) => damageTypes[obj]),
-        ...(actorData.traits.di.custom.length > 0 ? actorData.traits.di.custom.split(";") : []),
+        ...(actorData.traits.di.custom || []),
         ...actorData.traits.ci.value.map((obj) => pf1.config.conditionTypes[obj]),
-        ...(actorData.traits.ci.custom.length > 0 ? actorData.traits.ci.custom.split(";") : []),
+        ...(actorData.traits.ci.custom || []),
       ];
       headers.push({ header: game.i18n.localize("PF1.ImmunityPlural"), value: value });
     }
@@ -3294,7 +3289,7 @@ export class ActorPF extends ActorBasePF {
     if (this.system.traits.di.value.length || this.system.traits.di.custom.length) {
       const values = [
         ...this.system.traits.di.value.map((obj) => damageTypes[obj]),
-        ...(this.system.traits.di.custom.length > 0 ? this.system.traits.di.custom.split(reSplit) : []),
+        ...(this.system.traits.di.custom || []),
       ];
       energyResistance.push(...values.map((o) => game.i18n.format("PF1.ImmuneTo", { immunity: o })));
     }
@@ -3302,7 +3297,7 @@ export class ActorPF extends ActorBasePF {
     if (this.system.traits.dv.value.length || this.system.traits.dv.custom.length) {
       const values = [
         ...this.system.traits.dv.value.map((obj) => damageTypes[obj]),
-        ...(this.system.traits.dv.custom.length > 0 ? this.system.traits.dv.custom.split(reSplit) : []),
+        ...(this.system.traits.dv.custom || []),
       ];
       energyResistance.push(...values.map((o) => game.i18n.format("PF1.VulnerableTo", { vulnerability: o })));
     }
@@ -3791,8 +3786,8 @@ export class ActorPF extends ActorBasePF {
           isToken,
           dr: Object.values(actor.parseResistances("dr")),
           eres: Object.values(actor.parseResistances("eres")),
-          di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom.match(sliceReg) ?? [])],
-          dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom.match(sliceReg) ?? [])],
+          di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom || [])],
+          dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom || [])],
           checked: true,
         };
       });

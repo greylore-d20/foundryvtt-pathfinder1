@@ -553,7 +553,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Prepare {value: [], custom: string} objects
+    // Prepare {value: [], custom: []} objects
     const profs = {
       armorProf: pf1.config.armorProficiencies,
       descriptors: pf1.config.spellDescriptors,
@@ -578,12 +578,8 @@ export class ItemSheetPF extends ItemSheet {
       }, {});
 
       // Add custom entry
-      if (trait.custom) {
-        trait.custom
-          .split(pf1.config.re.traitSeparator)
-          .map((c) => c.trim())
-          .filter((c) => c)
-          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c));
+      if (trait.custom?.length) {
+        trait.custom.forEach((c, i) => (trait.selected[`custom${i + 1}`] = c));
       }
       trait.active = !foundry.utils.isEmpty(trait.selected);
     }

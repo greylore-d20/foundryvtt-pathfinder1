@@ -10,11 +10,9 @@ export class ActorTraitSelector extends DocumentSheet {
     this.options.classes.push(options.subject);
 
     // Get current values
-    let { value, custom } = deepClone(foundry.utils.getProperty(doc, this.attribute) ?? { value: [], custom: "" });
+    let { value, custom } = deepClone(foundry.utils.getProperty(doc, this.attribute) ?? { value: [], custom: [] });
     value ||= [];
-    custom ??= "";
-
-    custom = this.splitCustom(custom);
+    custom ||= [];
 
     this.attributes = { value, custom };
   }
@@ -96,7 +94,7 @@ export class ActorTraitSelector extends DocumentSheet {
     await this._onSubmit(event, { preventRender: true });
 
     const { custom, value } = this.attributes;
-    const updateData = { [this.attribute]: { value, custom: Array.from(new Set(custom)).join(";") } };
+    const updateData = { [this.attribute]: { value, custom } };
     this.object.update(updateData);
 
     this.close({ force: true });
@@ -181,7 +179,7 @@ export class ActorTraitSelector extends DocumentSheet {
       .filter(([_, v]) => v)
       .map(([k]) => k);
 
-    if (custom) this.attributes.custom.push(...this.splitCustom(custom));
+    if (custom?.length) this.attributes.custom.push(...custom);
 
     this.attributes.value = choices;
 

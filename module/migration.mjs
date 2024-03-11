@@ -663,6 +663,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorSubskillData(actorData, updateData);
   _migrateActorUnusedData(actorData, updateData);
   _migrateActorDRandER(actorData, updateData);
+  _migrateActorTraitsCustomToArray(actorData, updateData);
 
   // Migrate Owned Items
   const items = [];
@@ -767,6 +768,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemTuples(itemData, updateData);
   _migrateEquipmentCategories(itemData, updateData);
   _migrateSpellDescriptors(itemData, updateData);
+  _migrateItemTraitsCustomToArray(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
 
   // Migrate action data
@@ -2691,6 +2693,26 @@ const _migrateActorDRandER = function (ent, updateData) {
   }
 };
 
+const _migrateActorTraitsCustomToArray = (actor, updateData) => {
+  const keys = ["di", "dv", "ci", "languages", "armorProf", "weaponProf"];
+
+  keys.forEach((key) => {
+    const trait = actor.system.traits[key];
+    if (!trait || typeof trait.custom !== "string") return;
+
+    const custom =
+      trait.custom
+        ?.split(pf1.config.re.traitSeparator)
+        .map((x) => x.trim())
+        .filter((x) => x) ?? [];
+    if (custom.length) {
+      updateData[`system.traits.${key}.custom`] = custom;
+    } else {
+      updateData[`system.traits.${key}.-=custom`] = null;
+    }
+  });
+};
+
 const _Action_ConvertDamageType = function (damageTypeString) {
   const separator = /(?:\s*\/\s*|\s+and\s+|\s+or\s+)/i;
   const damageTypeList = [
@@ -2789,6 +2811,30 @@ const _migrateItemType = function (ent, updateData) {
 };
 
 /**
+ * @param item
+ * @param updateData
+ */
+const _migrateItemTraitsCustomToArray = (item, updateData) => {
+  const keys = ["armorProf", "descriptors", "languages", "weaponGroups", "weaponProf"];
+
+  keys.forEach((key) => {
+    const trait = item.system[key];
+    if (!trait || typeof trait.custom !== "string") return;
+
+    const custom = trait.custom
+      .split(pf1.config.re.traitSeparator)
+      .map((x) => x.trim())
+      .filter((x) => x);
+
+    if (custom.length) {
+      updateData[`system.${key}.custom`] = custom;
+    } else {
+      updateData[`system.${key}.-=custom`] = null;
+    }
+  });
+};
+
+/**
  * Removes data that the system has added to items that is now unused with no new location.
  *
  * @param item
@@ -2871,8 +2917,7 @@ const _migrateItemUnusedData = (item, updateData) => {
  *
  * @param {object} actorData - Actor data
  * @param {object} updateData - Update data
- * @param {object} [options={}] - Additional options
- * @param {Actor} [options.actor] - Actor document
+ * @param {Actor} [actor] - Actor document
  * @param actor
  */
 const _migrateActorActiveEffects = async (actorData, updateData, actor) => {

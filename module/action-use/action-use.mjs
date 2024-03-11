@@ -977,6 +977,7 @@ export class ActionUse {
         item: this.item.toObject(),
         actor,
         token,
+        scene: canvas.scene?.id,
         hasSave: this.shared.action.hasSave,
         rollData: this.shared.rollData,
         save: {

@@ -100,24 +100,29 @@ export class ActorTraitSelector extends DocumentSheet {
     this.close({ force: true });
   }
 
+  /**
+   * @internal
+   * @param {Event} event
+   */
   _onCustomInput(event) {
     // Consume input if semicolon is inserted
-    const value = event.target.value;
-    if (/;/.test(value)) {
-      this.attributes.custom.push(...this.splitCustom(value));
-      this.render();
+    if (/;/.test(event.target.value)) {
+      event.preventDefault();
+      this.submit();
     }
   }
 
+  /**
+   * @internal
+   * @param {Event} event
+   */
   _onActiveCustomInput(event) {
     if (event.isComposing) return;
 
     switch (event.key) {
       case "Enter": {
         event.preventDefault();
-        const elem = event.target;
-        this.attributes.custom.push(...this.splitCustom(elem.value));
-        this.render();
+        this.submit();
         break;
       }
       case "Backspace": {

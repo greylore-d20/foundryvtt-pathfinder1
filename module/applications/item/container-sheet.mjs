@@ -8,6 +8,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     super(...args);
 
     /**
+     * @type {string[]} IDs of expanded items.
+     * @private
+     */
+    this._expandedItems = [];
+
+    /**
      * Track the set of item filters which are applied
      *
      * @type {Set}
@@ -371,6 +377,24 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.inventory = Object.values(inventory);
   }
 
+  async _renderInner(...args) {
+    const html = await super._renderInner(...args);
+
+    // Re-open item summaries
+    for (const itemId of this._expandedItems) {
+      // Only display summaries of items that are still present
+      if (this.document.items.has(itemId)) {
+        const elem = html.find(`.item-list>.item[data-item-id="${itemId}"]`)[0];
+        if (elem) this._openItemSummary(elem, { animation: false });
+      } else {
+        // Delete itemIds belonging to items no longer found in the actor
+        this._expandedItems.findSplice((o) => o === itemId);
+      }
+    }
+
+    return html;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -384,8 +408,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     html.find(`.tab[data-tab="contents"] .item-delete`).click(this._onItemDelete.bind(this));
     html.find(`.tab[data-tab="contents"] .item-take`).click(this._onItemTake.bind(this));
 
-    // Quick edit item
-    html.find(".item .item-name").contextmenu(this._onItemEdit.bind(this));
+    html
+      .find(".item .item-name")
+      // Quick edit item
+      .contextmenu(this._onItemEdit.bind(this))
+      // Open item summary
+      .click(this._onItemSummary.bind(this));
 
     // Quick (un)identify item
     html.find("a.item-control.item-identify").click((ev) => {
@@ -454,6 +482,55 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(li.dataset.itemId);
 
     item.sheet.render(true, { focus: true, editable: this.isEditable });
+  }
+
+  _onItemSummary(event) {
+    event.preventDefault();
+    const li = event.target.closest(".item[data-item-id]");
+    this._openItemSummary(li);
+  }
+
+  /**
+   * @internal
+   * @param {Element} elem
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.animation=true]
+   * @param {object} [options.rollData]
+   */
+  async _openItemSummary(elem, { animation = true, rollData } = {}) {
+    // Check whether pseudo-item belongs to another collection
+    const itemId = elem.dataset.itemId;
+    const item = this.document.items.get(itemId);
+
+    rollData ??= item.firstAction?.getRollData() ?? item.getRollData();
+
+    const { description, properties } = await item.getChatData({ chatcard: false, rollData });
+
+    // Toggle summary
+    this._expandedItems = this._expandedItems.filter((o) => o !== itemId);
+    if (elem.classList.contains("expanded")) {
+      const summary = elem.querySelector(".item-summary");
+      if (!animation) summary.remove();
+      else $(summary).slideUp(200, () => summary.remove());
+    } else {
+      const templateData = {
+        description: description || game.i18n.localize("PF1.NoDescription"),
+        properties,
+      };
+      let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
+      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.document.isOwner });
+
+      const div = $(content);
+
+      if (!animation) elem.append(...div);
+      else {
+        div.hide();
+        elem.append(...div);
+        div.slideDown(200);
+      }
+      this._expandedItems.push(itemId);
+    }
+    elem.classList.toggle("expanded");
   }
 
   _onItemDelete(event) {

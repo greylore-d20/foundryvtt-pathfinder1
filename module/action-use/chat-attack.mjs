@@ -34,9 +34,7 @@ export class ChatAttack {
 
     this.cards = {};
     this.hasCards = false;
-    this.attackNotes = [];
     this.effectNotes = [];
-    this.attackNotesHTML = "";
     this.effectNotesHTML = "";
     this.targets = targets;
     this.ammo = null;
@@ -95,27 +93,6 @@ export class ChatAttack {
     data.critConfirmBonus = RollPF.safeRoll(data.action.critConfirmBonus || "0").total ?? 0;
     // Determine ability multiplier
     if (data.action.ability.damageMult != null) data.ablMult = data.action.ability.damageMult;
-  }
-
-  async setAttackNotesHTML() {
-    if (this.attackNotes.length === 0) {
-      this.attackNotesHTML = "";
-      return;
-    }
-
-    const enrichOptions = {
-      rollData: this.rollData,
-      async: true,
-      relativeTo: this.action.actor,
-    };
-
-    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
-      notes: this.attackNotes,
-      css: "attack-notes",
-      title: "PF1.AttackNotes",
-    });
-
-    this.attackNotesHTML = await TextEditor.enrichHTML(content, enrichOptions);
   }
 
   async setEffectNotesHTML() {
@@ -196,51 +173,6 @@ export class ChatAttack {
 
     // Add tooltip
     roll.options.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
-
-    if (this.attackNotes.length === 0) await this.addAttackNotes();
-  }
-
-  async addAttackNotes() {
-    if (!this.action.item) return;
-
-    const type = this.action.data.actionType;
-    const typeMap = {
-      rsak: ["ranged", /*"spell",*/ "rangedSpell"],
-      rwak: ["ranged", /*"weapon",*/ "rangedWeapon"],
-      twak: ["ranged", /*"weapon",*/ "thrownWeapon", "rangedWeapon"],
-      rcman: ["ranged"],
-      mwak: ["melee", /*"weapon",*/ "meleeWeapon"],
-      msak: ["melee", /*"spell",*/ "meleeSpell"],
-      mcman: ["melee"],
-    };
-
-    const notes = [];
-    // Add actor notes
-    if (this.action.item?.actor != null) {
-      notes.push(...this.action.item.actor.getContextNotesParsed("attacks.attack"));
-      typeMap[type]?.forEach((subTarget) =>
-        notes.push(...this.action.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
-      );
-    }
-    // Add item notes
-    if (this.action.item?.system.attackNotes) {
-      notes.push(...this.action.item.system.attackNotes);
-    }
-    // Add action notes
-    if (this.action.data.attackNotes) {
-      notes.push(...this.action.data.attackNotes);
-    }
-    // Add CMB notes
-    if (this.action.isCombatManeuver) {
-      notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
-    }
-
-    if (this.hasCritConfirm) {
-      notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
-    }
-
-    this.attackNotes = notes;
-    await this.setAttackNotesHTML();
   }
 
   async addDamage({ flavor = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {

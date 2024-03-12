@@ -68,6 +68,12 @@ export class ActionUse {
       actor: { value: shared.item.actor },
       token: { value: shared.token },
     });
+
+    // Init some shared data
+    this.shared.templateData = {
+      action: this.shared.action,
+      item: this.shared.item,
+    };
   }
 
   /**
@@ -587,6 +593,9 @@ export class ActionUse {
     // Effect notes only
     else await this.addEffectNotes();
 
+    // Add footnotes
+    await this.addFootnotes();
+
     // Add attack cards
     this.shared.attacks.forEach((attack) => {
       if (!attack.ammo) return;
@@ -704,9 +713,6 @@ export class ActionUse {
         }
       }
 
-      // Add attack notes
-      if (a === 0) attack.addAttackNotes();
-
       // Add effect notes
       if (atk.id !== "manyshot") {
         await attack.addEffectNotes();
@@ -748,6 +754,48 @@ export class ActionUse {
 
     // Add to list
     this.shared.chatAttacks.push(attack);
+  }
+
+  async addFootnotes() {
+    if (!this.item) return;
+
+    const type = this.action.data.actionType;
+    const typeMap = {
+      rsak: ["ranged", "rangedSpell"],
+      rwak: ["ranged", "rangedWeapon"],
+      twak: ["ranged", "thrownWeapon", "rangedWeapon"],
+      rcman: ["ranged"],
+      mwak: ["melee", "meleeWeapon"],
+      msak: ["melee", "meleeSpell"],
+      mcman: ["melee"],
+    };
+
+    const notes = [];
+    // Add actor notes
+    if (this.actor) {
+      notes.push(...this.item.actor.getContextNotesParsed("attacks.attack"));
+      typeMap[type]?.forEach((subTarget) =>
+        notes.push(...this.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
+      );
+    }
+    // Add item notes
+    if (this.item?.system.attackNotes) {
+      notes.push(...this.item.system.attackNotes);
+    }
+    // Add action notes
+    if (this.action.data.attackNotes) {
+      notes.push(...this.action.data.attackNotes);
+    }
+    // Add CMB notes
+    if (this.action.isCombatManeuver) {
+      notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
+    }
+
+    if (this.hasCritConfirm) {
+      notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
+    }
+
+    this.shared.templateData.footnotes = notes;
   }
 
   /**
@@ -897,7 +945,7 @@ export class ActionUse {
 
     // Create chat template data
     this.shared.templateData = {
-      action: this.shared.action,
+      ...this.shared.templateData,
       name: this.item.name,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       rollMode: this.shared.rollMode,
@@ -921,8 +969,7 @@ export class ActionUse {
 
     // Get extra text
     const props = [];
-    let extraText = "";
-    if (this.shared.templateData.attacks.length > 0) extraText = this.shared.templateData.attacks[0].attackNotesHTML;
+    const extraText = await this.enrichNotes(this.shared.templateData.footnotes, "PF1.Footnotes", "footnotes");
 
     const itemChatData = await this.item.getChatData({
       actionId: this.shared.action.id,
@@ -962,38 +1009,34 @@ export class ActionUse {
     // Parse template data
     const identified = Boolean(this.shared.rollData.item?.identified ?? true);
     const name = identified ? `${this.item.name} (${this.shared.action.name})` : this.item.getName(true);
-    this.shared.templateData = foundry.utils.mergeObject(
-      this.shared.templateData,
-      {
-        tokenUuid: token?.uuid,
-        actionId: this.shared.action?.id,
-        extraText: extraText,
-        identified: identified,
-        name: name,
-        description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
-        actionDescription: itemChatData.actionDescription,
-        hasExtraText: extraText.length > 0,
-        properties: props,
-        item: this.item.toObject(),
-        actor,
-        token,
-        scene: canvas.scene?.id,
-        hasSave: this.shared.action.hasSave,
-        rollData: this.shared.rollData,
-        save: {
-          dc: this.shared.saveDC,
-          type: this.shared.save,
-          label: game.i18n.format("PF1.SavingThrowButtonLabel", {
-            type: pf1.config.savingThrows[this.shared.save],
-            dc: this.shared.saveDC.toString(),
-          }),
-          gmSensitiveLabel: game.i18n.format("PF1.SavingThrowButtonLabelGMSensitive", {
-            save: pf1.config.savingThrows[this.shared.save],
-          }),
-        },
+    this.shared.templateData = {
+      ...this.shared.templateData,
+      tokenUuid: token?.uuid,
+      actionId: this.shared.action?.id,
+      extraText: extraText,
+      identified: identified,
+      name: name,
+      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
+      actionDescription: itemChatData.actionDescription,
+      properties: props,
+      item: this.item.toObject(),
+      actor,
+      token,
+      scene: canvas.scene?.id,
+      hasSave: this.shared.action.hasSave,
+      rollData: this.shared.rollData,
+      save: {
+        dc: this.shared.saveDC,
+        type: this.shared.save,
+        label: game.i18n.format("PF1.SavingThrowButtonLabel", {
+          type: pf1.config.savingThrows[this.shared.save],
+          dc: this.shared.saveDC.toString(),
+        }),
+        gmSensitiveLabel: game.i18n.format("PF1.SavingThrowButtonLabelGMSensitive", {
+          save: pf1.config.savingThrows[this.shared.save],
+        }),
       },
-      { inplace: false }
-    );
+    };
 
     // Add range info
     {
@@ -1054,6 +1097,34 @@ export class ActionUse {
         actionName: this.shared.action.name,
         actionDescription: itemChatData.actionDescription,
       };
+  }
+
+  /**
+   * Enrich notes
+   *
+   * @param {Array<string>} notes - Notes
+   * @param {string} title - Notes section title
+   * @param {string} css - CSS selectors
+   * @returns {string} - Enriched HTML as text
+   */
+  async enrichNotes(notes, title, css) {
+    if (notes.length === 0) return;
+
+    const enrichOptions = {
+      rollData: this.shared.rollData,
+      async: true,
+      relativeTo: this.actor,
+    };
+
+    const renderContext = {
+      notes,
+      css,
+      title,
+    };
+
+    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", renderContext);
+
+    return TextEditor.enrichHTML(content, enrichOptions);
   }
 
   /**

@@ -89,6 +89,7 @@ export class CombatPF extends Combat {
         const [updates, messages] = result;
 
         // Get Combatant data (non-strictly)
+        /** @type {CombatantPF} */
         const combatant = this.combatants.get(id);
         if (!combatant?.isOwner) return results;
 
@@ -107,13 +108,11 @@ export class CombatPF extends Combat {
         const [notes, notesHTML] = combatant.actor?.getInitiativeContextNotes?.() ?? [];
 
         // Create card template data
-        const hasNotes = notes?.length > 0;
         const templateData = {
           formula: roll.formula,
           tooltip: await roll.getTooltip(),
           total: roll.total,
-          hasExtraText: hasNotes,
-          extraText: hasNotes ? notesHTML : undefined,
+          extraText: notesHTML,
         };
 
         // Ensure roll mode is not lost

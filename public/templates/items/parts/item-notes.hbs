@@ -1,11 +1,11 @@
 <div class="notes {{css}}" data-name="{{name}}">
   {{! Header }}
-  <div class="header">{{localize title}}</div>
+  <div class="header" data-tooltip="{{hint}}">{{localize title}}</div>
   <div class="header entry-control">
     <a class="add-entry"><i class="fas fa-plus"></i></a>
   </div>
 
-  {{#each notes as |entry|}}
+  {{#each notes}}
   <input type="text" data-index="{{@index}}" value="{{this}}" name="{{../name}}.{{@index}}">
   <div class="entry-control entry" data-index="{{@index}}">
     <a class="delete-entry"><i class="fas fa-minus"></i></a>

@@ -101,9 +101,9 @@
 {{/unless}}
 
 {{#if hasAction}}
-{{!-- Attack Notes --}}
-{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="system.attackNotes" title="PF1.AttackNotes" notes=system.attackNotes css="attack"}}
+{{!-- Effect (Per-Instance) Notes --}}
+{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="system.effectNotes" title="PF1.EffectNotes" hint="PF1.EffectNotesHint" notes=system.effectNotes css="effect"}}
 
-{{!-- Effect Notes --}}
-{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="system.effectNotes" title="PF1.EffectNotes" notes=system.effectNotes css="effect"}}
+{{!-- Footnotes --}}
+{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="system.attackNotes" title="PF1.Footnotes" hint="PF1.FootnotesHint" notes=system.attackNotes css="attack"}}
 {{/if}}

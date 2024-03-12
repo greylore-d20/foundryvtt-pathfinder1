@@ -38,7 +38,7 @@ export class CombatantPF extends Combatant {
    * @param {string} [formula] Initiative formula override
    * @param {string} [d20=null] D20 override
    * @param {number} [bonus=null] Bonus to initiative
-   * @returns {RollPF} Initiative roll instance
+   * @returns {pf1.dice.D20RollPF} Initiative roll instance
    *
    * Synchronized with Foundry VTT 10.291
    */
@@ -50,7 +50,7 @@ export class CombatantPF extends Combatant {
       formula += " + @bonus";
     }
 
-    return new CONFIG.Dice.rolls.D20RollPF(formula, rollData);
+    return new pf1.dice.D20RollPF(formula, rollData);
   }
 
   /**

@@ -981,54 +981,6 @@ export class ItemAction {
   /* -------------------------------------------- */
 
   /**
-   * Only roll the item's effect.
-   *
-   * @param root0
-   * @param root0.critical
-   * @param root0.primaryAttack
-   */
-  rollEffect({ critical = false, primaryAttack = true } = {}) {
-    const rollData = this.getRollData();
-
-    if (!this.hasEffect) {
-      throw new Error("You may not make an Effect Roll with this Item.");
-    }
-
-    // Determine critical multiplier
-    rollData.critMult = 1;
-    if (critical) rollData.critMult = this.data.ability.critMult;
-    // Determine ability multiplier
-    if (this.data.ability.damageMult != null) rollData.ablMult = this.data.ability.damageMult;
-
-    // Create effect string
-    const effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
-      o.notes
-        .reduce((cur2, n) => {
-          cur2.push(...n.split(/[\n\r]+/));
-          return cur2;
-        }, [])
-        .forEach((n) => {
-          cur.push(n);
-        });
-      return cur;
-    }, []);
-    effectNotes.push(...this.data.effectNotes);
-    let effectContent = "";
-    for (const fx of effectNotes) {
-      if (fx.length > 0) {
-        effectContent += `<span class="tag">${fx}</span>`;
-      }
-    }
-
-    if (effectContent.length === 0) return "";
-
-    const inner = TextEditor.enrichHTML(effectContent, { rollData: rollData, relativeTo: this.actor });
-    return `<div class="flexcol property-group"><label>${game.i18n.localize(
-      "PF1.EffectNotes"
-    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
-  }
-
-  /**
    * Roll damage for an action.
    *
    * @param {object} [options] - Options configuring the damage roll

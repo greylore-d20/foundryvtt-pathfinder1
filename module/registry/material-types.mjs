@@ -997,6 +997,16 @@ export class MaterialTypes extends Registry {
       basic: true,
       hardness: 5,
     },
+    {
+      _id: "magic",
+      name: "PF1.Materials.Types.Magic",
+      addon: true,
+    },
+    {
+      _id: "epic",
+      name: "PF1.Materials.Types.Epic",
+      addon: true,
+    },
   ];
 }
 

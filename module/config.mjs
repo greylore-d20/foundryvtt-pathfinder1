@@ -288,8 +288,6 @@ export const alignmentsShort = {
  * @alpha
  */
 export const damageResistances = {
-  magic: "PF1.DamageResistance.magic",
-  epic: "PF1.DamageResistance.epic",
   lawful: "PF1.Alignments.l",
   chaotic: "PF1.Alignments.c",
   good: "PF1.Alignments.g",

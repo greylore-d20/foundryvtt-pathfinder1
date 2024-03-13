@@ -16,7 +16,7 @@ system:
         dismiss: true
         units: spec
         value: 1 min./level
-      img: systems/pf1/icons/misc/magic-swirl.png
+      img: icons/magic/nature/root-vine-entangled-humanoid.webp
       measureTemplate:
         size: '40'
         type: circle
@@ -26,21 +26,54 @@ system:
       save:
         description: Reflex partial (see text)
         type: ref
+    - _id: yujzN7LapUkjdsGm
+      actionType: twak
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      attackBonus: (-@attributes.bab.total + @cl)[CL Adjust] + @ablMod[Caster Ability]
+      damage:
+        parts:
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+        value: ''
+      img: icons/magic/nature/root-vine-entangled-humanoid.webp
+      measureTemplate:
+        size: '40'
+        type: circle
+      name: Thorn Attack
+      range:
+        maxIncrements: null
+        units: ft
+        value: '15'
+      save:
+        description: Reflex partial (see text)
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
   components:
     divineFocus: 1
     somatic: true
     verbal: true
   description:
     value: >-
-      <p>This spell functions as <i>entangle</i>, except the plants also grow
-      thorns and can fling them up to 15 feet. Any creature that moves within 15
-      feet of the spell's area is attacked once on its turn by the animated
-      plants. The plants use your caster level as their base attack bonus and
-      add your spellability score modifier (Intelligence for witches; Wisdom for
-      druids, rangers, and shamans) to the attack roll. A volley of thorns
-      counts as a thrown weapon and deals 2d6 points of piercing damage on a
-      successful hit. A creature that enters the spell's area or ends its turn
-      there automatically takes 2d6 points of piercing damage.</p>
+      <p>This spell functions as
+      @UUID[Compendium.pf1.spells.Item.2nn2tshkn4p7k25l]{entangle}, except the
+      plants also grow thorns and can fling them up to 15 feet. Any creature
+      that moves within 15 feet of the spell's area is attacked once on its turn
+      by the animated plants. The plants use your caster level as their base
+      attack bonus and add your spellability score modifier (Intelligence for
+      witches; Wisdom for druids, rangers, and shamans) to the attack roll. A
+      volley of thorns counts as a thrown weapon and deals 2d6 points of
+      piercing damage on a successful hit. A creature that enters the spell's
+      area or ends its turn there automatically takes 2d6 points of piercing
+      damage.</p>
   learnedAt:
     class:
       druid: 3
@@ -50,6 +83,9 @@ system:
       witch: 3
   level: 3
   school: trs
+  sources:
+    - id: PZO1110
+      pages: '278'
   sr: false
 type: spell
 

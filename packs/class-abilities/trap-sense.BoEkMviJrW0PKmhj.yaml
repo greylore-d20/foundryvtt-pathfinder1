@@ -1,12 +1,14 @@
-_id: fb00TzBa32sSisGb
-_key: '!items!fb00TzBa32sSisGb'
+_id: BoEkMviJrW0PKmhj
+_key: '!items!BoEkMviJrW0PKmhj'
 img: systems/pf1/icons/items/inventory/hook-hand.jpg
-name: Trap Sense (BAR)
+name: Trap Sense
 system:
   abilityType: ex
   associations:
     classes:
+      - Rogue
       - Barbarian
+      - Slayer
   contextNotes:
     - subTarget: ref
       target: savingThrows
@@ -21,6 +23,9 @@ system:
       against attacks made by traps. These bonuses increase by +1 every three
       levels thereafter (6th, 9th, 12th, 15th, and 18th level). Trap sense
       bonuses gained from multiple classes stack.</p>
+  sources:
+    - id: PZO1110
+      pages: 31, 69
   subType: classFeat
 type: feat
 

@@ -3,21 +3,17 @@ _key: '!items!pEODJDoTk7uhCZY7'
 img: systems/pf1/icons/items/inventory/lockpick.jpg
 name: Trapfinding
 system:
-  actions:
-    - _id: oz0dbhtu999vdrt7
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/items/inventory/lockpick.jpg
-      name: Use
   associations:
     classes:
       - Rogue
+      - Rogue (Unchained)
+      - Investigator
+      - Slayer
   changes:
     - _id: vhodw42z
       formula: max(1, floor(@class.level / 2))
       modifier: untyped
+      priority: null
       subTarget: skill.dev
   contextNotes:
     - subTarget: skill.per
@@ -25,15 +21,19 @@ system:
       text: +[[max(1, floor(@class.level / 2))]] vs Traps
   description:
     value: >-
-      <p>A rogue adds 1/2 her level to
-      <em>@UUID[Compendium.pf1.pf1e-rules.JournalEntry.x175kVqUfLGPt8tC.JournalEntryPage.2h6hz5AkTDxKPFxr]{Perception}
-      skill checks</em> made to locate traps and to
-      <em>@UUID[Compendium.pf1.pf1e-rules.JournalEntry.x175kVqUfLGPt8tC.JournalEntryPage.cSdUATLHBFfw3v4s]{Disable
-      Device} skill checks</em> (minimum +1). A rogue can use <em>Disable
-      Device</em> to disarm magic traps.</p>
+      <p>The character adds 1/2 her class level to
+      @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.2h6hz5AkTDxKPFxr]{Perception}
+      skill checks made to locate traps and to
+      @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.cSdUATLHBFfw3v4s]{Disable
+      Device} checks (minimum 1). The character can use Disable Device to disarm
+      magical traps.</p>
   sources:
     - id: PZO1110
       pages: '63'
+    - id: PZO1129
+      pages: '31'
+    - id: PZO1131
+      pages: '20'
   subType: classFeat
 type: feat
 

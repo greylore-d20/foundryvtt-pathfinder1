@@ -4324,7 +4324,7 @@ export class ActorPF extends ActorBasePF {
           updates.set(parent.id, update);
         }
 
-        update.system.links.children.push({ id: item.id, name: item.name, img: item.img });
+        update.system.links.children.push({ uuid: item.getRelativeUUID(this) });
       }
     }
 

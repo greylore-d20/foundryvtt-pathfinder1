@@ -1178,7 +1178,7 @@ export class ItemSheetPF extends ItemSheet {
     // Mark proficiency in indeterminate state if not forced but actor has it.
     if (
       hasActor &&
-      this.item.system.proficient === false &&
+      this.item.system.proficient !== true &&
       ["weapon", "equipment", "attack"].includes(this.item.type)
     ) {
       if (this.item.isProficient) {

@@ -4232,6 +4232,7 @@ export class ActorPF extends ActorBasePF {
 
     const collect = async (item, { depth = 0 } = {}) => {
       const supplements = item.system.links?.supplements ?? [];
+      const classLink = item.system.class;
       // Log larger fetches.
       // Fails if there's multiple small fetches
       if (supplements.length > 5) console.log("Fetching", supplements.length, "supplements for", item.name);
@@ -4249,7 +4250,7 @@ export class ActorPF extends ActorBasePF {
         const old = allSupplements.get(uuid);
         if (old) old.count += 1;
         else {
-          allSupplements.set(uuid, { parent: item, item: extraItem, count: 1 });
+          allSupplements.set(uuid, { parent: item, item: extraItem, count: 1, classLink });
           newItems.push(extraItem);
         }
       }
@@ -4285,6 +4286,10 @@ export class ActorPF extends ActorBasePF {
         // Adjust quantity of physical items if more than one was added of the same item
         if (item.isPhysical && itemData.system.quantity > 0) {
           itemData.system.quantity *= count;
+        }
+        // Inherit class link
+        if (supplement.classLink && item.type === "feat" && item.system.subType === "classFeat") {
+          itemData.system.class = supplement.classLink;
         }
         items.push(itemData);
       }

@@ -300,79 +300,81 @@
       }
     }
 
-    .changes,
-    .context-notes {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: block;
+    .tab.changes {
+      .changes,
+      .context-notes {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: block;
 
-      .change,
-      .context-note {
-        flex: 0 0 100%;
-        padding: 1px;
+        .change,
+        .context-note {
+          flex: 0 0 100%;
+          padding: 1px;
 
-        input {
-          flex: 3;
-          border: 1px solid @colorTan;
-          background: var(--pf1-bg-dark-0);
-          height: 24px;
-        }
-
-        input[type="text"]:invalid {
-          border: 2px solid @colorRust;
-          background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
-        }
-
-        select {
-          background: var(--pf1-bg-dark-0);
-        }
-
-        select:invalid {
-          border: 2px solid @colorRust;
-          background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
-        }
-
-        input[type="text"]:not(:first-child),
-        select:not(:first-child),
-        span:not(:first-child),
-        button:not(:first-child) {
-          margin-left: 5px;
-        }
-
-        button.edit-change-contents {
-          height: 24px;
-          line-height: 24px;
-        }
-
-        .change-priority {
-          flex: 0 0 24px;
-        }
-
-        .change-operator {
-          flex: 0 0 24px;
-        }
-
-        .change-target,
-        .context-note-target {
-          border: 1px solid @colorTan;
-          background: var(--pf1-bg-dark-0);
-          white-space: nowrap;
-          overflow: hidden;
-          height: 24px;
-          line-height: 24px;
-          border-radius: 4px;
-          text-align: center;
-          cursor: pointer;
-          font-size: @fontSizeNormal;
-
-          &:hover {
-            box-shadow: 0 0 8px @colorRed;
+          input {
+            flex: 3;
+            border: 1px solid @colorTan;
+            background: var(--pf1-bg-dark-0);
+            height: 24px;
           }
 
-          &.invalid {
+          input[type="text"]:invalid {
             border: 2px solid @colorRust;
             background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
+          }
+
+          select {
+            background: var(--pf1-bg-dark-0);
+          }
+
+          select:invalid {
+            border: 2px solid @colorRust;
+            background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
+          }
+
+          input[type="text"]:not(:first-child),
+          select:not(:first-child),
+          span:not(:first-child),
+          button:not(:first-child) {
+            margin-left: 5px;
+          }
+
+          button.edit-change-contents {
+            height: 24px;
+            line-height: 24px;
+          }
+
+          .change-priority {
+            flex: 0 0 24px;
+          }
+
+          .change-operator {
+            flex: 0 0 24px;
+          }
+
+          .change-target,
+          .context-note-target {
+            border: 1px solid @colorTan;
+            background: var(--pf1-bg-dark-0);
+            white-space: nowrap;
+            overflow: hidden;
+            height: 24px;
+            line-height: 24px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            font-size: @fontSizeNormal;
+
+            &:hover {
+              box-shadow: 0 0 8px @colorRed;
+            }
+
+            &.invalid {
+              border: 2px solid @colorRust;
+              background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
+            }
           }
         }
       }

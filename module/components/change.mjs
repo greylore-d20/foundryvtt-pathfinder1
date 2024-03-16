@@ -24,7 +24,7 @@ export class ItemChange {
       // Prepare data
       data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
 
-      const newChangeData = foundry.utils.deepClone(parent.system.changes ?? []);
+      const newChangeData = foundry.utils.deepClone(parent.toObject().system.changes ?? []);
       newChangeData.push(...data);
 
       // Ensure unique IDs within the item
@@ -155,7 +155,7 @@ export class ItemChange {
 
     data = this.preUpdate(data);
 
-    const changes = foundry.utils.deepClone(this.parent.system.changes ?? []);
+    const changes = foundry.utils.deepClone(this.parent.toObject().system.changes ?? []);
 
     const idx = changes.findIndex((change) => change._id === this.id);
     if (idx >= 0) {

@@ -203,7 +203,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    const description = this.document.getDescription({ rollData });
+    const description = this.item.getDescription({ rollData });
 
     // Add descriptions
     context.descriptionHTML = {
@@ -689,7 +689,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _selectContentSource() {
-    const sources = this.document.system.sources ?? [];
+    const sources = this.item.system.sources ?? [];
     if (sources?.length === 0) return null;
     return sources[0];
   }
@@ -865,7 +865,7 @@ export class ItemSheetPF extends ItemSheet {
     const result = [];
 
     for (const d of data.system.actions) {
-      const doc = this.object.actions.get(d._id);
+      const doc = this.item.actions.get(d._id);
       const obj = {
         data: d,
         isSelfCharged: doc.isSelfCharged,
@@ -888,7 +888,7 @@ export class ItemSheetPF extends ItemSheet {
     data.scriptCalls = null;
 
     const categories = pf1.registry.scriptCalls.filter((category) => {
-      if (!category.itemTypes.includes(this.document.type)) return false;
+      if (!category.itemTypes.includes(this.item.type)) return false;
       return !(category.hidden === true && !game.user.isGM);
     });
     // Don't show the Script Calls section if there are no categories for this item type
@@ -1129,7 +1129,7 @@ export class ItemSheetPF extends ItemSheet {
 
     const hasActor = !!this.actor;
 
-    if (this.document.isPhysical) {
+    if (this.item.isPhysical) {
       html.find(".item-properties input.details-tooptip").each((i, el) => {
         el.addEventListener(
           "mouseover",
@@ -1173,7 +1173,7 @@ export class ItemSheetPF extends ItemSheet {
     // Content source editor
     html
       .find(".content-source .control .edit")
-      .click(() => pf1.applications.ContentSourceEditor.open(this.document, { editable: this.isEditable }));
+      .click(() => pf1.applications.ContentSourceEditor.open(this.item, { editable: this.isEditable }));
 
     // Mark proficiency in indeterminate state if not forced but actor has it.
     if (
@@ -1304,12 +1304,12 @@ export class ItemSheetPF extends ItemSheet {
     let maxValue;
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = foundry.utils.getProperty(this.document, name) ?? "";
+      prevValue = foundry.utils.getProperty(this.item, name) ?? "";
       if (typeof prevValue !== "string") prevValue = prevValue.toString();
 
       if (name.endsWith(".value") && !noCap) {
         const maxName = name.replace(/\.value$/, ".max");
-        maxValue = foundry.utils.getProperty(this.document, maxName);
+        maxValue = foundry.utils.getProperty(this.item, maxName);
       }
     }
     newEl.value = prevValue;
@@ -1384,7 +1384,7 @@ export class ItemSheetPF extends ItemSheet {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const actionId = el.closest(".item[data-action-id]").dataset.actionId;
-    const action = this.document.actions.get(actionId);
+    const action = this.item.actions.get(actionId);
 
     this._mouseWheelAdd(event, el);
 
@@ -1415,7 +1415,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Memorize variables in document
     for (const d of updates) {
-      const action = this.document.actions.get(d._id);
+      const action = this.item.actions.get(d._id);
       if (!action) {
         console.error("Item update for non-existing item:", d._id, d);
         continue;
@@ -1437,7 +1437,7 @@ export class ItemSheetPF extends ItemSheet {
   async _onScriptCallControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
+    const item = this.item.scriptCalls ? this.item.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
     const group = a.closest(".item-list");
     const category = group.dataset.category;
 
@@ -1448,7 +1448,7 @@ export class ItemSheetPF extends ItemSheet {
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
-      const list = (this.document.system.scriptCalls || []).filter((o) => o._id !== item.id);
+      const list = (this.item.system.scriptCalls || []).filter((o) => o._id !== item.id);
       return this._onSubmit(event, { updateData: { "system.scriptCalls": list } });
     }
     // Edit item
@@ -1518,7 +1518,7 @@ export class ItemSheetPF extends ItemSheet {
     if (uuid) {
       const elem = event.currentTarget;
       const category = elem.dataset.category;
-      const list = this.document.system.scriptCalls ?? [];
+      const list = this.item.system.scriptCalls ?? [];
       await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category, name: "", img: "" }], {
         parent: this.item,
@@ -1554,7 +1554,7 @@ export class ItemSheetPF extends ItemSheet {
       dataType = "compendium";
     }
     // Case 2 - Import from same actor
-    else if (targetItem.actor === this.document.actor) {
+    else if (targetItem.actor === this.item.actor) {
       dataType = "data";
       itemLink = targetItem.getRelativeUUID(this.actor);
     }
@@ -1610,6 +1610,7 @@ export class ItemSheetPF extends ItemSheet {
     }
     const { type, uuid, actionId } = data;
 
+    /** @type {ItemPF} */
     const item = this.item;
 
     // Handle actions
@@ -1619,7 +1620,7 @@ export class ItemSheetPF extends ItemSheet {
       // Re-order
       if (srcItem === item) {
         const targetActionID = event.target?.closest(".item[data-action-id]")?.dataset?.actionId;
-        const prevActions = foundry.utils.deepClone(item.system.actions);
+        const prevActions = foundry.utils.deepClone(item.toObject().system.actions);
 
         let targetIdx;
         if (!targetActionID) targetIdx = prevActions.length - 1;
@@ -1628,15 +1629,14 @@ export class ItemSheetPF extends ItemSheet {
 
         const [actionData] = prevActions.splice(srcIdx, 1);
         prevActions.splice(targetIdx, 0, actionData);
-        await this.object.update({ "system.actions": prevActions });
+        await item.update({ "system.actions": prevActions });
       }
-
       // Add to another item
       else {
-        const prevActions = foundry.utils.deepClone(this.object.system.actions ?? []);
+        const prevActions = foundry.utils.deepClone(item.toObject().system.actions ?? []);
         data.data._id = foundry.utils.randomID(16);
         prevActions.splice(prevActions.length, 0, data.data);
-        await this.object.update({ "system.actions": prevActions });
+        await item.update({ "system.actions": prevActions });
       }
     }
   }
@@ -1648,7 +1648,7 @@ export class ItemSheetPF extends ItemSheet {
 
     if (!change) return;
 
-    const scriptEditor = new ScriptEditor({ command: change.formula, parent: this.object }).render(true);
+    const scriptEditor = new ScriptEditor({ command: change.formula, parent: this.item }).render(true);
     const result = await scriptEditor.awaitResult();
     if (typeof result?.command === "string") {
       return change.update({ formula: result.command });
@@ -1671,16 +1671,16 @@ export class ItemSheetPF extends ItemSheet {
       subject: a.dataset.options,
       choices: pf1.config[a.dataset.options],
     };
-    new ActorTraitSelector(this.object, options).render(true);
+    new ActorTraitSelector(this.item, options).render(true);
   }
 
   _onSpeedEdit(event) {
     event.preventDefault();
 
     let app = Object.values(ui.windows).find(
-      (oldApp) => oldApp instanceof SpeedEditor && oldApp.document === this.document
+      (oldApp) => oldApp instanceof SpeedEditor && oldApp.document === this.item
     );
-    app ??= new SpeedEditor(this.document);
+    app ??= new SpeedEditor(this.item);
     app.render(true, { focus: true });
   }
 
@@ -1791,7 +1791,7 @@ export class ItemSheetPF extends ItemSheet {
       const action = foundry.utils.deepClone(this.item.actions.get(li.dataset.actionId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = foundry.utils.randomID(16);
-      const actionParts = foundry.utils.deepClone(this.item.system.actions ?? []);
+      const actionParts = foundry.utils.deepClone(this.item.toObject().system.actions ?? []);
       actionParts.push(action);
       return this._onSubmit(event, { updateData: { "system.actions": actionParts } });
     }
@@ -1820,7 +1820,7 @@ export class ItemSheetPF extends ItemSheet {
       const li = a.closest(".change");
       const changeId = li.dataset.change;
 
-      const changes = foundry.utils.deepClone(this.item.system.changes ?? []);
+      const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
       changes.findSplice((c) => c._id === changeId);
 
       return this._onSubmit(event, { updateData: { "system.changes": changes } });
@@ -1858,7 +1858,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      const contextNotes = foundry.utils.deepClone(this.item.system.contextNotes || []);
+      const contextNotes = foundry.utils.deepClone(this.item.toObject().system.contextNotes || []);
       contextNotes.push(new pf1.components.ContextNote().toObject());
       await this._onSubmit(event, { updateData: { "system.contextNotes": contextNotes } });
     }
@@ -1866,7 +1866,7 @@ export class ItemSheetPF extends ItemSheet {
     // Remove a note
     if (a.classList.contains("delete-note")) {
       const li = a.closest(".context-note");
-      const contextNotes = foundry.utils.deepClone(this.item.system.contextNotes || []);
+      const contextNotes = foundry.utils.deepClone(this.item.toObject().system.contextNotes || []);
       contextNotes.splice(Number(li.dataset.note), 1);
       await this._onSubmit(event, {
         updateData: { "system.contextNotes": contextNotes },
@@ -1915,7 +1915,7 @@ export class ItemSheetPF extends ItemSheet {
 
       await this._onSubmit(event, { preventRender: true });
 
-      let links = foundry.utils.deepClone(this.item.system.links?.[linkType] ?? []);
+      let links = foundry.utils.deepClone(this.item.toObject().system.links?.[linkType] ?? []);
       const { uuid, itemId } = li.dataset;
       const link = links.find((o) => {
         if (uuid) return o.uuid === uuid;
@@ -1930,7 +1930,7 @@ export class ItemSheetPF extends ItemSheet {
       // Call hook for deleting a link
       Hooks.callAll("pf1DeleteItemLink", this.item, link, linkType);
 
-      await this.document.update(updateData);
+      await this.item.update(updateData);
     }
   }
 
@@ -2066,13 +2066,13 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.document, key) ?? []);
+      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.document, key) ?? []);
+      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
       notes.splice(index, 1);
       const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });

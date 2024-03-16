@@ -59,11 +59,11 @@ export class CombatantPF extends Combatant {
    * See Combat._getInitiativeFormula for more detail.
    *
    * @override
-   * @param {string} [d20="1d20"] Default check roll
+   * @param {string} [d20=pf1.dice.D20RollPF.standardRoll] Default check roll
    * @returns {string} Initiative formula
    */
   _getInitiativeFormula(d20) {
-    d20 ||= "1d20";
+    d20 ||= pf1.dice.D20RollPF.standardRoll;
     const defaultParts = [d20, `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
     const actor = this.actor;
     if (actor && game.settings.get("pf1", "initiativeTiebreaker"))

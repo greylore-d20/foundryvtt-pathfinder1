@@ -186,6 +186,7 @@ export class CombatPF extends Combat {
     const dialogData = { d20, bonus, rollMode, rollModes: CONFIG.Dice.rollModes };
 
     // Show dialog
+    // TODO: Use D20RollPF's prompt instead
     return Dialog.wait(
       {
         title: game.i18n.format("PF1.InitiativeCheck", { name }),
@@ -201,7 +202,7 @@ export class CombatPF extends Combat {
       },
       {
         subject: { core: "init" },
-        classes: [...Dialog.defaultOptions.classes, "pf1", "roll-initiative"],
+        classes: [...Dialog.defaultOptions.classes, "pf1", "roll-prompt", "roll-initiative"],
         jQuery: false,
       },
       {

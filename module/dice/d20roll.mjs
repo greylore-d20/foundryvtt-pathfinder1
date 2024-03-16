@@ -9,6 +9,11 @@ export class D20RollPF extends RollPF {
   options;
 
   /**
+   * Standard roll used by the system (1d20).
+   */
+  static standardRoll = "1d20";
+
+  /**
    * @param {string} formula - The roll formula to parse
    * @param {object} [data] - The data object against which to parse attributes within the formula
    * @param {Partial<D20RollConstructorOptions>} [options]
@@ -141,7 +146,7 @@ export class D20RollPF extends RollPF {
    * @type {boolean} - Is normal d20 roll
    */
   get isNormal() {
-    return this.terms[0].formula === "1d20";
+    return this.terms[0].formula === this.constructor.standardRoll;
   }
 
   /**
@@ -189,7 +194,8 @@ export class D20RollPF extends RollPF {
       data: this.data,
       rollMode: options.rollMode || rollMode,
       rollModes: CONFIG.Dice.rollModes,
-      d20: d20 === "1d20" ? "" : d20,
+      // TODO: Move this standard roll obfuscation to dialog handling
+      d20: d20 === pf1.dice.D20RollPF.standardRoll ? "" : d20, // Do not show standard roll in the input field
       bonus: this.options.bonus,
     };
 
@@ -421,7 +427,7 @@ export async function d20Roll(options = {}) {
     noSound = false,
     flavor = "",
     parts = [],
-    dice = "1d20",
+    dice = pf1.dice.D20RollPF.standardRoll,
     rollData = {},
     subject,
     bonus = "",

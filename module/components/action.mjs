@@ -969,7 +969,7 @@ export class ItemAction {
     }
 
     const roll = await new pf1.dice.D20RollPF(
-      [rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"),
+      [rollData.d20 || pf1.dice.D20RollPF.standardRoll, ...parts.filter((p) => !!p)].join("+"),
       rollData,
       {
         critical: this.critRange,

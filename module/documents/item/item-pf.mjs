@@ -1181,7 +1181,7 @@ export class ItemPF extends ItemBasePF {
    * @param {Event | null} [ev=null] - The event that triggered the use, if any
    * @param {boolean} [skipDialog=getSkipActionPrompt()] - Whether to skip the dialog for this action
    * @param {boolean} [chatMessage=true] - Whether to send a chat message for this action
-   * @param {string} [dice="1d20"] - The base dice to roll for this action
+   * @param {string} [dice=pf1.dice.D20RollPF.standardRoll] - The base dice to roll for this action
    * @param {string} [rollMode] - The roll mode to use for the chat message
    * @param {TokenDocument} [token] Token this action is for, if any.
    * @param {UseOptions} [options={}] Additional use options
@@ -1195,7 +1195,7 @@ export class ItemPF extends ItemBasePF {
     ev = null,
     skipDialog = getSkipActionPrompt(),
     chatMessage = true,
-    dice = "1d20",
+    dice = pf1.dice.D20RollPF.standardRoll,
     rollMode,
     token,
     options = {},
@@ -2281,7 +2281,7 @@ export class ItemPF extends ItemBasePF {
  * @property {object} rollData - The singular rollData object used for all rolls in the action
  * @property {boolean} skipDialog - Whether the user-facing dialog should get skipped. Defaults to `false`.
  * @property {boolean} chatMessage - Whether a chat message should be created at the end of the action's usage. Defaults to `true`.
- * @property {string} dice - The base dice used for the action's attack rolls. Defaults to `"1d20"`.
+ * @property {string} dice - The base dice used for the action's attack rolls. Defaults to return value of `pf1.dice.D20RollPF.standardRoll`.
  * @property {boolean} fullAttack - Whether the action is a full attack. Defaults to `true`.
  * @property {string[]} attackBonus - Bonus values to be added to the attack roll formula
  * @property {string[]} damageBonus - Bonus values to be added to the damage roll formula

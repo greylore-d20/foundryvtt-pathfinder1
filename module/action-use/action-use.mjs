@@ -119,7 +119,9 @@ export class ActionUse {
    */
   getRollData() {
     const rollData = foundry.utils.deepClone(this.shared.action.getRollData());
-    rollData.d20 = this.shared.dice !== "1d20" ? this.shared.dice : "";
+    const d20 = this.shared.dice;
+    // TODO: Move this standard roll obfuscation to dialog handling
+    rollData.d20 = d20 === pf1.dice.D20RollPF.standardRoll ? "" : d20;
 
     return rollData;
   }

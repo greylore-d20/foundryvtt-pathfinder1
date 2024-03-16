@@ -30,6 +30,10 @@ export class ItemChange {
       // Ensure unique IDs within the item
       const ids = new Set();
       newChangeData.forEach((change) => ids.add(change._id));
+      // Remove invalid IDs
+      ids.delete(undefined);
+      ids.delete("");
+
       // Unique ID count does not match number of changes
       if (ids.size != newChangeData.length) {
         while (ids.size < newChangeData.length) ids.add(foundry.utils.randomID(8));
@@ -44,8 +48,8 @@ export class ItemChange {
 
         // Assign remaining new IDs
         for (const change of reAssign) {
-          change._id = ids.first;
-          ids.delete(ids.first);
+          change._id = ids.first();
+          ids.delete(change._id);
         }
       }
 

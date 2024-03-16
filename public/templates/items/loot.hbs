@@ -34,7 +34,7 @@
   {{!-- Item Sheet Body --}}
   <section class="primary-body">
     {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
-    
+
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
@@ -107,17 +107,17 @@
 
     {{!-- Changes Tab --}}
     {{#unless showUnidentifiedData}}
-    <div class="tab" data-group="primary" data-tab="changes">
+    <div class="tab changes" data-group="primary" data-tab="changes">
       {{~> "systems/pf1/templates/items/parts/item-changes.hbs"}}
     </div>
     {{/unless}}
 
-    <div class="tab" data-group="primary" data-tab="links">
+    <div class="tab links" data-group="primary" data-tab="links">
       {{> "systems/pf1/templates/items/parts/item-links.hbs"}}
     </div>
 
     {{#unless showUnidentifiedData}}
-    <div class="tab" data-group="primary" data-tab="advanced">
+    <div class="tab advanced" data-group="primary" data-tab="advanced">
       {{> "systems/pf1/templates/items/parts/item-advanced.hbs"}}
     </div>
     {{/unless}}

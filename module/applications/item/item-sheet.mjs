@@ -54,6 +54,10 @@ export class ItemSheetPF extends ItemSheet {
           dragSelector: "li.action-part",
           dropSelector: ".tab.details",
         },
+        {
+          dragSelector: ".tab.changes li.change",
+          dropSelector: null,
+        },
       ],
       tabs: [
         {
@@ -596,13 +600,14 @@ export class ItemSheetPF extends ItemSheet {
 
       const buffTargets = getBuffTargets(actor);
       context.changes =
-        itemData.changes?.map((o) => {
-          const target = buffTargets[o.subTarget];
+        itemData.changes?.map((ch) => {
+          const target = buffTargets[ch.subTarget];
           return {
-            data: o,
             isValid: !!target,
-            label: target?.label ?? o.subTarget,
-            isScript: o.operator === "script",
+            label: target?.label ?? ch.subTarget,
+            isScript: ch.operator === "script",
+            ...ch,
+            id: ch._id,
           };
         }) ?? [];
     }
@@ -1211,8 +1216,8 @@ export class ItemSheetPF extends ItemSheet {
     // Add drop handler to textareas
     html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
-    // Modify buff changes
-    html.find(".change-control").click(this._onBuffControl.bind(this));
+    // Modify changes
+    html.find(".change-control").click(this._onChangeControl.bind(this));
     html.find(".change .change-target").click(this._onChangeTargetControl.bind(this));
 
     // Modify note changes
@@ -1576,6 +1581,11 @@ export class ItemSheetPF extends ItemSheet {
     return true;
   }
 
+  /**
+   * @internal
+   * @override
+   * @param {DragEvent} event
+   */
   _onDragStart(event) {
     const elem = event.target;
 
@@ -1585,6 +1595,15 @@ export class ItemSheetPF extends ItemSheet {
       const action = this.item.actions.get(actionId);
       const obj = { type: "action", uuid: this.item.uuid, actionId: action.id, data: action.data };
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
+      return;
+    }
+
+    const changeId = elem.dataset.changeId;
+    if (changeId) {
+      const ch = this.item.changes.get(changeId);
+      const obj = { type: "pf1Change", data: ch.data, changeId, uuid: this.item.uuid };
+      event.dataTransfer.setData("text/plain", JSON.stringify(obj));
+      return;
     }
   }
 
@@ -1608,42 +1627,52 @@ export class ItemSheetPF extends ItemSheet {
     } catch (e) {
       return false;
     }
-    const { type, uuid, actionId } = data;
 
+    const { type, uuid } = data;
     /** @type {ItemPF} */
     const item = this.item;
 
-    // Handle actions
-    if (type === "action") {
-      const srcItem = await fromUuid(uuid);
+    switch (type) {
+      // Handle actions
+      case "action": {
+        const srcItem = await fromUuid(uuid);
+        const actionId = data.actionId;
+        // Re-order
+        if (srcItem === item) {
+          const targetActionID = event.target?.closest(".item[data-action-id]")?.dataset?.actionId;
+          const prevActions = foundry.utils.deepClone(item.toObject().system.actions);
 
-      // Re-order
-      if (srcItem === item) {
-        const targetActionID = event.target?.closest(".item[data-action-id]")?.dataset?.actionId;
-        const prevActions = foundry.utils.deepClone(item.toObject().system.actions);
+          let targetIdx;
+          if (!targetActionID) targetIdx = prevActions.length - 1;
+          else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
+          const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === actionId));
 
-        let targetIdx;
-        if (!targetActionID) targetIdx = prevActions.length - 1;
-        else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
-        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === actionId));
-
-        const [actionData] = prevActions.splice(srcIdx, 1);
-        prevActions.splice(targetIdx, 0, actionData);
-        await item.update({ "system.actions": prevActions });
+          const [actionData] = prevActions.splice(srcIdx, 1);
+          prevActions.splice(targetIdx, 0, actionData);
+          await this.object.update({ "system.actions": prevActions });
+        }
+        // Add to another item
+        else {
+          const prevActions = foundry.utils.deepClone(item.toObject().system.actions ?? []);
+          data.data._id = foundry.utils.randomID(16);
+          prevActions.splice(prevActions.length, 0, data.data);
+          await this.object.update({ "system.actions": prevActions });
+        }
+        break;
       }
-      // Add to another item
-      else {
-        const prevActions = foundry.utils.deepClone(item.toObject().system.actions ?? []);
-        data.data._id = foundry.utils.randomID(16);
-        prevActions.splice(prevActions.length, 0, data.data);
-        await item.update({ "system.actions": prevActions });
+      case "pf1Change": {
+        // TODO: Support re-ordering
+        const chData = data.data;
+        delete chData.id;
+        this.activateTab("changes");
+        return pf1.components.ItemChange.create([chData], { parent: item });
       }
     }
   }
 
   async _onEditChangeScriptContents(event) {
     const elem = event.currentTarget;
-    const changeId = elem.closest(".change").dataset.change;
+    const changeId = elem.closest(".change").dataset.changeId;
     const change = this.item.changes.find((change) => change._id === changeId);
 
     if (!change) return;
@@ -1805,25 +1834,36 @@ export class ItemSheetPF extends ItemSheet {
     this.item.actions.get(li.dataset.actionId).sheet.render(true);
   }
 
-  async _onBuffControl(event) {
+  /**
+   * @internal
+   * @param {Event} event
+   */
+  async _onChangeControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
 
-    // Add new change
-    if (a.classList.contains("add-change")) {
-      await this._onSubmit(event, { preventRender: true });
-      return pf1.components.ItemChange.create([{}], { parent: this.item });
-    }
+    const action = a.dataset.action;
+    const changeId = a.dataset.changeId;
 
-    // Remove a change
-    if (a.classList.contains("delete-change")) {
-      const li = a.closest(".change");
-      const changeId = li.dataset.change;
-
-      const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
-      changes.findSplice((c) => c._id === changeId);
-
-      return this._onSubmit(event, { updateData: { "system.changes": changes } });
+    switch (action) {
+      // Add new change
+      case "add":
+        await this._onSubmit(event, { preventRender: true });
+        return pf1.components.ItemChange.create([{}], { parent: this.item });
+      // Remove a change
+      case "delete": {
+        const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
+        changes.findSplice((c) => c._id === changeId);
+        return this._onSubmit(event, { updateData: { "system.changes": changes } });
+      }
+      case "duplicate": {
+        const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
+        const old = changes.find((c) => c._id === changeId);
+        if (old) {
+          delete old._id;
+          return pf1.components.ItemChange.create([old], { parent: this.item });
+        }
+      }
     }
   }
   _onChangeTargetControl(event) {
@@ -1831,7 +1871,7 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
 
     // Prepare categories and changes to display
-    const changeId = a.closest(".change").dataset.change;
+    const changeId = a.closest(".change").dataset.changeId;
     const change = this.item.changes.get(changeId);
     const categories = getBuffTargetDictionary(this.item.actor);
 

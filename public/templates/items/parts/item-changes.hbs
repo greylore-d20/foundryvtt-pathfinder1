@@ -55,7 +55,7 @@
 
     {{#if @root.owner}}
     <div class="item-controls basic flexrow">
-      <a class="item-control item-create change-control add-change">
+      <a class="item-control item-create change-control add-change" data-action="add">
         <i class="fas fa-plus"></i>
       </a>
     </div>
@@ -63,19 +63,19 @@
   </li>
 
   <ol class="item-list changes">
-  {{#each changes as |change a|}}
-    <li class="item change flexrow" data-change="{{data._id}}">
+  {{#each changes}}
+    <li class="item change flexrow" data-change-id="{{id}}">
       <div class="item-name item-formula flexrow">
         {{#unless isScript}}
-        <input class="change-formula formula" type="text" name="system.changes.{{a}}.formula" value="{{data.formula}}" placeholder="{{localize "PF1.Formula"}}" required>
+        <input class="change-formula formula" type="text" name="system.changes.{{@key}}.formula" value="{{formula}}" placeholder="{{localize "PF1.Formula"}}" required>
         {{else}}
         <button type="button" class="edit-change-contents"><i class="fas fa-edit"></i> {{localize "PF1.Edit"}}</button>
         {{/unless}}
       </div>
 
       <div class="item-operator flexrow">
-        <select class="change-operator" name="system.changes.{{a}}.operator">
-          {{#select data.operator}}
+        <select class="change-operator" name="system.changes.{{@key}}.operator">
+          {{#select operator}}
           <option value="add">+</option>
           <option value="set">=</option>
           <option value="script">S</option>
@@ -88,19 +88,20 @@
       </div>
 
       <div class="item-modifier flexrow">
-        <select class="change-modifier" name="system.changes.{{a}}.modifier">
-          {{selectOptions @root.changeGlobals.modifiers selected=data.modifier}}
+        <select class="change-modifier" name="system.changes.{{@key}}.modifier">
+          {{selectOptions @root.changeGlobals.modifiers selected=modifier}}
         </select>
       </div>
 
       <div class="item-priority flexrow">
-        <input class="change-priority" type="text" data-dtype="Number" name="system.changes.{{a}}.priority" value="{{data.priority}}"
+        <input class="change-priority" type="text" data-dtype="Number" name="system.changes.{{@key}}.priority" value="{{priority}}"
           placeholder="0">
       </div>
 
       <div class="item-controls flexrow basic">
         {{#if @root.owner}}
-        <a class="item-control change-control delete-change"><i class="fas fa-trash"></i></a>
+        <a class="item-control change-control duplicate-change" data-change-id="{{id}}" data-action="duplicate"><i class="fa-solid fa-copy"></i></a>
+        <a class="item-control change-control delete-change" data-change-id="{{id}}" data-action="delete"><i class="fas fa-trash"></i></a>
         {{/if}}
       </div>
     </li>

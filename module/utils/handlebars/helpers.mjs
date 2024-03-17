@@ -173,12 +173,6 @@ export const registerHandlebarsHelpers = function () {
     return actor.formatContextNotes(noteObjs, rollData, { roll });
   });
 
-  Handlebars.registerHelper("enrich", (content, options) => {
-    const owner = Boolean(options.hash["owner"]);
-    const rollData = options.hash["rollData"];
-    return new Handlebars.SafeString(TextEditor.enrichHTML(content, { secrets: owner, rollData, async: false }));
-  });
-
   Handlebars.registerHelper("json-string", (obj) => {
     return new Handlebars.SafeString(escape(JSON.stringify(obj)));
   });

@@ -1,13 +1,13 @@
 {{!-- Apply Damage button/widget --}}
 {{#*inline "applyDamageButton"}}
   {{!-- Apply full damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}" data-tooltip="{{#if isHealing}}PF1.ApplyHealing{{else}}PF1.ApplyDamage{{/if}}"
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage.total}}" data-tooltip="{{#if isHealing}}PF1.ApplyHealing{{else}}PF1.ApplyDamage{{/if}}"
       data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute fas fa-plus"></i>
   </a>
   {{!-- Apply half damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}" data-tooltip="PF1.ApplyHalf"
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage.half}}" data-tooltip="PF1.ApplyHalf"
       data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute">½</i>
@@ -71,7 +71,7 @@
             <a class="attack-damage total fake-inline-roll inline-result" data-tooltip="PF1.Total">
               {{atk.damage.total}}
             </a>
-            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
+            {{> applyDamageButton damage=atk.damage isHealing=atk.isHealing nonlethal=atk.nonlethal}}
           </th>
         </tr>
         {{/if}}
@@ -103,7 +103,7 @@
             <a class="fake-inline-roll inline-dsn-hidden inline-result" data-tooltip="PF1.Total">
               {{atk.damage.total}}
             </a>
-            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
+            {{> applyDamageButton damage=atk.damage isHealing=atk.isHealing nonlethal=atk.nonlethal}}
           </th>
           {{#if atk.hasCritConfirm}}
           <th colspan="2">
@@ -111,7 +111,7 @@
             <a class="fake-inline-roll inline-dsn-hidden inline-result" data-tooltip="PF1.Total">
               {{atk.critDamage.total}}
             </a>
-            {{> applyDamageButton damage=atk.critDamage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
+            {{> applyDamageButton damage=atk.critDamage isHealing=atk.isHealing nonlethal=atk.nonlethal}}
           </th>
           {{/if}}
         </tr>

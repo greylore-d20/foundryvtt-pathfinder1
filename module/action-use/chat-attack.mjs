@@ -18,6 +18,9 @@ export class ChatAttack {
       total: 0,
       /** @type {DamageRoll[]} */
       rolls: [],
+      get half() {
+        return Math.floor(this.total / 2);
+      },
     };
     this.critDamage = {
       flavor: "",

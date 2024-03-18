@@ -889,6 +889,34 @@ export class ItemAction {
     // Add change bonus
     const changes = this.attackSources;
 
+    // Add masterwork bonus to changes (if applicable)
+    if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: "1",
+          operator: "add",
+          subTarget: "attack",
+          modifier: "enh",
+          value: 1,
+          flavor: game.i18n.localize("PF1.EnhancementBonus"),
+        })
+      );
+    }
+
+    // Add enhancement bonus to changes
+    if (this.enhancementBonus) {
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: this.enhancementBonus.toString(),
+          operator: "add",
+          subTarget: "attack",
+          modifier: "enh",
+          value: this.enhancementBonus,
+          flavor: game.i18n.localize("PF1.EnhancementBonus"),
+        })
+      );
+    }
+
     // Get attack bonus
     getHighestChanges(
       changes.filter((c) => {
@@ -919,33 +947,6 @@ export class ItemAction {
     else if (typeof actionData.attackBonus === "number") {
       rollData.item.attackBonus = actionData.attackBonus;
       parts.push(`@item.attackBonus[${game.i18n.localize("PF1.AttackRollBonus")}]`);
-    }
-
-    // Add masterwork bonus to changes (if applicable)
-    if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
-      changes.push(
-        new pf1.components.ItemChange({
-          formula: "1",
-          operator: "add",
-          subTarget: "attack",
-          modifier: "enh",
-          value: 1,
-          flavor: game.i18n.localize("PF1.EnhancementBonus"),
-        })
-      );
-    }
-    // Add enhancement bonus to changes
-    if (this.enhancementBonus) {
-      changes.push(
-        new pf1.components.ItemChange({
-          formula: this.enhancementBonus.toString(),
-          operator: "add",
-          subTarget: "attack",
-          modifier: "enh",
-          value: this.enhancementBonus,
-          flavor: game.i18n.localize("PF1.EnhancementBonus"),
-        })
-      );
     }
 
     // Add proficiency penalty

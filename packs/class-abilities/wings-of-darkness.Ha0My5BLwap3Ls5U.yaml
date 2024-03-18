@@ -19,6 +19,22 @@ system:
         units: personal
       target:
         value: self
+    - _id: TC4HPwtCzHouJrNT
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: hour
+        value: '@class.level'
+      img: icons/creatures/birds/dove-pigeon-flying-white.webp
+      name: Overland Flight
+      range:
+        units: personal
+      target:
+        value: you
+      uses:
+        autoDeductChargesCost: '@item.uses.max'
   associations:
     classes:
       - Oracle
@@ -36,8 +52,14 @@ system:
       as your total use of this ability for the day.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
+  sources:
+    - id: PZO1117
+      pages: '55'
   subType: classFeat
   tag: classFeat_wingsOfDarkness
+  tags:
+    - Dark Tapestry Mystery
+    - Revelation
   uses:
     maxFormula: '@class.level'
     per: day

@@ -11,14 +11,25 @@ system:
         unchained:
           cost: 2
           type: action
+      attackNotes:
+        - Damage roll in case save is succesfull.
+      damage:
+        parts:
+          - formula: 3d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
-      img: systems/pf1/icons/spells/light-royal-1.jpg
+      img: icons/magic/death/skull-energy-light-purple.webp
       name: Use
-      range:
-        units: medium
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will disbelief, then Fortitude partial; see text
+        type: will
       target:
-        value: one or more creatures
+        value: one or more creatures (see text)
   associations:
     classes:
       - Oracle
@@ -32,6 +43,9 @@ system:
       as if you had cast @Compendium[pf1.spells.3wdx7fjulsohi1lk]{Weird}.</p>
 
       <p>You must be at least 11th level to choose this revelation.</p>
+  sources:
+    - id: PZO1117
+      pages: '54'
   subType: classFeat
   tag: classFeat_dwellerInDarkness
   uses:

@@ -6,7 +6,6 @@ system:
   abilityType: su
   actions:
     - _id: wjqhgl70a9o5puie
-      actionType: spellsave
       activation:
         type: standard
         unchained:
@@ -14,13 +13,14 @@ system:
           type: action
       duration:
         units: round
-        value: '1'
+        value: '(@class.level < 7 ? 1 : @class.level)'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
       range:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Will negates
         type: will
       target:
@@ -40,8 +40,14 @@ system:
 
       <p>You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
+  sources:
+    - id: PZO1117
+      pages: '54'
   subType: classFeat
   tag: classFeat_giftOfMadness
+  tags:
+    - Dark Tapestry Mystery
+    - Revelation
   uses:
     maxFormula: 3 + @abilities.cha.mod
     per: day

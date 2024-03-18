@@ -3,6 +3,22 @@ _key: '!items!4UlxxUhrMwDjR76W'
 img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Dark Tapestry Final Revelation
 system:
+  actions:
+    - _id: G4KnZVuZfI0ctC1k
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: '@class.level * 10'
+      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Shapechange
+      range:
+        units: personal
+      target:
+        value: you
   associations:
     classes:
       - Oracle
@@ -13,6 +29,16 @@ system:
       hits, and sneak attacks. Once per day, you can cast
       @Compendium[pf1.spells.n3lp01euzcdmtbw5]{Shapechange} as a spell-like
       ability without requiring a material component.</p>
+  sources:
+    - id: PZO1117
+      pages: '55'
   subType: classFeat
+  tags:
+    - Dark Tapestry Mystery
+    - Revelation
+  uses:
+    maxFormula: '1'
+    per: day
+    value: 1
 type: feat
 

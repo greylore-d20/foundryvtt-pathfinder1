@@ -27,6 +27,7 @@ system:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortitude halves
         type: fort
       target:
@@ -49,8 +50,14 @@ system:
 
       <p>You can use this ability once per day plus one additional time per day
       at 10th level.</p>
+  sources:
+    - id: PZO1117
+      pages: '55'
   subType: classFeat
   tag: classFeat_interstellarVoid
+  tags:
+    - Dark Tapestry Mystery
+    - Revelation
   uses:
     maxFormula: '@class.level >= 10 ? 2 : 1'
     per: day

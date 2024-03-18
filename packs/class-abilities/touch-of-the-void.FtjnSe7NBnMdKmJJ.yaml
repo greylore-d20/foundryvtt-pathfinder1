@@ -27,8 +27,13 @@ system:
       name: Use
       range:
         units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Fortitude negates fatigue condition (see text)
+        type: fort
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Oracle
@@ -41,8 +46,14 @@ system:
       oracle level. This has no effect on a creature that is already fatigued.
       You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
+  sources:
+    - id: PZO1117
+      pages: '55'
   subType: classFeat
   tag: classFeat_touchOfTheVoid
+  tags:
+    - Dark Tapestry Mystery
+    - Revelation
   uses:
     maxFormula: 3 + @abilities.cha.mod
     per: day

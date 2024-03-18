@@ -27,10 +27,24 @@ system:
         units: ft
         value: '100'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Will negates
         type: will
       target:
-        value: one creature
+        value: one intelligent creature
+    - _id: hmbHFC4xZlx0yhGr
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: spec
+        value: '@abilities.cha.mod'
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      material:
+        normal: ''
+      name: Search through memories
   associations:
     classes:
       - Oracle
@@ -50,8 +64,14 @@ system:
 
       <p>You can use this ability once per day at 1st level, plus one additional
       time per day at 5th level and for every five levels beyond 5th.</p>
+  sources:
+    - id: PZO1117
+      pages: '54'
   subType: classFeat
   tag: classFeat_brainDrain
+  tags:
+    - Dark Tapestry Mystery
+    - Revelation
   uses:
     maxFormula: 1 + floor(@class.level / 5)
     per: day

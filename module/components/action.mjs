@@ -875,6 +875,8 @@ export class ItemAction {
     const itemData = rollData.item;
     const actionData = rollData.action;
 
+    const config = {};
+
     rollData.item.primaryAttack = primaryAttack;
 
     const isRanged = this.isRanged;
@@ -966,31 +968,50 @@ export class ItemAction {
 
     // Add proficiency penalty
     try {
-      if (!this.item.getProficiency(true)) {
-        parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.Proficiency.Penalty")}]`);
-      }
+      config.proficient = this.item.getProficiency(true);
     } catch (error) {
       // Ignore proficiency incompatibility.
     }
 
     // Add secondary natural attack penalty
-    if (this.item.system.subType === "natural" && primaryAttack === false) {
-      const penalty = -5;
-      parts.push(`${penalty}[${game.i18n.localize("PF1.SecondaryAttack")}]`);
-    }
+    const isNatural = this.item.subType === "natural";
+    const isNaturalSecondary = isNatural && primaryAttack === false;
+    config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
+
     // Add bonus
-    if (bonus) {
-      rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
+    rollData.bonus = bonus ? RollPF.safeRoll(bonus, rollData).total : 0;
+
+    // Options for D20RollPF
+    const rollOptions = {
+      critical: this.critRange,
+    };
+
+    Hooks.call("pf1PreAttackRoll", this, config, rollData, rollOptions);
+
+    // Convert config to roll part
+    if (config.secondaryPenalty != 0) {
+      parts.push(`${config.secondaryPenalty}[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+    }
+
+    if (rollData.bonus != 0) {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
+    }
+
+    if (!config.proficient) {
+      parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.Proficiency.Penalty")}]`);
     }
 
     const roll = await new pf1.dice.D20RollPF(
       [rollData.d20 || pf1.dice.D20RollPF.standardRoll, ...parts.filter((p) => !!p)].join("+"),
       rollData,
-      {
-        critical: this.critRange,
-      }
+      rollOptions
     ).evaluate();
+
+    // Cleanup roll data that was altered here.
+    delete rollData.bonus;
+
+    Hooks.call("pf1AttackRoll", this, roll, config);
+
     return roll;
   }
 

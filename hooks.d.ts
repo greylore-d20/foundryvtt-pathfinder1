@@ -405,6 +405,25 @@ declare global {
        */
       pf1PostActionUse: (actionUse: ActionUse, chatMessage: ChatMessage?) => void;
 
+      /**
+       * Pre-attack roll hook fired before rolling an attack.
+       *
+       * @param action - Action triggering the attack roll
+       * @param config - Attack configuration
+       * @param rollData - Roll data
+       * @param rollOptions - Options to be passed to D20RollPF
+       */
+      pf1PreAttackRoll: (action: ItemAction, config: object, rollData: object, rollOptions: object) => void;
+
+      /**
+       * Post attack roll hook fired after evaluating attack roll.
+       *
+       * @param {ItemAction} action - Action that triggered the attack roll
+       * @param {D20RollPF} roll - The attack roll
+       * @param {object} config - Attack configuration
+       */
+      pf1AttackRoll: (action: ItemAction, roll: D20RollPF, context: object) => void;
+
       // ------------------------- //
       //          Changes          //
       // ------------------------- //

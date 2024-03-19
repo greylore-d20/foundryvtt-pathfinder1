@@ -884,9 +884,9 @@ export class ItemSpellPF extends ItemPF {
           break;
       }
 
-      // Dismissable
+      // Dismissable, but only if special duration isn't used
       // TODO: Better i18n support
-      if (label.duration && duration.dismiss) {
+      if (label.duration && duration.dismiss && duration.units !== "spec") {
         label.duration += " " + game.i18n.localize("PF1.DismissableMark");
       }
     }

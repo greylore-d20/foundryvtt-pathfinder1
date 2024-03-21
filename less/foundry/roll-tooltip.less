@@ -1,0 +1,35 @@
+.inline-roll {
+  .dice-tooltip {
+    .tooltip-part {
+      .part-header {
+        flex-flow: row nowrap;
+
+        .part-formula {
+          text-align: left;
+          flex: 1;
+          &:empty {
+            flex: 0;
+          }
+        }
+
+        .part-flavor {
+          text-align: right;
+          flex: 2 min-content;
+          white-space: normal;
+          word-break: normal;
+        }
+
+        .part-total {
+          border: unset;
+          background: unset;
+          flex: 0 2em;
+          text-align: right;
+
+          .part-prefix {
+            color: var(--color-text-dark-inactive);
+          }
+        }
+      }
+    }
+  }
+}

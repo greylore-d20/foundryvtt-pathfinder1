@@ -42,14 +42,16 @@ system:
     value: >-
       <p>As a swift action, you cause flaming shards of rock to erupt from your
       body. These shards deal 1d6 points of damage per 2 oracle levels (minimum
-      1d6) to all creatures in a 10-foot-radius burst (Reflex half ). Half of
+      1d6) to all creatures in a 10-foot-radius burst (Reflex half). Half of
       this damage is fire damage and the other half is piercing damage. The
-      shards create difficult terrain for 1 round.</p>
-
-      <p>You can use this ability once per day, plus one additional time per day
-      at 5th level and every 5 levels thereafter.</p>
+      shards create difficult terrain for 1 round.</p><p>You can use this
+      ability once per day, plus one additional time per day at 5th level and
+      every 5 levels thereafter.</p>
   subType: classFeat
   tag: classFeat_erupt
+  tags:
+    - Revelation
+    - Volcano Mystery
   uses:
     maxFormula: 1 + floor(@class.level / 5)
     per: day

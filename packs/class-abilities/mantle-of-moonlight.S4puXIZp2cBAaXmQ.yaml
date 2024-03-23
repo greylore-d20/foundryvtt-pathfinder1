@@ -6,6 +6,7 @@ system:
   abilityType: su
   actions:
     - _id: t3jjqp7j4wghxmyp
+      actionType: mwak
       activation:
         type: standard
         unchained:
@@ -13,6 +14,7 @@ system:
           type: action
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
+      touch: true
   associations:
     classes:
       - Oracle
@@ -23,13 +25,17 @@ system:
       the moon with a successful touch attack. This action automatically forces
       the lycanthrope into its humanoid form, which it must remain in for a
       number of rounds equal to your oracle level. Upon reaching 5th level, you
-      can use this ability to force others into a rage, as per the spell. Using
-      this ability is a melee touch attack.</p>
-
-      <p>You can use this ability once per day at 5th level plus one additional
-      time per day for every 5 levels above 5th.</p>
+      can use this ability to force others into a
+      @UUID[Compendium.pf1.spells.Item.8u1xa5javcxc6szk]{rage}, as per the
+      spell. Using this ability is a melee touch attack.</p><p>You can use this
+      ability once per day at 5th level plus one additional time per day for
+      every 5 levels above 5th.</p>
   subType: classFeat
   tag: classFeat_mantleOfMoonlight
+  tags:
+    - Revelation
+    - Heavens Mystery
+    - Lunar Mystery
   uses:
     maxFormula: 1 + floor(@class.level / 5)
     per: day

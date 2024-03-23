@@ -42,8 +42,6 @@ system:
         units: spec
         value: '@abilities.cha.mod'
       img: systems/pf1/icons/spells/light-royal-1.jpg
-      material:
-        normal: ''
       name: Search through memories
   associations:
     classes:
@@ -59,19 +57,21 @@ system:
       jumble of stolen thoughts and memories to make a single Knowledge check
       using the victim's skill bonus. The randomly stolen thoughts remain in
       your mind for a number of rounds equal to your Charisma modifier. Treat
-      the knowledge gained as if you had used detect thoughts. This is a
-      mind-affecting effect.</p>
-
-      <p>You can use this ability once per day at 1st level, plus one additional
-      time per day at 5th level and for every five levels beyond 5th.</p>
+      the knowledge gained as if you had used
+      @UUID[Compendium.pf1.spells.Item.xllxylvvqr82o2d5]{detect thoughts}. This
+      is a mind-affecting effect.</p><p>You can use this ability once per day at
+      1st level, plus one additional time per day at 5th level and for every
+      five levels beyond 5th.</p>
   sources:
     - id: PZO1117
       pages: '54'
   subType: classFeat
   tag: classFeat_brainDrain
   tags:
-    - Dark Tapestry Mystery
     - Revelation
+    - Dark Tapestry Mystery
+    - Lore Mystery
+    - Occult Mystery
   uses:
     maxFormula: 1 + floor(@class.level / 5)
     per: day

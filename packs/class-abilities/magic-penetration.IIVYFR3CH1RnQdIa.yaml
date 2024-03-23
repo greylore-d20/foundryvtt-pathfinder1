@@ -4,17 +4,14 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Magic Penetration
 system:
   abilityType: ex
-  actions:
-    - _id: 7hztab8m5ywpwppi
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      name: Use
   associations:
     classes:
       - Oracle
+  contextNotes:
+    - subTarget: cl
+      text: >-
+        +[[2 + (@class.level >= 9 ? 2 : 0)]] bonus to dispel or remove a magic
+        effect
   description:
     value: >-
       <p>You gain a +2 bonus on any caster level check made to dispel or remove
@@ -24,5 +21,8 @@ system:
 
       <p>If you are 9th level or higher, the bonus increases to +4.</p>
   subType: classFeat
+  tags:
+    - Revelation
+    - Spellscar Mystery
 type: feat
 

@@ -23,14 +23,15 @@ export class ItemRacePF extends ItemPF {
 
     // Overwrite race
     if (actor) {
-      const oldRace = actor.items.find((o) => o.type === "race" && o !== this);
+      const oldRace = actor.itemTypes.race.find((r) => r !== this);
       if (oldRace) {
+        const oldSize = oldRace.system.size;
         await oldRace.delete();
 
         const context = {};
         // Ensure actor size is updated to match the race, but only if it's same as old race
         const actorSize = actor.system.traits.size;
-        if (actorSize !== this.system.size && oldRace.system.size === actorSize) context._pf1SizeChanged = true;
+        if (actorSize !== this.system.size && oldSize === actorSize) context._pf1SizeChanged = true;
       }
     }
   }
@@ -106,33 +107,21 @@ export class ItemRacePF extends ItemPF {
   _onDelete(context, userId) {
     super._onDelete(context, userId);
 
-    // Reset race reference
-    const actor = this.actor;
-    if (actor?.race === this) {
-      actor.race = null;
+    if (game.user.id !== userId) return;
 
-      if (game.user.id === userId) {
-        actor.update({
-          "system.attributes.speed": {
-            "land.base": 30,
-            "fly.base": 0,
-            "swim.base": 0,
-            "climb.base": 0,
-            "burrow.base": 0,
-          },
-        });
-      }
+    const actor = this.actor;
+    if (actor?.itemTypes.race.length === 0) {
+      // Reset race some race dependant details
+      actor.update({
+        "system.attributes.speed": {
+          "land.base": 30,
+          "fly.base": 0,
+          "swim.base": 0,
+          "climb.base": 0,
+          "burrow.base": 0,
+        },
+      });
     }
-  }
-
-  /**
-   * @override
-   */
-  prepareBaseData() {
-    super.prepareBaseData();
-    const actor = this.actor;
-    // Self-register on actor
-    if (actor) actor.race = this;
   }
 
   /**

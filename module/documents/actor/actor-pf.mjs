@@ -80,9 +80,6 @@ export class ActorPF extends ActorBasePF {
        */
       this._states = {};
 
-    // Init race reference
-    this.race ??= null;
-
     this._visionPermissionSheet ??= null;
   }
 
@@ -251,21 +248,7 @@ export class ActorPF extends ActorBasePF {
    * @type {pf1.documents.item.ItemRacePF|null}
    */
   get race() {
-    return this._race;
-  }
-
-  /**
-   * Set reference to actor's current race (item).
-   * Fill in any additional info, such as easy reference to creature type.
-   *
-   * @type {ItemRacePF|null}
-   */
-  set race(item) {
-    this._race = item;
-    const creatureType = item?.system.creatureType;
-    this.system.traits ??= {};
-    this.system.traits.type = creatureType;
-    this.system.traits.humanoid = creatureType === "humanoid";
+    return this.itemTypes.race[0] ?? null;
   }
 
   /**
@@ -1257,6 +1240,14 @@ export class ActorPF extends ActorBasePF {
    */
   prepareDerivedData() {
     super.prepareDerivedData();
+
+    const race = this.race;
+    if (race) {
+      const creatureType = race?.system.creatureType || "humanoid";
+      this.system.traits ??= {};
+      this.system.traits.type = creatureType;
+      this.system.traits.humanoid = creatureType === "humanoid";
+    }
 
     this.prepareProficiencies();
 

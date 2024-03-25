@@ -218,7 +218,7 @@ export class CombatPF extends Combat {
    * @param {string} userId Triggering user ID
    */
   _onUpdate(changed, context, userId) {
-    if (context.direction === 1 && (changed.turn !== undefined || changed.round !== undefined)) {
+    if (changed.turn !== undefined || changed.round !== undefined) {
       this._onNewTurn(changed, context, userId);
     }
   }
@@ -233,7 +233,7 @@ export class CombatPF extends Combat {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
-    if ("direction" in context && ("turn" in changed || "round" in changed)) {
+    if ("turn" in changed || "round" in changed) {
       // Record origin turn and round
       context.pf1 ??= {};
       context.pf1.from = { turn: this.turn, round: this.round };
@@ -249,11 +249,27 @@ export class CombatPF extends Combat {
    * @private
    */
   async _onNewTurn(changed, context, userId) {
+    if (!this._isForwardTime(changed, context)) return;
+
     if (game.users.activeGM?.isSelf && context.pf1?.from) {
       this._detectSkippedTurns(context.pf1.from, context);
     }
 
     this._processCurrentCombatant(changed, context, userId);
+  }
+
+  _isForwardTime(changed, context) {
+    // Non-UI turn progression does not have context.direction present to detect this otherwise
+    const t0 = context.pf1.from.turn,
+      r0 = context.pf1.from.round,
+      t1 = changed.turn ?? t0,
+      r1 = changed.round ?? r0,
+      rd = r1 - r0, // round delta
+      td = t1 - t0; // turn delta
+
+    if (rd < 0) return false;
+    else if (rd == 0 && td <= 0) return false;
+    return true;
   }
 
   /**

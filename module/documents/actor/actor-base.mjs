@@ -20,6 +20,8 @@ export class ActorBasePF extends Actor {
   prepareBaseData() {
     // Reset item types cache
     this._itemTypes = null;
+    // Reset roll data cache if it exists.
+    delete this._rollData;
 
     super.prepareBaseData();
   }

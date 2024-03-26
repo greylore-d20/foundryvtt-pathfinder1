@@ -1251,10 +1251,10 @@ export class ActorPF extends ActorBasePF {
 
     this.prepareProficiencies();
 
-    // Refresh roll data
+    // Reset roll data cache
     // Some changes act wonky without this
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    this.getRollData({ refresh: true });
+    delete this._rollData;
 
     this.items.forEach((item) => {
       item.prepareDerivedItemData();
@@ -1277,8 +1277,8 @@ export class ActorPF extends ActorBasePF {
     // Setup links
     this.prepareItemLinks();
 
-    // Refresh roll data again to include processed  info
-    this.getRollData({ refresh: true });
+    // Reset roll data cache again to include processed info
+    delete this._rollData;
 
     // Update item resources
     this.items.forEach((item) => {

@@ -237,8 +237,8 @@ export class ItemPhysicalPF extends ItemPF {
 
     const getActualValue = (identified = true, maxCharges = false) => {
       let value = 0;
-      if (identified) value = this.system.price;
-      else value = this.system.unidentified.price;
+      if (identified) value = this.system.price || 0;
+      else value = this.system.unidentified?.price || 0;
 
       // Add charge price
       if (identified && hasFiniteCharges) {

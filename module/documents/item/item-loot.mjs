@@ -69,7 +69,8 @@ export class ItemLootPF extends ItemPhysicalPF {
 
   get isActive() {
     if (this.subType === "gear") {
-      if (this.system.hp.value <= 0) return false;
+      const hp = this.system.hp?.value || 0;
+      if (hp <= 0) return false;
       return this.system.equipped ?? false;
     }
     return true;

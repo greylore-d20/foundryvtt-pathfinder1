@@ -237,7 +237,7 @@ export class ItemSheetPF extends ItemSheet {
         isNumber: true,
         name: "system.quantity",
         label: game.i18n.localize("PF1.Quantity"),
-        value: itemData.quantity,
+        value: itemData.quantity ?? 1,
         decimals: 0,
         id: "data-quantity",
       });
@@ -307,11 +307,11 @@ export class ItemSheetPF extends ItemSheet {
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "system.hp.value",
-          value: itemData.hp.value,
+          value: itemData.hp?.value || 0,
         },
         max: {
           name: "system.hp.max",
-          value: itemData.hp.max,
+          value: itemData.hp?.max || 0,
         },
       });
 
@@ -321,7 +321,7 @@ export class ItemSheetPF extends ItemSheet {
         label: game.i18n.localize("PF1.Hardness"),
         name: "system.hardness",
         decimals: 0,
-        value: itemData.hardness,
+        value: itemData.hardness || 0,
       });
 
       let disableEquipping = false;
@@ -363,7 +363,7 @@ export class ItemSheetPF extends ItemSheet {
           isBoolean: true,
           name: "system.identified",
           label: game.i18n.localize("PF1.Identified"),
-          value: itemData.identified,
+          value: itemData.identified ?? true,
         });
       }
     }

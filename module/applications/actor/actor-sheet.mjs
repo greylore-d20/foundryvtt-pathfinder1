@@ -543,7 +543,7 @@ export class ActorSheetPF extends ActorSheet {
     result.name = item.name; // Copy name over from item to handle identified state correctly
 
     if (result.isPhysical) {
-      result.quantity ??= 0;
+      result.quantity ||= 0;
       result.isStack = result.quantity > 1;
       result.destroyed = result.hp?.value <= 0;
     }
@@ -1203,7 +1203,7 @@ export class ActorSheetPF extends ActorSheet {
 
           if (weight && weight.total > 0) {
             const contents = [];
-            const quantity = item.system.quantity ?? 1;
+            const quantity = item.system.quantity || 0;
             contents.push(game.i18n.format("PF1.StackDetails.Base", { value: weight.value }));
             if (quantity > 1)
               contents.push(

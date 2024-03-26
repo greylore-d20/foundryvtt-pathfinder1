@@ -68,7 +68,7 @@ export class ItemPhysicalPF extends ItemPF {
     }
 
     // Quantity change
-    const quantity = this.system.quantity ?? 0;
+    const quantity = this.system.quantity || 0;
     if (quantity > 0) {
       this.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
     }
@@ -140,7 +140,7 @@ export class ItemPhysicalPF extends ItemPF {
     this.system.size ||= "med";
     this.system.weight ??= {};
     this.system.weight.value ||= 0;
-    this.system.quantity ??= 1;
+    this.system.quantity ||= 0;
 
     super.prepareBaseData();
 

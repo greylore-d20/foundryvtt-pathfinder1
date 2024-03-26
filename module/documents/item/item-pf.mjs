@@ -358,7 +358,7 @@ export class ItemPF extends ItemBasePF {
     if (!this.system.uses?.per) return Infinity;
 
     // Get own charges
-    if (this.isSingleUse) return this.system.quantity ?? 0;
+    if (this.isSingleUse) return this.system.quantity || 0;
     return this.system.uses?.value ?? 0;
   }
 
@@ -402,7 +402,7 @@ export class ItemPF extends ItemBasePF {
     if (!this.system.uses?.per) return Infinity;
 
     // Get own charges
-    if (this.isSingleUse) return this.system.quantity ?? 0;
+    if (this.isSingleUse) return this.system.quantity || 0;
 
     return this.system.uses?.max ?? 0;
   }
@@ -594,9 +594,9 @@ export class ItemPF extends ItemBasePF {
 
     // Add own charges
     if (this.isSingleUse && this.isPhysical) {
-      return this.update({ "system.quantity": (this.system.quantity ?? 0) + value });
+      return this.update({ "system.quantity": (this.system.quantity || 0) + value });
     } else {
-      return this.update({ "system.uses.value": (this.system.uses?.value ?? 0) + value });
+      return this.update({ "system.uses.value": (this.system.uses?.value || 0) + value });
     }
   }
 

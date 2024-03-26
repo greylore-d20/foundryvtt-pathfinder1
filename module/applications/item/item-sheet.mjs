@@ -237,7 +237,7 @@ export class ItemSheetPF extends ItemSheet {
         isNumber: true,
         name: "system.quantity",
         label: game.i18n.localize("PF1.Quantity"),
-        value: itemData.quantity ?? 1,
+        value: itemData.quantity || 0,
         decimals: 0,
         id: "data-quantity",
       });

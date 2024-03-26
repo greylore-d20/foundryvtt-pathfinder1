@@ -95,7 +95,7 @@ export class ActionUse {
     if (this.shared.cost !== null && this.shared.cost <= 0) return 0;
 
     if (this.item.isPhysical) {
-      const itemQuantity = this.item.system.quantity ?? 0;
+      const itemQuantity = this.item.system.quantity || 0;
       if (itemQuantity <= 0) {
         ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
         return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
@@ -382,7 +382,7 @@ export class ActionUse {
     if (ammoType) {
       const ammoId = this.item.getFlag("pf1", "defaultAmmo");
       const item = this.item.actor?.items.get(ammoId);
-      const quantity = item?.system.quantity ?? 0;
+      const quantity = item?.system.quantity || 0;
       const ammoCost = this.action.ammoCost;
       const abundant = item?.flags.pf1?.abundant ?? false;
       for (let a = 0; a < allAttacks.length; a++) {
@@ -470,7 +470,7 @@ export class ActionUse {
     for (const atk of this.shared.attacks) {
       if (!atk.ammo) continue;
       const attack = atk.chatAttack;
-      const ammo = actor.items.get(atk.ammo)?.system.quantity ?? 0;
+      const ammo = actor.items.get(atk.ammo)?.system.quantity || 0;
       attack.ammo.remaining = ammo;
       attack.ammo.quantity = ammoCost;
     }

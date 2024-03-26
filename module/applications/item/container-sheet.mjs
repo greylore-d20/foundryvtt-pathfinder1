@@ -95,7 +95,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       i.name = item.name;
       i.id = item.id;
 
-      i.quantity = system.quantity ?? 0;
+      i.quantity = system.quantity || 0;
       i.isStack = i.quantity > 1;
       //i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
       i.destroyed = system.hp?.value <= 0;
@@ -323,10 +323,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       item.isStack = item.system.quantity ? item.system.quantity > 1 : false;
       item.hasUses = item.system.uses && item.system.uses.max > 0;
       item.isCharged = ["day", "week", "charges"].includes(item.system.uses?.per);
-      item.price = item.system.identified === false ? item.system.unidentified.price : item.system.price;
+      item.price = item.system.identified === false ? item.system.unidentified?.price ?? 0 : item.system.price ?? 0;
 
-      const itemQuantity = item.system.quantity ?? 1;
-      const itemCharges = item.system.uses?.value ?? 1;
+      const itemQuantity = item.system.quantity || 0;
+      const itemCharges = item.system.uses?.value || 0;
       item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
       item.destroyed = item.system.hp?.value <= 0;
       item.disabled = item.empty || item.destroyed;

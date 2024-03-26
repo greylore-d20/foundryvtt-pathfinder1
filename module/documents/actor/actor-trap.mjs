@@ -3,6 +3,9 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorTrapPF extends ActorPF {
   prepareBaseData() {
+    // Forced deletion to ensure rolldata gets refreshed.
+    delete this._rollData;
+
     // Everything below this is needed for getRollData and ActorPF, but useless for the actor
     this.system.traits = { size: "med" };
 
@@ -71,6 +74,8 @@ export class ActorTrapPF extends ActorPF {
    */
   prepareDerivedData() {
     this.system.details.cr.total = this.system.details.cr.base;
+
+    delete this._rollData;
 
     applyChanges.call(this);
   }

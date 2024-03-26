@@ -3,6 +3,9 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorVehiclePF extends ActorPF {
   prepareBaseData() {
+    // Forced deletion to ensure rolldata gets refreshed.
+    delete this._rollData;
+
     // Add base initiative
     this.system.attributes.init.total = this.system.attributes.init.value;
     this.system.attributes.cmd.total = this.system.attributes.cmd.value;

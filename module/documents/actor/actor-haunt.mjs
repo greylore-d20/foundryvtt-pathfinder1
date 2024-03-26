@@ -3,6 +3,9 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorHauntPF extends ActorPF {
   prepareBaseData() {
+    // Forced deletion to ensure rolldata gets refreshed.
+    delete this._rollData;
+
     // Needed for getRollData and ActorPF, but useless for the actor
     this.system.abilities = {
       str: {
@@ -69,6 +72,7 @@ export class ActorHauntPF extends ActorPF {
   prepareDerivedData() {
     this.system.details.cr.total = this.system.details.cr.base;
     this.system.attributes.init.total = this.system.attributes.init.value;
+
     applyChanges.call(this);
   }
 

@@ -45,6 +45,13 @@ export class Sources extends Registry {
    */
   static TYPES = /** @type {const} */ (["core", "setting", "ap", "module", "companion"]);
 
+  /**
+   * Book type prefix
+   */
+  static PREFIXES = {
+    companion: "PPC", // Pathfinder Player Companion
+  };
+
   static _defaultData = [
     {
       _id: "PZO1110",
@@ -245,6 +252,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1118",
       name: "Ultimate Combat",
+      abbr: "UC",
       date: "2011-08-04",
       pages: 256,
       isbn: "978-1-60125-359-0",
@@ -254,6 +262,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1123",
       name: "Ultimate Equipment",
+      abbr: "UE",
       date: "2012-08-16",
       pages: 400,
       isbn: "978-1-60125-449-8",
@@ -263,6 +272,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1134",
       name: "Ultimate Intrigue",
+      abbr: "UI",
       date: "2016-03-30",
       pages: 256,
       isbn: "978-1-60125-826-7",
@@ -272,6 +282,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1117",
       name: "Ultimate Magic",
+      abbr: "UM",
       date: "2011-05-08",
       pages: 256,
       isbn: "978-1-60125-299-9",
@@ -290,6 +301,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1140",
       name: "Ultimate Wilderness",
+      abbr: "UW",
       date: "2017-11-15",
       pages: 288,
       isbn: "978-1-60125-986-8",
@@ -299,6 +311,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1141",
       name: "Planar Adventures",
+      abbr: "PA",
       date: "2018-06-27",
       pages: 192,
       isbn: "978-1-64078-044-6",
@@ -308,6 +321,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9001",
       name: "Rise of the Runelords #1: Burnt Offerings",
+      abbr: "RotR-1",
       date: "2007-08-01",
       pages: 96,
       isbn: "978-1-60125-035-3",
@@ -317,6 +331,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9002",
       name: "Rise of the Runelords #2: The Skinsaw Murders",
+      abbr: "RotR-2",
       date: "2007-09-01",
       pages: 96,
       isbn: "978-1-60125-037-7",
@@ -326,6 +341,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9003",
       name: "Rise of the Runelords #3: The Hook Mountain Massacre",
+      abbr: "RotR-3",
       date: "2007-10-01",
       pages: 96,
       isbn: "978-1-60125-038-4",
@@ -335,6 +351,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9004",
       name: "Rise of the Runelords #4: Fortress of the Stone Giants",
+      abbr: "RotR-4",
       date: "2007-11-01",
       pages: 96,
       isbn: "978-1-60125-039-1",
@@ -344,6 +361,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9005",
       name: "Rise of the Runelords #5: Sins of the Saviors",
+      abbr: "RotR-5",
       date: "2007-12-01",
       pages: 96,
       isbn: "978-1-60125-040-7",
@@ -353,6 +371,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9006",
       name: "Rise of the Runelords #6: Spires of Xin-Shalast",
+      abbr: "RotR-6",
       date: "2008-01-01",
       pages: 96,
       isbn: "978-1-60125-041-4",
@@ -362,6 +381,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9007",
       name: "Curse of the Crimson Throne #1: Edge of Anarchy",
+      abbr: "CotCT-1",
       date: "2008-02-01",
       pages: 96,
       isbn: "978-1-60125-088-9",
@@ -371,6 +391,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9008",
       name: "Curse of the Crimson Throne #2: Seven Days to the Grave",
+      abbr: "CotCT-2",
       date: "2008-03-01",
       pages: 96,
       isbn: "978-1-60125-091-9",
@@ -380,6 +401,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9009",
       name: "Curse of the Crimson Throne #3: Escape From Old Korvosa",
+      abbr: "CotCT-3",
       date: "2008-04-01",
       pages: 96,
       isbn: "978-1-60125-092-6",
@@ -389,6 +411,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9010",
       name: "Curse of the Crimson Throne #4: A History of Ashes",
+      abbr: "CotCT-4",
       date: "2008-05-01",
       pages: 96,
       isbn: "978-1-60125-093-3",
@@ -398,6 +421,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9011",
       name: "Curse of the Crimson Throne #5: Skeletons of Scarwall",
+      abbr: "CotCT-5",
       date: "2008-06-01",
       pages: 96,
       isbn: "978-1-60125-099-5",
@@ -407,6 +431,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9012",
       name: "Curse of the Crimson Throne #6: Crown of Fangs",
+      abbr: "CotCT-6",
       date: "2008-07-01",
       pages: 96,
       isbn: "978-1-60125-109-1",
@@ -470,6 +495,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9019",
       name: "Legacy of Fire #1: Howl of the Carrion King",
+      abbr: "LoF-1",
       date: "2009-03-01",
       pages: 96,
       isbn: "978-1-60125-159-6",
@@ -479,6 +505,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9020",
       name: "Legacy of Fire #2: House of the Beast",
+      abbr: "LoF-2",
       date: "2009-03-01",
       pages: 96,
       isbn: "978-1-60125-160-2",
@@ -488,6 +515,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9021",
       name: "Legacy of Fire #3: The Jackal's Price",
+      abbr: "LoF-3",
       date: "2009-04-01",
       pages: 96,
       isbn: "978-1-60125-161-9",
@@ -497,6 +525,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9022",
       name: "Legacy of Fire #4: The End of Eternity",
+      abbr: "LoF-4",
       date: "2009-05-01",
       pages: 96,
       isbn: "978-1-60125-173-2",
@@ -506,6 +535,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9023",
       name: "Legacy of Fire #5: The Impossible Eye",
+      abbr: "LoF-5",
       date: "2009-06-01",
       pages: 96,
       isbn: "978-1-60125-179-4",
@@ -515,6 +545,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9024",
       name: "Legacy of Fire #6: The Final Wish",
+      abbr: "LoF-6",
       date: "2009-07-01",
       pages: 96,
       isbn: "978-1-60125-185-5",
@@ -524,6 +555,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9025",
       name: "Council of Thieves #1: The Bastards of Erebus",
+      abbr: "CoT-1",
       date: "2009-08-01",
       pages: 96,
       isbn: "978-1-60125-190-9",
@@ -533,6 +565,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9026",
       name: "Council of Thieves #2: The Sixfold Trial",
+      abbr: "CoT-2",
       date: "2009-09-01",
       pages: 96,
       isbn: "978-1-60125-196-1",
@@ -542,6 +575,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9027",
       name: "Council of Thieves #3: What Lies in Dust",
+      abbr: "CoT-3",
       date: "2009-11-01",
       pages: 96,
       isbn: "978-1-60125-197-8",
@@ -551,6 +585,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9028",
       name: "Council of Thieves #4: The Infernal Syndrom",
+      abbr: "CoT-4",
       date: "2009-12-01",
       pages: 96,
       isbn: "978-1-60125-198-5",
@@ -560,6 +595,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9029",
       name: "Council of Thieves #5: Mother of Flies",
+      abbr: "CoT-5",
       date: "2010-01-01",
       pages: 96,
       isbn: "978-1-60125-199-2",
@@ -569,6 +605,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9030",
       name: "Council of Thieves #6: The Twice-Damned Prince",
+      abbr: "CoT-6",
       date: "2010-01-01",
       pages: 96,
       isbn: "978-1-60125-226-5",
@@ -686,6 +723,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9043",
       name: "Carrion Crown #1: The Haunting of Harrowstone",
+      abbr: "CC-1",
       date: "2011-03-01",
       pages: 96,
       isbn: "978-1-60125-308-8",
@@ -695,6 +733,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9044",
       name: "Carrion Crown #2: Trial of the Beast",
+      abbr: "CC-2",
       date: "2011-04-01",
       pages: 96,
       isbn: "978-1-60125-309-5",
@@ -704,6 +743,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9045",
       name: "Carrion Crown #3: Broken Moon",
+      abbr: "CC-3",
       date: "2011-05-01",
       pages: 96,
       isbn: "978-1-60125-310-1",
@@ -713,6 +753,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9046",
       name: "Carrion Crown #4: Wake of the Watcher",
+      abbr: "CC-4",
       date: "2011-06-01",
       pages: 96,
       isbn: "978-1-60125-311-8",
@@ -722,6 +763,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9047",
       name: "Carrion Crown #5: Ashes at Dawn",
+      abbr: "CC-5",
       date: "2011-07-01",
       pages: 96,
       isbn: "978-1-60125-312-5",
@@ -731,6 +773,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9048",
       name: "Carrion Crown #6: Shadows of Gallowspire",
+      abbr: "CC-6",
       date: "2011-07-01",
       pages: 96,
       isbn: "978-1-60125-313-2",
@@ -847,7 +890,8 @@ export class Sources extends Registry {
     },
     {
       _id: "PZO1002",
-      name: "Rise of the Runelords",
+      name: "Rise of the Runelords Anniversary Edition",
+      abbr: "RotRAE",
       date: "2012-07-01",
       pages: 432,
       isbn: "978-1-60125-436-8",
@@ -2302,6 +2346,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9410",
       name: "Adventurer's Armory",
+      abbr: "AA",
       date: "2010-04-01",
       isbn: "978-1-60125-222-7",
       tieIn: "Kingmaker",
@@ -2677,6 +2722,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9461",
       name: "Occult Origins",
+      abbr: "OO",
       date: "2015-10-21",
       isbn: "978-1-60125-785-7",
       type: "companion",
@@ -2684,6 +2730,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9462",
       name: "Black Markets",
+      abbr: "BM",
       date: "2015-10-21",
       isbn: "978-1-60125-789-5",
       type: "companion",
@@ -2705,6 +2752,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9465",
       name: "Arcane Anthology",
+      abbr: "AA",
       date: "2016-01-27",
       isbn: "978-1-60125-814-4",
       type: "companion",
@@ -2777,6 +2825,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9475",
       name: "Healer's Handbook",
+      abbr: "HH",
       date: "2017-01-25",
       isbn: "978-1-60125-914-1",
       type: "companion",
@@ -2820,6 +2869,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9481",
       name: "Adventurer's Armory 2",
+      abbr: "AA2",
       date: "2017-06-28",
       isbn: "978-1-60125-945-5",
       type: "companion",
@@ -3288,6 +3338,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9251",
       name: "Inner Sea Bestiary",
+      abbr: "ISB",
       date: "2012-11-01",
       pages: 64,
       isbn: "978-1-60125-468-9",
@@ -3392,6 +3443,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9267",
       name: "Inner Sea Gods",
+      abbr: "ISG",
       date: "2014-04-01",
       pages: 320,
       isbn: "978-1-60125-597-6",
@@ -3401,6 +3453,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9268",
       name: "Inner Sea Combat",
+      abbr: "ISC",
       date: "2014-05-01",
       pages: 64,
       isbn: "978-1-60125-598-3",
@@ -3506,6 +3559,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9280",
       name: "Inner Sea Races",
+      abbr: "ISR",
       date: "2015-09-01",
       pages: 256,
       isbn: "978-1-60125-722-2",

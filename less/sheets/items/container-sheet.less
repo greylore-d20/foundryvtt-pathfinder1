@@ -5,6 +5,11 @@
       &.contents {
         // Remove excess scrolling
         overflow: hidden;
+
+        // Scroll actual contents
+        > section {
+          overflow: hidden scroll;
+        }
       }
     }
   }

@@ -72,7 +72,7 @@ export class ActorSheetPFTrap extends ActorSheetPF {
     }
     data.system.details.xp = { value: newXP };
 
-    data.notesHTML = await TextEditor.enrichHTML(data.system.details.notes.value, {
+    data.notesHTML = await TextEditor.enrichHTML(data.system.details.notes?.value ?? "", {
       secrets: isOwner,
       rollData: data.rollData,
       async: true,

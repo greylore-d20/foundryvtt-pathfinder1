@@ -154,7 +154,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
       try {
         let item = prior?.get(itemId);
         if (item) {
-          item.updateSource(itemData, { recursive: false });
+          item.updateSource(new Item.implementation(itemData).toObject(), { recursive: false });
         } else {
           item = new Item.implementation(itemData, { parent: this.actor });
           item.parentItem = this;

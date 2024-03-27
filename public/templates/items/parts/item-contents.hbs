@@ -30,21 +30,21 @@
         {{/if}}
       </li>
 
-      {{#each section.items as |item iid|}}
-      <li class="item flexrow{{#if item.disabled}} disabled{{/if}}" data-item-id="{{item._id}}">
+      {{#each section.items}}
+      <li class="item flexrow{{#if item.disabled}} disabled{{/if}}" data-item-id="{{id}}">
         <div class="item-name">
-          <div class="item-image rollable" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
+          <div class="item-image rollable" style='background-image: url("{{img}}")' data-tooltip="PF1.DisplayInChat"></div>
           <h4 class="rollable">
-            {{~#if item.isStack}}({{item.system.quantity}}) {{/if}}
-            {{item.name~}}
+            {{~#if isStack}}({{system.quantity}}) {{/if}}
+            {{name~}}
           </h4>
         </div>
 
         {{#if section.hasActions}}
         <div class="item-detail item-actions">
           <div class="item-action">
-            {{#unless item.showUnidentifiedData}}
-            {{#if item.hasAction}}
+            {{#unless showUnidentifiedData}}
+            {{#if hasAction}}
             <a class="item-control item-action action roll" data-tooltip="PF1.UseItem">
               <i class="fa-solid fa-dice-d20"></i>
             </a>
@@ -56,29 +56,29 @@
 
         {{#if section.showValue}}
         <div class="item-detail item-value">
-          <span>{{item.price}} {{localize "PF1.CurrencyGP"}}</span>
+          <span>{{price}} {{localize "PF1.CurrencyGP"}}</span>
         </div>
         {{/if}}
 
         <div class="item-detail item-weight">
-          <span{{#if (eq item.document.system.weight.total 0)}} class="null"{{/if}}>{{item.document.system.weight.converted.total}} {{@root.units.weight}}</span>
+          <span{{#if (eq item.document.system.weight.total 0)}} class="null"{{/if}}>{{system.weight.converted.total}} {{@root.units.weight}}</span>
         </div>
 
         {{#if @root.isGM}}
         <div class="item-detail item-identified">
-          <a class="item-control item-identify"><span>{{{item.labels.identified}}}</span></a>
+          <a class="item-control item-identify"><span>{{{labels.identified}}}</span></a>
         </div>
         {{/if}}
 
-        <div class="item-detail item-uses flexrow {{#if (and @root.actor item.isCharged)}}tooltip{{/if}}">
-          {{#if item.isCharged}}
-          <input type="text" class="select-on-click blended" data-wheel-step="1" value="{{item.system.uses.value}}" data-dtype="Number">
+        <div class="item-detail item-uses flexrow {{#if (and @root.actor isCharged)}}tooltip{{/if}}">
+          {{#if isCharged}}
+          <input type="text" class="select-on-click blended" data-wheel-step="1" value="{{system.uses.value}}" data-dtype="Number">
           <span class="sep"> / </span>
-          <span class="max">{{item.system.uses.max}}</span>
+          <span class="max">{{system.uses.max}}</span>
           {{#if @root.actor}}
           <span class="tooltipcontent">
-            <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.system.uses.value}}</span>
-            <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.system.uses.max}}</span>
+            <span class="span2 align-left">@resources.{{tag}}.value :</span><span class="span1 align-right"> {{system.uses.value}}</span>
+            <span class="span2 align-left">@resources.{{tag}}.max :</span><span class="span1 align-right"> {{system.uses.max}}</span>
           </span>
           {{/if}}
           {{/if}}

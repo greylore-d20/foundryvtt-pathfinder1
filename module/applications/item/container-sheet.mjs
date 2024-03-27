@@ -83,8 +83,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // The item's items
     data.items = this.item.items.reduce((cur, item) => {
-      const i = item.toObject();
-      const system = item.system;
+      const itemData = item.system;
+      const i = { ...item };
+      i.id = item.id; // Alias
       cur.push(i);
       i.document = item;
       i.labels = item.getLabels();
@@ -92,19 +93,17 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       i.hasDamage = item.hasDamage;
       i.hasAction = item.hasAction || item.isCharged;
       i.showUnidentifiedData = item.showUnidentifiedData;
-      i.name = item.name;
-      i.id = item.id;
 
-      i.quantity = system.quantity || 0;
+      i.quantity = itemData.quantity || 0;
       i.isStack = i.quantity > 1;
       //i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
-      i.destroyed = system.hp?.value <= 0;
+      i.destroyed = itemData.hp?.value <= 0;
 
-      const itemCharges = system.uses?.value != null ? system.uses.value : 1;
+      const itemCharges = itemData.uses?.value != null ? itemData.uses.value : 1;
 
       i.empty = false;
       if (item.isPhysical && i.quantity <= 0) i.empty = true;
-      else if (item.isCharged && !system.isSingleUse && itemCharges <= 0) i.empty = true;
+      else if (item.isCharged && !itemData.isSingleUse && itemCharges <= 0) i.empty = true;
       i.disabled = i.empty || i.destroyed || false;
 
       return cur;

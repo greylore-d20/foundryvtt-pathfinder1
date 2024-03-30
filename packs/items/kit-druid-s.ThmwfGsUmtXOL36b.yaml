@@ -14,8 +14,6 @@ system:
       system:
         description:
           value: >-
-            <p><b>Price</b> 5 gp; <b>Weight</b> 2 lbs.</p>
-
             <p>A spellcaster with a spell component pouch is assumed to have all
             the material <em>components</em> and focuses needed for
             spellcasting, except for <em>components</em> that have a specific
@@ -24,7 +22,12 @@ system:
             or bandolier.</p>
         equipped: false
         price: 5
-        subType: gear
+        sources:
+          - id: PZO1123
+            pages: '77'
+          - id: PZO1110
+            pages: '158'
+        subType: tool
         weight:
           value: 2
       type: loot
@@ -67,7 +70,7 @@ system:
             name: Bowl
             system:
               equipped: false
-              subType: tradeGoods
+              subType: gear
               tags:
                 - Mundane
                 - Cooking
@@ -140,6 +143,10 @@ system:
               weight:
                 value: 0.1
             type: loot
+        price: 0.2
+        sources:
+          - id: PZO1123
+            pages: '57'
       type: container
     EE6NVJINSFnuHNpc:
       _id: EE6NVJINSFnuHNpc
@@ -155,6 +162,9 @@ system:
             buckled strap and holds about 2 cubic feet of material. Some may
             have one or more smaller pockets on the sides.</p>
         price: 2
+        sources:
+          - id: PZO1140
+            pages: '242'
         weight:
           value: 2
       type: container
@@ -176,37 +186,40 @@ system:
             name: Use
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
             <p>You can use this thick block of soap to scrub clothes, pots,
             linens, or anything else that might be dirty. A bar of soap has
             approximately 50 uses.</p>
         price: 0.01
-        subType: misc
-        tag: soap
+        sources:
+          - id: PZO1123
+            pages: '57'
+          - id: PZO9410
+            pages: '19'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
         uses:
           maxFormula: '50'
           per: charges
           value: 50
         weight:
           value: 0.5
-      type: consumable
-    LadwBtrqOVG0VXhm:
-      _id: LadwBtrqOVG0VXhm
+      type: loot
+    Fj1opmqqJyxbjKyW:
+      _id: Fj1opmqqJyxbjKyW
       flags:
         core:
-          sourceId: Compendium.pf1.items.frydnvdxagxetrkz
+          sourceId: Compendium.pf1.items.Item.jjitxdnizmpbthys
       img: icons/commodities/flowers/holly-buds-red.webp
-      name: Holly
+      name: Holly And Mistletoe
       system:
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
-            <p>The bright red berries of the holly tree have many uses as
-            decorations and ritual objects. Druids harvest holly berries with
-            specially prepared tools and during sacred times of the year.</p>
+            <p>Druids commonly use these plants as divine focuses when casting
+            spells.</p>
         equipped: false
+        sources:
+          - id: PZO1110
         subType: gear
       type: loot
     MmOTY3JmUSpWViM8:
@@ -219,8 +232,6 @@ system:
       system:
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-
             <p>A belt pouch is crafted of soft cloth or leather. They typically
             hold up to 10 lb. or 1/5 cubic ft. of items.</p>
 
@@ -234,7 +245,10 @@ system:
             characters.</p>
         equipped: false
         price: 1
-        subType: gear
+        sources:
+          - id: PZO1110
+            pages: '56'
+        subType: adventuring
         weight:
           value: 0.5
       type: loot
@@ -246,10 +260,45 @@ system:
       img: systems/pf1/icons/items/inventory/torch.jpg
       name: Torch
       system:
+        actions:
+          - _id: 7IkvstJGhp2Kfl21
+            activation:
+              type: full
+              unchained:
+                cost: 3
+                type: action
+            img: systems/pf1/icons/items/inventory/torch.jpg
+            name: Enlight (using flint and steal)
+          - _id: KNOoanyFVJlRjrdg
+            ability:
+              attack: str
+              damage: str
+            actionType: mwak
+            activation:
+              type: attack
+              unchained:
+                type: attack
+            attackBonus: '-2[improvised weapon]'
+            damage:
+              parts:
+                - formula: sizeRoll(1, 3, @size)
+                  type:
+                    custom: ''
+                    values:
+                      - bludgeoning
+                - formula: '1'
+                  type:
+                    custom: ''
+                    values:
+                      - fire
+            extraAttacks:
+              type: standard
+            img: systems/pf1/icons/items/inventory/torch.jpg
+            name: Attack
+            uses:
+              autoDeductChargesCost: '0'
         description:
           value: >-
-            <p><b>Price</b> 1 cp; <b>Weight</b> 1 lb.</p>
-
             <p>A torch burns for 1 hour, shedding normal light in a 20-foot
             radius and increasing the light level by one step for an additional
             20 feet beyond that area (darkness becomes dim light and dim light
@@ -260,7 +309,15 @@ system:
             damage.</p>
         equipped: false
         price: 0.01
-        subType: gear
+        quantity: 10
+        sources:
+          - id: PZO1123
+            pages: '58'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
+        uses:
+          per: single
         weight:
           value: 1
       type: loot
@@ -272,6 +329,15 @@ system:
       img: icons/commodities/stone/rock-chunk-grey.webp
       name: Flint And Steel
       system:
+        actions:
+          - _id: nOah5FBBvcEip0El
+            activation:
+              type: full
+              unchained:
+                cost: 3
+                type: action
+            img: icons/commodities/stone/rock-chunk-grey.webp
+            name: Light torch
         description:
           value: >-
             <p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a
@@ -279,7 +345,12 @@ system:
             that long.</p>
         equipped: false
         price: 1
-        subType: gear
+        sources:
+          - id: PZO1123
+            pages: '56'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
       type: loot
     XFToXp1099SYallL:
       _id: XFToXp1099SYallL
@@ -291,21 +362,21 @@ system:
       system:
         description:
           value: >-
-            <h4>Blanket</h4>
-
-            <p class="source"><b>Source</b> <em>PZO1115</em></p>
-
-            <p><b>Price</b> 5 sp; <b>Weight</b> 3 lbs.</p>
-
             <p>This warm, woven blanket has straps so it can be rolled up and
             tied. Blankets are often used in conjunction with bedrolls to
             provide additional warmth or a ground cushion.</p>
-
-            <p><b>Winter blanket</b> This is a fur blanket large enough for one
-            person. <b>Source</b> <em>PZO1110</em></p>
         equipped: false
         price: 0.5
-        subType: gear
+        sources:
+          - id: PZO1123
+            pages: '56'
+          - id: PZO9410
+            pages: '19'
+          - id: PZO1110
+            pages: '158'
+          - id: PZO1115
+            pages: '181'
+        subType: adventuring
         weight:
           value: 3
       type: loot
@@ -319,17 +390,17 @@ system:
       system:
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-
-            <p>Cooking pots come in a variety of materials, but the most common
-            is formed of iron.</p>
-
-            <p>A mithral cooking pot weighs 2 lbs. and costs 2,001 gp.</p>
-
-            <p><b>Empty Weight</b>: 2 lb.; <b>Capacity</b>: 1 gallon/8 lb.</p>
+            <p>This 8-inch-diameter iron pot is sturdy and has feet, a lid, and
+            a rounded handle. It can hold enough stew to feed one hungry human
+            for one meal.</p>
         equipped: false
         price: 0.8
-        subType: gear
+        sources:
+          - id: PZO1123
+            pages: '57'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
         weight:
           value: 4
       type: loot
@@ -343,114 +414,22 @@ system:
       system:
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-
             <p>A water or wineskin holds 1/2 gallon of liquid and weighs 4 lb
-            when full.</p>
-
-            <p><b>Empty Weight</b>: -; <b>Capacity</b>: 1/2 gallon/4
-            lb.<sup>1</sup></p>
-
-            <p class="source"><sup>1</sup> When made for Medium characters.
-            Weighs one-quarter the normal amount when made for Small characters.
-            Weighs twice the normal amount when made for Large characters.
-            Containers carry one-quarter the normal amount when made for Small
+            when full.</p><p><strong>Empty Weight</strong>: -;
+            <strong>Capacity</strong>: 1/2 gallon/4 lb.<sup>1</sup></p><p
+            class="source"><sup>1</sup> When made for Medium characters. Weighs
+            one-quarter the normal amount when made for Small characters. Weighs
+            twice the normal amount when made for Large characters. Containers
+            carry one-quarter the normal amount when made for Small
             characters.</p>
-
-            <h3>Magic Containers</h3>
-
-            <p>Magic containers come in almost as many varieties as there are
-            <em>alchemists</em>, and so are of inestimable value to
-            <em>alchemists</em> with specific needs. Some of the most well-known
-            magic containers are described here.</p>
-
-            <p>Because of a varied nature of alchemical items and their effects,
-            not all combinations of alchemical items and magic bottles are
-            viable or even make sense, even though they technically might be
-            allowed by the rules. The GM should have the final say on whether or
-            not a particular alchemical item can function within one of the
-            magical containers listed in this section.</p>
-
-            <table>
-
-            <thead>
-
-            <tr>
-
-            <th colspan="4">Magic Containers</th>
-
-            </tr>
-
-            <tr>
-
-            <th>Item</th>
-
-            <th>Price</th>
-
-            <th>Weight</th>
-
-            <th>Source</th>
-
-            </tr>
-
-            </thead>
-
-            <tbody>
-
-            <tr>
-
-            <td><i>Focusing Flask</i></td>
-
-            <td>700 gp</td>
-
-            <td>1 lb.</td>
-
-            <td class="source text"><em>PPC:AM</em></td>
-
-            </tr>
-
-            <tr>
-
-            <td><i>Retort of Control</i></td>
-
-            <td>13,000 gp</td>
-
-            <td>-</td>
-
-            <td class="source text"><em>PPC:AM</em></td>
-
-            </tr>
-
-            <tr>
-
-            <td><i>Vial of Efficacious Medicine</i></td>
-
-            <td>7,000 gp</td>
-
-            <td>-</td>
-
-            <td class="source text"><em>PPC:AM</em></td>
-
-            </tr>
-
-            <tr>
-
-            <td><i>Winged Bottle</i></td>
-
-            <td>1,620 gp</td>
-
-            <td>1 lb.</td>
-
-            <td class="source text"><em>PPC:AM</em></td>
-
-            </tr>
-
-            </tbody>
-
-            </table>
         equipped: false
         price: 1
-        subType: gear
+        sources:
+          - id: PZO1123
+            pages: '58'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
         weight:
           value: 4
       type: loot
@@ -462,12 +441,18 @@ system:
       img: systems/pf1/icons/items/inventory/meat.jpg
       name: Rations, Trail
       system:
+        actions:
+          - _id: VdYbDgVtRRoWmGoA
+            activation:
+              type: nonaction
+              unchained:
+                type: nonaction
+            ammo:
+              type: ''
+            img: systems/pf1/icons/items/inventory/meat.jpg
+            name: Use
         description:
           value: >-
-            <h4>Rations, Trail</h4>
-
-            <p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>
-
             <p>The listed price is for a day's worth of food. This bland food is
             usually some kind of hard tack, jerky, and dried fruit, though the
             contents vary from region to region and the race of those creating
@@ -475,48 +460,49 @@ system:
             spoiling.</p>
         equipped: false
         price: 0.5
-        subType: gear
+        quantity: 5
+        sources:
+          - id: PZO1123
+            pages: '95'
+          - id: PZO1110
+            pages: '158'
+        subType: food
+        uses:
+          per: single
         weight:
           value: 1
-      type: loot
-    ljXza4VWAbYfKyDy:
-      _id: ljXza4VWAbYfKyDy
-      flags:
-        core:
-          sourceId: Compendium.pf1.items.fubyjhqaertcabjp
-      img: icons/commodities/materials/bowl-powder-blue.webp
-      name: Mistletoe
-      system:
-        description:
-          value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
-            <p>This golden-colored parasitic plant grows on many different sorts
-            of trees. Druids harvest mistletoe with specially prepared tools and
-            during sacred times of the year.</p>
-        equipped: false
-        subType: gear
       type: loot
     zCL516ojH14Wy0L9:
       _id: zCL516ojH14Wy0L9
       flags:
         core:
           sourceId: Compendium.pf1.items.hwrgbauvnnirgqdy
-      img: systems/pf1/icons/items/inventory/dice.jpg
+      img: icons/consumables/plants/dried-bundle-tied-stems-sticks-brown.webp
       name: Feed, Animal
       system:
         description:
           value: >-
-            <p><b>Price</b> 5 cp/day; <b>Weight</b> 10 lbs.</p>
-
-            <p><em>Horses</em>, donkeys, mules, and <em>ponies</em> can graze to
-            sustain themselves, but providing feed for them is better. If you
-            have a <em>riding dog</em>, you have to feed it meat.</p>
+            <p>Horses, donkeys, mules, and ponies can graze in some regions to
+            sustain themselves, but feed provides more reliable nourishment.
+            Riding dogs and other carnivores can be fed meat for the same cost.
+            Except for horses, other Large creatures need to eat twice the feed
+            of other animals each day. Huge creatures need four times the
+            feed.</p>
         equipped: false
         price: 0.05
-        subType: gear
+        quantity: 5
+        sources:
+          - id: PZO1123
+            pages: '81'
+          - id: PZO1110
+            pages: '159'
+        subType: animalGear
         weight:
           value: 10
       type: loot
+  price: 14
+  sources:
+    - id: PZO1123
+      pages: '56'
 type: container
 

@@ -3,18 +3,31 @@ _key: '!items!iclfnaawjjxuvupa'
 img: icons/tools/laboratory/bowl-liquid-orange.webp
 name: Incense
 system:
+  actions:
+    - _id: dBk6KYoxtNpw314R
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: hour
+        value: '1'
+      img: icons/tools/laboratory/bowl-liquid-orange.webp
+      name: Use
   description:
     value: >-
-      <p>This aromatic resin, imbued with fragrant oils, is often formed into
-      sticks, cones, or balls and burned in ceremonies or during meditation. A
-      piece of incense burns for 1 hour.</p>
+      <p>This aromatic resin is imbued with fragrant oils and formed into
+      sticks, cones, or balls. It’s often burned in religious ceremonies or
+      during meditation. A piece of incense burns for 1 hour.</p>
   equipped: false
-  price: 10
+  price: 0.7
   sources:
+    - id: PZO1132
+      pages: '249'
     - id: PZO1121
       pages: '87'
-  subType: gear
-  weight:
-    value: 1
+  subType: adventuring
+  uses:
+    per: single
 type: loot
 

@@ -3,10 +3,45 @@ _key: '!items!snfogneawzopfzzl'
 img: systems/pf1/icons/items/inventory/torch.jpg
 name: Torch
 system:
+  actions:
+    - _id: 7IkvstJGhp2Kfl21
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: systems/pf1/icons/items/inventory/torch.jpg
+      name: Enlight (using flint and steal)
+    - _id: KNOoanyFVJlRjrdg
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      attackBonus: '-2[improvised weapon]'
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+          - formula: '1'
+            type:
+              custom: ''
+              values:
+                - fire
+      extraAttacks:
+        type: standard
+      img: systems/pf1/icons/items/inventory/torch.jpg
+      name: Attack
+      uses:
+        autoDeductChargesCost: '0'
   description:
     value: >-
-      <p><b>Price</b> 1 cp; <b>Weight</b> 1 lb.</p>
-
       <p>A torch burns for 1 hour, shedding normal light in a 20-foot radius and
       increasing the light level by one step for an additional 20 feet beyond
       that area (darkness becomes dim light and dim light becomes normal light).
@@ -16,7 +51,14 @@ system:
       plus 1 point of fire damage.</p>
   equipped: false
   price: 0.01
-  subType: gear
+  sources:
+    - id: PZO1123
+      pages: '58'
+    - id: PZO1110
+      pages: '158'
+  subType: adventuring
+  uses:
+    per: single
   weight:
     value: 1
 type: loot

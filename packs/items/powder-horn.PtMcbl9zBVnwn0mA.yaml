@@ -3,6 +3,14 @@ _key: '!items!PtMcbl9zBVnwn0mA'
 img: systems/pf1/icons/items/inventory/horn-drinking.jpg
 name: Powder horn
 system:
+  actions:
+    - _id: LTFIcpPw1pKiN4yt
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/items/inventory/horn-drinking.jpg
+      name: Use
   description:
     value: >-
       <p>Typically crafted from hollowed-out animal horn, but increasingly
@@ -16,7 +24,15 @@ system:
   sources:
     - id: PZO1123
       pages: '57'
-  subType: gear
+    - id: PZO1118
+      pages: '141'
+    - id: PZO9226
+      pages: '293'
+  subType: adventuring
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
   weight:
     value: 1
 type: loot

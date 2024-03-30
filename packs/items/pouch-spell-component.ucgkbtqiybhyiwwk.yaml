@@ -5,8 +5,6 @@ name: Pouch, Spell Component
 system:
   description:
     value: >-
-      <p><b>Price</b> 5 gp; <b>Weight</b> 2 lbs.</p>
-
       <p>A spellcaster with a spell component pouch is assumed to have all the
       material <em>components</em> and focuses needed for spellcasting, except
       for <em>components</em> that have a specific cost, divine focuses, and
@@ -14,7 +12,12 @@ system:
       waterproof and can be strung onto a belt or bandolier.</p>
   equipped: false
   price: 5
-  subType: gear
+  sources:
+    - id: PZO1123
+      pages: '77'
+    - id: PZO1110
+      pages: '158'
+  subType: tool
   weight:
     value: 2
 type: loot

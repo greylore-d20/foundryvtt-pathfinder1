@@ -41,10 +41,10 @@ system:
       name: Mirror, Miniature
       system:
         description:
-          value: |-
-            <p class="source"><b>Source</b> <em>PZO1110</em></p>
-            <p>A tiny steel mirror.</p>
+          value: <p>A tiny steel mirror.</p>
         equipped: false
+        sources:
+          - id: PZO1110
         subType: tradeGoods
         tags:
           - Mundane
@@ -84,21 +84,25 @@ system:
             name: Use
         description:
           value: >-
-            <p class="source"><b>Source</b> <em>PZO9410</em></p>
-
             <p>You can use this thick block of soap to scrub clothes, pots,
             linens, or anything else that might be dirty. A bar of soap has
             approximately 50 uses.</p>
         price: 0.01
-        subType: misc
-        tag: soap
+        sources:
+          - id: PZO1123
+            pages: '57'
+          - id: PZO9410
+            pages: '19'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
         uses:
           maxFormula: '50'
           per: charges
           value: 50
         weight:
           value: 0.5
-      type: consumable
+      type: loot
     TxKAh9dUYfofmk1w:
       _id: TxKAh9dUYfofmk1w
       flags:

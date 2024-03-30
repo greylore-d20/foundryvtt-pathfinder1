@@ -1,0 +1,418 @@
+_id: Vs4WiNGamVNMEEZI
+_key: '!items!Vs4WiNGamVNMEEZI'
+img: icons/containers/chest/chest-reinforced-steel-red.webp
+name: Kit, Spiritualist's
+system:
+  items:
+    1yrz5fBludeDIVzZ:
+      _id: 1yrz5fBludeDIVzZ
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.snfogneawzopfzzl
+      img: systems/pf1/icons/items/inventory/torch.jpg
+      name: Torch
+      system:
+        actions:
+          - _id: 7IkvstJGhp2Kfl21
+            activation:
+              type: full
+              unchained:
+                cost: 3
+                type: action
+            img: systems/pf1/icons/items/inventory/torch.jpg
+            name: Enlight (using flint and steal)
+          - _id: KNOoanyFVJlRjrdg
+            ability:
+              attack: str
+              damage: str
+            actionType: mwak
+            activation:
+              type: attack
+              unchained:
+                type: attack
+            attackBonus: '-2[improvised weapon]'
+            damage:
+              parts:
+                - formula: sizeRoll(1, 3, @size)
+                  type:
+                    custom: ''
+                    values:
+                      - bludgeoning
+                - formula: '1'
+                  type:
+                    custom: ''
+                    values:
+                      - fire
+            extraAttacks:
+              type: standard
+            img: systems/pf1/icons/items/inventory/torch.jpg
+            name: Attack
+            uses:
+              autoDeductChargesCost: '0'
+        description:
+          value: >-
+            <p>A torch burns for 1 hour, shedding normal light in a 20-foot
+            radius and increasing the light level by one step for an additional
+            20 feet beyond that area (darkness becomes dim light and dim light
+            becomes normal light). A torch does not increase the light level in
+            normal light or bright light. If a torch is used in combat, treat it
+            as a one-handed improvised weapon that deals bludgeoning damage
+            equal to that of a gauntlet of its size, plus 1 point of fire
+            damage.</p>
+        equipped: false
+        price: 0.01
+        quantity: 10
+        sources:
+          - id: PZO1123
+            pages: '58'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
+        uses:
+          per: single
+        weight:
+          value: 1
+      type: loot
+    6RNFx1jzn5VdEZmA:
+      _id: 6RNFx1jzn5VdEZmA
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.e97Z2wv4Z2DI9jHa
+      img: icons/consumables/potions/flask-ornate-skull-green.webp
+      name: Ectoplasmic Residue
+      system:
+        actions:
+          - _id: kmbG4nQaCbemtUlp
+            ability:
+              attack: dex
+            actionType: twak
+            activation:
+              type: attack
+              unchained:
+                type: attack
+            img: icons/consumables/potions/flask-ornate-skull-green.webp
+            measureTemplate:
+              size: '5'
+              type: rect
+            name: Attack
+            range:
+              units: ft
+              value: '10'
+            save:
+              dc: '13'
+              description: Will negates
+              type: will
+            touch: true
+        description:
+          value: >-
+            <p>This flask is filled with the detritus of minor ectoplasmic
+            phantoms and similar creatures. You can throw a flask of ectoplasmic
+            residue as a splash weapon. Treat this attack as a ranged touch
+            attack with a range increment of 10 feet. A direct hit deals no
+            damage, but the target must succeed at a DC 13 Will save or be
+            shaken for 1d4 rounds. Every creature within 5 feet of the point
+            where the flask hits must succeed at a DC 13 Will save or be shaken
+            for 1 round. This is a mind-affecting fear effect.</p>
+        material:
+          addon:
+            - null
+            - null
+            - null
+            - null
+        sources:
+          - id: PZO1132
+            pages: '251'
+        subType: misc
+        uses:
+          per: single
+        weaponSubtype: splash
+      type: weapon
+    CoYssvb4QhjBVmfa:
+      _id: CoYssvb4QhjBVmfa
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.wjvxmolafiegvesl
+      img: icons/containers/bags/coinpouch-simple-leather-tan.webp
+      name: Pouch, Belt
+      system:
+        description:
+          value: >-
+            <p>A belt pouch is crafted of soft cloth or leather. They typically
+            hold up to 10 lb. or 1/5 cubic ft. of items.</p>
+
+            <p><b>Empty Weight</b>: 1/2 lb.<sup>1</sup> <b>Capacity</b>: 1/5
+            cubic ft./10 lb.<sup>1</sup></p>
+
+            <p class="source"><sup>1</sup> When made for Medium characters.
+            Weighs one-quarter the normal amount when made for Small characters.
+            Weighs twice the normal amount when made for Large characters.
+            Containers carry one-quarter the normal amount when made for Small
+            characters.</p>
+        equipped: false
+        price: 1
+        sources:
+          - id: PZO1110
+            pages: '56'
+        subType: adventuring
+        weight:
+          value: 0.5
+      type: loot
+    DoJpwVrx5tEhViAH:
+      _id: DoJpwVrx5tEhViAH
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.bsztkhkrhgmsbqpt
+      img: systems/pf1/icons/items/inventory/waterskin.jpg
+      name: Waterskin
+      system:
+        description:
+          value: >-
+            <p>A water or wineskin holds 1/2 gallon of liquid and weighs 4 lb
+            when full.</p><p><strong>Empty Weight</strong>: -;
+            <strong>Capacity</strong>: 1/2 gallon/4 lb.<sup>1</sup></p><p
+            class="source"><sup>1</sup> When made for Medium characters. Weighs
+            one-quarter the normal amount when made for Small characters. Weighs
+            twice the normal amount when made for Large characters. Containers
+            carry one-quarter the normal amount when made for Small
+            characters.</p>
+        equipped: false
+        price: 1
+        sources:
+          - id: PZO1123
+            pages: '58'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
+        weight:
+          value: 4
+      type: loot
+    IwhhoRHT4Rdrppxn:
+      _id: IwhhoRHT4Rdrppxn
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.manvtbznrwjmnrua
+      img: systems/pf1/icons/items/inventory/meat.jpg
+      name: Rations, Trail
+      system:
+        actions:
+          - _id: VdYbDgVtRRoWmGoA
+            activation:
+              type: nonaction
+              unchained:
+                type: nonaction
+            ammo:
+              type: ''
+            img: systems/pf1/icons/items/inventory/meat.jpg
+            name: Use
+        description:
+          value: >-
+            <p>The listed price is for a day's worth of food. This bland food is
+            usually some kind of hard tack, jerky, and dried fruit, though the
+            contents vary from region to region and the race of those creating
+            it. As long as it stays dry, it can go for months without
+            spoiling.</p>
+        equipped: false
+        price: 0.5
+        quantity: 5
+        sources:
+          - id: PZO1123
+            pages: '95'
+          - id: PZO1110
+            pages: '158'
+        subType: food
+        uses:
+          per: single
+        weight:
+          value: 1
+      type: loot
+    Ke1AVurKAnNLRkH8:
+      _id: Ke1AVurKAnNLRkH8
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.iegwwsarycqwoezj
+      img: systems/pf1/icons/items/inventory/cloth-blue.jpg
+      name: Bedroll
+      system:
+        description:
+          value: >-
+            <p>This consists of two woolen sheets sewn together along the bottom
+            and one side to create a bag for sleeping in. Some have cloth straps
+            along the open side so the bedroll can be tied closed while you are
+            sleeping. It can be rolled and tied into a tight coil for storage or
+            transport. Most people use a <em>blanket</em> with the bedroll to
+            stay warm or provide a ground cushion.</p>
+        equipped: false
+        price: 0.1
+        sources:
+          - id: PZO1123
+            pages: '56'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
+        weight:
+          value: 5
+      type: loot
+    MZcZte37hWJ9q4wp:
+      _id: MZcZte37hWJ9q4wp
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.iclfnaawjjxuvupa
+      img: icons/tools/laboratory/bowl-liquid-orange.webp
+      name: Incense
+      system:
+        actions:
+          - _id: dBk6KYoxtNpw314R
+            activation:
+              type: nonaction
+              unchained:
+                type: nonaction
+            duration:
+              units: hour
+              value: '1'
+            img: icons/tools/laboratory/bowl-liquid-orange.webp
+            name: Use
+        description:
+          value: >-
+            <p>This aromatic resin is imbued with fragrant oils and formed into
+            sticks, cones, or balls. It’s often burned in religious ceremonies
+            or during meditation. A piece of incense burns for 1 hour.</p>
+        equipped: false
+        price: 0.7
+        quantity: 10
+        sources:
+          - id: PZO1132
+            pages: '249'
+          - id: PZO1121
+            pages: '87'
+        subType: adventuring
+        uses:
+          per: single
+      type: loot
+    fXgGB2AKJmULSapo:
+      _id: fXgGB2AKJmULSapo
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.HR0dO8pNmZLlQwaD
+      img: icons/containers/chest/chest-simple-box-blue.webp
+      name: Censer
+      system:
+        description:
+          value: >-
+            <p>This metal container comes with a small removable lid, and holds
+            a small crucible in which to burn incense. Used in religious
+            ceremonies or rituals, a censer can hold up to 10 pieces of incense,
+            and burns 1 piece per hour when lit.</p>
+        price: 5
+        sources:
+          - id: PZO1132
+            pages: '248'
+        subType: adventuring
+        weight:
+          value: 0.5
+      type: loot
+    icUKBpM6FjNUTYp4:
+      _id: icUKBpM6FjNUTYp4
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.habofoapdifirevm
+      img: icons/tools/cooking/cauldron-empty.webp
+      name: Pot, Cooking (Iron)
+      system:
+        description:
+          value: >-
+            <p>This 8-inch-diameter iron pot is sturdy and has feet, a lid, and
+            a rounded handle. It can hold enough stew to feed one hungry human
+            for one meal.</p>
+        equipped: false
+        price: 0.8
+        sources:
+          - id: PZO1123
+            pages: '57'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
+        weight:
+          value: 4
+      type: loot
+    os3IidDlG66QJ5Ke:
+      _id: os3IidDlG66QJ5Ke
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.OiVZjOl24GBYj70c
+      img: icons/sundries/documents/document-symbol-triangle-pink.webp
+      name: Magnetized Paper
+      system:
+        description:
+          value: >-
+            <p>These specially charged pieces of parchment come in small
+            packages containing seven sheets. Psychically attuned to the
+            specific magnetic fluids a living creature needs to part the
+            ethereal veil, these sheets add a 5% bonus to the chance of creating
+            meaningful writing for the automatic writing occult skill unlock.
+            This use consumes one sheet of the paper, and only one sheet can be
+            used per attempt.</p><h3>Construction</h3><p><strong>Craft
+            (Alchemy)</strong> DC 15</p>
+        price: 11
+        sources:
+          - id: PZO1132
+            pages: '252'
+        subType: tool
+        weight:
+          value: 1
+      type: loot
+    qn4toCmwIjHn6xnh:
+      _id: qn4toCmwIjHn6xnh
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.Item.ygmrcisvftnvjyob
+      img: icons/commodities/stone/rock-chunk-grey.webp
+      name: Flint And Steel
+      system:
+        actions:
+          - _id: nOah5FBBvcEip0El
+            activation:
+              type: full
+              unchained:
+                cost: 3
+                type: action
+            img: icons/commodities/stone/rock-chunk-grey.webp
+            name: Light torch
+        description:
+          value: >-
+            <p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a
+            full-round action. Lighting any other fire with them takes at least
+            that long.</p>
+        equipped: false
+        price: 1
+        sources:
+          - id: PZO1123
+            pages: '56'
+          - id: PZO1110
+            pages: '158'
+        subType: adventuring
+      type: loot
+    wqO8CPWPykVGlAEX:
+      _id: wqO8CPWPykVGlAEX
+      flags:
+        core:
+          sourceId: Compendium.pf1.items.lSCPUK5Ea6R0t4fz
+      img: systems/pf1/icons/items/inventory/backpack.jpg
+      name: Backpack
+      system:
+        description:
+          value: >-
+            <p>This leather knapsack has one large pocket that closes with a
+            buckled strap and holds about 2 cubic feet of material. Some may
+            have one or more smaller pockets on the sides.</p>
+        price: 2
+        sources:
+          - id: PZO1140
+            pages: '242'
+        weight:
+          value: 2
+      type: container
+  sources:
+    - id: PZO1132
+      pages: '250'
+type: container
+

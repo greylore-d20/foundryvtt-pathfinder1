@@ -166,15 +166,21 @@ export function applyAccessibilitySettings(app, html, data, conf) {}
 /**
  * Returns an inline roll string suitable for chat messages.
  *
+ * @deprecated
  * @param {Roll} roll - The roll to be stringified
  * @param {object} [options] - Additional options affecting the inline roll
  * @param {boolean} [options.hide3d] - Whether the roll should be hidden from DsN
  * @returns {string} The inline roll string
  */
 export function createInlineRollString(roll, { hide3d = true } = {}) {
-  return `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
-  data-tooltip="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
-  <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
+  foundry.utils.logCompatibilityWarning("pf1.utils.chat.createInlineRollString() is deprecated with no replacement", {
+    since: "PF1 vNEXT",
+    until: "PF1 vNEXT+1",
+  });
+
+  const a = roll.toAnchor();
+  if (hide3d) a.classList.add("inline-dsn-hidden");
+  return a.outerHTML;
 }
 
 /**

@@ -1,4 +1,3 @@
-import { createInlineRollString } from "../utils/chat.mjs";
 import { RollPF } from "module/dice/roll.mjs";
 
 export class LevelUpForm extends FormApplication {
@@ -361,8 +360,8 @@ export class LevelUpForm extends FormApplication {
       const roll = RollPF.safeRoll(formula);
       result.chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Roll",
-        add: createInlineRollString(roll),
-        roll: roll,
+        add: roll.toAnchor().outerHTML,
+        roll,
       };
       if (!Number.isNaN(roll.total)) {
         result.item["system.hp"] = this.object.system.hp + roll.total;

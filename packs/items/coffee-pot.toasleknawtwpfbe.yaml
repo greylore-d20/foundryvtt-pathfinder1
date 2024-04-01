@@ -1,12 +1,10 @@
 _id: toasleknawtwpfbe
 _key: '!items!toasleknawtwpfbe'
-img: systems/pf1/icons/items/inventory/bottle-empty.jpg
+img: icons/containers/kitchenware/stein-empty.webp
 name: Coffee Pot
 system:
   description:
     value: >-
-      <p><b>Price</b> 3 gp; <b>Weight</b> 4 lbs.</p>
-
       <p>This tall, teapot-like device contains a small chamber for coffee
       grounds and a large chamber for water, connected by a small tube. Heating
       the <em>pot</em> forces boiling water through the tube and into the
@@ -16,7 +14,10 @@ system:
       medicinal herbs, or just boil water.</p>
   equipped: false
   price: 3
-  subType: gear
+  sources:
+    - id: PZO1123
+      pages: '56'
+  subType: adventuring
   weight:
     value: 4
 type: loot

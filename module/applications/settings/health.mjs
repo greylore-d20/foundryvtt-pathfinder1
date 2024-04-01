@@ -1,4 +1,22 @@
 export class HealthConfigModel extends foundry.abstract.DataModel {
+  constructor(...args) {
+    super(...args);
+
+    Object.defineProperty(this, "continuity", {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "continuity string property in health configuration is deprecated in favor of continuous boolean property",
+          {
+            since: "PF1 vNEXT",
+            until: "PF1 vNEXT+1",
+          }
+        );
+
+        return this.continuous ? "continuous" : "discrete";
+      },
+    });
+  }
+
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
@@ -21,7 +39,7 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
       }),
       maximized: new fields.NumberField({ integer: true, min: 0, initial: 1 }),
       rounding: new fields.StringField({ blank: false, nullable: false, initial: "up" }),
-      continuity: new fields.StringField({ blank: false, nullable: false, initial: "discrete" }),
+      continuous: new fields.BooleanField({ initial: false }),
       variants: new fields.SchemaField({
         pc: new fields.SchemaField({
           useWoundsAndVigor: new fields.BooleanField({ initial: false }),
@@ -54,9 +72,20 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
         return this.hitdice.PC;
     }
   }
+
+  static migrateData(data) {
+    if (data.continuity) {
+      data.continuous = data.continuity === "continuous";
+    }
+  }
 }
 
 export class HealthConfig extends FormApplication {
+  /**
+   * @readonly
+   */
+  static model = HealthConfigModel;
+
   constructor(object = new HealthConfigModel(), options) {
     super(object, options);
   }

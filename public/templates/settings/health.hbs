@@ -56,10 +56,10 @@
 
       <div class="form-group">
         <label>{{localize 'PF1.SETTINGS.Health.Continuity'}}</label>
-        <select name="continuity">
-          {{#select continuity}}
-            <option value="continuous">{{localize 'PF1.SETTINGS.Health.Continuous'}}</option>
-            <option value="discrete">{{localize 'PF1.SETTINGS.Health.Discrete'}}</option>
+        <select name="continuous" data-dtype="Boolean">
+          {{#select continuous}}
+            <option value="true">{{localize 'PF1.SETTINGS.Health.Continuous'}}</option>
+            <option value="false">{{localize 'PF1.SETTINGS.Health.Discrete'}}</option>
           {{/select}}
         </select>
         <p class="notes">{{localize 'PF1.SETTINGS.Health.ContinuityHint'}}</p>

@@ -78,7 +78,7 @@ export const registerActorItemClassTests = () => {
                 foundry.utils.mergeObject(
                   previousHealthConfig,
                   {
-                    continuity: "continuous",
+                    continuous: true,
                     rounding: "up",
                     hitdice: {
                       PC: { auto: true, rate: 0.5, maximized: true },
@@ -154,7 +154,7 @@ export const registerActorItemClassTests = () => {
                 foundry.utils.mergeObject(
                   previousHealthConfig,
                   {
-                    continuity: "continuous",
+                    continuous: true,
                     rounding: "up",
                     hitdice: {
                       PC: { auto: true, rate: 0.5, maximized: true },

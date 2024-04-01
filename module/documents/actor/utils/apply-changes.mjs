@@ -640,7 +640,7 @@ function calculateHealth(actor, allClasses, changes) {
    * @returns {number}
    */
   const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
-  const continuous = healthConfig.continuity === "continuous";
+  const { continuous } = healthConfig;
 
   /**
    * @param {number} value

@@ -35,19 +35,20 @@ export class RollPF extends Roll {
    * @param {object} context - If error occurs, this will be included in the error message.
    * @param {object} [options] - Additional options
    * @param {boolean} [options.suppressError=false] - If true, no error will be printed even if one occurs.
+   * @param {object} [evalOpts] - Additional options to pass to Roll.evaluate()
    * @returns {RollPF} - Evaluated roll, or placeholder if error occurred.
    */
-  static safeRoll(formula, rollData = {}, context, options = { suppressError: false }) {
+  static safeRoll(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
     let roll;
     try {
-      roll = this.create(formula, rollData).evaluate({ async: false });
+      roll = this.create(formula, rollData).evaluate({ ...evalOpts, async: false });
     } catch (err) {
-      roll = this.create("0", rollData).evaluate({ async: false });
+      roll = this.create("0", rollData).evaluate({ ...evalOpts, async: false });
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
     if (roll.err) {
-      if (context && !options.suppressError) console.error(context, roll.err);
+      if (context && !suppressError) console.error(context, roll.err);
       else if (CONFIG.debug.roll) console.error(roll.err);
     }
     return roll;

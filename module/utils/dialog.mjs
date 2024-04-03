@@ -1,4 +1,5 @@
 import { ItemSelector } from "module/applications/item-selector.mjs";
+import { ActorSelector } from "module/applications/actor-selector.mjs";
 
 /**
  * @deprecated - Use {@link pf1.utils.dialog.getNumber} instead
@@ -28,55 +29,70 @@ export async function dialogGetNumber({
   return `${num}`;
 }
 
-export const dialogGetActor = function (title = "", actors = []) {
-  return new Promise((resolve) => {
-    const cancelled = true;
+/**
+ * @deprecated - Use {@link pf1.utils.dialog.getActor} instead
+ * @param title
+ * @param actors
+ * @returns {Promise<{type: string, id: string}>}
+ */
+export async function dialogGetActor(title = "", actors = []) {
+  foundry.utils.logCompatibilityWarning(
+    "pf1.utils.dialog.dialogGetActor is deprecated in favor of pf1.utils.dialog.getActor",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
 
-    const gmActive = !!game.users.activeGM;
+  const actorId = await pf1.utils.dialog.getActor({ actors: actors, title: title });
+  return { type: "actor", id: actorId };
+}
 
-    let content = "";
-    actors.forEach((target) => {
-      if (target instanceof Actor) {
-        const enabled = gmActive || target.isOwner;
-        const disabledClass = enabled ? "" : "disabled";
-        content += `<div class="dialog-get-actor flexrow ${disabledClass}" data-actor-id="${target.id}"><img src="${target.img}"><h2>${target.name}</h2></div>`;
-      } else if (target instanceof Item) {
-        content += `<div class="dialog-get-actor flexrow" data-item-id="${target.id}"><img src="${target.img}"><h2>${target.name}</h2></div>`;
-      }
-    });
+/**
+ * Choose actor from list.
+ *
+ * This is simplified interface to {@link pf1.applications.ActorSelector}
+ *
+ * @param {object} options - Options
+ * @param {Function<Actor>} [options.filter] - Filtering callback function.
+ * @param {Actor[]} [options.actors] - Actor list to choose from.
+ * @param {string} [options.title] - Dialog title
+ * @param {boolean} [options.disableUnowned=true] - Disable interactions with unowned actors.
+ * @param {string} [options.selected] - Already selected actor ID.
+ * @param {*} [options.ownership=CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED] - Minimum Ownership level
+ * @param {boolean} [options.showUnowned=true] - Whether to show unowned actors.
+ * @param {object} [options.appOptions={}] - Application options
+ * @param {object} [options.renderOptions={}] - Render options
+ * @returns {Promise<string|null>} - Actor ID or null if cancelled.
+ */
+export async function getActor({
+  filter,
+  actors,
+  title,
+  disableUnowned,
+  ownership,
+  selected,
+  showUnowned,
+  appOptions = {},
+  renderOptions = {},
+} = {}) {
+  const filterFunc = (actor) => {
+    return filter?.(actor) ?? true;
+  };
 
-    new Dialog(
-      {
-        title: title,
-        content: content,
-        buttons: {},
-        close: () => {
-          if (cancelled) {
-            resolve(null);
-          }
-        },
-        render: function (html) {
-          html.find(".dialog-get-actor:not(.disabled)").click((event) => {
-            const elem = event.currentTarget;
-            const actorId = elem.dataset.actorId;
-            if (actorId) {
-              resolve({ type: "actor", id: actorId });
-            } else {
-              const itemId = elem.dataset.itemId;
-              if (itemId) {
-                resolve({ type: "item", id: itemId });
-              }
-            }
-            this.close();
-          });
-        },
-      },
-      {
-        classes: [...Dialog.defaultOptions.classes, "pf1", "get-actor"],
-      }
-    ).render(true);
-  });
-};
+  const options = {
+    actors,
+    disableUnowned,
+    filter: filterFunc,
+    ownership,
+    selected,
+    showUnowned,
+  };
+
+  appOptions.title = title;
+
+  return ActorSelector.wait(options, appOptions, renderOptions);
+}
 
 /**
  * Choose item from actor.

@@ -97,10 +97,11 @@ form {
     }
   }
 
-  .item-list-search {
+  .item-list-search,
+  .actor-list-search {
     display: flex;
     flex-wrap: nowrap;
-    flex: 0 12em;
+    flex: 0;
 
     & ~ .currency {
       margin-left: 1em;
@@ -125,6 +126,10 @@ form {
         }
       }
     }
+  }
+
+  .item-list-search {
+    flex: 0 12em;
   }
 }
 

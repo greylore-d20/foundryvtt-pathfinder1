@@ -36,6 +36,8 @@ export { ExperienceDistributor } from "./xp-distributor.mjs";
 export { ItemDirectoryPF } from "./sidebar/items-directory.mjs";
 export { Troubleshooter } from "./troubleshooter.mjs";
 
+export { ActorSelector } from "./actor-selector.mjs";
+
 /**
  * {@link CompendiumBrowser}s for the various compendiums.
  *

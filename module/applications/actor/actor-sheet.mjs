@@ -2298,10 +2298,6 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
-    targets.push(...this.actor.itemTypes.container);
-    targets.push(
-      ...game.items.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
-    );
     targets.push(
       ...game.actors.contents.filter(
         (o) => o.hasPlayerOwner && o !== this.document && !o.testUserPermission(game.user, "OWNER")

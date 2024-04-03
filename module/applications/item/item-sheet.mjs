@@ -1955,22 +1955,17 @@ export class ItemSheetPF extends ItemSheet {
 
       await this._onSubmit(event, { preventRender: true });
 
-      let links = foundry.utils.deepClone(this.item.toObject().system.links?.[linkType] ?? []);
-      const { uuid, itemId } = li.dataset;
-      const link = links.find((o) => {
-        if (uuid) return o.uuid === uuid;
-        if (itemId) return o.id === itemId;
-        return false;
-      });
-      links = links.filter((o) => o !== link);
+      const links = this.item.toObject().system.links?.[linkType] ?? [];
 
-      const updateData = {};
-      updateData[`system.links.${linkType}`] = links;
+      const deleted = links.splice(Number(li.dataset.index), 1);
+
+      // Sanity check: Should happen only if update sneaks in between render and click
+      if (deleted.uuid && deleted.uuid !== li.dataset.uuid) throw new Error("Link deletion UUID mismatch");
 
       // Call hook for deleting a link
-      Hooks.callAll("pf1DeleteItemLink", this.item, link, linkType);
+      Hooks.callAll("pf1DeleteItemLink", this.item, deleted, linkType);
 
-      await this.item.update(updateData);
+      await this.item.update({ system: { links: { [linkType]: links } } });
     }
   }
 

@@ -285,6 +285,12 @@
       .links-item {
         &.broken-link .links-item-name {
           text-decoration: line-through;
+
+          .name {
+            &::after {
+              content: " [×]";
+            }
+          }
         }
 
         .links-item-name > div {

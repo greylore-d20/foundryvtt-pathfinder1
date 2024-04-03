@@ -24,19 +24,14 @@
 
         <th class="links-controls"></th>
       </tr>
-      {{#each link.items as |item index|}}
-      <tr class="links-item{{#if item.broken}} broken-link{{/if}}" data-uuid="{{item.uuid}}" data-tooltip="UUID: {{item.uuid}}">
+      {{#each link.items}}
+      <tr class="links-item{{#if broken}} broken-link{{/if}}" data-uuid="{{uuid}}" data-index="{{@index}}" data-tooltip="UUID: {{uuid}}">
         {{!-- Link name and image --}}
         <td class="links-item-name">
           <div>
-            <img src="{{item.img}}" width="24" height="24">
-            <span>
-              {{#if item.name}}
-              {{item.name}}
-              {{else}}
-              {{item.uuid}}
-              {{/if}}
-              {{#if item.broken}} [×]{{/if}}
+            <img src="{{img}}" width="24" height="24">
+            <span class="name">
+              {{#if name}}{{name}}{{else}}{{uuid}}{{/if}}
             </span>
           </div>
         </td>

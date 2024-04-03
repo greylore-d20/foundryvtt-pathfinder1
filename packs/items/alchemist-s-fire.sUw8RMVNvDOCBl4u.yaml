@@ -1,5 +1,6 @@
 _id: sUw8RMVNvDOCBl4u
 _key: '!items!sUw8RMVNvDOCBl4u'
+folder: kB3UEM2uyAcNWHIc
 img: systems/pf1/icons/items/potions/unique-6.jpg
 name: Alchemist's Fire
 system:
@@ -7,7 +8,7 @@ system:
     - _id: 0sbs7lavoyzvoeth
       ability:
         attack: dex
-      actionType: rwak
+      actionType: twak
       activation:
         type: attack
         unchained:
@@ -22,11 +23,19 @@ system:
       duration:
         units: inst
       img: systems/pf1/icons/items/potions/unique-6.jpg
-      name: Attack
+      measureTemplate:
+        customColor: '#ff9500'
+        overrideColor: true
+        size: '5'
+        type: circle
+      name: Throw
       range:
         maxIncrements: 5
         units: ft
         value: '10'
+      touch: true
+  baseTypes:
+    - Alchemist's Fire
   description:
     value: >-
       <p>You can throw a flask of alchemist's fire as a <em>splash weapon</em>
@@ -39,37 +48,53 @@ system:
       the flames requires a DC 15 <em>Reflex</em> save. Rolling on the ground
       provides the target a +2 bonus on the save. Leaping into a lake or
       magically extinguishing the flames automatically smothers the
-      fire.</p><p><em>Craft</em> (alchemy) DC: 20</p><h3>Alchemical Power
-      Component</h3><p class="source"><strong>Source</strong>
-      <em>PZO9410</em></p><p>This dwarven favorite can make fire spells last
-      longer.</p><ul><li><em>Burning Hands</em> (M): One target that fails its
-      <em>Reflex</em> saving throw (your choice) catches on fire as if it has
-      been struck by <em>alchemist's</em> fire.</li><li><em>Fireball</em> (M):
-      One target per <em>caster level</em> that fails its <em>Reflex</em> saving
-      throw (your choice) catches on fire as if it has been struck by
-      <em>alchemist's</em> fire.</li><li><em>Flaming Sphere</em> (M): Any
-      creature damaged by a <em>flaming sphere</em> catches on fire as if it has
-      been struck by <em>alchemist's</em> fire.</li><li><em>Protection from
-      Energy</em> (M): If cast to ward against cold, increase the amount of cold
-      damage absorbed by 5.</li><li><em>Resist Energy</em> (M): If cast to ward
-      against cold, increase the cold <em>resistance</em> to 12. At <em>caster
-      level</em> 7th, you may use two flasks of <em>alchemist's</em> fire as a
-      power component to increase the cold <em>resistance</em> to 24. At
-      <em>caster level</em> 11th, you may use three flasks as a power component
-      to increase the cold <em>resistance</em> to 36.</li><li><em>Scorching
-      Ray</em> (F): Add a +1 <em>circumstance bonus</em> on your <em>attack
-      roll</em> with all rays from the spell.</li><li><em>Scorching Ray</em>
-      (M): Any target damaged by a <em>scorching ray</em> catches on fire as if
-      it has been struck by <em>alchemist's</em> fire.</li></ul>
+      fire.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
+      20</p><h3>Alchemical Power Component</h3><p
+      class="source"><strong>Source</strong> <em>PZO9410</em></p><p>This dwarven
+      favorite can make fire spells last longer.</p><ul><li><em>Burning
+      Hands</em> (M): One target that fails its <em>Reflex</em> saving throw
+      (your choice) catches on fire as if it has been struck by
+      <em>alchemist's</em> fire.</li><li><em>Fireball</em> (M): One target per
+      <em>caster level</em> that fails its <em>Reflex</em> saving throw (your
+      choice) catches on fire as if it has been struck by <em>alchemist's</em>
+      fire.</li><li><em>Flaming Sphere</em> (M): Any creature damaged by a
+      <em>flaming sphere</em> catches on fire as if it has been struck by
+      <em>alchemist's</em> fire.</li><li><em>Protection from Energy</em> (M): If
+      cast to ward against cold, increase the amount of cold damage absorbed by
+      5.</li><li><em>Resist Energy</em> (M): If cast to ward against cold,
+      increase the cold <em>resistance</em> to 12. At <em>caster level</em> 7th,
+      you may use two flasks of <em>alchemist's</em> fire as a power component
+      to increase the cold <em>resistance</em> to 24. At <em>caster level</em>
+      11th, you may use three flasks as a power component to increase the cold
+      <em>resistance</em> to 36.</li><li><em>Scorching Ray</em> (F): Add a +1
+      <em>circumstance bonus</em> on your <em>attack roll</em> with all rays
+      from the spell.</li><li><em>Scorching Ray</em> (M): Any target damaged by
+      a <em>scorching ray</em> catches on fire as if it has been struck by
+      <em>alchemist's</em> fire.</li></ul>
+  equipped: false
+  material:
+    addon:
+      - null
+      - null
+      - null
+      - null
+    normal:
+      value: ''
   price: 20
+  proficient: true
   sources:
+    - id: PZO9445
+      pages: '30'
+    - id: PZO1123
+      pages: '107'
     - id: PZO1110
+      pages: '158'
   subType: misc
   tags:
     - Power Component
   uses:
     per: single
-  weaponSubtype: other
+  weaponSubtype: splash
   weight:
     value: 1
 type: weapon

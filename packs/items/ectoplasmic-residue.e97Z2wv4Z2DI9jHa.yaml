@@ -1,5 +1,6 @@
 _id: e97Z2wv4Z2DI9jHa
 _key: '!items!e97Z2wv4Z2DI9jHa'
+folder: kB3UEM2uyAcNWHIc
 img: icons/consumables/potions/flask-ornate-skull-green.webp
 name: Ectoplasmic Residue
 system:
@@ -12,12 +13,15 @@ system:
         type: attack
         unchained:
           type: attack
+      duration:
+        units: inst
       img: icons/consumables/potions/flask-ornate-skull-green.webp
       measureTemplate:
         size: '5'
-        type: rect
-      name: Attack
+        type: circle
+      name: Throw
       range:
+        maxIncrements: 5
         units: ft
         value: '10'
       save:
@@ -25,6 +29,8 @@ system:
         description: Will negates
         type: will
       touch: true
+  baseTypes:
+    - Ectoplasmic Residue
   description:
     value: >-
       <p>This flask is filled with the detritus of minor ectoplasmic phantoms
@@ -34,7 +40,9 @@ system:
       succeed at a DC 13 Will save or be shaken for 1d4 rounds. Every creature
       within 5 feet of the point where the flask hits must succeed at a DC 13
       Will save or be shaken for 1 round. This is a mind-affecting fear
-      effect.</p>
+      effect.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
+      25</p>
+  equipped: false
   material:
     addon:
       - null
@@ -43,6 +51,8 @@ system:
       - null
     normal:
       value: ''
+  price: 20
+  proficient: true
   sources:
     - id: PZO1132
       pages: '251'
@@ -50,5 +60,7 @@ system:
   uses:
     per: single
   weaponSubtype: splash
+  weight:
+    value: 2
 type: weapon
 

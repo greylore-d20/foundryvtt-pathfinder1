@@ -1,23 +1,88 @@
 _id: jplmkdpgjrlouwzu
 _key: '!items!jplmkdpgjrlouwzu'
+folder: kB3UEM2uyAcNWHIc
 img: systems/pf1/icons/items/potions/major-blue.jpg
 name: Alkali Flask
 system:
+  actions:
+    - _id: 3095UJm4OX6a93PA
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      conditionals:
+        - _id: bf88P2m7akLub3Ft
+          default: true
+          modifiers:
+            - _id: 7PnfxjHozuehwaEo
+              critical: normal
+              damageType:
+                custom: ''
+                values:
+                  - acid
+              formula: 1d6
+              subTarget: allDamage
+              target: damage
+              type: ''
+          name: Target is ooze?
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/potions/major-blue.jpg
+      measureTemplate:
+        customColor: '#007bff'
+        overrideColor: true
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      touch: true
+  baseTypes:
+    - Alkali Flask
   description:
     value: >-
       <p>This flask of caustic liquid reacts with an <em>ooze's natural</em>
       acids. You can throw an alkali flask as a <em>splash weapon</em> with a
       range increment of 10 feet. Against non-ooze creatures, an alkali flask
       functions as a normal flask of acid. Against <em>oozes</em> and other
-      acid-based creatures, the alkali flask inflicts double damage.</p>
-
-      <p><b>Create</b>: <em>Craft</em> (alchemy) DC 20</p>
+      acid-based creatures, the alkali flask inflicts double
+      damage.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
+      20</p>
   equipped: false
+  material:
+    addon:
+      - null
+      - null
+      - null
+      - null
+    normal:
+      value: ''
   price: 15
+  proficient: true
   sources:
+    - id: PZO1123
+      pages: '107'
+    - id: PZO9210
+      pages: '19'
     - id: PZO1115
-  subType: gear
+      pages: '184'
+  subType: misc
+  uses:
+    per: single
+  weaponSubtype: splash
   weight:
     value: 1
-type: loot
+type: weapon
 

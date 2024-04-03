@@ -1,8 +1,42 @@
 _id: jpqjxerilvwtcfwq
 _key: '!items!jpqjxerilvwtcfwq'
+folder: kB3UEM2uyAcNWHIc
 img: systems/pf1/icons/items/potions/unique-3.jpg
 name: Pox Burster
 system:
+  actions:
+    - _id: qUXKJ4OLh0n3BPkL
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          creatures in adjacent squares receive a +4 bonus on their saving
+          throw, when injured in the next minute
+      img: systems/pf1/icons/items/potions/unique-3.jpg
+      measureTemplate:
+        customColor: '#00e61b'
+        overrideColor: true
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      save:
+        dc: '13'
+        description: Fortitude negates
+        type: fort
+      touch: true
+  baseTypes:
+    - Pox Burster
   description:
     value: >-
       <p>A pox burster is an alchemically preserved animal bladder or gourd that
@@ -13,13 +47,28 @@ system:
       filth fever. Every space adjacent to the target square of the pox burster
       is covered in <em>disease</em>-causing filth. For the next minute, any
       creature that is injured while in one of these spaces must also make a DC
-      9 <em>Fortitude</em> save or contract filth fever.</p>
+      9 <em>Fortitude</em> save or contract filth
+      fever.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
+      25</p>
   equipped: false
+  material:
+    addon:
+      - null
+      - null
+      - null
+      - null
+    normal:
+      value: ''
   price: 50
+  proficient: true
   sources:
     - id: PZO1121
-  subType: gear
+      pages: '154'
+  subType: misc
+  uses:
+    per: single
+  weaponSubtype: splash
   weight:
     value: 1
-type: loot
+type: weapon
 

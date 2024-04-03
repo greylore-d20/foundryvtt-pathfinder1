@@ -1,8 +1,37 @@
 _id: thyddvmwqimlyxrl
 _key: '!items!thyddvmwqimlyxrl'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+folder: kB3UEM2uyAcNWHIc
+img: icons/consumables/potions/bottle-conical-fumes-green.webp
 name: Brewed Reek
 system:
+  actions:
+    - _id: iPOSsnnAGDO7BQ0d
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: round
+        value: 2d6
+      img: icons/consumables/potions/bottle-conical-fumes-green.webp
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      save:
+        dc: '15'
+        description: Fortitude negates
+        type: fort
+      touch: true
+  baseTypes:
+    - Brewed Reek
   description:
     value: >-
       <p>Animal musk, spoiled meat, pungent plants, and any other foul-smelling
@@ -15,15 +44,28 @@ system:
       or be <em>nauseated</em> for 1 round. Creatures in the splash area must
       make a <em>Fortitude</em> save or be <em>sickened</em> for 1 round. A
       creature that drinks brewed reek does not get a saving throw and is
-      <em>sickened</em> for 2d6 rounds and <em>nauseated</em> for 1 round.</p>
-
-      <p><b>Create</b>: <em>Craft</em> (alchemy) DC 25</p>
+      <em>sickened</em> for 2d6 rounds and <em>nauseated</em> for 1
+      round.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
+      25</p>
   equipped: false
+  material:
+    addon:
+      - null
+      - null
+      - null
+      - null
+    normal:
+      value: ''
   price: 40
+  proficient: true
   sources:
     - id: PZO1121
-  subType: gear
+      pages: '123'
+  subType: misc
+  uses:
+    per: single
+  weaponSubtype: splash
   weight:
     value: 1
-type: loot
+type: weapon
 

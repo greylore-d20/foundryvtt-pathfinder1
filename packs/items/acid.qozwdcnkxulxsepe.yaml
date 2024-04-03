@@ -1,5 +1,6 @@
 _id: qozwdcnkxulxsepe
 _key: '!items!qozwdcnkxulxsepe'
+folder: kB3UEM2uyAcNWHIc
 img: systems/pf1/icons/items/potions/major-green.jpg
 name: Acid
 system:
@@ -7,7 +8,7 @@ system:
     - _id: g2rblzzkmv43el5f
       ability:
         attack: dex
-      actionType: rwak
+      actionType: twak
       activation:
         type: attack
         unchained:
@@ -22,17 +23,26 @@ system:
       duration:
         units: inst
       img: systems/pf1/icons/items/potions/major-green.jpg
-      name: Attack
+      measureTemplate:
+        customColor: '#04e600'
+        overrideColor: true
+        size: '5'
+        type: cone
+      name: Throw
       range:
         maxIncrements: 5
         units: ft
         value: '10'
+      touch: true
+  baseTypes:
+    - Acid
   description:
     value: >-
       <p>You can throw a flask of acid as a <em>splash weapon</em> with a range
       increment of 10 feet.</p><p>A direct hit deals 1d6 points of acid damage.
       Every creature within 5 feet of the point where the acid hits takes 1
-      point of acid damage from the splash.</p><p>Craft (alchemy) DC:
+      point of acid damage from the
+      splash.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
       15</p><h3>Alchemical Power Component</h3><p
       class="source"><strong>Source</strong> <em>PZO9410</em></p><p>A common
       flask of acid has many uses as an alchemical power component, particularly
@@ -52,21 +62,30 @@ system:
       Ice</em> (M): For each flask of acid used as a power component, you may
       designate one 10-foot square of ice wall that, if <em>broken</em> through,
       deals 1d6 acid damage in addition to the normal cold damage.</li></ul>
-  links:
-    children:
-      - id: VOIeK1O7fy1zwq7s
-        name: Alchemist's Fire
-      - id: oaE0JqMAImcekCyU
-        name: Acid
+  equipped: false
+  material:
+    addon:
+      - null
+      - null
+      - null
+      - null
+    normal:
+      value: ''
   price: 10
+  proficient: true
   sources:
+    - id: PZO9445
+      pages: '30'
+    - id: PZO1123
+      pages: '107'
     - id: PZO1110
+      pages: '158'
   subType: misc
   tags:
     - Power Component
   uses:
     per: single
-  weaponSubtype: other
+  weaponSubtype: splash
   weight:
     value: 1
 type: weapon

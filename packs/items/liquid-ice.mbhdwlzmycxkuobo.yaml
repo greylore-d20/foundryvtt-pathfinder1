@@ -1,8 +1,55 @@
 _id: mbhdwlzmycxkuobo
 _key: '!items!mbhdwlzmycxkuobo'
+folder: kB3UEM2uyAcNWHIc
 img: systems/pf1/icons/items/potions/minor-blue.jpg
 name: Liquid Ice
 system:
+  actions:
+    - _id: nGeKcaVkpiW0sIOX
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/potions/minor-blue.jpg
+      measureTemplate:
+        customColor: '#00ccff'
+        overrideColor: true
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      touch: true
+    - _id: wKjf0zKqtfzvsl5M
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: round
+        value: 1d6
+      img: systems/pf1/icons/items/potions/minor-blue.jpg
+      name: Evaporate
+      range:
+        units: melee
+      target:
+        value: Liquid or object
+  baseTypes:
+    - Liquid Ice
   description:
     value: >-
       <p>Also known as "alchemist's ice," this sealed jar of crystalline blue
@@ -11,7 +58,7 @@ system:
       layer of ice. You can also throw liquid ice as a <em>splash weapon</em>. A
       direct hit deals 1d6 points of cold damage; creatures within 5 feet of
       where it hits take 1 point of cold damage from the
-      splash.</p><p><strong>Create</strong>: <em>Craft</em> (alchemy) DC
+      splash.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong> DC
       25</p><h3>Alchemical Power Component</h3><p
       class="source"><strong>Source</strong> <em>PZO9410</em></p><p>Liquid ice
       augments cold magic.</p><ul><li><em>Cone of Cold</em> (M): The spell deals
@@ -29,13 +76,30 @@ system:
       11th, you may use three jars as a power component to increase the fire
       <em>resistance</em> to 36.</li></ul>
   equipped: false
+  material:
+    addon:
+      - null
+      - null
+      - null
+      - null
+    normal:
+      value: ''
   price: 40
+  proficient: true
   sources:
+    - id: PZO1123
+      pages: '107'
     - id: PZO1115
-  subType: gear
+      pages: '184'
+    - id: PZO9410
+      pages: '19'
+  subType: misc
   tags:
     - Power Component
+  uses:
+    per: single
+  weaponSubtype: splash
   weight:
     value: 2
-type: loot
+type: weapon
 

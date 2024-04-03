@@ -1770,13 +1770,6 @@ const _migrateUnchainedActionEconomy = (action, item) => {
 };
 
 const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
-  if (
-    ["attack", "consumable", "equipment"].includes(itemData.type) &&
-    !foundry.utils.hasProperty(itemData.system, "links.charges")
-  ) {
-    updateData["system.links.charges"] = [];
-  }
-
   const linkData = itemData.system.links ?? {};
   for (const [linkType, oldLinks] of Object.entries(linkData)) {
     let updated = false;
@@ -1803,8 +1796,9 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
 
       // Convert ID to relative UUID
       if (link.id !== undefined) {
-        link.uuid = actor?.items.get(link.id)?.getRelativeUUID(actor);
-        if (link.uuid) delete link.id;
+        link.uuid = actor.items.get(link.id)?.getRelativeUUID(actor);
+        delete link.id;
+        updated = true;
       }
 
       // Remove unused data

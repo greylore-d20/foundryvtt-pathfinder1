@@ -1547,10 +1547,11 @@ export class ItemSheetPF extends ItemSheet {
 
     // Try to extract the data
     const data = TextEditor.getDragEventData(event.originalEvent);
-    if (!data.type) return;
+    if (!data.type) throw new Error("Invalid drop data received");
 
     const targetItem = await fromUuid(data.uuid);
-    if (!targetItem) return;
+    if (!targetItem || !(targetItem instanceof Item))
+      throw new Error(`UUID did not resolve to valid item: ${data.uuid}`);
 
     let dataType,
       itemLink = data.uuid;

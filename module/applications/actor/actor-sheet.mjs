@@ -1331,12 +1331,14 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.target;
     const parent = el.parentElement;
 
+    const isNumber = el.dataset.dtype === "Number" || el.type === "number";
+
     // Replace span element with an input (text) element
     const newEl = document.createElement("INPUT");
     newEl.type = "text";
     if (el.dataset?.dtype) {
       newEl.dataset.dtype = el.dataset.dtype;
-      if (el.dataset.dtype === "Number") newEl.size = 12; // HTML defaults to 20
+      if (isNumber) newEl.size = 12; // HTML defaults to 20
     }
 
     const noCap = el.classList.contains("no-value-cap");
@@ -1348,13 +1350,13 @@ export class ActorSheetPF extends ActorSheet {
     if (name) {
       newEl.setAttribute("name", name);
       prevValue = foundry.utils.getProperty(this.document, name) || 0;
-      if (name.endsWith(".value") && !noCap) {
+      if (name.endsWith(".value") && !noCap && isNumber) {
         const maxName = name.replace(/\.value$/, ".max");
         maxValue = foundry.utils.getProperty(this.document, maxName);
       }
     } else {
       if (!el.classList.contains("placeholder")) {
-        prevValue = parseFloat(el.innerText || "0");
+        prevValue = isNumber ? parseFloat(el.innerText || "0") : el.innerText || "";
       }
     }
 
@@ -1368,7 +1370,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     const allowRelative = el.classList.contains("allow-relative"),
-      clearValue = parseFloat(el.dataset.clearValue || "0");
+      clearValue = isNumber ? parseFloat(el.dataset.clearValue || "0") : "";
 
     // Replace span with input element
     parent.replaceChild(newEl, el);
@@ -1839,8 +1841,8 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Makes a readonly text input editable, and focus it.
    *
-   * @param event
    * @private
+   * @param {Event} event
    */
   _onInputText(event) {
     event.preventDefault();
@@ -1854,7 +1856,7 @@ export class ActorSheetPF extends ActorSheet {
     const origValue = elem.value;
     elem.value = value;
 
-    const wheelEvent = event && event instanceof WheelEvent;
+    const wheelEvent = event instanceof WheelEvent;
     if (wheelEvent) {
       this._mouseWheelAdd(event, elem);
     } else {
@@ -1873,19 +1875,13 @@ export class ActorSheetPF extends ActorSheet {
       }
       elem.removeEventListener("click", handler);
 
-      if (
-        (typeof value === "string" && value !== elem.value) ||
-        (typeof value === "number" && value !== parseInt(elem.value))
-      ) {
-        changed = true;
-      }
+      if (`${value}` !== elem.value) changed = true;
 
       if (changed) {
         this._onSubmit(event);
       } else {
         elem.readOnly = true;
         elem.value = origValue;
-        return;
       }
     };
     const keyHandler = (event) => {

@@ -46,18 +46,10 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     const data = await super.getData();
 
     // Challenge Rating
-    try {
-      data.labels.cr = CR.fromNumber(this.actor.system.details?.cr?.total);
-    } catch (e) {
-      try {
-        data.labels.cr = CR.fromNumber(this.actor.system.details?.cr);
-      } catch (e) {
-        data.labels.cr = CR.fromNumber(1);
-      }
-    }
+    data.labels.cr = CR.fromNumber(this.actor.system.details?.cr?.total ?? 0);
 
     const hpSettings = game.settings.get("pf1", "healthConfig");
-    data["woundThresholds"] = hpSettings.variants.npc;
+    data.woundThresholds = hpSettings.variants.npc;
 
     data.levelUp = true;
 

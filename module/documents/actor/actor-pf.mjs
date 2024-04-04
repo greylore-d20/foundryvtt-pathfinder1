@@ -933,11 +933,11 @@ export class ActorPF extends ActorBasePF {
 
     if (useAuto) {
       let casterType = book.casterType;
-      if (!casterType || (mode.isHybrid && casterType !== "high")) {
-        book.casterType = casterType = "high";
-      }
-      if (mode.isPrestige && casterType !== "low") {
-        book.casterType = casterType = "low";
+      // Set caster type to sane default if configuration not found.
+      if (pf1.config.casterProgression.castsPerDay[mode.raw]?.[casterType] === undefined) {
+        const keys = Object.keys(pf1.config.casterProgression.castsPerDay[mode.raw]);
+        if (mode.isPrestige) book.casterType = casterType = keys[0];
+        else book.casterType = casterType = keys.at(-1);
       }
 
       const castsForLevels =

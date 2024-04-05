@@ -15,12 +15,15 @@ system:
         units: round
         value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
+      measureTemplate:
+        size: '15'
+        type: circle
       name: Use
       range:
         units: ft
         value: '100'
       target:
-        value: a number of creatures up to your Charisma modifier
+        value: up to [[@abilities.cha.mod]] creatures
   associations:
     classes:
       - Oracle
@@ -35,6 +38,11 @@ system:
       rounds equal to your oracle level.</p>
 
       <p>You must be at least 7th level to select this revelation.</p>
+  sources:
+    - id: PZO9436
+      pages: '14'
+    - id: PZO9039
+      pages: '68'
   subType: classFeat
   tag: classFeat_unwillingHost
   tags:

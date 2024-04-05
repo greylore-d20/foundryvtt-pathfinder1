@@ -7,8 +7,8 @@ system:
   actions:
     - _id: uugkwzg6mnqdz1bn
       ability:
-        attack: dex
-      actionType: msak
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
@@ -28,10 +28,12 @@ system:
       range:
         units: touch
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortitude half
         type: fort
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Oracle
@@ -39,18 +41,14 @@ system:
     value: >-
       <p>You can channel the hostile, unforgiving heat of the sun into your
       touch. This is a melee touch attack that deals 1d8 points of fire damage
-      per 2 oracle levels (Fortitude half ). Against a plant creature, this
-      touch heals or damages the creature (your choice) for 1d6 points of fire
-      damage per oracle level.</p>
-
-      <p>At 7th level, a creature that fails its save against this revelation
-      becomes sickened for 1d4 hours in addition to taking fire damage.</p>
-
-      <p>At 15th level, your touch is so intense that a creature that fails its
-      save is also staggered for 1d6 rounds.</p>
-
-      <p>You can use this ability once per day plus one additional time per day
-      at 10th level.</p>
+      per 2 oracle levels (Fortitude half). Against a plant creature, this touch
+      heals or damages the creature (your choice) for 1d6 points of fire damage
+      per oracle level.</p><p>At 7th level, a creature that fails its save
+      against this revelation becomes sickened for 1d4 hours in addition to
+      taking fire damage.</p><p>At 15th level, your touch is so intense that a
+      creature that fails its save is also staggered for 1d6 rounds.</p><p>You
+      can use this ability once per day plus one additional time per day at 10th
+      level.</p>
   subType: classFeat
   tag: classFeat_blisteredCaress
   tags:

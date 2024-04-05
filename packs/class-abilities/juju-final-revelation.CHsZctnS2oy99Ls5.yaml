@@ -4,13 +4,24 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Juju Final Revelation
 system:
   actions:
-    - _id: zb5ahqw38r2icepq
+    - _id: RalpUwBJjgpjyH1R
+      actionType: spellsave
       activation:
-        type: passive
+        type: round
         unchained:
-          type: passive
+          cost: 3
+          type: action
+      duration:
+        units: day
+        value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will negates
+        type: will
+      target:
+        value: '[[@abilities.cha.mod * 2]] creatures'
   associations:
     classes:
       - Oracle
@@ -25,20 +36,79 @@ system:
       modifier: insight
       priority: null
       subTarget: allSavingThrows
+    - _id: EqQmdVpk
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kar
+    - _id: OHvZSscI
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kdu
+    - _id: ieRxPK8G
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.ken
+    - _id: 1Jpm4hXQ
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kge
+    - _id: 7QoLRnPE
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.khi
+    - _id: CMTp8YX0
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.klo
+    - _id: DkYHeCS4
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kna
+    - _id: 93Q4rtne
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kno
+    - _id: asQpySpa
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kpl
+    - _id: BFkCRU3Y
+      formula: '@abilities.cha.mod'
+      modifier: insight
+      priority: null
+      subTarget: skill.kre
   description:
     value: >-
       <p>At 20th level, you become a master of the connections between the
       mortal world and the spirit world. Your knowledge enables you to gain
       incredible insight and control over others by manipulating spiritual
       energy. You gain an insight bonus equal to your Charisma modifier to your
-      AC and on all saving throws and Knowledge checks.</p>
-
-      <p>Additionally, once per day, you may cast extended dominate monster as a
+      AC and on all saving throws and Knowledge checks.</p><p>Additionally, once
+      per day, you may cast extended
+      @UUID[Compendium.pf1.spells.Item.66s5qm8kwycgobce]{dominate monster} as a
       spell-like ability. With this ability, you may dominate a number of
       creatures equal to double your Charisma modifier.</p>
+  sources:
+    - id: PZO9436
+      pages: '14'
+    - id: PZO9039
+      pages: '68'
   subType: classFeat
   tags:
     - Revelation
     - Juju Mystery
+  uses:
+    maxFormula: '1'
+    per: day
+    value: 1
 type: feat
 

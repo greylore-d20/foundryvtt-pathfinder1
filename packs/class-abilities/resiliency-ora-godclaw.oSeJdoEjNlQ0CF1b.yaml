@@ -15,6 +15,11 @@ system:
   associations:
     classes:
       - Oracle
+  changes:
+    - _id: OkKBUhzJ
+      formula: '(@class.level >= 7 ? 1 : 0)'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>Once per day, when you are brought below 0 hit points but not killed,
@@ -28,6 +33,9 @@ system:
       <p>At 15th level, three times per day, if you are disabled and take a
       standard action (or any otherwise strenuous action), you avoid taking 1
       point of damage if you succeed at a DC 15 Fortitude saving throw.</p>
+  sources:
+    - id: PZO9293
+      pages: '26'
   subType: classFeat
   tag: classFeat_resiliencyOraGodclaw
   tags:

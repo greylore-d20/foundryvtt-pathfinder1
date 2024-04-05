@@ -6,18 +6,69 @@ system:
   abilityType: su
   actions:
     - _id: b8o4u6coahvvfhoa
+      ability:
+        attack: str
+      actionType: mwak
       activation:
-        type: attack
+        type: standard
         unchained:
-          type: attack
+          cost: 2
+          type: action
       duration:
         units: inst
       img: systems/pf1/icons/spells/light-royal-1.jpg
-      name: Use
+      name: Touch living creature
       range:
         units: touch
       target:
         value: creature touched
+      touch: true
+    - _id: w3BVXcbk3mtd1G1v
+      ability:
+        attack: str
+      actionType: mwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (@class.level)d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Touch object or construct
+      range:
+        units: touch
+      target:
+        value: Object or construct touched
+      touch: true
+    - _id: JSgDbMfjyqnnEP15
+      ability:
+        attack: str
+      actionType: mcman
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackName: Sunder
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      material:
+        normal: ''
+      name: Touch object in another's possesion
+      range:
+        units: touch
+      target:
+        value: object in another creature's possession
+      touch: true
   associations:
     classes:
       - Oracle

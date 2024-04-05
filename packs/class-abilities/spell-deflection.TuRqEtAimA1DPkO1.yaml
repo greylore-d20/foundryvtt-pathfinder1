@@ -4,6 +4,25 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Spell Deflection
 system:
   abilityType: su
+  actions:
+    - _id: u7DkXcy5yL0EpaFU
+      ability:
+        attack: str
+      actionType: mwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      attackName: unarmed attack roll
+      duration:
+        units: inst
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
+      range:
+        units: seeText
+      target:
+        value: Spellcaster
   associations:
     classes:
       - Oracle
@@ -19,6 +38,9 @@ system:
       the caster with the same ranged touch attack result.</p>
 
       <p>You must be at least 11th level before selecting this revelation.</p>
+  sources:
+    - id: PZO1136
+      pages: '104'
   subType: classFeat
   tags:
     - Revelation

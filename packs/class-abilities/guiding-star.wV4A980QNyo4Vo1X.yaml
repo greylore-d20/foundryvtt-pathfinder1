@@ -4,6 +4,14 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Guiding Star
 system:
   abilityType: su
+  actions:
+    - _id: lXvU0orGm4v1IzTN
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Use
   associations:
     classes:
       - Oracle
@@ -17,9 +25,16 @@ system:
       <p>In addition, once per night while outdoors, you can cast one spell as
       if it were modified by the Empower Spell, Extend Spell, Silent Spell, or
       Still spell feat without increasing the spell's casting time or level.</p>
+  sources:
+    - id: PZO1129
+      pages: '47'
   subType: classFeat
   tags:
     - Revelation
     - Heavens Mystery
+  uses:
+    maxFormula: '1'
+    per: day
+    value: 1
 type: feat
 

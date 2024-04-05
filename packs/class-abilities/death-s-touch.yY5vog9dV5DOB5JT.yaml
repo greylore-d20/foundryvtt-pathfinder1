@@ -7,8 +7,8 @@ system:
   actions:
     - _id: 6z9hem06l0w9lk6h
       ability:
-        attack: dex
-      actionType: msak
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
@@ -29,6 +29,7 @@ system:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Oracle
@@ -40,6 +41,9 @@ system:
       creature, it heals damage and grants a +2 channel resistance for 1 minute.
       You can use this ability a number of times per day equal to 3 + your
       Charisma modifier.</p>
+  sources:
+    - id: PZO1115
+      pages: '46'
   subType: classFeat
   tag: classFeat_deathsTouch
   tags:

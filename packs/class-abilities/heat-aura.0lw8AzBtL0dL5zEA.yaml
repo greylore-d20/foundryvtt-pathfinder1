@@ -13,7 +13,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (floor(@class.level / 2))d4
+          - formula: max((floor(@class.level / 2)), 1)d4
             type:
               custom: ''
               values:
@@ -26,6 +26,7 @@ system:
         units: ft
         value: '10'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Reflex half
         type: ref
       target:
@@ -43,6 +44,9 @@ system:
 
       <p>You can use this ability once per day, plus one additional time per day
       at 5th level and every five levels thereafter.</p>
+  sources:
+    - id: PZO1115
+      pages: '47'
   subType: classFeat
   tag: classFeat_heatAura
   tags:

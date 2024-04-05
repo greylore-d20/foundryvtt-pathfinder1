@@ -4,26 +4,32 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Juju Senses
 system:
   abilityType: ex
-  actions:
-    - _id: t1wb1ne0y5a8itnq
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      name: Use
   associations:
     classes:
       - Oracle
+  contextNotes:
+    - subTarget: skill.per
+      text: >-
+        +[[2 + (@class.level >= 10 ? 2 : 0)]] against spirit creatures, such as
+        outsiders, fey, and incorporeal undead.
+    - subTarget: skill.sen
+      text: >-
+        +[[2 + (@class.level >= 10 ? 2 : 0)]] against spirit creatures, such as
+        outsiders, fey, and incorporeal undead.
   description:
     value: >-
-      <p>When casting detect magic and identify, you gain a +2 bonus on
-      Knowledge (arcana) and Spellcraft checks to recognize auras and identify
-      their properties. You also gain a +2 bonus on Perception and Sense Motive
-      checks made against spirit creatures, such as outsiders, fey, and
-      incorporeal undead.</p>
-
-      <p>At 10th level, this bonus increases to +4.</p>
+      <p>When casting @UUID[Compendium.pf1.spells.Item.uqh87jz757r2cb7r]{detect
+      magic} and @UUID[Compendium.pf1.spells.Item.llxrra87kbofmyhl]{identify},
+      you gain a +2 bonus on Knowledge (arcana) and Spellcraft checks to
+      recognize auras and identify their properties. You also gain a +2 bonus on
+      Perception and Sense Motive checks made against spirit creatures, such as
+      outsiders, fey, and incorporeal undead.</p><p>At 10th level, this bonus
+      increases to +4.</p>
+  sources:
+    - id: PZO9436
+      pages: '14'
+    - id: PZO9039
+      pages: '68'
   subType: classFeat
   tags:
     - Revelation

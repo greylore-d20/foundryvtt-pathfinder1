@@ -6,14 +6,21 @@ system:
   abilityType: su
   actions:
     - _id: t3jjqp7j4wghxmyp
+      ability:
+        attack: str
       actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      duration:
+        units: round
+        value: '@class.level'
       img: systems/pf1/icons/spells/light-royal-1.jpg
       name: Use
+      target:
+        value: lycanthrope
       touch: true
   associations:
     classes:
@@ -30,6 +37,9 @@ system:
       spell. Using this ability is a melee touch attack.</p><p>You can use this
       ability once per day at 5th level plus one additional time per day for
       every 5 levels above 5th.</p>
+  sources:
+    - id: PZO1129
+      pages: '47'
   subType: classFeat
   tag: classFeat_mantleOfMoonlight
   tags:

@@ -15,6 +15,12 @@ system:
   associations:
     classes:
       - Oracle
+  contextNotes:
+    - subTarget: allSavingThrows
+      text: >-
+        +[[2 + (@class.level >= 11 ? 2 : 0)]] insight bonus against diseases,
+        mind-affecting effects, and poisons. At 7th level, this bonus also
+        applies on saves against death effects, sleep effects, and stunning.
   description:
     value: >-
       <p>You gain a +2 insight bonus on saves against diseases, mind-affecting
@@ -24,6 +30,11 @@ system:
       sleep effects, and stunning.</p>
 
       <p>At 11th level, the bonus increases to +4.</p>
+  sources:
+    - id: PZO1115
+      pages: '46'
+    - id: PZO1130
+      pages: '56'
   subType: classFeat
   tags:
     - Revelation

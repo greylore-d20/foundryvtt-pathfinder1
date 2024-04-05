@@ -6,10 +6,12 @@ system:
   abilityType: su
   actions:
     - _id: 3fok40s4535zo7g6
+      actionType: mwak
       activation:
-        type: attack
+        type: standard
         unchained:
-          type: attack
+          cost: 2
+          type: action
       duration:
         units: round
         value: max(1, floor(@class.level / 2))
@@ -17,8 +19,13 @@ system:
       name: Use
       range:
         units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Fortitude negates
+        type: fort
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Oracle

@@ -4,17 +4,14 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Might of the Godclaw
 system:
   abilityType: su
-  actions:
-    - _id: tqdtllwaprgx1xen
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/spells/light-royal-1.jpg
-      name: Use
   associations:
     classes:
       - Oracle
+  changes:
+    - _id: Pu5TsRA6
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>You gain Deific Obedience (Pathfinder Campaign Setting Inner Sea Gods
@@ -25,9 +22,11 @@ system:
       deity’s obedience. You can choose to gain the benefits of a maximum of
       four Godclaw deities’ obediences if you choose to forgo all three of your
       god’s boons. You never need to spend more than 1 hour per day to perform
-      your obedience.</p>
-
-      <p>You must be at least 3rd level to select this revelation.</p>
+      your obedience.</p><p>You must be at least 3rd level to select this
+      revelation.</p>
+  sources:
+    - id: PZO9293
+      pages: '26'
   subType: classFeat
   tags:
     - Revelation

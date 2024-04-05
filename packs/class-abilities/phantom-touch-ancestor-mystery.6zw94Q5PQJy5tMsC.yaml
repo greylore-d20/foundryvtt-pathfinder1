@@ -7,8 +7,8 @@ system:
   actions:
     - _id: 7fvofw7ctvqqfxid
       ability:
-        attack: dex
-      actionType: msak
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
@@ -23,6 +23,7 @@ system:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Oracle
@@ -32,6 +33,9 @@ system:
       a living creature to become shaken. This ability lasts for a number of
       rounds equal to 1/2 your oracle level (minimum 1 round). You can use this
       ability a number of times per day equal to 3 + your Charisma modifier.</p>
+  sources:
+    - id: PZO1117
+      pages: '53'
   subType: classFeat
   tag: classFeat_phantomTouch
   tags:

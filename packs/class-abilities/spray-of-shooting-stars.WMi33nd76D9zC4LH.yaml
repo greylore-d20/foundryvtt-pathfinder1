@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: (@class.level)d6
+          - formula: (@class.level)d4
             type:
               custom: ''
               values:
@@ -22,10 +22,17 @@ system:
       duration:
         units: inst
       img: systems/pf1/icons/spells/light-royal-1.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
       name: Use
       range:
         units: ft
         value: '60'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Reflex half
+        type: ref
       target:
         value: 5-ft. burst
   associations:
@@ -42,6 +49,9 @@ system:
       day at 5th level and for every 5 levels thereafter. You can fire more than
       one ball at a time, but creatures caught inside more than one simultaneous
       explosions only take damage once.</p>
+  sources:
+    - id: PZO1129
+      pages: '47'
   subType: classFeat
   tag: classFeat_sprayOfShootingStars
   tags:

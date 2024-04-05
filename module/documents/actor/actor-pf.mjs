@@ -1290,7 +1290,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareOverlandSpeeds();
 
     this._initialized = true;
-    this._setSourceDetails(this.sourceInfo);
+    this._setSourceDetails();
   }
 
   /**
@@ -1762,9 +1762,8 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @internal
-   * @param {*} extraData
    */
-  _setSourceDetails(extraData) {
+  _setSourceDetails() {
     const actorData = this.system;
     const sourceDetails = {};
     // Get empty source arrays
@@ -1783,6 +1782,7 @@ export class ActorPF extends ActorBasePF {
     sourceDetails["system.attributes.ac.flatFooted.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["system.attributes.cmd.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["system.attributes.cmd.flatFootedTotal"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
+
     // Add ability score data
     for (const [a, abl] of Object.entries(actorData.abilities)) {
       sourceDetails[`system.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.Base"), value: abl.value });
@@ -1828,7 +1828,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add extra data
     const rollData = this.getRollData();
-    for (const [changeTarget, changeGrp] of Object.entries(extraData)) {
+    for (const [changeTarget, changeGrp] of Object.entries(this.sourceInfo)) {
       for (const grp of Object.values(changeGrp)) {
         sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
         for (const src of grp) {

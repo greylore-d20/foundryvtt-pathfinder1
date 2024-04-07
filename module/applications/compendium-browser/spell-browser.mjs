@@ -22,10 +22,10 @@ export class SpellBrowser extends CompendiumBrowser {
     const result = super._mapEntry(entry, pack);
     // HACK: This transforms the string into an array.
     // Tt's completely hardcoded for English; should be replaced with proper AI word recognition :)
-    for (const key of ["subschool", "types"]) {
-      result.system[key] =
-        entry.system[key]
-          ?.split(/,|\Wor\s/)
+    {
+      result.system.subschool =
+        entry.system.subschool
+          ?.split(/,|\bor\b/)
           .map((type) => {
             /** @type {string} */
             let typeString = type.trim();
@@ -34,6 +34,27 @@ export class SpellBrowser extends CompendiumBrowser {
             return typeString;
           })
           .filter((typeString) => typeString.length) ?? [];
+    }
+
+    {
+      const value = entry.system.descriptors?.value ?? [];
+      const custom = (entry.system.descriptors?.custom ?? [])
+        .flatMap((c) =>
+          c?.split(/,|\bor\b/).map((type) => {
+            /** @type {string} */
+            let typeString = type.trim();
+            if (typeString.includes("see text")) return "see text";
+            if (typeString.startsWith("or")) typeString = typeString.replace("or").trim();
+            return typeString;
+          })
+        )
+        .filter((typeString) => typeString?.length);
+      const values = [...value, ...custom].map((descriptor) => {
+        const entries = Object.entries(pf1.config.spellDescriptors);
+        const match = entries.find(([k, v]) => k === descriptor || v === descriptor);
+        return match?.[0] ?? descriptor;
+      });
+      result.system.descriptors = [...new Set(values)];
     }
 
     /** @type {Record<string, Record<string, number>>} */

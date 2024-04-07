@@ -19,12 +19,20 @@ export class SpellSubSchoolFilter extends CheckboxFilter {
 
 export class SpellDescriptorFilter extends CheckboxFilter {
   static label = "PF1.Descriptor";
-  static indexField = "system.descriptors.value";
+  static indexField = "system.descriptors";
   static type = "spell";
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(pf1.config.spellDescriptors);
+    super.prepareChoices();
+    const choices = this.choices;
+
+    // this changes the value (the UI visible choice) to the translation from the config for pre-defined descriptors
+    const configChoices = this.constructor.getChoicesFromConfig(pf1.config.spellDescriptors);
+    configChoices.forEach((choice) => {
+      choices.set(choice.key, choice);
+    });
+    this.choices = choices;
   }
 }
 

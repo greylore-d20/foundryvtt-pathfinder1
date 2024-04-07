@@ -1,32 +1,48 @@
 _id: RYNN9nlsOqF5UfxK
 _key: '!items!RYNN9nlsOqF5UfxK'
+folder: BzkdxtDgGZ96mdwR
 img: systems/pf1/icons/items/inventory/barrel.jpg
-name: Black powder (Keg)
+name: Black powder, keg
 system:
+  actions:
+    - _id: HCuway3ohSegR4FI
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 5d6
+            type:
+              custom: ''
+              values:
+                - fire
+      img: systems/pf1/icons/items/inventory/barrel.jpg
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Explosion
+      save:
+        dc: '15'
+        description: Reflex half
+        type: ref
   description:
     value: >-
-      <p>Price 10 gp Black powder (dose), 1,000 gp Black powder (keg); Weight —
-      Black powder (dose), 5 lbs. Black powder (keg)</p>
-
-      <h3>Description</h3>
-
-      <p>Black powder is the key explosive component within a firearm that
-      enables it to function, but in larger amounts this alchemical material can
-      be quite destructive on its own as well. A single dose of black powder is
-      enough to power a single shot from most one-handed and two-handed
-      firearms, while 10 doses are required to fire a cannon. Black powder is
+      <p>@UUID[Compendium.pf1.items.Item.trucdntfxjdukrox]{Black powder} is
       often stored and transported in kegs (which hold 100 doses), but in this
       quantity the powder itself becomes dangerous. Exposure to fire,
       electricity, or a misfire explosion causes black powder to explode—a
       single keg that explodes in this manner deals 5d6 points of fire damage to
       anyone within a 20-foot burst (DC 15 Reflex half). Storing black powder in
-      a powder horn protects the powder from explosion.</p>
+      a @UUID[Compendium.pf1.items.Item.PtMcbl9zBVnwn0mA]{powder horn} protects
+      the powder from explosion.</p>
   equipped: false
   price: 1000
   sources:
     - id: PZO1118
       pages: '141'
-  subType: gear
+  subType: adventuring
   weight:
     value: 5
 type: loot

@@ -126,6 +126,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.CmjSKOVJuQnV8o3S
+      folder: kB3UEM2uyAcNWHIc
       img: systems/pf1/icons/items/potions/grand-blue.jpg
       name: Holy water
       system:
@@ -149,19 +150,24 @@ system:
               units: inst
             img: systems/pf1/icons/items/potions/grand-blue.jpg
             measureTemplate:
+              customColor: '#00cfeb'
+              overrideColor: true
               size: '5'
               type: circle
-            name: Attack
+            name: Throw
             range:
               maxIncrements: 5
               units: ft
               value: '10'
+            target:
+              value: Undead and evil outsiders
             touch: true
+        baseTypes:
+          - Holy water
         description:
           value: >-
-            <p>Category Alchemical Weapons</p><h3>Description</h3><p>Holy water
-            damages undead creatures and evil outsiders almost as if it were
-            acid. A flask of holy water can be thrown as a splash
+            <p>Holy water damages undead creatures and evil outsiders almost as
+            if it were acid. A flask of holy water can be thrown as a splash
             weapon.</p><p>Treat this attack as a ranged touch attack with a
             range increment of 10 feet. A flask breaks if thrown against the
             body of a corporeal creature, but to use it against an incorporeal
@@ -176,14 +182,20 @@ system:
             (making no profit). Holy water is made using the
             @UUID[Compendium.pf1.spells.Item.cyzbticmitktat5v]{bless water}
             spell.</p>
+        equipped: false
         material:
           addon:
             - null
             - null
+            - null
+            - null
         price: 25
+        proficient: true
         sources:
           - id: PZO1123
             pages: '107'
+          - id: PZO1110
+            pages: '158'
         subType: misc
         uses:
           per: single
@@ -196,6 +208,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.s5KkeKPLnneb0WR4
+      folder: BzkdxtDgGZ96mdwR
       img: icons/equipment/neck/amulet-engraved-wood.webp
       name: Holy symbol (Wood)
       system:

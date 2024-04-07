@@ -1,5 +1,6 @@
 _id: Vs4WiNGamVNMEEZI
 _key: '!items!Vs4WiNGamVNMEEZI'
+folder: 1uDzTmqE6tgpIano
 img: icons/containers/chest/chest-reinforced-steel-red.webp
 name: Kit, Spiritualist's
 system:
@@ -9,6 +10,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.snfogneawzopfzzl
+      folder: BzkdxtDgGZ96mdwR
       img: systems/pf1/icons/items/inventory/torch.jpg
       name: Torch
       system:
@@ -78,6 +80,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.Item.e97Z2wv4Z2DI9jHa
+      folder: kB3UEM2uyAcNWHIc
       img: icons/consumables/potions/flask-ornate-skull-green.webp
       name: Ectoplasmic Residue
       system:
@@ -90,12 +93,15 @@ system:
               type: attack
               unchained:
                 type: attack
+            duration:
+              units: inst
             img: icons/consumables/potions/flask-ornate-skull-green.webp
             measureTemplate:
               size: '5'
-              type: rect
-            name: Attack
+              type: circle
+            name: Throw
             range:
+              maxIncrements: 5
               units: ft
               value: '10'
             save:
@@ -103,6 +109,8 @@ system:
               description: Will negates
               type: will
             touch: true
+        baseTypes:
+          - Ectoplasmic Residue
         description:
           value: >-
             <p>This flask is filled with the detritus of minor ectoplasmic
@@ -112,13 +120,18 @@ system:
             damage, but the target must succeed at a DC 13 Will save or be
             shaken for 1d4 rounds. Every creature within 5 feet of the point
             where the flask hits must succeed at a DC 13 Will save or be shaken
-            for 1 round. This is a mind-affecting fear effect.</p>
+            for 1 round. This is a mind-affecting fear
+            effect.</p><h3>Construction</h3><p><strong>Craft (alchemy)</strong>
+            DC 25</p>
+        equipped: false
         material:
           addon:
             - null
             - null
             - null
             - null
+        price: 20
+        proficient: true
         sources:
           - id: PZO1132
             pages: '251'
@@ -126,12 +139,15 @@ system:
         uses:
           per: single
         weaponSubtype: splash
+        weight:
+          value: 2
       type: weapon
     CoYssvb4QhjBVmfa:
       _id: CoYssvb4QhjBVmfa
       flags:
         core:
           sourceId: Compendium.pf1.items.wjvxmolafiegvesl
+      folder: BzkdxtDgGZ96mdwR
       img: icons/containers/bags/coinpouch-simple-leather-tan.webp
       name: Pouch, Belt
       system:
@@ -162,6 +178,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.bsztkhkrhgmsbqpt
+      folder: BzkdxtDgGZ96mdwR
       img: systems/pf1/icons/items/inventory/waterskin.jpg
       name: Waterskin
       system:
@@ -230,6 +247,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.Item.iegwwsarycqwoezj
+      folder: BzkdxtDgGZ96mdwR
       img: systems/pf1/icons/items/inventory/cloth-blue.jpg
       name: Bedroll
       system:
@@ -315,8 +333,9 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.Item.habofoapdifirevm
+      folder: BzkdxtDgGZ96mdwR
       img: icons/tools/cooking/cauldron-empty.webp
-      name: Pot, Cooking (Iron)
+      name: Pot, common
       system:
         description:
           value: >-
@@ -331,6 +350,8 @@ system:
           - id: PZO1110
             pages: '158'
         subType: adventuring
+        tags:
+          - Cooking
         weight:
           value: 4
       type: loot
@@ -365,6 +386,7 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.Item.ygmrcisvftnvjyob
+      folder: BzkdxtDgGZ96mdwR
       img: icons/commodities/stone/rock-chunk-grey.webp
       name: Flint And Steel
       system:
@@ -396,8 +418,9 @@ system:
       flags:
         core:
           sourceId: Compendium.pf1.items.lSCPUK5Ea6R0t4fz
+      folder: BzkdxtDgGZ96mdwR
       img: systems/pf1/icons/items/inventory/backpack.jpg
-      name: Backpack
+      name: Backpack, common
       system:
         description:
           value: >-
@@ -406,8 +429,8 @@ system:
             have one or more smaller pockets on the sides.</p>
         price: 2
         sources:
-          - id: PZO1140
-            pages: '242'
+          - id: PZO1123
+            pages: '58'
         weight:
           value: 2
       type: container

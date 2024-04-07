@@ -13,12 +13,16 @@ system:
           type: action
       duration:
         units: round
-        value: '@class.level'
+        value: '@abilities.int.mod'
       img: systems/pf1/icons/skills/violet_02.jpg
       name: Use
       range:
         units: ft
         value: '30'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
       target:
         value: one animal or humanoid
   associations:
@@ -36,6 +40,9 @@ system:
 
       <p>At 8th level, this effect improves the attitude of the target creature
       by 2 steps. This is a mind-affecting charm effect.</p>
+  sources:
+    - id: PZO1115
+      pages: '66'
   subType: classFeat
   tags:
     - Hex

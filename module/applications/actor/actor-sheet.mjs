@@ -201,6 +201,7 @@ export class ActorSheetPF extends ActorSheet {
           overland: isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi,
         },
       },
+      unchainedActions: game.settings.get("pf1", "unchainedActionEconomy"),
     };
 
     Object.values(data.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
@@ -212,6 +213,18 @@ export class ActorSheetPF extends ActorSheet {
     data.inCharacterGeneration = this.inCharacterGeneration;
 
     data.hasProficiencies = data.isCharacter || game.settings.get("pf1", "npcProficiencies");
+
+    // BAB iteratives
+    if (!data.unchainedActions) {
+      const bab = data.rollData.attributes?.bab?.total;
+      if (bab > 0) {
+        const numAttacks = 1 + RollPF.safeRoll(pf1.config.iterativeExtraAttacks, { bab }).total || 0;
+        const iters = Array.fromRange(numAttacks).map(
+          (attackCount) => bab + RollPF.safeRoll(pf1.config.iterativeAttackModifier, { attackCount }).total
+        );
+        data.iteratives = `+${iters.join(" / +")}`;
+      }
+    }
 
     // Show whether the item has currency
     data.hasCurrency = Object.values(this.object.system.currency).some((o) => o > 0);

@@ -1777,11 +1777,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof LevelUpForm && o._element && o.object === item;
-    });
-    if (app) app.render(true, { focus: true });
-    else new LevelUpForm(item, { token: this.token }).render(true);
+    return LevelUpForm.increaseLevel(this.actor, item, { token: this.token });
   }
 
   /* -------------------------------------------- */
@@ -2629,9 +2625,6 @@ export class ActorSheetPF extends ActorSheet {
       features[k]?.items?.push(f);
     }
     classes.sort((a, b) => b.level - a.level);
-    classes.forEach((item) => {
-      if (item.subType !== "mythic") item.canLevelUp = true;
-    });
 
     // Buffs
     const buffSections = {};
@@ -3161,43 +3154,20 @@ export class ActorSheetPF extends ActorSheet {
         else if (resultData === null) return false;
         // else continue with spell creation
       }
-      // Choose how to import class
-      if (itemData.type === "class" && itemData.system.subType !== "mythic" && !(event && event.shiftKey)) {
-        const accept = await Dialog.wait(
-          {
-            title: game.i18n.localize("PF1.AddClass"),
-            content: `<div class="pf1"><p>${game.i18n.localize(
-              "PF1.Info.AddClassDialog_Desc"
-            )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
-              "PF1.Info.AddClassDialog"
-            )}</div></div>`,
-            buttons: {
-              normal: {
-                icon: '<i class="fas fa-hat-wizard"></i>',
-                label: game.i18n.localize("PF1.Normal"),
-                callback: () => {
-                  LevelUpForm.addClassWizard(this.actor, itemData);
-                  return false; // above adds the item itself if necessary
-                },
-              },
-              raw: {
-                icon: '<i class="fas fa-file"></i>',
-                label: game.i18n.localize("PF1.Raw"),
-                callback: () => true,
-              },
-            },
-            close: () => false,
-          },
-          {
-            classes: [...Dialog.defaultOptions.classes, "pf1", "add-character-class"],
-          }
-        );
-        if (!accept) continue;
-      }
 
       const newItem = new Item.implementation(itemData);
-
       this._sortNewItem(newItem);
+
+      // Choose how to import class
+      if (itemData.type === "class") {
+        // Set new class to be always level 1
+        newItem.updateSource({ system: { level: 1 } });
+
+        if (!(event && event.shiftKey)) {
+          LevelUpForm.addClassWizard(this.actor, newItem.toObject(), { token: this.token });
+          continue;
+        }
+      }
 
       creationData.push(newItem.toObject());
     }

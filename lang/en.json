@@ -143,13 +143,29 @@
     },
 
     "LevelUp": {
-      "Title": "Level up {className}",
-      "Label": "Level Up",
+      "Add": "Add {class}",
+      "Increase": "Level up {class}",
+      "Action": "Level Up",
+      "NewLevel": "New Level",
+      "NewTier": "New Tier",
+      "SkipHint": "Add class level as is, ignoring choices in this dialog. Class associations and other basic improvements (such as BAB) are still added.",
       "Health": {
         "Label": "Health",
+        "Auto": {
+          "Label": "Auto",
+          "Desc": "Your hit points are set automatically according to predefined rate ({rate}%)."
+        },
+        "Static": {
+          "Label": "Static",
+          "Desc": "You gain set amount of HP defined by your class."
+        },
+        "Maximized": {
+          "Label": "Maximized",
+          "Desc": "You gain maximum possible HP for this level based on your hit die."
+        },
         "Roll": {
           "Label": "Roll",
-          "Desc": "Your hit points for this level will be rolled for based on the size of your hit die."
+          "Desc": "Your hit points for this level will be rolled based on your hit die."
         },
         "Manual": {
           "Label": "Manual",
@@ -159,13 +175,20 @@
       "FC": {
         "Label": "Favoured Class Bonus",
         "HP": {
-          "Desc": "You will gain a single hit point as your favoured class bonus for this level."
+          "Label": "Hit Point",
+          "Desc": "You gain a single hit point."
         },
         "Skill": {
-          "Desc": "You will gain a single skill rank to freely spend as your favoured class bonus for this level."
+          "Label": "Skill Point",
+          "Desc": "You gain a single skill rank to freely spend."
         },
         "Alt": {
-          "Desc": "You will gain something specific for your class and race combination as your favoured class bonus for this level."
+          "Label": "Alternate",
+          "Desc": "You gain something specific for your class and race combination."
+        },
+        "None": {
+          "Label": "None",
+          "Desc": "You gain nothing either because this class can not have FCB or you have not chosen a bonus."
         }
       },
       "AbilityScore": {
@@ -174,39 +197,38 @@
         "Item": {
           "Name": "Added Ability Scores",
           "Desc": "<p>This feature is used for tracking your ability score changes from gaining hit die.</p>"
-        }
+        },
+        "Next": "Next gained at level {level}."
       },
       "Summary": {
         "Label": "Summary",
-        "AbilityScore": {
-          "Gain": "{abl}: +{value}"
-        }
+        "AdventureSkills": "Adventure skill ranks",
+        "BackgroundSkills": "Background skill ranks"
       },
       "Chat": {
         "Header": "Level Up Report",
         "Health": {
           "Header": "Health",
-          "Roll": "Rolled for health: {add}",
-          "Manual": "Manual health: {add}"
+          "Roll": "Rolled: {add}",
+          "Manual": "Manual: {add}",
+          "Auto": "Automatic: {add}",
+          "Static": "Static: {add}"
         },
         "FC": {
           "Header": "Favoured Class Bonus"
         },
         "AbilityScore": {
-          "Header": "Ability Score Increase"
+          "Header": "Ability Score Increase",
+          "Gain": "{abl}: +{value}"
         },
         "Extra": {
           "Header": "Extra",
           "NewFeat": "You have 1 new feat to choose",
-          "NewFeats": "You have {newValue} new feats to choose",
-          "NewAbilityScore": "You can increase an ability score by +1"
+          "NewFeats": "You have {newValue} new feats to choose"
         }
       }
     },
 
-    "Submit": "Submit",
-    "Next": "Next",
-    "Previous": "Previous",
     "General": "General",
 
     "Apply": "Apply",
@@ -1928,6 +1950,7 @@
     "FromSources": "From sources",
     "UnidentifiedName": "Unidentified Name",
     "UnidentifiedPriceShort": "Unid. Price",
+    "Finish": "Finish",
     "Yes": "Yes",
     "No": "No",
     "Other": "Other",
@@ -2378,7 +2401,7 @@
           "CustomPlaceholder": "e.g. '@level * 1000'"
         },
         "Disable": "Disable Experience Tracking",
-        "DisableHint": "Disables experience tracking features from the system, such as experience bars, level-up detection, XP thresholds, etc.",
+        "DisableHint": "Disables experience tracking features from the system, such as experience bars, level up detection, XP thresholds, etc.",
         "Distributor": "Open XP Distributor",
         "DistributorHint": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed"
       },

@@ -3,143 +3,321 @@
 /* ----------------------------------------- */
 
 .pf1.level-up {
-  form {
-    display: flex;
-    flex-direction: column;
+  min-width: 820px;
+  min-height: 440px;
 
-    .tab {
+  form {
+    display: grid;
+    grid-template-columns: 16em 2fr;
+    grid-template-rows: min-content 1fr min-content;
+    grid-template-areas:
+      "sidebar nav"
+      "sidebar main"
+      "footer footer";
+    gap: 3px;
+    overflow: hidden;
+
+    > nav {
+      gap: 1px;
+      grid-area: nav;
+
+      > .item {
+        flex: 1;
+
+        font-family: "Modesto Condensed Bold", "Signika", "Palatino Linotype", serif;
+        font-variant: small-caps;
+        font-size: var(--font-size-24);
+
+        justify-content: center;
+        text-align: center;
+
+        padding: 0 3px;
+        background: rgba(155, 155, 155, 0.3);
+        border-radius: 0.5em 0.5em 0 0;
+
+        &.active {
+          background-color: rgba(155, 155, 155, 0.5);
+        }
+      }
+    }
+
+    > footer {
+      grid-area: footer;
+    }
+
+    > .summary {
+      grid-area: sidebar;
+
       display: flex;
-      min-height: min-content;
+      flex-flow: column nowrap;
+      gap: 0.3em;
+
+      h3 {
+        margin: 0 0 3px;
+      }
+
+      .disabled {
+        opacity: 0.6;
+      }
+
+      .value {
+        color: darkgreen;
+      }
+
+      h4 {
+        margin: 0;
+      }
+    }
+
+    h2 {
+      font-family: "Modesto Condensed Bold", "Signika", "Palatino Linotype", serif;
+      font-variant: small-caps;
+      font-size: var(--font-size-24);
+      margin: 0 0 3px;
+      padding: 0 0.2em;
+
+      background-color: var(--pf1-bg-dark-1);
+    }
+
+    ul.choices {
       flex: 1;
 
-      h2 {
-        flex: 0;
-      }
+      list-style: none;
+      padding: 0;
+      margin: 0;
 
-      .list-selector {
-        display: flex;
-        flex: 2;
-        flex-direction: column;
-        height: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      gap: 1px;
 
-        a.item {
-          display: flex;
-          align-items: center;
+      li {
+        flex: 1;
+        padding: 0.2em 0.5em;
+        border: 1px solid transparent;
 
-          .itemBackground();
+        input[type="radio"] {
+          display: none;
+        }
+
+        border: 1px solid transparent;
+        border-radius: 0.3em;
+
+        &.choice {
+          cursor: pointer;
+          > label {
+            cursor: pointer;
+          }
+
+          flex: 1 calc(50% - 1px);
+
+          h3 {
+            display: flex;
+            gap: 0.3em;
+          }
 
           img {
-            flex: 0;
-            border-radius: 0;
-          }
-          .fake-img {
-            flex: 0 0 3.6em;
-          }
-          img,
-          .fake-img {
-            margin-right: 0.4em;
-            width: 3.6em;
-            height: 3.6em;
+            flex: 0 24px;
+            width: 24px;
+            height: 24px;
           }
 
-          span.name {
-            font-size: @fontSizeLarge;
+          &:hover {
+            border: 1px solid gray;
+            background: rgba(155, 155, 155, 0.1);
           }
         }
-      }
 
-      .content {
-        flex: 3;
-        border: 1px solid @colorOlive;
-        border-radius: 0.4em;
-        padding: 0.2em;
-        height: 100%;
-      }
+        h3 {
+          font-size: var(--font-size-16);
+          line-height: 1.5;
+          position: relative;
 
-      .ability-scores {
+          .value {
+            position: absolute;
+            right: 0;
+            color: green;
+          }
+        }
+
+        &:has(input:checked) {
+          background: rgba(155, 155, 155, 0.2);
+          border: 1px dashed var(--color-border-light-tertiary);
+
+          h3::after {
+            content: " ✔";
+            color: green;
+          }
+        }
+
+        &:has(input:disabled) {
+          opacity: 0.6;
+        }
+      }
+    }
+
+    .item-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex: 1 100%;
+
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 1px;
+
+      > .item {
         display: flex;
-        flex-direction: column;
-        height: 100%;
-        font-size: @fontSizeLarge;
+        flex-flow: row nowrap;
+        gap: 3px;
 
-        ul {
-          margin: 0;
-          padding: 0;
-          overflow-y: auto;
-          display: flex;
-          flex-direction: column;
-          min-height: min-content;
-          flex: 1 1 2.8em;
+        cursor: pointer;
 
-          .ability-score {
+        > img {
+          flex: 0 24px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    > section {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 3px;
+      overflow: hidden auto;
+
+      h2,
+      h3 {
+        flex: 1 100%;
+      }
+
+      .summary label {
+        font-weight: bold;
+      }
+
+      .segment {
+        &.ability-score {
+          ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
             display: flex;
-            align-items: center;
-            flex-direction: row;
-            height: 2.8em;
-            flex: 0 0 2.8em;
-            gap: 1em;
-            overflow-y: auto;
+            flex-flow: row wrap;
+            gap: 1px;
 
-            .itemBackground();
-
-            .name {
-              flex: 1;
-              text-align: right;
-            }
-
-            .value {
+            .ability-score {
               display: flex;
-              flex-direction: row;
-              flex: 1;
+              flex-flow: row nowrap;
+              flex: 1 33%;
+              gap: 0.5em;
 
-              .fake-operator,
-              .operator {
-                flex: 0 0 1.6em;
+              align-items: center;
+
+              .name {
+                flex: 1;
+                text-align: right;
               }
 
-              span {
-                flex: 0 0 2em;
+              .value {
+                display: flex;
+                flex-flow: row nowrap;
+                flex: 0 1em;
                 text-align: center;
+
+                font-weight: bold;
+
+                &.disabled {
+                  color: @colorBeige;
+                }
+              }
+
+              .name,
+              .value {
+                font-size: var(--font-size-16);
+              }
+
+              .controls {
+                display: flex;
+                flex-flow: column nowrap;
+                gap: 0;
+
+                .operator {
+                  flex: 0;
+
+                  &.disabled {
+                    pointer-events: none;
+                  }
+                }
+              }
+
+              &.enhanced {
+                span {
+                  color: steelblue;
+                }
               }
             }
+          }
 
-            &.enhanced {
-              span {
-                color: dodgerblue;
+          footer {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid @colorCrimson;
+            align-items: center;
+
+            .points-left {
+              font-size: var(--font-size-16);
+              line-height: 1.5;
+
+              > .ready {
+                color: green;
               }
             }
           }
         }
 
-        footer {
-          display: flex;
-          flex-direction: column;
-          border-top: 1px solid @colorCrimson;
-          margin-top: 0.8em;
-          align-items: center;
-
-          .points-left {
-            height: 2em;
-            font-size: var(--font-size-16);
+        &.fcb {
+          .notes {
+            border: 1px dashed var(--color-border-light-tertiary);
+            border-radius: 0.5em;
+            padding: 0 0.3em;
           }
         }
       }
     }
 
-    .nav-buttons {
-      border-top: @borderGroove;
-      padding-top: 0.4em;
-      height: 3em;
-      justify-content: center;
+    > footer {
       display: flex;
-      flex-direction: row;
+      flex-flow: row nowrap;
+      flex: 0 3em;
+      gap: 0.3em;
+      justify-content: center;
 
-      button {
-        width: 14em;
-        height: 2.4em;
+      padding: 0.4em;
 
-        &:disabled {
-          opacity: 0.6;
+      border-top: @borderGroove;
+
+      &.buttons {
+        > .padding {
+          flex: 1;
+        }
+
+        > button {
+          flex: 1;
+
+          &:disabled {
+            opacity: 0.6;
+          }
+        }
+
+        > select {
+          flex: 0;
+        }
+
+        > select,
+        > button {
+          line-height: 2;
+          height: unset; // Undo Foundry's styling
         }
       }
     }

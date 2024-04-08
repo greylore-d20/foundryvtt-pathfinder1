@@ -41,10 +41,16 @@ export class ItemClassPF extends ItemPF {
     const actor = this.actor;
     if (!actor) return;
 
+    // Adjust associations if any exist
+    if (this.system.level > 0) {
+      this._onLevelChange(0, this.system.level, { event: "create" });
+    }
+
     // Create spellbook if the class has spellcasting defined
-    if (!this.system.casting?.type) return;
-    const bookData = { ...this.system.casting, class: this.system.tag };
-    actor.createSpellbook(bookData);
+    if (this.system.casting?.type) {
+      const bookData = { ...this.system.casting, class: this.system.tag };
+      actor.createSpellbook(bookData);
+    }
   }
 
   /**

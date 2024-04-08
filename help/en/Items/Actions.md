@@ -22,6 +22,20 @@ You can add static extra attacks here with specific modifiers that are performed
 
 The formula-based extra attacks below is for more advanced cases that previously were used for BAB iterative handling or other similar complex or automatically scaling cases.
 
+#### Options
+
+| Option                      | Details                                                                                                                         |
+| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| Iteratives                  | BAB based extra attacks are automatically accounted for.                                                                        |
+| Flurry of Blows (Chained)   | Original _monk_ two-weapon fighting style _Flurry of Blows_. Requires _BAB override_ to be configured.                          |
+| Flurry of Blows (Unchained) | Unchained Monk's Flurry of Blows. Functions fully without customization.                                                        |
+| Iteratives + Custom         | Same as the first option but with additional customization options.                                                             |
+| Custom                      | Fully customizable, no automatically handled iteratives. Most useful for spells and natural attacks with specific requirements. |
+
+Note: Chained flurry will display the two-weapon fighting penalty (`-2`) in attack dialog always as it is integrated. This will not be applied when performing singular attacks.
+
+Chained flurry is easiest to handle for single class monk, ensuring the ability is linked to monk class at bottom of details tab, and adding BAB override in the attack simply as `@class.level` (or `@classes.monk.level` without linking).
+
 #### Formula-based extra attacks
 
 **Variables**

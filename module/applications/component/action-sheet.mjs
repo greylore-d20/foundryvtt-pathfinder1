@@ -177,7 +177,6 @@ export class ItemActionSheet extends FormApplication {
     // Prepare attack configuration
     context.extraAttacksTypes = Object.fromEntries([
       ...Object.entries(pf1.config.extraAttacks).map(([key, { label }]) => [key, label]),
-      ["custom", "PF1.Custom"],
     ]);
 
     context.extraAttacksConfig = { ...pf1.config.extraAttacks[action.data.extraAttacks?.type] };

@@ -34,7 +34,7 @@ export class LevelUpForm extends FormApplication {
   config = {
     health: { manual: null, type: null, value: 0 },
     fcb: { choice: "none", unavailable: false, available: true },
-    rollMode: null,
+    visibility: null,
     feats: 0,
     abilityScore: {
       new: 0,
@@ -123,7 +123,7 @@ export class LevelUpForm extends FormApplication {
     );
 
     // By default hide NPCs for GMs
-    if (!this.actor.hasPlayerOwner) this.config.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
+    if (!this.actor.hasPlayerOwner) this.config.visibility = CONST.DICE_ROLL_MODES.PRIVATE;
 
     this._initData();
     this._initChoices();
@@ -246,12 +246,12 @@ export class LevelUpForm extends FormApplication {
       fcb,
       abilityScore: this.config.abilityScore,
       icons: this.constructor.ICONS,
-      rollModes: CONFIG.Dice.rollModes,
+      visibilityOptions: pf1.const.messageVisibility,
       useBackgroundSkills: this.useBackgroundSkills,
     };
 
     // Disallow self roll for non-GMs.
-    if (!game.user.isGM) delete result.rollModes.selfroll;
+    if (!game.user.isGM) delete result.visibilityOptions.selfroll;
 
     result.health.rate = Math.round(hpOptions.rate * 100);
 
@@ -964,7 +964,7 @@ export class LevelUpForm extends FormApplication {
       },
     };
 
-    let rollMode = this.config.rollMode || game.settings.get("core", "rollMode");
+    let rollMode = this.config.visibility || game.settings.get("core", "rollMode");
     // Prevent self message from non-GMs.
     if (!game.user.isGM && rollMode === CONST.DICE_ROLL_MODES.SELF) rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
 

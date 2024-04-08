@@ -35,8 +35,8 @@
 
     <div class="padding"> </div>
 
-    <select name="rollMode">
-      {{selectOptions rollModes selected=rollMode localize=true blank="PF1.Default"}}
+    <select name="visibility">
+      {{selectOptions visibilityOptions selected=visibility localize=true blank="PF1.Default"}}
     </select>
 
     <button type="submit" {{#unless ready}}disabled{{/unless}} data-action="commit">

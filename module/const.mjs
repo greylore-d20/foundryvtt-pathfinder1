@@ -11,3 +11,17 @@ export const actionTypeToContext = {
   rsak: "sdamage",
   spellsave: "sdamage",
 };
+
+/**
+ * Message visibility
+ *
+ * Message visibility mode (roll mode) to non-roll message mapping.
+ *
+ * This will be obsoleted by Foundry ~v13
+ */
+export const messageVisibility = {
+  publicroll: "PF1.Chat.Visibility.Public",
+  gmroll: "PF1.Chat.Visibility.Private",
+  blindroll: "PF1.Chat.Visibility.Blind",
+  selfroll: "PF1.Chat.Visibility.Self",
+};

@@ -425,6 +425,8 @@ Hooks.once("i18nInit", function () {
     "vehicles",
   ];
 
+  const toLocalizeConst = ["messageVisibility"];
+
   // Config (sub-)objects to be sorted
   const toSort = [
     "skills",
@@ -476,6 +478,10 @@ Hooks.once("i18nInit", function () {
   // Localize and sort CONFIG objects
   for (const o of toLocalize) {
     pf1.config[o] = doLocalize(pf1.config[o], o);
+  }
+
+  for (const o of toLocalizeConst) {
+    pf1.const[o] = doLocalize(pf1.const[o], o);
   }
 
   // Localize buff targets

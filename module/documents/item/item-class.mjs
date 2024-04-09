@@ -140,7 +140,7 @@ export class ItemClassPF extends ItemPF {
 
         // Apply Foundry's transformations for importing (automatically calls .toObject())
         // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.
-        const itemData = game.items.fromCompendium(item);
+        const itemData = game.items.fromCompendium(item, { clearFolder: true });
 
         // Set associated class
         itemData.system.class = this.system.tag;

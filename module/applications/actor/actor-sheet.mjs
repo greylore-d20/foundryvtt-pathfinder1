@@ -3019,7 +3019,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!this.actor.isOwner) return false;
 
     const sourceItem = await Item.implementation.fromDropData(data);
-    const itemData = sourceItem.toObject();
+    const itemData = game.items.fromCompendium(sourceItem, { clearFolder: true });
 
     const sourceActor = await fromUuid(data.actorUuid || "");
 

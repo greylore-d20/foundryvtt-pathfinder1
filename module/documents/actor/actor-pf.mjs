@@ -4270,7 +4270,7 @@ export class ActorPF extends ActorBasePF {
       for (const supplement of allSupplements) {
         const { item, count, parent } = supplement;
         const parentUuid = parent?.uuid ?? parent?.flags?.core?.sourceId;
-        const itemData = game.items.fromCompendium(item);
+        const itemData = game.items.fromCompendium(item, { clearFolder: true });
         if (parentUuid) {
           setProperty(itemData, "flags.pf1.source", parentUuid);
         }

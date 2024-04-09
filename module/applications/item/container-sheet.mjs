@@ -643,9 +643,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     const { actorUuid, containerId } = data;
     const item = await Item.implementation.fromDropData(data);
-    const sourceActor = (await fromUuid(actorUuid || "")) ?? item.actor;
+    let sourceActor = actorUuid ? await fromUuid(actorUuid) : null;
+    sourceActor ??= item.actor;
 
-    const itemData = item.toObject();
+    const itemData = game.items.fromCompendium(item, { clearFolder: true });
 
     const sameActor = sourceActor && sourceActor === this.item.actor;
 

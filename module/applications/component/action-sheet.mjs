@@ -595,7 +595,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Adjust Material Addons object to array
     const material = formData.material;
-    if (material.addon) {
+    if (material?.addon) {
       material.addon = Object.entries(material.addon)
         .filter(([_, chosen]) => chosen)
         .map(([key]) => key);

@@ -300,14 +300,10 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     event.stopPropagation();
 
-    let data, type;
-    try {
-      data = JSON.parse(event.dataTransfer.getData("text/plain"));
-      // Surface-level check for conditional
-      if (data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers)) type = "conditional";
-    } catch (e) {
-      return false;
-    }
+    const data = TextEditor.getDragEventData(event);
+    let type;
+    // Surface-level check for conditional
+    if (data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers)) type = "conditional";
 
     const action = this.object;
     // Handle conditionals

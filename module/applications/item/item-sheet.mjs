@@ -1622,13 +1622,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     event.stopPropagation();
 
-    let data;
-    try {
-      data = JSON.parse(event.dataTransfer.getData("text/plain"));
-    } catch (e) {
-      return false;
-    }
-
+    const data = TextEditor.getDragEventData(event);
     const { type, uuid } = data;
     /** @type {ItemPF} */
     const item = this.item;

@@ -607,12 +607,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     event.stopPropagation();
 
     // Try to extract the data
-    let data;
-    try {
-      data = JSON.parse(event.dataTransfer.getData("text/plain"));
-    } catch (err) {
-      return false;
-    }
+    const data = TextEditor.getDragEventData(event);
+
     const item = this.item;
 
     // Handle the drop with a Hooked function

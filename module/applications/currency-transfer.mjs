@@ -161,13 +161,8 @@ export class CurrencyTransfer extends FormApplication {
     event.preventDefault();
 
     // try to extract the data
-    let data;
-    try {
-      data = JSON.parse(event.dataTransfer.getData("text/plain"));
-      if (data.type !== "Currency") return;
-    } catch (err) {
-      return false;
-    }
+    const data = TextEditor.getDragEventData(event);
+    if (data.type !== "Currency") return;
 
     const destDoc = event.currentTarget.classList.contains("item")
       ? game.items.get(docDestId)

@@ -698,6 +698,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Test if actor is proficient with specified weapon.
    *
+   * @remarks Natural attacks incorrectly do not count as proficient.
+   *
    * @param {ItemPF} item - Item to test
    * @param {object} [options] - Additional options
    * @param {boolean} [options.override=true] - Allow item's proficiency override to influence the result.

@@ -43,11 +43,11 @@
       <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
 
       <div class="form-group stacked">
+        {{#unless isNaturalAttack}}
         <label class="checkbox">
           <input type="checkbox" name="system.proficient" {{checked system.proficient}}> {{localize "PF1.Proficient"}}
         </label>
 
-        {{#unless isNaturalAttack}}
         <label class="checkbox">
           <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}> {{localize "PF1.Masterwork"}}
         </label>

@@ -596,7 +596,7 @@ export class ItemAction {
       },
       material: {
         normal: "",
-        addon: "",
+        addon: [],
       },
       alignments: {
         lawful: null,

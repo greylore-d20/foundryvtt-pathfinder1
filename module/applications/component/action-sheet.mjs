@@ -158,6 +158,13 @@ export class ItemActionSheet extends FormApplication {
 
     // Add materials and addons
     context.materialCategories = this._prepareMaterialsAndAddons();
+
+    context.materialAddons =
+      this.action.data.material?.addon?.reduce((obj, v) => {
+        obj[v] = true;
+        return obj;
+      }, {}) ?? {};
+
     // Inherited held option's name if any
     context.inheritedHeld = pf1.config.weaponHoldTypes[context.item.system.held];
 
@@ -584,25 +591,16 @@ export class ItemActionSheet extends FormApplication {
       });
     formData["conditionals"] = conditionalData;
 
-    // Adjust Material Addons
-    const addons = Object.entries(formData).filter((e) => e[0].includes("material.addon"));
-    if (addons.length) {
-      const keySeparator = addons[0][0].lastIndexOf(".");
-      const addonKey = addons[0][0].substring(0, keySeparator);
+    formData = foundry.utils.expandObject(formData);
 
-      formData[addonKey] = [];
-
-      for (const [key, value] of addons) {
-        const finalSeparator = key.lastIndexOf(".");
-        const addonKey = key.substring(0, finalSeparator);
-        const index = key.substring(key.lastIndexOf(".") + 1);
-
-        delete formData[key];
-        formData[addonKey][index] = value;
-      }
+    // Adjust Material Addons object to array
+    const material = formData.material;
+    if (material.addon) {
+      material.addon = Object.entries(material.addon)
+        .filter(([_, chosen]) => chosen)
+        .map(([key]) => key);
     }
 
-    formData = foundry.utils.expandObject(formData);
     if (formData.alignments) {
       // Adjust Alignment Types (this is necessary to handle null values for inheritance)
       for (const [key, value] of Object.entries(this.alignments)) {

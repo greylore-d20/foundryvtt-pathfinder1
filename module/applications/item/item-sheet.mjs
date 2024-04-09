@@ -404,6 +404,14 @@ export class ItemSheetPF extends ItemSheet {
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
+    if (this.item.system.material?.addon) {
+      context.materialAddons =
+        this.item.system.material.addon.reduce((obj, v) => {
+          obj[v] = true;
+          return obj;
+        }, {}) ?? {};
+    }
+
     // Prepare weapon specific stuff
     if (item.type === "weapon") {
       context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties["thr"] === true;
@@ -1080,7 +1088,9 @@ export class ItemSheetPF extends ItemSheet {
     const material = system.material;
     if (material?.addon) {
       // Convert to array
-      material.addon = Object.values(material.addon);
+      material.addon = Object.entries(material.addon)
+        .filter(([_, chosen]) => chosen)
+        .map(([key]) => key);
     }
 
     // Update the Item

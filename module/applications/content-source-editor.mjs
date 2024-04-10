@@ -24,6 +24,7 @@ export class ContentSourceEditor extends DocumentSheet {
       dragDrop: [{ dragSelector: "nav.tabs .source", dropSelector: null }],
       width: 540,
       height: "auto",
+      resizable: true,
       submitOnChange: true,
       submitOnClose: true,
       closeOnSubmit: false,
@@ -65,6 +66,11 @@ export class ContentSourceEditor extends DocumentSheet {
     };
   }
 
+  _getHeaderButtons() {
+    // HACK: Do not display import button
+    return super._getHeaderButtons().filter((b) => b.class !== "import");
+  }
+
   /**
    * @internal
    * @param {Event} event
@@ -80,8 +86,9 @@ export class ContentSourceEditor extends DocumentSheet {
       case "add": {
         this.form.disabled = true;
         const sources = this.document.system.sources ?? [];
-        sources.push({});
-        this.document.update({ "system.sources": sources });
+        await this.document.update({ "system.sources": [...sources, {}] });
+        // Activate the newly created source tab
+        this.activateTab(`source-${sources.length}`);
         break;
       }
       case "delete": {

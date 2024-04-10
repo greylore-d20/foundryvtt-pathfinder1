@@ -1,28 +1,35 @@
 {{#if @root.showIdentifiedData}}
 <div class="content-source {{#unless source.title}}missing{{/unless}}">
-	<span class="source"
-    {{#with source~}}
+  <span class="source"
+  {{#with source~}}
     {{#if title~}}
-		data-tooltip="
-		{{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
-		{{~#if edition}}{{localize "PF1.ContentSource.Info.Edition"}}: {{edition}}<br>{{/if~}}
-		{{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{else if date}}{{localize "PF1.ContentSource.Info.Release"}}: {{date}}<br>{{/if~}}
-		{{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
-    "{{/if}}{{/with}}>
-	{{#if source.title}}
-    <span class="title">{{source.title}}</span>
-    {{#if source.abbr}}
-    <span class="abbr">{{source.abbr}}</span>
+    data-tooltip-class="pf1 source"
+    data-tooltip="
+    {{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
+    {{~#if edition}}{{localize "PF1.ContentSource.Info.Edition"}}: {{edition}}<br>{{/if~}}
+    {{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{else if date}}{{localize "PF1.ContentSource.Info.Release"}}: {{date}}<br>{{/if~}}
+    {{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
+
+    {{#with extras}}
+    <p>{{localize "PF1.ContentSource.Extras"}}<p>{{#each entries}}{{this}}<br>{{/each}}
+    {{/with}}
+    "{{/if}}>
+    <span class="title">{{title}}</span>
+    {{#if abbr}}
+    <span class="abbr">{{abbr}}</span>
     {{/if}}
-		{{#if source.pages}}
-    <span class="pages">{{localize "PF1.ContentSource.Pages" pages=source.pages}}</span>
-		{{/if}}
-	{{else}}
-		{{localize "PF1.ContentSource.Missing"}}
-	{{/if}}
-	</span>
-	<div class="control">
-		<i class="fas fa-edit edit" data-tooltip="PF1.ContentSource.EditHint"></i>
-	</div>
+    {{#if pages}}
+    <span class="pages">{{localize "PF1.ContentSource.Pages" pages=pages}}</span>
+    {{/if}}
+    {{#with extras}}<span class="extra-source-count">{{numberFormat count sign=true}}</span>{{/with}}
+  {{else}}
+    >{{localize "PF1.ContentSource.Missing"}}
+  {{/with}}
+  </span>
+  <div class="control">
+    <a data-action="edit" class="edit" data-tooltip="PF1.ContentSource.EditHint">
+      <i class="fas fa-edit edit"></i>
+    </a>
+  </div>
 </div>
 {{/if}}

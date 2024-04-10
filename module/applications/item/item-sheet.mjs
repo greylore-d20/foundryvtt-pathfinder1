@@ -682,14 +682,14 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _prepareContentSource(context) {
-    let source = this._selectContentSource();
-    if (!source) return;
+    const osource = this._selectContentSource();
+    if (!osource) return;
 
-    source = { ...source }; // Shallow copy to avoid tampering
+    const source = { ...osource }; // Shallow copy to avoid tampering
     context.bookSource = source;
     if (!source?.id) return;
 
-    const rsource = pf1.registry.sources.get(context.bookSource.id);
+    const rsource = pf1.registry.sources.get(source.id);
     if (!rsource) return;
 
     source.title ||= rsource.name;
@@ -699,6 +699,21 @@ export class ItemSheetPF extends ItemSheet {
     // Data only in registry
     source.date = rsource.date;
     source.abbr = rsource.abbr;
+
+    // Add other available sources
+    const extraCount = this.item.system.sources.length - 1;
+    if (extraCount) {
+      source.extras = {
+        count: extraCount,
+        entries: this.item.system.sources
+          .filter((s) => s !== osource)
+          .map((s) => {
+            if (!s.title) return pf1.registry.sources.get(s.id)?.name;
+            return s.title;
+          })
+          .filter((s) => !!s),
+      };
+    }
   }
 
   _selectContentSource() {
@@ -1187,7 +1202,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Content source editor
     html
-      .find(".content-source .control .edit")
+      .find(".content-source .control a.edit")
       .click(() => pf1.applications.ContentSourceEditor.open(this.item, { editable: this.isEditable }));
 
     // Mark proficiency in indeterminate state if not forced but actor has it.

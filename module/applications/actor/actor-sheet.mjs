@@ -3165,9 +3165,12 @@ export class ActorSheetPF extends ActorSheet {
           actor: this.actor,
           allowSpell: spells.usedSpellbooks?.length > 0,
         });
-        if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
-        else if (resultData === null) return false;
-        // else continue with spell creation
+
+        if (resultData) {
+          creationData.push(resultData);
+          continue;
+        } else if (resultData === null) continue;
+        // else continue with regular spell creation
       }
 
       const newItem = new Item.implementation(itemData);
@@ -3179,7 +3182,8 @@ export class ActorSheetPF extends ActorSheet {
         newItem.updateSource({ system: { level: 1 } });
 
         if (!(event && event.shiftKey)) {
-          LevelUpForm.addClassWizard(this.actor, newItem.toObject(), { token: this.token });
+          const cls = await LevelUpForm.addClassWizard(this.actor, newItem.toObject(), { token: this.token });
+          if (cls && itemDatas.length === 1) this._focusTabByItem(cls);
           continue;
         }
       }
@@ -3187,7 +3191,46 @@ export class ActorSheetPF extends ActorSheet {
       creationData.push(newItem.toObject());
     }
 
+    if (creationData.length === 1) this._focusTabByItem(creationData[0]);
+
     return this.document.createEmbeddedDocuments("Item", creationData);
+  }
+
+  /**
+   * Focuses certain tab based on provided item.
+   *
+   * @internal
+   * @param {*} item
+   */
+  _focusTabByItem(item) {
+    let tabId;
+    switch (item.type) {
+      case "race":
+      case "class":
+        tabId = "summary";
+        break;
+      case "spell":
+        tabId = "spellbook";
+        break;
+      case "buff":
+        tabId = "buffs";
+        break;
+      case "feat":
+        tabId = "feats";
+        break;
+      case "weapon":
+      case "equipment":
+      case "consumable":
+      case "loot":
+      case "container":
+        tabId = "inventory";
+        break;
+      case "attack":
+        tabId = "combat";
+        break;
+    }
+
+    if (tabId) this.activateTab(tabId);
   }
 
   /**

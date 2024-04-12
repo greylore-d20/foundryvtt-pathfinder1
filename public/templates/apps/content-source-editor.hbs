@@ -66,8 +66,13 @@
       </div>
       <div class="form-group">
         <label>{{localize "PF1.ContentSource.Info.Release"}}</label>
-        <div class="form-fields" data-tooltip="PF1.ContentSource.Autofill">
-          <input type="text" value="{{registry.date}}" placeholder="{{localize "PF1.NonApplicable"}}" readonly>
+        <div class="form-fields" {{#if registry}}data-tooltip="PF1.ContentSource.Autofill"{{/if}}>
+          <input type="text" placeholder="{{localize "PF1.ContentSource.DateFormat"}}"
+            {{#if registry.date}}
+            value="{{registry.date}}" readonly
+            {{else}}
+            name="system.sources.{{@key}}.date" value="{{date}}"
+            {{/if}}>
         </div>
       </div>
       <div class="form-group">

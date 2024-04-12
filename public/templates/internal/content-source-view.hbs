@@ -1,7 +1,7 @@
-{{#if @root.showIdentifiedData}}
+{{#with @root.bookSources}}
 <div class="content-source {{#unless source.title}}missing{{/unless}}">
   <span class="source"
-  {{#with source~}}
+  {{#with main~}}
     {{#if title~}}
     data-tooltip-class="pf1 source"
     data-tooltip="
@@ -10,9 +10,9 @@
     {{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{else if date}}{{localize "PF1.ContentSource.Info.Release"}}: {{date}}<br>{{/if~}}
     {{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
 
-    {{#with extras}}
-    <p>{{localize "PF1.ContentSource.Extras"}}<p>{{#each entries}}{{this}}<br>{{/each}}
-    {{/with}}
+    {{#if ../extras}}
+    <p>{{localize "PF1.ContentSource.Extras"}}<p>{{#each ../extras}}{{title}}<br>{{/each}}
+    {{/if}}
     "{{/if}}>
     <span class="title">{{title}}</span>
     {{#if abbr}}
@@ -21,7 +21,7 @@
     {{#if pages}}
     <span class="pages">{{localize "PF1.ContentSource.Pages" pages=pages}}</span>
     {{/if}}
-    {{#with extras}}<span class="extra-source-count">{{numberFormat count sign=true}}</span>{{/with}}
+    {{#if ../extras}}<span class="extra-source-count">{{numberFormat ../extras.length sign=true}}</span>{{/if}}
   {{else}}
     >{{localize "PF1.ContentSource.Missing"}}
   {{/with}}
@@ -32,4 +32,4 @@
     </a>
   </div>
 </div>
-{{/if}}
+{{/with}}

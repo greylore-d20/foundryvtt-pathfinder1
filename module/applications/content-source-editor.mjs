@@ -47,10 +47,13 @@ export class ContentSourceEditor extends DocumentSheet {
     if (sources.some((src) => Object.keys(src).length === 0)) canAdd = false;
 
     // Shallow clone sources for extra data
-    sources = sources.map((src) => ({
-      ...src,
-      registry: pf1.registry.sources.get(src.id),
-    }));
+    sources = sources.map((src) => {
+      const registry = pf1.registry.sources.get(src.id);
+      return {
+        ...src,
+        registry,
+      };
+    });
 
     // Add default entry for editing when no entries exist
     if (sources.length === 0) {
@@ -275,9 +278,7 @@ export class ContentSourceEditor extends DocumentSheet {
       // Empty data that is auto-filled from registry
       if (registry) {
         delete source.title;
-        if (source.publisher === "Paizo") {
-          delete source.publisher;
-        }
+        delete source.publisher;
       }
 
       // Mark as empty for followup removal

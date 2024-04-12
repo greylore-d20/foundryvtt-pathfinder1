@@ -676,50 +676,50 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Content source, fill in from registry
-    this._prepareContentSource(context);
+    if (context.showIdentifiedData) {
+      this._prepareContentSource(context);
+    }
 
     return context;
   }
 
   _prepareContentSource(context) {
-    const osource = this._selectContentSource();
-    if (!osource) return;
+    const sources = this._getContentSources();
+    if (sources.length == 0) return;
 
-    const source = { ...osource }; // Shallow copy to avoid tampering
-    context.bookSource = source;
-    if (!source?.id) return;
+    const main = this._selectContentSource(sources);
 
-    const rsource = pf1.registry.sources.get(source.id);
-    if (!rsource) return;
+    context.bookSources = {
+      all: sources,
+      main,
+    };
 
-    source.title ||= rsource.name;
-    source.publisher ||= rsource.publisher;
-    source.errata ||= rsource.errata;
-    source.edition ||= rsource.edition;
-    // Data only in registry
-    source.date = rsource.date;
-    source.abbr = rsource.abbr;
-
-    // Add other available sources
-    const extraCount = this.item.system.sources.length - 1;
-    if (extraCount) {
-      source.extras = {
-        count: extraCount,
-        entries: this.item.system.sources
-          .filter((s) => s !== osource)
-          .map((s) => {
-            if (!s.title) return pf1.registry.sources.get(s.id)?.name;
-            return s.title;
-          })
-          .filter((s) => !!s),
-      };
+    if (sources.length > 1) {
+      context.bookSources.extras = sources.filter((s) => s !== main);
     }
   }
 
-  _selectContentSource() {
-    const sources = this.item.system.sources ?? [];
+  _selectContentSource(sources) {
     if (sources?.length === 0) return null;
+
+    sources.sort((a, b) => b.datestamp - a.datestamp);
+
     return sources[0];
+  }
+
+  _getContentSources() {
+    const sources = this.item.system.sources ?? [];
+
+    return sources.map((source) => {
+      const registry = pf1.registry.sources.get(source?.id) ?? {};
+      return {
+        ...registry, // Shallow copy to avoid tampering
+        ...source,
+        title: source.title || registry.name,
+        registry,
+        datestamp: Date.parse(source.date || registry.date),
+      };
+    });
   }
 
   _prepareMaterialsAndAddons(itemType, itemSubtype, subType, chosenMaterial = "") {

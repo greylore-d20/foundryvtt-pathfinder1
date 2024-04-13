@@ -14,6 +14,7 @@ export {
   convertDistanceBack,
   convertWeight,
   convertWeightBack,
+  calculateRange,
   createTag,
   diffObjectAndArray,
   findInCompendia,

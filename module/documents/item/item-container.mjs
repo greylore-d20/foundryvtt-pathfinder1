@@ -1,5 +1,4 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
-import { diffObjectAndArray } from "@utils";
 
 export class ItemContainerPF extends ItemPhysicalPF {
   /**

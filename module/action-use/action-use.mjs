@@ -1,7 +1,5 @@
-import { createTag, convertDistance } from "@utils";
 import { ChatAttack } from "./chat-attack.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { getDistanceSystem } from "@utils";
 
 // Documentation/type imports
 /** @typedef {import("@item/item-pf.mjs").SharedActionData} SharedActionData */
@@ -481,7 +479,7 @@ export class ActionUse {
       const conditionalData = {};
       for (const i of this.shared.conditionals) {
         const conditional = this.shared.action.data.conditionals[i];
-        const tag = createTag(conditional.name);
+        const tag = pf1.utils.createTag(conditional.name);
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
           // Due to being its own roll, this will only correctly work for static formulae.
@@ -831,7 +829,7 @@ export class ActionUse {
     // Determine size
     let dist = RollPF.safeRoll(this.shared.action.data.measureTemplate.size, this.shared.rollData).total;
     // Apply system of units conversion
-    dist = convertDistance(dist)[0];
+    dist = pf1.utils.convertDistance(dist)[0];
 
     // Create data object
     const templateOptions = {
@@ -1045,7 +1043,7 @@ export class ActionUse {
       const range = this.shared.action.getRange({ type: "max", rollData: this.shared.rollData });
       if (range != null) {
         this.shared.templateData.range = range;
-        const usystem = getDistanceSystem();
+        const usystem = pf1.utils.getDistanceSystem();
         this.shared.templateData.rangeLabel = usystem === "metric" ? `${range} m` : `${range} ft.`;
 
         const rangeUnits = this.shared.action.data.range.units;

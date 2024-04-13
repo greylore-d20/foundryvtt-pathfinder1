@@ -1,5 +1,3 @@
-import { getDistanceSystem } from "@utils";
-
 export class SpeedEditor extends DocumentSheet {
   static get defaultOptions() {
     return {
@@ -33,7 +31,9 @@ export class SpeedEditor extends DocumentSheet {
     const context = {
       system: itemData,
       speeds: {},
-      units: game.i18n.localize(getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"),
+      units: game.i18n.localize(
+        pf1.utils.getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"
+      ),
     };
 
     this.constructor.movementKeys.forEach((key) => {

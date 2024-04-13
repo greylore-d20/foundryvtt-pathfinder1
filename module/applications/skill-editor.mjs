@@ -1,4 +1,4 @@
-import { createTag, openJournal } from "../utils/lib.mjs";
+import { openJournal } from "../utils/lib.mjs";
 
 export class SkillEditor extends FormApplication {
   constructor(actor, skillId, subSkillId, options = {}) {

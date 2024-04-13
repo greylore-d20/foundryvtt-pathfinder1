@@ -14,7 +14,7 @@ import "./module/chatlog.mjs";
 // Import Modules
 import { tinyMCEInit } from "./module/mce/mce.mjs";
 import { measureDistances } from "./module/utils/canvas.mjs";
-import { getFirstActiveGM, moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
+import { moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
 import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
 import * as macros from "./module/documents/macros.mjs";

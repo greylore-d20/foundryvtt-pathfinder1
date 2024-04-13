@@ -1,6 +1,5 @@
 import { createTestActor } from "./actor-utils.mjs";
 import { fetchPackEntryData } from "./utils.mjs";
-import { convertWeight } from "../utils/lib.mjs";
 
 export const registerContainerItemTests = () => {
   quench.registerBatch(
@@ -110,7 +109,7 @@ export const registerContainerItemTests = () => {
               expect(items.container.system.weight.total).to.equal(items.alchemistsFire.system.weight.total);
             });
             it("should add the weight of the item to the actor", function () {
-              expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(10));
+              expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(10));
             });
             it("should increase the container's value", function () {
               expect(items.container.getValue({ recursive: true })).to.equal(100);
@@ -141,7 +140,7 @@ export const registerContainerItemTests = () => {
                 expect(items.container.system.weight.contents).to.equal(9);
               });
               it("and reduce the actor's weight", function () {
-                expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(9));
+                expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(9));
               });
               it("reduce the container's overall value", function () {
                 expect(items.container.getValue({ recursive: true })).to.equal(90);
@@ -167,7 +166,7 @@ export const registerContainerItemTests = () => {
                 expect(items.container.system.weight.contents).to.equal(90);
               });
               it("should increase the actor's carried weight", function () {
-                expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(45));
+                expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(45));
               });
             });
 
@@ -183,10 +182,10 @@ export const registerContainerItemTests = () => {
               });
               it("should have the right contents weight", function () {
                 expect(items.container.system.weight.contents).to.equal(90);
-                expect(items.container.system.weight.converted.contents).to.equal(convertWeight(90));
+                expect(items.container.system.weight.converted.contents).to.equal(pf1.utils.convertWeight(90));
               });
               it("should increase the actor's carried weight", function () {
-                expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(55));
+                expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(55));
               });
             });
           });
@@ -216,7 +215,7 @@ export const registerContainerItemTests = () => {
             });
             it("should add its weight to the actor", function () {
               expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(
-                Math.roundDecimals(convertWeight(11.5), 1)
+                Math.roundDecimals(pf1.utils.convertWeight(11.5), 1)
               );
             });
             it("should add its value to the actor", function () {

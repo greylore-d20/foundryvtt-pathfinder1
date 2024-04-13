@@ -1,5 +1,4 @@
 import { ItemPF } from "./documents/item/item-pf.mjs";
-import { createTag } from "./utils/lib.mjs";
 import { ItemChange } from "./components/change.mjs";
 
 import { MigrationDialog } from "./applications/migration/migration-dialog.mjs";

@@ -1,5 +1,4 @@
 import { ActorPF } from "../documents/actor/actor-pf.mjs";
-import { getAbilityModifier } from "@utils";
 import { createTestActor } from "./actor-utils.mjs";
 
 export const registerActorConditionsTests = () => {
@@ -214,7 +213,7 @@ export const registerActorConditionsTests = () => {
 
         it("Str and Dex penalty of -1 for fatigue", function () {
           for (const ability of ["str", "dex"]) {
-            const baseModifier = getAbilityModifier(actor.system.abilities[ability].value);
+            const baseModifier = pf1.utils.getAbilityModifier(actor.system.abilities[ability].value);
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 1);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Fatigued",
@@ -232,7 +231,7 @@ export const registerActorConditionsTests = () => {
 
         it("Str and Dex penalty of -3 for exhausted", function () {
           for (const ability of ["str", "dex"]) {
-            const baseModifier = getAbilityModifier(actor.system.abilities[ability].value);
+            const baseModifier = pf1.utils.getAbilityModifier(actor.system.abilities[ability].value);
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 3);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Exhausted",

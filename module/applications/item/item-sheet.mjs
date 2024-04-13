@@ -1,10 +1,4 @@
-import {
-  adjustNumberByStringCommand,
-  getBuffTargetDictionary,
-  getBuffTargets,
-  getWeightSystem,
-  getDistanceSystem,
-} from "@utils";
+import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets } from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
 import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
@@ -658,7 +652,7 @@ export class ItemSheetPF extends ItemSheet {
     this._prepareActions(context);
 
     context.distanceUnit = game.i18n.localize(
-      getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"
+      pf1.utils.getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"
     );
 
     // Prepare speeds
@@ -1131,7 +1125,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _onHoverWeightTooltip(event, content) {
-    const unit = game.i18n.localize(getWeightSystem() === "metric" ? "PF1.Kgs" : "PF1.Lbs");
+    const unit = game.i18n.localize(pf1.utils.getWeightSystem() === "metric" ? "PF1.Kgs" : "PF1.Lbs");
     // TODO: better i18n support
     const mValue = `${this.item.system.weight.converted.value} ${unit}`;
 

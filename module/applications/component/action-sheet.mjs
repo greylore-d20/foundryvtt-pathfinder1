@@ -1,5 +1,3 @@
-import { createTag } from "../../utils/lib.mjs";
-
 export class ItemActionSheet extends FormApplication {
   constructor(...args) {
     super(...args);
@@ -70,7 +68,7 @@ export class ItemActionSheet extends FormApplication {
     context.rollData = action.getRollData();
 
     // Tag placeholder
-    context.tag = createTag(action.name);
+    context.tag = pf1.utils.createTag(action.name);
 
     // Include CONFIG values
     context.config = pf1.config;

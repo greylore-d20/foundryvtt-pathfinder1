@@ -1,5 +1,3 @@
-import { simplify as simplifyFormula } from "@utils/formulas.mjs";
-
 const simplificationTestFormulas = [
   ["1 == 1 ? 1d6 : 0", "1d6"],
   ["sizeRoll(1, 12)[test]", "1d12"],
@@ -49,7 +47,7 @@ export function registerFormulaParsingTests() {
       describe("simplifyFormula", function () {
         simplificationTestFormulas.forEach(([formula, expected]) => {
           it(formula, function () {
-            expect(simplifyFormula(formula, rollData)).to.equal(expected);
+            expect(pf1.utils.formula.simplify(formula, rollData)).to.equal(expected);
           });
         });
       });

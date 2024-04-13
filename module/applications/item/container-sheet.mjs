@@ -1,7 +1,6 @@
 import { ItemSheetPF } from "./item-sheet.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
-import { getWeightSystem } from "@utils";
 
 export class ItemSheetPF_Container extends ItemSheetPF {
   constructor(...args) {
@@ -75,7 +74,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const data = await super.getData();
 
     data.units = {
-      weight: getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+      weight: pf1.utils.getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
 
     // Add filters
@@ -210,7 +209,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Get contents weight
-    const usystem = getWeightSystem();
+    const usystem = pf1.utils.getWeightSystem();
     data.weight = {
       contents: this.item.system.weight.converted.contents,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
@@ -335,7 +334,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }, []);
 
     // Organize Inventory
-    const usystem = getWeightSystem();
+    const usystem = pf1.utils.getWeightSystem();
     const units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
     for (const i of items) {
       const subType = i.type === "loot" ? i.system.subType || "gear" : i.system.subType;

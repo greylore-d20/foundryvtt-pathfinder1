@@ -1,6 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { getDistanceSystem, calculateRangeFormula } from "@utils";
+import { calculateRangeFormula } from "@utils";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 export class ItemSpellPF extends ItemPF {
@@ -908,7 +908,7 @@ export class ItemSpellPF extends ItemPF {
 
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = pf1.config.distanceUnits[rangeUnit];
-        const units = getDistanceSystem();
+        const units = pf1.utils.getDistanceSystem();
         switch (rangeUnit) {
           case "close":
             label.range = `${label.range} ${game.i18n.localize(

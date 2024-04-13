@@ -1,5 +1,4 @@
 import { ItemPF } from "./item-pf.mjs";
-import { createTag } from "../../utils/lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
 export class ItemClassPF extends ItemPF {

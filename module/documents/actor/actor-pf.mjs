@@ -1,5 +1,4 @@
 import { ActorBasePF } from "./actor-base.mjs";
-import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
 import { createTag, fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
@@ -769,7 +768,7 @@ export class ActorPF extends ActorBasePF {
     // Add spell slots based on ability bonus slot formula
     const spellSlotAbilityScoreBonus = RollPF.safeRoll(book.spellSlotAbilityBonusFormula || "0", rollData).total,
       spellSlotAbilityScore = (spellbookAbility?.total ?? 10) + spellSlotAbilityScoreBonus,
-      spellSlotAbilityMod = getAbilityModifier(spellSlotAbilityScore);
+      spellSlotAbilityMod = pf1.utils.getAbilityModifier(spellSlotAbilityScore);
 
     // Set CL
     let clTotal = 0;
@@ -1411,7 +1410,7 @@ export class ActorPF extends ActorBasePF {
       const total = abilities[ab].base;
       const penalty = abilities[ab].penalty || 0;
       const damage = abilities[ab].damage;
-      abilities[ab].baseMod = getAbilityModifier(total, { penalty, damage });
+      abilities[ab].baseMod = pf1.utils.getAbilityModifier(total, { penalty, damage });
     }
 
     const actorData = this.system;
@@ -4754,7 +4753,7 @@ export class ActorPF extends ActorBasePF {
       const total = this.system.abilities[k].total;
       const penalty = Math.abs(this.system.abilities[k].penalty || 0);
       const damage = this.system.abilities[k].damage;
-      const newMod = getAbilityModifier(total, { penalty, damage });
+      const newMod = pf1.utils.getAbilityModifier(total, { penalty, damage });
       this.system.abilities[k].mod = newMod;
     }
   }

@@ -1,5 +1,3 @@
-import { createTag } from "@utils";
-
 /**
  * Resource interface.
  */

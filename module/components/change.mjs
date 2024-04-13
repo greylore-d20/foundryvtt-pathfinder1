@@ -1,6 +1,5 @@
 import { getChangeFlat, getSourceInfo } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { getAbilityModifier } from "@utils";
 
 export class ItemChange {
   constructor(data, parent) {
@@ -323,7 +322,7 @@ export class ItemChange {
       const abilityTarget = modifierChanger?.[1];
       if (abilityTarget) {
         const ability = actor.system.abilities[abilityTarget];
-        ability.mod = getAbilityModifier(ability.total, {
+        ability.mod = pf1.utils.getAbilityModifier(ability.total, {
           damage: ability.damage,
           penalty: ability.penalty,
         });

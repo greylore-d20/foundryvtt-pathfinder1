@@ -1,6 +1,5 @@
 import { createTestActor } from "./actor-utils.mjs";
 import { fetchPackEntryData } from "./utils.mjs";
-import { convertWeight, getWeightSystem } from "../utils/lib.mjs";
 
 export const registerItemWeightTests = () => {
   quench.registerBatch(
@@ -59,7 +58,7 @@ export const registerItemWeightTests = () => {
             expect(game.settings.get("pf1", "units")).to.equal(units);
             let expectedSystem = weightUnits;
             if (expectedSystem === "default") expectedSystem = units;
-            expect(getWeightSystem()).to.equal(expectedSystem);
+            expect(pf1.utils.getWeightSystem()).to.equal(expectedSystem);
           });
 
           for (const kind of ["world", "embedded"]) {
@@ -83,8 +82,8 @@ export const registerItemWeightTests = () => {
               });
               it("should have a weight of 1 lbs/0.5 kg", function () {
                 expect(item.system.weight.total).to.equal(1);
-                expect(item.system.weight.converted.value).to.equal(convertWeight(1));
-                expect(item.system.weight.converted.total).to.equal(convertWeight(1));
+                expect(item.system.weight.converted.value).to.equal(pf1.utils.convertWeight(1));
+                expect(item.system.weight.converted.total).to.equal(pf1.utils.convertWeight(1));
               });
               it("should display correct weight", async function () {
                 expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(1));
@@ -95,7 +94,7 @@ export const registerItemWeightTests = () => {
 
               if (kind === "embedded") {
                 it("should add its weight to the actor", async function () {
-                  expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(1));
+                  expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(1));
                   expect(await getActorSheetCarried()).to.equal(getCarriedPresentationForWeight(1));
                 });
               }
@@ -108,8 +107,8 @@ export const registerItemWeightTests = () => {
                 it("should have a total weight of 2 lbs/1 kg", async function () {
                   expect(item.system.quantity).to.equal(2);
                   expect(item.system.weight.total).to.equal(2);
-                  expect(item.system.weight.converted.value).to.equal(convertWeight(1));
-                  expect(item.system.weight.converted.total).to.equal(convertWeight(2));
+                  expect(item.system.weight.converted.value).to.equal(pf1.utils.convertWeight(1));
+                  expect(item.system.weight.converted.total).to.equal(pf1.utils.convertWeight(2));
                   expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(2));
                 });
                 it("should have a sell value of 10g", function () {
@@ -120,7 +119,7 @@ export const registerItemWeightTests = () => {
 
                 if (kind === "embedded") {
                   it("should add its weight to the actor", async function () {
-                    expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(2));
+                    expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(2));
                     expect(await getActorSheetCarried()).to.equal(getCarriedPresentationForWeight(2));
                   });
                 }
@@ -133,14 +132,14 @@ export const registerItemWeightTests = () => {
                   it("should have a total weight of 20 lbs/10 kg", async function () {
                     expect(item.system.quantity).to.equal(2);
                     expect(item.system.weight.total).to.equal(20);
-                    expect(item.system.weight.converted.value).to.equal(convertWeight(10));
-                    expect(item.system.weight.converted.total).to.equal(convertWeight(20));
+                    expect(item.system.weight.converted.value).to.equal(pf1.utils.convertWeight(10));
+                    expect(item.system.weight.converted.total).to.equal(pf1.utils.convertWeight(20));
                     expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(20));
                   });
 
                   if (kind === "embedded") {
                     it("should add its weight to the actor", async function () {
-                      expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(20));
+                      expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(pf1.utils.convertWeight(20));
                       expect(await getActorSheetCarried()).to.equal(getCarriedPresentationForWeight(20));
                     });
                   }
@@ -161,7 +160,7 @@ export const registerItemWeightTests = () => {
  * @param {number} weight - The weight for which a string is generated
  * @returns {string} The weight's presentation
  */
-const getPresentationForWeight = (weight) => `${Math.roundDecimals(convertWeight(weight), 2).toFixed(2)}`;
+const getPresentationForWeight = (weight) => `${Math.roundDecimals(pf1.utils.convertWeight(weight), 2).toFixed(2)}`;
 
 /**
  * Returns a weight's presentation as it its shown in the actor sheet's carried weight tag
@@ -172,7 +171,7 @@ const getPresentationForWeight = (weight) => `${Math.roundDecimals(convertWeight
 const getCarriedPresentationForWeight = (weight) => {
   let usystem = game.settings.get("pf1", "weightUnits"); // override
   if (usystem === "default") usystem = game.settings.get("pf1", "units");
-  const displayWeight = Math.roundDecimals(convertWeight(weight), 1);
+  const displayWeight = Math.roundDecimals(pf1.utils.convertWeight(weight), 1);
   if (usystem === "metric") return game.i18n.format("PF1.CarryLabelKg", { kg: displayWeight });
   else return game.i18n.format("PF1.CarryLabel", { lbs: displayWeight });
 };

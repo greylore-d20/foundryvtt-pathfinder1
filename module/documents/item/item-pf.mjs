@@ -1,5 +1,5 @@
 import { ItemBasePF } from "./item-base.mjs";
-import { createTag, convertDistance, keepUpdateArray } from "../../utils/lib.mjs";
+import { keepUpdateArray } from "../../utils/lib.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
 import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
@@ -673,7 +673,7 @@ export class ItemPF extends ItemBasePF {
     const isTaggedType = this.constructor.system?.hasIdentifier ?? false;
     if (isTaggedType) {
       if (!this.system.tag) {
-        this.system.tag = createTag(this.name);
+        this.system.tag = pf1.utils.createTag(this.name);
       }
     }
   }
@@ -1104,7 +1104,7 @@ export class ItemPF extends ItemBasePF {
       if (actionData.range != null) {
         const range = action.getRange({ type: "max", rollData }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
-        const distanceValues = convertDistance(range, units);
+        const distanceValues = pf1.utils.convertDistance(range, units);
         const rangeLabel =
           range > 0 ? game.i18n.format("PF1.RangeNote", { distance: range, units: distanceValues[1] }) : null;
         if (rangeLabel) props.push(rangeLabel);

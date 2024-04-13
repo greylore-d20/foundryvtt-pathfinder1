@@ -1,13 +1,11 @@
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { ActorResistanceSelector } from "../damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { createTag, CR, adjustNumberByStringCommand, openJournal } from "../../utils/lib.mjs";
-import { getWeightSystem } from "@utils";
+import { CR, adjustNumberByStringCommand, openJournal } from "../../utils/lib.mjs";
 import { PointBuyCalculator } from "../point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "../item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { ItemPF } from "../../documents/item/item-pf.mjs";
-import { dialogGetActor } from "../../utils/dialog.mjs";
 import { applyAccessibilitySettings } from "../../utils/chat.mjs";
 import { LevelUpForm } from "../level-up.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
@@ -195,7 +193,8 @@ export class ActorSheetPF extends ActorSheet {
       sourceData: {},
       skillsLocked: this._skillsLocked,
       units: {
-        weight: getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+        weight:
+          pf1.utils.getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
         distance: {
           tactical: isMetricDist ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft,
           overland: isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi,
@@ -971,7 +970,7 @@ export class ActorSheetPF extends ActorSheet {
       medium: actorData.attributes.encumbrance.levels.medium,
       heavy: actorData.attributes.encumbrance.levels.heavy,
     };
-    const usystem = getWeightSystem();
+    const usystem = pf1.utils.getWeightSystem();
     const carryLabel =
       usystem === "metric"
         ? game.i18n.format("PF1.CarryLabelKg", { kg: carriedWeight })
@@ -1957,7 +1956,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     const baseName = skillData.name || "skill";
-    const baseTag = createTag(baseName);
+    const baseTag = pf1.utils.createTag(baseName);
     let tag = baseTag;
     let count = 1;
     while (this.document.system.skills[tag] != null) {
@@ -2308,7 +2307,8 @@ export class ActorSheetPF extends ActorSheet {
         (o) => o.hasPlayerOwner && o !== this.document && !o.testUserPermission(game.user, "OWNER")
       )
     );
-    const targetData = await dialogGetActor(`Give item to actor`, targets);
+
+    const targetData = await pf1.utils.dialog.getActor(`Give item to actor`, targets);
 
     if (!targetData) return;
     let target;
@@ -2574,7 +2574,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Organize Inventory
-    const usystem = getWeightSystem();
+    const usystem = pf1.utils.getWeightSystem();
 
     for (const i of items) {
       const subType = i.type === "loot" ? i.subType || "gear" : i.subType;

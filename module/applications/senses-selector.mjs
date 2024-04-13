@@ -1,5 +1,3 @@
-import { getDistanceSystem } from "@utils";
-
 export class SensesSelector extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
@@ -47,7 +45,7 @@ export class SensesSelector extends DocumentSheet {
       }
     }
 
-    const isMetric = getDistanceSystem() !== "imperial";
+    const isMetric = pf1.utils.getDistanceSystem() !== "imperial";
 
     return {
       noSystemVision:

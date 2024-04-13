@@ -1,5 +1,3 @@
-import { convertDistance } from "./utils/lib.mjs";
-
 /**
  * Initialize module compatibility/integration code.
  *
@@ -24,7 +22,7 @@ export function initializeModuleIntegration() {
         }
 
         getRanges(token) {
-          const baseSpeed = convertDistance(this.getBaseSpeed(token))[0];
+          const baseSpeed = pf1.utils.convertDistance(this.getBaseSpeed(token))[0];
           const rollData = token.actor.getRollData(),
             inHeavyArmor = rollData.armor.type >= pf1.config.armorTypes.heavy,
             inHeavyLoad = rollData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.heavy;

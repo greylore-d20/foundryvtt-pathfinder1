@@ -826,14 +826,16 @@ export class ActionUse {
    * @returns {Promise.<Attack_MeasureTemplateResult>} Whether an area was selected.
    */
   async promptMeasureTemplate() {
+    const mt = this.shared.action.data.measureTemplate;
+
     // Determine size
-    let dist = RollPF.safeRoll(this.shared.action.data.measureTemplate.size, this.shared.rollData).total;
+    let dist = RollPF.safeRoll(mt.size, this.shared.rollData).total;
     // Apply system of units conversion
     dist = pf1.utils.convertDistance(dist)[0];
 
     // Create data object
     const templateOptions = {
-      type: this.shared.action.data.measureTemplate.type,
+      type: mt.type,
       distance: dist,
       flags: {
         pf1: {
@@ -845,12 +847,12 @@ export class ActionUse {
       },
     };
 
-    if (this.shared.action.data.measureTemplate.overrideColor) {
-      templateOptions.color = this.shared.action.data.measureTemplate.customColor;
+    if (mt.color) {
+      // Color transformation to avoid invalid colors provided by user from corrupting the template
+      const c = Color.fromString(mt.color);
+      if (Number.isFinite(Number(c))) templateOptions.color = c.toString();
     }
-    if (this.shared.action.data.measureTemplate.overrideTexture) {
-      templateOptions.texture = this.shared.action.data.measureTemplate.customTexture;
-    }
+    if (mt.texture) templateOptions.texture = mt.texture;
 
     // Create template
     this.shared.template = null;

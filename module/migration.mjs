@@ -902,6 +902,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionAmmunitionUsage(action, itemData, updateData);
   _migrateActionHarmlessSpell(action, itemData);
   _migrateActionSpellArea(action, itemData);
+  _migrateActionTemplate(action, itemData);
   _migrateActionDuration(action, itemData);
   _migrateActionObsoleteTypes(action, itemData);
 
@@ -2022,6 +2023,25 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
 const _migrateActionSpellArea = (action, itemData) => {
   action.area ||= action.spellArea;
   delete action.spellArea;
+};
+
+/**
+ * @since PF1 vNEXT
+ * @param action
+ * @param itemData
+ */
+const _migrateActionTemplate = (action, itemData) => {
+  //
+  const mt = action.measureTemplate;
+  if (!mt) return;
+
+  mt.color = mt.customColor;
+  delete mt.overrideColor;
+  delete mt.customColor;
+
+  mt.texture = mt.customTexture;
+  delete mt.overrideTexture;
+  delete mt.customTexture;
 };
 
 // Action duration

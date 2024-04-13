@@ -45,10 +45,8 @@ export function getActionDefaultData() {
     measureTemplate: {
       type: "",
       size: "",
-      overrideColor: false,
-      customColor: "",
-      overrideTexture: false,
-      customTexture: "",
+      color: "",
+      texture: "",
     },
     attackName: "",
     actionType: "other",

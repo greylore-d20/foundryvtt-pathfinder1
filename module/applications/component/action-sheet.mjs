@@ -58,6 +58,7 @@ export class ItemActionSheet extends FormApplication {
     const action = this.action;
     const item = this.item;
     const actor = this.actor;
+    context.user = game.user;
     context.action = action;
     context.item = item;
     context.actor = actor;
@@ -603,6 +604,15 @@ export class ItemActionSheet extends FormApplication {
       // Adjust Alignment Types (this is necessary to handle null values for inheritance)
       for (const [key, value] of Object.entries(this.alignments)) {
         formData.alignments[key] = value;
+      }
+    }
+
+    // Uniform style for
+    if (formData.measureTemplate) {
+      if (formData.measureTemplate.color) {
+        const c = Color.fromString(formData.measureTemplate.color);
+        if (Number.isFinite(Number(c))) formData.measureTemplate.color = c.toString();
+        else console.warn("Invalid color provided to template", formData.measureTemplate.color, this.action);
       }
     }
 

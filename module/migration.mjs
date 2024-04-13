@@ -1795,7 +1795,7 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
 
       // Convert ID to relative UUID
       if (link.id !== undefined) {
-        link.uuid = actor.items.get(link.id)?.getRelativeUUID(actor);
+        link.uuid = actor?.items?.get(link.id)?.getRelativeUUID(actor);
         delete link.id;
         updated = true;
       }
@@ -2690,7 +2690,7 @@ const _migrateActorTraitsCustomToArray = (actor, updateData) => {
   const keys = ["di", "dv", "ci", "languages", "armorProf", "weaponProf"];
 
   keys.forEach((key) => {
-    const trait = actor.system.traits[key];
+    const trait = actor.system.traits?.[key];
     if (!trait || typeof trait.custom !== "string") return;
 
     const custom =

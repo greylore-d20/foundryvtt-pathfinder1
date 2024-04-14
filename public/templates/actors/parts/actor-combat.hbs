@@ -143,10 +143,10 @@
 
           <div class="item-detail item-attacks tooltip">
             {{#if item.hasAttack}}
-            <label>{{actionAttacks item.document.firstAction @root.rollData}}</label>
+            <label>{{attackSummary}}</label>
             <span class="tooltipcontent">
               <span class="span3">
-                {{#each item.document.attackArray~}}
+                {{#each attackArray~}}
                   {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}
                 {{~/each}}
               </span>

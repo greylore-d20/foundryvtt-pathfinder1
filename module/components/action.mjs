@@ -1233,6 +1233,147 @@ export class ItemAction {
   }
 
   /**
+   * Generate attacks.
+   *
+   * @param {object} [options] - Options
+   * @param {boolean} [options.full=true] - Full attack
+   * @param {object} [options.rollData] - Roll data
+   * @param {boolean} [options.resolve=false] - If the bonuses are to be resolved directly.
+   * @param {boolean} [options.conditionals=false] - Include conditional modifications. Requires `resolve` to be enabled.
+   * @param {boolean} [options.bonuses=false] - Include other bonuses. Requires `resolve` to be enabled.
+   * @returns {Array<object>} - Array of attack data
+   */
+  getAttacks({ full = true, rollData, resolve = false, conditionals = false, bonuses = false } = {}) {
+    rollData ||= this.getRollData();
+
+    const actionData = this.data;
+
+    const exAtkCfg = pf1.config.extraAttacks[actionData.extraAttacks?.type] ?? {};
+
+    /**
+     * Counter for unnamed or other numbered attacks, to be incremented with each usage.
+     * Starts at 1 to account for the base attack.
+     */
+    let unnamedAttackIndex = 1;
+
+    const attackName =
+      actionData.attackName || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttackIndex });
+
+    rollData.bab = rollData.attributes?.bab?.total; // TODO: BAB override/modifier
+    rollData.attackCount = 0;
+
+    const attacks = [{ bonus: exAtkCfg.bonus || "0".total, label: attackName }];
+
+    // Extra attacks
+    if (full) {
+      rollData.fullAttack = 1;
+      const unchainedEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+
+      let attackCount = 0;
+
+      const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
+        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
+        if (exAtkCount <= 0) {
+          delete rollData.bab;
+          return;
+        }
+
+        try {
+          for (let i = 0; i < exAtkCount; i++) {
+            rollData.attackCount = attackCount += 1;
+            rollData.formulaicAttack = i + 1; // Add and update attack counter
+            const bonus = RollPF.safeRoll(bonusFormula || "0", rollData).total;
+            attacks.push({
+              bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
+              // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
+              label:
+                label?.replace("{0}", i + 1) ||
+                game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        // Cleanup roll data
+        delete rollData.attackCount;
+        delete rollData.formulaicAttack;
+        delete rollData.bab;
+      };
+
+      if (exAtkCfg.iteratives && !unchainedEconomy) {
+        parseAttacks(
+          pf1.config.iterativeExtraAttacks,
+          pf1.config.iterativeAttackModifier,
+          null,
+          game.i18n.localize("PF1.Iterative")
+        );
+      }
+
+      // Add attacks defined by configuration
+      if (exAtkCfg.count) parseAttacks(exAtkCfg.count, exAtkCfg.bonus, null, exAtkCfg.flavor);
+
+      // Add manually entered explicit extra attacks
+      if (exAtkCfg.manual) {
+        const extraAttacks = actionData.extraAttacks?.manual ?? [];
+        for (const { name, formula } of extraAttacks) {
+          attacks.push({
+            bonus: formula,
+            // Use defined label, or fall back to continuously numbered default attack name
+            label: name || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+          });
+        }
+      }
+
+      // Add custom extra attack formula
+      if (exAtkCfg.formula) {
+        parseAttacks(
+          actionData.extraAttacks.formula?.count,
+          actionData.extraAttacks.formula?.bonus,
+          actionData.extraAttacks.formula?.label
+        );
+      }
+    }
+
+    if (resolve) {
+      const condBonuses = new Array(attacks.length).fill(0);
+      if (conditionals) {
+        // Conditional modifiers
+        actionData.conditionals
+          .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
+          .forEach((c) => {
+            c.modifiers.forEach((cc) => {
+              const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+              if (bonusRoll.total == 0) return;
+              if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
+                const atk = parseInt(RegExp.$1, 10);
+                if (atk in condBonuses) condBonuses[atk] += bonusRoll.total;
+              }
+            });
+          });
+      }
+
+      let totalBonus = 0;
+      if (bonuses) {
+        const sources = this.item.getAttackSources(this.id, { rollData });
+        totalBonus = sources.reduce((f, s) => f + s.value, 0);
+      }
+      console.log([...attacks]);
+
+      attacks.forEach((atk, i) => {
+        rollData.attackCount = i;
+        atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
+        delete rollData.attackCount;
+      });
+      console.log([...attacks]);
+    }
+
+    delete rollData.bab;
+
+    return attacks;
+  }
+
+  /**
    * @param {object} options - See ItemPF#useAttack.
    * @returns {Promise<void>}
    */

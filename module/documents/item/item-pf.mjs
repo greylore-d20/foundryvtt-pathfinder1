@@ -2081,67 +2081,22 @@ export class ItemPF extends ItemBasePF {
    * @returns {number[]} Simple array describing the individual guaranteed attacks.
    */
   getAttackArray(actionId) {
+    foundry.utils.logCompatibilityWarning(
+      `ItemPF.getAttackArray() is deprecated. Use ItemAction.getAttacks() instead.`,
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+
     const action = this.actions.get(actionId),
       actionData = action?.data,
-      rollData = action?.getRollData(),
-      attacks = [0];
-    if (!actionData) return attacks;
+      rollData = action?.getRollData();
+    if (!actionData) return [0];
 
-    const appendAttack = (formula) => {
-      const bonus = RollPF.safeRoll(formula, rollData).total;
-      if (Number.isFinite(bonus)) attacks.push(bonus);
-    };
+    const attacks = action.getAttacks({ full: true, rollData, conditionals: true, bonuses: true });
 
-    // Static extra attacks
-    if (actionData.extraAttacks.type) {
-      const exAtkCfg = pf1.config.extraAttacks[actionData.extraAttacks?.type] ?? {};
-
-      if (exAtkCfg.manual && actionData.extraAttacks?.manual?.length) {
-        const extraAttacks =
-          actionData.extraAttacks.manual.filter((n) => n.formula?.length).map((n) => n.formula) ?? [];
-        for (const formula of extraAttacks) appendAttack(formula);
-      }
-
-      if (exAtkCfg.formula) {
-        // Formula-based extra attacks
-        const fmAtk = actionData.extraAttacks?.formula?.count?.trim();
-        if (fmAtk?.length > 0) {
-          const fmAtkBonus = actionData.extraAttacks?.formula?.bonus?.trim() || "0";
-          rollData.bab = rollData.attributes?.bab?.total;
-
-          const count = RollPF.safeRoll(fmAtk, rollData);
-          for (let i = 0; i < count.total; i++) {
-            rollData.attackCount = i + 1;
-            rollData.formulaicAttack = rollData.attackCount;
-            appendAttack(fmAtkBonus);
-          }
-
-          delete rollData.attackCount;
-          delete rollData.formulaicAttack;
-          delete rollData.bab;
-        }
-      }
-    }
-
-    // Conditional modifiers
-    const condBonuses = new Array(attacks.length).fill(0);
-    actionData.conditionals
-      .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
-      .forEach((c) => {
-        c.modifiers.forEach((cc) => {
-          const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
-          if (bonusRoll.total == 0) return;
-          if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
-            const atk = parseInt(RegExp.$1, 10);
-            if (atk in condBonuses) condBonuses[atk] += bonusRoll.total;
-          }
-        });
-      });
-
-    const sources = this.getAttackSources(actionId, { rollData });
-    const totalBonus = sources.reduce((f, s) => f + s.value, 0);
-
-    return attacks.map((a, i) => a + totalBonus + condBonuses[i]);
+    return attacks;
   }
 
   /**
@@ -2150,6 +2105,11 @@ export class ItemPF extends ItemBasePF {
    * @returns {number[]} Simple array describing the individual guaranteed attacks.
    */
   get attackArray() {
+    foundry.utils.logCompatibilityWarning(`ItemPF.attackArray is deprecated. Use ItemAction.getAttacks() instead.`, {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
     return this.getAttackArray(this.firstAction.id);
   }
 

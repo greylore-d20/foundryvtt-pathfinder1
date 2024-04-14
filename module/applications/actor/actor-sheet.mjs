@@ -549,7 +549,18 @@ export class ActorSheetPF extends ActorSheet {
           { inplace: false }
         );
       }
+      if (result.hasAttack) {
+        const attacks = firstAction
+          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData: firstActionRollData })
+          .map((atk) => atk.bonus);
+        result.attackArray = attacks;
+        const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
+        result.attackSummary = `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${
+          attacks.length > 1 ? "/…" : ""
+        })`;
+      }
     }
+
     result.sort = item.sort;
     result.showUnidentifiedData = item.showUnidentifiedData;
     result.name = item.name; // Copy name over from item to handle identified state correctly

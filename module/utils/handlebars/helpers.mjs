@@ -144,7 +144,12 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("actionAttacks", (action) => {
-    const attacks = action.item.getAttackArray(action.id);
+    foundry.utils.logCompatibilityWarning(`actionAttacks HBS helper is deprecated with no replacement.`, {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    const attacks = action.getAttacks({ full: true, bonuses: true, conditionals: true }).map((atk) => atk.attackBonus);
     const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
     return `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${attacks.length > 1 ? "/…" : ""})`;
   });

@@ -1366,14 +1366,12 @@ export class ItemAction {
         const sources = this.item.getAttackSources(this.id, { rollData });
         totalBonus = sources.reduce((f, s) => f + s.value, 0);
       }
-      console.log([...attacks]);
 
       attacks.forEach((atk, i) => {
         rollData.attackCount = i;
         atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
         delete rollData.attackCount;
       });
-      console.log([...attacks]);
     }
 
     delete rollData.bab;

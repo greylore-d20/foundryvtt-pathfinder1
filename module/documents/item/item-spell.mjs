@@ -23,8 +23,9 @@ export class ItemSpellPF extends ItemPF {
     await super._preCreate(data, options, user);
     this._assignLevelOnCreate(data, options);
 
-    const prep = data.system.preparation;
-    if (prep) {
+    // Handle preparation data creation
+    {
+      const prep = data.system.preparation ?? {};
       const prepUpdate = {};
       if (prep.maxAmount !== undefined) {
         foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
@@ -50,7 +51,19 @@ export class ItemSpellPF extends ItemPF {
         prepUpdate.value = prep.prep.spontaneousPrepared ? 1 : 0;
         prepUpdate["-=spontaneousPrepared"] = null;
       }
-      this.updateSource({ system: { preparation: prepUpdate } });
+
+      // Add preparation
+      if (this.actor && prepUpdate.value === undefined) {
+        // Only spontaneous casters auto-prepare new spells
+        if (this.spellbook?.spellPreparationMode === "spontaneous") {
+          prepUpdate.value ??= 1;
+          prepUpdate.max ??= 1;
+        }
+      }
+
+      if (!foundry.utils.isEmpty(prepUpdate)) {
+        this.updateSource({ system: { preparation: prepUpdate } });
+      }
     }
   }
 

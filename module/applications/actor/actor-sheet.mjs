@@ -1175,7 +1175,7 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Quick toggle item property
-    html.find("a.item-control.item-toggle-data").click(this._itemPreparedToggle.bind(this));
+    html.find("a.item-control.item-toggle-prepared").click(this._itemPreparedToggle.bind(this));
 
     // Duplicate item
     html.find("a.item-control.item-duplicate").click(this._duplicateItem.bind(this));
@@ -2133,8 +2133,7 @@ export class ActorSheetPF extends ActorSheet {
     const property = el.dataset.name;
 
     const updateData = { system: {} };
-    foundry.utils.setProperty(updateData.system, property, !foundry.utils.getProperty(item.system, property) ? 0 : 1);
-
+    foundry.utils.setProperty(updateData.system, property, foundry.utils.getProperty(item.system, property) ? 0 : 1);
     item.update(updateData);
   }
 

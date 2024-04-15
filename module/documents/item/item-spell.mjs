@@ -48,7 +48,7 @@ export class ItemSpellPF extends ItemPF {
           since: "PF1 vNEXT",
           until: "PF1 vNEXT+1",
         });
-        prepUpdate.value = prep.prep.spontaneousPrepared ? 1 : 0;
+        prepUpdate.value = prep.spontaneousPrepared ? 1 : 0;
         prepUpdate["-=spontaneousPrepared"] = null;
       }
 

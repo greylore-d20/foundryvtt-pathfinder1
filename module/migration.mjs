@@ -2067,11 +2067,11 @@ const _migrateActionTemplate = (action, itemData) => {
   const mt = action.measureTemplate;
   if (!mt) return;
 
-  mt.color = mt.customColor;
+  mt.color ||= mt.customColor;
   delete mt.overrideColor;
   delete mt.customColor;
 
-  mt.texture = mt.customTexture;
+  mt.texture ||= mt.customTexture;
   delete mt.overrideTexture;
   delete mt.customTexture;
 };

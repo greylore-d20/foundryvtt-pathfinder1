@@ -1,6 +1,6 @@
 import { openJournal } from "../utils/lib.mjs";
 
-export class SkillEditor extends FormApplication {
+export class SkillEditor extends DocumentSheet {
   constructor(actor, skillId, subSkillId, options = {}) {
     super(actor, options);
     this.skillId = skillId;
@@ -15,34 +15,45 @@ export class SkillEditor extends FormApplication {
       ...options,
       width: 380,
       template: "systems/pf1/templates/apps/skill-editor.hbs",
-      closeOnSubmit: false,
       dragDrop: [{ dragSelector: null, dropSelector: "*" }],
       classes: [...options.classes, "pf1", "skill-editor"],
+      submitOnChange: true,
+      closeOnSubmit: false,
+      submitOnClose: false,
     };
   }
 
   get title() {
-    return `${game.i18n.localize("PF1.EditSkill")}: ${this.skillName}`;
+    return `${game.i18n.localize("PF1.EditSkill")}: ${this.skillName} – ${this.actor.name}`;
   }
 
+  /** @type {ActorPF} */
   get actor() {
-    return this.object;
+    return this.document;
   }
 
+  /** @type {boolean} */
   get isSubSkill() {
-    return this.subSkillId != null;
+    return !!this.subSkillId;
   }
+
+  /** @type {boolean} */
   get isStaticSkill() {
     return pf1.config.skills[this.skillId] != null && !this.isSubSkill;
   }
 
+  /** @type {object} */
   get skill() {
     if (this.isSubSkill) return this.actor.system.skills[this.skillId]?.subSkills[this.subSkillId];
     return this.actor.system.skills[this.skillId];
   }
+
+  /** @type {string} */
   get skillName() {
     return this.isStaticSkill ? pf1.config.skills[this.skillId] : this.skill.name;
   }
+
+  /** @type {string} */
   get skillTag() {
     if (this.isStaticSkill) return this.skillId;
     return this.isSubSkill ? this.subSkillId : this.skillId;
@@ -105,8 +116,9 @@ export class SkillEditor extends FormApplication {
       oldSkillId = this.skillId;
 
     // Preserve some data
-    newData.journal ??= this.skill.journal;
-    newData.custom ??= this.skill.custom;
+    if (newData.journal === undefined) newData.journal ??= this.skill.journal;
+    if (newData.custom === undefined) newData.custom ??= this.skill.custom;
+
     if (!this.isStaticSkill) {
       newData.background ??= this.skill.background;
     }
@@ -116,6 +128,19 @@ export class SkillEditor extends FormApplication {
       return void ui.notifications.error(game.i18n.localize("PF1.ErrorEmptySkillTag"));
     }
 
+    const subSkillId = this.isSubSkill ? tag : null;
+    const skillId = !this.isSubSkill ? tag : this.skillId;
+
+    // Detect skill ID conflicts
+    const tagChanged = this.isSubSkill ? tag !== this.subSkillId : tag !== this.skillId;
+    if (tagChanged) {
+      const skillsData = this.isSubSkill ? this.actor.system.skills[skillId].subSkills : this.actor.system.skills;
+      if (tag in skillsData) {
+        const msgOpts = { tag: this.isSubSkill ? `${this.skillId}.subSkills.${tag}` : tag };
+        return void ui.notifications.error(game.i18n.format("PF1.ErrorSkillTagAlreadyExists", msgOpts));
+      }
+    }
+
     // Change application's id by tag
     if (tag) {
       if (this.isSubSkill) this.subSkillId = tag;
@@ -123,30 +148,16 @@ export class SkillEditor extends FormApplication {
     }
 
     if (this.isSubSkill) {
-      skillCoreUpdateData[this.skillId] = { subSkills: { [this.subSkillId]: newData } };
-      if (!this.isStaticSkill && oldSubSkillId !== this.subSkillId) {
-        // Delete old skill
-        skillCoreUpdateData[this.skillId].subSkills[`-=${oldSubSkillId}`] = null;
-        // Check for attempts to overwrite skills
-        if (this.subSkillId in this.object.system.skills[this.skillId].subSkills) {
-          return void ui.notifications.error(
-            game.i18n.format("PF1.ErrorSkillTagAlreadyExists", { tag: `${this.skillId}.subSkills.${this.subSkillId}` })
-          );
-        }
-      }
+      skillCoreUpdateData[skillId] = { subSkills: { [subSkillId]: newData } };
+      // Delete old skill
+      if (tagChanged) skillCoreUpdateData[skillId].subSkills[`-=${oldSubSkillId}`] = null;
     } else {
-      skillCoreUpdateData[this.skillId] = newData;
-      if (!this.isStaticSkill && oldSkillId !== this.skillId) {
-        // Delete old skill
-        skillCoreUpdateData[`-=${oldSkillId}`] = null;
-        // Check for attempts to overwrite skills
-        if (this.skillId in this.object.system.skills) {
-          return void ui.notifications.error(game.i18n.format("PF1.ErrorSkillTagAlreadyExists", { tag: this.skillId }));
-        }
-      }
+      skillCoreUpdateData[skillId] = newData;
+      // Delete old skill
+      if (tagChanged) skillCoreUpdateData[`-=${oldSkillId}`] = null;
     }
 
-    await this.object.update(updateData);
+    return this.actor.update(updateData);
   }
 
   async close(...args) {
@@ -196,8 +207,8 @@ export class SkillEditor extends FormApplication {
     const elem = event.currentTarget;
 
     if (elem.classList.contains("delete")) {
-      await this._onSubmit(event, { updateData: { "skill.journal": null } });
-      await this.render();
+      await this._onSubmit(event, { preventRender: true });
+      return this._updateObject(event, this._getSubmitData({ "skill.journal": null }));
     }
   }
 }

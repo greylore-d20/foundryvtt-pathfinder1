@@ -16,7 +16,9 @@ export class ItemClassPF extends ItemPF {
 
     // Set level marker
     if (changed.system.level !== undefined) {
-      this._prevLevel = this.system.level;
+      context.pf1 ??= {};
+      context.pf1.level ??= {};
+      context.pf1.level.old = this.system.level;
     }
 
     // Ensure class associations remain in level order
@@ -41,8 +43,9 @@ export class ItemClassPF extends ItemPF {
     if (!actor) return;
 
     // Adjust associations if any exist
-    if (this.system.level > 0) {
-      this._onLevelChange(0, this.system.level, { event: "create" });
+    const level = this.system.level ?? 0;
+    if (level > 0) {
+      this._onLevelChange(0, level, { event: "create" });
     }
 
     // Create spellbook if the class has spellcasting defined
@@ -96,10 +99,9 @@ export class ItemClassPF extends ItemPF {
 
     // Update class associations if level changed
     const newLevel = changed.system?.level;
-    if (newLevel >= 0) {
-      const prevLevel = this._prevLevel;
-      delete this._prevLevel;
-      this._onLevelChange(prevLevel ?? 0, newLevel ?? 0, { event: "update" });
+    if (newLevel !== undefined) {
+      const prevLevel = context.pf1?.level?.old ?? 0;
+      this._onLevelChange(prevLevel, newLevel ?? 0, { event: "update" });
     }
   }
 
@@ -119,14 +121,13 @@ export class ItemClassPF extends ItemPF {
 
     // Add items associated to this class
     if (newLevel > curLevel) {
-      const classAssociations = (this.system.links?.classAssociations ?? []).filter(
-        (link, index) => link.level > curLevel && link.level <= newLevel
-      );
+      const associations = this.system.links?.classAssociations ?? [];
+      const newAssociations = associations.filter((link) => link.level > curLevel && link.level <= newLevel);
 
       const sources = new Map();
 
       const newItems = [];
-      for (const link of classAssociations) {
+      for (const link of newAssociations) {
         const item = await fromUuid(link.uuid);
         if (!item) {
           const msg = `Could not find class association: ${link.uuid}`;
@@ -174,6 +175,7 @@ export class ItemClassPF extends ItemPF {
     // Remove items associated to this class
     if (newLevel < curLevel) {
       const associations = foundry.utils.deepClone(this.getFlag("pf1", "links.classAssociations") || {});
+
       const itemIds = [];
       for (const [id, level] of Object.entries(associations)) {
         const item = actor.items.get(id);

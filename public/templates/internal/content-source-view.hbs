@@ -1,7 +1,6 @@
-{{#with @root.bookSources}}
-<div class="content-source {{#unless source.title}}missing{{/unless}}">
+<div class="content-source {{#unless @root.bookSources.main.title}}missing{{/unless}}">
   <span class="source"
-  {{#with main~}}
+  {{#with @root.bookSources.main~}}
     {{#if title~}}
     data-tooltip-class="pf1 source"
     data-tooltip="
@@ -32,4 +31,3 @@
     </a>
   </div>
 </div>
-{{/with}}

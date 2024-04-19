@@ -1763,6 +1763,12 @@ export class ActorPF extends ActorBasePF {
           const linkedItem = fromUuidSync(link.uuid, { relative: this });
           if (!linkedItem) continue;
 
+          // Detect bad links pointing to other actors
+          if (linkedItem.actor && linkedItem.actor !== this) {
+            console.error("Invalid item link:", { type, uuid: link.uuid, actor: this, item, linked: linkedItem });
+            continue;
+          }
+
           switch (type) {
             case "charges": {
               linkedItem.links.charges = item;

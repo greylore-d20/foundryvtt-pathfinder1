@@ -1827,10 +1827,25 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
       }
 
       // Convert ID to relative UUID
-      if (link.id !== undefined) {
+      if (link.id !== undefined && actor) {
         link.uuid = actor?.items?.get(link.id)?.getRelativeUUID(actor);
         delete link.id;
         updated = true;
+      }
+
+      if (actor && link.uuid) {
+        let linked = fromUuidSync(link.uuid, { relativeTo: actor });
+        // Attempt to recover bad links to other actors
+        if (linked?.actor) {
+          // Attempt to adjust owned item
+          if (linked.actor !== actor) linked = actor.items.get(linked.id);
+          const newLink = linked?.getRelativeUUID(actor);
+          // Successful recovery?
+          if (linked && newLink !== link.uuid) {
+            link.uuid = newLink;
+            updated = true;
+          }
+        }
       }
 
       // Remove unused data

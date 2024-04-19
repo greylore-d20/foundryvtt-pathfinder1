@@ -12,24 +12,28 @@ export class TokenPF extends Token {
    * @returns {boolean} - was it applied or removed
    */
   async toggleEffect(effect, { active, overlay = false } = {}) {
-    let call;
-    if (!this.actor) {
-      return super.toggleEffect(effect, { active, overlay });
-    } else if (typeof effect == "string") {
-      const buffItem = this.actor.items.get(effect);
-      if (buffItem) {
-        await buffItem.setActive(active ?? !buffItem.isActive);
-        call = buffItem.isActive;
-      } else call = await super.toggleEffect(effect, { active, overlay });
-    } else if (effect && pf1.registry.conditions.has(effect.id) && typeof this.actor.toggleCondition === "function") {
-      await this.actor.toggleCondition(effect.id);
-      call = this.actor.hasCondition(effect.id);
+    const effectId = typeof effect === "string" ? effect : effect?.id;
+    if (this.actor) {
+      const buff = this.actor.items.get(effectId);
+      if (buff) {
+        foundry.utils.logCompatibilityWarning("Toggling buffs via TokenPF.toggleEffect() is deprecated.", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+
+        await buff.setActive(active ?? !buff.isActive);
+        return buff.isActive;
+      }
+    }
+
+    if (this.actor && pf1.registry.conditions.has(effectId) && typeof this.actor.toggleCondition === "function") {
+      let rv;
+      if (active === undefined) rv = await this.actor.toggleCondition(effectId);
+      else rv = await this.actor.setCondition(effectId, active);
+      return rv[effectId];
     } else {
       return super.toggleEffect(effect, { active, overlay });
     }
-
-    if (this.hasActiveHUD) canvas.tokens.hud.refreshStatusIcons();
-    return call;
   }
 
   get actorVision() {

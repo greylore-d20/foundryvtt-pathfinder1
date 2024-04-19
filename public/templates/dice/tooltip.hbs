@@ -4,7 +4,7 @@
     <div class="dice">
       <header class="part-header flexrow">
         <span class="part-formula">{{formula}}</span>
-        {{#if flavor}}<span class="part-flavor">{{flavor}}</span>{{/if}}
+        <span class="part-flavor">{{flavor}}</span>
         <span class="part-total">{{total}}</span>
       </header>
       <ol class="dice-rolls">
@@ -21,7 +21,7 @@
     <div class="dice">
       <header class="part-header flexrow">
         <span class="part-formula"></span>
-        {{#if flavor}}<span class="part-flavor">{{flavor}}</span>{{/if}}
+        <span class="part-flavor">{{flavor}}</span>
         <span class="part-total">
           {{#if (gte total 0)}}<span class="part-prefix">+</span>{{/if}}
           {{~total~}}

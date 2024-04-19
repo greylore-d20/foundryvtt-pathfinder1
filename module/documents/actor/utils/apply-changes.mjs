@@ -900,8 +900,9 @@ export const addDefaultChanges = function (changes) {
     // BAB to attack
     changes.push(
       new pf1.components.ItemChange({
-        formula: getBabTotal,
-        operator: "function",
+        _id: "_bab", // HACK: Force ID to be special
+        formula: "@attributes.bab.total",
+        operator: "add",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",

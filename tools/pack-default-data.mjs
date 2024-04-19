@@ -51,6 +51,7 @@ export function getActionDefaultData() {
     attackName: "",
     actionType: "other",
     attackBonus: "",
+    bab: "",
     critConfirmBonus: "",
     damage: {
       parts: [],

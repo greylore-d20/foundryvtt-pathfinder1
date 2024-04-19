@@ -2,7 +2,7 @@ import { getChangeFlat, getSourceInfo } from "../documents/actor/utils/apply-cha
 import { RollPF } from "../dice/roll.mjs";
 
 export class ItemChange {
-  constructor(data, parent) {
+  constructor(data, parent = null) {
     this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
     this.parent = parent;
     this.updateTime = new Date();

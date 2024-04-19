@@ -494,6 +494,15 @@ export class ItemAction {
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
 
+    // BAB override
+    if (result.action.bab) {
+      const bab = RollPF.safeRoll(result.action.bab, result).total;
+      foundry.utils.setProperty(result, "attributes.bab.total", bab || 0);
+    }
+
+    // Add @bab
+    result.bab = result.attributes?.bab?.total || 0;
+
     return result;
   }
 
@@ -852,11 +861,12 @@ export class ItemAction {
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    *
-   * @param root0
-   * @param root0.data
-   * @param root0.extraParts
-   * @param root0.bonus
-   * @param root0.primaryAttack
+   * @param {object} [options] - Options
+   * @param {object} [options.data] - Roll data
+   * @param {Array<string>} [options.extraParts] - Additional attack parts
+   * @param {string} [options.bonus] - Additional attack bonus
+   * @param {boolean} [options.primaryAttack=true] - Treat as primary natural attack
+   * @returns {D20RollPF}
    */
   async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
     const rollData = data ?? this.getRollData();
@@ -891,7 +901,7 @@ export class ItemAction {
       parts.push(`@abilities.${abl}.mod[${pf1.config.abilities[abl]}]`);
     }
 
-    // Add change bonus
+    // Get relevant changes
     const changes = this.attackSources;
 
     // Add masterwork bonus to changes (if applicable)
@@ -931,15 +941,13 @@ export class ItemAction {
       { ignoreTarget: true }
     )
       .filter((c) => c.value != 0)
-      .reduce((cur, c) => {
-        cur.push({
-          value: c.value,
-          source: c.flavor,
-        });
-        return cur;
-      }, [])
       .forEach((c) => {
-        parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
+        let value = c.value;
+        // BAB override
+        if (actionData.bab && c._id === "_bab") {
+          value = RollPF.safeRoll(c.formula, data).total || 0;
+        }
+        parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
       });
 
     // Add bonus parts
@@ -1267,7 +1275,6 @@ export class ItemAction {
     const attackName =
       actionData.attackName || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttackIndex });
 
-    rollData.bab = rollData.attributes?.bab?.total; // TODO: BAB override/modifier
     rollData.attackCount = 0;
 
     const attacks = [{ bonus: exAtkCfg.bonus || "0".total, label: attackName }];
@@ -1281,10 +1288,7 @@ export class ItemAction {
 
       const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
         const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
-        if (exAtkCount <= 0) {
-          delete rollData.bab;
-          return;
-        }
+        if (exAtkCount <= 0) return;
 
         try {
           for (let i = 0; i < exAtkCount; i++) {
@@ -1306,7 +1310,6 @@ export class ItemAction {
         // Cleanup roll data
         delete rollData.attackCount;
         delete rollData.formulaicAttack;
-        delete rollData.bab;
       };
 
       if (exAtkCfg.iteratives && !unchainedEconomy) {
@@ -1373,8 +1376,6 @@ export class ItemAction {
         delete rollData.attackCount;
       });
     }
-
-    delete rollData.bab;
 
     return attacks;
   }

@@ -54,10 +54,9 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      attackBonus: >-
-        -@attributes.bab.total[Base Attack Bonus] + @cl[Caster Level] +
-        @ablMod[Caster Ability Mod]
+      attackBonus: '@ablMod[Caster Ability Mod]'
       attackName: Trip
+      bab: '@cl'
       duration:
         value: ''
       effectNotes:

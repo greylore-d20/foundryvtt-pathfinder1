@@ -32,7 +32,8 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      attackBonus: (-@attributes.bab.total + @cl)[CL Adjust] + @ablMod[Caster Ability]
+      attackBonus: '@ablMod[Caster Ability]'
+      bab: '@cl'
       damage:
         parts:
           - formula: 2d6

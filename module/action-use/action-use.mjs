@@ -127,24 +127,20 @@ export class ActionUse {
   /**
    * Creates and renders an attack roll dialog, and returns a result.
    *
-   * @returns {Promise<ItemAttack_Dialog_Result|boolean>}
+   * @returns {Promise<ItemAttack_Dialog_Result|null>}
    */
   createAttackDialog() {
-    const dialog = new pf1.applications.AttackDialog(this.shared.action, this.shared.rollData, this.shared);
+    const dialog = new pf1.applications.AttackDialog(this);
     return dialog.show();
   }
 
   /**
    * Alters roll (and shared) data based on user input during the attack's dialog.
    *
-   * @param {JQuery | object} form - The attack dialog's jQuery form data or FormData object
+   * @param {object} formData - The attack dialog's form data
    * @returns {Promise}
    */
-  alterRollData(form = {}) {
-    let formData;
-    if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).object;
-    else formData = form;
-
+  alterRollData(formData = {}) {
     const useOptions = this.shared.useOptions;
     formData["power-attack"] ??= useOptions.powerAttack;
     formData["primary-attack"] ??= useOptions.primaryAttack;
@@ -154,6 +150,7 @@ export class ActionUse {
     formData["manyshot"] ??= useOptions.manyshot;
     formData["rapid-shot"] ??= useOptions.rapidShot;
     formData["damage-ability-multiplier"] ??= useOptions.abilityMult;
+    formData.fullAttack ??= true;
 
     if (formData["d20"]) this.shared.rollData.d20 = formData["d20"];
     const atkBonus = formData["attack-bonus"];
@@ -173,6 +170,8 @@ export class ActionUse {
       this.shared.damageBonus.push(`1[${game.i18n.localize("PF1.PointBlankShot")}]`);
       this.shared.pointBlankShot = true;
     }
+
+    this.shared.fullAttack = formData.fullAttack;
 
     // Many-shot
     if (this.shared.fullAttack && formData["manyshot"]) {
@@ -286,30 +285,37 @@ export class ActionUse {
   generateAttacks(forceFullAttack = false) {
     const rollData = this.shared.rollData;
     const action = rollData.action;
+    const actor = this.actor;
 
     const useOptions = this.shared.useOptions;
 
     // Use either natural fullAttack state, or force generation of all attacks via override
     const full = forceFullAttack || this.shared.fullAttack;
 
+    /** @type {Array<ActionUseAttack>} */
     const allAttacks = this.action
-      .getAttacks({ full: full, rollData, conditionals: false, bonuses: false })
-      .map((atk) => ({ attackBonus: atk.bonus, label: atk.label }));
+      .getAttacks({ full, rollData, conditionals: false, bonuses: false })
+      .map((atk) => new ActionUseAttack(atk.label, atk.bonus));
 
-    // Set ammo usage
-    const ammoType = this.action.ammo?.type;
+    // Set default ammo usage
+    const ammoType = this.action.ammoType;
     if (ammoType) {
       const ammoId = this.item.getFlag("pf1", "defaultAmmo");
-      const item = this.item.actor?.items.get(ammoId);
-      const quantity = item?.system.quantity || 0;
-      const ammoCost = this.action.ammoCost;
-      const abundant = item?.flags.pf1?.abundant ?? false;
-      for (let a = 0; a < allAttacks.length; a++) {
-        const atk = allAttacks[a];
-        if (abundant || quantity >= a + ammoCost) atk.ammo = ammoId;
-        else atk.ammo = null;
+      const ammos = this.getAmmo();
+      if (ammoId && ammos.length) {
+        const ammo = ammos.find((a) => a.id === ammoId);
+        const quantity = ammo?.quantity || 0;
+        const ammoCost = action.ammoCost;
+        const abundant = ammo?.abundant ?? false;
+        for (let a = 0; a < allAttacks.length; a++) {
+          const atk = allAttacks[a];
+          if (abundant || quantity >= (a + 1) * ammoCost) atk.ammo = ammo;
+          else atk.ammo = null;
+        }
       }
     }
+
+    this.shared.attacks = allAttacks;
 
     return allAttacks;
   }
@@ -339,6 +345,35 @@ export class ActionUse {
     await this.item.setFlag("pf1", "defaultAmmo", ammo[0].id);
   }
 
+  getAmmo() {
+    const actor = this.actor;
+    const ammoCost = this.action.ammoCost;
+    const ammo = actor.itemTypes.loot.filter((item) => this._filterAmmo(item, ammoCost));
+
+    const defaultAmmo = this.action.item.getFlag("pf1", "defaultAmmo");
+
+    return ammo.map((o) => {
+      return {
+        id: o.id,
+        quantity: o.system.quantity || 0,
+        abundant: o.flags?.pf1?.abundant || false,
+        data: o.toObject(),
+        document: o,
+        isDefault: defaultAmmo === o.id,
+      };
+    });
+  }
+
+  _filterAmmo(item, ammoCost = 1) {
+    if (!(item.type === "loot" && item.subType === "ammo")) return false;
+    if (item.system.quantity < ammoCost) return false;
+
+    const ammoType = item.system.extraType;
+    if (!ammoType) return true;
+
+    return this.action.ammoType === ammoType;
+  }
+
   /**
    * Subtracts ammo for this attack, updating relevant items with new quantities.
    *
@@ -353,23 +388,24 @@ export class ActionUse {
     const ammoUsage = {};
     for (const atk of this.shared.attacks) {
       if (atk.ammo) {
-        const item = actor.items.get(atk.ammo);
+        const item = actor.items.get(atk.ammo.id);
+        if (!item) continue;
         // Don't remove abundant ammunition
         if (item.flags?.pf1?.abundant) continue;
 
-        ammoUsage[atk.ammo] ??= 0;
-        ammoUsage[atk.ammo] += value;
+        ammoUsage[atk.ammo.id] ??= 0;
+        ammoUsage[atk.ammo.id] += value;
       }
     }
 
     this.shared.ammoUsage = ammoUsage;
 
     if (!foundry.utils.isEmpty(ammoUsage)) {
-      const updateData = Object.entries(ammoUsage).reduce((cur, o) => {
-        const currentValue = this.item.actor.items.get(o[0]).system.quantity;
+      const updateData = Object.entries(ammoUsage).reduce((cur, [ammoId, usage]) => {
+        const quantity = this.item.actor.items.get(ammoId)?.system.quantity;
         const obj = {
-          _id: o[0],
-          "system.quantity": currentValue - o[1],
+          _id: ammoId,
+          "system.quantity": quantity - usage,
         };
 
         cur.push(obj);
@@ -386,12 +422,14 @@ export class ActionUse {
   updateAmmoUsage() {
     const actor = this.actor;
     const ammoCost = this.action.ammoCost;
+    if (ammoCost <= 0) return;
     for (const atk of this.shared.attacks) {
-      if (!atk.ammo) continue;
-      const attack = atk.chatAttack;
-      const ammo = actor.items.get(atk.ammo)?.system.quantity || 0;
-      attack.ammo.remaining = ammo;
-      attack.ammo.quantity = ammoCost;
+      const ammoId = atk.ammo?.id;
+      if (!ammoId) continue;
+      const chatAtk = atk.chatAttack;
+      const ammo = actor.items.get(ammoId)?.system.quantity || 0;
+      chatAtk.ammo.remaining = ammo;
+      chatAtk.ammo.quantity = ammoCost;
     }
   }
 
@@ -519,10 +557,10 @@ export class ActionUse {
 
     // Add attack cards
     this.shared.attacks.forEach((attack) => {
-      if (!attack.ammo) return;
+      if (!attack.hasAmmo) return;
       /** @type {ChatAttack} */
       const atk = attack.chatAttack;
-      if (atk) atk.setAmmo(attack.ammo);
+      if (atk) atk.setAmmo(attack.ammo.id);
     });
 
     // Add save info
@@ -1382,25 +1420,24 @@ export class ActionUse {
     // let modules modify the ActionUse before attacks are rolled
     Hooks.callAll("pf1CreateActionUse", this);
 
+    // Generate default attacks
+    shared.fullAttack = true;
+    await this.generateAttacks(true);
+
+    let form;
     // Show attack dialog, if appropriate
     if (!skipDialog) {
-      const result = await this.createAttackDialog();
-
+      form = await this.createAttackDialog();
       // Stop if result is not an object (i.e. when closed is clicked on the dialog)
-      if (result === null) return;
-
-      // Alter roll data
-      shared.fullAttack = result.fullAttack;
-      shared.attacks = result.attacks;
-      await this.alterRollData(result.html);
-    } else {
-      shared.attacks = await this.generateAttacks();
-      await this.alterRollData();
+      if (!form) return;
     }
+
+    // Alter roll data
+    await this.alterRollData(form);
 
     // Filter out attacks without ammo usage
     if (shared.action.ammoType) {
-      shared.attacks = shared.attacks.filter((o) => o.ammo != null);
+      shared.attacks = shared.attacks.filter((o) => o.hasAmmo);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));
         return;
@@ -1481,6 +1518,30 @@ export class ActionUse {
     Hooks.callAll("pf1PostActionUse", this, result instanceof pf1.documents.ChatMessagePF ? result : null);
 
     return result;
+  }
+}
+
+class ActionUseAttack {
+  /** @type {string} */
+  label;
+
+  /** @type {string} */
+  attackBonus;
+
+  /** @type {string} */
+  ammo = null;
+
+  /** @type {ChatAttack} */
+  chatAttack = null;
+
+  get hasAmmo() {
+    return !!this.ammo;
+  }
+
+  constructor(label, bonus = "", ammo = null) {
+    this.label = label;
+    this.attackBonus = bonus;
+    this.ammo = ammo;
   }
 }
 

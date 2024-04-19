@@ -3,20 +3,22 @@ import { RollPF } from "../dice/roll.mjs";
 
 export class AttackDialog extends Application {
   /**
-   * @param {pf1.components.ItemAction} action
-   * @param {object} rollData
-   * @param {object} shared
-   * @param options
+   * @param {pf1.actionUse.ActionUse} actionUse
    * @param {object} appOptions
    */
-  constructor(action, rollData = null, shared = {}, appOptions = {}) {
+  constructor(actionUse, appOptions = {}) {
     super(appOptions);
 
-    this.object = action;
+    this.actionUse = actionUse;
+    this.object = actionUse.action;
+
+    const action = actionUse.action;
+    const shared = actionUse.shared;
+    this.shared = shared;
 
     this.useOptions = shared.useOptions ?? {};
 
-    this.rollData = rollData ? rollData : action.getRollData();
+    this.rollData = shared.rollData;
 
     this.initAmmoUsage();
     this.initAttacks();
@@ -65,10 +67,7 @@ export class AttackDialog extends Application {
     if (useOptions.rapidShot) this._toggleExtraAttack("rapid-shot", true);
 
     // Callback for AttackDialog.show()
-    this._callbacks = {
-      resolve: null,
-      reject: null,
-    };
+    this.resolve = null;
   }
 
   get damageMult() {
@@ -149,7 +148,7 @@ export class AttackDialog extends Application {
       attributes: this.attributes,
       conditionals: this.conditionals,
       usesAmmo: !!this.action.ammoType,
-      ammo: this.getAmmo(),
+      ammo: this.actionUse.getAmmo(),
     };
 
     // Determine if power attack mode should be displayed
@@ -160,29 +159,6 @@ export class AttackDialog extends Application {
       !context.isNaturalAttack;
 
     return context;
-  }
-
-  getAmmo() {
-    const actor = this.action.actor;
-    const ammoCost = this.action.ammoCost;
-    const ammo = actor.itemTypes.loot.filter((item) => this._filterAmmo(item, ammoCost));
-
-    return ammo.map((o) => {
-      return {
-        data: o.toObject(),
-        isDefault: this.action.item.getFlag("pf1", "defaultAmmo") === o.id,
-      };
-    });
-  }
-
-  _filterAmmo(item, ammoCost = 1) {
-    if (!(item.type === "loot" && item.subType === "ammo")) return false;
-    if (item.system.quantity < ammoCost) return false;
-
-    const ammoType = item.system.extraType;
-    if (!ammoType) return true;
-
-    return this.action.ammoType === ammoType;
   }
 
   activateListeners(html) {
@@ -206,8 +182,8 @@ export class AttackDialog extends Application {
     html.find(`button[name="attack_single"]`).on("mouseleave", this._showExtraAttacks.bind(this));
 
     // Button press
-    html.find(`button[name="attack_single"]`).on("click", this._onAttackSingle.bind(this));
-    html.find(`button[name="attack_full"]`).on("click", this._onAttackFull.bind(this));
+    html.find(`button[name="attack_single"]`).on("click", (ev) => this.resolveAttack(ev, false));
+    html.find(`button[name="attack_full"]`).on("click", (ev) => this.resolveAttack(ev, true));
   }
 
   _onSelectChange(event) {
@@ -379,34 +355,28 @@ export class AttackDialog extends Application {
   }
 
   initAttacks() {
-    const action = this.action,
-      item = action.item;
+    this.attacks = this.shared.attacks;
 
-    this.attacks = new ActionUse({ rollData: this.rollData, item, action })
-      .generateAttacks(true)
-      .map(({ label, attackBonus }) => ({
-        label,
-        attackBonus,
-        // Reduce formula to a single number for easier display
-        attackBonusTotal: RollPF.safeRoll(attackBonus, this.rollData).total ?? 0,
-        // Ammo data is discarded in favour of specialised handling via setAttackAmmo
-        ammo: null,
-      }));
+    for (const atk of this.attacks) {
+      atk.attackBonusTotal = RollPF.safeRoll(atk.attackBonus, this.rollData).total ?? 0;
+    }
 
     // Set ammo usage
-    const ammoId = item.getFlag("pf1", "defaultAmmo");
-    if (ammoId != null) {
-      for (let a = 0; a < this.attacks.length; a++) {
-        this.setAttackAmmo(a, ammoId);
+    if (this.action.ammoType) {
+      const ammoId = this.action.item.getFlag("pf1", "defaultAmmo");
+      if (ammoId != null) {
+        for (let a = 0; a < this.attacks.length; a++) {
+          this.setAttackAmmo(a, ammoId);
+        }
       }
     }
   }
 
-  // Initializes ammo usage, which help avoid being able to overuse ammo
+  // Initializes ammo usage, which helps avoid being able to overuse ammo
   initAmmoUsage() {
-    this.ammoUsage = this.getAmmo().reduce((cur, o) => {
-      cur[o.data._id] = {
-        quantity: o.data.system.quantity,
+    this.ammoUsage = this.actionUse.getAmmo().reduce((cur, o) => {
+      cur[o.id] = {
+        quantity: o.quantity,
         used: 0,
       };
 
@@ -414,22 +384,11 @@ export class AttackDialog extends Application {
     }, {});
   }
 
-  getFormAttacks() {
-    return this.attacks.map((o) => {
-      return {
-        id: o.id,
-        label: o.label,
-        attackBonus: o.attackBonus,
-        ammo: o.ammo?.data._id,
-      };
-    });
-  }
-
   setAttackAmmo(attackIndex, ammoId = null) {
     if (!this.action.ammoType) return;
 
     const atk = this.attacks[attackIndex];
-    const curAmmo = atk.ammo?.data._id;
+    const curAmmo = atk.ammo?.id;
     const ammoItem = this.action.actor?.items.get(ammoId) ?? null;
     const abundant = ammoItem?.flags?.pf1?.abundant ?? false;
 
@@ -448,36 +407,30 @@ export class AttackDialog extends Application {
     // Don't allow overusage
     if (!abundant && this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
 
-    atk.ammo = this.getAmmo().find((o) => o.data._id === ammoId);
+    atk.ammo = this.actionUse.getAmmo().find((o) => o.id === ammoId);
+
     // Add to ammo usage tracker
-    if (curAmmo != null) {
-      this.ammoUsage[curAmmo].used--;
-    }
+    if (curAmmo) this.ammoUsage[curAmmo].used--;
     this.ammoUsage[ammoId].used++;
   }
 
-  _onAttackSingle(event) {
+  /**
+   * @internal
+   * @param {Event} event
+   * @param {boolean} fullAttack
+   */
+  resolveAttack(event, fullAttack = true) {
     event.preventDefault();
 
-    const attacks = this.getFormAttacks();
-    return this.doAttack(attacks.slice(0, 1), false);
-  }
+    const form = new FormDataExtended(this.element.find("form")[0]).object;
+    form.fullAttack = fullAttack;
 
-  _onAttackFull(event) {
-    event.preventDefault();
-
-    const attacks = this.getFormAttacks();
-    return this.doAttack(attacks, true);
-  }
-
-  doAttack(attacks, fullAttack = true) {
-    this._callbacks.resolve({ fullAttack, attacks, html: this.element });
-    this._callbacks.resolve = null;
+    this.resolve(form);
     this.close();
   }
 
   async close(options = {}) {
-    this._callbacks.resolve?.(null);
+    this.resolve(null);
     return super.close(options);
   }
 
@@ -486,12 +439,7 @@ export class AttackDialog extends Application {
    */
   show() {
     return new Promise((resolve, reject) => {
-      this._callbacks.resolve = (...args) => {
-        resolve(...args);
-      };
-      this._callbacks.reject = (...args) => {
-        reject(...args);
-      };
+      this.resolve = resolve;
       this.render(true);
     });
   }

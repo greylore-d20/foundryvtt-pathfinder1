@@ -4,6 +4,20 @@ import { ItemChange } from "./components/change.mjs";
 import { MigrationDialog } from "./applications/migration/migration-dialog.mjs";
 import { MigrationState } from "./migration/migration-state.mjs";
 
+/**
+ * Moved compendium content.
+ */
+export const moved = {
+  // Trapfinding (v10)
+  "Compendium.pf1.class-abilities.OhHKCLQXoMlYNodk": "Compendium.pf1.class-abilities.Item.pEODJDoTk7uhCZY7",
+  // Trap Sense (v10)
+  "Compendium.pf1.class-abilities.fb00TzBa32sSisGb": "Compendium.pf1.class-abilities.Item.BoEkMviJrW0PKmhj",
+  // Danger Sense (v10)
+  "Compendium.pf1.class-abilities.4bcGnKYf9beV0nfa": "Compendium.pf1.class-abilities.Item.sTlu3zgAEDdJnER5",
+  // Fast Movement (v10)
+  "Compendium.pf1.class-abilities.dvQdP8QfrDA9Lxzk": "Compendium.pf1.class-abilities.Item.9EX00obqhGHcrOdp",
+};
+
 const marker = () => ({ pf1: { action: "migration" } });
 
 /**
@@ -1845,6 +1859,15 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
             link.uuid = newLink;
             updated = true;
           }
+        }
+      }
+
+      // Handle moved compendium content
+      if (link.uuid) {
+        const muuid = moved[link.uuid];
+        if (muuid) {
+          link.uuid = muuid;
+          updated = true;
         }
       }
 

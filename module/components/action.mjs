@@ -1277,7 +1277,9 @@ export class ItemAction {
 
     rollData.attackCount = 0;
 
-    const attacks = [{ bonus: exAtkCfg.bonus || "0".total, label: attackName }];
+    const flavor = game.i18n.localize(exAtkCfg.flavor || "");
+    const formula = flavor ? `(${exAtkCfg.bonus || "0"})[${flavor}]` : exAtkCfg.bonus;
+    const attacks = [{ bonus: formula, label: attackName }];
 
     // Extra attacks
     if (full) {
@@ -1322,7 +1324,7 @@ export class ItemAction {
       }
 
       // Add attacks defined by configuration
-      if (exAtkCfg.count) parseAttacks(exAtkCfg.count, exAtkCfg.bonus, null, exAtkCfg.flavor);
+      if (exAtkCfg.count) parseAttacks(exAtkCfg.count, exAtkCfg.bonus, null, flavor);
 
       // Add manually entered explicit extra attacks
       if (exAtkCfg.manual) {

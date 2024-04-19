@@ -482,7 +482,7 @@ export class ItemAction {
   }
 
   getRollData() {
-    const result = this.item.getRollData();
+    const result = foundry.utils.deepClone(this.item.getRollData());
 
     result.action = foundry.utils.deepClone(this.data);
     result.dc = this.hasSave ? this.getDC(result) : 0;

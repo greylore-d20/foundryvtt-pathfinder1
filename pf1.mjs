@@ -264,6 +264,11 @@ Hooks.once("init", function () {
     types: ["container"],
     makeDefault: true,
   });
+  Items.registerSheet("pf1", applications.item.SpellcastingSheet, {
+    label: "PF1.Sheet.Spellcasting",
+    types: ["spellcasting"],
+    makeDefault: true,
+  });
 
   // Register detection modes
   for (const mode of Object.values(pf1.canvas.detectionModes)) {

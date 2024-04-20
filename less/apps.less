@@ -166,6 +166,7 @@
       min-width: 100%;
       max-height: 76px;
       overflow-y: auto;
+      .scrollbar();
 
       label.checkbox {
         flex: 0 0 50%;
@@ -403,7 +404,8 @@
 
         // Summary tab subdetails fix
         &.subdetails-body {
-          overflow: hidden scroll;
+          overflow: hidden auto;
+          .scrollbar();
         }
 
         &.secret {
@@ -419,6 +421,7 @@
     .window-content {
       .tab {
         overflow: hidden scroll;
+        .scrollbar();
 
         // Links, description and changes tabs use different scrolling
         &[data-group="description"],
@@ -671,6 +674,7 @@
     margin: 0;
     padding: 0;
     overflow: auto;
+    .scrollbar();
   }
 
   a.resistance-control.add-entry {
@@ -813,6 +817,7 @@
 .pf1.changelog {
   .content {
     overflow-y: auto;
+    .scrollbar();
     max-height: 640px;
 
     li > ul {
@@ -860,6 +865,7 @@
       border-right: @borderGroove;
       height: 100%;
       overflow: auto;
+      .scrollbar();
 
       > ul {
         list-style: none;
@@ -874,6 +880,8 @@
     .content {
       height: 100%;
       overflow: auto;
+      .scrollbar();
+
       padding-bottom: 32px;
       padding-left: 0.4em;
       padding-right: 0.4em;
@@ -944,6 +952,7 @@
       border-right: 1px dashed black;
       flex: 2;
       overflow-y: auto;
+      .scrollbar();
       height: 100%;
     }
 
@@ -966,6 +975,7 @@
 
     .damage-modifiers {
       overflow-y: auto;
+      .scrollbar();
       height: 100%;
     }
   }

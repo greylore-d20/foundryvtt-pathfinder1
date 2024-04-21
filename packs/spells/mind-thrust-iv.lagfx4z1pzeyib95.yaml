@@ -1,6 +1,6 @@
 _id: lagfx4z1pzeyib95
 _key: '!items!lagfx4z1pzeyib95'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/skills/wounds/injury-eyes-blood-red.webp
 name: Mind Thrust IV
 system:
   actions:
@@ -11,9 +11,16 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(15, @cl)d8
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
-      img: systems/pf1/icons/misc/magic-swirl.png
+      img: icons/skills/wounds/injury-eyes-blood-red.webp
       name: Use
       range:
         units: close
@@ -26,9 +33,11 @@ system:
     somatic: true
   description:
     value: >-
-      <p>This functions as <i>mind thrust I</i>, but the target takes 1d8 points
-      of damage per caster level (maximum 15d8) and is fatigued for 1 round if
-      it fails its save. This spell can be undercast.</p>
+      <p>This functions as
+      <em>@UUID[Compendium.pf1.spells.Item.rvf2gxyy1d4strae]{mind thrust
+      I}</em>, but the target takes 1d8 points of damage per caster level
+      (maximum 15d8) and is fatigued for 1 round if it fails its save. This
+      spell can be undercast.</p>
   learnedAt:
     class:
       psychic: 4

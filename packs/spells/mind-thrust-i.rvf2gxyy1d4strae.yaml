@@ -1,6 +1,6 @@
 _id: rvf2gxyy1d4strae
 _key: '!items!rvf2gxyy1d4strae'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/skills/wounds/injury-eyes-blood-red.webp
 name: Mind Thrust I
 system:
   actions:
@@ -11,9 +11,16 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(5, @cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
-      img: systems/pf1/icons/misc/magic-swirl.png
+      img: icons/skills/wounds/injury-eyes-blood-red.webp
       name: Use
       range:
         units: close

@@ -1,6 +1,6 @@
 _id: g2k2pg3l7ru29p0j
 _key: '!items!g2k2pg3l7ru29p0j'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/skills/wounds/injury-eyes-blood-red.webp
 name: Mind Thrust V
 system:
   actions:
@@ -11,9 +11,16 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(15, @cl)d8
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
-      img: systems/pf1/icons/misc/magic-swirl.png
+      img: icons/skills/wounds/injury-eyes-blood-red.webp
       name: Use
       range:
         units: close
@@ -26,9 +33,11 @@ system:
     somatic: true
   description:
     value: >-
-      <p>This functions as <i>mind thrust IV</i>, but the target is also
-      exhausted for 1 round if it fails its save and fatigued for 1 round if it
-      succeeds at its save. This spell can be undercast.</p>
+      <p>This functions as
+      <em>@UUID[Compendium.pf1.spells.Item.lagfx4z1pzeyib95]{mind thrust
+      IV}</em>, but the target is also exhausted for 1 round if it fails its
+      save and fatigued for 1 round if it succeeds at its save. This spell can
+      be undercast.</p>
   learnedAt:
     class:
       psychic: 5

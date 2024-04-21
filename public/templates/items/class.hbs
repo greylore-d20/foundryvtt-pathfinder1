@@ -210,7 +210,7 @@
       {{#each system.fc as |fc id|}}
       <div class="form-group">
         <label>{{fc.label}}</label>
-        <input type="text" name="system.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" data-tooltip="@classes.{{@root.system.tag}}.fc.{{id}}">
+        <input type="number" name="system.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" data-tooltip="@classes.{{@root.system.tag}}.fc.{{id}}" min="0" step="1" placeholder="0">
       </div>
       {{/each}}
       <div class="form-group">

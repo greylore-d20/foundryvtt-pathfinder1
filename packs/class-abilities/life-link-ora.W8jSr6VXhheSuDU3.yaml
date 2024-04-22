@@ -4,6 +4,22 @@ img: systems/pf1/icons/spells/light-royal-1.jpg
 name: Life Link (ORA)
 system:
   abilityType: su
+  actions:
+    - _id: XHPDVMGjeGQ2k2sx
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      name: Create Bond
+      range:
+        units: ft
+        value: 100 + (10 * @class.level)
+      target:
+        value: One creature
   associations:
     classes:
       - Oracle
@@ -18,6 +34,9 @@ system:
       exceeds medium range, or you end it as an immediate action (if you have
       multiple bonds active, you may end as many as you want as part of the same
       immediate action).</p>
+  sources:
+    - id: PZO1115
+      pages: '48'
   subType: classFeat
   tags:
     - Revelation

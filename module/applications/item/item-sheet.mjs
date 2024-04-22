@@ -1130,9 +1130,39 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   /**
+   * Validate input formula for basic errors.
+   *
+   * @internal
+   * @param {HTMLElement} el
+   */
+  async _validateFormula(el) {
+    const formula = el.value;
+    if (!formula) return;
+
+    let roll;
+    // Test if formula even works
+    try {
+      roll = Roll.create(formula);
+      await roll.evaluate();
+    } catch (e) {
+      el.dataset.tooltip = e.message;
+      el.setCustomValidity(e.message);
+      return;
+    }
+
+    // Deterministic formulas must be deterministic
+    if (el.classList.contains("deterministic")) {
+      if (!roll.isDeterministic) {
+        el.dataset.tooltip = "PF1.WarningFormulaMustBeDeterministic";
+        el.setCustomValidity(game.i18n.localize("PF1.WarningFormulaMustBeDeterministic"));
+      }
+    }
+  }
+
+  /**
    * Activate listeners for interactive item sheet events
    *
-   * @param html
+   * @param {JQuery<HTMLElement>} html
    */
   activateListeners(html) {
     super.activateListeners(html);
@@ -1208,6 +1238,9 @@ export class ItemSheetPF extends ItemSheet {
     // Allow editing and viewing visible scripts
     html.find(".script-calls .item-list .item").contextmenu(this._onScriptCallEdit.bind(this));
     html.find(".script-calls .item-control").click(this._onScriptCallControl.bind(this));
+
+    // Add warning about formulas
+    html.find("input.formula").each(async (_, el) => this._validateFormula(el));
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {

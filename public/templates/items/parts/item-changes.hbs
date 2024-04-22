@@ -64,10 +64,10 @@
 
   <ol class="item-list changes">
   {{#each changes}}
-    <li class="item change flexrow" data-change-id="{{id}}">
+    <li class="item change flexrow {{#if isDeferred}}deferred{{else}}deterministic{{/if}}" data-change-id="{{id}}">
       <div class="item-name item-formula flexrow">
         {{#unless isScript}}
-        <input class="change-formula formula" type="text" name="system.changes.{{@key}}.formula" value="{{formula}}" placeholder="{{localize "PF1.Formula"}}" required>
+        <input class="change-formula formula {{#unless isDeferred}}deterministic{{/unless}}" type="text" name="system.changes.{{@key}}.formula" value="{{formula}}" placeholder="{{localize "PF1.Formula"}}" required>
         {{else}}
         <button type="button" class="edit-change-contents"><i class="fas fa-edit"></i> {{localize "PF1.Edit"}}</button>
         {{/unless}}

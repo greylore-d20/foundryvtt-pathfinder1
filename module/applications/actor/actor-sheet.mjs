@@ -186,7 +186,6 @@ export class ActorSheetPF extends ActorSheet {
       isCharacter: this.document.type === "character",
       hasHD: true,
       config: pf1.config,
-      conditions: pf1.registry.conditions,
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.toObject() : null,
       usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
@@ -496,10 +495,16 @@ export class ActorSheetPF extends ActorSheet {
 
     // Conditions
     const conditions = this.actor.system.conditions;
+    // Get conditions that are inherited from items
+    const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
     data.conditions = pf1.registry.conditions.map((cond) => ({
       id: cond.id,
       img: cond.texture,
       active: conditions[cond.id] ?? false,
+      items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
+      get inherited() {
+        return this.items.size > 0;
+      },
       label: cond.name,
       compendium: cond.journal,
     }));

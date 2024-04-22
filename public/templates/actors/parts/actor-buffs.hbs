@@ -4,8 +4,18 @@
   <div class="condition {{#if active}}active{{/if}}">
     <a class="checkbox" data-condition-id="{{id}}">
       <img src="{{img}}" width="32" height="32">
-      <span>{{label}}</span>
+      <div class="details">
+        <span class="name">{{label}}</span>
+        {{#if inherited}}
+        <div class="sources">
+        {{#each items}}
+        <span class="source">{{name}}</span>
+        {{/each}}
+        </div>
+        {{/if}}
+      </div>
     </a>
+
     {{#if compendium}}
     <a class="compendium-entry" data-compendium-entry="{{compendium}}">
       <i class="fas fa-book compendium-icon"></i>

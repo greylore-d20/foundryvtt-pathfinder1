@@ -583,7 +583,7 @@
 
         a.checkbox {
           display: flex;
-          flex-direction: row nowrap;
+          flex-flow: row nowrap;
           gap: 4px;
 
           align-items: center;
@@ -592,6 +592,28 @@
           > img {
             border: none;
             filter: @filterParchment;
+          }
+
+          > .details {
+            display: flex;
+            flex-flow: row wrap;
+
+            > .sources {
+              text-shadow: none;
+              font-weight: normal;
+              font-size: var(--font-size-11);
+
+              &::before {
+                content: "(";
+              }
+              &::after {
+                content: ")";
+              }
+            }
+          }
+
+          .name {
+            flex: 1 100%;
           }
         }
 

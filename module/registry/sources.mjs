@@ -34,6 +34,7 @@ export class Source extends RegistryEntry {
 // setting: Campaign setting book
 // ap: Adventure path
 // pg: Adventure path - player guide
+// comic: Comic
 // module: Module
 
 export class Sources extends Registry {
@@ -951,6 +952,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-491-7",
       url: "https://paizo.com/products/btpy8tvr",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-12E",
+      name: "Reign of Winter Player's Guide",
+      date: "2013-02-01",
+      pages: 14,
+      url: "https://paizo.com/products/btpy8x1t",
+      type: "pg",
     },
     {
       _id: "PZO9067",
@@ -3192,6 +3201,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9226",
       name: "The Inner Sea World Guide",
+      abbr: "ISWG",
       date: "2011-03-01",
       pages: 320,
       isbn: "978-1-60125-269-2",
@@ -3757,6 +3767,70 @@ export class Sources extends Registry {
       pages: 64,
       isbn: "978-1-64078-141-2",
       type: "setting",
+    },
+    {
+      _id: "DYN0031-E",
+      name: "Worldscape #1",
+      date: "2016-10-16",
+      pages: 32,
+      type: "comic",
+      url: "https://paizo.com/products/btpy9oco",
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      _id: "DYN0032-E",
+      name: "Worldscape #2",
+      date: "2016-11-16",
+      pages: 32,
+      type: "comic",
+      url: "https://paizo.com/products/btpy9oza",
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      _id: "DYN0033-E",
+      name: "Worldscape #3",
+      date: "2016-12-21",
+      pages: 32,
+      type: "comic",
+      url: "https://paizo.com/products/btpy9qcq",
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      _id: "DYN0034-E",
+      name: "Worldscape #4",
+      date: "2017-01-25",
+      pages: 32,
+      type: "comic",
+      url: "https://paizo.com/products/btpy9qcu",
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      _id: "DYN0035-E",
+      name: "Worldscape #5",
+      date: "2017-02-22",
+      pages: 32,
+      type: "comic",
+      url: "https://paizo.com/products/btpy9qcy",
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      _id: "DYN0036-E",
+      name: "Worldscape #6",
+      date: "2017-04-05",
+      pages: 32,
+      type: "comic",
+      url: "https://paizo.com/products/btpy9sgk",
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      _id: "DYN0046-HC",
+      name: "Spiral of Bones",
+      date: "2019-02-09",
+      pages: 136,
+      type: "comic",
+      isbn: "978-1-5241-0738-3",
+      url: "https://paizo.com/products/btq01x8j",
+      publisher: "Dynamite Entertainment",
     },
   ];
 }

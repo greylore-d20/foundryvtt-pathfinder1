@@ -1072,6 +1072,10 @@ export class ItemSheetPF extends ItemSheet {
       } else {
         // Invalid strings
         newValue = 0;
+        // Trigger warning for bad value
+        if (event.target.name === `system.${key}`) {
+          event.target.setCustomValidity(game.i18n.localize("PF1.WarningInvalidInput"));
+        }
       }
 
       foundry.utils.setProperty(system, key, Math.max(0, newValue));

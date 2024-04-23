@@ -24,6 +24,10 @@ export class RollPF extends Roll {
     );
   }
 
+  get flavor() {
+    return this.options?.flavor;
+  }
+
   /**
    * Synchronous and thrown error consuming roll evaluation.
    *

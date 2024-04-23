@@ -17,29 +17,30 @@
 {{!-- Damage row partial --}}
 {{#*inline "damageRow"}}
   <tr>
-    {{#if dr.normal}}
-      <td class="roll">
-        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{dr.normal.formula}}" data-roll="{{json-string dr.normal}}">
-          <i class="fas fa-dice-d20"></i> {{dr.normal.total}}
+    {{#with dr.normal}}
+      <td class="roll damage normal">
+        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{formula}}" data-roll="{{json-string this}}">
+          <i class="fas fa-dice-d20"></i> {{total}}
         </a>
       </td>
-      <td class="damage-types">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=dr.normal.damageType damageTypes=@root.damageTypes}}</td>
+      <td class="damage-types">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType damageTypes=@root.damageTypes}}</td>
     {{else}}
       <td></td>
       <td></td>
-    {{/if}}
+    {{/with}}
+
     {{#if atk.hasCritConfirm}}
-    {{#if dr.crit}}
-      <td class="roll">
-        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{dr.crit.formula}}" data-roll="{{json-string dr.crit}}">
-          <i class="fas fa-dice-d20"></i> {{dr.crit.total}}
+    {{#with dr.crit}}
+      <td class="roll damage critical">
+        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{formula}}" data-roll="{{json-string this}}">
+          <i class="fas fa-dice-d20"></i> {{total}}
         </a>
       </td>
-      <td class="damage-type">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=dr.crit.damageType damageTypes=@root.damageTypes}}</td>
+      <td class="damage-type">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType damageTypes=@root.damageTypes}}</td>
     {{else}}
       <td></td>
       <td></td>
-    {{/if}}
+    {{/with}}
     {{/if}}
   </tr>
 {{/inline}}
@@ -80,18 +81,28 @@
       <tbody>
         {{#if atk.hasAttack}}
         <tr class="attack">
-          <td {{#if atk.hasCritConfirm}}colspan="2"{{else}}colspan="4"{{/if}} class="roll">
+          <td {{#if atk.hasCritConfirm}}colspan="2"{{else}}colspan="4"{{/if}} class="roll normal">
             <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20 success{{/if}}{{#if atk.attack.isNat1}} natural-1 failure{{/if}}{{#if atk.attack.isCrit}} critical-threat{{/if}}"
             data-tooltip="{{atk.attack.formula}}" data-roll="{{json-string atk.attack}}">
             <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
             </a>
           </td>
           {{#if atk.hasCritConfirm}}
-          <td colspan="2" class="roll">
+          <td colspan="2" class="roll critical">
+            {{#if atk.critConfirm.armorAsDR}}
+            {{! Armor as DR – Defense DC }}
+            {{localize "PF1.DefenseDC"}}:
+            <a class="inline-roll inline-dsn-hidden inline-result defense-dc" data-tooltip="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
+              {{atk.critConfirm.total}}
+            </a>
+            {{else}}
+            {{! Normal Critical }}
             <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isNat20}} success{{/if}}{{#if atk.critConfirm.isNat1}} natural-1 failure{{/if}}"
             data-tooltip="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
-            <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
+              <i class="fas fa-dice-d20"></i>
+              {{atk.critConfirm.total}}
             </a>
+            {{/if}}
           </td>
           {{/if}}
         </tr>

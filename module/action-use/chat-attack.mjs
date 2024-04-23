@@ -1,46 +1,45 @@
 import { RollPF } from "../dice/roll.mjs";
 
 export class ChatAttack {
-  constructor(action, { label = "", rollData = {}, targets = null } = {}) {
+  /** @type {ItemAction} */
+  action;
+
+  /** @type {pf1.actionUse.ActionUse} */
+  actionUse;
+
+  /** @type {D20RollPF | null} */
+  attack = null;
+  hasRange = false;
+  /** @type {D20RollPF | null} */
+  critConfirm = null;
+
+  hasAttack = false;
+  hasCritConfirm = false;
+
+  hasDamage = false;
+  damage = new AttackDamage();
+  damageRows = [];
+  nonlethal = false;
+  critDamage = new AttackDamage();
+
+  ammo = null;
+
+  hasCards = false;
+  cards = {};
+
+  effectNotes = [];
+  effectNotesHTML = "";
+  notesOnly = true;
+
+  targets = null;
+
+  constructor(action, { label = "", rollData = {}, targets = null, actionUse = null } = {}) {
+    this.actionUse = actionUse;
     this.rollData = rollData;
     this.setAction(action);
     this.label = label;
-
-    /** @type {D20RollPF | null} */
-    this.attack = null;
-    /** @type {D20RollPF | null} */
-    this.critConfirm = null;
-    this.hasAttack = false;
-    this.hasCritConfirm = false;
-
-    this.damage = {
-      flavor: "",
-      total: 0,
-      /** @type {DamageRoll[]} */
-      rolls: [],
-      get half() {
-        return Math.floor(this.total / 2);
-      },
-    };
-    this.critDamage = {
-      flavor: "",
-      total: 0,
-      /** @type {DamageRoll[]} */
-      rolls: [],
-    };
-    this.hasDamage = false;
     this.hasRange = action.item.hasRange;
-    this.nonlethal = false;
-    this.damageRows = [];
-
-    this.notesOnly = true;
-
-    this.cards = {};
-    this.hasCards = false;
-    this.effectNotes = [];
-    this.effectNotesHTML = "";
     this.targets = targets;
-    this.ammo = null;
   }
 
   /** @type {Actor} */
@@ -49,21 +48,17 @@ export class ChatAttack {
   }
 
   setAmmo(ammoId) {
-    if (ammoId == null) {
+    const ammoItem = this.actor.items.get(ammoId);
+    if (!ammoItem) {
       this.ammo = null;
-    } else {
-      const ammoItem = this.actor.items.get(ammoId);
-      if (ammoItem == null) {
-        this.ammo = null;
-        return;
-      }
-
-      this.ammo = {
-        id: ammoId,
-        img: ammoItem.img,
-        name: ammoItem.name,
-      };
+      return;
     }
+
+    this.ammo = {
+      id: ammoId,
+      img: ammoItem.img,
+      name: ammoItem.name,
+    };
   }
 
   /**
@@ -128,7 +123,6 @@ export class ChatAttack {
     this.hasAttack = true;
     this.notesOnly = false;
     /** @type {D20RollPF} */
-    let roll;
     if (critical === true) {
       if (this.rollData.critConfirmBonus !== 0) {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
@@ -153,9 +147,20 @@ export class ChatAttack {
       extraParts.push(`-2[${label}]`);
     }
 
+    // Armor as DR
+    if (!noAttack) {
+      if (critical && !game.settings.get("pf1", "critConfirm")) {
+        // Defense DC
+        this.critConfirm = this.actionUse?.getDefenseDC(this.attack) ?? RollPF.safeRoll("0");
+        this.critConfirm.armorAsDR = true;
+        this.critConfirm.options.flavor = game.i18n.localize("PF1.Critical");
+        noAttack = true;
+      }
+    }
+
     // Roll attack
     if (!noAttack) {
-      roll = await this.action.rollAttack({
+      const roll = await this.action.rollAttack({
         data: this.rollData,
         bonus: bonus,
         extraParts: extraParts,
@@ -172,10 +177,10 @@ export class ChatAttack {
 
         await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
       }
-    }
 
-    // Add tooltip
-    roll.options.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
+      // Add tooltip
+      roll.options.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
+    }
   }
 
   async addDamage({ flavor = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
@@ -294,5 +299,22 @@ export class ChatAttack {
     }
 
     return this;
+  }
+}
+
+class AttackDamage {
+  flavor = "";
+
+  total = 0;
+
+  /** @type {DamageRoll[]} */
+  rolls = [];
+
+  get isActive() {
+    return this.rolls.length > 0;
+  }
+
+  get half() {
+    return Math.floor(this.total / 2);
   }
 }

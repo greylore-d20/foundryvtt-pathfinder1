@@ -626,6 +626,7 @@ export class ActionUse {
         label: atk.label,
         rollData: this.shared.rollData,
         targets: game.user.targets,
+        actionUse: this,
       });
 
       if (atk.id !== "manyshot") {
@@ -700,6 +701,7 @@ export class ActionUse {
     const attack = new ChatAttack(this.shared.action, {
       rollData: this.shared.rollData,
       primaryAttack: this.shared.primaryAttack,
+      actionUse: this,
     });
     // Add damage
     await attack.addDamage({
@@ -764,6 +766,7 @@ export class ActionUse {
     const attack = new ChatAttack(this.shared.action, {
       rollData: this.shared.rollData,
       primaryAttack: this.shared.primaryAttack,
+      actionUse: this,
     });
 
     // Add effect notes
@@ -1396,6 +1399,36 @@ export class ActionUse {
     this.shared.targets = targets.filter(
       (t) => t.document.disposition !== CONST.TOKEN_DISPOSITIONS.SECRET && t.combatant?.isDefeated !== true
     );
+  }
+
+  /**
+   * Armor as DR defense DC determination.
+   *
+   * @remarks
+   * - Does not account for critical feats.
+   * - Does not account for size difference between target and attacker.
+   *
+   * @param attack
+   * @returns {RollPF} - Defense DC
+   */
+  getDefenseDC(attack) {
+    const parts = this._getDefenseDCParts(attack);
+    return RollPF.safeRoll(parts.join(" + "));
+  }
+
+  _getDefenseDCParts(attack) {
+    const parts = [];
+
+    // Determine check
+    const check = attack.d20.total;
+    parts.push(`${check}[${game.i18n.localize("PF1.Rolls.Check.Label")}]`);
+
+    // Locate used BAB (accounts for overrides)
+    const babIdent = game.i18n.localize("PF1.BAB");
+    const bab = attack.terms.find((t) => t.flavor === babIdent)?.number ?? 0;
+    parts.push(`${Math.floor(bab / 2)}[${game.i18n.localize("PF1.HalfBAB")}]`);
+
+    return parts;
   }
 
   /**

@@ -306,6 +306,20 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
+  // Armor as DR
+
+  /**
+   * Critical confirmation rolls
+   */
+  game.settings.register("pf1", "critConfirm", {
+    name: "PF1.SETTINGS.CriticalConfirm",
+    hint: "PF1.SETTINGS.CriticalConfirmHint",
+    scope: "world",
+    type: Boolean,
+    default: true,
+    config: true,
+  });
+
   // VISION
 
   /**

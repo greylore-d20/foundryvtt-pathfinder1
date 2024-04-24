@@ -597,6 +597,7 @@ export class ItemAction {
       },
       held: "",
       nonlethal: false,
+      splash: false,
       touch: false,
       ammo: {
         type: "",

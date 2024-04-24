@@ -97,6 +97,7 @@ export function getActionDefaultData() {
       },
     },
     nonlethal: false,
+    splash: false,
     touch: false,
     usesAmmo: false,
     spellEffect: "",

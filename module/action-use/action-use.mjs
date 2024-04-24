@@ -1132,6 +1132,9 @@ export class ActionUse {
     // Nonlethal
     if (this.action.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
 
+    // Splash
+    if (this.action.data.splash) properties.push(game.i18n.localize("PF1.Splash"));
+
     if (this.action.data.touch) properties.push(game.i18n.localize("PF1.TouchAttackShort"));
 
     // Add info for material

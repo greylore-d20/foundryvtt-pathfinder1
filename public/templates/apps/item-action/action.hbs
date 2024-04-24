@@ -13,10 +13,16 @@
   </label>
   {{/if}}
 
+  {{!-- Splash --}}
+  <label class="checkbox">
+    <input type="checkbox" name="splash" {{checked data.splash}}> {{localize "PF1.Splash"}}
+  </label>
+  
   {{!-- Touch --}}
   <label class="checkbox">
     <input type="checkbox" name="touch" {{checked data.touch}}> {{localize "PF1.TouchAttackShort"}}
   </label>
+
 </div>
 
 {{#if (or (eq item.type "attack") (eq item.type "weapon"))}}

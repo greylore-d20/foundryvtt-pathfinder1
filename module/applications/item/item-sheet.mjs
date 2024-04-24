@@ -680,14 +680,15 @@ export class ItemSheetPF extends ItemSheet {
 
       const buffTargets = getBuffTargets(actor);
       context.changes =
-        itemData.changes?.map((ch) => {
+        item.changes?.map((/** @type {ItemChange} */ ch) => {
           const target = buffTargets[ch.subTarget];
           return {
             isValid: !!target,
             label: target?.label ?? ch.subTarget,
             isScript: ch.operator === "script",
-            ...ch,
-            id: ch._id,
+            isDeferred: ch.isDeferred,
+            ...ch.data,
+            id: ch.id,
           };
         }) ?? [];
     }

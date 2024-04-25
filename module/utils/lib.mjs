@@ -563,11 +563,14 @@ export const binarySearch = function (searchArr, el, compare_fn) {
  * @returns {Array.<T[]>|false} An Array containing all Array permutations or false if failed.
  */
 function uniquePermutations(perm) {
-  const total = new Set();
+  perm = perm.map((p) => p.trim()).filter((p) => p?.length > 0);
+
   if (perm.length > 7) {
     console.warn("Array too large. Not attempting.", perm);
     return false;
   }
+
+  const total = new Set();
 
   for (let i = 0; i < perm.length; i = i + 1) {
     const rest = uniquePermutations(perm.slice(0, i).concat(perm.slice(i + 1)));
@@ -591,29 +594,32 @@ function uniquePermutations(perm) {
  * @param {object} [options] - Provides a filter to limit search to specific packs or Document types
  * @param {string[]} [options.packs] - An array of packs to search in
  * @param {"Actor"|"Item"|"Scene"|"JournalEntry"|"Macro"|"RollTable"|"Playlist"} [options.type] - A Document type to limit which packs are searched in
- * @returns {{pack: CompendiumCollection, index: object}|undefined} The index and pack containing it or undefined if no match is found
+ * @param {string} [options.docType] - Document type, such as "loot" or "npc"
+ * @param {boolean} [options.disabled=false] - Include packs disabled for compendium browser.
+ * @returns {{pack: CompendiumCollection, index: object}|false} The index and pack containing it or undefined if no match is found
  */
-export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
-  let packs;
-  if (options?.packs && options.packs.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
-  else packs = game.packs.filter((o) => !options?.type || o.metadata.type == options.type);
+export const findInCompendia = function (searchTerm, { packs = [], type, docType, disabled = false } = {}) {
+  if (packs?.length) packs = packs.flatMap((o) => game.packs.get(o) ?? []);
+  else packs = game.packs.filter((o) => !type || o.metadata.type == type);
+  if (!disabled) packs = packs.filter((o) => o.config?.pf1?.disabled !== true);
 
   searchTerm = searchTerm.toLocaleLowerCase();
-  let found, foundDoc, foundPack;
+
   for (const pack of packs) {
     if (!pack.fuzzyIndex) pack.fuzzyIndex = sortArrayByName([...pack.index]);
-    found = binarySearch(pack.fuzzyIndex, searchTerm, (sp, it) =>
+    let filteredIndex = pack.fuzzyIndex;
+    if (docType) filteredIndex = filteredIndex.filter((e) => e.type === docType);
+
+    const found = binarySearch(filteredIndex, searchTerm, (sp, it) =>
       sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
     );
     if (found > -1) {
-      foundDoc = pack.index.get(pack.fuzzyIndex[found]._id);
-      foundPack = pack;
-      break;
+      const entry = pack.index.get(filteredIndex[found]._id);
+      return { pack, index: entry };
     }
   }
-  if (foundDoc) return { pack: foundPack, index: foundDoc };
 
-  let searchMutations = uniquePermutations(searchTerm.split(/[ _-]/));
+  let searchMutations = uniquePermutations(searchTerm.split(/[, _-]/));
   if (searchMutations) searchMutations = searchMutations.map((o) => o.join(" "));
   else {
     // If array is too long, search for just a reversed version and one that pivots around commas/ semicolons
@@ -629,21 +635,21 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
   }
 
   for (const pack of packs) {
+    let filteredIndex = pack.fuzzyIndex;
+    if (docType) filteredIndex = filteredIndex.filter((e) => e.type === docType);
+
     // Skip first mutation since it is already searched for manually before computing mutations
     for (let mut = 1; mut < searchMutations.length; mut++) {
-      found = binarySearch(pack.fuzzyIndex, searchMutations[mut], (sp, it) =>
+      const found = binarySearch(filteredIndex, searchMutations[mut], (sp, it) =>
         sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
       );
       if (found > -1) {
-        foundDoc = pack.index.get(pack.fuzzyIndex[found]._id);
-        foundPack = pack;
-        break;
+        const entry = pack.index.get(filteredIndex[found]._id);
+        if (entry) return { pack, index: entry };
       }
     }
-    if (foundDoc) break;
   }
 
-  if (foundDoc) return { pack: foundPack, index: foundDoc };
   return false;
 };
 

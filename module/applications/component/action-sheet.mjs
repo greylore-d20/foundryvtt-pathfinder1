@@ -359,16 +359,18 @@ export class ItemActionSheet extends FormApplication {
     pf1.applications.EntrySelector.open(this.object, options);
   }
 
-  _onEntryControl(event) {
+  async _onEntryControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
     const key = a.closest(".notes").dataset.name;
+
+    await this._onSubmit(event, { preventRender: true });
 
     if (a.classList.contains("add-entry")) {
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
-      return this._onSubmit(event, { updateData });
+      this.action.update(updateData);
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key));
@@ -376,7 +378,7 @@ export class ItemActionSheet extends FormApplication {
 
       const updateData = {};
       updateData[key] = notes;
-      return this._onSubmit(event, { updateData });
+      this.action.update(updateData);
     }
   }
 
@@ -384,31 +386,26 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
 
+    await this._onSubmit(event, { preventRender: true }); // Submit any unsaved changes
+
     // Add new conditional
     if (a.classList.contains("add-conditional")) {
-      await this._onSubmit(event, { preventRender: true }); // Submit any unsaved changes
       return pf1.components.ItemConditional.create([{}], { parent: this.object });
     }
-
     // Remove a conditional
-    if (a.classList.contains("delete-conditional")) {
-      await this._onSubmit(event, { preventRender: true }); // Submit any unsaved changes
+    else if (a.classList.contains("delete-conditional")) {
       const li = a.closest(".conditional");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
       return conditional.delete();
     }
-
     // Add a new conditional modifier
-    if (a.classList.contains("add-conditional-modifier")) {
-      await this._onSubmit(event, { preventRender: true });
+    else if (a.classList.contains("add-conditional-modifier")) {
       const li = a.closest(".conditional");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
       return pf1.components.ItemConditionalModifier.create([{}], { parent: conditional });
     }
-
     // Remove a conditional modifier
-    if (a.classList.contains("delete-conditional-modifier")) {
-      await this._onSubmit(event, { preventRender: true });
+    else if (a.classList.contains("delete-conditional-modifier")) {
       const li = a.closest(".conditional-modifier");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
       const modifier = conditional.modifiers.get(li.dataset.modifier);
@@ -431,6 +428,8 @@ export class ItemActionSheet extends FormApplication {
     const k2 = path.split(".").slice(0, -1).join(".");
     const k3 = path.split(".").slice(-1).join(".");
 
+    await this._onSubmit(event, { preventRender: true });
+
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
@@ -446,11 +445,10 @@ export class ItemActionSheet extends FormApplication {
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       damageParts.push(initialData);
       updateData[path] = damageParts;
-      return this._onSubmit(event, { updateData });
+      return this.action.update(updateData);
     }
-
     // Remove a damage component
-    if (a.classList.contains("delete-damage")) {
+    else if (a.classList.contains("delete-damage")) {
       const li = a.closest(".damage-part");
       const damage = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, k2));
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
@@ -458,7 +456,7 @@ export class ItemActionSheet extends FormApplication {
         damageParts.splice(Number(li.dataset.damagePart), 1);
         const updateData = {};
         updateData[path] = damageParts;
-        return this._onSubmit(event, { updateData });
+        return this.action.update(updateData);
       }
     }
   }
@@ -496,17 +494,18 @@ export class ItemActionSheet extends FormApplication {
 
     const manualExtraAttacks = foundry.utils.deepClone(this.action.data.extraAttacks?.manual ?? []);
 
+    await this._onSubmit(event, { preventRender: true });
+
     // Add new attack component
     if (a.classList.contains("add-attack")) {
       manualExtraAttacks.push({ formula: "", name: "" });
-      return this._onSubmit(event, { updateData: { extraAttacks: { manual: manualExtraAttacks } } });
+      return this.action.update({ extraAttacks: { manual: manualExtraAttacks } });
     }
-
     // Remove an attack component
-    if (a.classList.contains("delete-attack")) {
+    else if (a.classList.contains("delete-attack")) {
       const li = a.closest(".attack-part");
       manualExtraAttacks.splice(Number(li.dataset.attackPart), 1);
-      return this._onSubmit(event, { updateData: { extraAttacks: { manual: manualExtraAttacks } } });
+      return this.action.update({ extraAttacks: { manual: manualExtraAttacks } });
     }
   }
 

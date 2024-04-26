@@ -143,10 +143,6 @@ export class HealthConfig extends FormApplication {
     return this.render();
   }
 
-  _onSubmit(event) {
-    super._onSubmit(event);
-  }
-
   /**
    * This method is called upon form submission after form data is validated.
    *

@@ -167,17 +167,13 @@ export class SkillEditor extends DocumentSheet {
   }
 
   async _onDrop(event) {
-    event.preventDefault();
-
     // Retrieve the dropped Journal Entry Page
     const data = TextEditor.getDragEventData(event);
     if (data.type !== "JournalEntryPage" && data.type !== "JournalEntry") return;
     const document = await CONFIG[data.type].documentClass.implementation.fromDropData(data);
     if (!document) return;
 
-    // Add Journal Entry Page reference
-    await this._onSubmit(event, { updateData: { "skill.journal": document.uuid } });
-    await this.render();
+    this._updateObject(event, this._getSubmitData({ "skill.journal": document.uuid }));
   }
 
   activateListeners(html) {

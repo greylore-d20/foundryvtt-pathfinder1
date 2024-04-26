@@ -80,7 +80,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
   /* -------------------------------------------- */
 
-  _adjustCR(event) {
+  async _adjustCR(event) {
     event.preventDefault();
     const el = event.currentTarget;
 
@@ -93,7 +93,17 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", (ev) => this._onSubmit(event, { updateData }), { passive: true, once: true });
-    } else this._onSubmit(event, { updateData });
+      el.addEventListener(
+        "mouseleave",
+        async (ev) => {
+          await this._onSubmit(event, { preventRender: true });
+          this.actor.update(updateData);
+        },
+        { passive: true, once: true }
+      );
+    } else {
+      await this._onSubmit(event, { preventRender: true });
+      this.actor.update(updateData);
+    }
   }
 }

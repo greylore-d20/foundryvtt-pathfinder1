@@ -1493,15 +1493,16 @@ export class ItemSheetPF extends ItemSheet {
     const group = a.closest(".item-list");
     const category = group.dataset.category;
 
+    await this._onSubmit(event, { preventRender: true });
+
     // Create item
     if (a.classList.contains("item-create")) {
-      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
       const list = (this.item.system.scriptCalls || []).filter((o) => o._id !== item.id);
-      return this._onSubmit(event, { updateData: { "system.scriptCalls": list } });
+      return this.item.update({ "system.scriptCalls": list });
     }
     // Edit item
     else if (item && a.classList.contains("item-edit")) {
@@ -1509,9 +1510,7 @@ export class ItemSheetPF extends ItemSheet {
     }
     // Toggle hidden
     else if (item && a.classList.contains("item-hide")) {
-      item.update({
-        hidden: !item.hidden,
-      });
+      item.update({ hidden: !item.hidden });
     }
   }
 
@@ -1568,10 +1567,11 @@ export class ItemSheetPF extends ItemSheet {
 
     // Submit data
     if (uuid) {
+      await this._onSubmit(event, { preventRender: true });
+
       const elem = event.currentTarget;
       const category = elem.dataset.category;
       const list = this.item.system.scriptCalls ?? [];
-      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category, name: "", img: "" }], {
         parent: this.item,
       });
@@ -1813,58 +1813,51 @@ export class ItemSheetPF extends ItemSheet {
 
     const a = event.currentTarget;
 
+    if (!this.isEditable) return;
+
+    await this._onSubmit(event, { preventRender: true });
+
     // Edit action
     if (a.classList.contains("edit-action")) {
       return this._onActionEdit(event);
     }
-
-    if (!this.isEditable) return;
-
     // Add action
-    if (a.classList.contains("add-action")) {
+    else if (a.classList.contains("add-action")) {
       const newActionData = {
         img: this.item.img,
         name: ["weapon", "attack"].includes(this.item.type)
           ? game.i18n.localize("PF1.Attack")
           : game.i18n.localize("PF1.Use"),
       };
-      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemAction.create([newActionData], { parent: this.item });
     }
-
     // Remove action
-    if (a.classList.contains("delete-action")) {
+    else if (a.classList.contains("delete-action")) {
       const li = a.closest(".item[data-action-id]");
       const action = this.item.actions.get(li.dataset.actionId);
 
-      const deleteItem = async () => {
-        return action.delete();
-      };
+      const confirmed = getSkipActionPrompt()
+        ? true
+        : await Dialog.confirm({
+            title: game.i18n.format("PF1.DeleteItemTitle", { name: action.name }),
+            content: `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`,
+            yes: () => true,
+            no: () => false,
+            close: () => false,
+            rejectClose: false,
+          });
 
-      if (getSkipActionPrompt()) {
-        deleteItem();
-      } else {
-        const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
-        Dialog.confirm({
-          title: game.i18n.format("PF1.DeleteItemTitle", { name: action.name }),
-          content: msg,
-          yes: () => {
-            deleteItem();
-          },
-          rejectClose: true,
-        });
-      }
+      if (confirmed === true) action.delete();
     }
-
     // Duplicate action
-    if (a.classList.contains("duplicate-action")) {
+    else if (a.classList.contains("duplicate-action")) {
       const li = a.closest(".item[data-action-id]");
       const action = foundry.utils.deepClone(this.item.actions.get(li.dataset.actionId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = foundry.utils.randomID(16);
       const actionParts = foundry.utils.deepClone(this.item.toObject().system.actions ?? []);
       actionParts.push(action);
-      return this._onSubmit(event, { updateData: { "system.actions": actionParts } });
+      return this.item.update({ "system.actions": actionParts });
     }
   }
 
@@ -1887,16 +1880,17 @@ export class ItemSheetPF extends ItemSheet {
     const action = a.dataset.action;
     const changeId = a.dataset.changeId;
 
+    await this._onSubmit(event, { preventRender: true });
+
     switch (action) {
       // Add new change
       case "add":
-        await this._onSubmit(event, { preventRender: true });
         return pf1.components.ItemChange.create([{}], { parent: this.item });
       // Remove a change
       case "delete": {
         const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
         changes.findSplice((c) => c._id === changeId);
-        return this._onSubmit(event, { updateData: { "system.changes": changes } });
+        return this.item.update({ "system.changes": changes });
       }
       case "duplicate": {
         const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
@@ -1938,11 +1932,13 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
+    await this._onSubmit(event, { preventRender: true });
+
     // Add new note
     if (a.classList.contains("add-note")) {
       const contextNotes = foundry.utils.deepClone(this.item.toObject().system.contextNotes || []);
       contextNotes.push(new pf1.components.ContextNote().toObject());
-      await this._onSubmit(event, { updateData: { "system.contextNotes": contextNotes } });
+      return this.item.update({ "system.contextNotes": contextNotes });
     }
 
     // Remove a note
@@ -1950,9 +1946,7 @@ export class ItemSheetPF extends ItemSheet {
       const li = a.closest(".context-note");
       const contextNotes = foundry.utils.deepClone(this.item.toObject().system.contextNotes || []);
       contextNotes.splice(Number(li.dataset.note), 1);
-      await this._onSubmit(event, {
-        updateData: { "system.contextNotes": contextNotes },
-      });
+      return this.item.update({ "system.contextNotes": contextNotes });
     }
   }
 
@@ -1989,13 +1983,13 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
+    await this._onSubmit(event, { preventRender: true });
+
     // Delete link
     if (a.classList.contains("delete-link")) {
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
       const linkType = group.dataset.tab;
-
-      await this._onSubmit(event, { preventRender: true });
 
       const links = this.item.toObject().system.links?.[linkType] ?? [];
 
@@ -2137,22 +2131,24 @@ export class ItemSheetPF extends ItemSheet {
     this.item.update({ [name]: item });
   }
 
-  _onEntryControl(event) {
+  async _onEntryControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
     const key = a.closest(".notes").dataset.name;
+
+    await this._onSubmit(event, { preventRender: true });
 
     if (a.classList.contains("add-entry")) {
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
-      return this._onSubmit(event, { updateData });
+      return this.item.update(updateData);
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
       notes.splice(index, 1);
       const updateData = { [key]: notes };
-      return this._onSubmit(event, { updateData });
+      return this.item.update(updateData);
     }
   }
 

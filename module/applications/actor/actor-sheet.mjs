@@ -1671,7 +1671,7 @@ export class ActorSheetPF extends ActorSheet {
     } else this._updateItems();
   }
 
-  _adjustActorPropertyBySpan(event) {
+  async _adjustActorPropertyBySpan(event) {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     this._mouseWheelAdd(event, el);
@@ -1695,10 +1695,20 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", (event) => this._onSubmit(event, { updateData }), {
-        once: true,
-      });
-    } else this._onSubmit(event, { updateData });
+      el.addEventListener(
+        "mouseleave",
+        async (event) => {
+          await this._onSubmit(event, { preventRender: true });
+          this.actor.update(updateData);
+        },
+        {
+          once: true,
+        }
+      );
+    } else {
+      await this._onSubmit(event, { preventRender: true });
+      this.actor.update(updateData);
+    }
   }
 
   _setBuffLevel(event) {

@@ -715,9 +715,6 @@ export class LevelUpForm extends FormApplication {
    * @param {Event} event
    */
   async _onCommit(event) {
-    // Make sure all changes are submitted
-    await this._onSubmit(event);
-
     this._disableSheet();
 
     const cfg = this.config;

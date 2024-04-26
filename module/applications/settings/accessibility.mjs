@@ -33,21 +33,10 @@ export class AccessibilityConfig extends FormApplication {
       template: "systems/pf1/templates/settings/accessibility.hbs",
       width: 560,
       height: "auto",
+      submitOnClose: false,
+      closeOnSubmit: true,
+      submitOnChange: false,
     });
-  }
-
-  /**
-   * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
-   *
-   * @override
-   */
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find('button[type="submit"]').click(this._onButtonSubmit.bind(this));
-  }
-
-  _onButtonSubmit(event) {
-    this._onSubmit(event);
   }
 
   /**

@@ -43,6 +43,15 @@
     </label>
     {{/if}}
 
+    {{#if system.associations.classes.length}}
+    <ul class="property-list classes">
+      <h5>{{localize "PF1.Classes"}}</h5>
+      {{#each system.associations.classes}}
+      <li class="property generic-tag">{{this}}</li>
+      {{/each}}
+    </ul>
+    {{/if}}
+
     {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
   </section>
 

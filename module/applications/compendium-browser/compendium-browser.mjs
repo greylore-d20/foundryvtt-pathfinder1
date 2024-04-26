@@ -407,12 +407,12 @@ export class CompendiumBrowser extends Application {
       this._onClickEntry(event);
     });
 
-    el.querySelector("button.refresh").addEventListener("click", (event) => {
-      this._onRefresh(event);
+    el.querySelector("button.reload").addEventListener("click", (event) => {
+      this._onReload(event);
     });
 
-    el.querySelector("button.reset").addEventListener("click", (event) => {
-      this._onResetFilters(event);
+    el.querySelector("button.clear-filters").addEventListener("click", (event) => {
+      this._onClearFilters(event);
     });
 
     el.querySelectorAll(".filter>h3").forEach((header) => {
@@ -518,7 +518,7 @@ export class CompendiumBrowser extends Application {
    * @private
    * @param {Event} _event - The originating click event
    */
-  _onResetFilters(_event) {
+  _onClearFilters(_event) {
     for (const filter of this.filters) {
       filter.reset();
     }
@@ -534,7 +534,7 @@ export class CompendiumBrowser extends Application {
    * @private
    * @param {Event} _event - The originating click event
    */
-  async _onRefresh(_event) {
+  async _onReload(_event) {
     this.#setup = false;
     this.initialize();
     this.render();

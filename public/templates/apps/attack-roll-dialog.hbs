@@ -141,8 +141,8 @@
     </div>
     {{#each attacks as |atk idx|}}
     <div class="attack" data-index="{{idx}}">
-      <input class="name" disabled type="text" name="attack.{{idx}}.label" value="{{atk.label}}" data-tooltip="PF1.Name">
-      <input class="bonus" disabled type="text" name="attack.{{idx}}.attackBonusTotal" value="{{atk.attackBonusTotal}}" data-tooltip="PF1.AttackRollBonus">
+      <label class="name" data-tooltip="PF1.Name">{{atk.label}}</label>
+      <label class="bonus" data-tooltip="PF1.AttackRollBonus">{{numberFormat atk.attackBonusTotal sign=true}}</label>
       {{#if @root.usesAmmo}}
         <div class="ammo ammo-select">
           <div class="flexrow">

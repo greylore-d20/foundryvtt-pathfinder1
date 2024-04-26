@@ -4,17 +4,20 @@
 
 .pf1.attack-dialog {
   .attacks {
-    padding: 2px;
+    //padding: 2px;
     border: 1px solid var(--color-border-light-tertiary);
     border-radius: 4px;
     display: flex;
     flex-flow: column nowrap;
-    gap: 2px;
+    gap: 1px;
 
-    .attack,
-    .attack-header {
+    background-color: var(--pf1-bg-dark-0);
+
+    :is(.attack, .attack-header) {
       display: flex;
       gap: 2px;
+      align-items: center;
+      padding: 0 3px;
 
       h3 {
         margin: 0;
@@ -33,11 +36,20 @@
       }
     }
 
+    .attack-header {
+      background-color: var(--pf1-bg-dark-1);
+    }
+
     .attack {
       display: flex;
+      height: 26px; // Match ammo select size
+
+      &:nth-child(odd) {
+        background-color: var(--pf1-bg-dark-0);
+      }
 
       &.disabled {
-        opacity: 0.5;
+        opacity: 0.4;
       }
 
       // Ammo select

@@ -1834,7 +1834,16 @@ export class ActorPF extends ActorBasePF {
         const wtData = this.getWoundThresholdData(actorData);
 
         if (wtData.level > 0) {
-          const changeFlatKeys = ["~attackCore", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+          const changeFlatKeys = [
+            "~attackCore",
+            "cmd",
+            "init",
+            "allSavingThrows",
+            "ac",
+            "skills",
+            "abilityChecks",
+            "cl",
+          ];
           for (const fk of changeFlatKeys) {
             const flats = getChangeFlat.call(this, fk, "penalty");
             for (const k of flats) {

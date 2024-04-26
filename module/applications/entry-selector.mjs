@@ -24,8 +24,9 @@ export class EntrySelector extends FormApplication {
       template: "systems/pf1/templates/apps/entry-selector.hbs",
       width: 320,
       height: "auto",
-      closeOnSubmit: false,
+      closeOnSubmit: true,
       submitOnClose: false,
+      submitOnChange: false,
     };
   }
 
@@ -87,8 +88,6 @@ export class EntrySelector extends FormApplication {
     html.find(".entry-control").click(this._onEntryControl.bind(this));
 
     html.find('tr td input[type="text"]').change(this._onEntryChange.bind(this));
-
-    html.find('button[type="submit"]').click(this._submitAndClose.bind(this));
   }
 
   async _updateObject(event, formData) {
@@ -159,12 +158,6 @@ export class EntrySelector extends FormApplication {
       if (this.isFlat) this.entries[index] = value;
       else this.entries[index][index2] = value;
     }
-  }
-
-  async _submitAndClose(event) {
-    event.preventDefault();
-    await this._onSubmit(event);
-    this.close();
   }
 
   /**

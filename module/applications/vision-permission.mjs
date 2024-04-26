@@ -1,4 +1,6 @@
 // Add Vision Permission sheet to ActorDirectory context options
+/*
+// Disabled until shared vision is fixed.
 Hooks.on("getActorDirectoryEntryContext", function sharedVision(html, menuItems) {
   menuItems.push({
     name: "PF1.Vision",
@@ -18,6 +20,7 @@ Hooks.on("getActorDirectoryEntryContext", function sharedVision(html, menuItems)
     },
   });
 });
+*/
 
 export class VisionPermissionSheet extends FormApplication {
   constructor(object, options) {

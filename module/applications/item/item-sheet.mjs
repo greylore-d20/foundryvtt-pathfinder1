@@ -785,8 +785,14 @@ export class ItemSheetPF extends ItemSheet {
 
     return sources.map((source) => {
       const registry = pf1.registry.sources.get(source?.id) ?? {};
+      const { publisher, date, abbr, name, edition } = registry;
+
       return {
-        ...registry, // Shallow copy to avoid tampering
+        publisher,
+        date,
+        abbr,
+        name,
+        edition,
         ...source,
         title: source.title || registry.name,
         registry,

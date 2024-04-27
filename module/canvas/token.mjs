@@ -50,9 +50,12 @@ export class TokenPF extends Token {
   }
 
   // Token#observer patch to make use of vision permission settings
+  /*
+  // Disabled until shared vision is fixed
   get observer() {
     return game.user.isGM || hasTokenVision(this);
   }
+  */
 
   /**
    * @param {object} data         Resource data for this bar

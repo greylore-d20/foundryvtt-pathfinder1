@@ -677,6 +677,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorUnusedData(actorData, updateData);
   _migrateActorDRandER(actorData, updateData);
   _migrateActorTraitsCustomToArray(actorData, updateData);
+  _migrateActorFlags(actorData, updateData);
 
   // Migrate Owned Items
   const items = [];
@@ -2794,6 +2795,30 @@ const _migrateActorTraitsCustomToArray = (actor, updateData) => {
       updateData[`system.traits.${key}.-=custom`] = null;
     }
   });
+};
+
+/**
+ * @param actorData
+ * @param updateData
+ * @since PF1 vNEXt
+ */
+const _migrateActorFlags = (actorData, updateData) => {
+  const flags = actorData.flags?.pf1;
+  if (!flags) return;
+
+  // visionPermission to visionSharing
+  if (flags.visionPermission) {
+    updateData["flags.pf1.visionSharing.default"] = flags.visionPermission.default === "yes" ? true : false;
+    const mapping = {
+      yes: true,
+      no: false,
+      default: null,
+    };
+    updateData["flags.pf1.visionSharing.users"] = Object.fromEntries(
+      Object.entries(flags.visionPermission.users).map(([uid, data]) => [uid, mapping[data.level] ?? null])
+    );
+    updateData["flags.pf1.-=visionPermission"] = null;
+  }
 };
 
 const _Action_ConvertDamageType = function (damageTypeString) {

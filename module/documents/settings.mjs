@@ -358,6 +358,20 @@ export const registerSystemSettings = function () {
     onChange: () => canvas.perception.update({ refreshLighting: true, refreshVision: true }, true),
   });
 
+  game.settings.register("pf1", "guaranteedVision", {
+    name: "PF1.SETTINGS.Vision.Guaranteed",
+    hint: "PF1.SETTINGS.Vision.GuaranteedHint",
+    scope: "world",
+    config: true,
+    default: "OBSERVER",
+    type: String,
+    choices: {
+      OBSERVER: "OWNERSHIP.OBSERVER",
+      OWNER: "OWNERSHIP.OWNER",
+    },
+    onChange: () => canvas.perception.update({ refreshLighting: true, refreshVision: true }, true),
+  });
+
   /**
    * Enable vision for player characters by default.
    */

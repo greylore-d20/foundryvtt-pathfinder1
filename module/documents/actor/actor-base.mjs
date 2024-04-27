@@ -108,6 +108,20 @@ export class ActorBasePF extends Actor {
   getCombatants(combat = game.combat) {
     return combat?.combatants.filter((c) => c.actor === this) ?? [];
   }
+
+  /**
+   * @type {boolean} - Whether current user can see through this actor.
+   */
+  get sharesVision() {
+    const visionFlag = this.getFlag("pf1", "visionSharing");
+    if (!visionFlag) return false;
+
+    const shared = visionFlag.users[game.user.id] ?? null;
+    if (shared === true) return true;
+    else if (shared === false) return false;
+    // Else handle by default rule
+    return visionFlag.default ?? false;
+  }
 }
 
 /**

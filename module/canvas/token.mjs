@@ -1,5 +1,3 @@
-import { hasTokenVision } from "../applications/vision-permission.mjs";
-
 export class TokenPF extends Token {
   /**
    * Synced with Foundry 11.315
@@ -49,13 +47,35 @@ export class TokenPF extends Token {
     return this.document.getFlag("pf1", "disableLowLight") === true;
   }
 
-  // Token#observer patch to make use of vision permission settings
-  /*
-  // Disabled until shared vision is fixed
-  get observer() {
-    return game.user.isGM || hasTokenVision(this);
+  /**
+   * Synced with Foundry v11.315
+   *
+   * @override
+   * @since PF1 vNEXT
+   */
+  _isVisionSource() {
+    if (!canvas.effects.visibility.tokenVision || !this.hasSight) return false;
+
+    // Only display hidden tokens for the GM
+    const isGM = game.user.isGM;
+    if (this.document.hidden && !isGM) return false;
+
+    // Always display controlled tokens which have vision
+    if (this.controlled) return true;
+
+    // Otherwise, vision is ignored for GM users
+    if (isGM) return false;
+
+    // Vision sharing
+    if (this.actor?.sharesVision) return true;
+
+    // If a non-GM user controls no other tokens with sight, display sight
+    const guarantee = game.settings.get("pf1", "guaranteedVision");
+    const canObserve = this.actor?.testUserPermission(game.user, guarantee) ?? false;
+    if (!canObserve) return false;
+    const others = this.layer.controlled.filter((t) => !t.document.hidden && t.hasSight);
+    return !others.length;
   }
-  */
 
   /**
    * @param {object} data         Resource data for this bar

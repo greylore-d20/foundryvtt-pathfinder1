@@ -12,7 +12,7 @@ import {
 import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
-import { VisionPermissionSheet } from "module/applications/vision-permission.mjs";
+import { VisionSharingSheet } from "module/applications/vision-sharing.mjs";
 import { Resource } from "./components/resource.mjs";
 
 /**
@@ -79,7 +79,7 @@ export class ActorPF extends ActorBasePF {
        */
       this._states = {};
 
-    this._visionPermissionSheet ??= null;
+    this._visionSharingSheet ??= null;
   }
 
   /**
@@ -2217,7 +2217,7 @@ export class ActorPF extends ActorBasePF {
       if (changed.system.traits.senses.ll) {
         refreshLighting = true;
       }
-    } else if (changed.flags?.pf1?.visionPermissions) {
+    } else if (changed.flags?.pf1?.visionSharing) {
       initializeVision = true;
       refreshLighting = true;
     }
@@ -5069,13 +5069,13 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * The VisionPermissionSheet instance for this actor
+   * The VisionSharingSheet instance for this actor
    *
-   * @type {VisionPermissionSheet}
+   * @type {VisionSharingSheet}
    */
-  get visionPermissionSheet() {
-    this._visionPermissionSheet ??= new VisionPermissionSheet(this);
-    return this._visionPermissionSheet;
+  get visionSharingSheet() {
+    this._visionSharingSheet ??= new VisionSharingSheet(this);
+    return this._visionSharingSheet;
   }
 }
 

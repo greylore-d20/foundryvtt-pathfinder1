@@ -30,7 +30,7 @@ export { SkillEditor } from "./skill-editor.mjs";
 export { ContentSourceEditor } from "./content-source-editor.mjs";
 export { TooltipPF } from "./tooltip.mjs";
 export { ActorTraitSelector } from "./trait-selector.mjs";
-export { VisionPermissionSheet } from "./vision-permission.mjs";
+export { VisionSharingSheet } from "./vision-sharing.mjs";
 export { ExperienceDistributor } from "./xp-distributor.mjs";
 
 export { ItemDirectoryPF } from "./sidebar/items-directory.mjs";

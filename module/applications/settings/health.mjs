@@ -23,17 +23,17 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
       hitdice: new fields.SchemaField({
         Racial: new fields.SchemaField({
           auto: new fields.BooleanField({ initial: false }),
-          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          rate: new fields.NumberField({ positive: true, initial: 0.5, max: 1 }),
           maximized: new fields.BooleanField({ initial: false }),
         }),
         PC: new fields.SchemaField({
           auto: new fields.BooleanField({ initial: false }),
-          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          rate: new fields.NumberField({ positive: true, initial: 0.5, max: 1 }),
           maximized: new fields.BooleanField({ initial: true }),
         }),
         NPC: new fields.SchemaField({
           auto: new fields.BooleanField({ initial: false }),
-          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          rate: new fields.NumberField({ positive: true, initial: 0.5, max: 1 }),
           maximized: new fields.BooleanField({ initial: false }),
         }),
       }),
@@ -94,7 +94,11 @@ export class HealthConfig extends FormApplication {
    * @override
    */
   getData() {
-    return game.settings.get("pf1", "healthConfig");
+    const context = game.settings.get("pf1", "healthConfig");
+    for (const [hdId, data] of Object.entries(context.hitdice)) {
+      data.label = `PF1.SETTINGS.Health.Class.${hdId.toLowerCase()}`;
+    }
+    return context;
   }
 
   /** @override */
@@ -138,8 +142,7 @@ export class HealthConfig extends FormApplication {
    */
   async _onReset(event) {
     event.preventDefault();
-    await game.settings.set("pf1", "healthConfig", new HealthConfigModel());
-    ui.notifications.info(`Reset Pathfinder health configuration.`);
+    await game.settings.set("pf1", "healthConfig", {});
     return this.render();
   }
 
@@ -149,16 +152,9 @@ export class HealthConfig extends FormApplication {
    * @override
    */
   async _updateObject(event, formData) {
-    const settings = foundry.utils.expandObject(formData);
-    // Some mild sanitation for the numeric values.
-    for (const hd of Object.values(settings.hitdice)) {
-      hd.rate = Math.clamped(hd.rate, 0, 100);
-      hd.maximized = Math.clamped(Math.floor(hd.maximized), 0, 100);
-    }
-
-    settings.variants.npc.allowWoundThresholdOverride = true; // HACK: This setting vanishes otherwise
-
-    await game.settings.set("pf1", "healthConfig", settings);
-    ui.notifications.info("Updated Pathfinder health configuration.");
+    formData = foundry.utils.expandObject(formData);
+    const settings = new HealthConfigModel(game.settings.get("pf1", "healthConfig").toObject());
+    settings.updateSource(formData); // Validate settings
+    await game.settings.set("pf1", "healthConfig", settings.toObject());
   }
 }

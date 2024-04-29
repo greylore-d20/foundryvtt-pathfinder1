@@ -20,7 +20,7 @@
     {{#if pages}}
     <span class="pages">{{localize "PF1.ContentSource.Pages" pages=pages}}</span>
     {{/if}}
-    {{#if ../extras}}<span class="extra-source-count">{{numberFormat ../extras.length sign=true}}</span>{{/if}}
+    {{#if ../bookSources.extras}}<span class="extra-source-count">{{numberFormat ../bookSources.extras.length sign=true}}</span>{{/if}}
   {{else}}
     >{{localize "PF1.ContentSource.Missing"}}
   {{/with}}

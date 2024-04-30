@@ -5,22 +5,22 @@ name: Rage (Unchained)
 system:
   changes:
     - _id: D2POwZXV
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      formula: 2 + max(0, floor((@classes.barbarianUnchained.level - 2 ) / 9))
       modifier: untyped
       priority: null
       subTarget: mattack
     - _id: 8f4QV8tz
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      formula: 2 + max(0, floor((@classes.barbarianUnchained.level - 2 ) / 9))
       modifier: untyped
       priority: null
       subTarget: mwdamage
     - _id: MUtCJV5t
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      formula: 2 + max(0, floor((@classes.barbarianUnchained.level - 2 ) / 9))
       modifier: untyped
       priority: null
       subTarget: twdamage
     - _id: RBiWOi4D
-      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      formula: 2 + max(0, floor((@classes.barbarianUnchained.level - 2 ) / 9))
       modifier: untyped
       priority: null
       subTarget: will
@@ -63,10 +63,13 @@ system:
         if (state) {
           const oldTHP = actor.system.attributes.hp.temp ?? 0;
           const level = actor.classes.barbarianUnchained.level;
-          const hpPerHD = 2 + Math.floor((level - 2) / 9);
+          const hpPerHD = 2 + Math.max(0, Math.floor((level - 2) / 9));
           const hd = actor.system.attributes.hd.total;
           const newTHP = oldTHP + hd * hpPerHD;
           actor.update({ "system.attributes.hp.temp": newTHP });
         }
+  sources:
+    - id: PZO1131
+      pages: '8'
 type: buff
 

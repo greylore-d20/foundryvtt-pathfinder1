@@ -62,6 +62,15 @@ export class ItemChange {
     return [];
   }
 
+  async delete() {
+    const item = this.parent;
+    if (!item) throw new Error("Can not delete Change not in an item");
+    const changes = item.toObject().system.changes ?? [];
+    const changeId = this.id;
+    changes.findSplice((c) => c._id === changeId);
+    return item.update({ "system.changes": changes });
+  }
+
   static get defaultData() {
     return {
       _id: foundry.utils.randomID(8),

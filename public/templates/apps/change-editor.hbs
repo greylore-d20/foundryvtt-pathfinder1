@@ -1,0 +1,92 @@
+<form autocomplete="off">
+  {{! Operator }}
+  <div class="form-group operator">
+    <label>{{localize "PF1.Operator"}}</label>
+    <div class="form-fields radio">
+      <label>
+        <input type="radio" value="add" name="change.operator" {{checked isAdd}}>
+        {{localize "PF1.Application.ChangeEditor.Operator.Add"}}
+      </label>
+      <label>
+        <input type="radio" value="set" name="change.operator" {{checked isSet}}>
+        {{localize "PF1.Application.ChangeEditor.Operator.Set"}}
+      </label>
+      {{#unless isValidOp}}
+      <label class="invalid">
+        <input type="radio" value="{{operator}}" name="change.operator" {{checked (not isValidOp)}}>
+        {{localize "PF1.Application.ChangeEditor.Invalid"}}
+      </label>
+      {{/unless}}
+    </div>
+  </div>
+
+  {{! Target }}
+  <div class="form-group target">
+    <label>{{localize "PF1.Target"}}</label>
+    <div class="form-fields">
+      {{log this}}
+      <span class="value change-target{{#unless isValid}} invalid{{/unless}}">
+        {{#if isValid}}
+        {{label}}
+        {{else}}
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "PF1.Application.ChangeEditor.Invalid"}}{{#if label}} ({{label}}){{/if}}
+        {{/if}}
+      </span>
+    </div>
+  </div>
+
+  {{! Formula }}
+  <div class="formula {{#if isDeferred}}deferred{{else}}deterministic{{/if}}">
+    <h3>{{localize "PF1.Formula"}}</h3>
+    <input type="text" class="formula{{#unless change.isDeferred}} deterministic{{/unless}}"
+      name="change.formula" value="{{change.formula}}" placeholder="{{localize "PF1.Formula"}}" required>
+  </div>
+
+  {{! Details }}
+  <div class="form-group stacked">
+    <label class="checkbox" data-tooltip="PF1.Application.ChangeEditor.Help.DeterministicHint">
+      <input class="is-deterministic" type="checkbox" {{checked (not change.isDeferred)}} disabled>
+      {{localize "PF1.Application.ChangeEditor.Help.Deterministic"}}
+    </label>
+  </div>
+
+  {{! Type }}
+  <div class="form-group type">
+    <label>{{localize "PF1.Type"}}</label>
+    <div class="form-fields">
+      <select class="change-modifier" name="change.modifier">
+        {{selectOptions @root.config.bonusTypes selected=change.modifier}}
+      </select>
+    </div>
+  </div>
+
+  {{! Priority }}
+  <div class="form-group priority">
+    <label>{{localize "PF1.Priority"}}</label>
+    <div class="form-fields">
+      <input type="number" value="{{change.priority}}" placeholder="0"
+        name="change.priority">
+    </div>
+  </div>
+
+  {{! Help }}
+  <p class="instructions">
+    <a class='help-browser' data-url="Help/Items/Changes">
+      <i class="far fa-question-circle"></i>
+      {{localize "PF1.Application.ChangeEditor.Help.Link"}}
+    </a>
+  </p>
+
+  {{! Buttons }}
+  <div class="buttons">
+    <button type="button" class="duplicate">
+      <i class="fa-solid fa-copy"></i>
+      {{localize "PF1.Duplicate"}}
+    </button>
+    <button type="button" class="delete">
+      <i class="fas fa-trash"></i>
+      {{localize "PF1.Delete"}}
+    </button>
+  </div>
+</form>

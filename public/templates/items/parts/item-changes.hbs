@@ -44,65 +44,73 @@
 {{!-- Changes --}}
 <ol class="item-groups-list changes-list">
   <li class="item-list-header change-header flexrow">
-    <div class="item-name">
-      <h3>{{localize "PF1.Changes"}}</h3>
-      <a class='help-browser' data-url="Help/Items/Changes"><i class="far fa-question-circle"></i></a>
-    </div>
-    <div class="item-operator flexrow">{{localize "PF1.Operator"}}</div>
-    <div class="item-target flexrow">{{localize "PF1.Target"}}</div>
-    <div class="item-type flexrow">{{localize "PF1.Type"}}</div>
-    <div class="item-priority flexrow" data-tooltip="PF1.Priority"><i class="fas fa-sort"></i></div>
-
-    {{#if @root.owner}}
-    <div class="item-controls basic flexrow">
-      <a class="item-control item-create change-control add-change" data-action="add">
-        <i class="fas fa-plus"></i>
-      </a>
-    </div>
-    {{/if}}
+    <h3>{{localize "PF1.Changes"}}</h3>
   </li>
 
   <ol class="item-list changes">
   {{#each changes}}
-    <li class="item change flexrow {{#if isDeferred}}deferred{{else}}deterministic{{/if}}" data-change-id="{{id}}">
-      <div class="item-name item-formula flexrow">
-        {{#unless isScript}}
-        <input class="change-formula formula {{#unless isDeferred}}deterministic{{/unless}}" type="text" name="system.changes.{{@key}}.formula" value="{{formula}}" placeholder="{{localize "PF1.Formula"}}" required>
+    <li class="change flexrow {{#if isDeferred}}deferred{{else}}deterministic{{/if}}" data-change-id="{{id}}">
+      <span class="operator"
+        {{#if isAdd}}
+        data-tooltip="PF1.Application.ChangeEditor.Operator.AddHint">
+        <i class="fa-solid fa-plus-minus fa-fw"></i>
+        {{else if isSet}}
+        data-tooltip="PF1.Application.ChangeEditor.Operator.SetHint">
+        <i class="fa-solid fa-equals fa-fw"></i>
         {{else}}
-        <button type="button" class="edit-change-contents"><i class="fas fa-edit"></i> {{localize "PF1.Edit"}}</button>
-        {{/unless}}
-      </div>
-
-      <div class="item-operator flexrow">
-        <select class="change-operator" name="system.changes.{{@key}}.operator">
-          {{#select operator}}
-          <option value="add">+</option>
-          <option value="set">=</option>
-          <option value="script">S</option>
-          {{/select}}
-        </select>
-      </div>
-
-      <div class="item-target flexrow">
-        <span class="change-target{{#unless isValid}} invalid{{/unless}}">{{label}}</span>
-      </div>
-
-      <div class="item-type flexrow">
-        <select class="change-type" name="system.changes.{{@key}}.modifier">
-          {{selectOptions @root.changeGlobals.modifiers selected=modifier}}
-        </select>
-      </div>
-
-      <div class="item-priority flexrow">
-        <input class="change-priority" type="text" data-dtype="Number" name="system.changes.{{@key}}.priority" value="{{priority}}"
-          placeholder="0">
-      </div>
-
-      <div class="item-controls flexrow basic">
-        {{#if @root.owner}}
-        <a class="item-control change-control duplicate-change" data-change-id="{{id}}" data-action="duplicate"><i class="fa-solid fa-copy"></i></a>
-        <a class="item-control change-control delete-change" data-change-id="{{id}}" data-action="delete"><i class="fas fa-trash"></i></a>
+        data-tooltip="PF1.Application.ChangeEditor.Operator.InvalidHint">
+        {{operator}}
         {{/if}}
+      </span>
+
+      <div class="details">
+        <div class="target">
+          <label>
+            {{#if isAdd}}
+            {{localize "PF1.Application.ChangeEditor.Operator.AddVerb"}}
+            {{else if isSet}}
+            {{localize "PF1.Application.ChangeEditor.Operator.SetVerb"}}
+            {{/if}}
+          </label>
+          <span class="value{{#unless isValid}} invalid{{/unless}}">
+            {{#if isValid}}
+            {{label}}
+            {{else}}
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            {{localize "PF1.Application.ChangeEditor.Invalid"}}{{#if subTarget}} ({{subTarget}}){{/if}}
+            {{/if}}
+          </span>
+        </div>
+
+        <div class="type">
+          <label>{{localize "PF1.Application.ChangeEditor.AsType"}}</label>
+          <span class="type value{{#unless isValidType}} invalid{{/unless}}">
+            {{#if isValidType}}
+            {{typeLabel}}
+            {{else}}
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            {{localize "PF1.Application.ChangeEditor.Invalid"}}{{#if modifier}} ({{modifier}}){{/if}}
+            {{/if}}
+          </span>
+        </div>
+
+        {{#if @root.changePriority}}
+        <div class="priority">
+          <label>{{localize "PF1.Priority"}}</label>
+          <span>{{numberFormat priority sign=true}}</span>
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="value">
+        <input class="formula {{#unless isDeferred}}deterministic{{/unless}}{{#unless formula}} invalid{{/unless}}"
+          type="text" value="{{formula}}" placeholder="0" readonly>
+      </div>
+
+      <div class="controls">
+        <a class="edit-change" data-action="edit" data-target="change" data-change-id="{{id}}" data-tooltip="PF1.Edit">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
       </div>
     </li>
   {{/each}}

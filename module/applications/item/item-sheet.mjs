@@ -668,29 +668,31 @@ export class ItemSheetPF extends ItemSheet {
       trait.active = !foundry.utils.isEmpty(trait.selected);
     }
 
-    // Prepare stuff for active effects on items
-    if (item.changes) {
-      context.changeGlobals = {
-        targets: {},
-        modifiers: pf1.config.bonusTypes,
-      };
-      for (const [k, v] of Object.entries(pf1.config.buffTargets)) {
-        context.changeGlobals.targets[k] = v._label;
-      }
-
+    // Prepare stuff for changes
+    if (item.changes?.size) {
       const buffTargets = getBuffTargets(actor);
+      let showPriority = false;
       context.changes =
         item.changes?.map((/** @type {ItemChange} */ ch) => {
           const target = buffTargets[ch.subTarget];
-          return {
+          const chData = {
             isValid: !!target,
             label: target?.label ?? ch.subTarget,
             isScript: ch.operator === "script",
             isDeferred: ch.isDeferred,
+            isAdd: ch.operator === "add",
+            isSet: ch.operator === "set",
             ...ch.data,
+            isValidType: !!pf1.config.bonusTypes[ch.modifier],
+            typeLabel: pf1.config.bonusTypes[ch.modifier] || ch.modifier,
             id: ch.id,
           };
+          chData.priority ||= 0;
+          if (chData.priority != 0) showPriority = true;
+          return chData;
         }) ?? [];
+
+      context.changePriority = showPriority;
     }
 
     // Prepare stuff for items with context notes
@@ -1035,6 +1037,7 @@ export class ItemSheetPF extends ItemSheet {
 
     const system = formData.system;
     const links = system.links;
+
     if (links) {
       const oldLinks = this.item.system?.links ?? {};
       // Handle links arrays
@@ -1158,6 +1161,7 @@ export class ItemSheetPF extends ItemSheet {
       await roll.evaluate();
     } catch (e) {
       el.dataset.tooltip = e.message;
+      el.classList.add("invalid");
       el.setCustomValidity(e.message);
       return;
     }
@@ -1166,6 +1170,7 @@ export class ItemSheetPF extends ItemSheet {
     if (el.classList.contains("deterministic")) {
       if (!roll.isDeterministic) {
         el.dataset.tooltip = "PF1.Warning.FormulaMustBeDeterministic";
+        el.classList.add("invalid");
         el.setCustomValidity(game.i18n.localize("PF1.Warning.FormulaMustBeDeterministic"));
       }
     }
@@ -1269,9 +1274,8 @@ export class ItemSheetPF extends ItemSheet {
     // Add drop handler to textareas
     html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
-    // Modify changes
-    html.find(".change-control").click(this._onChangeControl.bind(this));
-    html.find(".change .change-target").click(this._onChangeTargetControl.bind(this));
+    // Open Changes editor
+    html.find(".tab.changes .changes .controls a.edit-change").click(this._onEditChange.bind(this));
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
@@ -1675,15 +1679,18 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     event.stopPropagation();
 
+    if (!this.isEditable) return;
+
     const data = TextEditor.getDragEventData(event);
     const { type, uuid } = data;
     /** @type {ItemPF} */
     const item = this.item;
 
+    const srcItem = uuid ? fromUuidSync(uuid) : null;
+
     switch (type) {
       // Handle actions
       case "action": {
-        const srcItem = await fromUuid(uuid);
         const actionId = data.actionId;
         // Re-order
         if (srcItem === item) {
@@ -1709,11 +1716,33 @@ export class ItemSheetPF extends ItemSheet {
         break;
       }
       case "pf1Change": {
-        // TODO: Support re-ordering
         const chData = data.data;
-        delete chData._id;
-        this.activateTab("changes", "primary");
-        return pf1.components.ItemChange.create([chData], { parent: item });
+        // Sort in same item
+        if (srcItem === item) {
+          const el = event.target.matches("li.change") ? event.target : event.target.closest("li.change");
+          if (!el) return;
+          const targetChangeId = el.dataset.changeId;
+          if (chData._id === targetChangeId) {
+            // Dropped onto self, ignore.
+          } else {
+            // Re-arrange
+            /** @type {Array<object>} */
+            const changes = item.toObject().system.changes ?? [];
+            const removed = changes.findSplice((c) => c._id === chData._id);
+            if (!removed) return;
+            const idx = changes.findIndex((c) => c._id === targetChangeId);
+            if (idx >= 0) {
+              changes.splice(idx, 0, removed);
+              return item.update({ "system.changes": changes });
+            }
+          }
+        }
+        // Duplicate
+        else {
+          delete chData._id;
+          this.activateTab("changes", "primary");
+          return pf1.components.ItemChange.create([chData], { parent: item });
+        }
       }
     }
   }
@@ -1877,61 +1906,19 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * @internal
-   * @param {Event} event
+   * @param {Event} event - Click event
    */
-  async _onChangeControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
+  _onEditChange(event) {
+    const el = event.target;
 
-    const action = a.dataset.action;
-    const changeId = a.dataset.changeId;
+    if (el.dataset.target !== "change") return;
 
-    await this._onSubmit(event, { preventRender: true });
-
-    switch (action) {
-      // Add new change
-      case "add":
-        return pf1.components.ItemChange.create([{}], { parent: this.item });
-      // Remove a change
-      case "delete": {
-        const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
-        changes.findSplice((c) => c._id === changeId);
-        return this.item.update({ "system.changes": changes });
-      }
-      case "duplicate": {
-        const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
-        const old = changes.find((c) => c._id === changeId);
-        if (old) {
-          delete old._id;
-          return pf1.components.ItemChange.create([old], { parent: this.item });
-        }
+    switch (el.dataset.action) {
+      case "edit": {
+        const change = this.item.changes.get(el.dataset.changeId);
+        return void pf1.applications.ChangeEditor.wait(change);
       }
     }
-  }
-  _onChangeTargetControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-
-    // Prepare categories and changes to display
-    const changeId = a.closest(".change").dataset.changeId;
-    const change = this.item.changes.get(changeId);
-    const categories = getBuffTargetDictionary(this.item.actor);
-
-    const part1 = change?.subTarget?.split(".")[0];
-    const category = pf1.config.buffTargets[part1]?.category ?? part1;
-
-    // Show widget
-    const w = new Widget_CategorizedItemPicker(
-      { title: "PF1.Application.ChangeTargetSelector.Title", classes: ["change-target-selector"] },
-      categories,
-      (key) => {
-        if (key) {
-          change.update({ subTarget: key });
-        }
-      },
-      { category, item: change?.subTarget }
-    );
-    w.render(true);
   }
 
   async _onNoteControl(event) {

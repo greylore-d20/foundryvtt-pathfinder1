@@ -32,6 +32,7 @@ export { TooltipPF } from "./tooltip.mjs";
 export { ActorTraitSelector } from "./trait-selector.mjs";
 export { VisionSharingSheet } from "./vision-sharing.mjs";
 export { ExperienceDistributor } from "./xp-distributor.mjs";
+export { ChangeEditor } from "./change-editor.mjs";
 
 export { ItemDirectoryPF } from "./sidebar/items-directory.mjs";
 export { Troubleshooter } from "./troubleshooter.mjs";

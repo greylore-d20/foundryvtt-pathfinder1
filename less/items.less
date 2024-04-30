@@ -301,60 +301,16 @@
     }
 
     .tab.changes {
-      .changes,
       .context-notes {
         list-style: none;
         margin: 0;
         padding: 0;
         display: block;
 
-        .change,
         .context-note {
           flex: 0 0 100%;
           padding: 1px;
 
-          input {
-            flex: 3;
-            border: 1px solid @colorTan;
-            background: var(--pf1-bg-dark-0);
-            height: 24px;
-          }
-
-          input[type="text"]:invalid {
-            border: var(--pf1-invalid-input-border);
-            background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
-          }
-
-          select {
-            background: var(--pf1-bg-dark-0);
-          }
-
-          select:invalid {
-            border: var(--pf1-invalid-input-border);
-            background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
-          }
-
-          input[type="text"]:not(:first-child),
-          select:not(:first-child),
-          span:not(:first-child),
-          button:not(:first-child) {
-            margin-left: 5px;
-          }
-
-          button.edit-change-contents {
-            height: 24px;
-            line-height: 24px;
-          }
-
-          .change-priority {
-            flex: 0 0 24px;
-          }
-
-          .change-operator {
-            flex: 0 0 24px;
-          }
-
-          .change-target,
           .context-note-target {
             border: 1px solid @colorTan;
             background: var(--pf1-bg-dark-0);

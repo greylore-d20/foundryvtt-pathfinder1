@@ -1,0 +1,105 @@
+.pf1.sheet.change-editor {
+  min-height: 160px;
+  //min-width: 620px;
+
+  form {
+    input {
+      flex: 3;
+      border: 1px solid @colorTan;
+      background: var(--pf1-bg-dark-0);
+      height: 24px;
+    }
+
+    select {
+      background: var(--pf1-bg-dark-0);
+      text-align: center;
+    }
+
+    input[type="text"]:invalid {
+      border: var(--pf1-invalid-input-border);
+      background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
+    }
+
+    select:invalid {
+      border: var(--pf1-invalid-input-border);
+      background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
+    }
+
+    .radio {
+      display: flex;
+      flex-flow: row nowrap;
+
+      > label {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        gap: 0 0.3em;
+        line-height: 1.5;
+        align-items: center;
+
+        > input {
+          height: unset;
+          flex: unset;
+          top: unset;
+          margin: unset;
+        }
+      }
+    }
+
+    .change-priority {
+      text-align: center;
+    }
+
+    .change-target {
+      border: 1px solid @colorTan;
+      background: var(--pf1-bg-dark-0);
+      white-space: nowrap;
+      overflow: hidden;
+      height: 24px;
+      line-height: 24px;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      font-size: @fontSizeNormal;
+
+      &:hover {
+        box-shadow: 0 0 8px @colorRed;
+      }
+
+      &.invalid {
+        border: var(--pf1-invalid-input-border);
+        background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
+      }
+    }
+
+    .formula {
+      h3 {
+        all: inherit;
+        font-weight: bold;
+        color: @colorOlive;
+      }
+    }
+
+    .priority {
+      input {
+        text-align: center;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
+    .instructions {
+      text-align: center;
+    }
+
+    .target {
+      .value.invalid {
+        color: var(--pf1-color-text-error);
+        border: var(--pf1-invalid-input-border);
+        background: url(icons/misc/hazard-sign.svg) no-repeat 99% 50% var(--pf1-bg-dark-0);
+      }
+    }
+  }
+}

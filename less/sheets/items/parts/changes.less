@@ -1,0 +1,120 @@
+.pf1.item.sheet form {
+  .tab.changes {
+    .changes-list {
+      > .changes {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0px;
+      }
+
+      .item-list-header {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 1em;
+
+        padding-right: 5px; // Match generic h3 padding-left
+
+        h3 {
+          border: unset;
+          flex: 1;
+        }
+
+        > a {
+          flex: 0;
+          display: inline-flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          gap: 0.3em;
+
+          border: unset; // Undo general style
+
+          &.disabled {
+            color: var(--color-text-dark-inactive);
+          }
+        }
+      }
+
+      .change {
+        display: grid;
+        grid-template-columns: min-content 1fr min-content;
+        grid-template-rows: min-content;
+
+        gap: 1px 0.3em;
+        padding: 1px 0.3em;
+
+        &:nth-child(even) {
+          background-color: var(--pf1-bg-dark-0);
+        }
+
+        &:hover {
+          background-color: var(--pf1-bg-dark-05);
+        }
+
+        label {
+          color: var(--color-text-dark-6);
+        }
+
+        > .operator {
+          grid-row: 2;
+        }
+
+        > .details {
+          //grid-row: 1;
+          grid-column: 2;
+          display: flex;
+          flex-flow: row;
+          gap: 0 0.3em;
+
+          > div {
+            white-space: nowrap;
+          }
+
+          .target {
+            flex: 1;
+          }
+
+          :is(.target, .type) .invalid {
+            color: var(--pf1-color-text-error);
+          }
+
+          > :is(.type, .priority) {
+            flex: 0;
+          }
+        }
+
+        > .value {
+          grid-row: 2;
+          display: flex;
+          flex-flow: row nowrap;
+          > .formula {
+            height: unset; // Remove Foundry's sizing
+          }
+          padding-bottom: 2px;
+        }
+
+        :is(.target, .type, .priority) {
+          white-space: nowrap;
+          //display: inline-flex;
+          align-items: center;
+        }
+
+        .controls {
+          grid-row: span 2;
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+        }
+
+        input {
+          border: 1px solid var(--pf1-bg-dark-05);
+          background: var(--pf1-bg-dark-0);
+
+          &.invalid {
+            border: var(--pf1-invalid-input-border);
+            background: url(icons/misc/hazard-sign.svg) no-repeat 99% 50% var(--pf1-bg-dark-0);
+          }
+        }
+      }
+    }
+  }
+}

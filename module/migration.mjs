@@ -1643,28 +1643,27 @@ const _migrateItemChanges = function (itemData, updateData) {
   }
 
   // Migrate context notes
-  const notes = itemData.system.contextNotes;
-  if (Array.isArray(notes)) {
+  const oldNotes = itemData.system.contextNotes;
+  if (Array.isArray(oldNotes) && oldNotes?.length > 0) {
     const newNotes = [];
-    for (const n of notes) {
-      let newNote = n;
-      if (Array.isArray(n)) {
-        // Transform old tuple. Target is no longer used but is needed for the spellEffect below
-        newNote = { text: n[0], target: n[1], subTarget: n[2] };
+
+    for (const oldNote of oldNotes) {
+      let newNote = foundry.utils.deepClone(oldNote);
+
+      // Transform old tuple.
+      if (Array.isArray(oldNote)) {
+        newNote = { text: oldNote[0], target: oldNote[1], subTarget: oldNote[2] };
       }
 
-      // Migrate old note targets
-      if (newNote.target === "spell" && newNote.subTarget === "effect") {
-        newNote.subTarget = "spellEffect";
-      }
+      newNote = new pf1.components.ContextNote(newNote).toObject();
 
-      newNotes.push(new pf1.components.ContextNote(newNote).toObject());
+      newNotes.push(newNote);
     }
 
     // Alter the context note list, but only if changes actually occurred. Bidirectional to detect deletions.
     if (
-      !foundry.utils.isEmpty(foundry.utils.diffObject(notes, newNotes)) ||
-      !foundry.utils.isEmpty(foundry.utils.diffObject(newNotes, notes))
+      !foundry.utils.isEmpty(foundry.utils.diffObject(oldNotes, newNotes)) ||
+      !foundry.utils.isEmpty(foundry.utils.diffObject(newNotes, oldNotes))
     ) {
       updateData["system.contextNotes"] = newNotes;
     }

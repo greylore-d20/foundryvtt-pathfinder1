@@ -3992,12 +3992,12 @@ export class ActorPF extends ActorBasePF {
   /**
    * An array of all context note data for this actor.
    *
-   * @type {{notes: {text: string, subTarget: string}[], item: ItemPF}[]}
+   * @type {{notes: Array<pf1.components.ContextNote>, item: ItemPF}[]}
    */
   get allNotes() {
     return this.items
       .filter((item) => item.isActive && item.system.contextNotes?.length > 0)
-      .map((item) => ({ notes: item.system.contextNotes, item }));
+      .map((item) => ({ notes: item.system.contextNotes.map((n) => new pf1.components.ContextNote(n)), item }));
   }
 
   /**
@@ -4038,15 +4038,10 @@ export class ActorPF extends ActorBasePF {
       const skillKey = RegExp.$1;
       const skill = this.getSkillInfo(skillKey);
       const ability = skill.ability;
-      for (const note of result) {
-        note.notes = note.notes
-          .filter(
-            (note) =>
-              note.subTarget === context ||
-              note.subTarget === `${ability}Skills` ||
-              (all && note.subTarget === "skills")
-          )
-          .map((note) => note.text);
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes
+          .filter((n) => [context, `${ability}Skills`].includes(n.target) || (all && n.target === "skills"))
+          .map((n) => n.text);
       }
 
       return result;
@@ -4055,14 +4050,10 @@ export class ActorPF extends ActorBasePF {
     // Saving throws
     if (context.match(/^savingThrow\.(.+)/)) {
       const saveKey = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes
-          .filter((o) => {
-            return o.subTarget === saveKey || o.subTarget === "allSavingThrows";
-          })
-          .map((o) => {
-            return o.text;
-          });
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes
+          .filter((n) => [saveKey, "allSavingThrows"].includes(n.target))
+          .map((n) => n.text);
       }
 
       if (this.system.attributes.saveNotes != null && this.system.attributes.saveNotes !== "") {
@@ -4075,14 +4066,10 @@ export class ActorPF extends ActorBasePF {
     // Ability checks
     if (context.match(/^abilityChecks\.(.+)/)) {
       const ablKey = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes
-          .filter((o) => {
-            return o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks";
-          })
-          .map((o) => {
-            return o.text;
-          });
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes
+          .filter((n) => [`${ablKey}Checks`, "allChecks"].includes(n.target))
+          .map((n) => n.text);
       }
 
       return result;
@@ -4091,14 +4078,8 @@ export class ActorPF extends ActorBasePF {
     // Misc
     if (context.match(/^misc\.(.+)/)) {
       const miscKey = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes
-          .filter((o) => {
-            return o.subTarget === miscKey;
-          })
-          .map((o) => {
-            return o.text;
-          });
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes.filter((n) => n.target === miscKey).map((n) => n.text);
       }
 
       return result;
@@ -4106,14 +4087,8 @@ export class ActorPF extends ActorBasePF {
 
     if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
       const spellbookKey = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes
-          .filter((o) => {
-            return o.subTarget === "concentration";
-          })
-          .map((o) => {
-            return o.text;
-          });
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
       }
 
       const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.concentrationNotes;
@@ -4126,14 +4101,8 @@ export class ActorPF extends ActorBasePF {
 
     if (context.match(/^spell\.cl\.([a-z]+)$/)) {
       const spellbookKey = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes
-          .filter((o) => {
-            return o.subTarget === "cl";
-          })
-          .map((o) => {
-            return o.text;
-          });
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
       }
 
       const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.clNotes;
@@ -4145,8 +4114,8 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (context.match(/^spell\.effect$/)) {
-      for (const note of result) {
-        note.notes = note.notes.filter((o) => o.subTarget === "spellEffect").map((o) => o.text);
+      for (const noteSource of result) {
+        noteSource.notes = noteSource.notes.filter((n) => n.target === "spellEffect").map((n) => n.text);
       }
 
       return result;

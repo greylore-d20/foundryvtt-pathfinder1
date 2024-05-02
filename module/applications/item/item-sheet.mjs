@@ -697,10 +697,10 @@ export class ItemSheetPF extends ItemSheet {
     if (itemData.contextNotes) {
       context.contextNotes = foundry.utils.deepClone(itemData.contextNotes);
       const noteTargets = getBuffTargets(actor, "contextNotes");
-      context.contextNotes.forEach((o) => {
-        const target = noteTargets[o.subTarget];
-        o.isValid = !!target;
-        o.label = target?.label ?? o.subTarget;
+      context.contextNotes.forEach((n) => {
+        const target = noteTargets[n.target];
+        n.isValid = !!target;
+        n.label = target?.label ?? n.target;
       });
     }
 
@@ -1942,15 +1942,14 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      const contextNotes = foundry.utils.deepClone(this.item.toObject().system.contextNotes || []);
+      const contextNotes = this.item.toObject().system.contextNotes || [];
       contextNotes.push(new pf1.components.ContextNote().toObject());
       return this.item.update({ "system.contextNotes": contextNotes });
     }
-
     // Remove a note
     if (a.classList.contains("delete-note")) {
       const li = a.closest(".context-note");
-      const contextNotes = foundry.utils.deepClone(this.item.toObject().system.contextNotes || []);
+      const contextNotes = this.item.toObject().system.contextNotes || [];
       contextNotes.splice(Number(li.dataset.note), 1);
       return this.item.update({ "system.contextNotes": contextNotes });
     }
@@ -1976,11 +1975,11 @@ export class ItemSheetPF extends ItemSheet {
       (key) => {
         if (key) {
           const updateData = {};
-          updateData[`system.contextNotes.${noteIndex}.subTarget`] = key;
+          updateData[`system.contextNotes.${noteIndex}.target`] = key;
           this.item.update(updateData);
         }
       },
-      { category, item: note?.subTarget }
+      { category, item: note?.target }
     );
     w.render(true);
   }

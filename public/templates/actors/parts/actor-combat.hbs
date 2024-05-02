@@ -176,7 +176,7 @@
                   {{/if}}
                   {{#each allDamageSources}}
                     {{#if @first}}<span class="span3"><br></span>{{/if}}
-                    <span class="span1 align-left">{{flavor}} :</span><span class="span1 align-rightspaced"> {{value}}</span> <span class="span1 align-right"> [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusModifiers modifier}}{{/if}}]</span>
+                    <span class="span1 align-left">{{flavor}} :</span><span class="span1 align-rightspaced"> {{value}}</span> <span class="span1 align-right"> [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusTypes modifier}}{{/if}}]</span>
                   {{/each}}
                   {{#if (optionalConditionals item)}}
                     <span class="span3">+ {{localize "PF1.Conditionals"}}</span>

@@ -251,8 +251,11 @@ export class ItemChange {
             operator = result.operator;
           }
         } else if (operator === "function") {
-          value = this.formula(rollData, this.parent);
-          operator = "add";
+          foundry.utils.logCompatibilityWarning(
+            "ItemChange function operator is no longer supported with no replacement.",
+            { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          );
+          continue;
         } else if (!isNaN(this.formula)) {
           value = parseFloat(this.formula);
         } else if (this.isDeferred && RollPF.parse(this.formula).some((t) => !t.isDeterministic)) {

@@ -630,20 +630,6 @@ export const getChangeFlat = function (target, modifierType, value) {
   return result;
 };
 
-const getBabTotal = function (d) {
-  return d.attributes.bab.total;
-};
-
-const getNegativeEnergyDrain = function (d) {
-  return -d.attributes.energyDrain;
-};
-
-const getAbilityMod = function (ability) {
-  return function (d) {
-    return d.abilities[ability]?.mod ?? 0;
-  };
-};
-
 /**
  * Calculate actor health
  *
@@ -855,8 +841,8 @@ export const addDefaultChanges = function (changes) {
   if (hpAbility) {
     changes.push(
       new pf1.components.ItemChange({
-        formula: (d) => d.abilities[hpAbility].mod * d.attributes.hd.total,
-        operator: "function",
+        formula: "@attributes.hpAbility.mod * @attributes.hd.total",
+        operator: "add",
         target: "misc",
         subTarget: "mhp",
         modifier: "base",
@@ -867,8 +853,8 @@ export const addDefaultChanges = function (changes) {
     if (!this.system.attributes.wounds?.base) {
       changes.push(
         new pf1.components.ItemChange({
-          formula: (d) => d.abilities[hpAbility].total * 2 + d.abilities[hpAbility].drain,
-          operator: "function",
+          formula: "@attributes.hpAbility.total * 2 + @abilities.hpAbility.drain",
+          operator: "add",
           target: "misc",
           subTarget: "wounds",
           modifier: "base",
@@ -912,8 +898,8 @@ export const addDefaultChanges = function (changes) {
     // Energy drain to attack
     changes.push(
       new pf1.components.ItemChange({
-        formula: getNegativeEnergyDrain,
-        operator: "function",
+        formula: "-@attributes.energyDrain",
+        operator: "add",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
@@ -923,8 +909,8 @@ export const addDefaultChanges = function (changes) {
     // ACP to attack
     changes.push(
       new pf1.components.ItemChange({
-        formula: (d) => -d.attributes.acp.attackPenalty,
-        operator: "function",
+        formula: "-@attributes.acp.attackPenalty",
+        operator: "add",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "penalty",
@@ -938,8 +924,8 @@ export const addDefaultChanges = function (changes) {
     // BAB to CMD
     changes.push(
       new pf1.components.ItemChange({
-        formula: getBabTotal,
-        operator: "function",
+        formula: "@attributes.bab.total",
+        operator: "add",
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -962,8 +948,8 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain to CMD
     changes.push(
       new pf1.components.ItemChange({
-        formula: getNegativeEnergyDrain,
-        operator: "function",
+        formula: "-@attributes.energyDrain",
+        operator: "add",
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -978,8 +964,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         new pf1.components.ItemChange({
-          formula: getAbilityMod(abl),
-          operator: "function",
+          formula: `@abilities.${abl}.mod`,
+          operator: "add",
           target: "misc",
           subTarget: "init",
           modifier: "untypedPerm",
@@ -993,8 +979,8 @@ export const addDefaultChanges = function (changes) {
     if (["str", "dex"].includes(abl)) {
       changes.push(
         new pf1.components.ItemChange({
-          formula: (d) => -d.attributes.acp.attackPenalty,
-          operator: "function",
+          formula: "-@attributes.acp.attackPenalty",
+          operator: "add",
           target: "misc",
           subTarget: "init",
           modifier: "penalty",
@@ -1012,8 +998,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         new pf1.components.ItemChange({
-          formula: getAbilityMod(abl),
-          operator: "function",
+          formula: `@abilities.${abl}.mod`,
+          operator: "add",
           target: "savingThrows",
           subTarget: "fort",
           modifier: "untypedPerm",
@@ -1026,8 +1012,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         new pf1.components.ItemChange({
-          formula: getAbilityMod(abl),
-          operator: "function",
+          formula: `@abilities.${abl}.mod`,
+          operator: "add",
           target: "savingThrows",
           subTarget: "ref",
           modifier: "untypedPerm",
@@ -1040,8 +1026,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         new pf1.components.ItemChange({
-          formula: getAbilityMod(abl),
-          operator: "function",
+          formula: `@abilities.${abl}.mod`,
+          operator: "add",
           target: "savingThrows",
           subTarget: "will",
           modifier: "untypedPerm",
@@ -1052,8 +1038,8 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain
     changes.push(
       new pf1.components.ItemChange({
-        formula: getNegativeEnergyDrain,
-        operator: "function",
+        formula: "-@attributes.energyDrain",
+        operator: "add",
         target: "savingThrows",
         subTarget: "allSavingThrows",
         modifier: "penalty",
@@ -1207,8 +1193,8 @@ export const addDefaultChanges = function (changes) {
   {
     changes.push(
       new pf1.components.ItemChange({
-        formula: (d) => (d.attributes.speed.climb.total > 0 ? 8 : 0),
-        operator: "function",
+        formula: "(min(1, @attributes.speed.climb.total) * 8)",
+        operator: "add",
         target: "skill",
         subTarget: "skill.clm",
         modifier: "racial",
@@ -1219,8 +1205,8 @@ export const addDefaultChanges = function (changes) {
 
     changes.push(
       new pf1.components.ItemChange({
-        formula: (d) => (d.attributes.speed.swim.total > 0 ? 8 : 0),
-        operator: "function",
+        formula: "(min(1, @attributes.speed.swim.total) * 8)",
+        operator: "add",
         target: "skill",
         subTarget: "skill.swm",
         modifier: "racial",
@@ -1234,8 +1220,8 @@ export const addDefaultChanges = function (changes) {
   {
     changes.push(
       new pf1.components.ItemChange({
-        formula: getNegativeEnergyDrain,
-        operator: "function",
+        formula: "-@attributes.energyDrain",
+        operator: "add",
         target: "skills",
         subTarget: "skills",
         modifier: "untypedPerm",
@@ -1319,8 +1305,8 @@ export const addDefaultChanges = function (changes) {
   if (!Number.isNaN(actorData.attributes.energyDrain) && actorData.attributes.energyDrain > 0) {
     changes.push(
       new pf1.components.ItemChange({
-        formula: (d) => -d.attributes.energyDrain * 5,
-        operator: "function",
+        formula: "-(@attributes.energyDrain * 5)",
+        operator: "add",
         subTarget: "mhp",
         modifier: "untyped",
         priority: -750,
@@ -1330,8 +1316,8 @@ export const addDefaultChanges = function (changes) {
 
     changes.push(
       new pf1.components.ItemChange({
-        formula: (d) => -d.attributes.energyDrain * 5,
-        operator: "function",
+        formula: "-(@attributes.energyDrain * 5)",
+        operator: "add",
         subTarget: "vigor",
         modifier: "untyped",
         priority: -750,

@@ -4504,6 +4504,14 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
+    // Map HP ability
+    const hpAbility = result.abilities[result.attributes.hpAbility];
+    Object.defineProperty(result.attributes, "hpAbility", {
+      get() {
+        return hpAbility;
+      },
+    });
+
     this._rollData = result;
 
     // Call hook

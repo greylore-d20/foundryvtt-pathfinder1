@@ -438,7 +438,7 @@ Hooks.once("i18nInit", function () {
     "weaponHoldTypes",
     "auraStrengths",
     "conditionalTargets",
-    "bonusModifiers",
+    "bonusTypes",
     "abilityActivationTypes_unchained",
     "abilityActivationTypesPlurals_unchained",
     "actorStatures",

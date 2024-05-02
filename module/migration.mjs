@@ -2819,7 +2819,7 @@ const _migrateActorFlags = (actorData, updateData) => {
       default: null,
     };
     updateData["flags.pf1.visionSharing.users"] = Object.fromEntries(
-      Object.entries(flags.visionPermission.users).map(([uid, data]) => [uid, mapping[data.level] ?? null])
+      Object.entries(flags.visionPermission?.users ?? {}).map(([uid, data]) => [uid, mapping[data.level] ?? null])
     );
     updateData["flags.pf1.-=visionPermission"] = null;
   }

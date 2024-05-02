@@ -9,16 +9,13 @@ system:
       - Rogue (Unchained)
       - Barbarian (Unchained)
   contextNotes:
-    - subTarget: ref
-      target: savingThrows
+    - target: ref
       text: '+[[@class.level < 3 ? 1 : (floor(@class.level / 3))]] vs Traps'
-    - subTarget: skill.per
-      target: skill
+    - target: skill.per
       text: >-
         +[[@class.level < 3 ? 1 : (floor(@class.level / 3))]] to avoid being
         surprised by a foe
-    - subTarget: ac
-      target: misc
+    - target: ac
       text: >-
         +[[@class.level < 3 ? 1 : (floor(@class.level / 3))]] vs attacks made by
         traps

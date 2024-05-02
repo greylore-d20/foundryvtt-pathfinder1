@@ -1015,7 +1015,7 @@ export const shieldTypes = {
 /**
  * The types of bonus modifiers
  */
-export const bonusModifiers = {
+export const bonusTypes = {
   untyped: "PF1.ModifierType.untyped",
   untypedPerm: "PF1.ModifierType.untypedPerm",
   base: "PF1.ModifierType.base",
@@ -1040,9 +1040,9 @@ export const bonusModifiers = {
 };
 
 /**
- * An array of stacking bonus modifiers by their keys for {@link bonusModifiers}
+ * An array of stacking bonus types by their keys for {@link bonusTypes}
  */
-export const stackingBonusModifiers = ["untyped", "untypedPerm", "dodge", "racial", "penalty", "circumstance"];
+export const stackingBonusTypes = ["untyped", "untypedPerm", "dodge", "racial", "penalty", "circumstance"];
 
 /* -------------------------------------------- */
 

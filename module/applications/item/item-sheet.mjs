@@ -672,7 +672,7 @@ export class ItemSheetPF extends ItemSheet {
     if (item.changes) {
       context.changeGlobals = {
         targets: {},
-        modifiers: pf1.config.bonusModifiers,
+        modifiers: pf1.config.bonusTypes,
       };
       for (const [k, v] of Object.entries(pf1.config.buffTargets)) {
         context.changeGlobals.targets[k] = v._label;

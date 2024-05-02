@@ -295,7 +295,7 @@ export class ItemChange {
               // Skip positive dodge modifiers if lose dex to AC is in effect
               if (actor.changeFlags.loseDexToAC && value > 0 && this.modifier === "dodge" && this.isAC) continue;
 
-              if (pf1.config.stackingBonusModifiers.includes(this.modifier)) {
+              if (pf1.config.stackingBonusTypes.includes(this.modifier)) {
                 // Add stacking bonus
                 foundry.utils.setProperty(actor, t, base + value);
                 override[operator][this.modifier] = (prior ?? 0) + value;
@@ -358,7 +358,7 @@ export class ItemChange {
     switch (this.operator) {
       case "add":
       case "function":
-        if (pf1.config.stackingBonusModifiers.includes(this.modifier)) {
+        if (pf1.config.stackingBonusTypes.includes(this.modifier)) {
           // Always add stacking entries
           const sourceInfoGroup = value >= 0 ? "positive" : "negative";
           for (const si of sourceInfoTargets) {

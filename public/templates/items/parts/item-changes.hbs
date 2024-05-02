@@ -50,7 +50,7 @@
     </div>
     <div class="item-operator flexrow">{{localize "PF1.Operator"}}</div>
     <div class="item-target flexrow">{{localize "PF1.Target"}}</div>
-    <div class="item-modifier flexrow">{{localize "PF1.Modifier"}}</div>
+    <div class="item-type flexrow">{{localize "PF1.Type"}}</div>
     <div class="item-priority flexrow" data-tooltip="PF1.Priority"><i class="fas fa-sort"></i></div>
 
     {{#if @root.owner}}
@@ -87,8 +87,8 @@
         <span class="change-target{{#unless isValid}} invalid{{/unless}}">{{label}}</span>
       </div>
 
-      <div class="item-modifier flexrow">
-        <select class="change-modifier" name="system.changes.{{@key}}.modifier">
+      <div class="item-type flexrow">
+        <select class="change-type" name="system.changes.{{@key}}.modifier">
           {{selectOptions @root.changeGlobals.modifiers selected=modifier}}
         </select>
       </div>

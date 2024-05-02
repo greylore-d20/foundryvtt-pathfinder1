@@ -434,7 +434,7 @@ export class ItemAction {
 
     if (!rollData) return [];
 
-    const mods = Object.keys(pf1.config.bonusModifiers);
+    const mods = Object.keys(pf1.config.bonusTypes);
 
     // Turn relevant conditionals into structure accepted by getHighestChanges
     const fakeCondChanges = [];
@@ -1219,8 +1219,8 @@ export class ItemAction {
   getConditionalModifierTypes(target) {
     const result = {};
     if (target === "attack" || target === "damage") {
-      // Add bonusModifiers from PF1.bonusModifiers
-      for (const [k, v] of Object.entries(pf1.config.bonusModifiers)) {
+      // Add types from pf1.config.bonusTypes
+      for (const [k, v] of Object.entries(pf1.config.bonusTypes)) {
         result[k] = v;
       }
     }

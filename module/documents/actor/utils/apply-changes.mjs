@@ -89,7 +89,7 @@ const createOverride = function () {
     set: {},
   };
 
-  for (const k of Object.keys(pf1.config.bonusModifiers)) {
+  for (const k of Object.keys(pf1.config.bonusTypes)) {
     result.add[k] = null;
     result.set[k] = null;
   }
@@ -1433,7 +1433,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
     ids: [],
     highestID: null,
   };
-  const highest = Object.keys(pf1.config.bonusModifiers).reduce((cur, k) => {
+  const highest = Object.keys(pf1.config.bonusTypes).reduce((cur, k) => {
     if (options.ignoreTarget) cur[k] = foundry.utils.deepClone(highestTemplate);
     else cur[k] = {};
     return cur;
@@ -1456,7 +1456,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
     let mod, h;
     const filterFunc = function (c) {
       if (h.highestID === c._id) return true;
-      if (pf1.config.stackingBonusModifiers.indexOf(mod) === -1 && h.ids.includes(c._id)) return false;
+      if (pf1.config.stackingBonusTypes.indexOf(mod) === -1 && h.ids.includes(c._id)) return false;
       return true;
     };
 

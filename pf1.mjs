@@ -176,6 +176,28 @@ Hooks.once("init", function () {
     },
   });
 
+  // Modifier -> Type
+  Object.defineProperties(pf1.config, {
+    bonusModifiers: {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "pf1.config.bonusModifiers is deprecated in favor of pf1.config.bonusTypes",
+          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        );
+        return this.bonusTypes;
+      },
+    },
+    stackingBonusModifiers: {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "pf1.config.stackingBonusModifiers is deprecated in favor of pf1.config.stackingBonusTypes",
+          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        );
+        return this.stackingBonusTypes;
+      },
+    },
+  });
+
   Object.defineProperty(pf1.config, "itemTypes", {
     get() {
       foundry.utils.logCompatibilityWarning("pf1.config.itemTypes is deprecated in favor of CONFIG.Item.typeLabels", {

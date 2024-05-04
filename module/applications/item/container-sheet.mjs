@@ -716,7 +716,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   async _quickIdentifyItem(event) {
     event.preventDefault();
     if (!game.user.isGM) {
-      return void ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
+      return void ui.notifications.error(game.i18n.localize("PF1.Error.CantIdentify"));
     }
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);

@@ -942,7 +942,7 @@ export class ItemPF extends ItemBasePF {
           const roll = RollPF.safeRoll(maxFormula, rollData, [this], { suppressError: !this.isOwner });
           this.system.uses.max = roll.total;
         } else {
-          const msg = game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
+          const msg = game.i18n.format("PF1.Warning.NoDiceAllowedInFormula", {
             formula: maxFormula,
             context: game.i18n.localize("PF1.ChargePlural"),
           });
@@ -992,7 +992,7 @@ export class ItemPF extends ItemBasePF {
   async displayCard(altChatData = {}, { token } = {}) {
     const actor = this.actor;
     if (actor && !actor.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: actor.name }));
     }
 
     // Basic template rendering data
@@ -1284,9 +1284,9 @@ export class ItemPF extends ItemBasePF {
         const chargeCost = cost ?? this.getDefaultChargeCost();
         if (this.charges < chargeCost) {
           if (this.isSingleUse) {
-            return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
+            return void ui.notifications.warn(game.i18n.localize("PF1.Error.NoQuantity"));
           }
-          return void ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.name }));
+          return void ui.notifications.warn(game.i18n.format("PF1.Error.InsufficientCharges", { name: this.name }));
         }
 
         await this.addCharges(-chargeCost);
@@ -1613,13 +1613,13 @@ export class ItemPF extends ItemBasePF {
         // Prevent the closing of charge link loops
         if (targetLinks.length > 0) {
           ui.notifications.warn(
-            game.i18n.format("PF1.WarningCannotCreateChargeLink", { source: this.name, target: targetItem.name })
+            game.i18n.format("PF1.Warning.CannotCreateChargeLink", { source: this.name, target: targetItem.name })
           );
           return false;
         } else if (targetItem.links.charges != null) {
           // Prevent the linking of one item to multiple resource pools
           ui.notifications.warn(
-            game.i18n.format("PF1.WarningCannotCreateChargeLink2", {
+            game.i18n.format("PF1.Warning.CannotCreateChargeLink2", {
               source: this.name,
               target: targetItem.name,
               deeptarget: targetItem.links.charges.name,
@@ -2186,7 +2186,7 @@ export class ItemPF extends ItemBasePF {
     // Add proficiency penalty
     try {
       if (!this.getProficiency(true)) {
-        describePart(-4, game.i18n.localize("PF1.ProficiencyPenalty"), "penalty", -500);
+        describePart(-4, game.i18n.localize("PF1.Proficiency.Penalty"), "penalty", -500);
       }
     } catch (error) {
       // Ignore proficiency incompatibility.

@@ -882,11 +882,7 @@ export class LevelUpForm extends FormApplication {
       itemData = foundry.utils.mergeObject(
         itemData,
         {
-          name: game.i18n.localize(itemData.name),
           system: {
-            description: {
-              value: game.i18n.localize(itemData.system.description.value),
-            },
             changes: Object.entries(choices).reduce((cur, [target, formula]) => {
               const change = foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
                 subTarget: target,

@@ -831,7 +831,7 @@ export class ActorSheetPF extends ActorSheet {
     this.document.itemTypes.class
       .filter((cls) => cls.system.subType !== "mythic")
       .forEach((cls) => {
-        // Favored Class Bonus
+        // Favoured Class Bonus
         // Apply FCB regardless if mindless if user applied such
         const fcSkills = cls.system.fc?.skill?.value ?? 0;
         if (fcSkills > 0) {
@@ -2073,15 +2073,12 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    const items = Object.entries(pf1.config.alignmentsShort).reduce((cur, o) => {
-      cur.push({ value: o[0], label: game.i18n.localize(o[1]) });
-      return cur;
-    }, []);
+    const items = Object.entries(pf1.config.alignmentsShort).map(([value, label]) => ({ value, label }));
     const w = new Widget_ItemPicker(
       (alignment) => {
         this.document.update({ "system.details.alignment": alignment });
       },
-      { items: items, columns: 3 }
+      { items, columns: 3 }
     );
     w.render($(a));
   }
@@ -2136,7 +2133,7 @@ export class ActorSheetPF extends ActorSheet {
   async _quickIdentifyItem(event) {
     event.preventDefault();
     if (!game.user.isGM) {
-      return void ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
+      return void ui.notifications.error(game.i18n.localize("PF1.Error.CantIdentify"));
     }
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);

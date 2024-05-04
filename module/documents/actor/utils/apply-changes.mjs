@@ -1149,7 +1149,7 @@ export const addDefaultChanges = function (changes) {
         formula: ac,
         subTarget: "nac",
         modifier: "base",
-        flavor: game.i18n.localize("PF1.EquipTypeNatural"),
+        flavor: game.i18n.localize("PF1.NaturalArmor"),
       })
     );
   }

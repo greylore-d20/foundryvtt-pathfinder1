@@ -125,7 +125,7 @@ export class SkillEditor extends DocumentSheet {
 
     // Basic sanity check
     if (!this.isStaticSkill && !tag) {
-      return void ui.notifications.error(game.i18n.localize("PF1.ErrorEmptySkillTag"));
+      return void ui.notifications.error(game.i18n.localize("PF1.Error.EmptySkillTag"));
     }
 
     const subSkillId = this.isSubSkill ? tag : null;
@@ -137,7 +137,7 @@ export class SkillEditor extends DocumentSheet {
       const skillsData = this.isSubSkill ? this.actor.system.skills[skillId].subSkills : this.actor.system.skills;
       if (tag in skillsData) {
         const msgOpts = { tag: this.isSubSkill ? `${this.skillId}.subSkills.${tag}` : tag };
-        return void ui.notifications.error(game.i18n.format("PF1.ErrorSkillTagAlreadyExists", msgOpts));
+        return void ui.notifications.error(game.i18n.format("PF1.Error.SkillTagAlreadyExists", msgOpts));
       }
     }
 

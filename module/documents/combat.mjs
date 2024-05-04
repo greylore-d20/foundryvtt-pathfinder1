@@ -11,7 +11,7 @@ import { RollPF } from "../dice/roll.mjs";
 async function duplicateCombatantInitiativeDialog(combatantId) {
   /** @type {CombatantPF} */
   const combatant = game.combat.combatants.get(combatantId);
-  if (!combatant) return void ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
+  if (!combatant) return void ui.notifications.warn(game.i18n.localize("PF1.Warning.NoCombatantFound"));
 
   const offset = await pf1.utils.dialog.getNumber({
     title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.name}`,

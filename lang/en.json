@@ -505,11 +505,22 @@
         },
         "equipment": {
           "shield": {
-            "Single": "Shield"
+            "Single": "Shield",
+            "Types": {
+              "light": "Light Shield",
+              "heavy": "Heavy Shield",
+              "tower": "Tower Shield",
+              "misc": "Miscellaneous Shield"
+            }
           },
           "armor": {
             "Single": "Armor",
-            "Plural": "Armor"
+            "Plural": "Armor",
+            "Types": {
+              "light": "Light Armor",
+              "medium": "Medium Armor",
+              "heavy": "Heavy Armor"
+            }
           },
           "wondrous": {
             "Single": "Wondrous"
@@ -788,9 +799,6 @@
 
     "AssociatedClass": "Associated Class",
 
-    "TraitArmorProf": "Armor Proficiencies",
-    "TraitWeaponProf": "Weapon Proficiencies",
-
     "SpellPrepAtWill": "At-will",
     "SpellPrepPrepared": "Prepared",
     "SpellPrepSpontaneous": "Spontaneous",
@@ -849,43 +857,36 @@
     "WeaponTypeExotic": "Exotic",
     "WeaponTypeSplash": "Splash",
 
-    "WeaponPropAutomatic": "Automatic",
-    "WeaponPropBlocking": "Blocking",
-    "WeaponPropBrace": "Brace",
-    "WeaponPropDeadly": "Deadly",
-    "WeaponPropDistracting": "Distracting",
-    "WeaponPropDouble": "Double",
-    "WeaponPropDisarm": "Disarm",
-    "WeaponPropFinesse": "Finesse",
-    "WeaponPropFragile": "Fragile",
-    "WeaponPropGrapple": "Grapple",
-    "WeaponPropImprovised": "Improvised",
-    "WeaponPropMonk": "Monk",
-    "WeaponPropNonLethal": "Non-lethal",
-    "WeaponPropPerformance": "Performance",
-    "WeaponPropReach": "Reach",
-    "WeaponPropScatter": "Scatter",
-    "WeaponPropSemiAutomatic": "Semi-automatic",
-    "WeaponPropSlowFiring": "Slow-firing",
-    "WeaponPropSunder": "Sunder",
-    "WeaponPropSpecial": "Special",
-    "WeaponPropThrown": "Thrown",
-    "WeaponPropTrip": "Trip",
+    "WeaponProperty": {
+      "Automatic": "Automatic",
+      "Blocking": "Blocking",
+      "Brace": "Brace",
+      "Deadly": "Deadly",
+      "Distracting": "Distracting",
+      "Double": "Double",
+      "Disarm": "Disarm",
+      "Finesse": "Finesse",
+      "Fragile": "Fragile",
+      "Grapple": "Grapple",
+      "Improvised": "Improvised",
+      "Monk": "Monk",
+      "NonLethal": "Non-lethal",
+      "Performance": "Performance",
+      "Reach": "Reach",
+      "Scatter": "Scatter",
+      "SemiAutomatic": "Semi-automatic",
+      "SlowFiring": "Slow-firing",
+      "Sunder": "Sunder",
+      "Special": "Special",
+      "Thrown": "Thrown",
+      "Trip": "Trip"
+    },
 
     "WeaponSubtype": "Weapon Subtype",
-    "WeaponPropLight": "Light",
-    "WeaponPropOneHanded": "One-handed",
-    "WeaponPropTwoHanded": "Two-handed",
+    "WeaponSubtypeLight": "Light",
+    "WeaponSubtypeOneHanded": "One-handed",
+    "WeaponSubtypeTwoHanded": "Two-handed",
     "WeaponSubtypeRanged": "Ranged",
-
-    "EquipTypeLight": "Light Armor",
-    "EquipTypeMedium": "Medium Armor",
-    "EquipTypeHeavy": "Heavy Armor",
-    "EquipTypeNatural": "Natural Armor",
-    "EquipTypeLightShield": "Light Shield",
-    "EquipTypeHeavyShield": "Heavy Shield",
-    "EquipTypeTowerShield": "Tower Shield",
-    "EquipTypeOtherShield": "Miscellaneous Shield",
 
     "EquipSlots": {
       "none": "Slotless",
@@ -927,7 +928,8 @@
 
     "Activation": {
       "passive": {
-        "Single": "Passive"
+        "Single": "Passive",
+        "Plural": "Passive"
       },
       "free": {
         "Single": "Free",
@@ -970,7 +972,8 @@
         "Plural": "Hours"
       },
       "special": {
-        "Single": "Special"
+        "Single": "Special",
+        "Plural": "Special"
       },
       "nonaction": {
         "Single": "Nonaction"
@@ -1025,10 +1028,14 @@
       "9": "9th Level"
     },
 
-    "FavouredClassBonuses": "Favoured Class Bonuses",
-    "FavouredClassHP": "Hit Points",
-    "FavouredClassSkill": "Skills",
-    "FavouredClassAlt": "Alt",
+    "FavouredClass": {
+      "Bonuses": {
+        "Label": "Favoured Class Bonuses",
+        "hp": "Hit Points",
+        "skill": "Skills",
+        "alt": "Alt"
+      }
+    },
 
     "FavouredClassBonus": {
       "Label": "Favoured Class Bonus",
@@ -1039,64 +1046,79 @@
 
     "Key_Control": "Control",
 
-    "ArmorProfLight": "Light Armor",
-    "ArmorProfMedium": "Medium Armor",
-    "ArmorProfHeavy": "Heavy Armor",
-    "ArmorProfShield": "Shields",
-    "ArmorProfTowerShield": "Tower Shields",
-
-    "WeaponProfSimple": "Simple Weapons",
-    "WeaponProfMartial": "Martial Weapons",
+    "Proficiency": {
+      "Armor": {
+        "LabelPlural": "Armor Proficiencies",
+        "light": "Light Armor",
+        "medium": "Medium Armor",
+        "heavy": "Heavy Armor",
+        "shield": "Shields",
+        "tower": "Tower Shields"
+      },
+      "Weapon": {
+        "LabelPlural": "Weapon Proficiencies",
+        "simple": "Simple Weapons",
+        "martial": "Martial Weapons"
+      },
+      "Granted": "Granted Proficiencies",
+      "Penalty": "Proficiency Penalty"
+    },
 
     "InventoryWeapons": "Weapons",
     "InventoryArmorEquipment": "Armor/Equipment",
     "InventoryConsumables": "Consumables",
     "InventoryContainers": "Containers",
 
-    "ChangeFlagLoseDexToAC": "Lose Dex to AC",
-    "ChangeFlagNoMediumEncumbrance": "Unaffected by Medium Encumbrance",
-    "ChangeFlagNoHeavyEncumbrance": "Unaffected by Heavy Encumbrance",
-    "ChangeFlagMediumArmorFullSpeed": "Full Speed in Medium Armor",
-    "ChangeFlagHeavyArmorFullSpeed": "Full Speed in Heavy Armor",
+    "ChangeFlags": {
+      "LoseDexToAC": "Lose Dex to AC",
+      "NoMediumEncumbrance": "Unaffected by Medium Encumbrance",
+      "NoHeavyEncumbrance": "Unaffected by Heavy Encumbrance",
+      "MediumArmorFullSpeed": "Full Speed in Medium Armor",
+      "HeavyArmorFullSpeed": "Full Speed in Heavy Armor"
+    },
 
     "Undefined": "Undefined",
 
-    "ErrorGenericPermission": "You are not authorized to perform that action",
-    "ErrorNoActorPermission": "You are not authorized to control this actor",
-    "ErrorNoActorPermissionAlt": "You are not authorized to control actor \"{name}\"",
-    "ErrorNoFormula": "{name} does not have a formula to roll!",
-    "ErrorItemNoOwner": "This item has no owner",
-    "ErrorSpellbookExists": "Spellbook already exists",
-    "ErrorNoFreeSpellbooks": "No free spellbooks",
-    "ErrorItemFormula": "There's a formula error in item \"{item}\" on actor \"{actor}\"",
-    "ErrorActionFormula": "There's a formula error in action \"{action}\" in item \"{item}\" on actor \"{actor}\"",
-    "ErrorNoCharges": "There's no charges left in {name}",
-    "ErrorInsufficientCharges": "There's insufficient charges left in {name}",
-    "ErrorNoQuantity": "You don't have any more of that item",
-    "ErrorNoSpellsLeft": "You don't have spells left of that type",
-    "ErrorActorNotFound": "Actor with ID {id} not found",
-    "ErrorCantIdentify": "You are not allowed to identify items",
-    "ErrorNoApplicableActorFoundForAction": "No applicable actor found for action '{name}'",
-    "ErrorCouldNotFindActorByName": "Could not find actor by name '{name}'",
-    "ErrorFeatDisabled": "This feat is disabled",
-    "ErrorNoMacroID": "No macro with id '{id}' was found",
-    "ErrorEmptySkillTag": "Skill tag cannot be empty",
-    "ErrorSkillTagAlreadyExists": "Skill tag '{tag}' already exists",
-    "WarningNoSizeDie": "Could not determine size-appropriate die for {formula}, defaulting to rolling {fallback}",
-    "WarningDuplicateDFlag": "Conflicting dictionary flag \"{key}\" for item \"{item}\" (with identifier \"{tag}\") on actor \"{actor}\".",
-    "WarningDuplicateTag": "Duplicate item identifier \"{tag}\" found in item \"{item}\" on actor \"{actor}\".",
-    "WarningNoDiceAllowedInFormula": "No dice rolls are allowed in formula '{formula}' for {context}",
-    "WarningInsufficientAmmunition": "You have insufficient ammunition of type {type}",
-    "WarningMissingAmmunition": "Ammunition linked to the attack is missing.",
-    "WarningConditionalRoll": "Rolling conditional formula № {number} of conditional {name} caused an error",
-    "WarningNoItemOnActor": "Actor \"{actor}\" has no item \"{item}\"",
-    "WarningNoActionInItem": "Item \"{item}\" has no action \"{action}\"",
-    "WarningInvalidUUID": "Invalid UUID \"{uuid}\"",
-    "WarningCannotCreateChargeLink": "Could not create a Charge type link between {source} and {target}, because {target} has Charge type links of its own",
-    "WarningCannotCreateChargeLink2": "Could not create a Charge type link between {source} and {target}, because {target} is already linked to {deeptarget}",
-    "WarningNoCombatantFound": "No combatant found",
-    "WarningFormulaMustBeDeterministic": "Formula must be deterministic (no die rolls or other random elements).",
-    "WarningInvalidInput": "Invalid value",
+    "Error": {
+      "GenericPermission": "You are not authorized to perform that action",
+      "NoActorPermission": "You are not authorized to control this actor",
+      "NoActorPermissionAlt": "You are not authorized to control actor \"{name}\"",
+      "NoFormula": "{name} does not have a formula to roll!",
+      "ItemNoOwner": "This item has no owner",
+      "SpellbookExists": "Spellbook already exists",
+      "NoFreeSpellbooks": "No free spellbooks",
+      "ItemFormula": "There's a formula error in item \"{item}\" on actor \"{actor}\"",
+      "ActionFormula": "There's a formula error in action \"{action}\" in item \"{item}\" on actor \"{actor}\"",
+      "NoCharges": "There's no charges left in {name}",
+      "InsufficientCharges": "There's insufficient charges left in {name}",
+      "NoQuantity": "You don't have any more of that item",
+      "NoSpellsLeft": "You don't have spells left of that type",
+      "ActorNotFound": "Actor with ID {id} not found",
+      "CantIdentify": "You are not allowed to identify items",
+      "NoApplicableActorFoundForAction": "No applicable actor found for action '{name}'",
+      "CouldNotFindActorByName": "Could not find actor by name '{name}'",
+      "FeatDisabled": "This feat is disabled",
+      "NoMacroID": "No macro with id '{id}' was found",
+      "EmptySkillTag": "Skill tag cannot be empty",
+      "SkillTagAlreadyExists": "Skill tag '{tag}' already exists"
+    },
+    "Warning": {
+      "NoSizeDie": "Could not determine size-appropriate die for {formula}, defaulting to rolling {fallback}",
+      "DuplicateDFlag": "Conflicting dictionary flag \"{key}\" for item \"{item}\" (with identifier \"{tag}\") on actor \"{actor}\".",
+      "DuplicateTag": "Duplicate item identifier \"{tag}\" found in item \"{item}\" on actor \"{actor}\".",
+      "NoDiceAllowedInFormula": "No dice rolls are allowed in formula '{formula}' for {context}",
+      "InsufficientAmmunition": "You have insufficient ammunition of type {type}",
+      "MissingAmmunition": "Ammunition linked to the attack is missing.",
+      "ConditionalRoll": "Rolling conditional formula № {number} of conditional {name} caused an error",
+      "NoItemOnActor": "Actor \"{actor}\" has no item \"{item}\"",
+      "NoActionInItem": "Item \"{item}\" has no action \"{action}\"",
+      "InvalidUUID": "Invalid UUID \"{uuid}\"",
+      "CannotCreateChargeLink": "Could not create a Charge type link between {source} and {target}, because {target} has Charge type links of its own",
+      "CannotCreateChargeLink2": "Could not create a Charge type link between {source} and {target}, because {target} is already linked to {deeptarget}",
+      "NoCombatantFound": "No combatant found",
+      "FormulaMustBeDeterministic": "Formula must be deterministic (no die rolls or other random elements).",
+      "InvalidInput": "Invalid value"
+    },
     "NotificationCreatedAttack": "Created attack for {item}",
 
     "Action_DisplayDefenses": "Display Defenses",
@@ -1489,7 +1511,6 @@
     "Action": "Action",
     "ActionPlural": "Actions",
     "ActionType": "Action Type",
-    "ActionName": "Action Name",
     "All": "All",
     "Attack": "Attack",
     "AddEffect": "Add Effect",
@@ -1497,16 +1518,14 @@
     "AddChange": "Add Change",
     "AddNote": "Add Note",
     "AddEntry": "Add Entry",
-    "Confirmation": "Confirmation",
     "Attributes": "Attributes",
     "ArmorClass": "Armor Class",
+    "NaturalArmor": "Natural Armor",
     "Attacks": "Attacks",
     "Biography": "Biography",
     "Buffs": "Buffs",
     "Change": "Change",
     "Changes": "Changes",
-    "Charged": "Charged",
-    "ChargesSeperator": "of",
     "ClassAbilities": "Class Abilities",
     "Conditionals": "Conditional Modifiers",
     "ConImm": "Condition Immunities",
@@ -1521,7 +1540,6 @@
     "DamImm": "Damage Immunities",
     "DamRed": "Damage Reduction",
     "DamVuln": "Damage Vulnerabilities",
-    "MinimumDamage": "Minimum Damage",
     "Drain": "Drain",
     "Penalty": "Penalty",
     "Defense": "Defense",
@@ -1542,9 +1560,6 @@
     "Unidentified": "Unidentified",
     "Health": "Health",
     "Healing": "Healing",
-    "HealingTemp": "Healing (Temporary)",
-    "HealingCritical": "Critical Healing",
-    "HealthFormula": "Health Formula",
     "Wounds": "Wounds",
     "Vigor": "Vigor",
     "HitDice": "Hit Dice",
@@ -1564,9 +1579,6 @@
     "None": "None",
     "Notes": "Notes",
     "Operator": "Operator",
-    "Proficiency": "Proficiency",
-    "ProficienciesGranted": "Granted Proficiencies",
-    "ProficiencyPenalty": "Proficiency Penalty",
     "Quadruped": "Quadruped",
     "Senses": "Senses",
     "Save": "Save",

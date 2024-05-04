@@ -142,7 +142,7 @@ export class ItemScriptCall {
     // For Macros
     if (this.type === "macro") {
       const macro = await fromUuid(this.value);
-      if (!macro) return void ui.notifications.error(game.i18n.format("PF1.ErrorNoMacroID", { id: this.value }));
+      if (!macro) return void ui.notifications.error(game.i18n.format("PF1.Error.NoMacroID", { id: this.value }));
 
       macro.sheet.render(true, { focus: true, editable });
     }

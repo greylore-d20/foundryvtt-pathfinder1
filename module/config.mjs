@@ -224,16 +224,16 @@ export const classFractionalSavingThrowFormulas = {
 export const classAssociations = ["feat", "attack"];
 
 /**
- * The choices available for favored class bonuses
+ * The choices available for favoured class bonuses
  */
 export const favouredClassBonuses = {
-  hp: "PF1.FavouredClassHP",
-  skill: "PF1.FavouredClassSkill",
-  alt: "PF1.FavouredClassAlt",
+  hp: "PF1.FavouredClass.Bonuses.hp",
+  skill: "PF1.FavouredClass.Bonuses.skill",
+  alt: "PF1.FavouredClass.Bonuses.alt",
 };
 
 /**
- * Icons used for favored class bonus choices
+ * Icons used for favoured class bonus choices
  */
 export const favouredClassBonusIcons = {
   hp: "fa-heartbeat",
@@ -300,19 +300,19 @@ export const damageResistances = {
  * The set of Armor Proficiencies which a character may have
  */
 export const armorProficiencies = {
-  lgt: "PF1.ArmorProfLight",
-  med: "PF1.ArmorProfMedium",
-  hvy: "PF1.ArmorProfHeavy",
-  shl: "PF1.ArmorProfShield",
-  twr: "PF1.ArmorProfTowerShield",
+  lgt: "PF1.Proficiency.Armor.light",
+  med: "PF1.Proficiency.Armor.medium",
+  hvy: "PF1.Proficiency.Armor.heavy",
+  shl: "PF1.Proficiency.Armor.shield",
+  twr: "PF1.Proficiency.Armor.tower",
 };
 
 /**
  * The set of broad Weapon Proficiencies a character may have
  */
 export const weaponProficiencies = {
-  simple: "PF1.WeaponProfSimple",
-  martial: "PF1.WeaponProfMartial",
+  simple: "PF1.Proficiency.Weapon.simple",
+  martial: "PF1.Proficiency.Weapon.martial",
 };
 
 /* -------------------------------------------- */
@@ -800,16 +800,16 @@ export const limitedUsePeriodOrder = ["round", "day", "week"];
 export const equipmentTypes = {
   armor: {
     _label: "PF1.Subtypes.Item.equipment.armor.Single",
-    lightArmor: "PF1.EquipTypeLight",
-    mediumArmor: "PF1.EquipTypeMedium",
-    heavyArmor: "PF1.EquipTypeHeavy",
+    lightArmor: "PF1.Subtypes.Item.equipment.armor.Types.light",
+    mediumArmor: "PF1.Subtypes.Item.equipment.armor.Types.medium",
+    heavyArmor: "PF1.Subtypes.Item.equipment.armor.Types.heavy",
   },
   shield: {
     _label: "PF1.Subtypes.Item.equipment.shield.Single",
-    lightShield: "PF1.EquipTypeLightShield",
-    heavyShield: "PF1.EquipTypeHeavyShield",
-    towerShield: "PF1.EquipTypeTowerShield",
-    other: "PF1.EquipTypeOtherShield",
+    lightShield: "PF1.Subtypes.Item.equipment.shield.Types.light",
+    heavyShield: "PF1.Subtypes.Item.equipment.shield.Types.heavy",
+    towerShield: "PF1.Subtypes.Item.equipment.shield.Types.tower",
+    other: "PF1.Subtypes.Item.equipment.shield.Types.misc",
   },
   wondrous: {
     _label: "PF1.Subtypes.Item.equipment.wondrous.Single",
@@ -1749,23 +1749,23 @@ export const auraStrengths = {
 export const weaponTypes = {
   simple: {
     _label: "PF1.WeaponTypeSimple",
-    light: "PF1.WeaponPropLight",
-    "1h": "PF1.WeaponPropOneHanded",
-    "2h": "PF1.WeaponPropTwoHanded",
+    light: "PF1.WeaponSubtypeLight",
+    "1h": "PF1.WeaponSubtypeOneHanded",
+    "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   martial: {
     _label: "PF1.WeaponTypeMartial",
-    light: "PF1.WeaponPropLight",
-    "1h": "PF1.WeaponPropOneHanded",
-    "2h": "PF1.WeaponPropTwoHanded",
+    light: "PF1.WeaponSubtypeLight",
+    "1h": "PF1.WeaponSubtypeOneHanded",
+    "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   exotic: {
     _label: "PF1.WeaponTypeExotic",
-    light: "PF1.WeaponPropLight",
-    "1h": "PF1.WeaponPropOneHanded",
-    "2h": "PF1.WeaponPropTwoHanded",
+    light: "PF1.WeaponSubtypeLight",
+    "1h": "PF1.WeaponSubtypeOneHanded",
+    "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   misc: {
@@ -1811,28 +1811,28 @@ export const weaponGroups = {
  * Define the set of weapon property flags which can exist on a weapon
  */
 export const weaponProperties = {
-  ato: "PF1.WeaponPropAutomatic",
-  blc: "PF1.WeaponPropBlocking",
-  brc: "PF1.WeaponPropBrace",
-  dea: "PF1.WeaponPropDeadly",
-  dst: "PF1.WeaponPropDistracting",
-  dbl: "PF1.WeaponPropDouble",
-  dis: "PF1.WeaponPropDisarm",
-  fin: "PF1.WeaponPropFinesse",
-  frg: "PF1.WeaponPropFragile",
-  grp: "PF1.WeaponPropGrapple",
-  imp: "PF1.WeaponPropImprovised",
-  mnk: "PF1.WeaponPropMonk",
-  nnl: "PF1.WeaponPropNonLethal",
-  prf: "PF1.WeaponPropPerformance",
-  rch: "PF1.WeaponPropReach",
-  sct: "PF1.WeaponPropScatter",
-  sma: "PF1.WeaponPropSemiAutomatic",
-  slf: "PF1.WeaponPropSlowFiring",
-  snd: "PF1.WeaponPropSunder",
-  spc: "PF1.WeaponPropSpecial",
-  thr: "PF1.WeaponPropThrown",
-  trp: "PF1.WeaponPropTrip",
+  ato: "PF1.WeaponProperty.Automatic",
+  blc: "PF1.WeaponProperty.Blocking",
+  brc: "PF1.WeaponProperty.Brace",
+  dea: "PF1.WeaponProperty.Deadly",
+  dst: "PF1.WeaponProperty.Distracting",
+  dbl: "PF1.WeaponProperty.Double",
+  dis: "PF1.WeaponProperty.Disarm",
+  fin: "PF1.WeaponProperty.Finesse",
+  frg: "PF1.WeaponProperty.Fragile",
+  grp: "PF1.WeaponProperty.Grapple",
+  imp: "PF1.WeaponProperty.Improvised",
+  mnk: "PF1.WeaponProperty.Monk",
+  nnl: "PF1.WeaponProperty.NonLethal",
+  prf: "PF1.WeaponProperty.Performance",
+  rch: "PF1.WeaponProperty.Reach",
+  sct: "PF1.WeaponProperty.Scatter",
+  sma: "PF1.WeaponProperty.SemiAutomatic",
+  slf: "PF1.WeaponProperty.SlowFiring",
+  snd: "PF1.WeaponProperty.Sunder",
+  spc: "PF1.WeaponProperty.Special",
+  thr: "PF1.WeaponProperty.Thrown",
+  trp: "PF1.WeaponProperty.Trip",
 };
 
 /**

@@ -166,7 +166,7 @@
 
   {{#if hasProficiencies}}
     <div class="form-group {{system.traits.weaponProf.cssClass}} tooltip">
-      <label>{{localize "PF1.TraitWeaponProf"}}</label>
+      <label>{{localize "PF1.Proficiency.Weapon.LabelPlural"}}</label>
       <ul class="traits-list tooltip tag-list">
         {{#each system.traits.weaponProf.selected as |v k|}}
           <li class="tag {{k}}">{{v}}</li>
@@ -186,7 +186,7 @@
     </div>
 
     <div class="form-group {{system.traits.armorProf.cssClass}} tooltip">
-      <label>{{localize "PF1.TraitArmorProf"}}</label>
+      <label>{{localize "PF1.Proficiency.Armor.LabelPlural"}}</label>
       <ul class="traits-list tooltip tag-list">
         {{#each system.traits.armorProf.selected as |v k|}}
           <li class="tag {{k}}">{{v}}</li>

@@ -129,7 +129,7 @@ export function sizeRoll(origCount, origSides, targetSize = "M", initialSize = "
   }
 
   if (index === -1) {
-    ui.notifications.warn(game.i18n.format("PF1.WarningNoSizeDie", { fallback: currentDie, formula }));
+    ui.notifications.warn(game.i18n.format("PF1.Warning.NoSizeDie", { fallback: currentDie, formula }));
   }
 
   const [number, faces] = formula.split("d").map((n) => parseInt(n));

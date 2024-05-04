@@ -75,7 +75,7 @@ export const createActionMacro = async (actionId, uuid, slot) => {
 
   if (!action) {
     return void ui.notifications.error(
-      game.i18n.format("PF1.ErrorActionNotFound", { id: actionId, item: item?.name, actor: item?.actor?.name })
+      game.i18n.format("PF1.Error.ActionNotFound", { id: actionId, item: item?.name, actor: item?.actor?.name })
     );
   }
 
@@ -275,7 +275,7 @@ export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
 
   const actor = getActorFromId(actorId);
   if (actor && !actor.testUserPermission(game.user, "OWNER")) {
-    return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    return void ui.notifications.warn(game.i18n.localize("PF1.Error.NoActorPermission"));
   }
   const item = actor
     ? actor.items.find((i) => {
@@ -286,7 +286,7 @@ export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
     : null;
   if (!item) {
     return void ui.notifications.warn(
-      game.i18n.format("PF1.WarningNoItemOnActor", { actor: actor?.name, item: itemName })
+      game.i18n.format("PF1.Warning.NoItemOnActor", { actor: actor?.name, item: itemName })
     );
   }
 
@@ -313,7 +313,7 @@ export const rollSkillMacro = (actorId, skillId) => {
 
   const actor = getActorFromId(actorId);
   if (!actor) {
-    return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
+    return void ui.notifications.error(game.i18n.format("PF1.Error.ActorNotFound", { id: actorId }));
   }
 
   return actor.rollSkill(skillId);
@@ -335,7 +335,7 @@ export const rollSaveMacro = (actorId, saveId) => {
 
   const actor = getActorFromId(actorId);
   if (!actor) {
-    return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
+    return void ui.notifications.error(game.i18n.format("PF1.Error.ActorNotFound", { id: actorId }));
   }
 
   return actor.rollSavingThrow(saveId);
@@ -360,7 +360,7 @@ export const displayDefenses = ({ actorName = null, actorId = null, rollMode = n
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
     return void ui.notifications.warn(
-      game.i18n.format("PF1.ErrorNoApplicableActorFoundForAction", {
+      game.i18n.format("PF1.Error.NoApplicableActorFoundForAction", {
         name: game.i18n.localize("PF1.Action_DisplayDefenses"),
       })
     );
@@ -389,7 +389,7 @@ export const rollActorAttributeMacro = (actorId, type, altType = null) => {
 
   const actor = getActorFromId(actorId);
   if (!actor) {
-    return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
+    return void ui.notifications.error(game.i18n.format("PF1.Error.ActorNotFound", { id: actorId }));
   }
 
   switch (type) {

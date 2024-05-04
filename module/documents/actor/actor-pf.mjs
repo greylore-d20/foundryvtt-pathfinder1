@@ -375,7 +375,7 @@ export class ActorPF extends ActorBasePF {
 
           for (const [key, value] of dEntries) {
             if (dFlags[tag][key] !== undefined && this.isOwner) {
-              const msg = game.i18n.format("PF1.WarningDuplicateDFlag", {
+              const msg = game.i18n.format("PF1.Warning.DuplicateDFlag", {
                 actor: this.uuid,
                 item: item.name,
                 key,
@@ -851,7 +851,7 @@ export class ActorPF extends ActorBasePF {
           setSourceInfoByName(
             this.sourceInfo,
             key,
-            game.i18n.localize(pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+            pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level],
             -rollData.attributes.woundThresholds.penalty
           );
         }
@@ -1569,12 +1569,12 @@ export class ActorPF extends ActorBasePF {
       // Wearing heavy armor
       if (armor.type == 2 && !this.changeFlags.heavyArmorFullSpeed) {
         reducedSpeed = true;
-        sInfo.name = game.i18n.localize("PF1.EquipTypeHeavy");
+        sInfo.name = game.i18n.localize("PF1.Subtypes.Item.equipment.armor.Types.heavy");
       }
       // Wearing medium armor
       else if (armor.type == 1 && !this.changeFlags.mediumArmorFullSpeed) {
         reducedSpeed = true;
-        sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
+        sInfo.name = game.i18n.localize("PF1.Subtypes.Item.equipment.armor.Types.medium");
       }
 
       if (reducedSpeed) {
@@ -1849,7 +1849,7 @@ export class ActorPF extends ActorBasePF {
             for (const k of flats) {
               if (!k) continue;
               sourceDetails[k].push({
-                name: game.i18n.localize(pf1.config.woundThresholdConditions[wtData.level]),
+                name: pf1.config.woundThresholdConditions[wtData.level],
                 value: -wtData.penalty,
               });
             }
@@ -2477,7 +2477,7 @@ export class ActorPF extends ActorBasePF {
     if (!tag) console.error("Attempting create resource on tagless item", item);
 
     if (warnOnDuplicate && this.system.resources[tag] && this.isOwner) {
-      const msg = game.i18n.format("PF1.WarningDuplicateTag", {
+      const msg = game.i18n.format("PF1.Warning.DuplicateTag", {
         actor: this.uuid,
         item: item.name,
         tag,
@@ -2511,7 +2511,7 @@ export class ActorPF extends ActorBasePF {
     );
 
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
     const attackItem = pf1.documents.item.ItemAttackPF.fromItem(item);
@@ -2558,11 +2558,11 @@ export class ActorPF extends ActorBasePF {
 
     let bookId;
     if (oldBook) {
-      if (oldBook[1].inUse) return void ui.notifications.warn(game.i18n.localize("PF1.ErrorSpellbookExists"));
+      if (oldBook[1].inUse) return void ui.notifications.warn(game.i18n.localize("PF1.Error.SpellbookExists"));
       bookId = oldBook[0]; // Reuse old book
     } else {
       const available = Object.entries(books).find(([bookId, bookData]) => bookData.inUse !== true);
-      if (available === undefined) return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoFreeSpellbooks"));
+      if (available === undefined) return void ui.notifications.warn(game.i18n.localize("PF1.Error.NoFreeSpellbooks"));
       bookId = available[0];
     }
 
@@ -2652,7 +2652,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollSkill(skillId, options = {}) {
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
     const skl = this.getSkillInfo(skillId);
@@ -2704,11 +2704,9 @@ export class ActorPF extends ActorBasePF {
 
     // Add Wound Thresholds info
     if (rollData.attributes.woundThresholds?.penalty > 0) {
-      parts.push(
-        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level]
-        )}]`
-      );
+      const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
+      notes.push(label);
+      parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
     // Add changes
@@ -2753,7 +2751,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollBAB(options = {}) {
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
     const token = options.token ?? this.token;
@@ -2805,7 +2803,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollAttack({ maneuver = false, ranged = false, ability = null, ...options } = {}) {
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
     if (options.melee !== undefined) {
@@ -2884,7 +2882,7 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(game.i18n.localize(pf1.config.woundThresholdConditions[wT.level]));
+    if (wT.valid) notes.push(pf1.config.woundThresholdConditions[wT.level]);
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -3143,7 +3141,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollSavingThrow(savingThrowId, options = {}) {
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
     // Add contextual notes
@@ -3182,12 +3180,9 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
-      notes.push(game.i18n.localize(pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
-      parts.push(
-        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level]
-        )}]`
-      );
+      const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
+      notes.push(label);
+      parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
     // Roll saving throw
@@ -3227,7 +3222,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollAbilityTest(abilityId, options = {}) {
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
     // Add contextual notes
@@ -3249,12 +3244,9 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
-      notes.push(game.i18n.localize(pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
-      parts.push(
-        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level]
-        )}]`
-      );
+      const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
+      notes.push(label);
+      parts.push(`- @attributes.woundThresholds.penalty[${label}`);
     }
 
     const props = [];
@@ -3286,7 +3278,7 @@ export class ActorPF extends ActorBasePF {
    */
   async displayDefenseCard({ rollMode = null, token } = {}) {
     if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
     const rollData = this.getRollData();
     const damageTypes = pf1.registry.damageTypes.getLabels();
@@ -3340,7 +3332,7 @@ export class ActorPF extends ActorBasePF {
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
     if (wT.valid) {
-      const wTlabel = game.i18n.localize(pf1.config.woundThresholdConditions[wT.level]);
+      const wTlabel = pf1.config.woundThresholdConditions[wT.level];
       acNotes.push(wTlabel);
       cmdNotes.push(wTlabel);
     }
@@ -3721,7 +3713,7 @@ export class ActorPF extends ActorBasePF {
         const a = t instanceof Token ? t.actor : t;
 
         if (!a.isOwner) {
-          ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
+          ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
           continue;
         }
 

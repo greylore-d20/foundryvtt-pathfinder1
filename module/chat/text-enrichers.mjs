@@ -278,7 +278,7 @@ export function onUse(event, target) {
     });
 
     if (!item) {
-      const msg = game.i18n.format("PF1.WarningNoItemOnActor", { actor: actor.name, item: itemName });
+      const msg = game.i18n.format("PF1.Warning.NoItemOnActor", { actor: actor.name, item: itemName });
       ui.notifications.warn(msg, { console: false });
       console.warn("PF1 | @Use |", msg, actor);
       continue;
@@ -296,7 +296,7 @@ export function onUse(event, target) {
     }
 
     if (!itemAction) {
-      const msg = game.i18n.format("PF1.WarningNoActionInItem", { item: item.name, actor: actor.name });
+      const msg = game.i18n.format("PF1.Warning.NoActionInItem", { item: item.name, actor: actor.name });
       ui.notifications.warn(msg, { console: false });
       console.warn("PF1 | @Use |", msg, actor);
       continue;
@@ -337,7 +337,7 @@ export function onAction(event, target) {
   });
 
   if (!action) {
-    const msg = game.i18n.format("PF1.WarningNoActionInItem", { item: item.name, actor: actor.name });
+    const msg = game.i18n.format("PF1.Warning.NoActionInItem", { item: item.name, actor: actor.name });
     ui.notifications.warn(msg, { console: false });
     return void console.warn("PF1 | @Action |", msg, actor);
   }

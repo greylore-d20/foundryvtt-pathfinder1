@@ -1082,7 +1082,7 @@ export class ItemSheetPF extends ItemSheet {
         newValue = 0;
         // Trigger warning for bad value
         if (event.target.name === `system.${key}`) {
-          event.target.setCustomValidity(game.i18n.localize("PF1.WarningInvalidInput"));
+          event.target.setCustomValidity(game.i18n.localize("PF1.Warning.InvalidInput"));
         }
       }
 
@@ -1165,8 +1165,8 @@ export class ItemSheetPF extends ItemSheet {
     // Deterministic formulas must be deterministic
     if (el.classList.contains("deterministic")) {
       if (!roll.isDeterministic) {
-        el.dataset.tooltip = "PF1.WarningFormulaMustBeDeterministic";
-        el.setCustomValidity(game.i18n.localize("PF1.WarningFormulaMustBeDeterministic"));
+        el.dataset.tooltip = "PF1.Warning.FormulaMustBeDeterministic";
+        el.setCustomValidity(game.i18n.localize("PF1.Warning.FormulaMustBeDeterministic"));
       }
     }
   }
@@ -2050,7 +2050,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _createAttack(event) {
-    if (!this.actor) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
+    if (!this.actor) throw new Error(game.i18n.localize("PF1.Error.ItemNoOwner"));
 
     await this._onSubmit(event, { preventRender: true });
 
@@ -2077,7 +2077,7 @@ export class ItemSheetPF extends ItemSheet {
 
   async _createSpellbook(event) {
     event.preventDefault();
-    if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
+    if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.Error.ItemNoOwner"));
     await this._onSubmit(event, { preventRender: true });
 
     await this.item.actor.createSpellbook({ ...this.item.system.casting, class: this.item.system.tag });

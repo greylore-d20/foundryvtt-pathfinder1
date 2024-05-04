@@ -220,8 +220,7 @@ export class ChatAttack {
     // Add normal data
     if (!flavor) {
       if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-      else
-        flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+      else flavor = game.i18n.localize("PF1.DamageCritical");
     }
 
     // Determine total damage

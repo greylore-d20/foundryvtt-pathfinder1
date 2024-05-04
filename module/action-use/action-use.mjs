@@ -80,12 +80,12 @@ export class ActionUse {
   checkRequirements() {
     const actor = this.item.actor;
     if (actor && !actor.isOwner) {
-      ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
+      ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: actor.name }));
       return ERR_REQUIREMENT.NO_ACTOR_PERM;
     }
 
     if (this.item.type === "feat" && this.item.system.disabled) {
-      ui.notifications.warn(game.i18n.localize("PF1.ErrorFeatDisabled"));
+      ui.notifications.warn(game.i18n.localize("PF1.Error.FeatDisabled"));
       return ERR_REQUIREMENT.DISABLED;
     }
 
@@ -95,14 +95,14 @@ export class ActionUse {
     if (this.item.isPhysical) {
       const itemQuantity = this.item.system.quantity || 0;
       if (itemQuantity <= 0) {
-        ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
+        ui.notifications.warn(game.i18n.localize("PF1.Error.NoQuantity"));
         return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
       }
     }
 
     if (this.action.isSelfCharged && this.action.data.uses.self?.value < 1) {
       ui.notifications.warn(
-        game.i18n.format("PF1.ErrorInsufficientCharges", {
+        game.i18n.format("PF1.Error.InsufficientCharges", {
           name: `${this.item.name}: ${this.action.name}`,
         })
       );
@@ -445,7 +445,7 @@ export class ActionUse {
           const conditionalRoll = RollPF.safeRoll(modifier.formula, this.shared.rollData);
           if (conditionalRoll.err) {
             ui.notifications.warn(
-              game.i18n.format("PF1.WarningConditionalRoll", { number: i + 1, name: conditional.name })
+              game.i18n.format("PF1.Warning.ConditionalRoll", { number: i + 1, name: conditional.name })
             );
             // Skip modifier to avoid multiple errors from one non-evaluating entry
             continue;
@@ -533,7 +533,7 @@ export class ActionUse {
 
       // Cancel usage on insufficient charges
       if (cost > uses) {
-        ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.item.name }));
+        ui.notifications.warn(game.i18n.format("PF1.Error.InsufficientCharges", { name: this.item.name }));
         return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
       }
     }
@@ -1228,9 +1228,7 @@ export class ActionUse {
 
     // Add Wound Thresholds info
     if (this.shared.rollData.attributes?.woundThresholds?.level > 0)
-      properties.push(
-        game.i18n.localize(pf1.config.woundThresholdConditions[this.shared.rollData.attributes.woundThresholds.level])
-      );
+      properties.push(pf1.config.woundThresholdConditions[this.shared.rollData.attributes.woundThresholds.level]);
 
     return properties;
   }

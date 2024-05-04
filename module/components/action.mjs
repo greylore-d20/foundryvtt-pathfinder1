@@ -814,7 +814,7 @@ export class ItemAction {
       extraAttacks = Math.clamped(xaroll.total, 0, 50); // Arbitrarily clamp attacks
     }
     if (xaroll?.err) {
-      const msg = game.i18n.format("PF1.ErrorActionFormula", {
+      const msg = game.i18n.format("PF1.Error.ActionFormula", {
         action: this.name,
         item: this.item?.name,
         actor: this.actor?.name,
@@ -832,7 +832,7 @@ export class ItemAction {
         delete rollData.attackCount;
       }
     } catch (err) {
-      const msg = game.i18n.format("PF1.ErrorActionFormula", {
+      const msg = game.i18n.format("PF1.Error.ActionFormula", {
         action: this.name,
         item: this.item?.name,
         actor: this.actor?.name,
@@ -969,7 +969,7 @@ export class ItemAction {
     // Add proficiency penalty
     try {
       if (!this.item.getProficiency(true)) {
-        parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
+        parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.Proficiency.Penalty")}]`);
       }
     } catch (error) {
       // Ignore proficiency incompatibility.

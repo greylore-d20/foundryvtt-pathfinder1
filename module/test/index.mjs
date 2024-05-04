@@ -14,9 +14,11 @@ import { registerFormulaParsingTests } from "./formula.test.mjs";
 import { registerSizeRollTests } from "./roll-terminology.test.mjs";
 import { registerActorRestTests } from "./actor-rest.test.mjs";
 import { registerActorStaticTests } from "./actor-static.tests.mjs";
+import { registerConfigTests } from "./config.test.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
+  registerConfigTests();
   registerActorBasicTests();
   registerActorConditionsTests();
   registerActorStaticTests();

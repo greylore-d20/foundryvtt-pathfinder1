@@ -1711,8 +1711,8 @@ export class ItemSheetPF extends ItemSheet {
       case "pf1Change": {
         // TODO: Support re-ordering
         const chData = data.data;
-        delete chData.id;
-        this.activateTab("changes");
+        delete chData._id;
+        this.activateTab("changes", "primary");
         return pf1.components.ItemChange.create([chData], { parent: item });
       }
     }

@@ -150,15 +150,11 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   get currentPrimaryTab() {
-    const primaryElem = this.element.find('nav[data-group="primary"] .item.active');
-    if (primaryElem.length !== 1) return null;
-    return primaryElem.attr("data-tab");
+    return this._tabs.find((t) => t.group === "primary")?.active || null;
   }
 
   get currentSpellbookKey() {
-    const elems = this.element.find("nav.spellbooks .item.active");
-    if (elems.length === 1) return elems.attr("data-tab");
-    else return "primary";
+    return this._tabs.find((t) => t.group === "spellbooks")?.active || "primary";
   }
 
   /* -------------------------------------------- */
@@ -3255,7 +3251,7 @@ export class ActorSheetPF extends ActorSheet {
         break;
     }
 
-    if (tabId) this.activateTab(tabId);
+    if (tabId) this.activateTab(tabId, "primary");
   }
 
   /**

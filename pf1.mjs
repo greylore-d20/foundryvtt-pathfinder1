@@ -391,6 +391,7 @@ Hooks.once("i18nInit", function () {
     "abilities",
     "abilitiesShort",
     "alignments",
+    "alignmentsShort",
     "currencies",
     "distanceUnits",
     "itemActionTypes",
@@ -406,6 +407,7 @@ Hooks.once("i18nInit", function () {
     "conditionTypes",
     "lootTypes",
     "flyManeuverabilities",
+    "favouredClassBonuses",
     "abilityTypes",
     "weaponGroups",
     "weaponTypes",
@@ -414,7 +416,7 @@ Hooks.once("i18nInit", function () {
     "spellDescriptors",
     "spellSchools",
     "spellLevels",
-    "favouredClassBonuses",
+    "spellcasting",
     "armorProficiencies",
     "weaponProficiencies",
     "actorSizes",
@@ -445,6 +447,7 @@ Hooks.once("i18nInit", function () {
     "ammoTypes",
     "damageResistances",
     "vehicles",
+    "woundThresholdConditions",
   ];
 
   const toLocalizeConst = ["messageVisibility"];
@@ -497,6 +500,27 @@ Hooks.once("i18nInit", function () {
     }, {});
   };
 
+  const doLocalizePaths = (obj, paths = []) => {
+    for (const path of paths) {
+      const value = foundry.utils.getProperty(obj, path);
+      if (value) {
+        foundry.utils.setProperty(obj, path, game.i18n.localize(path));
+      }
+    }
+  };
+
+  const doLocalizeKeys = (obj, keys = []) => {
+    for (const path of Object.keys(foundry.utils.flattenObject(obj))) {
+      const key = path.split(".").at(-1);
+      if (keys.includes(key)) {
+        const value = foundry.utils.getProperty(obj, path);
+        if (value) {
+          foundry.utils.setProperty(obj, path, game.i18n.localize(path));
+        }
+      }
+    }
+  };
+
   // Localize and sort CONFIG objects
   for (const o of toLocalize) {
     pf1.config[o] = doLocalize(pf1.config[o], o);
@@ -513,6 +537,15 @@ Hooks.once("i18nInit", function () {
       pf1.config[l][k].label = game.i18n.localize(v.label);
     }
   }
+
+  // Extra attack structure
+  doLocalizeKeys(pf1.config.extraAttacks, ["label", "flavor"]);
+
+  // Level-up data
+  doLocalizePaths(pf1.config.levelAbilityScoreFeature, ["name", "system.description.value"]);
+
+  // Point buy data
+  doLocalizeKeys(pf1.config.pointBuy, ["label"]);
 });
 
 /**

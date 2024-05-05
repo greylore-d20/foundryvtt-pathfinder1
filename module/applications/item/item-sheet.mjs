@@ -1155,7 +1155,7 @@ export class ItemSheetPF extends ItemSheet {
     let roll;
     // Test if formula even works
     try {
-      roll = Roll.create(formula);
+      roll = Roll.create(formula || "0");
       await roll.evaluate();
     } catch (e) {
       el.dataset.tooltip = e.message;
@@ -1164,8 +1164,8 @@ export class ItemSheetPF extends ItemSheet {
       return;
     }
 
-    // Deterministic formulas must be deterministic
-    if (el.classList.contains("deterministic")) {
+    // Formulas not meant for checks must be deterministic
+    if (!el.classList.contains("check")) {
       if (!roll.isDeterministic) {
         el.dataset.tooltip = "PF1.Warning.FormulaMustBeDeterministic";
         el.classList.add("invalid");

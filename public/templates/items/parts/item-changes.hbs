@@ -55,7 +55,7 @@
 
   <ol class="item-list changes">
   {{#each changes}}
-    <li class="change flexrow {{#if isDeferred}}deferred{{else}}deterministic{{/if}}" data-change-id="{{id}}">
+    <li class="change flexrow {{#if isDeferred}}check{{else}}deterministic{{/if}}" data-change-id="{{id}}">
       <span class="operator"
         {{#if isAdd}}
         data-tooltip="PF1.Application.ChangeEditor.Operator.AddHint">
@@ -109,7 +109,7 @@
       </div>
 
       <div class="value">
-        <input class="formula {{#unless isDeferred}}deterministic{{/unless}}{{#unless formula}} invalid{{/unless}}"
+        <input class="formula {{#if isDeferred}}check{{else}}deterministic{{/if}}"
           type="text" value="{{formula}}" placeholder="0" readonly>
       </div>
 

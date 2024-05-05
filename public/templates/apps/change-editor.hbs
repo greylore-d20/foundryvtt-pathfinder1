@@ -36,9 +36,9 @@
   </div>
 
   {{! Formula }}
-  <div class="formula {{#if isDeferred}}deferred{{else}}deterministic{{/if}}">
+  <div class="formula {{#if change.isDeferred}}check{{else}}deterministic{{/if}}">
     <h3>{{localize "PF1.Formula"}}</h3>
-    <input type="text" class="formula{{#unless change.isDeferred}} deterministic{{/unless}}"
+    <input type="text" class="formula {{#if change.isDeferred}}check{{else}}deterministic{{/if}}"
       name="change.formula" value="{{change.formula}}" placeholder="{{localize "PF1.Formula"}}" required>
   </div>
 

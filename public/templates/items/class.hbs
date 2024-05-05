@@ -134,7 +134,7 @@
           </select>
           {{#if (eq system.bab "custom")}}
           <label>{{localize "PF1.Formula"}}</label>
-          <input type="text" class="formula" name='system.babFormula' value='{{system.babFormula}}'>
+          <input type="text" class="formula" name="system.babFormula" value="{{system.babFormula}}" placeholder="0">
           {{/if}}
         </div>
       </div>
@@ -158,7 +158,7 @@
         </select>
         {{#if (eq savingThrow.value "custom")}}
         <label>{{localize "PF1.Formula"}}</label>
-        <input name="system.savingThrows.{{id}}.custom" class="formula" type="text" value="{{savingThrow.custom}}">
+        <input name="system.savingThrows.{{id}}.custom" class="formula" type="text" value="{{savingThrow.custom}}" placeholder="0">
         {{/if}}
       </div>
       {{/each}}
@@ -249,7 +249,7 @@
       </div>
       {{/each}}
       <div class="form-group">
-        <label>{{localize 'PF1.Notes'}}</label>
+        <label>{{localize "PF1.Notes"}}</label>
         <input type="text" name="system.fc.alt.notes" value="{{system.fc.alt.notes}}" data-dtype="String">
       </div>
       {{/if}}

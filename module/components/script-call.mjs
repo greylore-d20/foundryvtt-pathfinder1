@@ -1,5 +1,3 @@
-import { ScriptEditor } from "../applications/script-editor.mjs";
-
 /**
  * Script Call
  */
@@ -148,7 +146,7 @@ export class ItemScriptCall {
     }
     // For regular script calls
     else {
-      const scriptEditor = new ScriptEditor({
+      const scriptEditor = new pf1.applications.ScriptEditor({
         command: this.value,
         name: this.name,
         parent: this.parent,

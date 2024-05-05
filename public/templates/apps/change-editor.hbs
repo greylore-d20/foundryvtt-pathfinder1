@@ -13,7 +13,7 @@
       </label>
       {{#unless isValidOp}}
       <label class="invalid">
-        <input type="radio" value="{{operator}}" name="change.operator" {{checked (not isValidOp)}}>
+        <input type="radio" value="{{change.operator}}" name="change.operator" {{checked (not isValidOp)}}>
         {{localize "PF1.Application.ChangeEditor.Invalid"}}
       </label>
       {{/unless}}

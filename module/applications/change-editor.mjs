@@ -89,7 +89,6 @@ export class ChangeEditor extends ItemSheet {
       isValidOp: ["add", "set"].includes(change.operator),
       isDeferred: change.isDeferred,
       label: target?.label || change.subTarget,
-      isScript: change.operator === "script",
     };
 
     return context;

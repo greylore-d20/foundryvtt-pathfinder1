@@ -219,27 +219,12 @@ export class ItemChange {
     // Prepare change targets
     targets ??= this.getTargets(actor);
 
-    // Ensure application of script changes creates a warning
-    if (this.operator === "script") {
-      ui.notifications?.warn(game.i18n.format("PF1.SETTINGS.AllowScriptChangesF", { parent: this.parent?.name }), {
-        console: false,
-      });
-      console.warn(
-        game.i18n.format("PF1.SETTINGS.AllowScriptChangesF", { parent: this.parent?.uuid || this.parent?.name }),
-        {
-          change: this,
-          item: this.parent,
-          actor: this.parent?.actor,
-        }
-      );
-    }
-
     const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
       const override = overrides[t];
-      let operator = this.operator;
+      const operator = this.operator;
 
       // HACK: Data prep change application creates overrides; only changes meant for manual comparison lack them,
       // and those do not have to be applied to the actor.
@@ -249,17 +234,7 @@ export class ItemChange {
 
       let value = 0;
       if (this.formula) {
-        if (operator === "script") {
-          if (!game.settings.get("pf1", "allowScriptChanges")) {
-            value = 0;
-            operator = "add";
-          } else {
-            const fn = this.createFunction(this.formula, ["d", "item"]);
-            const result = fn(rollData, this.parent);
-            value = result.value;
-            operator = result.operator;
-          }
-        } else if (operator === "function") {
+        if (operator === "function") {
           foundry.utils.logCompatibilityWarning(
             "ItemChange function operator is no longer supported with no replacement.",
             { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
@@ -285,7 +260,6 @@ export class ItemChange {
       this.data.value = value;
 
       if (!t) continue;
-      if (operator === "script") continue; // HACK: Script Changes without formula are not evaluated
 
       const prior = override[operator][this.modifier];
 

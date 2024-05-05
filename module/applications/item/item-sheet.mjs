@@ -1,6 +1,5 @@
 import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets } from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
-import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { SpeedEditor } from "../speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
@@ -678,7 +677,6 @@ export class ItemSheetPF extends ItemSheet {
           const chData = {
             isValid: !!target,
             label: target?.label ?? ch.subTarget,
-            isScript: ch.operator === "script",
             isDeferred: ch.isDeferred,
             isAdd: ch.operator === "add",
             isSet: ch.operator === "set",
@@ -1309,9 +1307,6 @@ export class ItemSheetPF extends ItemSheet {
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
-    // Edit change script contents
-    html.find(".edit-change-contents").on("click", this._onEditChangeScriptContents.bind(this));
-
     html.find(".speed-editor").click(this._onSpeedEdit.bind(this));
 
     // Linked item clicks
@@ -1747,20 +1742,6 @@ export class ItemSheetPF extends ItemSheet {
           return pf1.components.ItemChange.create([chData], { parent: item });
         }
       }
-    }
-  }
-
-  async _onEditChangeScriptContents(event) {
-    const elem = event.currentTarget;
-    const changeId = elem.closest(".change").dataset.changeId;
-    const change = this.item.changes.find((change) => change._id === changeId);
-
-    if (!change) return;
-
-    const scriptEditor = new ScriptEditor({ command: change.formula, parent: this.item }).render(true);
-    const result = await scriptEditor.awaitResult();
-    if (typeof result?.command === "string") {
-      return change.update({ formula: result.command });
     }
   }
 

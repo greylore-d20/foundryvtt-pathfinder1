@@ -98,10 +98,7 @@ export const registerHandlebarsHelpers = function () {
     handleParts(actionData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
-    action.allDamageSources.forEach((s) => {
-      if (s.operator === "script") return;
-      handleFormula(s.formula, s);
-    });
+    action.allDamageSources.forEach((s) => handleFormula(s.formula, s));
 
     if (parts.length === 0) parts.push("NaN"); // Something probably went wrong
 

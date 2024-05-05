@@ -8,8 +8,6 @@ export class ScriptEditor extends FormApplication {
     this.parent = options.parent;
     this.script = options.script;
 
-    this.isScriptCall = options.scriptCall === true;
-
     // Add editor title
     if (this.name) this.options.title = this.parent ? `${this.parent.name}: ${this.name}` : this.name;
     else this.options.title = this.parent?.name ?? game.i18n.localize("PF1.Unknown");
@@ -44,12 +42,6 @@ export class ScriptEditor extends FormApplication {
 
     data.command = this.command || "";
     data.name = this.name;
-
-    data.isScriptCall = this.isScriptCall;
-
-    data.canEdit = {
-      name: this.isScriptCall,
-    };
 
     return data;
   }

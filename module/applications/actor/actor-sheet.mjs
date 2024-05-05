@@ -3167,8 +3167,11 @@ export class ActorSheetPF extends ActorSheet {
             })} - ${itemData.name} - ${this.actor.name}`,
           };
 
-          const cls = await pf1.applications.ItemSelector.wait(options, appOptions);
-          if (cls) itemData.system.class = cls.system.tag;
+          const clsId = await pf1.applications.ItemSelector.wait(options, appOptions);
+          if (clsId) {
+            const cls = this.actor.items.get(clsId);
+            itemData.system.class = cls.system.tag;
+          }
           // TODO: Cancel if dialog was closed or no class was selected?
         }
       }

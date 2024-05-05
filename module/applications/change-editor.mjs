@@ -174,10 +174,7 @@ export class ChangeEditor extends ItemSheet {
     const old = changes.find((c) => c._id === this.change.id);
     if (old) {
       delete old._id;
-      console.log("Creating:", old);
       return pf1.components.ItemChange.create([old], { parent: this.item });
-    } else {
-      console.log("Old change not found");
     }
   }
 
@@ -185,6 +182,7 @@ export class ChangeEditor extends ItemSheet {
     super.activateListeners(html);
 
     // Buttons
+    html.find(".buttons button.close").click(this.close.bind(this));
     html.find(".buttons button.delete").click(this._onDelete.bind(this));
     html.find(".buttons button.duplicate").click(this._onDuplicate.bind(this));
 

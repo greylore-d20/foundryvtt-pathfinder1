@@ -21,12 +21,6 @@ export class ChangeEditor extends ItemSheet {
       ...options,
       classes: [...options.classes, "pf1", "change-editor"],
       template: "systems/pf1/templates/apps/change-editor.hbs",
-      dragDrop: [
-        {
-          dragSelector: ".changes li.change",
-          dropSelector: null,
-        },
-      ],
       submitOnChange: true,
       submitOnClose: true,
       closeOnSubmit: false,
@@ -99,57 +93,6 @@ export class ChangeEditor extends ItemSheet {
     };
 
     return context;
-  }
-
-  /**
-   * @internal
-   * @override
-   * @param {DragEvent} event
-   */
-  _onDragStart(event) {
-    const elem = event.target;
-
-    const changeId = elem.dataset.changeId;
-    if (changeId) {
-      const ch = this.item.changes.get(changeId);
-      const obj = { type: "pf1Change", data: ch.data, changeId, uuid: this.item.uuid };
-      event.dataTransfer.setData("text/plain", JSON.stringify(obj));
-      return;
-    }
-  }
-
-  /**
-   * @internal
-   * @param {Event} event
-   */
-  async _onChangeControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-
-    const action = a.dataset.action;
-    const changeId = a.dataset.changeId;
-
-    await this._onSubmit(event, { preventRender: true });
-
-    switch (action) {
-      // Add new change
-      case "add":
-        return pf1.components.ItemChange.create([{ modifier: "untyped" }], { parent: this.item });
-      // Remove a change
-      case "delete": {
-        const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
-        changes.findSplice((c) => c._id === changeId);
-        return this.item.update({ "system.changes": changes });
-      }
-      case "duplicate": {
-        const changes = foundry.utils.deepClone(this.item.toObject().system.changes ?? []);
-        const old = changes.find((c) => c._id === changeId);
-        if (old) {
-          delete old._id;
-          return pf1.components.ItemChange.create([old], { parent: this.item });
-        }
-      }
-    }
   }
 
   _onChangeTargetControl(event) {

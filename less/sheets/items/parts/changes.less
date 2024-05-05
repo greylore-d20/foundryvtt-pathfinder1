@@ -19,17 +19,23 @@
           flex: 1;
         }
 
-        > a {
+        .controls {
           flex: 0;
-          display: inline-flex;
-          flex-flow: row nowrap;
-          align-items: center;
-          gap: 0.3em;
 
-          border: unset; // Undo general style
+          a {
+            flex: 0;
+            display: inline-flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            gap: 0.3em;
 
-          &.disabled {
-            color: var(--color-text-dark-inactive);
+            color: @colorOlive;
+
+            border: unset; // Undo general style
+
+            &.disabled {
+              color: var(--color-text-dark-inactive);
+            }
           }
         }
       }

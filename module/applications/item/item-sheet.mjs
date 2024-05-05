@@ -1274,6 +1274,9 @@ export class ItemSheetPF extends ItemSheet {
     // Add drop handler to textareas
     html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
+    // Create new change
+    html.find(".tab.changes .controls a.add-change").click(this._onCreateChange.bind(this));
+
     // Open Changes editor
     html.find(".tab.changes .changes .controls a.edit-change").click(this._onEditChange.bind(this));
 
@@ -1909,6 +1912,7 @@ export class ItemSheetPF extends ItemSheet {
    * @param {Event} event - Click event
    */
   _onEditChange(event) {
+    event.preventDefault();
     const el = event.target;
 
     if (el.dataset.target !== "change") return;
@@ -1919,6 +1923,12 @@ export class ItemSheetPF extends ItemSheet {
         return void pf1.applications.ChangeEditor.wait(change);
       }
     }
+  }
+
+  _onCreateChange(event) {
+    event.preventDefault();
+
+    return pf1.components.ItemChange.create([{ modifier: "untyped" }], { parent: this.item });
   }
 
   async _onNoteControl(event) {

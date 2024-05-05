@@ -177,59 +177,6 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  /**
-   * @param root0
-   * @param root0.actorName
-   * @param root0.actorId
-   * @deprecated
-   */
-  static getActiveActor({ actorName = null, actorId = null } = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.getActiveActor() is deprecated in favor of ChatMessage.getSpeakerActor(ChatMessage.getSpeaker())",
-      {
-        since: "PF1 v9",
-        until: "PF1 v10",
-      }
-    );
-
-    const speaker = ChatMessage.implementation.getSpeaker();
-    let actor;
-
-    if (actorName || actorId) {
-      actor = game.actors.contents.find((o) => {
-        if (actorName && o.name !== actorName) return false;
-        if (actorId && o.id !== actorId) return false;
-        return true;
-      });
-    }
-    if (speaker.token && !actor) actor = canvas.tokens.get(speaker.token)?.actor;
-    if (!actor) actor = game.actors.get(speaker.actor);
-
-    return actor;
-  }
-
-  /**
-   * Returns an array of all selected tokens, along with their actors.
-   *
-   * @deprecated - Use `canvas.tokens.controlled` instead.
-   * @returns {Array.<ActorPF, Token>[]}
-   */
-  static getSelectedActors() {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.getSelectedActors() is deprecated in favor of canvas.tokens.controlled",
-      {
-        since: "PF1 v9",
-        until: "PF1 v10",
-      }
-    );
-
-    const result = [];
-    for (const t of canvas.tokens.controlled) {
-      result.push([t.actor, t]);
-    }
-    return result;
-  }
-
   /* -------------------------------------------- */
 
   /**

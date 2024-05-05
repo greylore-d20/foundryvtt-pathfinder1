@@ -8,24 +8,6 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
   Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
 
-  Handlebars.registerHelper("itemRange", (item, rollData) => {
-    foundry.utils.logCompatibilityWarning("{{itemRange}} helper is deprecated, please use {{actionRange}} instead.", {
-      since: "PF1 v9",
-      until: "PF1 v10",
-    });
-
-    if (!item.document?.firstAction?.hasRange) return null;
-    const action = item.document.firstAction;
-
-    const range = action.data.range.value;
-    const rangeType = action.data.range.units;
-
-    if (rangeType == null) return null;
-
-    const [rng, unit] = calculateRange(range, rangeType, rollData);
-    return `${rng} ${unit}`;
-  });
-
   Handlebars.registerHelper("actionRange", (action, rollData) => {
     if (!action?.hasRange) return null;
 
@@ -124,20 +106,6 @@ export const registerHandlebarsHelpers = function () {
     console.warn("{{itemDamage}} handlebars helper is deprecated, use {{actionDamage}} instead");
     const action = item.document?.firstAction;
     return actionDamage(action, rollData);
-  });
-
-  Handlebars.registerHelper("itemAttacks", (item) => {
-    foundry.utils.logCompatibilityWarning(
-      "{{itemAttacks}} helper is deprecated, please use {{actionAttacks}} instead.",
-      {
-        since: "PF1 v9",
-        until: "PF1 v10",
-      }
-    );
-
-    const attacks = item.document.attackArray;
-    const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
-    return `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${attacks.length > 1 ? "/…" : ""})`;
   });
 
   Handlebars.registerHelper("actionAttacks", (action) => {

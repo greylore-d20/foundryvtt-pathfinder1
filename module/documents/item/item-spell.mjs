@@ -318,21 +318,6 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * @deprecated Use {@link addCharges} instead.
-   * @param {number} value - The number of charges to add.
-   * @param {object} [data=null] - Additional data to pass to the update
-   * @returns {Promise<this | void>} Updated document or undefined if no update is possible.
-   */
-  async addUses(value, data = null) {
-    foundry.utils.logCompatibilityWarning("ItemSpellPF.addUses() is deprecated in favor of .addCharges()", {
-      since: "PF1 v9",
-      until: "PF1 v10",
-    });
-
-    return this.addCharges(value, data);
-  }
-
-  /**
    * Add charges to the spell or its relevant resource pool (spell points or spontaneous spells).
    *
    * @override

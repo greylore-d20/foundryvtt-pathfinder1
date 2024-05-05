@@ -743,21 +743,6 @@ export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, 
 }
 
 /**
- * Get first active GM user.
- *
- * @deprecated Use `game.users.activeGM` instead
- * @returns {User|undefined} Active GM
- */
-export const getFirstActiveGM = () => {
-  foundry.utils.logCompatibilityWarning("pf1.utils.getFirstActiveGM() is deprecated in favor of game.users.activeGM", {
-    since: "PF1 v9",
-    until: "PF1 v10",
-  });
-
-  return game.users.activeGM;
-};
-
-/**
  * Resolve range formula to numeric value.
  *
  * @param {string} [formula] Range formula. Only used with "mi", "ft", "m", "km" and similar types.

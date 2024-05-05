@@ -320,18 +320,6 @@ Hooks.once("init", function () {
   //Calculate conditions for world
   CONFIG.statusEffects = pf1.utils.init.getConditions();
 
-  // Define getter for config properties moved into registries
-  Object.defineProperty(pf1.config, "damageTypes", {
-    get: () => {
-      foundry.utils.logCompatibilityWarning(
-        "Damage types have been moved into the DamageTypes registry. " +
-          "Use pf1.registry.damageTypes.getLabels() for the old format, or access the collection for full damage type data.",
-        { since: "PF1 v9", until: "PF1 v10" }
-      );
-      return pf1.registry.damageTypes.getLabels();
-    },
-  });
-
   Object.defineProperty(pf1.config, "conditions", {
     get: () => {
       foundry.utils.logCompatibilityWarning(

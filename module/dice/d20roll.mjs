@@ -91,21 +91,6 @@ export class D20RollPF extends RollPF {
   }
 
   /**
-   * Is this roll a critical failure? Returns undefined if roll isn't evaluated.
-   *
-   * @type {boolean|void}
-   */
-  get isFumble() {
-    foundry.utils.logCompatibilityWarning("D20RollPF.isFumble is deprecated in favor of D20RollPF.isNat1", {
-      since: "PF1 v9",
-      until: "PF1 v10",
-    });
-    if (!this._evaluated) return undefined;
-    if (!Number.isNumeric(this.options.fumble)) return false;
-    return this.d20.total <= this.options.fumble;
-  }
-
-  /**
    * Is this roll a natural 20? Returns undefined if roll isn't evaluated.
    *
    * @type {boolean|void}

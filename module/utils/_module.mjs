@@ -24,7 +24,6 @@ export {
   getWeightSystem,
   getActors,
   getActorFromId,
-  getFirstActiveGM,
   getItemOwner,
   isMinimumCoreVersion,
   measureDistance,

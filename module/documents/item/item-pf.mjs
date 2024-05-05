@@ -50,21 +50,6 @@ export class ItemPF extends ItemBasePF {
   });
 
   /**
-   * Determine whether an item type is physical.
-   *
-   * @deprecated Use {@link ItemPF.isPhysical} insted.
-   * @param {string} type - The item type to check
-   * @returns {boolean} Whether an item of that type is physical.
-   */
-  static isInventoryItem(type) {
-    foundry.utils.logCompatibilityWarning(`ItemPF.isInventoryItem is deprecated. Use ItemPF.isPhysical instead.`, {
-      since: "PF1 v9",
-      until: "PF1 v10",
-    });
-    return CONFIG.Item.documentClasses[type]?.isPhysical ?? false;
-  }
-
-  /**
    * @internal
    * @override
    * @param {object} [itemData]
@@ -1935,28 +1920,10 @@ export class ItemPF extends ItemBasePF {
     return change;
   }
 
-  getTotalCurrency() {
-    foundry.utils.logCompatibilityWarning("ItemPF.getTotalCurrency is deprecated", {
-      since: "PF1 v9",
-      until: "PF1 v10",
-    });
-
-    return 0;
-  }
-
   getValue() {
     foundry.utils.logCompatibilityWarning("ItemPF.getValue() is deprecated, only physical items have value", {
       since: "PF1 vNEXT",
       until: "PF1 vNEXT+1",
-    });
-
-    return 0;
-  }
-
-  convertCurrency(type = "pp") {
-    foundry.utils.logCompatibilityWarning("ItemPF.convertCurrency is deprecated", {
-      since: "PF1 v9",
-      until: "PF1 v10",
     });
 
     return 0;

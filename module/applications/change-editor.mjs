@@ -69,6 +69,10 @@ export class ChangeEditor extends ItemSheet {
     return title;
   }
 
+  get id() {
+    return super.id + "-Change-" + this.change.id;
+  }
+
   getData() {
     const change = this.change,
       actor = this.actor,

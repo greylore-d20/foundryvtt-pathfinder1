@@ -10,21 +10,15 @@ system:
   changes:
     - _id: xjtaratc
       formula: >-
-        if (d.shield.type < 1 && d.armor.type < 1 &&
-        d.attributes.encumbrance.level < 1) {
-            result.value = d.abilities.wis.mod;
-        }
+        max(0, 1 - @shield.type - @armor.type - @attributes.encumbrance.level) *
+        @abilities.wis.mod
       modifier: untyped
-      operator: script
       subTarget: ac
     - _id: 18jtneni
       formula: >-
-        if (d.shield.type < 1 && d.armor.type < 1 &&
-        d.attributes.encumbrance.level < 1) {
-            result.value = d.abilities.wis.mod;
-        }
+        max(0, 1 - @shield.type - @armor.type - @attributes.encumbrance.level) *
+        @abilities.wis.mod
       modifier: untyped
-      operator: script
       subTarget: cmd
   description:
     value: >-

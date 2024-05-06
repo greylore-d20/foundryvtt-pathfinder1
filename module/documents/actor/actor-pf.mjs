@@ -1783,7 +1783,7 @@ export class ActorPF extends ActorBasePF {
         if (wtData.level > 0) {
           const changeFlatKeys = [
             "~attackCore",
-            "cmd",
+            //"cmd", // valid target but is inherited from "ac"
             "init",
             "allSavingThrows",
             "ac",

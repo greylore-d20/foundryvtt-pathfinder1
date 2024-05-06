@@ -6,7 +6,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
    */
   static system = Object.freeze({
     ...super.system,
-    hasIdentifier: false,
+    hasIdentifier: true,
   });
 
   constructor(...args) {

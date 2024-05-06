@@ -165,6 +165,22 @@ export class ItemPhysicalPF extends ItemPF {
   }
 
   /**
+   * @param {boolean} active
+   * @param {object} context Optional update context
+   * @returns {Promise} Update promise
+   * @override
+   */
+  async setActive(active, context) {
+    return this.update({ "system.equipped": active }, context);
+  }
+
+  get isActive() {
+    const hp = this.system.hp?.value || 0;
+    if (hp <= 0) return false;
+    return this.system.equipped ?? false;
+  }
+
+  /**
    * Prepare this item's {@link ItemWeightData}
    */
   prepareWeight() {

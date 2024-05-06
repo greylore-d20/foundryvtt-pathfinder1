@@ -58,25 +58,6 @@ export class ItemLootPF extends ItemPhysicalPF {
   }
 
   /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
-   */
-  async setActive(active, context) {
-    return this.update({ "system.equipped": active }, context);
-  }
-
-  get isActive() {
-    if (this.subType === "gear") {
-      const hp = this.system.hp?.value || 0;
-      if (hp <= 0) return false;
-      return this.system.equipped ?? false;
-    }
-    return true;
-  }
-
-  /**
    * Make ammo count inherently as single use.
    *
    * @inheritdoc

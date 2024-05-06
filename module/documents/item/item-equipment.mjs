@@ -207,21 +207,6 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
   }
 
   /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
-   */
-  async setActive(active, context) {
-    return this.update({ "system.equipped": active }, context);
-  }
-
-  get isActive() {
-    if (this.system.hp.value <= 0) return false;
-    return this.system.equipped ?? false;
-  }
-
-  /**
    * Does the equipment subtype use slots.
    *
    * @type {boolean}

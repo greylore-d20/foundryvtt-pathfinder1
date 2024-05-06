@@ -16,6 +16,8 @@
     </header>
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+    
+    {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
 
     <div class="weight-reduction">
       <h5>{{localize "PF1.WeightReduction.Label"}}</h5>
@@ -51,13 +53,16 @@
         <span>{{labels.sellValue}}</span>
       </div>
     </div>
+
   </section>
 
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item" data-tab="description">{{ localize "PF1.Description" }}</a>
+    <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
     <a class="item" data-tab="contents">{{ localize "PF1.Containers.Contents.Label" }}</a>
     {{#unless showUnidentifiedData}}
+    <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
     <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>
     {{/unless}}
   </nav>
@@ -67,6 +72,36 @@
 
     {{!-- Description Tab --}}
     {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
+      {{#if @root.showIdentifiedData}}
+      <div class="form-group stacked">
+        <label class="checkbox artifact">
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
+        </label>
+        <label class="checkbox timeworn">
+          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}> {{localize "PF1.Timeworn"}}
+        </label>
+      </div>
+      {{/if}}
+
+      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
+
+      {{!-- Advanced --}}
+      {{#unless showUnidentifiedData}}
+      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+
+      {{! Tags }}
+      {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}
+
+      {{! Identifier Tag }}
+      {{~> "systems/pf1/templates/items/parts/item-tag.hbs"}}
+      {{/unless}}
+    </div>
 
     {{!-- Contents Tab --}}
     <div class="tab contents" data-group="primary" data-tab="contents">
@@ -92,6 +127,13 @@
 
       {{> "systems/pf1/templates/items/parts/item-contents.hbs" sections=inventory}}
     </div>
+
+    {{!-- Changes Tab --}}
+    {{#unless showUnidentifiedData}}
+    <div class="tab changes" data-group="primary" data-tab="changes">
+      {{~> "systems/pf1/templates/items/parts/item-changes.hbs"}}
+    </div>
+    {{/unless}}
 
     {{#unless showUnidentifiedData}}
     <div class="tab" data-group="primary" data-tab="advanced">

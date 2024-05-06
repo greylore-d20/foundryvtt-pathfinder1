@@ -86,21 +86,6 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     this.system.carried = true;
   }
 
-  /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
-   */
-  async setActive(active, context) {
-    return this.update({ "system.equipped": active }, context);
-  }
-
-  /** @type {boolean} - If the item can be equipped currently */
-  get isActive() {
-    return this.system.equipped;
-  }
-
   get canEquip() {
     return !this.inContainer;
   }

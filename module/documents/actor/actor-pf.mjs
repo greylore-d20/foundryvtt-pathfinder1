@@ -1759,13 +1759,13 @@ export class ActorPF extends ActorBasePF {
     for (const [a, abl] of Object.entries(actorData.abilities)) {
       sourceDetails[`system.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.Base"), value: abl.value });
       // Add ability penalty, damage and drain
-      if (abl.damage != null && abl.damage !== 0) {
-        sourceDetails[`system.abilities.${a}.total`].push({
+      if (abl.damage > 0) {
+        sourceDetails[`system.abilities.${a}.mod`].push({
           name: game.i18n.localize("PF1.AbilityDamage"),
-          value: `-${Math.floor(Math.abs(abl.damage) / 2)} (${game.i18n.localize("PF1.ModifierOnlyShort")})`,
+          value: -Math.floor(Math.abs(abl.damage) / 2),
         });
       }
-      if (abl.drain != null && abl.drain !== 0) {
+      if (abl.drain > 0) {
         sourceDetails[`system.abilities.${a}.total`].push({
           name: game.i18n.localize("PF1.AbilityDrain"),
           value: -Math.abs(abl.drain),

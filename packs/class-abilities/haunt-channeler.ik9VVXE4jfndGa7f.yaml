@@ -1,0 +1,58 @@
+_id: ik9VVXE4jfndGa7f
+_key: '!items!ik9VVXE4jfndGa7f'
+img: icons/magic/death/undead-ghost-scream-teal.webp
+name: Haunt Channeler
+system:
+  abilityType: su
+  actions:
+    - _id: pBuLOispt2ckXb3X
+      ability:
+        attack: str
+      actionType: msak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      img: icons/magic/death/undead-ghost-scream-teal.webp
+      name: Touch Haunt
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: One Haunt
+      touch: true
+  associations:
+    classes:
+      - Medium
+      - Oracle
+  description:
+    value: >-
+      <p>At 3rd level, a medium can use his familiarity with spirits to assist
+      him when dealing with haunts. He can always act on the surprise round
+      against a haunt, and his touch funnels a portion of the haunt into
+      himself, dealing 1d6 points of damage to the haunt per 2 medium levels he
+      possesses as if via positive energy and allowing the medium to ask the
+      haunt a single question. The haunt can answer the question however it
+      chooses. Additionally, the medium can forgo his saving throw against a
+      haunt’s effects to funnel the haunt entirely into himself. If he does so,
+      the medium suffers the haunt’s full effect, but the haunt doesn’t affect
+      anyone else (even if it normally would). The haunt then gains control of
+      the medium’s body for 24 hours. Once per minute, the medium can attempt to
+      end this possession early by succeeding at a Will save (DC = 20 + 1/2 the
+      medium’s class level).</p>
+  sources:
+    - id: PZO1132
+      pages: '31'
+  subType: classFeat
+type: feat
+

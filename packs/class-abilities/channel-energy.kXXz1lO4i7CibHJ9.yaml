@@ -25,9 +25,34 @@ system:
       measureTemplate:
         size: '30'
         type: circle
-      name: Use
+      name: Positive - Heal living
       range:
-        maxIncrements: '1'
+        units: ft
+        value: '30'
+      target:
+        value: self; affects living
+    - _id: iPtvZlT6WRM4tLO4
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - positive
+      duration:
+        units: inst
+      img: icons/magic/death/projectile-skull-fire-orange.webp
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Positive - Harm undead
+      range:
         units: ft
         value: '30'
       save:
@@ -35,7 +60,65 @@ system:
         description: Will halves damage
         type: will
       target:
-        value: self; affects living OR undead
+        value: Undead
+    - _id: eUIoqEbx1rQqZbaG
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        units: inst
+      img: icons/magic/death/undead-skeleton-fire-green.webp
+      material:
+        normal: ''
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Negative - Heal undead
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: Undead
+    - _id: 3SRwcyD8hdoyiFe4
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - negative
+      duration:
+        units: inst
+      img: icons/magic/unholy/strike-body-explode-disintegrate.webp
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Negative - Harm living
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will halves damage
+        type: will
+      target:
+        value: Undead
   associations:
     classes:
       - Cleric

@@ -209,14 +209,6 @@ export class ChatAttack {
       );
     }
 
-    // Add tooltip
-    let tooltips = "";
-    for (const roll of data.rolls) {
-      tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.hbs", {
-        part: roll,
-      });
-    }
-
     // Add normal data
     if (!flavor) {
       if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");

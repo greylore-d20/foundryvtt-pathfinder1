@@ -871,6 +871,8 @@ export class ActorPF extends ActorBasePF {
 
     // Turn off spell points with auto slots
     if (useAuto) book.spellPoints.useSystem = false;
+    // Turn off bonus slots from ability score without auto slots
+    else book.autoSpellLevels = false;
 
     const useSpellPoints = book.spellPoints.useSystem === true;
 

@@ -210,19 +210,19 @@
             <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevelCalculation"
               {{checked spellbook.autoSpellLevelCalculation}}> {{localize "PF1.AutoCalculateSpellSlots"}}
           </label>
-          {{#unless spellbook.autoSpellLevelCalculation}}
-          <label class="checkbox">
+          <label class="checkbox" {{#if (not spellbook.autoSpellLevelCalculation)}}data-tooltip="PF1.RequiresAutoSlots"{{/if}}>
             <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevels"
+              {{disabled (not spellbook.autoSpellLevelCalculation)}}
               {{checked spellbook.autoSpellLevels}}> {{localize "PF1.AutomaticSpellSlots"}}
           </label>
-          {{/unless}}
         </div>
         <label class="checkbox">
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.psychic"
            {{checked spellbook.psychic}}> {{localize "PF1.Psychic"}}
         </label>
-        <label class="checkbox">
+        <label class="checkbox" {{#if spellbook.autoSpellLevelCalculation}}data-tooltip="PF1.AutoSlotIncompatible"{{/if}}>
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.spellPoints.useSystem"
+            {{disabled spellbook.autoSpellLevelCalculation}}
             {{checked spellbook.spellPoints.useSystem}}> {{localize "PF1.UseSpellPoints"}}
         </label>
         <label class="checkbox">

@@ -105,11 +105,6 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/apps/level-up/fcb.hbs",
   "systems/pf1/templates/apps/level-up/summary.hbs",
 
-  // Level Up summary
-  "systems/pf1/templates/apps/level-up/summary/health.hbs",
-  "systems/pf1/templates/apps/level-up/summary/fc.hbs",
-  "systems/pf1/templates/apps/level-up/summary/ability-score.hbs",
-
   // Dynamic tooltips
   "systems/pf1/templates/extended-tooltip.hbs",
 ]);

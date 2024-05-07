@@ -1111,9 +1111,6 @@ export class ItemPF extends ItemBasePF {
 
     // General equipment properties
     const props = [];
-    if (this.isPhysical) {
-      props.push(itemData.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"));
-    }
 
     if (chatcard !== true) {
       if (labels.subType && labels.childTypeDistinct !== true) props.push(labels.subType);

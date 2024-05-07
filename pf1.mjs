@@ -492,7 +492,7 @@ Hooks.once("i18nInit", function () {
     for (const path of paths) {
       const value = foundry.utils.getProperty(obj, path);
       if (value) {
-        foundry.utils.setProperty(obj, path, game.i18n.localize(path));
+        foundry.utils.setProperty(obj, path, game.i18n.localize(value));
       }
     }
   };

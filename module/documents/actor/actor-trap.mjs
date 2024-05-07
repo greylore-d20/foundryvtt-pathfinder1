@@ -67,6 +67,9 @@ export class ActorTrapPF extends ActorPF {
 
     this.system.skills ??= {};
     this.sourceDetails = {};
+
+    //  Init resources structure
+    this.system.resources ??= {};
   }
 
   /**
@@ -75,9 +78,27 @@ export class ActorTrapPF extends ActorPF {
   prepareDerivedData() {
     this.system.details.cr.total = this.system.details.cr.base;
 
-    delete this._rollData;
+    this.items.forEach((item) => {
+      item.prepareDerivedItemData();
+      this.updateItemResources(item);
+    });
 
     applyChanges.call(this);
+
+    // Setup links
+    this.prepareItemLinks();
+
+    // Reset roll data cache again to include processed info
+    delete this._rollData;
+
+    // Update item resources
+    this.items.forEach((item) => {
+      item.prepareDerivedItemData();
+      // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
+      this.updateItemResources(item, { warnOnDuplicate: false });
+    });
+
+    this._initialized = true;
   }
 
   /**
@@ -107,14 +128,11 @@ export class ActorTrapPF extends ActorPF {
    * @override
    */
   _prepareChanges() {
-    this.changeItems = this.items
-      .filter((obj) => {
-        return (
-          (obj.system.changes instanceof Array && obj.system.changes.length) ||
-          (obj.system.changeFlags && Object.values(obj.system.changeFlags).filter((o) => o === true).length)
-        );
-      })
-      .filter((obj) => obj.isActive);
+    this.changeItems = this.items.filter(
+      (item) =>
+        item.isActive &&
+        (item.system.changes?.length > 0 || Object.values(item.system.changeFlags ?? {}).some((v) => !!v))
+    );
 
     const changes = [];
     for (const i of this.changeItems) {
@@ -123,33 +141,25 @@ export class ActorTrapPF extends ActorPF {
 
     const c = new Collection();
     for (const change of changes) {
-      c.set(change._id, change);
+      // Avoid ID conflicts
+      const parentId = change.parent?.id ?? "Actor";
+      const uniqueId = `${parentId}-${change._id}`;
+      c.set(uniqueId, change);
     }
     this.changes = c;
   }
 
   getRollData(options = { refresh: false }) {
-    let result;
-
     // Return cached data, if applicable
     const skipRefresh = !options.refresh && this._rollData;
-    if (skipRefresh) {
-      result = this._rollData;
 
-      // Clear certain fields
-      const clearFields = ["ablMod", "sizeBonus"];
-      for (const k of clearFields) {
-        const arr = k.split(".");
-        const k2 = arr.slice(0, -1).join(".");
-        const k3 = arr.slice(-1)[0];
-        if (k2 === "") delete result[k];
-        else {
-          const obj = foundry.utils.getProperty(result, k2);
-          if (typeof obj === "object") delete obj[k3];
-        }
+    const result = { ...(skipRefresh ? this._rollData : foundry.utils.deepClone(this.system)) };
+
+    // Clear certain fields if not refreshing
+    if (skipRefresh) {
+      for (const path of pf1.config.temporaryRollDataFields.actor) {
+        foundry.utils.setProperty(result, path, undefined);
       }
-    } else {
-      result = foundry.utils.deepClone(this.system);
     }
 
     /* ----------------------------- */
@@ -173,6 +183,9 @@ export class ActorTrapPF extends ActorPF {
     // Set size index
     const sizeChart = Object.keys(pf1.config.sizeChart);
     result.size = sizeChart.indexOf(result.traits.size);
+
+    // Add item dictionary flags
+    result.dFlags = this.itemFlags?.dictionary ?? {};
 
     // Add range info
     result.range = pf1.documents.actor.ActorPF.getReach(this.system.traits.size, this.system.traits.stature);

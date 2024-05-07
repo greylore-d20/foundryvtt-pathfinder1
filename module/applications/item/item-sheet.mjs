@@ -1310,7 +1310,9 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".speed-editor").click(this._onSpeedEdit.bind(this));
 
     // Linked item clicks
-    html.find(".tab[data-tab='links'] .links-item .links-item-name").on("contextmenu", this._openLinkedItem.bind(this));
+    html
+      .find(".tab[data-tab='links'] .links-item .links-item-name .source-item")
+      .on("click", this._openLinkedItem.bind(this));
 
     /* -------------------------------------------- */
     /*  Actions

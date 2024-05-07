@@ -25,15 +25,19 @@
         <th class="links-controls"></th>
       </tr>
       {{#each link.items}}
-      <tr class="links-item{{#if broken}} broken-link{{/if}}" data-uuid="{{uuid}}" data-index="{{@index}}" data-tooltip="UUID: {{uuid}}">
+      <tr class="links-item{{#if broken}} broken-link{{/if}}" data-uuid="{{uuid}}" data-index="{{@index}}">
         {{!-- Link name and image --}}
         <td class="links-item-name">
-          <div>
-            <img src="{{img}}" width="24" height="24">
-            <span class="name">
-              {{#if name}}{{name}}{{else}}{{uuid}}{{/if}}
-            </span>
-          </div>
+          <img src="{{img}}" width="24" height="24">
+          <span class="name">
+            {{#if name}}{{name}}{{else}}{{uuid}}{{/if}}
+            {{#if broken}}<i class="fa-solid fa-link-slash" data-tooltip="PF1.Missing"></i>{{/if}}
+          </span>
+          {{#if uuid}}
+          <a class="source-item" data-uuid="{{uuid}}" data-tooltip="UUID: {{uuid}}">
+            <i class="fas fa-book compendium-icon"></i>
+          </a>
+          {{/if}}
         </td>
 
         {{#each link.fields}}

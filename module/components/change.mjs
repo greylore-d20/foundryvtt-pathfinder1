@@ -24,7 +24,6 @@ export class ItemChange {
       data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
 
       const oldChangeData = parent.toObject().system.changes ?? [];
-      oldChangeData.push(...data);
 
       // Catalog existing IDs
       const ids = new Set(oldChangeData.map((c) => c._id));

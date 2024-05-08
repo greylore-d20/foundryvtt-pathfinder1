@@ -79,15 +79,18 @@ export class ItemActionSheet extends FormApplication {
     context.actionType = context.data.actionType;
     context.isHealing = context.actionType === "heal";
     context.hasDamage = action.hasDamage;
-    context.isCombatManeuver = ["mcman", "rcman"].includes(context.actionType);
-    context.hasAttack = ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(context.actionType);
+    context.isCombatManeuver = action.isCombatManeuver;
+    context.hasAttack = action.hasAttack;
+    context.canCrit = action.hasAttack && action.data.ability?.critMult > 1;
     // Can have crit and non-crit damage, or simply show them if they've been defined.
-    context.hasCritDamage = context.hasAttack || context.data.damage?.critParts?.length > 0;
-    context.hasNonCritDamage = context.hasAttack || context.data.damage?.nonCritParts?.length > 0;
+    context.hasCritDamage = context.canCrit || context.data.damage?.critParts?.length > 0;
+    context.hasNonCritDamage = context.canCrit || context.data.damage?.nonCritParts?.length > 0;
 
     context.isCharged = action.isCharged;
     context.isSelfCharged = action.isSelfCharged;
-    context.showMaxChargeFormula = ["day", "week", "charges"].includes(context.data.uses.self.per);
+    const chargedUsePeriods = new Set([...Object.keys(pf1.config.limitedUsePeriods), "charges"]);
+    chargedUsePeriods.delete("single"); // Single is special
+    context.showMaxChargeFormula = chargedUsePeriods.has(context.data.uses.self.per);
     if (action.hasRange) {
       context.canInputRange = ["ft", "mi", "spec"].includes(context.data.range.units);
       context.canInputMinRange = ["ft", "mi", "spec"].includes(context.data.range.minUnits);

@@ -14,49 +14,38 @@ export class ItemChange {
    * @param {object[]} data - Data to initialize the change(s) with.
    * @param {object} context - An object containing context information.
    * @param {ItemPF} [context.parent] - The parent entity to create the change within.
-   * @returns The resulting changes, or an empty array if nothing was created.
+   * @returns {ItemChange[]} The resulting changes, or an empty array if nothing was created.
    */
-  static async create(data, context = {}) {
-    const { parent } = context;
+  static async create(data, { parent = null } = {}) {
+    if (!Array.isArray(data)) data = [data];
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
 
-      const newChangeData = foundry.utils.deepClone(parent.toObject().system.changes ?? []);
-      newChangeData.push(...data);
+      const oldChangeData = parent.toObject().system.changes ?? [];
+      oldChangeData.push(...data);
 
-      // Ensure unique IDs within the item
-      const ids = new Set();
-      newChangeData.forEach((change) => ids.add(change._id));
+      // Catalog existing IDs
+      const ids = new Set(oldChangeData.map((c) => c._id));
       // Remove invalid IDs
       ids.delete(undefined);
       ids.delete("");
-
-      // Unique ID count does not match number of changes
-      if (ids.size != newChangeData.length) {
-        while (ids.size < newChangeData.length) ids.add(foundry.utils.randomID(8));
-
-        // Remove already existing unique instances and build list of changes with bad IDs.
-        const reAssign = [];
-        for (const change of newChangeData) {
-          const cid = change._id;
-          if (ids.has(cid)) ids.delete(cid);
-          else reAssign.push(change);
-        }
-
-        // Assign remaining new IDs
-        for (const change of reAssign) {
-          change._id = ids.first();
-          ids.delete(change._id);
-        }
+      // Ensure new data has unique IDs that don't conflict with old
+      const newIds = new Set();
+      for (const c of data) {
+        c._id ||= foundry.utils.randomID(8);
+        while (ids.has(c._id)) c._id = foundry.utils.randomID(8);
+        ids.add(c._id);
+        newIds.add(c._id);
       }
 
       // Update parent
+      const newChangeData = [...oldChangeData, ...data];
       await parent.update({ "system.changes": newChangeData });
 
       // Return results
-      return [...parent.changes];
+      return [...parent.changes.filter((c) => newIds.has(c.id))];
     }
 
     return [];

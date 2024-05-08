@@ -1914,10 +1914,11 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
-  _onCreateChange(event) {
+  async _onCreateChange(event) {
     event.preventDefault();
 
-    return pf1.components.ItemChange.create([{ modifier: "untyped" }], { parent: this.item });
+    const [change] = await pf1.components.ItemChange.create([{ modifier: "untyped" }], { parent: this.item });
+    if (change) pf1.applications.ChangeEditor.wait(change);
   }
 
   async _onNoteControl(event) {

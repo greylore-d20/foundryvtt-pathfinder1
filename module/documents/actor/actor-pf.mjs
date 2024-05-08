@@ -3962,13 +3962,7 @@ export class ActorPF extends ActorBasePF {
     if (context.match(/^attacks\.(.+)/)) {
       const key = RegExp.$1;
       for (const note of result) {
-        note.notes = note.notes
-          .filter((o) => {
-            return o.subTarget === key;
-          })
-          .map((o) => {
-            return o.text;
-          });
+        note.notes = note.notes.filter((o) => o.target === key).map((o) => o.text);
       }
 
       return result;

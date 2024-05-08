@@ -1276,7 +1276,9 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".tab.changes .controls a.add-change").click(this._onCreateChange.bind(this));
 
     // Open Changes editor
-    html.find(".tab.changes .changes .controls a.edit-change").click(this._onEditChange.bind(this));
+    html[0]
+      .querySelectorAll(".tab.changes .changes .controls a.menu")
+      .forEach((el) => el.addEventListener("pointerenter", this._onOpenChangeMenu.bind(this), { passive: true }));
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
@@ -1896,6 +1898,27 @@ export class ItemSheetPF extends ItemSheet {
     this.item.actions.get(li.dataset.actionId).sheet.render(true);
   }
 
+  async _onOpenChangeMenu(event) {
+    const el = event.target;
+
+    const changeId = el.dataset.changeId;
+    if (!changeId) return;
+
+    const content = document.createElement("div");
+    content.innerHTML = await renderTemplate("systems/pf1/templates/items/parts/item-change-tooltip.hbs", { changeId });
+
+    content.querySelector(".duplicate").addEventListener("click", (ev) => this._onDuplicateChange(ev, el));
+    content.querySelector(".delete").addEventListener("click", (ev) => this._onDeleteChange(ev, el));
+    content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el));
+
+    await game.tooltip.activate(el, {
+      content,
+      locked: true,
+      direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
+      cssClass: "pf1 change-menu",
+    });
+  }
+
   /**
    * @internal
    * @param {Event} event - Click event
@@ -1903,15 +1926,34 @@ export class ItemSheetPF extends ItemSheet {
   _onEditChange(event) {
     event.preventDefault();
     const el = event.target;
-
-    if (el.dataset.target !== "change") return;
-
-    switch (el.dataset.action) {
-      case "edit": {
-        const change = this.item.changes.get(el.dataset.changeId);
-        return void pf1.applications.ChangeEditor.wait(change);
-      }
+    const changeId = el.dataset.changeId;
+    const change = this.item.changes.get(changeId);
+    if (change) {
+      game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
+      return void pf1.applications.ChangeEditor.wait(change);
     }
+  }
+
+  _onDuplicateChange(event) {
+    event.preventDefault();
+    const el = event.target;
+    const changeId = el.dataset.changeId;
+    if (!changeId) return;
+    const changes = this.item.toObject().system.changes ?? [];
+    const old = changes.find((c) => c._id === changeId);
+    if (old) {
+      game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
+      delete old._id;
+      return pf1.components.ItemChange.create([old], { parent: this.item });
+    }
+  }
+
+  _onDeleteChange(event) {
+    event.preventDefault();
+    const el = event.target;
+    const changeId = el.dataset.changeId;
+    game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
+    this.item.changes.get(changeId)?.delete();
   }
 
   async _onCreateChange(event) {

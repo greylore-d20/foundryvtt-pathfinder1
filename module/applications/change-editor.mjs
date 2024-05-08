@@ -159,32 +159,8 @@ export class ChangeEditor extends ItemSheet {
     }
   }
 
-  async _onDelete(event) {
-    event.preventDefault();
-
-    this.close();
-
-    this.change.delete();
-  }
-
-  async _onDuplicate(event) {
-    event.preventDefault();
-
-    const changes = this.item.toObject().system.changes ?? [];
-    const old = changes.find((c) => c._id === this.change.id);
-    if (old) {
-      delete old._id;
-      return pf1.components.ItemChange.create([old], { parent: this.item });
-    }
-  }
-
   activateListeners(html) {
     super.activateListeners(html);
-
-    // Buttons
-    html.find(".buttons button.close").click(this.close.bind(this));
-    html.find(".buttons button.delete").click(this._onDelete.bind(this));
-    html.find(".buttons button.duplicate").click(this._onDuplicate.bind(this));
 
     // Modify changes
     html.find(".target .change-target").click(this._onChangeTargetControl.bind(this));

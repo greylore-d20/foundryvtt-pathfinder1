@@ -124,3 +124,18 @@
     }
   }
 }
+
+.active.locked-tooltip.pf1.change-menu {
+  border-radius: 0.5rem;
+
+  .controls {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1em;
+
+    // Prevent the graphic eating pointer events
+    a > i {
+      pointer-events: none;
+    }
+  }
+}

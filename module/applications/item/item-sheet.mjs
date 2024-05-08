@@ -1187,7 +1187,7 @@ export class ItemSheetPF extends ItemSheet {
     if (this.item.isPhysical) {
       html.find(".item-properties input.details-tooptip").each((i, el) => {
         el.addEventListener(
-          "mouseover",
+          "pointerover",
           (ev) => {
             const content = this._onHoverTooltip(ev);
             if (content) {
@@ -1200,7 +1200,7 @@ export class ItemSheetPF extends ItemSheet {
           },
           { passive: true }
         );
-        el.addEventListener("mouseleave", (ev) => game.tooltip.deactivate(), { passive: true });
+        el.addEventListener("pointerleave", (ev) => game.tooltip.deactivate(), { passive: true });
       });
     }
 
@@ -1457,7 +1457,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", () => this._updateActions(), { passive: true, once: true });
+      el.addEventListener("pointerleave", () => this._updateActions(), { passive: true, once: true });
     } else this._updateActions();
   }
 

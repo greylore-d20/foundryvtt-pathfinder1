@@ -128,8 +128,8 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         event.stopPropagation();
 
         this.layer.preview.removeChildren();
-        canvas.stage.off("mousemove", handlers.mm);
-        canvas.stage.off("mousedown", handlers.lc);
+        canvas.stage.off("pointermove", handlers.mm);
+        canvas.stage.off("pointerdown", handlers.lc);
         canvas.app.view.removeEventListener("contextmenu", handlers.rc);
         canvas.app.view.removeEventListener("wheel", handlers.mw);
         // Clear highlight
@@ -198,8 +198,8 @@ export class AbilityTemplate extends MeasuredTemplatePF {
 
       // Activate listeners
       if (this.controlIcon) this.controlIcon.removeAllListeners();
-      canvas.stage.on("mousemove", handlers.mm);
-      canvas.stage.on("mousedown", handlers.lc);
+      canvas.stage.on("pointermove", handlers.mm);
+      canvas.stage.on("pointerdown", handlers.lc);
       canvas.app.view.addEventListener("contextmenu", handlers.rc);
       canvas.app.view.addEventListener("wheel", handlers.mw);
       this.hitArea = new PIXI.Polygon([]);

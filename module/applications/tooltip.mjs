@@ -8,7 +8,7 @@ export class TooltipPF extends Application {
     };
 
     document.addEventListener(
-      "mousemove",
+      "pointermove",
       (event) => {
         this.mousePos.x = event.clientX;
         this.mousePos.y = event.clientY;

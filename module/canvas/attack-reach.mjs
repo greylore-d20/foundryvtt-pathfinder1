@@ -464,8 +464,8 @@ const _getTokenByUuid = async function (uuid) {
  * @param {JQuery<HTMLElement>} html - The chat log
  */
 export function addReachListeners(html) {
-  html.on("mouseenter", ".card-range", _onMouseEnterReach);
-  html.on("mouseleave", ".card-range", _onMouseLeaveReach);
+  html.on("pointerenter", ".card-range", _onMouseEnterReach);
+  html.on("pointerleave", ".card-range", _onMouseLeaveReach);
 }
 
 /**

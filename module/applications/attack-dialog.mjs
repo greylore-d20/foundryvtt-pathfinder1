@@ -178,8 +178,8 @@ export class AttackDialog extends Application {
     html.on("click", this._unfocusElements.bind(this));
 
     // Button hover
-    html.find(`button[name="attack_single"]`).on("mouseenter", this._hideExtraAttacks.bind(this));
-    html.find(`button[name="attack_single"]`).on("mouseleave", this._showExtraAttacks.bind(this));
+    html.find(`button[name="attack_single"]`).on("pointerenter", this._hideExtraAttacks.bind(this));
+    html.find(`button[name="attack_single"]`).on("pointerleave", this._showExtraAttacks.bind(this));
 
     // Button press
     html.find(`button[name="attack_single"]`).on("click", (ev) => this.resolveAttack(ev, false));

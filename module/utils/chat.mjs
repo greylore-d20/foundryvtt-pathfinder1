@@ -298,8 +298,8 @@ export function addTargetCallbacks(cm, jq) {
 
     // Image element events
     const imgElem = elem.querySelector(".target-image");
-    imgElem.addEventListener("mouseenter", (ev) => _mouseEnterCallback(ev, uuid), { passive: true });
-    imgElem.addEventListener("mouseleave", (ev) => _mouseLeaveCallback(ev, uuid), { passive: true });
+    imgElem.addEventListener("pointerenter", (ev) => _mouseEnterCallback(ev, uuid), { passive: true });
+    imgElem.addEventListener("pointerleave", (ev) => _mouseLeaveCallback(ev, uuid), { passive: true });
     imgElem.addEventListener("click", (ev) => _imageClickCallback(ev, uuid));
 
     // Misc element events

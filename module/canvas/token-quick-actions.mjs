@@ -60,8 +60,8 @@ export class TokenQuickActions {
         const itemId = el.dataset.itemId;
         const item = actor.items.get(itemId);
         const action = item.firstAction;
-        el.addEventListener("mouseenter", () => showAttackReach(token, action), { passive: true });
-        el.addEventListener("mouseleave", () => clearHighlight(), { passive: true });
+        el.addEventListener("pointerenter", () => showAttackReach(token, action), { passive: true });
+        el.addEventListener("pointerleave", () => clearHighlight(), { passive: true });
       });
     }
   }

@@ -904,7 +904,7 @@ export class ActorSheetPF extends ActorSheet {
     super.activateListeners(html);
 
     // Tooltips
-    html[0].addEventListener("mousemove", (ev) => this._moveTooltips(ev), { passive: true });
+    html[0].addEventListener("pointermove", (ev) => this._moveTooltips(ev), { passive: true });
 
     // Activate Item Filters
     const filterLists = html.find(".filter-list");
@@ -1098,7 +1098,7 @@ export class ActorSheetPF extends ActorSheet {
     // Weight details tooltip
     html[0].querySelectorAll(".item-list .item[data-item-id] .item-detail.item-weight").forEach((el) => {
       el.addEventListener(
-        "mouseenter",
+        "pointerenter",
         (ev) => {
           const el0 = ev.currentTarget;
           const item = this.actor.items.get(el0.closest("[data-item-id]").dataset.itemId);
@@ -1126,7 +1126,7 @@ export class ActorSheetPF extends ActorSheet {
         },
         { passive: true }
       );
-      el.addEventListener("mouseleave", () => game.tooltip.deactivate(), { passive: true });
+      el.addEventListener("pointerleave", () => game.tooltip.deactivate(), { passive: true });
     });
 
     /* -------------------------------------------- */
@@ -1223,9 +1223,9 @@ export class ActorSheetPF extends ActorSheet {
     html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
 
     html
-      // "mouseenter" would be better, but Foundry tooltip behaves unpredictably with it.
-      .on("mouseover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
-      .on("mouseleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
+      // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
+      .on("pointerover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
+      .on("pointerleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
   }
 
   /**
@@ -2440,7 +2440,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
+      el.addEventListener("pointerleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
 
@@ -2462,7 +2462,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
+      el.addEventListener("pointerleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
   _setMaxSpellUses(event) {
@@ -2486,7 +2486,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
+      el.addEventListener("pointerleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
 
@@ -2514,7 +2514,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", async (event) => this._updateObject(event, this._getSubmitData(updateData)), {
+      el.addEventListener("pointerleave", async (event) => this._updateObject(event, this._getSubmitData(updateData)), {
         once: true,
       });
     } else {
@@ -2534,7 +2534,7 @@ export class ActorSheetPF extends ActorSheet {
     this.setItemUpdate(item.id, "system.level", value);
 
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
+      el.addEventListener("pointerleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
 
@@ -2713,7 +2713,7 @@ export class ActorSheetPF extends ActorSheet {
       const s = document.getSelection();
       if (s.anchorNode === elem || s.anchorNode === elem.parentElement) s.removeAllRanges();
 
-      if (wheelEvent) elem.removeEventListener("mouseout", handler);
+      if (wheelEvent) elem.removeEventListener("pointerout", handler);
       else {
         elem.removeEventListener("focusout", handler);
         elem.removeEventListener("keydown", keyHandler);
@@ -2738,7 +2738,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let changed = false;
     if (wheelEvent) {
-      elem.addEventListener("mouseout", handler, { passive: true });
+      elem.addEventListener("pointerout", handler, { passive: true });
       changed = true;
     } else {
       elem.addEventListener("focusout", handler, { passive: true });

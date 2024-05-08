@@ -23,6 +23,10 @@ export class ExperienceDistributor extends FormApplication {
       classes: ["pf1", "xp-distributor"],
       title: game.i18n.localize("PF1.Application.XPDistributor.Title"),
       template: "systems/pf1/templates/apps/xp-distributor.hbs",
+      dragDrop: [{ dragSelector: null, dropSelector: "form" }],
+      submitOnChange: false,
+      submitOnClose: false,
+      closeOnSubmit: false,
       width: 430,
       height: 794,
       resizable: true,
@@ -74,9 +78,6 @@ export class ExperienceDistributor extends FormApplication {
 
       this.render();
     });
-
-    // Allow dropping actors from the sidebar to add them to the list
-    html.addEventListener("drop", this._onDrop.bind(this));
 
     addListener('button[name="split-evenly"], button[name="give-to-all"]', "click", this._onSubmit.bind(this));
     addListener('button[name="cancel"]', "click", this._onCancel.bind(this));

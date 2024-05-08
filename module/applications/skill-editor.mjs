@@ -203,7 +203,6 @@ export class SkillEditor extends DocumentSheet {
     const elem = event.currentTarget;
 
     if (elem.classList.contains("delete")) {
-      await this._onSubmit(event, { preventRender: true });
       return this._updateObject(event, this._getSubmitData({ "skill.journal": null }));
     }
   }

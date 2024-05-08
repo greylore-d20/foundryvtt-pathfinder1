@@ -93,10 +93,12 @@ export class ActorTraitSelector extends DocumentSheet {
   async _updateDocument(event) {
     await this._onSubmit(event, { preventRender: true });
 
+    // Unregister this app from doc to avoid re-renders
+    delete this.document.apps[this.appId];
+
     const { custom, value } = this.attributes;
     const updateData = { [this.attribute]: { value, custom } };
     this.object.update(updateData);
-
     this.close({ force: true });
   }
 

@@ -1499,28 +1499,29 @@ export class ItemSheetPF extends ItemSheet {
   async _onScriptCallControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const item = this.item.scriptCalls ? this.item.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
+    const script = this.item.scriptCalls ? this.item.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
     const group = a.closest(".item-list");
     const category = group.dataset.category;
 
-    await this._onSubmit(event, { preventRender: true });
-
     // Create item
     if (a.classList.contains("item-create")) {
+      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
-    else if (item && a.classList.contains("item-delete")) {
-      const list = (this.item.system.scriptCalls || []).filter((o) => o._id !== item.id);
-      return this.item.update({ "system.scriptCalls": list });
+    else if (script && a.classList.contains("item-delete")) {
+      const list = (this.item.system.scriptCalls || []).filter((o) => o._id !== script.id);
+      const updateData = { "system.scriptCalls": list };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
     // Edit item
-    else if (item && a.classList.contains("item-edit")) {
-      item.edit();
+    else if (script && a.classList.contains("item-edit")) {
+      script.edit();
     }
     // Toggle hidden
-    else if (item && a.classList.contains("item-hide")) {
-      item.update({ hidden: !item.hidden });
+    else if (script && a.classList.contains("item-hide")) {
+      await this._onSubmit(event, { preventRender: true });
+      script.update({ hidden: !script.hidden });
     }
   }
 
@@ -1562,8 +1563,9 @@ export class ItemSheetPF extends ItemSheet {
     // Insert link
     if (link) {
       elem.value = !elem.value ? link : elem.value + "\n" + link;
+
+      return this._onSubmit(event); // Save
     }
-    return this._onSubmit(event);
   }
 
   async _onScriptCallDrop(event) {
@@ -1836,14 +1838,14 @@ export class ItemSheetPF extends ItemSheet {
 
     if (!this.isEditable) return;
 
-    await this._onSubmit(event, { preventRender: true });
-
     // Edit action
     if (a.classList.contains("edit-action")) {
       return this._onActionEdit(event);
     }
     // Add action
     else if (a.classList.contains("add-action")) {
+      await this._onSubmit(event, { preventRender: true });
+
       const newActionData = {
         img: this.item.img,
         name: ["weapon", "attack"].includes(this.item.type)
@@ -1868,7 +1870,10 @@ export class ItemSheetPF extends ItemSheet {
             rejectClose: false,
           });
 
-      if (confirmed === true) action.delete();
+      if (confirmed === true) {
+        await this._onSubmit(event, { preventRender: true });
+        action.delete();
+      }
     }
     // Duplicate action
     else if (a.classList.contains("duplicate-action")) {
@@ -1878,7 +1883,8 @@ export class ItemSheetPF extends ItemSheet {
       action._id = foundry.utils.randomID(16);
       const actionParts = foundry.utils.deepClone(this.item.toObject().system.actions ?? []);
       actionParts.push(action);
-      return this.item.update({ "system.actions": actionParts });
+      const updateData = { "system.actions": actionParts };
+      this._updateObject(event, this._getSubmitData(updateData));
     }
   }
 
@@ -1918,20 +1924,20 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    await this._onSubmit(event, { preventRender: true });
-
     // Add new note
     if (a.classList.contains("add-note")) {
       const contextNotes = this.item.toObject().system.contextNotes || [];
       contextNotes.push(new pf1.components.ContextNote().toObject());
-      return this.item.update({ "system.contextNotes": contextNotes });
+      const updateData = { "system.contextNotes": contextNotes };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
     // Remove a note
     if (a.classList.contains("delete-note")) {
       const li = a.closest(".context-note");
       const contextNotes = this.item.toObject().system.contextNotes || [];
       contextNotes.splice(Number(li.dataset.note), 1);
-      return this.item.update({ "system.contextNotes": contextNotes });
+      const updateData = { "system.contextNotes": contextNotes };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
   }
 
@@ -1968,8 +1974,6 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    await this._onSubmit(event, { preventRender: true });
-
     // Delete link
     if (a.classList.contains("delete-link")) {
       const li = a.closest(".links-item");
@@ -1986,7 +1990,8 @@ export class ItemSheetPF extends ItemSheet {
       // Call hook for deleting a link
       Hooks.callAll("pf1DeleteItemLink", this.item, deleted, linkType);
 
-      await this.item.update({ system: { links: { [linkType]: links } } });
+      const updateData = { "system.links": { [linkType]: links } };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
   }
 
@@ -2121,19 +2126,17 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
     const key = a.closest(".notes").dataset.name;
 
-    await this._onSubmit(event, { preventRender: true });
-
     if (a.classList.contains("add-entry")) {
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
-      return this.item.update(updateData);
+      return this._updateObject(event, this._getSubmitData(updateData));
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
       notes.splice(index, 1);
       const updateData = { [key]: notes };
-      return this.item.update(updateData);
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
   }
 

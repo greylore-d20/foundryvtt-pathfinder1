@@ -364,21 +364,20 @@ export class ItemActionSheet extends FormApplication {
     const a = event.currentTarget;
     const key = a.closest(".notes").dataset.name;
 
-    await this._onSubmit(event, { preventRender: true });
-
+    // Add
     if (a.classList.contains("add-entry")) {
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
-      this.action.update(updateData);
-    } else if (a.classList.contains("delete-entry")) {
+      return this._updateObject(event, this._getSubmitData(updateData));
+    }
+    // Delete
+    else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
       const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key));
       notes.splice(index, 1);
-
-      const updateData = {};
-      updateData[key] = notes;
-      this.action.update(updateData);
+      const updateData = { [key]: notes };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
   }
 
@@ -428,8 +427,6 @@ export class ItemActionSheet extends FormApplication {
     const k2 = path.split(".").slice(0, -1).join(".");
     const k3 = path.split(".").slice(-1).join(".");
 
-    await this._onSubmit(event, { preventRender: true });
-
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
@@ -441,11 +438,10 @@ export class ItemActionSheet extends FormApplication {
 
       // Add data
       const damage = foundry.utils.getProperty(this.action.data, k2);
-      const updateData = {};
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       damageParts.push(initialData);
-      updateData[path] = damageParts;
-      return this.action.update(updateData);
+      const updateData = { [path]: damageParts };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
     // Remove a damage component
     else if (a.classList.contains("delete-damage")) {
@@ -454,9 +450,8 @@ export class ItemActionSheet extends FormApplication {
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       if (damageParts.length) {
         damageParts.splice(Number(li.dataset.damagePart), 1);
-        const updateData = {};
-        updateData[path] = damageParts;
-        return this.action.update(updateData);
+        const updateData = { [path]: damageParts };
+        return this._updateObject(event, this._getSubmitData(updateData));
       }
     }
   }
@@ -494,18 +489,18 @@ export class ItemActionSheet extends FormApplication {
 
     const manualExtraAttacks = foundry.utils.deepClone(this.action.data.extraAttacks?.manual ?? []);
 
-    await this._onSubmit(event, { preventRender: true });
-
     // Add new attack component
     if (a.classList.contains("add-attack")) {
       manualExtraAttacks.push({ formula: "", name: "" });
-      return this.action.update({ extraAttacks: { manual: manualExtraAttacks } });
+      const updateData = { extraAttacks: { manual: manualExtraAttacks } };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
     // Remove an attack component
     else if (a.classList.contains("delete-attack")) {
       const li = a.closest(".attack-part");
       manualExtraAttacks.splice(Number(li.dataset.attackPart), 1);
-      return this.action.update({ extraAttacks: { manual: manualExtraAttacks } });
+      const updateData = { extraAttacks: { manual: manualExtraAttacks } };
+      return this._updateObject(event, this._getSubmitData(updateData));
     }
   }
 
@@ -540,8 +535,9 @@ export class ItemActionSheet extends FormApplication {
     // Insert link
     if (link) {
       elem.value = !elem.value ? link : elem.value + "\n" + link;
+
+      return this._onSubmit(event); // Save
     }
-    return this._onSubmit(event);
   }
 
   async _onAlignmentChecked(event) {

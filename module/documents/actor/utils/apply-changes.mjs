@@ -1043,9 +1043,9 @@ export const addDefaultChanges = function (changes) {
         formula: sr,
         target: "misc",
         subTarget: "spellResist",
-        modifier: "base",
+        modifier: "untyped",
         priority: 1000,
-        flavor: game.i18n.localize("PF1.Base"),
+        flavor: game.i18n.localize("PF1.CustomBonus"),
       })
     );
   }
@@ -1122,8 +1122,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: ac,
         subTarget: "nac",
-        modifier: "base",
-        flavor: game.i18n.localize("PF1.NaturalArmor"),
+        modifier: "untyped",
+        flavor: game.i18n.format("PF1.CustomBonusType", { type: game.i18n.localize("PF1.NaturalArmor") }),
       })
     );
   }

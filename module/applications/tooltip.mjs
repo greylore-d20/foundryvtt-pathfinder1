@@ -119,10 +119,11 @@ export class TooltipPF extends Application {
 
     const worldConfig = this.worldConfig;
 
-    if (
-      (isGM && this.forceHideGMInfo) ||
-      (!isGM && !token.actor.testUserPermission(game.user, worldConfig.minimumPermission))
-    ) {
+    const allow = isGM
+      ? this.forceHideGMInfo
+      : !token.actor.testUserPermission(game.user, worldConfig.minimumPermission);
+
+    if (allow) {
       const actorConfig = this.actorConfig;
       const tooltipName = actorConfig.name || "";
       const hideName = actorConfig.hideName === true;
@@ -154,18 +155,22 @@ export class TooltipPF extends Application {
     };
 
     const isGM = game.user.isGM;
-    const isNonGMOwner = !isGM && actor.isOwner;
+
     const actorConfig = this.actorConfig;
     const worldConfig = this.worldConfig;
 
-    data.isOwner = isGM || isNonGMOwner;
+    // Combine the two configs into something effective
+    const config = foundry.utils.deepClone(worldConfig);
+    Object.entries(actorConfig).forEach(([key, value]) => (config[key] ||= value));
+
+    data.isOwner = actor.isOwner;
     if (!data.isOwner) data.name = "???";
     this.getPortrait(data, actor.img);
 
-    const showForGM = isGM && !this.forceHideGMInfo;
+    const fullInfo = isGM ? !this.forceHideGMInfo : actor.isOwner;
 
     // Get conditions
-    if (showForGM || isNonGMOwner || (!actorConfig.hideConditions && !worldConfig.hideConditions)) {
+    if (fullInfo || !config.hideConditions) {
       const conditions = actor.system.conditions;
       for (const [conditionId, active] of Object.entries(conditions)) {
         if (active === true) {
@@ -180,7 +185,7 @@ export class TooltipPF extends Application {
     }
 
     // Get buffs
-    if (showForGM || isNonGMOwner || (!actorConfig.hideBuffs && !worldConfig.hideBuffs)) {
+    if (fullInfo || !config.hideBuffs) {
       const buffs = actor.itemTypes.buff?.filter((i) => i.isActive && !i.system.hideFromToken) ?? [];
       for (const b of buffs) {
         data.buffs = data.buffs || [];
@@ -193,7 +198,7 @@ export class TooltipPF extends Application {
     }
 
     // Get held items
-    if (showForGM || actor.isOwner || (!actorConfig.hideHeld && !worldConfig.hideHeld)) {
+    if (fullInfo || !config.hideHeld) {
       const held = actor.items.filter((i) => {
         if (!["weapon", "equipment"].includes(i.type)) return false;
         if (!i.isActive) return false;
@@ -204,7 +209,7 @@ export class TooltipPF extends Application {
       for (const i of held) {
         data.held = data.held || [];
         data.held.push({
-          label: i.getName(this.forceHideGMInfo),
+          label: i.getName(!fullInfo),
           icon: i.img,
         });
       }
@@ -213,26 +218,26 @@ export class TooltipPF extends Application {
     const equipment = actor.itemTypes.equipment?.filter((i) => i.isActive) ?? [];
 
     // Get armor
-    if (showForGM || actor.isOwner || (!actorConfig.hideArmor && !worldConfig.hideArmor)) {
+    if (fullInfo || !config.hideArmor) {
       const armor = equipment.filter((i) => i.subType === "armor");
 
       for (const i of armor) {
         data.armor = data.armor || [];
         data.armor.push({
-          label: i.getName(this.forceHideGMInfo),
+          label: i.getName(!fullInfo),
           icon: i.img,
         });
       }
     }
 
     // Get clothing
-    if (showForGM || actor.isOwner || (!actorConfig.hideClothing && !worldConfig.hideClothing)) {
+    if (fullInfo || !config.hideClothing) {
       const clothing = equipment.filter((i) => i.subType === "clothing");
 
       for (const i of clothing) {
         data.clothing = data.clothing || [];
         data.clothing.push({
-          label: i.getName(this.forceHideGMInfo),
+          label: i.getName(!fullInfo),
           icon: i.img,
         });
       }

@@ -397,7 +397,17 @@ export const woundThresholdConditions = {
 /**
  * Change targets affected by Wound Thresholds.
  */
-export const woundThresholdChangeTargets = ["~attackCore", "cmd", "allSavingThrows", "ac", "~skillMods", "allChecks"];
+export const woundThresholdChangeTargets = [
+  "~attackCore",
+  "cl",
+  "allSavingThrows",
+  "ac",
+  //"cmd", // valid target but is inherited from "ac"
+  "skills",
+  "allChecks",
+  //"init", // inherited from allChecks
+  //"abilityChecks", // inherited from allChecks
+];
 
 export const divineFocus = {
   0: "",

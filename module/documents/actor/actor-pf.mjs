@@ -791,19 +791,6 @@ export class ActorPF extends ActorBasePF {
         setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
       }
 
-      if (rollData.attributes.woundThresholds.penalty != null) {
-        // Subtract Wound Thresholds penalty. Can't reduce below 1.
-        if (rollData.attributes.woundThresholds.penalty > 0 && clTotal > 1) {
-          clTotal = Math.max(1, clTotal - rollData.attributes.woundThresholds.penalty);
-          setSourceInfoByName(
-            this.sourceInfo,
-            key,
-            pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level],
-            -rollData.attributes.woundThresholds.penalty
-          );
-        }
-      }
-
       // Subtract energy drain
       if (rollData.attributes.energyDrain) {
         clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
@@ -1783,17 +1770,7 @@ export class ActorPF extends ActorBasePF {
         const wtData = this.getWoundThresholdData(actorData);
 
         if (wtData.level > 0) {
-          const changeFlatKeys = [
-            "~attackCore",
-            //"cmd", // valid target but is inherited from "ac"
-            "init",
-            "allSavingThrows",
-            "ac",
-            "skills",
-            "abilityChecks",
-            "cl",
-          ];
-          for (const fk of changeFlatKeys) {
+          for (const fk of pf1.config.woundThresholdChangeTargets) {
             const flats = getChangeFlat.call(this, fk, "penalty");
             for (const k of flats) {
               if (!k) continue;

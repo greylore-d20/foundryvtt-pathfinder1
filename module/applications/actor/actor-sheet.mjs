@@ -495,12 +495,16 @@ export class ActorSheetPF extends ActorSheet {
       result.destroyed = result.hp?.value <= 0;
     }
 
-    const itemCharges = result.uses?.value != null ? result.uses.value : 1;
     result.empty = false;
+    if (result.isCharged && !result.isSingleUse) {
+      // TODO: Do charge test in action selection instead of here
+      //const smallestUsage = Math.min(...item.actions.map((a) => a.getChargeCost()));
+      //const itemCharges = result.uses?.value != null ? result.uses.value : 1;
+      //if (itemCharges < smallestUsage) result.empty = true;
+    }
+
     if (result.isPhysical && result.quantity <= 0) result.empty = true;
-    else if (result.isCharged && !result.isSingleUse && itemCharges <= 0) result.empty = true;
-    result.disabled = result.empty || result.destroyed || false;
-    if (result.type === "feat" && !result.isActive) result.disabled = true;
+    result.disabled = result.empty || result.destroyed || !result.isActive;
 
     return result;
   }

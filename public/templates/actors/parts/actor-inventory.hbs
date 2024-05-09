@@ -94,7 +94,7 @@
         {{#if section.hasActions}}
         <div class="item-detail item-actions">
           <div class="item-action">
-            {{#unless item.showUnidentifiedData}}
+            {{#unless (or item.showUnidentifiedData item.disabled)}}
             {{#if item.hasAction}}
             <a class="item-control item-action action roll" data-tooltip="PF1.UseItem">
               <i class="fa-solid fa-dice-d20"></i>

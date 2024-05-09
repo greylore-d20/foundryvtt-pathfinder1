@@ -176,7 +176,8 @@ export class ItemPhysicalPF extends ItemPF {
 
   get isActive() {
     const hp = this.system.hp?.value || 0;
-    if (hp <= 0) return false;
+    if (hp <= 0) return false; // Destroyed
+    if (this.system.quantity <= 0) return false;
     return this.system.equipped ?? false;
   }
 

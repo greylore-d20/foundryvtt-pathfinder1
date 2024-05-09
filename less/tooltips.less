@@ -1,118 +1,118 @@
-#tooltip.pf1.extended {
-  outline: 1px dotted orange;
-
+#tooltip.pf1 {
   font-size: var(--font-size-12);
-
+  outline: 1px dotted orange;
   background: rgba(0, 0, 0, 0.8);
 
-  display: grid;
-  grid-template-columns: 5fr 1fr 1fr 1fr;
-  gap: 0 0.5em;
+  &.extended {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr 1fr;
+    gap: 0 0.5em;
 
-  max-width: unset;
-  min-width: min-content;
-  width: min-content;
-
-  > :is(h3, h4, h5),
-  > .notes,
-  > hr {
-    grid-column: span 4;
-    text-align: center;
-    margin: 0;
-  }
-
-  :is(h3, h4) {
+    max-width: unset;
     min-width: min-content;
-    white-space: nowrap;
-    margin-top: 0.3em;
-    &:first-child {
-      margin-top: unset;
-    }
-  }
+    width: min-content;
 
-  > :is(.path, .detail, .type, .value, .unit, .flavor) {
-    width: min-content; // Tooltip sometimes sizes incorrectly without this
-    white-space: nowrap;
-  }
-
-  > :is(.path, .detail) {
-    grid-column: span 2;
-    text-align: left;
-
-    &.no-value {
+    > :is(h3, h4, h5),
+    > .notes,
+    > hr {
       grid-column: span 4;
+      text-align: center;
+      margin: 0;
     }
-  }
 
-  > .flavor {
-    text-align: left;
-  }
+    :is(h3, h4) {
+      min-width: min-content;
+      white-space: nowrap;
+      margin-top: 0.3em;
+      &:first-child {
+        margin-top: unset;
+      }
+    }
 
-  > .value {
-    color: gold;
-    text-align: right;
-    justify-self: right;
+    > :is(.path, .detail, .type, .value, .unit, .flavor) {
+      width: min-content; // Tooltip sometimes sizes incorrectly without this
+      white-space: nowrap;
+    }
 
-    &.left {
+    > :is(.path, .detail) {
+      grid-column: span 2;
+      text-align: left;
+
+      &.no-value {
+        grid-column: span 4;
+      }
+    }
+
+    > .flavor {
+      text-align: left;
+    }
+
+    > .value {
+      color: gold;
+      text-align: right;
+      justify-self: right;
+
+      &.left {
+        text-align: left;
+        justify-self: left;
+      }
+
+      grid-column: span 2;
+
+      &.untyped {
+        grid-column: span 3;
+      }
+
+      &.has-unit {
+        grid-column: unset;
+      }
+    }
+
+    > .unit {
+      color: goldenrod;
       text-align: left;
       justify-self: left;
     }
 
-    grid-column: span 2;
+    > .type {
+      font-size: var(--font-size-11);
+      text-align: left;
+      color: silver;
 
-    &.untyped {
-      grid-column: span 3;
-    }
-
-    &.has-unit {
-      grid-column: unset;
-    }
-  }
-
-  > .unit {
-    color: goldenrod;
-    text-align: left;
-    justify-self: left;
-  }
-
-  > .type {
-    font-size: var(--font-size-11);
-    text-align: left;
-    color: silver;
-
-    &::before {
-      //content: "[ ";
-    }
-    &::after {
-      //content: " ]";
-    }
-  }
-
-  > .notes {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    &:not(:first-child) {
-      margin-top: 0.3rem;
-    }
-
-    > h4 {
-      margin: 0;
-    }
-
-    .content-link,
-    .inline-preroll.inline-formula {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-      i.fa-dice-d20 {
-        color: #a0a099;
+      &::before {
+        //content: "[ ";
+      }
+      &::after {
+        //content: " ]";
       }
     }
 
-    .inline-roll {
-      border-color: var(--color-border-dark-5);
-      background: none;
+    > .notes {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      &:not(:first-child) {
+        margin-top: 0.3rem;
+      }
+
+      > h4 {
+        margin: 0;
+      }
+
+      .content-link,
+      .inline-preroll.inline-formula {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        i.fa-dice-d20 {
+          color: #a0a099;
+        }
+      }
+
+      .inline-roll {
+        border-color: var(--color-border-dark-5);
+        background: none;
+      }
     }
   }
 }

@@ -1230,6 +1230,9 @@ export class ActorSheetPF extends ActorSheet {
       // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
       .on("pointerover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
       .on("pointerleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
+
+    // Add system styling to all data-tooltip entries
+    html[0].querySelectorAll("[data-tooltip]").forEach((el) => (el.dataset.tooltipClass = "pf1"));
   }
 
   /**

@@ -3537,9 +3537,9 @@ export class ActorPF extends ActorBasePF {
 
     if (damages.custom.length) {
       damages.custom.split(pf1.config.re.traitSeparator).forEach((entry, counter) => {
-        const split = entry.split(damage === "dr" ? /\s*\/\s*/ : /\s+/);
-        const type = split[damage === "dr" ? 1 : 0];
-        const amount = split[damage === "dr" ? 0 : 1];
+        const re = /(?<value>\d+)/.exec(entry);
+        const amount = parseInt(re?.groups.value || "0");
+        const type = entry.replace(/\d+\s*\/?/, "").trim();
 
         resistances[`custom${counter + 1}`] = format(amount, type, null, "");
       });

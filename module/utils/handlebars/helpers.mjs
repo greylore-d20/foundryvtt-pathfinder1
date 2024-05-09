@@ -6,7 +6,14 @@ import { RollPF } from "../../dice/roll.mjs";
  */
 export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
-  Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
+  Handlebars.registerHelper("distanceUnit", (type) => {
+    foundry.utils.logCompatibilityWarning(`distanceUnit HBS helper is deprecated with no replacement.`, {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    const u = convertDistance(0, type)[1];
+    return pf1.config.measureUnitsShort[u] || u;
+  });
 
   Handlebars.registerHelper("actionRange", (action, rollData) => {
     if (!action?.hasRange) return null;

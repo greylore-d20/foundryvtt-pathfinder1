@@ -324,18 +324,6 @@ export const getChangeFlat = function (target, modifierType, value) {
         }
       }
       break;
-    case "~skillMods":
-      for (const [a, skl] of Object.entries(curData.skills)) {
-        if (skl == null) continue;
-        result.push(`system.skills.${a}.mod`);
-
-        if (skl.subSkills != null) {
-          for (const b of Object.keys(skl.subSkills)) {
-            result.push(`system.skills.${a}.subSkills.${b}.mod`);
-          }
-        }
-      }
-      break;
     case "unskills":
       // Untrained skills
       for (const [skillId, skill] of Object.entries(curData.skills)) {

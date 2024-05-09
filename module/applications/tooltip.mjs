@@ -75,6 +75,8 @@ export class TooltipPF extends Application {
    * @param {TokenDocument} token
    */
   bind(token) {
+    if (!game.user.isGM && token.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
+
     if (this.lock.new) return;
     // If already stickied, don't replace it unless new sticky is tried.
     if (this.stickied && !this.sticky) return;
@@ -307,8 +309,6 @@ export class TooltipPF extends Application {
     if (this.forceHide) return;
     if (this.clientConfig.disable === true || this.worldConfig.disable === true) return;
 
-    if (!game.user.isGM && token.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
-
     // Ensure tooltip is stickied
     if (this.sticky) this.stickied = true;
 
@@ -357,11 +357,11 @@ export class TooltipPF extends Application {
       const el = document.elementFromPoint(p.x, p.y);
       // This check is required to prevent hovering over tokens under application windows
       if (el?.id === "board") {
-        pf1.tooltip.bind(token);
+        pf1.tooltip.bind(token.document);
       }
     }
     // Hide token tooltip
-    else pf1.tooltip.unbind(token);
+    else pf1.tooltip.unbind(token.document);
   }
 
   static toggle(enable) {

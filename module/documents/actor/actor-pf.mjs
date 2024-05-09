@@ -3195,7 +3195,7 @@ export class ActorPF extends ActorBasePF {
     if (rollData.attributes.woundThresholds.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
       notes.push(label);
-      parts.push(`- @attributes.woundThresholds.penalty[${label}`);
+      parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
     const props = [];

@@ -1192,9 +1192,9 @@ export class ItemSheetPF extends ItemSheet {
     const hasActor = !!this.actor;
 
     if (this.item.isPhysical) {
-      html.find(".item-properties input.details-tooptip").each((i, el) => {
+      html.find(".details-tooptip").each((i, el) => {
         el.addEventListener(
-          "pointerover",
+          "pointermove",
           (ev) => {
             const content = this._onHoverTooltip(ev);
             if (content) {

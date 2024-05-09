@@ -704,6 +704,13 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
+    // Get conditions
+    context.conditions = item.effects
+      .filter((e) => !e.disabled && e.statuses.size)
+      .map((e) => Array.from(e.statuses))
+      .flat()
+      .map((s) => pf1.registry.conditions.get(s)?.name || s);
+
     // Add distance units
     context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {

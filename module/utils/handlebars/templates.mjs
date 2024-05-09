@@ -44,6 +44,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-description.hbs",
   "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs",
   "systems/pf1/templates/items/parts/item-sidebar-tags.hbs",
+  "systems/pf1/templates/items/parts/item-sidebar-conditions.hbs",
   "systems/pf1/templates/items/parts/item-sidebar-aura.hbs",
   "systems/pf1/templates/items/parts/item-links.hbs",
   "systems/pf1/templates/items/parts/item-materials-addon.hbs",

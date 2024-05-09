@@ -95,7 +95,6 @@ const templatePaths = /** @type {const} */ ([
 
   // Tooltip
   "systems/pf1/templates/hud/tooltip.hbs",
-  "systems/pf1/templates/hud/tooltip_actor.hbs",
 
   "systems/pf1/templates/hud/quick-actions.hbs",
 

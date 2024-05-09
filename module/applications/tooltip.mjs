@@ -52,11 +52,11 @@ export class TooltipPF extends Application {
   }
 
   get clientConfig() {
-    return game.settings.get("pf1", "tooltipConfig");
+    return game.settings.get("pf1", "tooltipConfig").toObject();
   }
 
   get worldConfig() {
-    return game.settings.get("pf1", "tooltipWorldConfig");
+    return game.settings.get("pf1", "tooltipWorldConfig").toObject();
   }
 
   get actorConfig() {
@@ -107,78 +107,56 @@ export class TooltipPF extends Application {
   }
 
   async getData() {
-    return {
-      actorData: this.getTokenData(),
-    };
-  }
-
-  getTokenData() {
-    const data = this.getActorData();
-    if (!data) return null;
-
-    const token = this.token;
-    const isGM = game.user.isGM;
-
-    const worldConfig = this.worldConfig;
-
-    const allow = isGM
-      ? this.forceHideGMInfo
-      : !token.actor.testUserPermission(game.user, worldConfig.minimumPermission);
-
-    if (allow) {
-      const actorConfig = this.actorConfig;
-      const tooltipName = actorConfig.name || "";
-      const hideName = actorConfig.hideName === true;
-      // Hide name if explicitly set to hide or disposition does not match
-      if (hideName || token.disposition <= worldConfig.hideActorNameByDisposition) {
-        data.name = worldConfig.hideActorNameReplacement || "???";
-      }
-      // Otherwise display custom name if configured
-      else if (tooltipName) {
-        data.name = tooltipName;
-      }
-      // Otherwise display token name as normal
-      else {
-        data.name = token.name;
-      }
-    }
-
-    return data;
-  }
-
-  getActorData() {
     const token = this.token;
     const actor = token?.actor;
-    if (!actor) return null;
+    if (!actor) return {};
 
-    const data = {
+    const context = {
       data: actor.system,
       name: token.name,
+      isOwner: actor.isOwner,
     };
 
     const isGM = game.user.isGM;
 
     const actorConfig = this.actorConfig;
     const worldConfig = this.worldConfig;
+    const clientConfig = this.clientConfig;
 
     // Combine the two configs into something effective
     const config = foundry.utils.deepClone(worldConfig);
     Object.entries(actorConfig).forEach(([key, value]) => (config[key] ||= value));
 
-    data.isOwner = actor.isOwner;
-    if (!data.isOwner) data.name = "???";
-    this.getPortrait(data, actor.img);
+    if (!clientConfig.portrait.hide && !worldConfig.portrait.hide === true) {
+      context.portrait = {
+        maxWidth: clientConfig.portrait?.maxSize?.width || 100,
+        maxHeight: clientConfig.portrait?.maxSize?.height || 100,
+        url: actor.img,
+      };
+    }
 
     const fullInfo = isGM ? !this.forceHideGMInfo : actor.isOwner;
+
+    // Display name, separate permission checking from
+    if (isGM ? this.forceHideGMInfo : !token.actor.testUserPermission(game.user, worldConfig.minimumPermission)) {
+      // Hide name if explicitly set to hide or disposition does not match
+      if (config.hideName || token.disposition <= worldConfig.hideActorNameByDisposition) {
+        context.name = config.name || worldConfig.hideActorNameReplacement || "???";
+      }
+      // Otherwise display custom name if configured
+      else if (config.name) {
+        context.name = config.name;
+      }
+    }
 
     // Get conditions
     if (fullInfo || !config.hideConditions) {
       const conditions = actor.system.conditions;
       for (const [conditionId, active] of Object.entries(conditions)) {
         if (active === true) {
-          data.conditions = data.conditions || [];
+          context.conditions = context.conditions || [];
           const condition = pf1.registry.conditions.get(conditionId);
-          data.conditions.push({
+          context.conditions.push({
             label: condition.name,
             icon: condition.texture,
           });
@@ -190,8 +168,8 @@ export class TooltipPF extends Application {
     if (fullInfo || !config.hideBuffs) {
       const buffs = actor.itemTypes.buff?.filter((i) => i.isActive && !i.system.hideFromToken) ?? [];
       for (const b of buffs) {
-        data.buffs = data.buffs || [];
-        data.buffs.push({
+        context.buffs = context.buffs || [];
+        context.buffs.push({
           label: b.name,
           icon: b.img,
           level: b.system.level,
@@ -209,8 +187,8 @@ export class TooltipPF extends Application {
       });
 
       for (const i of held) {
-        data.held = data.held || [];
-        data.held.push({
+        context.held = context.held || [];
+        context.held.push({
           label: i.getName(!fullInfo),
           icon: i.img,
         });
@@ -224,8 +202,8 @@ export class TooltipPF extends Application {
       const armor = equipment.filter((i) => i.subType === "armor");
 
       for (const i of armor) {
-        data.armor = data.armor || [];
-        data.armor.push({
+        context.armor = context.armor || [];
+        context.armor.push({
           label: i.getName(!fullInfo),
           icon: i.img,
         });
@@ -237,26 +215,15 @@ export class TooltipPF extends Application {
       const clothing = equipment.filter((i) => i.subType === "clothing");
 
       for (const i of clothing) {
-        data.clothing = data.clothing || [];
-        data.clothing.push({
+        context.clothing = context.clothing || [];
+        context.clothing.push({
           label: i.getName(!fullInfo),
           icon: i.img,
         });
       }
     }
 
-    return data;
-  }
-
-  getPortrait(data, url) {
-    const clientConfig = this.clientConfig;
-    if (clientConfig.portrait.hide === true || this.worldConfig.portrait.hide === true) return;
-
-    data.portrait = {
-      maxWidth: clientConfig.portrait?.maxSize?.width || 100,
-      maxHeight: clientConfig.portrait?.maxSize?.height || 100,
-      url: url,
-    };
+    return context;
   }
 
   _setPosition() {

@@ -105,6 +105,14 @@ export class ChangeEditor extends ItemSheet {
     // Prepare categories and changes to display
     const categories = getBuffTargetDictionary(this.item.actor);
 
+    // Sort specific categories
+    const sortable = new Set(["skill"]);
+    const lang = game.settings.get("core", "language");
+    for (const category of categories) {
+      if (!sortable.has(category.key)) continue;
+      category.items.sort((a, b) => a.label.localeCompare(b.label, lang));
+    }
+
     const part1 = this.change?.subTarget?.split(".")[0];
     const category = pf1.config.buffTargets[part1]?.category ?? part1;
 

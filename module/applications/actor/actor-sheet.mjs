@@ -2921,6 +2921,9 @@ export class ActorSheetPF extends ActorSheet {
 
   async _quickChangeItemQuantity(event, add = 1) {
     event.preventDefault();
+    if (event.shiftKey) add *= 5;
+    else if (event.ctrlKey) add *= 10;
+
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 

@@ -1513,6 +1513,10 @@ export class ActorSheetPF extends ActorSheet {
           {
             label: game.i18n.localize("PF1.ModifierOnly"),
             sources: getSource(`system.abilities.${abl}.mod`),
+          },
+          {
+            label: game.i18n.localize("PF1.CheckOnly"),
+            sources: getSource(`system.abilities.${abl}.checkMod`),
           }
         );
 

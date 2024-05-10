@@ -478,7 +478,7 @@ export class ItemSpellPF extends ItemPF {
       until: "PF1 vNEXT+1",
     });
 
-    return this.firstAction?.getDC(rollData) ?? 10;
+    return this.defaultAction?.getDC(rollData) ?? 10;
   }
 
   getSpellUses(max = false) {
@@ -849,7 +849,7 @@ export class ItemSpellPF extends ItemPF {
       }
     );
 
-    return this.canUse && (this.firstAction?.canUse ?? true);
+    return this.canUse && (this.defaultAction?.canUse ?? true);
   }
 
   /**
@@ -890,10 +890,10 @@ export class ItemSpellPF extends ItemPF {
   getDescriptionData({ rollData } = {}) {
     const reSplit = pf1.config.re.traitSeparator;
     const srcData = this.system;
-    const firstAction = this.firstAction;
-    const actionData = firstAction?.data ?? {};
+    const defaultAction = this.defaultAction;
+    const actionData = defaultAction?.data ?? {};
 
-    rollData ??= firstAction?.getRollData();
+    rollData ??= defaultAction?.getRollData();
 
     const label = {
       school: pf1.config.spellSchools[srcData.school],
@@ -930,7 +930,7 @@ export class ItemSpellPF extends ItemPF {
     const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 
     // Set casting time label
-    const act = firstAction?.activation;
+    const act = defaultAction?.activation;
     if (act != null) {
       const activationCost = act.cost;
       const activationType = act.type;

@@ -414,7 +414,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemId = elem.dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    rollData ??= item.firstAction?.getRollData() ?? item.getRollData();
+    rollData ??= item.defaultAction?.getRollData() ?? item.getRollData();
 
     const { description, properties } = await item.getChatData({ chatcard: false, rollData });
 

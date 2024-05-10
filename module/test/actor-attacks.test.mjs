@@ -152,12 +152,12 @@ export const registerActorItemAttackTests = () => {
         });
 
         it("should have max range of 10 ft", function () {
-          const maxRange = items.wGuisarme.firstAction.maxRange;
+          const maxRange = items.wGuisarme.defaultAction.maxRange;
           expect(pf1.utils.convertDistanceBack(maxRange)[0]).to.equal(10);
         });
 
         it("should have min range of 5 ft", function () {
-          const minRange = items.wGuisarme.firstAction.minRange;
+          const minRange = items.wGuisarme.defaultAction.minRange;
           expect(pf1.utils.convertDistanceBack(minRange)[0]).to.equal(5);
         });
       });
@@ -222,7 +222,7 @@ export const registerActorItemAttackTests = () => {
             let roll;
             let rolls;
             before(async () => {
-              const action = items.bite.firstAction;
+              const action = items.bite.defaultAction;
               await action.update({ naturalAttack: { primaryAttack: false } });
               roll = await items.bite.use({ skipDialog: true });
               rolls = roll.systemRolls.attacks[0];
@@ -273,7 +273,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack without ammo usage", function () {
           let roll;
           before(async () => {
-            await items.longbow.firstAction.update({ ammoType: "none" });
+            await items.longbow.defaultAction.update({ ammoType: "none" });
             roll = await items.longbow.use({ skipDialog: true });
             messages.push(roll);
           });
@@ -292,7 +292,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack with ammo usage and ammo present", function () {
           let roll;
           before(async () => {
-            await items.longbow.firstAction.update({ ammoType: "arrow" });
+            await items.longbow.defaultAction.update({ ammoType: "arrow" });
 
             items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });

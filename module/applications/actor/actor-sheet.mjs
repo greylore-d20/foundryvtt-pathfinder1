@@ -452,30 +452,30 @@ export class ActorSheetPF extends ActorSheet {
     result.hasResource = result.isCharged && !result.isSingleUse;
     result.hasUses = result.uses?.max > 0;
 
-    const firstAction = item.firstAction;
-    const firstActionRollData = firstAction?.getRollData();
+    const defaultAction = item.defaultAction;
+    const defaultActionRollData = defaultAction?.getRollData();
 
-    result.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
+    result.labels = item.getLabels({ actionId: defaultAction?.id, rollData: defaultActionRollData });
     result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-    if (firstAction) {
-      result.hasAttack = firstAction.hasAttack;
-      result.hasMultiAttack = firstAction.hasMultiAttack;
-      result.hasDamage = firstAction.hasDamage;
-      result.hasRange = firstAction.hasRange;
-      result.hasEffect = firstAction.hasEffect;
+    if (defaultAction) {
+      result.hasAttack = defaultAction.hasAttack;
+      result.hasMultiAttack = defaultAction.hasMultiAttack;
+      result.hasDamage = defaultAction.hasDamage;
+      result.hasRange = defaultAction.hasRange;
+      result.hasEffect = defaultAction.hasEffect;
       if (this._canShowRange(item)) {
         result.range = foundry.utils.mergeObject(
-          firstAction?.data?.range ?? {},
+          defaultAction?.data?.range ?? {},
           {
-            min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
-            max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
+            min: defaultAction?.getRange({ type: "min", rollData: defaultActionRollData }),
+            max: defaultAction?.getRange({ type: "max", rollData: defaultActionRollData }),
           },
           { inplace: false }
         );
       }
       if (result.hasAttack) {
-        const attacks = firstAction
-          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData: firstActionRollData })
+        const attacks = defaultAction
+          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData: defaultActionRollData })
           .map((atk) => atk.bonus);
         result.attackArray = attacks;
         const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
@@ -1639,7 +1639,7 @@ export class ActorSheetPF extends ActorSheet {
             break;
           }
           case "attacks": {
-            const action = item.firstAction;
+            const action = item.defaultAction;
             const attacks =
               action
                 ?.getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true })
@@ -1656,7 +1656,7 @@ export class ActorSheetPF extends ActorSheet {
             break;
           }
           case "damage": {
-            const action = item.firstAction;
+            const action = item.defaultAction;
             if (!action?.hasDamage) return;
 
             const actionData = action.data;
@@ -1765,7 +1765,7 @@ export class ActorSheetPF extends ActorSheet {
             break;
           }
           case "range": {
-            const action = item.firstAction;
+            const action = item.defaultAction;
             if (!action?.hasRange) return;
 
             const maxIncr = action.data.range?.maxIncrements ?? 1;
@@ -2095,7 +2095,7 @@ export class ActorSheetPF extends ActorSheet {
               });
             }
 
-            const action = item.firstAction;
+            const action = item.defaultAction;
 
             if (action?.hasDamage) {
               const types = action.data.damage?.parts?.map((d) => d.type).map(damageTypes) ?? [];
@@ -2650,7 +2650,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = elem.dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    rollData ??= item.firstAction?.getRollData() ?? item.getRollData();
+    rollData ??= item.defaultAction?.getRollData() ?? item.getRollData();
 
     const { description, properties } = await item.getChatData({ chatcard: false, rollData });
 

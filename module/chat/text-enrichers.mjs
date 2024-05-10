@@ -284,7 +284,7 @@ export function onUse(event, target) {
       continue;
     }
 
-    let itemAction = item.firstAction;
+    let itemAction = item.defaultAction;
     if (actionData) {
       const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionData);
       const { actionTag, actionId } = re?.groups ?? {};

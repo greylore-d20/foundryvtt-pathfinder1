@@ -59,7 +59,7 @@ export class TokenQuickActions {
       el.querySelectorAll(".token-quick-action").forEach((el) => {
         const itemId = el.dataset.itemId;
         const item = actor.items.get(itemId);
-        const action = item.firstAction;
+        const action = item.defaultAction;
         el.addEventListener("pointerenter", () => showAttackReach(token, action), { passive: true });
         el.addEventListener("pointerleave", () => clearHighlight(), { passive: true });
       });

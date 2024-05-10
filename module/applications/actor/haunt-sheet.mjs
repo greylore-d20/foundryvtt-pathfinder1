@@ -82,49 +82,9 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
     // The Actor and its Items
     data.actor = this.actor;
     data.token = this.token;
-    data.items = this.document.items.map((item) => {
-      const i = foundry.utils.deepClone(item.system);
-      i.document = item;
-      i.type = item.type;
-      i.id = item.id;
-      i.img = item.img;
-      i.isSingleUse = item.isSingleUse;
-      i.isCharged = item.isCharged;
-      i.hasResource = i.isCharged && !i.isSingleUse;
-      i.hasUses = i.uses?.max > 0;
-
-      const firstAction = item.firstAction;
-      const firstActionRollData = firstAction?.getRollData();
-
-      i.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
-      i.hasAttack = firstAction?.hasAttack;
-      i.hasMultiAttack = firstAction?.hasMultiAttack;
-      i.hasDamage = firstAction?.hasDamage;
-      i.hasRange = firstAction?.hasRange;
-      i.hasEffect = firstAction?.hasEffect;
-      i.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-      i.range = foundry.utils.mergeObject(
-        firstAction?.data?.range ?? {},
-        {
-          min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
-          max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
-        },
-        { inplace: false }
-      );
-      i.sort = item.sort;
-      i.showUnidentifiedData = item.showUnidentifiedData;
-      i.name = item.name; // Copy name over from item to handle identified state correctly
-
-      i.isStack = i.quantity > 1;
-      i.price = item.getValue({ recursive: false, sellValue: 1 });
-
-      const itemQuantity = i.quantity != null ? i.quantity : 1;
-      const itemCharges = i.uses?.value != null ? i.uses.value : 1;
-      i.empty = itemQuantity <= 0 || (i.isCharged && !i.isSingleUse && itemCharges <= 0);
-
-      return i;
-    });
-    data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    data.items = this.document.items
+      .map((item) => this._prepareItem(item))
+      .sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     // Prepare owned items
     this._prepareItems(data);

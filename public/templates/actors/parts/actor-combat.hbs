@@ -113,13 +113,13 @@
 
           <div class="item-detail item-damage tooltip" data-tooltip-extended="item.{{item.id}}.damage">
             {{#if item.hasDamage}}
-              <label class="resolved-formula">{{actionDamage item.document.firstAction @root.rollData}}</label>
+              <label class="resolved-formula">{{actionDamage item.document.defaultAction @root.rollData}}</label>
             {{/if}}
           </div>
 
           <div class="item-detail item-range" data-tooltip-extended="item.{{item.id}}.range">
             {{#if item.hasRange}}
-            <label>{{actionRange item.document.firstAction @root.rollData}}</label>
+            <label>{{actionRange item.document.defaultAction @root.rollData}}</label>
             {{/if}}
           </div>
 

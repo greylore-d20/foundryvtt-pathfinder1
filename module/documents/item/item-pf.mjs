@@ -266,8 +266,20 @@ export class ItemPF extends ItemBasePF {
     return this.system.alignments ?? null;
   }
 
-  /** @type {pf1.components.ItemAction|undefined} */
+  /**
+   * @deprecated
+   * @type {pf1.components.ItemAction|undefined}
+   */
   get firstAction() {
+    foundry.utils.logCompatibilityWarning("ItemPF.firstAction is deprecated in favor of ItemPF.defaultAction", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+2",
+    });
+    return this.defaultAction;
+  }
+
+  /** @type {pf1.components.ItemAction|undefined} */
+  get defaultAction() {
     return this.actions?.get(this.system.actions?.[0]?._id);
   }
 
@@ -694,7 +706,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Record<string, string>} This item's labels
    */
   getLabels({ actionId, rollData } = {}) {
-    const action = actionId ? this.actions.get(actionId) : this.firstAction;
+    const action = actionId ? this.actions.get(actionId) : this.defaultAction;
     return {
       activation: pf1.config.abilityActivationTypes.passive, // Default passive if no action is present
       ...(action?.getLabels({ rollData }) ?? {}),
@@ -1091,13 +1103,13 @@ export class ItemPF extends ItemBasePF {
    * @param {boolean} [options.chatcard=false] - Is this actually for chat card.
    * @param {boolean} [options.extended=false] - Include extended information that may not be useful in all circumstances.
    * @param {string} [options.actionId] - The ID of an action on this item to generate chat data for,
-   *                                      defaults to {@link ItemPF.firstAction}
+   *                                      defaults to {@link ItemPF.defaultAction}
    * @returns {ChatData} The chat data for this item (+action)
    */
   async getChatData({ chatcard = false, actionId = null, rollData = {} } = {}) {
     /** @type {ChatData} */
     const data = {};
-    const action = actionId ? this.actions.get(actionId) : this.firstAction;
+    const action = actionId ? this.actions.get(actionId) : this.defaultAction;
 
     rollData ??= action ? action.getRollData() : this.getRollData();
     const itemData = rollData.item ?? this.system;
@@ -1296,7 +1308,7 @@ export class ItemPF extends ItemBasePF {
       } else if (this.system.actions.length > 1 && skipDialog !== true) {
         return pf1.applications.ActionChooser.open(this, { ev, chatMessage, dice, rollMode, token });
       } else {
-        action = this.firstAction;
+        action = this.defaultAction;
       }
     } else {
       console.error("This item does not have an action associated with it.");
@@ -2084,7 +2096,7 @@ export class ItemPF extends ItemBasePF {
       until: "PF1 vNEXT+1",
     });
 
-    return this.getAttackArray(this.firstAction.id);
+    return this.getAttackArray(this.defaultAction.id);
   }
 
   /**
@@ -2193,7 +2205,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {object[]|undefined} Array of value and label pairs for attack bonus sources on the main attack.
    */
   get attackSources() {
-    return this.getAttackSources(this.firstAction.id);
+    return this.getAttackSources(this.defaultAction.id);
   }
 
   getAllDamageSources(actionId) {
@@ -2206,7 +2218,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {ItemChange[]|undefined} All relevant changes, or undefined if action was not found.
    */
   get allDamageSources() {
-    return this.getAllDamageSources(this.firstAction.id);
+    return this.getAllDamageSources(this.defaultAction.id);
   }
 
   /**

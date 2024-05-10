@@ -115,9 +115,9 @@ export class ItemSheetPF extends ItemSheet {
     const actor = item.actor,
       actorData = actor?.system;
 
-    const firstAction = item.firstAction;
+    const defaultAction = item.defaultAction;
 
-    const rollData = firstAction?.getRollData() ?? item.getRollData();
+    const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
     context.rollData = rollData;
     context.labels = item.getLabels();

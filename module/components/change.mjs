@@ -425,7 +425,7 @@ export class ItemChange {
       const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}\n${postDef}};`;
       return new Function(fullDef)();
     } catch (e) {
-      console.warn("Could not create change function with definition ", funcDef);
+      console.warn("Could not create change function with definition", funcDef);
       return function () {
         return { operator: "add", value: 0 };
       };

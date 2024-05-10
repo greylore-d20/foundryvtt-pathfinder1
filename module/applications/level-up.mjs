@@ -490,13 +490,7 @@ export class LevelUpForm extends FormApplication {
       advSkillRanks += roll.total || 0;
     }
 
-    // Calculate from changes
-    tempActor.changes
-      .filter((o) => o.subTarget === "bonusSkillRanks")
-      .forEach((o) => {
-        if (!o.value) return;
-        advSkillRanks += o.value;
-      });
+    advSkillRanks += tempActor.system.details?.skills?.bonus || 0;
 
     const feats = tempActor.getFeatCount().max;
 

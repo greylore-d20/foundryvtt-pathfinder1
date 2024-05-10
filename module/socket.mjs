@@ -42,7 +42,7 @@ const runSocketFunction = async function (args, senderId) {
         break;
     }
   } catch (err) {
-    console.log("PF1 | Socket Error: ", err);
+    console.log("PF1 | Socket Error:", err);
   }
 };
 

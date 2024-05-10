@@ -784,18 +784,8 @@ export class ActorSheetPF extends ActorSheet {
     // Count from intelligence
     const intMod = context.system.abilities?.int?.mod;
 
-    // Count from bonus skill rank formula
-    if (context.system.details.bonusSkillRankFormula !== "") {
-      const roll = RollPF.safeRoll(context.system.details.bonusSkillRankFormula, rollData);
-      if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
-      skillRanks.allowed += roll.total;
-    }
-
     // Calculate from changes
-    // TODO: Turn bonus skill ranks into actual change target
-    this.actor.changes
-      .filter((c) => c.subTarget === "bonusSkillRanks" && !!c.value)
-      .forEach((c) => (skillRanks.allowed += c.value));
+    skillRanks.allowed += this.actor.system.details?.skills?.bonus || 0;
 
     // Adventure skills transferred to background skills
     if (context.useBGSkills && skillRanks.bgUsed > skillRanks.bgAllowed) {
@@ -1885,8 +1875,8 @@ export class ActorSheetPF extends ActorSheet {
             // Background skills
             if (useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.subType)) {
               const bgranks = hd * pf1.config.backgroundSkillsPerLevel;
+              bgAllowed += bgranks;
               if (bgranks > 0 && isBG) {
-                bgAllowed += bgranks;
                 skillSources.push({
                   name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
                   value: bgranks,
@@ -1916,30 +1906,8 @@ export class ActorSheetPF extends ActorSheet {
           }
         }
 
-        // Count from bonus skill rank formula
-        if (system.details.bonusSkillRankFormula !== "") {
-          const roll = RollPF.safeRoll(system.details.bonusSkillRankFormula, lazy.rollData);
-          if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
-          skillSources.push({
-            name: game.i18n.localize("PF1.SkillBonusRankFormula"),
-            value: roll.total,
-          });
-        }
-
-        // Calculate from changes
-        this.actor.changes
-          .filter((o) => o.subTarget === "bonusSkillRanks")
-          .forEach((o) => {
-            if (!o.value) return;
-
-            skillSources.push({
-              name: o.parent?.name ?? game.i18n.localize("PF1.Change"),
-              value: o.value,
-            });
-          });
-
         // Count transfers for background skills
-        if (useBGSkills && isBG) {
+        if (useBGSkills) {
           let bgUsed = 0;
 
           // Count used skill ranks
@@ -1960,14 +1928,19 @@ export class ActorSheetPF extends ActorSheet {
           if (sentToBG > 0) {
             skillSources.push({
               name: game.i18n.localize("PF1.Transferred"),
-              value: sentToBG,
+              value: isBG ? sentToBG : -sentToBG,
             });
           }
         }
 
-        sources.push({
-          sources: skillSources,
-        });
+        sources.push(
+          {
+            sources: getSource("system.details.skills.bonus"),
+          },
+          {
+            sources: skillSources,
+          }
+        );
         break;
       }
       case "skill": {

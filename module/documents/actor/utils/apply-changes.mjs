@@ -1263,6 +1263,18 @@ export const addDefaultChanges = function (changes) {
     );
   }
 
+  // Custom skill rank bonus from sheet
+  if (this.system.details?.bonusSkillRankFormula) {
+    changes.push(
+      new pf1.components.ItemChange({
+        formula: this.system.details.bonusSkillRankFormula,
+        subTarget: "bonusSkillRanks",
+        modifier: "untyped",
+        flavor: game.i18n.localize("PF1.SkillBonusRankFormula"),
+      })
+    );
+  }
+
   // Add conditions
   for (const [con, v] of Object.entries(actorData.conditions)) {
     if (!v) continue;

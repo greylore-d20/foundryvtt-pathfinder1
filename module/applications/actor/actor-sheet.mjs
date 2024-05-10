@@ -3842,6 +3842,13 @@ export class ActorSheetPF extends ActorSheet {
     const sameActor = sourceItem.actor === this.actor && !data.containerId;
     if (sameActor) return this._onSortItem(event, itemData);
 
+    // Make item unidentified if ALT is held
+    if (sourceItem.isPhysical) {
+      if (game.user.isGM && event.altKey) {
+        itemData.system.identified = false;
+      }
+    }
+
     // Create the owned item
     this._alterDropItemData(itemData, sourceItem);
     const rv = await this._onDropItemCreate(itemData);

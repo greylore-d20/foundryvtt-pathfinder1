@@ -130,8 +130,7 @@ export class HealthConfig extends FormApplication {
    */
   activateListeners(html) {
     super.activateListeners(html);
-    html.find('button[name="reset"]').click(this._onReset.bind(this));
-    html.find('button[name="submit"]').click(this._onSubmit.bind(this));
+    html.find("button.reset").click(this._onReset.bind(this));
   }
 
   /**

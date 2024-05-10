@@ -949,9 +949,6 @@ export class ActorSheetPF extends ActorSheet {
       .find('*[data-action="input-text"].wheel-change')
       .on("wheel", (event) => this._onInputText(event.originalEvent));
 
-    // Trigger form submission from textarea elements.
-    html.find("textarea").change(this._onSubmit.bind(this));
-
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
@@ -2685,6 +2682,8 @@ export class ActorSheetPF extends ActorSheet {
     const origValue = elem.value;
     elem.value = value;
 
+    let changed = false;
+
     const wheelEvent = event instanceof WheelEvent;
     if (wheelEvent) {
       this._mouseWheelAdd(event, elem);
@@ -2704,7 +2703,7 @@ export class ActorSheetPF extends ActorSheet {
       }
       elem.removeEventListener("click", handler);
 
-      if (`${value}` !== elem.value) changed = true;
+      changed ||= `${value}` !== elem.value;
 
       if (changed) {
         this._onSubmit(event);
@@ -2720,7 +2719,6 @@ export class ActorSheetPF extends ActorSheet {
       }
     };
 
-    let changed = false;
     if (wheelEvent) {
       elem.addEventListener("pointerout", handler, { passive: true });
       changed = true;

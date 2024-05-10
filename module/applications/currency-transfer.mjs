@@ -87,8 +87,6 @@ export class CurrencyTransfer extends FormApplication {
   }
 
   activateListeners(html) {
-    html.find('button[type="submit"]').click(this._onSubmit.bind(this));
-
     html.find("button.cur-range").click(this._curRange.bind(this));
 
     html.find("input").on("input", this._calcTotal.bind(this));

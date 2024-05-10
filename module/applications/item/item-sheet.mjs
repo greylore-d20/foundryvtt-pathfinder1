@@ -1273,9 +1273,6 @@ export class ItemSheetPF extends ItemSheet {
       return;
     }
 
-    // Trigger form submission from textarea elements.
-    html.find("textarea").change(this._onSubmit.bind(this));
-
     // Add drop handler to textareas
     html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 

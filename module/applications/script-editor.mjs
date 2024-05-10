@@ -56,8 +56,6 @@ export class ScriptEditor extends FormApplication {
   }
 
   activateListeners(html) {
-    html.find('button[type="submit"]').click(this._onSubmit.bind(this));
-
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
   }

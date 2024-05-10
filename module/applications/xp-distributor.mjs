@@ -79,8 +79,7 @@ export class ExperienceDistributor extends FormApplication {
       this.render();
     });
 
-    addListener('button[name="split-evenly"], button[name="give-to-all"]', "click", this._onSubmit.bind(this));
-    addListener('button[name="cancel"]', "click", this._onCancel.bind(this));
+    addListener("button.cancel", "click", this._onCancel.bind(this));
   }
 
   async _onDrop(event) {

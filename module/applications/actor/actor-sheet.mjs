@@ -757,9 +757,9 @@ export class ActorSheetPF extends ActorSheet {
       .filter((cls) => cls.system.subType !== "mythic")
       .forEach((cls) => {
         // Favoured Class Bonus
-        // Apply FCB regardless if mindless if user applied such
-        const fcSkills = cls.system.fc?.skill?.value ?? 0;
-        if (fcSkills > 0) skillRanks.allowed += fcSkills;
+        if (pf1.config.favoredClassTypes.includes(cls.subType)) {
+          skillRanks.allowed += cls.system.fc?.skill?.value || 0;
+        }
 
         // Mindless get nothing else
         if (isMindless) return;
@@ -1854,13 +1854,15 @@ export class ActorSheetPF extends ActorSheet {
           .forEach((cls) => {
             // Favoured Class Bonus
             // Apply FCB regardless if mindless if user applied such
-            const fcSkills = cls.system.fc?.skill?.value ?? 0;
-            if (fcSkills > 0 && !isBG) {
-              skillSources.push({
-                name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
-                value: fcSkills,
-                untyped: true,
-              });
+            if (pf1.config.favoredClassTypes.includes(cls.subType)) {
+              const fcSkills = cls.system.fc?.skill?.value || 0;
+              if (fcSkills > 0 && !isBG) {
+                skillSources.push({
+                  name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
+                  value: fcSkills,
+                  untyped: true,
+                });
+              }
             }
 
             // Mindless get nothing else

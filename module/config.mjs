@@ -1650,6 +1650,13 @@ export const backgroundSkillsPerLevel = 2;
 export const backgroundSkillClasses = ["base", "prestige"];
 
 /**
+ * Valid class types to grant favored class bonuses.
+ *
+ * Prestige is included due to Favored Prestige Class feat.
+ */
+export const favoredClassTypes = ["base", "prestige"];
+
+/**
  * Bonus modifier granted to class skills.
  */
 export const classSkillBonus = 3;

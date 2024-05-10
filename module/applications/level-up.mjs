@@ -512,7 +512,7 @@ export class LevelUpForm extends FormApplication {
    * @todo Add better logic for determining this <26-01-22, Furyspark>
    */
   isFavouredClass() {
-    return this.item.subType === "base";
+    return pf1.config.favoredClassTypes.includes(this.item.subType);
   }
 
   async _updateObject(event, formData) {

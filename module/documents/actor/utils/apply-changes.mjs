@@ -717,7 +717,9 @@ function calculateHealth(actor, allClasses, changes) {
       }
       const maxedHp = maxedHD * hpPerHD;
       const levelHp = Math.max(0, hitDice - maxedHD) * dieHealth;
-      const fcbHp = healthSource.subType === "base" ? healthSource.system.fc.hp.value || 0 : 0;
+      const fcbHp = pf1.config.favoredClassTypes.includes(healthSource.subType)
+        ? healthSource.system.fc.hp.value || 0
+        : 0;
       health = maxedHp + levelHp + fcbHp;
     }
     pushHealth(health, healthSource);

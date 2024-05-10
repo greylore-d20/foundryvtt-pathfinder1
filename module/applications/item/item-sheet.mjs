@@ -598,7 +598,7 @@ export class ItemSheetPF extends ItemSheet {
         s.label = pf1.config.favouredClassBonuses[a];
       }
 
-      context.isBaseClass = itemData.subType === "base";
+      context.isBaselikeClass = pf1.config.favoredClassTypes.includes(itemData.subType);
       context.isRacialHD = itemData.subType === "racial";
       context.isNPCClass = itemData.subType === "npc";
       context.isPCClass = !context.isNPCClass && !context.isRacialHD;

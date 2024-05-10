@@ -22,14 +22,14 @@
     <header>
       <h3 class="item-type">{{itemType}}</h3>
 
-      <label class="level">{{labels.level}}</label>
+      <h4 class="level">{{labels.level}}</h4>
 
-      <label class="school">
+      <h4 class="school">
         <span>{{labels.school}}</span>
         {{#if system.subschool}}
         (<span class="subschool">{{system.subschool}}</span>)
         {{/if}}
-      </label>
+      </h4>
     </header>
 
     {{#if system.descriptors.total.size}}

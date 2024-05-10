@@ -17,16 +17,16 @@
     <header>
       <h3 class="item-type">{{itemType}}</h3>
 
-      <label class="item-subtype">
+      <h4 class="item-subtype">
         {{#if labels.childTypeDistinct}}
         {{labels.childType}}
         {{else}}
         {{labels.subType}}
         {{/if}}
-      </label>
+      </h4>
 
       {{#if hasMultipleSlots}}
-      <label class="slot">{{labels.slot}}</label>
+      <h4 class="slot">{{labels.slot}}</h4>
       {{/if}}
     </header>
 

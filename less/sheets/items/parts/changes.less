@@ -4,7 +4,7 @@
       > .changes {
         display: flex;
         flex-flow: column nowrap;
-        gap: 0px;
+        gap: 0;
       }
 
       .item-list-header {
@@ -21,22 +21,6 @@
 
         .controls {
           flex: 0;
-
-          a {
-            flex: 0;
-            display: inline-flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            gap: 0.3em;
-
-            color: @colorOlive;
-
-            border: unset; // Undo general style
-
-            &.disabled {
-              color: var(--color-text-dark-inactive);
-            }
-          }
         }
       }
 

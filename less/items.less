@@ -84,7 +84,7 @@
     .trait-selector,
     .item-selector {
       flex: 0 0 16px;
-      color: var(--color-text-dark-5);
+      color: var(--pf1-control-color);
       font-size: @fontSizeNormal;
     }
 
@@ -393,30 +393,22 @@
       }
     }
 
-    h4.change-header,
-    h4.context-notes-header {
-      margin: 0;
-      padding: 0;
-      font-weight: bold;
-      line-height: 24px;
-      color: @colorOlive;
-    }
+    .controls {
+      a {
+        flex: 0;
+        display: inline-flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        gap: 0.3em;
 
-    .delete-change,
-    .delete-note {
-      width: 18px;
-      flex: 0 0 18px;
-      line-height: 24px;
-      text-align: right;
-      color: @colorTan;
-    }
+        color: var(--pf1-control-color);
 
-    .add-change,
-    .add-note {
-      flex: 0 0 auto;
-      line-height: 24px;
-      color: @colorTan;
-      margin-left: 2px;
+        border: unset; // Undo general style
+
+        &.disabled {
+          color: var(--color-text-dark-inactive);
+        }
+      }
     }
 
     .recharge {

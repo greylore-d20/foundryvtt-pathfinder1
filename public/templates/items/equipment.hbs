@@ -50,28 +50,28 @@
     <div class="details">
       <h5>{{localize "PF1.Details"}}</h5>
       {{#if labels.armor}}
-      <div class="descriptor ac">
-        <label>{{localize "PF1.ACNormal"}}</label>
-        <span>{{labels.armorValue}}</span>
-      </div>
+      <label class="armor-class">
+        <span>{{localize "PF1.ACNormal"}}</span>
+        <span class="value">{{labels.armorValue}}</span>
+      </label>
       {{/if}}
       {{#if labels.acp}}
-      <div class="descriptor acp">
-        <label>{{localize "PF1.ACP"}}</label>
-        <span>{{labels.acpEffective}}</span>
-      </div>
+      <label class="acp">
+        <span>{{localize "PF1.ACP"}}</span>
+        <span class="value">{{labels.acpEffective}}</span>
+      </label>
       {{/if}}
       {{#if labels.mdex}}
-      <div class="descriptor mdex">
-        <label>{{localize "PF1.MaxDexShort"}}</label>
-        <span>{{numberFormat system.armor.dex sign=true}}</span>
-      </div>
+      <label class="mdex">
+        <span>{{localize "PF1.MaxDexShort"}}</span>
+        <span class="value">{{numberFormat system.armor.dex sign=true}}</span>
+      </label>
       {{/if}}
       {{#if system.spellFailure}}
-      <div class="descriptor asf">
-        <label>{{localize "PF1.ArcaneSpellFailureAbbr"}}</label>
+      <label class="asf">
+        <span>{{localize "PF1.ArcaneSpellFailureAbbr"}}</span>
         <span class="value">{{system.spellFailure}}%</span>
-      </div>
+      </label>
       {{/if}}
     </div>
     {{/if}}

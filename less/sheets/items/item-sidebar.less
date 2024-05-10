@@ -165,24 +165,12 @@
     }
   }
 
-  .weight-reduction {
+  :is(.contents, .details, .weight-reduction) {
     display: flex;
     flex-flow: column nowrap;
     gap: 3px;
 
-    h5 {
-      font-size: inherit;
-      font-weight: bold;
-      margin: 0;
-    }
-  }
-
-  .contents {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 1px;
-
-    :is(.total-value, .sell-value) {
+    :is(.total-value, .sell-value) .value {
       text-align: right;
     }
   }

@@ -567,7 +567,6 @@ export class ItemAction {
           label: "",
         },
       },
-      formula: "",
       ability: {
         attack: "",
         damage: "",

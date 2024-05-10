@@ -920,6 +920,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionTemplate(action, itemData);
   _migrateActionDuration(action, itemData);
   _migrateActionObsoleteTypes(action, itemData);
+  _migrateActionUnusedData(action, itemData);
 
   // Return the migrated update data
   return action;
@@ -2271,6 +2272,17 @@ const _migrateActionObsoleteTypes = (action, itemData) => {
       action.duration.value = `${durVal}`;
     }
   }
+};
+
+/**
+ * Remove dead data
+ *
+ * @param action
+ * @param itemData
+ */
+const _migrateActionUnusedData = (action, itemData) => {
+  // Added with PF1 vNEXT
+  if (!action.formula) delete action.formula;
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

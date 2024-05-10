@@ -67,7 +67,6 @@ export function getActionDefaultData() {
         label: "",
       },
     },
-    formula: "",
     ability: {
       attack: "",
       damage: "",

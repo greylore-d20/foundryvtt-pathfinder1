@@ -387,6 +387,25 @@ export class ItemContainerPF extends ItemPhysicalPF {
     return result;
   }
 
+  async getChatData({ chatcard, rollData } = {}) {
+    const context = await super.getChatData({ chatcard, rollData });
+    // Get contents value
+    const cpValue =
+      this.getValue({ sellValue: 1, recursive: true, inLowestDenomination: true }) -
+      this.getValue({ sellValue: 1, recursive: false, inLowestDenomination: true });
+    const totalValue = pf1.utils.currency.split(cpValue);
+    const value =
+      game.i18n.localize("PF1.Containers.Contents.Value") + ": " + game.i18n.format("PF1.SplitValue", totalValue);
+    context.properties.push(value);
+    const currency = { ...this.system.currency };
+    currency.gp ||= 0;
+    currency.gp += currency.pp * 10;
+    const coins = game.i18n.localize("PF1.Currency.Label") + ": " + game.i18n.format("PF1.SplitValue", currency);
+    context.properties.push(coins);
+
+    return context;
+  }
+
   /**
    * @remarks This item type can not be recharged.
    * @override

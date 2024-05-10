@@ -124,20 +124,26 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     };
 
     // Get contents value
+    const coinage = pf1.utils.currency.merge(this.item.system.currency);
+
     const cpValue =
-      this.item.getValue({ sellValue: 1, inLowestDenomination: true }) -
-      this.item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true });
+      this.item.getValue({ recursive: true, sellValue: 1, inLowestDenomination: true }) -
+      this.item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) -
+      coinage;
     const cpSellValue =
-      this.item.getValue({ inLowestDenomination: true }) -
-      this.item.getValue({ recursive: false, inLowestDenomination: true });
+      this.item.getValue({ recursive: true, inLowestDenomination: true }) -
+      this.item.getValue({ recursive: false, inLowestDenomination: true }) -
+      coinage;
 
     data.totalValue = pf1.utils.currency.split(cpValue);
     data.sellValue = pf1.utils.currency.split(cpSellValue);
+    data.currency = pf1.utils.currency.split(coinage);
 
-    // Set labels
+    // Set value labels
     data.labels ??= {};
     data.labels.totalValue = game.i18n.format("PF1.SplitValue", data.totalValue);
     data.labels.sellValue = game.i18n.format("PF1.SplitValue", data.sellValue);
+    data.labels.currency = game.i18n.format("PF1.SplitValue", data.currency);
 
     return data;
   }

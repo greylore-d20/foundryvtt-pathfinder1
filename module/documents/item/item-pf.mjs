@@ -1161,8 +1161,8 @@ export class ItemPF extends ItemBasePF {
     const harmless = actionData.save?.harmless;
     if (harmless) props.push(game.i18n.localize("PF1.Harmless"));
 
-    // Filter properties and return
     data.properties = props;
+
     return data;
   }
 

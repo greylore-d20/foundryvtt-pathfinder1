@@ -16,6 +16,31 @@ export function split(cp) {
 }
 
 /**
+ * Merges provided currencies into specified type.
+ *
+ * @param {object} currency - Currency object
+ * @param {number} [currency.pp] - Platinum
+ * @param {number} [currency.gp] - Gold
+ * @param {number} [currency.sp] - Silver
+ * @param {number} [currency.cp] - Copper
+ * @param {CoinType} [type] - Return coinage, defaults to copper.
+ * @returns {number} - Merged currency
+ */
+export function merge({ pp = 0, gp = 0, sp = 0, cp = 0 } = {}, type = "cp") {
+  const copper = pp * 1_000 + gp * 100 + sp * 10 + cp;
+  switch (type) {
+    case "pp":
+      return copper / 1_000;
+    case "gp":
+      return copper / 100;
+    case "sp":
+      return copper / 10;
+    default:
+      return copper;
+  }
+}
+
+/**
  * Convert given amount of copper to some other currency, excess is placed on less valuable coinage.
  *
  * @param {number} cp - Copper quantity

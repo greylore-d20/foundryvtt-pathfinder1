@@ -30,15 +30,21 @@
       {{/if}}
     </header>
 
+    {{#if (and showIdentified (gt system.armor.enh 0))}}
+    <label class="enhancement">
+      <span>{{localize "PF1.Enhancement"}}</span>
+      <span class="value">{{numberFormat system.armor.enh sign=true}}</span>
+    </label>
+    {{/if}}
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
-
-    {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
 
     <label class="descriptor checkbox quickbar" data-tooltip="PF1.QuickbarHint">
       <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
       {{localize "PF1.Quickbar"}}
     </label>
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
 
     {{#if (or labels.armor labels.mdex labels.acp)}}
     <div class="details">
@@ -219,7 +225,6 @@
       </div>
 
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
-
 
       {{!-- Proficiencies --}}
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}

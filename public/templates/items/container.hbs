@@ -39,19 +39,21 @@
     <div class="contents">
       <h5>{{localize "PF1.Containers.Contents.Label"}}</h5>
 
-      <div>
-        <label>{{localize "PF1.Weight"}}</label>
-        <span>{{weight.contents}} {{weight.units}}</span>
-      </div>
+      <label>
+        <span>{{localize "PF1.Weight"}}</span>
+        <input type="number" value="{{weight.contents}}" readonly>
+        <span class="unit">{{weight.units}}</span>
+      </label>
 
-      <div>
-        <label>{{localize "PF1.Value"}}</label>
-        <span>{{labels.totalValue}}</span>
-      </div>
-      <div>
-        <label>{{localize "PF1.SellValue"}}</label>
-        <span>{{labels.sellValue}}</span>
-      </div>
+      <label>
+        <span>{{localize "PF1.Value"}}</span>
+        <input class="total-value" type="text" value="{{labels.totalValue}}" readonly>
+      </label>
+
+      <label>
+        <span>{{localize "PF1.SellValue"}}</span>
+        <input class="sell-value" type="text" value="{{labels.sellValue}}" readonly>
+      </label>
     </div>
 
   </section>

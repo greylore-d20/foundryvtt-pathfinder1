@@ -2,7 +2,6 @@
   grid-row: span 2;
 
   border-right: 1px groove var(--color-border-light-1);
-  padding: 2px;
   display: flex;
   flex-flow: column;
   gap: 1px;
@@ -22,11 +21,6 @@
     label {
       border-bottom: 1px solid var(--pf1-header-underline);
     }
-  }
-
-  label.descriptor,
-  .descriptor > label {
-    font-weight: bold;
   }
 
   .range-value {
@@ -98,6 +92,11 @@
     }
   }
 
+  > label,
+  > div > label {
+    padding: 0 3px;
+  }
+
   h5 {
     font-size: inherit;
     background-color: var(--pf1-bg-dark-05);
@@ -112,8 +111,7 @@
     .property {
       border-radius: 5px 0 5px 0;
     }
-    .property,
-    .descriptor {
+    .property {
       padding: 1px 3px;
     }
   }
@@ -179,8 +177,34 @@
     }
   }
 
-  label span:first-child,
-  .contents label {
-    font-weight: bold;
+  .contents {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1px;
+
+    :is(.total-value, .sell-value) {
+      text-align: right;
+    }
+  }
+
+  .enhancement {
+    input:read-only {
+      text-align: right;
+    }
+  }
+
+  label {
+    span {
+      &:first-child {
+        font-weight: bold;
+      }
+
+      &.value {
+        flex: 1;
+        text-align: right;
+        padding: 0 4px; // Align with inputs
+        line-height: 1.5;
+      }
+    }
   }
 }

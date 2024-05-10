@@ -25,13 +25,6 @@
       <label class="item-subtype">{{labels.subType}}</label>
     </header>
 
-    {{#unless isNaturalAttack}}
-    <div class="descriptor held">
-      <label>{{localize "PF1.Held"}}:</label>
-      <span class="value">{{lookup config.weaponHoldTypes system.held}}</span>
-    </div>
-    {{/unless}}
-
     {{#if (and showIdentified (gt system.enh 0))}}
     <h4 class="enhancement">{{localize "PF1.Enhancement" bonus=system.enh}}</h4>
     {{/if}}

@@ -21,40 +21,21 @@
       <label class="childtype">{{labels.childType}}</label>
     </header>
 
-    {{#unless (or isNaturalAttack isRanged)}}
-    <div class="descriptor held">
-      <label>{{localize "PF1.Held"}}:</label>
-      <span class="value">{{lookup config.weaponHoldTypes system.held}}</span>
-    </div>
-    {{/unless}}
-
     {{#if (and showIdentified (gt system.enh 0))}}
-    <h4 class="enhancement">{{localize "PF1.Enhancement" bonus=system.enh}}</h4>
+    <label class="enhancement">
+      <span>{{localize "PF1.Enhancement"}}</span>
+      <span class="value">{{numberFormat system.enh sign=true}}</span>
+    </label>
     {{/if}}
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
-
-    {{#if (and showIdentifiedData identify.dc system.aura.school)}}
-    <label>{{lookup config.spellSchools system.aura.school}} ({{auraStrength_name}})</label>
-    {{/if}}
-
-    {{#if (and isGM identify.dc)}}
-    <div class='base-dc'>
-    <label>{{localize "PF1.IdentifyDC"}}</label>
-    <span class='value'>{{identify.dc}}</span>
-    </div>
-    {{#if system.cursed}}
-    <div class='curse-dc'>
-      <label>{{localize "PF1.IdentifyCurseDC"}}</label>
-      <span class='value'>{{identify.curse}}</span>
-    </div>
-    {{/if}}
-    {{/if}}
 
     <label class="checkbox descriptor quickbar" data-tooltip="PF1.QuickbarHint">
       <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
       <span>{{localize "PF1.Quickbar"}}</span>
     </label>
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
 
     {{! Property Lists }}
     <ul class="property-list weapon-groups">

@@ -1151,7 +1151,7 @@ export class ItemPF extends ItemBasePF {
       // Enhancement Bonus
       const enhBonus = actionData.enh?.value ?? itemData.enh ?? 0;
       if (enhBonus > 0) {
-        props.push(game.i18n.format("PF1.Enhancement", { bonus: enhBonus }));
+        props.push(game.i18n.format("PF1.EnhancementInline", { bonus: enhBonus }));
       }
     }
 

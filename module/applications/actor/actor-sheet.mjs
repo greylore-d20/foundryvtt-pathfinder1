@@ -319,6 +319,18 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
+    // Feat count
+    {
+      // Feat count
+      const feats = this.actor.getFeatCount();
+      // Additional values
+      feats.bonus = feats.formula + feats.changes;
+      feats.issues = 0;
+      if (feats.missing > 0 || feats.excess) feats.issues += 1;
+      if (feats.disabled > 0) feats.issues += 1;
+      data.featCount = feats;
+    }
+
     // Update traits
     this._prepareTraits(data.system.traits);
     data.labels.senses = this._prepareSenseLabels();
@@ -335,18 +347,6 @@ export class ActorSheetPF extends ActorSheet {
     this._prepareSkillsets(data);
 
     this._prepareSkills(data, rollData);
-
-    // Feat count
-    {
-      // Feat count
-      const feats = this.actor.getFeatCount();
-      // Additional values
-      feats.bonus = feats.formula + feats.changes;
-      feats.issues = 0;
-      if (feats.missing > 0 || feats.excess) feats.issues += 1;
-      if (feats.disabled > 0) feats.issues += 1;
-      data.featCount = feats;
-    }
 
     // Fetch the game settings relevant to sheet rendering.
     {
@@ -3446,13 +3446,22 @@ export class ActorSheetPF extends ActorSheet {
       );
     }
 
-    for (const f of feats) {
-      const k = f.subType;
-      const ablType = f.abilityType;
-      f.typelabel = pf1.config.abilityTypes[ablType]?.short || pf1.config.abilityTypes.na.short;
-      features[k]?.items?.push(f);
+    for (const feat of feats) {
+      const ablType = feat.abilityType;
+      feat.typelabel = pf1.config.abilityTypes[ablType]?.short || pf1.config.abilityTypes.na.short;
+      features[feat.subType]?.items?.push(feat);
     }
-    classes.sort((a, b) => b.level - a.level);
+
+    if (features.feat) {
+      features.feat.issues = {
+        found: data.featCount?.issues > 0,
+        missing: data.featCount?.missing || 0,
+        excess: data.featCount?.excess || 0,
+        get discrepancy() {
+          return Math.abs(this.missing - this.excess);
+        },
+      };
+    }
 
     // Buffs
     const buffSections = {};
@@ -3557,6 +3566,9 @@ export class ActorSheetPF extends ActorSheet {
         }
       }
     }
+
+    // Ensure classes are always in order of highest level to lowest
+    classes.sort((a, b) => b.level - a.level);
 
     // Assign and return
     data.inventory = inventory;

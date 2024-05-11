@@ -93,6 +93,15 @@
         {{/if}}
       </li>
       {{/each}}
+      {{log this}}
+      {{#if issues.discrepancy}}
+      <div class="feat-notifications">
+        <div class="notification-box warning">
+          <h5>{{#if issues.missing}}{{localize "PF1.Missing"}}{{else}}{{localize "PF1.Excess"}}{{/if}}</h5>
+          <span class="value">{{numberFormat issues.discrepancy}}</span>
+        </div>
+      </div>
+      {{/if}}
     </ol>
   {{/unless}}
   {{/each}}

@@ -31,30 +31,28 @@
       <h4 class="item-subtype">{{lookup config.classTypes system.subType}}</h4>
     </header>
 
-    <div class="descriptor health">
-      <label>
-        {{#if isMythic}}{{localize "PF1.Health"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}:
-      </label>
-      <span>{{labels.hitDie}}</span>
-    </div>
+    <label class="hit-die health">
+      <span>{{#if isMythic}}{{localize "PF1.Health"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}</span>
+      <span class="value">{{labels.hitDie}}</span>
+    </label>
 
-    <div class="descriptor">
-      <label>{{localize "PF1.BABAbbr"}}:</label>
-      <span>{{labels.bab}}</span>
-    </div>
+    <label class="bab">
+      <span>{{localize "PF1.BABAbbr"}}</span>
+      <span class="value">{{labels.bab}}</span>
+    </label>
 
-    <div class="descriptor">
-      <label>{{localize "PF1.SavingThrowFort"}}:</label>
-      <span>{{labels.saves.fort}}</span>
-    </div>
-    <div class="descriptor">
-      <label>{{localize "PF1.SavingThrowRef"}}:</label>
-      <span>{{labels.saves.ref}}</span>
-    </div>
-    <div class="descriptor">
-      <label>{{localize "PF1.SavingThrowWill"}}:</label>
-      <span>{{labels.saves.will}}</span>
-    </div>
+    <label class="save fort">
+      <span>{{localize "PF1.SavingThrowFort"}}</span>
+      <span class="value">{{labels.saves.fort}}</span>
+    </label>
+    <label class="save ref">
+      <span>{{localize "PF1.SavingThrowRef"}}:</span>
+      <span class="value">{{labels.saves.ref}}</span>
+    </label>
+    <label class="save will">
+      <span>{{localize "PF1.SavingThrowWill"}}:</span>
+      <span class="value">{{labels.saves.will}}</span>
+    </label>
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
 

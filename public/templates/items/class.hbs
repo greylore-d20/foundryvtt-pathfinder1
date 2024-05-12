@@ -152,6 +152,28 @@
         </div>
       </div>
 
+      {{! Alignment }}
+      <div class="form-group">
+        <label>{{localize "PF1.Alignment"}}</label>
+        <div class="form-fields">
+          <input type="text" name="system.alignment" value="{{system.alignment}}" placeholder="{{localize "PF1.Any"}}">
+        </div>
+      </div>
+
+      {{! Starting Wealth }}
+      <div class="form-group">
+        <label>{{localize "PF1.StartingWealth"}}</label>
+        <div class="form-fields">
+          <input type="text" class="formula check" name="system.wealth" value="{{system.wealth}}" placeholder="{{localize "PF1.Formula"}}">
+          {{#if wealth}}
+          <span class="average">
+            {{localize "PF1.AverageShort"}}
+            {{localize "PF1.Currency.Inline.gp" value=wealth.average}}
+          </span>
+          {{/if}}
+        </div>
+      </div>
+
       <h4 class="form-header">{{localize "PF1.SavingThrowPlural"}}</h4>
 
       {{!-- Saving Throws --}}

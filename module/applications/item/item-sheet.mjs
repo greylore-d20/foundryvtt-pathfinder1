@@ -147,6 +147,19 @@ export class ItemSheetPF extends ItemSheet {
       }, {});
 
       context.isMythic = this.item.subType === "mythic";
+
+      if (item.system.wealth) {
+        const max = await Roll.defaultImplementation.safeRoll(item.system.wealth, undefined, undefined, undefined, {
+          maximize: true,
+        })?.total;
+        const min = await Roll.defaultImplementation.safeRoll(item.system.wealth, undefined, undefined, undefined, {
+          minimize: true,
+        })?.total;
+        if (max > 0) {
+          context.wealth ??= {};
+          context.wealth.average = (max + min) / 2;
+        }
+      }
     }
 
     // Include raw tag data (from source to not get autofilled tag)

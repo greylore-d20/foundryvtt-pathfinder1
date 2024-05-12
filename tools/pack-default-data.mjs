@@ -115,6 +115,13 @@ export function getActionDefaultData() {
       good: null,
       lawful: null,
     },
+    material: {
+      addon: [],
+      normal: {
+        custom: false,
+        value: "",
+      },
+    },
   };
 }
 

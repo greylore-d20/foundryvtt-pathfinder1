@@ -32,7 +32,7 @@
     </header>
 
     <label class="hit-die health">
-      <span>{{#if isMythic}}{{localize "PF1.Health"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}</span>
+      <span>{{#if isMythic}}{{localize "PF1.HealthPerTier"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}</span>
       <span class="value">{{labels.hitDie}}</span>
     </label>
 
@@ -46,13 +46,20 @@
       <span class="value">{{labels.saves.fort}}</span>
     </label>
     <label class="save ref">
-      <span>{{localize "PF1.SavingThrowRef"}}:</span>
+      <span>{{localize "PF1.SavingThrowRef"}}</span>
       <span class="value">{{labels.saves.ref}}</span>
     </label>
     <label class="save will">
-      <span>{{localize "PF1.SavingThrowWill"}}:</span>
+      <span>{{localize "PF1.SavingThrowWill"}}</span>
       <span class="value">{{labels.saves.will}}</span>
     </label>
+
+    {{#if system.skillsPerLevel}}
+    <label>
+      <span>{{localize "PF1.SkillsPerLevel"}}</span>
+      <span class="value">{{system.skillsPerLevel}} + {{localize "PF1.AbilityShortInt"}}</span>
+    </label>
+    {{/if}}
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
 

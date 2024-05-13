@@ -752,7 +752,8 @@ export class ActionUse {
       notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
-    if (this.hasCritConfirm) {
+    const hasCritConfirm = this.shared.attacks.some((/** @type {ChatAttack} */ atk) => atk.hasCritConfirm);
+    if (hasCritConfirm) {
       notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
     }
 

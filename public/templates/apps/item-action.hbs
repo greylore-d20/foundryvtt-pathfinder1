@@ -19,7 +19,7 @@
   <section class="primary-body">
 
     {{!-- Action Description --}}
-    <div class="tab details" data-group="primary" data-tab="description">
+    <div class="tab description" data-group="primary" data-tab="description">
       <div class="form-group">
         <label>{{localize "PF1.Tag"}}</label>
         <input type="text" placeholder="{{tag}}" value="{{data.tag}}" name="tag">
@@ -28,17 +28,17 @@
     </div>
 
     {{!-- Action Activation --}}
-    <div class="tab details" data-group="primary" data-tab="activation">
+    <div class="tab activation" data-group="primary" data-tab="activation">
       {{> "systems/pf1/templates/apps/item-action/activation.hbs"}}
     </div>
 
     {{!-- Action Effect --}}
-    <div class="tab details" data-group="primary" data-tab="action">
+    <div class="tab action" data-group="primary" data-tab="action">
       {{> "systems/pf1/templates/apps/item-action/action.hbs"}}
     </div>
 
     {{!-- Miscellaneous --}}
-    <div class="tab" data-group="primary" data-tab="misc">
+    <div class="tab misc" data-group="primary" data-tab="misc">
       <h3 class="form-header">{{localize "PF1.MeasureTemplate"}}</h3>
 
       {{> "systems/pf1/templates/apps/item-action/template.hbs"}}
@@ -56,7 +56,7 @@
     </div>
 
     {{!-- Conditionals Tab --}}
-    <div class="tab" data-group="primary" data-tab="conditionals">
+    <div class="tab condtionals" data-group="primary" data-tab="conditionals">
       {{> "systems/pf1/templates/apps/item-action/conditionals.hbs"}}
     </div>
   </section>

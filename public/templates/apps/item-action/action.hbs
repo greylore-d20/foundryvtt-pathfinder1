@@ -17,7 +17,7 @@
   <label class="checkbox">
     <input type="checkbox" name="splash" {{checked data.splash}}> {{localize "PF1.Splash"}}
   </label>
-  
+
   {{!-- Touch --}}
   <label class="checkbox">
     <input type="checkbox" name="touch" {{checked data.touch}}> {{localize "PF1.TouchAttackShort"}}
@@ -186,6 +186,9 @@
       {{selectOptions config.abilities selected=data.ability.damage blank=""}}
     </select>
     <select name="ability.damageMult" data-dtype="Number">
+      {{#unless isNaturalAttack}}
+      <option value=''>{{localize "PF1.HeldMult" mult=heldAbilityMultiplier}}</option>
+      {{/unless}}
       {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}
     </select>
   </div>

@@ -174,6 +174,10 @@ export class ItemActionSheet extends FormApplication {
     context.alignmentTypes = this._prepareAlignments(this.action.alignments);
     this.alignments = context.alignmentTypes?.values; // Use a deep clone we've already made to track our progress.
 
+    // Ability damage multiplier from held
+    const held = context.rollData.action.held || context.rollData.item.held || "1h";
+    context.heldAbilityMultiplier = pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
+
     // Power attack multiplier if inherited
     context.paMultiplier = action.getPowerAttackMult({ rollData: context.rollData });
 

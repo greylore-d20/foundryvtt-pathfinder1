@@ -71,11 +71,13 @@ export class AttackDialog extends Application {
   }
 
   get damageMult() {
-    let damageMult = this.rollData.action?.ability?.damageMult ?? 1;
+    const rollData = this.rollData;
+    const held = rollData.action?.held || rollData.item?.held || "1h";
+    let damageMult = rollData.action?.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
 
     const isPrimaryAttack = this.flags["primary-attack"];
     if (!isPrimaryAttack) {
-      damageMult = this.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+      damageMult = rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
     }
 
     return damageMult;

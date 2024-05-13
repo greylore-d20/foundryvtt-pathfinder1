@@ -765,6 +765,15 @@ export const abilityDamageMultipliers = [
   { value: 2.5, label: "×2.5" },
 ];
 
+/**
+ * Ability damage multipliers inherited from held options
+ */
+export const abilityDamageHeldMultipliers = {
+  oh: 0.5,
+  normal: 1,
+  "2h": 1.5,
+};
+
 /* -------------------------------------------- */
 
 /**

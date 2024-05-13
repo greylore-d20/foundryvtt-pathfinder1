@@ -1695,7 +1695,11 @@ export class ActorSheetPF extends ActorSheet {
             // Include ability score only if the string isn't too long yet
             const dmgAbl = actionData.ability.damage;
             const dmgAblBaseMod = system.abilities[dmgAbl]?.mod ?? 0;
-            let dmgMult = actionData.ability.damageMult || 1;
+            const held = rollData.action?.held || rollData.item?.held || "1h";
+            let dmgMult =
+              rollData.action.ability.damageMult ??
+              (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ??
+              1;
             if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
               dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
             }
@@ -1737,7 +1741,7 @@ export class ActorSheetPF extends ActorSheet {
             }
             const abl = actionData.ability?.damage;
             if (abl) {
-              const mult = actionData.ability?.damageMult ?? 1;
+              const mult = actionData.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
               dmgSources.push({
                 value: Math.floor(rollData.abilities[abl]?.mod * mult),
                 type: pf1.config.abilities[abl],

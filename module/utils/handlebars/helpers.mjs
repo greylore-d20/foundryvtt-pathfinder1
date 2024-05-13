@@ -76,7 +76,9 @@ export const registerHandlebarsHelpers = function () {
     // Include ability score only if the string isn't too long yet
     const dmgAbl = actionData.ability.damage;
     const dmgAblBaseMod = actorData?.abilities[dmgAbl]?.mod ?? 0;
-    let dmgMult = actionData.ability.damageMult || 1;
+    const held = rollData.action?.held || rollData.item?.held || "1h";
+    let dmgMult =
+      actionData.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
     if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
       dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
     }

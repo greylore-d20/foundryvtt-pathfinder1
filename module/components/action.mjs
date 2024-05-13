@@ -302,10 +302,9 @@ export class ItemAction {
     if (this.item.subType === "natural") {
       // Primary
       if (rollData.action.naturalAttack?.primaryAttack) {
+        const ablDmgMult = rollData.action.ability?.damageMult ?? 1;
         // Primary attack gets +50% damage like with two-handing if ability score multiplier is 1.5x or higher
-        if (rollData.action.ability?.damageMult >= 1.5) {
-          mult = 1.5;
-        }
+        if (ablDmgMult >= 1.5) mult = 1.5;
       }
       // Secondary
       else {
@@ -1021,11 +1020,17 @@ export class ItemAction {
       throw new Error("You may not make a Damage Roll with this Action.");
     }
 
+    const isNatural = this.item?.subType === "natural";
+
     // Determine critical multiplier
     rollData.critMult = 1;
     if (critical) rollData.critMult = this.data.ability.critMult;
     // Determine ability multiplier
-    if (rollData.ablMult == null) rollData.ablMult = rollData.action?.ability.damageMult;
+    if (rollData.ablMult == null) {
+      const held = rollData.action?.held || rollData.item?.held || "1h";
+      rollData.ablMult =
+        rollData.action?.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
+    }
 
     // Define Roll parts
     const parts =

@@ -90,7 +90,10 @@ export class ChatAttack {
     // Add critical confirmation bonus
     data.critConfirmBonus = RollPF.safeRoll(data.action.critConfirmBonus || "0").total ?? 0;
     // Determine ability multiplier
-    if (data.action.ability.damageMult != null) data.ablMult = data.action.ability.damageMult;
+    if (data.action.ability.damageMult != null) {
+      const held = data.action?.held || data.item?.held || "1h";
+      data.ablMult = data.action.ability.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
+    }
   }
 
   async setEffectNotesHTML() {

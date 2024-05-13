@@ -4,6 +4,7 @@ import { ActorTraitSelector } from "../trait-selector.mjs";
 import { SpeedEditor } from "../speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -205,22 +206,26 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    const description = this.item.getDescription({ rollData });
+    const description = this.item.getDescription({ rollData, header: false });
 
     // Add descriptions
     context.descriptionHTML = {
-      identified: await TextEditor.enrichHTML(description, {
-        secrets: context.owner,
-        rollData: rollData,
-        async: true,
-        relativeTo: this.actor,
-      }),
-      unidentified: await TextEditor.enrichHTML(itemData.description.unidentified, {
-        secrets: context.owner,
-        rollData: rollData,
-        async: true,
-        relativeTo: this.actor,
-      }),
+      identified: description
+        ? await TextEditor.enrichHTML(description, {
+            secrets: context.owner,
+            rollData: rollData,
+            async: true,
+            relativeTo: this.actor,
+          })
+        : null,
+      unidentified: itemData.description.unidentified
+        ? await TextEditor.enrichHTML(itemData.description.unidentified, {
+            secrets: context.owner,
+            rollData: rollData,
+            async: true,
+            relativeTo: this.actor,
+          })
+        : null,
     };
 
     context.name = item.name;
@@ -531,6 +536,8 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    let topDescription;
+
     // Prepare spell specific stuff
     if (context.isSpell) {
       let spellbook = null;
@@ -545,15 +552,10 @@ export class ItemSheetPF extends ItemSheet {
       context.isAtWill = itemData.atWill;
       context.spellbooks = foundry.utils.deepClone(actorData?.attributes.spells.spellbooks ?? {});
 
-      const desc = await renderTemplate(
+      topDescription = renderCachedTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",
         item.getDescriptionData({ rollData })
       );
-      context.topDescription = await TextEditor.enrichHTML(desc, {
-        rollData,
-        async: true,
-        relativeTo: this.actor,
-      });
 
       // Enrich description
       if (itemData.description?.value) {
@@ -585,6 +587,14 @@ export class ItemSheetPF extends ItemSheet {
           c.divineFocus = false;
         }
       }
+    }
+
+    if (topDescription) {
+      context.topDescription = await TextEditor.enrichHTML(topDescription, {
+        rollData,
+        async: true,
+        relativeTo: this.actor,
+      });
     }
 
     // Prepare class specific stuff
@@ -1815,7 +1825,7 @@ export class ItemSheetPF extends ItemSheet {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, owner: this.item.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.item.isOwner });
 
       const div = $(content);
       div.hide();

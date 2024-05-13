@@ -528,10 +528,13 @@ export class ItemPF extends ItemBasePF {
    * @param {boolean} [options.chatcard=false] - Instruct template to render chat card in mind.
    * @param {object} [options.data={}] - Template data for rendering
    * @param {object} [options.rollData] - Roll data for transforming description
+   * @param {boolean} [options.header] - Include header if such exists.
+   * @param {boolean} [options.body] - Include main description body if such exists.
    * @returns {string} - Full description.
    */
-  getDescription(options) {
-    return this.system.description.value;
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true } = {}) {
+    if (body) return this.system.description.value;
+    return "";
   }
 
   /**

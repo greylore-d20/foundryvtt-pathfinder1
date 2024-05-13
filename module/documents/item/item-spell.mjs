@@ -875,14 +875,16 @@ export class ItemSpellPF extends ItemPF {
   /**
    * @inheritdoc
    */
-  getDescription({ chatcard = false, data = {}, rollData } = {}) {
-    return (
-      renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
-        ...data,
-        ...this.getDescriptionData({ rollData }),
-        chatcard: chatcard === true,
-      }) + this.system.description.value
-    );
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true } = {}) {
+    const headerContent = header
+      ? renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
+          ...data,
+          ...this.getDescriptionData({ rollData }),
+          chatcard: chatcard === true,
+        })
+      : "";
+    const bodyContent = body ? this.system.description.value : "";
+    return headerContent + bodyContent;
   }
 
   getDescriptionData({ rollData } = {}) {

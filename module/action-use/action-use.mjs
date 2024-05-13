@@ -554,12 +554,19 @@ export class ActionUse {
     // for effect notes only
     else await this.addEmptyAttack();
 
-    // Add attack cards
-    this.shared.attacks.forEach((attack) => {
+    const misfire = this.action.misfire ?? 0;
+
+    // Fill in ammo use details
+    this.shared.attacks.forEach((/** @type {ChatAttack}*/ attack) => {
       if (!attack.hasAmmo) return;
       /** @type {ChatAttack} */
       const atk = attack.chatAttack;
       if (atk) atk.setAmmo(attack.ammo.id);
+      // Mark misfire
+      if (atk.ammo) {
+        const d20 = atk.attack?.d20?.total;
+        atk.ammo.misfire = d20 <= misfire;
+      }
     });
 
     // Add save info
@@ -1293,7 +1300,7 @@ export class ActionUse {
       // Record used ammo ID and quantity
       if (chatAttack.ammo?.id) {
         // Quantity is included for future proofing for supporting attacks that consume more than 1.
-        attackRolls.ammo = { id: chatAttack.ammo.id, quantity: 1 };
+        attackRolls.ammo = { id: chatAttack.ammo.id, quantity: 1, misfire: chatAttack.ammo.misfire ?? false };
       }
 
       metadata.rolls.attacks[attackIndex] = attackRolls;
@@ -1576,6 +1583,7 @@ export class ActionUseAttack {
   /** @type {ChatAttack} */
   chatAttack = null;
 
+  /** @type {boolean} */
   get hasAmmo() {
     return !!this.ammo;
   }

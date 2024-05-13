@@ -111,6 +111,16 @@ export class D20RollPF extends RollPF {
   }
 
   /**
+   * Is this roll a misfire.
+   *
+   * @type {boolean|void}
+   */
+  get isMisfire() {
+    if (!this._evaluated) return undefined;
+    return this.natural <= (this.options.misfire ?? 0);
+  }
+
+  /**
    * Natural roll value. Undefined if the roll isn't evaluated.
    *
    * @type {number|void}
@@ -282,6 +292,7 @@ export class D20RollPF extends RollPF {
         tooltip: await this.getTooltip(),
         total: Math.floor(this.total * 100) / 100,
         isCrit: this.isCrit,
+        isMisfire: this.isMisfire,
         isNat20: this.isNat20,
         isNat1: this.isNat1,
         natural: this.natural,

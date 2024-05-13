@@ -282,6 +282,17 @@ export class ItemAction {
   }
 
   /**
+   * Misfire threshold
+   *
+   * @type {number} Misfire threshold. Zero if action does not misfire.
+   */
+  get misfire() {
+    const misfire = this.data.ammo?.misfire ?? null;
+    if (Number.isFinite(misfire)) return misfire;
+    return this.item?.system.ammo?.misfire ?? 0;
+  }
+
+  /**
    * Get power attack, deadly aim or piranha strike multiplier.
    *
    * @param {object} [options] - Additional options
@@ -999,6 +1010,11 @@ export class ItemAction {
 
     if (!config.proficient) {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.Proficiency.Penalty")}]`);
+    }
+
+    if (this.ammoType && this.ammoCost > 0) {
+      const misfire = this.misfire;
+      if (misfire > 0) rollOptions.misfire = misfire;
     }
 
     const roll = await new pf1.dice.D20RollPF(

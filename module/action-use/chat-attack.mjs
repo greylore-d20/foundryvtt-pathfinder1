@@ -58,6 +58,7 @@ export class ChatAttack {
       id: ammoId,
       img: ammoItem.img,
       name: ammoItem.name,
+      misfire: false,
     };
   }
 
@@ -275,6 +276,11 @@ export class ChatAttack {
     // Add action notes
     if (this.action.data.effectNotes?.length) {
       this.effectNotes.push(...this.action.data.effectNotes);
+    }
+
+    // Misfire; BUG: Doesn't work
+    if (this.ammo?.misfire) {
+      this.effectNotes.push(game.i18n.localize("PF1.Misfire"));
     }
 
     await this.setEffectNotesHTML();

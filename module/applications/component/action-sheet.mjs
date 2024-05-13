@@ -136,6 +136,10 @@ export class ItemActionSheet extends FormApplication {
     context.usesAmmo = !!action.ammoType;
     context.inheritedAmmoType = item?.system.ammo?.type;
 
+    if (context.usesAmmo) {
+      context.inheritedMisfire = item?.system.ammo?.misfire ?? null;
+    }
+
     // Add distance units
     context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {

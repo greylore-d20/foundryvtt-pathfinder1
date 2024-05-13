@@ -126,6 +126,13 @@
     <input type="number" name="ammo.cost" data-dtype="Number" value="{{data.ammo.cost}}" placeholder="1">
   </div>
 </div>
+
+<div class="form-group misfire">
+  <label>{{localize "PF1.Misfire"}}</label>
+  <div class="form-fields">
+    <input type="number" min="0" step="1" max="20" name="ammo.misfire" value="{{data.ammo.misfire}}" placeholder="{{#if inheritedMisfire}}{{inheritedMisfire}}{{else}}{{localize "PF1.None"}}{{/if}}">
+  </div>
+</div>
 {{/if}}
 {{/if}}
 

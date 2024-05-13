@@ -2270,7 +2270,7 @@ export class ItemPF extends ItemBasePF {
  * @property {boolean} fullAttack - Whether the action is a full attack. Defaults to `true`.
  * @property {string[]} attackBonus - Bonus values to be added to the attack roll formula
  * @property {string[]} damageBonus - Bonus values to be added to the damage roll formula
- * @property {object[]} attacks - Array of attacks
+ * @property {ActionUseAttack[]} attacks - Array of attacks
  * @property {pf1.actionUse.ChatAttack[]} chatAttacks - Array of chat attacks for this action's use
  * @property {string} rollMode - The roll mode to be used for the creation of the chat message. Defaults to the `core.rollMode` setting.
  * @property {boolean} useMeasureTemplate - Whether to use a measure template

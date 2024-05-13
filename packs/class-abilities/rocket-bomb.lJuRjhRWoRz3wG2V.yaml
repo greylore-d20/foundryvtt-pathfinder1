@@ -1,25 +1,68 @@
 _id: lJuRjhRWoRz3wG2V
 _key: '!items!lJuRjhRWoRz3wG2V'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/skills/ranged/rocket-skull-fire-blue.webp
 name: Rocket Bomb
 system:
   abilityType: su
+  actions:
+    - _id: Q9FqnPZkJIoTuxjb
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: ceil(@class.level / 2) + @abilities.int.mod
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/skills/ranged/rocket-skull-fire-blue.webp
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '50'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
   description:
     value: >-
-      <p>Alchemists with this discovery can prepare special rockets to deliver
-      their bombs. Rocket bombs travel farther and explode bigger than normal
-      bombs, but cannot target individual creatures. Rocket bombs explode in a
-      20-foot radius, and all creatures in that area take the alchemist’s normal
-      splash damage. The range increment on a rocket bomb is 50 feet. Rocket
-      bombs cannot be used with the precise bomb or fast bomb discoveries.</p>
-
-      <p>An alchemist must be at least 6th level before selecting this
-      discovery.</p>
+      <p><strong>Prerequisites</strong>: Goblin</p><p>Alchemists with this
+      discovery can prepare special rockets to deliver their bombs. Rocket bombs
+      travel farther and explode bigger than normal bombs, but cannot target
+      individual creatures. Rocket bombs explode in a 20-foot radius, and all
+      creatures in that area take the alchemist’s normal splash damage. The
+      range increment on a rocket bomb is 50 feet. Rocket bombs cannot be used
+      with the
+      @UUID[Compendium.pf1.class-abilities.Item.UGsZPQqUYwvkKeBq]{precise bomb}
+      or @UUID[Compendium.pf1.class-abilities.Item.Q20Fw7BBHmTWmfXg]{fast bomb}
+      discoveries.</p><p>An alchemist must be at least 6th level before
+      selecting this discovery.</p><hr /><p><strong>Usage</strong>: link charges
+      to <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1121
+      pages: '116'
   subType: classFeat
   tags:
+    - Goblin
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

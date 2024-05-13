@@ -1,8 +1,94 @@
 _id: EZhGOBSgLu42LqC0
 _key: '!items!EZhGOBSgLu42LqC0'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/fire/blast-jet-stream-embers-yellow.webp
 name: Strafe Bomb
 system:
+  abilityType: su
+  actions:
+    - _id: GEjBVedZez7GqFOU
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        color: '#eb7100'
+        size: '40'
+        type: ray
+      name: Throw
+      range:
+        units: ft
+        value: '40'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: DQKo53mMF68PiltC
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: icons/magic/fire/blast-jet-stream-embers-yellow.webp
+      measureTemplate:
+        color: '#eb7100'
+        size: '80'
+        type: ray
+      name: Throw (Explosive)
+      range:
+        units: ft
+        value: '80'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -13,11 +99,18 @@ system:
       him in the direction he chooses. The alchemist designates one creature in
       the squares affected by the line to be the target of the bomb and makes
       his attack roll against that creature; all other squares in the line take
-      splash damage. If the alchemist has the explosive bomb discovery and
-      throws an explosive strafe bomb, the line of splash damage is 80 feet long
-      instead of 40 feet.</p>
+      splash damage. If the alchemist has the
+      @UUID[Compendium.pf1.class-abilities.Item.aD2JhzW6M813epJg]{explosive
+      bomb} discovery and throws an explosive strafe bomb, the line of splash
+      damage is 80 feet long instead of 40 feet.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1117
+      pages: '17'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

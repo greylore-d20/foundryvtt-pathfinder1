@@ -1,8 +1,63 @@
 _id: PqGYXj1wsBYl0fv2
 _key: '!items!PqGYXj1wsBYl0fv2'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/control/fear-fright-monster-green.webp
 name: Anguish Bomb
 system:
+  actions:
+    - _id: 3rUVRhMsq7fZfxnp
+      ability:
+        attack: dex
+        damage: cha
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      conditionals:
+        - _id: AXD43qRho0VLiIhP
+          default: false
+          modifiers:
+            - _id: 8dPOnJ0PXQ4dFyaj
+              critical: normal
+              damageType:
+                custom: ''
+                values:
+                  - nonlethal
+              formula: floor(@class.level / 2)
+              subTarget: allDamage
+              target: damage
+              type: ''
+          name: Damaged (24 hours)
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - nonlethal
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - nonlethal
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will halves damage in splash area
+        type: will
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -10,7 +65,15 @@ system:
     value: >-
       <p>You can throw bombs infused with psychic trauma. This discovery allows
       other alchemists to duplicate the <em>anguish bombs</em> used by
-      mnemostillers.</p>
+      mnemostillers.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO92109
+      pages: '52'
   subType: classFeat
+  tags:
+    - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

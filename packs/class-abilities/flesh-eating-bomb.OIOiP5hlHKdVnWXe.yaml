@@ -1,8 +1,50 @@
 _id: OIOiP5hlHKdVnWXe
 _key: '!items!OIOiP5hlHKdVnWXe'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/acid/dissolve-arm-flesh.webp
 name: Flesh-Eating Bomb
 system:
+  actions:
+    - _id: qI8nzkFn2OL7z8Fk
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d8
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d8
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex; see text
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -15,9 +57,15 @@ system:
       armor bonus to AC is less likely to be harmed; such creatures in the
       bomb’s splash radius take no damage on a successful Reflex save, and the
       target of a direct hit can attempt a Reflex save against the bomb’s save
-      DC to take only half damage.</p>
+      DC to take only half damage.</p><hr /><p><strong>Usage</strong>: link
+      charges to <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9478
+      pages: '17'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

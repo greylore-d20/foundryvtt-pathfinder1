@@ -1,9 +1,35 @@
 _id: nAyAJFo8bHY2Vcdo
 _key: '!items!nAyAJFo8bHY2Vcdo'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/air/fog-gas-smoke-brown.webp
 name: Sand Bomb
 system:
   abilityType: su
+  actions:
+    - _id: qJga4TiGwsJbbNVz
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex negates blinded and halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -13,9 +39,16 @@ system:
       that explodes in an abrasive cloud on impact. A creature that takes a
       direct hit from a sand bomb is blinded for 1 round, as are any creatures
       in the splash radius that fail a Reflex save (DC = 10 + half the
-      alchemist’s level + his Intelligence modifier).</p>
+      alchemist’s level + his Intelligence modifier).</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO9484
+      pages: '29'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

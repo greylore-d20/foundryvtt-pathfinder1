@@ -1,8 +1,52 @@
 _id: no3cTfgumHLHXKWW
 _key: '!items!no3cTfgumHLHXKWW'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/weapons/thrown/bomb-purple.webp
 name: Jury-Rigged Bomb
 system:
+  abilityType: su
+  actions:
+    - _id: oXzxIow2mWnnGk9P
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: swift
+        unchained:
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d4
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d4 - floor(@abilities.int.mod / 2)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          [[ceil(@class.level / 2) + floor(@abilities.int.mod / 2)]] Splash
+          Damage
+      img: icons/weapons/thrown/bomb-purple.webp
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -22,9 +66,15 @@ system:
       direct hit.</p>
 
       <p>An alchemist must be at least 4th level before selecting this
-      discovery.</p>
+      discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9484
+      pages: '29'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

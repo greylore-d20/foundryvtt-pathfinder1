@@ -1,8 +1,72 @@
 _id: gJpPcE0uL09rBMTb
 _key: '!items!gJpPcE0uL09rBMTb'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/commodities/gems/pearl-purple-dark.webp
 name: Profane Bomb
 system:
+  actions:
+    - _id: QvMf9w3E2WgQz91H
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      alignments:
+        evil: true
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: /Divine
+              values:
+                - untyped
+        parts:
+          - formula: 1d6
+            type:
+              custom: /Divine
+              values:
+                - untyped
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      target:
+        value: Good or neutral aligned creatures
+      touch: true
+    - _id: kmAYaaQRJBsL4HVj
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: round
+        value: '1'
+      img: icons/commodities/gems/pearl-purple-dark.webp
+      name: Staggered effect
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortitude negates
+        type: fort
+      target:
+        value: Good creatures hit directly
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -15,9 +79,16 @@ system:
       target is not affected by the bomb’s staggering effect. A profane bomb has
       no effect against evil-aligned creatures.</p>
 
-      <p>An alchemist must be at least 8th level to select this discovery.</p>
+      <p>An alchemist must be at least 8th level to select this
+      discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9450
+      pages: '26'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

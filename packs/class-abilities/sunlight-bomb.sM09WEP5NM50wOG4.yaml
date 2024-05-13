@@ -1,25 +1,102 @@
 _id: sM09WEP5NM50wOG4
 _key: '!items!sM09WEP5NM50wOG4'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/light/beam-strike-orange-gold.webp
 name: Sunlight Bomb
 system:
   abilityType: su
+  actions:
+    - _id: ZjQpMw9wpfRq7CKb
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: >-
+              (ceil(@class.level / 2) - 1)d6 + (2 * (Ceil(@class.level / 2) -
+              1))
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6 + 2
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      target:
+        value: >-
+          Undead, fungi, molds, oozes, slimes, and creatures to which sunlight
+          is harmful or unnatural
+      touch: true
+    - _id: VBYjrQpDEF25gQMz
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      description: >-
+        <p>Creatures that take a direct hit from a sunlight bomb are blinded for
+        1 minute unless they succeed at a Fortitude save. Creatures in the
+        splash area that fail their saves against the bomb are dazzled for 1
+        minute. This is a light effect. Undead that are harmed by sunlight and
+        that fail their saves against the bomb are staggered for 1 round.</p>
+      duration:
+        units: minute
+        value: '1'
+      img: icons/magic/light/beam-strike-orange-gold.webp
+      name: Sunlight effect
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortutude negates
+        type: fort
+      target:
+        value: Creatures in bomb radius
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
   description:
     value: >-
       <p>The alchemist can throw bombs that explode with a searing radiance
-      equivalent to that of sunlight and that act as blinding bombs. Undead,
-      fungi, molds, oozes, slimes, and creatures to which sunlight is harmful or
-      unnatural take +2 damage per die from the bomb. Undead that are harmed by
-      sunlight and that fail their saves against the bomb are staggered for 1
-      round.</p>
-
-      <p>An alchemist must be at least 10th level and must have the blinding
-      bomb discovery before he can select this discovery.</p>
+      equivalent to that of sunlight and that act as
+      @UUID[Compendium.pf1.class-abilities.Item.Br14oRMf7TmT4Q7T]{blinding
+      bombs}. Undead, fungi, molds, oozes, slimes, and creatures to which
+      sunlight is harmful or unnatural take +2 damage per die from the bomb.
+      Undead that are harmed by sunlight and that fail their saves against the
+      bomb are staggered for 1 round.</p><p>An alchemist must be at least 10th
+      level and must have the blinding bomb discovery before he can select this
+      discovery.</p>
+  sources:
+    - id: PZO1117
+      pages: '17'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

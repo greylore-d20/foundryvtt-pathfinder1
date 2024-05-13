@@ -1,8 +1,35 @@
 _id: QKSblByvi4bHVKrP
 _key: '!items!QKSblByvi4bHVKrP'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/defensive/barrier-shield-dome-deflect-teal.webp
 name: Neutralizing Bomb
 system:
+  actions:
+    - _id: 6B5T29mlYFa5hBEa
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortitude negates monsters poison supression
+        type: fort
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -18,11 +45,15 @@ system:
       other conditions. Exposed poison in the splash radius is also rendered
       harmless. A creature with poison abilities that is directly struck by the
       bomb finds those abilities useless for 1d4 rounds unless it succeeds at a
-      Fortitude saving throw.</p>
-
-      <p>This discovery doesn’t stack with any other that modifies bombs.</p>
+      Fortitude saving throw.</p><p>This discovery doesn’t stack with any other
+      that modifies bombs.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9475
+      pages: '11'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

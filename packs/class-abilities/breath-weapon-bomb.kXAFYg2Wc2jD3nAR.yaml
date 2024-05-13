@@ -1,8 +1,45 @@
 _id: kXAFYg2Wc2jD3nAR
 _key: '!items!kXAFYg2Wc2jD3nAR'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/creatures/abilities/dragon-fire-breath-orange.webp
 name: Breath Weapon Bomb
 system:
+  actions:
+    - _id: Ygsg2MYhTM9AtCOM
+      ability:
+        damage: int
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/creatures/abilities/dragon-fire-breath-orange.webp
+      measureTemplate:
+        size: '15'
+        type: cone
+      name: Breath
+      range:
+        units: melee
+        value: ''
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves
+        type: ref
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -19,9 +56,15 @@ system:
       breath weapon bombs does not provoke attacks of opportunity.</p>
 
       <p>An alchemist must be at least 6th level before selecting this
-      discovery.</p>
+      discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1118
+      pages: '24'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

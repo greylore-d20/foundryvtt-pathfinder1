@@ -1,8 +1,50 @@
 _id: lAfdHXEzpd9ADoe4
 _key: '!items!lAfdHXEzpd9ADoe4'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/acid/dissolve-bone-skull.webp
 name: Poisoned Explosive
 system:
+  actions:
+    - _id: zvgCrdrh83t1Inwq
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -12,12 +54,20 @@ system:
       injury poison to it, as if applying poison to a weapon. If the poisoned
       bomb hits its target, the bomb deals damage as normal, but the target must
       also succeed at a saving throw against the poison or be affected by that
-      poison. No other creatures are affected by the poison.</p>
-
-      <p>An alchemist must be at least 4th level and have the poison use class
-      feature before selecting this discovery.</p>
+      poison. No other creatures are affected by the poison.</p><p>An alchemist
+      must be at least 4th level and have the
+      @UUID[Compendium.pf1.class-abilities.Item.kKaz5A6XbuxgVvhO]{poison use}
+      class feature before selecting this discovery.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p><p><span style="font-family:Signika, sans-serif">Roll poison
+      dose for poison effect after using bombs throw action.</span></p>
+  sources:
+    - id: PZO9459
+      pages: '7'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

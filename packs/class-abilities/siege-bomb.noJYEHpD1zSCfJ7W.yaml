@@ -1,8 +1,44 @@
 _id: noJYEHpD1zSCfJ7W
 _key: '!items!noJYEHpD1zSCfJ7W'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/fire/flame-burning-building.webp
 name: Siege Bomb
 system:
+  actions:
+    - _id: GF33SXBg8xnuZKji
+      activation:
+        type: standard
+        unchained:
+          type: nonaction
+      duration:
+        units: turn
+      img: icons/skills/ranged/bomb-grenade-thrown-yellow.webp
+      name: Infuse Ammo
+      range:
+        units: touch
+    - _id: uu9JROLfpQvYr86U
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/magic/fire/flame-burning-building.webp
+      measureTemplate:
+        color: '#f58f00'
+        size: '20'
+        type: circle
+      name: Siege weapon additional fire damage
+      splash: true
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -18,12 +54,18 @@ system:
       each round until the fire is extinguished. Extinguishing the flames is a
       full-round action that requires a Reflex save. Rolling on the ground
       provides the target with a +2 bonus on the save. Dousing the target with
-      at least 2 gallons of water automatically extinguishes the flames.</p>
-
-      <p>An alchemist must be at least 12th level and must possess the explosive
-      bomb discovery before selecting this discovery.</p>
+      at least 2 gallons of water automatically extinguishes the
+      flames.</p><p>An alchemist must be at least 12th level and must possess
+      the explosive bomb discovery before selecting this discovery.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1118
+      pages: '24'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

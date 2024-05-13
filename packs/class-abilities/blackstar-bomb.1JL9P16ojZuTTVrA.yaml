@@ -1,25 +1,84 @@
 _id: 1JL9P16ojZuTTVrA
 _key: '!items!1JL9P16ojZuTTVrA'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/creatures/eyes/void-single-black-purple.webp
 name: Blackstar Bomb
 system:
   abilityType: su
+  actions:
+    - _id: F52sJA742uPV6JR2
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d4
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+        parts:
+          - formula: 1d4
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex half
+        type: ref
+      touch: true
+    - _id: Ymbts8Z5JgMW09Dt
+      ability:
+        attack: int
+      actionType: mcman
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      img: icons/creatures/eyes/void-single-black-purple.webp
+      name: Bull Rush
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
   description:
     value: >-
-      <p>This bomb crushes the target like a void bomb, then repels nearby
-      creatures with a burst of gravity. The target takes damage as if hit by a
-      void bomb. All other creatures within 5 feet of the target are subject to
-      a bull rush. The alchemist uses his alchemist class level in place of his
-      Combat Maneuver Bonus, and adds his Intelligence modifier in place of his
-      Strength or Dexterity modifier to resolve the bull rush attempts.
-      Creatures moved by a blackstar bomb are pushed directly away from the
-      target’s square. An alchemist must have the void bomb discovery to create
-      blackstar bombs.</p>
+      <p>This bomb crushes the target like a
+      @UUID[Compendium.pf1.class-abilities.Item.tdevhSAiiOchinl7]{void bomb},
+      then repels nearby creatures with a burst of gravity. The target takes
+      damage as if hit by a void bomb. All other creatures within 5 feet of the
+      target are subject to a bull rush. The alchemist uses his alchemist class
+      level in place of his Combat Maneuver Bonus, and adds his Intelligence
+      modifier in place of his Strength or Dexterity modifier to resolve the
+      bull rush attempts. Creatures moved by a blackstar bomb are pushed
+      directly away from the target’s square. An alchemist must have the void
+      bomb discovery to create blackstar bombs.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1130
+      pages: '32'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

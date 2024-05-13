@@ -1,8 +1,51 @@
 _id: ZuGC98Ov3wZOIOhY
 _key: '!items!ZuGC98Ov3wZOIOhY'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/creatures/magical/spirit-mischief-fire-ice-blue.webp
 name: Ectoplasmic Bomb
 system:
+  actions:
+    - _id: TWrYU9gCN925d4Me
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: minute
+        value: '1'
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -19,9 +62,16 @@ system:
       creating a glowing trail. Any undead creatures in the affected area at the
       time of the explosion likewise glow faintly. This glowing effect lasts for
       1 minute, and is otherwise identical to
-      @Compendium[pf1.spells.bl71og1gklwncmt7]{Faerie Fire}.</p>
+      @Compendium[pf1.spells.bl71og1gklwncmt7]{Faerie Fire}.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO9444
+      pages: '21'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

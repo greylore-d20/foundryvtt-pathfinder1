@@ -1,8 +1,50 @@
 _id: PBjOMYMPRPnjbPXF
 _key: '!items!PBjOMYMPRPnjbPXF'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/fire/projectile-wave-arrow.webp
 name: Directed Bomb
 system:
+  actions:
+    - _id: FnECmofQqxirhPZZ
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '15'
+        type: cone
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -12,9 +54,15 @@ system:
       of a 5-foot-radius burst. The alchemist chooses the direction of the cone.
       If the attack misses, roll an additional 1d8 to determine the direction of
       the blast from where the bomb lands. This discovery can't be combined with
-      the explosive bomb discovery.</p>
+      the @UUID[Compendium.pf1.class-abilities.Item.aD2JhzW6M813epJg]{explosive
+      bomb} discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9440
+      pages: '20'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

@@ -1,8 +1,51 @@
 _id: dfrCk6U40q3R5c0J
 _key: '!items!dfrCk6U40q3R5c0J'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/skills/wounds/anatomy-organ-brain-pink-red.webp
 name: Psychoactive Bomb
 system:
+  actions:
+    - _id: i6D9S2zsHB47mmpk
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 2)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: hour
+        value: '@class.level'
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -18,9 +61,15 @@ system:
       normal.</p>
 
       <p>An alchemist must be at least 6th level before selecting this
-      discovery.</p>
+      discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9439
+      pages: '15'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

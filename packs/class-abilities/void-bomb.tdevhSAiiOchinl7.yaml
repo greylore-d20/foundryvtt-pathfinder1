@@ -1,9 +1,48 @@
 _id: tdevhSAiiOchinl7
 _key: '!items!tdevhSAiiOchinl7'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/sonic/explosion-shock-sound-wave.webp
 name: Void Bomb
 system:
   abilityType: su
+  actions:
+    - _id: hMaTglOhcq3nj0ic
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d4
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+        parts:
+          - formula: 1d4
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -19,11 +58,16 @@ system:
       movement speeds are reduced to 5 feet for 1 round. Other creatures within
       5 feet of the bomb’s target take no damage, but must succeed at a Reflex
       save against the bomb’s DC or have all their movement speeds reduced to 5
-      feet for 1 round.</p>
-
-      <p>An alchemist must be 6th level before selecting this discovery.</p>
+      feet for 1 round.</p><p>An alchemist must be 6th level before selecting
+      this discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1130
+      pages: '32'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

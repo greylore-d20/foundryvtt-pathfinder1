@@ -1,8 +1,67 @@
 _id: WhWfvSeThSe74lTg
 _key: '!items!WhWfvSeThSe74lTg'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/control/silhouette-fall-slip-prone.webp
 name: Grease Bomb
 system:
+  actions:
+    - _id: 1K9ZV0LELtwDCXgU
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      description: >-
+        <p><span style="font-family: Signika, sans-serif">Any creature in the
+        grease area must make a successful Reflex save or fall. A creature can
+        walk within or through the area of <em style="box-sizing: border-box;
+        user-select: text; color: rgb(25, 24, 19); font-family: Signika,
+        sans-serif; font-size: 13px; font-variant-ligatures: normal;
+        font-variant-caps: normal; font-weight: 400; letter-spacing: normal;
+        orphans: 2; text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; text-decoration-thickness: initial;
+        text-decoration-style: initial; text-decoration-color:
+        initial;">grease</em> at half normal speed with a DC 10 Acrobatics
+        check. Failure means it can't move that round (and must then make a
+        Reflex save or fall), while failure by 5 or more means it falls (see the
+        Acrobatics skill for details). Creatures that do not move on their turn
+        do not need to make this check and are not considered
+        flat-footed.</span></p>
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -18,9 +77,15 @@ system:
       armor.</p>
 
       <p>An alchemist must be at least 6th level before selecting this
-      discovery.</p>
+      discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO9430
+      pages: '27'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

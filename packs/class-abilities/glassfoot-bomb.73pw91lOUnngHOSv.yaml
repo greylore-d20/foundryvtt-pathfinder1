@@ -1,8 +1,50 @@
 _id: 73pw91lOUnngHOSv
 _key: '!items!73pw91lOUnngHOSv'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/commodities/gems/gem-fragments-turquoise.webp
 name: Glassfoot Bomb
 system:
+  actions:
+    - _id: PDPJwyGJzC9khnGI
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -12,9 +54,16 @@ system:
       ground in volatile jagged crystals in addition to its normal
       effects.</p><p>These crystals act like
       @UUID[Compendium.pf1.items.Item.yGrLgCtNMMV9cUvt]{caltrops}, evaporating
-      into a smelly but harmless gas in 2d6 rounds.</p>
+      into a smelly but harmless gas in 2d6 rounds.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1121
+      pages: '205'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

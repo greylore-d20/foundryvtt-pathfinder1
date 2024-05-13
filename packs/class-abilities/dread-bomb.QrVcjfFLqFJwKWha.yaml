@@ -1,8 +1,63 @@
 _id: QrVcjfFLqFJwKWha
 _key: '!items!QrVcjfFLqFJwKWha'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/control/fear-fright-monster-grin-green.webp
 name: Dread Bomb
 system:
+  actions:
+    - _id: E1yhjW4ZKP3BcPoF
+      ability:
+        attack: dex
+        damage: cha
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      conditionals:
+        - _id: AXD43qRho0VLiIhP
+          default: false
+          modifiers:
+            - _id: 8dPOnJ0PXQ4dFyaj
+              critical: normal
+              damageType:
+                custom: ''
+                values:
+                  - nonlethal
+              formula: floor(@class.level / 2)
+              subTarget: allDamage
+              target: damage
+              type: ''
+          name: Was thrower damaged in past 24 hours?
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - nonlethal
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - nonlethal
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will halves damage in splash area and see text
+        type: will
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -11,12 +66,18 @@ system:
       <p>Your anguish bombs are tainted with fear and dread. Creatures who take
       damage from your anguish bombs become frightened for 1d6 rounds. A target
       that succeeds at a Will saving throw is instead shaken for a single
-      round.</p>
-
-      <p>An alchemist must be 6th level and have the anguish bomb class feature
-      or the anguish bomb discovery before selecting this discovery.</p>
+      round.</p><p>An alchemist must be 6th level and have the anguish bomb
+      class feature or the
+      @UUID[Compendium.pf1.class-abilities.Item.PqGYXj1wsBYl0fv2]{anguish bomb}
+      discovery before selecting this discovery.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO92109
+      pages: '52'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

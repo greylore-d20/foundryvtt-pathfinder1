@@ -1,9 +1,51 @@
 _id: Kvx1P7zkatq3H1XG
 _key: '!items!Kvx1P7zkatq3H1XG'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/light/projectile-needles-salvo-white.webp
 name: Thorny Bomb
 system:
   abilityType: su
+  actions:
+    - _id: nYBYxDOjr0ovsw3f
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - piercing
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -11,9 +53,15 @@ system:
     value: >-
       <p>When the alchemist creates a bomb, he can choose to have it deal
       piercing damage. Thorny bombs count as magic weapons for the purpose of
-      overcoming damage reduction.</p>
+      overcoming damage reduction.</p><hr /><p><strong>Usage</strong>: link
+      charges to <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1140
+      pages: '34'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

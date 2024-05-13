@@ -1,8 +1,81 @@
 _id: b0chZv8qg9d4N2gy
 _key: '!items!b0chZv8qg9d4N2gy'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/air/fog-gas-smoke-swirling-pink.webp
 name: Greater Plague Bomb
 system:
+  actions:
+    - _id: JmsENUEA0JvCTD3w
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: oxy4TTJ8cjE3hCoH
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      area: 10 feet
+      description: >-
+        <p>The subject contracts one of the following diseases: blinding
+        sickness, bubonic plague, cackle fever, filth fever, leprosy, mindfire,
+        red ache, shakes, or slimy doom. The disease is contracted immediately
+        (the onset period does not apply). Use the disease's listed frequency
+        and save DC to determine further effects. </p><p>The victim cannot
+        overcome the disease without magic-making the required number of saves
+        does not cure it. The DC to remove the disease with magic is equal to
+        the save DC + 5.</p>
+      duration:
+        units: round
+        value: '@class.level'
+      img: icons/magic/air/fog-gas-smoke-swirling-pink.webp
+      measureTemplate:
+        color: '#b0b0b0'
+        size: '10'
+        type: circle
+      name: Contagion
+      save:
+        dc: '0'
+        description: Fortitude negates; see text
+        type: fort
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -12,10 +85,19 @@ system:
       effects of @Compendium[pf1.spells.hv1vqeuh5eji28rz]{Contagion, Greater}
       instead of @Compendium[pf1.spells.g33euis7yi9pwddy]{Fog Cloud}, filling an
       area equal to twice the bomb’s splash radius for 1 round per level. An
-      alchemist must be at least 16th level and must possess the plague bomb and
-      smoke bomb discoveries before selecting this discovery.</p>
+      alchemist must be at least 16th level and must possess the
+      @UUID[Compendium.pf1.class-abilities.Item.NYCJPKxtOT6baDxb]{plague bomb}
+      and @UUID[Compendium.pf1.class-abilities.Item.pT7c2VLJk8Pq4YgK]{smoke
+      bomb} discoveries before selecting this discovery.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1121
+      pages: '153'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

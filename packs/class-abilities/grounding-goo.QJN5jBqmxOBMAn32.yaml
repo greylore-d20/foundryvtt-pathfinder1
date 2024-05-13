@@ -1,9 +1,51 @@
 _id: QJN5jBqmxOBMAn32
 _key: '!items!QJN5jBqmxOBMAn32'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/commodities/materials/slime-thick-orange.webp
 name: Grounding Goo
 system:
   abilityType: su
+  actions:
+    - _id: wHITX6ZdG19d6Z9A
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -12,9 +54,16 @@ system:
       <p>The alchemist’s bomb applies a sticky residue after any damage from the
       bomb is resolved. If a creature damaged by the bomb has a nonmagical fly
       speed, its flight is severely impaired, and it takes a penalty equal to
-      the alchemist’s level on Fly checks for 1 minute.</p>
+      the alchemist’s level on Fly checks for 1 minute.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1140
+      pages: '34'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

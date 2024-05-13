@@ -1,8 +1,30 @@
 _id: EZ5qCVThr5HMKjo6
 _key: '!items!EZ5qCVThr5HMKjo6'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/life/cross-area-circle-green-white.webp
 name: Healing Bomb
 system:
+  actions:
+    - _id: GbCLhECXgzUHV5WG
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -15,9 +37,16 @@ system:
       imbibed the infusion or potion used to create the bomb. Creatures in the
       splash radius are healed for the minimum amount of damage the cure spell
       is capable of healing. A healing bomb damages undead instead of healing
-      them.</p>
+      them.</p><hr /><p><strong>Usage</strong>: link charges to <em>bomb</em>
+      class feature.</p><p>Roll exctract effect for heal effect after using
+      bombs throw action.</p>
+  sources:
+    - id: PZO9440
+      pages: '20'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

@@ -1,9 +1,73 @@
 _id: B1BN2ZkHQlGTWuiN
 _key: '!items!B1BN2ZkHQlGTWuiN'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/control/hypnosis-mesmerism-eye.webp
 name: Confusion Bomb
 system:
   abilityType: su
+  actions:
+    - _id: DaQKWm6ld4YlJut8
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 3)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: iS5LmbTN9J8yzpao
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: round
+        value: '@class.level'
+      img: icons/magic/control/hypnosis-mesmerism-eye.webp
+      measureTemplate:
+        size: '15'
+        type: circle
+      name: Confusion
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Will negates
+        type: will
+      target:
+        value: Creature directly hit
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -15,12 +79,17 @@ system:
       @Compendium[pf1.spells.n0bsyxchnigkkuqo]{Confusion} spell for 1 round per
       caster level of the alchemist. Reduce the amount of normal damage dealt by
       the bomb by 2d6 (so a bomb that would normally deal 6d6+4 points of damage
-      deals 4d6+4 points of damage instead).</p>
-
-      <p>An alchemist must be at least 8th level before selecting this
-      discovery.</p>
+      deals 4d6+4 points of damage instead).</p><p>An alchemist must be at least
+      8th level before selecting this discovery.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1117
+      pages: '15'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

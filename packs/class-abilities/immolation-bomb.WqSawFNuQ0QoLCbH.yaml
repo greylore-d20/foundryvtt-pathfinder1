@@ -1,8 +1,80 @@
 _id: WqSawFNuQ0QoLCbH
 _key: '!items!WqSawFNuQ0QoLCbH'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/fire/flame-burning-skeleton-explosion.webp
 name: Immolation Bomb
 system:
+  actions:
+    - _id: dhxeSRoGyXtR2mdd
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: round
+        value: ceil(@class.level / 2)
+      effectNotes:
+        - '[[1 + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: frWLvfjhYnW9VQWv
+      ability:
+        critMult: null
+        critRange: null
+        damage: int
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[1 + @abilities.int.mod]] Splash Damage'
+      img: icons/magic/fire/flame-burning-skeleton-explosion.webp
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Continuos fire damage
+      range:
+        value: ''
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -28,9 +100,15 @@ system:
       it from burning. These bombs can be used underwater.</p>
 
       <p>An alchemist must be at least 3rd level before selecting this
-      discovery.</p>
+      discovery.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1118
+      pages: '24'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

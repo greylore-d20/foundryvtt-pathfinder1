@@ -1,20 +1,71 @@
 _id: huIqZbUATwLMywBt
 _key: '!items!huIqZbUATwLMywBt'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/commodities/metal/barstock-heated-steel.webp
 name: Scrap Bomb
 system:
   abilityType: su
+  actions:
+    - _id: yyqOKUi0oFSgoTfb
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - piercing
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+        - '[[ceil(@class.level / 2) - 1]] Bleeding Damage on direct target'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage and negates bleeding
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
   description:
     value: >-
-      <p>When the alchemist creates a bomb, he can choose to have it explode
-      into shards of shrapnel that deal piercing damage. A creature that takes a
-      direct hit from a scrap bomb takes 1 point of bleed damage per die of bomb
-      damage unless it succeeds at a Reflex save.</p>
+      <p><strong>Prerequisites</strong>: Goblin</p><p>When the alchemist creates
+      a bomb, he can choose to have it explode into shards of shrapnel that deal
+      piercing damage. A creature that takes a direct hit from a scrap bomb
+      takes 1 point of bleed damage per die of bomb damage unless it succeeds at
+      a Reflex save.</p><hr /><p><strong>Usage</strong>: link charges to
+      <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1121
+      pages: '116'
   subType: classFeat
   tags:
+    - Goblin
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

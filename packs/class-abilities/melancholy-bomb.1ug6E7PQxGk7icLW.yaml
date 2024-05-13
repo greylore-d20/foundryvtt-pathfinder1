@@ -1,8 +1,72 @@
 _id: 1ug6E7PQxGk7icLW
 _key: '!items!1ug6E7PQxGk7icLW'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/control/fear-fright-white.webp
 name: Melancholy Bomb
 system:
+  actions:
+    - _id: 4k0ex3sx496ESFyl
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: xcQOWn8JuADI2sL0
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      description: >-
+        <p>An invisible cone of despair causes great sadness in the subjects.
+        Each affected creature takes a -2 penalty on attack rolls, saving
+        throws, ability checks, skill checks, and weapon damage
+        rolls.</p><p><em>Crushing despair</em> counters and dispels <em>good
+        hope</em>.</p>
+      duration:
+        units: round
+        value: '@class.level'
+      img: icons/magic/control/fear-fright-white.webp
+      name: Crushing Despair
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Will reduces duration to 1 round
+        type: will
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -13,9 +77,17 @@ system:
       @Compendium[pf1.spells.zt7cje76dck9hwp9]{Crushing Despair} for 1 round per
       alchemist level, or a single round if the target succeeds at a Will saving
       throw. An alchemist must be 10th level and have the anguish bomb class
-      feature or the anguish bomb discovery before selecting this discovery.</p>
+      feature or the
+      @UUID[Compendium.pf1.class-abilities.Item.PqGYXj1wsBYl0fv2]{anguish bomb}
+      discovery before selecting this discovery.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO92109
+      pages: '53'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

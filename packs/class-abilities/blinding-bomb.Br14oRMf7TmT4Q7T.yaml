@@ -1,9 +1,69 @@
 _id: Br14oRMf7TmT4Q7T
 _key: '!items!Br14oRMf7TmT4Q7T'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/creatures/eyes/humanoid-single-blind.webp
 name: Blinding Bomb
 system:
   abilityType: su
+  actions:
+    - _id: QAKvrvOfyTzeUXHt
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: DCE12phXWVzpFxyU
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: minute
+        value: '1'
+      img: icons/creatures/eyes/humanoid-single-blind.webp
+      name: Blinding effect
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortutude negates
+        type: fort
+      target:
+        value: Creatures in bomb radius
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -13,12 +73,16 @@ system:
       very brightly. Creatures that take a direct hit from a blinding bomb are
       blinded for 1 minute unless they succeed at a Fortitude save. Creatures in
       the splash area that fail their saves against the bomb are dazzled for 1
-      minute. This is a light effect.</p>
-
-      <p>An alchemist must be at least 8th level before selecting this
-      discovery.</p>
+      minute. This is a light effect.</p><p>An alchemist must be at least 8th
+      level before selecting this discovery.</p><hr /><p><strong>Usage</strong>:
+      link charges to <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1117
+      pages: '15'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

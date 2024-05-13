@@ -9,7 +9,7 @@ system:
       ability:
         attack: dex
         damage: int
-      actionType: rwak
+      actionType: twak
       activation:
         type: standard
         unchained:
@@ -36,14 +36,16 @@ system:
       measureTemplate:
         size: '5'
         type: circle
-      name: Use
+      name: Throw
       range:
         units: ft
         value: '20'
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
-        description: Reflex half
+        description: Reflex halves splash damage
         type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist

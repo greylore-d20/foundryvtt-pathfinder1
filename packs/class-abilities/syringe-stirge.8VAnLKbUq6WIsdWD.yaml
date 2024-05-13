@@ -1,9 +1,96 @@
 _id: 8VAnLKbUq6WIsdWD
 _key: '!items!8VAnLKbUq6WIsdWD'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/creatures/invertebrates/fly-wasp-mosquito-green.webp
 name: Syringe Stirge
 system:
   abilityType: su
+  actions:
+    - _id: QVeJsyGlKezfjXZT
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: minute
+        value: '@class.level'
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: icons/creatures/invertebrates/fly-wasp-mosquito-green.webp
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Create syringe stirge
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+      uses:
+        autoDeductChargesCost: '2'
+    - _id: 3vW0zmzN8OVkNe27
+      activation:
+        type: swift
+        unchained:
+          type: action
+      img: systems/pf1/icons/skills/light_08.jpg
+      name: Command Syringe Stirge
+      target:
+        value: One Syringe Stirge
+    - _id: APAFsVfqt6fJgfKB
+      ability:
+        damage: int
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - fire
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/creatures/abilities/fang-tooth-blood-red.webp
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Attach / Inject bomb
+      range:
+        units: melee
+        value: ''
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -18,11 +105,11 @@ system:
       action, you can order one of your syringe stirges to attack an enemy it
       can see. Once ordered to attack that enemy, the syringe stirge will
       continue to attack every round, attempting to attach and deliver its
-      payload.<p>A syringe stirge has all of the statistics of a <a
-      href="https://aonprd.com/MonsterDisplay.aspx?ItemName=Stirge">stirge</a>
-      but lacks the blood drain ability. If it ends its turn attached to an
-      opponent, it injects your bomb into the opponent’s bloodstream, dealing
-      damage as a direct hit plus the alchemist’s Intelligence modifier (as the
+      payload.</p><p>A syringe stirge has all of the statistics of a
+      <em>stirge</em> but lacks the blood drain ability. If it ends its turn
+      attached to an opponent, it injects your bomb into the opponent’s
+      bloodstream, dealing damage as a direct hit plus the alchemist’s
+      Intelligence modifier (as the
       @Compendium[pf1.feats.gGfXQq0IZrxdcZDx]{Throw Anything} feat—this
       injection is a direct attack and doesn’t deal splash damage. A syringe
       stirge dies immediately after injecting its bomb. A syringe stirge lasts
@@ -30,8 +117,12 @@ system:
       attached to an enemy before the end of its life span it and its bomb
       payload fall inert. An alchemist must be at least 6th level before
       selecting this discovery.</p>
+  sources:
+    - id: PZO9457
+      pages: '13'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

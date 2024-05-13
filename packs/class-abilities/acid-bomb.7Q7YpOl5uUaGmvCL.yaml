@@ -1,8 +1,66 @@
 _id: 7Q7YpOl5uUaGmvCL
 _key: '!items!7Q7YpOl5uUaGmvCL'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/acid/projectile-smoke-glowing.webp
 name: Acid Bomb
 system:
+  actions:
+    - _id: CkLRQWVN6yTjYXZQ
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d6
+            type:
+              custom: ''
+              values:
+                - acid
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage
+        type: ref
+      splash: true
+      touch: true
+    - _id: 2n5fCZca32qnQGSB
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - acid
+      img: icons/magic/acid/dissolve-arm-flesh.webp
+      name: 'Continuous damage '
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Alchemist
@@ -10,9 +68,16 @@ system:
     value: >-
       <p>When the alchemist creates a bomb, he can choose to have it inflict
       acid damage. Creatures that take a direct hit from an acid bomb take an
-      additional 1d6 points of acid damage 1 round later.</p>
+      additional 1d6 points of acid damage 1 round later.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>bomb</em> class
+      feature</p>
+  sources:
+    - id: PZO1115
+      pages: '29'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

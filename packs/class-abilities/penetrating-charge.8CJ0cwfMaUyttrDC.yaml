@@ -1,8 +1,21 @@
 _id: 8CJ0cwfMaUyttrDC
 _key: '!items!8CJ0cwfMaUyttrDC'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/sundries/misc/lock-open-yellow.webp
 name: Penetrating Charge
 system:
+  actions:
+    - _id: xHqEdYTSOmWzDHlZ
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      img: icons/sundries/misc/lock-open-yellow.webp
+      name: Place Charge
+      range:
+        units: touch
+      target:
+        value: One lock
   associations:
     classes:
       - Alchemist
@@ -16,9 +29,14 @@ system:
       it, granting a +5 circumstance bonus on any subsequent Disable Device
       checks against the mechanism. A creature can spend 10 minutes and attempt
       an appropriate Craft check (DC 15) to fix the lock and remove this
-      bonus.</p>
+      bonus.</p><hr /><p><strong>Usage</strong>: link charges to <em>bomb</em>
+      class feature</p>
+  sources:
+    - id: PZO1136
+      pages: '236'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
 type: feat
 

@@ -1,8 +1,50 @@
 _id: 0S9wLgzadEbYoQXM
 _key: '!items!0S9wLgzadEbYoQXM'
-img: systems/pf1/icons/items/potions/unique-3.jpg
+img: icons/magic/lightning/barrier-shield-crackling-orb-pink.webp
 name: Force Bomb
 system:
+  actions:
+    - _id: zjg7sI5ISWHrq4Tm
+      ability:
+        attack: dex
+        damage: int
+      actionType: twak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        nonCritParts:
+          - formula: (ceil(@class.level / 2) - 1)d4
+            type:
+              custom: ''
+              values:
+                - force
+        parts:
+          - formula: 1d4
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: inst
+      effectNotes:
+        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+      img: systems/pf1/icons/items/inventory/bomb.jpg
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Throw
+      range:
+        units: ft
+        value: '20'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex halves splash damage and see text
+        type: ref
+      splash: true
+      touch: true
   associations:
     classes:
       - Alchemist
@@ -12,12 +54,16 @@ system:
       force damage. Force bombs deal 1d4 points of force damage, plus 1d4 points
       of force damage for every odd-numbered level, instead of 1d6. Creatures
       that take a direct hit from a force bomb are knocked prone unless they
-      succeed on a Reflex save.</p>
-
-      <p>An alchemist must be at least 8th level before selecting this
-      discovery.</p>
+      succeed on a Reflex save.</p><p>An alchemist must be at least 8th level
+      before selecting this discovery.</p><hr /><p><strong>Usage</strong>: link
+      charges to <em>bomb</em> class feature</p>
+  sources:
+    - id: PZO1115
+      pages: '30'
   subType: classFeat
   tags:
     - Alchemist Discovery
+    - Bomb Discovery
+    - Does not stack
 type: feat
 

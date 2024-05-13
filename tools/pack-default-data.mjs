@@ -109,6 +109,12 @@ export function getActionDefaultData() {
       type: "none",
       cost: 1,
     },
+    alignments: {
+      chaotic: null,
+      evil: null,
+      good: null,
+      lawful: null,
+    },
   };
 }
 

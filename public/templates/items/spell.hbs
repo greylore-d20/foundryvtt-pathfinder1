@@ -114,11 +114,11 @@
 
     {{!-- Description Tab --}}
     <div class="tab description" data-group="primary" data-tab="description">
-      {{{topDescription}}}
+      {{{descriptionHTML.header}}}
 
-      {{!-- Spell Description --}}
-      <h2>{{localize "PF1.Description"}}</h2>
-      {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
+      <div class="description-body">
+        {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
+      </div>
     </div>
 
     {{!-- Details Tab --}}

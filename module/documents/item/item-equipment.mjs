@@ -1,4 +1,5 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
  * Equipment item
@@ -45,6 +46,57 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
         changed.system.slot = slotTypes[0];
       }
     }
+  }
+
+  /**
+   * @inheritDoc
+   */
+  getDescriptionData({ rollData, isolated = false } = {}) {
+    const context = super.getDescriptionData({ rollData });
+
+    const system = this.system;
+    const masterwork = system.masterwork ?? false;
+    const armor = system.armor ?? {};
+
+    let speed = 30;
+    if (this.system.equipmentSubtype === "mediumArmor" && this.system.changeFlags?.mediumArmorFullSpeed !== true)
+      speed = pf1.documents.actor.ActorPF.getReducedMovementSpeed(speed);
+    else if (this.system.equipmentSubtype === "heavyArmor" && this.system.changeFlags?.heavyArmorFullSpeed !== true)
+      speed = pf1.documents.actor.ActorPF.getReducedMovementSpeed(speed);
+
+    context.armor = {
+      bonus: (armor.value ?? 0) + (armor.enh ?? 0),
+      maxdex: armor.dex,
+      maxdexActive: Number.isNumeric(armor.dex),
+      acp: -Math.max(0, (armor.acp ?? 0) + (masterwork ? -1 : 0)),
+      speed: pf1.utils.convertDistance(speed)[0],
+      asf: system.spellFailure ?? 0,
+      unit:
+        pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.f,
+    };
+
+    return context;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
+    const headerContent = header
+      ? renderCachedTemplate("systems/pf1/templates/items/headers/armor-header.hbs", {
+          ...data,
+          ...this.getDescriptionData({ rollData, isolated }),
+          chatcard: chatcard === true,
+        })
+      : "";
+
+    let bodyContent = "";
+    if (body) bodyContent = `<div class="description-body">` + this.system.description.value + "</div>";
+
+    let separator = "";
+    if (header && body) separator = `<h3 class="description-header">${game.i18n.localize("PF1.Description")}</h3>`;
+
+    return headerContent + separator + bodyContent;
   }
 
   /** @inheritDoc */

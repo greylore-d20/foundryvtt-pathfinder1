@@ -77,6 +77,14 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/apps/item-action/template.hbs",
   "systems/pf1/templates/apps/item-action/conditionals.hbs",
 
+  // Item description headers
+  "systems/pf1/templates/items/headers/spell-header.hbs",
+  "systems/pf1/templates/items/headers/attack-header.hbs",
+  "systems/pf1/templates/items/headers/armor-header.hbs",
+  "systems/pf1/templates/items/headers/effect-header.hbs",
+  // Footers
+  "systems/pf1/templates/items/footers/class-footer.hbs",
+
   // Compendium browser partials
   "systems/pf1/templates/apps/compendium-browser/entries.hbs",
   "systems/pf1/templates/apps/compendium-browser/checkbox-filter.hbs",

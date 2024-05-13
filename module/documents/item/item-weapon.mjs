@@ -1,4 +1,5 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
  * Weapon item
@@ -25,6 +26,36 @@ export class ItemWeaponPF extends ItemPhysicalPF {
         changed.system.weaponSubtype = keys[0];
       }
     }
+  }
+
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
+    const headerContent = header
+      ? renderCachedTemplate("systems/pf1/templates/items/headers/attack-header.hbs", {
+          ...data,
+          ...this.getDescriptionData({ rollData, isolated }),
+          chatcard: chatcard === true,
+        })
+      : "";
+
+    let bodyContent = "";
+    if (body) bodyContent = `<div class="description-body">` + this.system.description.value + "</div>";
+
+    let separator = "";
+    if (header && body) separator = `<h3 class="description-header">${game.i18n.localize("PF1.Description")}</h3>`;
+
+    return headerContent + separator + bodyContent;
+  }
+
+  getDescriptionData({ rollData, isolated = false }) {
+    const context = super.getDescriptionData({ rollData, isolated });
+
+    if (isolated) {
+      if (this.system.weaponGroups?.total?.size) {
+        context.weaponGroups = Array.from(this.system.weaponGroups.total).join(", ");
+      }
+    }
+
+    return context;
   }
 
   /** @inheritDoc */

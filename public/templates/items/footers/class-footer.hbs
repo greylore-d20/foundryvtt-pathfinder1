@@ -1,0 +1,28 @@
+<footer class="details">
+  <p class="alignment">
+    <label>{{localize "PF1.Alignment"}}</label>: {{#if alignment}}{{alignment}}{{else}}{{localize "PF1.Any"}}{{/if}}
+  </p>
+
+  <p class="hit-die">
+    {{#if isMythic}}
+    <label>{{localize "PF1.HealthPerTier"}}</label>: {{health}}
+    {{else}}
+    <label>{{localize "PF1.HitDie"}}</label>: {{hitDie}}
+    {{/if}}
+  </p>
+
+  {{#with wealth}}
+  <p class="wealth">
+    <label>{{localize "PF1.StartingWealth"}}</label>: {{localize "PF1.Currency.Inline.gp" value=formula}} ({{localize "PF1.Average"}} {{localize "PF1.Currency.Inline.gp" value=average}})
+  </p>
+  {{/with}}
+
+  {{#if classSkills}}
+  <ul class="class-skills">
+    <h2>{{localize "PF1.ClassSkills"}}</h2>
+    {{#each classSkills}}
+    <li><span class="name">{{name}}</span></li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</footer>

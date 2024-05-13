@@ -2,7 +2,6 @@ import { calculateRange, keepUpdateArray } from "@utils";
 import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
-import { D20RollPF } from "../dice/d20roll.mjs";
 
 /**
  * Action pseudo-document
@@ -882,6 +881,8 @@ export class ItemAction {
       }
     }
 
+    if (!labels.activation) labels.isPassive = true;
+
     // Duration
     // Set duration label
     const duration = actionData.duration;
@@ -930,6 +931,8 @@ export class ItemAction {
     if (this.hasSave) {
       const totalDC = rollData.dc + (rollData.dcBonus ?? 0);
       labels.save = game.i18n.format("PF1.DCThreshold", { threshold: totalDC });
+      labels.saveDC = totalDC;
+      labels.saveType = actionData.save.description || pf1.config.savingThrows[actionData.save.type];
     }
 
     // Range
@@ -979,11 +982,10 @@ export class ItemAction {
     }
 
     // Targets
-    const targets = actionData.target?.value;
-    if (targets) labels.targets = targets;
+    labels.targets = actionData.target?.value;
 
-    // Set area label
-    if (actionData?.area) labels.area = actionData.area;
+    // Area
+    labels.area = actionData.area;
 
     // Action type
     labels.actionType = pf1.config.itemActionTypes[actionData.actionType];

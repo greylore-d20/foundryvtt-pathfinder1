@@ -81,7 +81,7 @@ export class ItemSheetPF extends ItemSheet {
         },
         {
           navSelector: "nav.tabs[data-group='description']",
-          contentSelector: "section.description-body",
+          contentSelector: ".description-container",
           initial: "identified",
           group: "description",
         },
@@ -595,8 +595,6 @@ export class ItemSheetPF extends ItemSheet {
       if (context.isCybertech) context.slots = pf1.config.implantSlots.cybertech;
     }
 
-    let topDescription;
-
     // Prepare spell specific stuff
     if (context.isSpell) {
       let spellbook = null;
@@ -615,11 +613,6 @@ export class ItemSheetPF extends ItemSheet {
           .filter(([_, { inUse }]) => inUse)
           .map(([key, { label }]) => [key, label])
           .sort(([_0, n0], [_1, n1]) => n0.localeCompare(n1, lang))
-      );
-
-      topDescription = renderCachedTemplate(
-        "systems/pf1/templates/items/headers/spell-header.hbs",
-        item.getDescriptionData({ rollData })
       );
 
       // Reverse mapping of pf1.config.divineFocus for readability
@@ -827,7 +820,9 @@ export class ItemSheetPF extends ItemSheet {
     // Trailing async awaits to ensure they're all awaited in one go instead of sequentially
 
     // Add descriptions
-    const description = context.showIdentified ? this.item.getDescription({ rollData, header: false }) : null;
+    const description = context.showIdentified
+      ? this.item.getDescription({ rollData, header: false, footer: false, body: true })
+      : null;
 
     context.descriptionHTML = {
       identified: null,
@@ -844,13 +839,19 @@ export class ItemSheetPF extends ItemSheet {
     const pUnidentDesc = unidentDesc ? enrichHTMLUnrolledAsync(unidentDesc, enrichOptions) : Promise.resolve();
     pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
 
-    const pTopDesc = topDescription
-      ? TextEditor.enrichHTML(topDescription, {
-          rollData,
-          relativeTo: this.actor,
-        })
-      : Promise.resolve();
-    pTopDesc.then((html) => (context.topDescription = html));
+    context.descriptionHTML = {
+      identified: null,
+      unidentified: null,
+      footer: null,
+      header: null,
+    };
+
+    const headerDescription = this.item.getDescription({ rollData, header: true, body: false, footer: false });
+    const phDesc = headerDescription ? TextEditor.enrichHTML(headerDescription, enrichOptions) : Promise.resolve();
+    phDesc.then((html) => (context.descriptionHTML.header = html));
+    const footerDescription = this.item.getDescription({ rollData, header: false, body: false, footer: true });
+    const pfDesc = footerDescription ? TextEditor.enrichHTML(footerDescription, enrichOptions) : Promise.resolve();
+    pfDesc.then((html) => (context.descriptionHTML.footer = html));
 
     // Add script calls
     const pScripts = this._prepareScriptCalls(context);
@@ -858,7 +859,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add links
     const pLinks = await this._prepareLinks(context);
 
-    await Promise.all([pIdentDesc, pUnidentDesc, pTopDesc, pScripts, pLinks]);
+    await Promise.all([pIdentDesc, pUnidentDesc, phDesc, pfDesc, pScripts, pLinks]);
 
     return context;
   }

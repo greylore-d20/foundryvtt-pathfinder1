@@ -2831,7 +2831,7 @@ export class ActorSheetPF extends ActorSheet {
 
     rollData ??= item.defaultAction?.getRollData() ?? item.getRollData();
 
-    const { description, properties } = await item.getChatData({ chatcard: false, rollData });
+    const { description, properties } = await item.getChatData({ chatcard: false, extended: true, rollData });
 
     // Toggle summary
     this._expandedItems = this._expandedItems.filter((o) => o !== itemId);

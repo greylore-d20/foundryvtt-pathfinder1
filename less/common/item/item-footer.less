@@ -1,0 +1,30 @@
+.chat-message .message-content .pf1 .item-description,
+// Actor sheet quick summaries and item sheet description
+.pf1.sheet:is(.actor, .item) form :is(.tab.description, .item-summary) {
+  footer.details {
+    ul.class-skills {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      > h2 {
+        margin: 0;
+      }
+
+      > li {
+        display: inline;
+        white-space: nowrap;
+
+        &:not(:last-of-type) {
+          &::after {
+            content: ", ";
+          }
+        }
+      }
+    }
+
+    label {
+      font-weight: bold;
+    }
+  }
+}

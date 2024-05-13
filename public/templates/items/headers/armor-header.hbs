@@ -1,0 +1,18 @@
+{{#with armor}}
+<header class="statistics">
+  <div class="armor">
+    <div class="armor-bonus detail"><label>{{localize "PF1.ArmorBonus"}}</label> <span class="value">{{numberFormat bonus sign=true}}</span></div>
+    <div class="max-dex detail"><label>{{localize "PF1.MaxDexBonusShort"}}</label> <span class="value">{{#if maxdexActive}}{{numberFormat maxdex sign=true}}{{else}}–{{/if}}</span></div>
+    <div class="check-penalty detail"><label>{{localize "PF1.ArmorCheckPenalty"}}</label> <span class="value">{{numberFormat acp sign=true}}</span></div>
+  </div>
+
+  <div class="detriments">
+    {{#if asf}}
+    <div class="spell-failure detail"><label>{{localize "PF1.ArcaneSpellFailure"}}</label> <span class="value">{{asf}}%</span></div>
+    {{/if}}
+    {{#if speed}}
+    <div class="speed-malus detail"><label>{{localize "PF1.Movement.Speed"}}</label> <span class="value">{{speed}}</span> <span class="unit">{{unit}}</span></div>
+    {{~/if}}
+  </div>
+</header>
+{{/with}}

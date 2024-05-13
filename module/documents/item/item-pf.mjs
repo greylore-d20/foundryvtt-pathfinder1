@@ -1211,7 +1211,7 @@ export class ItemPF extends ItemBasePF {
     // Basic template rendering data
     token ??= actor?.token;
     const rollData = this.getRollData();
-    const itemChatData = await this.getChatData({ rollData });
+    const itemChatData = await this.getChatData({ rollData, extended: true });
     const identified = Boolean(rollData.item?.identified ?? true);
 
     const templateData = {
@@ -1828,10 +1828,23 @@ export class ItemPF extends ItemBasePF {
    */
   static _onChatCardToggleContent(event) {
     event.preventDefault();
+    /** @type {HTMLElement} */
     const header = event.currentTarget;
     const card = header.closest(".chat-card");
-    const content = card.querySelector(".card-content");
-    content.style.display = content.style.display === "none" ? "block" : "none";
+
+    const content = card.querySelectorAll(".card-content,.description-header,.description-body");
+
+    const anyHidden = Array.from(content).some((el) => el.style.display === "none");
+    if (anyHidden) {
+      content.forEach((el) => el.style.removeProperty("display"));
+    } else {
+      const collapse = game.settings.get("pf1", "autoCollapseItemCards");
+      if (collapse >= 2) {
+        card.querySelector(".card-content").style.display = "none";
+      } else {
+        card.querySelectorAll(".description-header,.description-body").forEach((el) => (el.style.display = "none"));
+      }
+    }
 
     // Update chat popout size
     const popout = header.closest(".chat-popout");

@@ -434,9 +434,14 @@ export const registerSystemSettings = function () {
     hint: "PF1.SETTINGS.Chat.AutoCollapseHint",
     scope: "client",
     config: true,
-    default: false,
-    type: Boolean,
-    onChange: () => ui.chat.render(),
+    default: 0,
+    type: Number,
+    choices: {
+      0: "PF1.SETTINGS.Chat.AutoCollapseExpanded",
+      1: "PF1.SETTINGS.Chat.AutoCollapseCompacted",
+      2: "PF1.SETTINGS.Chat.AutoCollapseCollapsed",
+    },
+    onChange: () => ui.chat.render(), // BUG: This doesn't work
   });
 
   /**

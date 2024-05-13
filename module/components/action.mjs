@@ -609,7 +609,7 @@ export class ItemAction {
         value: null,
       },
       material: {
-        normal: "",
+        normal: {},
         addon: [],
       },
       alignments: {

@@ -291,7 +291,7 @@ export class ItemAction {
   getPowerAttackMult({ rollData = null } = {}) {
     rollData ??= this.getRollData();
 
-    const held = rollData.item?.held || "1h";
+    const held = rollData.action?.held || rollData.item?.held || "1h";
 
     let mult = rollData.action?.powerAttack?.multiplier;
     // Use defined override

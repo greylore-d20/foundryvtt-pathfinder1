@@ -192,7 +192,7 @@ export class ActionUse {
 
     // Set held type
     const held = formData["held"] || this.shared.rollData.action.held || this.shared.rollData.item.held || "normal";
-    this.shared.rollData.item.held = held;
+    this.shared.rollData.action.held = held;
 
     // Damage multiplier
     const abilityDamageMultOverride = formData["damage-ability-multiplier"];

@@ -344,10 +344,10 @@ export class AttackDialog extends Application {
         this.rollData.sl = this.base.sl + parseInt(elem.value);
         break;
       case "damage-ability-multiplier":
-        foundry.utils.setProperty(this.rollData, "item.ability.damageMult", elem.value);
+        foundry.utils.setProperty(this.rollData, "action.ability.damageMult", elem.value);
         break;
       case "held":
-        foundry.utils.setProperty(this.rollData, "item.held", elem.value);
+        foundry.utils.setProperty(this.rollData, "action.held", elem.value);
         break;
     }
 

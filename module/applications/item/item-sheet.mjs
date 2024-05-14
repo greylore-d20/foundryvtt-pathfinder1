@@ -727,12 +727,22 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
-    // Get conditions
+    // Prepare condition display
     context.conditions = item.effects
       .filter((e) => !e.disabled && e.statuses.size)
       .map((e) => Array.from(e.statuses))
       .flat()
       .map((s) => pf1.registry.conditions.get(s)?.name || s);
+
+    if (item.system.conditions?.all?.size) {
+      context.system.conditions.selected = item.system.conditions?.all?.map(
+        (c) => pf1.registry.conditions.get(c)?.name || c
+      );
+
+      context.conditions = context.conditions.concat(Array.from(context.system.conditions.selected));
+    }
+
+    context.conditions = new Set(context.conditions.sort((a, b) => a.localeCompare(b)));
 
     // Add distance units
     context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
@@ -1793,6 +1803,13 @@ export class ItemSheetPF extends ItemSheet {
       subject: a.dataset.options,
       choices: pf1.config[a.dataset.options],
     };
+
+    switch (a.dataset.options) {
+      case "conditions": {
+        options.choices = pf1.registry.conditions.getLabels();
+        break;
+      }
+    }
 
     new ActorTraitSelector(this.item, options).render(true);
   }

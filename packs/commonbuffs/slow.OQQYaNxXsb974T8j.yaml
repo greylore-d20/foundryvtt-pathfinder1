@@ -1,12 +1,5 @@
 _id: OQQYaNxXsb974T8j
 _key: '!items!OQQYaNxXsb974T8j'
-effects:
-  - _id: pGgbg0nNRssuiamk
-    _key: '!items.effects!OQQYaNxXsb974T8j.pGgbg0nNRssuiamk'
-    icon: systems/pf1/icons/conditions/staggered.png
-    name: staggered
-    statuses:
-      - staggered
 img: systems/pf1/icons/skills/yellow_18.jpg
 name: Slow
 system:
@@ -66,6 +59,9 @@ system:
       operator: set
       priority: '-5'
       subTarget: flySpeed
+  conditions:
+    value:
+      - staggered
   description:
     value: >-
       <p>You are <em>staggered</em>, and you have a -1 penalty to attack rolls,
@@ -76,6 +72,6 @@ system:
   duration:
     units: round
     value: '@item.level'
-  level: '5'
+  level: 5
 type: buff
 

@@ -1,5 +1,5 @@
 /**
- * A specialized form used to select damage or condition types which apply to an Actor
+ * A specialized form used to select types.
  *
  * @type {DocumentSheet}
  */
@@ -10,7 +10,7 @@ export class ActorTraitSelector extends DocumentSheet {
     this.options.classes.push(options.subject);
 
     // Get current values
-    let { value, custom } = deepClone(foundry.utils.getProperty(doc, this.attribute) ?? { value: [], custom: [] });
+    let { value, custom } = foundry.utils.getProperty(doc.toObject(), this.attribute) ?? { value: [], custom: [] };
     value ||= [];
     custom ||= [];
 

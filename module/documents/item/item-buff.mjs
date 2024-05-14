@@ -117,9 +117,9 @@ export class ItemBuffPF extends ItemPF {
       setProperty(aeData, "flags.pf1.tracker", true);
 
       // Update old
-      if (oldEffect) oldEffect.update(aeData, { render: false });
+      if (oldEffect) oldEffect.update(aeData);
       // Create new
-      else ActiveEffect.implementation.create(aeData, { parent: this, render: false });
+      else ActiveEffect.implementation.create(aeData, { parent: this });
     }
   }
 
@@ -177,6 +177,18 @@ export class ItemBuffPF extends ItemPF {
   prepareDerivedItemData() {
     super.prepareDerivedItemData();
     this._prepareDuration();
+
+    this._prepareTraits();
+  }
+
+  /**
+   * Prepare trait selector managed data.
+   *
+   * @internal
+   */
+  _prepareTraits() {
+    const conds = (this.system.conditions ??= {});
+    conds.all = new Set([...(conds.value ?? []), ...(conds.custom ?? [])]);
   }
 
   /**
@@ -219,6 +231,8 @@ export class ItemBuffPF extends ItemPF {
   // Determines the starting data for an ActiveEffect based off this item
   getRawEffectData() {
     const createData = super.getRawEffectData();
+
+    createData.statuses = Array.from(this.system.conditions.all);
 
     const hideIcon = this.system.hideFromToken;
     foundry.utils.setProperty(createData, "flags.pf1.show", !hideIcon);

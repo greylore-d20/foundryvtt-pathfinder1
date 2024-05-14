@@ -174,7 +174,7 @@
         </div>
       </div>
 
-      <h4 class="form-header">{{localize "PF1.SavingThrowPlural"}}</h4>
+      <h3 class="form-header">{{localize "PF1.SavingThrowPlural"}}</h3>
 
       {{!-- Saving Throws --}}
       {{#each system.savingThrows as |savingThrow id|}}
@@ -191,7 +191,7 @@
       {{/each}}
 
       {{! Spellcasting Configuration }}
-      <h4 class="form-header">{{localize "PF1.SpellCasting"}}</h4>
+      <h3 class="form-header">{{localize "PF1.SpellCasting"}}</h3>
 
       <div class="form-group spellcasting-type">
         <label>{{localize "PF1.Type"}}</label>
@@ -266,7 +266,7 @@
       {{/if}}
 
       {{#if isBaselikeClass}}
-      <h4 class="form-header">{{localize "PF1.FavouredClass.Bonuses.Label"}}</h4>
+      <h3 class="form-header">{{localize "PF1.FavouredClass.Bonuses.Label"}}</h3>
 
       {{!-- Favoured Class Bonuses --}}
       {{#each system.fc as |fc id|}}
@@ -284,7 +284,7 @@
       {{!-- Proficiencies --}}
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
-      <h4 class="form-header">{{localize "PF1.ClassSkills"}}</h4>
+      <h3 class="form-header">{{localize "PF1.ClassSkills"}}</h3>
 
       <div class="form-group">
         <ol class="item-list">
@@ -299,7 +299,7 @@
       </div>
 
       {{!-- Advanced --}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

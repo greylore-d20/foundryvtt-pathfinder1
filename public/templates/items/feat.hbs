@@ -74,8 +74,6 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
-
       {{!-- Feat Type --}}
       <div class="form-group select">
         <label>{{localize "PF1.Type"}}</label>
@@ -107,15 +105,15 @@
       </div>
       {{/if}}
 
-      {{!-- Feat Tags --}}
+      {{!-- Feat class associations --}}
+      {{#if isClassFeature}}
       <div class="form-group stacked">
-        {{#if isClassFeature}}
         <div class="data-selector">
           <a class="entry-selector" data-for="system.associations.classes" data-fields="PF1.ClassPlural" data-flat="true" data-dtypes="String" data-title="PF1.LinkTypeClassAssociations"><i class="fas fa-edit"></i></a>
           <label>{{localize "PF1.ClassPlural"}}</label>
         </div>
-        {{/if}}
       </div>
+      {{/if}}
 
       {{#if isTemplate}}
       <div class="form-group">
@@ -130,7 +128,7 @@
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       <!-- Class Skills -->
-      <h4 class="form-header">{{localize "PF1.ClassSkills"}}</h4>
+      <h3 class="form-header">{{localize "PF1.ClassSkills"}}</h3>
 
       <div class="form-group">
         <ol class="item-list">
@@ -145,7 +143,7 @@
       </div>
 
       {{!-- Advanced --}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

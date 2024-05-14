@@ -102,7 +102,6 @@
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
       {{!-- Equipment Type --}}
-      <h3 class="form-header">{{localize "PF1.InventoryArmorEquipment"}}</h3>
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
@@ -138,24 +137,13 @@
       <input type="hidden" name="system.slot" value="{{system.subType}}">
       {{/if}}
 
-      {{!-- Equipment Materials --}}
-      {{#if (or (eq item.subType "armor") (eq item.subType "shield"))}}
-        {{!-- Base Material --}}
-        {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Base" value_ref="system.armor.material.base.value" value=system.armor.material.base.value custom_ref="system.armor.material.base.custom" custom=system.armor.material.base.custom choices=materialCategories.basics}}
-
-        {{!-- Chosen Material --}}
-        {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Normal" value_ref="system.armor.material.normal.value" value=system.armor.material.normal.value custom_ref="system.armor.material.normal.custom" custom=system.armor.material.normal.custom choices=materialCategories.materials}}
-
-        {{> "systems/pf1/templates/items/parts/item-materials-addon.hbs" reference="system.armor.material.addon"}}
-      {{/if}}
-
       {{!-- Equipment Size --}}
       {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
 
       {{!-- Base Types --}}
       {{> "systems/pf1/templates/items/parts/item-base-types.hbs"}}
 
-      <hr>
+      <h3 class="form-header">{{localize "PF1.ArmorOrShield"}}</h3>
 
       {{!-- Armor Class --}}
       <div class="form-group">
@@ -216,7 +204,7 @@
         </label>
       </div>
 
-      <h4 class="form-header">{{localize "PF1.Misc"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
 
       <div class="form-group stacked">
         <label class="checkbox">
@@ -226,12 +214,24 @@
 
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
+      {{!-- Equipment Materials --}}
+      {{#if (or (eq item.subType "armor") (eq item.subType "shield"))}}
+        <h3 class="form-header">{{localize "PF1.Materials.Label"}}</h3>
+        {{!-- Base Material --}}
+        {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Base" value_ref="system.armor.material.base.value" value=system.armor.material.base.value custom_ref="system.armor.material.base.custom" custom=system.armor.material.base.custom choices=materialCategories.basics}}
+
+        {{!-- Chosen Material --}}
+        {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Normal" value_ref="system.armor.material.normal.value" value=system.armor.material.normal.value custom_ref="system.armor.material.normal.custom" custom=system.armor.material.normal.custom choices=materialCategories.materials}}
+
+        {{> "systems/pf1/templates/items/parts/item-materials-addon.hbs" reference="system.armor.material.addon"}}
+      {{/if}}
+
       {{!-- Proficiencies --}}
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

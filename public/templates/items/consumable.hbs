@@ -54,8 +54,6 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
-
       {{!-- Consumable Type --}}
       {{#unless showUnidentifiedData}}
       <div class="form-group">
@@ -85,7 +83,8 @@
 
         {{#if @root.showIdentifiedData}}
         <label class="checkbox artifact">
-          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}>
+          {{localize "PF1.Artifact"}}
         </label>
         {{/if}}
       </div>
@@ -94,7 +93,7 @@
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

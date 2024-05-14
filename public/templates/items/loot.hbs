@@ -51,8 +51,6 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
-
       {{!-- Loot Type --}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
@@ -82,6 +80,7 @@
           </label>
         </div>
 
+
         {{! Recovery Chance}}
         {{#unless item.flags.pf1.abundant}}
         <div class="form-group">
@@ -107,7 +106,7 @@
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

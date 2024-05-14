@@ -70,15 +70,6 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.AttackDetails"}}</h3>
-
-      <div class="form-group">
-        <label>{{localize "PF1.EnhancementBonus"}}</label>
-        <div class="form-fields">
-          <input type="number" name="system.enh" value="{{system.enh}}" data-dtype="Number" placeholder="0">
-        </div>
-      </div>
-
       {{!-- Attack Type --}}
       <div class="form-group">
         <label>{{localize "PF1.AttackType"}}</label>
@@ -101,8 +92,21 @@
       </div>
       {{/unless}}
 
+      <div class="form-group">
+        <label>{{localize "PF1.EnhancementBonus"}}</label>
+        <div class="form-fields">
+          <input type="number" name="system.enh" value="{{system.enh}}" data-dtype="Number" placeholder="0">
+        </div>
+      </div>
+
       {{!-- Ammo Config --}}
       {{> "systems/pf1/templates/items/parts/item-ammo.hbs"}}
+
+      {{!-- Base Types --}}
+      {{> "systems/pf1/templates/items/parts/item-base-types.hbs"}}
+
+      {{!-- Weapon Groups --}}
+      {{> "systems/pf1/templates/items/parts/item-weapon-groups.hbs"}}
 
       <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
 
@@ -124,13 +128,8 @@
         {{/unless}}
       </div>
 
-      {{!-- Base Types --}}
-      {{> "systems/pf1/templates/items/parts/item-base-types.hbs"}}
-
-      {{!-- Weapon Groups --}}
-      {{> "systems/pf1/templates/items/parts/item-weapon-groups.hbs"}}
-
       {{#if (eq system.subType "weapon")}}
+        <h3 class="form-header">{{localize "PF1.Materials.Label"}}</h3>
         {{!-- Base Material --}}
         {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Base" value_ref="system.material.base.value" value=system.material.base.value custom_ref="system.material.base.custom" custom=system.material.base.custom choices=materialCategories.basics}}
 
@@ -145,7 +144,7 @@
       {{/if}}
 
       {{!-- Advanced --}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

@@ -74,14 +74,6 @@
         </div>
       </div>
 
-      {{! Hide From Token}}
-      <div class="form-group">
-        <label>{{localize "PF1.HideFromToken"}}</label>
-        <input type="checkbox" name="system.hideFromToken" {{checked system.hideFromToken}}>
-      </div>
-
-      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
-
       {{!-- Duration --}}
       <div class="form-group input-select">
         <label>{{localize "PF1.Duration"}}</label>
@@ -95,11 +87,21 @@
         </div>
       </div>
 
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
+      {{! Hide From Token}}
+      <div class="form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="system.hideFromToken" {{checked system.hideFromToken}}>
+          {{localize "PF1.HideFromToken"}}
+        </label>
+      </div>
+
       {{!-- Proficiencies --}}
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       {{!-- Advanced --}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

@@ -130,6 +130,27 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
+      {{!-- Spell School --}}
+      <div class="form-group">
+        <label>{{localize "PF1.SpellSchool"}}</label>
+        <div class="form-fields">
+          <select name="system.school">
+            {{selectOptions config.spellSchools selected=system.school}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Subschool --}}
+      <div class="form-group flexrow">
+        <label>{{localize "PF1.SubSchool"}}</label>
+        <div class="form-fields">
+          <input type="text" name="system.subschool" value="{{system.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}">
+        </div>
+      </div>
+
+      {{!-- Descriptors --}}
+      {{> "systems/pf1/templates/items/parts/spell-descriptors.hbs"}}
+
       <h3 class="form-header">{{localize "PF1.SpellBook"}}</h3>
 
       {{!-- Spellbook --}}
@@ -183,29 +204,6 @@
           <label>{{localize "PF1.Bloodline"}}</label>
         </div>
       </div>
-
-      <h3 class="form-header">{{localize "PF1.SpellDetails"}}</h3>
-
-      {{!-- Spell School --}}
-      <div class="form-group">
-        <label>{{localize "PF1.SpellSchool"}}</label>
-        <div class="form-fields">
-          <select name="system.school">
-            {{selectOptions config.spellSchools selected=system.school}}
-          </select>
-        </div>
-      </div>
-
-      {{!-- Subschool --}}
-      <div class="form-group flexrow">
-        <label>{{localize "PF1.SubSchool"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.subschool" value="{{system.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}">
-        </div>
-      </div>
-
-      {{!-- Descriptors --}}
-      {{> "systems/pf1/templates/items/parts/spell-descriptors.hbs"}}
 
       {{!-- Misc --}}
       <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
@@ -386,7 +384,7 @@
       {{/unless}}
 
       {{!-- Advanced --}}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+      <h3 class="form-header">{{localize "PF1.Advanced"}}</h3>
 
       {{! Tags }}
       {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}

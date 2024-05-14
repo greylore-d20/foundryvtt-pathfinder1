@@ -1790,13 +1790,13 @@ export class ItemSheetPF extends ItemSheet {
   _onTraitSelector(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const label = a.closest("div.form-group").querySelector("label"); // TODO: Do not rely on HTML layout
     const options = {
       name: a.dataset.for,
-      title: label.innerText,
+      title: game.i18n.localize(a.dataset.title),
       subject: a.dataset.options,
       choices: pf1.config[a.dataset.options],
     };
+
     new ActorTraitSelector(this.item, options).render(true);
   }
 

@@ -98,7 +98,7 @@ export function registerD20RollTests() {
             expect(roll.isCrit).to.be.true;
           });
 
-          it("should recognize a static roll of 1 as fumble", async function () {
+          it("should recognize a static roll of 1 as nat 1", async function () {
             const roll = await rollD20("1");
             expect(roll.total).to.equal(1);
             expect(roll.isNat1).to.be.true;

@@ -6,12 +6,6 @@ interface D20RollConstructorOptions extends RollTerm.EvaluationOptions {
    */
   critical?: number;
   /**
-   * The number on the d20 that is considered a critical failure.
-   *
-   * @defaultValue `1`
-   */
-  fumble?: number;
-  /**
    * The flavor of the roll
    */
   flavor?: string;

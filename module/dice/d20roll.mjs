@@ -42,7 +42,7 @@ export class D20RollPF extends RollPF {
    * @type {Partial<D20RollOptions>}
    */
   static get defaultOptions() {
-    return { critical: 20, fumble: 1, flavor: "", staticRoll: null, bonus: "" };
+    return { critical: 20, flavor: "", staticRoll: null, bonus: "" };
   }
 
   /**
@@ -282,7 +282,6 @@ export class D20RollPF extends RollPF {
         tooltip: await this.getTooltip(),
         total: Math.floor(this.total * 100) / 100,
         isCrit: this.isCrit,
-        isFumble: this.isNat1, // Deprecated until 0.83
         isNat20: this.isNat20,
         isNat1: this.isNat1,
         natural: this.natural,

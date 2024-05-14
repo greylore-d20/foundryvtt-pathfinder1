@@ -166,6 +166,14 @@ export class SkillEditor extends DocumentSheet {
     this._callbacks.forEach((fn) => fn());
   }
 
+  /**
+   * @override
+   */
+  _canDragDrop() {
+    // Allow non-GM to drop links as appropriate.
+    return this.isEditable;
+  }
+
   async _onDrop(event) {
     // Retrieve the dropped Journal Entry Page
     const data = TextEditor.getDragEventData(event);

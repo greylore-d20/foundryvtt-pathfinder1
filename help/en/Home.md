@@ -1,5 +1,10 @@
 # Help
 
+## [Rules](Help/Rules)
+
+- [Optional](Help/Rules/Optional)
+- [Homebrew](Help/Rules/Homebrew)
+
 ## [Actors](Help/Actors)
 
 - Actor Types

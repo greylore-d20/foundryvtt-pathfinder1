@@ -2065,21 +2065,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Delete link
     if (a.classList.contains("delete-link")) {
-      const li = a.closest(".links-item");
-      const group = a.closest('div[data-group="links"]');
-      const linkType = group.dataset.tab;
+      const { type, uuid, index } = a.dataset;
+      const links = this.item.toObject().system.links?.[type] ?? [];
 
-      const links = this.item.toObject().system.links?.[linkType] ?? [];
-
-      const deleted = links.splice(Number(li.dataset.index), 1);
+      const deleted = links.splice(Number(index), 1);
 
       // Sanity check: Should happen only if update sneaks in between render and click
-      if (deleted.uuid && deleted.uuid !== li.dataset.uuid) throw new Error("Link deletion UUID mismatch");
+      if (deleted.uuid && deleted.uuid !== uuid) throw new Error("Link deletion UUID mismatch");
 
       // Call hook for deleting a link
-      Hooks.callAll("pf1DeleteItemLink", this.item, deleted, linkType);
+      Hooks.callAll("pf1DeleteItemLink", this.item, deleted, type);
 
-      const updateData = { "system.links": { [linkType]: links } };
+      const updateData = { "system.links": { [type]: links } };
       return this._updateObject(event, this._getSubmitData(updateData));
     }
   }

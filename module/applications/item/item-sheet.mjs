@@ -1374,9 +1374,6 @@ export class ItemSheetPF extends ItemSheet {
     /* -------------------------------------------- */
 
     html.find(".script-calls .item-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
-
-    // Add system styling to all data-tooltip entries
-    html[0].querySelectorAll("[data-tooltip]").forEach((el) => (el.dataset.tooltipClass = "pf1"));
   }
 
   _onSpanTextInput(event, callback = null) {

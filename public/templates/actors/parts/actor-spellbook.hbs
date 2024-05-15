@@ -89,10 +89,10 @@
           </div>
         </div>
 
-        <div class="form-group spellcasting-ability">
+        <div class="form-group spellcasting-ability" data-tooltip-extended="spellbook.{{bookId}}.ability">
           <h3>{{localize "PF1.SpellcastingAbility"}}</h3>
           <div class="form-fields">
-            <select name="system.attributes.spells.spellbooks.{{bookId}}.ability" data-dtype="String" data-tooltip="@ablMod : {{rollData.abilityMod}}<br>@spells.{{bookId}}.abilityMod : {{rollData.abilityMod}}<br>">
+            <select name="system.attributes.spells.spellbooks.{{bookId}}.ability" data-dtype="String">
               {{selectOptions @root.config.abilities selected=spellbook.ability blank="PF1.None" localize=true}}
             </select>
           </div>

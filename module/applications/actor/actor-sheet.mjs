@@ -2001,6 +2001,20 @@ export class ActorSheetPF extends ActorSheet {
             });
             break;
           }
+          case "ability": {
+            const ablMod = lazy.rollData.abilities[spellbook.ability]?.mod;
+            paths.push(
+              {
+                path: `@spells.${bookId}.abilityMod`,
+                value: ablMod,
+              },
+              {
+                path: "@ablMod",
+                value: ablMod,
+              }
+            );
+            break;
+          }
           case "level":
             paths.push({
               path: `@spells.${bookId}.cl.total`,

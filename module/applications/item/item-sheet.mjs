@@ -1080,6 +1080,8 @@ export class ItemSheetPF extends ItemSheet {
       const oldLinks = this.item.system?.links ?? {};
       // Handle links arrays
       for (const [linkType, typedLinks] of Object.entries(links)) {
+        if (Array.isArray(typedLinks)) continue; // Already handled by something else
+
         // Maintain array and merge new data in
         links[linkType] = foundry.utils.deepClone(oldLinks[linkType] ?? []);
         for (const [index, linkData] of Object.entries(typedLinks)) {

@@ -47,6 +47,7 @@ export class ActorSelector extends FormApplication {
     return {
       ...options,
       classes: [...options.classes, "pf1", "actor-selector"],
+      scrollY: [".actor-list"],
       height: "auto",
       submitOnClose: false,
       submitOnChange: true,

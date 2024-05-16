@@ -25,6 +25,7 @@ export class ItemSelector extends FormApplication {
     return {
       ...super.defaultOptions,
       classes: ["pf1", "item-selector"],
+      scrollY: [".item-list"],
       height: "auto",
       submitOnClose: false,
       submitOnChange: true,

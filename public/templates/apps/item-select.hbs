@@ -4,7 +4,7 @@
     <li class="item{{#if (eq @root.selected id)}} selected{{/if}}">
       <label>
         <input type="radio" name="selected" value="{{id}}" {{checked (eq @root.selected id)}}>
-        <img class="image" src="{{img}}">
+        <img class="image" src="{{img}}" height="64" loading="lazy">
         <div class="details">
           <h3 class="item-name">{{name}}</h3>
           {{#if system.quantity}}

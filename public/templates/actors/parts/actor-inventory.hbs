@@ -58,9 +58,7 @@
         <div class="item-detail item-identified"><i class="icon-pf icon-quill-ink" data-tooltip="PF1.Identified"></i></div>
         {{/if}}
         <div class="item-detail item-carried"><i class="icon-pf icon-wheelbarrow" data-tooltip="PF1.Carried"></i></div>
-        {{#if section.canEquip}}
         <div class="item-detail item-equipped"><i class="icon-pf icon-battle-gear" data-tooltip="PF1.Equipped"></i></div>
-        {{/if}}
         <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" data-tooltip="PF1.ChargePlural"></i></div>
 
         {{#if @root.owner}}
@@ -127,11 +125,11 @@
           <a class="item-control item-carry"><span>{{{item.labels.carried}}}</span></a>
         </div>
 
-        {{#if section.canEquip}}
         <div class="item-detail item-equipped">
+          {{#if section.canEquip}}
           <a class="item-control item-equip"><span>{{{item.labels.equipped}}}</span></a>
+          {{/if}}
         </div>
-        {{/if}}
 
         <div class="item-detail item-uses flexrow" data-tooltip-extended="item.{{item.id}}.resources">
           {{#unless showUnidentifiedData}}

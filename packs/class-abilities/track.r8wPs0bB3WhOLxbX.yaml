@@ -4,27 +4,25 @@ img: systems/pf1/icons/skills/beast_01.jpg
 name: Track
 system:
   abilityType: ex
-  actions:
-    - _id: i2kt03ybe5pgcnm1
-      activation:
-        type: passive
-        unchained:
-          type: passive
-      img: systems/pf1/icons/skills/beast_01.jpg
-      name: Use
   associations:
     classes:
+      - Hunter
+      - Inquisitor
       - Ranger
   contextNotes:
     - target: skill.sur
       text: +[[max(1, floor(@class.level / 2))]] to follow tracks
   description:
     value: >-
-      <p>A ranger adds half his level (minimum 1) to <em>Survival skill
+      <p>The character adds half his level (minimum 1) to <em>Survival skill
       checks</em> made to follow tracks.</p>
   sources:
     - id: PZO1110
       pages: '64'
+    - id: PZO2105
+      pages: '40'
+    - id: PZO1129
+      pages: '28'
   subType: classFeat
 type: feat
 

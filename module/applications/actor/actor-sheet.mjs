@@ -3301,7 +3301,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         hasActions: true,
         items: [],
-        canEquip: true,
+        canEquip: !pf1.config.unequippableLoot.includes("gear"),
         dataset: {
           type: "loot",
           "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.gear.Single"),
@@ -3313,7 +3313,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         hasActions: false,
         items: [],
-        canEquip: false,
+        canEquip: !pf1.config.unequippableLoot.includes("ammo"),
         dataset: {
           type: "loot",
           "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.ammo.Single"),
@@ -3325,7 +3325,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         hasActions: false,
         items: [],
-        canEquip: false,
+        canEquip: true, // Misc covers more than just misc loot
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" },
       },
       tradeGoods: {
@@ -3333,7 +3333,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         hasActions: false,
         items: [],
-        canEquip: false,
+        canEquip: !pf1.config.unequippableLoot.includes("tradeGoods"),
         dataset: {
           type: "loot",
           "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.tradeGoods.Single"),
@@ -3344,6 +3344,7 @@ export class ActorSheetPF extends ActorSheet {
         label: game.i18n.localize("PF1.InventoryContainers"),
         canCreate: true,
         hasActions: false,
+        canEquip: true,
         items: [],
         dataset: { type: "container", "type-name": game.i18n.localize("TYPES.Item.container") },
       },

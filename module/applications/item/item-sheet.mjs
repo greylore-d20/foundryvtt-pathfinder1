@@ -392,6 +392,9 @@ export class ItemSheetPF extends ItemSheet {
         }
       }
 
+      // Certain loot types don't have equipped
+      if (item.type === "loot" && pf1.config.unequippableLoot.includes(this.item.subType)) disableEquipping = true;
+
       // Add equipped flag
       context.descriptionAttributes.push({
         isBoolean: true,

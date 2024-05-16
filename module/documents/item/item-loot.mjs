@@ -57,6 +57,14 @@ export class ItemLootPF extends ItemPhysicalPF {
     return labels;
   }
 
+  get isActive() {
+    const hp = this.system.hp?.value || 0;
+    if (hp <= 0) return false; // Destroyed
+    if (this.system.quantity <= 0) return false;
+    if (pf1.config.unequippableLoot.includes(this.subType)) return true;
+    return this.system.equipped ?? false;
+  }
+
   /**
    * Make ammo count inherently as single use.
    *

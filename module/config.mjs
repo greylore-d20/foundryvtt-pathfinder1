@@ -895,6 +895,20 @@ export const lootTypes = {
 };
 
 /**
+ * Loot types that should not be equippable.
+ */
+export const unequippableLoot = [
+  "food",
+  "herb",
+  "reagent",
+  "treasure",
+  "tradeGoods",
+  "vehicle",
+  "entertainment",
+  "ammo",
+];
+
+/**
  * The subtypes for ammo type loot items
  */
 export const ammoTypes = {

@@ -6,15 +6,16 @@ system:
   abilityType: ex
   actions:
     - _id: 8kg4u8t2aalpsdrt
-      actionType: mwak
+      actionType: save
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       img: systems/pf1/icons/feats/cleave.jpg
-      name: Use
+      name: Secondary effect
       save:
+        dc: 10 + @floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates secondary effect
         type: fort
   associations:
@@ -30,7 +31,12 @@ system:
       succeed at a Fortitude saving throw or suffer the additional effect. The
       DC for this save is 10 + 1/2 the slayer’s level + the slayer’s
       Intelligence modifier. Whether or not the target succeeds, it cannot be
-      targeted by this ability again (by any slayer) for 24 hours.</p>
+      targeted by this ability again (by any slayer) for 24 hours.</p><hr
+      /><p><strong>Usage</strong>: Roll attack and damage with your weapon of
+      choice. Afterwards prompt save via action for secondary effect.</p>
+  sources:
+    - id: PZO1129
+      pages: '55'
   subType: classFeat
 type: feat
 

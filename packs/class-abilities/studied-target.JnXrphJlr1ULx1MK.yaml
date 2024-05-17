@@ -15,6 +15,41 @@ system:
   associations:
     classes:
       - Slayer
+  contextNotes:
+    - target: skill.blf
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kar
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kdu
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.ken
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kge
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.khi
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.klo
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kna
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kno
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kpl
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.kre
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.per
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: skill.sur
+      text: +[[floor(@class.level / 5) + 1]] against studied target
+    - target: meleeWeapon
+      text: >-
+        +[[floor(@class.level / 5) + 1]] to attack and damage against studied
+        target
+    - target: rangedWeapon
+      text: >-
+        +[[floor(@class.level / 5) + 1]] to attack and damage against studied
+        target
   description:
     value: >-
       <p>A slayer can study an opponent he can see as a move action. The slayer
@@ -34,6 +69,9 @@ system:
       time. The slayer may discard this connection to a studied target as a free
       action, allowing him to study another target in its place.<p>At 7th level,
       a slayer can study an opponent as a move or swift action.</p>
+  sources:
+    - id: PZO1129
+      pages: '53'
   subType: classFeat
 type: feat
 

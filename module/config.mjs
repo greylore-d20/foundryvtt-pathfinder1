@@ -2674,7 +2674,7 @@ export const sheetSections = {
         types: true,
       },
       create: { type: "feat", system: { subType: "feat" } },
-      sort: 1_000,
+      sort: 2_000,
     },
     classFeat: {
       label: () => pf1.config.featTypes.classFeat,
@@ -2685,7 +2685,7 @@ export const sheetSections = {
         types: true,
       },
       create: { type: "feat", system: { subType: "classFeat" } },
-      sort: 2_000,
+      sort: 1_000,
     },
     trait: {
       label: () => pf1.config.featTypes.trait,
@@ -2718,7 +2718,7 @@ export const sheetSections = {
         types: true,
       },
       create: { type: "feat", system: { subType: "misc" } },
-      sort: 5_000,
+      sort: 15_000,
     },
     template: {
       label: () => pf1.config.featTypes.template,

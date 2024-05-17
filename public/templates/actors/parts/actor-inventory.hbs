@@ -30,9 +30,9 @@
 
 <div class="inventory-filters flexrow">
   {{~> "systems/pf1/templates/internal/item-search.hbs" category="inventory"}}
-  <ul class="filter-list flexrow" data-filter="inventory">
+  <ul class="filter-list flexrow" data-category="inventory">
     {{#each sections as |section sid|}}
-    <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
+    <li class="filter-item" data-category="inventory" data-filter="{{section.id}}">{{section.label}}</li>
     {{/each}}
   </ul>
 </div>
@@ -47,10 +47,10 @@
           <h3>{{section.label}}</h3>
         </div>
 
-        {{#if section.hasSlots}}<div class="item-detail item-slot"><i class="icon-pf icon-inventory-slot" data-tooltip="PF1.Slot"></i></div>{{/if}}
-        {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
+        {{#if section.interface.slots}}<div class="item-detail item-slot"><i class="icon-pf icon-inventory-slot" data-tooltip="PF1.Slot"></i></div>{{/if}}
+        {{#if section.interface.actions}}<div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
 
-        {{#if section.showValue}}
+        {{#if section.interface.value}}
         <div class="item-detail item-value"><i class="icon-pf icon-coins" data-tooltip="PF1.Value"></i></div>
         {{/if}}
         <div class="item-detail item-weight"><i class="icon-pf icon-weight" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
@@ -58,13 +58,15 @@
         <div class="item-detail item-identified"><i class="icon-pf icon-quill-ink" data-tooltip="PF1.Identified"></i></div>
         {{/if}}
         <div class="item-detail item-carried"><i class="icon-pf icon-wheelbarrow" data-tooltip="PF1.Carried"></i></div>
+        {{#unless section.interface.noEquip}}
         <div class="item-detail item-equipped"><i class="icon-pf icon-battle-gear" data-tooltip="PF1.Equipped"></i></div>
+        {{/unless}}
         <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" data-tooltip="PF1.ChargePlural"></i></div>
 
         {{#if @root.owner}}
         <div class="item-controls">
-          {{#if section.canCreate}}
-          <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+          {{#if section.interface.create}}
+          <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}">
             <i class="fas fa-plus"></i>
           </a>
           {{/if}}
@@ -83,13 +85,13 @@
           </h4>
         </div>
 
-        {{#if section.hasSlots}}
+        {{#if section.interface.slots}}
         <div class="item-detail item-slot">
           <span data-tooltip="{{item.labels.slot}}">{{item.labels.slot}}</span>
         </div>
         {{/if}}
 
-        {{#if section.hasActions}}
+        {{#if section.interface.actions}}
         <div class="item-detail item-actions">
           <div class="item-action">
             {{#unless (or item.showUnidentifiedData item.disabled)}}
@@ -103,7 +105,7 @@
         </div>
         {{/if}}
 
-        {{#if section.showValue}}
+        {{#if section.interface.value}}
         <div class="item-detail item-value">
           <span>{{localize @root.labels.currency value=item.price}}</span>
         </div>
@@ -125,11 +127,13 @@
           <a class="item-control item-carry"><span>{{{item.labels.carried}}}</span></a>
         </div>
 
+        {{#unless section.interface.noEquip}}
         <div class="item-detail item-equipped">
-          {{#if section.canEquip}}
+          {{#if section.interface.equip}}
           <a class="item-control item-equip"><span>{{{item.labels.equipped}}}</span></a>
           {{/if}}
         </div>
+        {{/unless}}
 
         <div class="item-detail item-uses flexrow" data-tooltip-extended="item.{{item.id}}.resources">
           {{#unless showUnidentifiedData}}

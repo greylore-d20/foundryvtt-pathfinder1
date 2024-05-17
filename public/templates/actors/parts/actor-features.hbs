@@ -1,9 +1,9 @@
 <div class="inventory-filters flexrow">
   {{~> "systems/pf1/templates/internal/item-search.hbs" category="features"}}
 
-  <ul class="filter-list flexrow" data-filter="features">
+  <ul class="filter-list flexrow" data-category="features">
     {{#each sections as |section sid|}}
-    <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
+    <li class="filter-item" data-category="features" data-filter="{{section.id}}">{{section.label}}</li>
     {{/each}}
   </ul>
 </div>
@@ -18,24 +18,24 @@
           <h3>{{section.label}}</h3>
         </div>
 
-        {{#unless section.isClass}}
+        {{#unless section.interface.types}}
         <div class="item-detail item-type"><i class="icon-pf icon-magic-palm" data-tooltip="PF1.Type"></i></div>
         {{/unless}}
 
-        {{#if section.hasActions}}
+        {{#if section.interface.actions}}
         <div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>
         <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" data-tooltip="PF1.ChargePlural"></i></div>
         <div class="item-detail item-usage"><i class="icon-pf icon-hand" data-tooltip="PF1.Usage"></i></div>
         {{/if}}
 
-        {{#if section.isClass}}
+        {{#if section.interface.level}}
         <div class="item-detail item-feat-level"><i class="icon-pf icon-upgrade" data-tooltip="PF1.Level"></i></div>
         {{/if}}
 
         {{#if @root.owner}}
         <div class="item-controls">
-          {{#if section.canCreate}}
-          <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+          {{#if section.interface.create}}
+          <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}">
             <i class="fas fa-plus"></i>
           </a>
           {{/if}}
@@ -51,13 +51,13 @@
           <h4>{{item.name}}</h4>
         </div>
 
-        {{#unless section.isClass}}
+        {{#if section.interface.types}}
         <div class="item-detail item-type">
           <span>{{item.typelabel}}</span>
         </div>
-        {{/unless}}
+        {{/if}}
 
-        {{#if section.hasActions}}
+        {{#if section.interface.actions}}
         <div class="item-detail item-actions">
           <div class="item-action">
             {{#unless item.disabled}}

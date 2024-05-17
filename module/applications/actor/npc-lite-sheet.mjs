@@ -31,16 +31,18 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
   }
 
   _prepareItems(data) {
-    const attackSections = {
-      all: {
-        label: game.i18n.localize("PF1.ActionPlural"),
-        items: data.itemTypes.attack,
-        canCreate: true,
-        initial: true,
-        showTypes: true,
-        dataset: { type: "attack", "sub-type": "weapon" },
-      },
-    };
+    const attackSections = Object.values(pf1.config.sheetSections.combatlite)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
+    for (const i of data.items) {
+      const section = attackSections.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
+      } else {
+        console.warn("Could not find a sheet section for", i.name);
+      }
+    }
 
     data.attacks = attackSections;
   }

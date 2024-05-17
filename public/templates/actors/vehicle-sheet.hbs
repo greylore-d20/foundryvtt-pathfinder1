@@ -202,16 +202,16 @@
                   <h3>{{section.label}}</h3>
                 </div>
 
-                {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon-pf icon-magic-palm" title="{{localize "PF1.Type"}}"></i></div>{{/if}}
+                {{#if interface.types}}<div class="item-detail item-type"><i class="icon-pf icon-magic-palm" data-tooltip="PF1.Type"></i></div>{{/if}}
 
-                <div class="item-detail item-actions"><i class="icon-pf icon-gears" title="{{localize "PF1.ActionPlural"}}"></i></div>
+                <div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>
 
-                <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" title="{{localize "PF1.ChargePlural"}}"></i></div>
+                <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" data-tooltip="PF1.ChargePlural"></i></div>
 
                 {{#if @root.owner}}
                 <div class="item-controls">
-                  {{#if section.canCreate}}
-                  <a class="item-control item-create" title="Create Item" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+                  {{#if interface.create}}
+                  <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}">
                     <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
                   </a>
                   {{/if}}

@@ -327,9 +327,9 @@
 <div class="inventory-filters flexrow">
   {{~> "systems/pf1/templates/internal/item-search.hbs" category=(concat "spells-" bookId)}}
 
-  <ul class="filter-list flexrow" data-filter="spellbook-{{bookId}}">
-    {{#each spellbook.section as |section sid|}}
-    <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
+  <ul class="filter-list flexrow" data-category="spellbook-{{bookId}}">
+    {{#each spellbook.sections as |section sid|}}
+    <li class="filter-item" data-category="spellbook-{{../bookId}}" data-filter="level-{{section.level}}">{{section.label}}</li>
     {{/each}}
   </ul>
 </div>
@@ -345,7 +345,7 @@
 {{/if}}
 
 <ol class="item-groups-list book-{{bookId}}-body">
-  {{#each spellbook.section as |section sid|}}
+  {{#each spellbook.sections as |section sid|}}
   {{#unless section._hidden}}
   <ol class="item-list" data-type="spell" data-level="{{section.level}}" data-preparation-unused="{{section.preparation.unused}}" {{#if ../spellbook.spontaneous}}data-known-unused="{{section.known.unused}}"{{/if}}>
     <li class="flexrow item-list-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}">
@@ -388,8 +388,8 @@
       <div class="item-detail spell-school"><i class="icon-pf icon-spell-book" data-tooltip="PF1.SpellSchool"></i></div>
 
       <div class="item-controls">
-        {{#if section.canCreate}}
-        <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+        {{#if interface.create}}
+        <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}" data-level="{{section.level}}" data-book="{{../bookId}}">
           <i class="fas fa-plus"></i>
         </a>
         {{/if}}

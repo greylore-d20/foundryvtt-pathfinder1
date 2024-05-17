@@ -145,8 +145,8 @@
 
                 {{#if @root.owner}}
                 <div class="item-controls">
-                  {{#if section.canCreate}}
-                  <a class="item-control item-create" title="Create Item" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+                  {{#if interface.create}}
+                  <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}">
                     <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
                   </a>
                   {{/if}}

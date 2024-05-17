@@ -2499,3 +2499,341 @@ export const defaultIcons = {
     vehicle: "icons/svg/stone-path.svg",
   },
 };
+
+/**
+ * Sheet item section configuration.
+ */
+export const sheetSections = {
+  classes: {
+    class: {
+      label: "PF1.ClassPlural",
+      filters: [{ type: "class" }],
+      interface: {
+        types: true,
+        level: true,
+        create: true,
+      },
+      create: { type: "class", system: { subType: "base" } },
+      sort: 1_000,
+    },
+  },
+  combat: {
+    weapon: {
+      label: "PF1.Subtypes.Item.attack.weapon.Plural",
+      filters: [{ type: "attack", subTypes: ["weapon"] }],
+      interface: {
+        create: true,
+      },
+      create: { type: "attack", system: { subType: "weapon" } },
+      sort: 1_000,
+    },
+    natural: {
+      label: "PF1.Subtypes.Item.attack.natural.Plural",
+      filters: [{ type: "attack", subTypes: ["natural"] }],
+      interface: {
+        create: true,
+      },
+      create: { type: "attack", system: { subType: "natural" } },
+      sort: 2_000,
+    },
+    ability: {
+      label: "PF1.Subtypes.Item.attack.ability.Plural",
+      filters: [{ type: "attack", subTypes: ["ability"] }],
+      interface: {
+        create: true,
+      },
+      create: { type: "attack", system: { subType: "ability" } },
+      sort: 3_000,
+    },
+    racialAbility: {
+      label: "PF1.Subtypes.Item.attack.racialAbility.Plural",
+      filters: [{ type: "attack", subTypes: ["racialAbility"] }],
+      interface: {
+        create: true,
+      },
+      create: { type: "attack", system: { subType: "racialAbility" } },
+      sort: 4_000,
+    },
+    item: {
+      label: "PF1.Items",
+      filters: [{ type: "attack", subTypes: ["item"] }],
+      interface: {
+        create: true,
+      },
+      create: { type: "attack", system: { subType: "item" } },
+      sort: 5_000,
+    },
+    misc: {
+      label: "PF1.Misc",
+      filters: [{ type: "attack", subTypes: ["misc"] }],
+      interface: {
+        create: true,
+      },
+      create: { type: "attack", system: { subType: "misc" } },
+      sort: 6_000,
+    },
+  },
+  inventory: {
+    weapon: {
+      label: "PF1.InventoryWeapons",
+      filters: [{ type: "weapon" }],
+      interface: {
+        create: true,
+        actions: true,
+        equip: true,
+      },
+      create: { type: "weapon" },
+      sort: 1_000,
+    },
+    equipment: {
+      label: "PF1.InventoryArmorEquipment",
+      filters: [{ type: "equipment" }],
+      interface: {
+        create: true,
+        actions: true,
+        equip: true,
+        slots: true,
+      },
+      create: { type: "equipment" },
+      sort: 2_000,
+    },
+    consumable: {
+      label: "PF1.InventoryConsumables",
+      filters: [{ type: "consumable" }],
+      interface: {
+        create: true,
+        actions: true,
+        equip: false,
+      },
+      create: { type: "consumable" },
+      sort: 4_000,
+    },
+    gear: {
+      label: () => pf1.config.lootTypes.gear,
+      filters: [{ type: "loot", subTypes: ["gear", "adventuring", "tool", "reagent", "remedy", "herb", "animalGear"] }],
+      interface: {
+        create: true,
+        actions: true,
+        equip: () => !pf1.config.unequippableLoot.includes("gear"),
+      },
+      create: { type: "loot", system: { subType: "gear" } },
+      sort: 6_000,
+    },
+    ammo: {
+      label: () => pf1.config.lootTypes.ammo,
+      filters: [{ type: "loot", subTypes: ["ammo"] }],
+      interface: {
+        create: true,
+        actions: false,
+        equip: () => !pf1.config.unequippableLoot.includes("ammo"),
+      },
+      create: { type: "loot", system: { subType: "ammo" } },
+      sort: 8_000,
+    },
+    misc: {
+      label: () => pf1.config.lootTypes.misc,
+      filters: [{ type: "loot", subTypes: ["misc", "food", "entertainment", "vehicle"] }],
+      interface: {
+        create: true,
+        actions: false,
+        equip: true, // Misc covers more than just misc loot
+      },
+      create: { type: "loot", system: { subType: "misc" } },
+      sort: 9_000,
+    },
+    tradeGoods: {
+      label: () => pf1.config.lootTypes.tradeGoods,
+      filters: [{ type: "loot", subTypes: ["tradeGoods", "treasure"] }],
+      interface: {
+        create: true,
+        actions: false,
+        equip: () => !pf1.config.unequippableLoot.includes("tradeGoods"),
+      },
+      create: { type: "loot", system: { subType: "tradeGoods" } },
+      sort: 15_000,
+    },
+    container: {
+      label: "PF1.InventoryContainers",
+      filters: [{ type: "container" }],
+      interface: {
+        create: true,
+        actions: false,
+        equip: true,
+      },
+      create: { type: "container" },
+      sort: 20_000,
+    },
+  },
+  features: {
+    feat: {
+      label: () => pf1.config.featTypes.feat,
+      filters: [{ type: "feat", subTypes: ["feat"] }],
+      interface: {
+        create: true,
+        actions: true,
+        types: true,
+      },
+      create: { type: "feat", system: { subType: "feat" } },
+      sort: 1_000,
+    },
+    classFeat: {
+      label: () => pf1.config.featTypes.classFeat,
+      filters: [{ type: "feat", subTypes: ["classFeat"] }],
+      interface: {
+        create: true,
+        actions: true,
+        types: true,
+      },
+      create: { type: "feat", system: { subType: "classFeat" } },
+      sort: 2_000,
+    },
+    trait: {
+      label: () => pf1.config.featTypes.trait,
+      filters: [{ type: "feat", subTypes: ["trait"] }],
+      interface: {
+        create: true,
+        actions: true,
+        types: true,
+      },
+      create: { type: "feat", system: { subType: "trait" } },
+      sort: 3_000,
+    },
+    racial: {
+      label: () => pf1.config.featTypes.racial,
+      filters: [{ type: "feat", subTypes: ["racial"] }],
+      interface: {
+        create: true,
+        actions: true,
+        types: true,
+      },
+      create: { type: "feat", system: { subType: "racial" } },
+      sort: 4_000,
+    },
+    misc: {
+      label: () => pf1.config.featTypes.misc,
+      filters: [{ type: "feat", subTypes: ["misc"] }],
+      interface: {
+        create: true,
+        actions: true,
+        types: true,
+      },
+      create: { type: "feat", system: { subType: "misc" } },
+      sort: 5_000,
+    },
+    template: {
+      label: () => pf1.config.featTypes.template,
+      filters: [{ type: "feat", subTypes: ["template"] }],
+      interface: {
+        create: true,
+        actions: false,
+      },
+      create: { type: "feat", system: { subType: "template" } },
+      sort: 6_000,
+    },
+  },
+  buffs: {
+    feat: {
+      label: () => pf1.config.buffTypes.feat,
+      filters: [{ type: "buff", subTypes: ["feat"] }],
+      interface: {
+        create: true,
+        actions: true,
+      },
+      create: { type: "buff", system: { subType: "feat" } },
+      sort: 1_000,
+    },
+    item: {
+      label: () => pf1.config.buffTypes.item,
+      filters: [{ type: "buff", subTypes: ["item"] }],
+      interface: {
+        create: true,
+        actions: true,
+      },
+      create: { type: "buff", system: { subType: "item" } },
+      sort: 2_000,
+    },
+    misc: {
+      label: () => pf1.config.buffTypes.misc,
+      filters: [{ type: "buff", subTypes: ["misc"] }],
+      interface: {
+        create: true,
+        actions: true,
+      },
+      create: { type: "buff", system: { subType: "misc" } },
+      sort: 3_000,
+    },
+    perm: {
+      label: () => pf1.config.buffTypes.perm,
+      filters: [{ type: "buff", subTypes: ["perm"] }],
+      interface: {
+        create: true,
+        actions: true,
+      },
+      create: { type: "buff", system: { subType: "perm" } },
+      sort: 4_000,
+    },
+    spell: {
+      label: () => pf1.config.buffTypes.spell,
+      filters: [{ type: "buff", subTypes: ["spell"] }],
+      interface: {
+        create: true,
+        actions: true,
+      },
+      create: { type: "buff", system: { subType: "spell" } },
+      sort: 5_000,
+    },
+    temp: {
+      label: () => pf1.config.buffTypes.temp,
+      filters: [{ type: "buff", subTypes: ["temp"] }],
+      interface: {
+        create: true,
+        actions: true,
+      },
+      create: { type: "buff", system: { subType: "temp" } },
+      sort: 6_000,
+    },
+  },
+  // Spells section is not used quite like the others
+  spells: {
+    spell: {
+      interface: {
+        create: true,
+      },
+      create: { type: "spell", system: { school: "abj" } },
+    },
+  },
+  // Lite sheet and secondary sheet items
+  combatlite: {
+    attacks: {
+      label: "PF1.ActionPlural",
+      filters: [{ type: "attack" }],
+      interface: {
+        create: true,
+        types: true,
+      },
+      create: { type: "attack", system: { subType: "weapon" } },
+    },
+  },
+};
+
+// Prepare sheet sections with data available later
+// ... allowing module modification also.
+Hooks.once("setup", () => {
+  for (const [catKey, category] of Object.entries(sheetSections)) {
+    for (const [sectKey, section] of Object.entries(category)) {
+      section.category = catKey;
+      section.id = sectKey;
+      section.path = `${catKey}.${sectKey}`;
+
+      if (typeof section.label === "function") {
+        section.label = section.label();
+      }
+      section.label = game.i18n.localize(section.label);
+
+      const iface = section.interface;
+      if (typeof iface?.equip === "function") {
+        iface.equip = iface.equip();
+      }
+    }
+  }
+});

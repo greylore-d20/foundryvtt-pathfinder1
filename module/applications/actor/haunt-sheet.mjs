@@ -119,19 +119,17 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
       [[]]
     );
 
-    const attackSections = {
-      all: {
-        label: game.i18n.localize("PF1.ActionPlural"),
-        items: [],
-        canCreate: true,
-        initial: true,
-        showTypes: true,
-        dataset: { type: "attack", "sub-type": "weapon" },
-      },
-    };
-
-    for (const a of attacks) {
-      attackSections.all.items.push(a);
+    const attackSections = Object.values(pf1.config.sheetSections.combatlite)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
+    for (const i of attacks) {
+      const section = attackSections.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
+      } else {
+        console.warn("Could not find a sheet section for", i.name);
+      }
     }
 
     data.attacks = attackSections;

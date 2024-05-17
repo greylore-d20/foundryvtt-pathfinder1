@@ -7,9 +7,9 @@
           <h3>{{section.label}}</h3>
         </div>
 
-        {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
+        {{#if section.interface.actions}}<div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
 
-        {{#if section.showValue}}
+        {{#if section.interface.value}}
         <div class="item-detail item-value"><i class="icon-pf icon-coins" data-tooltip="PF1.Value"></i></div>
         {{/if}}
         <div class="item-detail item-weight"><i class="icon-pf icon-weight" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
@@ -20,8 +20,8 @@
 
         {{#if @root.owner}}
         <div class="item-controls">
-          {{#if section.canCreate}}
-          <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+          {{#if section.interface.create}}
+          <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}">
             <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
           </a>
           <a data-action="compendium" data-action-target="items" data-tooltip="PF1.OpenCompendium"><i class="fas fa-folder-plus"></i></a>
@@ -40,7 +40,7 @@
           </h4>
         </div>
 
-        {{#if section.hasActions}}
+        {{#if section.interface.actions}}
         <div class="item-detail item-actions">
           <div class="item-action">
             {{#unless showUnidentifiedData}}
@@ -54,7 +54,7 @@
         </div>
         {{/if}}
 
-        {{#if section.showValue}}
+        {{#if section.interface.value}}
         <div class="item-detail item-value">
           <span>{{price}} {{localize "PF1.CurrencyGP"}}</span>
         </div>

@@ -29,24 +29,8 @@ export class ActorSheetPF extends ActorSheet {
      * @type {Set}
      */
     this._filters = {
-      inventory: new Set(),
-      "spellbook-primary": new Set(),
-      "spellbook-secondary": new Set(),
-      "spellbook-tertiary": new Set(),
-      "spellbook-spelllike": new Set(),
-      features: new Set(),
-      buffs: new Set(),
-      attacks: new Set(),
-      search: {
-        inventory: "",
-        attacks: "",
-        feats: "",
-        buffs: "",
-        "spellbook-primary": "",
-        "spellbook-secondary": "",
-        "spellbook-tertiary": "",
-        "spellbook-spelllike": "",
-      },
+      sections: {},
+      search: {},
     };
 
     /** Item search */
@@ -133,20 +117,6 @@ export class ActorSheetPF extends ActorSheet {
           group: "spellbooks",
         },
       ],
-    };
-  }
-
-  /**
-   * Returns an object containing feature type specific data relevant to feature organization.
-   *
-   * @static
-   * @type {Object<string, any>}
-   */
-  static get featTypeData() {
-    return {
-      template: {
-        hasActions: false,
-      },
     };
   }
 
@@ -241,9 +211,10 @@ export class ActorSheetPF extends ActorSheet {
 
     // The Actor and its Items
     data.token = this.token;
-    data.items = this.document.items.map((item) => this._prepareItem(item));
 
+    data.items = this.document.items.map((item) => this._prepareItem(item));
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+
     data.labels = this.document.getLabels();
     data.filters = this._filters;
 
@@ -440,9 +411,12 @@ export class ActorSheetPF extends ActorSheet {
    * @returns {object} - Data fed to the sheet
    */
   _prepareItem(item) {
+    const type = item.type;
+    const subType = item.subType;
+
     const result = foundry.utils.deepClone(item.system);
     result.document = item;
-    result.type = item.type;
+    result.type = type;
     result.id = item.id;
     result.img = item.img;
     result.isActive = item.isActive;
@@ -505,6 +479,8 @@ export class ActorSheetPF extends ActorSheet {
 
     if (result.isPhysical && result.quantity <= 0) result.empty = true;
     result.disabled = result.empty || result.destroyed || !result.isActive;
+
+    result.typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${type}.${subType}.Single`);
 
     return result;
   }
@@ -638,7 +614,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Reduce spells to the nested spellbook structure
-    const spellbook = {};
+    const spellbook = [];
     for (let level = 0; level < 10; level++) {
       const spellLevel = book.spells?.[`spell${level}`];
       if (!spellLevel) {
@@ -649,16 +625,16 @@ export class ActorSheetPF extends ActorSheet {
       const valid = !isNaN(spellLevel.max);
 
       spellbook[level] = {
+        ...pf1.config.sheetSections.spells.spell,
+        id: `level-${level}`,
         level,
         valid,
         usesSlots: true,
         spontaneous: book.spontaneous,
-        canCreate: editable,
         canPrepare: data.actor.type === "character",
         label: pf1.config.spellLevels[level],
         items: [],
         uses: spellLevel.value || 0,
-        dataset: { type: "spell", level: level, spellbook: bookKey },
         hasIssues: spellLevel.hasIssues,
         lowAbilityScore: spellLevel.lowAbilityScore,
         lowLevel: spellLevel.lowLevel,
@@ -681,7 +657,9 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     for (let a = 0; a < 10; a++) {
-      if (spellbook[a]?.items.length === 0 && (a > max || a < min)) delete spellbook[a];
+      if (spellbook[a]?.items.length === 0 && (a > max || a < min)) {
+        delete spellbook[a];
+      }
     }
 
     return spellbook;
@@ -795,48 +773,6 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     context.skillRanks = skillRanks;
-  }
-
-  /**
-   * Returns the amount of type filters currently active.
-   *
-   * @param filters
-   * @returns {number}
-   * @private
-   */
-  _typeFilterCount(filters) {
-    return Array.from(filters).filter((s) => s.startsWith("type-")).length;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Determine whether an Item will be shown based on the current set of filters
-   *
-   * @param {object[]} items - Raw data objects of items
-   * @param filters
-   * @returns {boolean}
-   * @private
-   */
-  _filterItems(items, filters) {
-    const hasTypeFilter = this._typeFilterCount(filters) > 0;
-
-    return items.filter((item) => {
-      if (["feat", "buff", "attack"].includes(item.type)) {
-        if (hasTypeFilter && !filters.has(`type-${item.subType}`)) return false;
-      }
-
-      if (item.isPhysical) {
-        if (hasTypeFilter && item.type !== "loot" && !filters.has(`type-${item.type}`)) return false;
-        else if (hasTypeFilter && item.type === "loot" && !filters.has(`type-${item.subType}`)) return false;
-      }
-
-      if (item.type === "spell") {
-        if (hasTypeFilter && !filters.has(`type-${item.level}`)) return false;
-      }
-
-      return true;
-    });
   }
 
   /* -------------------------------------------- */
@@ -2349,14 +2285,14 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Initialize Item list filters by activating the set of filters which are currently applied
    *
-   * @param i
-   * @param ul
    * @private
+   * @param _i
+   * @param {Element} ul
    */
-  _initializeFilterItemList(i, ul) {
-    const set = this._filters[ul.dataset.filter];
+  _initializeFilterItemList(_i, ul) {
     const filters = ul.querySelectorAll(".filter-item");
     for (const li of filters) {
+      const set = (this._filters.sections[li.dataset.category] ??= new Set());
       if (set.has(li.dataset.filter)) li.classList.add("active");
     }
   }
@@ -3027,37 +2963,41 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    *
-   * @param event
    * @private
+   * @param {Event} event
    */
   _onItemCreate(event) {
     event.preventDefault();
-    const header = event.currentTarget;
+    const el = event.currentTarget;
 
-    const type = header.dataset.type;
-    let subType = header.dataset.subType;
-    const typeName = header.dataset.typeName || game.i18n.localize(CONFIG.Item.typeLabels[type] || type);
+    const [categoryId, sectionId] = el.dataset.create?.split(".") ?? [];
+    const createData = pf1.config.sheetSections[categoryId]?.[sectionId]?.create;
+    if (!createData) throw new Error(`No creation data found for "${categoryId}.${sectionId}"`);
+    createData.type ||= el.dataset.type;
+    const type = createData.type;
+    const subType = createData.system?.subType;
+    const typeName = game.i18n.localize(
+      subType ? `PF1.Subtypes.Item.${type}.${subType}.Single` : CONFIG.Item.typeLabels[type]
+    );
 
-    const itemData = {
-      name: game.i18n.format("PF1.NewItem", { type: typeName }),
-      type,
-      system: foundry.utils.duplicate(header.dataset),
-    };
+    const itemData = foundry.utils.mergeObject(
+      {
+        name: game.i18n.format("PF1.NewItem", { type: typeName }),
+        system: {},
+      },
+      createData,
+      { inplace: false }
+    );
 
-    delete itemData.system.type;
-    delete itemData.system.tooltip;
-    delete itemData.system.typeName;
-
-    // Ensure variable type is correct
+    // Add type specific data
     if (type === "spell") {
-      if (typeof itemData.system?.level === "string") itemData.system.level = parseInt(itemData.system.level);
+      itemData.system.level = parseInt(el.dataset.level);
+      itemData.system.spellbook = el.dataset.book;
     }
 
     const newItem = new Item.implementation(itemData);
 
     this._sortNewItem(newItem);
-
-    subType = newItem.subType;
 
     // Get old items of same general category
     const oldItems = this.actor.itemTypes[type]
@@ -3263,6 +3203,24 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
+   * Filters item by {@link pf1.config.sheetSections sheet section} config.
+   *
+   * @internal
+   * @param {Item} item - Item to filter
+   * @param {object} section - Section to filter by
+   * @returns {boolean}
+   */
+  _applySectionFilter(item, section) {
+    if (!section.filters) throw new Error(`Section "${section.path}" lacks filters`);
+    return section.filters.some((filter) => {
+      if (filter.type === item.type) {
+        return filter.subTypes?.includes(item.subType) ?? true;
+      }
+      return false;
+    });
+  }
+
+  /**
    * Organize and classify Owned Items
    *
    * @param data
@@ -3270,117 +3228,33 @@ export class ActorSheetPF extends ActorSheet {
    */
   _prepareItems(data) {
     // Categorize items as inventory, spellbook, features, and classes
-    const inventory = {
-      weapon: {
-        label: game.i18n.localize("PF1.InventoryWeapons"),
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: true,
-        dataset: { type: "weapon" },
-      },
-      equipment: {
-        label: game.i18n.localize("PF1.InventoryArmorEquipment"),
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: true,
-        dataset: { type: "equipment" },
-        hasSlots: true,
-      },
-      consumable: {
-        label: game.i18n.localize("PF1.InventoryConsumables"),
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: false,
-        dataset: { type: "consumable" },
-      },
-      gear: {
-        label: pf1.config.lootTypes["gear"],
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: !pf1.config.unequippableLoot.includes("gear"),
-        dataset: {
-          type: "loot",
-          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.gear.Single"),
-          "sub-type": "gear",
-        },
-      },
-      ammo: {
-        label: pf1.config.lootTypes["ammo"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: !pf1.config.unequippableLoot.includes("ammo"),
-        dataset: {
-          type: "loot",
-          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.ammo.Single"),
-          "sub-type": "ammo",
-        },
-      },
-      misc: {
-        label: pf1.config.lootTypes["misc"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: true, // Misc covers more than just misc loot
-        dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" },
-      },
-      tradeGoods: {
-        label: pf1.config.lootTypes["tradeGoods"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: !pf1.config.unequippableLoot.includes("tradeGoods"),
-        dataset: {
-          type: "loot",
-          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.tradeGoods.Single"),
-          "sub-type": "tradeGoods",
-        },
-      },
-      container: {
-        label: game.i18n.localize("PF1.InventoryContainers"),
-        canCreate: true,
-        hasActions: false,
-        canEquip: true,
-        items: [],
-        dataset: { type: "container", "type-name": game.i18n.localize("TYPES.Item.container") },
-      },
-    };
+    const inventory = Object.values(pf1.config.sheetSections.inventory)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
 
     // Partition items by category
-    let [items, spells, feats, classes, attacks, buffs] = data.items.reduce(
+    const [items, spells, other] = data.items.reduce(
       (arr, item) => {
         if (item.type === "spell") arr[1].push(item);
-        else if (item.type === "feat") arr[2].push(item);
-        else if (item.type === "class") arr[3].push(item);
-        else if (item.type === "attack") arr[4].push(item);
-        else if (item.type === "buff") arr[5].push(item);
         else if (item.isPhysical) arr[0].push(item);
+        else arr[2].push(item);
         return arr;
       },
-      [[], [], [], [], [], []]
+      [[], [], []]
     );
-
-    // Apply active item filters
-    items = this._filterItems(items, this._filters.inventory, this._filters.search.inventory);
-    feats = this._filterItems(feats, this._filters.features);
 
     // Organize Spellbook
     let hasASF = false;
-    const spellbookData = {};
+    const spellbookSections = {};
     const spellbooks = data.system.attributes.spells.spellbooks;
     for (const [bookId, spellbook] of Object.entries(spellbooks)) {
       // Required for spellbook selection in settings
-      spellbookData[bookId] = { ...spellbook };
+      spellbookSections[bookId] = { ...spellbook };
       // The rest are unnecssary processing if spellbook is not enabled
       if (!spellbook.inUse) continue;
-      const book = spellbookData[bookId];
-      let spellbookSpells = spells.filter((obj) => obj.spellbook === bookId);
-      spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${bookId}`]);
-      book.section = this._prepareSpellbook(data, spellbookSpells, bookId);
+      const book = spellbookSections[bookId];
+      const spellbookSpells = spells.filter((obj) => obj.spellbook === bookId);
+      book.sections = this._prepareSpellbook(data, spellbookSpells, bookId);
       book.prepared = spellbookSpells.filter(
         (obj) => obj.preparation.mode === "prepared" && obj.preparation.prepared
       ).length;
@@ -3405,71 +3279,33 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Organize Inventory
-    const usystem = pf1.utils.getWeightSystem();
-
     for (const i of items) {
-      const subType = i.type === "loot" ? i.subType || "gear" : i.subType;
-      if (inventory[i.type] != null) inventory[i.type].items.push(i);
-      // Only loot has subType specific sections
-      if (i.type === "loot") {
-        const subType = i.subType || "gear";
-        let subsectionId = subType;
-        switch (subType) {
-          case "adventuring":
-          case "tool":
-          case "reagent":
-          case "remedy":
-          case "herb":
-          case "animalGear":
-            subsectionId = "gear";
-            break;
-          case "treasure":
-            subsectionId = "tradeGoods";
-            break;
-          case "food":
-          case "entertainment":
-          case "vehicle":
-            subsectionId = "misc";
-            break;
-          case "ammo":
-          case "tradeGoods":
-          case "misc":
-          default:
-            subsectionId = subType;
-            break;
-        }
-        const subsection = inventory[subsectionId];
-        subsection?.items.push(i);
+      const section = inventory.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
       }
     }
 
     // Organize Features
-    const features = {};
-    const featureDefaults = { items: [], canCreate: true, hasActions: true };
-    const featData = this.constructor.featTypeData;
-    for (const [featKey, featValue] of Object.entries(pf1.config.featTypes)) {
-      // Merge type specific data into common data template
-      features[featKey] = foundry.utils.mergeObject(
-        featureDefaults,
-        {
-          // Fist generic data derived from the config object
-          label: pf1.config.featTypesPlurals[featKey] ?? featValue,
-          dataset: { type: "feat", "type-name": game.i18n.localize(featValue), "sub-type": featKey },
-          // Then any specific data explicitly set to override defaults
-          ...featData[featKey],
-        },
-        { inplace: false }
-      );
+    const featureSections = Object.values(pf1.config.sheetSections.features)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
+
+    for (const i of other) {
+      const ablType = i.abilityType;
+      i.typelabel = pf1.config.abilityTypes[ablType]?.short || pf1.config.abilityTypes.na.short;
+
+      const section = featureSections.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
+      }
     }
 
-    for (const feat of feats) {
-      const ablType = feat.abilityType;
-      feat.typelabel = pf1.config.abilityTypes[ablType]?.short || pf1.config.abilityTypes.na.short;
-      features[feat.subType]?.items?.push(feat);
-    }
-
-    if (features.feat) {
-      features.feat.issues = {
+    if (this.actor.itemTypes.feat.length) {
+      const section = featureSections.find((f) => f.path === "features.feat");
+      section.issues = {
         found: data.featCount?.issues > 0,
         missing: data.featCount?.missing || 0,
         excess: data.featCount?.excess || 0,
@@ -3480,119 +3316,72 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Buffs
-    const buffSections = {};
-    Object.entries(pf1.config.buffTypes).forEach(([buffId, label]) => {
-      buffSections[buffId] = {
-        label,
-        items: [],
-        hasActions: true,
-        dataset: { type: "buff", "sub-type": buffId },
-      };
-    });
-
-    buffs = this._filterItems(buffs, this._filters.buffs);
-    for (const b of this._filterItems(buffs, this._filters.buffs)) {
-      buffSections[b.subType]?.items.push(b);
+    const buffSections = Object.values(pf1.config.sheetSections.buffs)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
+    for (const i of other) {
+      const section = buffSections.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
+      }
     }
 
     // Attacks
-    attacks = this._filterItems(attacks, this._filters.attacks);
-    const attackSections = {
-      weapon: {
-        label: game.i18n.localize("PF1.Subtypes.Item.attack.weapon.Plural"),
-        items: [],
-        canCreate: true,
-        initial: false,
-        showTypes: false,
-        dataset: { type: "attack", "sub-type": "weapon" },
-      },
-      natural: {
-        label: game.i18n.localize("PF1.Subtypes.Item.attack.natural.Plural"),
-        items: [],
-        canCreate: true,
-        initial: false,
-        showTypes: false,
-        dataset: { type: "attack", "sub-type": "natural" },
-      },
-      ability: {
-        label: game.i18n.localize("PF1.Subtypes.Item.attack.ability.Plural"),
-        items: [],
-        canCreate: true,
-        initial: false,
-        showTypes: false,
-        dataset: { type: "attack", "sub-type": "ability" },
-      },
-      racialAbility: {
-        label: game.i18n.localize("PF1.Subtypes.Item.attack.racialAbility.Plural"),
-        items: [],
-        canCreate: true,
-        initial: false,
-        showTypes: false,
-        dataset: { type: "attack", "sub-type": "racialAbility" },
-      },
-      item: {
-        label: game.i18n.localize("PF1.Items"),
-        items: [],
-        canCreate: true,
-        initial: false,
-        showTypes: false,
-        dataset: { type: "attack", "sub-type": "item" },
-      },
-      misc: {
-        label: game.i18n.localize("PF1.Misc"),
-        items: [],
-        canCreate: true,
-        initial: false,
-        showTypes: false,
-        dataset: { type: "attack", "sub-type": "misc" },
-      },
-    };
+    const attackSections = Object.values(pf1.config.sheetSections.combat)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
 
-    for (const attack of attacks) {
-      const subType = attack.subType;
-      if (!attackSections[subType]) {
-        console.warn(`Attack for unrecognized subtype "${subType}"`);
-        continue;
+    // TODO: Support weapons in combat tab
+    for (const i of other) {
+      const section = attackSections.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
       }
-      attackSections[subType].items.push(attack);
     }
 
-    // Apply type filters
-    {
-      const sections = [
-        { key: "inventory", section: inventory },
-        { key: "features", section: features },
-        { key: "buffs", section: buffSections },
-        { key: "attacks", section: attackSections },
-      ];
-      for (const [k, sb] of Object.entries(spellbookData)) {
-        if (!sb.inUse) continue;
-        sections.push({ key: `spellbook-${k}`, section: sb.section });
-      }
+    // Classes
+    const classSections = Object.values(pf1.config.sheetSections.classes)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
 
+    for (const i of other) {
+      const section = classSections.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
+      }
+    }
+
+    const categories = [
+      { key: "inventory", sections: inventory },
+      { key: "features", sections: featureSections },
+      { key: "buffs", sections: buffSections },
+      { key: "attacks", sections: attackSections },
+    ];
+
+    for (const [bookId, sb] of Object.entries(spellbookSections)) {
+      if (!sb.inUse) continue;
+      if (!sb.sections) console.warn(bookId, sb);
+      categories.push({ key: `spellbook-${bookId}`, sections: sb.sections });
+    }
+
+    for (const { key, sections } of categories) {
+      const set = this._filters.sections[key];
       for (const section of sections) {
-        for (const [k, s] of Object.entries(section.section)) {
-          const typeFilterCount = this._typeFilterCount(this._filters[section.key]);
-          if (typeFilterCount > 0 && s.items.length === 0) {
-            s._hidden = true;
-          }
-          if (typeFilterCount === 1 && this._filters[section.key].has(`type-${k}`)) {
-            s._hidden = false;
-          }
-        }
+        if (!section) continue;
+        section._hidden = set?.size > 0 && !set.has(section.id);
       }
     }
-
-    // Ensure classes are always in order of highest level to lowest
-    classes.sort((a, b) => b.level - a.level);
 
     // Assign and return
     data.inventory = inventory;
-    data.spellbookData = spellbookData;
-    data.features = features;
+    data.spellbookData = spellbookSections;
+    data.features = featureSections;
     data.buffs = buffSections;
     data.attacks = attackSections;
-    data.classes = classes;
+    data.classes = classSections;
     data.quickActions = this.document.getQuickActions();
   }
 
@@ -3636,16 +3425,17 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const li = event.currentTarget;
-    const set = this._filters[li.parentElement.dataset.filter];
-    const filter = li.dataset.filter;
-    const typeFilterCount = this._typeFilterCount(set);
+    const { category, filter } = li.dataset;
+    const set = (this._filters.sections[category] ??= new Set());
+    const filterCount = set.size;
 
     const tabLikeFilters = game.settings.get("pf1", "invertSectionFilterShiftBehaviour")
       ? !event.shiftKey
       : event.shiftKey;
+
     if (tabLikeFilters) {
       for (const f of Array.from(set)) {
-        if (f.startsWith("type-") && (f !== filter || typeFilterCount > 1)) {
+        if (f !== filter) {
           set.delete(f);
         }
       }

@@ -43,7 +43,7 @@
         </div>
 
         <div class="item-controls flexcol">
-          {{#if owner}}
+          {{#if @root.owner}}
           {{#if race}}
           <a class="item-control item-edit" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
@@ -264,46 +264,53 @@
   {{!-- Classes --}}
   <div class="classes-body">
     <ol class="item-groups-list">
+      {{#each classes}}
       <ol class="item-list" data-type="class">
         <li class="item-list-header flexrow">
           <div class="item-name">
-            <h3>{{localize "PF1.ClassPlural"}}</h3>
+            <h3>{{label}}</h3>
           </div>
+
+          {{#if interface.types}}
+          <div class="item-detail item-subtype">{{localize "PF1.Type"}}</div>
+          {{/if}}
 
           <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
 
-          {{#if levelUp}}
-            <div class="item-detail item-button"><span>{{localize "PF1.Action"}}</span></div>
-          {{/if}}
+          <div class="item-detail item-button"><span>{{localize "PF1.Action"}}</span></div>
 
-          {{#if owner}}
           <div class="item-controls">
-            <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-type="class">
+            {{#if @root.owner}}
+            <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-create="{{path}}">
               <i class="fas fa-plus"></i>
             </a>
             <a data-action="compendium" data-action-target="classes" data-tooltip="PF1.OpenCompendium"><i class="fas fa-folder-plus"></i></a>
+            {{/if}}
           </div>
-          {{/if}}
         </li>
 
-        {{#if classes.length}}
-        {{#each classes as |item iid|}}
+        {{#if items.length}}
+        {{#each items as |item iid|}}
         <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item.id}}">
           <div class="item-name rollable">
             <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
             <h4>{{item.name}}</h4>
           </div>
 
+          {{#if ../interface.types}}
+          <div class="item-detail item-subtype">{{item.typeLabel}}</div>
+          {{/if}}
+
           <div class="item-detail item-feat-level tooltip"
             data-tooltip-extended="item.{{item.id}}.level">
-            <span>{{localize "PF1.Level"}} {{item.level}}</span>
+            <span>{{item.level}}</span>
           </div>
 
-          {{#if ../levelUp}}
-            <div class="item-detail item-button">
-              <button type="button" class="level-up" data-item-id="{{item.id}}">{{localize "PF1.LevelUp.Action"}}</button>
-            </div>
-          {{/if}}
+          <div class="item-detail item-button">
+            {{#if @root.levelUp}}
+            <button type="button" class="level-up" data-item-id="{{item.id}}">{{localize "PF1.LevelUp.Action"}}</button>
+            {{/if}}
+          </div>
 
           {{#if @root.owner}}
           <div class="item-controls">
@@ -322,6 +329,7 @@
         </div>
         {{/if}}
       </ol>
+      {{/each}}
     </ol>
   </div>
 </section>

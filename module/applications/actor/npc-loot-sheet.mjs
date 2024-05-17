@@ -53,10 +53,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     data.labels.sellValue = game.i18n.format("PF1.Containers.SellValue", data.sellValue);
 
     // Alter inventory columns
-    for (const inv of Object.values(data.inventory)) {
-      inv.hasActions = false;
-      inv.canEquip = false;
-      inv.showValue = true;
+    for (const section of data.inventory) {
+      section.interface = { ...section.interface, value: true, actions: false, noEquip: true };
     }
 
     data.labels.currency = `PF1.Currency.Inline.${this.itemValueDenomination}`;

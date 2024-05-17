@@ -18,9 +18,9 @@
           <h3>{{section.label}}</h3>
         </div>
 
-        {{#unless section.interface.types}}
+        {{#if section.interface.types}}
         <div class="item-detail item-type"><i class="icon-pf icon-magic-palm" data-tooltip="PF1.Type"></i></div>
-        {{/unless}}
+        {{/if}}
 
         {{#if section.interface.actions}}
         <div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>

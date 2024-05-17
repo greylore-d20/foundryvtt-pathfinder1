@@ -1948,12 +1948,12 @@ export const conditionTypes = {
 };
 
 export const buffTypes = {
-  temp: "PF1.Temporary",
-  spell: "TYPES.Item.spell",
-  feat: "TYPES.Item.feat",
-  perm: "PF1.Permanent",
-  item: "PF1.Item",
-  misc: "PF1.Misc",
+  temp: "PF1.Subtypes.Item.buff.temp.Single",
+  spell: "PF1.Subtypes.Item.buff.spell.Single",
+  feat: "PF1.Subtypes.Item.buff.feat.Single",
+  perm: "PF1.Subtypes.Item.buff.perm.Single",
+  item: "PF1.Subtypes.Item.buff.item.Single",
+  misc: "PF1.Subtypes.Item.buff.misc.Single",
 };
 
 /**
@@ -2609,7 +2609,7 @@ export const sheetSections = {
       sort: 4_000,
     },
     gear: {
-      label: () => pf1.config.lootTypes.gear,
+      label: "PF1.Subtypes.Item.loot.gear.Plural",
       filters: [{ type: "loot", subTypes: ["gear", "adventuring", "tool", "reagent", "remedy", "herb", "animalGear"] }],
       interface: {
         create: true,
@@ -2620,7 +2620,7 @@ export const sheetSections = {
       sort: 6_000,
     },
     ammo: {
-      label: () => pf1.config.lootTypes.ammo,
+      label: "PF1.Subtypes.Item.loot.ammo.Plural",
       filters: [{ type: "loot", subTypes: ["ammo"] }],
       interface: {
         create: true,
@@ -2631,7 +2631,7 @@ export const sheetSections = {
       sort: 8_000,
     },
     misc: {
-      label: () => pf1.config.lootTypes.misc,
+      label: "PF1.Subtypes.Item.loot.misc.Plural",
       filters: [{ type: "loot", subTypes: ["misc", "food", "entertainment", "vehicle"] }],
       interface: {
         create: true,
@@ -2642,7 +2642,7 @@ export const sheetSections = {
       sort: 9_000,
     },
     tradeGoods: {
-      label: () => pf1.config.lootTypes.tradeGoods,
+      label: "PF1.Subtypes.Item.loot.tradeGoods.Plural",
       filters: [{ type: "loot", subTypes: ["tradeGoods", "treasure"] }],
       interface: {
         create: true,
@@ -2666,7 +2666,7 @@ export const sheetSections = {
   },
   features: {
     feat: {
-      label: () => pf1.config.featTypes.feat,
+      label: "PF1.Subtypes.Item.feat.feat.Plural",
       filters: [{ type: "feat", subTypes: ["feat"] }],
       interface: {
         create: true,
@@ -2677,7 +2677,7 @@ export const sheetSections = {
       sort: 2_000,
     },
     classFeat: {
-      label: () => pf1.config.featTypes.classFeat,
+      label: "PF1.Subtypes.Item.feat.classFeat.Plural",
       filters: [{ type: "feat", subTypes: ["classFeat"] }],
       interface: {
         create: true,
@@ -2688,7 +2688,7 @@ export const sheetSections = {
       sort: 1_000,
     },
     trait: {
-      label: () => pf1.config.featTypes.trait,
+      label: "PF1.Subtypes.Item.feat.trait.Plural",
       filters: [{ type: "feat", subTypes: ["trait"] }],
       interface: {
         create: true,
@@ -2699,7 +2699,7 @@ export const sheetSections = {
       sort: 3_000,
     },
     racial: {
-      label: () => pf1.config.featTypes.racial,
+      label: "PF1.Subtypes.Item.feat.racial.Plural",
       filters: [{ type: "feat", subTypes: ["racial"] }],
       interface: {
         create: true,
@@ -2710,7 +2710,7 @@ export const sheetSections = {
       sort: 4_000,
     },
     misc: {
-      label: () => pf1.config.featTypes.misc,
+      label: "PF1.Subtypes.Item.feat.misc.Plural",
       filters: [{ type: "feat", subTypes: ["misc"] }],
       interface: {
         create: true,
@@ -2721,7 +2721,7 @@ export const sheetSections = {
       sort: 15_000,
     },
     template: {
-      label: () => pf1.config.featTypes.template,
+      label: "PF1.Subtypes.Item.feat.template.Plural",
       filters: [{ type: "feat", subTypes: ["template"] }],
       interface: {
         create: true,
@@ -2733,64 +2733,64 @@ export const sheetSections = {
   },
   buffs: {
     feat: {
-      label: () => pf1.config.buffTypes.feat,
+      label: "PF1.Subtypes.Item.buff.feat.Plural",
       filters: [{ type: "buff", subTypes: ["feat"] }],
       interface: {
         create: true,
         actions: true,
       },
       create: { type: "buff", system: { subType: "feat" } },
-      sort: 1_000,
+      sort: 5_000,
     },
     item: {
-      label: () => pf1.config.buffTypes.item,
+      label: "PF1.Subtypes.Item.buff.item.Plural",
       filters: [{ type: "buff", subTypes: ["item"] }],
       interface: {
         create: true,
         actions: true,
       },
       create: { type: "buff", system: { subType: "item" } },
-      sort: 2_000,
+      sort: 4_000,
     },
     misc: {
-      label: () => pf1.config.buffTypes.misc,
+      label: "PF1.Subtypes.Item.buff.misc.Plural",
       filters: [{ type: "buff", subTypes: ["misc"] }],
       interface: {
         create: true,
         actions: true,
       },
       create: { type: "buff", system: { subType: "misc" } },
-      sort: 3_000,
+      sort: 10_000,
     },
     perm: {
-      label: () => pf1.config.buffTypes.perm,
+      label: "PF1.Subtypes.Item.buff.perm.Plural",
       filters: [{ type: "buff", subTypes: ["perm"] }],
       interface: {
         create: true,
         actions: true,
       },
       create: { type: "buff", system: { subType: "perm" } },
-      sort: 4_000,
+      sort: 6_000,
     },
     spell: {
-      label: () => pf1.config.buffTypes.spell,
+      label: "PF1.Subtypes.Item.buff.spell.Plural",
       filters: [{ type: "buff", subTypes: ["spell"] }],
       interface: {
         create: true,
         actions: true,
       },
       create: { type: "buff", system: { subType: "spell" } },
-      sort: 5_000,
+      sort: 2_000,
     },
     temp: {
-      label: () => pf1.config.buffTypes.temp,
+      label: "PF1.Subtypes.Item.buff.temp.Plural",
       filters: [{ type: "buff", subTypes: ["temp"] }],
       interface: {
         create: true,
         actions: true,
       },
       create: { type: "buff", system: { subType: "temp" } },
-      sort: 6_000,
+      sort: 1_000,
     },
   },
   // Spells section is not used quite like the others
@@ -2825,9 +2825,6 @@ Hooks.once("setup", () => {
       section.id = sectKey;
       section.path = `${catKey}.${sectKey}`;
 
-      if (typeof section.label === "function") {
-        section.label = section.label();
-      }
       section.label = game.i18n.localize(section.label);
 
       const iface = section.interface;

@@ -83,14 +83,25 @@ export class ItemCreateDialog extends FormApplication {
   }
 
   getData() {
+    const lang = game.settings.get("core", "language");
+
     const folders = this.parent ? [] : game.folders.filter((f) => f.type === "Item" && f.displayed);
 
     const createData = this.createData;
 
-    const subtypes = this.getSubtypes(createData.type);
+    let subtypes = this.getSubtypes(createData.type);
     if (!subtypes && createData.system?.subType !== undefined) delete createData.system.subType;
+    if (subtypes) {
+      subtypes = Object.fromEntries(
+        Object.entries(subtypes).sort(([key0, label0], [key1, label1]) => label0.localeCompare(label1, lang))
+      );
+    }
 
-    const types = foundry.utils.deepClone(CONFIG.Item.typeLabels);
+    const types = Object.fromEntries(
+      Object.entries(CONFIG.Item.typeLabels).sort(([key0, label0], [key1, label1]) =>
+        label0.localeCompare(label1, lang)
+      )
+    );
     delete types.base; // base is Foundry's unusable default
 
     return {

@@ -3862,12 +3862,17 @@ export class ActorSheetPF extends ActorSheet {
     if (!this.actor.isOwner) return false;
 
     const sourceItem = await Item.implementation.fromDropData(data);
-    const itemData = game.items.fromCompendium(sourceItem, { clearFolder: true });
 
     const sourceActor = await fromUuid(data.actorUuid || "");
+    const sameActor = sourceItem.actor === this.actor && !data.containerId;
+
+    const itemData = game.items.fromCompendium(sourceItem, {
+      clearFolder: true,
+      keepId: sameActor,
+      clearSort: !sameActor,
+    });
 
     // Handle item sorting within the same actor
-    const sameActor = sourceItem.actor === this.actor && !data.containerId;
     if (sameActor) return this._onSortItem(event, itemData);
 
     // Make item unidentified if ALT is held

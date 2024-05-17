@@ -559,9 +559,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     let sourceActor = actorUuid ? await fromUuid(actorUuid) : null;
     sourceActor ??= item.actor;
 
-    const itemData = game.items.fromCompendium(item, { clearFolder: true });
-
     const sameActor = sourceActor && sourceActor === this.item.actor;
+
+    const itemData = game.items.fromCompendium(item, { clearFolder: true, keepId: sameActor, clearSort: !sameActor });
 
     // Sort item
     if (sameActor && containerId === this.item.id) {

@@ -2585,17 +2585,29 @@ export const sheetSections = {
       create: { type: "weapon" },
       sort: 1_000,
     },
-    equipment: {
-      label: "PF1.InventoryArmorEquipment",
-      filters: [{ type: "equipment" }],
+    armor: {
+      label: "PF1.ArmorOrShield",
+      filters: [{ type: "equipment", subTypes: ["armor", "shield"] }],
       interface: {
         create: true,
         actions: true,
         equip: true,
         slots: true,
       },
-      create: { type: "equipment" },
+      create: { type: "equipment", system: { subType: "armor", equipmentSubtype: "lightArmor", slot: "" } },
       sort: 2_000,
+    },
+    equipment: {
+      label: "PF1.InventoryEquipment",
+      filters: [{ type: "equipment", subTypes: ["wondrous", "other", "clothing"] }],
+      interface: {
+        create: true,
+        actions: true,
+        equip: true,
+        slots: true,
+      },
+      create: { type: "equipment", system: { subType: "wondrous", slot: "slotless" } },
+      sort: 3_000,
     },
     consumable: {
       label: "PF1.InventoryConsumables",

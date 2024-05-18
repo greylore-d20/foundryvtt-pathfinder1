@@ -2533,36 +2533,40 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {string} skillId - Skill ID
    * @param {object} [options] - Additional options
-   * @param {object} [options.rollData] - Roll data instance to use.
-   * @returns {object}
+   * @param {{ skills: {[key: string]: SkillData}}} [options.rollData] - Roll data instance to use.
+   * @returns {SkillInfo}
    */
   getSkillInfo(skillId, { rollData } = {}) {
-    let skill, skillName, parentSkill;
     const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
       isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
       mainSkill = this.system.skills[mainSkillId];
     if (!mainSkill) throw new Error(`Invalid skill ID '${skillId}'`);
 
+    let skill, fullName, parentSkill;
     if (isSubSkill) {
       skill = mainSkill.subSkills[subSkillId];
       if (!skill) throw new Error(`Invalid skill ID '${skillId}'`);
-      skillName = `${pf1.config.skills[mainSkillId]} (${skill.name})`;
+
+      fullName = `${pf1.config.skills[mainSkillId]} (${skill.name})`;
       parentSkill = this.getSkillInfo(mainSkillId);
     } else {
+      fullName = pf1.config.skills[mainSkillId];
       skill = mainSkill;
-      skillName = skill.name ?? pf1.config.skills[skillId];
     }
 
     rollData ??= this.getRollData();
-    const dataSkill = foundry.utils.getProperty(rollData.skills, skillId);
+    const dataSkill = getProperty(rollData.skills, skillId);
     if (!dataSkill) throw new Error(`Invalid skill ID '${skillId}'`);
 
+    /** @type {SkillInfo} */
     const result = foundry.utils.deepClone(dataSkill);
-    result.name = skillName;
+    result.journal ||= pf1.config.skillCompendiumEntries[isSubSkill ? mainSkillId : skillId];
+    result.name ||= pf1.config.skills[skillId] || skillId;
     result.id = skillId;
-    result.journal ||= pf1.config.skillCompendiumEntries[skillId];
-    if (isSubSkill) result.journal ||= pf1.config.skillCompendiumEntries[mainSkillId];
+    result.fullName = fullName;
+
     if (parentSkill) result.parentSkill = parentSkill;
+
     return result;
   }
 
@@ -2655,7 +2659,7 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      flavor: game.i18n.format("PF1.SkillCheck", { skill: skl.name }),
+      flavor: game.i18n.format("PF1.SkillCheck", { skill: skl.fullName }),
       chatTemplateData: { properties: props },
       compendium: { entry: pf1.config.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },

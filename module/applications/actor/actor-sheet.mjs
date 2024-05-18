@@ -2791,7 +2791,7 @@ export class ActorSheetPF extends ActorSheet {
       deleteSkill();
     } else {
       Dialog.confirm({
-        title: game.i18n.format("PF1.DeleteSkillTitle", { name: info.name }),
+        title: game.i18n.format("PF1.DeleteSkillTitle", { name: info.fullName }),
         content: `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`,
         yes: () => deleteSkill(),
         rejectClose: true,

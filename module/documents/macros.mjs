@@ -88,7 +88,7 @@ export const createSkillMacro = async (skillId, uuid, slot) => {
 
   const skillInfo = actor.getSkillInfo(skillId);
   const command = `fromUuidSync("${actor.uuid}")\n\t.rollSkill("${skillId}");`;
-  const name = game.i18n.format("PF1.RollSkillMacroName", { actor: actor.name, skill: skillInfo.name });
+  const name = game.i18n.format("PF1.RollSkillMacroName", { actor: actor.name, skill: skillInfo.fullName });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(

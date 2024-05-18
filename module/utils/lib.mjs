@@ -409,7 +409,7 @@ export const getBuffTargets = function (actor, type = "buffs") {
     for (const s of actor._skillTargets) {
       const sId = s.split(".").slice(1).join(".");
       const skill = actor.getSkillInfo(sId);
-      buffTargets[s] = { label: skill.name, category: "skill" };
+      buffTargets[s] = { label: skill.fullName, category: "skill" };
     }
   } else {
     for (const [k, v] of Object.entries(pf1.config.skills)) {

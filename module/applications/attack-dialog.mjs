@@ -1,4 +1,4 @@
-import { ActionUse } from "../action-use/action-use.mjs";
+import { ActionUse, ActionUseAttack } from "../action-use/action-use.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 export class AttackDialog extends Application {
@@ -108,15 +108,6 @@ export class AttackDialog extends Application {
       sheetConfig: false,
       submitOnChange: false,
       submitOnClose: false,
-    };
-  }
-
-  static get defaultAttack() {
-    return {
-      label: "",
-      attackBonus: 0,
-      attackBonusTotal: 0,
-      ammo: null,
     };
   }
 
@@ -248,15 +239,11 @@ export class AttackDialog extends Application {
       this.attacks.splice(
         place,
         0,
-        foundry.utils.mergeObject(this.constructor.defaultAttack, {
-          id: type,
-          label: game.i18n.localize(translationString[type]),
-          attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
-        })
+        new ActionUseAttack(game.i18n.localize(translationString[type]), "", null, { abstract: true, type })
       );
       this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
     } else {
-      this.attacks = this.attacks.filter((o) => o.id !== type);
+      this.attacks.findSplice((o) => o.type === type);
     }
   }
 

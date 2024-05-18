@@ -598,10 +598,10 @@ export class ActionUse {
     addPart("allAttack");
     addPart("allDamage");
 
-    if (atk.id === "rapid-shot") {
+    if (atk.type === "rapid-shot") {
       addPart("rapidShotAttack");
       addPart("rapidShotDamage");
-    } else if (atk.id === "haste-attack") {
+    } else if (atk.type === "haste-attack") {
       addPart("hasteAttack");
       addPart("hasteDamage");
     }
@@ -629,7 +629,7 @@ export class ActionUse {
         actionUse: this,
       });
 
-      if (atk.id !== "manyshot") {
+      if (atk.type !== "manyshot") {
         // Add attack roll
         await attack.addAttack({
           extraParts: [...this.shared.attackBonus, atk.attackBonus],
@@ -659,7 +659,7 @@ export class ActionUse {
 
         // Add damage
         let flavor = null;
-        if (atk.id === "manyshot") flavor = game.i18n.localize("PF1.Manyshot");
+        if (atk.type === "manyshot") flavor = game.i18n.localize("PF1.Manyshot");
         await attack.addDamage({
           flavor,
           extraParts: [...extraParts, ...nonCritParts],
@@ -674,7 +674,7 @@ export class ActionUse {
       }
 
       // Add effect notes
-      if (atk.id !== "manyshot") {
+      if (atk.type !== "manyshot") {
         await attack.addEffectNotes();
       }
 
@@ -1556,12 +1556,18 @@ export class ActionUse {
   }
 }
 
-class ActionUseAttack {
+export class ActionUseAttack {
+  /** @type {string|null} */
+  type;
+
   /** @type {string} */
   label;
 
   /** @type {string} */
   attackBonus;
+
+  /** @type {boolean} */
+  abstract;
 
   /** @type {string} */
   ammo = null;
@@ -1573,10 +1579,12 @@ class ActionUseAttack {
     return !!this.ammo;
   }
 
-  constructor(label, bonus = "", ammo = null) {
+  constructor(label, bonus = "", ammo = null, { abstract = false, type = null } = {}) {
     this.label = label;
     this.attackBonus = bonus;
     this.ammo = ammo;
+    this.abstract = abstract ?? false;
+    this.type = type;
   }
 }
 

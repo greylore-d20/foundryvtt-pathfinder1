@@ -3122,32 +3122,88 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
+
+    const quantity = item.system.quantity;
+    if (quantity <= 2) throw new Error("Can't split stack with less than 2 items");
+
+    const max = quantity - 1;
+
+    const templateData = {
+      quantity,
+      max,
+      half: Math.max(1, Math.floor(quantity / 2)),
+    };
+
+    const content = await renderTemplate("systems/pf1/templates/apps/split-stack.hbs", templateData);
 
     new Dialog(
       {
         title: game.i18n.format("PF1.Dialog.SplitItem.Title", { name: item.name }),
-        content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1">`,
+        content,
         buttons: {
           split: {
             // icon: `<i class="fas fa-people-arrows></i>`,
             label: game.i18n.localize("PF1.Split"),
-            callback: async (html) => {
-              let splitValue = parseInt(html.find(`[name="value"]`).val());
-              splitValue = Math.min(item.system.quantity - 1, Math.max(0, splitValue));
-              if (splitValue > 0) {
-                await item.update({ "system.quantity": Math.max(0, item.system.quantity - splitValue) });
+            callback: async ([html]) => {
+              const splitValue = Math.clamped(html.querySelector(`input.split`).valueAsNumber, 1, max);
+              console.log(splitValue, Number.isNumeric(splitValue));
+              if (Number.isNumeric(splitValue)) {
                 const data = item.toObject();
                 data.system.quantity = splitValue;
-                await Item.implementation.createDocuments([data], { parent: this.document });
+                data.sort = data.sort + 1_000;
+                await Item.implementation.createDocuments([data], { parent: this.actor });
+                await item.update({ "system.quantity": Math.max(1, item.system.quantity - splitValue) });
               }
             },
           },
         },
+        render: ([html]) => {
+          const slider = html.querySelector("input.slider");
+          const oldstack = html.querySelector("input.left");
+          const newstack = html.querySelector("input.split");
+          slider.addEventListener(
+            "input",
+            (ev) => {
+              const newval = ev.target.valueAsNumber;
+              newstack.value = newval;
+              oldstack.value = quantity - newval;
+            },
+            { passive: true }
+          );
+          newstack.addEventListener(
+            "input",
+            (ev) => {
+              let newval = ev.target.valueAsNumber;
+              if (newval > quantity) {
+                newstack.value = max;
+                newval = max;
+              } else if (newval < 1) {
+                newstack.value = 1;
+                newval = 1;
+              }
+              slider.value = newval;
+              oldstack.value = quantity - newval;
+            },
+            { passive: true }
+          );
+          oldstack.addEventListener("input", (ev) => {
+            let newval = quantity - ev.target.valueAsNumber;
+            if (newval > quantity) {
+              oldstack.value = max;
+              newval = 1;
+            } else if (newval < 1) {
+              oldstack.value = 1;
+              newval = max;
+            }
+            newstack.value = newval;
+            slider.value = newval;
+          });
+        },
         default: "split",
       },
       {
-        classes: [...Dialog.defaultOptions.classes, "pf1", "item-split"],
+        classes: [...Dialog.defaultOptions.classes, "pf1", "split-stack"],
       }
     ).render(true);
   }

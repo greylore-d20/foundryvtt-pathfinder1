@@ -1,0 +1,29 @@
+.pf1.dialog.split-stack {
+  .window-content {
+    .dialog-content {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 0.5em;
+
+      label {
+        text-align: center;
+      }
+
+      > div {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 0.5em;
+
+        .stack-size {
+          flex: 1 4em;
+          text-align: center;
+        }
+
+        .stack-drag {
+          flex: 4 12em;
+          align-self: end;
+        }
+      }
+    }
+  }
+}

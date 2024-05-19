@@ -1,4 +1,3 @@
-import MarkdownIt from "markdown-it";
 import { SemanticVersion } from "../utils/semver.mjs";
 
 export class ChangeLogWindow extends FormApplication {
@@ -46,7 +45,7 @@ export class ChangeLogWindow extends FormApplication {
   }
 
   _processChangelog(md) {
-    const MD = new MarkdownIt();
+    const converter = new showdown.Converter();
 
     // Cut off irrelevant changelog entries
     let lines = md.split(/[\n\r]/);
@@ -63,7 +62,7 @@ export class ChangeLogWindow extends FormApplication {
       }
     }
 
-    return MD.render(lines.join("\n"));
+    return converter.makeHtml(lines.join("\n"));
   }
 
   async _updateObject(event, formData) {

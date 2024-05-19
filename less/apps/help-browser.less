@@ -10,9 +10,20 @@
       text-decoration: underline;
     }
 
+    .articles ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      line-height: 1.5rem;
+      column-gap: 1rem;
+
+      > li {
+        margin: 0;
+      }
+    }
+
     .top-bar {
       padding: 6px;
-      flex: 0 0 24px;
+      flex: 0 0 39px;
       border-bottom: @borderGroove;
 
       > * {
@@ -28,21 +39,7 @@
     }
 
     .primary {
-      height: calc(100% - 32px);
-    }
-
-    nav {
-      padding: 0.3rem;
-      flex: 0 0 200px;
-      border-right: @borderGroove;
-      height: 100%;
-      overflow: auto;
-      .scrollbar();
-
-      > ul {
-        list-style: none;
-        padding: 0 0 0 0.5em;
-      }
+      height: calc(100% - 39px);
     }
 
     .content {

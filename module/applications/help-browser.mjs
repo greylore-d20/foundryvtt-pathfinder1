@@ -1,6 +1,3 @@
-import MarkdownIt from "markdown-it";
-import MarkDownItAnchor from "markdown-it-anchor";
-
 /**
  * An {@link Application} displaying documentation for the Pathfinder 1e system within Foundry.
  *
@@ -23,21 +20,26 @@ export class HelpBrowserPF extends Application {
    * @type {HistoryEntry}
    * @private
    */
-  _currentPage = { url: "" };
+  _currentPage = { url: "Help/Home" };
 
   /**
-   * The Markdown parser instance for this application.
+   * The Markdown converter for this application.
    *
-   * @type {MarkdownIt}
+   * @type {showdown.Converter}
    * @private
    */
-  _md;
+  #converter;
 
   /** @inheritdoc */
   constructor(...args) {
     super(...args);
-    this._initMarkdown();
-    return this;
+
+    this.#converter = new showdown.Converter({
+      extensions: [HelpBrowserPF.defaultExtensions],
+      noHeaderId: false,
+      ghCompatibleHeaderId: true,
+      prefixHeaderId: "pf1-help-browser-",
+    });
   }
 
   /** @inheritdoc */
@@ -68,34 +70,16 @@ export class HelpBrowserPF extends Application {
     return this._currentPage.url;
   }
 
-  /**
-   * Initializes this help browser's {@link MarkdownIt} instance, adjusting rules as necessary.
-   *
-   * @private
-   */
-  _initMarkdown() {
-    const md = new MarkdownIt().use(MarkDownItAnchor, {
-      tabIndex: false,
-      slugify: (url) => `pf1-help-browser.${url.slugify()}`,
-    });
-    const defaultImageRenderRule = md.renderer.rules.image;
-    md.renderer.rules.image = pf1HelpImageRenderer(defaultImageRenderRule);
-    this._md = md;
-  }
-
   /** @override */
   async getData() {
     const data = await super.getData();
 
-    // Nav element only needs to get rendered once
-    this.nav ??= this._md.render(game.i18n.localize("PF1.Help/Home"));
-
     data.hasHistoryBack = this._backwardHistory.length > 0;
     data.hasHistoryForward = this._forwardHistory.length > 0;
-    data.nav = this.nav;
 
     // Get markdown string from localisation, and parse it
-    data.pageContent = this._md.render(game.i18n.localize(`PF1.${this.currentUrl}`));
+    data.pageContent = this.#converter.makeHtml(game.i18n.localize(`PF1.${this.currentUrl}`));
+    data.isHome = this.currentUrl === "Help/Home";
 
     return data;
   }
@@ -122,7 +106,7 @@ export class HelpBrowserPF extends Application {
 
   /** @inheritdoc */
   async _render(force, options) {
-    await super._render(options);
+    await super._render(force, options);
     const contentElement = this.element.find(".content")[0];
 
     if (this._currentPage.scrollTop) {
@@ -131,11 +115,10 @@ export class HelpBrowserPF extends Application {
         contentElement.scrollTop = this._currentPage.scrollTop;
       }, 0);
     } else if (options.header) {
-      const headerElement = document.getElementById(`pf1-help-browser.${options.header}`);
+      const headerElement = document.getElementById(`pf1-help-browser-${options.header}`);
       if (headerElement) {
         setTimeout(() => {
-          const emHeight = Number.parseFloat(getComputedStyle(headerElement).fontSize);
-          contentElement.scrollTop = headerElement.offsetTop - (45 + 1.5 * emHeight);
+          headerElement.scrollIntoView({ block: "start" });
         }, 0);
       }
     }
@@ -190,19 +173,41 @@ export class HelpBrowserPF extends Application {
     // History buttons
     html.find(".history-back").on("click", this.backInHistory.bind(this));
     html.find(".history-forward").on("click", this.forwardInHistory.bind(this));
+    html.find(".history-home").on("click", () => this.openUrl("Help/Home"));
+  }
+
+  /**
+   * Extensions for the Markdown converter used by the help browser.
+   *
+   * @type {showdown.ShowdownExtension[]}
+   */
+  static get defaultExtensions() {
+    return [
+      // Replace image paths from the wiki with localised paths available in the current Foundry context
+      {
+        type: "output",
+        regex: /<img.*?src="(.+?)".*?>/g,
+        replace: function (match, src, _offset, _string) {
+          const foundrySrc = game.i18n.localize(`PF1.${src.startsWith("/") ? src.slice(1) : src}`);
+          return match.replace(src, foundry.utils.getRoute(`systems/pf1/${foundrySrc}`));
+        },
+      },
+      // Replace `::: <block>` with `<div class="<block>">` and `:::` with `</div>
+      {
+        type: "output",
+        regex: /<p>:::(\s\w+)?<\/p>/g,
+        replace: function (_match, blockName, _offset, _string) {
+          if (blockName) return `<div class="${blockName.slugify()}">`;
+          else return "</div>";
+        },
+      },
+    ];
   }
 }
 
-/** @type {(defaultRenderer: Renderer.RenderRule) => Renderer.RenderRule} */
-const pf1HelpImageRenderer = (defaultRenderer) => (tokens, idx, options, env, self) => {
-  const token = tokens[idx];
-  let src = token.attrGet("src");
-  if (src.startsWith("/")) src = src.slice(1);
-  const foundrySrc = game.i18n.localize(`PF1.${src}`);
-  token.attrSet("src", foundry.utils.getRoute(`systems/pf1/${foundrySrc}`));
-  return defaultRenderer(tokens, idx, options, env, self);
-};
-
+/**
+ * The singleton instance of the {@link HelpBrowserPF} available at runtime.
+ */
 export const helpBrowser = new HelpBrowserPF();
 
 /**

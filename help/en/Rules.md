@@ -1,8 +1,5 @@
 # Rules
 
-- [Optional Rules](Help/Rules/Optional)
-- [Homebrew & Third Party](Help/Rules/Homebrew)
-
 ## Core Rule Deficiencies
 
 The following rules are not directly supported. They require manual work to make them work as expected.

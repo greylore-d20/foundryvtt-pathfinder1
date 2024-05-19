@@ -1381,6 +1381,8 @@ export class ActionUse {
         ChatMessage.implementation.applyRollMode(this.shared.chatData, this.shared.chatData.rollMode);
 
         result = await ChatMessage.implementation.create(this.shared.chatData);
+
+        this.shared.message = result;
       } else result = this.shared;
     } else {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) result = this.item.roll();

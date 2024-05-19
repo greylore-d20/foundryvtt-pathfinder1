@@ -2265,6 +2265,7 @@ export class ItemPF extends ItemBasePF {
  * @property {object} rollData - The singular rollData object used for all rolls in the action
  * @property {boolean} skipDialog - Whether the user-facing dialog should get skipped. Defaults to `false`.
  * @property {boolean} chatMessage - Whether a chat message should be created at the end of the action's usage. Defaults to `true`.
+ * @property {ChatMessage} message - Chat message once it is created.
  * @property {string} dice - The base dice used for the action's attack rolls. Defaults to return value of `pf1.dice.D20RollPF.standardRoll`.
  * @property {boolean} fullAttack - Whether the action is a full attack. Defaults to `true`.
  * @property {string[]} attackBonus - Bonus values to be added to the attack roll formula

@@ -86,6 +86,7 @@ export class ChatAttack {
     const data = this.rollData;
     // Set critical hit multiplier
     data.critMult = 1;
+    data.critMultBonus = 0;
     data.critCount = 0;
     // Add critical confirmation bonus
     data.critConfirmBonus = RollPF.safeRoll(data.action.critConfirmBonus || "0").total ?? 0;
@@ -125,6 +126,7 @@ export class ChatAttack {
 
     this.hasAttack = true;
     this.notesOnly = false;
+
     /** @type {D20RollPF} */
     if (critical === true) {
       if (this.rollData.critConfirmBonus !== 0) {
@@ -173,9 +175,10 @@ export class ChatAttack {
       else this.attack = roll;
 
       // Add crit confirm
-      if (!critical && !this.action.isCombatManeuver && roll.isCrit && this.rollData.action.ability.critMult > 1) {
+      const baseCritMult = this.rollData.action.ability.critMult ?? 1;
+      if (!critical && !this.action.isCombatManeuver && roll.isCrit && baseCritMult > 1) {
         this.hasCritConfirm = true;
-        this.rollData.critMult = Math.max(1, this.rollData.action.ability.critMult);
+        this.rollData.critMult = Math.max(1, baseCritMult + (this.rollData.critMultBonus ?? 0));
         if (broken) this.rollData.critMult = 1;
 
         await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });

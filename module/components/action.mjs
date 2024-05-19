@@ -1162,7 +1162,10 @@ export class ItemAction {
    */
   getConditionalTargets() {
     const result = {};
-    if (this.hasAttack) result["attack"] = game.i18n.localize(pf1.config.conditionalTargets.attack._label);
+    if (this.hasAttack) {
+      result["attack"] = game.i18n.localize(pf1.config.conditionalTargets.attack._label);
+      result["critMult"] = game.i18n.localize(pf1.config.conditionalTargets.critMult._label);
+    }
     if (this.hasDamage) result["damage"] = game.i18n.localize(pf1.config.conditionalTargets.damage._label);
     result["size"] = game.i18n.localize(pf1.config.conditionalTargets.size._label);
     if (this.item.type === "spell" || this.hasSave)

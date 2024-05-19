@@ -474,6 +474,8 @@ export class ActionUse {
           // Add formula to the size property
           else if (modifier.target === "size") {
             this.shared.rollData.size += conditionalRoll.total;
+          } else if (modifier.target === "critMult") {
+            this.shared.rollData.critMultBonus += conditionalRoll.total;
           }
         }
       }

@@ -25,7 +25,7 @@
           {{/select}}
         </select>
 
-        {{#unless (eq modifier.target "size")}}
+        {{#unless (or (eq modifier.target "size") (eq modifier.target "critMult"))}}
           <select class="conditional-sub-target" name="conditionals.{{a}}.modifiers.{{m}}.subTarget">
             {{#select (lookup this "subTarget") }}
             {{#if (lookup this "target") }}

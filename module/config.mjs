@@ -2046,6 +2046,9 @@ export const conditionalTargets = {
   size: {
     _label: "PF1.Size",
   },
+  critMult: {
+    _label: "PF1.CriticalMultiplier",
+  },
   effect: {
     _label: "PF1.Effects",
   },

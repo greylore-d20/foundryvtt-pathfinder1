@@ -549,11 +549,8 @@ export class ActionUse {
     if (this.shared.action.hasAttack) await this.addAttacks();
     // Damage only
     else if (this.shared.action.hasDamage) await this.addDamage();
-    // Effect notes only
-    else await this.addEffectNotes();
-
-    // Add footnotes
-    await this.addFootnotes();
+    // for effect notes only
+    else await this.addEmptyAttack();
 
     // Add attack cards
     this.shared.attacks.forEach((attack) => {
@@ -566,6 +563,10 @@ export class ActionUse {
     // Add save info
     this.shared.save = this.shared.action.data.save.type;
     this.shared.saveDC = this.shared.action.getDC(this.shared.rollData);
+
+    // add notes after all attack info is generated
+    await this.addEffectNotes();
+    await this.addFootnotes();
   }
 
   /**
@@ -673,11 +674,6 @@ export class ActionUse {
         }
       }
 
-      // Add effect notes
-      if (atk.type !== "manyshot") {
-        await attack.addEffectNotes();
-      }
-
       // Add to list
       this.shared.chatAttacks.push(attack);
 
@@ -709,9 +705,6 @@ export class ActionUse {
       critical: false,
       conditionalParts: this.shared.conditionalParts,
     });
-
-    // Add effect notes
-    await attack.addEffectNotes();
 
     // Add to list
     this.shared.chatAttacks.push(attack);
@@ -752,29 +745,33 @@ export class ActionUse {
       notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
-    const hasCritConfirm = this.shared.attacks.some((/** @type {ChatAttack} */ atk) => atk.hasCritConfirm);
+    const hasCritConfirm = this.shared.attacks.some(
+      (/** @type {ChatAttack} */ atk) => !!atk.chatAttack?.hasCritConfirm
+    );
     if (hasCritConfirm) {
       notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
     }
 
     this.shared.templateData.footnotes = notes;
   }
-
-  /**
-   * Adds a ChatAttack entry for effect notes to an attack's shared context.
-   */
-  async addEffectNotes() {
+  async addEmptyAttack() {
     const attack = new ChatAttack(this.shared.action, {
       rollData: this.shared.rollData,
       primaryAttack: this.shared.primaryAttack,
       actionUse: this,
     });
 
-    // Add effect notes
-    await attack.addEffectNotes();
-
     // Add to list
     this.shared.chatAttacks.push(attack);
+  }
+
+  /**
+   * Add effect notes for each individual attack.
+   */
+  async addEffectNotes() {
+    /** @type {ChatAttack[]} */
+    const attacks = this.shared.chatAttacks;
+    await Promise.all(attacks.filter((attack) => attack.type !== "manyshot").map((attack) => attack.addEffectNotes()));
   }
 
   /**
@@ -883,7 +880,7 @@ export class ActionUse {
 
         // Create PoolTerm for crit confirmation and crit damage rolls
         const critPool = new PoolTerm();
-        if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm);
+        if (atk.chatAttack?.hasCritConfirm) critPool.rolls.push(atk.chatAttack.critConfirm);
         critPool.rolls.push(...(atk.critDamage?.rolls ?? []));
 
         // Add non-empty pools to the array of rolls to be displayed

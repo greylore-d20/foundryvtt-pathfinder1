@@ -1,11 +1,12 @@
 <div class="form-group stacked">
-  <label>
+  <h4 class="form-header">
     {{#if label}}
       {{localize label}}
     {{else}}
       {{localize "PF1.AttackAlignment"}}
-    {{/if}}</label></label>
-  <div class="form-group stacked">
+    {{/if}}
+  </h4>
+  <div class="form-group stacked material-alignments">
     {{#with alignmentTypes}}
       {{#each choices as |label choice|}}
       <label class="checkbox"

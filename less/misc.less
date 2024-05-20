@@ -1,17 +1,19 @@
-form {
-  .form-group.stacked {
-    label {
-      flex: 0 0 100%;
-    }
-    label.checkbox {
-      flex: auto;
-      text-align: left;
-      line-height: 20px;
-      font-size: @fontSizeSmall;
+.pf1 {
+  form {
+    .form-group.stacked {
+      label {
+        flex: 0 0 100%;
+      }
+      label.checkbox {
+        flex: auto;
+        text-align: left;
+        font-size: @fontSizeSmall;
+        height: unset; // Removes Foundry's insistent 22px sizing
 
-      input[type="checkbox"] {
-        height: unset;
-        margin: unset;
+        input[type="checkbox"] {
+          height: unset;
+          margin: unset;
+        }
       }
     }
   }

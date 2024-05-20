@@ -1475,6 +1475,9 @@ export class ActionUse {
       if (!form) return;
     }
 
+    // Save form data in case modules want to reference it later
+    this.formData = form ?? {};
+
     // Alter roll data
     await this.alterRollData(form);
 

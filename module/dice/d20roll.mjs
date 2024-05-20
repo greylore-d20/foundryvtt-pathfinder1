@@ -236,6 +236,17 @@ export class D20RollPF extends RollPF {
   }
 
   /**
+   * Converts form element to object
+   *
+   * @protected
+   * @param {HTMLFormElement} html
+   * @returns {object} - Expanded form data
+   */
+  _getFormData(html) {
+    return foundry.utils.expandObject(new FormDataExtended(html).object);
+  }
+
+  /**
    * A callback applying the user's input from the dialog to the roll and its options.
    *
    * @protected
@@ -245,31 +256,32 @@ export class D20RollPF extends RollPF {
    */
   _onDialogSubmit(html, staticRoll) {
     const form = html.querySelector("form");
-    if (form) {
-      if (form.bonus.value) {
-        this.options.bonus = form.bonus.value;
-      }
+    if (!form) return this;
+    const formData = this._getFormData(form);
 
-      if (form.d20.value) {
-        const baseDice = this.constructor.parse(form.d20.value, this.data);
-        // If a static roll is given as d20 input, Take X button clicks are ignored
-        if (baseDice[0] instanceof NumericTerm) this.options.staticRoll = baseDice[0].total;
-        else if (baseDice[0] instanceof Die) {
-          this.terms = [...baseDice, ...this.terms.slice(1)];
-          // d20 input is actual dice, so Take X buttons are respected
-          if (staticRoll !== undefined) this.options.staticRoll = staticRoll;
-        }
-      } else {
-        // No d20 input, base die is default, so Take X buttons are respected
+    if (formData.bonus) {
+      this.options.bonus = formData.bonus;
+    }
+
+    if (formData.d20) {
+      const baseDice = this.constructor.parse(formData.d20, this.data);
+      // If a static roll is given as d20 input, Take X button clicks are ignored
+      if (baseDice[0] instanceof NumericTerm) this.options.staticRoll = baseDice[0].total;
+      else if (baseDice[0] instanceof Die) {
+        this.terms = [...baseDice, ...this.terms.slice(1)];
+        // d20 input is actual dice, so Take X buttons are respected
         if (staticRoll !== undefined) this.options.staticRoll = staticRoll;
       }
-
-      if (form.rollMode) {
-        this.options.rollMode = form.rollMode.value;
-      }
-
-      this._formula = this.constructor.getFormula(this.terms);
+    } else {
+      // No d20 input, base die is default, so Take X buttons are respected
+      if (staticRoll !== undefined) this.options.staticRoll = staticRoll;
     }
+
+    if (formData.rollMode) {
+      this.options.rollMode = formData.rollMode;
+    }
+
+    this._formula = this.constructor.getFormula(this.terms);
 
     return this;
   }

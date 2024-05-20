@@ -51,6 +51,17 @@ interface D20RollDialogOptions extends Pick<D20RollConstructorOptions, "bonus"> 
    * @defaultValue `game.settings.get("core", "rollMode")`
    */
   rollMode?: string;
+  /**
+   * Speaker data
+   */
+  speaker?: foundry.data.ChatMessageData["_source"]["speaker"];
+}
+
+interface D20RollContext {
+  /**
+   * Speaker data
+   */
+  speaker?: foundry.data.ChatMessageData["_source"]["speaker"];
 }
 
 interface D20RollChatOptions {

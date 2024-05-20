@@ -17,10 +17,13 @@ export class D20RollPF extends RollPF {
    * @param {string} formula - The roll formula to parse
    * @param {object} [data] - The data object against which to parse attributes within the formula
    * @param {Partial<D20RollConstructorOptions>} [options]
+   * @param {D20RollContext} [context]
    */
-  constructor(formula, data, options = {}) {
+  constructor(formula, data, options = {}, context = {}) {
     super(formula, data, options);
     this.options = foundry.utils.mergeObject(this.constructor.defaultOptions, options);
+
+    this.context = context;
 
     // No dice in the formula
     if (!(this.terms[0] instanceof Die)) {
@@ -227,6 +230,8 @@ export class D20RollPF extends RollPF {
         ...dialogOptions,
         jQuery: false,
         subject: options.subject,
+        speaker: options.speaker,
+        roll: this,
       },
       {
         ...(options.renderOptions || {}),
@@ -445,10 +450,10 @@ export async function d20Roll(options = {}) {
 
   const formula = [dice, ...parts].join("+");
 
-  const roll = new pf1.dice.D20RollPF(formula, rollData, { flavor, staticRoll, bonus });
+  const roll = new pf1.dice.D20RollPF(formula, rollData, { flavor, staticRoll, bonus }, { speaker });
   if (!skipDialog) {
     const title = speaker?.alias ? `${speaker.alias}: ${flavor}` : flavor;
-    const dialogResult = await roll.promptDialog({ title, rollMode, subject });
+    const dialogResult = await roll.promptDialog({ title, rollMode, subject, speaker });
     if (dialogResult === null) return;
 
     // Move roll mode selection from roll data

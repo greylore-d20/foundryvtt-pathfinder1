@@ -1,18 +1,21 @@
 _id: rpur6zj1x4em1m4a
 _key: '!items!rpur6zj1x4em1m4a'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/skills/melee/swords-parry-block-blue.webp
 name: Deivon's Parry
 system:
   actions:
     - _id: 2pnfbxuzuukgptjm
+      ability:
+        attack: str
+      actionType: mwak
       activation:
         type: immediate
         unchained:
           type: reaction
       duration:
         units: inst
-      img: systems/pf1/icons/misc/magic-swirl.png
-      name: Use
+      img: icons/skills/melee/swords-parry-block-blue.webp
+      name: Parry
       range:
         units: personal
       target:
@@ -28,14 +31,19 @@ system:
       into action, allowing you to deflect a blow. This spell can be cast only
       when an opponent makes a melee attack against you, and only before the
       attack roll has been made. Make a parry attempt with a light or one-handed
-      weapon you're wielding, as if using the swashbuckler's opportune parry and
-      riposte deed (except that this does not require panache). You cannot
-      riposte as part of this spell's effect.</p>
+      weapon you're wielding, as if using the swashbuckler's
+      @UUID[Compendium.pf1.class-abilities.Item.Vvm6rtmeg1DwIEAC]{opportune
+      parry and riposte} deed (except that this does not require panache). You
+      cannot riposte as part of this spell's effect.</p>
   learnedAt:
     class:
       bard: 1
       magus: 1
+      skald: 1
   school: trs
+  sources:
+    - id: PZO1138
+      pages: '27'
   sr: false
 type: spell
 

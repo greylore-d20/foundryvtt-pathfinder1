@@ -8,10 +8,18 @@ system:
     classes:
       - Swashbuckler
   changes:
+    - _id: 2hpQj04B
+      formula: floor((@class.level - 1) / 4)
+      modifier: untyped
+      subTarget: mattack
     - _id: 6i701ysv
       formula: floor((@class.level - 1) / 4)
       modifier: untyped
       subTarget: wdamage
+    - _id: OaaG31h4
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>At 5th level, a swashbuckler gains a +1 bonus on attack and damage
@@ -20,6 +28,12 @@ system:
       @Compendium[pf1.feats.TbOPtIL8Fv8obXtP]{Improved Critical} feat. These
       attack and damage bonuses increase by 1 for every 4 levels beyond 5th
       level (to a maximum of +4 at 17th level).</p>
+  links:
+    supplements:
+      - uuid: Compendium.pf1.feats.Item.TbOPtIL8Fv8obXtP
+  sources:
+    - id: PZO1129
+      pages: '59'
   subType: classFeat
 type: feat
 

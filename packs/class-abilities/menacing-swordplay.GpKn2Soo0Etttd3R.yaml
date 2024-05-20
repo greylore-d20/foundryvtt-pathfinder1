@@ -1,0 +1,43 @@
+_id: GpKn2Soo0Etttd3R
+_key: '!items!GpKn2Soo0Etttd3R'
+folder: NcsnXMqsi3kBGntM
+img: icons/skills/melee/maneuver-sword-katana-yellow.webp
+name: Menacing Swordplay
+system:
+  abilityType: ex
+  actions:
+    - _id: l1GslUSWVi92ltUG
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: icons/skills/melee/maneuver-sword-katana-yellow.webp
+      name: Intimidate
+  associations:
+    classes:
+      - Swashbuckler
+  description:
+    value: >-
+      <p>At 3rd level, while she has at least 1 panache point, when a
+      swashbuckler hits an opponent with a light or one-handed piercing melee
+      weapon, she can choose to use Intimidate to demoralize that opponent
+      (Pathfinder RPG Core Rulebook 99) as a swift action instead of a standard
+      action.</p>
+  scriptCalls:
+    - _id: 7dmcW8wI81LeT89T
+      category: postUse
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Intimidate
+      type: script
+      value: actor.rollSkill("int", {skipDialog:true});
+  sources:
+    - id: PZO1129
+      pages: '57'
+  subType: classFeat
+  tags:
+    - Swashbuckler Deed
+type: feat
+

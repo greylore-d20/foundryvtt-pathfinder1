@@ -1,0 +1,46 @@
+_id: woRgiQJbhgpQolqB
+_key: '!items!woRgiQJbhgpQolqB'
+folder: NcsnXMqsi3kBGntM
+img: icons/skills/wounds/injury-pain-body-orange.webp
+name: Stunning Stab
+system:
+  abilityType: ex
+  actions:
+    - _id: YnthGjgLnBzMFrzF
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: round
+        value: '1'
+      img: icons/skills/wounds/injury-pain-body-orange.webp
+      name: Use
+      save:
+        dc: '@10 + floor(@class.level / 2) + @abilities.dex.mod'
+        description: Fortitude negates
+        type: fort
+      uses:
+        autoDeductChargesCost: '2'
+  associations:
+    classes:
+      - Swashbuckler
+  description:
+    value: >-
+      <p>At 19th level, when a swashbuckler hits a creature with a light or
+      one-handed piercing melee weapon, she can spend 2 panache points to stun
+      the creature for 1 round. The creature must succeed at a Fortitude saving
+      throw (DC = 10 + 1/2 the swashbuckler's level + the swashbuckler's
+      Dexterity modifier) or be stunned for 1 round. Creatures that are immune
+      to critical hits are also immune to this effect.</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>Panache</em> class
+      feature</p>
+  sources:
+    - id: PZO1129
+      pages: '59'
+  subType: classFeat
+  tags:
+    - Swashbuckler Deed
+type: feat
+

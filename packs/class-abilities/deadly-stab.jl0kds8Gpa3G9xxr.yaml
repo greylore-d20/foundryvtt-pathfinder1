@@ -1,0 +1,42 @@
+_id: jl0kds8Gpa3G9xxr
+_key: '!items!jl0kds8Gpa3G9xxr'
+folder: NcsnXMqsi3kBGntM
+img: icons/skills/melee/strike-dagger-blood-red.webp
+name: Deadly Stab
+system:
+  abilityType: ex
+  actions:
+    - _id: 291GX3jo0GFpoSEO
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: inst
+      img: icons/skills/melee/strike-dagger-blood-red.webp
+      name: Use
+      save:
+        dc: '@10 + floor(@class.level / 2) + @abilities.dex.mod'
+        description: Fortitude negates
+        type: fort
+  associations:
+    classes:
+      - Swashbuckler
+  description:
+    value: >-
+      <p>At 19th level, when the swashbuckler confirms a critical hit with a
+      light or one-handed piercing melee weapon, in addition to the normal
+      damage, she can spend 1 panache point to inflict a deadly stab. The target
+      must succeed at a Fortitude saving throw or die. The DC of this save is 10
+      + 1/2 the swashbuckler's level + the swashbuckler's Dexterity modifier.
+      This is a death attack. Performing this deed does not grant the
+      swashbuckler a panache point.</p><hr /><p><strong>Usage</strong>: link
+      charges to <em>Panache</em> class feature</p>
+  sources:
+    - id: PZO1129
+      pages: '59'
+  subType: classFeat
+  tags:
+    - Swashbuckler Deed
+type: feat
+

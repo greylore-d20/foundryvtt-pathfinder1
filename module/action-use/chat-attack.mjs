@@ -278,9 +278,17 @@ export class ChatAttack {
       this.effectNotes.push(...this.action.data.effectNotes);
     }
 
-    // Misfire; BUG: Doesn't work
+    // Misfire
     if (this.ammo?.misfire) {
-      this.effectNotes.push(game.i18n.localize("PF1.Misfire"));
+      let label = game.i18n.localize("PF1.Misfire");
+      const explosionRadius = this.action.item?.system.ammo?.explode ?? 0;
+      if (explosionRadius) {
+        const radius = pf1.utils.convertDistance(explosionRadius, "ft")[0];
+        const unit =
+          pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
+        label += ` (${radius} ${unit})`;
+      }
+      this.effectNotes.push(label);
     }
 
     await this.setEffectNotesHTML();

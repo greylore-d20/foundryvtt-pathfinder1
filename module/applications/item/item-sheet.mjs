@@ -721,7 +721,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare stuff for items with context notes
     if (itemData.contextNotes) {
-      context.contextNotes = foundry.utils.deepClone(itemData.contextNotes);
+      // TODO: Remove .toObject() and move the supporting data to the datamodel
+      context.contextNotes = itemData.contextNotes.map((cn) => cn.toObject());
       const noteTargets = getBuffTargets(actor, "contextNotes");
       context.contextNotes.forEach((n) => {
         const target = noteTargets[n.target];

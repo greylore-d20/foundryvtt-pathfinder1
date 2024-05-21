@@ -671,6 +671,10 @@ export class ItemPF extends ItemBasePF {
     this._prepareIdentifier();
 
     if (this.inContainer) this.adjustContained();
+
+    if (this.system.contextNotes) {
+      this.system.contextNotes = this.system.contextNotes.map((cn) => new pf1.components.ContextNote(cn));
+    }
   }
 
   /**

@@ -92,7 +92,7 @@
   </div>
 </div>
 {{/if}}
-{{#if isPhysical}}
+{{#if (and isPhysical document.hasFiniteCharges)}}
   <div class="form-group">
     <label>{{localize "PF1.PricePerCharge"}}</label>
     <input type="text" name="system.uses.pricePerUse" value="{{system.uses.pricePerUse}}" placeholder="0" type="Number">

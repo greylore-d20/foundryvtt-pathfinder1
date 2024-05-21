@@ -807,7 +807,7 @@ export function refreshActors({ renderOnly = false, renderForEveryone = false } 
   const resetOrRender = async (actor) => {
     if (!actor) return;
     if (!renderOnly) actor.reset();
-    actor.render();
+    actor.render(true);
   };
 
   // Reset base actors

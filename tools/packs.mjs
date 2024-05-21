@@ -324,6 +324,9 @@ function sanitizePackEntry(entry, documentType = "") {
   // Always delete system migration marker
   delete entry.flags?.pf1?.migration;
 
+  // Delete lingering abundant flag
+  delete entry.flags?.pf1?.abundant;
+
   // Remove non-system/non-core flags
   if (entry.flags) {
     utils.pruneObject(entry.flags);
@@ -435,11 +438,6 @@ function enforceTemplate(object, template, options = {}) {
 
     // Item cleanup
     if (options.documentName === "Item") {
-      // Delete abundant when set to false
-      if (flattened["flags.pf1.abundant"] === false) {
-        delete flattened["flags.pf1.abundant"];
-      }
-
       // Delete ammo type when empty
       if (!flattened["system.ammo.type"]) {
         delete flattened["system.ammo.type"];

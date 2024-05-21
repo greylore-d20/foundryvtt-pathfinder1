@@ -76,13 +76,13 @@
 
         <div class="form-group" data-tooltip="PF1.AbundantDesc">
           <label class="checkbox">
-            <input type="checkbox" name="flags.pf1.abundant" {{checked item.flags.pf1.abundant}}> {{localize "PF1.Abundant"}}
+            <input type="checkbox" name="system.abundant" {{checked system.abundant}}> {{localize "PF1.Abundant"}}
           </label>
         </div>
 
 
         {{! Recovery Chance}}
-        {{#unless item.flags.pf1.abundant}}
+        {{#unless system.abundant}}
         <div class="form-group">
           <label>{{localize "PF1.RecoverChancePercentage"}}</label>
           <div class="form-fields">

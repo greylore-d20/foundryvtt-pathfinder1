@@ -17,6 +17,16 @@ export class ItemLootPF extends ItemPhysicalPF {
 
     if (!changed.system) return;
 
+    //
+    if (changed.flags?.pf1?.abundant !== undefined) {
+      foundry.utils.logCompatibilityWarning("flags.pf1.abundant is deprecated in favor of system.abundant", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+      changed.system.abundant = changed.flags.pf1.abundant;
+      delete changed.flags.pf1.abundant;
+    }
+
     // Reset loot extra type when loot subtype is changed
     if (
       changed.system?.subType !== undefined &&

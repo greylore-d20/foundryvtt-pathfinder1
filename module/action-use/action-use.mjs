@@ -311,7 +311,7 @@ export class ActionUse {
         const ammo = ammos.find((a) => a.id === ammoId);
         const quantity = ammo?.quantity || 0;
         const ammoCost = action.ammoCost;
-        const abundant = ammo?.abundant ?? false;
+        const abundant = ammo?.abundant || false;
         for (let a = 0; a < allAttacks.length; a++) {
           const atk = allAttacks[a];
           if (abundant || quantity >= (a + 1) * ammoCost) atk.ammo = ammo;
@@ -361,7 +361,7 @@ export class ActionUse {
       return {
         id: o.id,
         quantity: o.system.quantity || 0,
-        abundant: o.flags?.pf1?.abundant || false,
+        abundant: o.system.abundant || false,
         data: o.toObject(),
         document: o,
         isDefault: defaultAmmo === o.id,
@@ -396,7 +396,7 @@ export class ActionUse {
         const item = actor.items.get(atk.ammo.id);
         if (!item) continue;
         // Don't remove abundant ammunition
-        if (item.flags?.pf1?.abundant) continue;
+        if (item.system.abundant) continue;
 
         ammoUsage[atk.ammo.id] ??= 0;
         ammoUsage[atk.ammo.id] += value;

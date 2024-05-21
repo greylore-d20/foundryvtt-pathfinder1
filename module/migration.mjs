@@ -783,6 +783,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateEquipmentCategories(itemData, updateData);
   _migrateSpellDescriptors(itemData, updateData);
   _migrateItemTraitsCustomToArray(itemData, updateData);
+  _migrateItemChangeFlags(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
 
   // Migrate action data
@@ -2955,6 +2956,20 @@ const _migrateItemTraitsCustomToArray = (item, updateData) => {
       updateData[`system.${key}.-=custom`] = null;
     }
   });
+};
+
+/**
+ * @param {object} itemData
+ * @param {object} updateData
+ * @since PF1 vNEXT
+ */
+const _migrateItemFlags = (itemData, updateData) => {
+  if (!itemData.flags?.pf1) return;
+
+  if (itemData.flags.pf1.abundant !== undefined) {
+    updateData["system.abundant"] = Boolean(itemData.flags.pf1.abundant);
+    updateData["flags.pf1.-=abundant"] = null;
+  }
 };
 
 /**

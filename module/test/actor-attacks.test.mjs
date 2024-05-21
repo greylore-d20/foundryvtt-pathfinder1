@@ -296,7 +296,7 @@ export const registerActorItemAttackTests = () => {
 
             items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
-            await items.arrows.update({ "flags.pf1.abundant": false });
+            await items.arrows.update({ "system.abundant": false });
             roll = await items.longbow.use({ skipDialog: true, chatMessage: false });
           });
 

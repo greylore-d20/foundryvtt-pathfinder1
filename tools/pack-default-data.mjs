@@ -36,6 +36,7 @@ export function getActionDefaultData() {
     },
     uses: {
       autoDeductChargesCost: "",
+      perAttack: false,
       self: {
         value: 0,
         maxFormula: "",

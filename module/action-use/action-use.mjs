@@ -121,6 +121,11 @@ export class ActionUse {
     // TODO: Move this standard roll obfuscation to dialog handling
     rollData.d20 = d20 === pf1.dice.D20RollPF.standardRoll ? "" : d20;
 
+    // Init values
+    rollData.dcBonus ||= 0;
+    rollData.chargeCost ||= 0;
+    rollData.chargeCostBonus ||= 0;
+
     return rollData;
   }
 
@@ -479,6 +484,7 @@ export class ActionUse {
           }
         }
       }
+
       // Expand data into rollData to enable referencing in formulae
       this.shared.rollData.conditionals = foundry.utils.expandObject(conditionalData, 5);
 
@@ -492,11 +498,9 @@ export class ActionUse {
               this.shared.rollData.cl += roll;
               break;
             case "effect.dc":
-              this.shared.rollData.dcBonus ||= 0;
               this.shared.rollData.dcBonus += roll;
               break;
             case "misc.charges":
-              this.shared.rollData.chargeCostBonus ||= 0;
               this.shared.rollData.chargeCostBonus += roll;
               break;
           }
@@ -511,19 +515,7 @@ export class ActionUse {
    * @returns {Promise<number> | number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
    */
   checkAttackRequirements() {
-    // Determine charge cost
-    const baseCost = this.shared.action.getChargeCost({ rollData: this.shared.rollData });
-
-    // Bonus cost, e.g. from a conditional modifier
-    const bonusCost = this.shared.rollData["chargeCostBonus"] ?? 0;
-
-    let cost = baseCost + bonusCost;
-
-    // Override cost
-    if (this.shared.cost !== null) cost = this.shared.cost;
-
-    // Save chargeCost as rollData entry for anything else
-    this.shared.rollData.chargeCost = cost;
+    let cost = this.shared.rollData.chargeCost;
 
     if (cost > 0) {
       const uses = this.item.charges;
@@ -623,18 +615,20 @@ export class ActionUse {
    * Adds ChatAttack entries to an attack's shared context.
    */
   async addAttacks() {
+    const rollData = this.shared.rollData;
+
     for (let a = 0; a < this.shared.attacks.length; a++) {
       const atk = this.shared.attacks[a];
 
       // Combine conditional modifiers for attack and damage
       const conditionalParts = this._getConditionalParts(atk, { index: a });
 
-      this.shared.rollData.attackCount = a;
+      rollData.attackCount = a;
 
       // Create attack object
       const attack = new ChatAttack(this.shared.action, {
         label: atk.label,
-        rollData: this.shared.rollData,
+        rollData,
         targets: game.user.targets,
         actionUse: this,
       });
@@ -654,15 +648,14 @@ export class ActionUse {
         const critParts = [];
 
         // Add power attack bonus
-        if (this.shared.rollData.powerAttackBonus > 0) {
+        if (rollData.powerAttackBonus > 0) {
           // Get label
           const label = ["rwak", "twak", "rsak"].includes(this.shared.action.data.actionType)
             ? game.i18n.localize("PF1.DeadlyAim")
             : game.i18n.localize("PF1.PowerAttack");
 
-          const powerAttackBonus = this.shared.rollData.powerAttackBonus;
-          const powerAttackCritBonus =
-            powerAttackBonus * (this.shared.rollData.action?.powerAttack?.critMultiplier ?? 1);
+          const powerAttackBonus = rollData.powerAttackBonus;
+          const powerAttackCritBonus = powerAttackBonus * (rollData.action?.powerAttack?.critMultiplier ?? 1);
           nonCritParts.push(`${powerAttackBonus}[${label}]`);
           critParts.push(`${powerAttackCritBonus}[${label}]`);
         }
@@ -691,7 +684,7 @@ export class ActionUse {
     }
 
     // Cleanup rollData
-    delete this.shared.rollData.attackCount;
+    delete rollData.attackCount;
   }
 
   /**
@@ -1107,7 +1100,7 @@ export class ActionUse {
     const properties = [];
 
     // Add actual cost
-    const cost = this.shared.rollData.chargeCost;
+    const cost = this.shared.totalChargeCost;
     if (cost && !this.item.system.atWill) {
       if (this.item.type === "spell" && this.item.useSpellPoints()) {
         properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
@@ -1441,6 +1434,24 @@ export class ActionUse {
     return parts;
   }
 
+  prepareChargeCost() {
+    const rollData = this.shared.rollData;
+
+    // Determine charge cost
+    const baseCost = this.shared.action.getChargeCost({ rollData });
+
+    // Bonus cost, e.g. from a conditional modifier
+    const bonusCost = this.shared.rollData.chargeCostBonus ?? 0;
+
+    let cost = baseCost + bonusCost;
+
+    // Override cost
+    if (this.shared.cost !== null) cost = this.shared.cost;
+
+    // Save chargeCost as rollData entry for anything else
+    this.shared.rollData.chargeCost = cost;
+  }
+
   /**
    * Process everything
    *
@@ -1481,7 +1492,7 @@ export class ActionUse {
     // Alter roll data
     await this.alterRollData(form);
 
-    // Filter out attacks without ammo usage
+    // Filter out attacks without ammo usage (out of ammo)
     if (shared.action.ammoType) {
       shared.attacks = shared.attacks.filter((o) => o.hasAmmo);
       if (shared.attacks.length === 0) {
@@ -1494,6 +1505,26 @@ export class ActionUse {
     if (!shared.fullAttack) shared.attacks = shared.attacks.slice(0, 1);
     // Handle conditionals
     await this.handleConditionals();
+
+    // Prepare charge cost
+    this.prepareChargeCost();
+
+    // Filter out attacks without charge usage (out of charges)
+    if (shared.rollData.chargeCost != 0 && this.shared.action.data.uses?.perAttack) {
+      const cost = shared.rollData.chargeCost;
+      const charges = shared.item.charges;
+
+      shared.attacks.forEach((atk, index) => {
+        if (charges >= (index + 1) * cost) atk.chargeCost = cost;
+        else atk.chargeCost = null;
+      });
+
+      shared.attacks = shared.attacks.filter((o) => o.chargeCost !== null);
+      if (shared.attacks.length === 0) {
+        ui.notifications.error(game.i18n.localize("PF1.ChargesDepleted"));
+        return;
+      }
+    }
 
     // Check attack requirements, post-dialog
     reqErr = await this.checkAttackRequirements();
@@ -1532,10 +1563,17 @@ export class ActionUse {
     const ammoCost = this.action.ammoCost;
     if (ammoCost != 0) premessage_promises.push(this.subtractAmmo(ammoCost));
 
-    if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
-      premessage_promises.push(this.item.addCharges(-shared.rollData.chargeCost));
-    if (shared.action.isSelfCharged)
-      premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
+    if (shared.rollData.chargeCost != null) {
+      let totalCost = shared.rollData.chargeCost;
+      if (this.action.data.uses.perAttack) {
+        totalCost = this.shared.attacks.reduce((total, atk) => total + atk.chargeCost, 0);
+      }
+      shared.totalChargeCost = totalCost;
+      premessage_promises.push(this.item.addCharges(-totalCost));
+
+      if (shared.action.isSelfCharged)
+        premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
+    }
 
     await Promise.all(premessage_promises);
 
@@ -1582,6 +1620,9 @@ export class ActionUseAttack {
 
   /** @type {string} */
   ammo = null;
+
+  /** @type {number} */
+  chargeCost = null;
 
   /** @type {ChatAttack} */
   chatAttack = null;

@@ -155,6 +155,12 @@
     {{else}}
     <input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.autoDeductChargesCost}}">
     {{/if}}
+    {{#unless isSpell}}
+    <label class="checkbox">
+      <input type="checkbox" name="uses.perAttack" {{checked data.uses.perAttack}}>
+      {{localize "PF1.PerAttack"}}
+    </label>
+    {{/unless}}
   </div>
 </div>
 

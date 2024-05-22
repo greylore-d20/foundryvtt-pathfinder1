@@ -1,6 +1,6 @@
 _id: LKmhG8ZsEICwXtCy
 _key: '!items!LKmhG8ZsEICwXtCy'
-img: systems/pf1/icons/skills/violet_02.jpg
+img: icons/magic/control/modfiy-luck-fortune-red.webp
 name: Misfortune
 system:
   abilityType: su
@@ -15,12 +15,13 @@ system:
       duration:
         units: round
         value: '1'
-      img: systems/pf1/icons/skills/violet_02.jpg
+      img: icons/magic/control/modfiy-luck-fortune-red.webp
       name: Use
       range:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level /2) + @abilities.int.mod
         description: Will negates
         type: will
       target:

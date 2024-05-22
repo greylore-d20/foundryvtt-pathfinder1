@@ -1,6 +1,6 @@
 _id: CCSBySTjdUsohhTs
 _key: '!items!CCSBySTjdUsohhTs'
-img: systems/pf1/icons/skills/green_03.jpg
+img: icons/magic/control/modfiy-luck-fortune-red.webp
 name: Misfortune (SHA)
 system:
   abilityType: su
@@ -17,12 +17,13 @@ system:
         value: >-
           @class.level >= 16 ? 3 : ((@class.level >= 8 && @class.level < 16) ? 2
           : 1)
-      img: systems/pf1/icons/skills/green_03.jpg
+      img: icons/magic/control/modfiy-luck-fortune-red.webp
       name: Use
       range:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level /2) + @abilities.wis.mod
         description: Will negates
         type: will
       target:
@@ -42,6 +43,11 @@ system:
 
       <p>Whether or not the save is successful, the creature cannot be the
       target of this hex again for 24 hours.</p>
+  sources:
+    - id: PZO1129
+      pages: '37'
   subType: classFeat
+  tags:
+    - Hex
 type: feat
 

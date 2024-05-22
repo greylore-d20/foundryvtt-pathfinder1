@@ -1,6 +1,6 @@
 _id: dxRGdxINH1msURhZ
 _key: '!items!dxRGdxINH1msURhZ'
-img: systems/pf1/icons/skills/green_03.jpg
+img: systems/pf1/icons/feats/intimidating-prowess.jpg
 name: Intimidating Display
 system:
   abilityType: ex
@@ -13,7 +13,10 @@ system:
           type: action
       duration:
         units: inst
-      img: systems/pf1/icons/skills/green_03.jpg
+      img: systems/pf1/icons/skills/violet_02.jpg
+      measureTemplate:
+        size: '30'
+        type: circle
       name: Use
       range:
         units: ft
@@ -23,6 +26,11 @@ system:
   associations:
     classes:
       - Shaman
+  changes:
+    - _id: IEKjNiJn
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
   description:
     value: >-
       <p>The shaman can call upon some of the majesty and power of dragons to
@@ -30,6 +38,22 @@ system:
       @Compendium[pf1.feats.3cq9YbgcMrAXC76j]{Dazzling Display} as a bonus feat,
       even if she does not meet the prerequisites, and she can use it even when
       not wielding a weapon.</p>
+  links:
+    supplements:
+      - uuid: Compendium.pf1.feats.Item.3cq9YbgcMrAXC76j
+  scriptCalls:
+    - _id: fBbs8EJq6UZ5oIwK
+      category: postUse
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Intimidate
+      type: script
+      value: actor.rollSkill("int", {skipDialog:true});
+  sources:
+    - id: PZO9491
+      pages: '8'
   subType: classFeat
+  tags:
+    - Hex
 type: feat
 

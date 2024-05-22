@@ -1,6 +1,6 @@
 _id: 6aAyScqLHuZ8gCgs
 _key: '!items!6aAyScqLHuZ8gCgs'
-img: systems/pf1/icons/skills/green_03.jpg
+img: systems/pf1/icons/skills/shadow_20.jpg
 name: Charm (SHA)
 system:
   abilityType: su
@@ -15,12 +15,13 @@ system:
       duration:
         units: round
         value: '@abilities.wis.mod'
-      img: systems/pf1/icons/skills/green_03.jpg
+      img: systems/pf1/icons/skills/shadow_20.jpg
       name: Use
       range:
         units: ft
         value: '30'
       save:
+        dc: 10 + @floor(@class.level / 2) + @abilities.wis.mod
         description: Will negates
         type: will
       target:
@@ -42,6 +43,11 @@ system:
 
       <p>At 8th level, this effect improves the attitude of the creature by 2
       steps. This is a mind-affecting charm effect.</p>
+  sources:
+    - id: PZO1129
+      pages: '36'
   subType: classFeat
+  tags:
+    - Hex
 type: feat
 

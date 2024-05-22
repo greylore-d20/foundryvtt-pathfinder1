@@ -1,17 +1,33 @@
 _id: 1hynAO1HTXaMgt46
 _key: '!items!1hynAO1HTXaMgt46'
-img: systems/pf1/icons/skills/green_03.jpg
+img: icons/commodities/treasure/dreamcatcher-blue.webp
 name: Fetish
 system:
   abilityType: ex
   associations:
     classes:
       - Shaman
+  changes:
+    - _id: mvbCtNFH
+      formula: '1'
+      modifier: untyped
+      subTarget: bonusFeats
+  contextNotes:
+    - target: skill.spl
+      text: +4 insight bonus to identify magic items permanently
   description:
     value: >-
       <p>The shaman receives @Compendium[pf1.feats.tD76K8QGco9scT0r]{Craft
       Wondrous Item} as a bonus feat and gains a +4 insight bonus on Spellcraft
       checks to identify magic items permanently.</p>
+  links:
+    supplements:
+      - uuid: Compendium.pf1.feats.Item.tD76K8QGco9scT0r
+  sources:
+    - id: PZO1129
+      pages: '36'
   subType: classFeat
+  tags:
+    - Hex
 type: feat
 

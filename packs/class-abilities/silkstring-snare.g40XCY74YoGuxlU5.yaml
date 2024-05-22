@@ -1,6 +1,6 @@
 _id: g40XCY74YoGuxlU5
 _key: '!items!g40XCY74YoGuxlU5'
-img: systems/pf1/icons/skills/green_03.jpg
+img: systems/pf1/icons/skills/violet_02.jpg
 name: Silkstring Snare
 system:
   abilityType: su
@@ -15,9 +15,10 @@ system:
       duration:
         units: round
         value: 3 + @abilities.wis.mod
-      img: systems/pf1/icons/skills/green_03.jpg
+      img: systems/pf1/icons/skills/violet_02.jpg
       name: Use
       save:
+        dc: 10 + floor(@class.level /2) + @abilities.wis.mod
         description: Reflex negates
         type: ref
       target:
@@ -39,6 +40,11 @@ system:
 
       <p>A creature affected by this hex cannot be affected by it again for 24
       hours.</p>
+  sources:
+    - id: PZO9480
+      pages: '17'
   subType: classFeat
+  tags:
+    - Hex
 type: feat
 

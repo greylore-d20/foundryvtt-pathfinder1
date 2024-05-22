@@ -148,86 +148,29 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     return data;
   }
 
+  /**
+   * Filters item by {@link pf1.config.sheetSections sheet section} config.
+   *
+   * @internal
+   * @param {Item} item - Item to filter
+   * @param {object} section - Section to filter by
+   * @returns {boolean}
+   */
+  _applySectionFilter(item, section) {
+    if (!section.filters) throw new Error(`Section "${section.path}" lacks filters`);
+    return section.filters.some((filter) => {
+      if (filter.type === item.type) {
+        return filter.subTypes?.includes(item.subType) ?? true;
+      }
+      return false;
+    });
+  }
+
   _prepareContents(data) {
     // Categorize items as inventory, spellbook, features, and classes
-    const inventory = {
-      weapon: {
-        label: game.i18n.localize("PF1.InventoryWeapons"),
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: false,
-        dataset: { type: "weapon" },
-      },
-      equipment: {
-        label: game.i18n.localize("PF1.InventoryArmorEquipment"),
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: false,
-        dataset: { type: "equipment" },
-        hasSlots: true,
-      },
-      consumable: {
-        label: game.i18n.localize("PF1.InventoryConsumables"),
-        canCreate: true,
-        hasActions: true,
-        items: [],
-        canEquip: false,
-        dataset: { type: "consumable" },
-      },
-      gear: {
-        label: pf1.config.lootTypes["gear"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: false,
-        dataset: {
-          type: "loot",
-          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.gear.Single"),
-          "sub-type": "gear",
-        },
-      },
-      ammo: {
-        label: pf1.config.lootTypes["ammo"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: false,
-        dataset: {
-          type: "loot",
-          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.ammo.Single"),
-          "sub-type": "ammo",
-        },
-      },
-      misc: {
-        label: pf1.config.lootTypes["misc"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: false,
-        dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" },
-      },
-      tradeGoods: {
-        label: pf1.config.lootTypes["tradeGoods"],
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        canEquip: false,
-        dataset: {
-          type: "loot",
-          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.tradeGoods.Single"),
-          "sub-type": "tradeGoods",
-        },
-      },
-      container: {
-        label: game.i18n.localize("PF1.InventoryContainers"),
-        canCreate: true,
-        hasActions: false,
-        items: [],
-        dataset: { type: "container" },
-      },
-    };
+    const inventory = Object.values(pf1.config.sheetSections.inventory)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
 
     // Partition items by category
     const items = data.items.reduce((arr, item) => {
@@ -248,45 +191,15 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }, []);
 
     // Organize Inventory
-    const usystem = pf1.utils.getWeightSystem();
-    const units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
     for (const i of items) {
-      const subType = i.type === "loot" ? i.system.subType || "gear" : i.system.subType;
-      if (inventory[i.type] != null) inventory[i.type].items.push(i);
-      // Only loot has subType specific sections
-      if (i.type === "loot") {
-        const subType = i.subType || "gear";
-        let subsectionId = subType;
-        switch (subType) {
-          case "adventuring":
-          case "tool":
-          case "reagent":
-          case "remedy":
-          case "herb":
-          case "animalGear":
-            subsectionId = "gear";
-            break;
-          case "treasure":
-            subsectionId = "tradeGoods";
-            break;
-          case "food":
-          case "entertainment":
-          case "vehicle":
-            subsectionId = "misc";
-            break;
-          case "ammo":
-          case "tradeGoods":
-          case "misc":
-          default:
-            subsectionId = subType;
-            break;
-        }
-        const subsection = inventory[subsectionId];
-        subsection?.items.push(i);
+      const section = inventory.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
       }
     }
 
-    data.inventory = Object.values(inventory);
+    data.inventory = inventory;
   }
 
   async _renderInner(...args) {

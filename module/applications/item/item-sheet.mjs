@@ -393,6 +393,8 @@ export class ItemSheetPF extends ItemSheet {
           else if (["wondrous", "other"].includes(item.subType) && itemData.slot !== "slotless") {
             disableEquipping = true;
           }
+        } else if (context.isImplant) {
+          disableEquipping = true;
         }
       }
 

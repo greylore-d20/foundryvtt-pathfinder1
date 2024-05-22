@@ -4,7 +4,7 @@ import { NumberRangeFilter } from "./number-range.mjs";
 export class ItemTypeFilter extends CheckboxFilter {
   static label = "PF1.Type";
   static indexField = "type";
-  static types = ["weapon", "equipment", "consumable", "container", "loot"];
+  static types = ["weapon", "equipment", "consumable", "container", "loot", "implant"];
 
   /** @inheritDoc */
   prepareChoices() {
@@ -15,6 +15,7 @@ export class ItemTypeFilter extends CheckboxFilter {
         { key: "consumable", label: game.i18n.localize("TYPES.Item.consumable") },
         { key: "container", label: game.i18n.localize("TYPES.Item.container") },
         { key: "loot", label: game.i18n.localize("PF1.Misc") },
+        { key: "implant", label: game.i18n.localize("TYPES.Item.implant") },
       ].map((choice) => [choice.key, choice])
     );
   }

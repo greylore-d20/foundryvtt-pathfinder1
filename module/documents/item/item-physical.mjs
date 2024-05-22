@@ -185,8 +185,6 @@ export class ItemPhysicalPF extends ItemPF {
    * Prepare this item's {@link ItemWeightData}
    */
   prepareWeight() {
-    if (!this.isPhysical) return;
-
     const itemData = this.system;
     const weight = itemData.weight;
 
@@ -337,11 +335,6 @@ export class ItemPhysicalPF extends ItemPF {
     labels.identified = "";
     if (itemData.identified === true) labels.identified = checkYes;
     else labels.identified = checkNo;
-
-    // Slot label
-    if (this.hasSlots) {
-      labels.slot = pf1.config.equipmentSlots.wondrous[itemData.slot] ?? null;
-    }
 
     return labels;
   }

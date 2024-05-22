@@ -1499,6 +1499,21 @@ export class ActorSheetPF extends ActorSheet {
         }
         break;
       }
+      case "implants": {
+        const cybertech = this.actor.itemTypes.implant.filter((i) => i.subType === "cybertech" && i.system.implanted);
+        paths.push(
+          { path: "@abilities.int.total", value: lazy.rollData.abilities.int.total },
+          { path: "@abilities.con.total", value: lazy.rollData.abilities.con.total }
+        );
+        sources.push({
+          untyped: true,
+          sources: cybertech.map((item) => ({
+            name: item.name,
+            value: item.system.implant,
+          })),
+        });
+        break;
+      }
       case "size":
         paths.push({ path: "@traits.size", value: system.traits.size }, { path: "@size", value: lazy.rollData.size });
         break;
@@ -2868,9 +2883,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    if (item.isPhysical) {
-      item.update({ "system.equipped": !item.system.equipped });
-    }
+    item.setActive(!item.isActive);
   }
 
   async _quickCarryItem(event) {
@@ -3267,6 +3280,19 @@ export class ActorSheetPF extends ActorSheet {
 
       data.asf = {
         total: asf,
+      };
+    }
+
+    // Implant capacity
+    const ct = game.settings.get("pf1", "cybertech");
+    // All implanted cybertech applies, even disabled as long as they're implanted
+    const cybertech = this.actor.itemTypes.implant.filter((i) => i.subType === "cybertech" && i.system.implanted);
+    if (ct || cybertech.length) {
+      const load = cybertech.reduce((total, item) => total + (item.system.implant || 0), 0);
+      const abilities = this.actor.system.abilities ?? {};
+      data.implants = {
+        load,
+        max: Math.min(abilities.int?.total, abilities.con?.total),
       };
     }
 

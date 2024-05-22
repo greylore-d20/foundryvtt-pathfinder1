@@ -75,6 +75,8 @@ export class ItemCreateDialog extends FormApplication {
         return null;
       case "buff":
         return pf1.config.buffTypes;
+      case "implant":
+        return pf1.config.implantTypes;
       case "container":
         return null;
       default:

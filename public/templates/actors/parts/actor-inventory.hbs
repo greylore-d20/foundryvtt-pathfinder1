@@ -59,7 +59,7 @@
         {{/if}}
         <div class="item-detail item-carried"><i class="icon-pf icon-wheelbarrow" data-tooltip="PF1.Carried"></i></div>
         {{#unless section.interface.noEquip}}
-        <div class="item-detail item-equipped"><i class="icon-pf icon-battle-gear" data-tooltip="PF1.Equipped"></i></div>
+        <div class="item-detail item-equipped"><i class="icon-pf icon-battle-gear" data-tooltip="{{#if section.labels.equip}}{{section.labels.equip}}{{else}}PF1.Equipped{{/if}}"></i></div>
         {{/unless}}
         <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" data-tooltip="PF1.ChargePlural"></i></div>
 

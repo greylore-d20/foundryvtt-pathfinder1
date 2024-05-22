@@ -874,6 +874,26 @@ export const equipmentSlots = {
   },
 };
 
+export const implantTypes = {
+  cybertech: "PF1.Subtypes.Item.implant.cybertech.Single",
+};
+
+/**
+ * The slots implants can occupy.
+ */
+export const implantSlots = {
+  cybertech: {
+    none: "PF1.Cybertech.Slots.none",
+    arm: "PF1.Cybertech.Slots.arm",
+    body: "PF1.Cybertech.Slots.body",
+    brain: "PF1.Cybertech.Slots.brain",
+    ears: "PF1.Cybertech.Slots.ears",
+    eyes: "PF1.Cybertech.Slots.eyes",
+    head: "PF1.Cybertech.Slots.head",
+    legs: "PF1.Cybertech.Slots.legs",
+  },
+};
+
 /**
  * The subtypes for loot items
  */
@@ -2612,6 +2632,21 @@ export const sheetSections = {
       create: { type: "equipment", system: { subType: "wondrous", slot: "slotless" } },
       sort: 3_000,
     },
+    implants: {
+      label: "PF1.InventoryImplants",
+      filters: [{ type: "implant" }],
+      interface: {
+        create: true,
+        actions: true,
+        equip: true,
+        slots: true,
+      },
+      labels: {
+        equip: "PF1.Implanted",
+      },
+      create: { type: "implant", system: { subType: "cybertech" } },
+      sort: 4_000,
+    },
     consumable: {
       label: "PF1.InventoryConsumables",
       filters: [{ type: "consumable" }],
@@ -2621,7 +2656,7 @@ export const sheetSections = {
         equip: false,
       },
       create: { type: "consumable" },
-      sort: 4_000,
+      sort: 5_000,
     },
     gear: {
       label: "PF1.Subtypes.Item.loot.gear.Plural",

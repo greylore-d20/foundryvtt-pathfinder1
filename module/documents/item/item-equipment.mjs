@@ -106,12 +106,16 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     const mdex = itemData.armor?.dex ?? null;
     if (Number.isFinite(mdex)) labels.mdex = true;
 
-    if (this.subType === "armor") {
-      labels.slot = pf1.config.equipmentSlots.armor.armor;
-    } else if (this.subType === "shield") {
-      labels.slot = pf1.config.equipmentSlots.shield.shield;
-    } else if (this.subType === "clothing") {
-      labels.slot = pf1.config.equipmentSlots.clothing.clothing;
+    if (this.hasSlots) {
+      if (this.subType === "armor") {
+        labels.slot = pf1.config.equipmentSlots.armor.armor;
+      } else if (this.subType === "shield") {
+        labels.slot = pf1.config.equipmentSlots.shield.shield;
+      } else if (this.subType === "clothing") {
+        labels.slot = pf1.config.equipmentSlots.clothing.clothing;
+      } else {
+        labels.slot = pf1.config.equipmentSlots.wondrous[itemData.slot];
+      }
     }
 
     return labels;

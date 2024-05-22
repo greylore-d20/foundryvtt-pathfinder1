@@ -306,6 +306,19 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
+  /**
+   * Cybertech
+   */
+  game.settings.register("pf1", "cybertech", {
+    name: "PF1.SETTINGS.Cybertech",
+    hint: "PF1.SETTINGS.CybertechHint",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
+  });
+
   // Armor as DR
 
   /**

@@ -122,6 +122,7 @@ Hooks.once("init", function () {
     race: documents.item.ItemRacePF,
     spell: documents.item.ItemSpellPF,
     weapon: documents.item.ItemWeaponPF,
+    implant: documents.item.ItemImplantPF,
   };
 
   CONFIG.Token.documentClass = documents.TokenDocumentPF;
@@ -278,7 +279,7 @@ Hooks.once("init", function () {
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("pf1", applications.item.ItemSheetPF, {
     label: "PF1.Sheet.Item",
-    types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"],
+    types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race", "implant"],
     makeDefault: true,
   });
   Items.registerSheet("pf1", applications.item.ItemSheetPF_Container, {
@@ -413,6 +414,8 @@ Hooks.once("i18nInit", function () {
     "limitedUsePeriods",
     "equipmentTypes",
     "equipmentSlots",
+    "implantSlots",
+    "implantTypes",
     "consumableTypes",
     "attackTypes",
     "buffTypes",

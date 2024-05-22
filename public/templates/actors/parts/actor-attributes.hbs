@@ -77,6 +77,13 @@
         <span class="value">{{system.attributes.maxDexBonus}}</span>
       </div>
 
+      {{#if implants}}
+      <div class="info-box implants" data-tooltip-extended="implants">
+        <h5>{{localize "PF1.Cybertech.Implantation"}}</h5>
+        <span class="value">{{implants.load}} / {{implants.max}}</span>
+      </div>
+      {{/if}}
+
       {{#if asf}}
       <div class="info-box asf" data-tooltip-extended="asf">
         <h5>{{localize "PF1.ArcaneSpellFailureAbbr"}}</h5>

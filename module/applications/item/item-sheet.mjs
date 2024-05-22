@@ -243,6 +243,8 @@ export class ItemSheetPF extends ItemSheet {
 
     context.name = item.name;
 
+    context.isImplant = item.type === "implant";
+
     /** @type {DescriptionAttribute[]} */
     context.descriptionAttributes = [];
 
@@ -342,40 +344,42 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Add hit points
-      context.descriptionAttributes.push({
-        isNumber: true,
-        isRange: true,
-        label: game.i18n.localize("PF1.HPShort"),
-        value: {
-          name: "system.hp.value",
-          value: itemData.hp?.value || 0,
-          constraints: {
-            step: 1,
-            max: itemData.hp?.max || 0,
+      if (!context.isImplant) {
+        context.descriptionAttributes.push({
+          isNumber: true,
+          isRange: true,
+          label: game.i18n.localize("PF1.HPShort"),
+          value: {
+            name: "system.hp.value",
+            value: itemData.hp?.value || 0,
+            constraints: {
+              step: 1,
+              max: itemData.hp?.max || 0,
+            },
           },
-        },
-        max: {
-          name: "system.hp.max",
-          value: itemData.hp?.max || 0,
+          max: {
+            name: "system.hp.max",
+            value: itemData.hp?.max || 0,
+            constraints: {
+              min: 0,
+              step: 1,
+            },
+          },
+        });
+
+        // Add hardness
+        context.descriptionAttributes.push({
+          isNumber: true,
+          label: game.i18n.localize("PF1.Hardness"),
+          name: "system.hardness",
+          decimals: 0,
+          value: itemData.hardness || 0,
           constraints: {
             min: 0,
             step: 1,
           },
-        },
-      });
-
-      // Add hardness
-      context.descriptionAttributes.push({
-        isNumber: true,
-        label: game.i18n.localize("PF1.Hardness"),
-        name: "system.hardness",
-        decimals: 0,
-        value: itemData.hardness || 0,
-        constraints: {
-          min: 0,
-          step: 1,
-        },
-      });
+        });
+      }
 
       let disableEquipping = false;
       if (item.inContainer) {
@@ -392,46 +396,60 @@ export class ItemSheetPF extends ItemSheet {
         }
       }
 
-      // Certain loot types don't have equipped
-      if (item.type === "loot" && pf1.config.unequippableLoot.includes(this.item.subType)) disableEquipping = true;
+      // Add equipped/implanted flag
+      if (context.isImplant) {
+        context.descriptionAttributes.push({
+          isBoolean: true,
+          name: "system.implanted",
+          label: game.i18n.localize("PF1.Implanted"),
+          value: itemData.implanted,
+          disabled: disableEquipping,
+        });
+      } else {
+        // Certain loot types don't have equipped
+        if (item.type === "loot" && pf1.config.unequippableLoot.includes(this.item.subType)) disableEquipping = true;
 
-      // Add equipped flag
-      context.descriptionAttributes.push({
-        isBoolean: true,
-        name: "system.equipped",
-        label: game.i18n.localize("PF1.Equipped"),
-        value: itemData.equipped,
-        disabled: disableEquipping,
-      });
+        context.descriptionAttributes.push({
+          isBoolean: true,
+          name: "system.equipped",
+          label: game.i18n.localize("PF1.Equipped"),
+          value: itemData.equipped,
+          disabled: disableEquipping,
+        });
+      }
 
       // Add carried flag
       context.descriptionAttributes.push({
         isBoolean: true,
         name: "system.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: itemData.carried,
-        disabled: item.inContainer,
+        value: itemData.carried || item.system.implanted || false,
+        disabled: item.inContainer || item.system.implanted || false,
       });
     }
 
     if (context.isPhysical || item.isQuasiPhysical) {
-      // Add carried flag
-      context.descriptionAttributes.push({
-        isBoolean: true,
-        name: "system.broken",
-        label: game.i18n.localize("PF1.Broken"),
-        value: itemData.broken,
-        disabled: context.isNaturalAttack,
-      });
+      // Add broken flag
+      if (!context.isImplant) {
+        context.descriptionAttributes.push({
+          isBoolean: true,
+          name: "system.broken",
+          label: game.i18n.localize("PF1.Broken"),
+          value: itemData.broken,
+          disabled: context.isNaturalAttack,
+        });
+      }
 
-      // Add carried flag
-      context.descriptionAttributes.push({
-        isBoolean: true,
-        name: "system.masterwork",
-        label: game.i18n.localize("PF1.Masterwork"),
-        value: itemData.masterwork,
-        disabled: context.isNaturalAttack,
-      });
+      // Add masterwork flag
+      if (!context.isImplant) {
+        context.descriptionAttributes.push({
+          isBoolean: true,
+          name: "system.masterwork",
+          label: game.i18n.localize("PF1.Masterwork"),
+          value: itemData.masterwork,
+          disabled: context.isNaturalAttack,
+        });
+      }
     }
 
     if (context.isPhysical) {
@@ -550,6 +568,13 @@ export class ItemSheetPF extends ItemSheet {
           itemData.armor.material?.normal.value ?? ""
         );
       }
+    }
+
+    if (item.type === "implant") {
+      context.subTypes = pf1.config.implantTypes;
+
+      context.isCybertech = item.subType === "cybertech";
+      if (context.isCybertech) context.slots = pf1.config.implantSlots.cybertech;
     }
 
     let topDescription;
@@ -1154,8 +1179,6 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
 
   _onHoverTooltip(event) {
-    if (this.item.system.quantity <= 1) return;
-
     const type = event.target.dataset.tooltipType;
     const content = [];
     switch (type) {

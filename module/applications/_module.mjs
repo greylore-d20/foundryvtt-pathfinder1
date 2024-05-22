@@ -38,6 +38,7 @@ export { ItemDirectoryPF } from "./sidebar/items-directory.mjs";
 export { Troubleshooter } from "./troubleshooter.mjs";
 
 export { ActorSelector } from "./actor-selector.mjs";
+export { SplitStack } from "./split-stack.mjs";
 
 /**
  * {@link CompendiumBrowser}s for the various compendiums.

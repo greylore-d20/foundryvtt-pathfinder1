@@ -149,8 +149,9 @@ export class ItemPF extends ItemBasePF {
       "system.changes",
     ];
 
+    const itemData = this.toObject();
     for (const path of keepPaths) {
-      keepUpdateArray(this, changed, path);
+      keepUpdateArray(itemData, changed, path);
     }
 
     await this._chargePreUpdate(changed, context);

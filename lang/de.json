@@ -1,5 +1,5 @@
 {
-  "PF1.Title": "Pathfinder 1",
+  "PF1.Title": "Pathfinder 1e",
   "PF1.ActorSheetPFCharacter": "Charakter",
   "PF1.ActorSheetPFNPC": "NSC",
   "PF1.ActorSheetPFNPCLite": "NSC (Lite)",
@@ -86,7 +86,7 @@
   "SETTINGS.pf1HealthComputeAuto": "Automatisch",
   "SETTINGS.pf1HealthComputeManual": "Manuell",
   "SETTINGS.pf1HealthRoundingName": "TP Runden",
-  "SETTINGS.pf1HealthRoundingHint": "TP Werte müssen ganze Zahlen sein.  Aufrunden, runden, oder abrunden?",
+  "SETTINGS.pf1HealthRoundingHint": "TP Werte müssen ganze Zahlen sein. In welche Richtung sollen sie gerundet werden?",
   "SETTINGS.pf1HealthContinuityName": "TP Kontinuität",
   "SETTINGS.pf1HealthContinuityHint": "TP kann diskret oder kontinuierlich berechnet werden. Diskrete TP werden bei jedem Stufenaufstieg gerundet, d.h. dass Kreaturen jedesmal eine feste Anzahl an TP bekommen. Kontinuierliche TP werden erst am Ende gerundet, nachdem alle Trefferwürfel evaluiert wurden, d.h. dass Kreaturen jedesmal eine schwankende Anzahl an TP bekommen.",
   "SETTINGS.pf1HealthContinuityContinuous": "Kontinuierlich",
@@ -125,6 +125,10 @@
     "ForceShowItem": {
       "Name": "Erzwinge Gegenstand zeigen",
       "Hint": "Ob der Gegenstand im Chat angezeigt werden soll, wenn ein Macro benutzt wird"
+    },
+    "StickyTokenTooltip": {
+      "Name": "Bleibendes Token-Tooltip",
+      "Hint": "Das Token-Tooltip soll weiter angezeigt werden, auch nachdem der Mauszeiger nicht mehr im Token verweilt."
     }
   },
   "PF1.SpellComponentKeys": {
@@ -237,13 +241,13 @@
     "FC": {
       "Label": "Bevorzugte Klasse",
       "HP": {
-        "Desc": "Du bekommst einen Trefferpunkt als Bonus für deine bevorzugte Klasse für diese Stufe."
+        "Desc": "Du bekommst einen einzelnen Trefferpunkt."
       },
       "Skill": {
-        "Desc": "Du bekommst einen Fertigkeitspunkt als Bonus für deine bevorzugte Klasse für diese Stufe."
+        "Desc": "Du bekommst einen einzelnen Fertigkeitspunkt."
       },
       "Alt": {
-        "Desc": "Du bekommst etwas, das sich aus der Kombination deines Volkes und deiner Klasse ergibt, als Bonus für deine bevorzugte Klasse für diese Stufe."
+        "Desc": "Du bekommst etwas, das sich aus der Kombination deines Volkes und deiner Klasse ergibt."
       }
     },
     "AbilityScore": {
@@ -264,8 +268,8 @@
       "Header": "Stufenaufstiegszusammenfassung",
       "Health": {
         "Header": "Trefferpunkte",
-        "Roll": "Erwürfelte TP: {add}",
-        "Manual": "Manuelle TP: {add}"
+        "Roll": "Erwürfelt: {add}",
+        "Manual": "Manuell: {add}"
       },
       "FC": {
         "Header": "Bonus für bevorzugte Klasse"
@@ -334,7 +338,7 @@
   "PF1.LinkHelpClassAssociations": "So verbundene Gegenstände werden automatisch zum Aktor hinzugefügt, wenn die passende Klassenstufe erreicht wird. Klassenverbindungen müssen auf Gegenstände in Kompendien verweisen.",
   "PF1.LinkHelpAmmunition": "Gegenstände die so verbunden werden verlieren automatisch ein Stück/eine Aufladung für jeden gemachten Angriff.",
   "PF1.HelpSellMultiplierN": "Verkaufskurs",
-  "PF1.HelpSellMultiplier": "Der Kurs zu welchem Nicht-Handelswaren verkauft werden können. Handelswaren werden immer zum vollen Preis verkauft. Standard ist 0.5.",
+  "PF1.HelpSellMultiplier": "Der Kurs zu welchem Güter verkauft werden können.<br>Standard ist 0.5.<br>Handelswaren werden immer zum vollen Preis verkauft (1.0).",
   "PF1.HelpDomainSpell": "Dieser Zauber belegt keine Zauberplätze.",
   "PF1.AbilityStr": "Stärke",
   "PF1.AbilityDex": "Geschicklichkeit",
@@ -546,20 +550,20 @@
   "PF1.BuffTarACNatural": "Natürliche Rüstung",
   "PF1.BuffTarACTouch": "Berührung",
   "PF1.BuffTarACFlatFooted": "AdfF",
-  "PF1.BuffTarStrSkills": "Stärke Fertigkeiten",
-  "PF1.BuffTarDexSkills": "Geschicklichkeit Fertigkeiten",
-  "PF1.BuffTarConSkills": "Konstitution Fertigkeiten",
-  "PF1.BuffTarIntSkills": "Intelligenz Fertigkeiten",
-  "PF1.BuffTarWisSkills": "Weisheit Fertigkeiten",
-  "PF1.BuffTarChaSkills": "Charisma Fertigkeiten",
+  "PF1.BuffTarStrSkills": "Stärkefertigkeiten",
+  "PF1.BuffTarDexSkills": "Geschicklichkeitsfertigkeiten",
+  "PF1.BuffTarConSkills": "Konstitutionsfertigkeiten",
+  "PF1.BuffTarIntSkills": "Intelligenzfertigkeiten",
+  "PF1.BuffTarWisSkills": "Weisheitsfertigkeiten",
+  "PF1.BuffTarChaSkills": "Charismafertigkeiten",
   "PF1.BuffTarSpecificSkill": "Spezifische Fertigkeiten",
-  "PF1.BuffTarAbilityChecks": "Attributs Proben",
-  "PF1.BuffTarStrChecks": "Stärke Proben",
-  "PF1.BuffTarDexChecks": "Geschicklichkeit Proben",
-  "PF1.BuffTarConChecks": "Konstitution Proben",
-  "PF1.BuffTarIntChecks": "Intelligenz Proben",
-  "PF1.BuffTarWisChecks": "Weisheit Proben",
-  "PF1.BuffTarChaChecks": "Charisma Proben",
+  "PF1.BuffTarAbilityChecks": "Attributsproben",
+  "PF1.BuffTarStrChecks": "Stärkeproben",
+  "PF1.BuffTarDexChecks": "Geschicklichkeitsproben",
+  "PF1.BuffTarConChecks": "Konstitutionsproben",
+  "PF1.BuffTarIntChecks": "Intelligenzproben",
+  "PF1.BuffTarWisChecks": "Weisheitsproben",
+  "PF1.BuffTarChaChecks": "Charismaproben",
   "PF1.BuffTarBonusSkillRanks": "Bonusfertigkeitsränge",
   "PF1.BuffTarBonusFeats": "Bonustalente",
   "PF1.BuffTarAllAttackRolls": "Alle Angriffswürfe",
@@ -879,9 +883,9 @@
   "PF1.ChangeFlagNoDex": "Keine Geschicklichkeit",
   "PF1.ChangeFlagNoStr": "Keine Stärke",
   "PF1.Undefined": "Undefiniert",
-  "PF1.ErrorGenericPermission": "Du hast keine Rechte diese Aktion auszuführen",
-  "PF1.ErrorNoActorPermission": "Du hast keine Rechte den Aktor zu kontrollieren",
-  "PF1.ErrorNoActorPermissionAlt": "Du hast keine Rechte den Aktor '{name}' zu kontrollieren",
+  "PF1.ErrorGenericPermission": "Du hast keine Befugnis diese Aktion auszuführen",
+  "PF1.ErrorNoActorPermission": "Du hast keine Befugnis den Aktor zu kontrollieren",
+  "PF1.ErrorNoActorPermissionAlt": "Du hast keine Befugnis den Aktor '{name}' zu kontrollieren",
   "PF1.ErrorNoFormula": "{name} hat keine Formel zum Würfeln!",
   "PF1.ErrorItemNoOwner": "Dieser Gegenstand hat keinen Besitzer",
   "PF1.ErrorSpellbookExists": "Zauberbuch existiert schon",
@@ -907,7 +911,7 @@
   "PF1.WarningInsufficientAmmunition": "Du hast nicht genug Munition vom Typ {type}",
   "PF1.WarningMissingAmmunition": "Zum Angriff verknüpfte Munition fehlt.",
   "PF1.WarningConditionalRoll": "Formel-Wurf Nr {number} von Bedingtem Modifikator {name} hat einen Fehler verursacht",
-  "PF1.WarningNoItemOnActor": "Aktor {actor} hat keinen Gegenstand {item}",
+  "PF1.WarningNoItemOnActor": "Aktor \"{actor}\" hat keinen Gegenstand \"{item}\"",
   "PF1.WarningCannotCreateChargeLink": "Konnte keinen Ladungen-Link zwischen {source} und {target} erstellen, da {target} bereit selber Ladungen-Links besitzt",
   "PF1.WarningCannotCreateChargeLink2": "Konnte keinen Ladungen-Link zwischen {source} und {target} erstellen, da {target} bereit mit {deeptarget} verlinkt is",
   "PF1.WarningNoCombatantFound": "Kein Kampfteilnehmer gefunden",
@@ -1092,23 +1096,23 @@
     "NewName": "Neuer Script Call",
     "Use": {
       "Name": "Benutzen",
-      "Info": "Wird aufgerufen, wenn der Gegenstand 'benutzt' wird (Angriff, Trank trinken, etc.). Hat die zusätzliche Variable `attacks`, welche alle Angriffswürfe der Aktion enthält (falls sie welche hat)."
+      "Info": "Wird aufgerufen, wenn der Gegenstand 'benutzt' wird (Angriff, Trank trinken, etc.). Hat die zusätzliche Array-Variable <code>attacks</code>, welche alle Angriffswürfe der Aktion enthält (falls sie welche hat)."
     },
     "Equip": {
       "Name": "Ausrüsten",
-      "Info": "Wird aufgerufen, wenn der Gegenstand ausgerüstet oder abgelegt wird. Hat die zusätzliche Variable `equipped`, welche entweder `true` oder `false` ist."
+      "Info": "Wird aufgerufen, wenn der Gegenstand ausgerüstet oder abgelegt wird. Hat die zusätzliche boolesche Variable <code>equipped</code>."
     },
     "Toggle": {
       "Name": "Umschalten",
-      "Info": "Wird aufgerufen, wenn der Gegenstand ein- oder ausgeschaltet wird. Hat die zusätzliche Variable `state`, welche entweder `true` oder `false` ist."
+      "Info": "Wird aufgerufen, wenn der Gegenstand ein- oder ausgeschaltet wird. Hat die zusätzliche boolesche Variable <code>state</code>."
     },
     "ChangeQuantity": {
       "Name": "Mengenänderung",
-      "Info": "Wird aufgerufen, wenn sich die Menge der Gegenstand ändert. Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
+      "Info": "Wird aufgerufen, wenn sich die Menge der Gegenstand ändert. Hat die zusätzlichen numerische Variablen <code>quantity.previous</code> und <code>quantity.new</code>."
     },
     "ChangeLevel": {
       "Name": "Stufenänderung",
-      "Info": "Wird aufgerufen, wenn sich die Stufe des Gegenstands ändert. Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
+      "Info": "Wird aufgerufen, wenn sich die Stufe des Gegenstands ändert. Hat die zusätzlichen numerischen Variablen <code>quantity.previous</code> und <code>quantity.new</code>."
     },
     "Create": "Erzeuge eingebetteten Scriptaufruf"
   },
@@ -1410,7 +1414,7 @@
   "PF1.ArmorCheckPenalty": "Rüstungsmalus",
   "PF1.ArcaneSpellFailure": "Chance für arkanen Zauberpatzer",
   "PF1.ArcaneSpellFailureAbbr": "AZP",
-  "PF1.AutoCalculateSpellSlots": "Automatische Zauberslots",
+  "PF1.AutoCalculateSpellSlots": "Berechne Zauberplätze automatisch",
   "PF1.HasCantrips": "Hat Zaubertricks/Gebete",
   "PF1.Modifications": "Veränderungen",
   "PF1.PreparePerDay": "Vorbereiten/Tag",
@@ -1480,11 +1484,11 @@
   "PF1.Rank": "Rang",
   "PF1.SkillRankPlural": "Fertigkeitsränge",
   "PF1.Used": "Benutzt",
-  "PF1.AdventureRanksToBG": "Abenteuerränge an BG senden",
-  "PF1.BGSkillRanks": "BG Fertigkeitsränge",
-  "PF1.BGUsed": "BG verwendet",
+  "PF1.AdventureRanksToBG": "Abenteuerränge an Hintergrund senden",
+  "PF1.BGSkillRanks": "Hintergrundfertigkeitsränge",
+  "PF1.BGUsed": "Hintergrund verwendet",
   "PF1.AllSkills": "Alle Fertigkeiten",
-  "PF1.AutomaticSpellSlots": "Automatische Zauberslots",
+  "PF1.AutomaticSpellSlots": "Bonuszauberplätze für hohe Eigenschaftenswerte",
   "PF1.Uses": "Benutzt",
   "PF1.SpellComponentsMisc": "Unterschiedliche Kompontenten",
   "PF1.SeeText": "Siehe Text",
@@ -1596,7 +1600,7 @@
   "PF1.BonusFeatFormula": "Bonustalente Formel",
   "PF1.Advanced": "Erweitert",
   "PF1.LeftToPrepare": "Noch vorbereitbar",
-  "PF1.SpellsTotalEachDay": "Gesamt pro Tag (exklusive Domänenzauber und Schulenzauber)",
+  "PF1.SpellsTotalEachDay": "Gesamt pro Tag",
   "PF1.UseItem": "Gegenstand benutzen",
   "PF1.UseSpell": "Zauber wirken",
   "PF1.UseFeat": "Feature benutzen",
@@ -1662,8 +1666,10 @@
   "PF1.SpellbookName": "Zauberbuchname",
   "PF1.StaticSize": "Statische Größe",
   "PF1.CustomVisionRules": {
-    "Label": "Eigene Sichtregeln",
-    "Description": "Ignoriere die Sinne des Aktors, um eigene Sichtregeln korrekt anzuwenden."
+    "Label": "Deaktiviere systemgesteuerte Sicht",
+    "Description": "Hindert das Pathfinder-System daran, die Sicht zu bestimmen. Die Sicht kann dann individuell angepasst werden.",
+    "ConfigHint": "Sinne werden im Attributstab des Charakterbogens geändert.",
+    "Warning": "Diese Einstellung hat keine Auswirkung solange die systemgesteuerte Sicht global oder im Token deaktiviert ist. Bitte überprüfe deine Einstellungen."
   },
   "PF1.DomainSlotValue": "Domänen- und Schulzauberplätze",
   "PF1.DomainSlotValueDesc": "Wie viele Bonus-Zauberplätze für Domänen- und Schulenzauber für jeden Grad zu Verfügung stehen.",
@@ -1710,13 +1716,16 @@
       "SplitEvenly": "Gleich verteilen",
       "GiveToAll": "Allen geben",
       "TotalExperience": "Gesamte Erfahrung",
-      "SplitExperience": "Erfahrung aufteilen"
+      "SplitExperience": "Erfahrung aufteilen",
+      "Reward": "Belohnung"
     },
     "EntrySelector": {
-      "Title": "Eingabeauswahl"
+      "Title": "Eingabeauswahl",
+      "TitleIsolated": "{item} – {title}",
+      "TitleOwned": "{item} – {actor} – {title}"
     },
     "TraitSelector": {
-      "CustomHint": "Du kannst verschiedene Einträge mit einem Semikolon (;) trennen."
+      "CustomHint": "Trage neue Einträge mit Enter oder einem Semikolon (;) ein. Zweifaches Drücken von Backspace entfernt den letzten Eintrag."
     },
     "DamageResistanceSelector": {
       "DRTitle": "Auswahl Schadensreduzierung",
@@ -1773,7 +1782,7 @@
   "PF1.FilterNoChoices": "Nichts passendes gefunden.",
   "PF1.QuickActionUseAny": "Benutze: {name}",
   "PF1.BuffTarUntrainedSkills": "Ungeübte Fertigkeiten",
-  "PF1.Enhancement": "+{bonus} Verbesserung",
+  "PF1.Enhancement": "Verbesserung",
   "PF1.SecondaryAttackModifier": "Sekundärer Angriffsmodifikator",
   "PF1.SecondaryAttackAbilityMultiplier": "Sekundärer Attributsmultiplikator",
   "PF1.ProficientAttack": "Geübt (Angriff)",
@@ -1834,7 +1843,7 @@
   "PF1.ProficienciesGranted": "Gewährte Geübtheiten",
   "PF1.BaseTypes": {
     "Label": "Ausrüstungsgrundtypen",
-    "Description": "Für Talente, die für spezifische Ausrüstungstypen gelten, wie zum Beispiel Waffenfokus."
+    "Description": "Für Talente, die für spezifische Ausrüstungstypen gelten, wie zum Beispiel Waffenfokus oder Waffengeübtheiten (wie die Geübtheit mit exotischen Waffen), oder wenn der Gegenstandsname vom Grundgegenstand abweicht.<p>Beispiel: die Schicksalsklinge hat den Grundtyp eines Dolches."
   },
   "PF1.WarningInvalidUUID": "Ungültige UUID \"{uuid}\"",
   "PF1.RollAbilityMacroName": "{actor}: Würfle {ability}",
@@ -1890,5 +1899,1702 @@
     "Trigger": "Auslöser"
   },
   "PF1.LanguageAndroffan": "Androffani",
-  "PF1.AmmoTypeSiege": "Belagerungswaffen"
+  "PF1.AmmoTypeSiege": "Belagerungswaffen",
+  "PF1.NegativeLevels": "Negative Stufen",
+  "PF1.ChangeFlagNoMediumEncumbrance": "Unbeeinflusst von mittelschwerer Belastung",
+  "PF1.ChangeFlagNoHeavyEncumbrance": "Unbeeinflusst von schwerer Belastung",
+  "PF1.FullRestMessage": "{name} hat für {hours} Stunden gerastet und die Nutzungen/Tag wiederhergestellt.",
+  "PF1.RestMessage": "{name} hat für {hours} Stunden gerastet.",
+  "SETTINGS.pf1HealthRate": "Anteilig",
+  "SETTINGS.pf1HealthMaximized": "Maximiert",
+  "SETTINGS.pf1OverlandVariantN": "Variante Überlandgeschwindigkeit",
+  "SETTINGS.pf1OverlandMetricRounded": "Gerundet (Deutsch & Französisch)",
+  "SETTINGS.pf1OverlandVariantL": "Wie die Überlandgeschwindigkeit im metrischen System berechnet werden soll.",
+  "SETTINGS.pf1pcDispositionN": "Einstellung von Spielercharakteren",
+  "SETTINGS.pf1pcDispositionH": "Überschreibe die standardmäßige Token-Einstellung von Spielercharakteren.",
+  "SETTINGS.pf1npcDispositionN": "Einstellung von Nichtspielercharakteren",
+  "SETTINGS.pf1npcDispositionH": "Überschreibe die standardmäßige Token-Einstellung von Nichtspielercharakteren",
+  "SETTINGS.pf1OverlandMetricExact": "Exakt (Spanisch)",
+  "PF1.DieSize": "W{size}",
+  "SETTINGS.pf1HealthRoundingUp": "Auf",
+  "SETTINGS.pf1HealthRoundingDown": "Ab",
+  "SETTINGS.pf1HealthRoundingNearest": "Echt",
+  "PF1.Cursed": "Verflucht",
+  "PF1.Timeworn": "Abgenutzt",
+  "PF1.Artifact": "Artefakt",
+  "PF1.NotSelected": "Nicht ausgewählt",
+  "PF1.IdentifyCurseDC": "Fluch Identifizieren SG",
+  "TYPES": {
+    "Actor": {
+      "character": "Spielercharakter (SC)",
+      "npc": "Nichtspielercharakter (NSC)",
+      "haunt": "Spukerscheinung",
+      "trap": "Falle",
+      "vehicle": "Fahrzeug",
+      "basic": "Basic (für Module)"
+    },
+    "Item": {
+      "class": "Klasse",
+      "spell": "Zauber",
+      "buff": "Buff",
+      "weapon": "Waffe",
+      "equipment": "Ausrüstung",
+      "consumable": "Verbrauchsgegenstand",
+      "loot": "Beute",
+      "race": "Volk",
+      "attack": "Angriff",
+      "container": "Behälter",
+      "feat": "Talent",
+      "implant": "Implantat"
+    }
+  },
+  "PF1.CriticalHitPlural": "Kritische Treffer",
+  "PF1.MediumEncumbrance": "Mittlere Belastung",
+  "PF1.HeavyEncumbrance": "Schwere Belastung",
+  "PF1.StaticSizeHint": "Wenn aktiviert, dann werden die Maße und Größe des Tokens nicht automatisch anhand der Charaktergröße verändert.",
+  "PF1.InheritAs": "Geerbt ({inherited})",
+  "PF1.WeightDetails": {
+    "Base": "Basis: {value}",
+    "Stack": "Stapel: {value}",
+    "Contents": "Inhalt: {value}",
+    "Total": "Gesamt: {value}"
+  },
+  "PF1.NoOverride": "Keine Überschreibung",
+  "PF1.XPValue": "{value} XP",
+  "PF1.Excess": "Überschuss",
+  "PF1.Missing": "Fehlt",
+  "PF1.Rolls": {
+    "Check": {
+      "OverrideHint": "z.B. 2d20kl",
+      "Override": "Wurf-Überschreibung"
+    },
+    "Bonus": "Wurf-Bonus",
+    "BonusHint": "z.B. 1d6[Inspiration] + 2[Beistand] + 1"
+  },
+  "PF1.DamageBonusHint": "z.B. 1d4[Feuer] + 2",
+  "PF1.DamageFormulaHint": "z.B. sizeRoll(1, 8, @size)",
+  "PF1.OnCritBonusFormula": "Bonusformel kritischer Treffer",
+  "PF1.NonMultBonusFormula": "Nicht-multiplizierende Bonusformel",
+  "PF1.AddBaseInstance": "Addiere Grundinstanz",
+  "PF1.AddNonMultInstance": "Addiere nicht-multiplizierende Instanz",
+  "PF1.AbilityBonus": "Attributsbonus",
+  "PF1.BaseFormula": "Grundformel",
+  "PF1.AddOnCritInstance": "Addiere Instanz für kritische Treffer",
+  "SETTINGS.pf1systemVisionN": "Systemgesteuerte Sicht",
+  "SETTINGS.pf1systemVisionH": "Benutze die Sichteinstellungen der Kreatur um das Sichtverhalten zu bestimmen. Dadurch können Pathfinder-spezifische Konzepte wie Dämmersicht berücksichtigt werden. Wenn deaktiviert, dann wird die Sicht alleinig durch die Tokeneinstellung gesetzt.",
+  "PF1.ContentSource": {
+    "Title": "Quellen: {name}",
+    "EditHint": "Quellenangaben editieren",
+    "Missing": "Keine Quellenangabe",
+    "Pages": "S. {pages}",
+    "Info": {
+      "Title": "Titel",
+      "TitleHint": "Titel der Quelle des Materials, typischerweise der Buchname.",
+      "ID": "Kürzel",
+      "Edition": "Auflage",
+      "EditionHint": "z.B. 6.",
+      "Pages": "Seiten",
+      "PagesHint": "Seitennumber, als Bereich (z.B. 276-278) oder Liste (z.B. 124,270)",
+      "Publisher": "Verlag",
+      "PublisherHint": "z.B. Paizo",
+      "IDHint": "ID oder Kürzel des Buches, z.B. PZO1110 oder GRW",
+      "Errata": "Errata",
+      "ErrataHint": "Version oder Datum der Errata"
+    }
+  },
+  "PF1.WeightReduction": "Gewichtsreduzierung",
+  "PF1.WeightReductionFlat": "Pauschal",
+  "PF1.ThrownWeaponDamage": "Wurfwaffenschaden",
+  "PF1.ActionTWAK": "Wurfwaffenangriff",
+  "PF1.MeleeWeaponDamage": "Nahkampfwaffenschaden",
+  "PF1.RangedWeaponDamage": "Fernkampfwaffenschaden",
+  "PF1": {
+    "BuffTarReach": "Natürliche Reichweite",
+    "EquipSlots": {
+      "shoulders": "Schultern",
+      "neck": "Hals",
+      "hands": "Hände",
+      "belt": "Gürtel",
+      "wrists": "Armgelenke",
+      "ring": "Ring",
+      "feet": "Füße",
+      "chest": "Brust",
+      "body": "Körper",
+      "none": "Ohne Ausrüstungsplatz",
+      "armor": "Rüstung",
+      "shield": "Schild",
+      "clothing": "Kleidung",
+      "head": "Kopf",
+      "headband": "Stirnband",
+      "eyes": "Augen"
+    },
+    "Trait": {
+      "equipment": "Ausrüstung",
+      "race": "Volk",
+      "region": "Regional",
+      "religion": "Religion",
+      "faith": "Glaube",
+      "social": "Sozial",
+      "campaign": "Kampagne",
+      "combat": "Kampf",
+      "magic": "Magie",
+      "cosmic": "Kosmisch",
+      "drawback": "Nachteil",
+      "exemplar": "Vorbild",
+      "faction": "Machtgruppe",
+      "family": "Familie",
+      "mount": "Reittier"
+    },
+    "Activation": {
+      "reaction": {
+        "Single": "Reaktion",
+        "Plural": "Reaktionen"
+      },
+      "aoo": {
+        "Plural": "Gelegenheitsangriffe",
+        "Single": "Gelegenheitsangriff"
+      },
+      "passive": {
+        "Single": "Passiv",
+        "Plural": "Passiv"
+      },
+      "free": {
+        "Plural": "Freie Aktionen",
+        "Single": "Frei"
+      },
+      "move": {
+        "Single": "Bewegung",
+        "Plural": "Bewegungaktionen"
+      },
+      "swift": {
+        "Single": "Schnell",
+        "Plural": "Schnelle Aktionen"
+      },
+      "immediate": {
+        "Single": "Augenblicklich",
+        "Plural": "Augenblickliche Aktionen"
+      },
+      "action": {
+        "Single": "Aktion",
+        "Plural": "Aktionen"
+      },
+      "standard": {
+        "Single": "Standard",
+        "Plural": "Standardaktionen"
+      },
+      "fullRound": {
+        "Single": "Voll",
+        "Plural": "Volle Aktionen"
+      },
+      "attack": {
+        "Single": "Angriff",
+        "Plural": "Angriffsaktionen"
+      },
+      "round": {
+        "Single": "Runde",
+        "Plural": "Runden"
+      },
+      "minute": {
+        "Single": "Minute",
+        "Plural": "Minuten"
+      },
+      "hour": {
+        "Single": "Stunde",
+        "Plural": "Stunden"
+      },
+      "special": {
+        "Single": "Speziell",
+        "Plural": "Speziell"
+      },
+      "nonaction": {
+        "Single": "Keine Aktion"
+      }
+    },
+    "SpellLevels": {
+      "3": "3. Grad",
+      "4": "4. Grad",
+      "5": "5. Grad",
+      "6": "6. Grad",
+      "0": "Zaubertricks/Stoßgebete",
+      "1": "1. Grad",
+      "2": "2. Grad",
+      "7": "7. Grad",
+      "8": "8. Grad",
+      "9": "9. Grad"
+    },
+    "DamageResistance": {
+      "magic": "Magie",
+      "epic": "Episch"
+    },
+    "Materials": {
+      "Types": {
+        "Greenwood": "Grünholz",
+        "Inubrix": "Inubrix",
+        "Mithral": "Mithral",
+        "Paueliel": "Paueliel",
+        "Siccatite": "Siccatit",
+        "PyreSteel": "Pyrstahl",
+        "Silversheen": "Silberschein",
+        "SingingSteel": "Singender Stahl",
+        "SpireSteel": "Turmstahl",
+        "Sunsilk": "Sonnenseide",
+        "FireForgedSteel": "Feuergeschmiedeter Stahl",
+        "FrostForgedSteel": "Eisgeschmiedeter Stahl",
+        "Lazurite": "Lazurit",
+        "Leather": "Leder",
+        "LiquidGlass": "Flüssiges Glas",
+        "LivingSteel": "Lebendstahl",
+        "Steel": "Stahl",
+        "Sunsilver": "Sonnensilber",
+        "Throneglass": "Thronglas",
+        "HeatstonePlating": "Hitzsteinpanzerung",
+        "Voidglass": "Leereglas",
+        "DarkleafCloth": "Schwarzblattstoff",
+        "Cryptstone": "Gruftstein",
+        "Blackwood": "Dunkelholz",
+        "ColdIron": "Kalteisen",
+        "Darkwood": "Schwarzholz",
+        "ElysianBronze": "Elysische Bronze",
+        "GriffonMane": "Greifenmähne",
+        "IrespanBasalt": "Zornspannbasalt",
+        "NexvaranSteel": "Nexavar-Stahl",
+        "Noqual": "Noqual",
+        "Caphorite": "Caphorit",
+        "Viridium": "Viridium",
+        "Cloth": "Stoff",
+        "Horacalcum": "Horacalcum",
+        "Adamantine": "Adamant",
+        "AlchemicalSilver": "Alchemistensilber",
+        "AngelSkin": "Engelhaut",
+        "Aszite": "Aszit",
+        "Abysium": "Abysium",
+        "BloodCrystal": "Blutkristall",
+        "BuletteArmor": "Landhaifellrüstung",
+        "Whipwood": "Peitschenholz",
+        "Wyroot": "Trauerwurz",
+        "Bone": "Knochen",
+        "Bronze": "Bronze",
+        "Glass": "Glas",
+        "Gold": "Gold",
+        "Obsidian": "Obsidian",
+        "Stone": "Stein",
+        "Wood": "Holz",
+        "Dragonhide": "Drachenhaut",
+        "EelHide": "Aalhaut",
+        "Glaucite": "Glauzit",
+        "Druchite": "Druchit",
+        "Magic": "Magie",
+        "Epic": "Episch"
+      },
+      "Base": "Ausgangsmaterial",
+      "Normal": "Material",
+      "Addon": "Zusatz",
+      "NormalOverride": "Materialüberschreibung",
+      "AddonOverride": "Zusatzüberschreibung",
+      "Label": "Materialien"
+    },
+    "Movement": {
+      "Mode": {
+        "fly": "Fliegen",
+        "land": "Land",
+        "swim": "Schwimmen",
+        "climb": "Klettern",
+        "burrow": "Graben"
+      },
+      "FlyManeuverability": {
+        "Quality": {
+          "average": "Durchschnittlich",
+          "good": "Gut",
+          "poor": "Ausreichend",
+          "perfect": "Perfekt",
+          "clumsy": "Unbeholfen"
+        },
+        "Abbr": "Manöv. Fliegen",
+        "Label": "Manövrierfähigkeit Fliegen"
+      },
+      "Label": "Bewegung",
+      "Speed": "Geschwindigkeit",
+      "Short": "{mode} {speed} {unit}"
+    },
+    "AttackAlignment": "Gesinnungsmerkmale",
+    "AttackAlignmentOverride": "Gesinnungsmerkmale überschreiben",
+    "Aura": {
+      "Plural": "Auren",
+      "Strength": {
+        "faint": "Schwach",
+        "moderate": "Durchschnittlich",
+        "strong": "Stark",
+        "overwhelming": "Übermächtig"
+      },
+      "Single": "Aura"
+    },
+    "BuffTarNaturalAttack": "Natürliche Waffenangriffswürfe",
+    "BuffTarThrownAttack": "Wurfwaffenangriffswürfe",
+    "Spellbook": {
+      "Known": "Bekannt",
+      "OpenSlots": "Offene Plätze",
+      "InsufficientAbility": "Eigenschaftswert zu niedrig",
+      "InsufficientLevel": "Zauberstufe zu niedrig"
+    },
+    "AllMeleeDamage": "Aller Nahkampfschaden",
+    "InvalidAmmoType": "Ungültiger Munitionstyp",
+    "Select": "Wähle",
+    "Migration": {
+      "Dialog": {
+        "Completed": "Migration abgeschlossen!",
+        "IgnoreLocked": "Ignoriere Kompendien mit Schreibschutz",
+        "Ongoing": "Migration im Vorgang!",
+        "ProcessLocked": "Verarbeite Kompendien mit Schreibschutz",
+        "Errors": "Fehler",
+        "Tooltip": {
+          "Ignored": "Ignoriert",
+          "Status": "Status",
+          "Invalid": "Ungültig",
+          "Errors": "Fehler",
+          "Processed": "Verarbeitet",
+          "Total": "Gesamt"
+        },
+        "Category": "Kategorie",
+        "Title": "Migration",
+        "Issues": "Probleme mit der Migration",
+        "InvalidDocuments": "Ungültige Dokumente"
+      },
+      "Category": {
+        "World": "Welt",
+        "Modules": "Modul-Kompendien",
+        "System": "System",
+        "Packs": "Kompendien",
+        "Actors": "Aktorenverzeichnis",
+        "Items": "Gegenstandsverzeichnis",
+        "Scenes": "Szenen"
+      },
+      "InProgress": "PF1 System-Migration im Vorgang. Bitte warte bis es fertig ist."
+    },
+    "Application": {
+      "ItemSelector": {
+        "Title": "Gegenstandswähler"
+      },
+      "Integration": {
+        "Title": "Modulintegration",
+        "Modules": {
+          "drag-ruler": {
+            "Label": "Drag Ruler",
+            "Info": "Fügt Spielsystemintegration für Pathfinder 1e zu Drag Ruler hinzu."
+          },
+          "dice-so-nice": {
+            "Label": "Dice So Nice",
+            "Info": "Fügt eigene DSN-Aufrufe hinzu, um Würfe anstoßen wenn die Erkennung des Moduls fehlschlägt und um Würfe kontextabhängig zu gruppieren."
+          },
+          "enhanced-terrain-layer": {
+            "Info": "Verbessert <em>Drag Ruler</em>-Integration.",
+            "Label": "Enhanced Terrain Layer"
+          }
+        },
+        "Label": "Konfiguriere Integration",
+        "Hint": "Ändere für welche Module das System spezielle Funktionalität bereithält."
+      },
+      "Performance": {
+        "Button": "Leistungseinstellungen",
+        "Title": "Leistungskonfiguration",
+        "Options": {
+          "reachLimit": {
+            "Hint": "Maximale Reichweite in Felder für die ein Highlight gezeichnet werden soll. Default ist 60 (90 m). Die Grundreichweite wird trotzdem vollständig angezeigt. Werte unter 10 deaktivieren Reichweitenhighlights komplett.",
+            "Label": "Begrenzung des Reichweitenhighlights"
+          }
+        },
+        "Hint": "Justiere Einstellungen die die Leistung beeinflussen."
+      },
+      "CurrencyTransfer": {
+        "Failed": "Geldtransfer gescheitert: ",
+        "GMRequired": "Ein SL ist benötigt um den Transfer abzuschließen.",
+        "Insufficient": "Nicht genug Geld",
+        "Send": "Sende Geld"
+      },
+      "GetNumber": {
+        "Title": "Zahl eingeben",
+        "Confirm": "Bestätigen"
+      },
+      "TraitSelector": {
+        "NoCustomEntries": "Keine eigenen Einträge.",
+        "CustomPlaceholder": "Trage eigene Einträge ein"
+      },
+      "PointBuy": {
+        "Warning": "Der Punkte-Kauf-Rechner ÜBERSCHREIBT die Attribute des Charakters.",
+        "Type": {
+          "epic": "Epische-Fantasy",
+          "low": "Low-Fantasy",
+          "standard": "Standard-Fantasy",
+          "high": "High-Fantasy"
+        },
+        "InvalidPoints": "Ungültige Punkteverteilung.",
+        "Points": "Punkte",
+        "SetupHint": "Der Punkte-Kauf-Rechner ist hier nur temporär. Du kannst ihn jederzeit im Einstellungstab finden.",
+        "Title": "Punkte-Kauf-Rechner",
+        "Spent": "Punkte ausgegeben",
+        "CampaignType": "Kampagnenart"
+      },
+      "ActorSelector": {
+        "OwnedActors": "Im Besitz",
+        "UnownedActors": "Andere",
+        "NoUnownedActors": "Du hast keine Rechte um Aktoren zu sehen.",
+        "Title": "Aktorenauswahl",
+        "MinimumPermissionLevel": "Beschränkte Rechte werden mindestens benötigt."
+      },
+      "ChangeEditor": {
+        "Operator": {
+          "AddVerb": "Anpassen",
+          "Add": "Addiere",
+          "AddHint": "Addiere zur Zieleigenschaft",
+          "Set": "Setze",
+          "SetVerb": "Setzen",
+          "SetHint": "Setze die Zieleigenschaft auf den Wert",
+          "InvalidHint": "Unbekannter Operator."
+        },
+        "Help": {
+          "Link": "Informationen über die Änderungen",
+          "Deterministic": "Deterministisch",
+          "DeterministicHint": "Gewähltes Ziel unterstützt keine Zufallselemente wie Würfel."
+        },
+        "Label": "Änderungseditor",
+        "AddChange": "Füge Änderung hinzu",
+        "Invalid": "Ungültig",
+        "AsType": "Als",
+        "CopyId": "Kopiere ID der Änderung"
+      },
+      "VisionSharing": {
+        "Label": "Sicht Teilen"
+      }
+    },
+    "AbilityTypes": {
+      "na": {
+        "Label": "Natürlich",
+        "Short": "NF"
+      },
+      "ex": {
+        "Label": "Außergewöhnlich",
+        "Short": "AF"
+      },
+      "su": {
+        "Label": "Übernatürlich",
+        "Short": "ÜF"
+      },
+      "sp": {
+        "Label": "Zauberähnlich",
+        "Short": "ZF"
+      }
+    },
+    "DefaultAmmo": "Standardmunition",
+    "HeldMult": "Gehalten (×{mult})",
+    "SelectSpecific": "Wähle {specifier}",
+    "Subtypes": {
+      "Item": {
+        "loot": {
+          "gear": {
+            "Plural": "Ausrüstung",
+            "Single": "Ausrüstung"
+          },
+          "ammo": {
+            "Single": "Munition",
+            "Plural": "Munition"
+          },
+          "misc": {
+            "Single": "Verschiedenes",
+            "Plural": "Verschiedenes"
+          },
+          "tradeGoods": {
+            "Plural": "Handelsgüter",
+            "Single": "Handelsgut"
+          },
+          "tool": {
+            "Plural": "Werkzeuge",
+            "Single": "Werkzeug"
+          },
+          "food": {
+            "Single": "Lebensmittel",
+            "Plural": "Lebensmittel"
+          },
+          "herb": {
+            "Single": "Kraut",
+            "Plural": "Kräuter"
+          },
+          "adventuring": {
+            "Single": "Abenteurerausrüstung",
+            "Plural": "Abenteurerausrüstungen"
+          },
+          "animalGear": {
+            "Single": "Tierbedarf",
+            "Plural": "Tierbedarf"
+          },
+          "reagent": {
+            "Single": "Alchemistische Reagenz",
+            "Plural": "Alchemistische Reagenzien"
+          },
+          "remedy": {
+            "Single": "Alchemistisches Hilfsmittel",
+            "Plural": "Alchemistische Hilfsmittel"
+          },
+          "entertainment": {
+            "Single": "Unterhaltung",
+            "Plural": "Unterhaltung"
+          },
+          "treasure": {
+            "Single": "Schatz",
+            "Plural": "Schätze"
+          },
+          "vehicle": {
+            "Single": "Fahrzeug/Transport",
+            "Plural": "Fahrzeuge/Transporte"
+          }
+        },
+        "class": {
+          "prestige": {
+            "Single": "Prestigeklasse"
+          },
+          "npc": {
+            "Single": "NPC-Klasse"
+          },
+          "racial": {
+            "Single": "Volks-TW"
+          },
+          "mythic": {
+            "Single": "Legendenpfad"
+          },
+          "base": {
+            "Single": "Basisklasse"
+          }
+        },
+        "equipment": {
+          "shield": {
+            "Single": "Schild",
+            "Types": {
+              "light": "Leichter Schild",
+              "heavy": "Schwerer Schild",
+              "tower": "Turmschild",
+              "misc": "Anderer Schild"
+            }
+          },
+          "armor": {
+            "Single": "Rüstung",
+            "Plural": "Rüstung",
+            "Types": {
+              "medium": "Mittelschwere Rüstung",
+              "heavy": "Schwere Rüstung",
+              "light": "Leichte Rüstung"
+            }
+          },
+          "wondrous": {
+            "Single": "Wundersam"
+          },
+          "clothing": {
+            "Single": "Kleidung",
+            "Plural": "Kleidung"
+          }
+        },
+        "consumable": {
+          "potion": {
+            "Single": "Trank/Öl"
+          },
+          "poison": {
+            "Single": "Gift"
+          },
+          "drug": {
+            "Single": "Droge"
+          },
+          "scroll": {
+            "Single": "Schriftrolle"
+          },
+          "wand": {
+            "Single": "Zauberstab"
+          },
+          "rod": {
+            "Single": "Zauberzepter"
+          },
+          "staff": {
+            "Single": "Zauberstecken"
+          }
+        },
+        "attack": {
+          "weapon": {
+            "Single": "Waffenangriff",
+            "Plural": "Waffenangriffe"
+          },
+          "natural": {
+            "Single": "Natürlicher Angriff",
+            "Plural": "Natürliche Angriffe"
+          },
+          "ability": {
+            "Single": "Klassenfähigkeit",
+            "Plural": "Klassenfähigkeiten"
+          },
+          "racialAbility": {
+            "Single": "Volksfähigkeit",
+            "Plural": "Volksfähigkeiten"
+          }
+        },
+        "feat": {
+          "trait": {
+            "Plural": "Wesenszüge",
+            "Single": "Wesenszug"
+          },
+          "racial": {
+            "Single": "Volksmerkmal",
+            "Plural": "Volksmerkmale"
+          },
+          "template": {
+            "Single": "Schablone",
+            "Plural": "Schablonen"
+          },
+          "feat": {
+            "Single": "Talent",
+            "Plural": "Talente"
+          },
+          "classFeat": {
+            "Single": "Klassenmerkmal",
+            "Plural": "Klassenmerkmale"
+          },
+          "misc": {
+            "Plural": "Verschiedenes",
+            "Single": "Verschiedenes"
+          }
+        },
+        "buff": {
+          "temp": {
+            "Single": "Temporär",
+            "Plural": "Temporär"
+          },
+          "spell": {
+            "Single": "Zauber",
+            "Plural": "Zauber"
+          },
+          "feat": {
+            "Single": "Talent",
+            "Plural": "Talente"
+          },
+          "perm": {
+            "Single": "Permanent",
+            "Plural": "Permanent"
+          },
+          "item": {
+            "Single": "Gegenstand",
+            "Plural": "Gegenstände"
+          },
+          "misc": {
+            "Single": "Verschiedenes",
+            "Plural": "Verschiedenes"
+          }
+        },
+        "implant": {
+          "cybertech": {
+            "Single": "Kybernetik"
+          }
+        }
+      }
+    },
+    "ModifierOnlyShort": "Nur Mod.",
+    "LimitedUses": {
+      "Label": "Begrenzte Nutzungen",
+      "Periods": {
+        "single": "Einmalige Nutzung",
+        "day": "Pro Tag",
+        "week": "Pro Woche",
+        "charges": "Ladungen",
+        "round": "Pro Runde"
+      }
+    },
+    "ActorSize": {
+      "sm": "Klein",
+      "tiny": "Sehr klein",
+      "fine": "Mini",
+      "dim": "Winzig",
+      "med": "Mittelgroß",
+      "lg": "Groß",
+      "huge": "Riesig",
+      "grg": "Gigantisch",
+      "col": "Kolossal"
+    },
+    "Currency": {
+      "Weightless": "Geld auf Bank",
+      "Abbr": {
+        "pp": "PM",
+        "gp": "GM",
+        "sp": "SM",
+        "cp": "KM"
+      },
+      "Full": {
+        "pp": "Platin",
+        "gp": "Gold",
+        "sp": "Silber",
+        "cp": "Kupfer"
+      },
+      "Inline": {
+        "pp": "{value} PM",
+        "gp": "{value} GM",
+        "sp": "{value} SM",
+        "cp": "{value} KM"
+      },
+      "Label": "Geld"
+    },
+    "NoDescription": "Keine Beschreibung.",
+    "SpellResistanceAbbr": "ZR",
+    "NaturalAttackDamage": "Natürlicher Waffenschaden",
+    "ACFFAbbr": "AdfF RK",
+    "SETTINGS": {
+      "DiagonalRule": {
+        "Label": "Diagonale Bewegungsregel",
+        "Options": {
+          "Core": "1.5/3/1.5",
+          "Simple": "1.5/1.5/1.5"
+        },
+        "Hint": "Konfiguriere, welche Diagonalbewegungsregel für Spiele innerhalb dieses Systems verwendet werden soll."
+      },
+      "InitTiebreaker": {
+        "Label": "Initiative Geschicklichkeit",
+        "Hint": "Anfügen der Geschicklichkeit, um in der Initiative ein Unentschieden besser zu erkennen."
+      },
+      "Experience": {
+        "Track": {
+          "Label": "Erfahrungsspur",
+          "Hint": "Die Geschwindigkeit in der die Charaktere in Stufen aufsteigen",
+          "Options": {
+            "Slow": "Langsam",
+            "Medium": "Mittel",
+            "Fast": "Schnell",
+            "Custom": "Benutzerdefiniert (Formel)"
+          },
+          "CustomPlaceholder": "z.B. '@level *1000'"
+        },
+        "Disable": "Deaktiviere Erfahrungstracking",
+        "Distributor": "Öffne XP-Verteiler",
+        "DistributorHint": "Öffnet den XP-Verteiler bei Kampfende, wenn Shift beim Löschen des Kampfes nicht gedrückt wird",
+        "DisableHint": "Deaktiviere Erfahrung im gesamten Spielsystem und entferne Erfahrungsbalken, Stufenaufstiegserkennung, XP-Schwellwerte, etc."
+      },
+      "Vision": {
+        "Sharing": "Sicht teilen",
+        "SharingHint": "Wie die Sicht zwischen Spielern gehandhabt werden soll.",
+        "SharingWithoutSelection": "Ohne ausgewähltes Token",
+        "SharingWithSelection": "Immer",
+        "PCDefault": "Spielercharaktersicht",
+        "SystemControl": "Systemkontrollierte Sicht",
+        "RequiresSelection": "Besondere Sicht erfordert eine Auswahl",
+        "RequiresSelectionHint": "Wenn aktiviert, dann profitieren Spieler ohne ausgewähltes Token NICHT von Dämmersicht oder Dunkelsicht ihrer Token.",
+        "PCDefaultHint": "Spielercharaktere haben standardmäßig Sicht auf ihren Tokens, egal wie die Defaulteinstellung für Tokens lautet.",
+        "SystemControlHint": "Benutze die Sichteinstellungen der Kreatur um die Vision zu bestimmen. Dadurch werden Pathfinder-spezisiche Konzepte wie Dämmersicht unterstützt. Wenn deaktiviert, dann wird die Sicht alleinig durch die Foundry-Tokeneinstellungen bestimmt.",
+        "Guaranteed": "Grundrechte für Sicht",
+        "GuaranteedHint": "Geringste Rechtestufe benötigt um immer aus der Sicht des Tokens zu sehen. Der Foundry-Standard ist Beobachter."
+      },
+      "VariantRules": {
+        "BackgroundSkills": "Benutze Hintergrundfertigkeiten",
+        "BackgroundSkillsHint": "Benutze die alternativen Regeln für Hintergrundfertigkeiten",
+        "FractionalBaseBonuses": "Benutze anteilige Grundboni",
+        "FractionalBaseBonusesHint": "Benutze die alternativen Regeln für anteilige Grundboni"
+      },
+      "Token": {
+        "PCDisposition": "Einstellung von Spielercharakteren",
+        "PCDispositionHint": "Überschreibe die Standardeinstellung von Token der Spielercharaktere.",
+        "NPCDisposition": "Einstellung von Nichtspielercharakteren",
+        "NPCDispositionHint": "Überschreibe die Standardeinstellung von Token der Nichtspielercharaktere"
+      },
+      "Canvas": {
+        "MeasureStyle": "Benutze Pathfinder-Messmethodenstil",
+        "MeasureStyleHint": "Verwende den Messungsstil von Pathfinder anstelle des Standardstils von FoundryVTT"
+      },
+      "AllowScriptChangesN": "Script-Änderungen zulassen",
+      "AllowScriptChangesH": "Lässt die Benutzung von Änderungen des Types \"Script\" in der Welt zu",
+      "AllowScriptChangesD": "Script-Änderungen werden bald nicht mehr unterstützt. Ersetze sie und schalte \"Script-Änderungen zulassen\" aus um diese Warnung abzuschalten.",
+      "HideTokenConditionsH": "Ob die Icons von Zuständen und Buffs auf dem Token versteckt werden sollen",
+      "CoreEffectsN": "Default Token-Zustände",
+      "UnchainedActionEconomyN": "Alternatives Aktionssystem",
+      "UnchainedActionEconomyH": "Benutze die Regeln des alternativen Aktionssystems.",
+      "SkipActionDialogsN": "Überspringe Aktionsdialoge",
+      "MeasureOnQuickUse": "Reichweitenmessschablone bei schneller Benutzung",
+      "MeasureOnQuickUseHint": "Aktiviert die Reichweitenmessschablone wenn der Aktionsdialog übersprungen wird.",
+      "SkipActionDialogsH": "Überspringe Aktionsdialoge (wie die von Angriffen und Rettungswürfen) es sei denn die Aktion wird mit Shift-Klick ausgelöst",
+      "Sheet": {
+        "InvertFilters": "Inventarfilterverhalten invertieren",
+        "InvertFiltersHint": "Invertiert das Shift-Klick Verhalten von Typfiltern in (Gegenstands-)Abschnitten."
+      },
+      "Houserules": {
+        "CoinDivisor": "Münzgewicht-Divisor",
+        "CoinDivisorHint": "Wie viele Münzen 1 Pfund wiegen. Setze auf null (0) um Geld gewichtlos zu machen. Standard ist 50.",
+        "SpellPointCost": "Default Zauberpunktekosten",
+        "SpellPointCostHint": "Zauberpunktekosten für Zauber, für die keine eigenen Kosten konfiguriert sind.",
+        "AltReach": "Alternative Reichweitenregeln",
+        "AltReachHint": "Verbiete die äußeren Ecken bei 3m Rechweitenmessungen",
+        "NPCProficiencies": "NSC-Geübtheiten",
+        "NPCProficienciesHint": "NSC-Akteure benutzen auch Geübheiten. Wenn dies deaktiviert ist (standard), dann sind sie geübt in allen, wie sie nach RAW haben."
+      },
+      "Chat": {
+        "ObscureInlineRolls": "Inline-Würfe verstecken",
+        "ObscureInlineRollsHint": "Verstecke Inline-Würfe vor Spielern ohne mindestens Beobachter-Rechte.",
+        "ObscureSaveDCs": "Rettungswurf-SGs verstecken",
+        "ObscureSaveDCsHint": "Verstecke SG-Werte vor Spielern in Chat-Karten.",
+        "AutoCollapse": "Gegenstände im Chat-Protokoll automatisch zusammenklappen",
+        "HideButtons": "Verstecke Schaltflächen auf Chat-Karten",
+        "HideButtonsHint": "Ob die Schaltflächen in Chat-Karten, wie die bei Angriffswürfen, versteckt werden sollen.",
+        "NoTargets": "Deaktiviere Attackenziele",
+        "ClearTargets": "Entferne Ziele nach Attacke",
+        "ClearTargetsHint": "Entferne alle Ziele nach dem Angriffswurf.",
+        "AutoCollapseHint": "Objektbeschreibungen im Chat-Protokoll automatisch zusammenklappen",
+        "NoTargetsHint": "Zeige die angezielten Tokens nicht in den Attack-Chat-Karten"
+      },
+      "Health": {
+        "Title": "TP-Konfiguration",
+        "Button": "Konfiguriere TP",
+        "Hint": "Passe die TP-Berechnung für Aktoren an.",
+        "TabBase": "Grundregeln",
+        "TabVariant": "Alternativregeln",
+        "Compute": "Berechne",
+        "Rate": "Halbiert",
+        "Maximized": "Maximiert",
+        "ComputeAuto": "Automatisch",
+        "ComputeManual": "Manuell",
+        "Rounding": "TP Runden",
+        "RoundingHint": "TP-Werte müssen ganze Zahlen sein. Wie soll gerundet werden?",
+        "RoundingUp": "Auf",
+        "RoundingDown": "Ab",
+        "RoundingNearest": "Nächstliegend",
+        "Continuity": "TP-Kontinuität",
+        "Continuous": "Kontinuierlich",
+        "Discrete": "Diskret",
+        "WoundsAndVigor": {
+          "PC": "Wunden und Vitalität für SCs",
+          "PCHint": "Benutze die optionalen Wunden- und Vitalitätsregeln für Spielercharaktere.",
+          "NPC": "Wunden und Vitalität für NSCs",
+          "NPCHint": "Benutze die optionalen Wunden- und Vitalitätsregeln für Nichtspielercharaktere."
+        },
+        "WoundThresholds": {
+          "PC": "Wundgrenzen für SCs",
+          "NPC": "Wundgrenzen für NSCs",
+          "NPCHint": "Benutze die optionalen Regeln für Wundgrenzen für Nichtspielercharaktere.",
+          "PCOverride": "Wundgrenzenüberschreibung bei SCs",
+          "NPCOverride": "Wundgrenzenüberschreibung bei NSCs",
+          "Disabled": "Deaktiviert",
+          "Normal": "Normal",
+          "Gritty": "Gnadenlos",
+          "PCHint": "Benutze die optionalen Regeln für Wundgrenzen für Spielercharaktere.",
+          "PCOverrideHint": "Erlaubt es, die Wundgrenze eines Spielercharakters in the Charaktereinstellungen zu überschreiben. ",
+          "NPCOverrideHint": "Erlaubt es, die Wundgrenze eines Nichtspielercharakters in the Charaktereinstellungen zu überschreiben "
+        },
+        "Instructions": "TP-Berechnung für die verschiedenen Arten von Klassen. Die Pathfinder Society kennt folgende Konfigurationen für Spielercharaktere: automatisch, halber Anteil, erster TW maximiert, aufgerundet, diskrete Kontinuität.",
+        "ContinuityHint": "TP kann diskret oder kontinuierlich berechnet werden. Diskrete TP werden bei jedem Stufenaufstieg gerundet, d.h. dass Kreaturen jedesmal eine feste Anzahl an TP bekommen. Kontinuierliche TP werden erst am Ende gerundet, nachdem alle Trefferwürfel evaluiert wurden, d.h. dass Kreaturen jedesmal eine schwankende Anzahl an TP bekommen.",
+        "CanMaximize": "Kann maximieren",
+        "MaximizedLimit": "Obergrenze maximierte TW",
+        "CanMaximizeHint": "Zählt zu den maximierten Trefferwürfeln.",
+        "Class": {
+          "racial": "Volk",
+          "pc": "SC",
+          "npc": "NSC"
+        }
+      },
+      "DragRulerWalk": "Gehen",
+      "DragRulerDash": "Eilen",
+      "DragRulerRun": "Rennen",
+      "DragRulerUseElevationName": "Höhe bestimmt Bewegungsart",
+      "DragRulerUseElevationHint": "Benutze die Erhebung des Tokens über dem Boden um zu bestimmen, ob ein Token fliegt oder gräbt",
+      "Units": {
+        "SystemHint": "Einheitensystem welches in der Welt verwendet werden soll",
+        "Imperial": "Angloamerikanisch (Fuß, Pfund)",
+        "ImperialDistance": "Angloamerikanisch (Fuß)",
+        "Metric": "Metrisch (Meter, Kilo)",
+        "MetricDistance": "Metrisch (Meter)",
+        "MetricWeight": "Metrisch (Kilo)",
+        "Distance": "Einheitensystem für Entfernungen",
+        "Weight": "Einheitensystem für Gewicht",
+        "WeightHint": "Überschreibe des Einheitensystem welches für Gewicht benutzt wird.",
+        "System": "Einheitensystem",
+        "ImperialWeight": "Angloamerikanisch (Pfund)",
+        "DistanceHint": "Überschreibe des Einheitensystem welches für Entfernungen benutzt wird."
+      },
+      "OverlandVariantN": "Geschwindigkeitsvariante Landweg",
+      "OverlandVariantL": "Berechnungsvariante für die Geschwindkeit auf dem Landweg für metrische Distanzen.",
+      "OverlandMetricExact": "Exakt (Spanisch)",
+      "AllowScriptChangesW": "<b>Diese Einstellung erlaubt es Spielern, beliebigen Code als SL auszuführen.</b><br><br>Bist du dir wirklich sicher, dass du dies erlauben möchtest?",
+      "AllowScriptChangesF": "Eine Änderung des veralteten Types \"Script\" wurde bei {parent} gefunden. Benutze bitte einen anderen Operator. Details wurden in die Console geschrieben.",
+      "HideTokenConditionsN": "Verstecke Token-Zustände",
+      "CoreEffectsH": "Zeige nur PF1-Zustände (angehakt) auf Tokens oder auch Icons von Foundry (unangehakt)",
+      "OverlandMetricRounded": "Gerundet (Deutsch & Französisch)",
+      "TokenTooltip": {
+        "UpdateInfo": "Tooltip-Einstellungen anwenden.",
+        "Anchor": "Tooltip-Anker",
+        "Hide": {
+          "Buffs": "Alle Buffs verstecken",
+          "BuffsHint": "Verstecke Buffs vor allen Spielern",
+          "Conditions": "Alle Zustände verstecken",
+          "ArmorHint": "Verstecke Rüstung vor allen Spielern",
+          "ConditionsHint": "Verstecke Zustände vor allen Spielern",
+          "Clothing": "Alle Kleidung verstecken",
+          "ActorName": {
+            "ByDispositionHint": "Verstecke Aktornamen vor allen Spielen bei schlechterer Einstellung des Aktors.",
+            "ByDisposition": "Alle Aktornamen verstecken",
+            "MinimumPermission": "Minimalrechte für Namen",
+            "Replacement": "Ersatzname für versteckte Aktornamen",
+            "MinimumPermissionHint": "Benötigte Minimalrechte um den echten Namen des Tokens zu sehen."
+          },
+          "Portraits": "Alle Portraits verstecken",
+          "Held": "Alle gehaltenen Gegenstände verstecken",
+          "HeldHint": "Verstecke gehaltene Gegenstände vor allen Spielern",
+          "Armor": "Alle Rüstungen verstecken",
+          "ClothingHint": "Verstecke Kleidung vor allen Spielern"
+        },
+        "Name": "Konfiguration Token-Tooltip",
+        "HideWithoutKey": "Verstecke sofern nicht {key} gedrückt",
+        "World": {
+          "Name": "Globale Konfiguration Token-Tooltip",
+          "Label": "Globale Konfiguration",
+          "Hint": "Ändere Tooltip-Einstellungen für alle Nutzer"
+        },
+        "Label": "Token-Tooltip",
+        "Hint": "Tooltip-Einstellungen ändern",
+        "ResetInfo": "Tooltip-Einstellungen zurücksetzen.",
+        "Offset": "Tooltip-Offset",
+        "MaxPortraitSize": "Maximale Portraitgröße",
+        "Disable": "Tooltips ausschalten"
+      },
+      "CriticalConfirm": "Bestätigungswurf",
+      "CriticalConfirmHint": "Wenn deaktiviert, dann wird der Bestätigungswurf durch das Zeigen des Verteigung-SG ersetzt, um Rüstung als SR als optinale Regel zu nutzen.",
+      "Cybertech": "Kybernetik",
+      "CybertechHint": "Aktiviere kybernetische Fertigkeiten, wie zum Beispiel das Anzeigen von Implantatskapazitäten, sogar ohne installierte Kybernetik."
+    },
+    "SpellComponents": {
+      "Label": "Zauberkomponenten",
+      "Misc": "Sonstige Komponenten",
+      "Type": {
+        "verbal": {
+          "Label": "Verbal",
+          "Abbr": "V"
+        },
+        "somatic": {
+          "Label": "Gesten",
+          "Abbr": "G"
+        },
+        "thought": {
+          "Label": "Gedanken",
+          "Abbr": "D"
+        },
+        "emotion": {
+          "Label": "Emotionen",
+          "Abbr": "E"
+        },
+        "material": {
+          "Label": "Material",
+          "Abbr": "M",
+          "Desc": "Materialbeschreibung",
+          "Value": "Materialwert"
+        },
+        "focus": {
+          "Label": "Fokus",
+          "Abbr": "F"
+        },
+        "divineFocus": {
+          "Label": "Göttlicher Fokus",
+          "Abbr": "GF"
+        }
+      },
+      "DFVariants": {
+        "DF": "GF",
+        "MDF": "M/GF",
+        "FDF": "F/GF"
+      }
+    },
+    "TotalItemValue": "Gesamtwert aller Gegenstände: {gp} GM, {sp} SM, {cp} KM",
+    "Containers": {
+      "Contents": {
+        "Label": "Inhalt",
+        "Weight": "Gewicht des Inhalts",
+        "Value": "Wert des Inhalts",
+        "SellValue": "Verkaufswert des Inhalts",
+        "Take": "Aus Behälter nehmen"
+      },
+      "TotalValue": "Gesamtwert: {gp} GM, {sp} SM, {cp} KM",
+      "SellValue": "Verkaufswert: {gp} GM, {sp} SM, {cp} KM"
+    },
+    "AmmoType": {
+      "arrow": "Pfeil",
+      "bolt": "Bolzen",
+      "repeatingBolt": "Bolzen (repetierend)",
+      "dart": "Wurfpfeil",
+      "siege": "Belagerungswaffen",
+      "slingBullet": "Kugel (Schleuder)",
+      "gunBullet": "Kugel (Feuerwaffe)",
+      "dragoonBullet": "Kugel (Dragoner)"
+    },
+    "Time": {
+      "Period": {
+        "turn": {
+          "Label": "Zug",
+          "Short": "Zug"
+        },
+        "round": {
+          "Label": "Runden",
+          "Short": "Runden"
+        },
+        "minute": {
+          "Label": "Minuten",
+          "Short": "min"
+        },
+        "inst": {
+          "Label": "Sofort"
+        },
+        "hour": {
+          "Short": "std",
+          "Label": "Stunden"
+        },
+        "day": {
+          "Label": "Tage"
+        },
+        "month": {
+          "Label": "Monate"
+        },
+        "year": {
+          "Label": "Jahre"
+        },
+        "perm": {
+          "Label": "Permanent"
+        },
+        "second": {
+          "Short": "sek",
+          "Label": "Sekunden"
+        }
+      },
+      "Format": "{value} {unit}"
+    },
+    "AssociatedClass": "Verbundene Klasse",
+    "SpellSchools": {
+      "abj": "Bannzauber",
+      "con": "Beschwörung",
+      "div": "Erkenntniszauber",
+      "enc": "Verzauberung",
+      "evo": "Hervorrufung",
+      "ill": "Illusion",
+      "nec": "Nekromantie",
+      "tra": "Verwandlung",
+      "uni": "Universell"
+    },
+    "AllRangedDamage": "Aller Fernkampfschaden",
+    "Harmless": "Harmlos",
+    "LevelOffset": "Zauberstufenoffset",
+    "Transferred": "Übertragen",
+    "HealBonus": "Heilungsbonus",
+    "HealBonusHint": "z.B. 1d6 + 6[Wundheiler]",
+    "TemplateSizeFormula": "Größenformel (ft)",
+    "TemplateSizeFormulaHint": "Bestimmt die Entfernung von Kegeln und Strahlen, den Radius von Kreisen und die Seitenlänge von Rechtecken.",
+    "AmmunitionType": "Munitionstyp",
+    "ContentSource": {
+      "Autofill": "Automatisch aus dem Quellenverzeichnis übernommen.",
+      "Info": {
+        "Release": "Veröffentlichungsdatum"
+      },
+      "AddEntry": "Quelle hinzufügen",
+      "NewEntry": "Neue Quelle",
+      "DelEntry": "Quelle entfernen",
+      "DelTitle": "Quelle entfernen: {entry}",
+      "DelEntryDesc": "Möchtest du wirklich \"{entry}\" löschen?",
+      "Extras": "Weitere Quellen",
+      "DateFormat": "YYYY-MM-DD"
+    },
+    "Troubleshooter": {
+      "Steps": {
+        "Foundry": "Lese Foundrys {link}.",
+        "FoundryLink": "Benutzerdokumentation"
+      }
+    },
+    "ActionTypes": {
+      "msak": "Nahkampfzauberangriff",
+      "rsak": "Fernkampfzauberangriff",
+      "mcman": "Nahkampf-Kampfmanöver",
+      "rcman": "Fernkampf-Kampfmanöver",
+      "spellSave": "Rettungswurf (Zauber)",
+      "save": "Rettungswurf",
+      "heal": "Heilung",
+      "other": "Sonstige",
+      "mwak": "Nahkampfwaffenangriff",
+      "rwak": "Fernkampfwaffenangriff",
+      "twak": "Wurfwaffenangriff"
+    },
+    "LinkTypeSupplements": "Beigaben",
+    "LinkHelpSupplements": "Beigaben sind Gegenstände, die mit diesem Gegenstand zusätzlich zum Aktor übertragen werden.",
+    "DamageAlignment": {
+      "Override": "Überschreibt Ausgangsgegenstand",
+      "Inherit": "Erbt von Ausgangsgegenstand"
+    },
+    "AlignmentL": "Rechtschaffen",
+    "AlignmentC": "Chaotisch",
+    "AlignmentG": "Gut",
+    "AlignmentE": "Böse",
+    "WarningNoActionInItem": "Gegenstand \"{item}\" hat keine Aktion \"{action}\"",
+    "EnrichedText": {
+      "Add": "Füge {value} hinzu",
+      "Remove": "Entferne {value}",
+      "Toggle": "Schalte {value} um",
+      "Browse": "Durchblätter {value}",
+      "AsSpeaker": "Handle als Sprecher",
+      "Roll": "Würfle",
+      "Error": "Fehler",
+      "Condition": {
+        "Duration": "Dauer: {period} {unit}"
+      },
+      "Errors": {
+        "NoCategory": "Kategorie nicht gefunden",
+        "ItemNotFound": "Vorgegebener Gegenstand nicht gefunden.",
+        "UnsupportedItemType": "Nicht unterstützte Gegenstandsart \"{type}\"",
+        "NoItemInMessage": "Kein relevanter Gegenstand in Nachricht gefunden.",
+        "BrowserNotFound": "Kein Kompendium-Browser für \"{category}\" gefunden!",
+        "NoActors": "Kein valider Aktor gefunden."
+      },
+      "Health": {
+        "Heal": "Heile {value} {NL}",
+        "Damage": "Schaden {value} {NL}",
+        "NL": "NT"
+      }
+    },
+    "StackDetails": {
+      "Stack": "Stapel: {value}",
+      "Contents": "Inhalt: {value}",
+      "Total": "Gesamt: {value}",
+      "Base": "Basis: {value}"
+    },
+    "LanguageCatfolk": "Felin",
+    "LanguageKasatha": "Kasatha",
+    "LanguageSamsaran": "Samsarisch",
+    "LanguageSasquatch": "Sasquatch",
+    "LanguageStrix": "Strix",
+    "LanguageLashunta": "Laschun",
+    "LanguageMunavri": "Munavrisch",
+    "LanguageReptoid": "Repto",
+    "LanguageRougarou": "Rougarou",
+    "LanguageSyrinx": "Syrinxisch",
+    "LanguageTriaxian": "Triaxisch",
+    "LanguageVanaran": "Vanarisch",
+    "LanguageVishkanya": "Vischkanisch",
+    "LanguageYaddithian": "Yaddithisch",
+    "WoundLevel": {
+      "grazed": "Angeschlagener Zustand",
+      "wounded": "Verletzter Zustand",
+      "critical": "Schwer verletzter Zustand",
+      "healthy": "Gesunder Zustand"
+    },
+    "LevelUp": {
+      "Title": "Stufenaufstieg {className}",
+      "Health": {
+        "Label": "Trefferpunkte",
+        "Roll": {
+          "Label": "Würfeln"
+        },
+        "Manual": {
+          "Label": "Manuell"
+        },
+        "Auto": {
+          "Desc": "Die Trefferpunkte werden automatisch nach der gegebenen Rate ({rate}%) berechnet.",
+          "Label": "Auto"
+        },
+        "Maximized": {
+          "Desc": "Die Trefferpunkte erhöhen sich um das Maximum des Trefferwürfels.",
+          "Label": "Maximiert"
+        },
+        "Static": {
+          "Label": "Statisch",
+          "Desc": "Die Trefferpunkte erhöhen sich entsprechend der Klasse."
+        }
+      },
+      "Add": "Hinzufügen {class}",
+      "Increase": "Stufenaufstieg {class}",
+      "Action": "Stufenaufstieg",
+      "NewLevel": "Neue Stufe",
+      "NewTier": "Neue Legendenstufe",
+      "FC": {
+        "None": {
+          "Desc": "Du bekommst nichts, entweder weil deine Klasse keine Boni erhält oder du keinen Bonus gewählt hast.",
+          "Label": "Keine"
+        },
+        "HP": {
+          "Label": "Trefferpunkte"
+        },
+        "Skill": {
+          "Label": "Fertigkeitspunkt"
+        },
+        "Alt": {
+          "Label": "Alternativ"
+        }
+      },
+      "AbilityScore": {
+        "Next": "Das nächste mal für Charakterstufe {level}."
+      },
+      "SkipHint": "Füge die Klasse ohne Änderung hinzu und ignoriere die Auswahl in diesem Dialog. Klassenzugehörigkeiten und andere einfache Verbesserungen (wie GAB) werden trotzdem hinzugefügt.",
+      "Summary": {
+        "AdventureSkills": "Abenteuerfertigkeitsränge",
+        "BackgroundSkills": "Hintergrundfertigkeitsränge"
+      },
+      "Chat": {
+        "Health": {
+          "Auto": "Automatisch: {add}",
+          "Static": "Statisch: {add}"
+        },
+        "AbilityScore": {
+          "Gain": "{abl}: +{value}"
+        }
+      }
+    },
+    "WeaponGroup": {
+      "axes": "Äxte",
+      "bladesHeavy": "Klingen, Schwere",
+      "bladesLight": "Klingen, Leichte",
+      "bows": "Bögen",
+      "close": "Nahbereichswaffen",
+      "crossbows": "Armbrüste",
+      "double": "Doppelwaffen",
+      "firearms": "Feuerwaffen",
+      "flails": "Flegel",
+      "hammers": "Hämmer",
+      "monk": "Mönchswaffen",
+      "natural": "Natürliche",
+      "polearms": "Stangenwaffen",
+      "siegeEngines": "Belagerungsgeräte",
+      "spears": "Speere",
+      "thrown": "Wurfwaffen",
+      "tribal": "Stammeswaffen"
+    },
+    "Condition": {
+      "bleed": "Blutend",
+      "blind": "Blind",
+      "confused": "Verwirrt",
+      "dazzled": "Geblendet",
+      "deaf": "Taub",
+      "entangled": "Verstrickt",
+      "fatigued": "Erschöpft",
+      "exhausted": "Entkräftet",
+      "grappled": "Ringend",
+      "incorporeal": "Körperlos",
+      "invisible": "Unsichtbar",
+      "paralyzed": "Gelähmt",
+      "prone": "Liegend",
+      "pinned": "Im Haltegriff",
+      "fear": "Angst (Erschüttert, Verängstigt, In Panik)",
+      "shaken": "Erschüttert",
+      "frightened": "Verängstigt",
+      "panicked": "In Panik",
+      "sickened": "Kränkelnd",
+      "staggered": "Wankend",
+      "stunned": "Betäubt",
+      "nauseated": "Übelkeit",
+      "dazed": "Benommen",
+      "sleep": "Schlaf",
+      "cowering": "Kauernd",
+      "squeezing": "Durchzwängen",
+      "deathEffects": "Todeseffekte",
+      "disease": "Krankheit",
+      "energyDrain": "Energieentzug",
+      "mindAffecting": "Geistesbeeinflussung",
+      "poison": "Gift",
+      "petrified": "Versteinert",
+      "helpless": "Hilflos",
+      "polymorph": "Verwandlung"
+    },
+    "Alignments": {
+      "c": "Chaotisch",
+      "g": "Gut",
+      "lg": "Rechtschaffend Gut",
+      "ng": "Neutral Gut",
+      "cg": "Chaotisch Gut",
+      "ln": "Rechtschaffend Neutral",
+      "tn": "Neutral",
+      "cn": "Chaotisch Neutral",
+      "ne": "Neutral Böse",
+      "ce": "Chaotisch Böse",
+      "Short": {
+        "lg": "RG",
+        "ng": "NG",
+        "cg": "CG",
+        "ln": "RN",
+        "tn": "NN",
+        "cn": "CN",
+        "ne": "NB",
+        "ce": "CB",
+        "le": "RB"
+      },
+      "l": "Rechtschaffend",
+      "e": "Böse",
+      "le": "Rechtschaffend Böse"
+    },
+    "Distance": {
+      "personal": "Persönlich",
+      "touch": "Berührung",
+      "melee": "Nahkampf",
+      "reach": "Reichweite",
+      "close": "Nah",
+      "medium": "Mittel",
+      "long": "Weit",
+      "ftShort": "ft",
+      "mi": "Meilen",
+      "miShort": "mi",
+      "m": "Meter",
+      "mShort": "m",
+      "km": "Kilometer",
+      "kmShort": "km",
+      "ft": "Fuß"
+    },
+    "Sense": {
+      "blindsight": "Blindsicht",
+      "darkvision": "Dunkelsicht",
+      "tremorsense": "Erschütterungssinn",
+      "truesight": "Wahrer Blick",
+      "lowlight": "Dämmersicht",
+      "seeInvis": "Unsichtbares sehen",
+      "seeInDark": "Im Dunkeln sehen",
+      "blindsense": "Blindgespür",
+      "scent": "Geruchssinn",
+      "trueseeing": "Wahrer Blick"
+    },
+    "BuffTarSpellEffect": "Zaubereffekt",
+    "Language": {
+      "gnoll": "Gnoll",
+      "dwarven": "Zwergisch",
+      "dziriak": "D'ziriakisch",
+      "elven": "Elfisch",
+      "gnome": "Gnomisch",
+      "giant": "Riesisch",
+      "goblin": "Goblinisch",
+      "grippli": "Grippli",
+      "halfling": "Halblingisch",
+      "druidic": "Druidisch",
+      "orc": "Orkisch",
+      "necril": "Nekril",
+      "orvian": "Orvisch",
+      "osiriani": "Osirisch",
+      "polyglot": "Polyglott",
+      "protean": "Proteanisch",
+      "reptoid": "Repto",
+      "skald": "Skald",
+      "vudrani": "Vudrisch",
+      "yaddithian": "Yaddithisch",
+      "abyssal": "Abyssisch",
+      "aklo": "Aklo",
+      "ancientosiriani": "Alt-Osiriani",
+      "androffan": "Androffani",
+      "aquan": "Aqual",
+      "auran": "Aural",
+      "azlanti": "Azlanti",
+      "boggard": "Boggard",
+      "catfolk": "Felin",
+      "celestial": "Celestisch",
+      "common": "Gemeinsprache",
+      "cyclops": "Zyklopisch",
+      "dark": "Dunkelwelsch",
+      "draconic": "Drakonisch",
+      "drowsign": "Zeichensprache der Drow",
+      "hallit": "Hallit",
+      "ignan": "Ignal",
+      "infernal": "Infernalisch",
+      "jistka": "Jistka",
+      "kelish": "Kelisch",
+      "lashunta": "Laschun",
+      "munavri": "Munavrisch",
+      "rougarou": "Rougarou",
+      "samsaran": "Samsarisch",
+      "sasquatch": "Sasquatch",
+      "shoanti": "Schoanti",
+      "strix": "Strix",
+      "sylvan": "Sylvanisch",
+      "syrinx": "Syrinxisch",
+      "taldane": "Taldani",
+      "tekritanin": "Tekritanisch",
+      "tengu": "Tengu",
+      "terran": "Terral",
+      "thassilonian": "Thassilonisch",
+      "tien": "Tien",
+      "treant": "Baumhirtisch",
+      "triaxian": "Triaxisch",
+      "undercommon": "Finsterländisch",
+      "vanaran": "Vanarisch",
+      "varisian": "Varisisch",
+      "vegepygmy": "Pflanzenpygmäisch",
+      "vishkanya": "Vischkanisch",
+      "aboleth": "Abolethisch",
+      "kasatha": "Kasatha",
+      "shadowtongue": "Schattensprache",
+      "sphinx": "Sphinx"
+    },
+    "CreatureTypes": {
+      "aberration": "Aberration",
+      "outsider": "Externar",
+      "magicalBeast": "Magische Bestie",
+      "monstrousHumanoid": "Monströser Humanoid",
+      "ooze": "Schlick",
+      "dragon": "Drache",
+      "fey": "Feenwesen",
+      "humanoid": "Humanoid",
+      "vermin": "Ungeziefer",
+      "animal": "Tier",
+      "construct": "Konstrukt",
+      "plant": "Pflanze",
+      "undead": "Untoter"
+    },
+    "ModifierType": {
+      "enhancement": "Verbesserung",
+      "dodge": "Ausweichen",
+      "inherent": "Innewohnend",
+      "racial": "Volk",
+      "size": "Größe",
+      "insight": "Verständnis",
+      "resistance": "Resistenz",
+      "profane": "Unheilig",
+      "trait": "Wesenszug",
+      "untyped": "Untypisiert",
+      "untypedPerm": "Untypisiert (Permanent)",
+      "base": "Basis",
+      "deflection": "Ablenkung",
+      "morale": "Moral",
+      "luck": "Glück",
+      "sacred": "Heilig",
+      "competence": "Kompetenz",
+      "circumstance": "Situation",
+      "alchemical": "Alchemistisch",
+      "penalty": "Malus",
+      "haste": "Hast"
+    },
+    "WeaponPropSemiAutomatic": "Halbautomatisch",
+    "WeaponPropSlowFiring": "Einzelfeuer",
+    "Dismissable": "Aufhebbar",
+    "DismissableMark": "(A)",
+    "ScriptCalls": {
+      "PostUse": {
+        "Name": "Nach Benutzung",
+        "Info": "Wird aufgerufen, nachdem der Gegenstand 'benutzt' wurde und alle relevanten Abfertigungen vom System fertig sind."
+      }
+    },
+    "AmmunitionPerAttack": "Munitionskosten (pro Angriff)",
+    "ExtraAttacks": {
+      "Advanced": "Iterative + Eigene",
+      "Custom": "Eigene",
+      "Add": "Zusätzlichen Angriff hinzufügen",
+      "ModifierFormula": "Angriffsmodifikatorformel",
+      "Formula": {
+        "Label": "Durch Formel",
+        "LabelDefault": "Angriff #{0}",
+        "LabelTooltip": "Füge <code>{0}</code> ein um den iterativen Zähler zu zeigen.",
+        "Count": "Angriffsanzahlformel"
+      },
+      "Label": "Zusätzliche Angriffe",
+      "Standard": "Iterative",
+      "ModifierTooltip": "<code>@formulaicAttack</code> kann benutzt werden, um darauf Bezug zu nehmen, der wievielte Angriff dies ist.",
+      "Flurry": "Schlaghagel (Grundregelwerk)",
+      "UnFlurry": "Schlaghagel (Alternativregeln)",
+      "FlurryFlavor": "Schlaghagel"
+    },
+    "Standard": "Standard",
+    "Manual": "Manuell",
+    "PowerAttackMode": "Modus für Heftiger Angriff",
+    "SpellDescriptors": {
+      "air": "Luft",
+      "cold": "Kälte",
+      "darkness": "Dunkelheit",
+      "death": "Tod",
+      "disease": "Krankheit",
+      "draconic": "Drakonisch",
+      "earth": "Erde",
+      "electricity": "Elektrizität",
+      "emotion": "Gefühl",
+      "evil": "Böse",
+      "fear": "Furcht",
+      "fire": "Feuer",
+      "good": "Gut",
+      "languageDependent": "Sprachabhängig",
+      "lawful": "Ordnung",
+      "light": "Licht",
+      "meditative": "Meditativ",
+      "pain": "Schmerz",
+      "ruse": "List",
+      "shadow": "Schatten",
+      "sonic": "Schall",
+      "water": "Wasser",
+      "acid": "Säure",
+      "chaotic": "Chaos",
+      "curse": "Fluch",
+      "force": "Energie",
+      "mindAffecting": "Geistesbeeinflussung",
+      "poison": "Gift"
+    },
+    "Footnotes": "Fußnoten",
+    "FootnotesHint": "Anmerkungen, die nur am unteren Rand von Chatkarten angezeigt werden.",
+    "EffectNotesHint": "Anmerkungen, die bei jedem Vorkommen angezeigt werden, z.B. für einen jeden individuellen Angriff.",
+    "Finish": "Fertig",
+    "BABOverride": "GAB-Überschreibung",
+    "CasterLevelAbbr": "ZS",
+    "SpellDC": "Zauber-SG",
+    "Chat": {
+      "Visibility": {
+        "Blind": "Blind",
+        "Self": "Selbst",
+        "Public": "Öffentlich",
+        "Private": "Privat"
+      }
+    },
+    "WarningFormulaMustBeDeterministic": "Formel muss deterministisch sein (keine Würfelwürfe oder andere Zufallselemente).",
+    "HalfBAB": "1/2 GAB",
+    "DefenseDC": "Verteidigung-SG",
+    "Rolls": {
+      "Check": {
+        "Label": "Wurf"
+      }
+    },
+    "WarningInvalidInput": "Ungültiger Wert",
+    "SplitValue": "{gp} GM, {sp} SM, {cp} KM",
+    "WeightReduction": {
+      "Percentage": "Anteilig",
+      "Flat": "Pauschal",
+      "Label": "Gewichtsreduktion"
+    },
+    "Quickbar": "Quickbar",
+    "AutoBroken": "Automatisch beschädigt wegen den verbleibenden Trefferpunkten.",
+    "Splash": "Flächenwirkung",
+    "CompendiumBrowser": {
+      "ClearFilters": "Filter löschen",
+      "ReloadPacks": "Pakete neu laden"
+    },
+    "QuickbarHint": "Im Token-HUD und in der Zusammenfassung anzeigen.",
+    "SellValue": "Verkaufspreis",
+    "Duplicate": "Duplizieren",
+    "Delete": "Löschen",
+    "WeaponProperty": {
+      "Blocking": "Blockierend",
+      "Automatic": "Automatik",
+      "Brace": "Abwehr",
+      "Deadly": "Tödlich",
+      "Distracting": "Ablenkend",
+      "Double": "Doppelwaffe",
+      "Disarm": "Entwaffnen",
+      "Finesse": "Finesse",
+      "Grapple": "Ringkampf",
+      "Improvised": "Improvisiert",
+      "Monk": "Mönch",
+      "NonLethal": "Nichttödlich",
+      "Performance": "Schaukampf",
+      "Reach": "Reichweite",
+      "Scatter": "Streuwaffe",
+      "SemiAutomatic": "Halbautomatisch",
+      "SlowFiring": "Einzelfeuer",
+      "Sunder": "Zerschmettern",
+      "Special": "Speziell",
+      "Thrown": "Wurfwaffe",
+      "Fragile": "Zerbrechlich",
+      "Trip": "Zu-Fall-bringen"
+    },
+    "FavouredClass": {
+      "Bonuses": {
+        "skill": "Fertigkeiten",
+        "hp": "Trefferpunkte",
+        "alt": "Alternativ",
+        "Label": "Bevorzugte-Klasse-Boni"
+      }
+    },
+    "WeaponSubtypeLight": "Leicht",
+    "WeaponSubtypeOneHanded": "Einhändig",
+    "WeaponSubtypeTwoHanded": "Zweihändig",
+    "Proficiency": {
+      "Armor": {
+        "LabelPlural": "Umgang mit Rüstungen",
+        "light": "Leichte Rüstungen",
+        "medium": "Mittelschwere Rüstungen",
+        "heavy": "Schwere Rüstungen",
+        "shield": "Schilde",
+        "tower": "Turmschilde"
+      },
+      "Weapon": {
+        "LabelPlural": "Umgang mit Waffen",
+        "simple": "Einfache Waffen",
+        "martial": "Kriegswaffen"
+      },
+      "Granted": "Gewährte Kenntnisse",
+      "Penalty": "Eingebüßte Kenntnisse"
+    },
+    "ChangeFlags": {
+      "LoseDexToAC": "Verliere GE-Bonus auf RK",
+      "NoMediumEncumbrance": "Unbeeinflusst durch mittelschwere Belastung",
+      "NoHeavyEncumbrance": "Unbeeinflusst durch schwere Belastung",
+      "HeavyArmorFullSpeed": "Volle Geschwindigkeit in schwerer Rüstung",
+      "MediumArmorFullSpeed": "Volle Geschwindigkeit in mittelschwerer Rüstung"
+    },
+    "Error": {
+      "GenericPermission": "Du bist nicht authorisiert diese Aktion durchzuführen",
+      "NoActorPermission": "Du bist nicht authorisiert diesen Aktor zu kontrollieren",
+      "NoActorPermissionAlt": "Du bist nicht authorisiert Aktor \"{name}\" zu kontrollieren",
+      "NoFormula": "{name} hat keine Wurfformel!",
+      "ItemNoOwner": "Dieser Gegenstand hat keinen Besitzer",
+      "SpellbookExists": "Zauberbuch existiert schon",
+      "NoFreeSpellbooks": "Keine freien Zauberbücher",
+      "ItemFormula": "Formelfehler in Gegenstand \"{item}\" bei Aktor \"{actor}\"",
+      "ActionFormula": "Formelfehler in Aktion \"{action}\" in Gegenstand \"{item}\" bei Aktor \"{actor}\"",
+      "NoCharges": "{name} hat keine Aufladungen mehr",
+      "InsufficientCharges": "{name} hat nicht genug Aufladungen",
+      "NoQuantity": "Du hast davon keine weiteren Gegenstände mehr",
+      "NoSpellsLeft": "Du hast keine Zauber dieses Typs mehr",
+      "ActorNotFound": "Aktor mit ID {id} nicht gefunden",
+      "CantIdentify": "Du bist nicht befugt Gegenstände zu identifizieren",
+      "NoApplicableActorFoundForAction": "Kein passender Aktor für Aktion '{name}' gefunden",
+      "CouldNotFindActorByName": "Kein Aktor mit Namen '{name}' gefunden",
+      "FeatDisabled": "Dieses Talent ist deaktiviert",
+      "NoMacroID": "Kein Makro mit ID '{id}' gefunden",
+      "EmptySkillTag": "Talent-Tag darf nicht leer sein",
+      "SkillTagAlreadyExists": "Talent-Tag '{tag}' existiert schon"
+    },
+    "Warning": {
+      "NoDiceAllowedInFormula": "In Formel '{formula}' für {context} sind keine Würfelwürfe erlaubt",
+      "CannotCreateChargeLink": "Konnte keinen Ladungen-Link zwischen {source} und {target} erstellen, da {target} bereit selber Ladungen-Links besitzt",
+      "FormulaMustBeDeterministic": "Formel muss deterministisch sein (keine Würfelwürfe oder andere Zufallselemente).",
+      "InvalidInput": "Ungültiger Wert",
+      "NoSizeDie": "Konnte {formula} nicht auf die gewünschte Größe anpassen, würfle stattdessen {fallback}",
+      "DuplicateDFlag": "Konflikt im Dictionary-Flag \"{key}\" für Gegenstand \"{item}\" (mit Identifikator \"{tag}\") im Aktor \"{actor}\".",
+      "DuplicateTag": "Gegenstand \"{item}\" in Aktor \"{actor}\" hat den gleichen Identifikator \"{tag}\".",
+      "InsufficientAmmunition": "Du hast nicht genug Munition vom Typ {type}",
+      "MissingAmmunition": "Zum Angriff verknüpfte Munition fehlt.",
+      "ConditionalRoll": "Formel-Wurf Nr {number} von Bedingtem Modifikator {name} hat einen Fehler verursacht",
+      "NoItemOnActor": "Aktor \"{actor}\" hat keinen Gegenstand \"{item}\"",
+      "NoActionInItem": "Gegenstand \"{item}\" hat keine Aktion \"{action}\"",
+      "InvalidUUID": "Ungültige UUID \"{uuid}\"",
+      "CannotCreateChargeLink2": "Konnte keinen Ladungen-Link zwischen {source} und {target} erstellen, da {target} bereit mit {deeptarget} verlinkt ist",
+      "NoCombatantFound": "Kein Kampfteilnehmer gefunden"
+    },
+    "NaturalArmor": "Natürliche Rüstung",
+    "ModifierOnly": "Nur Modifikator",
+    "RequiresAutoSlots": "Automatische Zauberplatzberechnung muss dafür aktiviert sein.",
+    "CustomBonus": "Eigener Bonus",
+    "CustomBonusType": "Eigener Bonus ({type})",
+    "AutoSlotIncompatible": "Automatische Zauberplatzberechnung muss dafür deaktiviert sein.",
+    "QuantityAdd": "Erhöhe Menge<br><br>Klick: 1<br>Shift + Klick: 5<br>Strg + Klick: 10",
+    "QuantitySub": "Verringere Menge<br><br>Klick: -1<br>Shift + Klick: -5<br>Strg + Klick: -10",
+    "CheckOnly": "Nur Probe",
+    "EnhancementInline": "+{bonus} Verbesserung",
+    "Average": "Durchschnitt",
+    "Radius": "Radius",
+    "ChargesDepleted": "Keine Aufladungen mehr!",
+    "ArmorOrShield": "Rüstung/Schild",
+    "Cybertech": {
+      "Implantation": "Implantation",
+      "Disabled": "Ausgeschaltet",
+      "Slots": {
+        "none": "Keiner",
+        "arm": "Arm",
+        "body": "Körper",
+        "ears": "Ohren",
+        "eyes": "Augen",
+        "head": "Kopf",
+        "legs": "Beine",
+        "brain": "Gehirn"
+      },
+      "Install": "Installation-SG"
+    },
+    "InventoryImplants": "Implantate",
+    "InventoryEquipment": "Ausrüstung",
+    "Implanted": "Implantiert",
+    "PerAttack": "Pro Angriff",
+    "AverageShort": "Durchschn.",
+    "Dialog": {
+      "SplitItem": {
+        "Keep": "Behalten",
+        "Split": "Aufteilen"
+      }
+    },
+    "StartingWealth": "Anfangsvermögen",
+    "Misfire": "Fehlzündung",
+    "Capacity": "Kapazität"
+  }
 }

@@ -233,7 +233,7 @@ export class ItemChange {
         } else if (this.isDeferred && RollPF.parse(this.formula).some((t) => !t.isDeterministic)) {
           value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
         } else {
-          value = RollPF.safeRoll(
+          value = RollPF.safeRollSync(
             this.formula,
             rollData,
             [t, this, rollData],

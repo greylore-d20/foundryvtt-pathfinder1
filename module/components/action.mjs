@@ -202,7 +202,7 @@ export class ItemAction {
     }
 
     rollData ??= this.getRollData();
-    const cost = RollPF.safeRoll(formula, rollData).total;
+    const cost = RollPF.safeRollAsync(formula, rollData).total;
     return this.item.isSingleUse ? Math.clamped(cost, -1, 1) : cost;
   }
 
@@ -386,7 +386,7 @@ export class ItemAction {
         const dcSchoolBonus = rollData.attributes.spells?.school?.[this.item.system.school]?.dc ?? 0;
         const universalDCBonus = rollData.attributes?.spells?.school?.all?.dc ?? 0;
 
-        return RollPF.safeRoll(formula, rollData).total + dcBonus + dcSchoolBonus + universalDCBonus;
+        return RollPF.safeRollSync(formula, rollData).total + dcBonus + dcSchoolBonus + universalDCBonus;
       } else {
         // Assume standard base formula for spells with minimum required abilty score
         const level = this.item?.system.level ?? 1;
@@ -395,7 +395,7 @@ export class ItemAction {
       }
     } else {
       const dcFormula = this.data.save.dc.toString() || "0";
-      result = RollPF.safeRoll(dcFormula, rollData).total + dcBonus;
+      result = RollPF.safeRollSync(dcFormula, rollData).total + dcBonus;
       return result;
     }
   }
@@ -451,7 +451,7 @@ export class ItemAction {
     for (const c of conds) {
       for (const m of c.modifiers) {
         if (m.target !== "damage") continue;
-        const roll = RollPF.safeRoll(m.formula, rollData);
+        const roll = RollPF.safeRollAsync(m.formula, rollData);
         if (roll.err) continue;
         const isModifier = mods.includes(m.type);
         fakeCondChanges.push({
@@ -506,7 +506,7 @@ export class ItemAction {
 
     // BAB override
     if (result.action.bab) {
-      const bab = RollPF.safeRoll(result.action.bab, result).total;
+      const bab = RollPF.safeRollSync(result.action.bab, result).total;
       foundry.utils.setProperty(result, "attributes.bab.total", bab || 0);
     }
 
@@ -637,10 +637,6 @@ export class ItemAction {
     this.data.actionType ||= "other";
 
     const rollData = this.getRollData();
-    // Parse formulaic attacks
-    if (this.hasAttack) {
-      this.parseFormulaicAttacks({ rollData });
-    }
 
     // Update conditionals
     if (this.data.conditionals instanceof Array) {
@@ -650,7 +646,7 @@ export class ItemAction {
     // Prepare max personal charges
     if (this.data.uses.self?.per) {
       const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;
-      const maxUses = RollPF.safeRoll(maxFormula, rollData).total ?? 0;
+      const maxUses = RollPF.safeRollSync(maxFormula, rollData).total ?? 0;
       foundry.utils.setProperty(this.data, "uses.self.max", maxUses);
     }
 
@@ -811,51 +807,6 @@ export class ItemAction {
 
   // -----------------------------------------------------------------------
 
-  parseFormulaicAttacks({ formula = null, rollData } = {}) {
-    if (!this.actor) return;
-
-    const exAtkCountFormula = formula || this.data.extraAttacks?.formula?.count || "0";
-    let extraAttacks = 0,
-      xaroll;
-    rollData ??= this.getRollData();
-    if (exAtkCountFormula.length > 0) {
-      xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
-      extraAttacks = Math.clamped(xaroll.total, 0, 50); // Arbitrarily clamp attacks
-    }
-    if (xaroll?.err) {
-      const msg = game.i18n.format("PF1.Error.ActionFormula", {
-        action: this.name,
-        item: this.item?.name,
-        actor: this.actor?.name,
-      });
-      console.warn(msg, xaroll.err, exAtkCountFormula, this);
-      ui.notifications.warn(msg, { console: false });
-    }
-
-    // Test bonus attack formula
-    const exAtkBonusFormula = this.data.extraAttacks?.formula?.bonus || "0";
-    try {
-      if (exAtkBonusFormula.length > 0 && exAtkBonusFormula != 0) {
-        rollData.attackCount = 1;
-        RollPF.safeRoll(exAtkBonusFormula, rollData);
-        delete rollData.attackCount;
-      }
-    } catch (err) {
-      const msg = game.i18n.format("PF1.Error.ActionFormula", {
-        action: this.name,
-        item: this.item?.name,
-        actor: this.actor?.name,
-      });
-      console.error(msg, err, exAtkBonusFormula, this);
-      ui.notifications.error(msg, { console: false });
-    }
-
-    // Update item
-    foundry.utils.setProperty(this.data, "extraAttacks.formula.countValue", extraAttacks);
-
-    return extraAttacks;
-  }
-
   /**
    * Get all appropriate context changes for attack rolls.
    *
@@ -960,7 +911,7 @@ export class ItemAction {
         let value = c.value;
         // BAB override
         if (actionData.bab && c._id === "_bab") {
-          value = RollPF.safeRoll(c.formula, data).total || 0;
+          value = RollPF.safeRollSync(c.formula, data).total || 0;
         }
         parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
       });
@@ -990,7 +941,7 @@ export class ItemAction {
     config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
 
     // Add bonus
-    rollData.bonus = bonus ? RollPF.safeRoll(bonus, rollData).total : 0;
+    rollData.bonus = bonus ? await RollPF.safeRollAsync(bonus, rollData).total : 0;
 
     // Options for D20RollPF
     const rollOptions = {
@@ -1337,14 +1288,16 @@ export class ItemAction {
       let attackCount = 0;
 
       const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
-        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
+        const exAtkCount = RollPF.safeRollAsync(countFormula, rollData)?.total ?? 0;
         if (exAtkCount <= 0) return;
 
         try {
           for (let i = 0; i < exAtkCount; i++) {
             rollData.attackCount = attackCount += 1;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRoll(bonusFormula || "0", rollData).total;
+            const bonus = RollPF.safeRollAsync(bonusFormula || "0", rollData, undefined, undefined, {
+              minimize: true,
+            }).total;
             attacks.push({
               bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
@@ -1404,7 +1357,7 @@ export class ItemAction {
           .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
           .forEach((c) => {
             c.modifiers.forEach((cc) => {
-              const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+              const bonusRoll = RollPF.safeRollAsync(cc.formula, rollData);
               if (bonusRoll.total == 0) return;
               if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
                 const atk = parseInt(RegExp.$1, 10);
@@ -1422,7 +1375,7 @@ export class ItemAction {
 
       attacks.forEach((atk, i) => {
         rollData.attackCount = i;
-        atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
+        atk.bonus = RollPF.safeRollAsync(atk.bonus, rollData).total + totalBonus + condBonuses[i];
         delete rollData.attackCount;
       });
     }

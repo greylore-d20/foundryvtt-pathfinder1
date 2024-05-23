@@ -376,7 +376,7 @@ export class ItemPF extends ItemBasePF {
   getDefaultChargeCost({ rollData } = {}) {
     rollData ??= this.getRollData();
     const formula = this.getDefaultChargeFormula();
-    return RollPF.safeRoll(formula, rollData).total;
+    return RollPF.safeRollAsync(formula, rollData).total;
   }
 
   /**
@@ -467,15 +467,6 @@ export class ItemPF extends ItemBasePF {
 
     if (commit) return this.update(updateData, context);
     return updateData;
-  }
-
-  /**
-   * Returns total duration in seconds or null.
-   *
-   * @returns {number|null} Seconds or null.
-   */
-  get totalDurationSeconds() {
-    return this.system.duration?.totalSeconds ?? null;
   }
 
   /**
@@ -943,7 +934,7 @@ export class ItemPF extends ItemBasePF {
         const isDeterministic = Roll.parse(maxFormula).every((t) => t.isDeterministic);
         if (isDeterministic) {
           const rollData = this.getRollData();
-          const roll = RollPF.safeRoll(maxFormula, rollData, [this], { suppressError: !this.isOwner });
+          const roll = RollPF.safeRollSync(maxFormula, rollData, [this], { suppressError: !this.isOwner });
           this.system.uses.max = roll.total;
         } else {
           const msg = game.i18n.format("PF1.Warning.NoDiceAllowedInFormula", {
@@ -962,7 +953,7 @@ export class ItemPF extends ItemBasePF {
   /**
    * Determines the starting data for an ActiveEffect based off this item.
    */
-  getRawEffectData() {
+  async getRawEffectData() {
     return {
       name: this.name,
       icon: this.img,
@@ -2151,7 +2142,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRoll(actionData.attackBonus || "0", rollData);
+    const bonusRoll = RollPF.safeRollAsync(actionData.attackBonus || "0", rollData);
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), "untyped", -100);
 

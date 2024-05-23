@@ -758,19 +758,19 @@ export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {
     case "reach":
       return rollData.range?.reach ?? 0;
     case "close":
-      return RollPF.safeRoll(pf1.config.spellRangeFormulas.close, rollData).total;
+      return RollPF.safeRollSync(pf1.config.spellRangeFormulas.close, rollData).total;
     case "medium":
-      return RollPF.safeRoll(pf1.config.spellRangeFormulas.medium, rollData).total;
+      return RollPF.safeRollSync(pf1.config.spellRangeFormulas.medium, rollData).total;
     case "long":
-      return RollPF.safeRoll(pf1.config.spellRangeFormulas.long, rollData).total;
+      return RollPF.safeRollSync(pf1.config.spellRangeFormulas.long, rollData).total;
     case "mi":
-      return RollPF.safeRoll(formula, rollData).total * 5_280;
+      return RollPF.safeRollSync(formula, rollData).total * 5_280;
     case "m":
-      return (RollPF.safeRoll(formula, rollData).total / 1.5) * 5;
+      return (RollPF.safeRollSync(formula, rollData).total / 1.5) * 5;
     case "km":
-      return ((RollPF.safeRoll(formula, rollData).total * 1000) / 1.5) * 5;
+      return ((RollPF.safeRollSync(formula, rollData).total * 1000) / 1.5) * 5;
     default:
-      return RollPF.safeRoll(formula, rollData).total;
+      return RollPF.safeRollSync(formula, rollData).total;
   }
 };
 

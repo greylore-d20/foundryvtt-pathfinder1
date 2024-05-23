@@ -98,7 +98,7 @@ export class ItemBuffPF extends ItemPF {
    * @param {object} changed Update data
    * @param {string} userId  User ID
    */
-  _updateTrackingEffect(changed, userId) {
+  async _updateTrackingEffect(changed, userId) {
     // Toggle icon if active state has changed
     const isActive = changed.system.active;
     if (isActive === undefined) return;
@@ -111,7 +111,7 @@ export class ItemBuffPF extends ItemPF {
     }
     // Add new AE or update old AE
     else {
-      const aeData = this.getRawEffectData();
+      const aeData = await this.getRawEffectData();
       aeData.active = isActive;
       aeData.transfer = true;
       setProperty(aeData, "flags.pf1.tracker", true);
@@ -164,8 +164,20 @@ export class ItemBuffPF extends ItemPF {
       if (unit === "turn") {
         labels.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
       } else if (unit && duration.value) {
-        const value = RollPF.safeRoll(duration.value, this.getRollData()).total ?? 0;
-        labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+        try {
+          // TODO: Fix this once safeRollSync
+          const roll = RollPF.create(duration.value);
+          rollData ??= this.getRollData();
+          let value;
+          if (roll.isDeterministic) {
+            value = RollPF.safeRollSync(duration.value, rollData).total ?? 0;
+          } else {
+            value = pf1.utils.formula.simplify(duration.value, rollData);
+          }
+          labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+        } catch (e) {
+          console.warning(`Error with buff duration formula "${duration.value}"`, this);
+        }
       } else {
         labels.duration = "";
       }
@@ -194,9 +206,10 @@ export class ItemBuffPF extends ItemPF {
   /**
    * Prepare .system.duration
    *
+   * @deprecated Remove with PF1 vNEXT+1
+   * @internal
    * @param {object} [options] Additional options
    * @param {object} [options.rollData] Roll data instance. New instance is generated if undefined and needed.
-   * @private
    */
   _prepareDuration({ rollData } = {}) {
     const itemData = this.system;
@@ -212,7 +225,7 @@ export class ItemBuffPF extends ItemPF {
     } else {
       if (!formula) return;
       rollData ??= this.getRollData();
-      const duration = RollPF.safeRoll(formula, rollData).total;
+      const duration = RollPF.safeRollSync(formula, rollData).total;
       switch (units) {
         case "hour":
           seconds = duration * 60 * 60;
@@ -228,9 +241,47 @@ export class ItemBuffPF extends ItemPF {
     itemData.duration.totalSeconds = seconds;
   }
 
+  /**
+   * Duration of the buff in seconds.
+   *
+   * @internal
+   * @param {object} [options]
+   * @param {object} [options.rollData]
+   * @returns {number|null} Duration in seconds or null if if it has no duration.
+   */
+  async getDuration({ rollData } = {}) {
+    const duration = this.system.duration ?? {};
+    const { units, value: formula } = duration;
+    if (!units) return null;
+
+    rollData ??= this.getRollData();
+
+    // Add total duration in seconds
+    let seconds = 0;
+    if (units === "turn") {
+      seconds = CONFIG.time.roundTime;
+    } else {
+      if (!formula) return;
+      rollData ??= this.getRollData();
+      const duration = await RollPF.safeRollAsync(formula, rollData).total;
+      switch (units) {
+        case "hour":
+          seconds = duration * 60 * 60;
+          break;
+        case "minute":
+          seconds = duration * 60;
+          break;
+        case "round":
+          seconds = duration * CONFIG.time.roundTime;
+          break;
+      }
+    }
+    return seconds;
+  }
+
   // Determines the starting data for an ActiveEffect based off this item
-  getRawEffectData() {
-    const createData = super.getRawEffectData();
+  async getRawEffectData({ rollData } = {}) {
+    const createData = await super.getRawEffectData();
 
     createData.statuses = Array.from(this.system.conditions.all);
 
@@ -247,21 +298,7 @@ export class ItemBuffPF extends ItemPF {
       createData.duration.turns = 1;
       seconds = CONFIG.time.roundTime;
     } else if (formula) {
-      switch (units) {
-        case "minute":
-        case "hour": {
-          seconds = this.totalDurationSeconds;
-          break;
-        }
-        case "round": {
-          const rounds = RollPF.safeRoll(formula, this.getRollData()).total;
-          if (rounds > 0) {
-            createData.duration.rounds = rounds;
-            seconds = rounds * CONFIG.time.roundTime;
-          }
-          break;
-        }
-      }
+      seconds = await this.getDuration({ rollData });
     }
 
     if (seconds > 0) createData.duration.seconds = seconds;

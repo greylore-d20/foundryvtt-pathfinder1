@@ -81,7 +81,7 @@ export class ActorNPCPF extends ActorPF {
     return templates.reduce((cur, item) => {
       const crOffset = item.system.crOffset;
       if (crOffset) {
-        cur += RollPF.safeRoll(crOffset, item.getRollData()).total;
+        cur += RollPF.safeRollSync(crOffset, item.getRollData()).total;
       }
       return cur;
     }, base);

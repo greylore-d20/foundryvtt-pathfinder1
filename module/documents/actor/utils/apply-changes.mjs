@@ -813,7 +813,7 @@ export const addDefaultChanges = function (changes) {
     // Fractional bonus +2 when one class has good save
     if (useFractional && hasGoodSave) {
       const goodSaveFormula = pf1.config.classFractionalSavingThrowFormulas.goodSaveBonus;
-      const total = RollPF.safeRoll(goodSaveFormula).total;
+      const total = RollPF.safeRollSync(goodSaveFormula).total;
       changes.push(
         new pf1.components.ItemChange({
           formula: total,

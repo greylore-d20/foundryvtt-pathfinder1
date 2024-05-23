@@ -730,7 +730,7 @@ export class ActorPF extends ActorBasePF {
     const spellbookAbility = actorData.abilities[book.ability];
 
     // Add spell slots based on ability bonus slot formula
-    const spellSlotAbilityScoreBonus = RollPF.safeRoll(book.spellSlotAbilityBonusFormula || "0", rollData).total,
+    const spellSlotAbilityScoreBonus = RollPF.safeRollSync(book.spellSlotAbilityBonusFormula || "0", rollData).total,
       spellSlotAbilityScore = (spellbookAbility?.total ?? 10) + spellSlotAbilityScoreBonus,
       spellSlotAbilityMod = pf1.utils.getAbilityModifier(spellSlotAbilityScore);
 
@@ -767,7 +767,7 @@ export class ActorPF extends ActorBasePF {
       // Set auto spell level calculation offset
       if (book.autoSpellLevelCalculation) {
         const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
-        const autoBonus = RollPF.safeRoll(autoFormula, rollData).total ?? 0;
+        const autoBonus = RollPF.safeRollSync(autoFormula, rollData).total ?? 0;
         const autoTotal = Math.clamped(total + autoBonus, 1, 20);
         book.cl.autoSpellLevelTotal = autoTotal;
 
@@ -783,7 +783,7 @@ export class ActorPF extends ActorBasePF {
       }
 
       // Add from bonus formula
-      const clBonus = RollPF.safeRoll(formula, rollData).total;
+      const clBonus = RollPF.safeRollSync(formula, rollData).total;
       clTotal += clBonus;
       if (clBonus > 0) {
         setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
@@ -816,7 +816,8 @@ export class ActorPF extends ActorBasePF {
         book.concentration = {};
       }
       const concFormula = book.concentrationFormula;
-      const formulaRoll = concFormula.length ? RollPF.safeRoll(concFormula, rollData).total : 0;
+      // TODO: Support dice roll bonus to concentration
+      const formulaRoll = concFormula.length ? RollPF.safeRollSync(concFormula, rollData).total : 0;
       const classAbilityMod = actorData.abilities[book.ability]?.mod ?? 0;
       const concentration = clTotal + classAbilityMod + formulaRoll;
       const prevTotal = book.concentration.total ?? 0;
@@ -891,7 +892,7 @@ export class ActorPF extends ActorBasePF {
       rollData.ablMod = spellSlotAbilityMod;
 
       const allLevelModFormula = book[isSpontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
-      const allLevelMod = RollPF.safeRoll(allLevelModFormula, rollData).total ?? 0;
+      const allLevelMod = RollPF.safeRollSync(allLevelModFormula, rollData).total ?? 0;
 
       for (let level = 0; level < 10; level++) {
         const levelData = book.spells[`spell${level}`];
@@ -909,7 +910,7 @@ export class ActorPF extends ActorBasePF {
             ? spellsForLevel +
               getAbilityBonus(level) +
               allLevelMod +
-              (RollPF.safeRoll(offsetFormula, rollData).total ?? 0)
+              (RollPF.safeRollSync(offsetFormula, rollData).total ?? 0)
             : NaN;
 
         levelData.max = max;
@@ -994,7 +995,7 @@ export class ActorPF extends ActorBasePF {
       const maxLevelByAblScore = (spellbookAbility?.total ?? 0) - 10;
 
       const allLevelModFormula = book.preparedAllOffsetFormula || "0";
-      const allLevelMod = RollPF.safeRoll(allLevelModFormula, rollData).total ?? 0;
+      const allLevelMod = RollPF.safeRollSync(allLevelModFormula, rollData).total ?? 0;
 
       const casterType = book.casterType || "high";
       const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
@@ -1025,7 +1026,7 @@ export class ActorPF extends ActorBasePF {
           available += allLevelMod;
 
           const formula = spellLevelData.preparedOffsetFormula || "0";
-          available += RollPF.safeRoll(formula, rollData).total ?? 0;
+          available += RollPF.safeRollSync(formula, rollData).total ?? 0;
 
           // Leave record of max known
           spellLevelData.known.max = available;
@@ -1088,7 +1089,7 @@ export class ActorPF extends ActorBasePF {
           ? rollData.attributes.hd?.total ?? rollData.details.level.value
           : rollData.classes[spellClass]?.level || 0;
 
-      const roll = RollPF.safeRoll(formula, rollData);
+      const roll = RollPF.safeRollSync(formula, rollData);
       book.spellPoints.max = roll.total;
     } else {
       book.spellPoints.max = 0;
@@ -1797,7 +1798,7 @@ export class ActorPF extends ActorBasePF {
           let srcValue =
             src.value != null
               ? src.value
-              : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
+              : RollPF.safeRollAsync(src.formula || "0", rollData, [changeTarget, src, this], {
                   suppressError: !this.testUserPermission(game.user, "OWNER"),
                 }).total;
           if (src.operator === "set") srcValue = game.i18n.format("PF1.SetTo", { value: srcValue });
@@ -2873,7 +2874,7 @@ export class ActorPF extends ActorBasePF {
 
     let formulaRoll = 0;
     if (spellbook.concentrationFormula.length)
-      formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
+      formulaRoll = await RollPF.safeRollAsync(spellbook.concentrationFormula, rollData).total;
     rollData.formulaBonus = formulaRoll;
 
     const token = options.token ?? this.token;
@@ -3624,8 +3625,8 @@ export class ActorPF extends ActorBasePF {
       if (form) {
         value = form.find('[name="damage"]').val();
         let dR = form.find('[name="damage-reduction"]').val();
-        value = value.length ? RollPF.safeRoll(value, {}, []).total : 0;
-        dR = dR.length ? RollPF.safeRoll(dR, {}, []).total : 0;
+        value = value.length ? RollPF.safeRollSync(value).total : 0;
+        dR = dR.length ? RollPF.safeRollSync(dR).total : 0;
         if (multiplier < 0) {
           value = Math.ceil(value * multiplier);
           value = Math.min(value - dR, 0);
@@ -4648,7 +4649,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Bonus feat formula
-    const bonusRoll = RollPF.safeRoll(this.system.details?.bonusFeatFormula || "0", this.getRollData());
+    const bonusRoll = RollPF.safeRollSync(this.system.details?.bonusFeatFormula || "0", this.getRollData());
     result.formula = bonusRoll.total;
     result.max += result.formula;
     if (bonusRoll.err) {
@@ -4712,7 +4713,7 @@ export class ActorPF extends ActorBasePF {
         // Try to roll restoreFormula, fall back to restoring max spell points
         let restorePoints = spellbook.spellPoints.max;
         if (spellbook.spellPoints.restoreFormula) {
-          const restoreRoll = RollPF.safeRoll(spellbook.spellPoints.restoreFormula, rollData);
+          const restoreRoll = await RollPF.safeRollAsync(spellbook.spellPoints.restoreFormula, rollData);
           if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
           else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
         }

@@ -241,7 +241,7 @@ export class ItemClassPF extends ItemPF {
           formula = saveFormulas[classType][saveType];
         }
         if (formula == null) formula = "0";
-        const total = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+        const total = RollPF.safeRollSync(formula, { level: itemData.level, hitDice: this.hitDice }).total;
         saveData.base = total;
         if (useFractional) saveData.good = saveFormulas[classType].goodSave === true && saveType === "high";
       }
@@ -258,7 +258,7 @@ export class ItemClassPF extends ItemPF {
       } else {
         formula = babFormulas[babType] || "0";
       }
-      itemData.babBase = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+      itemData.babBase = RollPF.safeRollSync(formula, { level: itemData.level, hitDice: this.hitDice }).total;
     }
 
     // Feed info back to actor
@@ -316,7 +316,7 @@ export class ItemClassPF extends ItemPF {
         itemData.hitDice = 0;
       } else if (itemData.customHD?.length > 0) {
         const rollData = { item: { level: this.system.level } };
-        itemData.hitDice = RollPF.safeRoll(itemData.customHD, rollData).total;
+        itemData.hitDice = RollPF.safeRollSync(itemData.customHD, rollData).total;
       } else {
         itemData.hitDice = itemData.level;
       }

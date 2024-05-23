@@ -43,6 +43,16 @@ export class RollPF extends Roll {
    * @returns {RollPF} - Evaluated roll, or placeholder if error occurred.
    */
   static safeRoll(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
+    if (evalOpts.async !== true) {
+      foundry.utils.logCompatibilityWarning(
+        "RollPF.safeRoll() is becoming async to match upstream API changes. Use RollPF.safeRollSync() for any non-dice synchronous rolling. Pass async=true to evalOpts to suppress this warning.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+    }
+
     let roll;
     try {
       roll = this.create(formula, rollData).evaluate({ ...evalOpts, async: false });
@@ -56,6 +66,39 @@ export class RollPF extends Roll {
       else if (CONFIG.debug.roll) console.error(roll.err);
     }
     return roll;
+  }
+
+  /**
+   * Synchronous version of {@link safeRoll safeRoll()}
+   *
+   * @ignore
+   * @see {@link safeRoll}
+   */
+  static safeRollSync(formula, rollData, context, options, evalOpts = {}) {
+    // TODO: Recreate safeRoll() with .evaluateSync() usage
+    evalOpts.async = true; // HACK, API hasn't actually changed yet
+    const roll = this.safeRoll(formula, rollData, context, options, evalOpts);
+    if (!roll.isDeterministic) {
+      foundry.utils.logCompatibilityWarning(
+        "RollPF.safeRollSync() will not support non-deterministic formulas in the future.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+    }
+    return roll;
+  }
+
+  /**
+   * Temporary helper function to handle transition to Foundry v12. Remove with Foundry v12 support.
+   *
+   * @ignore
+   * @internal
+   */
+  static safeRollAsync(formula, rollData, context, options, evalOpts = {}) {
+    evalOpts.async = true;
+    return this.safeRoll(formula, rollData, context, options, evalOpts);
   }
 
   static safeTotal(formula, data) {

@@ -2551,7 +2551,7 @@ export class ActorPF extends ActorBasePF {
       fullName = `${pf1.config.skills[mainSkillId]} (${skill.name})`;
       parentSkill = this.getSkillInfo(mainSkillId);
     } else {
-      fullName = pf1.config.skills[mainSkillId];
+      fullName = pf1.config.skills[mainSkillId] || skill.name;
       skill = mainSkill;
     }
 
@@ -2564,7 +2564,7 @@ export class ActorPF extends ActorBasePF {
     result.journal ||= pf1.config.skillCompendiumEntries[isSubSkill ? mainSkillId : skillId];
     result.name ||= pf1.config.skills[skillId] || skillId;
     result.id = skillId;
-    result.fullName = fullName;
+    result.fullName = fullName || result.name;
 
     if (parentSkill) result.parentSkill = parentSkill;
 

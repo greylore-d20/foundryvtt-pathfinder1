@@ -271,6 +271,7 @@ export class ActorSheetPF extends ActorSheet {
     // Update skill labels
     for (const [skillId, skill] of Object.entries(data.system.skills ?? {})) {
       skill.key = skillId;
+      skill.path = skillId;
       skill.skillId = skillId;
       skill.label = pf1.config.skills[skillId] || skill.name;
       skill.arbitrary = pf1.config.arbitrarySkills.includes(skillId);
@@ -279,7 +280,8 @@ export class ActorSheetPF extends ActorSheet {
 
       if (skill.subSkills != null) {
         for (const [subSkillId, subSkill] of Object.entries(skill.subSkills)) {
-          subSkill.key = `${skillId}.subSkills.${subSkillId}`;
+          subSkill.key = `${skillId}.${subSkillId}`;
+          subSkill.path = `${skillId}.subSkills.${subSkillId}`;
           subSkill.skillId = skillId;
           subSkill.subSkillId = subSkillId;
           subSkill.label ||= subSkill.name;
@@ -1234,6 +1236,7 @@ export class ActorSheetPF extends ActorSheet {
           .filter((dv) => !!dv) ?? []),
       ].flat();
 
+    let header;
     const details = [];
     const paths = [];
     const sources = [];
@@ -1895,16 +1898,19 @@ export class ActorSheetPF extends ActorSheet {
         break;
       }
       case "skill": {
-        const fullSkillId = detail;
-        const skillIdParts = fullSkillId.split(".");
-        const mainId = skillIdParts[0];
-        const subSkillId = skillIdParts.length > 1 ? skillIdParts.at(-1) : null;
+        const fullSkillId = detail,
+          skillIdParts = fullSkillId.split("."),
+          mainId = skillIdParts.shift(),
+          subSkillId = skillIdParts.pop(),
+          skill = this.actor.getSkillInfo(fullSkillId, { rollData: lazy.rollData });
 
-        const skill = this.actor.getSkillInfo(fullSkillId, { rollData: lazy.rollData });
+        header = `<code>${skill.id}</code>`;
+
+        const path = subSkillId ? `${mainId}.subSkills.${subSkillId}` : mainId;
 
         paths.push(
-          { path: `@skills.${fullSkillId}.mod`, value: skill.mod },
-          { path: `@skills.${fullSkillId}.rank`, value: skill.rank }
+          { path: `@skills.${path}.mod`, value: skill.mod },
+          { path: `@skills.${path}.rank`, value: skill.rank }
         );
 
         const acp = system.attributes?.acp?.total || 0;
@@ -1933,9 +1939,9 @@ export class ActorSheetPF extends ActorSheet {
           });
         }
 
-        sources.push({ sources: skillSources }, { sources: getSource(`system.skills.${fullSkillId}.mod`) });
+        sources.push({ sources: skillSources }, { sources: getSource(`system.skills.${path}.mod`) });
 
-        notes = getNotes(`skill.${fullSkillId}`);
+        notes = getNotes(`skill.${path}`);
         break;
       }
       case "spellbook": {
@@ -2110,6 +2116,7 @@ export class ActorSheetPF extends ActorSheet {
         throw new Error(`Invalid extended tooltip identifier "${fullId}"`);
     }
 
+    context.header = header;
     context.details = details;
     context.paths = paths;
     context.sources = sources;
@@ -2244,7 +2251,7 @@ export class ActorSheetPF extends ActorSheet {
     const result = {
       type: "skill",
       uuid: this.document.uuid,
-      skill: subSkill ? `${mainSkill}.subSkills.${subSkill}` : mainSkill,
+      skill: subSkill ? `${mainSkill}.${subSkill}` : mainSkill,
     };
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
@@ -2789,7 +2796,7 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.target.closest(".skill");
     const mainSkillId = el.dataset.skill;
     const subSkillId = el.dataset.subSkill;
-    const skillId = subSkillId ? `${mainSkillId}.subSkills.${subSkillId}` : mainSkillId;
+    const skillId = subSkillId ? `${mainSkillId}.${subSkillId}` : mainSkillId;
 
     const info = this.actor.getSkillInfo(skillId);
 
@@ -3426,7 +3433,7 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.target;
     const skill = el.dataset.skill;
     const subSkill = el.dataset.subSkill;
-    const skillId = subSkill ? `${skill}.subSkills.${subSkill}` : skill;
+    const skillId = subSkill ? `${skill}.${subSkill}` : skill;
 
     this.document.rollSkill(skillId, { token: this.token });
   }

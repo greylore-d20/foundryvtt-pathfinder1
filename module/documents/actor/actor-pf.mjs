@@ -245,7 +245,7 @@ export class ActorPF extends ActorBasePF {
       skills.push(`skill.${sklKey}`);
       // Add subskills if present
       for (const subSklKey of Object.keys(skl.subSkills ?? [])) {
-        skills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
+        skills.push(`skill.${sklKey}.${subSklKey}`);
       }
     }
     return skills;
@@ -2533,45 +2533,47 @@ export class ActorPF extends ActorBasePF {
    *
    * @example
    * actor.getSkillInfo("per"); // Perception skill info
-   * actor.getSkillInfo("crf.subSkills.alchemy"); // Craft (Alchemy) subskill info
+   * actor.getSkillInfo("crf.alchemy"); // Craft (Alchemy) subskill info
    *
    * @param {string} skillId - Skill ID
    * @param {object} [options] - Additional options
    * @param {{ skills: {[key: string]: SkillData}}} [options.rollData] - Roll data instance to use.
+   * @throws {Error} - If defined skill is not found.
    * @returns {SkillInfo}
    */
   getSkillInfo(skillId, { rollData } = {}) {
-    const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
-      isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
-      mainSkill = this.system.skills[mainSkillId];
-    if (!mainSkill) throw new Error(`Invalid skill ID '${skillId}'`);
+    const skillIdParts = skillId.split(".");
+    if (skillIdParts.length > 2) skillIdParts.splice(1, 1);
 
-    let skill, fullName, parentSkill;
-    if (isSubSkill) {
-      skill = mainSkill.subSkills[subSkillId];
-      if (!skill) throw new Error(`Invalid skill ID '${skillId}'`);
+    const mainSkillId = skillIdParts.shift(),
+      subSkillId = skillIdParts.pop(),
+      isSubSkill = !!subSkillId;
 
-      fullName = `${pf1.config.skills[mainSkillId]} (${skill.name})`;
-      parentSkill = this.getSkillInfo(mainSkillId);
-    } else {
-      skill = mainSkill;
-      fullName = pf1.config.skills[mainSkillId] || skill.name;
-    }
+    // Reconstruct skillId with new shorter version to ensure format
+    skillId = [mainSkillId, subSkillId].filterJoin(".");
 
     rollData ??= this.getRollData();
-    const dataSkill = getProperty(rollData.skills, skillId);
-    if (!dataSkill) throw new Error(`Invalid skill ID '${skillId}'`);
+    const parentSkill = isSubSkill ? this.getSkillInfo(mainSkillId, { rollData }) : null;
 
     /** @type {SkillInfo} */
-    const result = foundry.utils.deepClone(dataSkill);
-    result.journal ||= pf1.config.skillCompendiumEntries[isSubSkill ? mainSkillId : skillId];
-    result.name ||= pf1.config.skills[skillId] || skillId;
-    result.id = skillId;
-    result.fullName = fullName || result.name;
+    const skill = subSkillId
+      ? parentSkill.subSkills?.[subSkillId]
+      : foundry.utils.deepClone(rollData.skills[mainSkillId]);
 
-    if (parentSkill) result.parentSkill = parentSkill;
+    if (!skill) throw new Error(`Invalid skill ID '${skillId}'`);
 
-    return result;
+    skill.journal ||= pf1.config.skillCompendiumEntries[isSubSkill ? mainSkillId : skillId];
+    skill.name ||= pf1.config.skills[skillId] || skillId;
+    skill.id = skillId;
+
+    if (isSubSkill) {
+      skill.fullName = `${parentSkill.name} (${skill.name})`;
+      skill.parentSkill = parentSkill;
+    } else {
+      skill.fullName = skill.name;
+    }
+
+    return skill;
   }
 
   /**
@@ -2589,10 +2591,11 @@ export class ActorPF extends ActorBasePF {
       return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
 
-    const skl = this.getSkillInfo(skillId);
+    const skillIdParts = skillId.split(".");
+    const mainSkillId = skillIdParts[0],
+      subSkillId = skillIdParts.length > 1 ? skillIdParts.at(-1) : null;
 
-    const skillMatch = /^(?<mainSkillId>\w+).subSkills.(?<subSkillId>\w+)$/.exec(skillId);
-    const { mainSkillId, subSkillId } = skillMatch?.groups ?? {};
+    const skl = this.getSkillInfo(skillId);
     const haveParentSkill = !!subSkillId;
 
     // Add contextual attack string

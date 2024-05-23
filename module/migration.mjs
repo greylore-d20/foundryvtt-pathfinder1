@@ -762,6 +762,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateCR(itemData, updateData);
   _migrateItemChanges(itemData, updateData);
   _migrateItemChangeFlags(itemData, updateData);
+  _migrateItemContextNotes(itemData, updateData);
   _migrateEquipmentSize(itemData, updateData);
   _migrateSpellCosts(itemData, updateData);
   _migrateSpellPreparation(itemData, updateData, { item });
@@ -1644,6 +1645,25 @@ const _migrateItemChanges = function (itemData, updateData) {
     }
   }
 
+  const oldChanges = updateData["system.changes"] ?? itemData.system?.changes ?? [];
+  const newChanges = [];
+  let updateChanges = false;
+  for (const change of oldChanges) {
+    const newChange = { ...change };
+    // Replace targets with .subSkills. for ones without
+    // @since PF1 vNEXT
+    if (/\.subSkills\./.test(change.subTarget)) {
+      newChange.subTarget = change.subTarget.replace(".subSkills.", ".");
+      updateChanges = true;
+    }
+    newChanges.push(newChange);
+  }
+  if (updateChanges) {
+    updateData["system.changes"] = newChanges;
+  }
+};
+
+const _migrateItemContextNotes = (itemData, updateData) => {
   // Migrate context notes
   const oldNotes = itemData.system.contextNotes;
   if (Array.isArray(oldNotes) && oldNotes?.length > 0) {
@@ -1669,6 +1689,23 @@ const _migrateItemChanges = function (itemData, updateData) {
     ) {
       updateData["system.contextNotes"] = newNotes;
     }
+  }
+
+  const notes = updateData["system.contextNotes"] ?? oldNotes ?? [];
+  let updateNotes = false;
+  const newNotes = [];
+  for (const note of notes) {
+    const newNote = { ...note };
+    // Replace targets with .subSkills. for ones without
+    // @since PF1 vNEXT
+    if (/^skill\..+\.subSkills\..+$/.test(note.target)) {
+      newNote.target = note.target.replace(".subSkills.", ".");
+      updateNotes = true;
+    }
+    newNotes.push(newNote);
+  }
+  if (updateNotes) {
+    updateData["system.contextNotes"] = newNotes;
   }
 };
 

@@ -592,21 +592,24 @@ export const getChangeFlat = function (target, modifierType, value) {
     result.push(`system.attributes.spells.spellbooks.${bookId}.cl.bonus`);
   }
 
-  if (target.match(/^skill\.([a-zA-Z0-9]+)$/)) {
-    const sklKey = RegExp.$1;
-    const skillData = curData.skills[sklKey];
-    if (skillData != null) {
-      result.push(`system.skills.${sklKey}.mod`);
-      // Apply to subskills also
-      for (const subSklKey of Object.keys(skillData.subSkills ?? {})) {
+  if (/^skill\./.test(target)) {
+    const parts = target.split(".").slice(1);
+    const sklKey = parts.shift();
+    const subSklKey = parts.pop();
+
+    if (subSklKey) {
+      if (curData.skills[sklKey]?.subSkills?.[subSklKey] != null) {
         result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.mod`);
       }
-    }
-  } else if (target.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9_]+)$/)) {
-    const sklKey = RegExp.$1;
-    const subSklKey = RegExp.$2;
-    if (curData.skills[sklKey]?.subSkills?.[subSklKey] != null) {
-      result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.mod`);
+    } else {
+      const skillData = curData.skills[sklKey];
+      if (skillData != null) {
+        result.push(`system.skills.${sklKey}.mod`);
+        // Apply to subskills also
+        for (const subSklKey of Object.keys(skillData.subSkills ?? {})) {
+          result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.mod`);
+        }
+      }
     }
   }
 

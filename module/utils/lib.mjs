@@ -407,8 +407,8 @@ export const getBuffTargets = function (actor, type = "buffs") {
   // Append individual skills to buff targets
   if (actor) {
     for (const s of actor._skillTargets) {
-      const sId = s.split(".").slice(1).join(".");
-      const skill = actor.getSkillInfo(sId);
+      const skillId = s.split(".").slice(1).join(".");
+      const skill = actor.getSkillInfo(skillId);
       buffTargets[s] = { label: skill.fullName, category: "skill" };
     }
   } else {

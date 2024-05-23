@@ -2069,7 +2069,7 @@ export class ItemSheetPF extends ItemSheet {
     const note = this.item.system.contextNotes[noteIndex];
     const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
 
-    const part1 = note?.subTarget?.split(".")[0];
+    const part1 = note?.target?.split(".")[0];
     const category = pf1.config.contextNoteTargets[part1]?.category ?? part1;
 
     // Show widget

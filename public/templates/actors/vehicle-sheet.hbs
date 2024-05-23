@@ -32,7 +32,7 @@
           </li>
           {{! Cost }}
           <li>
-            <input name="system.details.vehicle.cost" type="number" data-dtype="Number" value="{{system.details.vehicle.cost}}" placeholder="{{localize "PF1.CostGP"}}"
+            <input name="system.details.cost" type="number" data-dtype="Number" value="{{system.details.cost}}" placeholder="{{localize "PF1.CostGP"}}"
               data-tooltip="{{localize "PF1.CostGP"}}">
           </li>
         </ul>
@@ -63,7 +63,7 @@
         <div class="info-box ac">
           <h5>{{localize "PF1.Hardness"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.hardness" type="number" value="{{system.details.vehicle.hardness}}" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.hardness" type="number" value="{{system.details.hardness}}" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         {{! Saving Throw }}
@@ -100,14 +100,14 @@
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.MaximumSpeed"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.maxSpeed" value="{{convertDistance system.details.vehicle.maxSpeed}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.maxSpeed" value="{{convertDistance system.details.maxSpeed}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         {{! Acceleration }}
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.Acceleration"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.acceleration" value="{{convertDistance system.details.vehicle.acceleration}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.acceleration" value="{{convertDistance system.details.acceleration}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         {{! CMB }}
@@ -139,32 +139,32 @@
       {{!-- Description --}}
       <div class="description info-box-header">
         <h3>{{localize "PF1.Description"}}</h3>
-        <textarea rows="4" name="system.details.vehicle.description">{{system.details.vehicle.description}}</textarea>
+        <textarea rows="4" name="system.details.description">{{system.details.description}}</textarea>
       </div>
 
       <div class="driving">
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.Propulsion"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.propulsion" value="{{system.details.vehicle.propulsion}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.propulsion" value="{{system.details.propulsion}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.DrivingCheck"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.drivingCheck" value="{{system.details.vehicle.drivingCheck}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.drivingCheck" value="{{system.details.drivingCheck}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.ForwardFacing"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.forwardFacing" value="{{system.details.vehicle.forwardFacing}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.forwardFacing" value="{{system.details.forwardFacing}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.DrivingDevice"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.drivingDevice" value="{{system.details.vehicle.drivingDevice}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.drivingDevice" value="{{system.details.drivingDevice}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
       </div>
@@ -173,19 +173,19 @@
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.DrivingSpace"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.drivingSpace" value="{{system.details.vehicle.drivingSpace}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.drivingSpace" value="{{system.details.drivingSpace}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.Crew"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.crew" value="{{system.details.vehicle.crew}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.crew" value="{{system.details.crew}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
         <div class="info-box">
           <h5>{{localize "PF1.Vehicles.Decks"}}</h5>
           <span class="value">
-            <input name="system.details.vehicle.decks" value="{{system.details.vehicle.decks}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+            <input name="system.details.decks" value="{{system.details.decks}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
           </span>
         </div>
       </div>

@@ -3096,6 +3096,10 @@ const _migrateActorUnusedData = (actor, updateData) => {
   if (actor.system.attributes?.conditions !== undefined) {
     updateData["system.attributes.-=conditions"] = null;
   }
+
+  if (actor.system.details.level !== undefined) {
+    updateData["system.details.-=level"] = null;
+  }
 };
 
 /**

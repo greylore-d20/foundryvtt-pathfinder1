@@ -3,6 +3,13 @@
     "types": ["character", "npc", "vehicle", "haunt", "trap", "basic"],
     "htmlFields": ["details.notes.value", "details.biography.value"],
     "templates": {
+      "notes": {
+        "details": {
+          "notes": {
+            "value": ""
+          }
+        }
+      },
       "common": {
         "abilities": {
           "str": {
@@ -414,17 +421,16 @@
           }
         },
         "details": {
-          "level": {
-            "value": 0
-          },
-          "bonusFeatFormula": "",
+          "height": "",
+          "weight": "",
+          "gender": "",
+          "deity": "",
+          "age": "",
           "alignment": "tn",
           "biography": {
             "value": ""
           },
-          "notes": {
-            "value": ""
-          },
+          "bonusFeatFormula": "",
           "bonusSkillRankFormula": "",
           "tooltip": {
             "name": "",
@@ -730,6 +736,13 @@
           "sp": 0,
           "cp": 0
         }
+      },
+      "cr": {
+        "details": {
+          "cr": {
+            "base": 0
+          }
+        }
       }
     },
     "character": {
@@ -737,12 +750,7 @@
       "details": {
         "xp": {
           "value": 0
-        },
-        "height": "",
-        "weight": "",
-        "gender": "",
-        "deity": "",
-        "age": ""
+        }
       },
       "traits": {
         "weaponProf": {
@@ -756,14 +764,10 @@
       }
     },
     "npc": {
-      "templates": ["common"],
-      "details": {
-        "cr": {
-          "base": 1
-        }
-      }
+      "templates": ["common", "notes", "cr"]
     },
     "vehicle": {
+      "templates": ["notes"],
       "abilities": {
         "str": {
           "value": 10
@@ -792,23 +796,18 @@
         }
       },
       "details": {
-        "vehicle": {
-          "acceleration": 0,
-          "cost": 0,
-          "crew": 0,
-          "decks": 1,
-          "description": "",
-          "drivingCheck": "",
-          "drivingDevice": "",
-          "drivingSpace": "",
-          "forwardFacing": "",
-          "hardness": 0,
-          "maxSpeed": 0,
-          "propulsion": ""
-        },
-        "notes": {
-          "value": ""
-        }
+        "acceleration": 0,
+        "cost": 0,
+        "crew": 0,
+        "decks": 1,
+        "description": "",
+        "drivingCheck": "",
+        "drivingDevice": "",
+        "drivingSpace": "",
+        "forwardFacing": "",
+        "hardness": 0,
+        "maxSpeed": 0,
+        "propulsion": ""
       },
       "traits": {
         "size": "lg",
@@ -816,6 +815,7 @@
       }
     },
     "haunt": {
+      "templates": ["notes", "cr"],
       "attributes": {
         "hp": {
           "value": 0,
@@ -829,43 +829,28 @@
         "size": "med"
       },
       "details": {
-        "cr": {
-          "base": 0
-        },
-        "notes": {
-          "value": ""
-        },
-        "haunt": {
-          "alignment": "",
-          "area": "",
-          "aura": "",
-          "cl": 0,
-          "notice": "",
-          "weakness": "",
-          "reset": "",
-          "trigger": "",
-          "effect": "",
-          "destruction": ""
-        }
+        "alignment": "",
+        "area": "",
+        "aura": "",
+        "cl": 0,
+        "notice": "",
+        "weakness": "",
+        "reset": "",
+        "trigger": "",
+        "effect": "",
+        "destruction": ""
       }
     },
     "trap": {
+      "templates": ["notes", "cr"],
       "details": {
-        "cr": {
-          "base": 0
-        },
-        "notes": {
-          "value": ""
-        },
-        "trap": {
-          "type": "",
-          "perception": 0,
-          "disarm": 0,
-          "trigger": "",
-          "duration": "",
-          "reset": "",
-          "effect": ""
-        }
+        "type": "",
+        "perception": 0,
+        "disarm": 0,
+        "trigger": "",
+        "duration": "",
+        "reset": "",
+        "effect": ""
       }
     }
   },
@@ -902,10 +887,9 @@
       "contextNotes": {
         "contextNotes": []
       },
-      "itemDescription": {
+      "description": {
         "description": {
-          "value": "",
-          "unidentified": ""
+          "value": ""
         },
         "tags": []
       },
@@ -917,30 +901,35 @@
           "explode": null
         }
       },
-      "physicalItem": {
-        "quantity": 1,
-        "weight": {
-          "value": 0
-        },
-        "price": 0,
-        "size": "med",
-        "equipped": true,
-        "resizing": false,
-        "identified": true,
+      "fragile": {
         "hp": {
           "max": 10,
           "value": 10
         },
         "broken": false,
+        "hardness": 0
+      },
+      "physical": {
+        "quantity": 1,
+        "weight": {
+          "value": 0
+        },
+        "equipped": true,
+        "carried": true,
+        "price": 0,
+        "size": "med",
+        "resizing": false,
         "timeworn": false,
         "artifact": false,
-        "cursed": false,
-        "hardness": 0,
-        "carried": true,
+        "identified": true,
         "unidentified": {
           "price": 0,
           "name": ""
         },
+        "description": {
+          "unidentified": ""
+        },
+        "cursed": false,
         "cl": 0,
         "aura": {
           "custom": false,
@@ -1013,7 +1002,7 @@
       }
     },
     "class": {
-      "templates": ["itemDescription", "changes", "links", "tagged", "proficiencies", "flags", "scriptCalls"],
+      "templates": ["description", "changes", "links", "tagged", "proficiencies", "flags", "scriptCalls"],
       "subType": "base",
       "level": 1,
       "hd": 8,
@@ -1038,7 +1027,7 @@
       }
     },
     "buff": {
-      "templates": ["itemDescription", "changes", "action", "contextNotes", "links", "tagged", "flags", "scriptCalls"],
+      "templates": ["description", "changes", "action", "contextNotes", "links", "tagged", "flags", "scriptCalls"],
       "subType": "temp",
       "active": false,
       "level": 0,
@@ -1053,7 +1042,7 @@
       "hideFromToken": false
     },
     "consumable": {
-      "templates": ["itemDescription", "physicalItem", "action", "links", "tagged", "flags", "scriptCalls"],
+      "templates": ["description", "physical", "fragile", "action", "links", "tagged", "flags", "scriptCalls"],
       "subType": "potion",
       "uses": {
         "value": 0,
@@ -1068,8 +1057,9 @@
     },
     "equipment": {
       "templates": [
-        "itemDescription",
-        "physicalItem",
+        "description",
+        "physical",
+        "fragile",
         "changes",
         "contextNotes",
         "action",
@@ -1081,10 +1071,10 @@
         "hasAttack",
         "ammo"
       ],
-      "equipped": true,
       "subType": "armor",
-      "baseTypes": [],
+      "slot": "slotless",
       "equipmentSubtype": "lightArmor",
+      "baseTypes": [],
       "armor": {
         "value": 0,
         "dex": null,
@@ -1103,7 +1093,6 @@
         }
       },
       "spellFailure": 0,
-      "slot": "slotless",
       "links": {
         "charges": []
       },
@@ -1111,7 +1100,7 @@
     },
     "feat": {
       "templates": [
-        "itemDescription",
+        "description",
         "action",
         "changes",
         "contextNotes",
@@ -1122,11 +1111,11 @@
         "scriptCalls"
       ],
       "subType": "feat",
+      "abilityType": "na",
       "associations": {
         "classes": []
       },
       "showInQuickbar": false,
-      "abilityType": "na",
       "crOffset": "",
       "links": {
         "charges": []
@@ -1136,9 +1125,10 @@
     },
     "loot": {
       "templates": [
-        "itemDescription",
+        "description",
         "action",
-        "physicalItem",
+        "physical",
+        "fragile",
         "changes",
         "contextNotes",
         "links",
@@ -1151,7 +1141,7 @@
       "abundant": false
     },
     "spell": {
-      "templates": ["itemDescription", "action", "links", "flags", "scriptCalls"],
+      "templates": ["description", "action", "links", "flags", "scriptCalls"],
       "learnedAt": {
         "class": {},
         "domain": {},
@@ -1178,7 +1168,6 @@
         "focus": false,
         "divineFocus": 0
       },
-      "castTime": "",
       "materials": {
         "value": "",
         "focus": "",
@@ -1191,15 +1180,15 @@
       },
       "atWill": false,
       "sr": true,
-      "shortDescription": "",
       "showInQuickbar": false,
       "domain": false,
       "slotCost": 1
     },
     "weapon": {
       "templates": [
-        "itemDescription",
-        "physicalItem",
+        "description",
+        "physical",
+        "fragile",
         "changes",
         "action",
         "contextNotes",
@@ -1211,6 +1200,8 @@
         "hasAttack",
         "ammo"
       ],
+      "subType": "simple",
+      "weaponSubtype": "light",
       "baseTypes": [],
       "weaponGroups": {
         "value": [],
@@ -1227,14 +1218,12 @@
         },
         "addon": []
       },
-      "subType": "simple",
-      "weaponSubtype": "light",
       "properties": {},
       "showInQuickbar": true
     },
     "attack": {
       "templates": [
-        "itemDescription",
+        "description",
         "action",
         "links",
         "tagged",
@@ -1244,21 +1233,20 @@
         "hasAttack",
         "ammo"
       ],
-      "showInQuickbar": true,
+      "subType": "",
+      "baseTypes": [],
       "broken": false,
       "links": {
         "charges": []
       },
-      "ammoType": "",
-      "subType": "",
-      "baseTypes": [],
       "weaponGroups": {
         "value": [],
         "custom": []
-      }
+      },
+      "showInQuickbar": true
     },
     "race": {
-      "templates": ["itemDescription", "changes", "contextNotes", "links", "proficiencies", "flags", "scriptCalls"],
+      "templates": ["description", "changes", "contextNotes", "links", "proficiencies", "flags", "scriptCalls"],
       "creatureType": "humanoid",
       "size": "med",
       "speeds": {
@@ -1272,7 +1260,7 @@
     },
     "implant": {
       "templates": [
-        "itemDescription",
+        "description",
         "changes",
         "contextNotes",
         "links",
@@ -1280,7 +1268,7 @@
         "scriptCalls",
         "tagged",
         "action",
-        "physicalItem"
+        "physical"
       ],
       "subType": "",
       "implant": null,
@@ -1294,15 +1282,10 @@
       "price": 0,
       "size": "med",
       "resizing": false,
-      "identified": true,
       "timeworn": false,
       "artifact": false,
       "cursed": false,
       "carried": true,
-      "unidentified": {
-        "price": 0,
-        "name": ""
-      },
       "cl": 0,
       "aura": {
         "custom": false,
@@ -1310,7 +1293,7 @@
       }
     },
     "container": {
-      "templates": ["itemDescription", "changes", "physicalItem", "inventory", "tagged", "flags"],
+      "templates": ["description", "changes", "physical", "fragile", "inventory", "tagged", "flags"],
       "items": {}
     }
   }

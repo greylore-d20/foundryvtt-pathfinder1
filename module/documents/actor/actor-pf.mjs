@@ -462,6 +462,9 @@ export class ActorPF extends ActorBasePF {
   prepareBaseData() {
     super.prepareBaseData();
 
+    this.system.details ??= {};
+    this.system.details.level ??= {};
+
     this.sourceInfo = {};
     this.changeFlags = {};
 

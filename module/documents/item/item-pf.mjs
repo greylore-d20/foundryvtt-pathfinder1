@@ -145,7 +145,6 @@ export class ItemPF extends ItemBasePF {
       "system.contextNotes",
       "system.scriptCalls",
       "system.actions",
-      "system.inventoryItems",
       "system.changes",
     ];
 

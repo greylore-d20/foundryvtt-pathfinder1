@@ -2551,8 +2551,8 @@ export class ActorPF extends ActorBasePF {
       fullName = `${pf1.config.skills[mainSkillId]} (${skill.name})`;
       parentSkill = this.getSkillInfo(mainSkillId);
     } else {
-      fullName = pf1.config.skills[mainSkillId] || skill.name;
       skill = mainSkill;
+      fullName = pf1.config.skills[mainSkillId] || skill.name;
     }
 
     rollData ??= this.getRollData();

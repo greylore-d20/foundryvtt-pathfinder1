@@ -24,6 +24,7 @@ export function applyChanges() {
 
   // Parse change flags
   for (const i of this.changeItems) {
+    if (!i.system.changeFlags) continue;
     for (const [k, v] of Object.entries(i.system.changeFlags)) {
       if (v === true) {
         this.changeFlags[k] = true;

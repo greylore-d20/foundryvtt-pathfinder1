@@ -1355,38 +1355,33 @@ export class ActionUse {
 
     // Show chat message
     let result;
-    if (this.shared.chatAttacks.length > 0) {
-      if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) {
-        const enrichOptions = {
-          rollData: this.shared.rollData,
-          secrets: this.isOwner,
-          async: true,
-          relativeTo: this.actor,
-        };
+    if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) {
+      const enrichOptions = {
+        rollData: this.shared.rollData,
+        secrets: this.isOwner,
+        async: true,
+        relativeTo: this.actor,
+      };
 
-        const content = await renderTemplate(this.shared.chatTemplate, this.shared.templateData);
-        this.shared.chatData.content = await TextEditor.enrichHTML(content, enrichOptions);
+      const content = await renderTemplate(this.shared.chatTemplate, this.shared.templateData);
+      this.shared.chatData.content = await TextEditor.enrichHTML(content, enrichOptions);
 
-        const hiddenData = this.shared.chatData["flags.pf1.identifiedInfo"];
-        if (hiddenData?.description) {
-          hiddenData.description = await TextEditor.enrichHTML(hiddenData.description, enrichOptions);
-        }
-        if (hiddenData?.actionDescription) {
-          hiddenData.actionDescription = await TextEditor.enrichHTML(hiddenData.actionDescription, enrichOptions);
-        }
+      const hiddenData = this.shared.chatData["flags.pf1.identifiedInfo"];
+      if (hiddenData?.description) {
+        hiddenData.description = await TextEditor.enrichHTML(hiddenData.description, enrichOptions);
+      }
+      if (hiddenData?.actionDescription) {
+        hiddenData.actionDescription = await TextEditor.enrichHTML(hiddenData.actionDescription, enrichOptions);
+      }
 
-        // Apply roll mode
-        this.shared.chatData.rollMode ??= game.settings.get("core", "rollMode");
-        ChatMessage.implementation.applyRollMode(this.shared.chatData, this.shared.chatData.rollMode);
+      // Apply roll mode
+      this.shared.chatData.rollMode ??= game.settings.get("core", "rollMode");
+      ChatMessage.implementation.applyRollMode(this.shared.chatData, this.shared.chatData.rollMode);
 
-        result = await ChatMessage.implementation.create(this.shared.chatData);
+      result = await ChatMessage.implementation.create(this.shared.chatData);
 
-        this.shared.message = result;
-      } else result = this.shared;
-    } else {
-      if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) result = this.item.roll();
-      else result = { descriptionOnly: true };
-    }
+      this.shared.message = result;
+    } else result = this.shared;
 
     return result;
   }

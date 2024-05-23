@@ -78,13 +78,8 @@
           <h3>{{localize "PF1.SpellcastingClass"}}</h3>
           <div class="form-fields">
             <select name="system.attributes.spells.spellbooks.{{bookId}}.class" data-dtype="String">
-              {{#select spellbook.classId}}
               <option value="">{{localize "PF1.None"}}</option>
-              <option value="_hd">{{localize "PF1.HitDie"}}</option>
-              {{#each @root.classes as |cls|}}
-              <option value="{{cls.tag}}">{{cls.name}}</option>
-              {{/each}}
-              {{/select}}
+              {{selectOptions @root.classList selected=spellbook.classId}}
             </select>
           </div>
         </div>

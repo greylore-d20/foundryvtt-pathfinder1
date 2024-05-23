@@ -3250,6 +3250,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Organize Spellbook
     let hasASF = false;
+    let hasSpellbooks = false;
     const spellbookSections = {};
     const spellbooks = data.system.attributes.spells.spellbooks;
     for (const [bookId, spellbook] of Object.entries(spellbooks)) {
@@ -3257,6 +3258,7 @@ export class ActorSheetPF extends ActorSheet {
       spellbookSections[bookId] = { ...spellbook };
       // The rest are unnecssary processing if spellbook is not enabled
       if (!spellbook.inUse) continue;
+      hasSpellbooks = true;
       const book = spellbookSections[bookId];
       const spellbookSpells = spells.filter((obj) => obj.spellbook === bookId);
       book.sections = this._prepareSpellbook(data, spellbookSpells, bookId);
@@ -3281,6 +3283,16 @@ export class ActorSheetPF extends ActorSheet {
       data.asf = {
         total: asf,
       };
+    }
+
+    // Class selection list, only used by spellbooks
+    if (hasSpellbooks) {
+      const lang = game.settings.get("core", "language");
+      const allClasses = this.actor.itemTypes.class
+        .map((cls) => [cls.system.tag, cls.name])
+        .sort(([_0, a], [_1, b]) => a.localeCompare(b, lang));
+      allClasses.unshift(["_hd", game.i18n.localize("PF1.HitDie")]);
+      data.classList = Object.fromEntries(allClasses);
     }
 
     // Implant capacity

@@ -1,0 +1,73 @@
+_id: YWY0hYssZIntIQgu
+_key: '!items!YWY0hYssZIntIQgu'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/swords/sword-flanged-lightning.webp
+name: Plasma blade
+system:
+  actions:
+    - _id: 92nrjlnrvug7ce1j
+      ability:
+        attack: str
+        critMult: 3
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+                - electric
+      duration:
+        units: inst
+      img: icons/weapons/swords/sword-flanged-lightning.webp
+      name: Attack
+      range:
+        units: melee
+        value: '5'
+      touch: true
+  baseTypes:
+    - Plasma blade
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed melee;
+      <strong>Proficiency</strong> exotic</p><p><strong>Damage</strong> 1d8
+      (small), 1d10 (medium); <strong>Damage Type</strong> E and F;
+      <strong>Critical</strong> 19-20/x3</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> 1 charge/minute;
+      <strong>Special</strong> Touch</p><h3>Description</h3><p>When activated, a
+      plasma blade's heavy, ornate handle projects a quantum field that contains
+      energized plasma in a 2- to 3-foot-long "blade." Attacks made with a
+      plasma blade resolve as touch attacks. Half the damage it deals is
+      electricity and the other half is fire. When the wielder attacks an
+      object, damage from a plasma blade ignores the first 20 points of hardness
+      and its damage is not halved (even though energy damage is usually halved
+      when applied to objects). Thanks to its quantum containment, a plasma
+      blade deals half damage against incorporeal creatures, despite not being a
+      magical weapon.</p><h3>Construction</h3><p><strong>Craft</strong> DC 0;
+      <strong>Cost</strong>  gp</p><p>N/A</p>
+  hardness: 10
+  price: 12000
+  showInQuickbar: false
+  sources:
+    - id: PZO90100
+      pages: '105'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - bladesLight
+  weaponSubtype: 1h
+  weight:
+    value: 3
+type: weapon
+

@@ -1,0 +1,109 @@
+_id: G8kw4UMkRLutukmm
+_key: '!items!G8kw4UMkRLutukmm'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/staves/staff-ornate-engraved-blue.webp
+name: Stun baton
+system:
+  actions:
+    - _id: 5qmvcdrb0iyaywyb
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - nonlethal
+      duration:
+        units: inst
+      img: icons/weapons/staves/staff-ornate-engraved-blue.webp
+      name: Attack (bludgeoning)
+      range:
+        units: melee
+        value: '5'
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: XyunErwMddvDhIpL
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: round
+        unchained:
+          type: passive
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - nonlethal
+                - electric
+      duration:
+        units: inst
+      img: icons/weapons/staves/staff-ornate-engraved-blue.webp
+      name: Attack (electrical)
+      range:
+        units: melee
+        value: '5'
+      uses:
+        autoDeductChargesCost: '1'
+    - _id: votdDCkHt3OEvIAn
+      actionType: ''
+      activation:
+        type: swift
+      img: icons/weapons/staves/staff-ornate-engraved-blue.webp
+      name: Switch lethal / non leathal
+      powerAttack:
+        multiplier: ''
+      range:
+        units: personal
+      uses:
+        autoDeductChargesCost: '0'
+  baseTypes:
+    - Sap
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed melee;
+      <strong>Proficiency</strong> martial</p><p><strong>Damage</strong> Special
+      (small), Special (medium); <strong>Damage Type</strong> B and E (special);
+      <strong>Critical</strong> x2</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> 1 charge/round;
+      <strong>Special</strong> Touch</p><h3>Description</h3><p>This slender rod
+      has an insulated grip and a conductive tip. All bludgeoning damage dealt
+      by an active stun baton is nonlethal, while the electrical charge can be
+      either nonlethal or lethal. By activating a control in the handle as a
+      swift action, the wielder can switch the attack between a nonlethal jolt
+      and a lethal shock. On a confirmed critical hit, a target must succeed at
+      a Fortitude saving throw (DC = 10 + the damage dealt by the critical hit)
+      or be staggered for 1 round. When it's not activated, a stun baton
+      functions as a sap. A character who is proficient with saps is proficient
+      with a stun baton.</p><h3>Construction</h3><p><strong>Craft</strong> DC
+      24; <strong>Cost</strong> 2,500
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 5000
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '20'
+  subType: martial
+  weaponGroups:
+    value:
+      - close
+  weaponSubtype: 1h
+  weight:
+    value: 2
+type: weapon
+

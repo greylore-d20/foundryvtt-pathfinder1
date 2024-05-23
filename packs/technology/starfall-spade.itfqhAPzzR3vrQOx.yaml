@@ -1,0 +1,107 @@
+_id: itfqhAPzzR3vrQOx
+_key: '!items!itfqhAPzzR3vrQOx'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/polearms/spear-hooked-broad.webp
+name: Starfall spade
+system:
+  actions:
+    - _id: uwo4hcjmn1m4fi7v
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      attackNotes:
+        - >-
+          When the weapon strikes a foe, it automatically consumes a charge and
+          deals an additional 2 points of plasma damage (1 electricity, 1 fire)
+          on that hit. Attack that miss don't consume charges.
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+                - bludgeoning
+      duration:
+        units: inst
+      img: icons/weapons/polearms/spear-hooked-broad.webp
+      name: Attack
+      range:
+        units: melee
+        value: '5'
+      touch: true
+    - _id: TBcqjJM5nXEzBaT2
+      actionType: rwak
+      activation:
+        type: standard
+      damage:
+        parts:
+          - formula: 4d6
+            type:
+              custom: ''
+              values:
+                - fire
+                - electric
+      img: icons/weapons/polearms/spear-hooked-broad.webp
+      name: Plasma beam
+      range:
+        maxIncrements: 0
+        units: ft
+        value: '40'
+      touch: true
+      uses:
+        autoDeductChargesCost: '10'
+  baseTypes:
+    - Monk's Spade
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed melee;
+      <strong>Proficiency</strong> martial</p><p><strong>Damage</strong> Special
+      (small), Special (medium); <strong>Damage Type</strong> Special;
+      <strong>Critical</strong> x2</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> see text;
+      <strong>Special</strong> See
+      text</p><h3>Description</h3><p><strong>Aura</strong> moderate evocation;
+      <strong>CL</strong> 7th</p><p>The Technic League produces these unusual
+      weapons as signature tools for the guards of Starfall and the Palace of
+      Fallen Stars. A Starfall spade is a <em>+1/+1 monk's
+      spade</em><sup>UE</sup> and has a capacity of 10 charges. When the weapon
+      strikes a foe, it automatically consumes a charge and deals an additional
+      2 points of plasma damage (1 electricity, 1 fire) on that hit. Attack that
+      miss don't consume charges. A crystal button on the shaft allows for a
+      secondary attack: a beam of plasma that fires from the forked tip of the
+      spade. This beam is a ranged touch attack that deals 4d6 points of plasma
+      damage (half electricity, half fire) on a hit-it has a maximum range of 40
+      feet with no range increment. Firing this plasma beam consumes 10
+      charges.</p><h3>Construction</h3><p><strong>Craft</strong> DC 26;
+      <strong>Cost</strong> 4,620
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.4hNO4OAWYF5vXphH]{Craft Magic
+      Arms and Armor}, @UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technoligcal Arms and Armor}, military lab, <em>scorching ray</em>,
+      <em>shocking grasp</em></p>
+  hardness: 10
+  price: 8620
+  showInQuickbar: false
+  sources:
+    - id: PZO9089
+      pages: '63'
+  subType: martial
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - double
+      - monk
+      - polearms
+  weaponSubtype: 2h
+  weight:
+    value: 12
+type: weapon
+

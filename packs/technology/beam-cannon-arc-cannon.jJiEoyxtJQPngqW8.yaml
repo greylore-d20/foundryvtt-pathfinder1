@@ -1,0 +1,127 @@
+_id: jJiEoyxtJQPngqW8
+_key: '!items!jJiEoyxtJQPngqW8'
+folder: 07LmOqf2qBzm5RsK
+img: icons/skills/ranged/cannon-barrel-firing-orange.webp
+name: Beam cannon (arc cannon)
+system:
+  actions:
+    - _id: 8sipovx2f7bvs3p5
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      attackNotes:
+        - >-
+          +2 circumstance bonus to hit metallic targets or creatures wearing
+          medium or heavy armor
+      damage:
+        parts:
+          - formula: sizeRoll(3, 6, @size)
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      img: icons/skills/ranged/cannon-barrel-firing-orange.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '300'
+      touch: true
+      uses:
+        perAttack: true
+    - _id: zRstpCWCL8IGF0CH
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      area: 20 ft. radius
+      damage:
+        parts:
+          - formula: 6d6
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          +2 DC against metallic targets or creatures wearing medium or heavy
+          armor
+      img: icons/skills/ranged/cannon-barrel-firing-orange.webp
+      measureTemplate:
+        size: '20'
+        type: circle
+      name: Blast
+      range:
+        units: ft
+        value: '300'
+      save:
+        dc: '14'
+        description: Reflex half
+        type: ref
+      uses:
+        autoDeductChargesCost: '10'
+  baseTypes:
+    - Beam cannon (arc cannon)
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic (heavy
+      weaponry)</p><p><strong>Damage</strong> 2d6 (small), 3d6 (medium);
+      <strong>Damage Type</strong> E; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 300 ft.; <strong>Capacity</strong> 50;
+      <strong>Usage</strong> 1 charge; <strong>Special</strong> Automatic,
+      touch</p><h3>Description</h3><p>A beam cannon is an immense version of one
+      of the six more common beam rifle types. Beam cannons are generally
+      referred to by type as summarized below. In addition to the standard
+      automatic firing mode options (<em>Pathfinder Campaign Setting: Technology
+      Guide</em> 20), a beam cannon can be used to launch a devastating blast of
+      energy. This is a full-round action, and these blasts can't be used to
+      make iterative attacks. When a beam cannon is used to launch a blast, no
+      attack roll is made-you simply target a 20-foot-radius spread within a
+      maximum range of 300 feet. You must have line of effect to your target
+      when you launch a blast; if the blast impacts a solid object before
+      reaching the target area, it explodes at that point. All creatures caught
+      in the blast radius take 6d6 points of damage of the energy type
+      appropriate to the cannon (Reflex DC 14 half). Each blast also has an
+      additional effect as determined by the type of cannon. Firing a blast from
+      a beam cannon consumes 10 charges.</p><p><strong>Arc Cannon</strong>: An
+      arc cannon deals electricity damage. Against metallic targets or creatures
+      wearing medium or heavy metal armor, an arc cannon grants a +2
+      circumstance bonus on attack rolls, and the save DC against its blast mode
+      increases by 2. An arc cannon costs 40,000 gp and has a Craft DC of
+      31.</p><h3>Construction</h3><p><strong>Craft</strong> DC 31;
+      <strong>Cost</strong> 20,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 40000
+  properties:
+    ato: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9089
+      pages: '62'
+  subType: exotic
+  uses:
+    maxFormula: '50'
+    per: charges
+    value: 50
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 18
+type: weapon
+

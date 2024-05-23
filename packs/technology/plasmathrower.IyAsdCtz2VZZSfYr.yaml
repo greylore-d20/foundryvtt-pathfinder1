@@ -1,0 +1,132 @@
+_id: IyAsdCtz2VZZSfYr
+_key: '!items!IyAsdCtz2VZZSfYr'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-worn-steel.webp
+name: Plasmathrower
+system:
+  actions:
+    - _id: uci24ck14x580ge6
+      ability:
+        attack: dex
+        critRange: 19
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      attackBonus: '-2'
+      attackNotes:
+        - >-
+          When a scatter weapon attacks all creatures within a cone, it makes a
+          separate attack roll against each creature within the cone.
+      damage:
+        parts:
+          - formula: sizeRoll(4, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+                - electric
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          Effects that grant concealment, such as fog or smoke, or the blur,
+          invisibility, or mirror image spells, do not foil a scatter attack.
+      img: icons/weapons/guns/gun-worn-steel.webp
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Scattering
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '60'
+      touch: true
+    - _id: qYndvoRp9NJdscyU
+      ability:
+        attack: dex
+        critRange: 19
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      attackBonus: '-2'
+      attackNotes:
+        - >-
+          When using an automatic weapon to attack all creatures in a line, the
+          wielder makes a separate attack roll against each creature in the
+          line.
+      damage:
+        parts:
+          - formula: sizeRoll(4, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+                - electric
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          Effects that grant concealment, such as fog or smoke, or the blur,
+          invisibility, or mirror image spells, do not foil a scatter attack.
+      img: icons/weapons/guns/gun-worn-steel.webp
+      measureTemplate:
+        size: '60'
+        type: ray
+      name: Automatic
+      range:
+        units: ft
+        value: '60'
+      touch: true
+      uses:
+        autoDeductChargesCost: '10'
+  baseTypes:
+    - Plasmathrower
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic (heavy
+      weaponry)</p><p><strong>Damage</strong> 2d10 (small), 4d6 (medium);
+      <strong>Damage Type</strong> E and F; <strong>Critical</strong>
+      19-20/x2</p><p><strong>Range</strong> 60 ft.; <strong>Capacity</strong>
+      20; <strong>Usage</strong> 2 charges; <strong>Special</strong> Automatic
+      or slow-firing, scatter, touch</p><h3>Description</h3><p>A plasmathrower
+      is a devastating weapon that fires blasts of superheated, electrically
+      charged gas. This weapon has two firing modes: slow-firing and automatic.
+      When used on the slowfiring setting, the weapon fires a scattering shot
+      with no range increment; on the automatic setting, it fires individual
+      bursts of plasma that can reach up to 3 range increments. Half the damage
+      dealt by a plasmathrower is fire damage and the other half is electricity
+      damage.</p><h3>Construction</h3><p><strong>Craft</strong> DC 32;
+      <strong>Cost</strong> 15,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 30000
+  properties:
+    ato: true
+    sct: true
+    slf: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    autoDeductChargesCost: '2'
+    maxFormula: '20'
+    per: charges
+    value: 20
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 15
+type: weapon
+

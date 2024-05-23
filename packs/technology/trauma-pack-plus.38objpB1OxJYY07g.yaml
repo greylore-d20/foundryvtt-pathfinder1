@@ -1,0 +1,82 @@
+_id: 38objpB1OxJYY07g
+_key: '!items!38objpB1OxJYY07g'
+folder: tfzw8qvCDCdcwsgT
+img: icons/magic/life/cross-worn-green.webp
+name: Trauma pack plus
+system:
+  actions:
+    - _id: 7eiEDQq7Fa45IP6O
+      actionType: ''
+      activation:
+        type: standard
+      img: icons/magic/life/cross-worn-green.webp
+      name: Use
+      powerAttack:
+        multiplier: ''
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Slot</strong>
+      none</p><p><strong>Capacity</strong> 5; <strong>Usage</strong> 1 charge
+      (disposable)</p><h3>Description</h3><p>A trauma pack plus functions as a
+      trauma pack, except that it's advanced chemicals and tools allow someone
+      to restore a recently slain creature to life if the healing provided by
+      the trauma pack plus is administered within 1 round of the target's death,
+      as <em>breath of life</em>. A trauma pack heals 2d8+2 points of damage on
+      a successful DC 15 Heal check. For every 5 points by which the result
+      exceeds the DC, the pack provides an additional 2d8+2 points of
+      healing.</p><h3>Construction</h3><p><strong>Craft</strong> DC 26;
+      <strong>Cost</strong> 5,625
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.u9wRB7bsYgX0jCdk]{Craft
+      Technological Item}, medical lab</p>
+  price: 11250
+  scriptCalls:
+    - _id: K937Pth3E6MZKlf9
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Use
+      type: script
+      value: |-
+        /* Configuration */
+        /** The DC the check has to meet for anything to happen */
+        const dc = 15;
+
+        /** The skill to use for the check */
+        const skill = "hea";
+
+        /**
+         * A function returning the formula to be used for the heal
+         *
+         * @param {number} check The check result
+         * @returns {string} The formula to be used for the heal
+         */
+        const formula = (check) => {
+          const dice = (Math.floor(check / 5) - 2) * 2;
+          return `${dice}d8 + ${dice}`;
+        };
+
+        /* Script */
+        const target = game.user.targets.first();
+        const checkMessage = await actor.rollSkill(skill);
+        const check = checkMessage.rolls[0].total;
+
+        if (check >= dc) {
+          const healFormula = formula(check);
+          const subject = `# ${game.i18n.localize("PF1.ActionHeal")}` + (target ? `: ${target.name}` : "");
+          ui.chat.processMessage(`/heal ${healFormula} ${subject}`);
+        } else {
+          ui.notifications.warn(`${game.i18n.format("PF1.DCThreshold", { threshold: dc })} not reached`);
+        }
+  sources:
+    - id: PZO9272
+      pages: '52'
+  subType: misc
+  uses:
+    maxFormula: '5'
+    per: charges
+    pricePerUse: '0'
+    value: 5
+  weight:
+    value: 5
+type: consumable
+

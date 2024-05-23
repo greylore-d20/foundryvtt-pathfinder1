@@ -1,0 +1,76 @@
+_id: 8YNJf9DyDpOWCCXB
+_key: '!items!8YNJf9DyDpOWCCXB'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-purple.webp
+name: EMP pistol
+system:
+  actions:
+    - _id: 3ghbvfgo5bavnubc
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 6, @size)
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      img: icons/weapons/guns/gun-purple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '50'
+      touch: true
+      uses:
+        perAttack: true
+  baseTypes:
+    - EMP pistol
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 1d10 (small), 2d6 (medium);
+      <strong>Damage Type</strong> E; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 50 ft.; <strong>Capacity</strong> 10;
+      <strong>Usage</strong> 1 charge; <strong>Special</strong> Semi-automatic,
+      touch</p><h3>Description</h3><p>An EMP pistol emits a beam of
+      electromagnetic energy that cannot harm living creatures, but deals
+      terrible damage to robots. An EMP pistol can harm androids and creatures
+      with cybernetic implants, but they take half damage from a hit. A creature
+      that is critically hit by an EMP pistol and takes damage from that hit
+      must succeed at a DC 15 Fortitude save or be staggered for 1d4
+      rounds.</p><h3>Construction</h3><p><strong>Craft</strong> DC 25;
+      <strong>Cost</strong> 6,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 12000
+  properties:
+    sma: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
+

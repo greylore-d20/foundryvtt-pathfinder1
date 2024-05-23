@@ -1,0 +1,83 @@
+_id: ELNWm6JNpR3elrJX
+_key: '!items!ELNWm6JNpR3elrJX'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-purple.webp
+name: Flare gun
+system:
+  actions:
+    - _id: 08fxx5olxtx8bh55
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/weapons/guns/gun-purple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '240'
+      touch: true
+  baseTypes:
+    - Flare gun
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium);
+      <strong>Damage Type</strong> F; <strong>Critical</strong>
+      x3</p><p><strong>Range</strong> 240 ft.; <strong>Capacity</strong> 1;
+      <strong>Usage</strong> Disposable; <strong>Special</strong> Slow-firing,
+      touch</p><h3>Description</h3><p>A flare gun looks like a wide-barreled
+      pistol, and although it can be used in combat, the item's primary use is
+      to send signals. A flare gun and its ammunition (a small, rocket-propelled
+      magnesium charge) are completely self-contained and disposable-once fired,
+      a flare gun is useless. While a flare gun has excellent range, the flare
+      tends to wobble and spiral in flight, incurring a 20% miss chance if it's
+      being used to target a specific point. The flare detonates once it hits a
+      target or reaches its maximum range of 2,400 feet, bursting into a sphere
+      of fire that illuminates a 120-foot-radius area for 1 minute as it drifts
+      slowly back to the ground. Any creatures within 20 feet of the flare must
+      succeed at a DC 12 Fortitude saving throw each round or be dazzled by the
+      intense light for as long as they remain in the area. Creatures adjacent
+      to a lit flare are also blinded for 1d4 rounds on a failed save. A
+      creature struck by a flare takes 1d8 points of fire damage (1d6 points of
+      fire damage from Small flare guns), and continues to take the same amount
+      of fire damage each round until the flare is removed. Removing a flare is
+      a full-round action.</p><h3>Construction</h3><p><strong>Craft</strong> DC
+      18; <strong>Cost</strong> 150
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, production lab</p>
+  hardness: 10
+  price: 300
+  properties:
+    slf: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    per: single
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 1
+type: weapon
+

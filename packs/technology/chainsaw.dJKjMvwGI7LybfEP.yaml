@@ -1,0 +1,90 @@
+_id: dJKjMvwGI7LybfEP
+_key: '!items!dJKjMvwGI7LybfEP'
+folder: 07LmOqf2qBzm5RsK
+img: icons/commodities/tech/metal-jaws.webp
+name: Chainsaw
+system:
+  actions:
+    - _id: zj18wuk042omt7dp
+      ability:
+        attack: str
+        critMult: '4'
+        critRange: '18'
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(3, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      img: icons/commodities/tech/metal-jaws.webp
+      name: Attack
+      powerAttack:
+        multiplier: ''
+      range:
+        units: melee
+        value: '5'
+      save:
+        dc: 0
+  baseTypes:
+    - Chainsaw
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed melee;
+      <strong>Proficiency</strong> exotic</p><p><strong>Damage</strong> 1d12
+      (small), 3d6 (medium); <strong>Damage Type</strong> S;
+      <strong>Critical</strong> 18-20/x2</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> 1 charge/hour;
+      <strong>Special</strong> Deadly,
+      distracting</p><h3>Description</h3><p>Originally developed for use as
+      tools, chainsaws work remarkably well as weapons and are often used by
+      lunatics or those who want to intimidate their enemies. A Numerian
+      chainsaw consists of a weighty housing for the engine and power source
+      that is fitted with two handles, and a 2- to 3-foot-long blade extending
+      from the front, around which a whirling, buzzing chain of razorsharp
+      cutting links spins at blinding speed when the weapon is activated. It's a
+      standard action to activate a chainsaw, and doing so consumes a charge of
+      power. The chainsaw continues to run constantly after activation, draining
+      an additional charge each hour. A dropped chainsaw automatically turns off
+      unless it is set down carefully as a move action. The buzzing of a
+      chainsaw's blade is loud and distracting (but not deafening), causing
+      anyone carrying an activated chainsaw to take a -10 penalty on Stealth
+      checks. An activated chainsaw grants a proficient user a +2 morale bonus
+      on Intimidate checks.</p><h3>Construction</h3><p><strong>Craft</strong> DC
+      20; <strong>Cost</strong> 1,350
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  material:
+    addon:
+      - null
+      - null
+  price: 2700
+  properties:
+    dea: true
+    dst: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 2h
+  weight:
+    value: 10
+type: weapon
+

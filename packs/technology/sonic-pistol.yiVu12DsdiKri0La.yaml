@@ -1,0 +1,74 @@
+_id: yiVu12DsdiKri0La
+_key: '!items!yiVu12DsdiKri0La'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-purple.webp
+name: Sonic pistol
+system:
+  actions:
+    - _id: l5r4ull0jf2c0rkk
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - sonic
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      img: icons/weapons/guns/gun-purple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '50'
+      touch: true
+      uses:
+        perAttack: true
+  baseTypes:
+    - Sonic pistol
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium);
+      <strong>Damage Type</strong> Sonic; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 50 ft.; <strong>Capacity</strong> 10;
+      <strong>Usage</strong> 1 charge; <strong>Special</strong> Semi-automic,
+      touch</p><h3>Description</h3><p>A sonic pistol emits a blast of
+      devastating sound waves that shatter and blast flesh, bone, and anything
+      else they happen to strike. A creature critically hit by a sonic pistol
+      must succeed at a DC 15 Fortitude save to resist being permanently
+      deafened.</p><h3>Construction</h3><p><strong>Craft</strong> DC 23;
+      <strong>Cost</strong> 6,500
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 13000
+  properties:
+    sma: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
+

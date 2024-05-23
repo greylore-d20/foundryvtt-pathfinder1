@@ -1,0 +1,74 @@
+_id: O7wVuAxCCbQ9wg3P
+_key: '!items!O7wVuAxCCbQ9wg3P'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-purple.webp
+name: Arc pistol
+system:
+  actions:
+    - _id: 8th9qwiescbi2oez
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      img: icons/weapons/guns/gun-purple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '50'
+      touch: true
+      uses:
+        perAttack: true
+  baseTypes:
+    - Arc pistol
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium);
+      <strong>Damage Type</strong> E; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 50 ft.; <strong>Capacity</strong> 10;
+      <strong>Usage</strong> 1 charge; <strong>Special</strong> Semi-automatic,
+      touch</p><h3>Description</h3><p>An arc pistol emits bolts of ionized
+      particles that it then electrifies, creating a crackling beam of
+      electricity between it and its target. Arc pistols gain a +2 circumstance
+      bonus on attack rolls against targets that are metal or are wearing medium
+      or heavy metal armor.</p><h3>Construction</h3><p><strong>Craft</strong> DC
+      23; <strong>Cost</strong> 5,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 10000
+  properties:
+    sma: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
+

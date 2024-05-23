@@ -1,0 +1,66 @@
+_id: 9CIYGYQjV8zcXqKo
+_key: '!items!9CIYGYQjV8zcXqKo'
+folder: InUvu8pSIVYU8kHo
+img: icons/weapons/wands/wand-carved-stone-shard.webp
+name: Grip of death
+system:
+  actions:
+    - _id: 29jtp3s2m3yzmkdt
+      actionType: rcman
+      activation:
+        type: standard
+        unchained:
+          type: action
+      attackBonus: '-@attributes.bab.total[Neutralize BAB] + 15'
+      attackName: Combat Maneuver
+      damage:
+        parts:
+          - formula: '1'
+            type:
+              custom: negative level
+              values: []
+      effectNotes:
+        - can be perform combat maneuvers on incorporeal undead.
+        - living creatures successfully hit gain 1 negative level
+      img: icons/weapons/wands/wand-carved-stone-shard.webp
+      name: Use
+      range:
+        units: ft
+        value: '400'
+  aura:
+    custom: true
+    school: Necromancy and Transmutation
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Slot</strong>
+      none</p><p><strong>Capacity</strong> 10; <strong>Usage</strong> 1
+      charge/round</p><h3>Description</h3><p><strong>Aura</strong> moderate
+      necromancy and transmutation</p><p>This black, wandlike object creates a
+      narrow gravitational field that affects both body and soul. It duplicates
+      the effects of <em>telekinesis</em>, but only to create a sustained force
+      (maximum 250 lbs.) toward or away from the wielder, or to perform a bull
+      rush, drag, or steal combat maneuver (CMB +15). The <em>grip of death
+      </em>can perform combat maneuvers on incorporeal undead. If the user
+      performs a successful combat maneuver against a living creature using the
+      <em>grip of death</em>, the target gains 1 negative level as a portion of
+      its soul is wrenched from its body. A living creature killed in this way
+      becomes a spectre (<em>Pathfinder RPG Bestiary</em> 256). Otherwise, the
+      negative levels fade after 10
+      hours.</p><h3>Construction</h3><p><strong>Craft</strong> DC 32;
+      <strong>Cost</strong> 45,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.u9wRB7bsYgX0jCdk]{Craft
+      Technological Item}, Craft Wondrous Item, graviton lab,
+      <em>enervation</em>, <em>telekinesis</em></p>
+  price: 90000
+  sources:
+    - id: PZO9088
+      pages: '72'
+  subType: gear
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weight:
+    value: 1
+type: loot
+

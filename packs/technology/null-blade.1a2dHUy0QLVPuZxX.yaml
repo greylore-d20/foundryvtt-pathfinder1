@@ -1,0 +1,199 @@
+_id: 1a2dHUy0QLVPuZxX
+_key: '!items!1a2dHUy0QLVPuZxX'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/swords/greatsword-evil-green.webp
+name: Null blade
+system:
+  actions:
+    - _id: j09spkb4mjkxcacj
+      ability:
+        attack: str
+        critRange: 19
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      conditionals:
+        - _id: dw1k8EKznteHY7jF
+          default: false
+          modifiers:
+            - _id: lA7iSSQJxwWFe2AX
+              critical: normal
+              damageType:
+                custom: ''
+                values: []
+              formula: 2[Bane Eenhancement Bonus]
+              subTarget: allAttack
+              target: attack
+              type: enh
+            - _id: RIVJM6ySKBD3Fs75
+              critical: normal
+              damageType:
+                custom: ''
+                values:
+                  - slashing
+              formula: 2[Bane Enhancement Bonus]
+              subTarget: allDamage
+              target: damage
+              type: ''
+            - _id: VI3OEWx1KSRzsHnR
+              critical: nonCrit
+              damageType:
+                custom: ''
+                values:
+                  - slashing
+              formula: 2d6[Bane (Construct)]
+              subTarget: allDamage
+              target: damage
+              type: ''
+          name: Bane (Construct)
+        - _id: RZXtPU3dh77WxJEY
+          default: false
+          modifiers:
+            - _id: FcPQV7m6Ddnn2HjH
+              critical: ''
+              damageType:
+                custom: ''
+                values: []
+              formula: '1'
+              subTarget: charges
+              target: misc
+              type: ''
+            - _id: 7hfIzHVVIdgB9g8z
+              critical: normal
+              damageType:
+                custom: ''
+                values: []
+              formula: 1[Active Blade Enhancement Bonus]
+              subTarget: allAttack
+              target: attack
+              type: enh
+            - _id: Vn7fWnPGH0X44AmI
+              critical: normal
+              damageType:
+                custom: ''
+                values:
+                  - slashing
+              formula: 1[Active Blade Enhancement Bonus]
+              subTarget: allDamage
+              target: damage
+              type: ''
+          name: Active Blade
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      img: icons/weapons/swords/greatsword-evil-green.webp
+      name: Attack
+      range:
+        units: melee
+        value: '5'
+    - _id: 57JxsjbRVHZf3M9D
+      ability:
+        critMult: null
+        critRange: null
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      img: icons/weapons/swords/greatsword-evil-green.webp
+      name: Activate Blade
+      powerAttack:
+        critMultiplier: null
+        damageBonus: null
+      range:
+        maxIncrements: null
+        units: personal
+        value: ''
+    - _id: 6P6KLkafruEOsiYp
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          Roll d20+11 as
+          @UUID[Compendium.pf1.spells.Item.gmgwyjfpeuuc4t4o]{Dispel Magic} check
+          against the target.
+      img: icons/weapons/swords/greatsword-evil-green.webp
+      name: Dispel Magic / Discharge
+      range:
+        units: melee
+      save:
+        dc: '14'
+        description: Fortitude negates discharge
+        type: fort
+      uses:
+        autoDeductChargesCost: '1'
+  aura:
+    school: abj
+  baseTypes:
+    - Bastard Sword
+  cl: 11
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed melee;
+      <strong>Proficiency</strong> exotic</p><p><strong>Damage</strong> 1d8
+      (small), 1d10 (medium); <strong>Damage Type</strong> S;
+      <strong>Critical</strong> 19-20/x2</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> 1 charge/round;
+      <strong>Special</strong> -</p><h3>Description</h3><p>A potent fusion of
+      magic, advanced science, and masterful weaponsmithing, <em>null
+      blades</em> were devised by the Technic League as weapons against both
+      magic and machine. <em>Null blades</em> incorporate an adamantine-noqual
+      alloy in their blades, a closely guarded metallurgical secret of the
+      Technic League. The League guards these weapons closely, and when one
+      falls into another's hands, they spare no expense in their efforts to
+      recover it.</p><p>A <em>null blade</em> is a <em>+1 construct-bane bastard
+      sword</em>- using it in this capacity does not consume any charges. The
+      blade's strange alloy penetrates hardness as if it were made of
+      adamantine. The blade can be activated as a swift action. While it's
+      active, a shimmering field of green energy wraps around the blade,
+      disrupting magic and technology alike, and the weapon's enhancement bonus
+      increases to +2. In addition, the first time in a round that an activated
+      <em>null blade</em> strikes a creature or object, it consumes an
+      additional charge and targets the creature or object struck with
+      <em>dispel magic</em> and <em>discharge</em> (see page 9). If a
+      technological item damaged by a <em>null blade</em> is used in the same
+      round it took damage, it glitches as if it were timeworn (see page
+      55).</p><h3>Construction</h3><p><strong>Craft</strong> DC 30;
+      <strong>Cost</strong> 33,835
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.4hNO4OAWYF5vXphH]{Craft Magic
+      Arms and Armor}, @UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab, <em>discharge</em>,
+      <em>dispel magic</em>, <em>summon monster I</em></p>
+  enh: 1
+  hardness: 10
+  material:
+    normal:
+      value: adamantine
+  price: 58835
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '20'
+  subType: exotic
+  uses:
+    autoDeductChargesCost: '0'
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - bladesHeavy
+  weaponSubtype: 1h
+  weight:
+    value: 4
+type: weapon
+

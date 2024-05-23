@@ -1,0 +1,80 @@
+_id: dALk8tzHMqQOQCkM
+_key: '!items!dALk8tzHMqQOQCkM'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/misc/whip-red-yellow.webp
+name: Monowhip
+system:
+  actions:
+    - _id: jw8um3k4v1jhdd8p
+      ability:
+        attack: str
+        critMult: '3'
+        critRange: '18'
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 6, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      img: icons/weapons/misc/whip-red-yellow.webp
+      name: Attack
+      powerAttack:
+        multiplier: ''
+      range:
+        units: melee
+        value: '5'
+      save:
+        dc: 0
+      touch: true
+  baseTypes:
+    - Monowhip
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> light melee;
+      <strong>Proficiency</strong> exotic</p><p><strong>Damage</strong> 1d10
+      (small), 2d6 (medium); <strong>Damage Type</strong> S;
+      <strong>Critical</strong> 18-20/x3</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> 1 charge/round;
+      <strong>Special</strong> Performance, reach,
+      touch</p><h3>Description</h3><p>A monowhip is a deadly melee weapon
+      capable of inflicting horrible wounds, even in the hands of the weak. An
+      inactive monowhip looks like a short metal baton, but when it's activated,
+      a small weight detaches, revealing a 15-foot-long monofilament length.
+      Wielded like a whip, a monowhip slices deeply into targets and can inflict
+      grievous critical hits with shocking ease. Attacks made with a monowhip
+      resolve as touch attacks, and they ignore hardness as if the monofilament
+      were made of adamantine. A monowhip's damage cannot be enhanced by
+      strength, as the monofilament slices with equal ease regardless of the
+      force applied. Activating a monowhip is a move action; once activated, the
+      whip consumes power incredibly quickly, at the rate of 1 charge per
+      round.</p><h3>Construction</h3><p><strong>Craft</strong> DC 32;
+      <strong>Cost</strong> 35,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, graviton lab</p>
+  hardness: 10
+  price: 70000
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '20'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - flails
+  weight:
+    value: 1
+type: weapon
+

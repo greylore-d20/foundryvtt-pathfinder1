@@ -1,0 +1,94 @@
+_id: RMj9nUiJgjU3dYkL
+_key: '!items!RMj9nUiJgjU3dYkL'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-worn-steel.webp
+name: Vortex gun
+system:
+  actions:
+    - _id: 8jme7rmxyhhel09q
+      ability:
+        attack: dex
+        critRange: 19
+        damage: str
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      damage:
+        parts:
+          - formula: sizeRoll(10, 6, @size)
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: inst
+      img: icons/weapons/guns/gun-worn-steel.webp
+      measureTemplate:
+        size: '100'
+        type: cone
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '100'
+      save:
+        dc: '18'
+        description: Fortitude negates nauseated effect
+        type: fort
+      touch: true
+  baseTypes:
+    - Vortex gun
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic (heavy
+      weaponry)</p><p><strong>Damage</strong> 8d6 (small), 10d6 (medium);
+      <strong>Damage Type</strong> Force; <strong>Critical</strong>
+      19-20/x2</p><p><strong>Range</strong> 100-ft. cone;
+      <strong>Capacity</strong> 30; <strong>Usage</strong> 10 charges;
+      <strong>Special</strong> Slow-firing, scatter,
+      touch</p><h3>Description</h3><p>A vortex gun looks like a sleek shotgun
+      with three barrels arranged in a triangular formation. When this weapon is
+      fired, the three barrels release a beam of gravitons that spiral around
+      each other to create a 100-foot-long cone-shaped vortex of devastating
+      energy. This energy tears, crushes, and twists everything in its path.
+      Being struck by a vortex gun induces overwhelming vertigo in living
+      victims. A living creature damaged by a vortex gun must succeed at a DC 18
+      Fortitude saving throw to avoid being nauseated for 1 round. A critical
+      hit also allows the user of the gun to attempt a trip combat maneuver
+      check against the target (CMB = user's base attack bonus + 15); this
+      attempt doesn't provoke attacks of opportunity. Flying creatures struck by
+      a vortex gun are affected as if they were struck by hurricane force winds.
+      A creature protected by a force field takes no damage from a vortex gun
+      but must succeed at a DC 18 Reflex save or the shot automatically depletes
+      all of the force field's remaining hit
+      points.</p><h3>Construction</h3><p><strong>Craft</strong> DC 33;
+      <strong>Cost</strong> 91,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, graviton lab</p>
+  hardness: 10
+  price: 182000
+  properties:
+    sct: true
+    slf: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    autoDeductChargesCost: '10'
+    maxFormula: '30'
+    per: charges
+    value: 30
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 15
+type: weapon
+

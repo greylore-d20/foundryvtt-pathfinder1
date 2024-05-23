@@ -1,0 +1,74 @@
+_id: uQnKIobfc6vSzOFb
+_key: '!items!uQnKIobfc6vSzOFb'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-blunderbuss-gold.webp
+name: EMP rifle
+system:
+  actions:
+    - _id: belrhgozzz7skmm7
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(3, 6, @size)
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      img: icons/weapons/guns/gun-blunderbuss-gold.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '150'
+      touch: true
+      uses:
+        perAttack: true
+  baseTypes:
+    - EMP rifle
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 2d6 (small), 3d6 (medium);
+      <strong>Damage Type</strong> E; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 150 ft.; <strong>Capacity</strong> 20;
+      <strong>Usage</strong> 1 charge; <strong>Special</strong> Automatic,
+      touch</p><h3>Description</h3><p>An EMP rifle is a larger, more powerful
+      version of an EMP pistol. It emits a beam of electromagnetic energy that
+      can't harm living creatures, but deals significant damage to robots. It
+      functions as an EMP pistol except for the differences listed
+      here.</p><h3>Construction</h3><p><strong>Craft</strong> DC 29;
+      <strong>Cost</strong> 12,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 24000
+  properties:
+    ato: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '20'
+    per: charges
+    value: 20
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 6
+type: weapon
+

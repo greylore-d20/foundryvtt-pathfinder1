@@ -1,0 +1,120 @@
+_id: vQXGn9lAT2qcizJ9
+_key: '!items!vQXGn9lAT2qcizJ9'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-blunderbuss-gold.webp
+name: Id rifle
+system:
+  actions:
+    - _id: k6ubr59rualdu8zn
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      damage:
+        parts:
+          - formula: 1d4
+            type:
+              custom: Intelligence damage
+              values: []
+      duration:
+        units: inst
+      effectNotes:
+        - Victim takes 1d4 intelligence damage for 6 round, fortitude negates.
+      img: icons/weapons/guns/gun-blunderbuss-gold.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '50'
+      save:
+        dc: '16'
+        description: Fortitude, see text
+        type: fort
+      touch: true
+    - _id: 7Aa5QCRJcNaoUEY9
+      activation:
+        type: move
+      duration:
+        units: seeText
+        value: '5'
+      effectNotes:
+        - >-
+          Creature follows the command, as if under the effect of a suggestion
+          spell.
+      img: icons/weapons/guns/gun-blunderbuss-gold.webp
+      name: Suggestion
+      powerAttack:
+        multiplier: ''
+      range:
+        units: ft
+        value: '50'
+      save:
+        dc: '16'
+        description: Will negates
+        type: will
+      uses:
+        autoDeductChargesCost: '0'
+  baseTypes:
+    - Id rifle
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> Special (small), Special
+      (medium); <strong>Damage Type</strong> Special; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 50 ft.; <strong>Capacity</strong> 1 nanite
+      canister; <strong>Usage</strong> 1 charge; <strong>Special</strong>
+      Slow-firing, touch</p><h3>Description</h3><p>An id rifle looks like a
+      sleek, low-caliber rifle made of burnished skymetal. It fires a tiny barb
+      of solid nanites with a range increment of 50 feet. Although this barb
+      does minimal damage on a hit, any creature damaged by an id rifle barb
+      must succeed at a DC 16 Fortitude saving throw or have its central nervous
+      system flooded with nanites that swiftly overwhelm the creature's brain,
+      reducing its mind to the instinctive level of an animal. The victim takes
+      1d4 points of Intelligence damage each round, but the total amount of
+      damage taken can never equal the victim's actual Intelligence score. Each
+      round after the first, the victim can resist the Intelligence damage by
+      succeeding at a DC 16 Fortitude saving throw, at which point the damage
+      ceases. The recurring Intelligence damage automatically ends after 6
+      rounds. A victim already suffering from the effects of an id rifle who is
+      affected by an additional shot has the save DC increased by 2 per
+      additional shot.</p><p>An id rifle has a microphone built into its stock.
+      During any round in which a creature takes Intelligence damage from an id
+      rifle, as a move action the wielder of that rifle can speak a short
+      command into the microphone. Any applicable target within 50 feet of the
+      wielder must then succeed at a DC 16 Will save to resist following the
+      command, as if under the effect of a <em>suggestion</em> spell. A victim
+      follows only the latest suggestion spoken into the microphone, and
+      abandons any previous suggestion if it fails a saving throw against a new
+      suggestion. A victim continues to follow the suggestion for up to 5 hours
+      after succumbing to its effects.</p><p>The effects created by an id rifle
+      are mind-affecting
+      effects.</p><h3>Construction</h3><p><strong>Craft</strong> DC 32;
+      <strong>Cost</strong> 25,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, nanotech lab</p>
+  hardness: 10
+  price: 50000
+  properties:
+    slf: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 5
+type: weapon
+

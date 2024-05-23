@@ -1,0 +1,94 @@
+_id: sHm78v9BqUu7pwNS
+_key: '!items!sHm78v9BqUu7pwNS'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/maces/mace-round-studded.webp
+name: Neural inhibitor
+system:
+  actions:
+    - _id: 9n9l3Cu6h3uUfE6g
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: swift
+        unchained:
+          type: passive
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      img: icons/weapons/maces/mace-round-studded.webp
+      name: Activate
+      range:
+        units: melee
+        value: '5'
+    - _id: gvn6wa65lqiz3u94
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 1d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      img: icons/weapons/maces/mace-round-studded.webp
+      name: Attack
+      range:
+        units: melee
+        value: '5'
+  baseTypes:
+    - Neural inhibitor
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> light melee;
+      <strong>Proficiency</strong> simple</p><p><strong>Damage</strong> 1d6
+      (small), 1d6 (medium); <strong>Damage Type</strong> B;
+      <strong>Critical</strong> x2</p><p><strong>Range</strong> -;
+      <strong>Capacity</strong> 10; <strong>Usage</strong> see text;
+      <strong>Special</strong> -</p><h3>Description</h3><p>While powered down,
+      this sturdy, 2-foot truncheon functions as a light mace. Once it is
+      activated (this is a swift action that consumes 1 charge), a high-density
+      power core housed in the weapon's head generates a high-pitched whine that
+      causes momentary disorientation in a creature struck. Each time the weapon
+      hits a target, it consumes 1 charge and the creature struck must succeed
+      at a DC 12 Fortitude save or suffer trauma to its central nervous system.
+      For 1 round, a creature that fails its saving throw takes a -1 penalty on
+      attack rolls, skill checks, and Will saving throws, as well as a -4
+      penalty on concentration checks. The duration of this effect stacks with
+      multiple hits from the neural inhibitor. This is a mind-affecting
+      effect.</p><h3>Construction</h3><p><strong>Craft</strong> DC 20;
+      <strong>Cost</strong> 1,200
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  price: 2400
+  showInQuickbar: false
+  sources:
+    - id: PZO9085
+      pages: '60'
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - hammers
+  weight:
+    value: 2
+type: weapon
+

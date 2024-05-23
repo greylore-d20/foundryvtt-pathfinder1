@@ -1,0 +1,73 @@
+_id: pdIwi0ktcvKvDyA6
+_key: '!items!pdIwi0ktcvKvDyA6'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-purple.webp
+name: Inferno pistol
+system:
+  actions:
+    - _id: bx5vlyaszce1whbs
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/weapons/guns/gun-purple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '30'
+      touch: true
+  baseTypes:
+    - Inferno pistol
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium);
+      <strong>Damage Type</strong> F; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 30 ft.; <strong>Capacity</strong> 1 nanite
+      canister; <strong>Usage</strong> 1 charge; <strong>Special</strong>
+      Touch</p><h3>Description</h3><p>An inferno pistol is a less refined
+      variant of the longer-range laser pistol<sup>TG</sup>. Unlike a laser
+      pistol, which uses an intensely focused beam of light to burn a target, an
+      inferno pistol is much less elegant-it generates a blob of molten, red-hot
+      material and fires what appears to be a burning pellet of fire with a soft
+      hissing sound. This material is consumed swiftly in firing, leaving behind
+      nothing but ash and painful burns on anything it strikes. On a critical
+      hit, a shot from an inferno pistol also inflicts 1 point of burn damage
+      (Reflex DC 12 negates). An inferno pistol has a maximum range of 5
+      increments.</p><h3>Construction</h3><p><strong>Craft</strong> DC 21;
+      <strong>Cost</strong> 2,500
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, nanotech lab</p>
+  hardness: 10
+  price: 5000
+  showInQuickbar: false
+  sources:
+    - id: PZO9085
+      pages: '60'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
+

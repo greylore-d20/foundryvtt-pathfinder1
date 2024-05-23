@@ -1,0 +1,80 @@
+_id: erNrPgCn7FIkROmh
+_key: '!items!erNrPgCn7FIkROmh'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-purple.webp
+name: Mindrender
+system:
+  actions:
+    - _id: u5s5pzn9zwdad1xn
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      damage:
+        parts:
+          - formula: '1'
+            type:
+              custom: Negative level
+              values: []
+      duration:
+        units: inst
+      img: icons/weapons/guns/gun-purple.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '40'
+      save:
+        dc: '17'
+        description: Fortitude only sickend for [[1d4]] rounds
+        type: fort
+      touch: true
+  baseTypes:
+    - Mindrender
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> one-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> Special (small), Special
+      (medium); <strong>Damage Type</strong> Special; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 40 ft.; <strong>Capacity</strong> 1 nanite
+      canister; <strong>Usage</strong> 2 charges; <strong>Special</strong>
+      Slow-firing, touch</p><h3>Description</h3><p>A mindrender is a cruel
+      weapon that emits a carrier wave of light which transmits a mass of
+      nanites into the body of the creature struck. The victim must succeed at a
+      DC 17 Fortitude save or it takes 1 negative level and is staggered for 1
+      round as the nanites flood the victim's brain and suppress long term
+      memories. If the victim succeeds, he's instead sickened for 1d4 rounds and
+      is immune to further attacks from a mindrender for 1 hour. A creature can
+      attempt a new saving throw every 24 hours to remove the negative level.
+      These are mind-affecting
+      effects.</p><h3>Construction</h3><p><strong>Craft</strong> DC 33;
+      <strong>Cost</strong> 28,000
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, nanotech lab</p>
+  hardness: 10
+  price: 56000
+  properties:
+    slf: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    autoDeductChargesCost: '2'
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 2
+type: weapon
+

@@ -1,0 +1,122 @@
+_id: HO0CoHWwxce86C8d
+_key: '!items!HO0CoHWwxce86C8d'
+folder: tfzw8qvCDCdcwsgT
+img: icons/magic/life/cross-explosion-burst-green.webp
+name: Nanite hypogun (black)
+system:
+  actions:
+    - _id: asrhy3sjz1gh66kf
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 2d8+3
+            type:
+              custom: ''
+              values: []
+      duration:
+        units: inst
+      img: icons/magic/life/cross-explosion-burst-green.webp
+      name: Primary Effect
+      powerAttack:
+        multiplier: ''
+      range:
+        units: touch
+      target:
+        value: one living creature
+      touch: true
+    - _id: 2Tf8xRa1WqE1F2qD
+      actionType: heal
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: 1d4
+            type:
+              custom: Ability Score Damage
+              values: []
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          You quell feelings of illness and nausea in the target, giving it a +4
+          morale bonus on saving throws against disease, nausea, and sickened
+          effects. If the subject is already under the influence of one of these
+          effects when receiving the spell, that effect is suppressed for the
+          duration of the spell.
+        - ''
+      img: icons/magic/life/cross-explosion-burst-green.webp
+      name: Lesser restoration
+      powerAttack:
+        multiplier: ''
+      range:
+        units: touch
+      save:
+        dc: 10+1+1
+        description: Will negates (harmless)
+        type: will
+      target:
+        value: one living creature
+      touch: true
+      uses:
+        autoDeductChargesCost: '5'
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Slot</strong>
+      none</p><p><strong>Capacity</strong> 1 nanite canister;
+      <strong>Usage</strong> 1 charge or 5
+      charges</p><h3>Description</h3><p>Nanite hypoguns inject specialized
+      nanites into a creature's body to heal many sorts of physical and mental
+      injuries. Injecting someone with a nanite hypogun requires a touch attack.
+      Nine categories of nanite hypogun exist along the color code scale, as
+      detailed below. All nanite hypoguns have two settings. On the primary
+      setting, the hypogun heals an amount of hit point damage determined by its
+      color. Each use of a hypogun on its primary setting consumes 1 charge. On
+      the secondary setting, a dose from a nanite hypogun has a different effect
+      determined by its color-these effects mimic specific restorative spells as
+      indicated on the chart below. Each use of a hypogun on its secondary
+      setting consumes 5 charges. Although they are not magical, nanite hypoguns
+      have an effective caster level for the purposes of determining the potency
+      of their effects as required by special circumstances (such as determining
+      if a disease is cured, or if damage caused by a clay golem's cursed wound
+      ability can be healed).</p><p>A nanite hypogun functions only on a living,
+      corporeal creature. It has no effect on undead creatures
+      whatsoever.</p><table><tbody><tr><td><strong>Color</strong></td><td><strong>Primary
+      Effect</strong></td><td><strong>Secondary
+      Effect</strong></td><td><strong>CL</strong></td></tr><tr><td>Brown</td><td>1d8+1
+      healing</td><td><em>Remove
+      sickness</em><sup>UM</sup></td><td>1st</td></tr><tr><td>Black</td><td>2d8+3
+      healing</td><td><em>Lesser restoration</em></td><td>3rd</td></tr>
+      <tr><td>White</td><td>3d8+5 healing</td><td><em>Remove
+      disease</em></td><td>5th</td></tr><tr><td>Gray</td><td>4d8+7
+      healing</td><td><em>Neutralize poison</em></td><td>7th</td></tr>
+      <tr><td>Green</td><td>5d8+9 healing</td><td><em>Breath of
+      life</em></td><td>9th</td></tr><tr><td>Red</td><td>6d8+11
+      healing</td><td><em>Heal</em></td><td>11th</td></tr><tr><td>Blue</td><td>7d8+13
+      healing</td><td><em>Regenerate</em></td><td>13th</td></tr><tr><td>Orange</td><td>8d8+15
+      healing</td><td><em>Greater restoration</em></td><td>15th</td></tr>
+      <tr><td>Prismatic</td><td>9d8+17 healing</td><td><em>True
+      resurrection</em></td><td>16th</td></tr></tbody></table><h3>Construction</h3><p><strong>Craft</strong>
+      DC 28; <strong>Cost</strong> 3,000 gp
+      </p><p>@UUID[Compendium.pf1.feats.Item.u9wRB7bsYgX0jCdk]{Craft
+      Technological Item}, nanotech lab</p>
+  price: 6000
+  sources:
+    - id: PZO9272
+      pages: '50'
+  subType: gear
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weight:
+    value: 1
+type: loot
+

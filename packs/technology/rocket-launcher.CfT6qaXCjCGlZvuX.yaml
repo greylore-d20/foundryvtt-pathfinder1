@@ -1,0 +1,91 @@
+_id: CfT6qaXCjCGlZvuX
+_key: '!items!CfT6qaXCjCGlZvuX'
+folder: 07LmOqf2qBzm5RsK
+img: icons/skills/ranged/cannon-barrel-firing-orange.webp
+name: Rocket launcher
+system:
+  actions:
+    - _id: dp7pc3kltyfrt83j
+      ability:
+        attack: dex
+        damage: str
+      actionType: rwak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      damage:
+        parts:
+          - formula: sizeRoll(12, 6, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+                - fire
+      duration:
+        units: inst
+      img: icons/weapons/guns/gun-worn-steel.webp
+      measureTemplate:
+        size: '30'
+        type: circle
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '120'
+      save:
+        dc: '15'
+        description: Reflex halves
+        type: ref
+      touch: true
+  baseTypes:
+    - Rocket launcher
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic (heavy
+      weaponry)</p><p><strong>Damage</strong> 8d6 (small), 12d6 (medium);
+      <strong>Damage Type</strong> B and F; <strong>Critical</strong>
+      -</p><p><strong>Range</strong> 120 ft.; <strong>Capacity</strong> 10;
+      <strong>Usage</strong> 1 (disposable); <strong>Special</strong>
+      Slow-firing, touch</p><h3>Description</h3><p>A newly created rocket
+      launcher contains its entire load of rockets and energy charges. It cannot
+      be reloaded, and once its final rocket is fired, the weapon is useless.
+      Rockets fired from a rocket launcher can target a single target or a grid
+      intersection. A creature that takes a direct hit from a rocket cannot
+      attempt a saving throw to reduce the damage taken. When a rocket strikes
+      its target, it explodes in a 30-foot-radius burst that deals fire and
+      bludgeoning damage to all creatures within that area of effect-a
+      successful DC 15 Reflex save halves the damage for all but the target.
+      Some rocket launchers carry alternate loads, replacing the fire damage
+      with electricity or cold damage, and there are rumors of rocket launchers
+      capable of doing even more damage, firing gravity-based weapons or using
+      radioactive payloads.</p><h3>Construction</h3><p><strong>Craft</strong> DC
+      28; <strong>Cost</strong> 5,400
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, military lab</p>
+  hardness: 10
+  material:
+    addon:
+      - null
+  price: 10800
+  properties:
+    slf: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 10
+type: weapon
+

@@ -1,0 +1,77 @@
+_id: cjL3a0XRJZpQ2m4Q
+_key: '!items!cjL3a0XRJZpQ2m4Q'
+folder: 07LmOqf2qBzm5RsK
+img: icons/weapons/guns/gun-blunderbuss-gold.webp
+name: Gravity rifle
+system:
+  actions:
+    - _id: 5pxupuqlhrv5e0rn
+      ability:
+        attack: dex
+      actionType: rwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(2, 6, @size)
+            type:
+              custom: ''
+              values:
+                - force
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      img: icons/weapons/guns/gun-blunderbuss-gold.webp
+      name: Attack
+      range:
+        maxIncrements: 10
+        units: ft
+        value: '150'
+      touch: true
+      uses:
+        perAttack: true
+  baseTypes:
+    - Gravity rifle
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Type</strong> two-handed ranged;
+      <strong>Proficiency</strong> exotic
+      (firearms)</p><p><strong>Damage</strong> 1d10 (small), 2d6 (medium);
+      <strong>Damage Type</strong> Force; <strong>Critical</strong>
+      x2</p><p><strong>Range</strong> 150 ft.; <strong>Capacity</strong> 20;
+      <strong>Usage</strong> 1 charge; <strong>Special</strong> Automatic,
+      touch</p><h3>Description</h3><p>A gravity rifle is a larger, more powerful
+      version of the gravity pistol, and functions as such except for the
+      differences listed here. When a gravity rifle is on sustained setting, it
+      can move objects weighing no more than 350 pounds up to 20 feet per round,
+      and the wielder gains a +4 bonus on combat maneuver checks; she still
+      substitutes her Intelligence modifier in place of her Strength or
+      Dexterity modifier when calculating her CMB for these
+      maneuvers.</p><h3>Construction</h3><p><strong>Craft</strong> DC 34;
+      <strong>Cost</strong> 82,500
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf]{Craft
+      Technological Arms and Armor}, graviton lab</p>
+  hardness: 10
+  price: 165000
+  properties:
+    ato: true
+  showInQuickbar: false
+  sources:
+    - id: PZO9272
+      pages: '21'
+  subType: exotic
+  uses:
+    maxFormula: '20'
+    per: charges
+    value: 20
+  weaponGroups:
+    value:
+      - firearms
+  weaponSubtype: ranged
+  weight:
+    value: 6
+type: weapon
+

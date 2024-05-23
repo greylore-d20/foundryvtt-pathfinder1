@@ -1,0 +1,63 @@
+_id: gIG5wBP6ZAyaFY3S
+_key: '!items!gIG5wBP6ZAyaFY3S'
+folder: tfzw8qvCDCdcwsgT
+img: icons/magic/life/cross-worn-green.webp
+name: Trauma pack
+system:
+  actions:
+    - _id: DLlYGZ4QduGrnbox
+      actionType: ''
+      activation:
+        type: standard
+      img: icons/magic/life/cross-worn-green.webp
+      name: Use
+      powerAttack:
+        multiplier: ''
+  description:
+    value: >-
+      <h3>Statistics</h3><p><strong>Slot</strong>
+      none</p><p><strong>Capacity</strong> 5; <strong>Usage</strong> 1 charge
+      (disposable)</p><h3>Description</h3><p>This small box of emergency medical
+      gear can be used to augment a creature's Heal skill to allow for enhanced
+      healing. A full trauma pack has enough supplies to be used 5 times before
+      it is depleted. When using a trauma pack to provide healing, attempt a DC
+      15 Heal check as a standard action. If he succeeds, the pack provides
+      1d8+1 points of healing. For every 5 points by which the Heal check's
+      result exceeds the DC, it provides an additional 1d8+1 points of
+      healing.</p><h3>Construction</h3><p><strong>Craft</strong> DC 20;
+      <strong>Cost</strong> 750
+      gp</p><p>@UUID[Compendium.pf1.feats.Item.u9wRB7bsYgX0jCdk]{Craft
+      Technological Item}, medical lab</p>
+  price: 1500
+  scriptCalls:
+    - _id: fVsC4UU1pk9g41X2
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Use
+      type: script
+      value: |-
+        const target = game.user.targets.first();
+        const healMsg = await actor.rollSkill("hea");
+        const check = healMsg.rolls[0].total;
+
+        if (check >= 15) {
+          const dice = Math.floor(check / 5) - 2;
+          const formula = `${dice}d8 + ${dice}`;
+          ui.chat.processMessage(
+            `/heal ${formula} # ${game.i18n.localize("PF1.ActionHeal")}${target ? `: ${target.name}` : ""}`
+          );
+        } else ui.notifications.warn("DC 15 not reached");
+  sources:
+    - id: PZO9272
+      pages: '52'
+  subType: misc
+  uses:
+    maxFormula: '5'
+    per: charges
+    pricePerUse: '0'
+    value: 5
+  weight:
+    value: 5
+type: consumable
+

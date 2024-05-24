@@ -106,7 +106,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       i.empty = false;
       if (item.isPhysical && i.quantity <= 0) i.empty = true;
       else if (item.isCharged && !itemData.isSingleUse && itemCharges <= 0) i.empty = true;
-      i.disabled = i.empty || i.destroyed || false;
+      i.disabled = i.destroyed || false;
 
       return cur;
     }, []);

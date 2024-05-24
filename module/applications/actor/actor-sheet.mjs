@@ -480,7 +480,14 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     if (result.isPhysical && result.quantity <= 0) result.empty = true;
-    result.disabled = result.empty || result.destroyed || !result.isActive;
+    result.disabled = result.destroyed || (!result.isActive && !result.empty);
+
+    if (result.isPhysical) {
+      // Do not count unequipped physical items as disabled
+      if (item.system.equipped === false) result.disabled = false;
+      // Do not count unimplanted implants as disabled
+      else if (item.system.implanted === false) result.disabled = false;
+    }
 
     result.typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${type}.${subType}.Single`);
 

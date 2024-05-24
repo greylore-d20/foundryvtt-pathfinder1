@@ -80,7 +80,7 @@
         <div class="item-name">
           <div class="item-image rollable" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
           <h4 class="rollable">
-            {{~#if item.isStack}}({{item.quantity}}) {{/if}}
+            <span class="quantity{{#if isStack}} stack{{/if}}{{#if (eq item.quantity 0)}} empty{{/if}}{{#if (eq item.quantity 1)}} singular{{/if}}">{{item.quantity}}</span>
             {{item.name~}}
           </h4>
         </div>

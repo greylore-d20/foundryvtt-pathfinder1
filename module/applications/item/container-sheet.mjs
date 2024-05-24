@@ -87,6 +87,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       const i = { ...item };
       i.id = item.id; // Alias
       cur.push(i);
+      i.type = item.type;
+      i.subType = item.subType;
       i.document = item;
       i.labels = item.getLabels();
       i.hasAttack = item.hasAttack;
@@ -196,6 +198,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       if (section) {
         section.items ??= [];
         section.items.push(i);
+      } else {
+        console.warn(`Could not find section for item "${i.name}"`, i);
       }
     }
 

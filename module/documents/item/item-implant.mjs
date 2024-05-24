@@ -63,10 +63,16 @@ export class ItemImplantPF extends ItemPhysicalPF {
   }
 
   /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
+   * Determines if the item implanted.
+   *
+   * @inheritDoc
+   */
+  get activeState() {
+    return this.system.implanted || false;
+  }
+
+  /**
+   * @inheritDoc
    */
   async setActive(active, context) {
     return this.update({ "system.implanted": active }, context);

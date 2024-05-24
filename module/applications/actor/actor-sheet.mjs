@@ -2902,7 +2902,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    item.setActive(!item.isActive);
+    item.setActive(!item.activeState);
   }
 
   async _quickCarryItem(event) {

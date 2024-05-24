@@ -67,6 +67,9 @@ export class ItemLootPF extends ItemPhysicalPF {
     return labels;
   }
 
+  /**
+   * @inheritDoc
+   */
   get isActive() {
     const hp = this.system.hp?.value || 0;
     if (hp <= 0) return false; // Destroyed
@@ -78,8 +81,7 @@ export class ItemLootPF extends ItemPhysicalPF {
   /**
    * Make ammo count inherently as single use.
    *
-   * @inheritdoc
-   * @override
+   * @inheritDoc
    */
   get isSingleUse() {
     return this.subType === "ammo" || super.isSingleUse;

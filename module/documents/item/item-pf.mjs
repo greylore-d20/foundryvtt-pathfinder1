@@ -2219,19 +2219,6 @@ export class ItemPF extends ItemBasePF {
     return this.getAllDamageSources(this.defaultAction.id);
   }
 
-  /**
-   * Set item's active state.
-   *
-   * @abstract
-   * @param {boolean} active Active state
-   * @param {object} context Optional update context
-   * @returns {Promise<this>} Update promise if item type supports the operation.
-   * @throws Error if item does not support the operation.
-   */
-  setActive(active, context) {
-    throw new Error(`Item type ${this.type} does not support ItemPF#setActive`);
-  }
-
   /** @type {boolean} - Is this item in a container? */
   get inContainer() {
     return !!this.parentItem;

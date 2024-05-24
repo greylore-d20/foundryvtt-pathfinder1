@@ -165,20 +165,29 @@ export class ItemPhysicalPF extends ItemPF {
   }
 
   /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
+   * @inheritDoc
    */
   async setActive(active, context) {
     return this.update({ "system.equipped": active }, context);
   }
 
+  /**
+   * @inheritDoc
+   */
   get isActive() {
     const hp = this.system.hp?.value || 0;
     if (hp <= 0) return false; // Destroyed
     if (this.system.quantity <= 0) return false;
     return this.system.equipped ?? false;
+  }
+
+  /**
+   * Determines if the item is equipped.
+   *
+   * @inheritDoc
+   */
+  get activeState() {
+    return this.system.equipped || false;
   }
 
   /**

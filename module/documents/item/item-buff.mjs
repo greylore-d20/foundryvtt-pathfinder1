@@ -314,8 +314,11 @@ export class ItemBuffPF extends ItemPF {
     return result;
   }
 
+  /**
+   * @inheritDoc
+   */
   get isActive() {
-    return this.system.active;
+    return this.system.active ?? false;
   }
 
   /**
@@ -328,10 +331,7 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
+   * @inheritDoc
    */
   async setActive(active, context) {
     return this.update({ "system.active": active }, context);

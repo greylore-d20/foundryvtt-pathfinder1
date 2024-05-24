@@ -18,17 +18,17 @@ export class ItemFeatPF extends ItemPF {
   }
 
   /**
-   * @param {boolean} active
-   * @param {object} context Optional update context
-   * @returns {Promise} Update promise
-   * @override
+   * @inheritDoc
    */
   async setActive(active, context) {
     return this.update({ "system.disabled": !active }, context);
   }
 
+  /**
+   * @inheritDoc
+   */
   get isActive() {
-    return !this.system.disabled;
+    return this.system.disabled !== true;
   }
 
   /** @inheritDoc */

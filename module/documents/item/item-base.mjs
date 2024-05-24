@@ -171,13 +171,43 @@ export class ItemBasePF extends Item {
   }
 
   /**
-   * Is the item functional.
+   * Is the item is fully functional.
+   *
+   * This returns composite result of if the item is equipped, has quantity, is not disabled, is not out of charges, etc.
+   * and is not representative if the item can be set active or not via {@link setActive}.
+   *
+   * @see {@link activeState}
    *
    * @abstract
    * @type {boolean}
    */
   get isActive() {
     return true;
+  }
+
+  /**
+   * If the item can be activated via {@link setActive}.
+   *
+   * {@link isActive} can return variable state independent of the toggle that {@link setActive} controls, this returns .
+   *
+   * @abstract
+   * @type {boolean}
+   */
+  get activeState() {
+    return this.isActive;
+  }
+
+  /**
+   * Set item's active state.
+   *
+   * @abstract
+   * @param {boolean} active - Active state
+   * @param {object} [context] - Optional update context
+   * @returns {Promise<this>} - Update promise if item type supports the operation.
+   * @throws {Error} - If item does not support the operation.
+   */
+  async setActive(active, context) {
+    throw new Error(`Item type ${this.type} does not support ItemBasePF#setActive`);
   }
 
   /**

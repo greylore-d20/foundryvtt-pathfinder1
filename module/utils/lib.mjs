@@ -1069,3 +1069,21 @@ export function* getActors({
     }
   }
 }
+
+/**
+ * Parse alignment string and provide breakdown of it.
+ *
+ * Each alignment is either 0 or 1, except for neutral which can reach 2 for true neutral.
+ *
+ * @param {string} align - Alignment string.
+ * @returns {{lawful:number, evil:number, chaotic:number, good:number, neutral:number}}
+ * @since PF1 vNEXT
+ */
+export function parseAlignment(align) {
+  const lawful = align.includes("l") ? 1 : 0;
+  const evil = align.includes("e") ? 1 : 0;
+  const chaotic = align.includes("c") ? 1 : 0;
+  const good = align.includes("g") ? 1 : 0;
+  const neutral = align == "tn" ? 2 : align.includes("n") ? 1 : 0;
+  return { lawful, evil, chaotic, good, neutral };
+}

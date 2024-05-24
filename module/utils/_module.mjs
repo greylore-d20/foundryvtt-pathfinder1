@@ -30,4 +30,5 @@ export {
   refreshActors,
   refreshSheets,
   sortArrayByName,
+  parseAlignment,
 } from "./lib.mjs";

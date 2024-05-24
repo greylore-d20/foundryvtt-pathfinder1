@@ -4483,6 +4483,9 @@ export class ActorPF extends ActorBasePF {
       },
     });
 
+    // @since PF1 vNEXT
+    result.alignment = pf1.utils.parseAlignment(this.system.details?.alignment || "tn");
+
     this._rollData = result;
 
     // Call hook

@@ -476,7 +476,7 @@ export class ItemActionSheet extends FormApplication {
     const damagePart = clickedElement.closest(".damage")?.dataset.key;
     if (damageIndex != null && damagePart != null) {
       const app = new pf1.applications.DamageTypeSelector(
-        this.object,
+        this.action,
         `${damagePart}.${damageIndex}.type`,
         foundry.utils.getProperty(this.object.data, damagePart)[damageIndex].type
       );

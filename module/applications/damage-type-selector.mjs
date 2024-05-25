@@ -1,9 +1,25 @@
 export class DamageTypeSelector extends FormApplication {
-  constructor(object, dataPath, data, options = {}) {
+  /**
+   * @internal
+   * @type {string}
+   */
+  path;
+  /**
+   * @internal
+   * @type {DamageTypes}
+   */
+  damage;
+
+  /**
+   * @param {object} object - Parent object
+   * @param {string} path - Path to damage data in object
+   * @param {DamageTypes} data - Damage data
+   * @param {object} options - Application options
+   */
+  constructor(object, path, data, options = {}) {
     super(object, options);
-    this._dataPath = dataPath;
-    this._data = foundry.utils.deepClone(data);
-    if (!this._data) this._data = [];
+    this.path = path;
+    this.damage = foundry.utils.deepClone(data) || { values: [] };
   }
 
   static get defaultOptions() {
@@ -18,7 +34,7 @@ export class DamageTypeSelector extends FormApplication {
     return game.i18n.localize("PF1.DamageType");
   }
   get id() {
-    return `action-${this.object.id}_${this._dataPath}`;
+    return `damage-types-${this.object.id}-${this.path.replaceAll(".", "_")}`;
   }
 
   get damageCategorySortOrder() {
@@ -26,46 +42,56 @@ export class DamageTypeSelector extends FormApplication {
   }
 
   async getData() {
-    const data = await super.getData();
+    const damageTypes = pf1.registry.damageTypes
+      .filter((damageType) => !damageType.isModifier)
+      .map((dt) => ({ ...dt, id: dt.id, enabled: this.damage.values.includes(dt.id) }));
 
-    const damageTypes = pf1.registry.damageTypes;
-    data.damageTypes = damageTypes.filter((damageType) => !damageType.isModifier);
+    const sortOrder = this.damageCategorySortOrder;
 
-    // Add damage type categories
-    data.damageCategories = data.damageTypes.reduce((cur, o) => {
-      let categoryObj = cur.find((o2) => o2.key === o.category);
-      if (!categoryObj) {
-        categoryObj = { key: o.category, label: `PF1.DamageTypeCategory.${o.category}`, data: [] };
-        cur.push(categoryObj);
-      }
-      categoryObj.data.push(o);
-      return cur;
-    }, []);
-    // Sort damage type categories
-    {
-      const sortOrder = this.damageCategorySortOrder;
-      data.damageCategories = data.damageCategories.sort((a, b) => {
-        const idxA = sortOrder.indexOf(a.key);
-        const idxB = sortOrder.indexOf(b.key);
-        if (idxA === -1 && idxB >= 0) return 1;
-        if (idxB === -1 && idxA >= 0) return -1;
-        if (idxA > idxB) return 1;
-        if (idxA < idxB) return -1;
-        return 0;
-      });
-    }
+    const context = {
+      damage: this.damage,
+      damageTypes,
+      damageModifiers: pf1.registry.damageTypes
+        .filter((o) => o.isModifier)
+        .map((dm) => ({ ...dm, id: dm.id, enabled: this.damage.values.includes(dm.id) })),
+      // Damage type categories
+      damageCategories: damageTypes
+        .reduce((cur, o) => {
+          let categoryObj = cur.find((o2) => o2.key === o.category);
+          if (!categoryObj) {
+            categoryObj = { key: o.category, label: `PF1.DamageTypeCategory.${o.category}`, types: [] };
+            cur.push(categoryObj);
+          }
+          categoryObj.types.push(o);
+          return cur;
+        }, [])
+        .sort((a, b) => {
+          const idxA = sortOrder.indexOf(a.key);
+          const idxB = sortOrder.indexOf(b.key);
+          if (idxA === -1 && idxB >= 0) return 1;
+          if (idxB === -1 && idxA >= 0) return -1;
+          if (idxA > idxB) return 1;
+          if (idxA < idxB) return -1;
+          return 0;
+        }),
+    };
 
-    data.damageModifiers = damageTypes.filter((o) => o.isModifier);
-    data.data = this._data;
-
-    return data;
+    return context;
   }
 
+  /**
+   * @override
+   * @param {JQuery<HTMLElement>} html
+   */
   activateListeners(html) {
     html.find(`.damage-type`).on("click", this._toggleDamageType.bind(this));
     html.find(`*[name]`).on("change", this._onChangeData.bind(this));
   }
 
+  /**
+   * @internal
+   * @param {Event} event
+   */
   _onChangeData(event) {
     event.preventDefault();
     const elem = event.currentTarget;
@@ -83,23 +109,35 @@ export class DamageTypeSelector extends FormApplication {
         break;
     }
 
-    foundry.utils.setProperty(this._data, dataPath, value);
+    foundry.utils.setProperty(this.damage, dataPath, value);
   }
 
+  /**
+   * @internal
+   * @param {Event} event
+   */
   _toggleDamageType(event) {
     event.preventDefault();
     const a = event.currentTarget;
     const dt = a.dataset.id;
 
-    if (this._data.values.includes(dt)) this._data.values.splice(this._data.values.indexOf(dt), 1);
-    else this._data.values.push(dt);
+    if (this.damage.values.includes(dt)) this.damage.values.splice(this.damage.values.indexOf(dt), 1);
+    else this.damage.values.push(dt);
     this.render();
   }
 
+  /**
+   * @override
+   * @param {Event} event
+   * @param {object} formData
+   */
   async _updateObject(event, formData) {
-    formData = foundry.utils.expandObject(formData);
-    const result = this._data;
-
-    return this.object.update({ [this._dataPath]: result });
+    return this.object.update({ [this.path]: this.damage });
   }
 }
+
+/**
+ * @typedef {object} DamageTypes
+ * @property {string[]} values - Damage type IDs
+ * @property {string} custom - Semicolon deliminated list of custom damage type.
+ */

@@ -140,12 +140,6 @@ export const registerHandlebarsHelpers = function () {
     return new Handlebars.SafeString(escape(JSON.stringify(obj)));
   });
 
-  Handlebars.registerHelper("arrayHas", (options) => {
-    const array = options.hash["array"];
-    const value = options.hash["value"];
-    return array.includes(value);
-  });
-
   // Alt numberFormat helper
   Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) => {
     const { decimals } = hash;

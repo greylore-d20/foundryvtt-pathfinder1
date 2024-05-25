@@ -12,7 +12,6 @@ import "module/compendium-directory.mjs";
 import "./module/chatlog.mjs";
 
 // Import Modules
-import { tinyMCEInit } from "./module/mce/mce.mjs";
 import { measureDistances } from "./module/utils/canvas.mjs";
 import { moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
 import { initializeSocket } from "./module/socket.mjs";
@@ -547,9 +546,6 @@ Hooks.once("setup", () => {
   for (const registry of Object.values(pf1.registry)) {
     if (registry instanceof pf1.registry.Registry) registry.setup();
   }
-
-  // TinyMCE variables and commands
-  tinyMCEInit();
 
   // Register controls
   documents.controls.registerSystemControls();

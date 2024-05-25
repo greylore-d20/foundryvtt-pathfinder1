@@ -90,7 +90,7 @@ export class ChatAttack {
     data.critMultBonus = 0;
     data.critCount = 0;
     // Add critical confirmation bonus
-    data.critConfirmBonus = RollPF.safeRoll(data.action.critConfirmBonus || "0").total ?? 0;
+    data.critConfirmBonus = RollPF.safeRollAsync(data.action.critConfirmBonus || "0").total ?? 0;
     // Determine ability multiplier
     if (data.action.ability.damageMult != null) {
       const held = data.action?.held || data.item?.held || "1h";
@@ -157,7 +157,7 @@ export class ChatAttack {
     if (!noAttack) {
       if (critical && !game.settings.get("pf1", "critConfirm")) {
         // Defense DC
-        this.critConfirm = this.actionUse?.getDefenseDC(this.attack) ?? RollPF.safeRoll("0");
+        this.critConfirm = this.actionUse?.getDefenseDC(this.attack) ?? RollPF.safeRollSync("0");
         this.critConfirm.armorAsDR = true;
         this.critConfirm.options.flavor = game.i18n.localize("PF1.Critical");
         noAttack = true;

@@ -347,7 +347,7 @@ export class AttackDialog extends Application {
     this.attacks = this.shared.attacks;
 
     for (const atk of this.attacks) {
-      atk.attackBonusTotal = RollPF.safeRoll(atk.attackBonus, this.rollData).total ?? 0;
+      atk.attackBonusTotal = RollPF.safeRollAsync(atk.attackBonus, this.rollData).total ?? 0;
     }
 
     // Set ammo usage

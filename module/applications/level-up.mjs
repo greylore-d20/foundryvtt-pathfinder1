@@ -485,7 +485,7 @@ export class LevelUpForm extends FormApplication {
 
     if (tempActor.system.details?.bonusSkillRankFormula) {
       rollData = tempActor.getRollData();
-      const roll = Roll.defaultImplementation.safeRoll(tempActor.system.details.bonusSkillRankFormula, rollData);
+      const roll = Roll.defaultImplementation.safeRollSync(tempActor.system.details.bonusSkillRankFormula, rollData);
       if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${tempActor.name}.`);
       advSkillRanks += roll.total || 0;
     }
@@ -690,7 +690,7 @@ export class LevelUpForm extends FormApplication {
    * @returns {Roll}
    */
   _getHealthRoll(type, formula) {
-    const roll = Roll.defaultImplementation.safeRoll(formula);
+    const roll = Roll.defaultImplementation.safeRollAsync(formula);
     switch (type) {
       case "auto":
       case "max":

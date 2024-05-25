@@ -103,7 +103,7 @@ export class ActorCharacterPF extends ActorPF {
       rollData ??= this.getRollData();
       for (let a = 0; a < level; a++) {
         rollData.level = a + 1;
-        const roll = RollPF.safeRoll(config.custom.formula, rollData);
+        const roll = RollPF.safeRollSync(config.custom.formula, rollData);
         totalXP += roll.total;
       }
       delete rollData.level; // Cleanup

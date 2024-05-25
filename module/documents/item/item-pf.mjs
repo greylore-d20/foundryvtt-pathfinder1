@@ -448,7 +448,7 @@ export class ItemPF extends ItemBasePF {
       if (!formula) maximize = true;
       else {
         rollData ??= this.getRollData();
-        const roll = RollPF.safeRoll(formula, rollData, "recharge");
+        const roll = await RollPF.safeRollAsync(formula, rollData, "recharge");
         value = roll.total;
 
         // Cancel if formula produced invalid value
@@ -1155,7 +1155,7 @@ export class ItemPF extends ItemBasePF {
         if (actionData.duration.units === "spec") {
           duration = actionData.duration.value;
         } else if (!["inst", "perm"].includes(actionData.duration.units)) {
-          const value = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
+          const value = await RollPF.safeRollAsync(actionData.duration.value || "0", rollData).total;
           duration = [value, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
         if (duration) props.push(duration);
@@ -2177,7 +2177,7 @@ export class ItemPF extends ItemBasePF {
     // Add secondary natural attack penalty
     if (actionData.naturalAttack.primaryAttack !== true && itemData.subType === "natural") {
       const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
-      const secondaryModifier = RollPF.safeRoll(`${attackBonus}`, rollData).total ?? 0;
+      const secondaryModifier = RollPF.safeRollSync(`${attackBonus}`, rollData).total ?? 0;
       describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), "untyped", -400);
     }
 
@@ -2187,7 +2187,7 @@ export class ItemPF extends ItemBasePF {
       .forEach((c) => {
         c.modifiers.forEach((cc) => {
           if (cc.subTarget === "allAttack") {
-            const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+            const bonusRoll = RollPF.safeRollAsync(cc.formula, rollData);
             if (bonusRoll.total == 0) return;
             describePart(bonusRoll.total, c.name, cc.type, -5000);
           }

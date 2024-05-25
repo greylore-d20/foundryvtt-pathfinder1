@@ -359,7 +359,7 @@ export function onHealth(event, target) {
   if (nonlethal) options.asNonlethal = true;
 
   for (const actor of actors) {
-    let value = RollPF.safeRoll(formula, actor.getRollData()).total;
+    let value = RollPF.safeRollAsync(formula, actor.getRollData()).total;
     if (command === "heal") value = -value;
     actor.applyDamage(value, { ...options, event, element: target });
   }

@@ -181,9 +181,9 @@ export class ActorSheetPF extends ActorSheet {
     if (!data.unchainedActions) {
       const bab = data.rollData.attributes?.bab?.total;
       if (bab > 0) {
-        const numAttacks = 1 + RollPF.safeRoll(pf1.config.iterativeExtraAttacks, { bab }).total || 0;
+        const numAttacks = 1 + RollPF.safeRollSync(pf1.config.iterativeExtraAttacks, { bab }).total || 0;
         const iters = Array.fromRange(numAttacks).map(
-          (attackCount) => bab + RollPF.safeRoll(pf1.config.iterativeAttackModifier, { attackCount }).total
+          (attackCount) => bab + RollPF.safeRollSync(pf1.config.iterativeAttackModifier, { attackCount }).total
         );
         data.iteratives = `+${iters.join(" / +")}`;
       }

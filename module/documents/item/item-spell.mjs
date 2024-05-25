@@ -399,7 +399,7 @@ export class ItemSpellPF extends ItemPF {
     if (this.useSpellPoints()) {
       rollData ??= this.getRollData();
       const formula = this.getDefaultChargeFormula();
-      return RollPF.safeRoll(formula, rollData).total;
+      return RollPF.safeRollAsync(formula, rollData).total;
     } else {
       return super.getDefaultChargeCost({ rollData });
     }
@@ -707,8 +707,9 @@ export class ItemSpellPF extends ItemPF {
       } else {
         // Convert spell-only ranges
         if (["close", "medium", "long"].includes(action.range?.units)) {
+          // TODO: These should only replace @cl with @item.level instead of pre-resolving the scaling formula
           const rlabel = pf1.config.distanceUnits[action.range.units];
-          const rvalue = RollPF.safeRoll(pf1.config.spellRangeFormulas[action.range.units], rollData).total ?? 0;
+          const rvalue = RollPF.safeRollSync(pf1.config.spellRangeFormulas[action.range.units], rollData).total ?? 0;
           action.range.value = `${rvalue}[${rlabel}]`;
           action.range.units = "ft";
         }
@@ -979,7 +980,7 @@ export class ItemSpellPF extends ItemPF {
         case "year":
           if (duration.value) {
             const unit = pf1.config.timePeriods[duration.units];
-            const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
+            const roll = Roll.defaultImplementation.safeRollAsync(duration.value, rollData);
             const value = roll.total;
             if (!roll.err) {
               label.duration = game.i18n.format("PF1.Time.Format", { value, unit });

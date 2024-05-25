@@ -818,11 +818,17 @@ export class ActorPF extends ActorBasePF {
         console.error(`Bad spellbook concentration value "${book.concentration}" in spellbook "${bookId}"`);
         book.concentration = {};
       }
+
+      // Bonus formula
       const concFormula = book.concentrationFormula;
-      // TODO: Support dice roll bonus to concentration
-      const formulaRoll = concFormula.length ? RollPF.safeRollSync(concFormula, rollData).total : 0;
+      const formulaRoll = concFormula.length
+        ? RollPF.safeRollSync(concFormula, rollData, undefined, undefined, { minimize: true })
+        : { total: 0, isDeterministic: true };
+      const rollBonus = formulaRoll.isDeterministic ? formulaRoll.total : 0;
+
+      // Add it all up
       const classAbilityMod = actorData.abilities[book.ability]?.mod ?? 0;
-      const concentration = clTotal + classAbilityMod + formulaRoll;
+      const concentration = clTotal + classAbilityMod + rollBonus;
       const prevTotal = book.concentration.total ?? 0;
 
       // Set source info
@@ -844,7 +850,7 @@ export class ActorPF extends ActorBasePF {
         this.sourceInfo,
         `system.attributes.spells.spellbooks.${bookId}.concentration.total`,
         game.i18n.localize("PF1.ByBonus"),
-        formulaRoll,
+        formulaRoll.isDeterministic ? formulaRoll.total : formulaRoll.formula,
         false
       );
 
@@ -2877,12 +2883,6 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-
-    if (spellbook.concentrationFormula.length) {
-      let concBonus = spellbook.concentrationFormula;
-      if (RollPF.parse(concBonus).length > 1) concBonus = `(${concBonus})`;
-      parts.push(`${concBonus}[${game.i18n.localize("PF1.ConcentrationBonusFormula")}]`);
-    }
 
     const token = options.token ?? this.token;
 

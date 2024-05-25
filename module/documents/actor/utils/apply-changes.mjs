@@ -463,7 +463,6 @@ export const getChangeFlat = function (target, modifierType, value) {
       break;
     case "allSpeeds":
       for (const speedKey of Object.keys(curData.attributes.speed)) {
-        const base = curData.attributes.speed[speedKey]?.base;
         result.push(`system.attributes.speed.${speedKey}.total`);
       }
       break;

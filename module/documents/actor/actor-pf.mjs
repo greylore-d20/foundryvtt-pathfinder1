@@ -1849,7 +1849,11 @@ export class ActorPF extends ActorBasePF {
               : RollPF.safeRollAsync(src.formula || "0", rollData, [changeTarget, src, this], {
                   suppressError: !this.testUserPermission(game.user, "OWNER"),
                 }).total;
-          if (src.operator === "set") srcValue = game.i18n.format("PF1.SetTo", { value: srcValue });
+          if (src.operator === "set") {
+            let displayValue = srcValue;
+            if (src.change?.isDistance) displayValue = pf1.utils.convertDistance(displayValue)[0];
+            srcValue = game.i18n.format("PF1.SetTo", { value: displayValue });
+          }
           if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
             // Account for dex denied denying dodge bonuses
             if (dexDenied && srcValue > 0 && src.modifier === "dodge" && src.operator === "add" && src.change?.isAC)

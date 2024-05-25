@@ -109,6 +109,10 @@ export class ItemChange {
     return /^skill\./.test(this.subTarget);
   }
 
+  get isDistance() {
+    return /speed/i.test(this.subTarget);
+  }
+
   get source() {
     return this.data.source;
   }
@@ -321,8 +325,9 @@ export class ItemChange {
     const value = this.value;
 
     // This Change's info entry data
-    const infoEntryData = {
-      value: value,
+    const infoEntry = {
+      value,
+      operator: this.operator,
       name: this.parent ? this.parent.name : this.flavor,
       modifier: this.modifier,
       type: this.parent ? this.parent.type : null,
@@ -336,7 +341,7 @@ export class ItemChange {
           // Always add stacking entries
           const sourceInfoGroup = value >= 0 ? "positive" : "negative";
           for (const si of sourceInfoTargets) {
-            getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push(infoEntryData);
+            getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push(infoEntry);
           }
         } else {
           for (const infoTarget of sourceInfoTargets) {
@@ -370,7 +375,7 @@ export class ItemChange {
                 sumValue += existingInfoEntry.value;
                 // Check whether the combined entry should exist, or if another entry is already better than it
                 const hasHighestValue = !sInfo.some((infoEntry) => {
-                  const isSameModifier = infoEntry.modifier === infoEntryData.modifier;
+                  const isSameModifier = infoEntry.modifier === infoEntry.modifier;
                   const subTarget = infoEntry.change?.subTarget;
                   const isSameTarget = subTarget ? subTarget === this.subTarget : true;
                   const hasHigherValue = infoEntry.value > sumValue;
@@ -379,7 +384,7 @@ export class ItemChange {
                 // If the merged entry is the best, replace the existing entry with it
                 sInfo.findSplice(
                   (entry) => entry === existingInfoEntry,
-                  hasHighestValue ? { ...infoEntryData, value: sumValue } : undefined
+                  hasHighestValue ? { ...infoEntry, value: sumValue } : undefined
                 );
               }
             }
@@ -387,7 +392,7 @@ export class ItemChange {
             // Determine whether there is an entry with a higher value; remove entries with lower values
             sInfo.forEach((infoEntry) => {
               const isSameModifier =
-                infoEntry.change?.modifier === infoEntryData.modifier || infoEntry.modifier === infoEntryData.modifier;
+                infoEntry.change?.modifier === infoEntry.modifier || infoEntry.modifier === infoEntry.modifier;
               if (isSameModifier) {
                 if (infoEntry.value < sumValue) {
                   sInfo.splice(sInfo.indexOf(infoEntry), 1);
@@ -398,23 +403,17 @@ export class ItemChange {
             });
 
             if (doAdd) {
-              sInfo.push({ ...infoEntryData });
+              sInfo.push({ ...infoEntry });
             }
           }
         }
         break;
-      case "set":
+      case "set": {
         for (const si of sourceInfoTargets) {
-          getSourceInfo(actor.sourceInfo, si).positive.push({
-            value: value,
-            operator: "set",
-            name: this.parent ? this.parent.name : this.flavor,
-            modifier: this.modifier,
-            type: this.parent ? this.parent.type : null,
-            change: this,
-          });
+          getSourceInfo(actor.sourceInfo, si).positive.push({ ...infoEntry });
         }
         break;
+      }
     }
   }
 

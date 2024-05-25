@@ -25,8 +25,8 @@ export class DamageTypeSelector extends FormApplication {
     return ["physical", "energy", "misc"];
   }
 
-  async getData(options) {
-    const data = await super.getData(options);
+  async getData() {
+    const data = await super.getData();
 
     const damageTypes = pf1.registry.damageTypes;
     data.damageTypes = damageTypes.filter((damageType) => !damageType.isModifier);

@@ -28,8 +28,8 @@ export class ActionChooser extends Application {
     });
   }
 
-  async getData(options) {
-    const result = await super.getData(options);
+  async getData() {
+    const result = await super.getData();
 
     result.item = this.item.toObject();
     result.actions = this.item.system.actions;

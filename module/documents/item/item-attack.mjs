@@ -38,7 +38,9 @@ export class ItemAttackPF extends ItemPF {
     return this.isProficient;
   }
 
-  /** @type {boolean} - If actor is proficient with this weapon. */
+  /**
+   * @inheritDoc
+   */
   get isProficient() {
     if (this.system.proficient) return true;
 

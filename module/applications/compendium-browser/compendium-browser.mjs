@@ -357,9 +357,9 @@ export class CompendiumBrowser extends Application {
   }
 
   /** @inheritDoc */
-  async getData(...args) {
-    const context = await super.getData(...args);
-    context.id = args[0]?.id;
+  async getData() {
+    const context = await super.getData();
+    context.id = this.options.id;
     context.query = this._query ?? "";
     context.filters = this.filters
       .filter((filter) => filter.hasChoices())

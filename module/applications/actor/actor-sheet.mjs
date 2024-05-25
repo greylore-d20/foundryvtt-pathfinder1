@@ -132,10 +132,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
-   *
-   * @param options
    */
-  async getData(options) {
+  async getData() {
     const isOwner = this.document.isOwner;
 
     const isMetricDist = pf1.utils.getDistanceSystem() === "metric";

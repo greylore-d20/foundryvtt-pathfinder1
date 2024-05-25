@@ -306,9 +306,11 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
+   * @abstract
    * @param {boolean} [weapon=true] - Get proficiency as a weapon. Armor otherwise.
    * @returns {boolean} - Whether or not the owner of the item is proficient.
    * @throws {Error} - If item type does not support proficiency.
+   * @since PF1 vNEXT
    */
   getProficiency(weapon = true) {
     throw new Error(`Item type ${this.type} has no concept of proficiency`);
@@ -317,6 +319,7 @@ export class ItemPF extends ItemBasePF {
   /**
    * @abstract
    * @type {boolean} - Is proficient using this as weapon.
+   * @since PF1 vNEXT
    */
   get isProficient() {
     return true;

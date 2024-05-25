@@ -236,7 +236,10 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     return actor.hasArmorProficiency(this);
   }
 
-  /** @type {string} - Matching base proficiency for the armor or shield type. */
+  /**
+   * @type {string} - Matching base proficiency for the armor or shield type.
+   * @since PF1 vNEXT
+   */
   get baseArmorProficiency() {
     const subType = this.subType;
     if (!["armor", "shield"].includes(subType)) throw new Error(`"${subType}" does not support proficiency`);
@@ -263,8 +266,8 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
    * @see {@link https://aonprd.com/Rules.aspx?Name=Armor%20for%20Unusual%20Creatures&Category=Armor}
    *
    * @inheritdoc
-   * @remarks
-   * Only armor and shields get anything besides 1.
+   * @remarks - Only armor and shields get anything besides 1.
+   * @since PF1 vNEXT
    */
   getWeightMultiplier() {
     if (!["armor", "shield"].includes(this.subType)) return 1;
@@ -272,7 +275,9 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     return this._getArmorWeightMultiplier();
   }
 
-  /** @type {boolean} - If actor is proficient with this weapon. */
+  /**
+   * @inheritDoc
+   */
   get isProficient() {
     if (this.system.proficient) return true;
     return this.actor?.hasWeaponProficiency?.(this) ?? true;

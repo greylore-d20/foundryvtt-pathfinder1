@@ -59,8 +59,8 @@ export class SkillEditor extends DocumentSheet {
     return this.isSubSkill ? this.subSkillId : this.skillId;
   }
 
-  async getData(options) {
-    const data = await super.getData(options);
+  async getData() {
+    const data = await super.getData();
 
     // Configuration
     data.config = pf1.config;

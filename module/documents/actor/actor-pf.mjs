@@ -1535,27 +1535,42 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add encumbrance source details
+    let encACPPPenalty = null,
+      encMaxDex = null;
     switch (attributes.encumbrance.level) {
-      case pf1.config.encumbranceLevels.medium:
-        getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
-        getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
+      case pf1.config.encumbranceLevels.medium: {
+        encACPPPenalty = 3;
+        encMaxDex = 3;
         break;
-      case pf1.config.encumbranceLevels.heavy:
-        getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 6,
-        });
-        getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 1,
-        });
+      }
+      case pf1.config.encumbranceLevels.heavy: {
+        encACPPPenalty = 6;
+        encMaxDex = 1;
         break;
+      }
+    }
+    const encLabel = game.i18n.localize("PF1.Encumbrance");
+    if (encACPPPenalty !== null) {
+      getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
+        name: encLabel,
+        value: encACPPPenalty,
+      });
+    }
+    if (encMaxDex !== null) {
+      getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.push({
+        name: encLabel,
+        value: encMaxDex,
+      });
+      let maxDexLabel = new Intl.NumberFormat("nu", { signDisplay: "always" }).format(encMaxDex);
+      maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
+      getSourceInfo(this.sourceInfo, "system.attributes.ac.normal.total").negative.push({
+        name: encLabel,
+        value: maxDexLabel,
+      });
+      getSourceInfo(this.sourceInfo, "system.attributes.ac.touch.total").negative.push({
+        name: encLabel,
+        value: maxDexLabel,
+      });
     }
 
     this.updateSpellbookInfo();
@@ -1655,6 +1670,28 @@ export class ActorPF extends ActorBasePF {
                 value: mDex,
                 ignoreNull: false,
               });
+            }
+
+            // Add max dex to AC, too.
+            let maxDexLabel = new Intl.NumberFormat("nu", { signDisplay: "always" }).format(mDex);
+            maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
+            for (const p of ["system.attributes.ac.normal.total", "system.attributes.ac.touch.total"]) {
+              // Use special maxDex id to ensure only the worst is shown
+              const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDex");
+              if (sInfoA) {
+                if (mDex < sInfoA.value) {
+                  sInfoA.value = maxDexLabel;
+                  sInfoA.itemId = item.id;
+                  sInfoA.name = item.name;
+                }
+              } else {
+                getSourceInfo(this.sourceInfo, p).negative.push({
+                  name: item.name,
+                  value: maxDexLabel,
+                  itemId: item.id,
+                  id: "maxDex",
+                });
+              }
             }
           }
         }

@@ -2878,10 +2878,11 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
-    let formulaRoll = 0;
-    if (spellbook.concentrationFormula.length)
-      formulaRoll = await RollPF.safeRollAsync(spellbook.concentrationFormula, rollData).total;
-    rollData.formulaBonus = formulaRoll;
+    if (spellbook.concentrationFormula.length) {
+      let concBonus = spellbook.concentrationFormula;
+      if (RollPF.parse(concBonus).length > 1) concBonus = `(${concBonus})`;
+      parts.push(`${concBonus}[${game.i18n.localize("PF1.ConcentrationBonusFormula")}]`);
+    }
 
     const token = options.token ?? this.token;
 

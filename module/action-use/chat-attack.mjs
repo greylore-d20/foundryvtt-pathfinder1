@@ -89,8 +89,6 @@ export class ChatAttack {
     data.critMult = 1;
     data.critMultBonus = 0;
     data.critCount = 0;
-    // Add critical confirmation bonus
-    data.critConfirmBonus = RollPF.safeRollAsync(data.action.critConfirmBonus || "0").total ?? 0;
     // Determine ability multiplier
     if (data.action.ability.damageMult != null) {
       const held = data.action?.held || data.item?.held || "1h";
@@ -130,8 +128,10 @@ export class ChatAttack {
 
     /** @type {D20RollPF} */
     if (critical === true) {
-      if (this.rollData.critConfirmBonus !== 0) {
-        extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
+      if (this.action.data.critConfirmBonus) {
+        let critConfirm = this.action.data.critConfirmBonus;
+        if (RollPF.parse(critConfirm).length > 1) critConfirm = `(${critConfirm})`;
+        extraParts.push(`${critConfirm}[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
 
       const ccKeys = pf1.documents.actor.changes.getChangeFlat.call(actor, "critConfirm");

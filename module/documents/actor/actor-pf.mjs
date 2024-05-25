@@ -1523,13 +1523,15 @@ export class ActorPF extends ActorBasePF {
         sInfo.name = game.i18n.localize("PF1.Subtypes.Item.equipment.armor.Types.medium");
       }
 
-      if (reducedSpeed) {
-        for (const speedKey of Object.keys(this.system.attributes.speed)) {
-          const speedValue = this.system.attributes.speed[speedKey].total;
-          if (speedValue > 0) {
-            this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
-            getSourceInfo(this.sourceInfo, `system.attributes.speed.${speedKey}.total`).negative.push(sInfo);
-          }
+      for (const speedKey of Object.keys(this.system.attributes.speed)) {
+        const speedValue = this.system.attributes.speed[speedKey].total;
+        // Save speed unaffected by speed maluses here (not counting negative changes)
+        // TODO: Somehow make this ignore additional set operators
+        this.system.attributes.speed[speedKey].unhindered = speedValue; // @since PF1 vNEXT
+
+        if (reducedSpeed && speedValue > 0) {
+          this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
+          getSourceInfo(this.sourceInfo, `system.attributes.speed.${speedKey}.total`).negative.push(sInfo);
         }
       }
     }

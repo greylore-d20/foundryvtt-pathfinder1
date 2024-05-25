@@ -1296,14 +1296,21 @@ export class ActorSheetPF extends ActorSheet {
         const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
 
         const mode = detail;
+        const speed = system.attributes.speed[mode];
 
         // Add base speed
-        const [tD] = pf1.utils.convertDistance(system.attributes.speed[mode].total);
+        const [tD] = pf1.utils.convertDistance(speed.total);
+        const [tB] = pf1.utils.convertDistance(speed.base);
+        const [tR] = pf1.utils.convertDistance(speed.unhindered);
         const tU = isMetricDist ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
-        paths.push({ path: `@attributes.speed.${mode}.total`, value: tD, unit: tU });
+        paths.push(
+          { path: `@attributes.speed.${mode}.total`, value: tD, unit: tU },
+          { path: `@attributes.speed.${mode}.base`, value: tB, unit: tU },
+          { path: `@attributes.speed.${mode}.unhindered`, value: tR, unit: tU }
+        );
         // Add overland speed if we have actual speed
         if (tD > 0) {
-          const [oD] = pf1.utils.convertDistance(system.attributes.speed[mode].overland);
+          const [oD] = pf1.utils.convertDistance(speed.overland);
           const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
           paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
         }

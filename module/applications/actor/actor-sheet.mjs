@@ -1288,20 +1288,20 @@ export class ActorSheetPF extends ActorSheet {
         });
         break;
       case "speed": {
+        const mode = detail;
+
         sources.push(
-          { sources: getSource("system.attributes.speed.land.base") },
-          { sources: getSource("system.attributes.speed.land.total") }
+          { sources: getSource(`system.attributes.speed.${mode}.base`) },
+          { sources: getSource(`system.attributes.speed.${mode}.total`) }
         );
 
-        const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
-
-        const mode = detail;
-        const speed = system.attributes.speed[mode];
-
         // Add base speed
+        const speed = system.attributes.speed[mode];
         const [tD] = pf1.utils.convertDistance(speed.total);
         const [tB] = pf1.utils.convertDistance(speed.base);
         const [tR] = pf1.utils.convertDistance(speed.unhindered);
+
+        const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
         const tU = isMetricDist ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
         paths.push(
           { path: `@attributes.speed.${mode}.total`, value: tD, unit: tU },

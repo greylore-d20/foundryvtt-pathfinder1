@@ -669,6 +669,9 @@ export function createInlineFormula(match, rollData, options) {
   const isDeferred = !!command;
   let roll;
 
+  // Leave command variants to be handled by core
+  if (command) return TextEditor._createInlineRoll(match, rollData, { ...options, rolls: true });
+
   const cls = ["inline-preroll", "inline-formula"];
 
   // Handle the possibility of closing brackets
@@ -729,6 +732,36 @@ export function createInlineFormula(match, rollData, options) {
  */
 export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents, relativeTo } = {}) {
   let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false, relativeTo });
+
+  if (!rolls) {
+    const html = document.createElement("div");
+    html.innerHTML = String(pcontent);
+    const text = TextEditor._getTextNodes(html);
+    const rgx = /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi;
+    TextEditor._replaceTextContent(text, rgx, (match) => createInlineFormula(match, rollData));
+    pcontent = html.innerHTML;
+  }
+
+  return pcontent;
+}
+
+/**
+ * Temporary async variant until the rest of the code can be refactored.
+ *
+ * @internal
+ * @param content
+ * @param root0
+ * @param root0.rollData
+ * @param root0.secrets
+ * @param root0.rolls
+ * @param root0.documents
+ * @param root0.relativeTo
+ */
+export async function enrichHTMLUnrolledAsync(
+  content,
+  { rollData, secrets, rolls = false, documents, relativeTo } = {}
+) {
+  let pcontent = await TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: true, relativeTo });
 
   if (!rolls) {
     const html = document.createElement("div");

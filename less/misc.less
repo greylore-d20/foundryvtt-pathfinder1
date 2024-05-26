@@ -23,10 +23,19 @@
 .inline-preroll.inline-formula {
   background: #ddd;
   padding: 1px 4px;
-  border: 1px solid #4b4a44;
+  border: 1px solid var(--color-text-dark-inactive);
   border-radius: 2px;
   white-space: nowrap;
   word-break: break-all;
+
+  &:hover {
+    text-shadow: none;
+    cursor: default;
+  }
+
+  > i {
+    color: var(--color-text-dark-inactive);
+  }
 }
 
 .pf1 {

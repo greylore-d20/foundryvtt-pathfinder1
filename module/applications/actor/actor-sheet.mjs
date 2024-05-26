@@ -1,16 +1,16 @@
-import { ActorTraitSelector } from "../trait-selector.mjs";
-import { ActorResistanceSelector } from "../damage-resistance-selector.mjs";
+import { ActorTraitSelector } from "@app/trait-selector.mjs";
+import { ActorResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { CR, adjustNumberByStringCommand, openJournal } from "../../utils/lib.mjs";
-import { PointBuyCalculator } from "../point-buy-calculator.mjs";
-import { Widget_ItemPicker } from "../item-picker.mjs";
+import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync } from "@utils";
+import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
+import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
-import { ItemPF } from "../../documents/item/item-pf.mjs";
-import { applyAccessibilitySettings } from "../../utils/chat.mjs";
-import { LevelUpForm } from "../level-up.mjs";
-import { CurrencyTransfer } from "../currency-transfer.mjs";
-import { getHighestChanges } from "../../documents/actor/utils/apply-changes.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { ItemPF } from "@item/item-pf.mjs";
+import { applyAccessibilitySettings } from "@utils/chat.mjs";
+import { LevelUpForm } from "@app/level-up.mjs";
+import { CurrencyTransfer } from "@app/currency-transfer.mjs";
+import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
+import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
@@ -201,10 +201,10 @@ export class ActorSheetPF extends ActorSheet {
       relativeTo: this.actor,
     };
     const bio = context.system.details?.biography?.value;
-    const pBio = bio ? TextEditor.enrichHTML(bio, enrichHTMLOptions) : Promise.resolve();
+    const pBio = bio ? enrichHTMLUnrolledAsync(bio, enrichHTMLOptions) : Promise.resolve();
     pBio.then((html) => (context.biographyHTML = html));
     const notes = context.system.details?.notes?.value;
-    const pNotes = notes ? TextEditor.enrichHTML(notes, enrichHTMLOptions) : Promise.resolve();
+    const pNotes = notes ? enrichHTMLUnrolledAsync(notes, enrichHTMLOptions) : Promise.resolve();
     pNotes.then((html) => (context.notesHTML = html));
     await Promise.all([pBio, pNotes]);
 

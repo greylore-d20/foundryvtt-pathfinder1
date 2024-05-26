@@ -1,8 +1,8 @@
-import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets } from "@utils";
+import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets, enrichHTMLUnrolledAsync } from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
-import { ActorTraitSelector } from "../trait-selector.mjs";
-import { SpeedEditor } from "../speed-editor.mjs";
-import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
+import { ActorTraitSelector } from "@app/trait-selector.mjs";
+import { SpeedEditor } from "@app/speed-editor.mjs";
+import { Widget_CategorizedItemPicker } from "@app/categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
@@ -232,10 +232,10 @@ export class ItemSheetPF extends ItemSheet {
       async: true,
       relativeTo: this.actor,
     };
-    const pIdentDesc = description ? TextEditor.enrichHTML(description, enrichOptions) : Promise.resolve();
+    const pIdentDesc = description ? enrichHTMLUnrolledAsync(description, enrichOptions) : Promise.resolve();
     pIdentDesc.then((html) => (context.descriptionHTML.identified = html));
     const unidentDesc = itemData.description?.unidentified;
-    const pUnidentDesc = unidentDesc ? TextEditor.enrichHTML(unidentDesc, enrichOptions) : Promise.resolve();
+    const pUnidentDesc = unidentDesc ? enrichHTMLUnrolledAsync(unidentDesc, enrichOptions) : Promise.resolve();
     pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
     await Promise.all([pIdentDesc, pUnidentDesc]);
 

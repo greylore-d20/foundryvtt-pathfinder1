@@ -356,6 +356,14 @@ function sanitizePackEntry(entry, documentType = "") {
       if (!allowedCoreFields.includes(key)) delete entry[key];
     }
   }
+  if (documentType === "JournalEntry") {
+    const disallowedPageFields = ["_stats", "ownership", "video"];
+    for (const page of entry.pages) {
+      for (const key of Object.keys(page)) {
+        if (disallowedPageFields.includes(key)) delete page[key];
+      }
+    }
+  }
 
   // Remove folders anyway if null
   if (entry.folder === null) delete entry.folder;

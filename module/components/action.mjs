@@ -16,6 +16,8 @@ export class ItemAction {
   /** @type {Record<number,Application>} */
   apps = {};
 
+  static FALLBACK_IMAGE = "systems/pf1/icons/skills/gray_04.jpg";
+
   constructor(data, parent) {
     this.data = foundry.utils.mergeObject(ItemAction.defaultData, data);
 
@@ -108,7 +110,7 @@ export class ItemAction {
     return this.data._id;
   }
   get img() {
-    return this.data.img;
+    return this.data.img || this.item?.img || this.constructor.FALLBACK_IMAGE;
   }
   get name() {
     return this.data.name;
@@ -520,7 +522,7 @@ export class ItemAction {
     return {
       _id: foundry.utils.randomID(16),
       name: game.i18n.localize("PF1.Action"),
-      img: "systems/pf1/icons/skills/gray_04.jpg",
+      img: "",
       description: "",
       tag: "",
       activation: {

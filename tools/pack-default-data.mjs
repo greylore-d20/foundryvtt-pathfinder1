@@ -7,7 +7,7 @@ export function getActionDefaultData() {
   return {
     _id: "",
     name: "",
-    img: "systems/pf1/icons/skills/gray_04.jpg",
+    img: "",
     description: "",
     tag: "",
     activation: {

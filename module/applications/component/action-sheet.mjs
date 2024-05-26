@@ -54,25 +54,26 @@ export class ItemActionSheet extends FormApplication {
   }
 
   async getData() {
-    const context = await super.getData();
     const action = this.action;
     const item = this.item;
     const actor = this.actor;
-    context.user = game.user;
-    context.action = action;
-    context.item = item;
-    context.actor = actor;
+
+    const context = {
+      config: pf1.config,
+      editable: this.isEditable,
+      user: game.user,
+      action,
+      item,
+      actor,
+      img: action.img,
+      tag: pf1.utils.createTag(action.name), // Tag placeholder
+      damageTypes: pf1.registry.damageTypes.toObject(),
+      rollData: action.getRollData(),
+    };
+
     context.data = foundry.utils.mergeObject(action.constructor.defaultData, foundry.utils.deepClone(action.data), {
       inplace: false,
     });
-    context.damageTypes = pf1.registry.damageTypes.toObject();
-    context.rollData = action.getRollData();
-
-    // Tag placeholder
-    context.tag = pf1.utils.createTag(action.name);
-
-    // Include CONFIG values
-    context.config = pf1.config;
 
     // Action Details
     context.hasAttackRoll = action.hasAttack;

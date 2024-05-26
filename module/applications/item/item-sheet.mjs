@@ -1045,8 +1045,10 @@ export class ItemSheetPF extends ItemSheet {
     for (const d of context.system.actions) {
       const doc = this.item.actions.get(d._id);
       const obj = {
+        img: doc.img,
         data: d,
         isSelfCharged: doc.isSelfCharged,
+        doc,
       };
 
       result.push(obj);
@@ -1924,7 +1926,6 @@ export class ItemSheetPF extends ItemSheet {
       await this._onSubmit(event, { preventRender: true });
 
       const newActionData = {
-        img: this.item.img,
         name: ["weapon", "attack"].includes(this.item.type)
           ? game.i18n.localize("PF1.Attack")
           : game.i18n.localize("PF1.Use"),

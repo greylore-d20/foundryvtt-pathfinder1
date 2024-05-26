@@ -116,12 +116,15 @@ export class ItemActionSheet extends FormApplication {
       : pf1.config.abilityActivationTypes;
 
     // Add description
-    context.descriptionHTML = await TextEditor.enrichHTML(context.data.description, {
-      secrets: context.owner,
-      rollData: context.rollData,
-      async: true,
-      relativeTo: this.actor,
-    });
+    const description = context.data.description;
+    context.descriptionHTML = description
+      ? await TextEditor.enrichHTML(description, {
+          secrets: context.owner,
+          rollData: context.rollData,
+          async: true,
+          relativeTo: this.actor,
+        })
+      : null;
 
     // Show additional ranged properties
     context.showMaxRangeIncrements = context.data.range.units === "ft";

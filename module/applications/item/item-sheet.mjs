@@ -104,13 +104,9 @@ export class ItemSheetPF extends ItemSheet {
    * Start with the base item data and extending with additional properties for rendering.
    */
   async getData() {
-    const context = await super.getData();
-    context.flags = { flags: context.flags };
-
     /** @type {ItemPF} */
     const item = this.item,
       itemData = item.system;
-    context.system = itemData;
 
     const actor = item.actor,
       actorData = actor?.system;
@@ -119,10 +115,23 @@ export class ItemSheetPF extends ItemSheet {
 
     const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
-    context.rollData = rollData;
-    context.labels = item.getLabels();
+    const context = {
+      item,
+      name: item.name,
+      system: itemData,
+      itemType: game.i18n.localize(CONFIG.Item.typeLabels[item.type]),
+      rollData,
+      config: pf1.config,
+      owned: !!actor,
+      owner: item.isOwner,
+      isGM: game.user.isGM,
+      labels: item.getLabels(),
+      canClassLink: pf1.config.classAssociations.includes(item.type) && !!rollData.classes,
+      inContainer: item.inContainer ?? false,
+      // Include raw tag data (from source to not get autofilled tag)
+      tag: this.item._source.system.tag,
+    };
 
-    context.canClassLink = pf1.config.classAssociations.includes(item.type) && !!rollData.classes;
     if (context.canClassLink) {
       context.hasClassLink = !!item.system.class;
       context.classes = {};
@@ -133,11 +142,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Include sub-items
     context.items = item.items?.map((i) => i.toObject()) ?? [];
-
-    // Include CONFIG values
-    context.config = pf1.config;
-
-    context.inContainer = item.inContainer ?? false;
 
     // Add hit die size options for classes
     if (item.type === "class") {
@@ -162,21 +166,16 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Include raw tag data (from source to not get autofilled tag)
-    context.tag = this.item._source.system.tag;
-
-    // Item Type, Status, and Details
-    context.itemType = game.i18n.localize(CONFIG.Item.typeLabels[item.type]);
-    context.itemName = item.name;
     if (item.links.charges) context.inheritCharges = item.links.charges;
     context.isCharged = !["single", "", undefined].includes(itemData.uses?.per);
     context.defaultChargeFormula = item.getDefaultChargeFormula();
+
+    // Item type identifiers
     context.isPhysical = itemData.quantity !== undefined;
     context.isNaturalAttack = itemData.subType === "natural";
     context.isSpell = item.type === "spell";
-    context.owned = !!actor;
-    context.owner = item.isOwner;
-    context.isGM = game.user.isGM;
+    context.isImplant = item.type === "implant";
+
     context.hasAction = item.hasAction;
     context.showIdentifyDescription = context.isGM && context.isPhysical;
     context.showUnidentifiedData = item.showUnidentifiedData;
@@ -219,31 +218,25 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    const description = this.item.getDescription({ rollData, header: false });
-
     // Add descriptions
+    const description = context.showIdentified ? this.item.getDescription({ rollData, header: false }) : null;
+
     context.descriptionHTML = {
-      identified: description
-        ? await TextEditor.enrichHTML(description, {
-            secrets: context.owner,
-            rollData: rollData,
-            async: true,
-            relativeTo: this.actor,
-          })
-        : null,
-      unidentified: itemData.description.unidentified
-        ? await TextEditor.enrichHTML(itemData.description.unidentified, {
-            secrets: context.owner,
-            rollData: rollData,
-            async: true,
-            relativeTo: this.actor,
-          })
-        : null,
+      identified: null,
+      unidentified: null,
     };
-
-    context.name = item.name;
-
-    context.isImplant = item.type === "implant";
+    const enrichOptions = {
+      secrets: context.owner,
+      rollData: rollData,
+      async: true,
+      relativeTo: this.actor,
+    };
+    const pIdentDesc = description ? TextEditor.enrichHTML(description, enrichOptions) : Promise.resolve();
+    pIdentDesc.then((html) => (context.descriptionHTML.identified = html));
+    const unidentDesc = itemData.description?.unidentified;
+    const pUnidentDesc = unidentDesc ? TextEditor.enrichHTML(unidentDesc, enrichOptions) : Promise.resolve();
+    pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
+    await Promise.all([pIdentDesc, pUnidentDesc]);
 
     /** @type {DescriptionAttribute[]} */
     context.descriptionAttributes = [];
@@ -961,14 +954,14 @@ export class ItemSheetPF extends ItemSheet {
     return true; // Finally made it through the gauntlet!
   }
 
-  _prepareLinks(data) {
-    data.links = {
+  _prepareLinks(context) {
+    context.links = {
       list: [],
     };
 
     // Add charges link type
     if (["feat", "consumable", "attack", "equipment"].includes(this.item.type)) {
-      data.links.list.push({
+      context.links.list.push({
         id: "charges",
         label: game.i18n.localize("PF1.LinkTypeCharges"),
         help: game.i18n.localize("PF1.LinkHelpCharges"),
@@ -978,7 +971,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add class associations
     if (this.item.type === "class") {
-      data.links.list.push({
+      context.links.list.push({
         id: "classAssociations",
         label: game.i18n.localize("PF1.LinkTypeClassAssociations"),
         help: game.i18n.localize("PF1.LinkHelpClassAssociations"),
@@ -993,14 +986,14 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add children link type
-    data.links.list.push({
+    context.links.list.push({
       id: "children",
       label: game.i18n.localize("PF1.LinkTypeChildren"),
       help: game.i18n.localize("PF1.LinkHelpChildren"),
       items: [],
     });
 
-    data.links.list.push({
+    context.links.list.push({
       id: "supplements",
       label: game.i18n.localize("PF1.LinkTypeSupplements"),
       help: game.i18n.localize("PF1.LinkHelpSupplements"),
@@ -1019,7 +1012,7 @@ export class ItemSheetPF extends ItemSheet {
     // Post process data
     const item = this.item,
       actor = item.actor;
-    for (const links of data.links.list) {
+    for (const links of context.links.list) {
       const items = item.system.links?.[links.id] || [];
       for (let index = 0; index < items.length; index++) {
         const linkData = foundry.utils.deepClone(items[index]);
@@ -1038,11 +1031,11 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
-  _prepareActions(data) {
-    if (!data.system.actions) return [];
+  _prepareActions(context) {
+    if (!context.system.actions) return [];
     const result = [];
 
-    for (const d of data.system.actions) {
+    for (const d of context.system.actions) {
       const doc = this.item.actions.get(d._id);
       const obj = {
         data: d,
@@ -1052,18 +1045,18 @@ export class ItemSheetPF extends ItemSheet {
       result.push(obj);
     }
 
-    data.actions = result;
+    context.actions = result;
   }
 
-  _prepareItemFlags(data) {
-    const flags = data.item.system.flags ?? {};
-    data.flags ??= {};
-    data.flags.boolean = flags.boolean ?? {};
-    data.flags.dictionary = flags.dictionary ?? {};
+  _prepareItemFlags(context) {
+    const flags = context.system.flags ?? {};
+    context.flags ??= {};
+    context.flags.boolean = flags.boolean ?? {};
+    context.flags.dictionary = flags.dictionary ?? {};
   }
 
-  async _prepareScriptCalls(data) {
-    data.scriptCalls = null;
+  async _prepareScriptCalls(context) {
+    context.scriptCalls = null;
 
     const categories = pf1.registry.scriptCalls.filter((category) => {
       if (!category.itemTypes.includes(this.item.type)) return false;
@@ -1072,14 +1065,14 @@ export class ItemSheetPF extends ItemSheet {
     // Don't show the Script Calls section if there are no categories for this item type
     if (!categories.length) return;
 
-    data.scriptCalls = {};
+    context.scriptCalls = {};
 
     // Iterate over all script calls, and adjust data
     const scriptCalls = this.item.scriptCalls ?? [];
 
     // Create categories, and assign items to them
     for (const { id, name, info } of categories) {
-      data.scriptCalls[id] = {
+      context.scriptCalls[id] = {
         name,
         tooltip: info,
         items: scriptCalls.filter((sc) => sc.category === id && !sc.hide),

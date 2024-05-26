@@ -138,7 +138,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
 
-    const data = {
+    const context = {
       actor: this.actor,
       document: this.actor,
       effects: this.actor.effects,
@@ -167,65 +167,66 @@ export class ActorSheetPF extends ActorSheet {
       unchainedActions: game.settings.get("pf1", "unchainedActionEconomy"),
     };
 
-    Object.values(data.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
+    Object.values(context.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
 
     const rollData = this.document.getRollData();
-    data.rollData = rollData;
-    data.system = foundry.utils.deepClone(this.document.system);
+    context.rollData = rollData;
+    context.system = foundry.utils.deepClone(this.document.system);
 
-    data.inCharacterGeneration = this.inCharacterGeneration;
+    context.inCharacterGeneration = this.inCharacterGeneration;
 
-    data.hasProficiencies = data.isCharacter || game.settings.get("pf1", "npcProficiencies");
+    context.hasProficiencies = context.isCharacter || game.settings.get("pf1", "npcProficiencies");
 
     // BAB iteratives
-    if (!data.unchainedActions) {
-      const bab = data.rollData.attributes?.bab?.total;
+    if (!context.unchainedActions) {
+      const bab = context.rollData.attributes?.bab?.total;
       if (bab > 0) {
         const numAttacks = 1 + RollPF.safeRollSync(pf1.config.iterativeExtraAttacks, { bab }).total || 0;
         const iters = Array.fromRange(numAttacks).map(
           (attackCount) => bab + RollPF.safeRollSync(pf1.config.iterativeAttackModifier, { attackCount }).total
         );
-        data.iteratives = `+${iters.join(" / +")}`;
+        context.iteratives = `+${iters.join(" / +")}`;
       }
     }
 
     // Show whether the item has currency
-    data.hasCurrency = Object.values(this.object.system.currency).some((o) => o > 0);
-    data.hasAltCurrency = Object.values(this.object.system.altCurrency).some((o) => o > 0);
+    context.hasCurrency = Object.values(this.object.system.currency).some((o) => o > 0);
+    context.hasAltCurrency = Object.values(this.object.system.altCurrency).some((o) => o > 0);
 
     // Enrich descriptions
-    data.biographyHTML = await TextEditor.enrichHTML(data.system.details.biography.value, {
+    const enrichHTMLOptions = {
       secrets: isOwner,
-      rollData: data.rollData,
+      rollData: context.rollData,
       async: true,
       relativeTo: this.actor,
-    });
-    data.notesHTML = await TextEditor.enrichHTML(data.system.details.notes.value, {
-      secrets: isOwner,
-      rollData: data.rollData,
-      async: true,
-      relativeTo: this.actor,
-    });
+    };
+    const bio = context.system.details?.biography?.value;
+    const pBio = bio ? TextEditor.enrichHTML(bio, enrichHTMLOptions) : Promise.resolve();
+    pBio.then((html) => (context.biographyHTML = html));
+    const notes = context.system.details?.notes?.value;
+    const pNotes = notes ? TextEditor.enrichHTML(notes, enrichHTMLOptions) : Promise.resolve();
+    pNotes.then((html) => (context.notesHTML = html));
+    await Promise.all([pBio, pNotes]);
 
     // The Actor and its Items
-    data.token = this.token;
+    context.token = this.token;
 
-    data.items = this.document.items.map((item) => this._prepareItem(item));
-    data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.items = this.document.items.map((item) => this._prepareItem(item));
+    context.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
-    data.labels = this.document.getLabels();
-    data.filters = this._filters;
+    context.labels = this.document.getLabels();
+    context.filters = this._filters;
 
     // Generic melee and ranged attack bonuses, only present for sheet.
     {
-      const attributes = data.system.attributes,
-        abilities = data.system.abilities,
-        sizeModifier = pf1.config.sizeMods[data.system.traits.size],
+      const attributes = context.system.attributes,
+        abilities = context.system.abilities,
+        sizeModifier = pf1.config.sizeMods[context.system.traits.size],
         baseBonus = attributes.attack.shared + attributes.attack.general + sizeModifier,
         meleeAbility = abilities[attributes.attack.meleeAbility]?.mod ?? 0,
         rangedAbility = abilities[attributes.attack.rangedAbility]?.mod ?? 0;
 
-      data.genericAttacks = {
+      context.genericAttacks = {
         melee: {
           ability: attributes.attack.meleeAbility,
           abilityMod: meleeAbility,
@@ -243,7 +244,7 @@ export class ActorSheetPF extends ActorSheet {
     {
       const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
       const totalValue = pf1.utils.currency.split(cpValue);
-      data.labels.totalValue = game.i18n.format("PF1.TotalItemValue", {
+      context.labels.totalValue = game.i18n.format("PF1.TotalItemValue", {
         gp: totalValue.gp,
         sp: totalValue.sp,
         cp: totalValue.cp,
@@ -251,23 +252,23 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Ability Scores
-    for (const [a, abl] of Object.entries(data.system.abilities)) {
+    for (const [a, abl] of Object.entries(context.system.abilities)) {
       abl.label = pf1.config.abilities[a];
       abl.totalLabel = abl.total == null ? "-" : abl.total;
     }
 
     // Armor Class
-    for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
+    for (const [a, ac] of Object.entries(context.system.attributes.ac)) {
       ac.label = pf1.config.ac[a];
     }
 
     // Saving Throws
-    for (const [a, savingThrow] of Object.entries(data.system.attributes.savingThrows)) {
+    for (const [a, savingThrow] of Object.entries(context.system.attributes.savingThrows)) {
       savingThrow.label = pf1.config.savingThrows[a];
     }
 
     // Update skill labels
-    for (const [skillId, skill] of Object.entries(data.system.skills ?? {})) {
+    for (const [skillId, skill] of Object.entries(context.system.skills ?? {})) {
       skill.key = skillId;
       skill.path = skillId;
       skill.skillId = skillId;
@@ -299,38 +300,38 @@ export class ActorSheetPF extends ActorSheet {
       feats.issues = 0;
       if (feats.missing > 0 || feats.excess) feats.issues += 1;
       if (feats.disabled > 0) feats.issues += 1;
-      data.featCount = feats;
+      context.featCount = feats;
     }
 
     // Update traits
-    this._prepareTraits(data.system.traits);
-    data.labels.senses = this._prepareSenseLabels();
-    data.dr = this.document.parseResistances("dr");
-    data.eres = this.document.parseResistances("eres");
+    this._prepareTraits(context.system.traits);
+    context.labels.senses = this._prepareSenseLabels();
+    context.dr = this.document.parseResistances("dr");
+    context.eres = this.document.parseResistances("eres");
 
     // Prepare owned items
-    this._prepareItems(data);
+    this._prepareItems(context);
 
     // Compute encumbrance
-    data.encumbrance = this._computeEncumbrance(data.system);
+    context.encumbrance = this._computeEncumbrance(context.system);
 
     // Prepare skillsets
-    this._prepareSkillsets(data);
+    this._prepareSkillsets(context);
 
-    this._prepareSkills(data, rollData);
+    this._prepareSkills(context, rollData);
 
     // Fetch the game settings relevant to sheet rendering.
     {
       const actorType = { character: "pc", npc: "npc" }[this.document.type];
-      data.healthConfig = game.settings.get("pf1", "healthConfig");
-      data.useWoundsAndVigor = data.healthConfig.variants[actorType].useWoundsAndVigor;
+      context.healthConfig = game.settings.get("pf1", "healthConfig");
+      context.useWoundsAndVigor = context.healthConfig.variants[actorType].useWoundsAndVigor;
     }
 
     // Determine hidden elements
     this._prepareHiddenElements();
-    data.hiddenElems = this._hiddenElems;
+    context.hiddenElems = this._hiddenElems;
 
-    data.magicItems = {
+    context.magicItems = {
       identified: [],
       unidentified: [],
     };
@@ -368,13 +369,13 @@ export class ActorSheetPF extends ActorSheet {
 
         itemData.unidentifiedName = game.user.isGM ? item.system.unidentified?.name : null;
 
-        if (itemData.identified) data.magicItems.identified.push(itemData);
-        else data.magicItems.unidentified.push(itemData);
+        if (itemData.identified) context.magicItems.identified.push(itemData);
+        else context.magicItems.unidentified.push(itemData);
       });
 
     // Prepare (interactive) labels
     if (this.actor.itemTypes.class.length === 0) {
-      data.labels.firstClass = game.i18n
+      context.labels.firstClass = game.i18n
         .format("PF1.Info_FirstClass", {
           html: `<a data-action="compendium" data-action-target="classes" data-tooltip="PF1.OpenCompendium">${game.i18n.localize(
             "PF1.Info_FirstClass_Compendium"
@@ -387,7 +388,7 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
-    data.conditions = pf1.registry.conditions.map((cond) => ({
+    context.conditions = pf1.registry.conditions.map((cond) => ({
       id: cond.id,
       img: cond.texture,
       active: conditions[cond.id] ?? false,
@@ -400,7 +401,7 @@ export class ActorSheetPF extends ActorSheet {
     }));
 
     // Return data to the sheet
-    return data;
+    return context;
   }
 
   /**

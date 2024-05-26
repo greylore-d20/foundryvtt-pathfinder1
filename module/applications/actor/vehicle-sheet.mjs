@@ -60,12 +60,15 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       Object.entries(pf1.config.vehicles.size).map(([key, data]) => [key, data.label])
     );
 
-    data.notesHTML = await TextEditor.enrichHTML(data.system.details.notes?.value ?? "", {
-      secrets: isOwner,
-      rollData: data.rollData,
-      async: true,
-      relativeTo: this.actor,
-    });
+    const notes = data.system.details?.notes?.value ?? "";
+    data.notesHTML = notes
+      ? await TextEditor.enrichHTML(notes, {
+          secrets: isOwner,
+          rollData: data.rollData,
+          async: true,
+          relativeTo: this.actor,
+        })
+      : null;
 
     // The Actor and its Items
     data.actor = this.actor;

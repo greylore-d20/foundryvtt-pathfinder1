@@ -34,6 +34,13 @@ export class SpeedEditor extends DocumentSheet {
       units: game.i18n.localize(
         pf1.utils.getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"
       ),
+      flyManeuverability: {
+        clumsy: "PF1.Movement.FlyManeuverability.Quality.clumsy",
+        poor: "PF1.Movement.FlyManeuverability.Quality.poor",
+        average: "PF1.Movement.FlyManeuverability.Quality.average",
+        good: "PF1.Movement.FlyManeuverability.Quality.good",
+        perfect: "PF1.Movement.FlyManeuverability.Quality.perfect",
+      },
     };
 
     this.constructor.movementKeys.forEach((key) => {
@@ -42,13 +49,17 @@ export class SpeedEditor extends DocumentSheet {
       context.speeds[key] = value;
     });
 
+    context.speeds.flyManeuverability = itemData.speeds.flyManeuverability || "average";
+
     return context;
   }
 
   async _updateObject(event, formData) {
     // Convert data back
     for (const [key, value] of Object.entries(formData)) {
-      formData[key] = pf1.utils.convertDistanceBack(value)[0];
+      if (Number.isNumeric(value)) {
+        formData[key] = pf1.utils.convertDistanceBack(value)[0];
+      }
     }
 
     return super._updateObject(event, formData);

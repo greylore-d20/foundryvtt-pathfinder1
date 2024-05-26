@@ -805,10 +805,16 @@ export class ItemSheetPF extends ItemSheet {
       for (const key of ["land", "fly", "swim", "climb", "burrow"]) {
         const value = item.system.speeds?.[key] ?? 0;
         if (value == 0) continue;
+        let descriptor;
+        if (key === "fly") {
+          const fm = item.system.speeds.flyManeuverability || "average";
+          descriptor = `PF1.Movement.FlyManeuverability.Quality.${fm}`;
+        }
         context.speeds.push({
           value: pf1.utils.convertDistance(value)[0],
           mode: key,
           label: `PF1.Movement.Mode.${key}`,
+          descriptor,
         });
       }
     }

@@ -79,7 +79,12 @@ export class ItemRacePF extends ItemPF {
       for (const [key, value] of Object.entries(this.system.speeds ?? {})) {
         speedUpdates[key] = { base: value };
       }
-      this.actor.update({ "system.attributes.speed": speedUpdates });
+      if (this.system.speeds?.fly > 0) {
+        speedUpdates.fly.maneuverability = this.system.speeds.flyManeuverability || "average";
+      }
+      this.actor.update({
+        "system.attributes.speed": speedUpdates,
+      });
     }
   }
 
@@ -111,11 +116,12 @@ export class ItemRacePF extends ItemPF {
 
     const actor = this.actor;
     if (actor?.itemTypes.race.length === 0) {
-      // Reset race some race dependant details
+      // Reset some race dependant details
       actor.update({
         "system.attributes.speed": {
           "land.base": 30,
           "fly.base": 0,
+          "fly.maneuverability": "average",
           "swim.base": 0,
           "climb.base": 0,
           "burrow.base": 0,

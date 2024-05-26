@@ -124,6 +124,7 @@ export class ItemSheetPF extends ItemSheet {
       config: pf1.config,
       owned: !!actor,
       owner: item.isOwner,
+      editable: this.isEditable,
       isGM: game.user.isGM,
       labels: item.getLabels(),
       canClassLink: pf1.config.classAssociations.includes(item.type) && !!rollData.classes,

@@ -793,7 +793,7 @@ export class ItemSheetPF extends ItemSheet {
     await this._prepareLinks(context);
 
     // Add actions
-    this._prepareActions(context);
+    context.actions = this.item.actions;
 
     context.distanceUnit = game.i18n.localize(
       pf1.utils.getDistanceSystem() === "imperial" ? "PF1.Distance.ftShort" : "PF1.Distance.mShort"
@@ -1036,25 +1036,6 @@ export class ItemSheetPF extends ItemSheet {
         links.items.push(linkData);
       }
     }
-  }
-
-  _prepareActions(context) {
-    if (!context.system.actions) return [];
-    const result = [];
-
-    for (const d of context.system.actions) {
-      const doc = this.item.actions.get(d._id);
-      const obj = {
-        img: doc.img,
-        data: d,
-        isSelfCharged: doc.isSelfCharged,
-        doc,
-      };
-
-      result.push(obj);
-    }
-
-    context.actions = result;
   }
 
   _prepareItemFlags(context) {

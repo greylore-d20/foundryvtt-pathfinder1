@@ -625,6 +625,9 @@ export class ItemActionSheet extends FormApplication {
       }
     }
 
+    // Do not add image if it's same as parent item
+    if (formData.img === this.item?.img) delete formData.img;
+
     return this.action.update(formData);
   }
 

@@ -697,12 +697,11 @@ export class ItemAction {
   }
 
   async update(updateData, options = {}) {
+    updateData = foundry.utils.expandObject(updateData);
     const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
     if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
-    const prevData = foundry.utils.deepClone(this.data);
-    const newUpdateData = foundry.utils.mergeObject(prevData, foundry.utils.expandObject(updateData), {
-      performDeletions: true,
-    });
+    const prevData = this.item.toObject().system.actions[idx];
+    const newUpdateData = foundry.utils.mergeObject(prevData, updateData, { performDeletions: true });
 
     // Make sure this action has a name, even if it's removed
     newUpdateData["name"] ||= this.name;

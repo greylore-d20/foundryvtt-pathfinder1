@@ -191,6 +191,9 @@
       {{/unless}}
       {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}
     </select>
+    <label>{{localize "PF1.MaxShort"}}</label>
+    <input type="number" class="max-ability" name="ability.max" value="{{data.ability.max}}"
+      placeholder="∞" data-tooltip="PF1.MaxAbilityHint" step="1">
   </div>
 </div>
 

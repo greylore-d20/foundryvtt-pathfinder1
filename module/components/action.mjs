@@ -1110,8 +1110,9 @@ export class ItemAction {
     const ability = rollData.abilities?.[abl];
     if (ability) {
       // Determine ability score bonus
-      rollData.ablDamage = Math.floor(ability.mod * rollData.ablMult);
-      if (ability.mod < 0) rollData.ablDamage = ability.mod;
+      const max = this.data.ability?.max ?? Infinity;
+      if (ability.mod < 0) rollData.ablDamage = Math.min(max, ability.mod);
+      else rollData.ablDamage = Math.floor(Math.min(max, ability.mod) * rollData.ablMult);
 
       // Determine ability score label
       const ablLabel = pf1.config.abilities[abl];

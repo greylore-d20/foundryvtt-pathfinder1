@@ -29,15 +29,22 @@ system:
                 - bludgeoning
       duration:
         units: inst
+      extraAttacks:
+        type: standard
       name: Attack
       range:
         units: melee
         value: '5'
       touch: true
     - _id: TBcqjJM5nXEzBaT2
+      ability:
+        attack: dex
       actionType: rwak
       activation:
         type: standard
+        unchained:
+          cost: 2
+          type: action
       damage:
         parts:
           - formula: 4d6
@@ -48,14 +55,16 @@ system:
                 - electric
       name: Plasma beam
       range:
-        maxIncrements: 0
         units: ft
         value: '40'
       touch: true
       uses:
         autoDeductChargesCost: '10'
+  aura:
+    school: evo
   baseTypes:
     - Monk's Spade
+  cl: 7
   description:
     value: >-
       <h3>Statistics</h3><p><strong>Type</strong> two-handed melee;
@@ -63,12 +72,10 @@ system:
       (small), Special (medium); <strong>Damage Type</strong> Special;
       <strong>Critical</strong> x2</p><p><strong>Range</strong> -;
       <strong>Capacity</strong> 10; <strong>Usage</strong> see text;
-      <strong>Special</strong> See
-      text</p><h3>Description</h3><p><strong>Aura</strong> moderate evocation;
-      <strong>CL</strong> 7th</p><p>The Technic League produces these unusual
-      weapons as signature tools for the guards of Starfall and the Palace of
-      Fallen Stars. A Starfall spade is a <em>+1/+1 monk's
-      spade</em><sup>UE</sup> and has a capacity of 10 charges. When the weapon
+      <strong>Special</strong> See text</p><h3>Description</h3><p>The Technic
+      League produces these unusual weapons as signature tools for the guards of
+      Starfall and the Palace of Fallen Stars. A Starfall spade is a <em>+1/+1
+      monk's spade</em> and has a capacity of 10 charges. When the weapon
       strikes a foe, it automatically consumes a charge and deals an additional
       2 points of plasma damage (1 electricity, 1 fire) on that hit. Attack that
       miss don't consume charges. A crystal button on the shaft allows for a

@@ -5,6 +5,18 @@ img: icons/weapons/wands/wand-carved-stone-shard.webp
 name: Medlance
 system:
   actions:
+    - _id: q31XWPTImgTsfn9c
+      ability:
+        attack: str
+      actionType: mwak
+      activation:
+        type: move
+        unchained:
+          type: action
+      name: Use (willing target)
+      target:
+        value: one willing target
+      touch: true
     - _id: 0g16b7uwxl61npdi
       ability:
         attack: str
@@ -14,7 +26,9 @@ system:
         unchained:
           cost: 2
           type: action
-      name: Use
+      name: Use (unwilling target)
+      target:
+        value: one unwilling target
       touch: true
   description:
     value: >-

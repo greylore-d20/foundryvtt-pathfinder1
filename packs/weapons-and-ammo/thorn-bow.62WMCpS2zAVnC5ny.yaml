@@ -9,6 +9,8 @@ system:
         attack: dex
         critMult: 3
         critRange: null
+        damage: str
+        max: 0
       actionType: rwak
       activation:
         type: attack
@@ -16,7 +18,7 @@ system:
           type: attack
       damage:
         parts:
-          - formula: sizeRoll(1, 6, @size) + min(@abilities.str.mod, 0)[Strength]
+          - formula: sizeRoll(1, 6, @size)
             type:
               custom: ''
               values:
@@ -44,8 +46,6 @@ system:
     value: 5
   material:
     base:
-      value: steel
-    normal:
       value: steel
   price: 50
   sources:

@@ -100,14 +100,20 @@ export function hideGMSensitiveInfo(cm, html, data) {
   if (game.settings.get("pf1", "obscureInlineRolls")) {
     // Turn rolls into raw strings
     html.find(".inline-roll").each((a, elem) => {
-      if (!elem.dataset.roll) {
+      if (!elem.dataset.roll) return;
+
+      let roll;
+      try {
+        roll = Roll.fromJSON(unescape(elem.dataset.roll));
+      } catch (err) {
+        console.error(`Inline roll in chat message ${cm.id} had invalid data`, err);
         return;
       }
 
-      const roll = Roll.fromJSON(unescape(elem.dataset.roll));
-      const parent = elem.parentNode;
-      parent.insertBefore($(`<span>${roll.total}</span>`)[0], elem);
-      parent.removeChild(elem);
+      const nroll = Roll.defaultImplementation.safeRollSync(`${roll.total}`);
+      elem.dataset.roll = escape(JSON.stringify(nroll));
+      delete elem.dataset.tooltip;
+      elem.classList.add("obfuscated");
     });
   }
 }

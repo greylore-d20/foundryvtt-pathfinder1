@@ -71,6 +71,7 @@ export function getActionDefaultData() {
     ability: {
       attack: "",
       damage: "",
+      max: null,
       damageMult: 1,
       critRange: 20,
       critMult: 2,

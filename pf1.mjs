@@ -387,6 +387,7 @@ Hooks.once("i18nInit", function () {
     "skills",
     "timePeriods",
     "timePeriodsShort",
+    "durationEndEvents",
     "savingThrows",
     "ac",
     "featTypes",

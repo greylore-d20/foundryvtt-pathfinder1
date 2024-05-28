@@ -391,28 +391,46 @@ export class ActorPF extends ActorBasePF {
    * @param {object} [options] Additional options
    * @param {Combat} [options.combat] Combat to expire data in, if relevant
    * @param {number} [options.timeOffset=0] Time offset from world time
+   * @param {string} [options.event] - Expiration event
+   * @param {number} [options.initiative] - Initiative based expiration marker
    * @param {DocumentModificationContext} [context] Document update context
    */
-  async expireActiveEffects({ combat, timeOffset = 0 } = {}, context = {}) {
+  async expireActiveEffects({ combat, timeOffset = 0, event = null, initiative = null } = {}, context = {}) {
     if (!this.isOwner) throw new Error("Must be owner");
 
     const worldTime = game.time.worldTime + timeOffset;
 
     const temporaryEffects = this.temporaryEffects.filter((ae) => {
-      const { seconds, rounds, startTime, startRound } = ae.duration;
+      const { seconds, startTime } = ae.duration;
+      const { rounds, startRound } = ae.duration;
+
       // Calculate remaining duration.
       // AE.duration.remaining is updated by Foundry only in combat and is unreliable.
-      if (seconds > 0) {
-        const elapsed = worldTime - (startTime ?? 0),
-          remaining = seconds - elapsed;
-        return remaining <= 0;
+      let remaining = Infinity;
+      // Convert rounds to seconds
+      if (Number.isFinite(seconds) && seconds >= 0) {
+        const elapsed = worldTime - (startTime ?? 0);
+        remaining = seconds - elapsed;
       } else if (rounds > 0 && combat) {
-        // BUG: This will ignore which combat
-        const elapsed = combat.round - (startRound ?? 0),
-          remaining = rounds - elapsed;
-        return remaining <= 0;
+        // BUG: This will ignore which combat the round tracking started for
+        const elapsed = combat.round - (startRound ?? 0);
+        remaining = (rounds - elapsed) * CONFIG.time.roundTime;
       }
-      return false;
+
+      const flags = ae.getFlag("pf1", "duration") ?? {};
+      const endOn = flags.end || "turnStart";
+      if (remaining > 0) return false;
+      // Initiative based ending
+      if (initiative !== null) {
+        // Anything not on initiative expires if they have negative time remaining
+        if (endOn !== "initiative") return remaining < 0;
+        return flags.initiative <= initiative;
+      }
+      // End on turn end, but we're at turn start and there's 0 or more seconds left
+      else if (remaining === 0 && endOn === "turnEnd" && event === "turnStart") {
+        return false;
+      }
+      return remaining <= 0;
     });
 
     const disableActiveEffects = [],
@@ -420,7 +438,12 @@ export class ActorPF extends ActorBasePF {
       disableBuffs = [];
 
     for (const ae of temporaryEffects) {
-      const item = fromUuidSync(ae.origin, { relative: this });
+      let item;
+      // Use AE parent when available
+      if (ae.parent instanceof Item) item = ae.parent;
+      // Otherwise support older origin cases
+      else item = ae.origin ? fromUuidSync(ae.origin, { relative: this }) : null;
+
       if (item?.type === "buff") {
         disableBuffs.push({ _id: item.id, "system.active": false });
       } else {

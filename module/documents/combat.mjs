@@ -239,11 +239,20 @@ export class CombatPF extends Combat {
   async _onNewTurn(changed, context, userId) {
     if (!this._isForwardTime(changed, context)) return;
 
-    if (game.users.activeGM?.isSelf && context.pf1?.from) {
-      this._detectSkippedTurns(context.pf1.from, context);
+    if (context.pf1?.from) {
+      const skipped = this._detectSkippedTurns(context.pf1.from, context);
+
+      if (game.users.activeGM?.isSelf) {
+        this._handleSkippedTurns(skipped, context);
+      }
+
+      const previous = this.turns.at(this.turn - 1);
+      if (!skipped.has(previous)) this._processEndTurn(context.pf1?.from, context);
     }
 
-    this._processCurrentCombatant(changed, context, userId);
+    this._processTurnStart(changed, context, userId);
+
+    this._processInitiative();
   }
 
   _isForwardTime(changed, context) {
@@ -263,20 +272,22 @@ export class CombatPF extends Combat {
   /**
    * Determine skipped turns
    *
+   * @internal
    * @param {object} from
    * @param {number} from.turn From turn
    * @param {number} from.round From round
    * @param {object} context - Update context
-   * @private
+   * @returns {Set<Combatant>} - Set of combatant IDs whose turn was skipped
    */
   _detectSkippedTurns({ turn, round } = {}, context) {
     const roundChange = this.round !== round;
 
+    const skipped = new Set();
+
     // No combatants skipped
-    if (!roundChange && turn + 1 === this.turn) return;
+    if (!roundChange && turn + 1 === this.turn) return skipped;
 
     // Determine skipped combatants
-    const skipped = new Set();
     for (const [index, combatant] of this.turns.entries()) {
       // Seeking first, not actually skipped
       if (!roundChange && index <= turn) continue;
@@ -286,20 +297,62 @@ export class CombatPF extends Combat {
       else if (roundChange && index > turn) skipped.add(combatant);
     }
 
-    this._handleSkippedTurns(skipped, context);
-
     Hooks.callAll("pf1CombatTurnSkip", this, skipped, context);
+
+    return skipped;
   }
 
   /**
    * Handle effects of skipped turns.
    *
    * @internal
-   * @param {Set<string>} skipped - Combatant IDs of those whose turn was skipped.
+   * @param {Set<Combatant>} skipped - Combatant IDs of those whose turn was skipped.
    * @param {object} context - Combat update context
    */
   _handleSkippedTurns(skipped, context) {
-    // TODO
+    const currentTurn = this.turn;
+    const combat = this;
+    const event = "turnEnd";
+
+    const timeOffset = context.advanceTime ?? 0;
+
+    // Expire effects for skipped combatants
+    for (const combatant of skipped) {
+      const actor = combatant.actor;
+      if (!actor) continue;
+
+      // Adjust expiration time for those who come after in initiative (their expiration was for previous round)
+      const turn = this.turns.findIndex((c) => c === combatant);
+      const turnTimeOffset = timeOffset + (turn > currentTurn) ? -CONFIG.time.roundTime : 0;
+
+      actor.expireActiveEffects?.({ timeOffset: timeOffset + turnTimeOffset, combat, event });
+    }
+  }
+
+  /**
+   * Handle end of turn
+   *
+   * @internal
+   * @param {object} originTime
+   * @param {number} originTime.turn - Turn that ended
+   * @param {object} context
+   */
+  async _processEndTurn({ turn } = {}, context = {}) {
+    const previous = this.turns.at(turn);
+    const actor = previous.actor;
+    if (!actor) return;
+
+    const owner = actor.activeOwner;
+    if (!owner?.isSelf) return;
+
+    let timeOffset = context.advanceTime ?? 0;
+    if (turn - 1 < 0) timeOffset -= CONFIG.time.roundTime; // Roll back time for a turn that ended on previous round
+
+    try {
+      await actor.expireActiveEffects?.({ timeOffset, combat: this, event: "turnEnd" });
+    } catch (error) {
+      console.error(error, actor);
+    }
   }
 
   /**
@@ -309,7 +362,7 @@ export class CombatPF extends Combat {
    * @param {options} context Context options
    * @param {string} userId Triggering user ID
    */
-  async _processCurrentCombatant(changed, context, userId) {
+  async _processTurnStart(changed, context, userId) {
     const actor = this.combatant?.actor;
     if (!actor) return;
 
@@ -319,7 +372,7 @@ export class CombatPF extends Combat {
 
     const timeOffset = context.advanceTime ?? 0;
     try {
-      await actor.expireActiveEffects?.({ timeOffset, combat: this });
+      await actor.expireActiveEffects?.({ timeOffset, combat: this, event: "turnStart" });
     } catch (error) {
       console.error(error, actor);
     }
@@ -328,6 +381,26 @@ export class CombatPF extends Combat {
       await actor.rechargeItems?.({ period: "round", exact: true });
     } catch (error) {
       console.error(error, actor);
+    }
+  }
+
+  /**
+   * Process end of durations based on initiative.
+   *
+   * Only active GM processes these to avoid conflicts and logic bloat.
+   *
+   * @internal
+   */
+  _processInitiative() {
+    if (!game.users.activeGM?.isSelf) return;
+
+    const initiative = this.initiative;
+    for (const combatant of this.combatants) {
+      if (combatant.isDefeated) continue;
+      const actor = combatant.actor;
+      if (!actor) continue;
+
+      actor.expireActiveEffects?.({ combat: this, initiative });
     }
   }
 

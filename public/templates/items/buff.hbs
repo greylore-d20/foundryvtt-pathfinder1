@@ -78,14 +78,25 @@
       <div class="form-group input-select">
         <label>{{localize "PF1.Duration"}}</label>
         <div class="form-fields">
-          {{#unless (eq system.duration.units "turn")}}
+          {{#unless noDurationTiming}}
           <input class="formula" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}">
           {{/unless}}
           <select name="system.duration.units">
-            {{selectOptions config.timePeriodsShort selected=system.duration.units blank=""}}
+            {{selectOptions config.timePeriodsShort selected=system.duration.units blank=(localize "PF1.Infinite")}}
           </select>
         </div>
       </div>
+
+      {{#unless noDurationTiming}}
+      <div class="form-group">
+        <label>{{localize "PF1.DurationEndTiming"}}</label>
+        <div class="form-fields">
+          <select name="system.duration.end">
+            {{selectOptions config.durationEndEvents selected=system.duration.end}}
+          </select>
+        </div>
+      </div>
+      {{/unless}}
 
       {{! Conditions }}
       {{~> "systems/pf1/templates/items/parts/item-conditions.hbs"}}

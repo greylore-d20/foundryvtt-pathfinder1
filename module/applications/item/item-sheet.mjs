@@ -608,6 +608,10 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    if (this.item.type === "buff") {
+      context.noDurationTiming = !itemData.duration.units || itemData.duration.units === "turn";
+    }
+
     // Prepare class specific stuff
     if (item.type === "class") {
       context.isMythicPath = itemData.subType === "mythic";

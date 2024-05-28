@@ -961,7 +961,9 @@ export class ItemPF extends ItemBasePF {
       name: this.name,
       icon: this.img,
       origin: this.getRelativeUUID(this.actor),
-      duration: {},
+      duration: {
+        startTime: game.time.worldTime,
+      },
       disabled: !this.isActive,
     };
   }

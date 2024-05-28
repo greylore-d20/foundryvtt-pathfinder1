@@ -286,22 +286,30 @@ export class ItemBuffPF extends ItemPF {
     createData.statuses = Array.from(this.system.conditions.all);
 
     const hideIcon = this.system.hideFromToken;
-    foundry.utils.setProperty(createData, "flags.pf1.show", !hideIcon);
+    const flags = { duration: {} };
+    flags.show = !hideIcon;
 
     // Add buff durations
     const duration = this.system.duration;
-    let formula = duration.value || "";
-    if (typeof formula == "number") formula += "";
+    const formula = `${duration.value}`;
+
     let seconds = 0;
-    const units = duration.units;
-    if (units === "turn") {
-      createData.duration.turns = 1;
-      seconds = CONFIG.time.roundTime;
+    let endTiming = this.system.duration.end || "turnStart";
+    if (duration.units === "turn") {
+      endTiming = "turnEnd";
     } else if (formula) {
       seconds = await this.getDuration({ rollData });
     }
 
-    if (seconds > 0) createData.duration.seconds = seconds;
+    // Record end timing
+    flags.duration.end = endTiming;
+
+    // Record initiative
+    flags.duration.initiative = game.combat?.initiative;
+
+    foundry.utils.mergeObject(createData, { "flags.pf1": flags });
+
+    if (seconds >= 0) createData.duration.seconds = seconds;
 
     return createData;
   }

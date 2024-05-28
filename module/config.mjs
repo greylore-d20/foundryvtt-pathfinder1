@@ -1168,6 +1168,17 @@ export const timePeriodsShort = {
   hour: "PF1.Time.Period.hour.Short",
 };
 
+/**
+ * Duration end events
+ *
+ * Used by buffs to decide when exactly their duration ends.
+ */
+export const durationEndEvents = {
+  turnStart: "PF1.Time.Turn.Start",
+  initiative: "PF1.Initiative",
+  turnEnd: "PF1.Time.Turn.End",
+};
+
 /* -------------------------------------------- */
 
 /**

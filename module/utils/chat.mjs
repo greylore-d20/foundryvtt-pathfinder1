@@ -185,42 +185,49 @@ export function createInlineRollString(roll, { hide3d = true } = {}) {
 
 /**
  * @param {ChatMessage} cm - Chat message instance
- * @param {JQuery<HTMLElement>} jq - JQuery instance
+ * @param {HTMLElement} html - HTML element
+ * @param recursive
  */
-export async function hideInvisibleTargets(cm, jq) {
-  const targetsElem = jq.find(".pf1.chat-card .attack-targets");
+export async function hideInvisibleTargets(cm, html, recursive = false) {
+  const targetsElem = html.querySelector(".pf1.chat-card .attack-targets");
 
-  // TODO: Delay this until canvas is ready
+  // Delay until canvas ready if it's not yet so.
   if (!canvas.ready) {
-    targetsElem.hide();
+    if (recursive) return;
+    targetsElem.style.display = "none";
+    if (!game.settings.get("core", "noCanvas")) {
+      Hooks.once("canvasReady", () => hideInvisibleTargets(cm, $(html), true));
+    } else {
+      // Canvas disabled, remove targets
+      targetsElem.remove();
+    }
     return;
   }
 
-  const targetElems = targetsElem.find(".target");
-  const targets = targetElems.toArray().reduce((cur, o) => {
-    cur.push({ uuid: o.dataset.uuid, elem: o });
-    return cur;
-  }, []);
+  const targetElems = targetsElem.querySelectorAll(".target");
+  const targets = Array.from(targetElems).map((elem) => ({ uuid: elem.dataset.uuid, elem }));
 
   let hasVisible = false;
   for (const t of targets) {
-    const elem = $(t.elem);
-
-    // Gather token
+    /** @type {TokenDocumentPF} */
     const token = fromUuidSync(t.uuid);
     if (!token) continue;
     t.token = token.object;
 
-    // Hide if token invisible
-    if (!t.token?.isVisible) elem.hide();
+    const isVisible = t.token?.isVisible;
+    const isObserver = token.actor?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) ?? false;
+
+    // Hide if token invisible and user isn't observer of token
+    if (!isVisible && !isObserver) $(t.elem).hide();
     else {
       hasVisible = true;
-      elem.show();
+      $(t.elem).show();
     }
   }
 
   // Hide targets if there's none visible to not reveal presence of invisible targets
-  if (!hasVisible) targetsElem.hide();
+  if (!hasVisible) targetsElem.remove();
+  else targetElems.style.removeProperty("display");
 }
 
 const getTokenByUuid = (uuid) => fromUuidSync(uuid)?.object;

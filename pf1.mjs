@@ -642,7 +642,7 @@ Hooks.on(
     chatUtils.hideGMSensitiveInfo(cm, jq, options);
 
     // Hide non-visible targets for players
-    if (!game.user.isGM) chatUtils.hideInvisibleTargets(cm, jq);
+    if (!game.user.isGM) chatUtils.hideInvisibleTargets(cm, [jq]);
 
     // Create target callbacks
     chatUtils.addTargetCallbacks(cm, jq);

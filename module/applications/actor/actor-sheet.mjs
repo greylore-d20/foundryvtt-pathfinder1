@@ -1579,9 +1579,17 @@ export class ActorSheetPF extends ActorSheet {
             break;
         }
         break;
-      case "quadruped":
+      case "quadruped": {
         paths.push({ path: "@attributes.quadruped", value: String(system.attributes.quadruped) });
+        const race = this.actor.race;
+        if (race) {
+          sources.push({
+            untyped: true,
+            sources: [{ name: race.name, value: race.system.quadruped ?? false, isBoolean: true }],
+          });
+        }
         break;
+      }
       case "negativeLevels":
         paths.push({ path: "@attributes.energyDrain", value: system.attributes.energyDrain, signed: false });
         break;

@@ -90,6 +90,14 @@
       {{!-- Race Size --}}
       {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=false}}
 
+      <div class="form-group stacked">
+        {{! Quadruped }}
+        <label class="checkbox quadruped">
+          <input type="checkbox" name="system.quadruped" {{checked system.quadruped}}>
+          {{localize "PF1.Quadruped"}}
+        </label>
+      </div>
+
       {{!-- Movement --}}
       <div class="form-group movement">
         <label>{{localize "PF1.Movement.Label"}}</label>

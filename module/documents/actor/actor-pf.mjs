@@ -1212,6 +1212,8 @@ export class ActorPF extends ActorBasePF {
       this.system.traits ??= {};
       this.system.traits.type = creatureType;
       this.system.traits.humanoid = creatureType === "humanoid";
+      this.system.attributes ??= {};
+      this.system.attributes.quadruped ??= race?.system.quadruped ?? false;
     }
 
     this.prepareProficiencies();
@@ -2099,6 +2101,13 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (context.diff === false) return; // Don't diff if we were told not to diff
+
+    if (changed.system.attributes?.quadruped !== undefined) {
+      const quad = changed.system.attributes.quadruped;
+      const quadRace = this.race?.system.quadruped ?? false;
+      // Null if setting qudruped to same as race (no override)
+      if (quad === quadRace) changed.system.attributes.quadruped = null;
+    }
 
     // Make certain variables absolute
     const abilities = changed.system.abilities;

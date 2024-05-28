@@ -28,7 +28,11 @@
 
     <span class="value{{#if ../left}} left{{/if}}{{#if ../untyped}} untyped{{/if}}">
       {{#unless unvalued}}
+        {{#if isBoolean}}
+        {{value}}
+        {{else}}
         {{#if value.length}}{{value}}{{else}}{{numberFormat value sign=true}}{{/if}}
+        {{/if}}
       {{/unless}}
     </span>
     {{#unless ../untyped}}

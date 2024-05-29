@@ -1891,7 +1891,7 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
       }
 
       if (actor && link.uuid) {
-        let linked = fromUuidSync(link.uuid, { relativeTo: actor });
+        let linked = fromUuidSync(link.uuid, { relative: actor });
         // Attempt to recover bad links to other actors
         if (linked?.actor) {
           // Attempt to adjust owned item

@@ -1642,9 +1642,10 @@ export class ItemPF extends ItemBasePF {
    * @param {string} dataType - Either "compendium", "data" or "world".
    * @param {object} targetItem - The target item to link to.
    * @param {string} itemLink - The link identifier for the item.
+   * @param {object} extraData - Additional data
    * @returns {Array} An array to insert into this item's link data.
    */
-  generateInitialLinkData(linkType, dataType, targetItem, itemLink) {
+  generateInitialLinkData(linkType, dataType, targetItem, itemLink, extraData = {}) {
     const result = {
       name: targetItem.name,
     };
@@ -1671,6 +1672,9 @@ export class ItemPF extends ItemBasePF {
         break;
     }
 
+    // Merge in extra data
+    foundry.utils.mergeObject(result, extraData);
+
     return result;
   }
 
@@ -1683,11 +1687,12 @@ export class ItemPF extends ItemBasePF {
    * @param {object} targetItem - The target item to link to.
    * @param {string} itemLink - The link identifier for the item.
    * e.g. UUID for items external to the actor, and item ID for same actor items.
+   * @param {object} [extraData] - Additional data to store int he link
    * @returns {boolean} Whether a link was created.
    */
-  async createItemLink(linkType, dataType, targetItem, itemLink) {
+  async createItemLink(linkType, dataType, targetItem, itemLink, extraData) {
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
-      const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
+      const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink, extraData);
       const itemData = this.toObject();
       const links = foundry.utils.deepClone(itemData.system.links?.[linkType] ?? []);
       links.push(link);

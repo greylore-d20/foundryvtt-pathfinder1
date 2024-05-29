@@ -1,0 +1,54 @@
+.pf1.sheet {
+  .tab.links {
+    table {
+      .extra-field {
+        width: 128px;
+      }
+
+      .controls {
+        width: 48px;
+
+        & > div {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      .links-item {
+        &.broken-link .item-name {
+          text-decoration: line-through;
+        }
+
+        .item-name {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 2px 0.3em;
+
+          .name {
+            flex: 1;
+            text-align: left;
+          }
+
+          img {
+            flex: 0 0 24px;
+            margin-right: 4px;
+          }
+        }
+      }
+
+      th {
+        background-color: var(--pf1-bg-dark-3);
+      }
+
+      tr:not(:last-child) {
+        border-bottom: 1px solid rgb(136, 136, 136);
+      }
+
+      td:not(:last-child),
+      th:not(:last-child) {
+        border-right: 1px solid rgb(136, 136, 136);
+      }
+    }
+  }
+}

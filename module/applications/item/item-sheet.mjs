@@ -55,6 +55,10 @@ export class ItemSheetPF extends ItemSheet {
           dragSelector: ".tab.changes li.change",
           dropSelector: null,
         },
+        {
+          dragSelector: ".tab.links .item-name",
+          dropSelector: ".tab.links .tab[data-group='links']",
+        },
       ],
       tabs: [
         {
@@ -1357,9 +1361,6 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".entry-control a").click(this._onEntryControl.bind(this));
     html.find(".item-selector").click(this._onItemSelector.bind(this));
 
-    // Add drop handler to link tabs
-    html.find('div[data-group="links"],a.item[data-tab="links"]').on("drop", this._onLinksDrop.bind(this));
-
     html.find(".link-control").click(this._onLinkControl.bind(this));
 
     // Click to change text input
@@ -1658,41 +1659,6 @@ export class ItemSheetPF extends ItemSheet {
     pf1.applications.helpBrowser.openUrl(a.dataset.url);
   }
 
-  async _onLinksDrop(event) {
-    const elem = event.currentTarget;
-    let linkType = elem.dataset.tab;
-
-    // Default selection for dropping on tab instead of body
-    if (linkType === "links") linkType = "children";
-
-    // Try to extract the data
-    const data = TextEditor.getDragEventData(event.originalEvent);
-    if (!data.type) throw new Error("Invalid drop data received");
-
-    const targetItem = await fromUuid(data.uuid);
-    if (!targetItem || !(targetItem instanceof Item))
-      throw new Error(`UUID did not resolve to valid item: ${data.uuid}`);
-
-    let dataType,
-      itemLink = data.uuid;
-    // Case 1 - Import from a Compendium pack
-    if (targetItem.pack) {
-      dataType = "compendium";
-    }
-    // Case 2 - Import from same actor
-    else if (targetItem.actor === this.item.actor) {
-      dataType = "data";
-      itemLink = targetItem.getRelativeUUID(this.actor);
-    }
-
-    // Case 3 - Import from World Document
-    else {
-      dataType = "world";
-    }
-
-    await this.item.createItemLink(linkType, dataType, targetItem, itemLink);
-  }
-
   /**
    * By default, returns true only for GM
    *
@@ -1719,10 +1685,29 @@ export class ItemSheetPF extends ItemSheet {
       return;
     }
 
+    // Drag Change
     const changeId = elem.dataset.changeId;
     if (changeId) {
       const ch = this.item.changes.get(changeId);
       const obj = { type: "pf1Change", data: ch.data, changeId, uuid: this.item.uuid };
+      event.dataTransfer.setData("text/plain", JSON.stringify(obj));
+      return;
+    }
+
+    // Drag link
+    if (elem.matches(".links-item .item-name")) {
+      const el = elem.closest("[data-uuid]");
+      const type = el.closest("[data-tab]")?.dataset.tab;
+      let uuid = el.dataset.uuid;
+      console.log(type, uuid);
+      if (type === "children") {
+        // Transform relative UUID into absolute
+        uuid = fromUuidSync(uuid, { relative: this.actor })?.uuid;
+      }
+      const index = Number(el.dataset.index);
+      const link = this.item.system.links?.[type]?.[index];
+      const obj = { type: "Item", uuid, pf1Link: {} };
+      if (link) obj.pf1Link.level = link.level;
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
       return;
     }
@@ -1806,8 +1791,60 @@ export class ItemSheetPF extends ItemSheet {
           this.activateTab("changes", "primary");
           return pf1.components.ItemChange.create([chData], { parent: item });
         }
+        break;
+      }
+      case "Item": {
+        // Add drop handler to link tabs
+        if (event.target.matches(".tab.links .tab[data-group='links']")) {
+          this._onLinksDrop(event, data);
+        }
+        break;
       }
     }
+  }
+
+  async _onLinksDrop(event, data) {
+    const elem = event.target;
+    let linkType = elem.closest("[data-tab]").dataset.tab;
+
+    // Default selection for dropping on tab instead of body
+    if (linkType === "links") linkType = "children";
+
+    // Try to extract the data
+    if (!data.type) throw new Error("Invalid drop data received");
+
+    const targetItem = await fromUuid(data.uuid);
+    if (!targetItem || !(targetItem instanceof Item))
+      throw new Error(`UUID did not resolve to valid item: ${data.uuid}`);
+
+    let dataType,
+      itemLink = data.uuid;
+    // Case 1 - Import from a Compendium pack
+    if (targetItem.pack) {
+      dataType = "compendium";
+    }
+    // Case 2 - Import from same actor
+    else if (targetItem.actor === this.item.actor) {
+      dataType = "data";
+      itemLink = targetItem.getRelativeUUID(this.actor);
+    }
+
+    // Case 3 - Import from World Document
+    else {
+      dataType = "world";
+    }
+
+    // Add extra data
+    const extraData = {};
+    switch (linkType) {
+      case "classAssociations": {
+        const level = data.pf1Link?.level;
+        if (Number.isNumeric(level)) extraData.level = level;
+        break;
+      }
+    }
+
+    await this.item.createItemLink(linkType, dataType, targetItem, itemLink, extraData);
   }
 
   /**

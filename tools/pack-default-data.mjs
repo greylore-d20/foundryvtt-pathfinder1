@@ -72,7 +72,7 @@ export function getActionDefaultData() {
       attack: "",
       damage: "",
       max: null,
-      damageMult: 1,
+      damageMult: null,
       critRange: 20,
       critMult: 2,
     },

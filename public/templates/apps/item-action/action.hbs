@@ -186,7 +186,7 @@
       {{selectOptions config.abilities selected=data.ability.damage blank=""}}
     </select>
     <select name="ability.damageMult" data-dtype="Number">
-      {{#unless isNaturalAttack}}
+      {{#unless canHold}}
       <option value=''>{{localize "PF1.HeldMult" mult=heldAbilityMultiplier}}</option>
       {{/unless}}
       {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}

@@ -136,6 +136,8 @@ export class ItemActionSheet extends FormApplication {
       context.isNaturalAttack = item.system.subType === "natural";
     }
 
+    context.canHold = item.isPhysical ?? item.isQuasiPhysical ?? false;
+
     context.canUseAmmo = context.isNaturalAttack !== true;
     context.usesAmmo = !!action.ammoType;
     context.inheritedAmmoType = item?.system.ammo?.type;

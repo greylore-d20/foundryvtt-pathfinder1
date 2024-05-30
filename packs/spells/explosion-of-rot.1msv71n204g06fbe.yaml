@@ -12,6 +12,15 @@ system:
           cost: 2
           type: action
       area: 10-ft.-radius burst
+      attackNotes:
+        - Staggered for [[1d4]] rounds on failed save
+      damage:
+        parts:
+          - formula: min(15, @cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       measureTemplate:

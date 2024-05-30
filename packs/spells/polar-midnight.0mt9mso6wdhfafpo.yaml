@@ -11,9 +11,22 @@ system:
         unchained:
           cost: 2
           type: action
+      attackNotes:
+        - '[[/r 1d6]] Dexterity damage'
+      damage:
+        parts:
+          - formula: 5d6
+            type:
+              custom: ''
+              values:
+                - cold
       duration:
         units: spec
         value: 1 round/level
+      measureTemplate:
+        color: '#76aab7'
+        size: '30'
+        type: circle
       name: Use
       range:
         units: close

@@ -5,14 +5,28 @@ name: Contagious Flame
 system:
   actions:
     - _id: mqsfv9er7rpkf85n
+      actionType: rsak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      attackName: Ray
+      damage:
+        parts:
+          - formula: 4d6
+            type:
+              custom: ''
+              values:
+                - fire
       duration:
         units: round
         value: '3'
+      extraAttacks:
+        formula:
+          count: clamped(floor((@cl - 3) / 4), 2, 4)
+          label: 'Ray #{0}'
+        type: custom
       name: Use
       range:
         units: close

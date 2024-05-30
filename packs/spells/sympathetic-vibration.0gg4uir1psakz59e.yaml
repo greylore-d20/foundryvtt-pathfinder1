@@ -12,14 +12,19 @@ system:
         unchained:
           cost: 10
           type: minute
+      damage:
+        parts:
+          - formula: 2d10
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
-        units: spec
-        value: up to 1 round/level
+        units: round
+        value: '@cl'
       name: Use
       range:
         units: touch
-      save:
-        description: none; see text
       target:
         value: one freestanding structure
   components:

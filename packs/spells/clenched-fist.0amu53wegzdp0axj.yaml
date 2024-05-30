@@ -17,6 +17,31 @@ system:
       range:
         units: medium
       spellEffect: 10-ft. hand
+    - _id: aZCrEsL6CUaeBo3f
+      ability:
+        attack: int
+      actionType: msak
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      attackBonus: 11[Hand's Strength] - 1[Large]
+      attackNotes:
+        - Stunned for 1 round on failed Fortitude save.
+      bab: '@cl'
+      damage:
+        parts:
+          - formula: 1d8 + 11[Strength]
+            type:
+              custom: ''
+              values:
+                - untyped
+      name: Strike
+      save:
+        description: Fortitude partial; see text
+        type: fort
+      uses:
+        autoDeductChargesCost: '0'
   components:
     divineFocus: 3
     focus: true

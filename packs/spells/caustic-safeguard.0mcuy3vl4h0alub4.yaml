@@ -23,6 +23,24 @@ system:
         type: ref
       target:
         value: object touched
+    - _id: lIqTB5PnliTfPW4O
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: floor(@cl / 2)d6
+            type:
+              custom: ''
+              values:
+                - acid
+      name: Object First Touched
+      save:
+        description: Reflex half
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
   components:
     material: true
     somatic: true

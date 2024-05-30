@@ -11,6 +11,15 @@ system:
         unchained:
           cost: 2
           type: action
+      attackNotes:
+        - '[[/r 1d3]] Wisdom or [[/r 1d6]] Sanity damage'
+      damage:
+        parts:
+          - formula: min(5, floor(@cl / 2))d8
+            type:
+              custom: ''
+              values:
+                - fire
       duration:
         units: inst
       name: Use
@@ -35,9 +44,9 @@ system:
       save or take 1d8 points of fire damage for every 2 caster levels you have
       (maximum 5d8). Any creature taking fire damage must also succeed at a Will
       save or take 1d3 points of Wisdom damage. Deaf creatures receive a +4
-      circumstance bonus on their Will saves.  If your campaign uses the sanity
-      system (see page 12), a creature takes 1d6 points of sanity damage instead
-      of Wisdom damage.</p>
+      circumstance bonus on their Will saves. If your campaign uses the sanity
+      system (Horror Adventures p. 12), a creature takes 1d6 points of sanity
+      damage instead of Wisdom damage.</p>
   descriptors:
     value:
       - evil

@@ -1975,8 +1975,11 @@ export class ActorSheetPF extends ActorSheet {
               { path: `@spells.${bookId}.cl.total`, value: spellbook.cl.total }
             );
 
-            const cls = lazy.rollData.classes?.[spellbook.class];
-            if (cls) paths.push({ path: "@classLevel", value: cls.level });
+            let cls;
+            // TODO: get proper spellbook roll data
+            if (spellbook.class === "_hd") cls = { level: lazy.rollData.attributes?.hd?.total };
+            cls = lazy.rollData.classes?.[spellbook.class];
+            if (cls) paths.push({ path: "@class.level", value: cls.level });
 
             sources.push({
               sources: getSource(`system.attributes.spells.spellbooks.${bookId}.cl.total`),

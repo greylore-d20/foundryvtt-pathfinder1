@@ -265,16 +265,22 @@ export class ItemSpellPF extends ItemPF {
       const spellbook = this.spellbook;
       if (spellbook != null) {
         const spellAbility = spellbook.ability;
-        let ablMod = "";
-        if (spellAbility !== "") ablMod = result.abilities?.[spellAbility]?.mod;
+        result.ablMod = result.abilities?.[spellAbility]?.mod || 0;
 
         result.cl = this.casterLevel || 0;
         result.sl = this.spellLevel || 0;
-        result.classLevel =
-          spellbook.class === "_hd"
-            ? result.attributes.hd?.total ?? result.details.level.value
-            : result.classes?.[spellbook.class]?.level || 0;
-        result.ablMod = ablMod;
+        if (spellbook.class === "_hd")
+          result.class = { level: result.attributes.hd?.total ?? result.details.level.value };
+        else result.class = result.classes?.[spellbook.class] ?? {};
+        Object.defineProperty(result, "classLevel", {
+          get() {
+            foundry.utils.logCompatibilityWarning("@classLevel is deprecated in favor of @class.level", {
+              since: "PF1 vNEXT",
+              until: "PF1 vNEXT+1",
+            });
+            return this.class?.level;
+          },
+        });
 
         // Add @spellbook shortcut to @spells[bookId]
         result.spellbook = result.spells[this.system.spellbook];

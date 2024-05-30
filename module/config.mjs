@@ -2490,7 +2490,7 @@ export const temporaryRollDataFields = {
     "ablDamage",
     "cl",
     "sl",
-    "classLevel",
+    "class",
     "ablMod",
     "item",
     "action",

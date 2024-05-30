@@ -1898,6 +1898,16 @@ export class ItemSheetPF extends ItemSheet {
 
     if (!this.isEditable) return;
 
+    const getUniqueActionName = (baseName) => {
+      baseName = baseName.replace(/\s*\(\d+\)$/, ""); // Strip existing number
+      let name = baseName;
+      const names = new Set(this.item.actions?.map((act) => act.name) ?? []);
+      let iter = 1;
+      // Find unique name
+      while (names.has(name)) name = `${baseName} (${iter++})`;
+      return name;
+    };
+
     // Edit action
     if (a.classList.contains("edit-action")) {
       return this._onActionEdit(event);
@@ -1906,11 +1916,14 @@ export class ItemSheetPF extends ItemSheet {
     else if (a.classList.contains("add-action")) {
       await this._onSubmit(event, { preventRender: true });
 
+      const baseName = ["weapon", "attack"].includes(this.item.type)
+        ? game.i18n.localize("PF1.Attack")
+        : game.i18n.localize("PF1.Use");
+
       const newActionData = {
-        name: ["weapon", "attack"].includes(this.item.type)
-          ? game.i18n.localize("PF1.Attack")
-          : game.i18n.localize("PF1.Use"),
+        name: getUniqueActionName(baseName),
       };
+
       return pf1.components.ItemAction.create([newActionData], { parent: this.item });
     }
     // Remove action
@@ -1937,12 +1950,12 @@ export class ItemSheetPF extends ItemSheet {
     // Duplicate action
     else if (a.classList.contains("duplicate-action")) {
       const li = a.closest(".item[data-action-id]");
-      const action = foundry.utils.deepClone(this.item.actions.get(li.dataset.actionId).data);
-      action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
+      const actions = this.item.toObject().system.actions ?? [];
+      const action = foundry.utils.deepClone(actions.find((act) => act._id === li.dataset.actionId) ?? {});
+      action.name = getUniqueActionName(action.name);
       action._id = foundry.utils.randomID(16);
-      const actionParts = foundry.utils.deepClone(this.item.toObject().system.actions ?? []);
-      actionParts.push(action);
-      const updateData = { "system.actions": actionParts };
+      actions.push(action);
+      const updateData = { "system.actions": actions };
       this._updateObject(event, this._getSubmitData(updateData));
     }
   }

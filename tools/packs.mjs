@@ -470,9 +470,15 @@ function enforceTemplate(object, template, options = {}) {
   /* -------------------------------------------- */
   if ("actions" in flattened && Array.isArray(flattened.actions)) {
     const defaultData = getActionDefaultData();
-    flattened.actions = flattened.actions.map((action) =>
-      enforceTemplate(action, defaultData, { documentName: "Component", componentName: "Action" })
-    );
+    flattened.actions = flattened.actions.map((action) => {
+      action = enforceTemplate(action, defaultData, { documentName: "Component", componentName: "Action" });
+
+      // Special cleanup
+      if (!action.ability?.damage) delete action.ability?.damageMult;
+      if (utils.isEmpty(action.ability)) delete action.ability;
+
+      return action;
+    });
   }
   if ("changes" in flattened && Array.isArray(flattened.changes)) {
     const defaultData = getChangeDefaultData();

@@ -97,6 +97,18 @@ declare global {
       pf1ToggleActorBuff: (actor: ActorPF, item: ItemBuffPF, state: boolean) => void;
 
       /**
+       * Extended tooltip render hook just before tooltip is activated.
+       *
+       * @group Actor Sheet
+       * @remarks Called by {@link Hooks.callAll}
+       * @param sheet - Linked sheet
+       * @param id - Tooltip ID
+       * @param template - HTML document fragment providing live DOM to the tooltip.
+       * @since PF1 vNEXT
+       */
+      renderPF1ExtendedTooltip: (sheet: ActorSheet, id: string, template: DocumentFragment) => void;
+
+      /**
        * A hook event fired by the system when an {@link ActorPF} gains XP.
        *
        * @group Actor

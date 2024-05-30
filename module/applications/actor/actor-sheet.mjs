@@ -1194,10 +1194,13 @@ export class ActorSheetPF extends ActorSheet {
       }));
     }
 
-    const text = renderCachedTemplate("systems/pf1/templates/extended-tooltip.hbs", context);
+    const template = document.createElement("template");
+    template.innerHTML = renderCachedTemplate("systems/pf1/templates/extended-tooltip.hbs", context);
+
+    Hooks.callAll("renderPF1ExtendedTooltip", this, id, template);
 
     game.tooltip.activate(el, {
-      text,
+      content: template.content,
       cssClass: "pf1 extended",
       direction: el.dataset.tooltipDirection || undefined,
     });

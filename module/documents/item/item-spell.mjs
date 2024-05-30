@@ -261,30 +261,39 @@ export class ItemSpellPF extends ItemPF {
   getRollData() {
     const result = super.getRollData();
 
-    if (this.actor) {
-      const spellbook = this.spellbook;
-      if (spellbook != null) {
-        const spellAbility = spellbook.ability;
-        result.ablMod = result.abilities?.[spellAbility]?.mod || 0;
+    result.sl = this.spellLevel || 0;
 
-        result.cl = this.casterLevel || 0;
-        result.sl = this.spellLevel || 0;
-        if (spellbook.class === "_hd")
-          result.class = { level: result.attributes.hd?.total ?? result.details.level.value };
-        else result.class = result.classes?.[spellbook.class] ?? {};
-        Object.defineProperty(result, "classLevel", {
-          get() {
-            foundry.utils.logCompatibilityWarning("@classLevel is deprecated in favor of @class.level", {
-              since: "PF1 vNEXT",
-              until: "PF1 vNEXT+1",
-            });
-            return this.class?.level;
-          },
-        });
+    const spellbook = this.spellbook;
+    if (spellbook) {
+      const spellAbility = spellbook.ability;
+      let ablMod = "";
+      if (spellAbility !== "") ablMod = result.abilities?.[spellAbility]?.mod;
+      result.ablMod = ablMod;
 
-        // Add @spellbook shortcut to @spells[bookId]
-        result.spellbook = result.spells[this.system.spellbook];
-      }
+      result.cl = this.casterLevel || 0;
+
+      // Add @class shortcut to @classes[classTag]
+      if (spellbook.class === "_hd")
+        result.class = { level: result.attributes.hd?.total ?? result.details.level.value };
+      else result.class = result.classes?.[spellbook.class] ?? {};
+      Object.defineProperty(result, "classLevel", {
+        get() {
+          foundry.utils.logCompatibilityWarning("@classLevel is deprecated in favor of @class.level", {
+            since: "PF1 vNEXT",
+            until: "PF1 vNEXT+1",
+          });
+          return this.class?.level;
+        },
+      });
+
+      // Add @spellbook shortcut to @spells[bookId]
+      result.spellbook = result.spells[this.system.spellbook];
+    } else {
+      const [sl, cl] = this.constructor.getMinimumCasterLevelBySpellData(this);
+
+      result.sl = sl;
+      result.cl = cl;
+      result.ablMod = Math.floor(sl / 2);
     }
 
     return result;
@@ -900,7 +909,7 @@ export class ItemSpellPF extends ItemPF {
     const defaultAction = this.defaultAction;
     const actionData = defaultAction?.data ?? {};
 
-    rollData ??= defaultAction?.getRollData();
+    rollData ??= defaultAction?.getRollData() ?? this.getRollData();
 
     const label = {
       school: pf1.config.spellSchools[srcData.school],
@@ -963,43 +972,44 @@ export class ItemSpellPF extends ItemPF {
 
     // Set duration label
     const duration = actionData.duration;
-    if (duration?.units) {
-      switch (duration.units) {
-        case "spec":
-          label.duration = duration.value;
-          break;
-        case "seeText":
-        case "inst":
-        case "perm":
-          label.duration = pf1.config.timePeriods[duration.units];
-          break;
-        case "turn": {
+    switch (duration.units) {
+      case "spec":
+        label.duration = duration.value;
+        break;
+      case "seeText":
+      case "inst":
+      case "perm":
+        label.duration = pf1.config.timePeriods[duration.units];
+        break;
+      case "turn": {
+        const unit = pf1.config.timePeriods[duration.units];
+        label.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
+        break;
+      }
+      case "round":
+      case "minute":
+      case "hour":
+      case "day":
+      case "month":
+      case "year":
+        if (duration.value) {
           const unit = pf1.config.timePeriods[duration.units];
-          label.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
-          break;
-        }
-        case "round":
-        case "minute":
-        case "hour":
-        case "day":
-        case "month":
-        case "year":
-          if (duration.value) {
-            const unit = pf1.config.timePeriods[duration.units];
-            const roll = Roll.defaultImplementation.safeRollAsync(duration.value, rollData);
-            const value = roll.total;
-            if (!roll.err) {
-              label.duration = game.i18n.format("PF1.Time.Format", { value, unit });
-            }
+          const roll = Roll.defaultImplementation.safeRollAsync(duration.value, rollData);
+          const value = roll.total;
+          if (!roll.err) {
+            label.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+          } else {
+            console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
           }
-          break;
-      }
+          label.durationFormula = duration.value;
+        }
+        break;
+    }
 
-      // Dismissable, but only if special duration isn't used
-      // TODO: Better i18n support
-      if (label.duration && duration.dismiss && duration.units !== "spec") {
-        label.duration += " " + game.i18n.localize("PF1.DismissableMark");
-      }
+    // Dismissable, but only if special duration isn't used
+    // TODO: Better i18n support
+    if (label.duration && duration.dismiss && duration.units !== "spec") {
+      label.duration += " " + game.i18n.localize("PF1.DismissableMark");
     }
 
     // Set effect label

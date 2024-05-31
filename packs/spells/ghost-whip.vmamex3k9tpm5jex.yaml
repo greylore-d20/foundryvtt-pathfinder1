@@ -19,6 +19,49 @@ system:
         units: ft
         value: '0'
       spellEffect: whip of flexible ectoplasm
+    - _id: 4Rp55L1pbQ7cQ3A2
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - slashing
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      name: Ghost touch attack
+      range:
+        units: reach
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: wrIgu1Lyhz64OlSZ
+      ability:
+        attack: str
+      actionType: mcman
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      name: Combat Maneuver
+      range:
+        units: reach
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
   components:
     somatic: true
     verbal: true
@@ -54,5 +97,8 @@ system:
       wizard: 2
   level: 2
   school: evo
+  sources:
+    - id: PZO1132
+      pages: '172'
 type: spell
 

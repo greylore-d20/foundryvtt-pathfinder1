@@ -104,6 +104,8 @@ export class ItemSheetPF extends ItemSheet {
    * Start with the base item data and extending with additional properties for rendering.
    */
   async getData() {
+    const lang = game.settings.get("core", "language");
+
     /** @type {ItemPF} */
     const item = this.item,
       itemData = item.system;
@@ -587,7 +589,13 @@ export class ItemSheetPF extends ItemSheet {
       context.isPreparedSpell = !context.isSpontaneousLike;
       context.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       context.isAtWill = itemData.atWill;
-      context.spellbooks = foundry.utils.deepClone(actorData?.attributes.spells.spellbooks ?? {});
+      context.spellbooks = actorData?.attributes.spells.spellbooks ?? {};
+      context.spellbookChoices = Object.fromEntries(
+        Object.entries(context.spellbooks)
+          .filter(([_, { inUse }]) => inUse)
+          .map(([key, { label }]) => [key, label])
+          .sort(([_0, n0], [_1, n1]) => n0.localeCompare(n1, lang))
+      );
 
       topDescription = renderCachedTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",

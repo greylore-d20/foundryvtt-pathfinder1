@@ -154,16 +154,12 @@
       <h3 class="form-header">{{localize "PF1.SpellBook"}}</h3>
 
       {{!-- Spellbook --}}
-      {{#if owner}}
+      {{#if owned}}
       <div class="form-group">
         <label>{{localize "PF1.SpellBook"}}</label>
         <div class="form-fields">
           <select name="system.spellbook">
-            {{#select system.spellbook}}
-            {{#each spellbooks as |spellbook a|}}
-            <option value="{{a}}">{{spellbook.label}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions spellbookChoices selected=system.spellbook}}
           </select>
         </div>
       </div>

@@ -64,13 +64,17 @@ The current round of combat, or `0` if not in combat.
 The critical multiplier of the attack, or `1` if the attack is not a critical threat.
 Only appropriate for use in damage rolls and attack and effect notes.
 
-## `@powerAttackBonus`
+### `@sizeBonus`
+
+Effective attack roll bonus or penalty from size.
+
+### `@powerAttackBonus`
 
 Base bonus damage given by power attack to individual damage. E.g. two-handed attack at level 2 would always give 3 for this.
 
 Defaults to `0` if power attack is disabled.
 
-## `@powerAttackPenalty`
+### `@powerAttackPenalty`
 
 Attack penalty power attacking causes. Goes hand in hand with `@powerAttackBonus`.
 
@@ -78,7 +82,7 @@ For example furious focus is easy to implement with conditional attack roll modi
 
 Defaults to `0` if power attack is disabled.
 
-## `@attackCount`
+### `@attackCount`
 
 Zero-indexed counter for which attack is being processed. So if this was placed as damage bonus, it would give you `0`, `1`, `2`, `3`, etc. bonus to damage as the attacks progress.
 

@@ -119,6 +119,8 @@
       {{!-- Spell Description --}}
       <h2>{{localize "PF1.Description"}}</h2>
       {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
+
+      {{> "systems/pf1/templates/items/parts/item-instructions.hbs"}}
     </div>
 
     {{!-- Details Tab --}}

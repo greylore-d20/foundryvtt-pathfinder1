@@ -1,0 +1,15 @@
+{{#if @root.showIdentifiedData}}
+<fieldset class="instructions{{#unless descriptionHTML.instructions}} placeholder{{/unless}}">
+  <legend><i class="icon fa-solid fa-circle-info fa-fw"></i> {{localize "PF1.Instructions"}}</legend>
+  {{#if descriptionHTML.instructions}}
+  <div class="instruction-content">
+    {{{descriptionHTML.instructions}}}
+  </div>
+  {{else}}
+  <label class="placeholder">{{localize "PF1.NoInstrutions"}}</label>
+  {{/if}}
+  <div class="controls">
+    <a class="text-editor control" data-action="text-editor" data-path="system.description.instructions" data-tooltip="PF1.Edit"><i class="fas fa-edit"></i></a>
+  </div>
+</fieldset>
+{{/if}}

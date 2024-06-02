@@ -160,10 +160,10 @@ export class ItemSheetPF extends ItemSheet {
       context.isMythic = this.item.subType === "mythic";
 
       if (item.system.wealth) {
-        const max = await Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, undefined, undefined, {
+        const max = Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, undefined, undefined, {
           maximize: true,
         })?.total;
-        const min = await Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, undefined, undefined, {
+        const min = Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, undefined, undefined, {
           minimize: true,
         })?.total;
         if (max > 0) {
@@ -224,26 +224,6 @@ export class ItemSheetPF extends ItemSheet {
         );
       }
     }
-
-    // Add descriptions
-    const description = context.showIdentified ? this.item.getDescription({ rollData, header: false }) : null;
-
-    context.descriptionHTML = {
-      identified: null,
-      unidentified: null,
-    };
-    const enrichOptions = {
-      secrets: context.owner,
-      rollData: rollData,
-      async: true,
-      relativeTo: this.actor,
-    };
-    const pIdentDesc = description ? enrichHTMLUnrolledAsync(description, enrichOptions) : Promise.resolve();
-    pIdentDesc.then((html) => (context.descriptionHTML.identified = html));
-    const unidentDesc = itemData.description?.unidentified;
-    const pUnidentDesc = unidentDesc ? enrichHTMLUnrolledAsync(unidentDesc, enrichOptions) : Promise.resolve();
-    pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
-    await Promise.all([pIdentDesc, pUnidentDesc]);
 
     /** @type {DescriptionAttribute[]} */
     context.descriptionAttributes = [];
@@ -606,16 +586,6 @@ export class ItemSheetPF extends ItemSheet {
         item.getDescriptionData({ rollData })
       );
 
-      // Enrich description
-      if (itemData.description?.value) {
-        context.enrichedDescription = await TextEditor.enrichHTML(itemData.description.value, {
-          rollData,
-          secrets: context.owner,
-          async: true,
-          relativeTo: this.actor,
-        });
-      }
-
       // Reverse mapping of pf1.config.divineFocus for readability
       const dfVariants = { DF: 1, MDF: 2, FDF: 3 };
       itemData.components ??= {};
@@ -636,14 +606,6 @@ export class ItemSheetPF extends ItemSheet {
           c.divineFocus = false;
         }
       }
-    }
-
-    if (topDescription) {
-      context.topDescription = await TextEditor.enrichHTML(topDescription, {
-        rollData,
-        async: true,
-        relativeTo: this.actor,
-      });
     }
 
     // Prepare class specific stuff
@@ -755,7 +717,8 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare stuff for items with context notes
     if (itemData.contextNotes) {
       // TODO: Remove .toObject() and move the supporting data to the datamodel
-      context.contextNotes = itemData.contextNotes.map((cn) => cn.toObject());
+      // HACK: this.item.system access instead of itemData as itemData can become invalid via async processes during AE creation
+      context.contextNotes = this.item.system.contextNotes.map((cn) => cn.toObject());
       const noteTargets = getBuffTargets(actor, "contextNotes");
       context.contextNotes.forEach((n) => {
         const target = noteTargets[n.target];
@@ -798,12 +761,6 @@ export class ItemSheetPF extends ItemSheet {
     // Add item flags
     this._prepareItemFlags(context);
 
-    // Add script calls
-    await this._prepareScriptCalls(context);
-
-    // Add links
-    await this._prepareLinks(context);
-
     // Add actions
     context.actions = this.item.actions;
 
@@ -835,6 +792,44 @@ export class ItemSheetPF extends ItemSheet {
     if (context.showIdentifiedData) {
       this._prepareContentSource(context);
     }
+
+    // Trailing async awaits to ensure they're all awaited in one go instead of sequentially
+
+    // Add descriptions
+    const description = context.showIdentified ? this.item.getDescription({ rollData, header: false }) : null;
+
+    context.descriptionHTML = {
+      identified: null,
+      unidentified: null,
+    };
+    const enrichOptions = {
+      secrets: context.owner,
+      rollData: rollData,
+      async: true,
+      relativeTo: this.actor,
+    };
+    const pIdentDesc = description ? enrichHTMLUnrolledAsync(description, enrichOptions) : Promise.resolve();
+    pIdentDesc.then((html) => (context.descriptionHTML.identified = html));
+    const unidentDesc = itemData.description?.unidentified;
+    const pUnidentDesc = unidentDesc ? enrichHTMLUnrolledAsync(unidentDesc, enrichOptions) : Promise.resolve();
+    pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
+
+    const pTopDesc = topDescription
+      ? TextEditor.enrichHTML(topDescription, {
+          rollData,
+          async: true,
+          relativeTo: this.actor,
+        })
+      : Promise.resolve();
+    pTopDesc.then((html) => (context.topDescription = html));
+
+    // Add script calls
+    const pScripts = this._prepareScriptCalls(context);
+
+    // Add links
+    const pLinks = this._prepareLinks(context);
+
+    await Promise.all([pIdentDesc, pUnidentDesc, pTopDesc, pScripts, pLinks]);
 
     return context;
   }

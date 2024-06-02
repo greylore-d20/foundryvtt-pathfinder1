@@ -3979,7 +3979,7 @@ export class ActorPF extends ActorBasePF {
   get allNotes() {
     return this.items
       .filter((item) => item.isActive && item.system.contextNotes?.length > 0)
-      .map((item) => ({ notes: item.system.contextNotes.map((n) => new pf1.components.ContextNote(n)), item }));
+      .map((item) => ({ notes: item.system.contextNotes, item }));
   }
 
   /**

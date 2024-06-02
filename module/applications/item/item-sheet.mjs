@@ -1567,7 +1567,11 @@ export class ItemSheetPF extends ItemSheet {
     // Create item
     if (a.classList.contains("item-create")) {
       await this._onSubmit(event, { preventRender: true });
-      return pf1.components.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
+      const newScripts = await pf1.components.ItemScriptCall.create([{ category, type: "script" }], {
+        parent: this.item,
+      });
+      newScripts?.forEach((script) => script.edit());
+      return;
     }
     // Delete item
     else if (script && a.classList.contains("item-delete")) {
@@ -1968,7 +1972,9 @@ export class ItemSheetPF extends ItemSheet {
         name: getUniqueActionName(baseName),
       };
 
-      return pf1.components.ItemAction.create([newActionData], { parent: this.item });
+      const newActions = await pf1.components.ItemAction.create([newActionData], { parent: this.item });
+      newActions.forEach((action) => action.sheet.render(true));
+      return;
     }
     // Remove action
     else if (a.classList.contains("delete-action")) {
@@ -2000,7 +2006,8 @@ export class ItemSheetPF extends ItemSheet {
       action._id = foundry.utils.randomID(16);
       actions.push(action);
       const updateData = { "system.actions": actions };
-      this._updateObject(event, this._getSubmitData(updateData));
+      await this._updateObject(event, this._getSubmitData(updateData));
+      this.item.actions.get(action._id)?.sheet.render(true);
     }
   }
 

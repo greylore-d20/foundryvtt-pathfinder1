@@ -2982,7 +2982,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // TODO: itemData.system.unidentified?.name;
 
-    this.document.createEmbeddedDocuments("Item", [itemData]);
+    const items = await this.document.createEmbeddedDocuments("Item", [itemData]);
+    // Open sheet for new item
+    items?.forEach((item) => item.sheet.render(true));
   }
 
   _quickAction(event) {

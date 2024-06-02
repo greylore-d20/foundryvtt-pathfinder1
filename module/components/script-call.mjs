@@ -27,7 +27,7 @@ export class ItemScriptCall {
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
-      const newScriptCallData = foundry.utils.deepClone(parent.system.scriptCalls || []);
+      const newScriptCallData = parent.toObject().system.scriptCalls || [];
       newScriptCallData.push(...data);
 
       // Update parent

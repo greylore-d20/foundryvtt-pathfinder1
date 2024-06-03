@@ -67,18 +67,20 @@ export function hideGMSensitiveInfo(cm, html, data) {
     // Then check for stuff
     const uuid = elem.data("gm-sensitive-uuid");
     if (!uuid) return;
-    fromUuid(uuid).then((obj) => {
-      // If token or token document, get actor for testing user permissions
-      if (obj instanceof Token || obj instanceof TokenDocument) obj = obj.actor;
-      //  Show element again, since we have permission
-      if (obj?.testUserPermission && obj.testUserPermission(game.user, "OBSERVER")) {
-        elem.show();
-      }
-      // Remove element completely, since we don't have permission
-      else {
-        elem.remove();
-      }
-    });
+
+    let obj = fromUuidSync(uuid);
+    // If token or token document, get actor for testing user permissions
+    // TODO: This should no longer be necessary with Foundry v11, unlinked actors give actor directly.
+    if (obj instanceof Token || obj instanceof TokenDocument) obj = obj.actor;
+
+    //  Show element again, since we have permission
+    if (obj?.testUserPermission && obj.testUserPermission(game.user, "OBSERVER")) {
+      elem.show();
+    }
+    // Remove element completely, since we don't have permission
+    else {
+      elem.remove();
+    }
   });
 
   const actor = ChatMessage.getSpeakerActor(cm.speaker);

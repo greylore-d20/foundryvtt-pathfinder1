@@ -394,6 +394,7 @@ export class ActorPF extends ActorBasePF {
    * @param {string} [options.event] - Expiration event
    * @param {number} [options.initiative] - Initiative based expiration marker
    * @param {DocumentModificationContext} [context] Document update context
+   * @throws {Error} - With insufficient permissions to control the actor.
    */
   async expireActiveEffects({ combat, timeOffset = 0, event = null, initiative = null } = {}, context = {}) {
     if (!this.isOwner) throw new Error("Must be owner");
@@ -1872,7 +1873,7 @@ export class ActorPF extends ActorBasePF {
             src.value != null
               ? src.value
               : RollPF.safeRollAsync(src.formula || "0", rollData, [changeTarget, src, this], {
-                  suppressError: !this.testUserPermission(game.user, "OWNER"),
+                  suppressError: !this.isOwner,
                 }).total;
           if (src.operator === "set") {
             let displayValue = srcValue;

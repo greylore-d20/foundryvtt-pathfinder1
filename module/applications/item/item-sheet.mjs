@@ -2250,8 +2250,9 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onItemSelector(event) {
     event.preventDefault();
-    if (!this.item.isOwner) return void ui.notifications.warn("Insufficient permissions to modify item.");
-    if (!this.actor) return void ui.notifications.warn("No actor to find items from.");
+    if (!this.item.isOwner) return void ui.notifications.warn("PF1.Error.NoItemPermission", { localize: true });
+    // This functionm should never be called without an actor
+    if (!this.actor) throw new Error("No actor to find items from.");
 
     const { type, subType, kind, empty, selected, label, name } = event.currentTarget.dataset;
 

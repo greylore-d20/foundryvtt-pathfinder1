@@ -241,9 +241,7 @@ export class ItemChange {
             this.formula,
             rollData,
             [t, this, rollData],
-            {
-              suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
-            },
+            { suppressError: this.parent && !this.parent.isOwner },
             { maximize: true }
           ).total;
         }

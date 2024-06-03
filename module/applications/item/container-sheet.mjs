@@ -469,7 +469,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _onDropItem(event, data) {
-    if (!this.item.isOwner) return false;
+    if (!this.item.isOwner) return void ui.notifications.warn("PF1.Error.NoItemPermission", { localize: true });
 
     const { actorUuid, containerId } = data;
     const item = await Item.implementation.fromDropData(data);

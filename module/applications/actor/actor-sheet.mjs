@@ -2753,7 +2753,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`system.skills.${skillId}.subSkills.${tag}`] = skillData;
-    if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
+    await this.document.update(updateData);
 
     return this._editSkill(skillId, tag);
   }
@@ -2815,8 +2815,6 @@ export class ActorSheetPF extends ActorSheet {
 
   _onSkillDelete(event) {
     event.preventDefault();
-    if (!this.document.testUserPermission(game.user, "OWNER")) return;
-
     const el = event.target.closest(".skill");
     const mainSkillId = el.dataset.skill;
     const subSkillId = el.dataset.subSkill;
@@ -3122,14 +3120,10 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
-    targets.push(
-      ...game.actors.contents.filter(
-        (o) => o.hasPlayerOwner && o !== this.document && !o.testUserPermission(game.user, "OWNER")
-      )
-    );
+    const targets = game.actors.contents.filter((o) => o.isOwner && o !== this.document);
+    targets.push(...game.actors.contents.filter((o) => o.hasPlayerOwner && o !== this.document && !o.isOwner));
 
-    const targetData = await pf1.utils.dialog.getActor(`Give item to actor`, targets);
+    const targetData = await pf1.utils.dialog.getActor(game.i18n.localize("PF1.GiveItemToActor"), targets);
 
     if (!targetData) return;
     let target;
@@ -3712,7 +3706,7 @@ export class ActorSheetPF extends ActorSheet {
    * @override
    */
   async _onDropItem(event, data) {
-    if (!this.actor.isOwner) return false;
+    if (!this.item.isOwner) return void ui.notifications.warn("PF1.Error.NoActorPermission", { localize: true });
 
     const sourceItem = await Item.implementation.fromDropData(data);
 

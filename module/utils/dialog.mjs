@@ -122,9 +122,6 @@ export async function getItem({
   appOptions = {},
   renderOptions = {},
 } = {}) {
-  if (!actor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER))
-    throw new Error("Insufficient permission to actor");
-
   if (!type && !subType && !filter) throw new Error("Insufficient filter rules provided.");
 
   const filterFunc = (item) => {

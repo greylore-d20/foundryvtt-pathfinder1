@@ -90,10 +90,9 @@ export class ActorBasePF extends Actor {
    */
   get activeOwner() {
     const firstOwner =
-      Object.keys(this.ownership)
-        .map((userId) => game.users.get(userId))
-        .filter((u) => u?.active && !u.isGM)
-        .filter((user) => this.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER))
+      game.users
+        .filter((u) => u.active && !u.isGM)
+        .filter((u) => this.testUserPermission(u, "OWNER"))
         .sort((a, b) => (a.id > b.id ? 1 : -1))[0] ?? null;
 
     return firstOwner ?? game.users.activeGM;

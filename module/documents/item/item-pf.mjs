@@ -1429,6 +1429,10 @@ export class ItemPF extends ItemBasePF {
     const tag = this.system.tag;
     result.item.dFlags = result.dFlags?.[tag];
 
+    result.item.bFlags = Object.fromEntries(
+      Object.entries(result.item.flags?.boolean ?? {}).map(([key, value]) => [key, value ? 1 : 0])
+    );
+
     // Set aura strength
     if (this.isPhysical) {
       result.item.auraStrength = this.auraStrength;

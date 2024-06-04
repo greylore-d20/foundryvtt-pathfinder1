@@ -4495,6 +4495,9 @@ export class ActorPF extends ActorBasePF {
 
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};
+    result.bFlags = Object.fromEntries(
+      Object.entries(this.itemFlags?.boolean ?? {}).map(([key, { sources }]) => [key, sources.length > 0 ? 1 : 0])
+    );
 
     result.range = this.system.traits?.reach?.total ?? NaN;
 

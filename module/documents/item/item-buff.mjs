@@ -77,11 +77,19 @@ export class ItemBuffPF extends ItemPF {
 
   /**
    * @override
-   * @param {object} options - Delete context options
+   * @param {object} context - Delete context options
    * @param {string} userId - Triggering user ID
    */
-  _onDelete(options, userId) {
-    super._onDelete(options, userId);
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
+
+    // Run script call(s)
+    if (game.users.get(userId)?.isSelf) {
+      if (this.isActive) {
+        const startTime = context.pf1?.startTime;
+        this.executeScriptCalls("toggle", { state: false, startTime });
+      }
+    }
 
     const actor = this.actor;
     if (!actor) return;
@@ -130,22 +138,13 @@ export class ItemBuffPF extends ItemPF {
    * @param {User} user
    */
   async _preDelete(context, user) {
-    // Delete associated effect
     const effect = this.effect;
-
-    const startTime = effect?.duration.startTime;
     context.pf1 ??= {};
-    context.pf1.startTime = startTime;
-
-    if (effect) {
+    context.pf1.startTime = effect?.duration.startTime;
+    // Delete associated effect
+    // TODO: Remove this eventually, it is only needed by old items/actors
+    if (effect?.parent !== this) {
       await effect.delete({ pf1: { delete: this.uuid } });
-    }
-
-    // Run script call(s)
-    if (user.isSelf) {
-      if (this.isActive) {
-        this.executeScriptCalls("toggle", { state: false, startTime });
-      }
     }
 
     await super._preDelete(context, user);

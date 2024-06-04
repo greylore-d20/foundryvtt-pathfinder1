@@ -24,26 +24,6 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     }
   }
 
-  /**
-   * @internal
-   * @override
-   * @param {object} context
-   * @param {User} user
-   */
-  async _preDelete(context, user) {
-    if (user.isSelf) {
-      if (this.isActive) {
-        this.executeScriptCalls("equip", { equipped: false });
-      }
-
-      if (this.system.quantity > 0) {
-        this.executeScriptCalls("changeQuantity", { quantity: { previous: this.system.quantity, new: 0 } });
-      }
-    }
-
-    await super._preDelete(context, user);
-  }
-
   /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });

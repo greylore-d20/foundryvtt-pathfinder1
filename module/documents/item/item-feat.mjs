@@ -5,16 +5,16 @@ export class ItemFeatPF extends ItemPF {
    * @internal
    * @override
    * @param {object} context
-   * @param {User} user
+   * @param {User} userId
    */
-  async _preDelete(context, user) {
-    if (user.isSelf) {
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
+
+    if (game.users.get(userId)?.isSelf) {
       if (this.isActive) {
         this.executeScriptCalls("toggle", { state: false });
       }
     }
-
-    await super._preDelete(context, user);
   }
 
   /**

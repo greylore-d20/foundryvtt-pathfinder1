@@ -98,6 +98,26 @@ export class ItemPhysicalPF extends ItemPF {
   }
 
   /**
+   * @internal
+   * @override
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
+
+    if (game.users.get(userId)?.isSelf) {
+      if (this.isActive) {
+        this.executeScriptCalls("equip", { equipped: false });
+      }
+
+      if (this.system.quantity > 0) {
+        this.executeScriptCalls("changeQuantity", { quantity: { previous: this.system.quantity, new: 0 } });
+      }
+    }
+  }
+
+  /**
    * Reset charges when quantity is changed to simulate a stack.
    *
    * - If charges are 0

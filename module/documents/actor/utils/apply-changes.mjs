@@ -7,16 +7,16 @@ export function applyChanges() {
   this.changeOverrides = {};
   const changes = Array.from(this.changes);
 
-  const priority = getSortChangePriority.call(this);
+  const { targets, types } = getSortChangePriority.call(this);
   const _sortChanges = function (a, b) {
-    const typeA = priority.types.indexOf(a.subTarget);
-    const typeB = priority.types.indexOf(b.subTarget);
-    const modA = priority.modifiers.indexOf(a.modifier);
-    const modB = priority.modifiers.indexOf(b.modifier);
-    const prioA = (a.priority ?? 0) + 1000;
-    const prioB = (b.priority ?? 0) + 1000;
+    const targetA = targets.indexOf(a.subTarget);
+    const targetB = targets.indexOf(b.subTarget);
+    const typeA = types.indexOf(a.modifier);
+    const typeB = types.indexOf(b.modifier);
+    const prioA = a.priority ?? 0;
+    const prioB = b.priority ?? 0;
 
-    return prioB - prioA || typeA - typeB || modA - modB;
+    return prioB - prioA || targetA - targetB || typeA - typeB;
   };
 
   // Organize changes by priority
@@ -102,35 +102,13 @@ const getSortChangePriority = function () {
   /** @type {[string, {sort: number}][]}*/
   const skillTargets = this._skillTargets.map((target, index) => [target, { sort: 76000 + index * 10 }]);
   const buffTargets = Object.entries(pf1.config.buffTargets);
-  const types = [...skillTargets, ...buffTargets]
+  const targets = [...skillTargets, ...buffTargets]
     .sort(([, { sort: aSort }], [, { sort: bSort }]) => aSort - bSort)
     .map(([target]) => target);
 
   return {
-    types: types,
-    modifiers: [
-      "untyped",
-      "untypedPerm",
-      "base",
-      "enh",
-      "dodge",
-      "haste",
-      "inherent",
-      "deflection",
-      "morale",
-      "luck",
-      "sacred",
-      "insight",
-      "resist",
-      "profane",
-      "trait",
-      "racial",
-      "size",
-      "competence",
-      "circumstance",
-      "alchemical",
-      "penalty",
-    ],
+    targets,
+    types: Object.keys(pf1.config.bonusTypes),
   };
 };
 

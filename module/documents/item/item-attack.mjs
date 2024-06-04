@@ -63,6 +63,13 @@ export class ItemAttackPF extends ItemPF {
 
     const srcData = item.toObject().system;
 
+    // Convert single-use to 1 max charge
+    const uses = srcData.uses ?? {};
+    if (uses.per === "single") {
+      uses.per = "charges";
+      uses.maxFormula = "1";
+    }
+
     // Get attack template
     const attackItem = {
       name: item.name,
@@ -84,6 +91,8 @@ export class ItemAttackPF extends ItemPF {
         actions: srcData.actions ?? [],
         material: srcData.material,
         alignments: srcData.alignments,
+        attackNotes: srcData.attackNotes ?? [],
+        effectNotes: srcData.effectNotes ?? [],
       },
     };
 

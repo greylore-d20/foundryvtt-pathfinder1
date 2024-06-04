@@ -177,6 +177,9 @@ export class ItemSheetPF extends ItemSheet {
     context.isCharged = !["single", "", undefined].includes(itemData.uses?.per);
     context.defaultChargeFormula = item.getDefaultChargeFormula();
 
+    context.limitedUsePeriods = { ...pf1.config.limitedUsePeriods };
+    if (!item.isPhysical) delete context.limitedUsePeriods.single;
+
     // Item type identifiers
     context.isPhysical = itemData.quantity !== undefined;
     context.isNaturalAttack = itemData.subType === "natural";

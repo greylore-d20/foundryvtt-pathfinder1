@@ -91,6 +91,8 @@ export class ItemActionSheet extends FormApplication {
     context.isSelfCharged = action.isSelfCharged;
     const chargedUsePeriods = new Set([...Object.keys(pf1.config.limitedUsePeriods), "charges"]);
     chargedUsePeriods.delete("single"); // Single is special
+    context.limitedUsePeriods = { ...pf1.config.limitedUsePeriods };
+    if (!item.isPhysical) delete context.limitedUsePeriods.single;
     context.showMaxChargeFormula = chargedUsePeriods.has(context.data.uses.self.per);
     if (action.hasRange) {
       context.canInputRange = ["ft", "mi", "spec"].includes(context.data.range.units);

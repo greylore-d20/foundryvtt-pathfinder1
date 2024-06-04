@@ -869,11 +869,20 @@ const _migrateActionType = (action, itemData) => {
   action.actionType ||= "other";
 };
 
-// Migrate unlimited to empty selection, as the two are identical in meaning
 // Added with PF1 vNEXT
 const _migrateActionLimitedUses = (action, itemData) => {
+  // Migrate unlimited to empty selection, as the two are identical in meaning
   if (action.uses?.self?.per === "unlimited") {
     delete action.uses.self.per;
+  }
+
+  // Only physical items can be single use
+  const isPhysical = CONFIG.Item.documentClasses[itemData.type]?.isPhysical;
+  if (!isPhysical) {
+    if (action.uses?.self?.per === "single") {
+      action.uses.self.per = "charges";
+      action.uses.self.maxFormula = "1";
+    }
   }
 };
 
@@ -1739,7 +1748,8 @@ const _migrateItemWeight = function (ent, updateData) {
     weight = ent.system.weight;
 
   // Skip items of inappropriate type
-  if (!game.system.template.Item[ent.type].templates.includes("physicalItem")) {
+  const isPhysical = CONFIG.Item.documentClasses[ent.type]?.isPhysical;
+  if (!isPhysical) {
     if (weight !== undefined) {
       // Ensure inappropriate items don't have spurious weight, which breaks data prep
       updateData["system.-=weight"] = null;
@@ -2345,11 +2355,20 @@ const _migrateItemChargeCost = function (item, updateData) {
   }
 };
 
-// Migrate unlimited to empty selection, as the two are identical in meaning
 // Added with PF1 vNEXT
 const _migrateItemLimitedUses = (itemData, updateData) => {
+  // Migrate unlimited to empty selection, as the two are identical in meaning
   if (itemData.system.uses?.per === "unlimited") {
     updateData["system.uses.per"] = "";
+  }
+
+  // Only physical items have single use, convert use cases to 1 charge
+  const isPhysical = CONFIG.Item.documentClasses[itemData.type]?.isPhysical;
+  if (!isPhysical) {
+    if (itemData.system.uses?.per === "single") {
+      updateData["system.uses.per"] = "charges";
+      updateData["system.uses.maxFormula"] = "1";
+    }
   }
 };
 

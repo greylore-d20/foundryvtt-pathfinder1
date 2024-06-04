@@ -1089,13 +1089,12 @@ export const bonusTypes = {
   competence: "PF1.ModifierType.competence",
   circumstance: "PF1.ModifierType.circumstance",
   alchemical: "PF1.ModifierType.alchemical",
-  penalty: "PF1.ModifierType.penalty",
 };
 
 /**
  * An array of stacking bonus types by their keys for {@link bonusTypes}
  */
-export const stackingBonusTypes = ["untyped", "untypedPerm", "dodge", "racial", "penalty", "circumstance"];
+export const stackingBonusTypes = ["untyped", "untypedPerm", "dodge", "racial", "circumstance"];
 
 /* -------------------------------------------- */
 
@@ -2110,6 +2109,12 @@ export const buffTargets = /** @type {const} */ ({
   intMod: { label: "PF1.AbilityIntMod", category: "ability", sort: 43000 },
   wisMod: { label: "PF1.AbilityWisMod", category: "ability", sort: 44000 },
   chaMod: { label: "PF1.AbilityChaMod", category: "ability", sort: 45000 },
+  strPen: { label: "PF1.AbilityStrPen", category: "ability", sort: 50000 },
+  dexPen: { label: "PF1.AbilityDexPen", category: "ability", sort: 51000 },
+  conPen: { label: "PF1.AbilityConPen", category: "ability", sort: 52000 },
+  intPen: { label: "PF1.AbilityIntPen", category: "ability", sort: 53000 },
+  wisPen: { label: "PF1.AbilityWisPen", category: "ability", sort: 54000 },
+  chaPen: { label: "PF1.AbilityChaPen", category: "ability", sort: 55000 },
   skills: { label: "PF1.BuffTarAllSkills", category: "skills", sort: 50000 },
   unskills: { label: "PF1.BuffTarUntrainedSkills", category: "skills", sort: 100000 },
   carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000 },

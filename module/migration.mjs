@@ -1665,6 +1665,17 @@ const _migrateItemChanges = function (itemData, updateData) {
       newChange.subTarget = change.subTarget.replace(".subSkills.", ".");
       updateChanges = true;
     }
+    // Remove use of penalty bonus type
+    // @since PF1 vNEXT
+    if (change.modifier === "penalty") {
+      // Convert the special ability score case to specific target
+      if (["str", "dex", "con", "int", "wis", "cha"].includes(change.subTarget)) {
+        newChange.subTarget = `${change.subTarget}Pen`;
+      }
+      // Convert all to untyped modifiers
+      newChange.modifier = "untyped";
+      updateChanges = true;
+    }
     newChanges.push(newChange);
   }
   if (updateChanges) {

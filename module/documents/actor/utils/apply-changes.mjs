@@ -142,16 +142,22 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "int":
     case "wis":
     case "cha":
-      if (modifierType === "penalty") {
-        result.push(`system.abilities.${target}.penalty`);
-        break;
-      }
       if (["base", "untypedPerm"].includes(modifierType)) {
         result.push(`system.abilities.${target}.total`, `system.abilities.${target}.base`);
         break;
       }
       result.push(`system.abilities.${target}.total`);
       break;
+    case "strPen":
+    case "dexPen":
+    case "conPen":
+    case "intPen":
+    case "wisPen":
+    case "chaPen": {
+      const ablKey = target.slice(0, -3);
+      result.push(`system.abilities.${ablKey}.penalty`);
+      break;
+    }
     case "strMod":
     case "dexMod":
     case "conMod":

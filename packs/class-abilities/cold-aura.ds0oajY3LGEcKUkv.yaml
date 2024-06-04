@@ -25,6 +25,7 @@ system:
       range:
         units: personal
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortitude half
         type: fort
       target:

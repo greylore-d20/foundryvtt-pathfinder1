@@ -18,6 +18,9 @@ system:
       range:
         units: touch
       save:
+        dc: >-
+          10 + floor(@class.level / 2) + max(@abilities.dex.mod,
+          @abilities.str.mod)
         description: Fortitude negates unconscious
         type: fort
       target:

@@ -28,6 +28,7 @@ system:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates impaired vision
         type: fort
       target:

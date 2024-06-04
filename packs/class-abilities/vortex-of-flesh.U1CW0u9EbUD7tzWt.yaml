@@ -25,6 +25,8 @@ system:
       range:
         units: personal
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Reflex half
         type: ref
       target:
         value: 20-ft. radius

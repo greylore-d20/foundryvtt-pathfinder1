@@ -71,7 +71,7 @@ system:
         type: circle
       name: Contagion
       save:
-        dc: '0'
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates; see text
         type: fort
       uses:

@@ -69,7 +69,7 @@ system:
         type: circle
       name: Contagion
       save:
-        dc: '0'
+        dc: 10 + (@class.level / 2) + @abiltiies.int.mod
         description: Fortitude negates; see text
         type: fort
       uses:

@@ -29,6 +29,7 @@ system:
         units: ft
         value: '100'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortitude half
         type: fort
       target:

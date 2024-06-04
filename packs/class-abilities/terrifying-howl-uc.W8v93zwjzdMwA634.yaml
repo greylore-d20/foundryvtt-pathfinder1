@@ -21,6 +21,7 @@ system:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.str.mod
         description: Will negates
         type: will
       target:

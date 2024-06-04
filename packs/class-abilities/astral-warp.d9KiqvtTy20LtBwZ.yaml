@@ -27,6 +27,7 @@ system:
         units: spec
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Negates
         type: fort
       target:

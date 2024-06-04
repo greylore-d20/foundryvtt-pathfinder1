@@ -13,6 +13,7 @@ system:
           type: action
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
         description: Will negates
         type: will
   associations:

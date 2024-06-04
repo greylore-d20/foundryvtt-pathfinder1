@@ -25,6 +25,7 @@ system:
       range:
         units: seeText
       save:
+        dc: 10 + floor(@attributes.hd.total / 2) + @abilities.con.mod
         description: Reflex half
         type: ref
   associations:

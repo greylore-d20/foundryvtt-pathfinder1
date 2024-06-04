@@ -28,6 +28,7 @@ system:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Reflex half
         type: ref
       target:

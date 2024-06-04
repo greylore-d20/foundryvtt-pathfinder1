@@ -26,6 +26,7 @@ system:
         units: ft
         value: '10'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
         description: Reflex half
         type: ref
       target:

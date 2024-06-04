@@ -13,6 +13,7 @@ system:
           type: nonaction
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Will negates
         type: will
   associations:

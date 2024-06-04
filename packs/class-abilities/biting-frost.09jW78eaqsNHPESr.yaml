@@ -27,6 +27,7 @@ system:
         units: ft
         value: '30'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
         description: Fortitude ends effect
         type: fort
       target:

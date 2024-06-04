@@ -26,6 +26,7 @@ system:
         units: ft
         value: '100'
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Fortidude half and no deafness
         type: fort
       target:

@@ -13,6 +13,7 @@ system:
           type: action
       name: Use
       save:
+        dc: 15 + floor(@class.level / 2)
         type: will
   associations:
     classes:

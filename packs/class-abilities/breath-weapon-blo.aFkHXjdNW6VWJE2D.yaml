@@ -21,6 +21,7 @@ system:
                 - untyped
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.con.mod
         description: Reflex half
         type: ref
   associations:

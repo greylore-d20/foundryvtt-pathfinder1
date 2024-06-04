@@ -97,6 +97,34 @@ export class ItemChange {
   get value() {
     return this.data.value;
   }
+
+  /**
+   * Value is positive modifier, zero inclusive.
+   *
+   * @type {boolean}
+   */
+  get isBonus() {
+    return this.value >= 0;
+  }
+
+  /**
+   * Value can't be determined to be positive or negative modifier.
+   *
+   * @type {boolean}
+   */
+  get isIndeterminate() {
+    return !Number.isFinite(this.value);
+  }
+
+  /**
+   * Value is negative modifier.
+   *
+   * @type {boolean}
+   */
+  get isPenalty() {
+    return this.value < 0;
+  }
+
   get flavor() {
     return this.data.flavor ?? this.parent?.name.replace(/\[|\]/g, "") ?? this.modifier;
   }

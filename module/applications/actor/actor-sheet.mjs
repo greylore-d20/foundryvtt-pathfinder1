@@ -3706,7 +3706,7 @@ export class ActorSheetPF extends ActorSheet {
    * @override
    */
   async _onDropItem(event, data) {
-    if (!this.item.isOwner) return void ui.notifications.warn("PF1.Error.NoActorPermission", { localize: true });
+    if (!this.actor.isOwner) return void ui.notifications.warn("PF1.Error.NoActorPermission", { localize: true });
 
     const sourceItem = await Item.implementation.fromDropData(data);
 

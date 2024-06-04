@@ -1,36 +1,52 @@
 _id: ugfcxwedwbkcqqlz
 _key: '!items!ugfcxwedwbkcqqlz'
-img: systems/pf1/icons/items/inventory/dice.jpg
+folder: Xsrr4hrzufdySmSQ
+img: icons/consumables/potions/flask-corked-blue-glow.webp
 name: Focusing Flask
 system:
+  actions:
+    - _id: WDtpOrhj30B9ismc
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      splash: true
   aura:
     school: trs
   cl: 7
   description:
     value: >-
-      <p><strong>Slot</strong> none</p><p>This round, rainbow-hued glass flask
-      allows up to three alchemical <em>splash weapons</em> of the same type to
-      be poured into it, concentrating them such that they never increase its
-      weight noticeably. If multiple types of alchemical items are poured in,
-      all the contents are ruined. The flask can be thrown as a normal
-      <em>splash weapon</em>, and when it breaks, it releases all of the
-      contained <em>splash weapons</em> in the same space, and the <em>focusing
-      flask</em> is destroyed. If the items held within the flask normally allow
-      a saving throw to reduce or negate the effects, the target of a
-      <em>focusing flask</em> needs to succeed at only a single saving throw,
-      regardless of the number of items held within the <em>focusing flask</em>.
-      The DC of the saving throw increases by 2 if the flask contains two
-      alchemical items, or by 4 if it contains three items.</p><p>CONSTRUCTION
-      REQUIREMENTS</p><p><strong>Feats</strong> <em>Craft Wondrous Item</em>;
-      <strong>Spells</strong> <em>shrink item</em>; <strong>Cost</strong> 350
-      gp</p>
+      <p>This round, rainbow-hued glass flask allows up to three alchemical
+      <em>splash weapons</em> of the same type to be poured into it,
+      concentrating them such that they never increase its weight noticeably. If
+      multiple types of alchemical items are poured in, all the contents are
+      ruined. The flask can be thrown as a normal <em>splash weapon</em>, and
+      when it breaks, it releases all of the contained <em>splash weapons</em>
+      in the same space, and the <em>focusing flask</em> is destroyed. If the
+      items held within the flask normally allow a saving throw to reduce or
+      negate the effects, the target of a <em>focusing flask</em> needs to
+      succeed at only a single saving throw, regardless of the number of items
+      held within the <em>focusing flask</em>. The DC of the saving throw
+      increases by 2 if the flask contains two alchemical items, or by 4 if it
+      contains three items.</p><h3>Construction</h3><p><strong>Feats</strong>
+      @UUID[Compendium.pf1.feats.Item.tD76K8QGco9scT0r]{Craft Wondrous Item},
+      @UUID[Compendium.pf1.spells.Item.gvfrhibwwuar2rcf]{shrink item};
+      <strong>Cost</strong> 350 gp</p>
   equipped: false
   price: 700
   sources:
     - id: PZO9445
       pages: '16'
-  subType: gear
+  subType: wondrous
   weight:
     value: 1
-type: loot
+type: equipment
 

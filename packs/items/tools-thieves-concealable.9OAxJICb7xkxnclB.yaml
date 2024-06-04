@@ -1,5 +1,6 @@
 _id: 9OAxJICb7xkxnclB
 _key: '!items!9OAxJICb7xkxnclB'
+folder: BzkdxtDgGZ96mdwR
 img: systems/pf1/icons/items/inventory/lockpick.jpg
 name: Tools, Thieves' (Concealable)
 system:
@@ -7,7 +8,10 @@ system:
     - _id: l8afzshe
       formula: '2'
       modifier: circumstance
-      subTarget: dev
+      subTarget: skill.dev
+  contextNotes:
+    - target: skill.slt
+      text: +4 to conceal concealable thieves tools on your body
   description:
     value: >-
       <p>This kit contains lockpicks and other tools you need to use the
@@ -28,7 +32,8 @@ system:
   price: 190
   sources:
     - id: PZO1134
-  subType: gear
+      pages: '233'
+  subType: adventuring
   weight:
     value: 0.5
 type: loot

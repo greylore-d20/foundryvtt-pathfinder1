@@ -199,37 +199,22 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @internal
-   * @param type
-   * @param subtype
-   * @param name
+   * @param src - Source info
    */
-  static _translateSourceInfo(type, subtype, name) {
-    let result = "";
-    if (type === "size") result = game.i18n.localize("PF1.SourceInfoSize");
-    if (type === "buff") {
-      result = game.i18n.localize("PF1.SourceInfoBuffs");
-      if (subtype === "temp") result = game.i18n.localize("PF1.SourceInfoTemporaryBuffs");
-      if (subtype === "perm") result = game.i18n.localize("PF1.SourceInfoPermanentBuffs");
-      if (subtype === "item") result = game.i18n.localize("PF1.SourceInfoItemBuffs");
-      if (subtype === "misc") result = game.i18n.localize("PF1.SourceInfoMiscBuffs");
-    }
-    if (type === "equipment") result = game.i18n.localize("PF1.SourceInfoEquipment");
-    if (type === "weapon") result = game.i18n.localize("PF1.SourceInfoWeapons");
-    if (type === "feat") {
-      result = game.i18n.localize("PF1.SourceInfoFeats");
-      if (subtype === "classFeat") result = game.i18n.localize("PF1.SourceInfoClassFeatures");
-      if (subtype === "trait") result = game.i18n.localize("PF1.SourceInfoTraits");
-      if (subtype === "racial") result = game.i18n.localize("PF1.SourceInfoRacialTraits");
-      if (subtype === "misc") result = game.i18n.localize("PF1.SourceInfoMiscFeatures");
-      if (subtype === "template") result = game.i18n.localize("PF1.SourceInfoTemplate");
-    }
-    if (type === "race") {
-      result = game.i18n.localize("PF1.SourceInfoRace");
+  static _getSourceLabel(src) {
+    const item = src.change?.parent;
+    if (item) {
+      const subtype = item.subType;
+      let typeLabel;
+
+      if (subtype && ((item.system.identified ?? true) || game.user.isGM))
+        typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${item.type}.${subtype}.Single`);
+      else typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
+
+      return `${src.name} (${typeLabel})`;
     }
 
-    if (!name || name.length === 0) return result;
-    if (result === "") return name;
-    return `${result} (${name})`;
+    return src.name;
   }
 
   /**
@@ -1868,7 +1853,8 @@ export class ActorPF extends ActorBasePF {
         sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
         for (const src of grp) {
           if (!src.operator) src.operator = "add";
-          const srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
+          // TODO: Separate source name from item type label
+          const label = this.constructor._getSourceLabel(src);
           let srcValue =
             src.value != null
               ? src.value
@@ -1886,7 +1872,7 @@ export class ActorPF extends ActorBasePF {
               continue;
 
             sourceDetails[changeTarget].push({
-              name: srcInfo.replace(/[[\]]/g, ""),
+              name: label.replace(/[[\]]/g, ""),
               modifier: src.modifier || "",
               value: srcValue,
             });

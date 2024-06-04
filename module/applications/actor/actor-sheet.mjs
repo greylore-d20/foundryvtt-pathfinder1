@@ -1460,10 +1460,24 @@ export class ActorSheetPF extends ActorSheet {
         break;
       }
       case "acp":
-        paths.push({
-          path: "@attributes.acp.total",
-          value: system.attributes.acp.total,
-        });
+        paths.push(
+          {
+            path: "@attributes.acp.total",
+            value: system.attributes.acp.total,
+          },
+          {
+            path: "@attributes.acp.skill",
+            value: system.attributes.acp.skill,
+          },
+          {
+            path: "@attributes.acp.encumbrance",
+            value: system.attributes.acp.encumbrance,
+          },
+          {
+            path: "@attributes.acp.gear",
+            value: system.attributes.acp.gear,
+          }
+        );
 
         sources.push(
           {
@@ -1934,7 +1948,7 @@ export class ActorSheetPF extends ActorSheet {
           { path: `@skills.${path}.rank`, value: skill.rank }
         );
 
-        const acp = system.attributes?.acp?.total || 0;
+        const acp = system.attributes?.acp?.skill || 0;
 
         const skillSources = [];
         // Add skill rank source

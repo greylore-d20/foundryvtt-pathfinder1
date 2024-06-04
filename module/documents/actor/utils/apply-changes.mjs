@@ -1358,7 +1358,7 @@ function finalizeSkills() {
 
   const abilities = actorData.abilities;
 
-  const acpPenaltyValue = actorData.attributes?.acp?.total ?? 0;
+  const acpPenaltyValue = actorData.attributes?.acp?.skill ?? 0;
 
   const finalizeSkill = (skill) => {
     const acpPenalty = skill.acp ? acpPenaltyValue : 0;

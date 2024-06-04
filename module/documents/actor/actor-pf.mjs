@@ -1192,6 +1192,8 @@ export class ActorPF extends ActorBasePF {
       this.system.attributes.acp.encumbrance = encPen.acp;
       this.system.attributes.acp.gear = gearPen.acp;
       this.system.attributes.acp.total = Math.max(encPen.acp, gearPen.acp);
+      // Broken gear affects only skills
+      this.system.attributes.acp.skill = Math.max(encPen.acp, gearPen.acpSkill);
 
       // Set maximum dexterity bonus
       if (encPen.maxDexBonus != null || gearPen.maxDexBonus != null) {
@@ -1634,21 +1636,27 @@ export class ActorPF extends ActorBasePF {
           itemACP = Math.max(0, itemACP + (this.system.attributes?.acp?.[`${eqType}Bonus`] ?? 0));
         }
 
-        let brokenACP = 0;
-        if (item.isBroken) {
-          brokenACP = itemACP;
-          itemACP *= 2;
-        }
-
         if (itemACP) {
+          if (item.isBroken) {
+            broken[eqType].value = itemACP;
+            broken[eqType].item = item;
+
+            const bsInfo = getSourceInfo(this.sourceInfo, "system.attributes.acp.skill").negative.find(
+              (o) => o.itemId === item.id
+            );
+            if (bsInfo) bsInfo.value = itemACP;
+            else {
+              getSourceInfo(this.sourceInfo, "system.attributes.acp.skill").negative.push({
+                name: `${item.name} (${game.i18n.localize("PF1.Broken")})`,
+                itemId: item.id,
+                value: itemACP,
+              });
+            }
+          }
+
           const sInfo = getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.find(
             (o) => o.itemId === item.id
           );
-
-          if (brokenACP) {
-            broken[eqType].value = brokenACP;
-            broken[eqType].item = item;
-          }
 
           if (sInfo) sInfo.value = itemACP;
           else {
@@ -1712,7 +1720,6 @@ export class ActorPF extends ActorBasePF {
 
     // Add Broken to sources
     {
-      const name = game.i18n.localize("PF1.Broken");
       for (const eqType of Object.keys(broken)) {
         const value = broken[eqType].value;
         if (value == 0) continue;
@@ -1723,7 +1730,7 @@ export class ActorPF extends ActorBasePF {
         if (sInfo) sInfo.value = value;
         else
           getSourceInfo(this.sourceInfo, `system.attributes.acp.${eqType}Bonus`).negative.push({
-            name,
+            name: `${broken[eqType].item.name} (${game.i18n.localize("PF1.Broken")})`,
             brokenId,
             value,
           });
@@ -1735,6 +1742,7 @@ export class ActorPF extends ActorBasePF {
     const result = {
       maxDexBonus: null,
       acp: totalACP,
+      acpSkill: totalACP + broken.armor.value + broken.shield.value,
     };
     this.system.attributes.acp.gear = totalACP;
     if (mdex.armor !== null || mdex.shield !== null)
@@ -1901,6 +1909,7 @@ export class ActorPF extends ActorBasePF {
       "attributes.acp.gear": 0,
       "attributes.acp.encumbrance": 0,
       "attributes.acp.total": 0,
+      "attributes.acp.skill": 0,
       "attributes.acp.attackPenalty": 0,
       "attributes.maxDexBonus": null,
       "ac.normal.total": 0,
@@ -2703,8 +2712,8 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add armor check penalty
-    if (skl.acp && rollData.attributes.acp.total !== 0) {
-      parts.push(`-@attributes.acp.total[${game.i18n.localize("PF1.ACPLong")}]`);
+    if (skl.acp && rollData.attributes.acp.skill !== 0) {
+      parts.push(`-@attributes.acp.skill[${game.i18n.localize("PF1.ACPLong")}]`);
     }
 
     // Add Wound Thresholds info

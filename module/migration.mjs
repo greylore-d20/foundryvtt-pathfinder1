@@ -1619,29 +1619,20 @@ const _migrateItemChanges = function (itemData, updateData) {
     const newChanges = [];
     for (const c of changes) {
       if (Array.isArray(c)) {
-        const newChange = new ItemChange(
-          {
-            formula: c[0],
-            target: c[1],
-            subTarget: c[2],
-            modifier: c[3],
-          },
-          null
-        );
-        newChanges.push(newChange.data);
+        const newChange = new ItemChange({
+          formula: c[0],
+          target: c[1],
+          subTarget: c[2],
+          modifier: c[3],
+        });
+        newChanges.push(newChange.toObject());
       } else {
         const cd = foundry.utils.deepClone(c); // Avoid mutating source data so diff works properly
         // Transform legacy operators
         if (cd.operator === "=") cd.operator = "set";
         if (cd.operator === "+") cd.operator = "add";
 
-        // Cleanup: Following were never meant to be stored
-        delete cd.value;
-        delete cd.continuous;
-
-        const newChange = new ItemChange(cd, null).data;
-        newChange._id ||= foundry.utils.randomID(8); // Fill in missing ID
-        newChanges.push(newChange);
+        newChanges.push(new ItemChange(cd).toObject());
       }
     }
 

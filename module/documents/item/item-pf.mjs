@@ -741,9 +741,10 @@ export class ItemPF extends ItemBasePF {
       let change = null;
       if (prior && prior.has(c._id)) {
         change = prior.get(c._id);
-        change.data = foundry.utils.mergeObject(ItemChange.defaultData, c);
+        const updateData = { ...c };
+        change.updateSource(updateData, { recursive: false });
         change.prepareData();
-      } else change = new pf1.components.ItemChange(c, this);
+      } else change = new pf1.components.ItemChange(c, { parent: this });
       collection.set(c._id || change.data._id, change);
     }
     return collection;
@@ -1368,8 +1369,8 @@ export class ItemPF extends ItemBasePF {
    */
   getContextChanges(context = ["attack"]) {
     if (!this.actor) return [];
-    const subTargets = this.getContextStack(context);
-    return this.actor.changes.filter((c) => subTargets.has(c.subTarget));
+    const targets = this.getContextStack(context);
+    return this.actor.changes.filter((c) => targets.has(c.target));
   }
 
   /**
@@ -1896,12 +1897,12 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * Generates lists of change subtargets this item can have.
+   * Generates lists of change targets this item can have.
    *
    * @param {string} target - The target key, as defined in PF1.buffTargets.
    * @returns {Object<string, string>} A list of changes
    */
-  getChangeSubTargets(target) {
+  getChangeTargets(target) {
     const result = {};
     // Add specific skills
     if (target === "skill") {
@@ -1931,6 +1932,14 @@ export class ItemPF extends ItemBasePF {
     }
 
     return result;
+  }
+
+  getChangeSubTargets(target) {
+    foundry.utils.logCompatibilityWarning(
+      "ItemPF.getChangeSubTargets() is deprecated in favor of ItemPF.getChangeTargets",
+      { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+    );
+    return this.getChangeTargets(target);
   }
 
   async addChange() {
@@ -2145,7 +2154,7 @@ export class ItemPF extends ItemBasePF {
     const changeSources = action.attackSources;
 
     const effectiveChanges = getHighestChanges(changeSources, { ignoreTarget: true });
-    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, ic.modifier, -800));
+    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, ic.type, -800));
 
     if (actionData.ability.attack) {
       const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;
@@ -2160,7 +2169,7 @@ export class ItemPF extends ItemBasePF {
     // Masterwork or enhancement bonus
     // Only add them if there's no larger enhancement bonus from some other source
     const virtualEnh = action.enhancementBonus ?? (itemData.masterwork ? 1 : 0);
-    if (!effectiveChanges.find((i) => i.modifier === "enh" && i.value > virtualEnh)) {
+    if (!effectiveChanges.find((i) => i.type === "enh" && i.value > virtualEnh)) {
       if (Number.isFinite(action.enhancementBonus) && action.enhancementBonus !== 0) {
         describePart(action.enhancementBonus, game.i18n.localize("PF1.EnhancementBonus"), "enh", -300);
       } else if (itemData.masterwork) {

@@ -453,9 +453,9 @@ declare global {
        * ```
        * @param result - An array of target data fields.
        * @param target - The change target as per the change's `subTarget` property,
-       *   see {@link pf1.components.ItemChange.subTarget ItemChange#subTarget} and {@link pf1.config.buffTargets change targets}.
+       *   see {@link pf1.components.ItemChange.target ItemChange#target} and {@link pf1.config.buffTargets change targets}.
        * @param modifierType - The change type as per the change's `modifier` property,
-       *   see {@link pf1.components.ItemChange.modifier ItemChange#modifier} and {@link pf1.config.bonusModifiers change modifiers}.
+       *   see {@link pf1.components.ItemChange.type ItemChange#type} and {@link pf1.config.bonusTypes change types}.
        * @param value - The numerical change value, if any.
        * @param actor - The actor the change is being applied to.
        */

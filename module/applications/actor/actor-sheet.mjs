@@ -1810,7 +1810,7 @@ export class ActorSheetPF extends ActorSheet {
         // Generate fake sources
         // TODO: Move this to the real source info generation
         this.actor.changes
-          .filter((c) => c.subTarget === "bonusFeats")
+          .filter((c) => c.target === "bonusFeats")
           .forEach((c) => {
             if (c.parent || c.flavor) {
               featSources.push({

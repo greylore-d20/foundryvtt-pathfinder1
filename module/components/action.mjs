@@ -474,7 +474,7 @@ export class ItemAction {
       allChanges.push({
         flavor: game.i18n.localize("PF1.EnhancementBonus"),
         value: enh,
-        modifier: "enh",
+        type: "enh",
         formula: enh.toString(),
       });
     }
@@ -485,7 +485,7 @@ export class ItemAction {
       allChanges.push({
         flavor: game.i18n.localize("PF1.Broken"),
         value: -2,
-        modifier: "untyped",
+        type: "untyped",
         formula: "-2",
       });
     }

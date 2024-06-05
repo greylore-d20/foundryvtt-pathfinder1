@@ -701,16 +701,18 @@ export class ItemSheetPF extends ItemSheet {
       let showPriority = false;
       context.changes =
         item.changes?.map((/** @type {ItemChange} */ ch) => {
-          const target = buffTargets[ch.subTarget];
+          const target = buffTargets[ch.target];
+          const typeLabel = pf1.config.bonusTypes[ch.type];
           const chData = {
+            change: ch,
             isValid: !!target,
-            label: target?.label ?? ch.subTarget,
+            label: target?.label ?? ch.target,
             isDeferred: ch.isDeferred,
             isAdd: ch.operator === "add",
             isSet: ch.operator === "set",
-            ...ch.data,
-            isValidType: !!pf1.config.bonusTypes[ch.modifier],
-            typeLabel: pf1.config.bonusTypes[ch.modifier] || ch.modifier,
+            ...ch,
+            isValidType: !!typeLabel,
+            typeLabel: typeLabel || ch.type,
             id: ch.id,
           };
           chData.priority ||= 0;

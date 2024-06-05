@@ -903,7 +903,7 @@ export class LevelUpForm extends FormApplication {
     else {
       const changes = foundry.utils.deepClone(item.toObject().system.changes ?? []);
       for (const [target, formula] of Object.entries(choices)) {
-        const change = changes.find((o) => o.subTarget === target);
+        const change = changes.find((o) => o.target === target);
 
         // Update previous change
         if (change) {

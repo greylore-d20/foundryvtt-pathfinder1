@@ -79,7 +79,7 @@ export class ChangeEditor extends ItemSheet {
       item = this.item;
 
     const buffTargets = getBuffTargets(actor);
-    const target = buffTargets[change.subTarget];
+    const target = buffTargets[change.target];
 
     const context = {
       config: pf1.config,
@@ -89,10 +89,10 @@ export class ChangeEditor extends ItemSheet {
       isAdd: change.operator === "add",
       isSet: change.operator === "set",
       isValid: !!target,
-      isValidType: !!pf1.config.bonusTypes[change.modifier],
+      isValidType: !!pf1.config.bonusTypes[change.type],
       isValidOp: ["add", "set"].includes(change.operator),
       isDeferred: change.isDeferred,
-      label: target?.label || change.subTarget,
+      label: target?.label || change.target,
     };
 
     return context;
@@ -113,7 +113,7 @@ export class ChangeEditor extends ItemSheet {
       category.items.sort((a, b) => a.label.localeCompare(b.label, lang));
     }
 
-    const part1 = this.change?.subTarget?.split(".")[0];
+    const part1 = this.change?.target?.split(".")[0];
     const category = pf1.config.buffTargets[part1]?.category ?? part1;
 
     // Show widget
@@ -122,10 +122,10 @@ export class ChangeEditor extends ItemSheet {
       categories,
       (key) => {
         if (key) {
-          this.change.update({ subTarget: key });
+          this.change.update({ target: key });
         }
       },
-      { category, item: this.change?.subTarget }
+      { category, item: this.change?.target }
     );
     w.render(true);
   }

@@ -9,10 +9,10 @@ export function applyChanges() {
 
   const { targets, types } = getSortChangePriority.call(this);
   const _sortChanges = function (a, b) {
-    const targetA = targets.indexOf(a.subTarget);
-    const targetB = targets.indexOf(b.subTarget);
-    const typeA = types.indexOf(a.modifier);
-    const typeB = types.indexOf(b.modifier);
+    const targetA = targets.indexOf(a.target);
+    const targetB = targets.indexOf(b.target);
+    const typeA = types.indexOf(a.type);
+    const typeB = types.indexOf(b.type);
     const prioA = a.priority ?? 0;
     const prioB = b.priority ?? 0;
 
@@ -1133,7 +1133,7 @@ export const addDefaultChanges = function (changes) {
               subTarget: armorTarget,
               modifier: "base",
             },
-            item
+            { parent: item }
           )
         );
         changes.push(
@@ -1143,7 +1143,7 @@ export const addDefaultChanges = function (changes) {
               subTarget: armorTarget,
               modifier: "enhancement",
             },
-            item
+            { parent: item }
           )
         );
       }
@@ -1416,8 +1416,8 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
 
   for (const c of changes) {
     let h;
-    if (options.ignoreTarget) h = highest[c.modifier];
-    else h = highest[c.modifier]?.[c.subTarget];
+    if (options.ignoreTarget) h = highest[c.type];
+    else h = highest[c.type]?.[c.target];
 
     if (!h) continue; // Ignore bad changes
     h.ids.push(c._id);

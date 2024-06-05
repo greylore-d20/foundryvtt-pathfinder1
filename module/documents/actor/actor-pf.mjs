@@ -3166,7 +3166,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add changes
     let changeBonus = [];
-    const changes = this.changes.filter((c) => ["allSavingThrows", savingThrowId].includes(c.subTarget));
+    const changes = this.changes.filter((c) => ["allSavingThrows", savingThrowId].includes(c.target));
     {
       // Get damage bonus
       changeBonus = getHighestChanges(
@@ -4750,7 +4750,7 @@ export class ActorPF extends ActorBasePF {
     // Bonuses from changes
     result.changes = getHighestChanges(
       this.changes.filter((c) => {
-        if (c.subTarget !== "bonusFeats") return false;
+        if (c.target !== "bonusFeats") return false;
         return c.operator !== "set";
       }),
       { ignoreTarget: true }

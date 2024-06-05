@@ -1,11 +1,83 @@
 import { getChangeFlat, getSourceInfo } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
-export class ItemChange {
-  constructor(data, parent = null) {
-    this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
-    this.parent = parent;
+/**
+ * Change datamodel
+ *
+ * @property {string} formula
+ * @property {"add"|"set"} operator
+ * @property {BuffTarget} target
+ * @property {string} type - Bonus type
+ * @property {string} priority
+ * @property {number} value
+ * @property {string} flavor
+ * @property {boolean} continuous
+ */
+export class ItemChange extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      _id: new fields.StringField({
+        blank: false,
+        initial: () => foundry.utils.randomID(8),
+        required: true,
+        readonly: true,
+      }),
+      formula: new fields.StringField({ blank: true, required: false }),
+      operator: new fields.StringField({ blank: false, initial: "add", choices: ["add", "set"] }),
+      target: new fields.StringField({ blank: true, required: false }),
+      type: new fields.StringField({ blank: true, required: false }),
+      priority: new fields.NumberField({ initial: 0, required: false }),
+      value: new fields.NumberField({ initial: 0, required: false }),
+      flavor: new fields.StringField({ blank: true, initial: undefined, required: false }),
+      continuous: new fields.BooleanField({ initial: undefined, required: false }),
+    };
+  }
+
+  static migrateData(data) {
+    // Update terminology
+    if (data.subTarget) data.target = data.subTarget;
+    if (data.modifier) data.type = data.modifier;
+    // Script operator is no longer supported
+    if (data.operator === "script") data.operator = "add";
+    else if (data.operator === "+") data.operator = "add";
+    else if (data.operator === "=") data.operator = "set";
+  }
+
+  constructor(data, options = {}) {
+    if (options instanceof Item || options instanceof Actor) {
+      foundry.utils.logCompatibilityWarning(
+        "ItemChange constructor's second parameter is now options object for datamodel instead of direct parent reference",
+        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      );
+
+      options = { parent: options };
+    }
+    super(data, options);
     this.updateTime = new Date();
+  }
+
+  /**
+   * @override
+   */
+  _initialize(options = {}) {
+    super._initialize(options);
+    // Required to overcome Foundry's _id special case
+    Object.defineProperty(this, "_id", {
+      value: this._source._id,
+      writable: false,
+      configurable: true,
+    });
+    this.prepareData();
+  }
+
+  /**
+   * Prepare in-memory data.
+   *
+   * @internal
+   */
+  prepareData() {
+    this.flavor ||= this.parent?.name.replace(/\[|\]/g, "") || this.type;
   }
 
   /**
@@ -21,7 +93,7 @@ export class ItemChange {
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
-      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
+      data = data.map((dataObj) => new this(dataObj).toObject());
 
       const oldChangeData = parent.toObject().system.changes ?? [];
 
@@ -44,7 +116,7 @@ export class ItemChange {
       await parent.update({ "system.changes": newChangeData });
 
       // Return results
-      return [...parent.changes.filter((c) => newIds.has(c.id))];
+      return [...parent.changes.filter((c) => newIds.has(c._id))];
     }
 
     return [];
@@ -60,64 +132,64 @@ export class ItemChange {
   }
 
   static get defaultData() {
-    return {
-      _id: foundry.utils.randomID(8),
-      formula: "",
-      operator: "add",
-      subTarget: "",
-      modifier: "",
-      priority: 0,
-      value: 0,
-      flavor: undefined,
-    };
+    foundry.utils.logCompatibilityWarning(
+      "ItemChange.defaultData() is deprecated in favor of using ItemChange DataModel",
+      { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+    );
+
+    return new this().toObject();
   }
 
+  get data() {
+    foundry.utils.logCompatibilityWarning("ItemChange.data is deprecated in favor of accessing the model directly.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    return this;
+  }
+
+  /** @type {string} - Change ID */
   get id() {
-    return this.data._id;
-  }
-  get _id() {
-    return this.data._id;
-  }
-  get formula() {
-    return this.data.formula;
-  }
-  get operator() {
-    return this.data.operator;
-  }
-  /** @type {BuffTarget} */
-  get subTarget() {
-    return this.data.subTarget;
-  }
-  get modifier() {
-    return this.data.modifier;
-  }
-  get priority() {
-    return this.data.priority;
-  }
-  get value() {
-    return this.data.value;
-  }
-  get flavor() {
-    return this.data.flavor ?? this.parent?.name.replace(/\[|\]/g, "") ?? this.modifier;
-  }
-  get continuous() {
-    return this.data.continuous;
-  }
-  get isDeferred() {
-    if (["damage", "wdamage", "mwdamage", "twdamage", "rwdamage", "sdamage", "skills"].includes(this.subTarget))
-      return true;
-    return /^skill\./.test(this.subTarget);
+    return this._id;
   }
 
+  get subTarget() {
+    foundry.utils.logCompatibilityWarning("ItemChange.subTarget is deprecated in favor of ItemChange.target", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return this.target;
+  }
+
+  get modifier() {
+    foundry.utils.logCompatibilityWarning("ItemChange.modifier is deprecated in favor of ItemChange.type", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return this.type;
+  }
+
+  /** @type {boolean} */
+  get isDeferred() {
+    if (["damage", "wdamage", "mwdamage", "twdamage", "rwdamage", "sdamage", "skills"].includes(this.target))
+      return true;
+    return /^skill\./.test(this.target);
+  }
+
+  /** @type {boolean} - Does this change refer to a distance? */
   get isDistance() {
-    return /speed/i.test(this.subTarget);
+    return /speed/i.test(this.target);
   }
 
   get source() {
-    return this.data.source;
+    console.warn("ItemChange.source does not exist");
+    return null;
   }
+
   getSourceInfoTargets(actor) {
-    switch (this.subTarget) {
+    switch (this.target) {
       case "aac":
       case "sac":
       case "nac":
@@ -125,42 +197,63 @@ export class ItemChange {
     }
 
     // Return default targets
-    return getChangeFlat.call(actor, this.subTarget, this.modifier);
+    return getChangeFlat.call(actor, this.target, this.type);
   }
 
-  prepareData() {}
-
-  preUpdate(data) {
-    // Ensure priority is a number
-    if (typeof data.priority === "string") {
-      data.priority = parseInt(data.priority);
-    }
+  _preUpdate(data) {
+    data = new this.constructor(data).toObject();
 
     // Make sure sub-target is valid
-    if (data.target) {
-      const subTarget = data.subTarget || this.subTarget;
-      const changeSubTargets = this.parent.getChangeSubTargets(data.target);
-      if (changeSubTargets[subTarget] == null) {
-        data.subTarget = Object.keys(changeSubTargets)[0];
+    const targetCategory = data.target?.split(".").shift();
+    if (targetCategory) {
+      const target = data.target || this.target;
+      const changeTargets = this.parent.getChangeTargets(targetCategory);
+      if (changeTargets[target] == null) {
+        data.target = Object.keys(changeTargets)[0];
       }
     }
 
     return data;
   }
 
-  async update(data, options = {}) {
-    if (!this.parent) return;
+  updateSource(data, options) {
+    // Shallow copy to avoid altering things for caller
+    data = { ...data };
+    // Prevent ID alterations
+    if (this.id && data._id) delete data._id;
+
+    return super.updateSource(data, options);
+  }
+
+  /**
+   *
+   * @param {object} data - Update data
+   * @param {object} options - Additional options
+   * @param {object} context - Update context
+   * @throws {Error} - If change has no parent to update or the change does not exist on parent.
+   * @returns {Promise<Item|null>} - Updated parent, or null if no update was performed (e.g. nothing changed)
+   */
+  async update(data, options = {}, context = {}) {
+    if (!this.parent) throw new Error("ItemChange has no parent to update.");
 
     this.updateTime = new Date();
 
-    data = this.preUpdate(data);
+    data = this._preUpdate(data);
+    // Prevent ID alterations
+    if (data._id) delete data._id;
 
-    const changes = foundry.utils.deepClone(this.parent.toObject().system.changes ?? []);
+    const changes = this.parent.toObject().system.changes ?? [];
 
     const idx = changes.findIndex((change) => change._id === this.id);
     if (idx >= 0) {
-      changes[idx] = foundry.utils.mergeObject(changes[idx], data);
-      return this.parent.update({ "system.changes": changes });
+      const updated = this.updateSource(data);
+      // Omit update if nothing would change
+      if (foundry.utils.isEmpty(updated)) return null;
+
+      changes[idx] = this.toObject();
+      return this.parent.update({ "system.changes": changes }, context);
+    } else {
+      throw new Error(`Change #${this.id} not found on parent ${this.parent.uuid}`);
     }
   }
 
@@ -206,12 +299,13 @@ export class ItemChange {
    * @param {string[]} [targets] - Property paths to target on the actor's data.
    * @param {object} [options] - Optional options to change the behavior of this function.
    * @param {boolean} [options.applySourceInfo=true] - Whether to add the changes to the actor's source information.
+   * @param {object} [options.rollData] - Roll data
    */
-  applyChange(actor, targets = null, { applySourceInfo = true } = {}) {
+  applyChange(actor, targets = null, { applySourceInfo = true, rollData } = {}) {
     // Prepare change targets
     targets ??= this.getTargets(actor);
 
-    const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
+    rollData ??= this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
@@ -247,11 +341,11 @@ export class ItemChange {
         }
       }
 
-      this.data.value = value;
+      this.value = value;
 
       if (!t) continue;
 
-      const prior = override[operator][this.modifier];
+      const prior = override[operator][this.type];
 
       switch (operator) {
         case "add":
@@ -269,17 +363,17 @@ export class ItemChange {
 
             if (typeof base === "number") {
               // Skip positive dodge modifiers if lose dex to AC is in effect
-              if (actor.changeFlags.loseDexToAC && value > 0 && this.modifier === "dodge" && this.isAC) continue;
+              if (actor.changeFlags.loseDexToAC && value > 0 && this.type === "dodge" && this.isAC) continue;
 
-              if (pf1.config.stackingBonusTypes.includes(this.modifier)) {
+              if (pf1.config.stackingBonusTypes.includes(this.type)) {
                 // Add stacking bonus
                 foundry.utils.setProperty(actor, t, base + value);
-                override[operator][this.modifier] = (prior ?? 0) + value;
+                override[operator][this.type] = (prior ?? 0) + value;
               } else {
                 // Use higher value only
                 const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
                 foundry.utils.setProperty(actor, t, base + diff);
-                override[operator][this.modifier] = Math.max(prior ?? 0, value);
+                override[operator][this.type] = Math.max(prior ?? 0, value);
               }
             }
           }
@@ -287,7 +381,7 @@ export class ItemChange {
 
         case "set":
           foundry.utils.setProperty(actor, t, value);
-          override[operator][this.modifier] = value;
+          override[operator][this.type] = value;
           break;
       }
 
@@ -306,17 +400,18 @@ export class ItemChange {
     }
   }
 
+  /** @type {boolean} - Does this target any kind of AC? */
   get isAC() {
-    return ["ac", "aac", "sac", "nac", "tac", "ffac"].includes(this.subTarget);
+    return ["ac", "aac", "sac", "nac", "tac", "ffac"].includes(this.target);
   }
 
   /**
    * Applies this change's info to an actor's `sourceInfo`.
-   * Info is only added if either the {@link modifier | modifier type} allows stacking or the {@link value} is higher than the previous value.
+   * Info is only added if either the {@link type | modifier type} allows stacking or the {@link value} is higher than the previous value.
    * If the modifier type is not stacking and this change's info is added, existing and now ineffective info entries are removed.
    *
    * @param {ActorPF} actor - The actor to apply the change's data to.
-   * returns {void}
+   * @returns {void}
    */
   applySourceInfo(actor) {
     const sourceInfoTargets = this.getSourceInfoTargets(actor);
@@ -327,7 +422,7 @@ export class ItemChange {
       value,
       operator: this.operator,
       name: this.parent ? this.parent.name : this.flavor,
-      modifier: this.modifier,
+      modifier: this.type,
       type: this.parent ? this.parent.type : null,
       change: this,
     };
@@ -335,7 +430,7 @@ export class ItemChange {
     switch (this.operator) {
       case "add":
       case "function":
-        if (pf1.config.stackingBonusTypes.includes(this.modifier)) {
+        if (pf1.config.stackingBonusTypes.includes(this.type)) {
           // Always add stacking entries
           const sourceInfoGroup = value >= 0 ? "positive" : "negative";
           for (const si of sourceInfoTargets) {
@@ -357,14 +452,14 @@ export class ItemChange {
             const existingInfoEntry = sInfo.find((infoEntry) => {
               const hasSameParent = infoEntry.change?.parent === this.parent;
               const isEnh =
-                (infoEntry.change?.modifier === "base" && this.modifier === "enhancement") ||
-                (infoEntry.change?.modifier === "enhancement" && this.modifier === "base");
-              const hasSameTarget = infoEntry.change?.subTarget === this.subTarget;
+                (infoEntry.change?.type === "base" && this.type === "enhancement") ||
+                (infoEntry.change?.type === "enhancement" && this.type === "base");
+              const hasSameTarget = infoEntry.change?.target === this.target;
               return hasSameParent && isEnh && hasSameTarget;
             });
             if (existingInfoEntry) {
               doAdd = false;
-              if (existingInfoEntry.change?.modifier === "base") {
+              if (existingInfoEntry.change?.type === "base") {
                 // This Change enhances an existing base
                 existingInfoEntry.value += value;
                 continue;
@@ -374,8 +469,8 @@ export class ItemChange {
                 // Check whether the combined entry should exist, or if another entry is already better than it
                 const hasHighestValue = !sInfo.some((infoEntry) => {
                   const isSameModifier = infoEntry.modifier === infoEntry.modifier;
-                  const subTarget = infoEntry.change?.subTarget;
-                  const isSameTarget = subTarget ? subTarget === this.subTarget : true;
+                  const target = infoEntry.change?.target;
+                  const isSameTarget = target ? target === this.target : true;
                   const hasHigherValue = infoEntry.value > sumValue;
                   return isSameModifier && isSameTarget && hasHigherValue;
                 });
@@ -389,9 +484,8 @@ export class ItemChange {
 
             // Determine whether there is an entry with a higher value; remove entries with lower values
             sInfo.forEach((infoEntry) => {
-              const isSameModifier =
-                infoEntry.change?.modifier === infoEntry.modifier || infoEntry.modifier === infoEntry.modifier;
-              if (isSameModifier) {
+              const isSameType = infoEntry.change?.type === infoEntry.type;
+              if (isSameType) {
                 if (infoEntry.value < sumValue) {
                   sInfo.splice(sInfo.indexOf(infoEntry), 1);
                 } else {
@@ -435,6 +529,21 @@ export class ItemChange {
    * @returns {Array<string>} - Valid targets for this change on specified actor
    */
   getTargets(actor) {
-    return getChangeFlat.call(actor, this.subTarget, this.modifier, this.value);
+    return getChangeFlat.call(actor, this.target, this.type, this.value);
+  }
+
+  toObject(...options) {
+    const data = super.toObject(...options);
+
+    // Cleanup: Following are never meant to be stored
+    delete data.value;
+    delete data.continuous;
+
+    // Clear undefined values
+    for (const [key, value] of Object.entries(data)) {
+      if (value === undefined) delete data[key];
+    }
+
+    return data;
   }
 }

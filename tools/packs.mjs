@@ -427,8 +427,8 @@ function enforceTemplate(object, template, options = {}) {
     const currentValue = utils.getProperty(object, path);
     const templateValue = utils.getProperty(template, path);
     if (templateValue === "" && currentValue === null) delete flattened[path];
-    // Delete empty strings in general
-    if (currentValue === "") delete flattened[path];
+    // Delete empty strings in general if they don't default to something more specific
+    if (currentValue === "" && !(utils.getProperty(template, path)?.length > 0)) delete flattened[path];
 
     const templateHasArray = Array.isArray(utils.getProperty(template, path));
     const isEmptyArray = flattened[path] instanceof Array && flattened[path].length === 0;

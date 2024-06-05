@@ -769,10 +769,11 @@ export class ItemSpellPF extends ItemPF {
     convertNotes(itemData.system);
 
     // Set description
-    itemData.system.description.value = this._replaceConsumableConversionString(
-      origData.system.description.value,
-      rollData
-    );
+    const spell = new Item.implementation(origData);
+    spell.reset();
+    // TODO: Make range and duration appear as inline rolls that scale on item CL?
+    const desc = spell.getDescription({ charcard: false, header: true, body: true, rollData });
+    itemData.system.description.value = this._replaceConsumableConversionString(desc, rollData);
 
     // Create and return synthetic item data
     return new ItemPF(foundry.utils.expandObject(itemData)).toObject();

@@ -935,7 +935,8 @@ export class ItemAction {
     try {
       config.proficient = this.item.getProficiency(true);
     } catch (error) {
-      // Ignore proficiency incompatibility.
+      // Treat as proficient if there's proficiency incompatibility.
+      config.proficient = true;
     }
 
     // Add secondary natural attack penalty

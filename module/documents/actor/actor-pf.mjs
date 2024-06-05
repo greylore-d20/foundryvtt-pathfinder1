@@ -2659,7 +2659,7 @@ export class ActorPF extends ActorBasePF {
    * @example
    * await actor.rollSkill("per", { skipDialog: true, bonus: "1d6", dice: "2d20kh" });
    *
-   * @param {string} skillId      The skill id (e.g. "per", or "prf.subSkills.prf1")
+   * @param {string} skillId      The skill id (e.g. "per", "prf.prf1", or "crf.alchemy")
    * @param {ActorRollOptions} [options={}]      Options which configure how the skill check is rolled
    * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */

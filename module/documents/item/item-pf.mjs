@@ -1910,17 +1910,14 @@ export class ItemPF extends ItemBasePF {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = foundry.utils.mergeObject(
-          foundry.utils.deepClone(pf1.config.skills),
-          this.actor.system.skills
-        );
+        const actorSkills = foundry.utils.mergeObject(pf1.config.skills, this.actor.system.skills, { inplace: false });
         for (const [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
             else result[`skill.${s}`] = pf1.config.skills[s];
           } else {
             for (const [s2, skl2] of Object.entries(skl.subSkills)) {
-              result[`skill.${s}.subSkills.${s2}`] = `${pf1.config.skills[s]} (${skl2.name})`;
+              result[`skill.${s}.${s2}`] = `${pf1.config.skills[s]} (${skl2.name})`;
             }
           }
         }

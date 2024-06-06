@@ -79,7 +79,7 @@ export class ActorTrapPF extends ActorPF {
     this.system.details.cr.total = this.system.details.cr.base;
 
     this.items.forEach((item) => {
-      item.prepareDerivedItemData();
+      item._prepareDependentData(false);
       this.updateItemResources(item);
     });
 
@@ -93,7 +93,7 @@ export class ActorTrapPF extends ActorPF {
 
     // Update item resources
     this.items.forEach((item) => {
-      item.prepareDerivedItemData();
+      item._prepareDependentData(true);
       // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
       this.updateItemResources(item, { warnOnDuplicate: false });
     });

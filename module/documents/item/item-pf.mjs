@@ -47,6 +47,10 @@ export class ItemPF extends ItemBasePF {
      * Whether this item receives an identifier.
      */
     hasIdentifier: true,
+    /**
+     * Whether this item has changes and change flags.
+     */
+    hasChanges: true,
   });
 
   /**
@@ -228,6 +232,14 @@ export class ItemPF extends ItemBasePF {
   /** {@inheritDoc ItemPF.isPhysical:getter} */
   get isPhysical() {
     return this.constructor.isPhysical;
+  }
+
+  static get hasChanges() {
+    return this.system.hasChanges;
+  }
+  /** {@inheritDoc ItemPF.isPhysical:getter} */
+  get hasChanges() {
+    return this.constructor.hasChanges;
   }
 
   /**
@@ -627,30 +639,11 @@ export class ItemPF extends ItemBasePF {
     const itemData = this.system;
 
     // Update changes
-    if (itemData.changes instanceof Array) {
-      this.changes = this._prepareChanges(itemData.changes);
-    }
-
-    // Update actions
-    if (itemData.actions instanceof Array) {
-      const oldActions = this.actions ?? [];
-      /** @type {Map<string,pf1.components.ItemAction>} */
-      this.actions = this._prepareActions(itemData.actions);
-
-      for (const action of oldActions) {
-        if (this.actions.get(action.id) !== action) {
-          Object.values(action.apps).forEach((app) =>
-            app.close({ pf1: { action: "delete" }, submit: false, force: true })
-          );
-        }
-      }
+    if (this.hasChanges) {
+      this._prepareChanges();
     }
 
     this._prepareScriptCalls();
-
-    if (!this.actor) {
-      this.prepareDerivedItemData();
-    }
 
     const wgroups = this.system.weaponGroups;
     if (wgroups) {
@@ -658,6 +651,24 @@ export class ItemPF extends ItemBasePF {
       wgroups.custom ??= [];
       wgroups.total = new Set([...wgroups.value.map((g) => pf1.config.weaponGroups[g] || g), ...wgroups.custom]);
     }
+
+    // Prepare dependent data only if there's no actor or actor initialization has happened.
+    if (!this.actor || this.actor._initialized !== false) {
+      this._prepareDependentData(true);
+    }
+  }
+
+  /**
+   * Prepare data potentially dependent on other items.
+   *
+   * @param {boolean} final - Is this final call to this?
+   */
+  _prepareDependentData(final = false) {
+    // Update maximum uses
+    this._updateMaxUses();
+
+    // Prepare actions only when item preparation is deemed finalized
+    if (final) this._prepareActions();
   }
 
   prepareBaseData() {
@@ -666,8 +677,10 @@ export class ItemPF extends ItemBasePF {
 
     if (this.inContainer) this.adjustContained();
 
-    if (this.system.contextNotes) {
-      this.system.contextNotes = this.system.contextNotes.map((cn) => new pf1.components.ContextNote(cn));
+    if (this.system.contextNotes?.length) {
+      this.system.contextNotes = this.system.contextNotes.map(
+        (cn) => new pf1.components.ContextNote(cn, { parent: this })
+      );
     }
   }
 
@@ -689,11 +702,6 @@ export class ItemPF extends ItemBasePF {
    * @abstract
    */
   adjustContained() {}
-
-  prepareDerivedItemData() {
-    // Update maximum uses
-    this._updateMaxUses();
-  }
 
   /**
    * Returns labels for this item
@@ -734,10 +742,10 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
-  _prepareChanges(changes) {
+  _prepareChanges() {
     const prior = this.changes;
     const collection = new Collection();
-    for (const c of changes) {
+    for (const c of this.system.changes ?? []) {
       let change = null;
       if (prior && prior.has(c._id)) {
         change = prior.get(c._id);
@@ -747,10 +755,13 @@ export class ItemPF extends ItemBasePF {
       } else change = new pf1.components.ItemChange(c, { parent: this });
       collection.set(c._id || change.data._id, change);
     }
-    return collection;
+
+    this.changes = collection;
   }
 
-  _prepareActions(actions) {
+  _prepareActions() {
+    const actions = this.system.actions ?? [];
+
     const prior = this.actions;
     const collection = new Collection();
     for (const o of actions) {
@@ -762,7 +773,17 @@ export class ItemPF extends ItemBasePF {
       } else action = new pf1.components.ItemAction(o, this);
       collection.set(o._id || action.data._id, action);
     }
-    return collection;
+
+    /** @type {Map<string, pf1.components.ItemAction>} */
+    this.actions = collection;
+
+    for (const action of prior ?? []) {
+      if (this.actions.get(action.id) !== action) {
+        Object.values(action.apps).forEach((app) =>
+          app.close({ pf1: { action: "delete" }, submit: false, force: true })
+        );
+      }
+    }
   }
 
   /**
@@ -1424,7 +1445,7 @@ export class ItemPF extends ItemBasePF {
 
     // Add @class
     const classTag = result.item.class;
-    if (classTag) result.class = result.classes[classTag];
+    if (classTag) result.class = result.classes?.[classTag];
 
     // Add dictionary flag
     const tag = this.system.tag;

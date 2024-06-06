@@ -333,16 +333,13 @@ export class ActorPF extends ActorBasePF {
    * @internal
    */
   _prepareChanges() {
-    this.changeItems = this.items.filter(
-      (item) =>
-        item.isActive &&
-        (item.system.changes?.length > 0 || Object.values(item.system.changeFlags ?? {}).filter((v) => !!v).length)
-    );
+    this.changeItems = this.items.filter((item) => item.hasChanges && item.isActive);
 
     const changes = [];
     for (const i of this.changeItems) {
       changes.push(...i.changes);
     }
+
     addDefaultChanges.call(this, changes);
 
     const c = new Collection();
@@ -469,6 +466,8 @@ export class ActorPF extends ActorBasePF {
    * @override
    */
   prepareBaseData() {
+    this._initialized = false; // For preventing items initializing certain data too early
+
     super.prepareBaseData();
 
     this.system.details ??= {};
@@ -1234,8 +1233,9 @@ export class ActorPF extends ActorBasePF {
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
     delete this._rollData;
 
+    // Update dependant data and resources
     this.items.forEach((item) => {
-      item.prepareDerivedItemData();
+      item._prepareDependentData(false);
       this.updateItemResources(item);
     });
 
@@ -1255,19 +1255,21 @@ export class ActorPF extends ActorBasePF {
     // Setup links
     this.prepareItemLinks();
 
+    this._prepareOverlandSpeeds();
+
     // Reset roll data cache again to include processed info
     delete this._rollData;
 
-    // Update item resources
+    // Update items
     this.items.forEach((item) => {
-      item.prepareDerivedItemData();
+      item._prepareDependentData(true);
       // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
       this.updateItemResources(item, { warnOnDuplicate: false });
     });
 
-    this._prepareOverlandSpeeds();
-
+    // Initialization is effectively complete at this point
     this._initialized = true;
+
     this._setSourceDetails();
   }
 
@@ -2098,6 +2100,8 @@ export class ActorPF extends ActorBasePF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
+
     if (!changed.system) return; // No system updates.
 
     const oldData = this.system;
@@ -2106,7 +2110,7 @@ export class ActorPF extends ActorBasePF {
 
     // Offset HP values
     const attributes = changed.system.attributes;
-    if (this._initialized && attributes != undefined) {
+    if (attributes != undefined) {
       for (const key of ["hp", "wounds", "vigor"]) {
         const hp = attributes[key];
         if (!hp) continue;
@@ -2118,8 +2122,6 @@ export class ActorPF extends ActorBasePF {
         delete hp.value;
       }
     }
-
-    if (context.diff === false) return; // Don't diff if we were told not to diff
 
     if (changed.system.attributes?.quadruped !== undefined) {
       const quad = changed.system.attributes.quadruped;
@@ -4666,9 +4668,6 @@ export class ActorPF extends ActorBasePF {
    * @returns {Promise<this>}
    */
   async importFromJSON(json) {
-    // Set _initialized flag to prevent faults (such as HP changing incorrectly)
-    this._initialized = false;
-
     // Import from JSON
     const data = JSON.parse(json);
     delete data._id;

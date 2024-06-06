@@ -185,10 +185,13 @@ export class ItemBuffPF extends ItemPF {
     return labels;
   }
 
-  prepareDerivedItemData() {
-    super.prepareDerivedItemData();
-    this._prepareDuration();
+  /**
+   * @inheritDoc
+   */
+  _prepareDependentData(final = false) {
+    super._prepareDependentData(final);
 
+    this._prepareDuration();
     this._prepareTraits();
   }
 

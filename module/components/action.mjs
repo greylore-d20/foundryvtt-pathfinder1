@@ -84,7 +84,6 @@ export class ItemAction {
 
       // Update parent
       await parent.update({ "system.actions": newActionData });
-
       // Return results
       return data.map((o) => parent.actions.get(o._id));
     }

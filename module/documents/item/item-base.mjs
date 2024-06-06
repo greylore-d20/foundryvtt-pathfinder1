@@ -151,16 +151,6 @@ export class ItemBasePF extends Item {
   }
 
   /**
-   * @override
-   */
-  prepareData() {
-    // To combat Foundry's weird out-of-order initialization bug
-    if (this.id && this.actor && !this.actor._initializing) return;
-
-    super.prepareData();
-  }
-
-  /**
    * Fetch item name
    *
    * @param {boolean} [forcePlayerPerspective=false] - If true, return value players see.

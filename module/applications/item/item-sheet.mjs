@@ -726,8 +726,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare stuff for items with context notes
     if (itemData.contextNotes) {
       // TODO: Remove .toObject() and move the supporting data to the datamodel
-      // HACK: this.item.system access instead of itemData as itemData can become invalid via async processes during AE creation
-      context.contextNotes = this.item.system.contextNotes.map((cn) => cn.toObject());
+      context.contextNotes = itemData.contextNotes.map((cn) => cn.toObject());
       const noteTargets = getBuffTargets(actor, "contextNotes");
       context.contextNotes.forEach((n) => {
         const target = noteTargets[n.target];

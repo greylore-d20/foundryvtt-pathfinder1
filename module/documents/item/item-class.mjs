@@ -262,17 +262,13 @@ export class ItemClassPF extends ItemPF {
     }
 
     // Feed info back to actor
-    const actor = this.actor;
-    // Test against actor.data to avoid unlinked token weirdness
-    if (actor && !actor?.system) console.error("Weirdness!");
-    if (actor?.system) {
-      this._registerOnActor();
-    }
+    // Unlinked actors sometimes call item prep when actor isn't prepped and they're lacking .system
+    if (this.actor?.system) this._registerOnActor();
   }
 
   _registerOnActor() {
     const actor = this.actor;
-    if (!actor.classes) return; // actor prep has not run for some reason
+    if (!actor.classes) return; // actor prep has not run for some reason (unlinked actor)
 
     const actorData = actor.system,
       itemData = this.system;

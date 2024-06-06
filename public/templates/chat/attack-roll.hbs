@@ -1,13 +1,13 @@
 {{!-- Apply Damage button/widget --}}
 {{#*inline "applyDamageButton"}}
   {{!-- Apply full damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage.total}}" data-tooltip="{{#if isHealing}}PF1.ApplyHealing{{else}}PF1.ApplyDamage{{/if}}"
+  <a class="inline-action" data-action="applyDamage" data-type="{{type}}" data-value="{{#if isHealing}}-{{/if}}{{damage.total}}" data-tooltip="{{#if isHealing}}PF1.ApplyHealing{{else}}PF1.ApplyDamage{{/if}}"
       data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute fas fa-plus"></i>
   </a>
   {{!-- Apply half damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage.half}}" data-tooltip="PF1.ApplyHalf"
+  <a class="inline-action" data-action="applyDamage" data-type="{{type}}" data-value="{{#if isHealing}}-{{/if}}{{damage.half}}" data-tooltip="PF1.ApplyHalf"
       data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute">½</i>
@@ -109,20 +109,20 @@
 
         {{#if atk.hasDamage}}
         <tr class="damage">
-          <th colspan="2">
+          <th colspan="2" data-damage-type="normal">
             {{atk.damage.flavor}}
             <a class="fake-inline-roll inline-dsn-hidden inline-result" data-tooltip="PF1.Total">
               {{atk.damage.total}}
             </a>
-            {{> applyDamageButton damage=atk.damage isHealing=atk.isHealing nonlethal=atk.nonlethal}}
+            {{> applyDamageButton damage=atk.damage isHealing=atk.isHealing nonlethal=atk.nonlethal type="normal"}}
           </th>
           {{#if atk.hasCritConfirm}}
-          <th colspan="2">
+          <th colspan="2" data-damage-type="critical">
             {{atk.critDamage.flavor}}
             <a class="fake-inline-roll inline-dsn-hidden inline-result" data-tooltip="PF1.Total">
               {{atk.critDamage.total}}
             </a>
-            {{> applyDamageButton damage=atk.critDamage isHealing=atk.isHealing nonlethal=atk.nonlethal}}
+            {{> applyDamageButton damage=atk.critDamage isHealing=atk.isHealing nonlethal=atk.nonlethal type="critical"}}
           </th>
           {{/if}}
         </tr>

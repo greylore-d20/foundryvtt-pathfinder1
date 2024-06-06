@@ -3668,6 +3668,8 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} [options.asWounds=false] - Apply damage to wounds directly instead of vigor, as needed for Wounds & Vigor variant health rule.
    * @param {Event} [options.event] - Triggering event, if any
    * @param {Element} [options.element] - Triggering element, if any.
+   * @param {ChatMessage} [options.message] - Chat message reference if any. This is to help modules, the system does not use it.
+   * @param {DamageInstance[]} [options.instances] - Individual instances of damage. This is not processed currently.
    * @returns {Promise<false|Actor[]>} - False if cancelled or array of updated actors.
    */
   static async applyDamage(
@@ -3679,8 +3681,10 @@ export class ActorPF extends ActorBasePF {
       targets = null,
       critMult = 0,
       asWounds = false,
+      instances = [],
       event,
       element,
+      message = null,
     } = {}
   ) {
     if (value == 0 || !Number.isFinite(value)) return void console.warn("Attempting to apply 0 damage.");
@@ -3831,6 +3835,9 @@ export class ActorPF extends ActorBasePF {
         damageReduction: reductionDefault,
         tokens,
         nonlethal: asNonlethal,
+        asWounds,
+        critMult,
+        instances,
       };
 
       const content = await renderTemplate(template, dialogData);
@@ -5072,4 +5079,12 @@ export class ActorPF extends ActorBasePF {
  * @property {ActorRestOptions} options - Options for resting
  * @property {object} updateData - Updates applied to the actor
  * @property {object[]} itemUpdates - Updates applied to the actor's items
+ */
+
+/**
+ * @typedef {object} DamageInstance
+ * @property {number} value - Total damage in this instance
+ * @property {object} types - Damage type data
+ * @property {string} types.custom - Custom damage types
+ * @property {string[]} types.values - Standard damage types
  */

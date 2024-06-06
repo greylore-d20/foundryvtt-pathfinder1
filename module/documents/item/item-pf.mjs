@@ -1493,6 +1493,8 @@ export class ItemPF extends ItemBasePF {
   }
 
   static async _onChatCardAction(action, { button = null, item = null, event } = {}) {
+    const message = game.messages.get(button.closest(".chat-message").dataset.messageId);
+
     // Apply damage
     if (action === "applyDamage") {
       let asNonlethal = false;
@@ -1501,7 +1503,39 @@ export class ItemPF extends ItemBasePF {
       const value = parseInt(button.dataset.value);
       if (isNaN(value)) return void console.warn("Invalid damage value:", value, { button });
 
-      pf1.documents.actor.ActorPF.applyDamage(value, { asNonlethal, event, element: button });
+      const attackIndex = parseInt(button.closest("[data-index]")?.dataset.index);
+      const attackType = button.dataset.type;
+
+      const attack = message.systemRolls?.attacks?.[attackIndex];
+      const isCritical = attackType === "critical";
+
+      const instances = [];
+      let damageRolls;
+      if (attack) {
+        if (attackType === "normal") damageRolls = attack.damage;
+        else if (isCritical) damageRolls = attack.critDamage;
+      }
+
+      const metadata = message.getFlag("pf1", "metadata") ?? {};
+
+      if (damageRolls) {
+        for (const dmg of damageRolls) {
+          instances.push({
+            value: dmg.total,
+            types: dmg.damageType,
+          });
+        }
+      }
+
+      pf1.documents.actor.ActorPF.applyDamage(value, {
+        asNonlethal,
+        event,
+        element: button,
+        message,
+        isCritical,
+        critMult: isCritical ? metadata.config.critMult ?? 0 : 0,
+        instances,
+      });
     }
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {
@@ -1510,11 +1544,10 @@ export class ItemPF extends ItemBasePF {
       // Check for recovery state
       const attackIndex = button.closest(".chat-attack").dataset.index;
       if (!attackIndex) return;
-      const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
       const ammoId = button.closest(".ammo")?.dataset.ammoId || button.dataset.ammoId;
       const ammoQuantity = button.closest(".ammo")?.dataset.ammoQuantity || button.dataset.ammoQuantity || 1;
       if (ammoQuantity == 0) return;
-      const recoveryData = card.getFlag("pf1", "ammoRecovery");
+      const recoveryData = message.getFlag("pf1", "ammoRecovery");
       const ammoRecovery = recoveryData?.[attackIndex]?.[ammoId];
       // Backwards compatibility (PF1 vNEXT) with old messages
       if (ammoRecovery?.failed === true) return;
@@ -1547,7 +1580,7 @@ export class ItemPF extends ItemBasePF {
       if (recovered > 0) promises.push(ammoItem.addCharges(recovered));
 
       // Update chat card
-      promises.push(card.setFlag("pf1", "ammoRecovery", { [attackIndex]: { [ammoId]: { recovered } } }));
+      promises.push(message.setFlag("pf1", "ammoRecovery", { [attackIndex]: { [ammoId]: { recovered } } }));
 
       await Promise.all(promises);
 

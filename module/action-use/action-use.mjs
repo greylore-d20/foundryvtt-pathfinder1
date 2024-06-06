@@ -1254,19 +1254,26 @@ export class ActionUse {
    * @returns {object} The resulting metadata object.
    */
   generateChatMetadata() {
-    const metadata = {};
+    const metadata = {
+      actor: this.actor.uuid,
+      item: this.item.id,
+      action: this.action.id,
+      combat: undefined,
+      template: this.shared.template?.id ?? null,
+      rolls: {
+        attacks: [],
+      },
+      targets: this.shared.targets.map((t) => t.document.uuid),
+      config: {
+        critMult: this.shared.rollData.critMult,
+      },
+    };
 
-    metadata.item = this.item.id;
-    metadata.action = this.action.id;
+    console.log(this);
+
     if (this.actor && game.combat?.combatants.some((c) => c.actor === this.actor)) {
       metadata.combat = game.combat.id;
     }
-    metadata.template = this.shared.template?.id ?? null;
-    metadata.rolls = {
-      attacks: [],
-    };
-
-    metadata.targets = this.shared.targets.map((t) => t.document.uuid);
 
     // Add attack rolls
     for (let attackIndex = 0; attackIndex < this.shared.chatAttacks.length; attackIndex++) {

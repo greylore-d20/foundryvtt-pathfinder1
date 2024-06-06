@@ -172,12 +172,13 @@ export class ItemScriptCall {
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.actor;
+    const action = shared.action ?? null;
     const token = actor?.token?.object ?? actor.getActiveTokens(false, false)[0];
 
     const scm = await this.getDelegate();
     if (!scm) return;
 
     // Create temporary macro for handling execution context and other utility
-    return scm.execute({ item, actor, token, shared, ...extraParams });
+    return scm.execute({ item, actor, token, shared, action, ...extraParams });
   }
 }

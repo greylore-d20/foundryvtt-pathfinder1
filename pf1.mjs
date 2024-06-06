@@ -222,6 +222,20 @@ Hooks.once("init", function () {
     },
   });
 
+  Object.defineProperty(pf1.applications, "ActionChooser", {
+    get() {
+      foundry.utils.logCompatibilityWarning(
+        "pf1.utils.ActionChooser is deprecated in favor of pf1.utils.ActionSelector",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+
+      return pf1.applications.ActionSelector;
+    },
+  });
+
   CONFIG.time.roundTime = 6;
 
   // Register System Settings

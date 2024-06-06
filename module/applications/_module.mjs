@@ -12,7 +12,7 @@ export * as component from "./component/_module.mjs";
 export * as settings from "./settings/_module.mjs";
 export * as compendiumBrowser from "./compendium-browser/_module.mjs";
 
-export { ActionChooser } from "./action-chooser.mjs";
+export { ActionSelector } from "./action-selector.mjs";
 export { AttackDialog } from "./attack-dialog.mjs";
 export { Widget_CategorizedItemPicker } from "./categorized-item-picker.mjs";
 export { ChangeLogWindow } from "./change-log.mjs";

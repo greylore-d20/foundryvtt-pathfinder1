@@ -1306,7 +1306,7 @@ export class ItemPF extends ItemBasePF {
         action = this.actions.get(actionId);
         if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
       } else if (this.system.actions.length > 1 && skipDialog !== true) {
-        return pf1.applications.ActionChooser.open(this, { ev, chatMessage, dice, rollMode, token });
+        return pf1.applications.ActionSelector.open(this, { ev, chatMessage, dice, rollMode, token });
       } else {
         action = this.defaultAction;
       }

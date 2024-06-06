@@ -1,6 +1,6 @@
 import { getSkipActionPrompt } from "../documents/settings.mjs";
 
-export class ActionChooser extends Application {
+export class ActionSelector extends Application {
   /**
    * @param {ItemPF} item - The item for which to choose an attack
    * @param {object} [options={}] - Application options
@@ -14,15 +14,17 @@ export class ActionChooser extends Application {
   }
 
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/apps/action-chooser.hbs",
-      classes: ["pf1", "action-chooser"],
+    const options = super.defaultOptions;
+    return {
+      ...options,
+      template: "systems/pf1/templates/apps/action-select.hbs",
+      classes: [...options.classes, "pf1", "action-selector"],
       width: 400,
-    });
+    };
   }
 
   get title() {
-    return game.i18n.format("PF1.Application.ActionChooser.Title", {
+    return game.i18n.format("PF1.Application.ActionSelector.Title", {
       actor: this.item.actor.name ?? "",
       item: this.item.name,
     });
@@ -32,7 +34,7 @@ export class ActionChooser extends Application {
     const result = await super.getData();
 
     result.item = this.item.toObject();
-    result.actions = this.item.system.actions;
+    result.actions = this.item.actions;
 
     return result;
   }

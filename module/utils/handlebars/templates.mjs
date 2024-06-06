@@ -65,6 +65,9 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/apps/attack-roll-dialog.hbs",
   "systems/pf1/templates/apps/vision-sharing.hbs",
   "systems/pf1/templates/apps/help-browser.hbs",
+  "systems/pf1/templates/apps/action-select.hbs",
+  "systems/pf1/templates/apps/item-select.hbs",
+  "systems/pf1/templates/apps/actor-select.hbs",
 
   // Item Action Partials
   "systems/pf1/templates/apps/item-action/action.hbs",

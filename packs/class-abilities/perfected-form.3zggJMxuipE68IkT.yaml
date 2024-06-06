@@ -13,7 +13,7 @@ system:
       duration:
         units: minute
         value: '1'
-      name: Use
+      name: Surge of self-confidence
       range:
         units: personal
       target:
@@ -21,6 +21,12 @@ system:
   associations:
     classes:
       - Cleric
+      - Inquisitor
+  contextNotes:
+    - target: allSavingThrows
+      text: >-
+        Perfected Form: +[[1 + floor(@class.level / 5)]] sacred or profane bonus
+        against polymorph effects
   description:
     value: >-
       <p>You maintain an unshakable sense of who you are, and no force can
@@ -32,12 +38,22 @@ system:
       gain a surge of self-confidence as an immediate action that grants you a
       number of temporary hit points equal to your cleric level and a +2 morale
       bonus on attack rolls, skill checks, and saving throws; both effects last
-      for 1 minute.</p>
-
-      <p>This power replaces the Liberation power of the Liberation Domain or
-      the Strength Surge power of the Strength Domain.</p>
+      for 1 minute.</p><p>This power replaces the
+      @UUID[Compendium.pf1.class-abilities.Item.2mnWAoFKqKKxWCt4]{Liberation}
+      power of the
+      @UUID[Compendium.pf1.class-abilities.Item.NjMyfBFJ42xbUpwC]{Liberation
+      Domain} or the
+      @UUID[Compendium.pf1.class-abilities.Item.Iu8gyBT93dRpGtgH]{Strength
+      Surge} power of the
+      @UUID[Compendium.pf1.class-abilities.Item.6JYvxEtSqmjDbDWr]{Strength
+      Domain}.</p>
+  sources:
+    - id: PZO9472
+      pages: '26'
   subType: classFeat
-  tag: classFeat_perfectedForm
+  tags:
+    - Domain Power
+    - Self-Realization Subdomain
   uses:
     maxFormula: '1'
     per: day

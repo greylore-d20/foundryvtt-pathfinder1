@@ -2871,7 +2871,7 @@ export const sheetSections = {
   // Lite sheet and secondary sheet items
   combatlite: {
     attacks: {
-      label: "PF1.ActionPlural",
+      label: "PF1.AbilityPlural",
       filters: [{ type: "attack" }],
       interface: {
         create: true,

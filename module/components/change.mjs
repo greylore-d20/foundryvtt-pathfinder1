@@ -36,8 +36,14 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   static migrateData(data) {
     // Update terminology
-    if (data.subTarget) data.target = data.subTarget;
-    if (data.modifier) data.type = data.modifier;
+    if (data.subTarget) {
+      data.target = data.subTarget;
+      delete data.subTarget;
+    }
+    if (data.modifier) {
+      data.type = data.modifier;
+      delete data.modifier;
+    }
     // Script operator is no longer supported
     if (data.operator === "script") data.operator = "add";
     else if (data.operator === "+") data.operator = "add";
@@ -204,18 +210,25 @@ export class ItemChange extends foundry.abstract.DataModel {
     data = new this.constructor(data).toObject();
 
     // Make sure sub-target is valid
+    /*
+    // BUG: This does not work reliably for much anything but skills
     const targetCategory = data.target?.split(".").shift();
     if (targetCategory) {
       const target = data.target || this.target;
       const changeTargets = this.parent.getChangeTargets(targetCategory);
       if (changeTargets[target] == null) {
-        data.target = Object.keys(changeTargets)[0];
+        console.error(`Invalid change target ${target}, resetting.`);
+        data.target = "";
       }
     }
+    */
 
     return data;
   }
 
+  /**
+   * @override
+   */
   updateSource(data, options) {
     // Shallow copy to avoid altering things for caller
     data = { ...data };

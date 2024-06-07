@@ -221,9 +221,9 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
    * Determine tokens residing within the template bounds, based on either grid higlight logic or token center.
    *
    * @public
-   * @returns {Token[]} Tokens sufficiently within the template.
+   * @returns {Promise<Token[]>} Tokens sufficiently within the template.
    */
-  getTokensWithin() {
+  async getTokensWithin() {
     const shape = this.document.t,
       dimensions = this.scene.dimensions,
       gridSizePx = dimensions.size,
@@ -237,6 +237,15 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         y: this.y + this.height / 2,
       };
     };
+
+    // Ensure shape and related data exists (e.g. this.ray) for getHighlightedSquares to work correctly.
+    // this.width, this.height, etc. are wrong without this
+    if (!this.shape) {
+      this._applyRenderFlags({ refreshShape: true });
+      // HACK: Wait for next tick, the template won't be finalized by Foundry until then.
+      // Likely breaks with Foundry v12 with newer PIXI version
+      await new Promise((resolve) => canvas.app.ticker.addOnce(() => resolve()), undefined, PIXI.UPDATE_PRIORITY.LOW);
+    }
 
     const tCenter = getCenter();
 
@@ -317,9 +326,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     // Non-gridless
     else {
       const mapCoordsToCell = ({ x, y }) => ({ x, y, width: gridSizePx, height: gridSizePx });
-
-      // Ensure shape and related data exists (e.g. this.ray) for getHighlightedSquares to work correctly.
-      if (!this.shape) this._applyRenderFlags({ refreshShape: true });
 
       const highlightSquares = this._getGridHighlightPositions().map(mapCoordsToCell);
       for (const cell of highlightSquares) {

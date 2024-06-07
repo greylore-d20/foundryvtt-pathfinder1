@@ -1395,10 +1395,12 @@ export class ActionUse {
   /**
    * Collect valid targets.
    */
-  getTargets() {
+  async getTargets() {
     // Get targets from template, and if no template is present, from explicitly targeted tokens list
-    const targets = this.shared.template?.object.getTokensWithin() ?? Array.from(game.user.targets);
-
+    /** @type {MeasuredTemplatePF|null} */
+    const template = this.shared.template?.object;
+    let targets = template ? await template.getTokensWithin() : null;
+    targets ??= Array.from(game.user.targets);
     // Ignore defeated and secret tokens
     this.shared.targets = targets.filter(
       (t) => t.document.disposition !== CONST.TOKEN_DISPOSITIONS.SECRET && t.combatant?.isDefeated !== true
@@ -1547,7 +1549,7 @@ export class ActionUse {
       return;
     }
 
-    this.getTargets();
+    await this.getTargets();
 
     // Call script calls
     await this.executeScriptCalls();

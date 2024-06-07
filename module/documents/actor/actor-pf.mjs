@@ -2115,7 +2115,7 @@ export class ActorPF extends ActorBasePF {
         const hp = attributes[key];
         if (!hp) continue;
         if (hp.value !== undefined && hp.offset === undefined) {
-          const max = hp.max ?? oldData.attributes[key]?.max;
+          const max = hp.max ?? oldData.attributes[key]?.max ?? 0;
           hp.offset = hp.value - max;
         }
         // Do not ever keep .value

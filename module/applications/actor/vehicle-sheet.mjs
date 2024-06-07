@@ -125,4 +125,19 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
 
     data.attacks = attackSections;
   }
+
+  _updateObject(event, formData) {
+    formData = foundry.utils.expandObject(formData);
+
+    // Convert distances back to backend imperial format
+    const convertibleKeys = ["maxSpeed", "acceleration"];
+    for (const key of convertibleKeys) {
+      const value = formData.system.details[key];
+      if (Number.isFinite(value)) {
+        formData.system.details[key] = pf1.utils.convertDistanceBack(value)[0];
+      }
+    }
+
+    return super._updateObject(event, formData);
+  }
 }

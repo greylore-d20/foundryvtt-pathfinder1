@@ -1,9 +1,9 @@
 <div class="attack-targets">
   <h2>{{localize "PF1.Targets"}}</h2>
-  {{#each targets as |t|}}
-    <div class="target" data-uuid="{{t.uuid}}">
+  {{#each targets}}
+    <div class="target" data-uuid="{{uuid}}">
       {{!-- Saving Throws --}}
-      <div class="saving-throws" data-gm-sensitive-uuid="{{t.uuid}}">
+      <div class="saving-throws" data-gm-sensitive-uuid="{{uuid}}">
         <div class="fort click" data-saving-throw="fort" data-tooltip="PF1.SavingThrowFort">
           <i class="icon-pf icon-heart-plus"></i>
           <span class="value"></span>
@@ -19,33 +19,33 @@
       </div>
 
       {{!-- Portrait --}}
-      <img class="target-image" src="{{t.img}}">
+      <img class="target-image" src="{{img}}">
 
       {{!-- AC --}}
       {{#if @root.action.isCombatManeuver}}
-      <div class="cmd" data-gm-sensitive-uuid="{{t.uuid}}">
+      <div class="cmd" data-gm-sensitive-uuid="{{uuid}}">
         <div class="normal" data-tooltip="PF1.CMDAbbr">
           <i class="fas fa-shield-alt"></i>
-          <span class="value">{{t.actorData.system.attributes.cmd.total}}</span>
+          <span class="value">{{actor.system.attributes.cmd.total}}</span>
         </div>
         <div class="flatFooted" data-tooltip="PF1.CMDFlatFooted">
           <i class="fas fa-shoe-prints"></i>
-          <span class="value">{{t.actorData.system.attributes.cmd.flatFootedTotal}}</span>
+          <span class="value">{{actor.system.attributes.cmd.flatFootedTotal}}</span>
         </div>
       </div>
       {{else}}
-      <div class="ac" data-gm-sensitive-uuid="{{t.uuid}}">
+      <div class="ac" data-gm-sensitive-uuid="{{uuid}}">
         <div class="normal" data-tooltip="PF1.ACNormal">
           <i class="fas fa-shield-alt"></i>
-          <span class="value">{{t.actorData.system.attributes.ac.normal.total}}</span>
+          <span class="value">{{actor.system.attributes.ac.normal.total}}</span>
         </div>
         <div class="touch" data-tooltip="PF1.ACTouch">
           <i class="fas fa-hand-point-up"></i>
-          <span class="value">{{t.actorData.system.attributes.ac.touch.total}}</span>
+          <span class="value">{{actor.system.attributes.ac.touch.total}}</span>
         </div>
         <div class="flatFooted" data-tooltip="PF1.ACFlatFooted">
           <i class="fas fa-shoe-prints"></i>
-          <span class="value">{{t.actorData.system.attributes.ac.flatFooted.total}}</span>
+          <span class="value">{{actor.system.attributes.ac.flatFooted.total}}</span>
         </div>
       </div>
       {{/if}}

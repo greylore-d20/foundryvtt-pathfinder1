@@ -1046,9 +1046,9 @@ export class ActionUse {
     if (!game.settings.get("pf1", "disableAttackCardTargets")) {
       this.shared.templateData.targets = this.shared.targets.map((t) => ({
         img: t.document.texture.src,
-        actorData: t.actor?.toObject(false),
-        tokenData: t.document.toObject(false),
-        uuid: t.document.id,
+        actor: t.actor,
+        token: t.document,
+        uuid: t.document.uuid,
       }));
     }
 
@@ -1268,8 +1268,6 @@ export class ActionUse {
         critMult: this.shared.rollData.critMult,
       },
     };
-
-    console.log(this);
 
     if (this.actor && game.combat?.combatants.some((c) => c.actor === this.actor)) {
       metadata.combat = game.combat.id;

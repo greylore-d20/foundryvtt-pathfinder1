@@ -91,6 +91,15 @@ export class TokenDocumentPF extends TokenDocument {
     // Make resources editable
     if (data?.attribute.startsWith("resources.")) data.editable = true;
 
+    const offsetAttributes = ["attributes.hp", "attributes.wounds", "attributes.vigor"];
+    if (offsetAttributes.includes(data?.attribute)) {
+      // Add temp HP on top
+      const temp = foundry.utils.getProperty(this.actor?.system, data.attribute + ".temp") || 0;
+      data.value += temp;
+      // Allow editing
+      data.editable = true;
+    }
+
     return data;
   }
 

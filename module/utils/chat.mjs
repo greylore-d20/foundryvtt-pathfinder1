@@ -198,13 +198,14 @@ export function createInlineRollString(roll, { hide3d = true } = {}) {
  */
 export async function hideInvisibleTargets(cm, html, recursive = false) {
   const targetsElem = html.querySelector(".pf1.chat-card .attack-targets");
+  if (!targetsElem) return; // No targets
 
   // Delay until canvas ready if it's not yet so.
   if (!canvas.ready) {
     if (recursive) return;
     targetsElem.style.display = "none";
     if (!game.settings.get("core", "noCanvas")) {
-      Hooks.once("canvasReady", () => hideInvisibleTargets(cm, $(html), true));
+      Hooks.once("canvasReady", () => hideInvisibleTargets(cm, html, true));
     } else {
       // Canvas disabled, remove targets
       targetsElem.remove();

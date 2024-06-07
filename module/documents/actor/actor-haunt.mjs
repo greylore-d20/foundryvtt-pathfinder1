@@ -83,6 +83,8 @@ export class ActorHauntPF extends ActorPF {
 
     applyChanges.call(this);
 
+    this.prepareHealth();
+
     // Setup links
     this.prepareItemLinks();
 
@@ -97,6 +99,13 @@ export class ActorHauntPF extends ActorPF {
     });
 
     this._initialized = true;
+  }
+
+  prepareHealth() {
+    // Offset relative health
+    const hp = this.system.attributes.hp;
+    if (!Number.isFinite(hp?.offset)) hp.offset = 0;
+    hp.value = hp.max + hp.offset;
   }
 
   /**

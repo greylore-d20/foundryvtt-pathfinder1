@@ -1367,6 +1367,7 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({
           sources: getSource("system.attributes.sr.total"),
+          untyped: true,
         });
 
         notes = getNotes("misc.sr");
@@ -1379,6 +1380,7 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({
           sources: getSource("system.attributes.bab.total"),
+          untyped: true,
         });
         break;
       case "cmb":
@@ -1482,14 +1484,17 @@ export class ActorSheetPF extends ActorSheet {
         sources.push(
           {
             sources: getSource("system.attributes.acp.total"),
+            untyped: true,
           },
           {
             label: game.i18n.localize("PF1.EquipSlots.armor"),
             sources: getSource("system.attributes.acp.armorBonus"),
+            untyped: true,
           },
           {
             label: game.i18n.localize("PF1.EquipSlots.shield"),
             sources: getSource("system.attributes.acp.shieldBonus"),
+            untyped: true,
           }
         );
         break;
@@ -1502,14 +1507,17 @@ export class ActorSheetPF extends ActorSheet {
         sources.push(
           {
             sources: getSource("system.attributes.maxDexBonus"),
+            untyped: true,
           },
           {
             label: game.i18n.localize("PF1.EquipSlots.armor"),
             sources: getSource("system.attributes.mDex.armorBonus"),
+            untyped: true,
           },
           {
             label: game.i18n.localize("PF1.EquipSlots.shield"),
             sources: getSource("system.attributes.mDex.shieldBonus"),
+            untyped: true,
           }
         );
         break;
@@ -1525,7 +1533,7 @@ export class ActorSheetPF extends ActorSheet {
           }, 0);
 
         if (asfSources.length) {
-          sources.push({ sources: asfSources });
+          sources.push({ sources: asfSources, untyped: true });
         }
         break;
       }
@@ -1827,7 +1835,7 @@ export class ActorSheetPF extends ActorSheet {
             value: feats.formula,
           });
         }
-        sources.push({ sources: featSources });
+        sources.push({ sources: featSources, untyped: true });
         break;
       }
       case "skills": {
@@ -1925,9 +1933,11 @@ export class ActorSheetPF extends ActorSheet {
         sources.push(
           {
             sources: getSource("system.details.skills.bonus"),
+            untyped: true,
           },
           {
             sources: skillSources,
+            untyped: true,
           }
         );
         break;
@@ -2021,6 +2031,7 @@ export class ActorSheetPF extends ActorSheet {
             });
             sources.push({
               sources: getSource(`system.attributes.spells.spellbooks.${bookId}.cl.total`),
+              untyped: true,
             });
             break;
           case "concentration": {
@@ -2030,6 +2041,7 @@ export class ActorSheetPF extends ActorSheet {
             });
             sources.push({
               sources: getSource(`system.attributes.spells.spellbooks.${bookId}.concentration.total`),
+              untyped: true,
             });
             break;
           }

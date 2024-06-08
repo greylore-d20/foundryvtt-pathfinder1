@@ -38,26 +38,23 @@
     {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
 
     {{! Property Lists }}
+    {{#if system.weaponGroups.total.size}}
     <ul class="property-list weapon-groups">
       <h5>{{localize "PF1.WeaponGroups"}}</h5>
-      {{#if system.weaponGroups.total.size}}
         {{#each system.weaponGroups.total}}
         <li class="property weapon-group">{{this}}</li>
         {{/each}}
-      {{else}}
-        <li class="no-properties">{{localize "PF1.NonApplicable"}}</li>
-      {{/if}}
     </ul>
+    {{/if}}
+    {{! Weapon Groups}}
+    {{#if labels.properties.length}}
     <ul class="property-list weapon-groups">
       <h5>{{localize "PF1.Properties"}}</h5>
-      {{#if labels.properties.length}}
         {{#each labels.properties}}
         <li class="property">{{this}}</li>
         {{/each}}
-      {{else}}
-        <li class="no-properties">{{localize "PF1.NonApplicable"}}</li>
-      {{/if}}
     </ul>
+    {{/if}}
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
   </section>

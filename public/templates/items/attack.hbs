@@ -36,16 +36,14 @@
       {{localize "PF1.Quickbar"}}
     </label>
 
+    {{#if system.weaponGroups.total.size}}
     <ul class="property-list weapon-groups">
       <h5>{{localize "PF1.WeaponGroups"}}</h5>
-    {{#if system.weaponGroups.selected.length}}
-      {{#each system.weaponGroups.selected}}
+      {{#each system.weaponGroups.total}}
       <li class="property weapon-group {{@key}}">{{this}}</li>
       {{/each}}
-    {{else}}
-      <li class="no-properties">{{localize "PF1.NonApplicable"}}</li>
-    {{/if}}
     </ul>
+    {{/if}}
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
   </section>

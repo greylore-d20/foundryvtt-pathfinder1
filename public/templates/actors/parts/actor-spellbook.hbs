@@ -471,7 +471,8 @@
           <span class="value">{{lookup (lookup @root.system.abilities ../spellbook.ability) 'total'}}</span>
           <span class="label">{{lookup @root.config.abilitiesShort ../spellbook.ability}}</span>
         </div>
-      {{else if spontaneous}}
+      {{/if}}
+      {{#if spontaneous}}
         {{#if invalidKnown}}
           <div class="notification-box{{#if (gt known.excess 0)}} warning{{/if}}">
             <h5>{{localize "PF1.Spellbook.Known"}}</h5>

@@ -721,14 +721,15 @@ export function createInlineFormula(match, rollData, options) {
  *
  * {@inheritDoc TextEditor.enrichHTML}
  *
+ * @experimental - This may be removed without warning.
  * @param {string} content HTML content in string format to be enriched.
  * @param {options} [options] Additional options passed to enrichHTML
  * @param {object} [options.rollData] Roll data object
  * @param {boolean} [options.secrets] Display secrets
  * @param {boolean} [options.rolls=false] Roll inline rolls. If false, the roll formula is shown instead as if /r had been used.
  * @param {boolean} [options.documents] Parse content links
- *
- * Synchronized with Foundry VTT v10.291
+ * @returns {string} - Enriched HTML string
+ * Synchronized with Foundry VTT v11.315
  */
 export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents, relativeTo } = {}) {
   let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false, relativeTo });

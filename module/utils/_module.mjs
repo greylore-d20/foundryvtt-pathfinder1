@@ -31,4 +31,5 @@ export {
   refreshSheets,
   sortArrayByName,
   parseAlignment,
+  enrichHTMLUnrolled,
 } from "./lib.mjs";

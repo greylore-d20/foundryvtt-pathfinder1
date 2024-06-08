@@ -1166,7 +1166,19 @@ export class ActorPF extends ActorBasePF {
     }
 
     // usedSpellbooks backwards compatibility. Mostly unused by the system itself
-    this.system.attributes.spells.usedSpellbooks = Object.keys(spellbooks).filter((book) => spellbooks[book].inUse);
+    Object.defineProperty(this.system.attributes.spells, "usedSpellbooks", {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "actor.system.attributes.spells.usedSpellbooks is deprecated with no replacement.",
+          {
+            since: "PF1 vNEXT",
+            until: "PF1 vNEXT+1",
+          }
+        );
+
+        return Object.keys(spellbooks).filter((book) => spellbooks[book].inUse);
+      },
+    });
   }
 
   /**

@@ -313,7 +313,7 @@ export class ActorSheetPF extends ActorSheet {
     this._prepareItems(context);
 
     // Compute encumbrance
-    context.encumbrance = this._computeEncumbrance(context.system);
+    context.encumbrance = this._computeEncumbrance();
 
     // Prepare skillsets
     this._prepareSkillsets(context);
@@ -788,16 +788,16 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Compute the level and percentage of encumbrance for an Actor.
    *
-   * @param {object} actorData      The data object for the Actor being rendered
    * @returns {object}               An object describing the character's encumbrance level
    * @private
    */
-  _computeEncumbrance(actorData) {
-    const carriedWeight = actorData.attributes.encumbrance.carriedWeight;
+  _computeEncumbrance() {
+    const system = this.actor.system;
+    const carriedWeight = system.attributes.encumbrance.carriedWeight;
     const load = {
-      light: actorData.attributes.encumbrance.levels.light,
-      medium: actorData.attributes.encumbrance.levels.medium,
-      heavy: actorData.attributes.encumbrance.levels.heavy,
+      light: system.attributes.encumbrance.levels.light,
+      medium: system.attributes.encumbrance.levels.medium,
+      heavy: system.attributes.encumbrance.levels.heavy,
     };
     const usystem = pf1.utils.getWeightSystem();
     const carryLabel =
@@ -812,17 +812,17 @@ export class ActorSheetPF extends ActorSheet {
         heavy: Math.clamped(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 0, 99.5),
       },
       encumbered: {
-        light: actorData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium,
-        medium: actorData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.heavy,
-        heavy: actorData.attributes.encumbrance.carriedWeight >= actorData.attributes.encumbrance.levels.heavy,
+        light: system.attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium,
+        medium: system.attributes.encumbrance.level >= pf1.config.encumbranceLevels.heavy,
+        heavy: system.attributes.encumbrance.carriedWeight >= system.attributes.encumbrance.levels.heavy,
       },
-      light: actorData.attributes.encumbrance.levels.light,
-      medium: actorData.attributes.encumbrance.levels.medium,
-      heavy: actorData.attributes.encumbrance.levels.heavy,
-      aboveHead: actorData.attributes.encumbrance.levels.heavy,
-      offGround: actorData.attributes.encumbrance.levels.heavy * 2,
-      dragPush: actorData.attributes.encumbrance.levels.heavy * 5,
-      value: actorData.attributes.encumbrance.carriedWeight,
+      light: system.attributes.encumbrance.levels.light,
+      medium: system.attributes.encumbrance.levels.medium,
+      heavy: system.attributes.encumbrance.levels.heavy,
+      aboveHead: system.attributes.encumbrance.levels.heavy,
+      offGround: system.attributes.encumbrance.levels.heavy * 2,
+      dragPush: system.attributes.encumbrance.levels.heavy * 5,
+      value: system.attributes.encumbrance.carriedWeight,
       carryLabel: carryLabel,
     };
 

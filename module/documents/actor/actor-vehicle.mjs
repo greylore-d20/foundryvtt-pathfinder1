@@ -97,6 +97,7 @@ export class ActorVehiclePF extends ActorPF {
     applyChanges.call(this);
 
     this.prepareHealth();
+    this._computeEncumbrance();
 
     // Setup links
     this.prepareItemLinks();

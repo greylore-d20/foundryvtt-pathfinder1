@@ -45,42 +45,64 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
    */
   async getData() {
     const isOwner = this.document.isOwner;
-    const data = {
+    const context = {
       owner: isOwner,
+      system: this.actor.system,
       limited: this.document.limited,
       editable: this.isEditable,
       cssClass: isOwner ? "editable" : "locked",
       config: pf1.config,
       isGM: game.user.isGM,
+      labels: {
+        currency: `PF1.Currency.Inline.${this.itemValueDenomination}`,
+      },
+      isLootSheet: true, // inventory include unwanted data otherwise
     };
 
-    data.system = foundry.utils.deepClone(this.document.system);
+    context.system = foundry.utils.deepClone(this.document.system);
 
-    data.vehicleSizes = Object.fromEntries(
+    context.vehicleSizes = Object.fromEntries(
       Object.entries(pf1.config.vehicles.size).map(([key, data]) => [key, data.label])
     );
 
-    const notes = data.system.details?.notes?.value ?? "";
-    data.notesHTML = notes
+    const notes = context.system.details?.notes?.value ?? "";
+    context.notesHTML = notes
       ? await TextEditor.enrichHTML(notes, {
           secrets: isOwner,
-          rollData: data.rollData,
+          rollData: context.rollData,
           async: true,
           relativeTo: this.actor,
         })
       : null;
 
     // The Actor and its Items
-    data.actor = this.actor;
-    data.token = this.token;
-    data.items = this.document.items
+    context.actor = this.actor;
+    context.token = this.token;
+    context.items = this.document.items
       .map((item) => this._prepareItem(item))
       .sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     // Prepare owned items
-    this._prepareItems(data);
+    this._prepareItems(context);
 
-    return data;
+    //context.sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier");
+
+    const baseCurrency = this.actor.getTotalCurrency({ inLowestDenomination: true });
+    context.hasCurrency = true; // Never fade currency field for this
+
+    // Get total value
+    const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
+    const cpSellValue = this.calculateSellItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
+
+    context.totalValue = pf1.utils.currency.split(cpValue);
+    context.sellValue = pf1.utils.currency.split(cpSellValue);
+    context.labels.totalValue = game.i18n.format("PF1.Containers.TotalValue", context.totalValue);
+    context.labels.sellValue = game.i18n.format("PF1.Containers.SellValue", context.sellValue);
+
+    // Compute encumbrance
+    context.encumbrance = this._computeEncumbrance();
+
+    return context;
   }
 
   /* -------------------------------------------- */
@@ -124,6 +146,35 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
     }
 
     data.attacks = attackSections;
+
+    // Categorize items as inventory, spellbook, features, and classes
+    const inventory = Object.values(pf1.config.sheetSections.inventory)
+      .map((data) => ({ ...data }))
+      .sort((a, b) => a.sort - b.sort);
+
+    // Alter inventory columns
+    for (const section of inventory) {
+      section.interface = { ...section.interface, value: true, actions: false, noEquip: true };
+    }
+
+    const items = this.actor.items.filter((i) => i.isPhysical).map(this._prepareItem);
+    items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+
+    // Organize Inventory
+    for (const i of items) {
+      const section = inventory.find((section) => this._applySectionFilter(i, section));
+      if (section) {
+        section.items ??= [];
+        section.items.push(i);
+      }
+    }
+
+    data.inventory = inventory;
+  }
+
+  /** @type {CoinType} */
+  get itemValueDenomination() {
+    return "gp";
   }
 
   _updateObject(event, formData) {

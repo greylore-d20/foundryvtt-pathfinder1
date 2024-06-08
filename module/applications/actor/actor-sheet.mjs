@@ -153,7 +153,7 @@ export class ActorSheetPF extends ActorSheet {
       config: pf1.config,
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.toObject() : null,
-      usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
+      usesAnySpellbook: Object.values(this.actor.system.attributes.spells.spellbooks).some((book) => book.inUse),
       sourceData: {},
       skillsLocked: this._skillsLocked,
       units: {

@@ -825,8 +825,14 @@ export class ItemPF extends ItemBasePF {
 
     shared.category = category;
 
-    for (const s of scripts) {
-      await s.execute(shared, extraParams);
+    try {
+      for (const s of scripts) {
+        await s.execute(shared, extraParams);
+      }
+    } catch (error) {
+      console.error(`Script call execution failed\n`, error, this);
+      // Rethrow to ensure everything cancels
+      throw new Error("Error occurred while executing a script call", { cause: error });
     }
 
     return shared;

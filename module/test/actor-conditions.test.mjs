@@ -20,7 +20,7 @@ export const registerActorConditionsTests = () => {
         await actor.delete();
       });
 
-      const shakenCondition = { name: "Shaken", value: -2, modifier: "penalty" };
+      const shakenCondition = { name: "Shaken", value: -2, type: "untyped" };
 
       // ---------------------------------- //
       // Shaken                             //
@@ -101,7 +101,7 @@ export const registerActorConditionsTests = () => {
           await actor.setCondition("sickened", false);
         });
 
-        const sickenedCondition = { name: "Sickened", value: -2, modifier: "penalty" };
+        const sickenedCondition = { name: "Sickened", value: -2, type: "untyped" };
 
         it("can be enabled", async function () {
           expect(actor.hasCondition("sickened")).to.be.true;
@@ -207,8 +207,7 @@ export const registerActorConditionsTests = () => {
           await actor.setCondition("fatigued", true);
         });
         after(async () => {
-          await actor.setCondition("fatigued", false);
-          await actor.setCondition("exhausted", false);
+          await actor.setConditions({ fatigued: false, exhausted: false });
         });
 
         it("Str and Dex penalty of -1 for fatigue", function () {
@@ -217,7 +216,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 1);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Fatigued",
-              modifier: "penalty",
+              type: "untyped",
               value: -2,
             });
           }
@@ -235,7 +234,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 3);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Exhausted",
-              modifier: "penalty",
+              type: "untyped",
               value: -6,
             });
           }

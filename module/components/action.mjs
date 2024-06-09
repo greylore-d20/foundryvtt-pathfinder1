@@ -581,7 +581,7 @@ export class ItemAction {
       ability: {
         attack: "",
         damage: "",
-        damageMult: 1,
+        damageMult: null,
         critRange: 20,
         critMult: 2,
       },
@@ -656,9 +656,11 @@ export class ItemAction {
       foundry.utils.setProperty(this.data, "enh.value", null);
     }
 
-    // Initialize default damageMult if missing
-    if (this.data.ability?.damageMult === undefined) {
-      foundry.utils.setProperty(this.data, "ability.damageMult", 1);
+    // Initialize default damageMult if missing (for things that can't inherit it from item)
+    if (!Number.isFinite(this.data.ability?.damageMult)) {
+      let canHold = this.item?.isPhysical ?? this.item?.isQuasiPhysical ?? false;
+      if (!this.hasAttack) canHold = false;
+      if (!canHold) foundry.utils.setProperty(this.data, "ability.damageMult", 1);
     }
     if (this.data.naturalAttack?.secondary?.damageMult === undefined) {
       foundry.utils.setProperty(this.data, "naturalAttack.secondary.damageMult", 0.5);

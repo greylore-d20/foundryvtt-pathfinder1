@@ -56,7 +56,7 @@
 </div>
 {{/if}}
 
-{{#if hasAttackRoll}}
+{{#if hasAttack}}
 {{!-- Attack Name --}}
 <h3 class="form-header">{{localize "PF1.Attack"}}</h3>
 <div class="form-group">
@@ -123,7 +123,7 @@
 </div>
 {{/if}}
 
-{{#if hasAttackRoll}}
+{{#if hasAttack}}
 <div class="form-group multi-attack-type">
   <label>{{localize "PF1.ExtraAttacks.Label"}}</label>
   <div class="form-fields">
@@ -186,9 +186,9 @@
       {{selectOptions config.abilities selected=data.ability.damage blank=""}}
     </select>
     <select name="ability.damageMult" data-dtype="Number">
-      {{#unless canHold}}
+      {{#if canHold}}
       <option value=''>{{localize "PF1.HeldMult" mult=heldAbilityMultiplier}}</option>
-      {{/unless}}
+      {{/if}}
       {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}
     </select>
     <label>{{localize "PF1.MaxShort"}}</label>
@@ -283,7 +283,7 @@
 {{/if}}
 
 {{!-- Power Attack/Deadly Aim properties --}}
-{{#if hasAttackRoll}}
+{{#if hasAttack}}
 <h3 class="form-header">{{localize "PF1.PowerAttack"}}/{{localize "PF1.DeadlyAim"}}</h3>
 <div class="form-group">
   <label>{{localize "PF1.Multiplier"}}</label>

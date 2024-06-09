@@ -76,12 +76,11 @@ export class ItemActionSheet extends FormApplication {
     });
 
     // Action Details
-    context.hasAttackRoll = action.hasAttack;
+    context.hasAttack = action.hasAttack;
     context.actionType = context.data.actionType;
     context.isHealing = context.actionType === "heal";
     context.hasDamage = action.hasDamage;
     context.isCombatManeuver = action.isCombatManeuver;
-    context.hasAttack = action.hasAttack;
     context.canCrit = action.hasAttack && action.data.ability?.critMult > 1;
     // Can have crit and non-crit damage, or simply show them if they've been defined.
     context.hasCritDamage = context.canCrit || context.data.damage?.critParts?.length > 0;
@@ -138,8 +137,6 @@ export class ItemActionSheet extends FormApplication {
       context.isNaturalAttack = item.system.subType === "natural";
     }
 
-    context.canHold = item.isPhysical ?? item.isQuasiPhysical ?? false;
-
     context.canUseAmmo = context.isNaturalAttack !== true;
     context.usesAmmo = !!action.ammoType;
     context.inheritedAmmoType = item?.system.ammo?.type;
@@ -181,6 +178,9 @@ export class ItemActionSheet extends FormApplication {
 
     // Inherited held option's name if any
     context.inheritedHeld = pf1.config.weaponHoldTypes[context.item.system.held];
+    // Can hold
+    context.canHold = item.isPhysical ?? item.isQuasiPhysical ?? false;
+    if (!context.hasAttack) context.canHold = false;
 
     // Add alignments
     context.alignmentTypes = this._prepareAlignments(this.action.alignments);

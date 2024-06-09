@@ -1996,11 +1996,6 @@ export class ItemPF extends ItemBasePF {
     return this.getChangeTargets(target);
   }
 
-  async addChange() {
-    const change = new ItemChange({}, this);
-    return change;
-  }
-
   getValue() {
     foundry.utils.logCompatibilityWarning("ItemPF.getValue() is deprecated, only physical items have value", {
       since: "PF1 vNEXT",
@@ -2234,7 +2229,7 @@ export class ItemPF extends ItemBasePF {
     // Add proficiency penalty
     try {
       if (!this.getProficiency(true)) {
-        describePart(-4, game.i18n.localize("PF1.Proficiency.Penalty"), "penalty", -500);
+        describePart(-4, game.i18n.localize("PF1.Proficiency.Penalty"), "untyped", -500);
       }
     } catch (error) {
       // Ignore proficiency incompatibility.
@@ -2242,7 +2237,7 @@ export class ItemPF extends ItemBasePF {
 
     // Broken condition
     if (this.isBroken) {
-      describePart(-2, game.i18n.localize("PF1.Broken"), "penalty", -500);
+      describePart(-2, game.i18n.localize("PF1.Broken"), "untyped", -500);
     }
 
     // Add secondary natural attack penalty

@@ -187,7 +187,6 @@ export const getChangeFlat = function (target, modifierType, value) {
         case "morale":
         case "profane":
         case "sacred":
-        case "penalty":
           result.push(
             "system.attributes.ac.flatFooted.total",
             "system.attributes.cmd.total",
@@ -642,18 +641,16 @@ function calculateHealth(actor, allClasses, changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: value,
-        target: "misc",
-        subTarget: "mhp",
-        modifier: "untypedPerm",
+        target: "mhp",
+        type: "untypedPerm",
         flavor: source.name,
       })
     );
     changes.push(
       new pf1.components.ItemChange({
         formula: value,
-        target: "misc",
-        subTarget: "vigor",
-        modifier: "untypedPerm",
+        target: "vigor",
+        type: "untypedPerm",
         flavor: source.name,
       })
     );
@@ -772,9 +769,8 @@ export const addDefaultChanges = function (changes) {
         changes.push(
           new pf1.components.ItemChange({
             formula: base,
-            target: "savingThrows",
-            subTarget: a,
-            modifier: "untypedPerm",
+            target: a,
+            type: "untypedPerm",
             flavor: cls.name,
           })
         );
@@ -789,9 +785,8 @@ export const addDefaultChanges = function (changes) {
       changes.push(
         new pf1.components.ItemChange({
           formula: Math.floor(total),
-          target: "savingThrows",
-          subTarget: a,
-          modifier: "untypedPerm",
+          target: a,
+          type: "untypedPerm",
           flavor: game.i18n.localize("PF1.Base"),
         })
       );
@@ -804,9 +799,8 @@ export const addDefaultChanges = function (changes) {
       changes.push(
         new pf1.components.ItemChange({
           formula: total,
-          target: "savingThrows",
-          subTarget: a,
-          modifier: "untypedPerm",
+          target: a,
+          type: "untypedPerm",
           flavor: game.i18n.localize("PF1.SavingThrowGoodFractionalBonus"),
         })
       );
@@ -820,9 +814,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "@attributes.hpAbility.mod * @attributes.hd.total",
         operator: "add",
-        target: "misc",
-        subTarget: "mhp",
-        modifier: "base",
+        target: "mhp",
+        type: "base",
         flavor: pf1.config.abilities[hpAbility],
       })
     );
@@ -832,9 +825,8 @@ export const addDefaultChanges = function (changes) {
         new pf1.components.ItemChange({
           formula: "@attributes.hpAbility.total * 2 + @abilities.hpAbility.drain",
           operator: "add",
-          target: "misc",
-          subTarget: "wounds",
-          modifier: "base",
+          target: "wounds",
+          type: "base",
           flavor: pf1.config.abilities[hpAbility],
         })
       );
@@ -848,9 +840,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: base,
-        target: "speed",
-        subTarget: `${k}Speed`,
-        modifier: "base",
+        target: `${k}Speed`,
+        type: "base",
         operator: "set",
         priority: 1001,
         flavor: game.i18n.localize("PF1.Base"),
@@ -866,9 +857,8 @@ export const addDefaultChanges = function (changes) {
         _id: "_bab", // HACK: Force ID to be special
         formula: "@attributes.bab.total",
         operator: "add",
-        target: "attack",
-        subTarget: "~attackCore",
-        modifier: "untypedPerm",
+        target: "~attackCore",
+        type: "untypedPerm",
         flavor: game.i18n.localize("PF1.BAB"),
       })
     );
@@ -877,9 +867,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "-@attributes.energyDrain",
         operator: "add",
-        target: "attack",
-        subTarget: "~attackCore",
-        modifier: "untypedPerm",
+        target: "~attackCore",
+        type: "untypedPerm",
         flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
@@ -888,9 +877,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "-@attributes.acp.attackPenalty",
         operator: "add",
-        target: "attack",
-        subTarget: "~attackCore",
-        modifier: "penalty",
+        target: "~attackCore",
+        type: "untyped",
         flavor: game.i18n.localize("PF1.ArmorCheckPenalty"),
       })
     );
@@ -903,9 +891,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "@attributes.bab.total",
         operator: "add",
-        target: "misc",
-        subTarget: "cmd",
-        modifier: "untypedPerm",
+        target: "cmd",
+        type: "untypedPerm",
         flavor: game.i18n.localize("PF1.BAB"),
       })
     );
@@ -915,9 +902,8 @@ export const addDefaultChanges = function (changes) {
       changes.push(
         new pf1.components.ItemChange({
           formula: `@abilities.${strAbl}.mod`,
-          target: "misc",
-          subTarget: "cmd",
-          modifier: "untypedPerm",
+          target: "cmd",
+          type: "untypedPerm",
           flavor: pf1.config.abilities[strAbl],
         })
       );
@@ -927,9 +913,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "-@attributes.energyDrain",
         operator: "add",
-        target: "misc",
-        subTarget: "cmd",
-        modifier: "untypedPerm",
+        target: "cmd",
+        type: "untypedPerm",
         flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
@@ -943,9 +928,8 @@ export const addDefaultChanges = function (changes) {
         new pf1.components.ItemChange({
           formula: `@abilities.${abl}.mod`,
           operator: "add",
-          target: "misc",
-          subTarget: "init",
-          modifier: "untypedPerm",
+          target: "init",
+          type: "untypedPerm",
           priority: -100,
           flavor: pf1.config.abilities[abl],
         })
@@ -958,9 +942,8 @@ export const addDefaultChanges = function (changes) {
         new pf1.components.ItemChange({
           formula: "-@attributes.acp.attackPenalty",
           operator: "add",
-          target: "misc",
-          subTarget: "init",
-          modifier: "penalty",
+          target: "init",
+          type: "untyped",
           priority: -100,
           flavor: game.i18n.localize("PF1.ArmorCheckPenalty"),
         })
@@ -977,9 +960,8 @@ export const addDefaultChanges = function (changes) {
         new pf1.components.ItemChange({
           formula: `@abilities.${abl}.mod`,
           operator: "add",
-          target: "savingThrows",
-          subTarget: "fort",
-          modifier: "untypedPerm",
+          target: "fort",
+          type: "untypedPerm",
           flavor: pf1.config.abilities[abl],
         })
       );
@@ -991,9 +973,8 @@ export const addDefaultChanges = function (changes) {
         new pf1.components.ItemChange({
           formula: `@abilities.${abl}.mod`,
           operator: "add",
-          target: "savingThrows",
-          subTarget: "ref",
-          modifier: "untypedPerm",
+          target: "ref",
+          type: "untypedPerm",
           flavor: pf1.config.abilities[abl],
         })
       );
@@ -1005,9 +986,8 @@ export const addDefaultChanges = function (changes) {
         new pf1.components.ItemChange({
           formula: `@abilities.${abl}.mod`,
           operator: "add",
-          target: "savingThrows",
-          subTarget: "will",
-          modifier: "untypedPerm",
+          target: "will",
+          type: "untypedPerm",
           flavor: pf1.config.abilities[abl],
         })
       );
@@ -1017,9 +997,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "-@attributes.energyDrain",
         operator: "add",
-        target: "savingThrows",
-        subTarget: "allSavingThrows",
-        modifier: "penalty",
+        target: "allSavingThrows",
+        type: "untyped",
         flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
@@ -1030,9 +1009,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: sr,
-        target: "misc",
-        subTarget: "spellResist",
-        modifier: "untyped",
+        target: "spellResist",
+        type: "untyped",
         priority: 1000,
         flavor: game.i18n.localize("PF1.CustomBonus"),
       })
@@ -1044,9 +1022,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: cStr,
-        target: "misc",
-        subTarget: "carryStr",
-        modifier: "untyped",
+        target: "carryStr",
+        type: "untyped",
         priority: 1000,
         flavor: game.i18n.localize("PF1.Custom"),
       })
@@ -1056,9 +1033,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: cMultBase,
-        target: "misc",
-        subTarget: "carryMult",
-        modifier: "base",
+        target: "carryMult",
+        type: "base",
         priority: 1000,
         flavor: game.i18n.localize("PF1.Base"),
       })
@@ -1067,9 +1043,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: cMult,
-        target: "misc",
-        subTarget: "carryMult",
-        modifier: "untyped",
+        target: "carryMult",
+        type: "untyped",
         priority: 1000,
         flavor: game.i18n.localize("PF1.Custom"),
       })
@@ -1094,8 +1069,8 @@ export const addDefaultChanges = function (changes) {
         changes.push(
           new pf1.components.ItemChange({
             formula: value,
-            subTarget: key,
-            modifier: "base",
+            trget: key,
+            type: "base",
             flavor: game.i18n.localize("PF1.Custom"),
             operator: "set",
           })
@@ -1110,8 +1085,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: ac,
-        subTarget: "nac",
-        modifier: "untyped",
+        target: "nac",
+        type: "untyped",
         flavor: game.i18n.format("PF1.CustomBonusType", { type: game.i18n.localize("PF1.NaturalArmor") }),
       })
     );
@@ -1130,8 +1105,8 @@ export const addDefaultChanges = function (changes) {
           new pf1.components.ItemChange(
             {
               formula: baseAC,
-              subTarget: armorTarget,
-              modifier: "base",
+              target: armorTarget,
+              type: "base",
             },
             { parent: item }
           )
@@ -1140,8 +1115,8 @@ export const addDefaultChanges = function (changes) {
           new pf1.components.ItemChange(
             {
               formula: enhAC,
-              subTarget: armorTarget,
-              modifier: "enhancement",
+              target: armorTarget,
+              type: "enhancement",
             },
             { parent: item }
           )
@@ -1158,9 +1133,8 @@ export const addDefaultChanges = function (changes) {
       changes.push(
         new pf1.components.ItemChange({
           formula: flyValue,
-          target: "skill",
-          subTarget: "skill.fly",
-          modifier: "racial",
+          target: "skill.fly",
+          type: "racial",
           flavor: game.i18n.localize("PF1.Movement.FlyManeuverability.Label"),
         })
       );
@@ -1172,9 +1146,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "(min(1, @attributes.speed.climb.total) * 8)",
         operator: "add",
-        target: "skill",
-        subTarget: "skill.clm",
-        modifier: "racial",
+        target: "skill.clm",
+        type: "racial",
         priority: -1,
         flavor: game.i18n.localize("PF1.Movement.Mode.climb"),
       })
@@ -1184,9 +1157,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "(min(1, @attributes.speed.swim.total) * 8)",
         operator: "add",
-        target: "skill",
-        subTarget: "skill.swm",
-        modifier: "racial",
+        target: "skill.swm",
+        type: "racial",
         priority: -1,
         flavor: game.i18n.localize("PF1.Movement.Mode.swim"),
       })
@@ -1200,8 +1172,7 @@ export const addDefaultChanges = function (changes) {
         formula: "-@attributes.energyDrain",
         operator: "add",
         target: "skills",
-        subTarget: "skills",
-        modifier: "untypedPerm",
+        type: "untypedPerm",
         flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
     );
@@ -1215,8 +1186,7 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: pf1.config.sizeMods[sizeKey],
         target: "ac",
-        subTarget: "ac",
-        modifier: "size",
+        type: "size",
         flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
@@ -1224,9 +1194,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: pf1.config.sizeStealthMods[sizeKey],
-        target: "skill",
-        subTarget: "skill.ste",
-        modifier: "size",
+        target: "skill.ste",
+        type: "size",
         flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
@@ -1234,9 +1203,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: pf1.config.sizeFlyMods[sizeKey],
-        target: "skill",
-        subTarget: "skill.fly",
-        modifier: "size",
+        target: "skill.fly",
+        type: "size",
         flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
@@ -1244,9 +1212,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: pf1.config.sizeSpecialMods[sizeKey],
-        target: "misc",
-        subTarget: "cmd",
-        modifier: "size",
+        target: "cmd",
+        type: "size",
         flavor: game.i18n.localize("PF1.ModifierType.size"),
       })
     );
@@ -1257,8 +1224,8 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: this.system.details.bonusSkillRankFormula,
-        subTarget: "bonusSkillRanks",
-        modifier: "untyped",
+        target: "bonusSkillRanks",
+        type: "untyped",
         flavor: game.i18n.localize("PF1.SkillBonusRankFormula"),
       })
     );
@@ -1296,8 +1263,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "-(@attributes.energyDrain * 5)",
         operator: "add",
-        subTarget: "mhp",
-        modifier: "untyped",
+        target: "mhp",
+        type: "untyped",
         priority: -750,
         flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })
@@ -1307,8 +1274,8 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: "-(@attributes.energyDrain * 5)",
         operator: "add",
-        subTarget: "vigor",
-        modifier: "untyped",
+        target: "vigor",
+        type: "untyped",
         priority: -750,
         flavor: game.i18n.localize("PF1.Condition.energyDrain"),
       })

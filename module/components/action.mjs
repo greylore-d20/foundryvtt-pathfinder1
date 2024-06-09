@@ -878,8 +878,8 @@ export class ItemAction {
         new pf1.components.ItemChange({
           formula: "1",
           operator: "add",
-          subTarget: "attack",
-          modifier: "enh",
+          target: "attack",
+          type: "enh",
           value: 1,
           flavor: game.i18n.localize("PF1.EnhancementBonus"),
         })
@@ -892,8 +892,8 @@ export class ItemAction {
         new pf1.components.ItemChange({
           formula: this.enhancementBonus.toString(),
           operator: "add",
-          subTarget: "attack",
-          modifier: "enh",
+          target: "attack",
+          type: "enh",
           value: this.enhancementBonus,
           flavor: game.i18n.localize("PF1.EnhancementBonus"),
         })
@@ -1076,8 +1076,8 @@ export class ItemAction {
           new pf1.components.ItemChange({
             formula: this.enhancementBonus.toString(),
             operator: "add",
-            subTarget: "damage",
-            modifier: "enh",
+            target: "damage",
+            type: "enh",
             value: this.enhancementBonus,
             flavor: game.i18n.localize("PF1.EnhancementBonus"),
           })

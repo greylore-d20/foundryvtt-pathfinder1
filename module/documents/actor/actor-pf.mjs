@@ -1845,22 +1845,22 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add wound threshold data
-    {
-      const hpconf = game.settings.get("pf1", "healthConfig").variants;
-      const wtUsage = this.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
-      if (wtUsage > 0) {
-        const wtData = this.getWoundThresholdData(actorData);
+    const hpconf = game.settings.get("pf1", "healthConfig").variants;
+    const hpconfvariant = this.type === "npc" ? hpconf.npc : hpconf.pc;
+    const wtUsage = hpconfvariant.useWoundThresholds;
+    if (wtUsage > 0) {
+      const wtData = this.getWoundThresholdData({ healthConfig: hpconfvariant });
 
-        if (wtData.level > 0) {
-          for (const fk of pf1.config.woundThresholdChangeTargets) {
-            const flats = getChangeFlat.call(this, fk, "penalty");
-            for (const k of flats) {
-              if (!k) continue;
-              sourceDetails[k].push({
-                name: pf1.config.woundThresholdConditions[wtData.level],
-                value: -wtData.penalty,
-              });
-            }
+      if (wtData.level > 0) {
+        const penalty = -wtData.penalty;
+        for (const fk of pf1.config.woundThresholdChangeTargets) {
+          const flats = getChangeFlat.call(this, fk, "untyped", penalty);
+          for (const k of flats) {
+            if (!k) continue;
+            sourceDetails[k].push({
+              name: pf1.config.woundThresholdConditions[wtData.level],
+              value: penalty,
+            });
           }
         }
       }
@@ -3918,31 +3918,35 @@ export class ActorPF extends ActorBasePF {
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    *
    * @protected
-   * @param {object} [data]
+   * @param {object} [options]
+   * @param {object} [options.healthConfig] - PC/NPC health config variant data
    * @returns {number} Multiplier
    */
-  getWoundThresholdMultiplier(data = null) {
-    data = data ?? this.system;
+  getWoundThresholdMultiplier({ healthConfig } = {}) {
+    healthConfig ??= game.settings.get("pf1", "healthConfig").variants[this.type === "npc" ? "npc" : "pc"];
 
-    const hpconf = game.settings.get("pf1", "healthConfig").variants;
-    const conf = this.type === "npc" ? hpconf.npc : hpconf.pc;
-    const override = data.attributes.woundThresholds.override ?? -1;
-    return override >= 0 && conf.allowWoundThresholdOverride ? override : conf.useWoundThresholds;
+    const wt = this.system.attributes?.woundThresholds ?? {};
+    const override = wt.override ?? -1;
+    return override >= 0 && healthConfig.allowWoundThresholdOverride ? override : healthConfig.useWoundThresholds;
   }
 
   /**
    * Returns Wound Threshold relevant data.
    *
    * @protected
-   * @param {object} data Provided valid rollData
+   * @param {object} [options]
+   * @param {object} [options.healthConfig] - PC/NPC health config variant data
    * @returns {{level:number,penalty:number,multiplier:number,valid:boolean}}
    */
-  getWoundThresholdData(data = null) {
-    data = data ?? this.system;
+  getWoundThresholdData({ healthConfig } = {}) {
+    healthConfig ??= game.settings.get("pf1", "healthConfig").variants[this.type === "npc" ? "npc" : "pc"];
 
-    const woundMult = this.getWoundThresholdMultiplier(data),
-      woundLevel = data.attributes.woundThresholds.level ?? 0,
-      woundPenalty = woundLevel * woundMult + (data.attributes.woundThresholds.mod ?? 0);
+    const wt = this.system.attributes?.woundThresholds ?? {};
+
+    const woundMult = this.getWoundThresholdMultiplier({ healthConfig }),
+      woundLevel = wt.level || 0,
+      woundPenalty = woundLevel * woundMult + (wt.mod || 0);
+
     return {
       level: woundLevel,
       penalty: woundPenalty,
@@ -3958,7 +3962,8 @@ export class ActorPF extends ActorBasePF {
    */
   updateWoundThreshold() {
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
-    const usage = this.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+    const variant = this.type === "npc" ? hpconf.npc : hpconf.pc;
+    const usage = variant.useWoundThresholds;
     const wt = this.system.attributes.woundThresholds;
     if (!usage) {
       wt.level = 0;
@@ -3975,7 +3980,7 @@ export class ActorPF extends ActorBasePF {
     let level = usage > 0 ? Math.clamped(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
     if (Number.isNaN(level)) level = 0; // Division by 0 due to max HP on new actors.
 
-    const wtMult = this.getWoundThresholdMultiplier();
+    const wtMult = this.getWoundThresholdMultiplier({ healthConfig: variant });
     const wtMod = wt.mod ?? 0;
 
     wt.level = level;
@@ -3984,12 +3989,15 @@ export class ActorPF extends ActorBasePF {
 
     const penalty = wt.penalty;
     const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
-    for (const fk of changeFlatKeys) {
-      const flats = getChangeFlat.call(this, fk, "penalty");
-      for (const k of flats) {
-        if (!k) continue;
-        const curValue = foundry.utils.getProperty(this, k) ?? 0;
-        foundry.utils.setProperty(this, k, curValue - penalty);
+    // TODO: Convert to changes
+    if (penalty != 0) {
+      for (const fk of changeFlatKeys) {
+        const flats = getChangeFlat.call(this, fk, "untyped", -penalty);
+        for (const k of flats) {
+          if (!k) continue;
+          const curValue = foundry.utils.getProperty(this, k) ?? 0;
+          foundry.utils.setProperty(this, k, curValue - penalty);
+        }
       }
     }
   }

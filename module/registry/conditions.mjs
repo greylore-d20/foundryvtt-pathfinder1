@@ -23,8 +23,8 @@ export class Condition extends RegistryEntry {
           changes: new fields.ArrayField(
             new fields.SchemaField({
               formula: new fields.StringField({}),
-              subTarget: new fields.StringField({}),
-              modifier: new fields.StringField({}),
+              target: new fields.StringField({}),
+              type: new fields.StringField({}),
             })
           ),
           flags: new fields.ArrayField(new fields.StringField({})),
@@ -65,7 +65,7 @@ export class Conditions extends Registry {
    */
   static SET_TO_ZERO = {
     formula: 0,
-    modifier: "untypedPerm",
+    type: "untypedPerm",
     operator: "set",
     priority: 1001,
     continuous: true,
@@ -90,8 +90,8 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "ac",
-            modifier: "penalty",
+            target: "ac",
+            type: "untyped",
           },
         ],
         flags: ["loseDexToAC"],
@@ -113,8 +113,8 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "ac",
-            modifier: "penalty",
+            target: "ac",
+            type: "untyped",
           },
         ],
         flags: ["loseDexToAC"],
@@ -137,8 +137,8 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -1,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
         ],
       },
@@ -154,8 +154,8 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -4,
-            subTarget: "init",
-            modifier: "penalty",
+            target: "init",
+            type: "untyped",
           },
         ],
       },
@@ -169,13 +169,13 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -4,
-            subTarget: "dex",
-            modifier: "penalty",
+            target: "dex",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
         ],
       },
@@ -189,13 +189,13 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -6,
-            subTarget: "str",
-            modifier: "penalty",
+            target: "str",
+            type: "untyped",
           },
           {
             formula: -6,
-            subTarget: "dex",
-            modifier: "penalty",
+            target: "dex",
+            type: "untyped",
           },
         ],
       },
@@ -211,13 +211,13 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "str",
-            modifier: "penalty",
+            target: "str",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "dex",
-            modifier: "penalty",
+            target: "dex",
+            type: "untyped",
           },
         ],
       },
@@ -233,23 +233,23 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allSavingThrows",
-            modifier: "penalty",
+            target: "allSavingThrows",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "skills",
-            modifier: "penalty",
+            target: "skills",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allChecks",
-            modifier: "penalty",
+            target: "allChecks",
+            type: "untyped",
           },
         ],
       },
@@ -265,13 +265,13 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -4,
-            subTarget: "dex",
-            modifier: "penalty",
+            target: "dex",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
         ],
       },
@@ -285,7 +285,7 @@ export class Conditions extends Registry {
         changes: [
           {
             ...this.SET_TO_ZERO,
-            subTarget: "dex",
+            target: "dex",
           },
         ],
         flags: ["loseDexToAC"],
@@ -301,16 +301,16 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: 0,
-            subTarget: "nac",
-            modifier: "base",
+            target: "nac",
+            type: "base",
             operator: "set",
             priority: -10,
           },
           {
             formula: "max(1, @abilities.cha.mod)",
             operator: "add",
-            subTarget: "ac",
-            modifier: "deflection",
+            target: "ac",
+            type: "deflection",
           },
         ],
       },
@@ -339,23 +339,23 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allSavingThrows",
-            modifier: "penalty",
+            target: "allSavingThrows",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "skills",
-            modifier: "penalty",
+            target: "skills",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allChecks",
-            modifier: "penalty",
+            target: "allChecks",
+            type: "untyped",
           },
         ],
       },
@@ -370,11 +370,11 @@ export class Conditions extends Registry {
         changes: [
           {
             ...this.SET_TO_ZERO,
-            subTarget: "dex",
+            target: "dex",
           },
           {
             ...this.SET_TO_ZERO,
-            subTarget: "str",
+            target: "str",
           },
         ],
         flags: ["loseDexToAC"],
@@ -390,21 +390,21 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: "min(0, @abilities.dex.mod)",
-            subTarget: "dexMod",
-            modifier: "untyped",
+            target: "dexMod",
+            type: "untyped",
             operator: "set",
             priority: 1001,
             continuous: true,
           },
           {
             formula: -4,
-            subTarget: "ac",
-            modifier: "penalty",
+            target: "ac",
+            type: "untyped",
           },
           {
             formula: -4,
-            subTarget: "cmd",
-            modifier: "penalty",
+            target: "cmd",
+            type: "untyped",
           },
         ],
         flags: ["loseDexToAC"],
@@ -420,8 +420,8 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -4,
-            subTarget: "mattack",
-            modifier: "penalty",
+            target: "mattack",
+            type: "untyped",
           },
         ],
       },
@@ -435,23 +435,23 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allSavingThrows",
-            modifier: "penalty",
+            target: "allSavingThrows",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "skills",
-            modifier: "penalty",
+            target: "skills",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allChecks",
-            modifier: "penalty",
+            target: "allChecks",
+            type: "untyped",
           },
         ],
       },
@@ -468,28 +468,28 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "wdamage",
-            modifier: "penalty",
+            target: "wdamage",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allSavingThrows",
-            modifier: "penalty",
+            target: "allSavingThrows",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "skills",
-            modifier: "penalty",
+            target: "skills",
+            type: "untyped",
           },
           {
             formula: -2,
-            subTarget: "allChecks",
-            modifier: "penalty",
+            target: "allChecks",
+            type: "untyped",
           },
         ],
       },
@@ -505,7 +505,7 @@ export class Conditions extends Registry {
         changes: [
           {
             ...this.SET_TO_ZERO,
-            subTarget: "dex",
+            target: "dex",
           },
         ],
         flags: ["loseDexToAC"],
@@ -527,8 +527,8 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -2,
-            subTarget: "ac",
-            modifier: "penalty",
+            target: "ac",
+            type: "untyped",
           },
         ],
         flags: ["loseDexToAC"],
@@ -544,13 +544,13 @@ export class Conditions extends Registry {
         changes: [
           {
             formula: -4,
-            subTarget: "ac",
-            modifier: "penalty",
+            target: "ac",
+            type: "untyped",
           },
           {
             formula: -4,
-            subTarget: "attack",
-            modifier: "penalty",
+            target: "attack",
+            type: "untyped",
           },
         ],
       },

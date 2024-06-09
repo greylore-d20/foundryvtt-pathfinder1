@@ -1,6 +1,6 @@
 _id: 8w67l6dzzsi6oz5f
 _key: '!items!8w67l6dzzsi6oz5f'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/magic/control/silhouette-fall-slip-prone.webp
 name: Create Pit
 system:
   actions:
@@ -14,6 +14,9 @@ system:
       duration:
         units: spec
         value: 1 round + 1 round/level
+      measureTemplate:
+        size: '10'
+        type: rect
       name: Use
       range:
         units: medium
@@ -60,6 +63,9 @@ system:
   materials:
     focus: miniature shovel costing 10 gp
   school: con
+  sources:
+    - id: PZO1115
+      pages: '213'
   sr: false
   subschool: creation
 type: spell

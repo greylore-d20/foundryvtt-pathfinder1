@@ -1,6 +1,6 @@
 _id: 4osvw3l6mq9unkec
 _key: '!items!4osvw3l6mq9unkec'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/creatures/abilities/mouth-teeth-rows-white.webp
 name: Hungry Pit
 system:
   actions:
@@ -14,6 +14,9 @@ system:
       duration:
         units: spec
         value: 1 round + 1 round/level
+      measureTemplate:
+        size: '10'
+        type: rect
       name: Use
       range:
         units: medium
@@ -27,14 +30,15 @@ system:
     verbal: true
   description:
     value: >-
-      <p>This spell functions as <i>create pit</i>, except that the pit has the
-      ability to squeeze and crush any creature trapped within it and has a
-      maximum depth of 100 feet. Creatures who fall into the hole take falling
-      damage as normal. In addition, anyone within the pit, not just those on
-      the bottom, takes 4d6 points of bludgeoning damage each round as the pit
-      contracts and then returns to its normal size (a successful Reflex save
-      halves this damage). The ever-shifting walls of the pit are quite
-      difficult to scale and have a Climb DC of 35.</p>
+      <p>This spell functions as
+      @UUID[Compendium.pf1.spells.Item.8w67l6dzzsi6oz5f]{create pit}, except
+      that the pit has the ability to squeeze and crush any creature trapped
+      within it and has a maximum depth of 100 feet. Creatures who fall into the
+      hole take falling damage as normal. In addition, anyone within the pit,
+      not just those on the bottom, takes 4d6 points of bludgeoning damage each
+      round as the pit contracts and then returns to its normal size (a
+      successful Reflex save halves this damage). The ever-shifting walls of the
+      pit are quite difficult to scale and have a Climb DC of 35.</p>
   learnedAt:
     class:
       arcanist: 5
@@ -48,6 +52,9 @@ system:
   materials:
     focus: miniature shovel costing 10 gp
   school: con
+  sources:
+    - id: PZO1115
+      pages: '228'
   sr: false
   subschool: creation
 type: spell

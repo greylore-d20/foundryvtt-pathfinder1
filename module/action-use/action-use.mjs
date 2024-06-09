@@ -1587,7 +1587,7 @@ export class ActionUse {
     await this.getMessageData();
 
     // Post message
-    let result;
+    let result = Promise.resolve();
     if (shared.scriptData?.hideChat !== true) {
       result = this.postMessage();
     }
@@ -1598,6 +1598,9 @@ export class ActionUse {
       // Above does not communicate targets to other users, so..
       game.user.broadcastActivity({ targets: [] });
     }
+
+    // Wait for chat message to be created before continuing
+    await result;
 
     // Call post-use script calls
     await this.executeScriptCalls("postUse");

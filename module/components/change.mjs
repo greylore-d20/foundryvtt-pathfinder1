@@ -552,6 +552,9 @@ export class ItemChange extends foundry.abstract.DataModel {
     delete data.value;
     delete data.continuous;
 
+    // Null priority is pointless
+    if (data.priority === null) delete data.priority;
+
     // Clear undefined values
     for (const [key, value] of Object.entries(data)) {
       if (value === undefined) delete data[key];

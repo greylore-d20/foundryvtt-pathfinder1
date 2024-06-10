@@ -187,10 +187,11 @@ export class ItemSheetPF extends ItemSheet {
     context.isImplant = item.type === "implant";
 
     context.hasAction = item.hasAction;
-    context.showIdentifyDescription = context.isGM && context.isPhysical;
+    context.showBothDescriptions = context.isGM && context.isPhysical;
     context.showUnidentifiedData = item.showUnidentifiedData;
     context.showIdentified = !item.showUnidentifiedData;
     context.showIdentifiedData = context.showIdentified;
+    if (context.showIdentified) context.showBothDescriptions = true;
     context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 
     // Identification information
@@ -266,7 +267,7 @@ export class ItemSheetPF extends ItemSheet {
       });
 
       // Add price
-      if (context.showIdentifyDescription) {
+      if (context.isGM) {
         context.descriptionAttributes.push(
           {
             isNumber: true,
@@ -294,37 +295,35 @@ export class ItemSheetPF extends ItemSheet {
             },
           }
         );
+      } else if (context.showUnidentifiedData) {
+        context.descriptionAttributes.push({
+          isNumber: true,
+          name: "system.unidentified.price",
+          fakeName: true,
+          label: game.i18n.localize("PF1.Price"),
+          value: item.getValue({ sellValue: 1 }),
+          decimals: 2,
+          tooltip: "price",
+          id: "data-price",
+          constraints: {
+            min: 0,
+            step: 0.01,
+          },
+        });
       } else {
-        if (context.showUnidentifiedData) {
-          context.descriptionAttributes.push({
-            isNumber: true,
-            name: "system.unidentified.price",
-            fakeName: true,
-            label: game.i18n.localize("PF1.Price"),
-            value: item.getValue({ sellValue: 1 }),
-            decimals: 2,
-            tooltip: "price",
-            id: "data-price",
-            constraints: {
-              min: 0,
-              step: 0.01,
-            },
-          });
-        } else {
-          context.descriptionAttributes.push({
-            isNumber: true,
-            name: "system.price",
-            label: game.i18n.localize("PF1.Price"),
-            value: item.getValue({ sellValue: 1 }),
-            decimals: 2,
-            tooltip: "price",
-            id: "data-price",
-            constraints: {
-              min: 0,
-              step: 0.01,
-            },
-          });
-        }
+        context.descriptionAttributes.push({
+          isNumber: true,
+          name: "system.price",
+          label: game.i18n.localize("PF1.Price"),
+          value: item.getValue({ sellValue: 1 }),
+          decimals: 2,
+          tooltip: "price",
+          id: "data-price",
+          constraints: {
+            min: 0,
+            step: 0.01,
+          },
+        });
       }
 
       // Add hit points

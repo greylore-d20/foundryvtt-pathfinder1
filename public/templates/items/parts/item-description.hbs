@@ -1,5 +1,5 @@
 <div class="tab description" data-group="primary" data-tab="description">
-  {{#if showIdentifyDescription}}
+  {{#if showBothDescriptions}}
   <nav class="sheet-navigation tabs subtabs description" data-group="description">
     <a class="item" data-tab="identified">{{localize "PF1.Identified"}}</a>
     <a class="item" data-tab="unidentified">{{localize "PF1.Unidentified"}}</a>
@@ -7,7 +7,7 @@
   {{/if}}
 
   <div class="flexrow description-container">
-    {{#if showIdentifyDescription}}
+    {{#if showBothDescriptions}}
     <section class="description-body">
       <div class="tab description-group flexcol" data-group="description" data-tab="identified">
       {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}

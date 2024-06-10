@@ -6,6 +6,8 @@ export class ActorVehiclePF extends ActorPF {
     // Forced deletion to ensure rolldata gets refreshed.
     delete this._rollData;
 
+    this._resetInherentTotals();
+
     // Add base initiative
     this.system.attributes.init.total = this.system.attributes.init.value;
     this.system.attributes.cmd.total = this.system.attributes.cmd.value;
@@ -76,12 +78,21 @@ export class ActorVehiclePF extends ActorPF {
     this.system.resources ??= {};
   }
 
+  _getInherentTotalsKeys() {
+    return {
+      "attributes.hp.max": 0,
+      "details.carryCapacity.bonus.total": 0,
+      "details.carryCapacity.multiplier.total": 0,
+    };
+  }
+
   /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
    * @override
+   * @inheritDoc
    */
-  _resetInherentTotals() {}
+  _getBaseValueFillKeys() {
+    return [{ parent: "abilities.str", key: "base", value: 0 }];
+  }
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF
@@ -205,5 +216,15 @@ export class ActorVehiclePF extends ActorPF {
 
     this._rollData = result;
     return result;
+  }
+
+  /**
+   * @remarks - Vehicles don't have weightless currency
+   * @override
+   * @inheritDoc
+   */
+  getTotalCurrency({ inLowestDenomination = true } = {}) {
+    const total = this.getCurrency("currency", { inLowestDenomination: true });
+    return inLowestDenomination ? total : total / 100;
   }
 }

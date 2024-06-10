@@ -2050,6 +2050,7 @@ export class ActorPF extends ActorBasePF {
     for (const data of this._getBaseValueFillKeys()) {
       const { parent, key, value } = data;
       const o = getProperty(this.system, parent);
+      if (!o) continue; // Not all actor types have these
       o[key] ??= value;
     }
   }
@@ -4248,8 +4249,9 @@ export class ActorPF extends ActorBasePF {
    */
   _computeEncumbrance() {
     // Init base data
+    this.system.attributes ??= {};
     const attributes = this.system.attributes;
-    if (attributes.encumbrance === undefined) attributes.encumbrance = {};
+    attributes.encumbrance ??= {};
     const encumbrance = attributes.encumbrance;
 
     const carry = this.getCarryCapacity();
@@ -4305,9 +4307,9 @@ export class ActorPF extends ActorBasePF {
    */
   getCarryCapacity() {
     // Determine carrying capacity
-    const carryCapacity = this.system.details.carryCapacity;
-    const carryStr = this.system.abilities.str.total + carryCapacity.bonus.total;
-    let carryMultiplier = carryCapacity.multiplier.total;
+    const carryCapacity = this.system.details?.carryCapacity ?? {};
+    const carryStr = this.system.abilities.str.total + carryCapacity.bonus?.total;
+    let carryMultiplier = carryCapacity.multiplier?.total;
     const size = this.system.traits.size;
     if (this.system.attributes.quadruped) carryMultiplier *= pf1.config.encumbranceMultipliers.quadruped[size];
     else carryMultiplier *= pf1.config.encumbranceMultipliers.normal[size];

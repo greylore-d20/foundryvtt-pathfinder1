@@ -10,7 +10,8 @@ export function initializeModuleIntegration() {
   // Drag Ruler <https://foundryvtt.com/packages/drag-ruler>
   if (game.modules.get("drag-ruler")?.active && integration.dragRuler) {
     Hooks.once("dragRuler.ready", (SpeedProvider) => {
-      const enhancedTerrain = game.modules.get("enhanced-terrain-layer")?.active && integration.enhancedTerrainLayer;
+      // TODO: Disable enhanced terrain layer support until the module is fixed or support for it is removed
+      const enhancedTerrain = false; // game.modules.get("enhanced-terrain-layer")?.active && integration.enhancedTerrainLayer;
 
       class Pf1SpeedProvider extends SpeedProvider {
         get colors() {

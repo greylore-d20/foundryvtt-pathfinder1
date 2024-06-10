@@ -80,7 +80,7 @@ export class ActorVehiclePF extends ActorPF {
 
   _getInherentTotalsKeys() {
     return {
-      "attributes.hp.max": 0,
+      "attributes.hp.max": this.system.attributes?.hp?.base ?? 0,
       "details.carryCapacity.bonus.total": 0,
       "details.carryCapacity.multiplier.total": 0,
     };

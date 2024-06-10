@@ -6,14 +6,14 @@ system:
   changes:
     - _id: d4pzl47v
       formula: max(0, ceil(@attributes.hd.total/4 - 1))
-      modifier: untyped
-      subTarget: aac
+      target: aac
+      type: untyped
     - _id: 19d9kfhn
       formula: >-
         (@attributes.hd.total >= 17) ? 2 : ((@attributes.hd.total >= 9 &&
         @attributes.hd.total < 17) ? 1 : 0)
-      modifier: untyped
-      subTarget: sac
+      target: sac
+      type: untyped
   crOffset: '1'
   description:
     value: >-

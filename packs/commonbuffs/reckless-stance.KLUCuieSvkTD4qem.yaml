@@ -6,12 +6,12 @@ system:
   changes:
     - _id: GV1FtNjh
       formula: 1 + floor(@classes.barbarianUnchained / 4)
-      modifier: untyped
-      subTarget: attack
+      target: attack
+      type: untyped
     - _id: 0wRibKqz
       formula: '- (1 + floor(@classes.barbarianUnchained / 4))'
-      modifier: penalty
-      subTarget: ac
+      target: ac
+      type: penalty
   description:
     value: >-
       <p>The barbarian can focus her ferocity. She gains a +1 bonus on melee

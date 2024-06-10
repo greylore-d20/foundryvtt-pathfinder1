@@ -13,16 +13,14 @@ system:
       formula: >-
         (@shield.type < 1 && @armor.type < 1 && @attributes.encumbrance.level <
         1 ? 1 : 0) * (@abilities.wis.mod + floor(@class.level / 4))
-      modifier: untyped
-      priority: null
-      subTarget: ac
+      target: ac
+      type: untyped
     - _id: 3n8ckhwe
       formula: >-
         (@shield.type < 1 && @armor.type < 1 && @attributes.encumbrance.level <
         1 ? 1 : 0) * (@abilities.wis.mod + floor(@class.level / 4))
-      modifier: untyped
-      priority: null
-      subTarget: cmd
+      target: cmd
+      type: untyped
   description:
     value: >-
       <p>When unarmored and unencumbered, the monk adds his Wisdom bonus (if

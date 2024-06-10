@@ -10,12 +10,12 @@ system:
   changes:
     - _id: 8c5qur3o
       formula: '@class.level >= 9 ? 8 : 4'
-      modifier: untyped
-      subTarget: skill.clm
+      target: skill.clm
+      type: untyped
     - _id: ow8gnugm
       formula: '@class.level >= 9 ? (floor(@attributes.speed.land.base / 2)) : 0'
-      modifier: base
-      subTarget: climbSpeed
+      target: climbSpeed
+      type: base
   description:
     value: >-
       <p>At 4th level, chains cover your body and extend from your arms,

@@ -12,14 +12,14 @@ system:
       formula: >-
         max(0, 1 - @shield.type - @armor.type - @attributes.encumbrance.level) *
         @abilities.wis.mod
-      modifier: untyped
-      subTarget: ac
+      target: ac
+      type: untyped
     - _id: 18jtneni
       formula: >-
         max(0, 1 - @shield.type - @armor.type - @attributes.encumbrance.level) *
         @abilities.wis.mod
-      modifier: untyped
-      subTarget: cmd
+      target: cmd
+      type: untyped
   description:
     value: >-
       <p>When unarmored and unencumbered, you add your Wisdom bonus (if any) to

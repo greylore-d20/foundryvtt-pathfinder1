@@ -12,14 +12,14 @@ system:
       formula: >-
         (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
         clamped(floor((@class.level - 1) / 4), 0, 4)
-      modifier: dodge
-      subTarget: ac
+      target: ac
+      type: dodge
     - _id: tvl84rm2
       formula: >-
         (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
         clamped(floor((@class.level - 1) / 4), 0, 4)
-      modifier: dodge
-      subTarget: cmd
+      target: cmd
+      type: dodge
   description:
     value: >-
       <p>At 4th level, when a brawler wears light or no armor, she gains a +1

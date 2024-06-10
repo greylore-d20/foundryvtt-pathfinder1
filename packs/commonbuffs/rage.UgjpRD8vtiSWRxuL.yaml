@@ -6,24 +6,20 @@ system:
   changes:
     - _id: lIgrzIpA
       formula: 4 + (floor((@classes.barbarian.level - 2) / 9) * 2)
-      modifier: morale
-      priority: null
-      subTarget: str
+      target: str
+      type: morale
     - _id: 6i7dqnX9
       formula: 4 + (floor((@classes.barbarian.level - 2) / 9) * 2)
-      modifier: morale
-      priority: null
-      subTarget: con
+      target: con
+      type: morale
     - _id: vNiZTayy
       formula: 2 + floor((@classes.barbarian.level - 2) / 9)
-      modifier: morale
-      priority: null
-      subTarget: will
+      target: will
+      type: morale
     - _id: Ffm7Dn9d
       formula: '-2'
-      modifier: penalty
-      priority: null
-      subTarget: ac
+      target: ac
+      type: penalty
   contextNotes:
     - target: skills
       text: >-

@@ -1,6 +1,6 @@
-{{#if (and showIdentifiedData identify.dc system.aura.school)}}
+{{#if (and showIdentifiedData identify.dc aura)}}
 <h5>{{localize "PF1.Aura.Single"}}</h5>
-<label>{{lookup config.spellSchools system.aura.school}} ({{auraStrength_name}})</label>
+<label>{{aura.school}} ({{aura.strengthLabel}})</label>
 
 <label class="identify-dc">
   <span>{{localize "PF1.IdentifyDC"}}</span>

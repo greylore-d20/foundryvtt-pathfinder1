@@ -196,16 +196,17 @@ export class ItemSheetPF extends ItemSheet {
     // Identification information
     context.identify ??= {};
     context.identify.dc = 0;
-    if (rollData.item.auraStrength != null) {
-      const auraStrength = rollData.item.auraStrength;
-      context.auraStrength = auraStrength;
+    const auraStrength = rollData.item.auraStrength;
+    if (auraStrength) {
+      context.aura = {
+        strength: auraStrength,
+        strengthLabel: pf1.config.auraStrengths[auraStrength],
+        school:
+          pf1.config.spellSchools[itemData.aura.school] || itemData.aura.school || game.i18n.localize("PF1.Unknown"),
+      };
 
-      if (pf1.config.auraStrengths[auraStrength]) {
-        context.auraStrength_name = pf1.config.auraStrengths[auraStrength];
-
-        context.identify.dc = 15 + rollData.item.cl;
-        context.identify.curse = context.identify.dc + 10;
-      }
+      context.identify.dc = 15 + rollData.item.cl;
+      context.identify.curse = context.identify.dc + 10;
     }
 
     // Add spellcasting configuration

@@ -10,27 +10,21 @@
 </div>
 
 {{!-- Aura --}}
-<div class="form-group" data-tooltip="@item.auraStrength : {{auraStrength}}">
+<div class="form-group" data-tooltip="@item.auraStrength : {{aura.strength}}">
   <label class="header">{{localize "PF1.School"}}</label>
-  {{#if system.aura.custom}}
   <div class="form-fields">
-    <label class="aura-strength">{{auraStrength_name}}</label>
+    <label class="aura-strength">{{aura.strengthLabel}}</label>
+    {{#if system.aura.custom}}
     <input type="text" name="system.aura.school" value="{{system.aura.school}}" placeholder="{{localize "PF1.Aura.Single"}}">
-    <label class="checkbox">
-      <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}> {{localize "PF1.Custom"}}
-    </label>
-  </div>
-  {{else}}
-  <div class="form-fields">
-    <label class="aura-strength">{{auraStrength_name}}</label>
+    {{else}}
     <select name="system.aura.school">
-      {{selectOptions config.spellSchools selected=system.aura.school blank=""}}
+      {{selectOptions config.spellSchools selected=system.aura.school blank=(localize "PF1.None")}}
     </select>
+    {{/if}}
     <label class="checkbox">
       <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}> {{localize "PF1.Custom"}}
     </label>
   </div>
-  {{/if}}
 </div>
 
 <div class="form-group stacked">

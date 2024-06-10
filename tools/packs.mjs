@@ -485,6 +485,10 @@ function enforceTemplate(object, template, options = {}) {
     flattened.changes = flattened.changes.map((change) =>
       enforceTemplate(change, defaultData, { documentName: "Component", componentName: "Change" })
     );
+    // Delete special cases
+    flattened.changes.forEach((ch) => {
+      if (ch.priority === null) delete ch.priority;
+    });
   }
 
   return utils.expandObject(flattened);

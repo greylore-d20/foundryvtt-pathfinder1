@@ -137,8 +137,8 @@ export function getChangeDefaultData() {
     _id: "",
     formula: "",
     operator: "add",
-    subTarget: "",
-    modifier: "",
+    target: "",
+    type: "",
     priority: 0,
     flavor: undefined,
   };

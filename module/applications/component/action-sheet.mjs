@@ -176,11 +176,13 @@ export class ItemActionSheet extends FormApplication {
         return obj;
       }, {}) ?? {};
 
+    // Can hold (attacks & weapons only and only if they have attack rolls)
+    context.canHold = context.hasAttack;
     // Inherited held option's name if any
-    context.inheritedHeld = pf1.config.weaponHoldTypes[context.item.system.held];
-    // Can hold
-    context.canHold = item.isPhysical ?? item.isQuasiPhysical ?? false;
-    if (!context.hasAttack) context.canHold = false;
+    context.inheritedHeld =
+      context.canhold && ["attack", "weapon"].includes(item.type)
+        ? pf1.config.weaponHoldTypes[context.item.system.held]
+        : null;
 
     // Add alignments
     context.alignmentTypes = this._prepareAlignments(this.action.alignments);

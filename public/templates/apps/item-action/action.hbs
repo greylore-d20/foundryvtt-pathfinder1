@@ -45,12 +45,15 @@
 </div>
 
 {{!-- Held Override --}}
-{{#if inheritedHeld}}
+{{#if canHold}}
 <div class="form-group select">
   <label>{{localize "PF1.Held"}}</label>
   <div class="form-fields">
     <select name="held">
-      {{selectOptions @root.config.weaponHoldTypes selected=data.held blank=(localize "PF1.InheritAs" inherited=@root.inheritedHeld)}}
+      {{#if inheritedHeld}}
+      <option>{{localize "PF1.InheritAs" inherited=@root.inheritedHeld}}</option>
+      {{/if}}
+      {{selectOptions @root.config.weaponHoldTypes selected=data.held}}
     </select>
   </div>
 </div>

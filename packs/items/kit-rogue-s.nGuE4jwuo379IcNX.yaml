@@ -20,7 +20,6 @@ system:
               type: nonaction
               unchained:
                 type: nonaction
-            img: icons/tools/fasteners/pin-spiked.webp
             name: Use
         description:
           value: >-
@@ -53,7 +52,6 @@ system:
               type: special
               unchained:
                 type: special
-            img: systems/pf1/icons/items/inventory/soap.jpg
             name: Use
         description:
           value: >-
@@ -119,7 +117,6 @@ system:
               unchained:
                 cost: 3
                 type: action
-            img: icons/commodities/stone/rock-chunk-grey.webp
             name: Light torch
         description:
           value: >-
@@ -151,11 +148,12 @@ system:
               type: nonaction
               unchained:
                 type: nonaction
-            attackBonus: '-@attributes.bab.total[BAB] - @size[Size]'
+            attackBonus: '-@size[Size]'
             attackNotes:
               - >-
                 If the creature is wearing shoes or other footwear, it gets a +2
                 armor bonus to AC.
+            bab: '0'
             damage:
               parts:
                 - formula: '1'
@@ -163,7 +161,6 @@ system:
                     custom: ''
                     values:
                       - untyped
-            img: icons/weapons/thrown/ball-spiked.webp
             name: Attack
             uses:
               autoDeductChargesCost: '0'
@@ -173,7 +170,6 @@ system:
               unchained:
                 cost: 2
                 type: action
-            img: icons/weapons/thrown/ball-spiked.webp
             measureTemplate:
               size: '5'
               type: rect
@@ -226,7 +222,6 @@ system:
               type: move
               unchained:
                 type: action
-            img: systems/pf1/icons/items/inventory/brush-bowl.jpg
             name: Use
         description:
           value: >-
@@ -257,9 +252,7 @@ system:
             <p>This kit contains lockpicks and other tools you need to use the
             @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.cSdUATLHBFfw3v4s]{Disable
             Device} skill. Without these tools, you must use improvised tools,
-            and you take a -2 circumstance penalty on
-            @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.cSdUATLHBFfw3v4s]{Disable
-            Device} checks.</p>
+            and you take a -2 circumstance penalty on Disable Device checks.</p>
         equipped: false
         price: 30
         sources:
@@ -337,7 +330,6 @@ system:
               type: nonaction
               unchained:
                 type: nonaction
-            img: systems/pf1/icons/items/inventory/meat.jpg
             name: Use
         description:
           value: >-
@@ -492,12 +484,12 @@ system:
               unchained:
                 cost: 3
                 type: action
-            img: systems/pf1/icons/items/inventory/torch.jpg
             name: Enlight (using flint and steal)
           - _id: KNOoanyFVJlRjrdg
             ability:
               attack: str
               damage: str
+              damageMult: 1
             actionType: mwak
             activation:
               type: attack
@@ -518,7 +510,6 @@ system:
                       - fire
             extraAttacks:
               type: standard
-            img: systems/pf1/icons/items/inventory/torch.jpg
             name: Attack
             uses:
               autoDeductChargesCost: '0'
@@ -661,7 +652,6 @@ system:
               type: attack
               unchained:
                 type: attack
-            img: icons/equipment/neck/necklace-simple-hook-stone.webp
             name: Throw
             range:
               units: ft

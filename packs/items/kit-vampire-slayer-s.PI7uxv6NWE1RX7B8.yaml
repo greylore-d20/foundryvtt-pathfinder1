@@ -45,7 +45,6 @@ system:
               units: inst
             extraAttacks:
               type: standard
-            img: systems/pf1/icons/items/weapons/wooden-stake.png
             name: Attack
             range:
               units: melee
@@ -61,9 +60,8 @@ system:
           max: 2
           value: 2
         material:
-          addon:
-            - null
-            - null
+          base:
+            value: steel
         properties:
           fin: true
         sources:
@@ -148,7 +146,6 @@ system:
                       - untyped
             duration:
               units: inst
-            img: systems/pf1/icons/items/potions/grand-blue.jpg
             measureTemplate:
               color: '#00cfeb'
               size: '5'
@@ -182,12 +179,6 @@ system:
             @UUID[Compendium.pf1.spells.Item.cyzbticmitktat5v]{bless water}
             spell.</p>
         equipped: false
-        material:
-          addon:
-            - null
-            - null
-            - null
-            - null
         price: 25
         proficient: true
         sources:

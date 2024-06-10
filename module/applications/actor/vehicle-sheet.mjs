@@ -112,12 +112,12 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
   /**
    * Organize and classify Owned Items - We just need attacks
    *
-   * @param data
+   * @param context
    * @private
    * @override
    */
-  _prepareItems(data) {
-    const [attacks] = data.items.reduce(
+  _prepareItems(context) {
+    const [attacks] = context.items.reduce(
       (arr, item) => {
         item.img = item.img || Item.implementation.getDefaultArtwork(item);
         item.hasUses = item.uses && item.uses.max > 0;
@@ -145,7 +145,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       }
     }
 
-    data.attacks = attackSections;
+    context.attacks = attackSections;
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = Object.values(pf1.config.sheetSections.inventory)
@@ -157,8 +157,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       section.interface = { ...section.interface, value: true, actions: false, noEquip: true };
     }
 
-    const items = this.actor.items.filter((i) => i.isPhysical).map(this._prepareItem);
-    items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    const items = context.items.filter((i) => i.isPhysical);
 
     // Organize Inventory
     for (const i of items) {
@@ -169,7 +168,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       }
     }
 
-    data.inventory = inventory;
+    context.inventory = inventory;
   }
 
   /** @type {CoinType} */

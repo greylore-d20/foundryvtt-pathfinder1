@@ -1,10 +1,13 @@
 _id: fhary5oz1t4uhc2l
 _key: '!items!fhary5oz1t4uhc2l'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/equipment/hand/gauntlet-armored-red-gold.webp
 name: Rusting Grasp
 system:
   actions:
     - _id: 3n15ka6kg7375iv0
+      ability:
+        attack: str
+      actionType: msak
       activation:
         type: standard
         unchained:
@@ -19,6 +22,7 @@ system:
         value: >-
           one nonmagical ferrous object (or the volume of the object within 3
           ft. of the touched point) or one ferrous creature
+      touch: true
   components:
     divineFocus: 1
     somatic: true
@@ -49,6 +53,9 @@ system:
       Ruins: 4
   level: 4
   school: trs
+  sources:
+    - id: PZO1110
+      pages: '335'
   sr: false
 type: spell
 

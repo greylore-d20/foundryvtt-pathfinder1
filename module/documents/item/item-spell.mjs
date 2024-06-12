@@ -1005,6 +1005,7 @@ export class ItemSpellPF extends ItemPF {
             console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
           }
           label.durationFormula = duration.value;
+          data.variableDuration = /@\w/.test(duration.value);
         }
         break;
     }

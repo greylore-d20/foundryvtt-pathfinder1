@@ -22,7 +22,7 @@
   {{#if label.area}}<strong>{{localize "PF1.Area"}}</strong>&nbsp;{{{label.area}}}<br>{{/if}}
   {{#if label.targets}}<strong>{{localize "PF1.Targets"}}</strong>&nbsp;{{{label.targets}}}<br>{{/if}}
   {{#if label.effect}}<strong>{{localize "PF1.Effect"}}</strong>&nbsp;{{{label.effect}}}<br>{{/if}}
-  {{#if label.duration}}<strong>{{localize "PF1.Duration"}}</strong>&nbsp;<span{{#if label.durationFormula}} data-tooltip="{{localize "PF1.Formula"}}: {{label.durationFormula}}"{{/if}}>{{{label.duration}}}</span><br>{{/if}}
+  {{#if label.duration}}<strong>{{localize "PF1.Duration"}}</strong>&nbsp;<span{{#if label.durationFormula}} data-tooltip="{{localize "PF1.Formula"}}: {{label.durationFormula}}"{{/if}}>{{#if variableDuration}}≅{{/if}}{{{label.duration}}}</span><br>{{/if}}
   {{#if useDCandSR}}
     <strong>{{localize "PF1.SavingThrow"}}</strong>&nbsp;{{{label.savingThrow}}};
     <strong>{{localize "PF1.SpellResistance"}}</strong>&nbsp;{{{label.sr}}}

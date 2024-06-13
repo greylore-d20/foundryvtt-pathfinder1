@@ -1376,7 +1376,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Linked item clicks
     html
-      .find(".tab[data-tab='links'] .links-item .links-item-name .source-item")
+      .find(".tab[data-tab='links'] .links-item .item-name .source-item")
       .on("click", this._openLinkedItem.bind(this));
 
     /* -------------------------------------------- */

@@ -1540,12 +1540,12 @@ export class ActorPF extends ActorBasePF {
       if (eqData) this._prepareArmorData(eqData.armor, armor);
 
       // Wearing heavy armor
-      if (armor.type == 2 && !this.changeFlags.heavyArmorFullSpeed) {
+      if (armor.type == pf1.config.armorTypes.heavy && !this.changeFlags.heavyArmorFullSpeed) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Subtypes.Item.equipment.armor.Types.heavy");
       }
       // Wearing medium armor
-      else if (armor.type == 1 && !this.changeFlags.mediumArmorFullSpeed) {
+      else if (armor.type == pf1.config.armorTypes.medium && !this.changeFlags.mediumArmorFullSpeed) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Subtypes.Item.equipment.armor.Types.medium");
       }

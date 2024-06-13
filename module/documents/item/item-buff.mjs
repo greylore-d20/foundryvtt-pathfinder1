@@ -139,12 +139,14 @@ export class ItemBuffPF extends ItemPF {
    */
   async _preDelete(context, user) {
     const effect = this.effect;
-    context.pf1 ??= {};
-    context.pf1.startTime = effect?.duration.startTime;
-    // Delete associated effect
-    // TODO: Remove this eventually, it is only needed by old items/actors
-    if (effect?.parent !== this) {
-      await effect.delete({ pf1: { delete: this.uuid } });
+    if (effect) {
+      context.pf1 ??= {};
+      context.pf1.startTime = effect?.duration.startTime;
+      // Delete associated effect
+      // TODO: Remove this eventually, it is only needed by old items/actors
+      if (effect?.parent !== this) {
+        await effect.delete({ pf1: { delete: this.uuid } });
+      }
     }
 
     await super._preDelete(context, user);

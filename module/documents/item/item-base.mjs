@@ -141,7 +141,7 @@ export class ItemBasePF extends Item {
           updates.set(parent.id, update);
         }
 
-        update.system.links.children.push({ uuid: item.getRelativeUUID(this) });
+        update.system.links.children.push({ uuid: item.getRelativeUUID(context.parent) });
       }
     }
 

@@ -4201,41 +4201,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Update item child links with supplements.
-   *
-   * @internal
-   * @param {Item[]} items
-   * @param {*} supplements
-   */
-  async _addSupplementChildLinks(items, supplements) {
-    const updates = new Collection();
-    const collection = new Collection();
-    for (const item of items) {
-      const source = item.getFlag("core", "sourceId");
-      if (source) collection.set(source, item);
-    }
-
-    for (const item of items) {
-      const source = item.getFlag("pf1", "source");
-      if (source) {
-        const parent = collection.get(source);
-        let update = updates.get(parent.id);
-        if (!update) {
-          update = { system: { links: { children: [] } } };
-          update._id = parent.id;
-          updates.set(parent.id, update);
-        }
-
-        update.system.links.children.push({ uuid: item.getRelativeUUID(this) });
-      }
-    }
-
-    if (updates.size) {
-      return this.updateEmbeddedDocuments("Item", Array.from(updates));
-    }
-  }
-
-  /**
    * @typedef {object} MobilityPenaltyResult
    * @property {number|null} maxDexBonus - The maximum dexterity bonus allowed for this result.
    * @property {number} acp - The armor check penalty of this result.

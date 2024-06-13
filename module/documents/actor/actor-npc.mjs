@@ -34,6 +34,10 @@ export class ActorNPCPF extends ActorPF {
   prepareSpecificDerivedData() {
     super.prepareSpecificDerivedData();
 
+    this._prepareCR();
+  }
+
+  _prepareCR() {
     // Reset CR
     foundry.utils.setProperty(this.system, "details.cr.total", this.getCR());
 
@@ -90,11 +94,11 @@ export class ActorNPCPF extends ActorPF {
   /**
    * Return the amount of experience granted by killing a creature of a certain CR.
    *
-   * @param cr {null | number}     The creature's challenge rating
-   * @returns {number}       The amount of experience granted per kill
+   * @param {number} cr - The creature's challenge rating
+   * @returns {number|null} - The amount of experience granted per kill. Or null if the CR was invalid.
    */
   getCRExp(cr) {
-    if (cr < 1.0) return Math.max(400 * cr, 0);
-    return pf1.config.CR_EXP_LEVELS[cr];
+    if (cr < 1.0) return Math.floor(Math.max(400 * cr, 0));
+    return pf1.config.CR_EXP_LEVELS[cr] || null;
   }
 }

@@ -1,5 +1,5 @@
-import { ActorSheetPF } from "./actor-sheet.mjs";
-import { CR } from "../../utils/lib.mjs";
+import { ActorSheetPFNPC } from "./npc-sheet.mjs";
+import { CR } from "@utils/lib.mjs";
 
 /**
  * An Actor sheet for Vehicle type characters in the game system.
@@ -7,7 +7,7 @@ import { CR } from "../../utils/lib.mjs";
  *
  * @type {ActorSheetPF}
  */
-export class ActorSheetPFTrap extends ActorSheetPF {
+export class ActorSheetPFTrap extends ActorSheetPFNPC {
   /**
    * Define default rendering options for the NPC sheet
    *
@@ -61,16 +61,6 @@ export class ActorSheetPFTrap extends ActorSheetPF {
     data.labels = {
       cr: CR.fromNumber(data.system.details.cr.total),
     };
-
-    // Reset experience value
-    let newXP = 0;
-    try {
-      const crTotal = data.system.details?.cr?.total || 0;
-      newXP = this.getCRExp(crTotal);
-    } catch (e) {
-      newXP = this.getCRExp(1);
-    }
-    data.system.details.xp = { value: newXP };
 
     const notes = data.system.details?.notes?.value ?? "";
     data.notesHTML = notes
@@ -136,16 +126,5 @@ export class ActorSheetPFTrap extends ActorSheetPF {
     }
 
     data.attacks = attackSections;
-  }
-
-  /**
-   * Return the amount of experience granted by killing a creature of a certain CR.
-   *
-   * @param cr {null | number}     The creature's challenge rating
-   * @returns {number}       The amount of experience granted per kill
-   */
-  getCRExp(cr) {
-    if (cr < 1.0) return Math.max(400 * cr, 0);
-    return pf1.config.CR_EXP_LEVELS[cr];
   }
 }

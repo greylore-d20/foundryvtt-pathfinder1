@@ -94,7 +94,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
       el.addEventListener("pointerleave", async (ev) => this._updateObject(event, this._getSubmitData(updateData)), {
-        passive: true,
+        //passive: true, // Causes Foundry to error
         once: true,
       });
     } else {

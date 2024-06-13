@@ -1,7 +1,7 @@
-import { ActorPF } from "./actor-pf.mjs";
+import { ActorNPCPF } from "./actor-npc.mjs";
 import { applyChanges } from "./utils/apply-changes.mjs";
 
-export class ActorTrapPF extends ActorPF {
+export class ActorTrapPF extends ActorNPCPF {
   prepareBaseData() {
     // Forced deletion to ensure rolldata gets refreshed.
     delete this._rollData;
@@ -84,6 +84,8 @@ export class ActorTrapPF extends ActorPF {
     });
 
     applyChanges.call(this);
+
+    this._prepareCR();
 
     // Setup links
     this.prepareItemLinks();

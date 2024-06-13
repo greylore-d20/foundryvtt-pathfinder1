@@ -1121,3 +1121,18 @@ export function parseAlignment(align) {
   const neutral = align == "tn" ? 2 : align.includes("n") ? 1 : 0;
   return { lawful, evil, chaotic, good, neutral };
 }
+
+/**
+ * Limit precision.
+ *
+ * Reduces number of decimals but does not insist on those decimals to be there.
+ *
+ * @beta
+ * @param {number} number - Number to adjust
+ * @param {number} decimals - Maximum number of decimals
+ * @returns {number} - Adjusted number
+ */
+export function limitPrecision(number, decimals = 2) {
+  const mult = Math.pow(10, decimals);
+  return Math.floor(number * mult) / mult;
+}

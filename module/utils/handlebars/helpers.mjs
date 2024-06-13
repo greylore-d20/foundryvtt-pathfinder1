@@ -141,12 +141,7 @@ export const registerHandlebarsHelpers = function () {
   });
 
   // Alt numberFormat helper
-  Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) => {
-    const { decimals } = hash;
-    if (decimals !== undefined) {
-      // Show up to X decimals but don't insist on it
-      const mult = Math.pow(10, decimals);
-      return Math.floor(number * mult) / mult;
-    }
-  });
+  Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) =>
+    pf1.utils.limitPrecision(number, hash.decimals)
+  );
 };

@@ -32,4 +32,5 @@ export {
   sortArrayByName,
   parseAlignment,
   enrichHTMLUnrolled,
+  limitPrecision,
 } from "./lib.mjs";

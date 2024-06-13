@@ -3,8 +3,6 @@ import { ActorSheetPF } from "./actor-sheet.mjs";
 /**
  * An Actor sheet for Vehicle type characters in the game system.
  * Extends the base ActorSheetPF class.
- *
- * @type {ActorSheetPF}
  */
 export class ActorSheetPFVehicle extends ActorSheetPF {
   /**

@@ -660,7 +660,11 @@ function calculateHealth(actor, allClasses, changes) {
    * @param {ItemPF} healthSource
    */
   function manualHealth(healthSource) {
-    let health = healthSource.system.hp + (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
+    const fcbHp = pf1.config.favoredClassTypes.includes(healthSource.subType)
+      ? healthSource.system.fc.hp.value || 0
+      : 0;
+
+    let health = healthSource.system.hp + fcbHp;
 
     if (!continuous) health = round(health);
     pushHealth(health, healthSource);

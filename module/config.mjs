@@ -1705,9 +1705,13 @@ export const backgroundSkillClasses = ["base", "prestige"];
 /**
  * Valid class types to grant favored class bonuses.
  *
- * Prestige is included due to Favored Prestige Class feat.
+ * @remarks
+ * - Prestige is included due to Favored Prestige Class feat.
+ * - NPC is also valid as it is not omitted by any rules about favored class.
+ * - Only mythic paths and racial HD are omitted.
+ * @see https://www.aonprd.com/Rules.aspx?ID=344
  */
-export const favoredClassTypes = ["base", "prestige"];
+export const favoredClassTypes = ["base", "prestige", "npc"];
 
 /**
  * Bonus modifier granted to class skills.

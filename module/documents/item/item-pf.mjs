@@ -976,7 +976,7 @@ export class ItemPF extends ItemBasePF {
           console.warn(msg, this);
         }
       } catch (err) {
-        console.error(err);
+        console.error("Invalid max uses formula:", { formula: maxFormula, item: this }, err);
       }
     }
   }

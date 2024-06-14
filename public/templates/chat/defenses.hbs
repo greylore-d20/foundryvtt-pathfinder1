@@ -3,36 +3,37 @@
     <h3 class="actor-name">{{localize "PF1.Defenses"}}</h3>
   </header>
 
-  {{#if ac}}
+  {{#with ac}}
   <div class="defense">
     <div class="info-box-joined ac">
       <div class="info-box">
         <h5>{{localize "PF1.ACNormal"}}</h5>
-        <span class="value">{{ac.normal}}</span>
+        <span class="value">{{normal}}</span>
       </div>
       <div class="info-box">
         <h5>{{localize "PF1.ACTouch"}}</h5>
-        <span class="value">{{ac.touch}}</span>
+        <span class="value">{{touch}}</span>
       </div>
       <div class="info-box">
         <h5>{{localize "PF1.ACFFAbbr"}}</h5>
-        <span class="value">{{ac.flatFooted}}</span>
+        <span class="value">{{flatFooted}}</span>
       </div>
     </div>
   </div>
 
-  {{#if ac.notes}}
+  {{#if notes}}
   <div class="flexcol property-group">
     <label>{{localize "PF1.ACNotes"}}</label>
     <div class="flexrow tag-list">
-      {{#each ac.notes as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each notes}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
   {{/if}}
+  {{/with}}
 
-  {{#if cmd}}
+  {{#if (or cmd misc.sr)}}
   <div class="defense">
     <div class="info-box-joined cmd">
       <div class="info-box cmd normal">
@@ -56,8 +57,8 @@
   <div class="flexcol property-group">
     <label>{{localize "PF1.CMDNotes"}}</label>
     <div class="flexrow tag-list">
-      {{#each cmd.notes as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each cmd.notes}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
@@ -68,8 +69,8 @@
   <div class="flexcol property-group">
     <label>{{localize "PF1.SpellResistanceNotes"}}</label>
     <div class="flexrow tag-list">
-      {{#each misc.srNotes as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each misc.srNotes}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
@@ -79,8 +80,8 @@
   <div class="flexcol property-group">
     <label>{{localize "PF1.DamRed"}}</label>
     <div class="flexrow tag-list">
-      {{#each misc.drNotes as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each misc.drNotes}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
@@ -90,32 +91,32 @@
   <div class="flexcol property-group">
     <label>{{localize "PF1.EnRes"}}</label>
     <div class="flexrow tag-list">
-      {{#each misc.energyResistance as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each misc.energyResistance}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
   {{/if}}
 
-  {{#if regen}}
+  {{#with regen}}
   <div class="defense regen">
     <div class="info-box regen">
       <h5>{{localize "PF1.Regeneration"}}</h5>
-      <span class="value">{{#if regen.regen}}{{regen.regen}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</span>
+      <span class="value">{{#if regen}}{{regen}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</span>
     </div>
     <div class="info-box fastheal">
       <h5>{{localize "PF1.FastHealing"}}</h5>
-      <span class="value">{{#if regen.fastHealing}}{{regen.fastHealing}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</span>
+      <span class="value">{{#if fastHealing}}{{fastHealing}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</span>
     </div>
   </div>
-  {{/if}}
+  {{/with}}
 
   {{#if misc.conditions}}
   <div class="flexcol property-group">
     <label>{{localize "PF1.ConditionPlural"}}</label>
     <div class="flexrow tag-list">
-      {{#each misc.conditions as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each misc.conditions}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
@@ -127,108 +128,16 @@
     <button data-action="defense-save" data-save="will">{{localize "PF1.SavingThrowWill"}}</button>
   </div>
 
-  {{#if ac.notes}}
+  {{#with saves}}
+  {{#if notes}}
   <div class="flexcol property-group">
-    <label>{{localize "PF1.ACNotes"}}</label>
+    <label>{{localize "PF1.SaveNotes"}}</label>
     <div class="flexrow tag-list">
-      {{#each ac.notes as |v|}}
-      <span class="tag">{{{v}}}</span>
+      {{#each notes}}
+      <span class="tag">{{{this}}}</span>
       {{/each}}
     </div>
   </div>
   {{/if}}
-  {{/if}}
-
-  {{#if cmd}}
-  <div class="defense">
-    <div class="info-box cmd normal">
-      <h5>{{localize "PF1.CMDAbbr"}}</h5>
-      <span class="value">{{cmd.normal}}</span>
-    </div>
-    <div class="info-box cmd flatfooted">
-      <h5>{{localize "PF1.CMDFFAbbr"}}</h5>
-      <span class="value">{{cmd.flatFooted}}</span>
-    </div>
-    {{#if misc.sr}}
-    <div class="info-box sr">
-      <h5>{{localize "PF1.SpellResistanceAbbr"}}</h5>
-      <span class="value">{{misc.sr}}</span>
-    </div>
-    {{/if}}
-  </div>
-
-  {{#if cmd.notes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.CMDNotes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each cmd.notes as |v|}}
-      <span class="tag">{{{v}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
-  {{/if}}
-
-  {{#if misc.srNotes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.SpellResistanceNotes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each misc.srNotes as |v|}}
-      <span class="tag">{{{v}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
-
-  {{#if misc.drNotes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.DamRed"}}</label>
-    <div class="flexrow tag-list">
-      {{#each misc.drNotes as |v|}}
-      <span class="tag">{{{v}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
-
-  {{#if misc.energyResistance}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.EnRes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each misc.energyResistance as |v|}}
-      <span class="tag">{{{v}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
-
-  {{#if regen}}
-  <div class="defense regen">
-    <div class="info-box regen">
-      <h5>{{localize "PF1.Regeneration"}}</h5>
-      <span class="value">{{#if regen.regen}}{{regen.regen}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</span>
-    </div>
-    <div class="info-box fastheal">
-      <h5>{{localize "PF1.FastHealing"}}</h5>
-      <span class="value">{{#if regen.fastHealing}}{{regen.fastHealing}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</span>
-    </div>
-  </div>
-  {{/if}}
-
-  {{#if misc.conditions}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.ConditionPlural"}}</label>
-    <div class="flexrow tag-list">
-      {{#each misc.conditions as |v|}}
-      <span class="tag">{{{v}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
-
-  <div class="saving-throws flexrow">
-    <button data-action="defense-save" data-save="fort">{{localize "PF1.SavingThrowFort"}}</button>
-    <button data-action="defense-save" data-save="ref">{{localize "PF1.SavingThrowRef"}}</button>
-    <button data-action="defense-save" data-save="will">{{localize "PF1.SavingThrowWill"}}</button>
-  </div>
+  {{/with}}
 </div>

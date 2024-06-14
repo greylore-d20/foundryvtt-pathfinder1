@@ -3310,17 +3310,22 @@ export class ActorPF extends ActorBasePF {
     // Add contextual AC notes
     const acNoteObjects = this.getContextNotes("misc.ac");
     const acNotes = this.formatContextNotes(acNoteObjects, rollData);
-    if (this.system.attributes.acNotes.length > 0) acNotes.push(...this.system.attributes.acNotes.split(/[\n\r]+/));
+    if (this.system.attributes.acNotes) acNotes.push(...this.system.attributes.acNotes.split(/[\n\r]+/));
 
     // Add contextual CMD notes
     const cmdNoteObjects = this.getContextNotes("misc.cmd");
     const cmdNotes = this.formatContextNotes(cmdNoteObjects, rollData);
-    if (this.system.attributes.cmdNotes.length > 0) cmdNotes.push(...this.system.attributes.cmdNotes.split(/[\n\r]+/));
+    if (this.system.attributes.cmdNotes) cmdNotes.push(...this.system.attributes.cmdNotes.split(/[\n\r]+/));
 
     // Add contextual SR notes
     const srNoteObjects = this.getContextNotes("misc.sr");
     const srNotes = this.formatContextNotes(srNoteObjects, rollData);
-    if (this.system.attributes.srNotes.length > 0) srNotes.push(...this.system.attributes.srNotes.split(/[\n\r]+/));
+    if (this.system.attributes.srNotes) srNotes.push(...this.system.attributes.srNotes.split(/[\n\r]+/));
+
+    // BUG: No specific saving throw notes are included
+    const saveNotesObjects = this.getContextNotes("allSavingThrows");
+    const saveNotes = this.formatContextNotes(saveNotesObjects, rollData);
+    if (this.system.attributes.saveNotes) saveNotes.push(...this.system.attributes.saveNotes.split(/[\n\r]+/));
 
     // Add misc data
     const reSplit = pf1.config.re.traitSeparator;
@@ -3387,6 +3392,9 @@ export class ActorPF extends ActorBasePF {
         drNotes: drNotes,
         energyResistance: energyResistance,
         conditions: conditions,
+      },
+      saves: {
+        notes: saveNotes,
       },
     };
     // Add regeneration and fast healing

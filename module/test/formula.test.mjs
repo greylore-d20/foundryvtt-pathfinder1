@@ -12,6 +12,7 @@ const simplificationTestFormulas = [
   ["sizeRoll(2, 6, 5) + 5 + 2", "3d6 + 7"],
   ["1d8+min(2,@attributes.dex.mod)", "1d8 + 2"],
   ["-.5", "-0.5"],
+  ["ceil(@attributes.hd.total / 5)d6", "2d6"],
   ["3d6x>=5", "3d6x>=5"], // bug#2175
 ];
 
@@ -32,6 +33,9 @@ export function registerFormulaParsingTests() {
         attributes: {
           dex: {
             mod: 3,
+          },
+          hd: {
+            total: 7,
           },
         },
       };

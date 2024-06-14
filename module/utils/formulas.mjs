@@ -218,10 +218,15 @@ function ternaryTerms(terms) {
  */
 export function simplify(formula, rollData = {}) {
   formula = Roll.replaceFormulaData(unflair(formula), rollData, { missing: 0 });
-  let terms = Roll.create(compress(formula)).terms;
+
+  const roll = new Roll.defaultImplementation(compress(formula));
 
   // Evaluate terms
-  terms.forEach((term) => term.evaluate({ async: false }));
+  // TODO: v12 this needs to call .evaluateSync()
+  roll.evaluate({ async: false, minimize: true });
+  // Old evaluation, fails with parenthetical terms followed by d6 or the like
+  //terms.forEach((term) => term.evaluate({ async: false, minimize: true }));
+  let terms = roll.terms;
 
   // Negatives (combine - with the following term)
   terms = negativeTerms(terms);

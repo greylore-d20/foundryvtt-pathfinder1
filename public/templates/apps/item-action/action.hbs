@@ -51,7 +51,7 @@
   <div class="form-fields">
     <select name="held">
       {{#if inheritedHeld}}
-      <option>{{localize "PF1.InheritAs" inherited=@root.inheritedHeld}}</option>
+      <option value="">{{localize "PF1.InheritAs" inherited=@root.inheritedHeld}}</option>
       {{/if}}
       {{selectOptions @root.config.weaponHoldTypes selected=data.held}}
     </select>
@@ -190,7 +190,7 @@
     </select>
     <select name="ability.damageMult" data-dtype="Number">
       {{#if canHold}}
-      <option value=''>{{localize "PF1.HeldMult" mult=heldAbilityMultiplier}}</option>
+      <option value="">{{localize "PF1.HeldMult" mult=heldAbilityMultiplier}}</option>
       {{/if}}
       {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}
     </select>

@@ -658,7 +658,7 @@ export class ItemAction {
 
     // Initialize default damageMult if missing (for things that can't inherit it from item)
     if (!Number.isFinite(this.data.ability?.damageMult)) {
-      let canHold = this.item?.isPhysical ?? this.item?.isQuasiPhysical ?? false;
+      let canHold = this.item?.isPhysical || this.item?.isQuasiPhysical || false;
       if (!this.hasAttack) canHold = false;
       if (!canHold) foundry.utils.setProperty(this.data, "ability.damageMult", 1);
     }

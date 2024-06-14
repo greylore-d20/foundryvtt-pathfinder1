@@ -177,10 +177,10 @@ export class ItemActionSheet extends FormApplication {
       }, {}) ?? {};
 
     // Can hold (attacks & weapons only and only if they have attack rolls)
-    context.canHold = context.hasAttack;
+    context.canHold = action.hasAttack;
     // Inherited held option's name if any
     context.inheritedHeld =
-      context.canhold && ["attack", "weapon"].includes(item.type)
+      context.canHold && ["attack", "weapon"].includes(item.type)
         ? pf1.config.weaponHoldTypes[context.item.system.held]
         : null;
 
@@ -189,7 +189,7 @@ export class ItemActionSheet extends FormApplication {
     this.alignments = context.alignmentTypes?.values; // Use a deep clone we've already made to track our progress.
 
     // Ability damage multiplier from held
-    const held = context.rollData.action.held || context.rollData.item.held || "1h";
+    const held = context.rollData.action.held || context.rollData.item.held || "normal";
     context.heldAbilityMultiplier = pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
 
     // Power attack multiplier if inherited

@@ -948,7 +948,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
  * @param {MigrationCategory} [options.tracker=null]
  * @returns {Promise<void>}
  */
-export async function migrateScene(scene, { state, tracker }) {
+export async function migrateScene(scene, { state, tracker } = {}) {
   console.log(`PF1 | Migration | Scene: ${scene.name} | Starting...`);
   try {
     await migrateSceneTokens(scene, { state, tracker });

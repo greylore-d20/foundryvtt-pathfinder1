@@ -22,19 +22,7 @@ const PACK_CACHE = "../public/packs";
  */
 const TEMPLATE_EXCEPTION_PATHS = {
   Actor: [],
-  Item: [
-    "classSkills",
-    "uses.autoDeductChargesCost",
-    "uses.rechargeFormula",
-    "links.supplements",
-    "flags",
-    "casting",
-    "learnedAt",
-    "properties",
-    "source",
-    "items",
-    "ammo",
-  ],
+  Item: ["classSkills", "links.supplements", "flags", "casting", "learnedAt", "properties", "source", "items", "ammo"],
   Component: [],
 };
 

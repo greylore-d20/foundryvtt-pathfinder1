@@ -1566,17 +1566,17 @@ export class ActionUse {
     const ammoCost = this.action.ammoCost;
     if (ammoCost != 0) premessage_promises.push(this.subtractAmmo(ammoCost));
 
-    if (shared.rollData.chargeCost != null) {
-      let totalCost = shared.rollData.chargeCost;
-      if (this.action.data.uses.perAttack) {
-        totalCost = this.shared.attacks.reduce((total, atk) => total + atk.chargeCost, 0);
-      }
+    let totalCost = shared.rollData?.chargeCost;
+    if (this.action.data.uses.perAttack) {
+      totalCost = this.shared.attacks.reduce((total, atk) => total + atk.chargeCost, 0);
+    }
+    if (totalCost != 0) {
       shared.totalChargeCost = totalCost;
       premessage_promises.push(this.item.addCharges(-totalCost));
-
-      if (shared.action.isSelfCharged)
-        premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
     }
+
+    if (shared.action.isSelfCharged)
+      premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
 
     await Promise.all(premessage_promises);
 

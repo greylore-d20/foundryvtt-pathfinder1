@@ -904,6 +904,7 @@ export const lootTypes = {
   food: "PF1.Subtypes.Item.loot.food.Plural",
   herb: "PF1.Subtypes.Item.loot.herb.Plural",
   adventuring: "PF1.Subtypes.Item.loot.adventuring.Plural",
+  animal: "PF1.Subtypes.Item.loot.animal.Plural",
   animalGear: "PF1.Subtypes.Item.loot.animalGear.Plural",
   reagent: "PF1.Subtypes.Item.loot.reagent.Plural",
   remedy: "PF1.Subtypes.Item.loot.remedy.Plural",
@@ -2680,7 +2681,12 @@ export const sheetSections = {
     },
     gear: {
       label: "PF1.Subtypes.Item.loot.gear.Plural",
-      filters: [{ type: "loot", subTypes: ["gear", "adventuring", "tool", "reagent", "remedy", "herb", "animalGear"] }],
+      filters: [
+        {
+          type: "loot",
+          subTypes: ["gear", "adventuring", "tool", "reagent", "remedy", "herb", "animal", "animalGear"],
+        },
+      ],
       interface: {
         create: true,
         actions: true,

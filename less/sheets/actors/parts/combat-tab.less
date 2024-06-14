@@ -11,10 +11,28 @@
       }
     }
 
+    .combat-attacks {
+      flex: 1 1 320px;
+      overflow-y: auto;
+      .scrollbar();
+    }
+
     .combat-defenses {
       display: flex;
       flex-flow: column nowrap;
       gap: 2px;
+
+      > .attributes {
+        gap: 0 0.5em;
+      }
+
+      h3 {
+        border-bottom: unset;
+      }
+
+      table {
+        margin-bottom: 4px;
+      }
     }
   }
 }

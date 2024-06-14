@@ -652,6 +652,7 @@ export declare const pf1PostReady: Hooks.StaticCallbacks["pf1PostReady"];
 export declare const pf1ToggleActorCondition: Hooks.StaticCallbacks["pf1ToggleActorCondition"];
 export declare const pf1ToggleActorBuff: Hooks.StaticCallbacks["pf1ToggleActorBuff"];
 export declare const pf1GainXp: Hooks.StaticCallbacks["pf1GainXp"];
+export declare const renderPF1ExtendedTooltip: Hooks.StaticCallbacks["renderPF1ExtendedTooltip"];
 export declare const pf1PrepareBaseActorData: Hooks.StaticCallbacks["pf1PrepareBaseActorData"];
 export declare const pf1PrepareDerivedActorData: Hooks.StaticCallbacks["pf1PrepareDerivedActorData"];
 export declare const pf1PreActorRest: Hooks.StaticCallbacks["pf1PreActorRest"];
@@ -680,6 +681,8 @@ export declare const pf1DisplayCard: Hooks.StaticCallbacks["pf1DisplayCard"];
 export declare const pf1CreateActionUse: Hooks.StaticCallbacks["pf1CreateActionUse"];
 export declare const pf1PostActionUse: Hooks.StaticCallbacks["pf1PostActionUse"];
 export declare const pf1PreActionUse: Hooks.StaticCallbacks["pf1PreActionUse"];
+export declare const pf1PreAttackRoll: Hooks.StaticCallbacks["pf1PreAttackRoll"];
+export declare const pf1AttackRoll: Hooks.StaticCallbacks["pf1AttackRoll"];
 export declare const pf1PreDisplayActionUse: Hooks.StaticCallbacks["pf1PreDisplayActionUse"];
 
 // Changes

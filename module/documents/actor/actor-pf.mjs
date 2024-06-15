@@ -4016,13 +4016,11 @@ export class ActorPF extends ActorBasePF {
    */
   get allSkills() {
     const result = [];
-    for (const [k, s] of Object.entries(this.system.skills)) {
-      if (!s) continue;
-      result.push(k);
-      if (s.subSkills) {
-        for (const k2 of Object.keys(s.subSkills)) {
-          result.push(`${k}.subSkills.${k2}`);
-        }
+    for (const [key, skillData] of Object.entries(this.system.skills)) {
+      if (!skillData) continue;
+      result.push(key);
+      for (const subKey of Object.keys(skillData.subSkills ?? {})) {
+        result.push(`${key}.${subKey}`);
       }
     }
     return result;

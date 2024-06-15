@@ -1,7 +1,7 @@
 /**
  * Action type to change context mapping.
  *
- * @see {pf1.documents.item.ItemPF.prototype.getContextChanges}
+ * @see {@link pf1.documents.item.ItemPF.prototype.getContextChanges}
  */
 export const actionTypeToContext = {
   mwak: "mwdamage",

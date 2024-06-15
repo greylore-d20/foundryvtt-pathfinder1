@@ -7,8 +7,8 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
         foundry.utils.logCompatibilityWarning(
           "continuity string property in health configuration is deprecated in favor of continuous boolean property",
           {
-            since: "PF1 vNEXT",
-            until: "PF1 vNEXT+1",
+            since: "PF1 v10",
+            until: "PF1 v11",
           }
         );
 

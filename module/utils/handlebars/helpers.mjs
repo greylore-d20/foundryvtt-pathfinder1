@@ -8,8 +8,8 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
   Handlebars.registerHelper("distanceUnit", (type) => {
     foundry.utils.logCompatibilityWarning(`distanceUnit HBS helper is deprecated with no replacement.`, {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
     const u = convertDistance(0, type)[1];
     return pf1.config.measureUnitsShort[u] || u;
@@ -105,8 +105,8 @@ export const registerHandlebarsHelpers = function () {
 
   Handlebars.registerHelper("damageTypes", (typeInfo) => {
     foundry.utils.logCompatibilityWarning(`damageTypes HBS helper is deprecated with no replacement.`, {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
     const rv = [];
     const { custom, values } = typeInfo;
@@ -117,8 +117,8 @@ export const registerHandlebarsHelpers = function () {
 
   Handlebars.registerHelper("actionAttacks", (action) => {
     foundry.utils.logCompatibilityWarning(`actionAttacks HBS helper is deprecated with no replacement.`, {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
 
     const attacks = action.getAttacks({ full: true, bonuses: true, conditionals: true }).map((atk) => atk.attackBonus);

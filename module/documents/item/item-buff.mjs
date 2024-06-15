@@ -210,7 +210,7 @@ export class ItemBuffPF extends ItemPF {
   /**
    * Prepare .system.duration
    *
-   * @deprecated Remove with PF1 vNEXT+1
+   * @deprecated Remove with PF1 v11
    * @internal
    * @param {object} [options] Additional options
    * @param {object} [options.rollData] Roll data instance. New instance is generated if undefined and needed.

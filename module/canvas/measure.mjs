@@ -80,8 +80,8 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     foundry.utils.logCompatibilityWarning(
       "MeasuredTemplatePF.getHighlightedSquares() deprecated in favor of MeasuredTemplate._getGridHighlightPositions()",
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
     return this._getGridHighlightPositions();

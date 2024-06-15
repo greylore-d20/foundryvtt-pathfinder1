@@ -29,8 +29,8 @@ export const createTag = function (str) {
  */
 export const isMinimumCoreVersion = function (version) {
   foundry.utils.logCompatibilityWarning("pf1.utils.isMinimumCoreVersion is deprecated with no replacement", {
-    since: "PF1 vNEXT",
-    until: "PF1 vNEXT+1",
+    since: "PF1 v10",
+    until: "PF1 v11",
   });
   const coreVersion = SemanticVersion.fromString(game.version);
   const compareVersion = SemanticVersion.fromString(version);
@@ -45,8 +45,8 @@ export const isMinimumCoreVersion = function (version) {
  */
 export const getItemOwner = function (item) {
   foundry.utils.logCompatibilityWarning("pf1.utils.getItemOwner() is deprecated with no replacement", {
-    since: "PF1 vNEXT",
-    until: "PF1 vNEXT+1",
+    since: "PF1 v10",
+    until: "PF1 v11",
   });
   if (item.actor) return item.actor;
   if (item.id) return game.actors.find((o) => o.items.get(item.id));
@@ -101,8 +101,8 @@ export const CR = {
  */
 export const getActorFromId = function (id) {
   foundry.utils.logCompatibilityWarning("pf1.utils.getActorFromId() is deprecated with no replacement", {
-    since: "PF1 vNEXT",
-    until: "PF1 vNEXT+1",
+    since: "PF1 v10",
+    until: "PF1 v11",
   });
   const speaker = ChatMessage.getSpeaker();
   let actor = null;
@@ -1111,7 +1111,7 @@ export function* getActors({
  *
  * @param {string} align - Alignment string.
  * @returns {{lawful:number, evil:number, chaotic:number, good:number, neutral:number}}
- * @since PF1 vNEXT
+ * @since PF1 v10
  */
 export function parseAlignment(align) {
   const lawful = align.includes("l") ? 1 : 0;

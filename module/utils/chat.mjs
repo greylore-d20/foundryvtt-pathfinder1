@@ -182,8 +182,8 @@ export function applyAccessibilitySettings(app, html, data, conf) {}
  */
 export function createInlineRollString(roll, { hide3d = true } = {}) {
   foundry.utils.logCompatibilityWarning("pf1.utils.chat.createInlineRollString() is deprecated with no replacement", {
-    since: "PF1 vNEXT",
-    until: "PF1 vNEXT+1",
+    since: "PF1 v10",
+    until: "PF1 v11",
   });
 
   const a = roll.toAnchor();

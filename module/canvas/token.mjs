@@ -15,8 +15,8 @@ export class TokenPF extends Token {
       const buff = this.actor.items.get(effectId);
       if (buff) {
         foundry.utils.logCompatibilityWarning("Toggling buffs via TokenPF.toggleEffect() is deprecated.", {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         });
 
         await buff.setActive(active ?? !buff.isActive);
@@ -51,7 +51,7 @@ export class TokenPF extends Token {
    * Synced with Foundry v11.315
    *
    * @override
-   * @since PF1 vNEXT
+   * @since PF1 v10
    */
   _isVisionSource() {
     if (!canvas.effects.visibility.tokenVision || !this.hasSight) return false;

@@ -149,7 +149,7 @@ Hooks.once("init", function () {
       get() {
         foundry.utils.logCompatibilityWarning(
           "CONFIG.Dice.RollPF is deprecated in favor of RollPF global and pf1.dice.RollPF",
-          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          { since: "PF1 v10", until: "PF1 v11" }
         );
         return pf1.dice.RollPF;
       },
@@ -160,7 +160,7 @@ Hooks.once("init", function () {
       get() {
         foundry.utils.logCompatibilityWarning(
           "CONFIG.Dice.rolls.DamageRoll is deprecated in favor of pf1.dice.DamageRoll",
-          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          { since: "PF1 v10", until: "PF1 v11" }
         );
         return pf1.dice.DamageRoll;
       },
@@ -169,7 +169,7 @@ Hooks.once("init", function () {
       get() {
         foundry.utils.logCompatibilityWarning(
           "CONFIG.Dice.rolls.D20RollPF is deprecated in favor of pf1.dice.D20RollPF",
-          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          { since: "PF1 v10", until: "PF1 v11" }
         );
         return pf1.dice.D20RollPF;
       },
@@ -182,7 +182,7 @@ Hooks.once("init", function () {
       get() {
         foundry.utils.logCompatibilityWarning(
           "pf1.config.bonusModifiers is deprecated in favor of pf1.config.bonusTypes",
-          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          { since: "PF1 v10", until: "PF1 v11" }
         );
         return this.bonusTypes;
       },
@@ -191,7 +191,7 @@ Hooks.once("init", function () {
       get() {
         foundry.utils.logCompatibilityWarning(
           "pf1.config.stackingBonusModifiers is deprecated in favor of pf1.config.stackingBonusTypes",
-          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          { since: "PF1 v10", until: "PF1 v11" }
         );
         return this.stackingBonusTypes;
       },
@@ -201,8 +201,8 @@ Hooks.once("init", function () {
   Object.defineProperty(pf1.config, "itemTypes", {
     get() {
       foundry.utils.logCompatibilityWarning("pf1.config.itemTypes is deprecated in favor of CONFIG.Item.typeLabels", {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       });
 
       return Object.fromEntries(
@@ -214,8 +214,8 @@ Hooks.once("init", function () {
   Object.defineProperty(pf1.utils, "rollPreProcess", {
     get() {
       foundry.utils.logCompatibilityWarning("pf1.utils.rollPreProcess.* is deprecated in favor of pf1.utils.roll.*", {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       });
 
       return pf1.utils.roll;
@@ -227,8 +227,8 @@ Hooks.once("init", function () {
       foundry.utils.logCompatibilityWarning(
         "pf1.utils.ActionChooser is deprecated in favor of pf1.utils.ActionSelector",
         {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         }
       );
 
@@ -339,7 +339,7 @@ Hooks.once("init", function () {
       foundry.utils.logCompatibilityWarning(
         "Conditions have been moved into the Conditions registry. " +
           "Use pf1.registry.conditions.getLabels() for the old format, or access the collection for full condition data.",
-        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        { since: "PF1 v10", until: "PF1 v11" }
       );
       return pf1.registry.conditions.getLabels();
     },
@@ -350,7 +350,7 @@ Hooks.once("init", function () {
       foundry.utils.logCompatibilityWarning(
         "Condition textures have been moved into the Conditions registry. " +
           "Access the collection for full condition data.",
-        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        { since: "PF1 v10", until: "PF1 v11" }
       );
       return Object.fromEntries(
         pf1.registry.conditions.map((registryObject) => [registryObject.id, registryObject.texture])
@@ -363,7 +363,7 @@ Hooks.once("init", function () {
       foundry.utils.logCompatibilityWarning(
         "Condition mechanics have been moved into the Conditions registry. " +
           "Access the collection for full condition data.",
-        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        { since: "PF1 v10", until: "PF1 v11" }
       );
       return Object.fromEntries(
         pf1.registry.conditions.map((registryObject) => [registryObject.id, registryObject.mechanics])

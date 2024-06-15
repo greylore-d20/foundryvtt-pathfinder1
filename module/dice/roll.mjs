@@ -47,8 +47,8 @@ export class RollPF extends Roll {
       foundry.utils.logCompatibilityWarning(
         "RollPF.safeRoll() is becoming async to match upstream API changes. Use RollPF.safeRollSync() for any non-dice synchronous rolling. Pass async=true to evalOpts to suppress this warning.",
         {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         }
       );
     }
@@ -82,8 +82,8 @@ export class RollPF extends Roll {
       foundry.utils.logCompatibilityWarning(
         "RollPF.safeRollSync() will not support non-deterministic formulas in the future.",
         {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         }
       );
     }
@@ -103,8 +103,8 @@ export class RollPF extends Roll {
 
   static safeTotal(formula, data) {
     foundry.utils.logCompatibilityWarning("RollPF.safeTotal() is deprecated in favor of RollPF.safeRoll().total", {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
 
     return RollPF.safeRoll(formula, data).total;

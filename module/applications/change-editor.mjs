@@ -4,7 +4,7 @@ import { Widget_CategorizedItemPicker } from "./categorized-item-picker.mjs";
 /**
  * Change Editor
  *
- * @since PF1 vNEXT
+ * @since PF1 v10
  */
 export class ChangeEditor extends ItemSheet {
   /** @type {ItemChange} */

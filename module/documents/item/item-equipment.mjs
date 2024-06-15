@@ -218,7 +218,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
 
   /**
    * @type {string} - Matching base proficiency for the armor or shield type.
-   * @since PF1 vNEXT
+   * @since PF1 v10
    */
   get baseArmorProficiency() {
     const subType = this.subType;
@@ -247,7 +247,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
    *
    * @inheritdoc
    * @remarks - Only armor and shields get anything besides 1.
-   * @since PF1 vNEXT
+   * @since PF1 v10
    */
   getWeightMultiplier() {
     if (!["armor", "shield"].includes(this.subType)) return 1;

@@ -20,8 +20,8 @@ export class ItemLootPF extends ItemPhysicalPF {
     //
     if (changed.flags?.pf1?.abundant !== undefined) {
       foundry.utils.logCompatibilityWarning("flags.pf1.abundant is deprecated in favor of system.abundant", {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       });
       changed.system.abundant = changed.flags.pf1.abundant;
       delete changed.flags.pf1.abundant;

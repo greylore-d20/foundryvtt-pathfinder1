@@ -595,7 +595,7 @@ export async function migrateActor(actor) {
 /**
  * Migrate active effects from actor to items that should own them instead.
  *
- * Added with PF1 vNEXT
+ * Added with PF1 v10
  *
  * @param {ActorPF} actor
  */
@@ -802,7 +802,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   }
 
   // Migrate container .inventoryItems array to .items map
-  // Introduced with PF1 vNEXT
+  // Introduced with PF1 v10
   if (itemData.system?.inventoryItems instanceof Array) {
     updateData["system.items"] = {};
     for (const sitem of itemData.system.inventoryItems) {
@@ -864,12 +864,12 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
 }
 
 // Migrate empty action type to "other"
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateActionType = (action, itemData) => {
   action.actionType ||= "other";
 };
 
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateActionLimitedUses = (action, itemData) => {
   // Migrate unlimited to empty selection, as the two are identical in meaning
   if (action.uses?.self?.per === "unlimited") {
@@ -972,8 +972,8 @@ export async function migrateSceneData() {
   foundry.utils.logCompatibilityWarning(
     "pf1.migrations.migrateSceneData() is obsolete, please use pf1.migrations.migrateScene() instead",
     {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     }
   );
   return {};
@@ -1164,7 +1164,7 @@ const _migrateActorSpellbookSlots = function (ent, updateData) {
 };
 
 // Remove inconsistently used .spontaneous permanently recorded boolean
-// Added with PF1 vNEXT
+// Added with PF1 v10
 function _migrateActorSpellbookPrep(actorData, updateData) {
   for (const [bookId, book] of Object.entries(
     foundry.utils.getProperty(actorData.system, "attributes.spells.spellbooks") || {}
@@ -1346,7 +1346,7 @@ const _migrateWeaponImprovised = function (ent, updateData) {
 };
 
 // Migrates the weird .shortDescription back to .description.value
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateItemSpellDescription = function (itemData, updateData) {
   if (itemData.type !== "spell") return;
 
@@ -1386,7 +1386,7 @@ const _migrateClassType = function (ent, updateData) {
   }
 };
 
-// Added with PF1 vNEXT
+// Added with PF1 v10
 function _migrateClassCasting(itemData, updateData) {
   const casting = itemData.system?.casting;
   if (!casting) return;
@@ -1475,7 +1475,7 @@ const _migrateArmorCategories = function (ent, updateData) {
 /**
  * Convert string armor max dex to number.
  *
- * Introduced with PF1 vNEXT
+ * Introduced with PF1 v10
  *
  * @param item
  * @param updateData
@@ -1578,7 +1578,7 @@ const _migrateItemFeatAbilityTypes = function (itemData, updateData) {
 
   const type = itemData.system.abilityType;
   // Convert "none" and other invalid values (e.g. null or "n/a") to "na"
-  // Added with PF1 vNEXT
+  // Added with PF1 v10
   if (pf1.config.abilityTypes[type] === undefined) {
     updateData["system.abilityType"] = "na";
   }
@@ -1651,13 +1651,13 @@ const _migrateItemChanges = function (itemData, updateData) {
   for (const change of oldChanges) {
     const newChange = { ...change };
     // Replace targets with .subSkills. for ones without
-    // @since PF1 vNEXT
+    // @since PF1 v10
     if (/\.subSkills\./.test(change.subTarget)) {
       newChange.subTarget = change.subTarget.replace(".subSkills.", ".");
       updateChanges = true;
     }
     // Remove use of penalty bonus type
-    // @since PF1 vNEXT
+    // @since PF1 v10
     if (change.modifier === "penalty") {
       // Convert the special ability score case to specific target
       if (["str", "dex", "con", "int", "wis", "cha"].includes(change.subTarget)) {
@@ -1708,7 +1708,7 @@ const _migrateItemContextNotes = (itemData, updateData) => {
   for (const note of notes) {
     const newNote = { ...note };
     // Replace targets with .subSkills. for ones without
-    // @since PF1 vNEXT
+    // @since PF1 v10
     if (/^skill\..+\.subSkills\..+$/.test(note.target)) {
       newNote.target = note.target.replace(".subSkills.", ".");
       updateNotes = true;
@@ -1819,7 +1819,7 @@ const _migrateSpellCosts = function (ent, updateData) {
 /**
  * Migrate spell preparation
  *
- * Added with PF1 vNEXT
+ * Added with PF1 v10
  *
  * @param {object} itemData
  * @param {object} updateData
@@ -1945,7 +1945,7 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
 };
 
 const _migrateItemProficiencies = function (item, updateData) {
-  // Added with PF1 vNEXT
+  // Added with PF1 v10
   // Migrate sim/mar to simple/martial
   const wprofmap = {
     sim: "simple",
@@ -2128,7 +2128,7 @@ const _migrateActionAmmunitionUsage = function (action, itemData, updateData) {
 };
 
 // Migrate harmless from save descriptor to the harmless toggle.
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateActionHarmlessSpell = (action, itemData) => {
   if (!action.save.description) return;
 
@@ -2144,14 +2144,14 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
 };
 
 // Migrate .spellArea to .area
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateActionSpellArea = (action, itemData) => {
   action.area ||= action.spellArea;
   delete action.spellArea;
 };
 
 /**
- * @since PF1 vNEXT
+ * @since PF1 v10
  * @param action
  * @param itemData
  */
@@ -2170,7 +2170,7 @@ const _migrateActionTemplate = (action, itemData) => {
 };
 
 // Action duration
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateActionDuration = (action, itemData) => {
   action.duration ??= {};
 
@@ -2233,7 +2233,7 @@ const _migrateActionDuration = (action, itemData) => {
 };
 
 /**
- * Added with PF1 vNEXT
+ * Added with PF1 v10
  *
  * @param {object} action
  * @param {object} itemData
@@ -2331,7 +2331,7 @@ const _migrateActionObsoleteTypes = (action, itemData) => {
  * @param itemData
  */
 const _migrateActionUnusedData = (action, itemData) => {
-  // Added with PF1 vNEXT
+  // Added with PF1 v10
   if (!action.formula) delete action.formula;
 };
 
@@ -2357,7 +2357,7 @@ const _migrateItemChargeCost = function (item, updateData) {
   }
 };
 
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateItemLimitedUses = (itemData, updateData) => {
   // Migrate unlimited to empty selection, as the two are identical in meaning
   if (itemData.system.uses?.per === "unlimited") {
@@ -2570,7 +2570,7 @@ const _migrateActorStatures = function (ent, updateData) {
 
 // Migrate weapon proficiencies
 // Converts sim and mar to simple and martial
-// Added with PF1 vNEXT
+// Added with PF1 v10
 const _migrateActorProficiencies = (actorData, updateData, { actor = null } = {}) => {
   const wprofs = actorData.system.traits?.weaponProf?.value;
   if (wprofs === undefined) return;
@@ -2874,7 +2874,7 @@ const _migrateActorTraitsCustomToArray = (actor, updateData) => {
 /**
  * @param actorData
  * @param updateData
- * @since PF1 vNEXt
+ * @since PF1 v10
  */
 const _migrateActorFlags = (actorData, updateData) => {
   const flags = actorData.flags?.pf1;
@@ -3019,7 +3019,7 @@ const _migrateItemTraitsCustomToArray = (item, updateData) => {
 /**
  * @param {object} itemData
  * @param {object} updateData
- * @since PF1 vNEXT
+ * @since PF1 v10
  */
 const _migrateItemFlags = (itemData, updateData) => {
   if (!itemData.flags?.pf1) return;
@@ -3087,7 +3087,7 @@ const _migrateItemUnusedData = (item, updateData) => {
     updateData["system.-=measureTemplate"] = null;
   }
 
-  // useCustomTag not used since PF1 vNEXT
+  // useCustomTag not used since PF1 v10
   if (item.system.useCustomTag !== undefined) {
     updateData["system.-=useCustomTag"] = null;
     if (item.system.useCustomTag === false && item.system.tag !== undefined) {
@@ -3109,7 +3109,7 @@ const _migrateItemUnusedData = (item, updateData) => {
  * Migrate Active Effect data.
  * - Removes pf1_ status ID prefixes.
  *
- * Added with PF1 vNEXT
+ * Added with PF1 v10
  *
  * @param {object} actorData - Actor data
  * @param {object} updateData - Update data
@@ -3150,7 +3150,7 @@ const _migrateActorUnusedData = (actor, updateData) => {
     updateData["system.-=resources"] = null;
   }
 
-  // Conditions no longer are permanently stored in actor data (since PF1 vNEXT)
+  // Conditions no longer are permanently stored in actor data (since PF1 v10)
   if (actor.system.attributes?.conditions !== undefined) {
     updateData["system.attributes.-=conditions"] = null;
   }

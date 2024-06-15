@@ -54,7 +54,7 @@ export class ItemChange extends foundry.abstract.DataModel {
     if (options instanceof Item || options instanceof Actor) {
       foundry.utils.logCompatibilityWarning(
         "ItemChange constructor's second parameter is now options object for datamodel instead of direct parent reference",
-        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        { since: "PF1 v10", until: "PF1 v11" }
       );
 
       options = { parent: options };
@@ -140,7 +140,7 @@ export class ItemChange extends foundry.abstract.DataModel {
   static get defaultData() {
     foundry.utils.logCompatibilityWarning(
       "ItemChange.defaultData() is deprecated in favor of using ItemChange DataModel",
-      { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      { since: "PF1 v10", until: "PF1 v11" }
     );
 
     return new this().toObject();
@@ -148,8 +148,8 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   get data() {
     foundry.utils.logCompatibilityWarning("ItemChange.data is deprecated in favor of accessing the model directly.", {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
     return this;
   }
@@ -161,8 +161,8 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   get subTarget() {
     foundry.utils.logCompatibilityWarning("ItemChange.subTarget is deprecated in favor of ItemChange.target", {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
 
     return this.target;
@@ -170,8 +170,8 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   get modifier() {
     foundry.utils.logCompatibilityWarning("ItemChange.modifier is deprecated in favor of ItemChange.type", {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
 
     return this.type;
@@ -336,7 +336,7 @@ export class ItemChange extends foundry.abstract.DataModel {
         if (operator === "function") {
           foundry.utils.logCompatibilityWarning(
             "ItemChange function operator is no longer supported with no replacement.",
-            { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+            { since: "PF1 v10", until: "PF1 v11" }
           );
           continue;
         } else if (!isNaN(this.formula)) {

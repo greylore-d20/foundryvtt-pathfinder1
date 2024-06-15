@@ -1326,8 +1326,8 @@ export class ActionUse {
           foundry.utils.logCompatibilityWarning(
             "shared.attackData is deprecated in favor of directly accessing shared",
             {
-              since: "PF1 vNEXT",
-              until: "PF1 vNEXT+2",
+              since: "PF1 v10",
+              until: "PF1 v12",
             }
           );
           return shared;

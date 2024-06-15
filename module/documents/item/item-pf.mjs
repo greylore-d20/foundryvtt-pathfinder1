@@ -284,8 +284,8 @@ export class ItemPF extends ItemBasePF {
    */
   get firstAction() {
     foundry.utils.logCompatibilityWarning("ItemPF.firstAction is deprecated in favor of ItemPF.defaultAction", {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+2",
+      since: "PF1 v10",
+      until: "PF1 v12",
     });
     return this.defaultAction;
   }
@@ -322,7 +322,7 @@ export class ItemPF extends ItemBasePF {
    * @param {boolean} [weapon=true] - Get proficiency as a weapon. Armor otherwise.
    * @returns {boolean} - Whether or not the owner of the item is proficient.
    * @throws {Error} - If item type does not support proficiency.
-   * @since PF1 vNEXT
+   * @since PF1 v10
    */
   getProficiency(weapon = true) {
     throw new Error(`Item type ${this.type} has no concept of proficiency`);
@@ -331,7 +331,7 @@ export class ItemPF extends ItemBasePF {
   /**
    * @abstract
    * @type {boolean} - Is proficient using this as weapon.
-   * @since PF1 vNEXT
+   * @since PF1 v10
    */
   get isProficient() {
     return true;
@@ -580,7 +580,7 @@ export class ItemPF extends ItemBasePF {
   static get defaultContextNote() {
     foundry.utils.logCompatibilityWarning(
       "ItemPF#defaultContextNote is deprecated in favor of pf1.components.ContextNote",
-      { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      { since: "PF1 v10", until: "PF1 v11" }
     );
 
     return new pf1.components.ContextNote().toObject();
@@ -1268,8 +1268,8 @@ export class ItemPF extends ItemBasePF {
 
     if (actionID) {
       foundry.utils.logCompatibilityWarning("ItemPF.use() actionID parameter is deprecated in favor of actionId", {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       });
 
       actionId ||= actionID;
@@ -1291,8 +1291,8 @@ export class ItemPF extends ItemBasePF {
             foundry.utils.logCompatibilityWarning(
               "shared.attackData is deprecated in favor of directly accessing shared",
               {
-                since: "PF1 vNEXT",
-                until: "PF1 vNEXT+2",
+                since: "PF1 v10",
+                until: "PF1 v12",
               }
             );
             return sharedData;
@@ -1576,7 +1576,7 @@ export class ItemPF extends ItemBasePF {
       if (ammoQuantity == 0) return;
       const recoveryData = message.getFlag("pf1", "ammoRecovery");
       const ammoRecovery = recoveryData?.[attackIndex]?.[ammoId];
-      // Backwards compatibility (PF1 vNEXT) with old messages
+      // Backwards compatibility (PF1 v10) with old messages
       if (ammoRecovery?.failed === true) return;
       // Recovered is the number recovered, the rest failed
       if (ammoRecovery?.recovered !== undefined) return;
@@ -1922,8 +1922,8 @@ export class ItemPF extends ItemBasePF {
     foundry.utils.logCompatibilityWarning(
       "ItemPF.getLinkItem() is deprecated in favor of fromUuid(linkData.uuid, {relative:actor})",
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
 
@@ -1948,8 +1948,8 @@ export class ItemPF extends ItemBasePF {
     foundry.utils.logCompatibilityWarning(
       "ItemPF.getLinkedItemSync() is deprecated in favor of fromUuidSync(linkData.uuid, {relative:actor})",
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
 
@@ -1997,15 +1997,15 @@ export class ItemPF extends ItemBasePF {
   getChangeSubTargets(target) {
     foundry.utils.logCompatibilityWarning(
       "ItemPF.getChangeSubTargets() is deprecated in favor of ItemPF.getChangeTargets",
-      { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      { since: "PF1 v10", until: "PF1 v11" }
     );
     return this.getChangeTargets(target);
   }
 
   getValue() {
     foundry.utils.logCompatibilityWarning("ItemPF.getValue() is deprecated, only physical items have value", {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
 
     return 0;
@@ -2140,8 +2140,8 @@ export class ItemPF extends ItemBasePF {
     foundry.utils.logCompatibilityWarning(
       `ItemPF.getAttackArray() is deprecated. Use ItemAction.getAttacks() instead.`,
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
 
@@ -2162,8 +2162,8 @@ export class ItemPF extends ItemBasePF {
    */
   get attackArray() {
     foundry.utils.logCompatibilityWarning(`ItemPF.attackArray is deprecated. Use ItemAction.getAttacks() instead.`, {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     });
 
     return this.getAttackArray(this.defaultAction.id);

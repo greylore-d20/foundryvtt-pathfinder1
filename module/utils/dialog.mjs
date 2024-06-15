@@ -18,8 +18,8 @@ export async function dialogGetNumber({
   foundry.utils.logCompatibilityWarning(
     "pf1.utils.dialog.dialogGetNumber is deprecated in favor of pf1.utils.dialog.getNumber",
     {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     }
   );
 
@@ -39,8 +39,8 @@ export async function dialogGetActor(title = "", actors = []) {
   foundry.utils.logCompatibilityWarning(
     "pf1.utils.dialog.dialogGetActor is deprecated in favor of pf1.utils.dialog.getActor",
     {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     }
   );
 

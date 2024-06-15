@@ -104,7 +104,7 @@ declare global {
        * @param sheet - Linked sheet
        * @param id - Tooltip ID
        * @param template - HTML document fragment providing live DOM to the tooltip.
-       * @since PF1 vNEXT
+       * @since PF1 v10
        */
       renderPF1ExtendedTooltip: (sheet: ActorSheet, id: string, template: DocumentFragment) => void;
 

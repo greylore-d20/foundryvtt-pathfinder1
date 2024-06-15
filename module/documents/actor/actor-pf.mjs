@@ -579,7 +579,7 @@ export class ActorPF extends ActorBasePF {
         get() {
           foundry.utils.logCompatibilityWarning(
             "actor.system.attributes.conditions is deprecated in favor of actor.system.conditions and actor.statuses",
-            { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+            { since: "PF1 v10", until: "PF1 v11" }
           );
           return conditions;
         },
@@ -1171,8 +1171,8 @@ export class ActorPF extends ActorBasePF {
         foundry.utils.logCompatibilityWarning(
           "actor.system.attributes.spells.usedSpellbooks is deprecated with no replacement.",
           {
-            since: "PF1 vNEXT",
-            until: "PF1 vNEXT+1",
+            since: "PF1 v10",
+            until: "PF1 v11",
           }
         );
 
@@ -1554,7 +1554,7 @@ export class ActorPF extends ActorBasePF {
         const speedValue = this.system.attributes.speed[speedKey].total;
         // Save speed unaffected by speed maluses here (not counting negative changes)
         // TODO: Somehow make this ignore additional set operators
-        this.system.attributes.speed[speedKey].unhindered = speedValue; // @since PF1 vNEXT
+        this.system.attributes.speed[speedKey].unhindered = speedValue; // @since PF1 v10
 
         if (reducedSpeed && speedValue > 0) {
           this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
@@ -2176,8 +2176,8 @@ export class ActorPF extends ActorBasePF {
       foundry.utils.logCompatibilityWarning(
         "Toggling conditions via Actor.update() is deprecated in favor of Actor.setCondition()",
         {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         }
       );
 
@@ -2527,8 +2527,8 @@ export class ActorPF extends ActorBasePF {
     foundry.utils.logCompatibilityWarning(
       "ActorPF.createAttackFromWeapon() is deprecated in favor of ItemAttackPF.fromItem()",
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
 
@@ -2809,8 +2809,8 @@ export class ActorPF extends ActorBasePF {
     foundry.utils.logCompatibilityWarning(
       "ActorPF.rollCMB() is deprecated in favor of ActorPF.rollAttack({maneuver:true})",
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
 
@@ -2837,8 +2837,8 @@ export class ActorPF extends ActorBasePF {
 
     if (options.melee !== undefined) {
       foundry.utils.logCompatibilityWarning("ActorPF.rollAttack() melee parameter has been deprecated.", {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       });
 
       ranged = !options.melee;
@@ -3435,8 +3435,8 @@ export class ActorPF extends ActorBasePF {
     if (/^pf1_/.test(key)) {
       const newKey = key.replace(/^pf1_/, "");
       foundry.utils.logCompatibilityWarning(`Condition "${key}" is deprecated in favor of "${newKey}"`, {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       });
       key = newKey;
     }
@@ -4328,8 +4328,8 @@ export class ActorPF extends ActorBasePF {
     foundry.utils.logCompatibilityWarning(
       "ActorPF.mergeCurrency() is deprecated in favor of ActorPF.getTotalCurrency()",
       {
-        since: "PF1 vNEXT",
-        until: "PF1 vNEXT+1",
+        since: "PF1 v10",
+        until: "PF1 v11",
       }
     );
 
@@ -4367,8 +4367,8 @@ export class ActorPF extends ActorBasePF {
       foundry.utils.logCompatibilityWarning(
         "ActorPF.getTotalCurrency() parameters changed. Options are now the first and only parameter. Old behaviour is found in getCurrency()",
         {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         }
       );
 
@@ -4522,7 +4522,7 @@ export class ActorPF extends ActorBasePF {
       },
     });
 
-    // @since PF1 vNEXT
+    // @since PF1 v10
     result.alignment = pf1.utils.parseAlignment(this.system.details?.alignment || "tn");
 
     this._rollData = result;
@@ -4708,8 +4708,8 @@ export class ActorPF extends ActorBasePF {
     Object.defineProperty(result, "value", {
       get() {
         foundry.utils.logCompatibilityWarning("getFeatCount().value is deprecated in favor of getFeatCount().active", {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v10",
+          until: "PF1 v11",
         });
 
         return this.active;

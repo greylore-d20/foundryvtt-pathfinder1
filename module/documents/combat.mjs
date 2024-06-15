@@ -30,8 +30,8 @@ export const duplicateCombatantInitiative = function (combat, combatant, initiat
   foundry.utils.logCompatibilityWarning(
     "pf1.documents.duplicateCombatantInitiative() is deprecated in favor of CombatantPF.duplicateWithData()",
     {
-      since: "PF1 vNEXT",
-      until: "PF1 vNEXT+1",
+      since: "PF1 v10",
+      until: "PF1 v11",
     }
   );
   return combatant.duplicateWithData({ initiative });

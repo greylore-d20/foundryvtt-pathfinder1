@@ -62,7 +62,10 @@ async function inc(importance) {
     const manifest = fs.readJsonSync(SYSTEM_MANIFEST);
     manifest.version = newVersion;
     const prettierConfig = await prettier.resolveConfig(".");
-    const formattedManifest = prettier.format(JSON.stringify(manifest, null, 2), { ...prettierConfig, parser: "json" });
+    const formattedManifest = await prettier.format(JSON.stringify(manifest, null, 2), {
+      ...prettierConfig,
+      parser: "json",
+    });
     await fs.writeFile(SYSTEM_MANIFEST, formattedManifest);
   } else {
     throw new Error("Could not determine version!");

@@ -131,7 +131,7 @@ export async function releaseLog(newVersion) {
       if (data[type]) {
         text += `\n### ${type}\n\n`;
         data[type].forEach(({ message, issueNumber }) => {
-          if (issueNumber === "" || !config.gitIssueTemplate) {
+          if (issueNumber === "" || issueNumber == null || !config.gitIssueTemplate) {
             text = `${text}- ${message}\n`;
           } else {
             const link = issueNumber

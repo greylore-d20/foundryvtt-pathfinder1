@@ -5,15 +5,27 @@ name: Ball Lightning
 system:
   actions:
     - _id: 12v1htor6kwyzvb7
-      actionType: spellsave
+      actionType: rsak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      attackBonus: 100[Ignore Attack Roll]
+      damage:
+        parts:
+          - formula: 3d6
+            type:
+              custom: ''
+              values:
+                - electric
       duration:
         units: spec
         value: 1 round/level
+      extraAttacks:
+        formula:
+          count: clamped(floor((@cl - 3) / 4), 1, 4)
+        type: custom
       name: Use
       range:
         units: medium
@@ -21,6 +33,38 @@ system:
         description: Reflex negates
         type: ref
       spellEffect: two or more 5-ft.-diameter spheres
+    - _id: QUBwmVW9XKhg2HJC
+      activation:
+        type: move
+        unchained:
+          type: action
+      name: Move Globes
+      range:
+        units: ft
+        value: '20'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: 1UT7OWfYPIuuWTAX
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 3d6
+            type:
+              custom: ''
+              values:
+                - electric
+      name: Damage Only
+      save:
+        description: Reflex half
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
+  attackNotes:
+    - '-4 penalty to the save for creatures wearing metal armor.'
   components:
     divineFocus: 2
     material: true

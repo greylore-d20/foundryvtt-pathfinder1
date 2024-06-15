@@ -12,6 +12,12 @@ system:
           cost: 2
           type: action
       area: 30-ft.-radius spread centered on you
+      damage:
+        parts:
+          - formula: min(10, @cl)d8
+            type:
+              custom: ''
+              values: []
       duration:
         units: spec
         value: 1 round, then instantaneous

@@ -11,9 +11,18 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(10, floor(@cl / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: spec
         value: 1 round + 1 round/level
+      effectNotes:
+        - '@Action[Contraction]'
       measureTemplate:
         size: '10'
         type: rect
@@ -24,6 +33,26 @@ system:
         description: Reflex negates; Reflex half; see text
         type: ref
       spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
+    - _id: P8HdEWMnXskpnkgl
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 4d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      name: Contraction
+      save:
+        description: Reflex halves
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
+  attackNotes:
+    - 'Depth: [[min(10, floor(@cl / 2)) * 10]] ft'
   components:
     focus: true
     somatic: true

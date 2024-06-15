@@ -13,6 +13,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(20, @cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: spec
         value: instantaneous and 1 round/level (see text)
@@ -23,6 +30,21 @@ system:
         description: Fortitude partial
         type: fort
       spellEffect: ray
+      touch: true
+    - _id: EZKpvzMiuglD8C6R
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: round
+        value: floor(@cl / 2)
+      name: Toxic Cosmic Energy
+      save:
+        description: Fortitude negates
+        type: fort
+      uses:
+        autoDeductChargesCost: '0'
   components:
     material: true
     somatic: true

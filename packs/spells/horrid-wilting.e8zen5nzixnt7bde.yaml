@@ -11,9 +11,16 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(20, @cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
-      name: Use
+      name: Cast
       range:
         units: long
       save:
@@ -21,6 +28,35 @@ system:
         type: fort
       target:
         value: living creatures, no two of which can be more than 60 ft. apart
+    - _id: BR7cFsdZINXKSiZb
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: min(20, @cl)d8
+            type:
+              custom: ''
+              values:
+                - untyped
+      description: >-
+        <p>Damage to Water Elementals & Plant Creatures.</p><p><em>Note: This
+        action does not cast the spell.</em></p>
+      duration:
+        units: inst
+      name: Alternate Damage
+      range:
+        units: long
+      save:
+        description: Fortitude half
+        type: fort
+      target:
+        value: living creatures, no two of which can be more than 60 ft. apart
+      uses:
+        autoDeductChargesCost: '0'
   components:
     divineFocus: 2
     material: true

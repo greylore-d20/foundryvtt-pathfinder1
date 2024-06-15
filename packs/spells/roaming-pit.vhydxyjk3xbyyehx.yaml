@@ -11,6 +11,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(3, floor(@cl / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: spec
         value: 1 round/level
@@ -24,6 +31,19 @@ system:
         description: Reflex negates
         type: ref
       spellEffect: mobile 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
+    - _id: tcwdYT6rDqVMEgqO
+      activation:
+        type: move
+        unchained:
+          type: action
+      name: Move Pit
+      range:
+        units: ft
+        value: '20'
+      uses:
+        autoDeductChargesCost: '0'
+  attackNotes:
+    - 'Depth: [[min(3, floor(@cl / 2)) * 10]] ft'
   components:
     material: true
     somatic: true

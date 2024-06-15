@@ -12,8 +12,17 @@ system:
           cost: 2
           type: action
       area: 20-ft.-radius burst centered on you
+      damage:
+        parts:
+          - formula: min(15, @cl)d6
+            type:
+              custom: ''
+              values:
+                - force
       duration:
         units: inst
+      effectNotes:
+        - '@Action[Knock Prone]'
       measureTemplate:
         size: '20'
         type: circle
@@ -24,6 +33,18 @@ system:
       save:
         description: Fortitude half (see text)
         type: fort
+    - _id: GVjqkKXMkFAmm3jB
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      name: Knock Prone
+      save:
+        description: Reflex negates
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
   components:
     verbal: true
   description:

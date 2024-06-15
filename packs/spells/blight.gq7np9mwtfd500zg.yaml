@@ -11,6 +11,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(15, @cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       name: Use

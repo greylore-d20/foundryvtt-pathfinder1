@@ -11,6 +11,18 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(5, floor(@cl / 2))d6
+            type:
+              custom: ''
+              values:
+                - untyped
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - piercing
       duration:
         units: spec
         value: 1 round + 1 round/level
@@ -24,6 +36,8 @@ system:
         description: Reflex negates
         type: ref
       spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
+  attackNotes:
+    - 'Depth: [[min(5, floor(@cl / 2)) * 10]] ft'
   components:
     focus: true
     somatic: true

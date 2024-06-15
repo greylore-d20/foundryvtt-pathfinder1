@@ -12,9 +12,18 @@ system:
           cost: 2
           type: action
       area: 30-ft.-radius burst
+      damage:
+        parts:
+          - formula: min(20, @cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: spec
         value: instantaneous and 2 rounds; see text
+      effectNotes:
+        - '@Action[Followup Damage]'
       measureTemplate:
         size: '30'
         type: circle
@@ -25,6 +34,29 @@ system:
       save:
         description: Reflex half (see text)
         type: ref
+    - _id: odPAM81PljbNOpne
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: min(10, floor(@cl / 2))d6
+            type:
+              custom: ''
+              values:
+                - acid
+      duration:
+        units: inst
+      measureTemplate:
+        size: '30'
+      name: Followup Damage
+      save:
+        description: Reflex half (see text)
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
   components:
     somatic: true
     verbal: true

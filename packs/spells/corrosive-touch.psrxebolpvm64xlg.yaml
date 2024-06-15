@@ -10,6 +10,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(5, @cl)d4
+            type:
+              custom: ''
+              values:
+                - acid
       duration:
         units: inst
       name: Use
@@ -17,6 +24,7 @@ system:
         units: touch
       target:
         value: creature or object touched
+      touch: true
   components:
     somatic: true
     verbal: true

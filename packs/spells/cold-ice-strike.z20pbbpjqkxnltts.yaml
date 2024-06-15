@@ -11,6 +11,13 @@ system:
         unchained:
           type: action
       area: 30-ft. line
+      damage:
+        parts:
+          - formula: min(15, @cl)d6
+            type:
+              custom: ''
+              values:
+                - cold
       duration:
         units: inst
       measureTemplate:

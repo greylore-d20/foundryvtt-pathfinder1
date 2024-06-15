@@ -11,6 +11,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: min(20, @cl)d6
+            type:
+              custom: ''
+              values:
+                - fire
       duration:
         units: inst
       name: Use
@@ -23,14 +30,18 @@ system:
         value: >-
           one primary target, plus one secondary target/level (each of which
           must be within 30 ft. of the primary target)
+  attackNotes:
+    - 'Max arcs: [[@cl]]'
   components:
     focus: true
     somatic: true
     verbal: true
   description:
     value: >-
-      <p>This spell functions like <i>chain lightning</i>, except as noted
-      above, and the spell deals fire damage instead of electricity damage.</p>
+      <p>This spell functions like
+      @UUID[Compendium.pf1.spells.Item.6vfauefzzmwl4az7]{chain lightning},
+      except as noted above, and the spell deals fire damage instead of
+      electricity damage.</p>
   descriptors:
     value:
       - fire

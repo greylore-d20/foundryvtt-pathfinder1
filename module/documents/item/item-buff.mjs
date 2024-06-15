@@ -166,7 +166,7 @@ export class ItemBuffPF extends ItemPF {
         labels.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
       } else if (unit && duration.value) {
         try {
-          // TODO: Fix this once safeRollSync
+          // TODO: Durations can be variable, variable durations need to be supported.
           const roll = RollPF.create(duration.value);
           rollData ??= this.getRollData();
           let value;
@@ -177,7 +177,7 @@ export class ItemBuffPF extends ItemPF {
           }
           labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
         } catch (e) {
-          console.warning(`Error with buff duration formula "${duration.value}"`, this);
+          console.warn(`Error with buff duration formula "${duration.value}"`, this);
         }
       } else {
         labels.duration = "";

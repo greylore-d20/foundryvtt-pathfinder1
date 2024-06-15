@@ -179,6 +179,7 @@ export class ItemSheetPF extends ItemSheet {
 
     context.limitedUsePeriods = { ...pf1.config.limitedUsePeriods };
     if (!item.isPhysical) delete context.limitedUsePeriods.single;
+    context.isRechargeable = pf1.config.limitedUsePeriodOrder.includes(itemData.uses?.per);
 
     // Item type identifiers
     context.isPhysical = itemData.quantity !== undefined;

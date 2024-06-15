@@ -975,7 +975,7 @@ export class ItemSpellPF extends ItemPF {
 
     // Set duration label
     const duration = actionData.duration;
-    switch (duration.units) {
+    switch (duration?.units) {
       case "spec":
         label.duration = duration.value;
         break;

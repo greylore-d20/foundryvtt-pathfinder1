@@ -4,6 +4,21 @@ img: systems/pf1/icons/items/weapons/rhoka.PNG
 name: Slowing Strike (SLA)
 system:
   abilityType: ex
+  actions:
+    - _id: 2dK8NN3vyqzBWHJ8
+      actionType: save
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      duration:
+        units: round
+        value: 1d4
+      name: Use
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortitude negates
+        type: fort
   associations:
     classes:
       - Slayer

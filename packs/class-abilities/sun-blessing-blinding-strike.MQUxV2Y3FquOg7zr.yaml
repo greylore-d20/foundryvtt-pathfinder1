@@ -16,6 +16,7 @@ system:
         value: '1'
       name: Use
       save:
+        dc: 10 + floor(@class.level / 2) + @abilities.wis.mod
         description: Reflex dazzles instead of blinds
         type: ref
       target:

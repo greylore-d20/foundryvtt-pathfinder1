@@ -4,7 +4,7 @@
  * @see {pf1.documents.item.ItemPF.prototype.getContextChanges}
  */
 export const actionTypeToContext = {
-  mwak: "wmdamage",
+  mwak: "mwdamage",
   twak: "twdamage",
   rwak: "rwdamage",
   msak: "sdamage",

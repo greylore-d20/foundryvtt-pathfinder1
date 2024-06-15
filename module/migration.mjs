@@ -1625,12 +1625,16 @@ const _migrateItemChanges = function (itemData, updateData) {
           subTarget: c[2],
           modifier: c[3],
         });
+
         newChanges.push(newChange.toObject());
       } else {
         const cd = foundry.utils.deepClone(c); // Avoid mutating source data so diff works properly
         // Transform legacy operators
         if (cd.operator === "=") cd.operator = "set";
         if (cd.operator === "+") cd.operator = "add";
+
+        // Value should not exist, yet it was added previously by using derived data for updates.
+        delete cd.value;
 
         newChanges.push(new ItemChange(cd).toObject());
       }

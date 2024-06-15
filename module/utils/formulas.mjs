@@ -215,6 +215,7 @@ function ternaryTerms(terms) {
  * @param {string} formula - Formula
  * @param {object} [rollData={}] - Roll data
  * @returns {string} - Simpler formula
+ * @throws {Error} - On invalid formula
  */
 export function simplify(formula, rollData = {}) {
   formula = Roll.replaceFormulaData(unflair(formula), rollData, { missing: 0 });

@@ -97,8 +97,13 @@ export const registerHandlebarsHelpers = function () {
     if (semiFinal === "NaN") return semiFinal;
     if (!combine) return semiFinal;
     // Simplification turns 1d12+1d8+6-8+3-2 into 1d12+1d8-1
-    const final = pf1.utils.formula.simplify(semiFinal, undefined);
-    return pf1.utils.formula.compress(final);
+    try {
+      const final = pf1.utils.formula.simplify(semiFinal, undefined);
+      return pf1.utils.formula.compress(final);
+    } catch (err) {
+      console.error("Invalid action damage formula:", parts.join(" + "), action, err);
+      return "NaN";
+    }
   }
 
   Handlebars.registerHelper("actionDamage", actionDamage);

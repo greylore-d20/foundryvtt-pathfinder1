@@ -727,13 +727,13 @@ export class ActionUse {
       mcman: ["melee"],
     };
 
+    const isAttack = this.action.hasAttack ?? false;
+
     const notes = [];
-    // Add actor notes
-    if (this.actor) {
-      notes.push(...this.item.actor.getContextNotesParsed("attacks.attack"));
-      typeMap[type]?.forEach((subTarget) =>
-        notes.push(...this.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
-      );
+    // Add actor notes for attacks
+    if (this.actor && isAttack) {
+      notes.push(...this.actor.getContextNotesParsed("attacks.attack"));
+      typeMap[type]?.forEach((subTarget) => notes.push(...this.actor.getContextNotesParsed(`attacks.${subTarget}`)));
     }
     // Add item notes
     if (this.item?.system.attackNotes) {
@@ -743,20 +743,20 @@ export class ActionUse {
     if (this.action.data.attackNotes) {
       notes.push(...this.action.data.attackNotes);
     }
+
     // Add CMB notes
     if (this.action.isCombatManeuver) {
       notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
-    const hasCritConfirm = this.shared.attacks.some(
-      (/** @type {ChatAttack} */ atk) => !!atk.chatAttack?.hasCritConfirm
-    );
-    if (hasCritConfirm) {
-      notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
+    if (isAttack) {
+      const hasCritConfirm = this.shared.attacks.some((atk) => !!atk.chatAttack?.hasCritConfirm);
+      if (hasCritConfirm) notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
     }
 
     this.shared.templateData.footnotes = notes;
   }
+
   async addEmptyAttack() {
     const attack = new ChatAttack(this.shared.action, {
       rollData: this.shared.rollData,

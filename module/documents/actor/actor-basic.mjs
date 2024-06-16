@@ -7,11 +7,15 @@ import { ActorBasePF } from "./actor-base.mjs";
  */
 export class BasicActorPF extends ActorBasePF {
   constructor(...args) {
-    foundry.utils.logCompatibilityWarning("Basic actor type is obsolete with Foundry v11", {
-      since: "PF1 v9",
-      until: "PF1 v11",
-    });
     super(...args);
+
+    foundry.utils.logCompatibilityWarning(
+      `Basic actor type is obsolete with Foundry v11. Actor "${this.uuid}" will become nonfunctional in the future.`,
+      {
+        since: "PF1 v9",
+        until: "PF1 v11",
+      }
+    );
   }
 
   _resetInherentTotals() {}

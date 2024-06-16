@@ -441,7 +441,8 @@ export class ItemPF extends ItemBasePF {
 
     // No update when period does not match usage
     if (["charges", "single"].includes(uses.per)) {
-      // Ignore, no constraints
+      // Only charge if time period is any
+      if (period !== "any") return;
     } else if (pf1.config.limitedUsePeriodOrder.includes(period) && !exact) {
       // Recharge lesser time periods when using inexact matching
       const idx = pf1.config.limitedUsePeriodOrder.indexOf(period);

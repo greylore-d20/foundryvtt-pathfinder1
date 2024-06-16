@@ -4965,7 +4965,7 @@ export class ActorPF extends ActorBasePF {
       const spellbookUpdates = await this.resetSpellbookUsage({ commit: false });
       foundry.utils.mergeObject(updateData, spellbookUpdates);
 
-      itemUpdates = await this.rechargeItems({ commit: false, updateData });
+      itemUpdates = await this.rechargeItems({ commit: false, updateData, period: "day" });
     }
 
     options = { restoreHealth, restoreDailyUses, longTermCare, hours };

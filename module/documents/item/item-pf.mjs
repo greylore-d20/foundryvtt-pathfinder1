@@ -252,21 +252,23 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * The item's material, or `null` if the item has no subtype
+   * The item's material.
    *
    * @type {string|null}
    */
   get normalMaterial() {
-    return this.system.material?.normal.value || null;
+    if (this.type === "equipment") return this.system.armor?.material?.normal.value || null;
+    else return this.system.material?.normal.value || null;
   }
 
   /**
-   * The item's material addons, or `null` if the item has no subtype
+   * The item's material addons.
    *
-   * @type {string[]|null}
+   * @type {string[]}
    */
   get addonMaterial() {
-    return this.system.material?.addon.filter((o) => o ?? false) || null;
+    if (this.type === "equipment") return this.system.armor?.material?.addon?.filter((o) => o ?? false) ?? [];
+    else return this.system.material?.addon?.filter((o) => o ?? false) ?? [];
   }
 
   /**

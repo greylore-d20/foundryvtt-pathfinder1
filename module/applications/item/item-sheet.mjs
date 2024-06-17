@@ -487,9 +487,10 @@ export class ItemSheetPF extends ItemSheet {
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
-    if (this.item.system.material?.addon) {
+    const material = this.item.type === "equipment" ? this.item.system.armor?.material : this.item.system.material;
+    if (material?.addon?.length) {
       context.materialAddons =
-        this.item.system.material.addon.reduce((obj, v) => {
+        material.addon.reduce((obj, v) => {
           obj[v] = true;
           return obj;
         }, {}) ?? {};
@@ -1165,7 +1166,7 @@ export class ItemSheetPF extends ItemSheet {
     // Adjust Material Addons
     // The available addons can change depending in the chosen material,
     // so we need to get the values to build the addons on the item.
-    const material = system.material;
+    const material = this.item.type === "equipment" ? system.armor?.material : system.material;
     if (material?.addon) {
       // Convert to array
       material.addon = Object.entries(material.addon)

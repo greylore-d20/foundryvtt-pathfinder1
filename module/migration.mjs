@@ -785,6 +785,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateSpellDescriptors(itemData, updateData);
   _migrateItemTraitsCustomToArray(itemData, updateData);
   _migrateItemChangeFlags(itemData, updateData);
+  _migrateItemMaterials(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
 
   // Migrate action data
@@ -3034,6 +3035,26 @@ const _migrateItemFlags = (itemData, updateData) => {
   if (itemData.flags.pf1.abundant !== undefined) {
     updateData["system.abundant"] = Boolean(itemData.flags.pf1.abundant);
     updateData["flags.pf1.-=abundant"] = null;
+  }
+};
+
+const _migrateItemMaterials = (itemData, updateData) => {
+  // Convert incorrect material addon data
+  if (itemData.system.material?.addon) {
+    const addon = itemData.system.material.addon;
+    if (!Array.isArray(addon)) {
+      updateData["system.material.addon"] = Object.entries(addon)
+        .filter(([_, chosen]) => chosen)
+        .map(([key]) => key);
+    }
+  }
+  if (itemData.system.armor?.material?.addon) {
+    const addon = itemData.system.armor?.material?.addon;
+    if (!Array.isArray(addon)) {
+      updateData["system.material.addon"] = Object.entries(addon)
+        .filter(([_, chosen]) => chosen)
+        .map(([key]) => key);
+    }
   }
 };
 

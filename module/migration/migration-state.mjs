@@ -65,4 +65,16 @@ export class MigrationState {
     this.completed = true;
     this.call(this, { action: "finish" });
   }
+
+  get errors() {
+    return Object.values(this.categories).reduce((total, c) => total + c.errors.length, 0);
+  }
+
+  get invalid() {
+    return Object.values(this.categories).reduce((total, c) => total + c.invalid, 0);
+  }
+
+  get ignored() {
+    return Object.values(this.categories).reduce((total, c) => total + c.ignored, 0);
+  }
 }

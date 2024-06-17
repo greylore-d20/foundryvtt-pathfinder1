@@ -50,6 +50,20 @@
   {{/if}}
 </div>
 
+{{#if (or errors invalid)}}
+<div class="error-info">
+  <i class="fa-solid fa-solid fa-triangle-exclamation"></i>
+  {{#if errors}}
+  <span class="detail"><label>{{localize "PF1.Migration.Dialog.Errors"}}</label>: <span>{{errors}}</span></span>
+  {{~/if}}
+  {{#if invalid~}}
+  <span class="detail"><label>{{localize "PF1.Migration.Dialog.InvalidDocuments"}}</label>: <span>{{invalid}}</span></span>
+  {{/if}}
+  <br>
+  <span class="instructions">{{localize "PF1.Migration.Dialog.ErrorHelp"}}</span>
+</div>
+{{/if}}
+
 <h3 class="status {{#if completed}}completed{{else}}in-progress{{/if}}">
   {{#if completed}}
   <i class="fa-solid fa-check-double fa-beat"></i>

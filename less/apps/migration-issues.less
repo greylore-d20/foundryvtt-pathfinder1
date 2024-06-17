@@ -1,4 +1,6 @@
 .pf1.dialog.migration-issues {
+  max-height: 560px;
+
   .dialog-content {
     display: flex;
     flex-flow: column nowrap;
@@ -7,9 +9,16 @@
 
     h3 {
       margin: 0;
+      flex: 0;
+
+      &.center {
+        text-align: center;
+      }
     }
 
     ul {
+      flex: 1;
+
       list-style: none;
       margin: 0;
       padding: 0;
@@ -18,9 +27,9 @@
       .scrollbar();
 
       display: grid;
-      grid-template-columns: 1fr 5fr;
+      grid-template-columns: 4em 5fr;
       &.errors {
-        grid-template-columns: 1fr 3fr 5fr;
+        grid-template-columns: 4em 3fr 5fr;
       }
       grid-auto-rows: min-content;
       gap: 3px;
@@ -47,15 +56,15 @@
       }
 
       .issue {
-        .id {
-          font-size: var(--font-size-11);
-          font-family: monospace;
-          align-self: center;
+        :is(.id, .uuid) {
+          justify-self: center;
+
+          > a > i {
+            pointer-events: none;
+          }
         }
 
-        .id,
-        .name,
-        .message {
+        :is(.name, .message) {
           user-select: all;
         }
       }

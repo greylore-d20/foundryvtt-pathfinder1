@@ -1,5 +1,5 @@
 import { MigrationState } from "../../migration/migration-state.mjs";
-import { MigrationIssuesDialog as MigrationIssuesDialog } from "./migration-issues-dialog.mjs";
+import { MigrationIssuesDialog } from "./migration-issues-dialog.mjs";
 
 export class MigrationDialog extends Application {
   /**

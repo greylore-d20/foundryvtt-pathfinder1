@@ -518,6 +518,7 @@ export class ActorPF extends ActorBasePF {
         ability.total = null;
         ability.base = null;
       } else {
+        ability.undrained = value;
         ability.total = value - ability.drain;
         ability.penalty = (ability.penalty || 0) - Math.abs(ability.userPenalty || 0);
         ability.base = ability.total;

@@ -825,9 +825,11 @@ export const addDefaultChanges = function (changes) {
     );
 
     if (!this.system.attributes.wounds?.base) {
+      // TODO: Apply current wounds by ability drain
       changes.push(
         new pf1.components.ItemChange({
-          formula: "@attributes.hpAbility.total * 2 + @abilities.hpAbility.drain",
+          // Wounds max are unaffected by ability drain
+          formula: "@attributes.hpAbility.undrained * 2",
           operator: "add",
           target: "wounds",
           type: "base",

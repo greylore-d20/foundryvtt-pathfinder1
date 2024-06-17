@@ -1438,6 +1438,7 @@ export class ActorSheetPF extends ActorSheet {
           { path: `@abilities.${abl}.mod`, value: ability.mod },
           { path: `@abilities.${abl}.damage`, value: ability.damage, sign: false },
           { path: `@abilities.${abl}.drain`, value: ability.drain, sign: false },
+          { path: `@abilities.${abl}.undrained`, value: ability.undrained, sign: false },
           { path: `@abilities.${abl}.penalty`, value: ability.penalty, sign: false },
           { path: `@abilities.${abl}.base`, value: ability.base, sign: false },
           { path: `@abilities.${abl}.baseMod`, value: ability.baseMod }

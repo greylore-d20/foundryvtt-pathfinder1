@@ -1833,9 +1833,12 @@ const _migrateSpellCosts = function (ent, updateData) {
 function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
   if (itemData.type !== "spell") return;
 
+  const prepMode = item?.spellbook?.spellPreparationMode || "prepared";
+  const isPrepared = prepMode === "prepared";
+
   const prep = itemData.system.preparation ?? {};
   if (prep.maxAmount !== undefined) {
-    if (prep.max === undefined) {
+    if (!(prep.max > 0)) {
       // Migrate even older non number max amount
       if (typeof prep.maxAmount !== "number") prep.maxAmount = 0;
       updateData["system.preparation.max"] = prep.maxAmount ?? 0;
@@ -1843,19 +1846,19 @@ function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
     updateData["system.preparation.-=maxAmount"] = null;
   }
   if (prep.spontaneousPrepared !== undefined) {
-    if (prep.value === undefined) {
+    if (!(prep.value > 0) && isPrepared) {
       updateData["system.preparation.value"] = prep.spontaneousPrepared ? 1 : 0;
     }
     updateData["system.preparation.-=spontaneousPrepared"] = null;
   }
   if (prep.preparedAmount !== undefined) {
-    if (prep.value === undefined) {
+    if (!(prep.value > 0) && isPrepared) {
       updateData["system.preparation.value"] = Math.max(
         prep.preparedAmount,
-        updateData["system.preparation.value"] ?? 0
+        updateData["system.preparation.value"] || 0
       );
     }
-    updateData["system.preparation.-=spontaneousPrepared"] = null;
+    updateData["system.preparation.-=preparedAmount"] = null;
   }
 }
 

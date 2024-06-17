@@ -3368,6 +3368,11 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
+    // Remove implant section if cybertech is disabled and no implants are present
+    if (!ct && this.actor.itemTypes.implant.length === 0) {
+      inventory.findSplice((cat) => cat.id === "implants");
+    }
+
     // Organize Features
     const featureSections = Object.values(pf1.config.sheetSections.features)
       .map((data) => ({ ...data }))

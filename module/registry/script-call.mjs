@@ -35,14 +35,14 @@ export class ScriptCalls extends Registry {
     // Use
     {
       _id: "use",
-      itemTypes: ["attack", "buff", "feat", "equipment", "implant", "consumable", "spell", "weapon"],
+      itemTypes: ["attack", "buff", "feat", "loot", "equipment", "implant", "consumable", "spell", "weapon"],
       name: "PF1.ScriptCalls.Use.Name",
       info: "PF1.ScriptCalls.Use.Info",
     },
     // Post-Use
     {
       _id: "postUse",
-      itemTypes: ["attack", "buff", "feat", "equipment", "implant", "consumable", "spell", "weapon"],
+      itemTypes: ["attack", "buff", "feat", "loot", "equipment", "implant", "consumable", "spell", "weapon"],
       name: "PF1.ScriptCalls.PostUse.Name",
       info: "PF1.ScriptCalls.PostUse.Info",
     },

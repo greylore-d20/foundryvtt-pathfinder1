@@ -1,0 +1,68 @@
+_id: lmkfribudweixchx
+_key: '!items!lmkfribudweixchx'
+folder: cAy9ZJ6s0itRwD7c
+img: icons/consumables/potions/potion-flask-corked-yellow.webp
+name: Ambrosia (vial)
+system:
+  actions:
+    - _id: mNzQtLL6MFimMD45
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: hour
+        value: '1'
+      name: Drink
+    - _id: VKmORj7uvNgOcGYV
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 2d4
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      measureTemplate:
+        color: '#00cfeb'
+        size: '5'
+        type: circle
+      name: Throw as holy water
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      splash: true
+      target:
+        value: Undead and evil outsiders
+      touch: true
+  description:
+    value: >-
+      <p>Upon consumption, this heavenly elixir, brewed from holy water and
+      blessed herbs, grants a +2 <em>sacred bonus</em> on saving throws against
+      negative energy, <em>energy drain</em>, and death effects for 1 hour,
+      including saves to remove <em>negative levels</em>. Ambrosia affects
+      <em>undead</em> and evil <em>outsiders</em> as holy water.</p>
+  equipped: false
+  price: 100
+  sources:
+    - id: PZO1121
+      pages: '87'
+  subType: remedy
+  tags:
+    - Aasimar
+  uses:
+    per: single
+  weight:
+    value: 1
+type: loot
+

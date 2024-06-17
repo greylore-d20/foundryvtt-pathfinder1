@@ -1,12 +1,22 @@
 _id: wiufrzfxrmcoudhz
 _key: '!items!wiufrzfxrmcoudhz'
+folder: hN7XSgK640IpD3iM
 img: icons/commodities/metal/clasp-steel-green.webp
 name: Armor Truss
 system:
+  actions:
+    - _id: TyWcWHnWr1t1UmSj
+      activation:
+        cost: 15
+        type: minute
+        unchained:
+          cost: 15
+          type: minute
+      duration:
+        units: inst
+      name: Prepare armor
   description:
     value: >-
-      <p><b>Price</b> 30 gp; <b>Weight</b> 10 lbs.</p>
-
       <p>This collection of flexible strips of wood, durable shims, and thin
       cords allows you to prop open the buckles, padding, and plates of armor
       for easy entry. If you take at least 15 minutes preparing an empty suit of
@@ -18,7 +28,8 @@ system:
   price: 30
   sources:
     - id: PZO9455
-  subType: gear
+      pages: '20'
+  subType: tool
   weight:
     value: 10
 type: loot

@@ -1,12 +1,37 @@
 _id: sjnuvlnhhecnotky
 _key: '!items!sjnuvlnhhecnotky'
+folder: gm8oRtGnrytDCA3z
 img: icons/commodities/materials/slime-white.webp
 name: Alchemical Glue
 system:
+  actions:
+    - _id: KW4BsLQq0ghR9Uo3
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: spec
+        value: 1 minute and fully cured after 1 hour
+      measureTemplate:
+        size: '5'
+        type: rect
+      name: Glue large area
+      uses:
+        autoDeductChargesCost: '20'
+    - _id: mIMS126CbypVuCi6
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: spec
+        value: 1 minute and fully cured after 1 hour
+      name: Glue small area
   description:
     value: >-
-      <p><b>Price</b> 20 gp; <b>Weight</b> 1/2 lb.</p>
-
       <p>This glue is stored as two flasks of syrupy liquid. When mixed together
       and allowed to cure, they form a strong bond. The glue is sufficient to
       coat 1 square foot of surface, or (because of waste, spills, and
@@ -16,10 +41,18 @@ system:
       requires a DC 20 <em>Strength</em> check for tacky glue or DC 25 for cured
       glue. Pulling apart a small glued surface (anything less than 1 square
       foot) is a DC 15 <em>Strength</em> check for tacky glue or DC 20 for cured
-      glue.</p>
+      glue.</p><h3>Construction</h3><p><strong>Craft (Alchemy)</strong> DC
+      20</p>
   equipped: false
   price: 20
-  subType: gear
+  sources:
+    - id: PZO1123
+      pages: '103'
+  subType: tool
+  uses:
+    maxFormula: '20'
+    per: charges
+    value: 20
   weight:
     value: 0.5
 type: loot

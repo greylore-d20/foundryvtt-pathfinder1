@@ -1,8 +1,19 @@
 _id: glpxtqnicsmuyngy
 _key: '!items!glpxtqnicsmuyngy'
+folder: cAy9ZJ6s0itRwD7c
 img: icons/commodities/materials/slime-thick-orange.webp
 name: Alchemical Preserves
 system:
+  actions:
+    - _id: T0utUpNkHvBihM28
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      name: Use
   description:
     value: >-
       <p>Each small tin of this specially treated jam contains just enough of
@@ -11,11 +22,17 @@ system:
       <em>standard action</em>, it only affects halflings in a beneficial way.
       Halflings who eat the preserves recover from <em>fatigue</em>.
       Non-halflings who eat alchemical preserves become <em>sickened</em> for 1
-      round.</p>
+      round.</p><h3>Construction</h3><p><strong>Craft (Alchemy)</strong> DC
+      20</p>
   equipped: false
   price: 50
   sources:
     - id: PZO1121
-  subType: gear
+      pages: '65'
+  subType: remedy
+  tags:
+    - Halfling
+  uses:
+    per: single
 type: loot
 

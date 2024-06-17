@@ -1,8 +1,19 @@
 _id: nxlrjuqliwfghmwp
 _key: '!items!nxlrjuqliwfghmwp'
+folder: cAy9ZJ6s0itRwD7c
 img: icons/tools/laboratory/bowl-liquid-black.webp
 name: Alchemical Grease
 system:
+  actions:
+    - _id: tzYluoEL5Q0bbiJD
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: hour
+        value: '4'
+      name: Use
   description:
     value: >-
       <p>Each pot of this slick black goo has sufficient contents to cover one
@@ -11,7 +22,7 @@ system:
       on <em>combat maneuver</em> checks made to escape a <em>grapple</em>, and
       to your <em>CMD</em> to avoid being <em>grappled</em>; this lasts 4 hours
       or until you wash it off.</p><h3>Construction</h3><p><strong>Craft
-      (alchemy)</strong> DC 15</p><h3>Alchemical Power
+      (Alchemy)</strong> DC 15</p><h3>Alchemical Power
       Component</h3><p>Alchemical grease is good for augmenting spells affecting
       or creating
       surfaces.</p><ul><li>@UUID[Compendium.pf1.spells.Item.ik9u3eel5vfwrtb5]{Grease}
@@ -37,9 +48,11 @@ system:
       pages: '19'
     - id: PZO9410
       pages: '19'
-  subType: gear
+  subType: remedy
   tags:
     - Power Component
+  uses:
+    per: single
   weight:
     value: 1
 type: loot

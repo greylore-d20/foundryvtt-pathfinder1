@@ -2890,6 +2890,12 @@ export const sheetSections = {
       create: { type: "attack", system: { subType: "weapon" } },
     },
   },
+  // Misc section is only informal for sheet handling of special cases
+  misc: {
+    race: {
+      create: { type: "race" },
+    },
+  },
 };
 
 // Prepare sheet sections with data available later

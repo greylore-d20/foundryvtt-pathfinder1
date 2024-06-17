@@ -35,14 +35,14 @@ export class ScriptCalls extends Registry {
     // Use
     {
       _id: "use",
-      itemTypes: ["attack", "buff", "feat", "equipment", "consumable", "spell", "weapon"],
+      itemTypes: ["attack", "buff", "feat", "equipment", "implant", "consumable", "spell", "weapon"],
       name: "PF1.ScriptCalls.Use.Name",
       info: "PF1.ScriptCalls.Use.Info",
     },
     // Post-Use
     {
       _id: "postUse",
-      itemTypes: ["attack", "buff", "feat", "equipment", "consumable", "spell", "weapon"],
+      itemTypes: ["attack", "buff", "feat", "equipment", "implant", "consumable", "spell", "weapon"],
       name: "PF1.ScriptCalls.PostUse.Name",
       info: "PF1.ScriptCalls.PostUse.Info",
     },
@@ -52,6 +52,13 @@ export class ScriptCalls extends Registry {
       itemTypes: ["weapon", "equipment", "loot"],
       name: "PF1.ScriptCalls.Equip.Name",
       info: "PF1.ScriptCalls.Equip.Info",
+    },
+    // Implant
+    {
+      _id: "implant",
+      itemTypes: ["implant"],
+      name: "PF1.ScriptCalls.Implant.Name",
+      info: "PF1.ScriptCalls.Implant.Info",
     },
     // Toggle
     {
@@ -63,7 +70,7 @@ export class ScriptCalls extends Registry {
     // Change Quantity
     {
       _id: "changeQuantity",
-      itemTypes: ["loot", "equipment", "weapon", "consumable", "container"],
+      itemTypes: ["loot", "equipment", "weapon", "implant", "consumable", "container"],
       name: "PF1.ScriptCalls.ChangeQuantity.Name",
       info: "PF1.ScriptCalls.ChangeQuantity.Info",
     },

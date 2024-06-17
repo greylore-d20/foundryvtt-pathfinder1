@@ -1,6 +1,47 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
 export class ItemImplantPF extends ItemPhysicalPF {
+  _onCreate(data, context, userId) {
+    super._onCreate(data, context, userId);
+
+    // Simulate equipping items    {
+    if (this.system.implanted === true) {
+      this.executeScriptCalls("implant", { implanted: true });
+    }
+  }
+
+  /**
+   * @internal
+   * @override
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
+
+    if (game.users.get(userId)?.isSelf) {
+      if (this.system.implanted === true) {
+        this.executeScriptCalls("implant", { implanted: false });
+      }
+    }
+  }
+
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onUpdate(changed, context, userId) {
+    super._onUpdate(changed, context, userId);
+
+    // Call 'implant' script calls
+    const implanted = changed.system?.implanted;
+    if (implanted != null) {
+      this.executeScriptCalls("implant", { implanted });
+    }
+  }
+
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 

@@ -4880,19 +4880,37 @@ export class ActorPF extends ActorBasePF {
    */
   _restingHeal(options = {}) {
     const actorData = this.system,
-      hp = actorData.attributes.hp;
+      hp = actorData.attributes.hp,
+      wounds = actorData.attributes?.wounds,
+      vigor = actorData.attributes?.vigor;
+
     const { hours, longTermCare } = options;
     const updateData = {};
 
     const hd = actorData.attributes.hd.total;
+
+    // Base healing
     const heal = {
       hp: hd,
       abl: 1,
       nonlethal: hours * hd,
+      vigor: vigor?.max ?? 0,
+      wounds: wounds?.max > 0 ? 1 : 0,
     };
+
+    // -- Normal Hit Points ---
+
+    // Full day of resting
+    if (hours >= 24) {
+      heal.hp += 1;
+      heal.wounds += Math.floor(hd / 2);
+      heal.abl += 1;
+    }
+    // Long term care
     if (longTermCare === true) {
       heal.hp *= 2;
       heal.abl *= 2;
+      heal.wounds *= 2;
     }
 
     updateData["system.attributes.hp.value"] = Math.min(hp.value + heal.hp, hp.max);
@@ -4900,6 +4918,14 @@ export class ActorPF extends ActorBasePF {
     for (const [key, abl] of Object.entries(actorData.abilities)) {
       const dmg = Math.abs(abl.damage);
       updateData[`system.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
+    }
+
+    // --- Wounds & Vigor ---
+
+    // Secondary actors don't use W&V rules
+    if (wounds?.max && vigor?.max) {
+      updateData["system.attributes.wounds.value"] = Math.min(wounds.value + heal.wounds, wounds.max);
+      updateData["system.attributes.vigor.value"] = Math.min(vigor.value + heal.vigor, vigor.max);
     }
 
     return updateData;

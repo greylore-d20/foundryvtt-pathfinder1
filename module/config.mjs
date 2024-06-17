@@ -2599,7 +2599,7 @@ export const sheetSections = {
       sort: 4_000,
     },
     item: {
-      label: "PF1.Items",
+      label: "PF1.Subtypes.Item.attack.item.Plural",
       filters: [{ type: "attack", subTypes: ["item"] }],
       interface: {
         create: true,
@@ -2608,7 +2608,7 @@ export const sheetSections = {
       sort: 5_000,
     },
     misc: {
-      label: "PF1.Misc",
+      label: "PF1.Subtypes.Item.attack.misc.Plural",
       filters: [{ type: "attack", subTypes: ["misc"] }],
       interface: {
         create: true,

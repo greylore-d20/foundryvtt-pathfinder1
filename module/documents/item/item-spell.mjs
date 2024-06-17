@@ -431,12 +431,20 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * @inheritdoc
+   * @remarks
+   * - Recharging individual spells for spell point, spontaneous, or hybrid spellbooks has no effect.
+   * @override
+   * @inheritDoc
    */
   async recharge({ value, period = "day", exact = false, maximize = true, commit = true, rollData, context } = {}) {
-    const itemData = this.system,
-      spellbook = this.spellbook,
-      isSpontaneous = spellbook?.spontaneous ?? false;
+    const spellbook = this.spellbook,
+      mode = spellbook?.spellPreparationMode || "prepared";
+
+    // Can not recharge non-prepared spellbooks
+    if (mode !== "prepared") return;
+
+    // Spellpoints are not on spells
+    if (spellbook?.spellPoints?.useSystem ?? false) return;
 
     if (period == "week") {
       // Spells do not recharge per week
@@ -448,25 +456,22 @@ export class ItemSpellPF extends ItemPF {
     // Spells do not restore on non-day period
     if (!["day", "any"].includes(period)) return;
 
-    // Spontaneous spells do not record charges in spell.
-    if (isSpontaneous) return;
+    const prep = this.system.preparation ?? {};
 
-    // Spellpoints are not on spells
-    if (spellbook?.spellPoints?.useSystem ?? false) return;
+    // No specific value given
+    maximize = !(Number.isFinite(value) && value >= 0);
 
-    const updateData = { system: { preparation: {} } };
+    // Set value
+    if (maximize) value = prep.max || 0;
+    // Clamp charge value
+    value = Math.clamped(value, 0, prep.max || 0);
 
-    const prep = itemData.preparation;
-    if (prep.value == prep.max) return;
+    // Cancel pointless or bad update
+    if (value === (prep.value || 0) || !Number.isFinite(value)) return;
 
-    if (maximize) value = prep.max ?? 0;
-    value = Math.clamped(value, 0, prep.max ?? 0);
+    const updateData = { system: { preparation: { value } } };
 
-    if (!Number.isFinite(value)) return;
-
-    updateData.system.preparation.value = prep.max ?? 0;
-
-    if (commit) this.update(updateData, context);
+    if (commit) return this.update(updateData, context);
     return updateData;
   }
 

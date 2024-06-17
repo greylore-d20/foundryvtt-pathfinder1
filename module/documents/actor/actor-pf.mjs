@@ -4791,6 +4791,8 @@ export class ActorPF extends ActorBasePF {
 
     // Update spellbooks
     for (const [bookId, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
+      if (!spellbook.inUse) continue;
+
       // Restore spellbooks using spell points
       if (spellbook.spellPoints.useSystem) {
         // Try to roll restoreFormula, fall back to restoring max spell points
@@ -4827,55 +4829,23 @@ export class ActorPF extends ActorBasePF {
    * @param {RechargeActorItemsOptions} [options] - Additional options
    * @returns {Promise<Item[]|object[]>} - Result of an update or the update data.
    */
-  async rechargeItems({ updateData = {}, commit = true, ...rechargeOptions } = {}) {
+  async rechargeItems({ commit = true, ...rechargeOptions } = {}) {
     const actorData = this.system;
     const itemUpdates = [];
 
-    // Get data at path, either from passed updateData or directly from actor
-    const getPathData = (path) =>
-      foundry.utils.getProperty(updateData.system, path) ?? foundry.utils.getProperty(this.system, path);
-
     // Update charged items
+    // TODO: Await all item recharges in one go.
     for (const item of this.items) {
       const itemUpdate = (await item.recharge({ ...rechargeOptions, commit: false })) ?? {};
       itemUpdate.system ??= {};
 
-      const itemData = item.system;
-      if (item.type === "spell") {
-        const bookId = itemData.spellbook,
-          level = itemData.level;
-
-        const spellbook = foundry.utils.getProperty(actorData, `attributes.spells.spellbooks.${bookId}`);
-
-        // Skip spells with missing spellbook
-        if (!spellbook) {
-          console.warn(`${item.name} [${item.id}] has invalid spellbook: "${bookId}"`);
-          continue;
-        }
-
-        // Spontaneous don't store casts in individual spells
-        if (spellbook.spontaneous) continue;
-
-        if (itemData.preparation.value < itemData.preparation.max) {
-          foundry.utils.setProperty(itemUpdate.system, "preparation.value", itemData.preparation.max);
-        }
-        if (!item.system.domain) {
-          let sbUses = getPathData(`attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`) || 0;
-          sbUses -= itemData.preparation.max ?? 0;
-          foundry.utils.setProperty(
-            updateData,
-            `system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`,
-            sbUses
-          );
-        }
-      }
-
       // Update charged actions
       // TODO: Move to ItemPF.recharge()
-      if (item.system.actions?.length > 0) {
+      if (item.system.actions?.length > 0 && (rechargeOptions.period || "day") === "day") {
         const actions = item.toObject().system.actions;
         let _changed = false;
         for (const actionData of actions) {
+          // TODO: Handle time period correctly
           if (actionData.uses?.self?.per === "day") {
             const maxUses = actionData.uses.self.max || 0;
             if (actionData.uses.self.value < maxUses) {
@@ -4965,6 +4935,7 @@ export class ActorPF extends ActorBasePF {
       const spellbookUpdates = await this.resetSpellbookUsage({ commit: false });
       foundry.utils.mergeObject(updateData, spellbookUpdates);
 
+      // Recharge all items (including spells for prepared spellbooks)
       itemUpdates = await this.rechargeItems({ commit: false, updateData, period: "day" });
     }
 

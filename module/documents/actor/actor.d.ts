@@ -6,12 +6,6 @@ interface RechargeActorItemsOptions
    * @defaultValue `true`
    */
   commit?: boolean;
-  /**
-   * Update data to complement or read changed values from.
-   *
-   * @defaultValue `{}`
-   */
-  updateData: Record<string, unknown>;
 }
 
 /**

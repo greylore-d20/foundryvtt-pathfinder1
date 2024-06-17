@@ -107,7 +107,7 @@ export class ItemPhysicalPF extends ItemPF {
     super._onDelete(context, userId);
 
     if (game.users.get(userId)?.isSelf) {
-      if (this.isActive) {
+      if (this.system.equipped === true) {
         this.executeScriptCalls("equip", { equipped: false });
       }
 

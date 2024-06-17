@@ -78,7 +78,7 @@ export class RollPF extends Roll {
     // TODO: Recreate safeRoll() with .evaluateSync() usage
     evalOpts.async = true; // HACK, API hasn't actually changed yet
     const roll = this.safeRoll(formula, rollData, context, options, evalOpts);
-    if (!roll.isDeterministic) {
+    if (!roll.isDeterministic && evalOpts.maximize !== true && evalOpts.minimize !== true) {
       foundry.utils.logCompatibilityWarning(
         "RollPF.safeRollSync() will not support non-deterministic formulas in the future.",
         {

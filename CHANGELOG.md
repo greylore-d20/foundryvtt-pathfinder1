@@ -1,5 +1,37 @@
 # Changelog
 
+## 10.1 - 2024-6-17
+
+### Bug Fixes
+
+- Wounds & Vigor were not healed when resting. ([3214](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3214))
+- Per round limited uses did not have recharge formula.
+- Attack context notes were included with every type of action. ([3199](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3199))
+- Loot items were missing use and post-use script calls options. ([3203](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3203))
+- Implants were missing all script call options.
+- Equip-toggle script call option for physical items could fire needlessly when item was deleted.
+- Some base translation keys were missing for item subtypes. ([3208](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3208))
+- Implants inventory section was still displayed even with cybertech global setting was disabled. ([3209](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3209))
+- Actor sheet could not be opened if a buff had invalid duration formula.
+- Dropping items to item sheet links tab sometimes did not work.
+- Using level-up dialog for mythic path would error.
+- Spells with no actions could not be opened, such as when creating new one from scratch.
+- Could not create race from scratch directly on actor sheet. ([3207](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3207))
+- Resting would incorrectly recharge items with finite charges with no timed recharge.
+- Prepared casters would have their spell uses reset on start of their combat turn.
+- Buffs targeting melee weapon damage had no effect.
+- Ability drain incorrectly affected maximum wounds. ([3206](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3206))
+- Invalid damage formulas could make the actor sheet unopenable.
+
+### Changelog
+
+- Resting for 24 hours or more now increases healing as per full day of rest. ([702](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/702))
+- Migration now cleans up invalid values in Changes.
+
+### Compendium
+
+- Monk was missing their Wholeness of Body ability from 7th level progression. ([3212](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/3212))
+
 ## 10.0 - 2024-6-15
 
 ### Bug Fixes

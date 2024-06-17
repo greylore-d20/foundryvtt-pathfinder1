@@ -3025,7 +3025,7 @@ export class ActorSheetPF extends ActorSheet {
     const currencyType = a.dataset.type;
     const category = a.dataset.category;
 
-    this.document.convertCurrency(category, currencyType);
+    this.actor.convertCurrency(category, currencyType);
   }
 
   /**

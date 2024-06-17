@@ -4392,16 +4392,13 @@ export class ActorPF extends ActorBasePF {
    * @returns {Promise<this>|undefined} Updated document or undefined if no update occurred.
    */
   convertCurrency(category = "currency", type = "pp") {
-    const cp = this.getTotalCurrency(category, { inLowestDenomination: true });
+    const cp = this.getCurrency(category, { inLowestDenomination: true });
     if (!Number.isFinite(cp)) {
       console.error(`Invalid total currency "${cp}" in "${category}" category`);
       return;
     }
 
     const currency = pf1.utils.currency.convert(cp, type);
-
-    // Sanity check
-    if (currency.cp < 0) currency.cp = 0;
 
     return this.update({ system: { [category]: currency } });
   }

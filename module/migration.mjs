@@ -3216,6 +3216,7 @@ const migrateActiveEffectData = async (ae, actor) => {
    * @returns {string|undefined} Relative UUID, if origin was found
    */
   const getNewRelativeOrigin = async (origin) => {
+    if (typeof origin !== "string") return; // Invalid origin type, recorded by SBC?
     const newOrigin = await fromUuid(origin, { relative: actor });
     if (newOrigin instanceof Item && newOrigin.actor === actor) {
       return newOrigin.getRelativeUUID(actor);

@@ -1803,7 +1803,8 @@ export class ItemSheetPF extends ItemSheet {
       }
       case "Item": {
         // Add drop handler to link tabs
-        if (event.target.matches(".tab.links .tab[data-group='links']")) {
+        const linksTab = event.target.closest(".tab.links .tab[data-group='links']");
+        if (linksTab) {
           this._onLinksDrop(event, data);
         }
         break;

@@ -638,18 +638,17 @@ function calculateHealth(actor, allClasses, changes) {
 
   /**
    * @param {number} value
+   * @param {number} fcb
    * @param {ItemPF} source
    */
-  function pushHealth(value, source) {
+  function pushHealth(value, fcb, source) {
     changes.push(
       new pf1.components.ItemChange({
         formula: value,
         target: "mhp",
         type: "untypedPerm",
         flavor: source.name,
-      })
-    );
-    changes.push(
+      }),
       new pf1.components.ItemChange({
         formula: value,
         target: "vigor",
@@ -657,6 +656,22 @@ function calculateHealth(actor, allClasses, changes) {
         flavor: source.name,
       })
     );
+    if (fcb != 0) {
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: fcb,
+          target: "mhp",
+          type: "untypedPerm",
+          flavor: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: source.name }),
+        }),
+        new pf1.components.ItemChange({
+          formula: fcb,
+          target: "vigor",
+          type: "untypedPerm",
+          flavor: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: source.name }),
+        })
+      );
+    }
   }
 
   /**
@@ -667,10 +682,10 @@ function calculateHealth(actor, allClasses, changes) {
       ? healthSource.system.fc.hp.value || 0
       : 0;
 
-    let health = healthSource.system.hp + fcbHp;
-
+    let health = healthSource.system.hp;
     if (!continuous) health = round(health);
-    pushHealth(health, healthSource);
+
+    pushHealth(health, fcbHp, healthSource);
   }
 
   /**
@@ -684,7 +699,8 @@ function calculateHealth(actor, allClasses, changes) {
     const hpPerHD = healthSource.system.hd ?? 0;
     if (hpPerHD === 0) return;
 
-    let health = 0;
+    let health = 0,
+      fcbHp = 0;
 
     // Mythic
     if (healthSource.subType === "mythic") {
@@ -708,12 +724,10 @@ function calculateHealth(actor, allClasses, changes) {
       }
       const maxedHp = maxedHD * hpPerHD;
       const levelHp = Math.max(0, hitDice - maxedHD) * dieHealth;
-      const fcbHp = pf1.config.favoredClassTypes.includes(healthSource.subType)
-        ? healthSource.system.fc.hp.value || 0
-        : 0;
+      fcbHp = pf1.config.favoredClassTypes.includes(healthSource.subType) ? healthSource.system.fc.hp.value || 0 : 0;
       health = maxedHp + levelHp + fcbHp;
     }
-    pushHealth(health, healthSource);
+    pushHealth(health, fcbHp, healthSource);
   }
 
   /**

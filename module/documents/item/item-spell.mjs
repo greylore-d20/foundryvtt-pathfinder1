@@ -276,7 +276,7 @@ export class ItemSpellPF extends ItemPF {
 
       // Add @class shortcut to @classes[classTag]
       if (spellbook.class === "_hd")
-        result.class = { level: result.attributes.hd?.total ?? result.details.level.value };
+        result.class = { level: result.attributes.hd?.total ?? result.details?.level?.value ?? 0 };
       else result.class = result.classes?.[spellbook.class] ?? {};
       Object.defineProperty(result, "classLevel", {
         get() {

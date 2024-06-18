@@ -237,7 +237,7 @@ export class LevelUpForm extends FormApplication {
       config: pf1.config,
       labels: {
         fcb: {
-          skl: "PF1.LevelUp.FC.Skill.Label",
+          skill: "PF1.LevelUp.FC.Skill.Label",
           hp: "PF1.LevelUp.FC.HP.Label",
           none: "PF1.LevelUp.FC.None.Label",
           alt: "PF1.LevelUp.FC.Alt.Label",
@@ -280,7 +280,7 @@ export class LevelUpForm extends FormApplication {
         result.health.value += 1;
         result.health.bonus += 1;
         break;
-      case "skl":
+      case "skill":
         result.skills.delta.ranks += 1;
         break;
     }
@@ -752,7 +752,7 @@ export class LevelUpForm extends FormApplication {
     if (cfg.fcb.choice in itemData.fc) {
       const key = cfg.fcb.choice;
       const value = itemData.fc?.[key]?.value ?? 0;
-      foundry.utils.setProperty(updateData, `fc.${key}.value`, value);
+      foundry.utils.setProperty(updateData, `fc.${key}.value`, value + 1);
 
       const fcKey = { hp: "HP", skill: "Skill", alt: "Alt" }[key];
       cardData.fc = { type: key, label: `PF1.FavouredClassBonus.${fcKey}` };

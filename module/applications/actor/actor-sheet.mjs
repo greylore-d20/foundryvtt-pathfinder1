@@ -1813,9 +1813,20 @@ export class ActorSheetPF extends ActorSheet {
         });
         break;
       case "feats": {
-        const featSources = [];
+        const isMindless = this.actor.system.abilities?.int?.value === null;
+        if (!isMindless) {
+          const levels = Math.ceil(this.actor.system.attributes.hd.total / 2);
+          if (levels > 0) {
+            sources.push({ sources: [{ name: game.i18n.localize("PF1.FromLevels"), value: levels }], untyped: true });
+          }
+          const mythic = Math.ceil(this.actor.system.details.mythicTier / 2);
+          if (mythic > 0) {
+            sources.push({ sources: [{ name: game.i18n.localize("PF1.FromMythic"), value: mythic }], untyped: true });
+          }
+        }
 
         // Generate fake sources
+        const featSources = [];
         // TODO: Move this to the real source info generation
         this.actor.changes
           .filter((c) => c.target === "bonusFeats")

@@ -4990,16 +4990,14 @@ export class ActorPF extends ActorBasePF {
     let doc = this;
     const current = foundry.utils.getProperty(this.system, attribute),
       updates = {};
-    const resourceMatch = /^resources\.(?<tag>[^.]+)$/.exec(attribute);
-    if (resourceMatch) {
-      const { tag } = resourceMatch.groups;
-      const itemId = this.system.resources[tag]?._id;
-      doc = this.items.get(itemId);
-    }
+
+    const isResource = current instanceof Resource;
+    if (isResource) doc = current.item;
+
     if (!doc) return;
     const updateData = {};
 
-    // Special keys
+    // Hit points
     if (attribute === "attributes.hp") {
       if (!isDelta) value = (current.temp + current.value - value) * -1;
       let dt = value;
@@ -5008,7 +5006,9 @@ export class ActorPF extends ActorBasePF {
         updates["system.attributes.hp.temp"] = Math.max(0, current.temp + value);
       }
       updates["system.attributes.hp.value"] = Math.min(current.value + dt, current.max);
-    } else if (attribute === "attributes.vigor") {
+    }
+    // Wounds & Vigor
+    else if (attribute === "attributes.vigor") {
       if (!isDelta) value = (current.temp + current.value - value) * -1;
       let dt = value;
       if (current.temp > 0 && value < 0) {
@@ -5017,22 +5017,23 @@ export class ActorPF extends ActorBasePF {
       }
       updates["system.attributes.vigor.value"] = Math.min(current.value + dt, current.max);
     }
-    // Absolute
-    else if (!isDelta) {
-      if (doc instanceof Actor) {
-        if (isBar) updates[`system.${attribute}.value`] = value;
-        else updates[`system.${attribute}`] = value;
+    // Relative
+    else if (isDelta) {
+      if (isResource) {
+        updates["system.uses.value"] = Math.min(current.value + value, current.max);
       } else {
-        updates["system.uses.value"] = value;
-      }
-      // Relative
-    } else {
-      if (doc instanceof Actor) {
         if (isBar)
-          updates[`system.${attribute}.value`] = Math.clamped(current.min || 0, current.value + value, current.max);
+          updates[`system.${attribute}.value`] = Math.clamped(current.value + value, current.min || 0, current.max);
         else updates[`system.${attribute}`] = current + value;
+      }
+    }
+    // Absolute
+    else {
+      if (isResource) {
+        updates["system.uses.value"] = Math.clamped(value, 0, current.max);
       } else {
-        updates["system.uses.value"] = current.value + value;
+        if (isBar) updates[`system.${attribute}.value`] = Math.min(value, current.max);
+        else updates[`system.${attribute}`] = value;
       }
     }
 

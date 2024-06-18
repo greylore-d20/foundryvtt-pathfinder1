@@ -302,6 +302,8 @@ export class LevelUpForm extends FormApplication {
    * @returns {boolean}
    */
   isReady() {
+    if (this.config.isMythic) return true;
+    if (!this.config.health.type) return false;
     return this.config.abilityScore.available == 0;
   }
 
@@ -601,30 +603,28 @@ export class LevelUpForm extends FormApplication {
   }
 
   _initHPChoices() {
-    if (this.config.isMythic) {
-      this.config.health.type = this._getDefaultHealthOption();
-      return;
-    }
+    this.config.health.type = this._getDefaultHealthOption();
 
     const hpConf = game.settings.get("pf1", "healthConfig");
     const clsConf = hpConf.getClassHD(this.item);
 
-    if (!clsConf.maximized) return;
+    if (clsConf.maximized) {
+      const maxHDlimit = hpConf.maximized;
 
-    const maxHDlimit = hpConf.maximized;
+      const maximized = this.actor.itemTypes.class.reduce((maximized, cls) => {
+        if (!hpConf.getClassHD(this.item).maximized) return maximized;
+        return maximized + cls.hitDice;
+      }, 0);
 
-    const maximized = this.actor.itemTypes.class.reduce((maximized, cls) => {
-      if (!hpConf.getClassHD(this.item).maximized) return maximized;
-      return maximized + cls.hitDice;
-    }, 0);
+      const maxLeft = hpConf.maximized - maximized;
+      this.config.health.maximized = Math.max(0, maxLeft);
 
-    const maxLeft = hpConf.maximized - maximized;
-    this.config.health.maximized = Math.max(0, maxLeft);
-
-    // Maximize auto health, too.
-    if (maxLeft > 0) this.config.health.delta = this.config.health.hitDie;
-
-    this.config.health.type = this._getDefaultHealthOption();
+      // Maximize auto health, too.
+      if (maxLeft > 0) {
+        this.config.health.delta = this.config.health.hitDie;
+        this.config.health.type = "max";
+      }
+    }
   }
 
   /**

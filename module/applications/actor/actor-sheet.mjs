@@ -871,6 +871,9 @@ export class ActorSheetPF extends ActorSheet {
     // Race item special right-click handler
     html.find(".race.item").contextmenu(this._onItemEdit.bind(this));
 
+    // Spellbook config toggle
+    html.find("a.hide-show").click(this._hideShowElement.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -1134,8 +1137,6 @@ export class ActorSheetPF extends ActorSheet {
       .on("click", (event) => {
         this._onSpanTextInput(event, this._setBuffLevel.bind(this));
       });
-
-    html.find("a.hide-show").click(this._hideShowElement.bind(this));
 
     // Toggle condition
     html.find(".condition .checkbox").click(this._onToggleCondition.bind(this));

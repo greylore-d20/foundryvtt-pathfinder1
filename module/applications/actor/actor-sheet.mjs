@@ -1279,7 +1279,8 @@ export class ActorSheetPF extends ActorSheet {
       case "wounds": // Wounds & Vigor
         paths.push(
           { path: "@attributes.wounds.value", value: system.attributes.wounds.value },
-          { path: "@attributes.wounds.max", value: system.attributes.wounds.max }
+          { path: "@attributes.wounds.max", value: system.attributes.wounds.max },
+          { path: "@attributes.wounds.threshold", value: system.attributes.wounds.threshold }
         );
 
         sources.push({

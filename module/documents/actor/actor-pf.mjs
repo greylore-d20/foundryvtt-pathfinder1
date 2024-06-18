@@ -1948,6 +1948,7 @@ export class ActorPF extends ActorBasePF {
       "attributes.hp.max": this.system.attributes.hp.base ?? 0,
       "attributes.vigor.max": this.system.attributes.vigor.base ?? 0,
       "attributes.wounds.max": this.system.attributes.wounds.base ?? 0,
+      "attributes.wounds.threshold": 0,
       "attributes.attack.general": 0,
       "attributes.attack.melee": 0,
       "attributes.attack.natural": 0,

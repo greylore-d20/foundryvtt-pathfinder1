@@ -133,6 +133,9 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "wounds":
       result.push("system.attributes.wounds.max");
       break;
+    case "woundThreshold":
+      result.push("system.attributes.wounds.threshold");
+      break;
     case "vigor":
       result.push("system.attributes.vigor.max");
       break;
@@ -825,15 +828,55 @@ export const addDefaultChanges = function (changes) {
     );
 
     if (!this.system.attributes.wounds?.base) {
-      // TODO: Apply current wounds by ability drain
+      // > a creature has a number of wound points equal to twice its Constitution score.
       changes.push(
         new pf1.components.ItemChange({
-          // Wounds max are unaffected by ability drain
           formula: "@attributes.hpAbility.undrained * 2",
           operator: "add",
           target: "wounds",
           type: "base",
           flavor: pf1.config.abilities[hpAbility],
+        })
+      );
+      // > It also has a wound threshold equal to its Constitution score.
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: "@attributes.hpAbility.undrained",
+          operator: "add",
+          target: "woundThreshold",
+          type: "base",
+          flavor: pf1.config.abilities[hpAbility],
+        })
+      );
+      // https://www.aonprd.com/Rules.aspx?ID=1157
+      // >  For each point of Constitution damage a creature takes, it loses 2 wound points
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: "-(@attributes.hpAbility.damage * 2)",
+          operator: "add",
+          target: "wounds",
+          type: "untyped",
+          flavor: game.i18n.localize("PF1.AbilityDamage"),
+        })
+      );
+      // > When a creature takes a penalty to its Constitution score or its Constitution is drained,
+      // > it loses 1 wound point per point of drain or per penalty
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: "@attributes.hpAbility.penalty", // no minus since penalty is negative inherently
+          operator: "add",
+          target: "wounds",
+          type: "untyped",
+          flavor: game.i18n.localize(`PF1.Ability${hpAbility.capitalize()}Pen`),
+        })
+      );
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: "-@attributes.hpAbility.drain",
+          operator: "add",
+          target: "wounds",
+          type: "untyped",
+          flavor: game.i18n.localize("PF1.AbilityDrain"),
         })
       );
     }

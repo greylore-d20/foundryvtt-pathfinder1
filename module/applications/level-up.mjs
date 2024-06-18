@@ -733,7 +733,7 @@ export class LevelUpForm extends FormApplication {
 
     const labels = {
       manual: "PF1.LevelUp.Chat.Health.Manual",
-      roll: "PF1.LevelUp.Chat.Health.Manual",
+      roll: "PF1.LevelUp.Chat.Health.Roll",
       max: "PF1.LevelUp.Chat.Health.Auto",
       auto: "PF1.LevelUp.Chat.Health.Auto",
       static: "PF1.LevelUp.Chat.Health.Static",

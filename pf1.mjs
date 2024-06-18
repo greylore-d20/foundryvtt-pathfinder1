@@ -481,6 +481,10 @@ Hooks.once("i18nInit", function () {
   // Point buy data
   doLocalizeKeys(pf1.config.pointBuy, ["label"]);
 
+  // Caster type labels
+  doLocalizeKeys(pf1.config.caster.type, ["label"]);
+  doLocalizeKeys(pf1.config.caster.progression, ["label", "hint"]);
+
   // Localize registry data
   for (const registry of Object.values(pf1.registry)) {
     if (registry instanceof pf1.registry.Registry) registry.localize();

@@ -707,6 +707,9 @@ export class ActorPF extends ActorBasePF {
 
     book.isSchool = book.kind !== "divine";
 
+    book.hasProgressionChoices =
+      Object.keys(pf1.config.casterProgression.castsPerDay[book.spellPreparationMode] ?? {}).length > 1;
+
     // Set spellbook label
     book.label = book.name || game.i18n.localize(`PF1.SpellBook${bookId.capitalize()}`);
 
@@ -880,10 +883,9 @@ export class ActorPF extends ActorBasePF {
     if (useAuto) {
       let casterType = book.casterType;
       // Set caster type to sane default if configuration not found.
-      if (pf1.config.casterProgression.castsPerDay[mode.raw]?.[casterType] === undefined) {
+      if (!pf1.config.casterProgression.castsPerDay[mode.raw]?.[casterType]) {
         const keys = Object.keys(pf1.config.casterProgression.castsPerDay[mode.raw]);
-        if (mode.isPrestige) book.casterType = casterType = keys[0];
-        else book.casterType = casterType = keys.at(-1);
+        book.casterType = casterType = keys[0];
       }
 
       const castsForLevels =
@@ -2179,6 +2181,21 @@ export class ActorPF extends ActorBasePF {
     // Never allow updates to the new condtions location
     if (changed.system.conditions !== undefined) {
       delete changed.system.conditions;
+    }
+
+    // Adjust spellbook data
+    const books = changed.system.attributes?.spells?.spellbooks;
+    if (books) {
+      const cbooks = this.system.attributes?.spells?.spellbooks;
+      for (const [bookId, bookData] of Object.entries(books)) {
+        const prepMode = bookData.spellPreparationMode;
+        if (prepMode !== cbooks[bookId].spellPreparationMode) {
+          const prog = bookData.casterType || cbooks[bookId].casterType;
+          const progs = pf1.config.casterProgression.castsPerDay[prepMode] ?? {};
+          // Reset invalid progression to first choice
+          if (!progs[prog]) bookData.casterType = Object.keys(progs)[0];
+        }
+      }
     }
   }
 

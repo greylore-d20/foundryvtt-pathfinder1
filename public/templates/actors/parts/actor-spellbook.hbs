@@ -201,42 +201,27 @@
               {{checked spellbook.noAbilityLimit}}> {{localize "PF1.NoCastingAbilityLimit"}}
           </label>
         </div>
-        <div class="radios">
-          <label class="checkbox">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.spellPreparationMode "prepared")}}>
-            {{localize "PF1.SpellPrepPrepared"}}
-          </label>
-          <label class="checkbox">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.spellPreparationMode" value="spontaneous" {{checked (eq spellbook.spellPreparationMode "spontaneous")}}>
-            {{localize "PF1.SpellPrepSpontaneous"}}
-          </label>
-          <label class="checkbox">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.spellPreparationMode "hybrid")}}>
-            {{localize "PF1.Arcanist"}}
-          </label>
-          <label class="checkbox">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.spellPreparationMode" value="prestige" {{checked (eq spellbook.spellPreparationMode "prestige")}}>
-            {{localize "PF1.RedMantisAssassin"}}
-          </label>
+        <div class="form-group">
+          <h3>{{localize "PF1.Preparation"}}</h3>
+          <div class="form-fields">
+            <select name="system.attributes.spells.spellbooks.{{bookId}}.spellPreparationMode">
+              {{selectOptions @root.choices.casterPreparation selected=spellbook.spellPreparationMode}}
+            </select>
+          </div>
         </div>
-        {{#unless (or (eq spellbook.spellPreparationMode "hybrid") (eq spellbook.spellPreparationMode "prestige"))}}
-        <div class="radios">
-          <label class="checkbox" data-tooltip="PF1.Spellcasting.Progression.LowHint">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.casterType" value="low" {{checked (eq spellbook.casterType "low")}}>
-            {{localize "PF1.Low"}}
-          </label>
-          <label class="checkbox" data-tooltip="PF1.Spellcasting.Progression.MediumHint">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.casterType" value="med" {{checked (eq spellbook.casterType "med")}}>
-            {{localize "PF1.Medium"}}
-          </label>
-          <label class="checkbox" data-tooltip="PF1.Spellcasting.Progression.HighHint">
-            <input type="radio" name="system.attributes.spells.spellbooks.{{bookId}}.casterType" value="high" {{checked (eq spellbook.casterType "high")}}>
-            {{localize "PF1.High"}}
-          </label>
+        <div class="form-group" data-tooltip="PF1.Spellcasting.Progression.Hint">
+          <h3>{{localize "PF1.Spellcasting.Progression.Label"}}</h3>
+          <div class="form-fields">
+            <select name="system.attributes.spells.spellbooks.{{bookId}}.casterType" {{disabled (not hasProgressionChoices)}}>
+              {{#each @root.choices.casterProgression}}
+              <option value="{{@key}}" {{#if (eq ../spellbook.casterType @key)}}selected{{/if}}>{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
         </div>
-        {{/unless}}
 
         {{#if spellbook.autoSpellLevelCalculation}}
+        <hr>
         <section class="spell-level-mod-container {{#if (eq spellbook.spellPreparationMode "prepared")}}hide-cpd{{/if}}">
           <h3>{{localize "PF1.Modifications"}}</h3>
           <div class="spell-mod-formulas">

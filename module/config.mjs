@@ -1252,6 +1252,53 @@ export const durationEndEvents = {
 /* -------------------------------------------- */
 
 /**
+ * Caster types.
+ *
+ * Keys match options in {@link casterProgression}
+ */
+export const caster = {
+  /**
+   * Preparation types.
+   */
+  type: {
+    prepared: {
+      label: "PF1.SpellPrepPrepared",
+      spontaneous: false,
+      prepared: true,
+    },
+    spontaneous: {
+      label: "PF1.SpellPrepSpontaneous",
+      spontaneous: true,
+      prepared: false,
+    },
+    hybrid: {
+      label: "PF1.Arcanist",
+      spontaneous: true,
+      prepared: true,
+    },
+    prestige: {
+      label: "PF1.RedMantisAssassin",
+      spontaneous: true,
+      prepared: false,
+    },
+  },
+  /**
+   * Progression choices.
+   */
+  progression: {
+    high: {
+      label: "PF1.High",
+    },
+    med: {
+      label: "PF1.Medium",
+    },
+    low: {
+      label: "PF1.Low",
+    },
+  },
+};
+
+/**
  * This Object determines spells gained and cast per level
  */
 export const casterProgression = {

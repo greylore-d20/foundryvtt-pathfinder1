@@ -160,7 +160,17 @@ export class ActorSheetPF extends ActorSheet {
         },
       },
       unchainedActions: game.settings.get("pf1", "unchainedActionEconomy"),
+      choices: {},
     };
+
+    if (context.usesAnySpellbook) {
+      context.choices.casterProgression = Object.fromEntries(
+        Object.entries(pf1.config.caster.progression).map(([key, data]) => [key, data.label])
+      );
+      context.choices.casterPreparation = Object.fromEntries(
+        Object.entries(pf1.config.caster.type).map(([key, data]) => [key, data.label])
+      );
+    }
 
     Object.values(context.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
 

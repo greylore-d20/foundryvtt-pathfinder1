@@ -2124,7 +2124,7 @@ export class ActorPF extends ActorBasePF {
 
     // Offset HP values
     const attributes = changed.system.attributes;
-    if (attributes != undefined) {
+    if (attributes) {
       for (const key of ["hp", "wounds", "vigor"]) {
         const hp = attributes[key];
         if (!hp) continue;
@@ -2134,6 +2134,19 @@ export class ActorPF extends ActorBasePF {
         }
         // Do not ever keep .value
         delete hp.value;
+      }
+
+      // Convert excess vigor damage to wounds
+      const vigor = attributes.vigor;
+      if (vigor?.offset < 0) {
+        const maxVigor = oldData.attributes.vigor.max;
+        const excessVigorDamage = -(maxVigor + vigor.offset);
+        if (excessVigorDamage > 0) {
+          attributes.wounds ??= {};
+          attributes.wounds.offset ??= oldData.attributes?.wounds?.offset ?? 0;
+          attributes.wounds.offset -= excessVigorDamage;
+          vigor.offset = -maxVigor;
+        }
       }
     }
 

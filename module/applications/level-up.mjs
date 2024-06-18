@@ -958,8 +958,7 @@ export class LevelUpForm extends FormApplication {
     // Prevent self message from non-GMs.
     if (!game.user.isGM && rollMode === CONST.DICE_ROLL_MODES.SELF) rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
 
-    // ChatMessage.implementation.applyRollMode(messageData, rollMode); // Has no effect
-
-    return ChatMessage.create(messageData, { rollMode });
+    ChatMessage.implementation.applyRollMode(messageData, rollMode); // rollMode here sometimes has no effect?
+    return ChatMessage.create(messageData, { rollMode }); // rollMode here has no effect?
   }
 }

@@ -7,7 +7,7 @@
       label.checkbox {
         flex: auto;
         text-align: left;
-        font-size: @fontSizeSmall;
+        font-size: var(--font-size-11);
         height: unset; // Removes Foundry's insistent 22px sizing
 
         input[type="checkbox"] {
@@ -72,7 +72,7 @@
 
   a.disabled {
     * {
-      color: @colorBeige;
+      color: var(--pf1-beige);
     }
     text-shadow: 0 0 transparent;
     cursor: auto;
@@ -121,7 +121,7 @@
       margin-left: 1em;
     }
     .search-input {
-      border: 1px solid @colorTan;
+      border: 1px solid var(--pf1-tan);
       background-color: rgba(255, 255, 255, 0.6);
 
       // Clear Foundry's styling
@@ -131,7 +131,7 @@
         margin-left: -1.45em;
         margin-right: 0.1em;
         margin-top: 1px;
-        color: @colorTan;
+        color: var(--pf1-tan);
         align-self: center;
         padding: 2px;
         &:hover {

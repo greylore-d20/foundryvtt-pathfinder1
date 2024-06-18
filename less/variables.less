@@ -1,15 +1,3 @@
-/* Deprecated vars */
-@borderLight: #ccc;
-
-@fontSizeDamageIcon: 4rem;
-@fontSizeLargeHeader: var(--font-size-28, 1.75rem);
-@fontSizeHeader: var(--font-size-24, 1.5rem);
-@fontSizeSubHeader: var(--font-size-20, 1.25rem);
-@fontSizeLarge: var(--font-size-14, 0.875rem);
-@fontSizeEnlarged: var(--font-size-13, 0.8125rem);
-@fontSizeNormal: var(--font-size-12, 0.75rem);
-@fontSizeSmall: var(--font-size-11, 0.6875rem);
-
 /* ----------------------------------------- */
 /*  Fonts                                    */
 /* ----------------------------------------- */
@@ -18,33 +6,23 @@
   font-family: "Modesto Condensed Bold";
   src: url("../../fonts/modesto-condensed/modesto-condensed-bold.woff2") format("woff2");
 }
-.modesto {
+
+// Font mixin
+.modesto() {
   font-family: "Modesto Condensed Bold", "Signika", "Palatino Linotype", serif;
-  font-size: @fontSizeHeader;
+  font-size: var(--font-size-24);
   font-variant: small-caps;
+}
+
+// Mixin to help identify unused style
+.unused() {
+  background-color: darkred;
+  color: yellow;
 }
 
 /* ----------------------------------------- */
 /*  Sheet Styles                             */
 /* ----------------------------------------- */
-
-@colorFaint: #c9c7b8;
-@colorBeige: #b5b3a4;
-@colorTan: #7a7971;
-@colorOlive: #4b4a44;
-@colorCrimson: #44191a;
-@colorLink: #7e78dc;
-@colorRust: #782e22;
-@colorRed: #da0000;
-@colorGold: #ffd700;
-@borderGroove: 2px groove #eeede0;
-@borderLightThin: 1px solid var(--color-border-light-2, #999);
-@sheetBackground: url("../../ui/parchment.jpg") repeat;
-@filterAuburn: invert(16%) sepia(51.5%) saturate(4012%) hue-rotate(345deg) brightness(100%) contrast(86%);
-@filterParchment: invert(88%) sepia(11%) saturate(158%) hue-rotate(13deg) brightness(98%) contrast(93%);
-
-@itemHoverBackgroundTint: rgba(64, 64, 192, 0.2);
-@itemActiveBackgroundTint: rgba(32, 32, 96, 0.2);
 
 .itemBackgroundBase(@base, @alt, @hover) {
   background-color: @base;
@@ -56,7 +34,7 @@
     color: var(--pf1-item-list-hover-text);
   }
   &.active {
-    background-color: @itemActiveBackgroundTint;
+    background-color: rgba(32, 32, 96, 0.2);
   }
 }
 
@@ -72,6 +50,10 @@
 
 :root {
   --pf1-nav-height: 1.3em;
+  --pf1-sheet-background: url("../../ui/parchment.jpg") repeat;
+  --pf1-border-groove: 2px groove #eeede0;
+
+  --pf1-damage-icon-size: 4rem;
 }
 
 .scrollbar() {

@@ -19,7 +19,7 @@
 
         input[type="text"],
         select {
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
         }
       }
@@ -42,7 +42,7 @@
         padding: 1px;
         input {
           flex: 3;
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
           height: 24px;
         }
@@ -77,7 +77,7 @@
         }
         .change-target,
         .context-note-target {
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
           white-space: nowrap;
           overflow: hidden;
@@ -86,10 +86,10 @@
           border-radius: 4px;
           text-align: center;
           cursor: pointer;
-          font-size: @fontSizeNormal;
+          font-size: var(--font-size-12);
 
           &:hover {
-            box-shadow: 0 0 8px @colorRed;
+            box-shadow: 0 0 8px var(--pf1-red);
           }
 
           &.invalid {
@@ -115,7 +115,7 @@
           max-width: max-content;
           min-width: 80px;
           flex: 1;
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
         }
         select:not(:first-child) {
@@ -127,7 +127,7 @@
         }
         input[type="text"] {
           height: 24px;
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
         }
         input[type="text"]:invalid {
@@ -161,7 +161,7 @@
       padding: 0;
       font-weight: bold;
       line-height: 24px;
-      color: @colorOlive;
+      color: var(--pf1-olive);
       border: unset;
     }
     h4.attack-header {
@@ -178,7 +178,7 @@
       flex: 0 0 18px;
       line-height: 24px;
       text-align: right;
-      color: @colorTan;
+      color: var(--pf1-tan);
     }
 
     .add-attack,
@@ -188,7 +188,7 @@
     .add-conditional-modifier {
       flex: 0 0 auto;
       line-height: 24px;
-      color: @colorTan;
+      color: var(--pf1-tan);
       margin-left: 2px;
     }
 

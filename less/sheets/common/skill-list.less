@@ -1,11 +1,11 @@
 .pf1.sheet {
   ul.skills-list {
-    overflow-y: auto;
     .scrollbar();
+    overflow-x: hidden;
     list-style: none;
     margin: 0;
     padding: 0;
-    border: @borderGroove;
+    border: var(--pf1-border-groove);
     border-radius: 3px;
 
     .skill {
@@ -51,7 +51,7 @@
 
         .skill-name {
           display: inline-flex;
-          font-size: @fontSizeEnlarged;
+          font-size: var(--font-size-13);
           align-items: center;
           gap: 0.3em;
 
@@ -83,7 +83,7 @@
         }
 
         .checkbox {
-          font-size: @fontSizeNormal;
+          font-size: var(--font-size-12);
         }
 
         .skill-ability {}
@@ -97,7 +97,7 @@
         }
 
         .skill-rank {
-          border-bottom: @borderGroove;
+          border-bottom: var(--pf1-border-groove);
 
           &.placeholder {
             opacity: 0.6;

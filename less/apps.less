@@ -11,7 +11,7 @@
   }
 
   .footnote {
-    color: @colorTan;
+    color: var(--pf1-tan);
   }
 
   div.group-container {
@@ -36,7 +36,7 @@
       position: absolute;
       left: -2px;
       top: -2px;
-      font-size: @fontSizeNormal;
+      font-size: var(--font-size-12);
       background: black;
       color: var(--color-text-light-highlight);
       padding: 1px;
@@ -59,12 +59,12 @@
   input[type="number"]::placeholder,
   input[type="text"]::placeholder,
   .placeholder {
-    color: @colorTan;
+    color: var(--pf1-tan);
   }
 
   input[type="text"]:disabled,
   input[type="text"][disabled] {
-    color: @colorTan;
+    color: var(--pf1-tan);
   }
 
   .align-left {
@@ -82,8 +82,8 @@
   }
 
   .window-content {
-    background: @sheetBackground;
-    font-size: @fontSizeEnlarged;
+    background: var(--pf1-sheet-background);
+    font-size: var(--font-size-13);
     color: var(--color-text-dark-primary);
     overflow: hidden;
   }
@@ -96,7 +96,7 @@
   input[type="text"],
   input[type="number"],
   select {
-    border: 1px solid @colorTan;
+    border: 1px solid var(--pf1-tan);
     background: var(--pf1-bg-dark-0);
     color: var(--color-text-dark-primary);
   }
@@ -122,7 +122,7 @@
     &:disabled,
     &[disabled],
     &:readonly {
-      color: @colorOlive;
+      color: var(--pf1-olive);
       &:hover,
       &:focus {
         box-shadow: none !important;
@@ -136,7 +136,7 @@
     flex: auto;
     margin: 0;
     line-height: 1.5;
-    font-size: @fontSizeNormal;
+    font-size: var(--font-size-12);
 
     input[type="checkbox"] {
       height: auto;
@@ -156,7 +156,7 @@
         text-align: left;
         font-weight: bold;
         white-space: nowrap;
-        color: @colorOlive;
+        color: var(--pf1-olive);
       }
     }
 
@@ -221,13 +221,13 @@
     margin: 0;
     padding: 0 2px;
     .modesto();
-    font-size: @fontSizeHeader;
-    border-top: @borderGroove;
-    border-bottom: @borderGroove;
+    font-size: var(--font-size-24);
+    border-top: var(--pf1-border-groove);
+    border-bottom: var(--pf1-border-groove);
   }
 
   h4.form-header {
-    font-size: @fontSizeSubHeader;
+    font-size: var(--font-size-20);
   }
 
   .tag-list {
@@ -251,7 +251,7 @@
     display: inline-block;
     flex: 0;
     padding: 0 3px;
-    font-size: @fontSizeSmall;
+    font-size: var(--font-size-11);
     line-height: 1.2;
     border: 1px solid #999;
     border-radius: 3px;
@@ -319,8 +319,8 @@
   .window-content {
     overflow: hidden;
     padding: 5px;
-    background: @sheetBackground;
-    font-size: @fontSizeEnlarged;
+    background: var(--pf1-sheet-background);
+    font-size: var(--font-size-13);
     color: var(--color-text-dark-primary);
 
     form {
@@ -424,7 +424,7 @@
   /* ----------------------------------------- */
   .sheet-header {
     flex: 0 0 @headerHeight;
-    border-bottom: @borderGroove;
+    border-bottom: var(--pf1-border-groove);
     align-items: center;
 
     :is(h1, h2, h3, h4, h5) {
@@ -439,7 +439,7 @@
       padding: 0;
 
       input {
-        font-size: calc(@fontSizeLargeHeader * 1.2);
+        font-size: calc(var(--font-size-28) * 1.2);
         font-variant-caps: small-caps;
         margin: 0;
       }
@@ -452,7 +452,7 @@
       height: @headerHeight;
       object-fit: contain;
       border: none;
-      border-right: @borderGroove;
+      border-right: var(--pf1-border-groove);
     }
 
     /* Header Summary Details */
@@ -462,15 +462,15 @@
       margin: 0;
       padding: 0;
       list-style: none;
-      border-top: @borderGroove;
+      border-top: var(--pf1-border-groove);
 
       li {
         display: inline-flex;
         width: 33.33%;
         padding: 0 3px;
-        border-right: @borderGroove;
-        border-bottom: @borderGroove;
-        color: @colorOlive;
+        border-right: var(--pf1-border-groove);
+        border-bottom: var(--pf1-border-groove);
+        color: var(--pf1-olive);
         height: 1.7em;
 
         input {
@@ -509,7 +509,7 @@
     background: rgba(155, 155, 155, 0.3);
     border: 1px solid transparent;
     border-radius: 12px 12px 0 0;
-    font-size: @fontSizeSubHeader;
+    font-size: var(--font-size-20);
     column-gap: 2px;
 
     .item {
@@ -530,7 +530,7 @@
     }
 
     &.tabs {
-      border-bottom: @borderGroove;
+      border-bottom: var(--pf1-border-groove);
     }
   }
 
@@ -569,17 +569,17 @@
 
     .filter-item {
       text-align: center;
-      font-size: @fontSizeNormal;
+      font-size: var(--font-size-12);
       border-bottom: 3px solid var(--color-border-light-secondary);
       white-space: nowrap;
 
       &:hover {
         text-shadow: 0 0 4px red;
-        border-bottom: 3px solid @colorTan;
+        border-bottom: 3px solid var(--pf1-tan);
       }
 
       &.active {
-        border-bottom: 3px solid @colorCrimson;
+        border-bottom: 3px solid var(--pf1-crimson);
       }
     }
   }
@@ -601,11 +601,11 @@
     justify-content: center;
 
     span {
-      color: @colorTan;
+      color: var(--pf1-tan);
       flex: 0;
 
       a {
-        color: @colorLink;
+        color: #7e78dc;
       }
     }
   }
@@ -824,11 +824,11 @@
         width: 100%;
         text-align: center;
         font-weight: bold;
-        font-size: @fontSizeHeader;
+        font-size: var(--font-size-24);
       }
 
       .icon-pf {
-        font-size: @fontSizeDamageIcon;
+        font-size: var(--pf1-damage-icon-size);
         text-shadow: 0 0 4px black;
         background: none;
       }
@@ -908,7 +908,7 @@
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  border: 1px solid @colorTan;
+  border: 1px solid var(--pf1-tan);
   border-radius: 3px;
   background-color: var(--pf1-bg-dark-0);
   vertical-align: middle;

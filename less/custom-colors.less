@@ -18,6 +18,16 @@
   --pf1-success: #18520b;
   --pf1-failure: #aa0200;
 
+  // TODO: Make these colors more meaningful
+  // in terms of what they're for rather than what color they are
+  --pf1-red: #da0000;
+  --pf1-crimson: #44191a;
+  --pf1-rust: #782e22;
+  --pf1-olive: #4b4a44;
+  --pf1-tan: #7a7971;
+  --pf1-beige: #b5b3a4;
+  --pf1-faint: #c9c7b8;
+
   --pf1-roll-critical: #d8e9ba;
   --pf1-roll-success: hsl(201deg 66% 74%);
   --pf1-roll-success-alt: hsl(174deg 100% 8%); // for hue rotated blocks
@@ -60,10 +70,12 @@
   --pf1-scrollbar-handle: darkred;
   --pf1-scrollbar-background: transparent;
 
-  --pf1-invalid-input-border: 2px solid @colorRust;
+  --pf1-invalid-input-border: 2px solid var(--pf1-rust);
   --pf1-invalid-input-bg: rgba(255, 0, 0, 0.05);
+
+  --pf1-border-thin-light: 1px solid var(--color-border-light-2, #999);
 
   --pf1-header-underline: var(--color-underline-header);
 
-  --pf1-control-color: @colorOlive;
+  --pf1-control-color: var(--pf1-olive);
 }

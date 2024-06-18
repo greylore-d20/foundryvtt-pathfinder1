@@ -17,8 +17,6 @@
   }
 
   .tab {
-    overflow-y: hidden;
-
     footer {
       flex: 0;
     }
@@ -33,7 +31,7 @@
         flex-flow: row nowrap;
 
         flex: 0;
-        border-bottom: @borderGroove;
+        border-bottom: var(--pf1-border-groove);
 
         display: flex;
         flex-flow: row nowrap;
@@ -71,8 +69,8 @@
             flex: 0 0 33%;
             //height: 32px;
             line-height: 2;
-            border-right: @borderGroove;
-            border-bottom: @borderGroove;
+            border-right: var(--pf1-border-groove);
+            border-bottom: var(--pf1-border-groove);
             align-content: center;
 
             &:nth-child(3n + 0) {
@@ -129,8 +127,8 @@
         margin: 0;
         border-left: none;
         border-bottom: none;
-        border-top: @borderGroove;
-        border-right: @borderGroove;
+        border-top: var(--pf1-border-groove);
+        border-right: var(--pf1-border-groove);
         border-radius: 0;
         height: auto;
       }
@@ -142,7 +140,7 @@
         padding: 0 3px;
         object-fit: contain;
         border: none;
-        border-right: @borderGroove;
+        border-right: var(--pf1-border-groove);
       }
 
       .misc-header-items {
@@ -207,10 +205,10 @@
 
         li {
           padding: 0;
-          border-top: @borderGroove;
+          border-top: var(--pf1-border-groove);
 
           &:not(:last-child) {
-            border-right: @borderGroove;
+            border-right: var(--pf1-border-groove);
           }
         }
       }
@@ -261,7 +259,7 @@
     h4.box-title {
       line-height: 16px;
       margin: 4px 8px 2px;
-      font-size: @fontSizeSubHeader;
+      font-size: var(--font-size-20);
       border-bottom: 1px solid var(--color-border-light-secondary);
     }
 
@@ -271,9 +269,8 @@
 
     &.attributes {
       .traits {
-        overflow-y: auto;
+        overflow: hidden auto;
         .scrollbar();
-        height: 100%;
 
         > * {
           flex: 0 0 24px;
@@ -329,38 +326,6 @@
       .attribute .attribute-footer input {
         width: 32px;
       }
-
-      .defense-rolls,
-      .defense-notes {
-        label {
-          line-height: 20px;
-          white-space: nowrap;
-
-          h3 {
-            .modesto();
-            font-size: @fontSizeHeader;
-          }
-        }
-      }
-
-      .defense-notes {
-        margin-top: 5px;
-        overflow-y: scroll;
-        flex: 1;
-        .scrollbar();
-
-        h3 {
-          border-bottom: unset;
-        }
-
-        label {
-          flex: 1;
-        }
-
-        textarea {
-          flex: 3;
-        }
-      }
     }
 
     /* ----------------------------------------- */
@@ -394,7 +359,7 @@
       align-items: center;
 
       > a {
-        font-size: @fontSizeNormal;
+        font-size: var(--font-size-12);
         flex: 1;
       }
 
@@ -431,7 +396,7 @@
         flex: 0 0 16px;
         padding: 2px 0;
         color: var(--pf1-control-color);
-        font-size: @fontSizeLarge;
+        font-size: var(--font-size-14);
       }
 
       .configure-flags {
@@ -478,7 +443,7 @@
       }
 
       .inactive {
-        color: @colorTan;
+        color: var(--pf1-tan);
       }
     }
 
@@ -489,7 +454,7 @@
     /* Encumbrance Bar */
     .encumbrance {
       height: 12px;
-      background: @colorTan;
+      background: var(--pf1-tan);
       margin: 1px 15px 0 1px;
       border: 1px solid var(--color-border-dark-2);
       border-radius: 3px;
@@ -511,7 +476,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        font-size: @fontSizeNormal;
+        font-size: var(--font-size-12);
         line-height: 1;
         text-align: right;
         color: #eee;
@@ -584,7 +549,7 @@
 
           > img {
             border: none;
-            filter: @filterParchment;
+            filter: invert(88%) sepia(11%) saturate(158%) hue-rotate(13deg) brightness(98%) contrast(93%);
           }
 
           > .details {
@@ -658,8 +623,8 @@
       h3,
       .filter-title {
         .modesto();
-        color: @colorOlive;
-        font-size: @fontSizeHeader;
+        color: var(--pf1-olive);
+        font-size: var(--font-size-24);
         margin: 0;
       }
     }
@@ -697,7 +662,7 @@
         margin-left: 8px;
         text-align: right;
         line-height: 20px;
-        color: @colorTan;
+        color: var(--pf1-tan);
         white-space: nowrap;
       }
       input[type="text"],
@@ -706,7 +671,7 @@
         flex: 0 0 48px;
         text-align: center;
         margin-left: 8px;
-        border-bottom: @borderGroove;
+        border-bottom: var(--pf1-border-groove);
       }
     }
 

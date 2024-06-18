@@ -6,7 +6,7 @@
     flex-direction: column;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: @fontSizeNormal;
+    font-size: var(--font-size-12);
     border: 1px solid black;
     border-radius: 2px;
     background: #e1e1e1;
@@ -26,7 +26,7 @@
         text-align: center;
       }
       .item:hover {
-        border-color: @colorRed;
+        border-color: var(--pf1-red);
       }
     }
   }
@@ -72,7 +72,7 @@
         a {
           h2 {
             font-weight: bold;
-            font-size: @fontSizeLarge;
+            font-size: var(--font-size-14);
             margin-right: -1px;
             margin-bottom: 1px;
             padding-top: 3px;
@@ -102,7 +102,7 @@
       }
 
       .item {
-        border: 1px solid @colorTan;
+        border: 1px solid var(--pf1-tan);
         border-radius: 2px;
         background: var(--pf1-bg-dark-0);
         line-height: 20px;
@@ -113,7 +113,7 @@
         word-break: break-word;
 
         &:hover {
-          box-shadow: 0 0 6px @colorRed;
+          box-shadow: 0 0 6px var(--pf1-red);
           border: 1px solid black;
           text-shadow: 0 0 black;
         }

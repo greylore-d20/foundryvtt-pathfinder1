@@ -19,8 +19,8 @@
       flex: 0 0 300px;
       height: 100%;
       padding: 0.7rem;
-      border-right: @borderGroove;
-      font-size: @fontSizeNormal;
+      border-right: var(--pf1-border-groove);
+      font-size: var(--font-size-12);
 
       .entry-filter {
         flex: 0;
@@ -78,7 +78,7 @@
 
               .control {
                 line-height: unset;
-                font-size: @fontSizeNormal;
+                font-size: var(--font-size-12);
                 min-width: fit-content;
                 max-width: 30%;
               }
@@ -130,7 +130,7 @@
           text-align: center;
         }
         span:not(:last-child) {
-          border-right: @borderGroove;
+          border-right: var(--pf1-border-groove);
         }
       }
 
@@ -145,7 +145,7 @@
         .compendium-loading {
           display: flex;
           line-height: 100px;
-          font-size: @fontSizeLargeHeader;
+          font-size: var(--font-size-28);
           position: sticky;
           top: calc(50% - 64px);
         }
@@ -181,7 +181,7 @@
           }
 
           .entry-source {
-            font-size: @fontSizeSmall;
+            font-size: var(--font-size-11);
             color: rgba(0, 0, 0, 0.5);
             flex: 1 0 0;
             margin-left: 4px;

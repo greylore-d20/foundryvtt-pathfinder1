@@ -4,7 +4,7 @@
 
 .pf1.chat-card {
   font-style: normal;
-  font-size: @fontSizeNormal;
+  font-size: var(--font-size-12);
 
   .card-header {
     padding: 3px 0;
@@ -35,7 +35,7 @@
 
     hr {
       border-top: none;
-      border-bottom: @borderLightThin;
+      border-bottom: var(--pf1-border-thin-light);
     }
 
     .item-name,
@@ -49,8 +49,8 @@
     .description-metadata {
       flex: 0 1;
       text-align: right;
-      color: @colorOlive;
-      font-size: @fontSizeSubHeader;
+      color: var(--pf1-olive);
+      font-size: var(--font-size-20);
     }
 
     .item-description *,
@@ -78,7 +78,7 @@
     .identified-info {
       background: var(--pf1-bg-dark-0);
       border-radius: 3px;
-      border: @borderLightThin;
+      border: var(--pf1-border-thin-light);
       padding: 2px;
       margin-bottom: 0.75em;
     }
@@ -88,7 +88,7 @@
     display: block;
     margin: 0 2px 1px 0;
     padding: 1px 3px;
-    font-size: @fontSizeNormal;
+    font-size: var(--font-size-12);
     line-height: 1.5;
     border: 1px solid #999;
     border-radius: 3px;
@@ -111,18 +111,11 @@
       }
 
       button {
-        font-size: @fontSizeNormal;
+        font-size: var(--font-size-12);
         height: 20px;
         line-height: 1.3;
         margin: 2px 0;
       }
-    }
-
-    span {
-      display: block;
-      line-height: 20px;
-      text-align: center;
-      border: 1px solid @borderLight;
     }
   }
 
@@ -138,7 +131,7 @@
 
       h3 {
         color: #4c6d9f;
-        font-size: @fontSizeLarge;
+        font-size: var(--font-size-14);
         text-align: center;
       }
 
@@ -159,14 +152,14 @@
 
     h1 {
       margin-bottom: 4px;
-      font-size: @fontSizeLarge;
+      font-size: var(--font-size-14);
       font-weight: bold;
       border-bottom: unset;
       box-shadow: inset 0px -2px 0px 0px #782e22;
     }
 
     h2 {
-      font-size: @fontSizeNormal;
+      font-size: var(--font-size-12);
       margin-bottom: 4px;
       margin-top: 4px;
     }
@@ -335,13 +328,13 @@
 
       .dice-flavor {
         color: #4c6d9f;
-        font-size: @fontSizeSmall;
+        font-size: var(--font-size-11);
         text-align: center;
         white-space: nowrap;
       }
 
       .dice-total {
-        font-size: @fontSizeLarge;
+        font-size: var(--font-size-14);
         line-height: 1.3;
       }
     }
@@ -392,7 +385,7 @@
     .tag {
       display: inline-block;
       padding: 1px 3px;
-      font-size: @fontSizeSmall;
+      font-size: var(--font-size-11);
       line-height: 1.2;
       border: 1px solid #999;
       border-radius: 3px;
@@ -408,7 +401,7 @@
 
     label {
       flex: 2;
-      color: @colorOlive;
+      color: var(--pf1-olive);
       font-weight: bold;
     }
   }
@@ -419,7 +412,7 @@
 
     label {
       flex: 2;
-      color: @colorOlive;
+      color: var(--pf1-olive);
       font-weight: bold;
     }
   }
@@ -453,12 +446,12 @@
 
   .extra-roll-label {
     font-weight: bold;
-    font-size: @fontSizeNormal;
+    font-size: var(--font-size-12);
   }
 
   div.defense {
     table {
-      font-size: @fontSizeNormal;
+      font-size: var(--font-size-12);
       width: 100%;
       table-layout: fixed;
 

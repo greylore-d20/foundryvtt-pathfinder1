@@ -19,16 +19,16 @@
         margin: 0;
         padding: 5px;
         text-align: right;
-        color: @colorTan;
+        color: var(--pf1-tan);
 
         .item-type {
-          font-size: @fontSizeSubHeader;
+          font-size: var(--font-size-20);
           line-height: 1.1;
           margin: 0;
         }
 
         .item-status {
-          font-size: @fontSizeLarge;
+          font-size: var(--font-size-14);
           line-height: 1.1;
         }
       }
@@ -43,7 +43,7 @@
         flex: 0 0 120px;
         margin: 5px 5px 5px 0;
         padding-right: 5px;
-        border-right: @borderGroove;
+        border-right: var(--pf1-border-groove);
 
         .form-group {
           margin: 0;
@@ -68,9 +68,9 @@
             margin: 3px 0;
             padding: 0 2px;
             background: var(--pf1-bg-dark-0);
-            border: @borderGroove;
+            border: var(--pf1-border-groove);
             text-align: center;
-            font-size: @fontSizeNormal;
+            font-size: var(--font-size-12);
             line-height: 1.5;
           }
         }
@@ -85,7 +85,7 @@
     .item-selector {
       flex: 0 0 16px;
       color: var(--pf1-control-color);
-      font-size: @fontSizeNormal;
+      font-size: var(--font-size-12);
     }
 
     /* ----------------------------------------- */
@@ -97,7 +97,7 @@
       input[type="text"],
       input[type="number"],
       select {
-        border: 1px solid @colorTan;
+        border: 1px solid var(--pf1-tan);
         background: var(--pf1-bg-dark-0);
       }
 
@@ -185,7 +185,7 @@
           flex: 0 0 64px;
           text-align: right;
           margin-right: 5px;
-          font-size: @fontSizeNormal;
+          font-size: var(--font-size-12);
           line-height: 2;
         }
 
@@ -198,7 +198,7 @@
       .item-list {
         .item {
           line-height: 24px;
-          border-bottom: 1px solid @colorFaint;
+          border-bottom: 1px solid var(--pf1-faint);
 
           &:last-child {
             border-bottom: none;
@@ -221,13 +221,13 @@
         margin: 2px 0;
         padding: 0;
         background: var(--pf1-bg-dark-0);
-        border: @borderGroove;
+        border: var(--pf1-border-groove);
         font-weight: bold;
         line-height: 24px;
 
         h3 {
           padding-left: 5px;
-          font-size: @fontSizeNormal;
+          font-size: var(--font-size-12);
           font-weight: bold;
         }
 
@@ -238,8 +238,8 @@
 
       .item-weight {
         flex: 0 0 60px;
-        border-left: 1px solid @colorFaint;
-        border-right: 1px solid @colorFaint;
+        border-left: 1px solid var(--pf1-faint);
+        border-right: 1px solid var(--pf1-faint);
       }
 
       .item-list {
@@ -251,10 +251,10 @@
       // Item Dropdown Summary in containers
       .item-summary {
         flex: 0 0 100%;
-        font-size: @fontSizeNormal;
+        font-size: var(--font-size-12);
         line-height: 1.3;
         padding: 0.25em 0.5em;
-        border-top: 1px solid @colorFaint;
+        border-top: 1px solid var(--pf1-faint);
       }
     }
 
@@ -268,7 +268,7 @@
         padding: 0;
         font-weight: bold;
         line-height: 24px;
-        color: @colorOlive;
+        color: var(--pf1-olive);
         border: unset;
       }
     }
@@ -312,7 +312,7 @@
           padding: 1px;
 
           .context-note-target {
-            border: 1px solid @colorTan;
+            border: 1px solid var(--pf1-tan);
             background: var(--pf1-bg-dark-0);
             white-space: nowrap;
             overflow: hidden;
@@ -321,10 +321,10 @@
             border-radius: 4px;
             text-align: center;
             cursor: pointer;
-            font-size: @fontSizeNormal;
+            font-size: var(--font-size-12);
 
             &:hover {
-              box-shadow: 0 0 8px @colorRed;
+              box-shadow: 0 0 8px var(--pf1-red);
             }
 
             &.invalid {
@@ -345,7 +345,7 @@
           max-width: max-content;
           min-width: 80px;
           flex: 1;
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
         }
 
@@ -360,7 +360,7 @@
 
         input[type="text"] {
           height: 24px;
-          border: 1px solid @colorTan;
+          border: 1px solid var(--pf1-tan);
           background: var(--pf1-bg-dark-0);
         }
 

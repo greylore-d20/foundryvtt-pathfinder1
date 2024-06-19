@@ -2256,14 +2256,14 @@ export class ActorSheetPF extends ActorSheet {
           newValue = parseFloat(newEl.value || "0");
         }
 
-        // Reset if nothing changed (probably never triggers, since it's not a change)
+        // Reset if nothing changed
         if (newValue === prevValue) {
           parent.replaceChild(el, newEl);
         }
         // Pass it to callback
         else {
           newEl.readOnly = true;
-          callback.call(this, event);
+          callback.call(this, event, el);
         }
       },
       { once: true }
@@ -2508,7 +2508,7 @@ export class ActorSheetPF extends ActorSheet {
     } else this._updateItems();
   }
 
-  async _adjustActorPropertyBySpan(event) {
+  async _adjustActorPropertyBySpan(event, oldEl) {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     this._mouseWheelAdd(event, el);
@@ -2526,7 +2526,11 @@ export class ActorSheetPF extends ActorSheet {
 
     let updateData;
     if (name) {
-      if (value === getProperty(this.actor, name)) return;
+      if (value === getProperty(this.actor, name)) {
+        // Restore input
+        if (oldEl) el.parentElement.replaceChild(oldEl, el);
+        return;
+      }
       updateData = { [name]: value };
     }
 

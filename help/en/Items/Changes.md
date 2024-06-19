@@ -16,11 +16,11 @@ This is a list of changes which affect the actor owning the item directly.
 
 From left to right:
 
-- **Formula**: The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See this page for more details.
-- **Operator**: The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values add to an attribute, while absolute values set the attribute to the result of the formula. See below for the script operator.
+- **Operator**: The operators are '±' (relative) or '=' (absolute). Relative values add to an attribute, while absolute values set the attribute to the result of the formula.
 - **Target**: The attribute to alter with this change.
-- **Modifier**: The modifier of this change.
+- **Type**: The type of this change.
 - **Priority**: The priority of this change. Changes with lower priorities will be processed later. In rare cases, a lower priority is necessary.
+- **Formula**: The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See this page for more details.
 
 ## Context Notes
 
@@ -30,19 +30,3 @@ From left to right:
 
 - **Description**: The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these.
 - **Target**: The context in which the text is to be provided in.
-
-## Script Operator
-
-The 'formula' of changes using the Script operator are actually small JavaScript scripts that are run when processing changes. Some JavaScript knowledge is required to understand these.
-
-> ⚠ Script Operators are disabled by default. ⚠
->
-> **Only activate them if you trust your players, activating them will allow them to execute JavaScript code with elevated permissions!**
->
-> If, and only if, you trust every player, you can activate Script Operators in System Settings > Enable Script Changes.
-
-Within these scripts, the following variables can be used:
-
-- `d` The roll data at the time of processing the change. Contains any variable you could use within a normal change formula using the `@` symbol.
-- `result` This contains two more variables, `value` and `operator`. Set `value` to the numeric result you want for the change, and `operator` to either "add" or "set".
-  `value` defaults to 0 and `operator` defaults to "add".

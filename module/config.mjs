@@ -1627,7 +1627,7 @@ export const skills = {
 export const skillCompendiumEntries = {
   acr: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.gGfJO90ZuRT4sZ9X",
   apr: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.QGxoGsSIAOoe5dTW",
-  art: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.x175kVqUfLGPt8tC",
+  art: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.vH2PLto0QPzkG4io",
   blf: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.kRK5XwVBvcMi35w2",
   clm: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.ZAwjVOTwsBpZRgw4",
   crf: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.3E8pxbjI8MD3JbfQ",
@@ -1650,7 +1650,7 @@ export const skillCompendiumEntries = {
   kpl: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.BWeqgXSZvUQl68vt",
   kre: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.BWeqgXSZvUQl68vt",
   lin: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.SqLm3Deag2FpP8ty",
-  lor: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.x175kVqUfLGPt8tC",
+  lor: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.rExcBHs5GTiWLlo8",
   per: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.2h6hz5AkTDxKPFxr",
   prf: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.emzBKDFNkNnC7N8u",
   pro: "Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.224EaK0K72NhCeRi",

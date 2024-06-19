@@ -2225,6 +2225,11 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
+    // Add constraints if they exist
+    if (el.dataset.min) newEl.min = el.dataset.min;
+    if (el.dataset.step) newEl.step = el.dataset.step;
+    if (el.dataset.max) newEl.max = el.dataset.max;
+
     // Set value of new input element
     newEl.value = `${prevValue || 0}`;
 
@@ -2523,6 +2528,11 @@ export class ActorSheetPF extends ActorSheet {
       if (Number.isNaN(parseInt(value))) value = null;
       else value = parseInt(value);
     }
+
+    // Add constraints if any
+    if (el.min) value = Math.max(Number(el.min), value);
+    if (el.max) value = Math.min(Number(el.max), value);
+    if (el.step) value = value.toNearest(Number(el.step));
 
     let updateData;
     if (name) {

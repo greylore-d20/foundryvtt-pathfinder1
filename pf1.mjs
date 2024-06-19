@@ -630,11 +630,6 @@ Hooks.once("ready", async function () {
     }
   }
 
-  // Create permanent warning if script changes are allowed
-  if (game.settings.get("pf1", "allowScriptChanges")) {
-    ui.notifications.warn("PF1.SETTINGS.AllowScriptChangesD", { localize: true, permanent: true });
-  }
-
   Hooks.callAll("pf1PostReady");
 });
 

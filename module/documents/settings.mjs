@@ -654,32 +654,6 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
   });
-
-  // SECURITY
-
-  /**
-   * Allow Script type Changes.
-   */
-  game.settings.register("pf1", "allowScriptChanges", {
-    name: "PF1.SETTINGS.AllowScriptChangesN",
-    hint: "PF1.SETTINGS.AllowScriptChangesH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    onChange: (value) => {
-      if (!value || !game.user.isGM) return;
-      // Flash scare message and confirmation
-      const d = Dialog.confirm({
-        title: game.i18n.localize("PF1.SETTINGS.AllowScriptChangesN"),
-        content: game.i18n.localize("PF1.SETTINGS.AllowScriptChangesW"),
-        defaultYes: false,
-      });
-      d.then((result) => {
-        if (!result) game.settings.set("pf1", "allowScriptChanges", false);
-      });
-    },
-  });
 };
 
 export const registerClientSettings = function () {};

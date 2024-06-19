@@ -4,14 +4,14 @@
     {{#if title~}}
     data-tooltip-class="pf1 source"
     data-tooltip="
-    {{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
+    <p>{{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
     {{~#if edition}}{{localize "PF1.ContentSource.Info.Edition"}}: {{edition}}<br>{{/if~}}
     {{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{else if date}}{{localize "PF1.ContentSource.Info.Release"}}: {{date}}<br>{{/if~}}
     {{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
-
-    {{#if ../extras}}
-    <p>{{localize "PF1.ContentSource.Extras"}}<p>{{#each ../extras}}{{title}}<br>{{/each}}
-    {{/if}}
+    {{#with ../bookSources.extras}}
+      <h4>{{localize "PF1.ContentSource.Extras"}}</h4>
+      <p>{{#each this}}{{title}}<br>{{/each}}
+    {{/with}}
     "{{/if}}>
     <span class="title">{{title}}</span>
     {{#if abbr}}

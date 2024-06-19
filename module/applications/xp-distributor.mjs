@@ -125,9 +125,10 @@ export class ExperienceDistributor extends FormApplication {
   async _onSubmit(event) {
     event.preventDefault();
 
-    const type = event.currentTarget.name;
+    const button = event.currentTarget;
+    const splitEvently = button.dataset.reward === "split";
 
-    const value = type === "split-evenly" ? this.getSplitExperience() : this.getTotalExperience();
+    const value = splitEvently ? this.getSplitExperience() : this.getTotalExperience();
 
     if (value > 0) {
       const characters = this.getCharacters().filter((o) => o.selected);

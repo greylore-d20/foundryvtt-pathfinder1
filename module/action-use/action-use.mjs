@@ -289,7 +289,7 @@ export class ActionUse {
    */
   generateAttacks(forceFullAttack = false) {
     const rollData = this.shared.rollData;
-    const action = rollData.action;
+    const action = this.action;
     const actor = this.actor;
 
     const useOptions = this.shared.useOptions;

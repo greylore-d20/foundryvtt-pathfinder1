@@ -13,6 +13,7 @@ export class DamageType extends RegistryEntry {
       ...super.defineSchema(),
       abbr: new fields.StringField({ required: false, blank: false, nullable: true, initial: null }),
       icon: new fields.StringField({ required: false, initial: "" }),
+      img: new fields.FilePathField({ categories: ["IMAGE"] }),
       category: new fields.StringField({
         required: true,
         blank: false,

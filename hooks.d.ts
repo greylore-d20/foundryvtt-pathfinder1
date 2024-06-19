@@ -616,11 +616,11 @@ declare global {
      * @example
      * ```js
      * Hooks.on("pf1RegisterDamageTypes", (registry, model) => {
-     *   registry.register("my-module", "my-damage-type", {
-     *     name: "My Damage Type",
-     *     icon: "icons/svg/damage.svg",
-     *     color: "#00ff00",
-     *     category: "physical",
+     *   registry.register("my-module", "bleed", {
+     *     name: "Bleed",
+     *     icon: "ra ra-droplet",
+     *     color: "red",
+     *     category: "misc",
      *   });
      * });
      * ```

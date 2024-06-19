@@ -6,7 +6,7 @@
     {{#if (lookup (lookup ../damageTypes d) "icon")}}
     <i class="{{lookup (lookup ../damageTypes d) "icon"}} icon-pf" style="color: {{lookup (lookup ../damageTypes d) "color"}}"></i>
     {{else}}
-    <img class="icon" src="{{lookup (lookup ../damageTypes d) "img"}}">
+    <img class="icon-pf" src="{{lookup (lookup ../damageTypes d) "img"}}">
     {{/if}}
     {{#if (and (eq ../data.values.length 1) (not ../data.custom))}}
     <span class="name">{{localize (lookup (lookup ../damageTypes d) "name")}}</span>

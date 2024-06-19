@@ -100,8 +100,7 @@ export class Registry extends foundry.utils.Collection {
    * ```js
    * pf1.registry.damageTypes.register("my-module", "my-damage-type", {
    *   name: "My Damage Type",
-   *   icon: "icons/svg/damage.svg",
-   *   color: "#00ff00",
+   *   img: "icons/svg/damage.svg",
    *   category: "physical",
    * });
    * ```

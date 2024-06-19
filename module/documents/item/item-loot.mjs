@@ -38,7 +38,7 @@ export class ItemLootPF extends ItemPhysicalPF {
   }
 
   getLabels({ actionId, rollData } = {}) {
-    const labels = super.getLabels();
+    const labels = super.getLabels({ actionId, rollData });
 
     if (!this.showUnidentifiedData) {
       labels.subType = pf1.config.lootTypes[this.subType];

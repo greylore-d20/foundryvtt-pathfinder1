@@ -78,6 +78,14 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
       data.continuous = data.continuity === "continuous";
     }
   }
+
+  static get woundThesholdOptions() {
+    return {
+      0: game.i18n.localize("PF1.SETTINGS.Health.WoundThresholds.Disabled"),
+      1: game.i18n.localize("PF1.SETTINGS.Health.WoundThresholds.Normal"),
+      2: game.i18n.localize("PF1.SETTINGS.Health.WoundThresholds.Gritty"),
+    };
+  }
 }
 
 export class HealthConfig extends FormApplication {
@@ -94,10 +102,17 @@ export class HealthConfig extends FormApplication {
    * @override
    */
   getData() {
-    const context = game.settings.get("pf1", "healthConfig");
+    this.healthConfig ??= new HealthConfigModel(game.settings.get("pf1", "healthConfig").toObject());
+
+    const context = {
+      ...this.healthConfig,
+      woundThesholdOptions: HealthConfigModel.woundThesholdOptions,
+    };
+
     for (const [hdId, data] of Object.entries(context.hitdice)) {
       data.label = `PF1.SETTINGS.Health.Class.${hdId.toLowerCase()}`;
     }
+
     return context;
   }
 
@@ -120,17 +135,10 @@ export class HealthConfig extends FormApplication {
           group: "primary",
         },
       ],
+      submitOnChange: true,
+      submitOnClose: false,
+      closeOnSubmit: false,
     };
-  }
-
-  /**
-   * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
-   *
-   * @override
-   */
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find("button.reset").click(this._onReset.bind(this));
   }
 
   /**
@@ -141,8 +149,28 @@ export class HealthConfig extends FormApplication {
    */
   async _onReset(event) {
     event.preventDefault();
+
     await game.settings.set("pf1", "healthConfig", {});
     return this.render();
+  }
+
+  async _onSave(event) {
+    event.preventDefault();
+
+    const settings = this.healthConfig;
+    await game.settings.set("pf1", "healthConfig", settings.toObject());
+    this.close();
+  }
+
+  /**
+   * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
+   *
+   * @override
+   */
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find("button.reset").click(this._onReset.bind(this));
+    html.find("button.save").click(this._onSave.bind(this));
   }
 
   /**
@@ -154,6 +182,7 @@ export class HealthConfig extends FormApplication {
     formData = foundry.utils.expandObject(formData);
     const settings = new HealthConfigModel(game.settings.get("pf1", "healthConfig").toObject());
     settings.updateSource(formData); // Validate settings
-    await game.settings.set("pf1", "healthConfig", settings.toObject());
+    this.healthConfig = settings;
+    this.render();
   }
 }

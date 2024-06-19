@@ -3988,8 +3988,10 @@ export class ActorPF extends ActorBasePF {
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
     const variant = this.type === "npc" ? hpconf.npc : hpconf.pc;
     const usage = variant.useWoundThresholds;
+    const vigor = variant.useWoundsAndVigor;
     const wt = this.system.attributes.woundThresholds;
-    if (!usage) {
+    // Null if WT is not in use, or it is combined with Wounds & Vigor
+    if (!usage || vigor) {
       wt.level = 0;
       wt.penaltyBase = 0;
       wt.penalty = 0;

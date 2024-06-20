@@ -14,6 +14,8 @@ const simplificationTestFormulas = [
   ["-.5", "-0.5"],
   ["ceil(@attributes.hd.total / 5)d6", "2d6"],
   ["3d6x>=5", "3d6x>=5"], // bug#2175
+  //["(ceil(@classes.alchemist.level / 2) - 1)d6", "(-1)d6"], // This is expected to fail since Foundry breaks on this, omitted from system testing
+  ["4 + max(0, ceil(@classes.alchemist.level / 2) - 1)d6", "4 + 0d6"], // incorrectly produces 4d6
 ];
 
 const generalTestFormulas = [

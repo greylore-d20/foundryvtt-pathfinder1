@@ -79,7 +79,7 @@
         <label>{{localize "PF1.Duration"}}</label>
         <div class="form-fields">
           {{#unless noDurationTiming}}
-          <input class="formula" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}">
+          <input class="formula roll" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}">
           {{/unless}}
           <select name="system.duration.units">
             {{selectOptions config.timePeriodsShort selected=system.duration.units blank=(localize "PF1.Infinite")}}

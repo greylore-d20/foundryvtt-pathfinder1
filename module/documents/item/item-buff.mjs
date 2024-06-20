@@ -167,11 +167,11 @@ export class ItemBuffPF extends ItemPF {
       } else if (unit && duration.value) {
         try {
           // TODO: Durations can be variable, variable durations need to be supported.
-          const roll = RollPF.create(duration.value);
+          const roll = RollPF.safeRollSync(duration.value, rollData, {}, {}, { maximize: true });
           rollData ??= this.getRollData();
           let value;
           if (roll.isDeterministic) {
-            value = RollPF.safeRollSync(duration.value, rollData).total ?? 0;
+            value = roll.total ?? 0;
           } else {
             value = pf1.utils.formula.simplify(duration.value, rollData);
           }
@@ -223,13 +223,15 @@ export class ItemBuffPF extends ItemPF {
     if (!units) return;
 
     // Add total duration in seconds
-    let seconds = 0;
+    let seconds = NaN;
     if (units === "turn") {
       seconds = CONFIG.time.roundTime;
     } else {
       if (!formula) return;
       rollData ??= this.getRollData();
-      const duration = RollPF.safeRollSync(formula, rollData).total;
+      const roll = RollPF.safeRollSync(formula, rollData, {}, {}, { minimize: true });
+      if (!roll.isDeterministic) return;
+      const duration = roll.isDeterministic ? roll.total : roll.formula;
       switch (units) {
         case "hour":
           seconds = duration * 60 * 60;
@@ -267,6 +269,7 @@ export class ItemBuffPF extends ItemPF {
     } else {
       if (!formula) return;
       rollData ??= this.getRollData();
+      // TODO: Make this roll somehow known
       const duration = await RollPF.safeRollAsync(formula, rollData).total;
       switch (units) {
         case "hour":

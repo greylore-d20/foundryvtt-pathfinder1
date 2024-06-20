@@ -153,6 +153,11 @@ export function getTokenDefaultData() {
     sight: {
       enabled: false,
     },
+    light: {
+      dim: 0,
+      bright: 0,
+      color: null,
+    },
     texture: {
       offsetX: 0,
       offsetY: 0,

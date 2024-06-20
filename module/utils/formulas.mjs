@@ -214,17 +214,37 @@ function ternaryTerms(terms) {
  *
  * @param {string} formula - Formula
  * @param {object} [rollData={}] - Roll data
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.strict] - Attempt to return something even slightly valid even with bad formulas
  * @returns {string} - Simpler formula
  * @throws {Error} - On invalid formula
  */
-export function simplify(formula, rollData = {}) {
-  formula = Roll.replaceFormulaData(unflair(formula), rollData, { missing: 0 });
+export function simplify(formula, rollData = {}, { strict = true } = {}) {
+  formula = compress(Roll.replaceFormulaData(unflair(formula), rollData, { missing: 0 }));
 
-  const roll = new Roll.defaultImplementation(compress(formula));
+  // Produce nicer formula
+  formula = Roll.defaultImplementation
+    .parse(formula)
+    .map((t) => {
+      if (t instanceof ParentheticalTerm) {
+        t.evaluate();
+        const v = t.total;
+        return v >= 0 ? `${t.total}` : `(${t.total})`;
+      }
+      return t.formula;
+    })
+    .join("");
 
-  // Evaluate terms
+  const roll = new Roll.defaultImplementation(formula);
+
+  // Evaluate
   // TODO: v12 this needs to call .evaluateSync()
-  roll.evaluate({ async: false, minimize: true });
+  try {
+    roll.evaluate({ async: false, minimize: true });
+  } catch (err) {
+    if (strict) throw err;
+    else return compress(formula);
+  }
   // Old evaluation, fails with parenthetical terms followed by d6 or the like
   //terms.forEach((term) => term.evaluate({ async: false, minimize: true }));
   let terms = roll.terms;
@@ -252,4 +272,79 @@ export function simplify(formula, rollData = {}) {
   const final = new FormulaPart(terms);
 
   return final.formula.replace(/ \+ 0\b/g, "");
+}
+
+export function actionDamageFormula(action, rollData, { combine = true, strict = true } = {}) {
+  const actor = action.actor,
+    item = action.item,
+    actorData = actor?.system,
+    actionData = action.data;
+
+  const parts = [];
+
+  const handleFormula = (formula, change) => {
+    try {
+      switch (typeof formula) {
+        case "string": {
+          // Ensure @item.level and similar gets parsed correctly
+          const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? rollData : {};
+          if (formula != 0) {
+            const newformula = pf1.utils.formula.simplify(formula, rd, { strict });
+            if (newformula != 0) parts.push(newformula);
+          }
+          break;
+        }
+        case "number":
+          if (formula != 0) parts.push(`${formula}`);
+          break;
+      }
+    } catch (err) {
+      console.error(`Action damage formula parsing error with "${formula}"`, err, action);
+      parts.push("NaN");
+    }
+  };
+
+  const handleParts = (parts) => parts.forEach(({ formula }) => handleFormula(formula));
+
+  // Normal damage parts
+  handleParts(actionData.damage.parts);
+
+  const isNatural = action.item.subType === "natural";
+
+  // Include ability score only if the string isn't too long yet
+  const dmgAbl = actionData.ability.damage;
+  const dmgAblBaseMod = actorData?.abilities[dmgAbl]?.mod ?? 0;
+  const held = action.data?.held || item?.system.held || "normal";
+  let dmgMult =
+    actionData.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
+  if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
+    dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
+  }
+  const dmgAblMod = Math.floor(dmgAblBaseMod * dmgMult);
+  if (dmgAblMod != 0) parts.push(dmgAblMod);
+
+  // Include damage parts that don't happen on crits
+  handleParts(actionData.damage.nonCritParts);
+
+  // Include general sources. Item enhancement bonus is among these.
+  action.allDamageSources.forEach((s) => handleFormula(s.formula, s));
+
+  // Something probably went wrong
+  // Early exit from invalid formulas
+  if (parts.length === 0 || parts.some((p) => p === "NaN")) {
+    console.warn("Action damage resulted in invalid formula:", parts.join(" + "), action);
+    return "NaN";
+  }
+
+  const semiFinal = pf1.utils.formula.compress(parts.join("+"));
+  if (!combine) return semiFinal;
+
+  // Simplification turns 1d12+1d8+6-8+3-2 into 1d12+1d8-1
+  try {
+    const final = pf1.utils.formula.simplify(semiFinal, { strict });
+    return pf1.utils.formula.compress(final);
+  } catch (err) {
+    console.error("Invalid action damage formula:", parts.join(" + "), action, err);
+    return "NaN";
+  }
 }

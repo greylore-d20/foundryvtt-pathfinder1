@@ -1,5 +1,6 @@
 import { convertDistance, calculateRange } from "../lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { actionDamageFormula } from "@utils/formulas.mjs";
 
 /**
  * @internal
@@ -35,75 +36,8 @@ export const registerHandlebarsHelpers = function () {
    */
   function actionDamage(action, rollData, options) {
     if (!action.hasDamage) return null;
-
-    const actor = action.actor,
-      item = action.item,
-      actorData = actor?.system,
-      actionData = action.data,
-      combine = options.hash.combine ?? true;
-
-    const parts = [];
-
-    const handleFormula = (formula, change) => {
-      try {
-        switch (typeof formula) {
-          case "string": {
-            // Ensure @item.level and similar gets parsed correctly
-            const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? rollData : {};
-            if (formula != 0) {
-              const newformula = pf1.utils.formula.simplify(formula, rd);
-              if (newformula != 0) parts.push(newformula);
-            }
-            break;
-          }
-          case "number":
-            if (formula != 0) parts.push(`${formula}`);
-            break;
-        }
-      } catch (err) {
-        console.error(`Formula parsing error with "${formula}"`, err);
-        parts.push("NaN");
-      }
-    };
-
-    const handleParts = (parts) => parts.forEach(({ formula }) => handleFormula(formula));
-
-    // Normal damage parts
-    handleParts(actionData.damage.parts);
-
-    const isNatural = action.item.subType === "natural";
-
-    // Include ability score only if the string isn't too long yet
-    const dmgAbl = actionData.ability.damage;
-    const dmgAblBaseMod = actorData?.abilities[dmgAbl]?.mod ?? 0;
-    const held = action.data?.held || item?.system.held || "normal";
-    let dmgMult =
-      actionData.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
-    if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
-      dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
-    }
-    const dmgAblMod = Math.floor(dmgAblBaseMod * dmgMult);
-    if (dmgAblMod != 0) parts.push(dmgAblMod);
-
-    // Include damage parts that don't happen on crits
-    handleParts(actionData.damage.nonCritParts);
-
-    // Include general sources. Item enhancement bonus is among these.
-    action.allDamageSources.forEach((s) => handleFormula(s.formula, s));
-
-    if (parts.length === 0) parts.push("NaN"); // Something probably went wrong
-
-    const semiFinal = pf1.utils.formula.compress(parts.join("+"));
-    if (semiFinal === "NaN") return semiFinal;
-    if (!combine) return semiFinal;
-    // Simplification turns 1d12+1d8+6-8+3-2 into 1d12+1d8-1
-    try {
-      const final = pf1.utils.formula.simplify(semiFinal, undefined);
-      return pf1.utils.formula.compress(final);
-    } catch (err) {
-      console.error("Invalid action damage formula:", parts.join(" + "), action, err);
-      return "NaN";
-    }
+    const combine = options.hash.combine ?? true;
+    return actionDamageFormula(action, rollData, { combine });
   }
 
   Handlebars.registerHelper("actionDamage", actionDamage);

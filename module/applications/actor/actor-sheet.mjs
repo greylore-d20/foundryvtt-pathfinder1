@@ -12,6 +12,7 @@ import { CurrencyTransfer } from "@app/currency-transfer.mjs";
 import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
+import { actionDamageFormula } from "@utils/formulas.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -1656,63 +1657,11 @@ export class ActorSheetPF extends ActorSheet {
             if (!action?.hasDamage) return;
 
             const actionData = action.data;
-            const parts = [];
             const rollData = action.getRollData();
 
-            const handleFormula = (formula, change) => {
-              try {
-                switch (typeof formula) {
-                  case "string": {
-                    // Ensure @item.level and similar gets parsed correctly
-                    const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? rollData : {};
-                    if (formula != 0) {
-                      const newformula = pf1.utils.formula.simplify(formula, rd);
-                      if (newformula != 0) parts.push(newformula);
-                    }
-                    break;
-                  }
-                  case "number":
-                    if (formula != 0) parts.push(`${formula}`);
-                    break;
-                }
-              } catch (err) {
-                console.error(`Formula parsing error with "${formula}"`, err);
-                parts.push("NaN");
-              }
-            };
+            const dmgformula = actionDamageFormula(action, rollData, { strict: false });
 
-            const handleParts = (parts) => parts.forEach(({ formula }) => handleFormula(formula));
-
-            // Normal damage parts
-            handleParts(actionData.damage.parts);
-
-            const isNatural = action.item.subType === "natural";
-
-            // Include ability score only if the string isn't too long yet
-            const dmgAbl = actionData.ability.damage;
-            const dmgAblBaseMod = system.abilities[dmgAbl]?.mod ?? 0;
-            const held = rollData.action?.held || rollData.item?.held || "1h";
-            let dmgMult =
-              rollData.action.ability.damageMult ??
-              (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ??
-              1;
-            if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
-              dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
-            }
-            const dmgAblMod = Math.floor(dmgAblBaseMod * dmgMult);
-            if (dmgAblMod != 0) parts.push(dmgAblMod);
-
-            // Include damage parts that don't happen on crits
-            handleParts(actionData.damage.nonCritParts);
-
-            // Include general sources. Item enhancement bonus is among these.
-            action.allDamageSources.forEach((s) => handleFormula(s.formula, s));
-
-            if (parts.length === 0) parts.push("NaN"); // Something probably went wrong
-
-            const semiFinal = pf1.utils.formula.compress(parts.join("+"));
-
-            context.header = semiFinal;
+            context.header = dmgformula;
 
             const dmgSources = [];
 
@@ -1722,7 +1671,7 @@ export class ActorSheetPF extends ActorSheet {
             for (const { formula, type } of damage.parts ?? []) {
               dmgSources.push({
                 name: formula,
-                value: pf1.utils.formula.simplify(formula, rollData),
+                value: pf1.utils.formula.simplify(formula, rollData, { strict: false }),
                 type: damageTypes(type).join(", "),
                 //unvalued: true,
               });
@@ -1730,11 +1679,14 @@ export class ActorSheetPF extends ActorSheet {
             for (const { formula, type } of damage.nonCritParts ?? []) {
               dmgSources.push({
                 name: formula,
-                value: pf1.utils.formula.simplify(formula, rollData),
+                value: pf1.utils.formula.simplify(formula, rollData, { strict: false }),
                 type: damageTypes(type).join(", "),
                 //unvalued: true,
               });
             }
+
+            const held = rollData.action?.held || rollData.item?.held || "normal";
+
             const abl = actionData.ability?.damage;
             if (abl) {
               const mult = actionData.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;

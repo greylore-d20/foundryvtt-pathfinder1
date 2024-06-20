@@ -383,7 +383,7 @@ export class ActorPF extends ActorBasePF {
 
     const worldTime = game.time.worldTime + timeOffset;
 
-    const temporaryEffects = this.temporaryEffects.filter((ae) => {
+    const temporaryEffects = this._effectsWithDuration.filter((ae) => {
       const { seconds, startTime } = ae.duration;
       const { rounds, startRound } = ae.duration;
 

@@ -111,6 +111,20 @@ export class ActorBasePF extends Actor {
     // Else handle by default rule
     return visionFlag.default ?? false;
   }
+
+  /**
+   * Temporary solution until Foundry v12 where visibility of AE no longer controls if it's temporary.
+   *
+   * @internal
+   * @returns {ActiveEffectPF[]}
+   */
+  get _effectsWithDuration() {
+    const effects = [];
+    for (const effect of this.allApplicableEffects()) {
+      if (effect.active && effect._hasDuration) effects.push(effect);
+    }
+    return effects;
+  }
 }
 
 /**

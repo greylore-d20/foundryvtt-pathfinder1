@@ -92,6 +92,7 @@ export class ActiveEffectPF extends ActiveEffect {
   }
 
   /**
+   * @remarks BUG: Foundry v11 and older controls visibility through this.
    * @override
    * @type {boolean}
    */
@@ -99,6 +100,16 @@ export class ActiveEffectPF extends ActiveEffect {
     if (this.getFlag("pf1", "show") === false || game.settings.get("pf1", "hideTokenConditions")) return false;
 
     return super.isTemporary || this.getFlag("pf1", "show") || false;
+  }
+
+  /**
+   * Temporary solution until Foundry v12 to deal with problems of isTemporary.
+   *
+   * @internal
+   */
+  get _hasDuration() {
+    const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns) ?? 0;
+    return duration > 0;
   }
 
   /** @type {number|undefined} - Initiative counter if this effect started during combat */

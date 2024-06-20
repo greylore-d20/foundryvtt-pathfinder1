@@ -129,8 +129,9 @@
         <div class="form-group domain-slot-value">
           <h3>{{localize "PF1.DomainSlotValue"}}</h3>
           <div class="form-fields">
-            <input type="number" name="system.attributes.spells.spellbooks.{{bookId}}.domainSlotValue"
-              value="{{spellbook.domainSlotValue}}" data-tooltip="PF1.DomainSlotValueDesc" placeholder="0" data-dtype="Number">
+            <input type="number" min="0" step="1"
+              name="system.attributes.spells.spellbooks.{{bookId}}.domainSlotValue" placeholder="0"
+              value="{{spellbook.domainSlotValue}}" data-tooltip="PF1.DomainSlotValueDesc">
           </div>
         </div>
 

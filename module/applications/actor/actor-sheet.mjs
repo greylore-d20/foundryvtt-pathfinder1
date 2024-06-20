@@ -1699,7 +1699,11 @@ export class ActorSheetPF extends ActorSheet {
             sources.push({ sources: dmgSources });
 
             sources.push({
-              sources: action.allDamageSources.map((s) => ({ name: s.flavor, ...s })),
+              sources: action.allDamageSources.map((s) => ({
+                name: s.flavor,
+                ...s,
+                type: pf1.config.bonusTypes[s.type] || s.type,
+              })),
             });
 
             const hasOptionalConditionals = action?.data.conditionals.find((c) => !c.default);

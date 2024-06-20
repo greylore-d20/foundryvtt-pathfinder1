@@ -21,9 +21,15 @@ const PACK_CACHE = "../public/packs";
  * This should include paths to any objects that can contain arbitrary (i.e. not in template) properties.
  */
 const TEMPLATE_EXCEPTION_PATHS = {
-  Actor: [],
+  Actor: ["attributes.spells.spellbooks"],
   Item: ["classSkills", "links.supplements", "flags", "casting", "learnedAt", "properties", "source", "items", "ammo"],
   Component: [],
+  Token: [],
+};
+
+// Template exceptions only when the document is in actor
+const TEMPLATE_ACTOR_EXCEPTION_PATHS = {
+  Item: ["class"],
 };
 
 const templateData = loadDocumentTemplates();
@@ -356,8 +362,8 @@ function sanitizePackEntry(entry, documentType = "", { inActor = false } = {}) {
     }
   }
 
-  // Remove folders anyway if null
-  if (entry.folder === null) delete entry.folder;
+  // Remove folders anyway if null or document is in actor
+  if (entry.folder === null || inActor) delete entry.folder;
 
   // Adhere to template data
   if (templateData) {
@@ -421,9 +427,15 @@ function enforceTemplate(object, template, options = {}) {
     // Delete additional properties unless in template or in the exception list
     // ... but remove exceptions anyway if they're null or empty string.
     const inTemplate = utils.hasProperty(template, path);
-    const isExempt =
+    let isExempt =
       options.documentName &&
       TEMPLATE_EXCEPTION_PATHS[options.documentName].some((exceptionPath) => path.startsWith(exceptionPath));
+
+    // Excemptions when this document is in actor
+    if (options.inActor && !isExempt)
+      isExempt =
+        TEMPLATE_ACTOR_EXCEPTION_PATHS[options.documentName]?.some((exceptionPath) => path.startsWith(exceptionPath)) ??
+        false;
 
     const value = flattened[path];
     if (!inTemplate && (!isExempt || (isExempt && (value === "" || value === null)))) {

@@ -28,16 +28,6 @@
     <input type="text" name="system.traits.aura.custom" value="{{system.traits.aura.custom}}" placeholder="{{localize "PF1.None"}}">
   </div>
 
-  <div class="form-group damage-reduction {{#unless system.traits.dr}}inactive{{/unless}} data-selector" data-tooltip-extended="damageReduction">
-    <label>{{localize "PF1.DamRed"}}</label>
-    <ul class="traits-list tooltip tag-list">
-    {{#each dr}}
-      <li class="tag {{@key}}">{{this}}</li>
-    {{/each}}
-    </ul>
-    <a class="resistance-selector" data-for="system.traits.dr" data-options="dr" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
-  </div>
-
   <div class="form-group regeneration {{#unless system.traits.regen}}inactive{{/unless}}" data-tooltip-extended="regen">
     <label>{{localize "PF1.Regeneration"}}</label>
     <input type="text" name="system.traits.regen" value="{{system.traits.regen}}" placeholder="{{localize "PF1.None"}}">
@@ -58,9 +48,14 @@
     <a class="resistance-selector" data-for="system.traits.eres" data-options="eres" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
   </div>
 
-  <div class="form-group condition-resistance {{#unless system.traits.cres}}inactive{{/unless}}" data-tooltip-extended="conditionResistance">
-    <label>{{localize "PF1.ConRes"}}</label>
-    <input type="text" name="system.traits.cres" value="{{system.traits.cres}}" placeholder="{{localize "PF1.None"}}">
+  <div class="form-group damage-reduction {{#unless system.traits.dr}}inactive{{/unless}} data-selector" data-tooltip-extended="damageReduction">
+    <label>{{localize "PF1.DamRed"}}</label>
+    <ul class="traits-list tooltip tag-list">
+      {{#each dr}}
+        <li class="tag {{@key}}">{{this}}</li>
+      {{/each}}
+    </ul>
+    <a class="resistance-selector" data-for="system.traits.dr" data-options="dr" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
   </div>
 
   <div class="form-group damage-immunity {{system.traits.di.cssClass}}" data-tooltip-extended="damageImmunity">
@@ -81,6 +76,11 @@
     {{/each}}
     </ul>
     <a class="trait-selector" data-for="system.traits.dv" data-options="damageTypes"><i class="fas fa-edit"></i></a>
+  </div>
+
+  <div class="form-group condition-resistance {{#unless system.traits.cres}}inactive{{/unless}}" data-tooltip-extended="conditionResistance">
+    <label>{{localize "PF1.ConRes"}}</label>
+    <input type="text" name="system.traits.cres" value="{{system.traits.cres}}" placeholder="{{localize "PF1.None"}}">
   </div>
 
   <div class="form-group condition-immunity {{system.traits.ci.cssClass}}" data-tooltip-extended="conditionImmunity">

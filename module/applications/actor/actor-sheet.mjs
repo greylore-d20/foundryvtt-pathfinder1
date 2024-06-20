@@ -711,7 +711,10 @@ export class ActorSheetPF extends ActorSheet {
   _prepareSkills(context, rollData) {
     context.useBGSkills = game.settings.get("pf1", "allowBackgroundSkills");
 
-    const isMindless = context.system.abilities?.int?.value === null;
+    const abilities = context.system.abilities;
+
+    const isMindless = abilities?.int?.value === null;
+    const intMod = isMindless ? 0 : abilities?.int?.mod ?? 0;
 
     // Rank counting
     const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
@@ -750,10 +753,8 @@ export class ActorSheetPF extends ActorSheet {
 
         const perLevel = cls.system.skillsPerLevel || 0;
 
-        // Allow 0 skills per HD class configuration to function, ignoring minimum skills rule
-        if (perLevel > 0) {
-          skillRanks.allowed += Math.max(1, perLevel + this.document.system.abilities.int.mod) * hd;
-        }
+        // Int from HD still applies even if skills per level is zero.
+        skillRanks.allowed += Math.max(1, perLevel + intMod) * hd;
 
         // Background skills
         if (context.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.subType)) {
@@ -761,9 +762,6 @@ export class ActorSheetPF extends ActorSheet {
           if (bgranks > 0) skillRanks.bgAllowed += bgranks;
         }
       });
-
-    // Count from intelligence
-    const intMod = context.system.abilities?.int?.mod;
 
     // Calculate from changes
     skillRanks.allowed += this.actor.system.details?.skills?.bonus || 0;

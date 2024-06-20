@@ -251,5 +251,5 @@ export function simplify(formula, rollData = {}) {
   // Make final pass
   const final = new FormulaPart(terms);
 
-  return final.formula.replace(/ \+ 0/g, "");
+  return final.formula.replace(/ \+ 0\b/g, "");
 }

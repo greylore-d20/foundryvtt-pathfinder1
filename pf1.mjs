@@ -708,18 +708,14 @@ Hooks.on(
 Hooks.on("renderSidebarTab", (app, html) => {
   if (app instanceof Settings) {
     // Add buttons
-    const chlogButton = $(`<button class="changelog">${game.i18n.localize("PF1.Changelog")}</button>`);
-    const helpButton = $(`<button class="help">${game.i18n.localize("PF1.Help.Label")}</button>`);
-    const tshooterButton = $(
-      `<button class="troubleshooter">${game.i18n.localize("PF1.Troubleshooter.Button")}</button>`
-    );
+    const chlogButton = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
+    const helpButton = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
+    const tshooterButton = $(`<button>${game.i18n.localize("PF1.Troubleshooter.Button")}</button>`);
     html
       .find("#game-details")
       .after(
-        $(`<div id="pf1-sidebar">`).append(
-          $(`<h2>${game.i18n.localize("PF1.Title")}</h2>`),
-          $("<div id='pf1-details'>").append(chlogButton, helpButton, tshooterButton)
-        )
+        $(`<h2>${game.i18n.localize("PF1.Title")}</h2>`),
+        $("<div id='pf1-details'>").append(chlogButton, helpButton, tshooterButton)
       );
 
     chlogButton.click(() => {

@@ -1,5 +1,3 @@
-// FIXME: Tour class is not in v9.6 of Foundry types
-// eslint-disable-next-line no-undef
 export class PF1Tour extends Tour {
   /**
    * Foundry Tours do not wait for the element to be rendered so we need this workaround.

@@ -88,7 +88,7 @@
           <h3>{{localize "PF1.SpellcastingAbility"}}</h3>
           <div class="form-fields">
             <select name="system.attributes.spells.spellbooks.{{bookId}}.ability" data-dtype="String">
-              {{selectOptions @root.config.abilities selected=spellbook.ability blank="PF1.None" localize=true}}
+              {{selectOptions @root.config.abilities selected=spellbook.ability}}
             </select>
           </div>
         </div>

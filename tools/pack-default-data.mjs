@@ -143,3 +143,23 @@ export function getChangeDefaultData() {
     flavor: undefined,
   };
 }
+
+export function getTokenDefaultData() {
+  return {
+    actorLink: false,
+    disposition: -1,
+    height: 1,
+    width: 1,
+    sight: {
+      enabled: false,
+    },
+    texture: {
+      offsetX: 0,
+      offsetY: 0,
+      rotation: 0,
+      scaleY: 1,
+      scaleX: 1,
+      src: "",
+    },
+  };
+}

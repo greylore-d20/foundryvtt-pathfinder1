@@ -8,7 +8,7 @@ import yaml from "js-yaml";
 import * as fvtt from "@foundryvtt/foundryvtt-cli";
 
 import * as utils from "./utils.mjs";
-import { getActionDefaultData, getChangeDefaultData } from "./pack-default-data.mjs";
+import { getActionDefaultData, getChangeDefaultData, getTokenDefaultData } from "./pack-default-data.mjs";
 import { ViteLoggerPF } from "./vite-logger.mjs";
 
 const logger = new ViteLoggerPF(console);
@@ -294,9 +294,11 @@ function sanitizeActiveEffects(effects) {
  *
  * @param {object} entry Loaded compendium content.
  * @param {string} [documentType] The document type of the entry, determining which data is scrubbed.
+ * @param {object} [options]
+ * @param {boolean} [options.inActor]
  * @returns {object} The sanitized content.
  */
-function sanitizePackEntry(entry, documentType = "") {
+function sanitizePackEntry(entry, documentType = "", { inActor = false } = {}) {
   // Delete unwanted fields
   delete entry.ownership;
   delete entry._stats;
@@ -335,6 +337,7 @@ function sanitizePackEntry(entry, documentType = "") {
     "items",
     "effects",
     "system",
+    "prototypeToken",
     "_id",
     "_key",
     "folder",
@@ -364,11 +367,17 @@ function sanitizePackEntry(entry, documentType = "") {
       entry.system = enforceTemplate(systemData, template, {
         documentName: documentType,
         type: entry.type,
+        inActor,
       });
     }
-    if (documentType === "Actor" && entry.items?.length > 0) {
-      // Treat embedded items like normal items for sanitization
-      entry.items = entry.items.map((i) => sanitizePackEntry(i, "Item"));
+    if (documentType === "Actor") {
+      if (entry.items?.length > 0) {
+        // Treat embedded items like normal items for sanitization
+        entry.items = entry.items.map((i) => sanitizePackEntry(i, "Item", { inActor: true }));
+      }
+      if (entry.prototypeToken) {
+        entry.prototypeToken = sanitizePackEntry(entry.prototypeToken, "Token", { inActor: true });
+      }
     }
     if (documentType === "Item" && entry.system.items && Object.keys(entry.system.items).length > 0) {
       // Treat embedded items like normal items for sanitization
@@ -377,6 +386,15 @@ function sanitizePackEntry(entry, documentType = "") {
       }
     }
   }
+
+  if (documentType === "Token") {
+    const defaultData = getTokenDefaultData();
+    return enforceTemplate(entry, defaultData, {
+      documentName: "Token",
+      inActor: true,
+    });
+  }
+
   return entry;
 }
 
@@ -388,12 +406,13 @@ function sanitizePackEntry(entry, documentType = "") {
  * @param {object} [options={}] - Additional options to augment the behavior.
  * @param {"Actor" | "Item" | "Component"} [options.documentName] - The document(-like) name to which this template belongs.
  * @param {"Action" | "Change"} [options.componentName] - The component name to which this template belongs.
+ * @param {boolean} [options.inActor] - Is this child document of an actor?
  * @param {string} [options.type] - The document type of the object, if it is not already present.
  * @returns {object} A data object which has been trimmed to match the template
  */
 function enforceTemplate(object, template, options = {}) {
   // Do not enforce templates on documents which do not have them
-  if (!object || !template || !["Actor", "Item", "Component"].includes(options.documentName)) return object;
+  if (!object || !template || !["Actor", "Item", "Token", "Component"].includes(options.documentName)) return object;
 
   // Create a diff of the object and template to remove all default values
   const diff = utils.diffObject(template, object);

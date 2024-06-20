@@ -143,6 +143,12 @@ export class DamageTypes extends Registry {
       icon: "ra ra-hand",
       isModifier: true,
     },
+    {
+      _id: "areaOfEffect",
+      name: "PF1.DamageTypes.areaOfEffect.Label",
+      icon: "ra ra-bomb-explosion",
+      isModifier: true,
+    },
   ];
 }
 

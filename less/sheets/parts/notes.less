@@ -1,16 +1,9 @@
-.pf1.sheet {
-  .notes {
-    display: grid;
-    grid-template-columns: 2fr min-content;
-    grid-template-rows: min-content;
-    row-gap: 1px;
-
+.pf1.sheet:is(.item, .action) form {
+  .card-notes {
     // Undo Foundry stylings
     flex: 0;
     margin: 0;
     line-height: inherit;
-
-    font-size: var(--font-size-12);
 
     > * {
       padding: 0.2em 0.3em;
@@ -18,9 +11,43 @@
     }
 
     > .header {
+      display: flex;
+      flex-flow: row nowrap;
+
+      > label {
+        flex: 1;
+        margin: 0;
+        border: unset;
+      }
+
       background-color: var(--pf1-header-background);
       color: var(--pf1-header-text);
       text-shadow: var(--pf1-header-shadow);
+
+      > .add-entry {
+        white-space: nowrap;
+      }
+    }
+
+    > .note-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      > li {
+        display: flex;
+        gap: 0.3em;
+      }
+    }
+
+    .controls {
+      padding: 0 0.3em;
+
+      flex: 0;
+      a {
+        color: inherit;
+        white-space: nowrap;
+      }
     }
   }
 }

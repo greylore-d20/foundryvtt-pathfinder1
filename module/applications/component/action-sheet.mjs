@@ -265,7 +265,7 @@ export class ItemActionSheet extends FormApplication {
     html.find("img[data-edit]").click((ev) => this._onEditImage(ev));
 
     // Add drop handler to textareas
-    html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
+    html.find("textarea, .card-notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
     // Modify attack formula
     html.find(".attack-control").click(this._onAttackControl.bind(this));
@@ -274,9 +274,8 @@ export class ItemActionSheet extends FormApplication {
     html.find(".damage-control").click(this._onDamageControl.bind(this));
     html.find(".damage-type-visual").on("click", this._onClickDamageType.bind(this));
 
-    // Listen to field entries
-    html.find(".entry-selector").click(this._onEntrySelector.bind(this));
-    html.find(".entry-control a").click(this._onEntryControl.bind(this));
+    // Note control
+    html.find(".card-notes .controls a").click(this._onNoteEntryControl.bind(this));
 
     // Modify conditionals
     html.find(".conditional-control").click(this._onConditionalControl.bind(this));
@@ -364,41 +363,27 @@ export class ItemActionSheet extends FormApplication {
     }
   }
 
-  _onEntrySelector(event) {
+  async _onNoteEntryControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const options = {
-      name: a.dataset.for,
-      title: a.dataset.title,
-      flag: a.dataset.flag === "true",
-      boolean: a.dataset.boolean === "true",
-      flat: a.dataset.flat === "true",
-      fields: a.dataset.fields,
-      dtypes: a.dataset.dtypes,
-    };
+    const key = a.dataset.name;
 
-    pf1.applications.EntrySelector.open(this.object, options);
-  }
-
-  async _onEntryControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-    const key = a.closest(".notes").dataset.name;
-
-    // Add
-    if (a.classList.contains("add-entry")) {
-      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key) ?? []);
-      notes.push("");
-      const updateData = { [key]: notes };
-      return this._updateObject(event, this._getSubmitData(updateData));
-    }
-    // Delete
-    else if (a.classList.contains("delete-entry")) {
-      const index = a.closest(".entry").dataset.index;
-      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key));
-      notes.splice(index, 1);
-      const updateData = { [key]: notes };
-      return this._updateObject(event, this._getSubmitData(updateData));
+    switch (a.dataset.action) {
+      // Add
+      case "add": {
+        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key) ?? []);
+        notes.push("");
+        const updateData = { [key]: notes };
+        return this._updateObject(event, this._getSubmitData(updateData));
+      }
+      // Delete
+      case "delete": {
+        const index = Number(a.dataset.index);
+        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key));
+        notes.splice(index, 1);
+        const updateData = { [key]: notes };
+        return this._updateObject(event, this._getSubmitData(updateData));
+      }
     }
   }
 

@@ -1,9 +1,15 @@
 export class PF1Tour extends Tour {
-  calledAsPreviousStep = false;
-  calledAsExit = false;
-  calledAsReset = false;
+  /** @type {"start" | "exit" | "previous" | "reset" | null} The function that called current step. */
+  calledFrom = null;
   /** @type {pf1.applications.compendiumBrowser.CompendiumBrowser | null} */
   currentOpenCompendium = null;
+
+  /** @override */
+  constructor(config, { id, namespace } = {}) {
+    super(config, { id, namespace });
+    this.calledFrom = null;
+    this.currentOpenCompendium = null;
+  }
 
   /**
    * @returns {TourStep} The previous step.
@@ -16,7 +22,7 @@ export class PF1Tour extends Tour {
    * Gets the current sheet based on if it's displayed or not.
    * WARNING: This won't work if the actor sheet is not displayed or there are multiple actor sheets open at once.
    *
-   * @returns {import("@app/actor/actor-sheet.mjs").ActorSheetPF | null} The current actor sheet if found.
+   * @returns {pf1.applications.actor.ActorSheetPF | null} The current actor sheet if found.
    */
   get sheetInDisplay() {
     // We need to Actor ID to find the sheet. The actor ID is in the ID of the sheet element but needs some formatting
@@ -29,7 +35,7 @@ export class PF1Tour extends Tour {
    * In case you need to wait for the actor sheet to be displayed.
    * WARNING: This blocks the code until the actor sheet is displayed.
    *
-   * @returns {Promise<import("@app/actor/actor-sheet.mjs").ActorSheetPF | null>} The current actor sheet if found.
+   * @returns {Promise<pf1.applications.actor.ActorSheetPF | null>} The current actor sheet if found.
    */
   async waitForSheetInDisplay() {
     const sheetSelector = "div.sheet.pf1.actor";
@@ -58,7 +64,19 @@ export class PF1Tour extends Tour {
   }
 
   /**
+   * Checks if the current step is a safe step meaning this that is not being called from start, exit, previous or reset.
+   * This is mainly used to avoid executing irreversible steps such as deleting an actor, adding an item, etc... or just
+   * to avoid opening unwanted dialogs.
+   *
+   * @returns {boolean} True if the current step is a safe step.
+   */
+  _isSafe() {
+    return !["start", "exit", "previous", "reset"].includes(this.calledFrom);
+  }
+
+  /**
    * In many steps we might need an specific compendium to be opened to continue.
+   * This function opens the given type of compendium and stores it for later closing or referencing.
    *
    * @param {string} compendium The compendium to open.
    * @param {object} [options={}] Additional options to pass to the render function.
@@ -75,6 +93,25 @@ export class PF1Tour extends Tour {
     // Set current compendium
     this.currentOpenCompendium = comp;
     return comp;
+  }
+
+  /**
+   * Closes the currently opened compendium either by referencing the variable or checking if the active window is the compendium.
+   *
+   * @see {@link _openCompendium}
+   * @see {@link Application.render}
+   */
+  _closeCompendium() {
+    if (this.currentOpenCompendium) {
+      this.currentOpenCompendium.close();
+      this.currentOpenCompendium = null;
+      return;
+    }
+
+    // Check if the active window is the compendium
+    if (ui.activeWindow instanceof pf1.applications.compendiumBrowser.CompendiumBrowser) {
+      ui.activeWindow.close();
+    }
   }
 
   /**
@@ -147,6 +184,63 @@ export class PF1Tour extends Tour {
     searchBar.dispatchEvent(new Event("input", { bubbles: true }));
   }
 
+  /**
+   * Triggering a typing event in the compendium browser search bar.
+   * Since compendium browsers are not rendered immediately, we need to wait for the filter to be applied.
+   *
+   * @param {string} text Text to type in the search bar.
+   * @param {number} [timeout=400] Timeout in milliseconds to wait for the filter to be applied.
+   */
+  async _typeInCompendiumBrowserSearchBar(text, timeout = 400) {
+    if (!this.currentOpenCompendium) {
+      this._warn("Trying to type in a search bar for a compendium that isn't open.");
+      return;
+    }
+
+    /** @type {HTMLInputElement} */
+    const searchBar = await this.waitForElement(
+      `div[data-appid="${this.currentOpenCompendium.appId}"] input[type="search"][name="filter"]`
+    );
+    searchBar.value = text;
+    searchBar.dispatchEvent(new Event("input", { bubbles: true }));
+    // We need to wait for the filter to be applied. It can take some milliseconds
+    // Refer to `pf1.applications.compendiumBrowser.CompendiumBrowser._debouncedRender`
+    await new Promise((resolve) => setTimeout(resolve, timeout));
+  }
+
+  /**
+   * Simulates dropping an item from Compendium Browser into the displayed actor sheet.
+   *
+   * @param {string} selector The CSS selector for the target element.
+   * @returns {Promise<Document[]>} The dropped items.
+   */
+  async _dropItemFromCompendiumBrowser(selector) {
+    if (!document.querySelector(selector)) {
+      this._warn("Trying to trigger Drag&Drop with an element that's not rendered.");
+      return;
+    }
+
+    if (!this.sheetInDisplay) {
+      this._warn("Trying to trigger Drag&Drop with an actor sheet that isn't rendered.");
+      return;
+    }
+
+    /** @type {Document[]} */
+    const itemUUID = document.querySelector(selector)?.getAttribute("data-uuid");
+
+    if (!itemUUID) {
+      this._warn("Trying to trigger Drag&Drop with an element that doesn't have an item UUID.");
+      return;
+    }
+
+    const droppedItems = await this.sheetInDisplay._onDropItem(new DragEvent("drop"), {
+      type: "Item",
+      uuid: itemUUID,
+    });
+
+    return droppedItems;
+  }
+
   /** @override */
   async _preStep() {
     // We will always want `this.targetElement` to be there
@@ -162,34 +256,33 @@ export class PF1Tour extends Tour {
 
   /** @override */
   async previous() {
-    this.calledAsPreviousStep = true;
+    this.calledFrom = "previous";
     await super.previous();
   }
 
   /** @override */
   async next() {
-    this.calledAsPreviousStep = false;
+    this.calledFrom = "next";
     await super.next();
   }
 
   /** @override */
   async reset() {
-    this.calledAsPreviousStep = false;
-    this.calledAsExit = false;
-    this.calledAsReset = true;
+    this.calledFrom = "reset";
+    // Since it's a reset we also want to set openCompendium to null
+    this.currentOpenCompendium = null;
     await super.reset();
   }
 
   /** @override */
   async start() {
-    this.calledAsPreviousStep = false;
-    this.calledAsExit = false;
+    this.calledFrom = "start";
     await super.start();
   }
 
   /** @override */
   exit() {
-    this.calledAsExit = true;
+    this.calledFrom = "exit";
     super.exit();
   }
 }

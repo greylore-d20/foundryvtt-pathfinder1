@@ -1941,7 +1941,7 @@ export class ActorPF extends ActorBasePF {
       "ac.shield.misc": 0,
       "attributes.sr.total": 0,
       "attributes.init.bonus": 0,
-      "attributes.init.total": 0,
+      "attributes.init.total": this.system.attributes.init.value ?? 0,
       "attributes.cmb.bonus": 0,
       "attributes.cmb.total": 0,
       "attributes.cmb.value": 0,

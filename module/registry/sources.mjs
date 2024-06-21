@@ -873,7 +873,7 @@ export class Sources extends Registry {
     },
     {
       _id: "PZO9059",
-      name: "Skull & Shackles #5: The Prince of Infamy",
+      name: "Skull & Shackles #5: The Price of Infamy",
       date: "2012-06-01",
       pages: 96,
       isbn: "978-1-60125-421-4",
@@ -1412,7 +1412,7 @@ export class Sources extends Registry {
     },
     {
       _id: "PZO90115",
-      name: "Ironfang Invasion #1: Trail of the Haunted",
+      name: "Ironfang Invasion #1: Trail of the Hunted",
       date: "2017-03-01",
       pages: 96,
       isbn: "978-1-60125-926-4",
@@ -2299,7 +2299,7 @@ export class Sources extends Registry {
     },
     {
       _id: "PZO9403",
-      name: "Osirion, Land of Pharahs",
+      name: "Osirion, Land of Pharaohs",
       date: "2008-12-01",
       isbn: "978-1-60125-144-2",
       url: "https://paizo.com/products/btpy86j7",

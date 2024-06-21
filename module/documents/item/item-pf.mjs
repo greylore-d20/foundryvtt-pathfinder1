@@ -2116,7 +2116,7 @@ export class ItemPF extends ItemBasePF {
 
   /**
    * @param {string} flagName - The name/key of the flag to get.
-   * @returns {object} The value stored in the flag.
+   * @returns {string|number|undefined} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
     const flags = this.system.flags?.dictionary || {};

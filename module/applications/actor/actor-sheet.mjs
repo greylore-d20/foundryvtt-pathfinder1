@@ -1226,8 +1226,8 @@ export class ActorSheetPF extends ActorSheet {
 
     const getSource = (path) => this.actor.sourceDetails[path];
 
-    const getNotes = (context) => {
-      const noteObjs = actor.getContextNotes(context);
+    const getNotes = (context, all = true) => {
+      const noteObjs = actor.getContextNotes(context, all);
       return actor.formatContextNotes(noteObjs, lazy.rollData, { roll: false });
     };
 
@@ -1952,7 +1952,8 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({ sources: skillSources }, { sources: getSource(`system.skills.${path}.mod`) });
 
-        notes = getNotes(`skill.${path}`);
+        notes = getNotes(`skill.${fullSkillId}`);
+        if (subSkillId) notes.push(...getNotes(`skill.${mainId}`, false));
         break;
       }
       case "spellbook": {

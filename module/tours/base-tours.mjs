@@ -2,6 +2,8 @@ export class PF1Tour extends Tour {
   calledAsPreviousStep = false;
   calledAsExit = false;
   calledAsReset = false;
+  /** @type {pf1.applications.compendiumBrowser.CompendiumBrowser | null} */
+  currentOpenCompendium = null;
 
   /**
    * @returns {TourStep} The previous step.
@@ -59,15 +61,20 @@ export class PF1Tour extends Tour {
    * In many steps we might need an specific compendium to be opened to continue.
    *
    * @param {string} compendium The compendium to open.
+   * @param {object} [options={}] Additional options to pass to the render function.
    * @see {@link pf1.applications.compendiumBrowser.CompendiumBrowser.initializeBrowsers}
+   * @see {@link Application.render}
    * @returns {Application} The opened compendium.
    */
-  _openCompendium(compendium) {
+  _openCompendium(compendium, options = {}) {
     if (!Object.prototype.hasOwnProperty.call(pf1.applications.compendiums, compendium)) {
       throw new Error(`Compendium "${compendium}" not found`);
     }
     // Open compendium
-    return pf1.applications.compendiums[compendium].render(true, { focus: true });
+    const comp = pf1.applications.compendiums[compendium].render(true, { focus: true, ...options });
+    // Set current compendium
+    this.currentOpenCompendium = comp;
+    return comp;
   }
 
   /**

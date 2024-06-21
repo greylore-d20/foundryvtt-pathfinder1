@@ -43,9 +43,11 @@ export class CreateNPCTour extends PF1Tour {
   /**
    * In many steps we need this sheet to be opened to continue.
    *
+   * @param {object} [options={}] Additional options to pass to the render function.
    * @returns {import("@app/actor/actor-sheet.mjs").ActorSheetPF | null} The opened Actor sheet.
+   * @see {@link Application.render}
    */
-  _openCreatedNPCSheet() {
+  _openCreatedNPCSheet(options = {}) {
     if (!this.createdNPC) {
       this._warn("Trying to open a Sheet for an Actor that doesn't exist in the Tour object.");
       ui.notifications.warn("PF1.Tours.RestartTutorialWarning", { localize: true });
@@ -55,7 +57,7 @@ export class CreateNPCTour extends PF1Tour {
     const sheet = this.createdNPC.sheet;
     if (!sheet) return null;
     // Open Actor sheet
-    return sheet.render(true, { focus: true });
+    return sheet.render(true, { focus: true, ...options });
   }
 
   async _setActorName() {
@@ -105,7 +107,12 @@ export class CreateNPCTour extends PF1Tour {
     }
 
     // Depending on the step we start we need to have the race compendium open
-    if (this.stepIndex >= this.getStepIndexById(this.STEPS.ALL_RACES_DISPLAY)) {
+    if (
+      this.stepIndex >= this.getStepIndexById(this.STEPS.ALL_RACES_DISPLAY) &&
+      this.stepIndex <= this.getStepIndexById(this.STEPS.HIGHLIGHT_RACE)
+    ) {
+      // In order to have the compendium on top of the sheet we need to wait for it
+      await this.waitForSheetInDisplay();
       this._openCompendium("races");
     }
 
@@ -155,7 +162,7 @@ export class CreateNPCTour extends PF1Tour {
             ?.getAttribute("data-uuid"),
         });
         // Close the race CompendiumBrowser
-        ui.activeWindow.close();
+        this.currentOpenCompendium?.close();
         break;
       default:
         break;
@@ -186,7 +193,7 @@ export class CreateNPCTour extends PF1Tour {
           break;
         }
         // Open the race CompendiumBrowser otherwise
-        this.targetElement.click();
+        this._openCompendium("races");
         break;
       default:
         break;
@@ -209,10 +216,15 @@ export class CreateNPCTour extends PF1Tour {
       this._openCreateActorMenu();
       await this._prepareDefaultCreationMenuData();
     }
-    // Going back once opened the race compendium browser
+    // Going back once opened the race compendium browser for the first time
     if (this.previousStep?.id === this.STEPS.OPEN_RACE_COMPENDIUM) {
       // Close the Compendium Browser App that should be active
       ui.activeWindow.close();
+    }
+
+    // Going back after closing the race compendium browser (because we selected a race)
+    if (this.previousStep?.id === this.STEPS.HIGHLIGHT_RACE) {
+      this._openCompendium("races");
     }
 
     await super.previous();

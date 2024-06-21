@@ -1,6 +1,6 @@
 _id: gigqcn4amhmhgnnl
 _key: '!items!gigqcn4amhmhgnnl'
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/magic/death/blood-corruption-vomit-red.webp
 name: Fungal Blisters
 system:
   actions:
@@ -13,11 +13,40 @@ system:
       duration:
         units: spec
         value: 1 minute/level or until discharged (see text)
+      img: systems/pf1/icons/misc/magic-swirl.png
       name: Use
       range:
         units: personal
+      spellEffect: Creates [[floor(@cl / 2)d2 + floor(@cl / 2)]]
       target:
         value: you
+    - _id: aXgxNdpBfTr4QcQo
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      area: 5-foot-radius burst centered on you
+      damage:
+        parts:
+          - formula: floor(@cl / 2)d2 + floor(@cl / 2)
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      measureTemplate:
+        size: '5'
+        type: circle
+      name: Burst blister
+      save:
+        description: Fortitude negates
+        type: fort
+      spellEffect: cloud of harmful spores (disease)
+      uses:
+        autoDeductChargesCost: '0'
+        self:
+          per: charges
   components:
     somatic: true
     verbal: true
@@ -34,10 +63,11 @@ system:
       plants aren't affected by the spores. It is possible for more than one
       blister to burst in a single round. If you are reduced to 0 or fewer hit
       points, all remaining blisters burst, and the resulting spores deal the
-      cumulative amount of damage.  You are not able to cast this spell while
+      cumulative amount of damage. You are not able to cast this spell while
       wearing heavy armor. If you don heavy armor during the spell's duration,
       all remaining blisters burst as if you had been reduced to 0 or fewer hit
-      points.</p>
+      points.</p><hr /><p><strong>Usage</strong>: setup max charges of burst
+      blister action after cast</p>
   learnedAt:
     class:
       alchemist: 2
@@ -50,6 +80,11 @@ system:
       wizard: 2
   level: 2
   school: trs
+  sources:
+    - id: PZO90119
+      pages: '70'
   sr: false
+  tags:
+    - Cyth-V'sug
 type: spell
 

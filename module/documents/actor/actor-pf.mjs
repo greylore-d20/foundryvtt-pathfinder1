@@ -543,6 +543,9 @@ export class ActorPF extends ActorBasePF {
         }, 0)
       );
       this.system.attributes.bab.total = Math.floor(v);
+
+      // Add .value for NPC lite sheet
+      if (this.system.attributes.bab.value) this.system.attributes.bab.total += this.system.attributes.bab.value ?? 0;
     }
 
     this._prepareClassSkills();
@@ -2001,6 +2004,9 @@ export class ActorPF extends ActorBasePF {
       "attributes.speed.fly.add": 0,
       "attributes.speed.climb.add": 0,
       "attributes.speed.burrow.add": 0,
+      "attributes.savingThrows.fort.total": this.system.attributes.savingThrows.fort.base ?? 0,
+      "attributes.savingThrows.ref.total": this.system.attributes.savingThrows.ref.base ?? 0,
+      "attributes.savingThrows.will.total": this.system.attributes.savingThrows.will.base ?? 0,
     };
 
     // Determine skill keys

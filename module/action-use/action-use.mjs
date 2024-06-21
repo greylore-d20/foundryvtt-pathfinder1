@@ -350,6 +350,11 @@ export class ActionUse {
     await this.item.setFlag("pf1", "defaultAmmo", ammo[0].id);
   }
 
+  /**
+   * Fetch valid ammo items from actor.
+   *
+   * @returns {AttackAmmo}
+   */
   getAmmo() {
     const actor = this.actor;
     const ammoCost = this.action.ammoCost;
@@ -369,6 +374,14 @@ export class ActionUse {
     });
   }
 
+  /**
+   * Determine if item is valid for use as ammo.
+   *
+   * @internal
+   * @param {Item} item - Item to filter
+   * @param {number} ammoCost - Ammo usage per attack
+   * @returns {boolean}
+   */
   _filterAmmo(item, ammoCost = 1) {
     if (!(item.type === "loot" && item.subType === "ammo")) return false;
     if (item.system.quantity < ammoCost) return false;
@@ -1624,7 +1637,7 @@ export class ActionUseAttack {
   /** @type {boolean} */
   abstract;
 
-  /** @type {string} */
+  /** @type {AttackAmmo|null} */
   ammo = null;
 
   /** @type {number} */
@@ -1651,4 +1664,14 @@ export class ActionUseAttack {
  * @typedef {object} ItemAttack_Dialog_Result
  * @property {boolean} fullAttack - Whether it's a full attack (true) or a single attack (false)
  * @property {JQuery} html - The html containing user input and selections.
+ */
+
+/**
+ * @typedef {object} AttackAmmo
+ * @property {string} id - Ammo item ID
+ * @property {number} quantity - Quantity of ammo
+ * @property {boolean} abundant - Is abundant?
+ * @property {object} data - Ammo document data
+ * @property {Item} document - Ammo document
+ * @property {boolean} isDefault - Is this default ammo for the item?
  */

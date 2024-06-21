@@ -1332,6 +1332,8 @@ export class ActorSheetPF extends ActorSheet {
         sources.push({
           sources: getSource(`system.attributes.ac.${detail}.total`),
         });
+
+        notes = getNotes("misc.ac");
         break;
       }
       case "cmd":

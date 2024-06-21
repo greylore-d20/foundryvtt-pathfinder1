@@ -193,7 +193,7 @@ export class LevelUpForm extends FormApplication {
    * @param {object} itemData - Class item data
    * @param {object} [options={}] - Additional options
    * @param {TokenDocument} [options.token] - Associated token
-   * @returns {Promise<Item|null>}
+   * @returns {Promise<Item | null>}
    */
   static async addClassWizard(actor, itemData, { token } = {}) {
     // Add class item

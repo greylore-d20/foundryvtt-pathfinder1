@@ -3884,10 +3884,10 @@ export class ActorSheetPF extends ActorSheet {
 
       // Choose how to import class
       if (itemData.type === "class") {
-        // Set new class to be always level 1
-        newItem.updateSource({ system: { level: 1 } });
-
         if (!(event && event.shiftKey)) {
+          // Set new class to be always level 1
+          newItem.updateSource({ system: { level: 1 } });
+
           const cls = await LevelUpForm.addClassWizard(this.actor, newItem.toObject(), { token: this.token });
           if (cls && itemDatas.length === 1) this._focusTabByItem(cls);
           continue;

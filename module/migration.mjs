@@ -1840,8 +1840,10 @@ const _migrateSpellCosts = function (ent, updateData) {
 function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
   if (itemData.type !== "spell") return;
 
-  const prepMode = item?.spellbook?.spellPreparationMode || "prepared";
-  const isPrepared = prepMode === "prepared";
+  const spellbook = item?.spellbook;
+  const prepMode = spellbook?.spellPreparationMode || "prepared";
+  const usesSpellPoints = spellbook?.spellPoints?.useSystem ?? false;
+  const isPrepared = usesSpellPoints ? false : prepMode === "prepared";
 
   const prep = itemData.system.preparation ?? {};
   if (prep.maxAmount !== undefined) {

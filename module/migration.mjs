@@ -152,7 +152,10 @@ export async function migrateActors({ state, dialog = null, noHooks = false } = 
   tracker.setInvalid(game.actors.invalidDocumentIds.size);
 
   for (const actor of game.actors) {
-    if (!actor.isOwner) continue;
+    if (!actor.isOwner) {
+      tracker.ignoreEntry(actor);
+      continue;
+    }
 
     tracker.startEntry(actor);
 
@@ -203,7 +206,10 @@ export async function migrateItems({ state, dialog = null, noHooks = false } = {
   tracker.setInvalid(game.items.invalidDocumentIds.size);
 
   for (const item of game.items) {
-    if (!item.isOwner) continue;
+    if (!item.isOwner) {
+      tracker.ignoreEntry(item);
+      continue;
+    }
 
     tracker.startEntry(item);
 
@@ -306,7 +312,7 @@ export async function migrateCompendiums(
   for (const pack of packIds) {
     tracker?.startEntry(pack);
 
-    if (!unlock && pack.locked) tracker.ignoreEntry(pack);
+    if (!unlock && pack.locked) tracker?.ignoreEntry(pack);
 
     try {
       await migrateCompendium(pack, { unlock, noHooks: true });

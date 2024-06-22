@@ -88,7 +88,7 @@
 <div class="form-group charges-per-rest">
   <label>{{localize "PF1.RechargeFormula"}}</label>
   <div class="form-fields">
-    <input class="formula" type="text" name="system.uses.rechargeFormula" value="{{system.uses.rechargeFormula}}" placeholder="@item.uses.max">
+    <input class="formula" type="text" name="system.uses.rechargeFormula" value="{{system.uses.rechargeFormula}}" placeholder="@item.uses.max" {{disabled inheritCharges}}>
   </div>
 </div>
 {{/if}}

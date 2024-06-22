@@ -1788,7 +1788,7 @@ export class ItemPF extends ItemBasePF {
       if (linkType === "charges") {
         itemUpdates.push({
           _id: targetItem.id,
-          system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null } },
+          system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null, "-=rechargeFormula": null } },
         });
       }
 

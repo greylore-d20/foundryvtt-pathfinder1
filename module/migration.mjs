@@ -956,7 +956,7 @@ export async function migrateScene(scene, { state, tracker } = {}) {
     await migrateSceneActors(scene, { state, tracker });
 
     // Mark last migrated version
-    await scene.setFlag("pf1", "migration", game.system.version);
+    if (game.user.isGM) await scene.setFlag("pf1", "migration", game.system.version);
   } catch (err) {
     tracker?.recordError(scene, err);
     console.error(`PF1 | Migration | Scene: ${scene.name} | Error`, err);

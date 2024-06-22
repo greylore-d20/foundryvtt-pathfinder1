@@ -50,7 +50,7 @@ system:
       duration:
         units: inst
       img: systems/pf1/icons/spells/heal-jade-1.jpg
-      name: Lesser Restoration (1 Charge)
+      name: Lesser Restoration (1 charge)
       range:
         units: touch
       save:
@@ -79,6 +79,8 @@ system:
         type: fort
       target:
         value: creature touched
+      uses:
+        autoDeductChargesCost: '2'
     - _id: WoKem5DGGT5YaGTU
       actionType: heal
       activation:
@@ -99,6 +101,8 @@ system:
         type: fort
       target:
         value: creature touched
+      uses:
+        autoDeductChargesCost: '3'
   aura:
     school: con
   cl: 8
@@ -131,6 +135,10 @@ system:
   subType: staff
   unidentified:
     name: Ashen staff
+  uses:
+    maxFormula: '10'
+    per: charges
+    value: 10
   weight:
     value: 5
 type: consumable

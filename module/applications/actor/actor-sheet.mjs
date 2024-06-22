@@ -3161,7 +3161,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.items.get(itemId);
 
     const quantity = item.system.quantity;
-    if (quantity <= 2) throw new Error("Can't split stack with less than 2 items");
+    if (quantity < 2) throw new Error("Can't split stack with less than 2 items");
 
     const options = {
       total: quantity,

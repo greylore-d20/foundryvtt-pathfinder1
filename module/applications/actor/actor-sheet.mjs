@@ -2968,7 +2968,8 @@ export class ActorSheetPF extends ActorSheet {
 
     delete itemData._id;
 
-    if (itemData.system.links?.children) delete itemData.system.links.children;
+    delete itemData.system.links?.children;
+    delete itemData.system.links?.charges;
 
     // BUG: If unidentified item has same name, it won't be matched or modified
     const searchUnusedName = (name) => {

@@ -12,7 +12,6 @@ import { CurrencyTransfer } from "@app/currency-transfer.mjs";
 import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
-import { actionDamageFormula } from "@utils/formulas.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -1661,7 +1660,7 @@ export class ActorSheetPF extends ActorSheet {
             const actionData = action.data;
             const rollData = action.getRollData();
 
-            const dmgformula = actionDamageFormula(action, rollData, { strict: false });
+            const dmgformula = pf1.utils.formula.actionDamage(action, { strict: false });
 
             context.header = dmgformula;
 

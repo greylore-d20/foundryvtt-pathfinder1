@@ -274,7 +274,17 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
   return final.formula.replace(/ \+ 0\b/g, "");
 }
 
-export function actionDamageFormula(action, rollData, { combine = true, strict = true } = {}) {
+/**
+ * Get action's damage formula.
+ *
+ * @internal
+ * @param {ItemAction} action
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.simplify] - Simplify and compress the resulting formula before returning.
+ * @param {boolean} [options.strict] - Strict option to pass to {@link pf1.utils.formula.simplify simplify}.
+ * @returns {string}
+ */
+export function actionDamage(action, { simplify = true, strict = true } = {}) {
   const actor = action.actor,
     item = action.item,
     actorData = actor?.system,
@@ -282,12 +292,20 @@ export function actionDamageFormula(action, rollData, { combine = true, strict =
 
   const parts = [];
 
+  const lazy = {
+    _rollData: null,
+    get rollData() {
+      this._rollData ??= action.getRollData();
+      return this._rollData;
+    },
+  };
+
   const handleFormula = (formula, change) => {
     try {
       switch (typeof formula) {
         case "string": {
           // Ensure @item.level and similar gets parsed correctly
-          const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? rollData : {};
+          const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? lazy.rollData : {};
           if (formula != 0) {
             const newformula = pf1.utils.formula.simplify(formula, rd, { strict });
             if (newformula != 0) parts.push(newformula);
@@ -337,7 +355,7 @@ export function actionDamageFormula(action, rollData, { combine = true, strict =
   }
 
   const semiFinal = pf1.utils.formula.compress(parts.join("+"));
-  if (!combine) return semiFinal;
+  if (!simplify) return semiFinal;
 
   // Simplification turns 1d12+1d8+6-8+3-2 into 1d12+1d8-1
   try {

@@ -1,6 +1,5 @@
 import { convertDistance, calculateRange } from "../lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { actionDamageFormula } from "@utils/formulas.mjs";
 
 /**
  * @internal
@@ -29,15 +28,13 @@ export const registerHandlebarsHelpers = function () {
   });
 
   /**
-   *
    * @param {ItemAction} action
-   * @param {object} rollData
+   * @param {object} [_rollData] - Deprecated
    * @param {object} [options]
    */
-  function actionDamage(action, rollData, options) {
+  function actionDamage(action, _rollData, options) {
     if (!action.hasDamage) return null;
-    const combine = options.hash.combine ?? true;
-    return actionDamageFormula(action, rollData, { combine });
+    return pf1.utils.formula.actionDamage(action, { simplify: options?.hash?.combine ?? true });
   }
 
   Handlebars.registerHelper("actionDamage", actionDamage);

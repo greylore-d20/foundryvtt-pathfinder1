@@ -2959,6 +2959,35 @@ export class ActorSheetPF extends ActorSheet {
     item.update(updateData);
   }
 
+  _prepareDuplicateItem(itemData, { rename = true } = {}) {
+    delete itemData._id;
+
+    delete itemData.system.links?.children;
+    delete itemData.system.links?.charges;
+
+    itemData.sort = itemData.sort + 1_000;
+
+    if (rename) {
+      // BUG: If unidentified item has same name, it won't be matched or modified
+      const searchUnusedName = (name) => {
+        let iter = 1;
+        let newName;
+        do {
+          iter += 1;
+          newName = `${name} (${iter})`;
+        } while (this.actor.items.getName(newName));
+        return newName;
+      };
+
+      // Eliminate previous iterator
+      itemData.name = itemData.name.replace(/\s+\(\d+\)$/, "");
+
+      itemData.name = searchUnusedName(itemData.name);
+    }
+
+    // TODO: itemData.system.unidentified?.name;
+  }
+
   async _duplicateItem(event) {
     event.preventDefault();
     const a = event.currentTarget;
@@ -2966,28 +2995,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
     const itemData = item.toObject();
 
-    delete itemData._id;
-
-    delete itemData.system.links?.children;
-    delete itemData.system.links?.charges;
-
-    // BUG: If unidentified item has same name, it won't be matched or modified
-    const searchUnusedName = (name) => {
-      let iter = 1;
-      let newName;
-      do {
-        iter += 1;
-        newName = `${name} (${iter})`;
-      } while (this.actor.items.getName(newName));
-      return newName;
-    };
-
-    // Eliminate previous iterator
-    itemData.name = itemData.name.replace(/\s+\(\d+\)$/, "");
-
-    itemData.name = searchUnusedName(itemData.name);
-
-    // TODO: itemData.system.unidentified?.name;
+    this._prepareDuplicateItem(itemData);
 
     const items = await this.document.createEmbeddedDocuments("Item", [itemData]);
     // Open sheet for new item
@@ -3173,10 +3181,12 @@ export class ActorSheetPF extends ActorSheet {
 
     const [keep, split] = result;
 
-    const data = item.toObject();
-    data.system.quantity = split;
-    data.sort = data.sort + 1_000;
-    await Item.implementation.createDocuments([data], { parent: this.actor });
+    const itemData = item.toObject();
+    itemData.system.quantity = split;
+
+    this._prepareDuplicateItem(itemData, { rename: false });
+
+    await Item.implementation.createDocuments([itemData], { parent: this.actor });
     await item.update({ "system.quantity": keep });
   }
 

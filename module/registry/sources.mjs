@@ -1294,6 +1294,12 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      date: "2016-02-25",
+      id: "PZO9000-18E",
+      pages: 20,
+      title: "Hell's Vengeance Player's Guide",
+    },
+    {
       _id: "PZO90103",
       name: "Hell's Vengeance #1: The Hellfire Compact",
       date: "2016-02-01",
@@ -3831,6 +3837,19 @@ export class Sources extends Registry {
       isbn: "978-1-5241-0738-3",
       url: "https://paizo.com/products/btq01x8j",
       publisher: "Dynamite Entertainment",
+    },
+    {
+      id: "DYN0010-A",
+      title: "Pathfinder Comics #10",
+      date: "2013-10-23",
+      pages: 32,
+      publisher: "Dynamite Entertainment",
+    },
+    {
+      id: "PZOPSS0310E",
+      title: "Pathfinder Society Scenario #3–10: The Immortal Conundrum",
+      date: "2011-11-01",
+      pages: 24,
     },
   ];
 }

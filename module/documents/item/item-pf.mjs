@@ -728,19 +728,14 @@ export class ItemPF extends ItemBasePF {
     for (const [type, item] of Object.entries(this.links)) {
       if (type === "charges") {
         // Remove cached link if stale
+        // TODO: This should not exist.
         const links = item.getLinkedItemsSync("charges");
         if (!links.some((i) => i.id === this.id)) {
           delete this.links.charges;
           continue;
         }
 
-        // Copy charge data
-        const uses = item.system.uses;
-        if (!uses) break;
-        for (const [k, v] of Object.entries(uses)) {
-          if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
-          this.system.uses[k] = v;
-        }
+        this._updateInheritedCharges(item);
       }
     }
   }
@@ -958,6 +953,9 @@ export class ItemPF extends ItemBasePF {
     // No charges? No charges!
     if (!per) return;
 
+    // Do not evaluate inherited charges
+    if (this.links?.charges) return;
+
     const maxFormula = this.system.uses.maxFormula;
     if (per === "single") {
       this.system.uses.max = 1;
@@ -970,6 +968,10 @@ export class ItemPF extends ItemBasePF {
           const rollData = this.getRollData();
           const roll = RollPF.safeRollSync(maxFormula, rollData, [this], { suppressError: !this.isOwner });
           this.system.uses.max = roll.total;
+
+          // Update any items inheriting our charges
+          const linked = this.getLinkedItemsSync("charges");
+          linked.forEach((item) => item._updateInheritedCharges(this));
         } else {
           const msg = game.i18n.format("PF1.Warning.NoDiceAllowedInFormula", {
             formula: maxFormula,
@@ -982,6 +984,19 @@ export class ItemPF extends ItemBasePF {
         console.error("Invalid max uses formula:", { formula: maxFormula, item: this }, err);
       }
     }
+  }
+
+  _updateInheritedCharges(item) {
+    const iuses = item.system.uses;
+    if (!iuses) return;
+
+    const uses = this.system.uses;
+
+    uses.per = iuses.per;
+    uses.max = iuses.max;
+    uses.maxFormula = iuses.maxFormula;
+    uses.value = iuses.value;
+    uses.rechargeFormula = iuses.rechargeFormula;
   }
 
   /**

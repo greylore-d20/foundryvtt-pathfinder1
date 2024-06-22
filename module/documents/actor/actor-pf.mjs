@@ -2618,7 +2618,8 @@ export class ActorPF extends ActorBasePF {
     casting.ability ??= "int";
     casting.cantrips ??= true;
     casting.domain ??= 1;
-    if (casting.offset !== undefined) casting.offset = `${casting.offset}`;
+    casting.offset ??= 0;
+    if (casting.offset !== 0) casting.offset = `${casting.offset}`;
 
     const updateData = {
       [`system.attributes.spells.spellbooks.${bookId}`]: {

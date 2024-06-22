@@ -1847,7 +1847,7 @@ function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
     updateData["system.preparation.-=maxAmount"] = null;
   }
   if (prep.spontaneousPrepared !== undefined) {
-    if (!(prep.value > 0) && isPrepared) {
+    if (!(prep.value > 0) && !isPrepared) {
       updateData["system.preparation.value"] = prep.spontaneousPrepared ? 1 : 0;
     }
     updateData["system.preparation.-=spontaneousPrepared"] = null;

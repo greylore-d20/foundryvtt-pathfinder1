@@ -210,14 +210,6 @@ export class ActorSelector extends FormApplication {
     appOptions,
     renderOptions
   ) {
-    const old = Object.values(ui.windows).find(
-      (app) => app instanceof pf1.applications.ActorSelector && app.id === appOptions.id
-    );
-    if (old) {
-      old.render(false, { focus: true });
-      return null;
-    }
-
     return new Promise((resolve) => {
       const app = new this({ actors, filter, disableUnowned, ownership, selected, showUnowned }, appOptions);
       app.resolve = resolve;

@@ -3129,41 +3129,28 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    const targets = game.actors.contents.filter((o) => o.isOwner && o !== this.document);
-    targets.push(...game.actors.contents.filter((o) => o.hasPlayerOwner && o !== this.document && !o.isOwner));
+    const targets = game.actors.filter((a) => a !== this.actor && (a.isOwner || a.hasPlayerOwner));
+    if (targets.length === 0) ui.notifications.warn("PF1.Error.NoGiftTargets", { localize: true });
 
-    const targetData = await pf1.utils.dialog.getActor(game.i18n.localize("PF1.GiveItemToActor"), targets);
+    const targetActorId = await pf1.utils.dialog.getActor({
+      title: game.i18n.localize("PF1.GiveItemToActor"),
+      actors: targets,
+    });
 
-    if (!targetData) return;
-    let target;
-    if (targetData.type === "actor") {
-      target = game.actors.get(targetData.id);
-    } else if (targetData.type === "item") {
-      target = this.document.items.get(targetData.id);
-      if (!target) {
-        target = game.items.get(targetData.id);
-      }
-    }
+    const target = game.actors.get(targetActorId);
+    if (!target) throw new Error(`Invalid actor ID as gift target: "${targetActorId}"`);
 
-    if (target && target !== item) {
-      const itemData = item.toObject();
-      if (target instanceof Actor) {
-        if (target.testUserPermission(game.user, "OWNER")) {
-          await target.createEmbeddedDocuments("Item", [itemData]);
-        } else {
-          game.socket.emit("system.pf1", {
-            eventType: "giveItem",
-            targetActor: target.uuid,
-            item: item.uuid,
-          });
-          // Deleting will be performed on the gm side as well to prevent race conditions
-          return;
-        }
-      } else if (target instanceof Item) {
-        await target.createContainerContent(itemData);
-      }
-
-      await this.document.deleteEmbeddedDocuments("Item", [item.id]);
+    if (target.isOwner) {
+      const docs = await target.createEmbeddedDocuments("Item", [item.toObject()]);
+      // Delete only if item was successfully created
+      if (docs.length > 0) await item.delete();
+    } else {
+      game.socket.emit("system.pf1", {
+        eventType: "giveItem",
+        targetActor: target.uuid,
+        item: item.uuid,
+      });
+      // Deleting will be performed on the gm side as well to prevent race conditions
     }
   }
 

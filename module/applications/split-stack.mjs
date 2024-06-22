@@ -26,7 +26,7 @@ export class SplitStack extends Dialog {
     // Can't split
     if (total <= 1) return null;
     // Only one answer
-    if (total == 2) return 1;
+    if (total == 2) return [1, 1];
 
     step ||= 1;
     initial = Math.clamped(initial || 0, 1, total);

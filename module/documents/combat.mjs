@@ -156,7 +156,7 @@ export class CombatPF extends Combat {
     if (updateTurn && currentId) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
 
     // Create multiple chat messages
-    const chatMessages = await ChatMessage.implementation.create(messages);
+    const chatMessages = await ChatMessage.implementation.create(messages, { rollMode });
     return { combat: this, messages: chatMessages };
   }
 

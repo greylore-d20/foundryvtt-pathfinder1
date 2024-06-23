@@ -1363,8 +1363,10 @@ export class ItemSheetPF extends ItemSheet {
       html.find("button[name='create-spellbook']").click(this._createSpellbook.bind(this));
     }
 
+    // Effect notes and footnotes
+    html.find(".card-notes .controls a").click(this._onCardNoteControl.bind(this));
+
     // Listen to field entries
-    html.find(".entry-control a").click(this._onEntryControl.bind(this));
     html.find(".item-selector").click(this._onItemSelector.bind(this));
 
     html.find(".link-control").click(this._onLinkControl.bind(this));
@@ -2291,22 +2293,32 @@ export class ItemSheetPF extends ItemSheet {
     this.item.update({ [name]: item });
   }
 
-  async _onEntryControl(event) {
+  /**
+   * Control effect notes and footnotes
+   *
+   * @internal
+   * @param {Event} event
+   * @returns
+   */
+  async _onCardNoteControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const key = a.closest(".notes").dataset.name;
+    const name = a.dataset.name;
+    const action = a.dataset.action;
 
-    if (a.classList.contains("add-entry")) {
-      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
-      notes.push("");
-      const updateData = { [key]: notes };
-      return this._updateObject(event, this._getSubmitData(updateData));
-    } else if (a.classList.contains("delete-entry")) {
-      const index = a.closest(".entry").dataset.index;
-      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.item.toObject(), key) ?? []);
-      notes.splice(index, 1);
-      const updateData = { [key]: notes };
-      return this._updateObject(event, this._getSubmitData(updateData));
+    const notes = foundry.utils.getProperty(this.item.toObject(), name) ?? [];
+
+    switch (action) {
+      case "add": {
+        notes.push("");
+        const updateData = { [name]: notes };
+        return this._updateObject(event, this._getSubmitData(updateData));
+      }
+      case "delete": {
+        notes.splice(Number(a.dataset.index), 1);
+        const updateData = { [name]: notes };
+        return this._updateObject(event, this._getSubmitData(updateData));
+      }
     }
   }
 

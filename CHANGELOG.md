@@ -1,5 +1,68 @@
 # Changelog
 
+## 10.2 - 2024-6-23
+
+### Bug Fixes
+
+- Lore and Artistry compendium links did not open journals ([3239](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3239))
+- CMB could not be rolled from summary tabs ([3243](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3243))
+- Skill ranks can no longer be set to negative values.
+- Damage types could not be registered with images
+- Adjusting equipment (armor, wondrous items, etc.) material addons could cause the item sheet to become unopenable.
+- Features tab footer sources tooltip did not include levels or mythic tiers for feats. ([3197](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3197))
+- Wounds were not handling ability drain, penalty and damage correctly. ([3206](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3206))
+- Excess vigor damage was not corretly applied to wounds. ([3221](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3221))
+- Spellbook configuration could not be viewed for actors in locked compendiums. ([3231](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3231))
+- Actions using ammo could falsely claim you're out of ammo and refuse attacks even with everything configured correctly. ([3233](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3233))
+- Experience distributor's split evenly option gave maximum possible to everyone. ([3234](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3234))
+- Action sheet notes section moved from bottom of action tab to usage tab. ([3237](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3237))
+- Wound Thresholds optional rule is now disabled if Wounds & Vigor is also enabled to prevent unpredictable and unexpected behaviour. ([3242](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3242))
+- AC tooltip did not display related context notes. ([3247](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3247))
+- Subskill tooltips did not display context notes correctly. ([3250](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3250))
+- Removed None as spellcasting ability option. ([3253](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3253))
+- Buffs with the icon hidden either through the buff's own setting or the global condition hiding setting would never expire. ([3260](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3260))
+- Buffs with random durations caused invalid warnings. ([3261](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3261))
+- Combat tab damage column had some instances display raw ID rather than human readable name for types in the tooltip. ([3266](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3266))
+- Damage type selector behaved unexpectedly upon re-opening when custom damage type field was used. ([3275](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3275))
+- Duplicating an item sharing charges would duplicate the charge sharing, leading to invalid state of items inheriting charges from more than one source. ([3279](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3279))
+- Splitting stack of 2 items would error. ([3281](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3281))
+- Splitting item stack could cause various problems if the source item had any links. ([3285](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3285))
+- Charge inheritance caused potentially wrong inherited charges due to re-evaluation of max charges. ([3288](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3288))
+- Recharge formula was incorrectly left editable in items inheriting charges. ([3290](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3290))
+- Adding classes to actors raw (holding shift) still caused their level to be forced to 1 as if adding class normally.
+- Give item dialog had far larger selection of characters available than intended, including the character giving the item. ([3282](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3282))
+- Level-up dialog failed to increase chosen favored class bonus (FCB).
+- Roll mode selection in level-up dialog had no effect.
+- Actor sheet damage column could sometimes display invalid shothands (e.g. 4+0d6 becoming 4d6)
+- Using level-up dialog for NPC classes could cause it to error.
+- Level-up dialog failed to auto-select default health option for NPC classes.
+- Level-up dialog would not allow finishing gaining mythic path at a time level progression could grant ability score increase.
+- NPC lite sheet initiative, BAB, AC, CMD and saves inputs had no effect.
+- Non-GM users could get migration errors from scene migration.
+- Class set to provide zero skills per level would prevent gaining Intelligence bonus to skills for those levels.
+- Class spellcasting config could be initialized wrong and result in class level modification formula to have invalid "null" formula.
+- Spell slot preparation migration caused all preparation to be zeroed.
+- Loot items with multiple actions didn't display the action type correctly in chat cards.
+- Combat tab entries with invalid damage formula would not display any info about it in damage tooltip.
+- Initiative rolls ignored the rollMode set in the dialog
+- Skill rank input could enter uneditable state until something else was edited.
+
+### Changelog
+
+- FCB to health is now shown in health breakdown. ([3200](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3200))
+- Wounds now have their wound threshold displayed in their tooltip. ([3206](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3206))
+- Reorganize actor attribute trait list to more meaningful order. ([2704](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/2704))
+
+### Compendium
+
+- Updated saves, actions, icons and sources of fungal blisters and molten orb spells. ([3267](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3267))
+- Add source info to compendium spells
+- Add missing touch flag to spell attacks ([3268](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3268))
+
+### API
+
+- pf1.applications.SplitStack.wait() no longer gives invalid return value for stacks of 2.
+
 ## 10.1 - 2024-6-17
 
 ### Bug Fixes

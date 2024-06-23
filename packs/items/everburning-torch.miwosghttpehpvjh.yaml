@@ -1,19 +1,10 @@
-_id: snfogneawzopfzzl
-_key: '!items!snfogneawzopfzzl'
-folder: BzkdxtDgGZ96mdwR
+_id: miwosghttpehpvjh
+_key: '!items!miwosghttpehpvjh'
 img: systems/pf1/icons/items/inventory/torch.jpg
-name: Torch
+name: Everburning torch
 system:
   actions:
-    - _id: 7IkvstJGhp2Kfl21
-      activation:
-        type: full
-        unchained:
-          cost: 3
-          type: action
-      name: Enlight (using flint and steal)
-      tag: ignite
-    - _id: KNOoanyFVJlRjrdg
+    - _id: lp6ctTR5WcsvNTzZ
       ability:
         attack: str
         damage: str
@@ -31,44 +22,30 @@ system:
               custom: ''
               values:
                 - bludgeoning
-          - formula: '1'
-            type:
-              custom: ''
-              values:
-                - fire
       extraAttacks:
         type: standard
       name: Attack
       uses:
         autoDeductChargesCost: '0'
-    - _id: shc8HOmsOaDPbFKX
-      activation:
-        type: nonaction
-        unchained:
-          type: nonaction
-      name: Extinguish
-      tag: extinguish
   description:
     value: >-
-      <p>A torch burns for 1 hour, shedding normal light in a 20-foot radius and
-      increasing the light level by one step for an additional 20 feet beyond
-      that area (darkness becomes dim light and dim light becomes normal light).
-      A torch does not increase the light level in normal light or bright light.
-      If a torch is used in combat, treat it as a one-handed improvised weapon
-      that deals bludgeoning damage equal to that of a gauntlet of its size,
-      plus 1 point of fire damage.</p>
+      <p>This otherwise normal torch has a
+      <em>@UUID[Compendium.pf1.spells.Item.b8vp8fgt1o6pq1qc]{continual
+      flame}</em> spell cast on it. This causes it to shed light like an
+      ordinary torch, but it does not emit heat or deal fire damage if used as a
+      weapon.</p>
   equipped: false
-  price: 0.01
+  price: 110
   scriptCalls:
-    - _id: X6fUtOgays06HuzF
-      category: use
+    - _id: W08BUriKQTZ6gTqH
+      category: equip
       hidden: false
       img: icons/svg/dice-target.svg
       name: Turn on light
       type: script
       value: |-
         if (!token) return;
-        if (action.tag !== "ignite") return;
+        if (!equipped) return;
 
         const light = token.document.light;
 
@@ -88,25 +65,25 @@ system:
         };
 
         token.document.update({light: {...lightSource}});
-    - _id: B7q2csNBZkQnLMYQ
-      category: use
+    - _id: dqXoJ4di6mBdiYw0
+      category: equip
       hidden: false
       img: icons/svg/dice-target.svg
       name: Turn off light
       type: script
       value: |-
         if (!token) return;
-        if (action.tag !== "extinguish") return;
+        if (equipped) return;
 
         // Lights off as it comes from Foundry default
         const lightOff = new foundry.data.LightData().toObject();
         token.document.update({light: {...lightOff}});
   sources:
-    - id: PZO1123
-      pages: 58, 74
     - id: PZO1110
-      pages: 157, 158
-  subType: adventuring
+      pages: 158, 160
+    - id: PZO1123
+      pages: 56, 63
+  subType: gear
   weight:
     value: 1
 type: loot

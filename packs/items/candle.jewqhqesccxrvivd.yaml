@@ -7,13 +7,23 @@ system:
   actions:
     - _id: su42oeevO8Sw3cKi
       activation:
-        type: nonaction
+        type: special
         unchained:
           type: nonaction
       duration:
         units: hour
         value: '1'
-      name: Use
+      name: Ignite
+      tag: ignite
+      uses:
+        autoDeductChargesCost: '1'
+    - _id: jhOeLTBf4RwThzDe
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      name: Extinguish
+      tag: extinguish
   description:
     value: >-
       <p>A candle dimly illuminates a small area, increasing the light level in
@@ -22,13 +32,53 @@ system:
       normal light. A candle burns for 1 hour.</p>
   equipped: false
   price: 0.01
+  scriptCalls:
+    - _id: H62XLSB8fS11kyM9
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Turn on light
+      type: script
+      value: |-
+        if (!token) return;
+        if (action.tag !== "ignite") return;
+
+        const light = token.document.light;
+
+        // Set lamp light as Foundry light configuration
+        const flameAnimation = {
+          type: "flame",
+          speed: 2,
+          intensity: 1,
+        };
+        const lightSource = {
+          bright: 5,
+          dim: 0,
+          color: "#fcba03",
+          alpha: 0.3,
+          angle: 360,
+          animation: {...flameAnimation},
+        };
+
+        token.document.update({light: {...lightSource}});
+    - _id: 2Ru4FFdAZ4vzHqM2
+      category: use
+      hidden: false
+      img: icons/svg/dice-target.svg
+      name: Turn off light
+      type: script
+      value: |
+        if (!token) return;
+        if (action.tag !== "extinguish") return;
+
+        // Lights off as it comes from Foundry default
+        const lightOff = new foundry.data.LightData().toObject();
+        token.document.update({ light: { ...lightOff } });
   sources:
     - id: PZO1123
-      pages: '56'
+      pages: 56, 61
     - id: PZO1110
-      pages: '158'
+      pages: 155, 158
   subType: adventuring
-  uses:
-    per: single
 type: loot
 

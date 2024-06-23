@@ -1690,9 +1690,11 @@ export class ActorSheetPF extends ActorSheet {
 
             const abl = actionData.ability?.damage;
             if (abl) {
+              const max = actionData.ability?.max ?? Infinity;
+              const mod = Math.min(rollData.abilities[abl]?.mod ?? 0, max);
               const mult = actionData.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
               dmgSources.push({
-                value: Math.floor(rollData.abilities[abl]?.mod * mult),
+                value: mod >= 0 ? Math.floor(mod * mult) : mod,
                 type: pf1.config.abilities[abl],
               });
             }

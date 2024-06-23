@@ -167,8 +167,8 @@ export class ItemBuffPF extends ItemPF {
       } else if (unit && duration.value) {
         try {
           // TODO: Durations can be variable, variable durations need to be supported.
-          const roll = RollPF.safeRollSync(duration.value, rollData, {}, {}, { maximize: true });
           rollData ??= this.getRollData();
+          const roll = RollPF.safeRollSync(duration.value, rollData, {}, {}, { maximize: true });
           let value;
           if (roll.isDeterministic) {
             value = roll.total ?? 0;

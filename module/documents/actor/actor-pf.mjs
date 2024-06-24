@@ -2708,6 +2708,9 @@ export class ActorPF extends ActorBasePF {
     const skillIdParts = skillId.split(".");
     const mainSkillId = skillIdParts[0],
       subSkillId = skillIdParts.length > 1 ? skillIdParts.at(-1) : null;
+    // Reconstruct skill ID to ensure it is valid for everything else.
+    skillId = subSkillId ? `${mainSkillId}.${subSkillId}` : mainSkillId;
+    const skillDataPathPart = subSkillId ? `${mainSkillId}.subSkills.${subSkillId}` : mainSkillId;
 
     const skl = this.getSkillInfo(skillId);
     const haveParentSkill = !!subSkillId;
@@ -2730,7 +2733,7 @@ export class ActorPF extends ActorBasePF {
         const cf = c.getTargets(this);
 
         if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.mod`)) return true;
-        return cf.includes(`system.skills.${skillId}.mod`);
+        return cf.includes(`system.skills.${skillDataPathPart}.mod`);
       }),
       { ignoreTarget: true }
     );

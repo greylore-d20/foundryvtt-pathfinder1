@@ -966,7 +966,12 @@ export class ItemPF extends ItemBasePF {
         const isDeterministic = Roll.parse(maxFormula).every((t) => t.isDeterministic);
         if (isDeterministic) {
           const rollData = this.getRollData();
-          const roll = RollPF.safeRollSync(maxFormula, rollData, [this], { suppressError: !this.isOwner });
+          const roll = RollPF.safeRollSync(
+            maxFormula,
+            rollData,
+            { formula: maxFormula, item: this },
+            { suppressError: !this.isOwner }
+          );
           this.system.uses.max = roll.total;
 
           // Update any items inheriting our charges

@@ -168,7 +168,13 @@ export class ItemBuffPF extends ItemPF {
         try {
           // TODO: Durations can be variable, variable durations need to be supported.
           rollData ??= this.getRollData();
-          const roll = RollPF.safeRollSync(duration.value, rollData, {}, {}, { maximize: true });
+          const roll = RollPF.safeRollSync(
+            duration.value,
+            rollData,
+            { formula: duration.value, item: this },
+            {},
+            { maximize: true }
+          );
           let value;
           if (roll.isDeterministic) {
             value = roll.total ?? 0;
@@ -229,7 +235,7 @@ export class ItemBuffPF extends ItemPF {
     } else {
       if (!formula) return;
       rollData ??= this.getRollData();
-      const roll = RollPF.safeRollSync(formula, rollData, {}, {}, { minimize: true });
+      const roll = RollPF.safeRollSync(formula, rollData, { formula, item: this }, {}, { minimize: true });
       if (!roll.isDeterministic) return;
       const duration = roll.isDeterministic ? roll.total : roll.formula;
       switch (units) {

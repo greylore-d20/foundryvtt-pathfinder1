@@ -160,10 +160,11 @@ export class ItemSheetPF extends ItemSheet {
       context.isMythic = this.item.subType === "mythic";
 
       if (item.system.wealth) {
-        const max = Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, undefined, undefined, {
+        const context = { formula: item.system.wealth, item: this.item };
+        const max = Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, context, undefined, {
           maximize: true,
         })?.total;
-        const min = Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, undefined, undefined, {
+        const min = Roll.defaultImplementation.safeRollSync(item.system.wealth, undefined, context, undefined, {
           minimize: true,
         })?.total;
         if (max > 0) {

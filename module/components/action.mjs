@@ -1302,9 +1302,15 @@ export class ItemAction {
           for (let i = 0; i < exAtkCount; i++) {
             rollData.attackCount = attackCount += 1;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRollAsync(bonusFormula || "0", rollData, undefined, undefined, {
-              minimize: true,
-            }).total;
+            const bonus = RollPF.safeRollAsync(
+              bonusFormula || "0",
+              rollData,
+              { formula: bonusFormula, action: this },
+              undefined,
+              {
+                minimize: true,
+              }
+            ).total;
             attacks.push({
               bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering

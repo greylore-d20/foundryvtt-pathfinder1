@@ -27,6 +27,7 @@ export class DamageTypeSelector extends FormApplication {
       width: 720,
       height: 590,
       template: "systems/pf1/templates/apps/damage-type-selector.hbs",
+      scrollY: [".damage-type-categories", ".damage-modifiers"],
       closeOnSubmit: true,
     });
   }

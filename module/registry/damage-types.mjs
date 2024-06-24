@@ -18,7 +18,7 @@ export class DamageType extends RegistryEntry {
         required: true,
         blank: false,
         initial: "misc",
-        choices: DamageTypes.CATEGORIES,
+        choices: () => DamageTypes.CATEGORIES,
       }),
       isModifier: new fields.BooleanField({ required: false, initial: false }),
       color: new fields.StringField({ required: true, initial: "black" }),

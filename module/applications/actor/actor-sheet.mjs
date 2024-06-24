@@ -372,7 +372,7 @@ export class ActorSheetPF extends ActorSheet {
     if (this.actor.itemTypes.class.length === 0) {
       context.labels.firstClass = game.i18n
         .format("PF1.Info_FirstClass", {
-          html: `<a data-action="compendium" data-action-target="classes" data-tooltip="PF1.OpenCompendium">${game.i18n.localize(
+          html: `<a data-action="browse" data-category="classes" data-tooltip="PF1.BrowseClasses">${game.i18n.localize(
             "PF1.Info_FirstClass_Compendium"
           )}</a>`,
         })
@@ -872,6 +872,12 @@ export class ActorSheetPF extends ActorSheet {
     // Spellbook config toggle
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
 
+    // Open skill compendium entry
+    html.find("a.compendium-entry").click(this._onOpenCompendiumEntry.bind(this));
+
+    // Open compendium browser
+    html.find('a[data-action="browse"]').click(this._onOpenCompendiumBrowser.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -932,9 +938,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Roll Skill Checks
     html.find(".tab.skills .skill > .action.roll").click(this._onRollSkillCheck.bind(this));
-
-    // Open skill compendium entry
-    html.find("a.compendium-entry").click(this._onOpenCompendiumEntry.bind(this));
 
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
@@ -1148,8 +1151,6 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
     /*  Links
     /* -------------------------------------------- */
-
-    html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
 
     html
       // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
@@ -2581,12 +2582,30 @@ export class ActorSheetPF extends ActorSheet {
     });
   }
 
-  _onOpenCompendium(event) {
+  /**
+   * Handle opening a compendium browser
+   *
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onOpenCompendiumBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const target = a.dataset.actionTarget;
+    const target = a.dataset.category;
 
     pf1.applications.compendiums[target].render(true, { focus: true });
+  }
+
+  /**
+   * Handle opening a skill's compendium entry
+   *
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  async _onOpenCompendiumEntry(event) {
+    const uuid = event.currentTarget.dataset.compendiumEntry;
+
+    openJournal(uuid);
   }
 
   _onRollConcentration(event) {
@@ -3470,18 +3489,6 @@ export class ActorSheetPF extends ActorSheet {
     const skillId = subSkill ? `${skill}.${subSkill}` : skill;
 
     this.document.rollSkill(skillId, { token: this.token });
-  }
-
-  /**
-   * Handle opening a skill's compendium entry
-   *
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async _onOpenCompendiumEntry(event) {
-    const uuid = event.currentTarget.dataset.compendiumEntry;
-
-    openJournal(uuid);
   }
 
   /* -------------------------------------------- */

@@ -1332,6 +1332,11 @@ export class ItemSheetPF extends ItemSheet {
     // Add warning about formulas
     html.find("input.formula").each(async (_, el) => this._validateFormula(el));
 
+    // Linked item clicks
+    html
+      .find(".tab[data-tab='links'] .links-item .item-name .source-item")
+      .on("click", this._openLinkedItem.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -1378,11 +1383,6 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
     html.find(".speed-editor").click(this._onSpeedEdit.bind(this));
-
-    // Linked item clicks
-    html
-      .find(".tab[data-tab='links'] .links-item .item-name .source-item")
-      .on("click", this._openLinkedItem.bind(this));
 
     /* -------------------------------------------- */
     /*  Actions
@@ -1711,7 +1711,6 @@ export class ItemSheetPF extends ItemSheet {
       const el = elem.closest("[data-uuid]");
       const type = el.closest("[data-tab]")?.dataset.tab;
       let uuid = el.dataset.uuid;
-      console.log(type, uuid);
       if (type === "children") {
         // Transform relative UUID into absolute
         uuid = fromUuidSync(uuid, { relative: this.actor })?.uuid;

@@ -2051,7 +2051,7 @@ export class ActorPF extends ActorBasePF {
       try {
         foundry.utils.setProperty(this.system, k, v);
       } catch (err) {
-        console.log(err, k);
+        console.error(err, k);
       }
     }
 

@@ -487,11 +487,21 @@ export const enrichers = [
   new PF1TextEnricher(
     "save",
     /@Save\[(?<save>\w+)(;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
-    (match, _options) => {
+    (match, { rollData } = {}) => {
       const { save, options, label } = match.groups;
       const a = createElement({ label, click: true, handler: "save", options });
       const name = CONFIG.PF1.savingThrows[save];
-      const dc = a.dataset.dc;
+
+      let dc = a.dataset.dc;
+
+      // DC is not simple value
+      // For supporting things like: @Save[ref;dc=15+@attributes.hd.total + 2]
+      if (!/^\d+$/.test(dc)) {
+        a.dataset.formula = dc;
+        const roll = RollPF.safeRollSync(dc, rollData, { formula: dc }, {}, { minimize: true });
+        dc = roll.total;
+      }
+
       const title = dc !== undefined ? game.i18n.format("PF1.SavingThrowButtonLabel", { type: name, dc }) : name;
       a.append(title);
       a.dataset.type = save;

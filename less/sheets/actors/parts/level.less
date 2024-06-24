@@ -1,11 +1,12 @@
 .pf1.actor.sheet {
+  // Default sheets
   .hd-level {
-    flex: 0;
+    flex: 2 0 200px;
   }
 
-  // Sheet specific adjustments
-  &:is(.character, .npc) .hd-level {
-    flex: 1 fit-content;
+  // Trap & Haunt don't have HD level in a header
+  &.npc:is(.trap, .haunt) .hd-level {
+    flex: 0;
   }
 
   // Shared layout

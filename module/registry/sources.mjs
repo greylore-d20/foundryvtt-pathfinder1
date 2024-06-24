@@ -1294,10 +1294,10 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-18E",
+      name: "Hell's Vengeance Player's Guide",
       date: "2016-02-25",
-      id: "PZO9000-18E",
       pages: 20,
-      title: "Hell's Vengeance Player's Guide",
     },
     {
       _id: "PZO90103",
@@ -3839,15 +3839,15 @@ export class Sources extends Registry {
       publisher: "Dynamite Entertainment",
     },
     {
-      id: "DYN0010-A",
-      title: "Pathfinder Comics #10",
+      _id: "DYN0010-A",
+      name: "Pathfinder Comics #10",
       date: "2013-10-23",
       pages: 32,
       publisher: "Dynamite Entertainment",
     },
     {
-      id: "PZOPSS0310E",
-      title: "Pathfinder Society Scenario #3–10: The Immortal Conundrum",
+      _id: "PZOPSS0310E",
+      name: "Pathfinder Society Scenario #3–10: The Immortal Conundrum",
       date: "2011-11-01",
       pages: 24,
     },

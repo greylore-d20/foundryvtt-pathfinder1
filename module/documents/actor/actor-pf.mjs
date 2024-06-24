@@ -45,15 +45,6 @@ export class ActorPF extends ActorBasePF {
        */
       this.changes = new Collection();
 
-    if (this._queuedUpdates === undefined)
-      /**
-       * Stores updates to be applied to the actor near the end of the _onUpdate method.
-       *
-       * @private
-       * @type {Object<string, any>}
-       */
-      this._queuedUpdates = {};
-
     if (this._rollData === undefined)
       /**
        * Cached roll data for this item.
@@ -70,14 +61,6 @@ export class ActorPF extends ActorBasePF {
        * @type {ItemPF[]}
        */
       this.containerItems = [];
-
-    if (this._states === undefined)
-      /**
-       * Tracks various states which need to be tracked.
-       *
-       * @type {object}
-       */
-      this._states = {};
 
     this._visionSharingSheet ??= null;
   }

@@ -1955,8 +1955,6 @@ export class ItemSheetPF extends ItemSheet {
 
     const a = event.currentTarget;
 
-    if (!this.isEditable) return;
-
     const getUniqueActionName = (baseName) => {
       baseName = baseName.replace(/\s*\(\d+\)$/, ""); // Strip existing number
       let name = baseName;

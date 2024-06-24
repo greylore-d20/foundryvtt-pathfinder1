@@ -1239,7 +1239,7 @@ export class ActorSheetPF extends ActorSheet {
           .filter((dv) => !!dv) ?? []),
       ].flat();
 
-    let header;
+    let header, subHeader;
     const details = [];
     const paths = [];
     const sources = [];
@@ -1646,7 +1646,7 @@ export class ActorSheetPF extends ActorSheet {
             if (attacks.length == 0) return;
 
             const formatter = new Intl.NumberFormat("nu", { signDisplay: "always" });
-            context.header = attacks.map((n) => formatter.format(n)).join("/");
+            header = attacks.map((n) => formatter.format(n)).join("/");
 
             sources.push({
               sources: item.attackSources,
@@ -1662,11 +1662,11 @@ export class ActorSheetPF extends ActorSheet {
 
             const dmgformula = pf1.utils.formula.actionDamage(action, { strict: false });
 
-            context.header = dmgformula;
+            //header = dmgformula; // No different than on sheet
 
             const dmgSources = [];
 
-            context.subHeader = game.i18n.localize("PF1.Details");
+            subHeader = game.i18n.localize("PF1.Details");
 
             const damage = action.data.damage;
             for (const { formula, type } of damage.parts ?? []) {
@@ -2137,6 +2137,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     context.header = header;
+    context.subHeader = subHeader;
     context.details = details;
     context.paths = paths;
     context.sources = sources;

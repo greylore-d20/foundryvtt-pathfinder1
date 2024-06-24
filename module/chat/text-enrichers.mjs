@@ -162,13 +162,15 @@ export function getRelevantActors(target) {
  * @param {Element} el Target element
  */
 export function generateTooltip(el) {
-  const { roll, bonus, speaker, name } = el.dataset;
+  const { roll, formula, bonus, speaker, name } = el.dataset;
 
   const tooltip = [];
   if (name) tooltip.push(name);
   if (roll) {
     if (/d\d+/.test(roll)) tooltip.push(game.i18n.localize("PF1.Roll") + `: ${roll}`);
     else tooltip.push(game.i18n.format("PF1.TakeX", { number: roll }));
+  } else if (formula) {
+    tooltip.push(formula);
   }
   if (bonus) tooltip.push(game.i18n.localize("PF1.Bonus") + `: ${bonus}`);
   if (speaker) tooltip.push(game.i18n.localize("PF1.EnrichedText.AsSpeaker"));
@@ -600,13 +602,13 @@ export const enrichers = [
     /@(?<command>Heal|Damage)\[(?<formula>.*?)(?:;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
     (match, _options) => {
       const { command, formula, label, options } = match.groups;
-      const a = createElement({ label, click: true, handler: "health", options });
+      const a = createElement({ click: true, handler: "health", options });
       a.dataset.command = command.toLowerCase();
       a.dataset.formula = formula;
 
       a.append(
         game.i18n.format(`PF1.EnrichedText.Health.${command}`, {
-          value: formula,
+          value: label || formula,
           NL: a.dataset.nonlethal ? game.i18n.localize("PF1.EnrichedText.Health.NL") : "",
         })
       );

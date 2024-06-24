@@ -4,7 +4,7 @@ Common input format: `@Command[key;options]{label}`
 
 Options format: `key=value` pairs separated with semicolon (`;`)
 
-Label adds a prefix to the button, for example `@Ability[str]{Flex}` would show up as `Flex: Strength`.
+Label adds a prefix to the button, for example `@Ability[str]{Flex}` would show up as `Flex: Strength`. Some enrichers deviate from this however.
 
 ## Common Options
 
@@ -106,6 +106,8 @@ The key is damage formula instead.
 Heals selected tokens by defined amount.
 
 The key is heal formula instead.
+
+**Note!** Label replaces formula display instead of becoming a prefix.
 
 #### Examples
 

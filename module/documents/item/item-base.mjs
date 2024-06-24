@@ -17,6 +17,8 @@ export class ItemBasePF extends Item {
   }
 
   static async createDocuments(data = [], context = {}) {
+    if (!Array.isArray(data)) data = [data]; // Match Foundry API
+
     const origContext = foundry.utils.deepClone(context);
     const inActor = context.parent instanceof Actor;
 

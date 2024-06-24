@@ -8,7 +8,7 @@
     <div class="filter-container">
       {{#each filters as |filter|}}
         <div class="filter" data-filter-id="{{filter.id}}">
-          <h3 class="rollable">{{filter.label}}
+          <h3>{{filter.label}}
             {{#if filter.active}}<span class="filter-count"><i class="fas fa-filter"></i>×{{filter.activeCount}}</span>{{/if}}
           </h3>
           <div class="filter-content flexcol {{filter.collapsed}}">

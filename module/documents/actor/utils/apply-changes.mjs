@@ -1306,8 +1306,7 @@ export const addDefaultChanges = function (changes) {
     // Add changes
     for (const change of mechanic.changes ?? []) {
       // Alter change data
-      const changeData = foundry.utils.deepClone(change);
-      changeData.flavor = condition.name;
+      const changeData = { ...change, flavor: condition.name };
 
       // Create change object
       const changeObj = new pf1.components.ItemChange(changeData);

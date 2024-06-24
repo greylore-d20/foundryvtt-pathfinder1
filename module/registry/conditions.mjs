@@ -22,9 +22,12 @@ export class Condition extends RegistryEntry {
         {
           changes: new fields.ArrayField(
             new fields.SchemaField({
-              formula: new fields.StringField({}),
-              target: new fields.StringField({}),
-              type: new fields.StringField({}),
+              formula: new fields.StringField({ required: true }),
+              target: new fields.StringField({ required: true }),
+              type: new fields.StringField({ required: true }),
+              operator: new fields.StringField({ required: false, initial: undefined }),
+              priority: new fields.NumberField({ required: false, initial: undefined }),
+              continuous: new fields.BooleanField({ required: false, initial: undefined }),
             })
           ),
           flags: new fields.ArrayField(new fields.StringField({})),

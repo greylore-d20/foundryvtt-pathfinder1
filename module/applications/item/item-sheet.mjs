@@ -2122,6 +2122,14 @@ export class ItemSheetPF extends ItemSheet {
     const note = this.item.system.contextNotes[noteIndex];
     const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
 
+    // Sort specific categories
+    const sortable = new Set(["skill"]);
+    const lang = game.settings.get("core", "language");
+    for (const category of categories) {
+      if (!sortable.has(category.key)) continue;
+      category.items.sort((a, b) => a.label.localeCompare(b.label, lang));
+    }
+
     const part1 = note?.target?.split(".")[0];
     const category = pf1.config.contextNoteTargets[part1]?.category ?? part1;
 

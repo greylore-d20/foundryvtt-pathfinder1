@@ -189,6 +189,8 @@ export class ItemSheetPF extends ItemSheet {
     context.isImplant = item.type === "implant";
 
     context.hasAction = item.hasAction;
+    context.hasAttack = item.hasAttack;
+    context.hasDamage = item.hasDamage;
     context.showBothDescriptions = context.isGM && context.isPhysical;
     context.showUnidentifiedData = item.showUnidentifiedData;
     context.showIdentified = !item.showUnidentifiedData;
@@ -477,7 +479,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare attack-specific stuff
-    if (item.type === "attack" && item.subType === "weapon") {
+    if (item.type === "attack") {
       context.materialCategories = this._prepareMaterialsAndAddons(
         "weapon",
         "all",
@@ -612,6 +614,16 @@ export class ItemSheetPF extends ItemSheet {
           c.divineFocus = false;
         }
       }
+
+      // Material for spells to emulate
+      context.materialCategories = this._prepareMaterialsAndAddons(
+        "spell",
+        "all",
+        itemData.subType,
+        itemData.material?.normal.value
+      );
+
+      context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
     if (this.item.type === "buff") {

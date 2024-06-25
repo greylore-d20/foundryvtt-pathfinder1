@@ -690,12 +690,22 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   for (const item of actorData.items ?? []) {
     // Migrate the Owned Item
     const itemData = item instanceof Item ? item.toObject() : item;
-    const itemUpdate = await migrateItemData(itemData, actor, { item: actor?.items.get(itemData._id) });
+    const itemDoc = actor?.items.get(itemData._id);
+    try {
+      const itemUpdate = await migrateItemData(itemData, actor, { item: itemDoc });
 
-    // Update the Owned Item
-    if (!foundry.utils.isEmpty(itemUpdate)) {
-      itemUpdate._id = itemData._id;
-      items.push(foundry.utils.expandObject(itemUpdate));
+      // Update the Owned Item
+      if (!foundry.utils.isEmpty(itemUpdate)) {
+        itemUpdate._id = itemData._id;
+        items.push(foundry.utils.expandObject(itemUpdate));
+      }
+    } catch (err) {
+      console.error(
+        `Error migrating Item "${item.name}" [${itemDoc?.uuid ?? itemData._id}] on actor "${actorData.name}" [${
+          actor?.uuid ?? actorData._id
+        }]`
+      );
+      throw new Error(`Item "${item.name}" [${itemData._id}] failed migration: ${err.message}`, { cause: err });
     }
   }
   if (items.length > 0) updateData.items = items;

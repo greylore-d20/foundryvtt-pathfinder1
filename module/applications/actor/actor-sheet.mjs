@@ -1419,7 +1419,7 @@ export class ActorSheetPF extends ActorSheet {
           { sources: getSource("system.attributes.cmb.bonus") }
         );
 
-        notes = getNotes("misc.cmb");
+        notes = [...getNotes("attacks.attack"), ...getNotes("attacks.melee"), ...getNotes("misc.cmb")];
         break;
       case "init":
         paths.push({
@@ -2129,6 +2129,9 @@ export class ActorSheetPF extends ActorSheet {
 
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
+
+            notes = [...getNotes("attacks.attack"), getNotes(`attacks.${subTarget}`)];
+
             break;
           }
         }

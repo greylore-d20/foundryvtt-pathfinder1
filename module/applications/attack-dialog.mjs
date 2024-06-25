@@ -145,11 +145,15 @@ export class AttackDialog extends Application {
     };
 
     // Determine if power attack mode should be displayed
-    context.canConfigurePowerAttack =
+    context.canConfigureHeld =
       context.flags["power-attack"] &&
       !context.isRanged &&
       (context.isAttack || context.isWeapon) &&
       !context.isNaturalAttack;
+
+    if (!Number.isFinite(action.data.ability?.damageMult)) {
+      context.canConfigureHeld = true;
+    }
 
     return context;
   }

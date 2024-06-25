@@ -3474,7 +3474,7 @@ export class ActorPF extends ActorBasePF {
    * @example
    * await actor.toggleCondition("dazzled");
    *
-   * @param {boolean} conditionId - A direct condition key, as per PF1.registry.conditions, such as `shaken` or `dazed`.
+   * @param {boolean} conditionId - A direct condition key, as per {@link pf1.registry.conditions}, such as `shaken` or `dazed`.
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
   async toggleCondition(conditionId) {
@@ -3486,14 +3486,16 @@ export class ActorPF extends ActorBasePF {
    *
    * @example
    * await actor.setCondition("dazzled", true);
+   * await actor.setCondition("sleep", { duration: { seconds: 60 } });
    *
-   * @param {string} conditionId - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
-   * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
+   * @param {string} conditionId - A direct condition key, as per {@link pf1.registry.conditions}, such as `shaken` or `dazed`.
+   * @param {object|boolean} enabled - Whether to enable (true) the condition, or disable (false) it. Or object for merging into the active effect as part of enabling.
    * @param {object} [context] Update context
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
   async setCondition(conditionId, enabled, context) {
-    if (typeof enabled !== "boolean") throw new TypeError("Actor.setCondition() enabled state must be a boolean");
+    if (typeof enabled !== "boolean" && foundry.utils.getType(enabled) !== "Object")
+      throw new TypeError("Actor.setCondition() enabled state must be a boolean or plain object");
     return this.setConditions({ [conditionId]: enabled }, context);
   }
 
@@ -3504,7 +3506,7 @@ export class ActorPF extends ActorBasePF {
    * @example
    * await actor.setConditions({ blind: true, sleep: false, shaken:true });
    *
-   * @param {object} conditions Condition ID to boolean mapping of new condition states.
+   * @param {object} conditions Condition ID to boolean (or update data) mapping of new condition states. See {@link setCondition()}
    * @param {object} [context] Update context
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
@@ -3559,6 +3561,10 @@ export class ActorPF extends ActorBasePF {
             icon: currentCondition.texture,
             label: currentCondition.name,
           };
+
+          if (typeof value !== "boolean") {
+            foundry.utils.mergeObject(aeData, value);
+          }
 
           toCreate.push(aeData);
         } else {

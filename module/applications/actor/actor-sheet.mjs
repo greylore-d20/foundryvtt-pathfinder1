@@ -1141,6 +1141,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Toggle condition
     html.find(".condition .checkbox").click(this._onToggleCondition.bind(this));
+    html.find(".condition .checkbox").on("contextmenu", this._onEditCondition.bind(this));
 
     /* -------------------------------------------- */
     /*  Skills
@@ -2556,6 +2557,51 @@ export class ActorSheetPF extends ActorSheet {
     const conditionId = a.dataset.conditionId;
 
     this.actor.toggleCondition(conditionId);
+  }
+
+  async _onEditCondition(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const conditionId = a.dataset.conditionId;
+    const cond = pf1.registry.conditions.get(conditionId);
+    if (!cond) throw new Error(`Invalid condition ID: ${conditionId}`);
+
+    let ae;
+
+    if (this.actor.statuses.has(conditionId)) {
+      const relevantAEs = [];
+      for (const ae of this.actor.allApplicableEffects()) {
+        if (!ae.active) continue;
+        if (ae.statuses.has(conditionId)) relevantAEs.push(ae);
+      }
+
+      // TODO: Add selector and remove this error message
+      if (relevantAEs.length > 1) {
+        return void ui.notifications.warn("PF1.Error.TooManyConditionSources", { localize: true });
+      }
+
+      ae = relevantAEs[0];
+    }
+
+    const { bottom, left } = a.getBoundingClientRect();
+
+    const rounds = await pf1.utils.dialog.getNumber({
+      title: cond.name + " – " + game.i18n.localize("PF1.Duration"),
+      initial: Math.floor((ae?.duration?.seconds ?? 0) / CONFIG.time.roundTime),
+      hint: game.i18n.localize("PF1.Time.Period.round.Label"),
+      min: 0,
+      step: 1,
+      dialog: {
+        top: bottom + 20,
+        left: left - 20,
+      },
+    });
+
+    if (Number.isNaN(rounds)) return;
+
+    const updatedata = { "duration.seconds": rounds * CONFIG.time.roundTime };
+    if (ae) ae.update(updatedata);
+    else this.actor.setCondition(conditionId, updatedata);
   }
 
   /**

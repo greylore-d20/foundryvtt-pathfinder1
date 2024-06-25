@@ -78,7 +78,7 @@ const templatePaths = /** @type {const} */ ([
   // Compendium browser partials
   "systems/pf1/templates/apps/compendium-browser/entries.hbs",
   "systems/pf1/templates/apps/compendium-browser/checkbox-filter.hbs",
-  "systems/pf1/templates/apps/compendium-browser/minmax-filter.hbs",
+  "systems/pf1/templates/apps/compendium-browser/text-filter.hbs",
 
   // Chat
   "systems/pf1/templates/chat/roll-ext.hbs",

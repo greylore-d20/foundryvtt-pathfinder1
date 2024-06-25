@@ -1,6 +1,7 @@
 export { BaseFilter } from "./base.mjs";
 export { CheckboxFilter } from "./checkbox.mjs";
 export { NumberRangeFilter } from "./number-range.mjs";
+export { TextFilter } from "./text.mjs";
 export * as common from "./common.mjs";
 export * as item from "./item.mjs";
 export * as spell from "./spell.mjs";

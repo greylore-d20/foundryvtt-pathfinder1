@@ -836,7 +836,6 @@ export class MaterialTypes extends Registry {
     {
       _id: "throneglass",
       name: "PF1.Materials.Types.Throneglass",
-      addon: true,
       allowed: {
         rangedWeapon: false,
         buckler: false,

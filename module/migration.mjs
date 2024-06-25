@@ -937,6 +937,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionSpellArea(action, itemData);
   _migrateActionTemplate(action, itemData);
   _migrateActionDuration(action, itemData);
+  _migrateActionMaterials(action, itemData);
   _migrateActionObsoleteTypes(action, itemData);
   _migrateActionUnusedData(action, itemData);
 
@@ -2248,6 +2249,19 @@ const _migrateActionDuration = (action, itemData) => {
   }
 };
 
+const _migrateActionMaterials = (action, itemData) => {
+  const addons = action.material?.addon;
+  if (addons) {
+    // Convert Throneglass into non-addon material
+    // Since PF1 vNEXT
+    const tg = "throneglass";
+    if (action.material.addon.includes(tg)) {
+      action.material.addon = action.material.addon.filter((ma) => ma !== tg);
+      action.material.normal.value ||= tg;
+    }
+  }
+};
+
 /**
  * Added with PF1 v10
  *
@@ -3047,21 +3061,43 @@ const _migrateItemFlags = (itemData, updateData) => {
 };
 
 const _migrateItemMaterials = (itemData, updateData) => {
+  const tg = "throneglass";
+
   // Convert incorrect material addon data
+  // Weapon
   if (itemData.system.material?.addon) {
-    const addon = itemData.system.material.addon;
+    let addon = itemData.system.material.addon;
     if (!Array.isArray(addon)) {
       updateData["system.material.addon"] = Object.entries(addon)
         .filter(([_, chosen]) => chosen)
         .map(([key]) => key);
+      addon = updateData["system.material.addon"];
+    }
+    // Convert Throneglass into main material
+    // Since PF1 vNEXT
+    if (addon.includes(tg)) {
+      updateData["system.material.addon"] = addon.filter((ma) => ma !== tg);
+      if (!itemData.system.material?.normal?.value) {
+        updateData["system.material.normal.value"] = tg;
+      }
     }
   }
+  // Armor
   if (itemData.system.armor?.material?.addon) {
-    const addon = itemData.system.armor?.material?.addon;
+    let addon = itemData.system.armor?.material?.addon;
     if (!Array.isArray(addon)) {
-      updateData["system.material.addon"] = Object.entries(addon)
+      updateData["system.armor.material.addon"] = Object.entries(addon)
         .filter(([_, chosen]) => chosen)
         .map(([key]) => key);
+      addon = updateData["system.armor.material.addon"];
+    }
+    // Convert Throneglass into main material
+    // Since PF1 vNEXT
+    if (addon.includes(tg)) {
+      updateData["system.armor.material.addon"] = addon.filter((ma) => ma !== tg);
+      if (!itemData.system.armor?.material?.normal?.value) {
+        updateData["system.armor.material.normal.value"] = tg;
+      }
     }
   }
 };

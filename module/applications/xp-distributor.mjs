@@ -80,6 +80,7 @@ export class ExperienceDistributor extends FormApplication {
     });
 
     addListener("button.cancel", "click", this._onCancel.bind(this));
+    addListener("button[data-reward]", "click", this._onSubmit.bind(this));
   }
 
   async _onDrop(event) {

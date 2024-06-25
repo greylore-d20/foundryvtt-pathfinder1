@@ -1,51 +1,84 @@
 import { Registry } from "./base-registry.mjs";
 import { RegistryEntry } from "./base-registry.mjs";
 
-const fields = foundry.data.fields;
-
 // Notes
 // PPC = Player Companion
 // PRG is in rare cases used to refer to core rulebook, but also sometimes to refer to the game in its entirety
 // PCh = Pathfinder Chronicles
 
+class URLField extends foundry.data.fields.StringField {
+  /** @override */
+  _validateType(value) {
+    super._validateType(value);
+
+    if (!/^https?:\/\/[\w\d.]+\.\w+/.test(value)) throw new Error("Must be a valid URL");
+  }
+}
+
+class DateField extends foundry.data.fields.StringField {
+  /** @override */
+  _validateType(value) {
+    super._validateType(value);
+
+    if (value && Number.isNaN(Date.parse(value))) {
+      throw new Error("Must be valid date in YYYY-MM-DD format.");
+    }
+  }
+}
+
 export class Source extends RegistryEntry {
   static defineSchema() {
-    const optionalString = () => new fields.StringField({ nullable: true, blank: true, initial: undefined });
+    const fields = foundry.data.fields;
+
+    const optionalString = (options = {}) =>
+      new fields.StringField({ required: false, nullable: true, blank: true, initial: undefined, ...options });
+
     return {
       ...super.defineSchema(),
       name: new fields.StringField({ nullable: false, blank: false, required: true }),
       abbr: new fields.StringField({ nullable: false, blank: false, required: false, initial: undefined }), // Add constraints
-      date: optionalString(), // Validate date, expect YYYY-MM-DD format
-      pages: new fields.NumberField({ required: false, integer: true, initial: undefined }),
+      date: new DateField({ required: false, nullable: true, blank: false, initial: undefined }),
+      pages: new fields.NumberField({
+        required: false,
+        integer: true,
+        min: 1,
+        initial: undefined,
+        label: "Page count",
+      }),
       isbn: optionalString(), // TODO: Validate ISBN
       publisher: new fields.StringField({ required: false, blank: false, nullable: false, initial: "Paizo" }), // Assume Paizo
-      level: new fields.NumberField({ required: false, min: 1, integer: true, initial: undefined }),
+      level: new fields.NumberField({
+        required: false,
+        min: 1,
+        integer: true,
+        initial: undefined,
+        label: "Starting level",
+      }),
       tieIn: optionalString(),
-      url: optionalString(), // TODO: Validate URL
-      legacy: new fields.BooleanField({ required: false, initial: false }), // D&D 3.5 material
-      type: optionalString(), // TODO: Validate type
+      url: new URLField({ required: false, nullable: true, blank: true, initial: undefined }),
+      legacy: new fields.BooleanField({ required: false, initial: false, label: "D&D 3.5 Material" }),
+      type: optionalString({ choices: () => this.TYPES }),
     };
   }
-}
 
-// Types
-// core: Core book
-// companion: Player companion
-// setting: Campaign setting book
-// ap: Adventure path
-// pg: Adventure path - player guide
-// comic: Comic
-// module: Module
-// pfs: Pathfinder Society
+  /**
+   * An array of allowed types of sources.
+   *
+   * core: Core book
+   * companion: Player companion
+   * setting: Campaign setting book
+   * ap: Adventure path
+   * pg: Adventure path - player guide
+   * comic: Comic
+   * pfs: Pathfinder Society
+   * module: Module
+   */
+  static TYPES = /** @type {const} */ (["core", "setting", "ap", "module", "companion", "pg", "comic", "pfs"]);
+}
 
 export class Sources extends Registry {
   /** @inheritdoc */
   static model = Source;
-
-  /**
-   * An array of allowed types of sources.
-   */
-  static TYPES = /** @type {const} */ (["core", "setting", "ap", "module", "companion", "pg", "comic", "pfs"]);
 
   /**
    * Book type prefix

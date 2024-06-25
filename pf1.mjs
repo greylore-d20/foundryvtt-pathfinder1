@@ -459,6 +459,7 @@ Hooks.once("i18nInit", function () {
 
   // Config (sub-)objects to be sorted
   const toSort = [
+    "bonusTypes",
     "skills",
     "conditionTypes",
     "consumableTypes",

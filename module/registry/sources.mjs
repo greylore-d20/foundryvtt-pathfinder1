@@ -36,6 +36,7 @@ export class Source extends RegistryEntry {
 // pg: Adventure path - player guide
 // comic: Comic
 // module: Module
+// pfs: Pathfinder Society
 
 export class Sources extends Registry {
   /** @inheritdoc */
@@ -44,7 +45,7 @@ export class Sources extends Registry {
   /**
    * An array of allowed types of sources.
    */
-  static TYPES = /** @type {const} */ (["core", "setting", "ap", "module", "companion"]);
+  static TYPES = /** @type {const} */ (["core", "setting", "ap", "module", "companion", "pg", "comic", "pfs"]);
 
   /**
    * Book type prefix
@@ -320,6 +321,16 @@ export class Sources extends Registry {
       type: "core",
     },
     {
+      _id: "PZO1002-PGE",
+      name: "Rise of the Runelords Player's Guide",
+      date: "2007-09-01",
+      pages: 16,
+      isbn: "978-1-60125-059-9",
+      legacy: true,
+      url: "https://paizo.com/products/btpy8bd9",
+      type: "pg",
+    },
+    {
       _id: "PZO9001",
       name: "Rise of the Runelords #1: Burnt Offerings",
       abbr: "RotR-1",
@@ -377,6 +388,23 @@ export class Sources extends Registry {
       pages: 96,
       isbn: "978-1-60125-041-4",
       url: "https://paizo.com/products/btpy817c",
+      type: "ap",
+    },
+    {
+      _id: "PZO9000-2S",
+      name: "Curse of the Crimson Throne Player's Guide",
+      date: "2008-02-01",
+      pages: 16,
+      url: "https://paizo.com/products/btpy806v",
+      type: "pg",
+    },
+    {
+      _id: "PZO1021",
+      name: "Curse of the Crimson Throne",
+      date: "2016-10-01",
+      pages: 480,
+      isbn: "978-1-60125-890-8",
+      url: "http://paizo.com/products/btpy9nme",
       type: "ap",
     },
     {
@@ -440,6 +468,16 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9401",
+      name: "Second Darkness Player's Guide",
+      date: "2008-08-01",
+      pages: 32,
+      isbn: "978-1-60125-142-8",
+      legacy: true,
+      url: "https://paizo.com/products/btpy84en",
+      type: "pg",
+    },
+    {
       _id: "PZO9013",
       name: "Second Darkness #1: Shadow in the Sky",
       date: "2008-08-01",
@@ -492,6 +530,17 @@ export class Sources extends Registry {
       isbn: "978-1-60125-131-2",
       url: "https://paizo.com/products/btpy86v1",
       type: "ap",
+    },
+    {
+      _id: "PZO9404",
+      name: "Legacy of Fire Player's Guide",
+      date: "2009-03-01",
+      pages: 32,
+      isbn: "978-1-60125-168-8",
+      tieIn: "Legacy of Fire",
+      legacy: true,
+      url: "https://paizo.com/products/btpy8737",
+      type: "pg",
     },
     {
       _id: "PZO9019",
@@ -554,6 +603,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-5E",
+      name: "Council of Thieves Player's Guide",
+      date: "2009-08-01",
+      pages: 13,
+      url: "https://paizo.com/products/btpy89m7",
+      type: "pg",
+    },
+    {
       _id: "PZO9025",
       name: "Council of Thieves #1: The Bastards of Erebus",
       abbr: "CoT-1",
@@ -614,6 +671,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-6E",
+      name: "Kingmaker Player's Guide",
+      date: "2010-03-01",
+      pages: 16,
+      url: "https://paizo.com/products/btpy8dqh",
+      type: "pg",
+    },
+    {
       _id: "PZO9031",
       name: "Kingmaker #1: Stolen Land",
       date: "2010-03-01",
@@ -668,6 +733,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-7E",
+      name: "Serpent's Skull Player's Guide",
+      date: "2010-07-01",
+      pages: 13,
+      url: "https://paizo.com/products/btpy8g6d",
+      type: "pg",
+    },
+    {
       _id: "PZO9037",
       name: "Serpent's Skull #1: Soul for Smuggler's Shiv",
       date: "2010-08-01",
@@ -720,6 +793,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-307-1",
       url: "https://paizo.com/products/btpy8g3i",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-8E",
+      name: "Carrion Crown Player's Guide",
+      date: "2011-03-01",
+      pages: 15,
+      url: "https://paizo.com/products/btpy8j0q",
+      type: "pg",
     },
     {
       _id: "PZO9043",
@@ -782,6 +863,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-9E",
+      name: "Jade Regent Player's Guide",
+      date: "2011-07-27",
+      pages: 28,
+      url: "https://paizo.com/products/btpy8mh3",
+      type: "pg",
+    },
+    {
       _id: "PZO9049",
       name: "Jade Regent #1: The Brinewall Legacy",
       date: "2011-08-01",
@@ -834,6 +923,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-400-9",
       url: "https://paizo.com/products/btpy8mh1",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-10E",
+      name: "Skull and Shackles Player's Guide",
+      date: "2012-02-01",
+      pages: 30,
+      url: "https://paizo.com/products/btpy8rwc",
+      type: "pg",
     },
     {
       _id: "PZO9055",
@@ -890,6 +987,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO1002-PGE",
+      name: "Rise of the Runelords Anniversary Edition Player's Guide",
+      date: "2012-07-01",
+      pages: 17,
+      url: "https://paizo.com/products/btpy8tgl",
+      type: "pg",
+    },
+    {
       _id: "PZO1002",
       name: "Rise of the Runelords Anniversary Edition",
       abbr: "RotRAE",
@@ -898,6 +1003,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-436-8",
       url: "http://paizo.com/products/btpy8tc0",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-11E",
+      name: "Shattered Star Player's Guide",
+      date: "2012-08-01",
+      pages: 12,
+      url: "https://paizo.com/products/btpy8txj",
+      type: "pg",
     },
     {
       _id: "PZO9061",
@@ -1016,6 +1129,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-13E",
+      name: "Wrath of the Righteous Player's Guide",
+      date: "2013-08-09",
+      pages: 14,
+      url: "https://paizo.com/products/btpy919c",
+      type: "pg",
+    },
+    {
       _id: "PZO9073",
       name: "Wrath of the Righteous #1: The Worldwound Incursion",
       date: "2013-08-01",
@@ -1068,6 +1189,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-587-7",
       url: "https://paizo.com/products/btpy921g",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-14E",
+      name: "Mummy's Mask Player's Guide",
+      date: "2014-03-01",
+      pages: 14,
+      url: "https://paizo.com/products/btpy94z3",
+      type: "pg",
     },
     {
       _id: "PZO9079",
@@ -1186,6 +1315,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-16E",
+      name: "Giantslayer Player's Guide",
+      date: "2015-01-25",
+      pages: 16,
+      url: "https://paizo.com/products/btpy9bsv",
+      type: "pg",
+    },
+    {
       _id: "PZO9091",
       name: "Giantslayer #1: Battle of Bloodmarch Hill",
       date: "2015-02-01",
@@ -1238,6 +1375,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-730-7",
       url: "https://paizo.com/products/btpy98t8",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-17E",
+      name: "Hell's Rebels Player's Guide",
+      date: "2015-08-12",
+      pages: 34,
+      url: "https://paizo.com/products/btpy9g44",
+      type: "pg",
     },
     {
       _id: "PZO9097",
@@ -1298,6 +1443,8 @@ export class Sources extends Registry {
       name: "Hell's Vengeance Player's Guide",
       date: "2016-02-25",
       pages: 20,
+      url: "https://paizo.com/products/btpy9jva",
+      type: "pg",
     },
     {
       _id: "PZO90103",
@@ -1354,6 +1501,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-19E",
+      name: "Strange Aeons Player's Guide",
+      date: "2016-08-17",
+      pages: 12,
+      url: "https://paizo.com/products/btpy9nrw",
+      type: "pg",
+    },
+    {
       _id: "PZO90109",
       name: "Strange Aeons #1: In Search of Sanity",
       date: "2016-08-01",
@@ -1369,15 +1524,6 @@ export class Sources extends Registry {
       pages: 96,
       isbn: "978-1-60125-892-2",
       url: "https://paizo.com/products/btpy9l3g",
-      type: "ap",
-    },
-    {
-      _id: "PZO1021",
-      name: "Curse of the Crimson Throne",
-      date: "2016-10-01",
-      pages: 480,
-      isbn: "978-1-60125-890-8",
-      url: "http://paizo.com/products/btpy9nme",
       type: "ap",
     },
     {
@@ -1415,6 +1561,14 @@ export class Sources extends Registry {
       isbn: "978-1-60125-919-6",
       url: "https://paizo.com/products/btpy9nd9",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-20E",
+      name: "Ironfang Invasion Player's Guide",
+      date: "2017-03-16",
+      pages: 12,
+      url: "https://paizo.com/products/btpy9sc5",
+      type: "pg",
     },
     {
       _id: "PZO90115",
@@ -1471,6 +1625,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-21E",
+      name: "Ruins of Azlant Player's Guide",
+      date: "2017-08-03",
+      pages: 16,
+      url: "https://paizo.com/products/btpy9uir",
+      type: "pg",
+    },
+    {
       _id: "PZO90121",
       name: "Ruins of Azlant #1: The Lost Outpost",
       date: "2017-08-01",
@@ -1523,6 +1685,14 @@ export class Sources extends Registry {
       isbn: "978-1-64078-009-5",
       url: "https://paizo.com/products/btpy9xf0",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-22E",
+      name: "War for the Crown Player's Guide",
+      date: "2018-03-22",
+      pages: 18,
+      url: "https://paizo.com/products/btpya08v",
+      type: "pg",
     },
     {
       _id: "PZO90127",
@@ -1579,6 +1749,14 @@ export class Sources extends Registry {
       type: "ap",
     },
     {
+      _id: "PZO9000-23E",
+      name: "Return of the Runelords Player's Guide",
+      date: "2018-09-05",
+      pages: 14,
+      url: "https://paizo.com/products/btq01su5",
+      type: "pg",
+    },
+    {
       _id: "PZO90133",
       name: "Return of the Runelords #1: Secrets of Roderic's Cove",
       date: "2018-08-01",
@@ -1631,6 +1809,14 @@ export class Sources extends Registry {
       isbn: "978-1-64078-106-1",
       url: "https://paizo.com/products/btq01w1w",
       type: "ap",
+    },
+    {
+      _id: "PZO9000-24E",
+      name: "Tyrant's Grasp Player's Guide",
+      date: "2019-02-08",
+      pages: 9,
+      url: "https://paizo.com/products/btq01xdp",
+      type: "pg",
     },
     {
       _id: "PZO90139",
@@ -2288,14 +2474,6 @@ export class Sources extends Registry {
       type: "module",
     },
     {
-      _id: "PZO9401",
-      name: "Second Darkness",
-      date: "2008-08-01",
-      isbn: "978-1-60125-142-8",
-      legacy: true,
-      type: "companion",
-    },
-    {
       _id: "PZO9402",
       name: "Elves of Golarion",
       date: "2008-10-01",
@@ -2309,15 +2487,6 @@ export class Sources extends Registry {
       date: "2008-12-01",
       isbn: "978-1-60125-144-2",
       url: "https://paizo.com/products/btpy86j7",
-      legacy: true,
-      type: "companion",
-    },
-    {
-      _id: "PZO9404",
-      name: "Legacy of Fire",
-      date: "2009-03-01",
-      isbn: "978-1-60125-168-8",
-      tieIn: "Legacy of Fire",
       legacy: true,
       type: "companion",
     },
@@ -2376,7 +2545,7 @@ export class Sources extends Registry {
     },
     {
       _id: "PZO9412",
-      name: "Sargava, The Lost Colony",
+      name: "Sargava, the Lost Colony",
       date: "2010-06-01",
       isbn: "978-1-60125-255-5",
       type: "companion",
@@ -3843,6 +4012,7 @@ export class Sources extends Registry {
       name: "Pathfinder Comics #10",
       date: "2013-10-23",
       pages: 32,
+      type: "comic",
       publisher: "Dynamite Entertainment",
     },
     {
@@ -3850,6 +4020,14 @@ export class Sources extends Registry {
       name: "Pathfinder Society Scenario #3–10: The Immortal Conundrum",
       date: "2011-11-01",
       pages: 24,
+      type: "pfs",
+    },
+    {
+      _id: "PZOPSS0000E",
+      name: "Pathfinder Society Roleplaying Guild Guide",
+      date: "2019-08-09",
+      pages: 44,
+      type: "pfs",
     },
   ];
 }

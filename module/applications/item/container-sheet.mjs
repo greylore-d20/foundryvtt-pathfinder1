@@ -534,6 +534,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(itemId);
     const itemData = item.toObject();
 
+    delete itemData.system?.links?.children;
+    delete itemData.system?.links?.charges;
+
     delete itemData._id;
     itemData.name = `${itemData.name} (${game.i18n.localize("PF1.Copy")})`;
     if (item.isPhysical && !item.system.identified) {

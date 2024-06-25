@@ -1195,7 +1195,7 @@ export class ActionUse {
     else materialKey = baseMaterialItem;
 
     if (materialKey) {
-      properties.push(pf1.registry.materialTypes.get(materialKey.toLowerCase())?.name ?? materialKey.capitalize());
+      properties.push(pf1.registry.materials.get(materialKey.toLowerCase())?.name ?? materialKey.capitalize());
     }
 
     // Check for addon materials; prefer action data, then item data
@@ -1206,7 +1206,7 @@ export class ActionUse {
       const materialAddonNames = materialAddons
         .map((addon) => {
           if (!addon) return null;
-          const addonName = pf1.registry.materialTypes.get(addon.toLowerCase())?.name ?? addon.capitalize();
+          const addonName = pf1.registry.materials.get(addon.toLowerCase())?.name ?? addon.capitalize();
           return addonName;
         })
         .filter((addon) => !!addon);

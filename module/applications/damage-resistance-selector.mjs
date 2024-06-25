@@ -1,5 +1,3 @@
-import { damageTypes } from "module/registry/damage-types.mjs";
-import { materialTypes } from "module/registry/material-types.mjs";
 import { DamageTypeSelector } from "./damage-type-selector.mjs";
 import { naturalSort } from "@utils";
 
@@ -65,7 +63,7 @@ export class ActorResistanceSelector extends FormApplication {
         damages[dType] = pf1.config.damageResistances[dType];
       });
 
-      naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
+      naturalSort([...pf1.registry.materials], "name").forEach((material) => {
         if (
           material.dr &&
           !material.treatedAs &&

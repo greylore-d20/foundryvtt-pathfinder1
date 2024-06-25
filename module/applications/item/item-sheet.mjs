@@ -913,7 +913,7 @@ export class ItemSheetPF extends ItemSheet {
     const addonList = [];
     const basicList = {};
 
-    naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
+    naturalSort([...pf1.registry.materials], "name").forEach((material) => {
       if (material.basic) {
         // Filter basic materials
         basicList[material.id] = material.name;

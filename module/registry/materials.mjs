@@ -3,14 +3,19 @@ import { Registry, RegistryEntry } from "./base-registry.mjs";
 const fields = foundry.data.fields;
 
 /**
- * A single material type entry in the {@link MaterialTypes} registry.
+ * A single material type entry in the {@link Materials} registry.
  *
- * @group Material Types
+ * @group Materials
  */
-export class MaterialType extends RegistryEntry {
+export class Material extends RegistryEntry {
   static defineSchema() {
     return {
       ...super.defineSchema(),
+      name: new fields.StringField({
+        required: false,
+        localize: true,
+        initial: (data) => `PF1.Materials.Types.${data._id}`,
+      }),
       shortName: new fields.StringField({ required: false, initial: undefined, blank: false, localize: true }),
       treatedAs: new fields.StringField({ required: false, initial: undefined, blank: false }),
       addon: new fields.BooleanField({ required: false, initial: false }),
@@ -159,15 +164,15 @@ export class MaterialType extends RegistryEntry {
   /**
    * Check if a given addon material is valid for the chosen material
    *
-   * @param {ItemPF|MaterialType|string} material - Item, material, or material ID for which to test if this addon is valid.
+   * @param {ItemPF|Material|string} material - Item, material, or material ID for which to test if this addon is valid.
    * @returns {boolean|null} - Null if the provided parameter is invalid, boolean otherwise.
    */
   isValidAddon(material) {
     // Convert item and material IDs to actual material
-    if (material instanceof Item) material = pf1.registry.materialTypes.get(material.normalMaterial);
-    else if (typeof material === "string") material = pf1.registry.materialTypes.get(material);
+    if (material instanceof Item) material = pf1.registry.materials.get(material.normalMaterial);
+    else if (typeof material === "string") material = pf1.registry.materials.get(material);
 
-    if (!(material instanceof MaterialType)) {
+    if (!(material instanceof Material)) {
       if (this.intrinsic) return true;
       return null; // Material not found or is invalid data
     }
@@ -179,37 +184,34 @@ export class MaterialType extends RegistryEntry {
 }
 
 /**
- * The singleton registry of material types.
- * At runtime this registry is accessible as `pf1.registry.materialTypes`.
+ * The singleton registry of materials.
+ * At runtime this registry is accessible as `pf1.registry.materials`.
  *
- * @group Material Types
+ * @group Materials
  * @see {@link Registry}
- * @see {@link MaterialType}
- * @augments {Registry<MaterialType>}
+ * @see {@link Material}
+ * @augments {Registry<Material>}
  */
-export class MaterialTypes extends Registry {
+export class Materials extends Registry {
   /** @inheritdoc */
-  static model = MaterialType;
+  static model = Material;
 
   /** @inheritdoc */
   static _defaultData = [
     {
       _id: "cloth",
-      name: "PF1.Materials.Types.Cloth",
       hardness: 0,
       healthPerInch: 2,
       healthMultiplier: 0.07,
     },
     {
       _id: "leather",
-      name: "PF1.Materials.Types.Leather",
       hardness: 2,
       healthPerInch: 5,
       healthMultiplier: 0.17,
     },
     {
       _id: "adamantine",
-      name: "PF1.Materials.Types.Adamantine",
       baseMaterial: ["steel"],
       hardness: 20,
       healthPerInch: 40,
@@ -236,8 +238,7 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "alchemicalSilver",
-      name: "PF1.Materials.Types.AlchemicalSilver",
-      shortName: "PF1.Materials.Types.Silver",
+      shortName: "PF1.Materials.Types.silver",
       baseMaterial: ["steel"],
       hardness: 8,
       healthPerInch: 10,
@@ -265,7 +266,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "angelSkin",
-      name: "PF1.Materials.Types.AngelSkin",
       baseMaterial: ["leather"],
       hardness: 5,
       healthPerInch: 5,
@@ -289,7 +289,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "aszite",
-      name: "PF1.Materials.Types.Aszite",
       addon: true,
       allowed: {
         lightBlade: false,
@@ -312,7 +311,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "blackwood",
-      name: "PF1.Materials.Types.Blackwood",
       baseMaterial: ["wood"],
       hardness: 7,
       healthPerInch: 10,
@@ -329,7 +327,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "blightQuartz",
-      name: "PF1.Materials.Types.BlightQuartz",
       addon: true,
       allowed: {
         buckler: false,
@@ -351,7 +348,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "bloodCrystal",
-      name: "PF1.Materials.Types.BloodCrystal",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 10,
@@ -376,7 +372,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "caphorite",
-      name: "PF1.Materials.Types.Caphorite",
       baseMaterial: ["steel"],
       // No official hardness stat
       // No official hp per inch stat
@@ -400,7 +395,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "coldIron",
-      name: "PF1.Materials.Types.ColdIron",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -414,7 +408,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "cryptstone",
-      name: "PF1.Materials.Types.Cryptstone",
       baseMaterial: ["stone", "steel", "wood"],
       hardness: 10,
       healthPerInch: 30,
@@ -439,7 +432,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "darkleafCloth",
-      name: "PF1.Materials.Types.DarkleafCloth",
       baseMaterial: ["leather", "cloth"],
       hardness: 10,
       healthPerInch: 20,
@@ -471,7 +463,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "darkwood",
-      name: "PF1.Materials.Types.Darkwood",
       baseMaterial: ["wood"],
       hardness: 5,
       healthPerInch: 10,
@@ -488,7 +479,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "dragonhide",
-      name: "PF1.Materials.Types.Dragonhide",
       baseMaterial: ["leather"],
       hardness: 10,
       healthPerInch: 10, // Typically ½ and 1 inch thick
@@ -506,7 +496,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "druchite",
-      name: "PF1.Materials.Types.Druchite",
       addon: true,
       allowed: {
         buckler: false,
@@ -529,7 +518,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "eelHide",
-      name: "PF1.Materials.Types.EelHide",
       baseMaterial: ["leather"],
       hardness: 2,
       healthPerInch: 5,
@@ -556,7 +544,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "elysianBronze",
-      name: "PF1.Materials.Types.ElysianBronze",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -580,7 +567,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "fireForgedSteel",
-      name: "PF1.Materials.Types.FireForgedSteel",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -605,7 +591,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "frostForgedSteel",
-      name: "PF1.Materials.Types.FrostForgedSteel",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -630,7 +615,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "glaucite",
-      name: "PF1.Materials.Types.Glaucite",
       baseMaterial: ["steel"],
       hardness: 15,
       healthPerInch: 30,
@@ -646,7 +630,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "greenwood",
-      name: "PF1.Materials.Types.Greenwood",
       baseMaterial: ["wood"],
       hardness: 5,
       healthPerInch: 10,
@@ -667,7 +650,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "griffonMane",
-      name: "PF1.Materials.Types.GriffonMane",
       baseMaterial: ["cloth"],
       hardness: 1,
       healthPerInch: 4,
@@ -691,7 +673,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "heatstonePlating",
-      name: "PF1.Materials.Types.HeatstonePlating",
       addon: true,
       allowed: {
         lightBlade: false,
@@ -714,7 +695,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "horacalcum",
-      name: "PF1.Materials.Types.Horacalcum",
       baseMaterial: ["steel"],
       hardness: 15,
       healthPerInch: 30,
@@ -740,7 +720,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "inubrix",
-      name: "PF1.Materials.Types.Inubrix",
       baseMaterial: ["steel"],
       hardness: 5,
       healthPerInch: 10,
@@ -766,7 +745,6 @@ export class MaterialTypes extends Registry {
     /* This is added for completenss' sake, but it's not an applicable material outside of constructs.
     {
       _id: "irespanBasalt",
-      name: "PF1.Materials.Types.IrespanBasalt",
       baseMaterial: ["stone"],
       allowed: {
         lightBlade: false,
@@ -789,7 +767,6 @@ export class MaterialTypes extends Registry {
     */
     {
       _id: "lazurite",
-      name: "PF1.Materials.Types.Lazurite",
       addon: true,
       allowed: {
         lightBlade: false,
@@ -809,7 +786,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "liquidGlass",
-      name: "PF1.Materials.Types.LiquidGlass",
       baseMaterial: ["glass", "steel", "wood", "stone"], // BUG: Does not actually state base material
       hardness: 10,
       healthPerInch: 10,
@@ -826,7 +802,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "livingSteel",
-      name: "PF1.Materials.Types.LivingSteel",
       baseMaterial: ["steel"],
       hardness: 15,
       healthPerInch: 35,
@@ -847,7 +822,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "mithral",
-      name: "PF1.Materials.Types.Mithral",
       baseMaterial: ["steel"],
       treatedAs: "alchemicalSilver",
       hardness: 15,
@@ -876,7 +850,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "nexavaranSteel",
-      name: "PF1.Materials.Types.NexavaranSteel",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -891,7 +864,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "noqual",
-      name: "PF1.Materials.Types.Noqual",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -923,7 +895,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "paueliel",
-      name: "PF1.Materials.Types.Paueliel",
       baseMaterial: ["wood"],
       hardness: 7,
       healthPerInch: 10,
@@ -940,7 +911,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "pyresteel",
-      name: "PF1.Materials.Types.PyreSteel",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 15,
@@ -954,7 +924,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "siccatite",
-      name: "PF1.Materials.Types.Siccatite",
       baseMaterial: ["steel"],
       hardness: 10, // Not officially statted
       healthPerInch: 30, // Not officially statted
@@ -978,7 +947,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "silversheen",
-      name: "PF1.Materials.Types.Silversheen",
       baseMaterial: ["steel"],
       treatedAs: "alchemicalSilver",
       hardness: 10, // Not officially statted
@@ -1004,7 +972,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "singingSteel",
-      name: "PF1.Materials.Types.SingingSteel",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 20,
@@ -1036,7 +1003,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "spireSteel",
-      name: "PF1.Materials.Types.SpireSteel",
       baseMaterial: ["steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -1061,13 +1027,11 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "steel",
-      name: "PF1.Materials.Types.Steel",
       hardness: 10,
       healthPerInch: 30,
     },
     {
       _id: "sunsilk",
-      name: "PF1.Materials.Types.Sunsilk",
       addon: true,
       allowed: {
         lightBlade: false,
@@ -1087,7 +1051,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "sunsilver",
-      name: "PF1.Materials.Types.Sunsilver",
       baseMaterial: ["steel"],
       treatedAs: "alchemicalSilver",
       hardness: 8,
@@ -1100,7 +1063,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "throneglass",
-      name: "PF1.Materials.Types.Throneglass",
       baseMaterial: ["glass", "steel", "wood", "stone"], // BUG: Does not actually state base material
       hardness: 10, // "as durable as steel"
       healthPerInch: 30, // "as durable as steel"
@@ -1122,7 +1084,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "viridium",
-      name: "PF1.Materials.Types.Viridium",
       baseMaterial: ["steel"],
       hardness: 5,
       healthPerInch: 30, // Not officially statted
@@ -1146,7 +1107,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "voidglass",
-      name: "PF1.Materials.Types.Voidglass",
       baseMaterial: ["glass", "steel"],
       hardness: 10,
       healthPerInch: 30,
@@ -1164,7 +1124,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "whipwood",
-      name: "PF1.Materials.Types.Whipwood",
       baseMaterial: ["wood"],
       hardness: 5,
       healthPerInch: 10,
@@ -1188,7 +1147,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "wyroot",
-      name: "PF1.Materials.Types.Wyroot",
       baseMaterial: ["wood"],
       hardness: 5,
       healthPerInch: 10,
@@ -1205,14 +1163,12 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "bone",
-      name: "PF1.Materials.Types.Bone",
       primitive: true,
       hardness: 5, // Actually half of whatever the base material is for weapons, 5 is true for armor
       healthPerInch: null, // Same as base material
     },
     {
       _id: "bronze",
-      name: "PF1.Materials.Types.Bronze",
       primitive: true,
       hardness: 9,
       healthPerInch: 30, // Not officially statted, but speaks of steel
@@ -1222,7 +1178,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "glass",
-      name: "PF1.Materials.Types.Glass",
       primitive: true,
       hardnessMultiplier: 0.5,
       allowed: {
@@ -1231,7 +1186,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "gold",
-      name: "PF1.Materials.Types.Gold",
       primitive: true,
       hardnessMultiplier: 0.5,
       allowed: {
@@ -1246,7 +1200,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "obsidian",
-      name: "PF1.Materials.Types.Obsidian",
       primitive: true,
       hardnessMultiplier: 0.5,
       allowed: {
@@ -1268,7 +1221,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "stone",
-      name: "PF1.Materials.Types.Stone",
       primitive: true,
       hardnessMultiplier: 0.5,
       allowed: {
@@ -1283,13 +1235,11 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "wood",
-      name: "PF1.Materials.Types.Wood",
       hardness: 5,
       healthPerInch: 10,
     },
     {
       _id: "magic",
-      name: "PF1.Materials.Types.Magic",
       addon: true,
       intrinsic: true,
       allowed: {
@@ -1305,7 +1255,6 @@ export class MaterialTypes extends Registry {
     },
     {
       _id: "epic",
-      name: "PF1.Materials.Types.Epic",
       addon: true,
       intrinsic: true,
       allowed: {
@@ -1323,9 +1272,9 @@ export class MaterialTypes extends Registry {
 }
 
 /**
- * {@inheritDoc MaterialTypes}
+ * {@inheritDoc Materials}
  *
- * @group Material Types
- * @type {MaterialTypes}
+ * @group Materials
+ * @type {Materials}
  */
-export let materialTypes;
+export let materials;

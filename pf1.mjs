@@ -226,7 +226,7 @@ Hooks.once("init", function () {
   // Initialize registries with initial/built-in data
   const registries = /** @type {const} */ ([
     ["damageTypes", registry.DamageTypes],
-    ["materialTypes", registry.MaterialTypes],
+    ["materials", registry.Materials],
     ["scriptCalls", registry.ScriptCalls],
     ["conditions", registry.Conditions],
     ["sources", registry.Sources],
@@ -234,6 +234,16 @@ Hooks.once("init", function () {
   for (const [registryName, registryClass] of registries) {
     pf1.registry[registryName] = new registryClass();
   }
+
+  Object.defineProperty(pf1.registry, "materialTypes", {
+    get: () => {
+      foundry.utils.logCompatibilityWarning("pf1.registry.materialTypes has been moved to pf1.registry.materials.", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+      return pf1.registry.materials;
+    },
+  });
 
   //Calculate conditions for world
   CONFIG.statusEffects = pf1.utils.init.getConditions();

@@ -8,15 +8,15 @@ export function registerMaterialTests() {
       const { describe, it, expect, before, after, assert } = context;
 
       const materials = /** @type {const} */ ({
-        mithral: pf1.registry.materialTypes.get("mithral"),
-        silver: pf1.registry.materialTypes.get("alchemicalSilver"),
-        cryptstone: pf1.registry.materialTypes.get("cryptstone"),
-        darkwood: pf1.registry.materialTypes.get("darkwood"),
-        darkleaf: pf1.registry.materialTypes.get("darkleafCloth"),
-        coldIron: pf1.registry.materialTypes.get("coldIron"),
-        dragonhide: pf1.registry.materialTypes.get("dragonhide"),
-        sunsilk: pf1.registry.materialTypes.get("sunsilk"),
-        blightQuartz: pf1.registry.materialTypes.get("blightQuartz"),
+        mithral: pf1.registry.materials.get("mithral"),
+        silver: pf1.registry.materials.get("alchemicalSilver"),
+        cryptstone: pf1.registry.materials.get("cryptstone"),
+        darkwood: pf1.registry.materials.get("darkwood"),
+        darkleaf: pf1.registry.materials.get("darkleafCloth"),
+        coldIron: pf1.registry.materials.get("coldIron"),
+        dragonhide: pf1.registry.materials.get("dragonhide"),
+        sunsilk: pf1.registry.materials.get("sunsilk"),
+        blightQuartz: pf1.registry.materials.get("blightQuartz"),
       });
 
       describe("Weapons", function () {

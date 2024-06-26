@@ -56,7 +56,7 @@ export class ChangeEditor extends ItemSheet {
     idLink.innerHTML = '<i class="fa-solid fa-passport"></i>';
     idLink.addEventListener("click", (event) => {
       event.preventDefault();
-      game.clipboard.copyPlainText(this.object.id);
+      game.clipboard.copyPlainText(this.item.id);
       ui.notifications.info(game.i18n.format("DOCUMENT.IdCopiedClipboard", { label, type: "id", id: this.change.id }));
     });
     title.append(idLink);

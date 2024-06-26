@@ -1775,14 +1775,14 @@ export class ItemSheetPF extends ItemSheet {
 
           const [actionData] = prevActions.splice(srcIdx, 1);
           prevActions.splice(targetIdx, 0, actionData);
-          await this.object.update({ "system.actions": prevActions });
+          await this.item.update({ "system.actions": prevActions });
         }
         // Add to another item
         else {
           const prevActions = foundry.utils.deepClone(item.toObject().system.actions ?? []);
           data.data._id = foundry.utils.randomID(16);
           prevActions.splice(prevActions.length, 0, data.data);
-          await this.object.update({ "system.actions": prevActions });
+          await this.item.update({ "system.actions": prevActions });
         }
         break;
       }

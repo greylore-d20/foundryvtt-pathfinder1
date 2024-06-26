@@ -134,7 +134,7 @@ export class ActorSheetPF extends ActorSheet {
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
    */
   async getData() {
-    const isOwner = this.document.isOwner;
+    const isOwner = this.actor.isOwner;
 
     const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
 
@@ -145,14 +145,14 @@ export class ActorSheetPF extends ActorSheet {
       options: this.options,
       owner: isOwner,
       itemTypes: this.actor.itemTypes,
-      limited: this.document.limited,
+      limited: this.actor.limited,
       editable: this.isEditable,
       cssClass: isOwner ? "editable" : "locked",
-      isCharacter: this.document.type === "character",
+      isCharacter: this.actor.type === "character",
       hasHD: true,
       config: pf1.config,
       isGM: game.user.isGM,
-      race: this.document.race != null ? this.document.race.toObject() : null,
+      race: this.actor.race != null ? this.actor.race.toObject() : null,
       usesAnySpellbook: Object.values(this.actor.system.attributes.spells.spellbooks).some((book) => book.inUse),
       sourceData: {},
       skillsLocked: this._skillsLocked,
@@ -169,9 +169,9 @@ export class ActorSheetPF extends ActorSheet {
 
     Object.values(context.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
 
-    const rollData = this.document.getRollData();
+    const rollData = this.actor.getRollData();
     context.rollData = rollData;
-    context.system = foundry.utils.deepClone(this.document.system);
+    context.system = foundry.utils.deepClone(this.actor.system);
 
     context.inCharacterGeneration = this.inCharacterGeneration;
 
@@ -190,8 +190,8 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Show whether the item has currency
-    context.hasCurrency = Object.values(this.object.system.currency).some((o) => o > 0);
-    context.hasAltCurrency = Object.values(this.object.system.altCurrency).some((o) => o > 0);
+    context.hasCurrency = Object.values(this.actor.system.currency).some((o) => o > 0);
+    context.hasAltCurrency = Object.values(this.actor.system.altCurrency).some((o) => o > 0);
 
     // Enrich descriptions
     const enrichHTMLOptions = {
@@ -211,10 +211,10 @@ export class ActorSheetPF extends ActorSheet {
     // The Actor and its Items
     context.token = this.token;
 
-    context.items = this.document.items.map((item) => this._prepareItem(item));
+    context.items = this.actor.items.map((item) => this._prepareItem(item));
     context.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
-    context.labels = this.document.getLabels();
+    context.labels = this.actor.getLabels();
     context.filters = this._filters;
 
     // Generic melee and ranged attack bonuses, only present for sheet.
@@ -306,8 +306,8 @@ export class ActorSheetPF extends ActorSheet {
     // Update traits
     this._prepareTraits(context.system.traits);
     context.labels.senses = this._prepareSenseLabels();
-    context.dr = this.document.parseResistances("dr");
-    context.eres = this.document.parseResistances("eres");
+    context.dr = this.actor.parseResistances("dr");
+    context.eres = this.actor.parseResistances("eres");
 
     // Prepare owned items
     this._prepareItems(context);
@@ -322,7 +322,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Fetch the game settings relevant to sheet rendering.
     {
-      const actorType = { character: "pc", npc: "npc" }[this.document.type];
+      const actorType = { character: "pc", npc: "npc" }[this.actor.type];
       context.healthConfig = game.settings.get("pf1", "healthConfig");
       context.useWoundsAndVigor = context.healthConfig.variants[actorType].useWoundsAndVigor;
     }
@@ -337,7 +337,7 @@ export class ActorSheetPF extends ActorSheet {
         identified: [],
         unidentified: [],
       };
-      this.document.items
+      this.actor.items
         .filter((o) => {
           if (!o.isPhysical) return false;
           if (!o.system.carried) return false;
@@ -446,6 +446,7 @@ export class ActorSheetPF extends ActorSheet {
           { inplace: false }
         );
       }
+
       if (result.hasAttack) {
         const attacks = defaultAction
           .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData })
@@ -522,7 +523,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _prepareHiddenElements() {
     // Hide spellbook info
-    const spellbooks = this.document.system.attributes?.spells?.spellbooks ?? {};
+    const spellbooks = this.actor.system.attributes?.spells?.spellbooks ?? {};
     for (const k of Object.keys(spellbooks)) {
       const key = `spellbook-info_${k}`;
       if (this._hiddenElems[key] == null) this._hiddenElems[key] = true;
@@ -606,7 +607,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _prepareSpellbook(data, spells, bookKey) {
     const editable = this.isEditable;
-    const book = this.document.system.attributes.spells.spellbooks[bookKey];
+    const book = this.actor.system.attributes.spells.spellbooks[bookKey];
 
     const min = book.hasCantrips ? 0 : 1;
     let max = 9;
@@ -743,7 +744,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Allowed skill ranks from HD, classes, intelligence, FCB, etc.
-    this.document.itemTypes.class
+    this.actor.itemTypes.class
       .filter((cls) => cls.system.subType !== "mythic")
       .forEach((cls) => {
         // Favoured Class Bonus
@@ -953,7 +954,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Display defenses
     html.find(".generic-defenses .rollable").click((ev) => {
-      this.document.displayDefenseCard({ token: this.token });
+      this.actor.displayDefenseCard({ token: this.token });
     });
 
     // Rest
@@ -2184,10 +2185,10 @@ export class ActorSheetPF extends ActorSheet {
 
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = foundry.utils.getProperty(this.document, name) || 0;
+      prevValue = foundry.utils.getProperty(this.actor, name) || 0;
       if (name.endsWith(".value") && !noCap && isNumber) {
         const maxName = name.replace(/\.value$/, ".max");
-        maxValue = foundry.utils.getProperty(this.document, maxName);
+        maxValue = foundry.utils.getProperty(this.actor, maxName);
       }
     } else {
       if (!el.classList.contains("placeholder")) {
@@ -2287,7 +2288,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const result = {
       type: "skill",
-      uuid: this.document.uuid,
+      uuid: this.actor.uuid,
       skill: subSkill ? `${mainSkill}.${subSkill}` : mainSkill,
     };
 
@@ -2302,7 +2303,7 @@ export class ActorSheetPF extends ActorSheet {
   _onDragMiscStart(event, type, subType) {
     const result = {
       type: type,
-      uuid: this.document.uuid,
+      uuid: this.actor.uuid,
     };
 
     switch (type) {
@@ -2335,7 +2336,7 @@ export class ActorSheetPF extends ActorSheet {
     const result = {
       type: "save",
       save: type,
-      uuid: this.document.uuid,
+      uuid: this.actor.uuid,
     };
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
@@ -2373,11 +2374,11 @@ export class ActorSheetPF extends ActorSheet {
         button.disabled = false;
       }
     } else {
-      const app = Object.values(this.document.apps).find((o) => {
+      const app = Object.values(this.actor.apps).find((o) => {
         return o instanceof ActorRestDialog && o._element;
       });
       if (app) app.render(true, { focus: true });
-      else new ActorRestDialog(this.document).render(true);
+      else new ActorRestDialog(this.actor).render(true);
     }
   }
 
@@ -2394,7 +2395,7 @@ export class ActorSheetPF extends ActorSheet {
     event.stopPropagation();
 
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     if (item == null) return;
     return item.displayCard(undefined, { token: this.token });
@@ -2424,7 +2425,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     this._mouseWheelAdd(event, el);
 
@@ -2441,7 +2442,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     this._mouseWheelAdd(event, el);
 
@@ -2462,7 +2463,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     this._mouseWheelAdd(event, el);
 
@@ -2528,7 +2529,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     this._mouseWheelAdd(event, el);
     const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
@@ -2667,14 +2668,14 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollConcentration(spellbookKey, { token: this.token });
+    this.actor.rollConcentration(spellbookKey, { token: this.token });
   }
 
   _onRollCL(event) {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollCL(spellbookKey, { token: this.token });
+    this.actor.rollCL(spellbookKey, { token: this.token });
   }
 
   _setItemActive(event) {
@@ -2761,7 +2762,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!elem || elem?.disabled) return;
 
     elem.readOnly = false;
-    const value = foundry.utils.getProperty(this.document, elem.name);
+    const value = foundry.utils.getProperty(this.actor, elem.name);
 
     const origValue = elem.value;
     elem.value = value;
@@ -2818,7 +2819,7 @@ export class ActorSheetPF extends ActorSheet {
   async _onArbitrarySkillCreate(event) {
     event.preventDefault();
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
-    const mainSkillData = this.document.system.skills[skillId];
+    const mainSkillData = this.actor.system.skills[skillId];
     const skillData = {
       name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: mainSkillData.ability,
@@ -2838,7 +2839,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`system.skills.${skillId}.subSkills.${tag}`] = skillData;
-    await this.document.update(updateData);
+    await this.actor.update(updateData);
 
     return this._editSkill(skillId, tag);
   }
@@ -2862,14 +2863,14 @@ export class ActorSheetPF extends ActorSheet {
     const baseTag = pf1.utils.createTag(baseName);
     let tag = baseTag;
     let count = 1;
-    while (this.document.system.skills[tag] != null) {
+    while (this.actor.system.skills[tag] != null) {
       count++;
       tag = baseTag + count.toString();
     }
 
     const updateData = {};
     updateData[`system.skills.${tag}`] = skillData;
-    await this.document.update(updateData);
+    await this.actor.update(updateData);
 
     return this._editSkill(tag);
   }
@@ -2883,7 +2884,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _editSkill(skillId, subSkillId) {
     return new Promise((resolve) => {
-      const app = new pf1.applications.SkillEditor(this.document, skillId, subSkillId);
+      const app = new pf1.applications.SkillEditor(this.actor, skillId, subSkillId);
       app.addCallback(resolve);
       app.render(true);
     });
@@ -2913,7 +2914,7 @@ export class ActorSheetPF extends ActorSheet {
       if (subSkillId) updateData[`system.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
       // Delete main skill
       else updateData[`system.skills.-=${mainSkillId}`] = null;
-      this.document.update(updateData);
+      this.actor.update(updateData);
     };
 
     if (getSkipActionPrompt()) {
@@ -2931,21 +2932,21 @@ export class ActorSheetPF extends ActorSheet {
   async _onPointBuyCalculator(event) {
     event.preventDefault();
 
-    const app = Object.values(this.document.apps).find((o) => {
+    const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof PointBuyCalculator && o._element;
     });
     if (app) app.render(true, { focus: true });
-    else new PointBuyCalculator(this.document).render(true);
+    else new PointBuyCalculator(this.actor).render(true);
   }
 
   async _onSensesSelector(event) {
     event.preventDefault();
 
-    const app = Object.values(this.document.apps).find((o) => {
+    const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof pf1.applications.SensesSelector && o._element;
     });
     if (app) app.render(true, { focus: true });
-    else new pf1.applications.SensesSelector(this.document).render(true);
+    else new pf1.applications.SensesSelector(this.actor).render(true);
   }
 
   async _onControlAlignment(event) {
@@ -2955,7 +2956,7 @@ export class ActorSheetPF extends ActorSheet {
     const items = Object.entries(pf1.config.alignmentsShort).map(([value, label]) => ({ value, label }));
     const w = new Widget_ItemPicker(
       (alignment) => {
-        this.document.update({ "system.details.alignment": alignment });
+        this.actor.update({ "system.details.alignment": alignment });
       },
       { items, columns: 3 }
     );
@@ -2971,7 +2972,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const itemId = a.closest(".item[data-item-id]").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     item.use({ ev: event, token: this.token });
   }
@@ -3016,7 +3017,7 @@ export class ActorSheetPF extends ActorSheet {
       return void ui.notifications.error(game.i18n.localize("PF1.Error.CantIdentify"));
     }
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     if (item.isPhysical) {
       item.update({ "system.identified": !item.system.identified });
@@ -3069,12 +3070,12 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const itemId = a.closest(".item[data-item-id]").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
     const itemData = item.toObject();
 
     this._prepareDuplicateItem(itemData);
 
-    const items = await this.document.createEmbeddedDocuments("Item", [itemData]);
+    const items = await this.actor.createEmbeddedDocuments("Item", [itemData]);
     // Open sheet for new item
     items?.forEach((item) => item.sheet.render(true));
   }
@@ -3083,7 +3084,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const itemId = a.dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
     if (!item) return;
 
     return item.use({ token: this.token });
@@ -3155,7 +3156,7 @@ export class ActorSheetPF extends ActorSheet {
       if (newName !== newItem.name) newItem.updateSource({ name: newName });
     }
 
-    return this.document.createEmbeddedDocuments("Item", [newItem.toObject()], { renderSheet: true });
+    return this.actor.createEmbeddedDocuments("Item", [newItem.toObject()], { renderSheet: true });
   }
 
   /* -------------------------------------------- */
@@ -3169,7 +3170,7 @@ export class ActorSheetPF extends ActorSheet {
   _onItemEdit(event) {
     event.preventDefault();
     const li = event.currentTarget.closest(".item");
-    const item = this.document.items.get(li.dataset.itemId);
+    const item = this.actor.items.get(li.dataset.itemId);
 
     item.sheet.render(true, { focus: true });
   }
@@ -3187,7 +3188,7 @@ export class ActorSheetPF extends ActorSheet {
     if (button.disabled) return;
 
     const li = event.currentTarget.closest(".item");
-    const item = this.document.items.get(li.dataset.itemId);
+    const item = this.actor.items.get(li.dataset.itemId);
 
     if (getSkipActionPrompt()) {
       item.delete();
@@ -3212,7 +3213,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const item = this.actor.items.get(itemId);
 
     const targets = game.actors.filter((a) => a !== this.actor && (a.isOwner || a.hasPlayerOwner));
     if (targets.length === 0) ui.notifications.warn("PF1.Error.NoGiftTargets", { localize: true });
@@ -3276,12 +3277,12 @@ export class ActorSheetPF extends ActorSheet {
   _onRollAbilityTest(event) {
     event.preventDefault();
     const ability = event.currentTarget.closest(".ability").dataset.ability;
-    this.document.rollAbilityTest(ability, { token: this.token });
+    this.actor.rollAbilityTest(ability, { token: this.token });
   }
 
   _onRollBAB(event) {
     event.preventDefault();
-    this.document.rollBAB({ token: this.token });
+    this.actor.rollBAB({ token: this.token });
   }
 
   /**
@@ -3297,12 +3298,12 @@ export class ActorSheetPF extends ActorSheet {
     const maneuver = el.dataset.type !== "weapon";
     const ranged = el.dataset.ranged === "true";
 
-    this.document.rollAttack({ maneuver, ranged, token: this.token });
+    this.actor.rollAttack({ maneuver, ranged, token: this.token });
   }
 
   _onRollInitiative(event) {
     event.preventDefault();
-    this.document.rollInitiative({
+    this.actor.rollInitiative({
       createCombatants: true,
       rerollInitiative: game.user.isGM,
       token: this.token,
@@ -3312,7 +3313,7 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSavingThrow(event) {
     event.preventDefault();
     const savingThrow = event.currentTarget.closest(".saving-throw").dataset.savingthrow;
-    this.document.rollSavingThrow(savingThrow, { token: this.token });
+    this.actor.rollSavingThrow(savingThrow, { token: this.token });
   }
 
   /* -------------------------------------------- */
@@ -3527,7 +3528,7 @@ export class ActorSheetPF extends ActorSheet {
     data.buffs = buffSections;
     data.attacks = attackSections;
     data.classes = classSections;
-    data.quickActions = this.document.getQuickActions();
+    data.quickActions = this.actor.getQuickActions();
   }
 
   /**
@@ -3543,7 +3544,7 @@ export class ActorSheetPF extends ActorSheet {
     const subSkill = el.dataset.subSkill;
     const skillId = subSkill ? `${skill}.${subSkill}` : skill;
 
-    this.document.rollSkill(skillId, { token: this.token });
+    this.actor.rollSkill(skillId, { token: this.token });
   }
 
   /* -------------------------------------------- */
@@ -3660,10 +3661,10 @@ export class ActorSheetPF extends ActorSheet {
       choices: choices,
     };
 
-    let app = Object.values(this.document.apps).find(
+    let app = Object.values(this.actor.apps).find(
       (app) => app instanceof ActorTraitSelector && app.options.name === options.name
     );
-    app ??= new ActorTraitSelector(this.document, options);
+    app ??= new ActorTraitSelector(this.actor, options);
     app.render(true, { focus: true });
   }
 
@@ -3686,11 +3687,11 @@ export class ActorSheetPF extends ActorSheet {
       isDR: a.dataset.options === "dr" ? true : false,
     };
 
-    const app = Object.values(this.document.apps).find((o) => {
+    const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof ActorResistanceSelector && o.options.name === options.name && o._element;
     });
     if (app) app.render(true, { focus: true });
-    else new ActorResistanceSelector(this.document, options).render(true);
+    else new ActorResistanceSelector(this.actor, options).render(true);
   }
 
   setItemUpdate(id, key, value) {
@@ -3726,7 +3727,7 @@ export class ActorSheetPF extends ActorSheet {
     // Re-open item summaries
     for (const itemId of this._expandedItems) {
       // Only display summaries of items that are still present
-      if (this.object.items.has(itemId)) {
+      if (this.actor.items.has(itemId)) {
         const elem = html.find(`.item-list>.item[data-item-id="${itemId}"]`)[0];
         if (elem) this.openItemSummary(elem, { instant: true });
       } else {
@@ -3757,7 +3758,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Memorize variables in document
     for (const d of updates) {
-      const item = this.document.items.get(d._id);
+      const item = this.actor.items.get(d._id);
       if (!item) {
         console.error("Item update for non-existing item:", d._id, d);
         continue;
@@ -3974,7 +3975,7 @@ export class ActorSheetPF extends ActorSheet {
 
     if (creationData.length === 1) this._focusTabByItem(creationData[0]);
 
-    return this.document.createEmbeddedDocuments("Item", creationData);
+    return this.actor.createEmbeddedDocuments("Item", creationData);
   }
 
   /**
@@ -4082,7 +4083,7 @@ export class ActorSheetPF extends ActorSheet {
         if (el.dataset.dtype === "Number") value = Number(value);
         else if (el.dataset.dtype === "Boolean") value = Boolean(value);
 
-        if (foundry.utils.getProperty(this.document.system, name) !== value) {
+        if (foundry.utils.getProperty(this.actor.system, name) !== value) {
           changedData[name] = value;
         }
       }
@@ -4106,8 +4107,8 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   calculateSellItemValue({ inLowestDenomination = false, recursive = false } = {}) {
-    const items = this.document.items.filter((o) => o.system.price != null);
-    const sellMultiplier = this.document.getFlag("pf1", "sellMultiplier") || 0.5;
+    const items = this.actor.items.filter((o) => o.system.price != null);
+    const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
     const total = items.reduce((cur, i) => {
       return cur + i.getValue({ recursive, sellValue: sellMultiplier, inLowestDenomination: true });
     }, 0);

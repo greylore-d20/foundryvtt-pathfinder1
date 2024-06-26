@@ -33,9 +33,11 @@ export class ItemActionSheet extends FormApplication {
       ],
     });
   }
+
   get title() {
     return `${this.item.name}: ${this.action.name}`;
   }
+
   get id() {
     return `item-${this.item.uuid}-action-${this.action.id}`;
   }
@@ -44,10 +46,12 @@ export class ItemActionSheet extends FormApplication {
   get action() {
     return this.object;
   }
+
   /** @type {ItemPF} */
   get item() {
     return this.action.item;
   }
+
   /** @type {ActorPF} */
   get actor() {
     return this.item.actor;
@@ -298,7 +302,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Drag conditional
     if (elem.dataset?.conditional) {
-      const conditional = this.object.conditionals.get(elem.dataset?.conditional);
+      const conditional = this.action.conditionals.get(elem.dataset?.conditional);
       event.dataTransfer.setData("text/plain", JSON.stringify(conditional.data));
     }
   }
@@ -330,7 +334,7 @@ export class ItemActionSheet extends FormApplication {
     // Surface-level check for conditional
     if (data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers)) type = "conditional";
 
-    const action = this.object;
+    const action = this.action;
     // Handle conditionals
     if (type === "conditional") {
       // Check targets and other fields for valid values, reset if necessary
@@ -359,7 +363,7 @@ export class ItemActionSheet extends FormApplication {
       // Append conditional
       const conditionals = foundry.utils.deepClone(action.data.conditionals || []);
       conditionals.push(data);
-      await this.object.update({ conditionals });
+      await this.action.update({ conditionals });
     }
   }
 
@@ -371,7 +375,7 @@ export class ItemActionSheet extends FormApplication {
     switch (a.dataset.action) {
       // Add
       case "add": {
-        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key) ?? []);
+        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, key) ?? []);
         notes.push("");
         const updateData = { [key]: notes };
         return this._updateObject(event, this._getSubmitData(updateData));
@@ -379,7 +383,7 @@ export class ItemActionSheet extends FormApplication {
       // Delete
       case "delete": {
         const index = Number(a.dataset.index);
-        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key));
+        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, key));
         notes.splice(index, 1);
         const updateData = { [key]: notes };
         return this._updateObject(event, this._getSubmitData(updateData));
@@ -395,24 +399,24 @@ export class ItemActionSheet extends FormApplication {
 
     // Add new conditional
     if (a.classList.contains("add-conditional")) {
-      return pf1.components.ItemConditional.create([{}], { parent: this.object });
+      return pf1.components.ItemConditional.create([{}], { parent: this.action });
     }
     // Remove a conditional
     else if (a.classList.contains("delete-conditional")) {
       const li = a.closest(".conditional");
-      const conditional = this.object.conditionals.get(li.dataset.conditional);
+      const conditional = this.action.conditionals.get(li.dataset.conditional);
       return conditional.delete();
     }
     // Add a new conditional modifier
     else if (a.classList.contains("add-conditional-modifier")) {
       const li = a.closest(".conditional");
-      const conditional = this.object.conditionals.get(li.dataset.conditional);
+      const conditional = this.action.conditionals.get(li.dataset.conditional);
       return pf1.components.ItemConditionalModifier.create([{}], { parent: conditional });
     }
     // Remove a conditional modifier
     else if (a.classList.contains("delete-conditional-modifier")) {
       const li = a.closest(".conditional-modifier");
-      const conditional = this.object.conditionals.get(li.dataset.conditional);
+      const conditional = this.action.conditionals.get(li.dataset.conditional);
       const modifier = conditional.modifiers.get(li.dataset.modifier);
       return modifier.delete();
     }
@@ -473,7 +477,7 @@ export class ItemActionSheet extends FormApplication {
       const app = new pf1.applications.DamageTypeSelector(
         this.action,
         `${damagePart}.${damageIndex}.type`,
-        foundry.utils.getProperty(this.object.data, damagePart)[damageIndex].type
+        foundry.utils.getProperty(this.action.data, damagePart)[damageIndex].type
       );
       return app.render(true);
     }
@@ -482,7 +486,7 @@ export class ItemActionSheet extends FormApplication {
     const conditionalElement = clickedElement.closest(".conditional");
     const modifierElement = clickedElement.closest(".conditional-modifier");
     if (conditionalElement && modifierElement) {
-      const conditional = this.object.conditionals.get(conditionalElement.dataset.conditional);
+      const conditional = this.action.conditionals.get(conditionalElement.dataset.conditional);
       const modifier = conditional.modifiers.get(modifierElement.dataset.modifier);
       const app = new pf1.applications.DamageTypeSelector(modifier, "damageType", modifier.data.damageType);
       return app.render(true);
@@ -565,7 +569,7 @@ export class ItemActionSheet extends FormApplication {
 
   async _updateObject(event, formData) {
     // Handle conditionals array
-    const conditionalData = foundry.utils.deepClone(this.object.data.conditionals);
+    const conditionalData = foundry.utils.deepClone(this.action.data.conditionals);
     Object.entries(formData)
       .filter((o) => o[0].startsWith("conditionals"))
       .forEach((o) => {
@@ -575,7 +579,7 @@ export class ItemActionSheet extends FormApplication {
           const conditionalIdx = parseInt(reResult[1]);
           const modifierIdx = parseInt(reResult[2]);
           const conditional =
-            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.object.data.conditionals[conditionalIdx]);
+            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.action.data.conditionals[conditionalIdx]);
           const path = reResult[3];
           foundry.utils.setProperty(conditional.modifiers[modifierIdx], path, o[1]);
         }
@@ -583,7 +587,7 @@ export class ItemActionSheet extends FormApplication {
         else if ((reResult = o[0].match(/^conditionals.([0-9]+).(.+)$/))) {
           const conditionalIdx = parseInt(reResult[1]);
           const conditional =
-            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.object.data.conditionals[conditionalIdx]);
+            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.action.data.conditionals[conditionalIdx]);
           const path = reResult[2];
           foundry.utils.setProperty(conditional, path, o[1]);
         }

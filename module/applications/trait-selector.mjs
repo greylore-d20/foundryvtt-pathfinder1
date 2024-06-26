@@ -25,7 +25,7 @@ export class ActorTraitSelector extends DocumentSheet {
   }
 
   get title() {
-    return `${this.options.title} – ${this.object.name}`;
+    return `${this.options.title} – ${this.document.name}`;
   }
 
   get id() {
@@ -78,7 +78,7 @@ export class ActorTraitSelector extends DocumentSheet {
     }
 
     // Object type
-    const updateButton = this.object instanceof Actor ? "PF1.UpdateActor" : "PF1.UpdateItem";
+    const updateButton = this.document instanceof Actor ? "PF1.UpdateActor" : "PF1.UpdateItem";
 
     // Return data
     return {
@@ -98,7 +98,7 @@ export class ActorTraitSelector extends DocumentSheet {
 
     const { custom, value } = this.attributes;
     const updateData = { [this.attribute]: { value, custom } };
-    this.object.update(updateData);
+    this.document.update(updateData);
     this.close({ force: true });
   }
 

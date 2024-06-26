@@ -287,6 +287,6 @@ export class ContentSourceEditor extends DocumentSheet {
 
     updateData.system.sources = updateData.system.sources.filter((s) => s.empty !== true);
 
-    return this.object.update(updateData);
+    return this.document.update(updateData);
   }
 }

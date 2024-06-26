@@ -31,9 +31,11 @@ export class DamageTypeSelector extends FormApplication {
       closeOnSubmit: true,
     });
   }
+
   get title() {
     return game.i18n.localize("PF1.DamageType");
   }
+
   get id() {
     return `damage-types-${this.object.id}-${this.path.replaceAll(".", "_")}`;
   }

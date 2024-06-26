@@ -1,5 +1,48 @@
 # Changelog
 
+## 10.3 - 2024-6-26
+
+### Bug Fixes
+
+- Compendium links and compendium browser buttons were nonfunctional on uneditable sheets (such as when viewing with observer permissions or in locked compendiums).
+- Generic CMB, melee, and ranged attacks did not display related context notes fully or at all. ([3249](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3249))
+- Change and Context Note target selection now sorts targets the same way. ([3251](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3251))
+- Throneglass was incorrectly add-on material instead of normal construction material. ([3291](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3291))
+- Combat tab attack tooltip no longer displayed attack bonuses for each attack (such as iterative progression). ([3292](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3292))
+- Changes targeting subskills were not included in actual rolls. ([3293](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3293))
+- Various conditions (notably paralyzed, helpless, and sleeping) did not apply their effects correctly. ([3294](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3294))
+- Action sheet could not be opened in uneditable sheet via the dedicated button for it.
+- Buff duration label (e.g. in acror sheet buffs tab) failed to resolve durations correctly.
+- Combat tab damage column did not respect maximum ability score limitation nor restrictions on multipliers when modifier is below zero.
+- Container contents weight could become excessively precise.
+- Source registry was having 3 largely harmless errors at world launch.
+- XP distributor's split evenly option still didn't work correctly. ([3234](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3234))
+- Actors with negative levels but no classes would error.
+
+### Changelog
+
+- Bonus type selection is now sorted everywhere. ([3262](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3262))
+- Non-weapon attacks and spells now have access to materials. ([3304](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3304))
+- Right clicking a condition on buffs tab allows configuring its duration or enabling one with duration.
+- ⚠️ `@Heal` and `@Damage` enrichers now replace formula display with provided label instead of using it as prefix.
+- Empty item stacks now have strikethrough again, broken items are slightly discolored red, and some other small item presentation changes to allow custom CSS tweaking better.
+- Owned item migration failures are now more descriptive.
+- Attempting to cast unprepared/unknown spell now causes more accurate error.
+- Modifiers for quantity adjust can now be combined.
+- `@Save` enricher now attempts to resolve the DC parameter as formula if it's not a simple number.
+- Trait types are now alphasorted.
+
+### Compendium
+
+- Add source information to classes ([3300](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3300))
+- Removed Vampire Hunter D and Niobe content, such as the Esufey race, Vampire Hunter and Omdura classes and their related content.
+- Fixed typo in Being of Ib name. ([3307](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3307))
+
+### API
+
+- New categories can be added to DamageTypes.CATEGORIES
+- ActorPF.setCondition() and its kin now accept object in addition to boolean as state parameter for merging into the created active effect.
+
 ## 10.2 - 2024-6-23
 
 ### Bug Fixes

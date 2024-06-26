@@ -96,16 +96,20 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       i.hasAction = item.hasAction || item.isCharged;
       i.showUnidentifiedData = item.showUnidentifiedData;
 
-      i.quantity = itemData.quantity || 0;
-      i.isStack = i.quantity > 1;
       //i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
-      i.destroyed = itemData.hp?.value <= 0;
 
-      const itemCharges = itemData.uses?.value != null ? itemData.uses.value : 1;
+      if (item.isPhysical) {
+        i.quantity = itemData.quantity || 0;
+        i.isStack = i.quantity > 1;
+        i.destroyed = itemData.hp?.value <= 0;
+        i.isEmpty = i.quantity <= 0;
+        i.isBroken = item.isBroken;
+      }
 
-      i.empty = false;
-      if (item.isPhysical && i.quantity <= 0) i.empty = true;
-      else if (item.isCharged && !itemData.isSingleUse && itemCharges <= 0) i.empty = true;
+      if (!i.isEmpty && item.isCharged && !itemData.isSingleUse) {
+        if (item.charges <= 0) i.isEmpty = true;
+      }
+
       i.disabled = i.destroyed || false;
 
       return cur;

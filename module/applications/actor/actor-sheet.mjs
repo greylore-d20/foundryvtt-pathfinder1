@@ -463,6 +463,9 @@ export class ActorSheetPF extends ActorSheet {
       result.quantity ||= 0;
       result.isStack = result.quantity > 1;
       result.destroyed = result.hp?.value <= 0;
+      result.isEmpty = result.quantity == 0;
+      result.isBroken = item.isBroken;
+      result.disabled ||= result.destroyed;
     }
 
     result.empty = false;

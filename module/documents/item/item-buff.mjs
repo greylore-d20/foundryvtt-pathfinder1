@@ -185,8 +185,6 @@ export class ItemBuffPF extends ItemPF {
         } catch (e) {
           console.warn(`Error with buff duration formula "${duration.value}"`, this);
         }
-      } else {
-        labels.duration = "";
       }
     }
 

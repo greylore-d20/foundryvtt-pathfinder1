@@ -132,7 +132,7 @@ export class ItemSheetPF extends ItemSheet {
       owner: item.isOwner,
       editable: this.isEditable,
       isGM: game.user.isGM,
-      labels: item.getLabels(),
+      labels: item.getLabels({ rollData }),
       canClassLink: pf1.config.classAssociations.includes(item.type) && !!rollData.classes,
       inContainer: item.inContainer ?? false,
       // Include raw tag data (from source to not get autofilled tag)

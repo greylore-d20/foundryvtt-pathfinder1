@@ -423,9 +423,9 @@ export class ActorSheetPF extends ActorSheet {
     result.hasUses = result.uses?.max > 0;
 
     const defaultAction = item.defaultAction;
-    const defaultActionRollData = defaultAction?.getRollData();
+    const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
-    result.labels = item.getLabels({ actionId: defaultAction?.id, rollData: defaultActionRollData });
+    result.labels = item.getLabels({ actionId: defaultAction?.id, rollData });
     result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
     if (defaultAction) {
       result.hasAttack = defaultAction.hasAttack;
@@ -437,15 +437,15 @@ export class ActorSheetPF extends ActorSheet {
         result.range = foundry.utils.mergeObject(
           defaultAction?.data?.range ?? {},
           {
-            min: defaultAction?.getRange({ type: "min", rollData: defaultActionRollData }),
-            max: defaultAction?.getRange({ type: "max", rollData: defaultActionRollData }),
+            min: defaultAction?.getRange({ type: "min", rollData }),
+            max: defaultAction?.getRange({ type: "max", rollData }),
           },
           { inplace: false }
         );
       }
       if (result.hasAttack) {
         const attacks = defaultAction
-          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData: defaultActionRollData })
+          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData })
           .map((atk) => atk.bonus);
         result.attackArray = attacks;
         const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.

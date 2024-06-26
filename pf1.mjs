@@ -461,6 +461,7 @@ Hooks.once("i18nInit", function () {
   const toSort = [
     "bonusTypes",
     "skills",
+    "traitTypes",
     "conditionTypes",
     "consumableTypes",
     "creatureTypes",

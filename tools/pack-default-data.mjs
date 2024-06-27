@@ -166,5 +166,10 @@ export function getTokenDefaultData() {
       scaleX: 1,
       src: "",
     },
+    flags: {
+      pf1: {
+        staticSize: false,
+      },
+    },
   };
 }

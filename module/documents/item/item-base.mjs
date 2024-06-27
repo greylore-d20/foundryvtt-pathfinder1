@@ -1,3 +1,8 @@
+/**
+ * Base item
+ *
+ * From which all other item documents inherit from.
+ */
 export class ItemBasePF extends Item {
   /**
    * Item create dialog.
@@ -16,6 +21,9 @@ export class ItemBasePF extends Item {
     return pf1.applications.item.CreateDialog.waitPrompt(data, { parent, pack, options });
   }
 
+  /**
+   * @override
+   */
   static async createDocuments(data = [], context = {}) {
     if (!Array.isArray(data)) data = [data]; // Match Foundry API
 

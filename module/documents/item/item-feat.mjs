@@ -1,5 +1,10 @@
 import { ItemPF } from "./item-pf.mjs";
 
+/**
+ * Feature item
+ *
+ * Class features, feats, traits, templates, racial traits, etc.
+ */
 export class ItemFeatPF extends ItemPF {
   /**
    * @internal
@@ -17,16 +22,12 @@ export class ItemFeatPF extends ItemPF {
     }
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   async setActive(active, context) {
     return this.update({ "system.disabled": !active }, context);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   get isActive() {
     return this.system.disabled !== true;
   }

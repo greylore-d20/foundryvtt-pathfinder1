@@ -1,5 +1,8 @@
 import { ItemPF } from "./item-pf.mjs";
 
+/**
+ * Race item
+ */
 export class ItemRacePF extends ItemPF {
   /**
    * @override

@@ -1,6 +1,12 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
+/**
+ * Loot item
+ *
+ * Ammunition, gear, trade goods, etc.
+ */
 export class ItemLootPF extends ItemPhysicalPF {
+  /** @type {string} */
   get extraType() {
     return this.system.extraType;
   }
@@ -37,6 +43,7 @@ export class ItemLootPF extends ItemPhysicalPF {
     }
   }
 
+  /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 
@@ -47,9 +54,7 @@ export class ItemLootPF extends ItemPhysicalPF {
     return labels;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   get isActive() {
     const hp = this.system.hp?.value || 0;
     if (hp <= 0) return false; // Destroyed

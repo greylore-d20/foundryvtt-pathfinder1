@@ -1,5 +1,10 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
+/**
+ * Container item
+ *
+ * Bags, backpacks, chests, etc.
+ */
 export class ItemContainerPF extends ItemPhysicalPF {
   /**
    * @override
@@ -83,6 +88,12 @@ export class ItemContainerPF extends ItemPhysicalPF {
     items[itemId] = diff;
   }
 
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} options
+   * @param {string} userId
+   */
   _onUpdate(changed, options, userId) {
     // Call various document workflows for changed items
     const items = changed.system?.items;
@@ -109,7 +120,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     super._onUpdate(changed, options, userId);
   }
 
-  /** @inheritdoc */
+  /** @override */
   prepareBaseData() {
     super.prepareBaseData();
 
@@ -118,6 +129,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     this.system.weight.currency = this._calculateCoinWeight() * weightReduction;
   }
 
+  /** @override */
   prepareDerivedData() {
     this._prepareInventory();
 
@@ -180,7 +192,18 @@ export class ItemContainerPF extends ItemPhysicalPF {
     super.prepareWeight();
   }
 
+  /**
+   * @deprecated
+   * @param itemId
+   */
   getContainerContent(itemId) {
+    foundry.utils.logCompatibilityWarning(
+      "ItemContainerPF.getContainerContent() is deprecated in favor of ItemContainerPF.items collection usage.",
+      {
+        since: "PF1 v10",
+        until: "PF1 v11",
+      }
+    );
     return this.items.get(itemId);
   }
 
@@ -352,7 +375,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     return Object.values(this.system.currency || {}).reduce((total, coins) => total + (coins || 0), 0) / divisor;
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   getValue({ recursive = false, inLowestDenomination = false, ...options } = {}) {
     if (options.single) recursive = false;
     const fullOptions = { recursive, inLowestDenomination, ...options };
@@ -371,6 +394,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     return result;
   }
 
+  /** @inheritDoc */
   async getChatData({ chatcard, rollData } = {}) {
     const context = await super.getChatData({ chatcard, rollData });
     // Get contents value
@@ -398,6 +422,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     return;
   }
 
+  /** @inheritDoc */
   adjustContained() {
     super.adjustContained();
 

@@ -312,7 +312,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   _onItemEdit(event) {
     event.preventDefault();
     const li = event.currentTarget.closest(".item");
-    const item = this.item.getContainerContent(li.dataset.itemId);
+    const item = this.item.items.get(li.dataset.itemId);
 
     item.sheet.render(true, { focus: true, editable: this.isEditable });
   }
@@ -398,7 +398,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     event.preventDefault();
 
     const li = event.currentTarget.closest(".item");
-    const item = this.item.getContainerContent(li.dataset.itemId);
+    const item = this.item.items.get(li.dataset.itemId);
 
     if (this.actor) {
       await this.actor.createEmbeddedDocuments("Item", [item.toObject()]);
@@ -420,7 +420,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         amount: parseInt(elem.nextElementSibling.textContent || elem.nextElementSibling.value),
       };
     } else {
-      const item = this.item.getContainerContent(elem.dataset.itemId);
+      const item = this.item.items.get(elem.dataset.itemId);
       dragData = {
         type: "Item",
         data: item.toObject(),
@@ -522,7 +522,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       return void ui.notifications.error(game.i18n.localize("PF1.Error.CantIdentify"));
     }
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
-    const item = this.item.getContainerContent(itemId);
+    const item = this.item.items.get(itemId);
 
     const isIdentified = item.system.identified;
     if (isIdentified !== undefined) {
@@ -535,7 +535,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const a = event.currentTarget;
 
     const itemId = $(a).parents(".item").attr("data-item-id");
-    const item = this.item.getContainerContent(itemId);
+    const item = this.item.items.get(itemId);
     const itemData = item.toObject();
 
     delete itemData.system?.links?.children;
@@ -557,7 +557,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (event.ctrlKey) add *= 10;
 
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
-    const item = this.item.getContainerContent(itemId);
+    const item = this.item.items.get(itemId);
 
     const curQuantity = item.system.quantity || 0;
     let newQuantity = Math.max(0, curQuantity + add);
@@ -574,7 +574,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   _quickItemActionControl(event) {
     event.preventDefault();
     const itemId = $(event.currentTarget).closest(".item").attr("data-item-id");
-    const item = this.item.getContainerContent(itemId);
+    const item = this.item.items.get(itemId);
     item.use({ ev: event });
   }
 
@@ -582,7 +582,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
-    const item = this.item.getContainerContent(itemId);
+    const item = this.item.items.get(itemId);
 
     this._mouseWheelAdd(event.originalEvent, el);
 
@@ -694,7 +694,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   _onItemRoll(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.item.getContainerContent(itemId);
+    const item = this.item.items.get(itemId);
 
     if (item == null) return;
     return item.displayCard();

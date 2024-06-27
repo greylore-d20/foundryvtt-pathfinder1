@@ -2263,7 +2263,7 @@ const _migrateActionMaterials = (action, itemData) => {
   const addons = action.material?.addon;
   if (addons) {
     // Convert Throneglass into non-addon material
-    // Since PF1 vNEXT
+    // Since PF1 v10.3
     const tg = "throneglass";
     if (action.material.addon.includes(tg)) {
       action.material.addon = action.material.addon.filter((ma) => ma !== tg);
@@ -3084,7 +3084,7 @@ const _migrateItemMaterials = (itemData, updateData) => {
       addon = updateData["system.material.addon"];
     }
     // Convert Throneglass into main material
-    // Since PF1 vNEXT
+    // Since PF1 v10.3
     if (addon.includes(tg)) {
       updateData["system.material.addon"] = addon.filter((ma) => ma !== tg);
       if (!itemData.system.material?.normal?.value) {
@@ -3102,7 +3102,7 @@ const _migrateItemMaterials = (itemData, updateData) => {
       addon = updateData["system.armor.material.addon"];
     }
     // Convert Throneglass into main material
-    // Since PF1 vNEXT
+    // Since PF1 v10.3
     if (addon.includes(tg)) {
       updateData["system.armor.material.addon"] = addon.filter((ma) => ma !== tg);
       if (!itemData.system.armor?.material?.normal?.value) {

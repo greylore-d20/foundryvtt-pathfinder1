@@ -1,6 +1,11 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
+/**
+ * Class-like item
+ *
+ * For base classes, NPC classes, racial HD, and mythic paths.
+ */
 export class ItemClassPF extends ItemPF {
   /**
    * @internal
@@ -199,6 +204,9 @@ export class ItemClassPF extends ItemPF {
     Hooks.callAll("pf1ClassLevelChange", this.actor, this, curLevel, newLevel);
   }
 
+  /**
+   * @override
+   */
   prepareBaseData() {
     super.prepareBaseData();
     const itemData = this.system;
@@ -217,6 +225,9 @@ export class ItemClassPF extends ItemPF {
     }
   }
 
+  /**
+   * @override
+   */
   prepareDerivedData() {
     super.prepareDerivedData();
 
@@ -266,6 +277,11 @@ export class ItemClassPF extends ItemPF {
     if (this.actor?.system) this._registerOnActor();
   }
 
+  /**
+   * Register this item on actor in relevant places.
+   *
+   * @internal
+   */
   _registerOnActor() {
     const actor = this.actor;
     if (!actor.classes) return; // actor prep has not run for some reason (unlinked actor)
@@ -305,6 +321,7 @@ export class ItemClassPF extends ItemPF {
     };
   }
 
+  /** @type {number} - Number of hit dice */
   get hitDice() {
     const itemData = this.system;
     if (itemData.hitDice === undefined) {
@@ -321,12 +338,10 @@ export class ItemClassPF extends ItemPF {
     return itemData.hitDice;
   }
 
+  /** @type {number} - Mythic tier */
   get mythicTier() {
-    const itemData = this.system;
-    if (itemData.mythicTier === undefined) {
-      itemData.mythicTier = this.subType === "mythic" ? itemData.level : 0;
-    }
-    return itemData.mythicTier;
+    this.system.mythicTier ??= this.subType === "mythic" ? this.system.level : 0;
+    return this.system.mythicTier;
   }
 
   /**
@@ -337,6 +352,7 @@ export class ItemClassPF extends ItemPF {
     return;
   }
 
+  /** @inheritDoc */
   getLabels({ rollData } = {}) {
     const labels = super.getLabels({ rollData });
 

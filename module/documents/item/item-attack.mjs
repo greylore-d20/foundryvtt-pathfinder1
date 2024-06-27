@@ -1,5 +1,10 @@
 import { ItemPF } from "./item-pf.mjs";
 
+/**
+ * Attack item
+ *
+ * Non-specific combat related actions. Mainly used to populate the combat tab.
+ */
 export class ItemAttackPF extends ItemPF {
   /**
    * @internal
@@ -24,6 +29,9 @@ export class ItemAttackPF extends ItemPF {
     return ["weapon", "item"].includes(this.subType);
   }
 
+  /**
+   * {@inheritDoc ItemPhysicalPF.isBroken}
+   */
   get isBroken() {
     if (!this.isQuasiPhysical) return false;
     return this.system.broken === true;
@@ -104,6 +112,10 @@ export class ItemAttackPF extends ItemPF {
     return attackItem;
   }
 
+  /**
+   * @override
+   * @inheritDoc
+   */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 

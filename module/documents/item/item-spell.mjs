@@ -3,6 +3,9 @@ import { RollPF } from "../../dice/roll.mjs";
 import { calculateRangeFormula } from "@utils";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
+/**
+ * Spell item
+ */
 export class ItemSpellPF extends ItemPF {
   /**
    * @override
@@ -221,6 +224,7 @@ export class ItemSpellPF extends ItemPF {
     return updates;
   }
 
+  /** @override */
   prepareBaseData() {
     super.prepareBaseData();
 
@@ -249,6 +253,7 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /** @override */
   prepareDerivedData() {
     super.prepareDerivedData();
 
@@ -260,6 +265,7 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /** @override */
   getRollData() {
     const result = super.getRollData();
 
@@ -382,6 +388,7 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /** @inheritDoc */
   get isCharged() {
     if (this.system.atWill) return false;
     return true;
@@ -422,6 +429,7 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /** @inheritDoc */
   getDefaultChargeFormula() {
     if (this.useSpellPoints()) {
       return this.system.spellPoints?.cost || game.settings.get("pf1", "spellPointCost") || "0";
@@ -530,10 +538,18 @@ export class ItemSpellPF extends ItemPF {
     return 0;
   }
 
+  /** @returns {boolean} - Whether the attached spellbok uses spell points */
   useSpellPoints() {
     return this.spellbook?.spellPoints?.useSystem ?? false;
   }
 
+  /**
+   * Spell components
+   *
+   * @param {object} options
+   * @param {boolean} [options.compact]
+   * @returns {string[]}
+   */
   getSpellComponents({ compact = false } = {}) {
     const reSplit = pf1.config.re.traitSeparator,
       srcComponents = this.system.components ?? {},
@@ -614,6 +630,13 @@ export class ItemSpellPF extends ItemPF {
     return result;
   }
 
+  /**
+   * Used in consumable creation
+   *
+   * @internal
+   * @param string
+   * @param rollData
+   */
   static _replaceConsumableConversionString(string, rollData) {
     return string
       .replace(/@sl/g, `${rollData.sl}[${game.i18n.localize("PF1.SpellLevel")}]`)
@@ -896,9 +919,7 @@ export class ItemSpellPF extends ItemPF {
     return this.system.domain === true;
   }
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritDoc */
   getDescription({ chatcard = false, data = {}, rollData, header = true, body = true } = {}) {
     const headerContent = header
       ? renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
@@ -911,6 +932,7 @@ export class ItemSpellPF extends ItemPF {
     return headerContent + bodyContent;
   }
 
+  /** @inheritDoc */
   getDescriptionData({ rollData } = {}) {
     const reSplit = pf1.config.re.traitSeparator;
     const srcData = this.system;

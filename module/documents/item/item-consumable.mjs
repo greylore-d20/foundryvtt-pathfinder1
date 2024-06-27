@@ -1,6 +1,14 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
+/**
+ * Consumable item
+ *
+ * For potions, wands, scrolls, drugs, etc.
+ */
 export class ItemConsumablePF extends ItemPhysicalPF {
+  /**
+   * @inheritDoc
+   */
   adjustContained() {
     super.adjustContained();
 
@@ -12,6 +20,9 @@ export class ItemConsumablePF extends ItemPhysicalPF {
     return !this.inContainer;
   }
 
+  /**
+   * @inheritDoc
+   */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 

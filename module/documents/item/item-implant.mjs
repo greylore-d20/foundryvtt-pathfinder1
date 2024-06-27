@@ -1,6 +1,12 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
+/**
+ * Implant item
+ *
+ * Cybernetics, magic tattoos, necrografts, demonic implants, piercings, etc.
+ */
 export class ItemImplantPF extends ItemPhysicalPF {
+  /** @override */
   _onCreate(data, context, userId) {
     super._onCreate(data, context, userId);
 
@@ -42,6 +48,7 @@ export class ItemImplantPF extends ItemPhysicalPF {
     }
   }
 
+  /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 
@@ -60,9 +67,7 @@ export class ItemImplantPF extends ItemPhysicalPF {
     return labels;
   }
 
-  /**
-   * Adjust item while in container.
-   */
+  /** @inheritDoc */
   adjustContained() {
     // Everything in containers count as carried
     this.system.carried = true;
@@ -71,9 +76,7 @@ export class ItemImplantPF extends ItemPhysicalPF {
     this.system.implanted = false;
   }
 
-  /**
-   * Prepare this item's {@link ItemWeightData}
-   */
+  /** @inheritDoc */
   prepareWeight() {
     super.prepareWeight();
 
@@ -94,9 +97,7 @@ export class ItemImplantPF extends ItemPhysicalPF {
     }
   }
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritDoc */
   get isActive() {
     if (this.system.quantity <= 0) return false;
     if (this.subType === "cybertech" && this.system.disabled) return false;
@@ -112,9 +113,7 @@ export class ItemImplantPF extends ItemPhysicalPF {
     return this.system.implanted || false;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   async setActive(active, context) {
     return this.update({ "system.implanted": active }, context);
   }

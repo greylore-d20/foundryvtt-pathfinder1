@@ -1,5 +1,8 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
+/**
+ * Weapon item
+ */
 export class ItemWeaponPF extends ItemPhysicalPF {
   /**
    * @internal
@@ -51,6 +54,7 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     return labels;
   }
 
+  /** @inheritDoc */
   getTypeChatData(data, labels, props, rollData, { actionId = null, chatcard = false } = {}) {
     super.getTypeChatData(data, labels, props, rollData, { actionId, chatcard });
 
@@ -59,6 +63,7 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     if (labels.weaponSubtype) props.push(labels.weaponSubtype);
   }
 
+  /** @inheritDoc */
   adjustContained() {
     super.adjustContained();
 
@@ -70,18 +75,14 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     return !this.inContainer;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   getProficiency(weapon = true) {
     if (!weapon) throw new Error("Weapons do not support non-weapon proficiency");
 
     return this.isProficient;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   get isProficient() {
     if (this.system.proficient) return true;
     return this.actor?.hasWeaponProficiency?.(this) ?? true;

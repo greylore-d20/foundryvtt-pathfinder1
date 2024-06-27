@@ -1,5 +1,10 @@
 import { ItemPhysicalPF } from "./item-physical.mjs";
 
+/**
+ * Equipment item
+ *
+ * Armor, shields, wondrous items, etc.
+ */
 export class ItemEquipmentPF extends ItemPhysicalPF {
   /**
    * @internal
@@ -101,9 +106,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     return labels;
   }
 
-  /**
-   * Adjust item while in container.
-   */
+  /** @inheritDoc */
   adjustContained() {
     super.adjustContained();
 
@@ -131,6 +134,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     return true;
   }
 
+  /** @override */
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.system;

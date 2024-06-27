@@ -27,6 +27,10 @@ export class ItemPhysicalPF extends ItemPF {
    */
   static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
 
+  /**
+   * @internal
+   * @param system
+   */
   _preUpdateNumericValueGuard(system) {
     super._preUpdateNumericValueGuard(system);
 
@@ -59,6 +63,12 @@ export class ItemPhysicalPF extends ItemPF {
     }
   }
 
+  /**
+   * @override
+   * @param {*} data
+   * @param {*} context
+   * @param {*} userId
+   */
   _onCreate(data, context, userId) {
     super._onCreate(data, context, userId);
 
@@ -74,6 +84,12 @@ export class ItemPhysicalPF extends ItemPF {
     }
   }
 
+  /**
+   * @override
+   * @param {*} changed
+   * @param {*} context
+   * @param {*} userId
+   */
   _onUpdate(changed, context, userId) {
     super._onUpdate(changed, context, userId);
 
@@ -148,6 +164,7 @@ export class ItemPhysicalPF extends ItemPF {
     }
   }
 
+  /** @override */
   prepareBaseData() {
     // Set visible name
     if (this.showUnidentifiedData) {
@@ -172,6 +189,7 @@ export class ItemPhysicalPF extends ItemPF {
     itemData.weight.converted ??= {};
   }
 
+  /** @override */
   prepareDerivedData() {
     super.prepareDerivedData();
 
@@ -184,16 +202,12 @@ export class ItemPhysicalPF extends ItemPF {
     }
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   async setActive(active, context) {
     return this.update({ "system.equipped": active }, context);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   get isActive() {
     const hp = this.system.hp?.value || 0;
     if (hp <= 0) return false; // Destroyed
@@ -240,8 +254,14 @@ export class ItemPhysicalPF extends ItemPF {
     return 1;
   }
 
-  // Generic weight scaling
-  // For use with getWeightMultiplier() across item types
+  /**
+   * Weight scaling
+   *
+   * For use with {@link getWeightMultiplier()} across item types
+   *
+   * @internal
+   * @returns {number}
+   */
   _getArmorWeightMultiplier() {
     // Scale weight for weapons, armor and shields
     const actorSize = this.actor?.system.traits?.size;
@@ -343,6 +363,7 @@ export class ItemPhysicalPF extends ItemPF {
     return false;
   }
 
+  /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 
@@ -385,6 +406,7 @@ export class ItemPhysicalPF extends ItemPF {
     return !game.user.isGM && this.system.identified === false;
   }
 
+  /** @inheritDoc */
   getRollData() {
     const result = super.getRollData();
 

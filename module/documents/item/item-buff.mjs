@@ -1,6 +1,11 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
+/**
+ * Buff item
+ *
+ * More or less ephemeral effects, such as spell buffs.
+ */
 export class ItemBuffPF extends ItemPF {
   /**
    * @internal
@@ -290,7 +295,14 @@ export class ItemBuffPF extends ItemPF {
     return seconds;
   }
 
-  // Determines the starting data for an ActiveEffect based off this item
+  /**
+   * Create basic Active Effect data based on the item.
+   *
+   * @internal
+   * @param {object} options
+   * @param {object} options.rollData
+   * @returns {object}
+   */
   async getRawEffectData({ rollData } = {}) {
     const createData = await super.getRawEffectData();
 
@@ -325,6 +337,9 @@ export class ItemBuffPF extends ItemPF {
     return createData;
   }
 
+  /**
+   * @override
+   */
   getRollData() {
     const result = super.getRollData();
 

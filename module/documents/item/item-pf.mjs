@@ -229,6 +229,7 @@ export class ItemPF extends ItemBasePF {
   static get isPhysical() {
     return this.system.isPhysical;
   }
+
   /** {@inheritDoc ItemPF.isPhysical:getter} */
   get isPhysical() {
     return this.constructor.isPhysical;
@@ -237,6 +238,7 @@ export class ItemPF extends ItemBasePF {
   static get hasChanges() {
     return this.system.hasChanges;
   }
+
   /** {@inheritDoc ItemPF.isPhysical:getter} */
   get hasChanges() {
     return this.constructor.hasChanges;
@@ -339,18 +341,22 @@ export class ItemPF extends ItemBasePF {
     return true;
   }
 
+  /** @type {boolean} */
   get isOwned() {
     return super.isOwned || this.parentItem != null;
   }
 
+  /** @type {boolean} */
   get hasAction() {
     return this.system.actions?.length > 0;
   }
 
+  /** @type {boolean} */
   get isSingleUse() {
     return this.system.uses?.per === "single";
   }
 
+  /** @type {boolean} */
   get isCharged() {
     return this.isSingleUse || ["round", "day", "week", "charges"].includes(this.system.uses?.per);
   }
@@ -634,6 +640,9 @@ export class ItemPF extends ItemBasePF {
   /*	Data Preparation														*/
   /* -------------------------------------------- */
 
+  /**
+   * @override
+   */
   prepareDerivedData() {
     super.prepareDerivedData();
 
@@ -674,6 +683,9 @@ export class ItemPF extends ItemBasePF {
     if (final) this._prepareActions();
   }
 
+  /**
+   * @override
+   */
   prepareBaseData() {
     super.prepareBaseData();
     this._prepareIdentifier();
@@ -689,6 +701,8 @@ export class ItemPF extends ItemBasePF {
 
   /**
    * Initialize identifier
+   *
+   * @internal
    */
   _prepareIdentifier() {
     const isTaggedType = this.constructor.system?.hasIdentifier ?? false;
@@ -722,6 +736,11 @@ export class ItemPF extends ItemBasePF {
     };
   }
 
+  /**
+   * Prepare item links.
+   *
+   * @internal
+   */
   prepareLinks() {
     if (!this.links) return;
 
@@ -740,6 +759,11 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /**
+   * Prepare and update Changes collection.
+   *
+   * @internal
+   */
   _prepareChanges() {
     const prior = this.changes;
     const collection = new Collection();
@@ -757,6 +781,11 @@ export class ItemPF extends ItemBasePF {
     this.changes = collection;
   }
 
+  /**
+   * Prepare actions
+   *
+   * @internal
+   */
   _prepareActions() {
     const actions = this.system.actions ?? [];
 
@@ -836,6 +865,12 @@ export class ItemPF extends ItemBasePF {
     return shared;
   }
 
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @returns {Promise<Item>}
+   */
   async update(data, context = {}) {
     // Avoid regular update flow for explicitly non-recursive update calls
     if (context.recursive === false) {
@@ -888,6 +923,11 @@ export class ItemPF extends ItemBasePF {
     return data;
   }
 
+  /**
+   * Memorize quantity and level for later diffing.
+   *
+   * @internal
+   */
   memorizeVariables() {
     if (this._memoryVariables != null) return;
 
@@ -947,6 +987,11 @@ export class ItemPF extends ItemBasePF {
     this._memoryVariables = null;
   }
 
+  /**
+   * Update max uses
+   *
+   * @internal
+   */
   _updateMaxUses() {
     const per = this.system.uses?.per;
 
@@ -991,6 +1036,12 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /**
+   * Update this item's charges based on provided item.
+   *
+   * @internal
+   * @param {Item} item - Charge source
+   */
   _updateInheritedCharges(item) {
     const iuses = item.system.uses;
     if (!iuses) return;

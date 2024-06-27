@@ -1,7 +1,7 @@
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { ActorResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync } from "@utils";
+import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
@@ -383,17 +383,20 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
-    context.conditions = pf1.registry.conditions.map((cond) => ({
-      id: cond.id,
-      img: cond.texture,
-      active: conditions[cond.id] ?? false,
-      items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
-      get inherited() {
-        return this.items.size > 0;
-      },
-      label: cond.name,
-      compendium: cond.journal,
-    }));
+    context.conditions = naturalSort(
+      pf1.registry.conditions.map((cond) => ({
+        id: cond.id,
+        img: cond.texture,
+        active: conditions[cond.id] ?? false,
+        items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
+        get inherited() {
+          return this.items.size > 0;
+        },
+        label: cond.name,
+        compendium: cond.journal,
+      })),
+      "label"
+    );
 
     // Return data to the sheet
     return context;

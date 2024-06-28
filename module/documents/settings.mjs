@@ -61,6 +61,7 @@ export const registerSystemSettings = function () {
     type: HealthConfigModel,
     config: false,
     requiresReload: true,
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   // Experience configuration

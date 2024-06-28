@@ -97,9 +97,14 @@ export class ActiveEffectPF extends ActiveEffect {
    * @type {boolean}
    */
   get isTemporary() {
-    if (this.getFlag("pf1", "show") === false || game.settings.get("pf1", "hideTokenConditions")) return false;
+    // Allow overlays to always show
+    if (this.getFlag("core", "overlay") && this.statuses.size) return true;
 
-    return super.isTemporary || this.getFlag("pf1", "show") || false;
+    // Hide everything else told to hide
+    const show = this.getFlag("pf1", "show");
+    if (show === false || game.settings.get("pf1", "hideTokenConditions")) return false;
+
+    return super.isTemporary || show || false;
   }
 
   /**

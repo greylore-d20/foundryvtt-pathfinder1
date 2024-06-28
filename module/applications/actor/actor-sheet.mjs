@@ -2655,9 +2655,9 @@ export class ActorSheetPF extends ActorSheet {
   _onOpenCompendiumBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const target = a.dataset.category;
+    const category = a.dataset.category;
 
-    pf1.applications.compendiums[target].render(true, { focus: true });
+    pf1.applications.compendiums[category].render(true, { focus: true });
   }
 
   /**

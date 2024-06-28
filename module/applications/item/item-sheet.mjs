@@ -1353,6 +1353,8 @@ export class ItemSheetPF extends ItemSheet {
       .find(".tab[data-tab='links'] .links-item .item-name .source-item")
       .on("click", this._openLinkedItem.bind(this));
 
+    html.find('a[data-action="browse"]').click(this._onOpenCompendiumBrowser.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -1419,12 +1421,6 @@ export class ItemSheetPF extends ItemSheet {
       const item = this.actor.items.get(itemId);
       item?.sheet.render(true, { focus: true });
     });
-
-    /* -------------------------------------------- */
-    /*  Links
-    /* -------------------------------------------- */
-
-    html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
 
     /* -------------------------------------------- */
     /*  Script Calls
@@ -1574,12 +1570,12 @@ export class ItemSheetPF extends ItemSheet {
 
   /* -------------------------------------------- */
 
-  _onOpenCompendium(event) {
+  _onOpenCompendiumBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const target = a.dataset.actionTarget;
+    const category = a.dataset.category;
 
-    pf1.applications.compendiums[target].render(true, { focus: true });
+    pf1.applications.compendiums[category].render(true, { focus: true });
   }
 
   async _onScriptCallControl(event) {

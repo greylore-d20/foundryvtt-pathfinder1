@@ -206,6 +206,8 @@ export class CombatPF extends Combat {
    * @param {string} userId Triggering user ID
    */
   _onUpdate(changed, context, userId) {
+    super._onUpdate(changed, context, userId);
+
     if (changed.turn !== undefined || changed.round !== undefined) {
       this._onNewTurn(changed, context, userId);
     }

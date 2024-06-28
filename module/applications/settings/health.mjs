@@ -157,9 +157,14 @@ export class HealthConfig extends FormApplication {
   async _onSave(event) {
     event.preventDefault();
 
-    const settings = this.healthConfig;
-    await game.settings.set("pf1", "healthConfig", settings.toObject());
+    const settings = this.healthConfig.toObject();
+    const diff = game.settings.get("pf1", "healthConfig").updateSource(settings, { dry: true });
     this.close();
+    if (foundry.utils.isEmpty(diff)) return;
+
+    await game.settings.set("pf1", "healthConfig", settings);
+
+    SettingsConfig.reloadConfirm({ world: true });
   }
 
   /**

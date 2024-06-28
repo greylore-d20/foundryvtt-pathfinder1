@@ -501,6 +501,10 @@
       "PostUse": {
         "Name": "Nach Benutzung",
         "Info": "Wird aufgerufen, nachdem der Gegenstand 'benutzt' wurde und alle relevanten Abfertigungen vom System fertig sind."
+      },
+      "Implant": {
+        "Name": "Implantation",
+        "Info": "Wird aufgerufen, wenn ein Gegenstand implantiert oder entfernt wird. hat die zusätzliche boolische Variable <code>implanted</code>."
       }
     },
     "Abundant": "Reichlich",
@@ -1009,7 +1013,8 @@
         "Category": "Kategorie",
         "Title": "Migration",
         "Issues": "Probleme mit der Migration",
-        "InvalidDocuments": "Ungültige Dokumente"
+        "InvalidDocuments": "Ungültige Dokumente",
+        "ErrorHelp": "Klicke auf die Fehleranzahl je Kategorie, um die Details zu aufzurufen."
       },
       "Category": {
         "World": "Welt",
@@ -1020,7 +1025,12 @@
         "Items": "Gegenstandsverzeichnis",
         "Scenes": "Szenen"
       },
-      "InProgress": "PF1 System-Migration im Vorgang. Bitte warte bis es fertig ist."
+      "InProgress": "PF1 System-Migration im Vorgang. Bitte warte bis es fertig ist.",
+      "Issues": {
+        "ID": "ID",
+        "Message": "Nachricht",
+        "UUID": "UUID"
+      }
     },
     "Application": {
       "ChangeTargetSelector": {
@@ -1093,7 +1103,7 @@
             "Label": "Begrenzung des Reichweitenhighlights"
           }
         },
-        "Hint": "Justiere Einstellungen die die Leistung beeinflussen."
+        "Hint": "Passe Einstellungen an, die die Leistung beeinflussen."
       },
       "CurrencyTransfer": {
         "Failed": "Geldtransfer gescheitert: ",
@@ -1150,6 +1160,9 @@
       },
       "VisionSharing": {
         "Label": "Sicht Teilen"
+      },
+      "ActionSelector": {
+        "Title": "{actor} nutzt {item}"
       }
     },
     "Dialog": {
@@ -1317,7 +1330,7 @@
         "TitleHint": "Titel der Quelle des Materials, typischerweise der Buchname.",
         "ID": "Kürzel",
         "Edition": "Auflage",
-        "EditionHint": "z.B. 6.",
+        "EditionHint": "z.B. 6",
         "Pages": "Seiten",
         "PagesHint": "Seitennumber, als Bereich (z.B. 276-278) oder Liste (z.B. 124,270)",
         "Publisher": "Verlag",
@@ -1627,6 +1640,10 @@
           "vehicle": {
             "Single": "Fahrzeug/Transport",
             "Plural": "Fahrzeuge/Transporte"
+          },
+          "animal": {
+            "Single": "Tier/Reittier",
+            "Plural": "Tiere/Reittiere"
           }
         },
         "class": {
@@ -1712,6 +1729,14 @@
           "racialAbility": {
             "Single": "Volksfähigkeit",
             "Plural": "Volksfähigkeiten"
+          },
+          "item": {
+            "Single": "Gegenstand",
+            "Plural": "Gegenstände"
+          },
+          "misc": {
+            "Single": "Verschiedene",
+            "Plural": "Verschiedenes"
           }
         },
         "feat": {
@@ -1935,7 +1960,8 @@
           "Gritty": "Gnadenlos",
           "PCHint": "Benutze die optionalen Regeln für Wundgrenzen für Spielercharaktere.",
           "PCOverrideHint": "Erlaubt es, die Wundgrenze eines Spielercharakters in the Charaktereinstellungen zu überschreiben. ",
-          "NPCOverrideHint": "Erlaubt es, die Wundgrenze eines Nichtspielercharakters in the Charaktereinstellungen zu überschreiben "
+          "NPCOverrideHint": "Erlaubt es, die Wundgrenze eines Nichtspielercharakters in the Charaktereinstellungen zu überschreiben ",
+          "VigorConflict": "Verletzungsstufen haben keinen Effekt wenn die optionalen Regeln für Wunden und Vitalität aktiv sind."
         },
         "Instructions": "TP-Berechnung für die verschiedenen Arten von Klassen. Die Pathfinder Society kennt folgende Konfigurationen für Spielercharaktere: automatisch, halber Anteil, erster TW maximiert, aufgerundet, diskrete Kontinuität.",
         "ContinuityHint": "TP kann diskret oder kontinuierlich berechnet werden. Diskrete TP werden bei jedem Stufenaufstieg gerundet, d.h. dass Kreaturen jedesmal eine feste Anzahl an TP bekommen. Kontinuierliche TP werden erst am Ende gerundet, nachdem alle Trefferwürfel evaluiert wurden, d.h. dass Kreaturen jedesmal eine schwankende Anzahl an TP bekommen.",
@@ -2013,7 +2039,24 @@
       "CriticalConfirm": "Bestätigungswurf",
       "CriticalConfirmHint": "Wenn deaktiviert, dann wird der Bestätigungswurf durch das Zeigen des Verteigung-SG ersetzt, um Rüstung als SR als optinale Regel zu nutzen.",
       "Cybertech": "Kybernetik",
-      "CybertechHint": "Aktiviere kybernetische Fertigkeiten, wie zum Beispiel das Anzeigen von Implantatskapazitäten, sogar ohne installierte Kybernetik."
+      "CybertechHint": "Aktiviere kybernetische Fertigkeiten, wie zum Beispiel das Anzeigen von Implantatskapazitäten, sogar ohne installierte Kybernetik.",
+      "Experience": {
+        "DisableHint": "Deaktiviert den Erfahrungspunktefortschritt im system, wie Erfahrungspunkteleiste, Stufenaufstiegserkennung, etc.",
+        "Track": {
+          "Label": "Aufstiegsgeschwindigkeit",
+          "Hint": "Die Rate mit welcher dein Charakter Stufen aufsteigt.",
+          "Options": {
+            "Slow": "Langsam",
+            "Medium": "Mittel",
+            "Fast": "Schnell",
+            "Custom": "Eigen"
+          },
+          "CustomPlaceholder": "z.b. '@level * 1000'"
+        },
+        "Disable": "Erfahrungspunktefortschritt deaktivieren",
+        "Distributor": "Öffne EP Verteiler",
+        "DistributorHint": "Öffnet den EP Verteiler am Ende des Kampfes, es sei den Shift wird gedrückt wenn der Kampf beendet wird."
+      }
     },
     "TotalItemValue": "Gesamtwert aller Gegenstände: {gp} GM, {sp} SM, {cp} KM",
     "Containers": {
@@ -2075,7 +2118,11 @@
           "Label": "Sekunden"
         }
       },
-      "Format": "{value} {unit}"
+      "Format": "{value} {unit}",
+      "Turn": {
+        "End": "Rundenende",
+        "Start": "Rundenbeginn"
+      }
     },
     "AssociatedClass": "Verbundene Klasse",
     "SpellSchools": {
@@ -2496,7 +2543,11 @@
       "FeatDisabled": "Dieses Talent ist deaktiviert",
       "NoMacroID": "Kein Makro mit ID '{id}' gefunden",
       "EmptySkillTag": "Talent-Tag darf nicht leer sein",
-      "SkillTagAlreadyExists": "Talent-Tag '{tag}' existiert schon"
+      "SkillTagAlreadyExists": "Talent-Tag '{tag}' existiert schon",
+      "NoItemPermission": "Du bist nicht authorisiert dieses Gegenstand zu verändern.",
+      "TooManyConditionSources": "Zu viele Zustandsquellen zum editieren.",
+      "NoGiftTargets": "Kein gültiges Ziel um etwas zu übergeben.",
+      "InsufficientPreparation": "{name} wurde nicht vorbereitet oder ist nicht bekannt."
     },
     "Warning": {
       "NoDiceAllowedInFormula": "In Formel '{formula}' für {context} sind keine Würfelwürfe erlaubt",
@@ -2552,7 +2603,62 @@
     "StartingWealth": "Anfangsvermögen",
     "Misfire": "Fehlzündung",
     "Capacity": "Kapazität",
-    "AbilityStrPen": "Stärkemalus"
+    "AbilityStrPen": "Stärkemalus",
+    "DamageTypes": {
+      "slashing": {
+        "Abbr": "H",
+        "Label": "Hieb"
+      },
+      "untyped": {
+        "Label": "Untypisiert"
+      },
+      "cold": {
+        "Label": "Kälte"
+      },
+      "bludgeoning": {
+        "Label": "Wucht",
+        "Abbr": "W"
+      },
+      "piercing": {
+        "Label": "Stich",
+        "Abbr": "S"
+      },
+      "fire": {
+        "Label": "Feuer"
+      },
+      "electricity": {
+        "Label": "Elektrizität"
+      },
+      "sonic": {
+        "Label": "Schall"
+      },
+      "acid": {
+        "Label": "Säure"
+      },
+      "force": {
+        "Label": "Energie"
+      },
+      "negative": {
+        "Label": "Negative"
+      },
+      "positive": {
+        "Label": "Positive"
+      }
+    },
+    "Infinite": "Unendlich",
+    "AbilityDexPen": "Geschicklichkeitsmalus",
+    "MaxShort": "Max",
+    "SkillJournalHint": "Drag & Drop Journal oder Journalseite, um diese zu verlinken.",
+    "MaxAbilityHint": "Maximaler erlaubter Attributswert Modifikator. Limit gilt vor dem Multiplikator. Unbegrenzt falls nicht definiert.",
+    "FromLevels": "Aus Stufen",
+    "GiveItemToActor": "Gegenstand übergeben",
+    "AbilityConPen": "Konstitutionsmalus",
+    "AbilityIntPen": "Intelligenzmalus",
+    "AbilityWisPen": "Weisheitsmalus",
+    "AbilityChaPen": "Charismamalus",
+    "DurationEndTiming": "Endzeitpunkt",
+    "FromMythic": "Aus Legendenstufen",
+    "AbilityPlural": "Attribute"
   },
   "TOKEN": {
     "VisionLowLight": "Dämmersicht",

@@ -134,12 +134,14 @@ export class TokenDocumentPF extends TokenDocument {
 
     const senses = this.actor?.system?.traits?.senses ?? {};
 
+    const convertDistance = (d) => pf1.utils.convertDistance(d)[0];
+
     // Darkvision
     const darkvision = senses.dv ?? 0;
     if (darkvision > 0) {
       this.sight.visionMode = "darkvision";
       // Upgrade basic mode range if greater
-      basicMode.range = Math.max(baseRange, pf1.utils.convertDistance(darkvision)[0]);
+      basicMode.range = Math.max(baseRange, convertDistance(darkvision));
     }
 
     // -----------------------
@@ -153,7 +155,7 @@ export class TokenDocumentPF extends TokenDocument {
     const trueseeing = senses.tr ?? 0;
     if (trueseeing > 0) {
       // Add normal vision within range of true seeing
-      const trr = pf1.utils.convertDistance(trueseeing)[0];
+      const trr = convertDistance(trueseeing);
       basicMode.range = Math.max(trr, basicMode.range);
       if (trueseeing > darkvision) this.sight.visionMode = "basic";
 
@@ -164,17 +166,17 @@ export class TokenDocumentPF extends TokenDocument {
 
     // Tremor sense
     if (senses.ts) {
-      this.detectionModes.push({ id: "feelTremor", enabled: true, range: senses.ts });
+      this.detectionModes.push({ id: "feelTremor", enabled: true, range: convertDistance(senses.ts) });
     }
 
     // Blind sense
     if (senses.bse) {
-      this.detectionModes.push({ id: "blindSense", enabled: true, range: senses.bse });
+      this.detectionModes.push({ id: "blindSense", enabled: true, range: convertDistance(senses.bse) });
     }
 
     // Blind sight
     if (senses.bs) {
-      this.detectionModes.push({ id: "blindSight", enabled: true, range: senses.bs });
+      this.detectionModes.push({ id: "blindSight", enabled: true, range: convertDistance(senses.bs) });
     }
 
     // Sort detection modes

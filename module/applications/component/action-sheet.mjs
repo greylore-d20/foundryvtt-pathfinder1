@@ -149,6 +149,15 @@ export class ItemActionSheet extends FormApplication {
       context.inheritedMisfire = item?.system.ammo?.misfire ?? null;
     }
 
+    if (context.canUseAmmo) {
+      context.ammoTypes = {
+        none: game.i18n.localize("PF1.None"),
+        "": game.i18n.format("PF1.InheritAs", { inherited: pf1.config.ammoTypes[context.inheritedAmmoType] }),
+        ...pf1.config.ammoTypes,
+      };
+      if (!context.inheritedAmmoType) delete context.ammoTypes[""];
+    }
+
     // Add distance units
     context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {

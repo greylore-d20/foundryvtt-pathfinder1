@@ -31,16 +31,22 @@ export class TooltipWorldConfig extends FormApplication {
   }
 
   getData() {
-    const result = {};
-
-    // Get settings
-    result.data = game.settings.get("pf1", "tooltipWorldConfig");
-
-    result.permissions = {
-      [CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE]: "OWNERSHIP.NONE",
-      [CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED]: "OWNERSHIP.LIMITED",
-      [CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER]: "OWNERSHIP.OBSERVER",
-      [CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER]: "OWNERSHIP.OWNER",
+    const result = {
+      data: game.settings.get("pf1", "tooltipWorldConfig"),
+      config: pf1.config,
+      const: pf1.const,
+      tokenNameDisposition: {
+        "-2": "PF1.Disposition.None",
+        "-1": "PF1.Disposition.Hostile",
+        0: "PF1.Disposition.Non-Friendly",
+        1: "PF1.Disposition.All",
+      },
+      permissions: {
+        [CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE]: "OWNERSHIP.NONE",
+        [CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED]: "OWNERSHIP.LIMITED",
+        [CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER]: "OWNERSHIP.OBSERVER",
+        [CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER]: "OWNERSHIP.OWNER",
+      },
     };
 
     return result;

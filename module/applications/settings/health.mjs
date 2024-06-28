@@ -107,6 +107,15 @@ export class HealthConfig extends FormApplication {
     const context = {
       ...this.healthConfig,
       woundThesholdOptions: HealthConfigModel.woundThesholdOptions,
+      healthRounding: {
+        up: "PF1.SETTINGS.Health.RoundingUp",
+        nearest: "PF1.SETTINGS.Health.RoundingNearest",
+        down: "PF1.SETTINGS.Health.RoundingDown",
+      },
+      healthContinuity: {
+        true: "PF1.SETTINGS.Health.Continuous",
+        false: "PF1.SETTINGS.Health.Discrete",
+      },
     };
 
     for (const [hdId, data] of Object.entries(context.hitdice)) {

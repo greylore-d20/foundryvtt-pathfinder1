@@ -458,6 +458,10 @@ export class ItemSheetPF extends ItemSheet {
     if (item.type === "feat") {
       context.isClassFeature = itemData.subType === "classFeat";
       context.isTemplate = itemData.subType === "template";
+
+      context.abilityTypes = Object.fromEntries(
+        Object.entries(pf1.config.abilityTypes).map(([key, { short, long }]) => [key, `${long} (${short})`])
+      );
     }
 
     if (["class", "feat", "race"].includes(item.type)) {

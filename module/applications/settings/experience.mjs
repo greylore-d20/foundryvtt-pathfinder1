@@ -37,6 +37,14 @@ export class ExperienceConfig extends FormApplication {
       // Custom experience track booleans
       enabled: settings.disable !== true,
       hasCustomFormula: settings.track === "custom",
+      config: pf1.config,
+      const: pf1.const,
+      progressionOptions: {
+        slow: "PF1.SETTINGS.Experience.Track.Options.Slow",
+        medium: "PF1.SETTINGS.Experience.Track.Options.Medium",
+        fast: "PF1.SETTINGS.Experience.Track.Options.Fast",
+        custom: "PF1.SETTINGS.Experience.Track.Options.Custom",
+      },
     };
   }
 

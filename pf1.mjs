@@ -388,7 +388,7 @@ if (import.meta.env.DEV) {
 
 // Pre-translation passes
 Hooks.once("i18nInit", function () {
-  // Localize CONFIG objects once up-front
+  // Localize pf1.config objects once up-front
   const toLocalize = [
     "abilities",
     "abilitiesShort",
@@ -455,6 +455,7 @@ Hooks.once("i18nInit", function () {
     "woundThresholdConditions",
   ];
 
+  // Localize pf1.const objects
   const toLocalizeConst = ["messageVisibility"];
 
   // Config (sub-)objects to be sorted

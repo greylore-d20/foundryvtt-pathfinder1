@@ -83,11 +83,7 @@
           </select>
 
           <select name="system.abilityType" value="{{system.abilityType}}">
-            {{#select system.abilityType}}
-            {{#each config.abilityTypes}}
-            <option value="{{@key}}">{{long}} ({{short}})</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions abilityTypes selected=system.abilityType}}
           </select>
         </div>
       </div>

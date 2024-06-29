@@ -97,14 +97,17 @@ export class ActiveEffectPF extends ActiveEffect {
    * @type {boolean}
    */
   get isTemporary() {
-    // Allow overlays to always show
-    if (this.getFlag("core", "overlay") && this.statuses.size) return true;
+    // Allow overlays to always show, no matter what else
+    if (this.statuses.size && this.getFlag("core", "overlay")) return true;
 
-    // Hide everything else told to hide
-    const show = this.getFlag("pf1", "show");
-    if (show === false || game.settings.get("pf1", "hideTokenConditions")) return false;
+    // Hide everything told to hide
+    if (this.getFlag("pf1", "show") === false) return false;
 
-    return super.isTemporary || show || false;
+    // Hide buffs if buff hiding option is enabled
+    const isTracker = this.isTracker;
+    if (isTracker && game.settings.get("pf1", "hideTokenConditions")) return false;
+
+    return isTracker || super.isTemporary;
   }
 
   /**

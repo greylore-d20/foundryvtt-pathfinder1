@@ -395,7 +395,7 @@ export class ItemAction {
         return 10 + level + minAbl + dcBonus;
       }
     } else {
-      const dcFormula = this.data.save.dc.toString() || "0";
+      const dcFormula = this.data.save.dc?.toString() || "0";
       result = RollPF.safeRollSync(dcFormula, rollData).total + dcBonus;
       return result;
     }

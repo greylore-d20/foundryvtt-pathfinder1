@@ -801,6 +801,7 @@ export const itemActionTypes = {
 export const limitedUsePeriods = {
   single: "PF1.LimitedUses.Periods.single",
   round: "PF1.LimitedUses.Periods.round",
+  hour: "PF1.LimitedUses.Periods.hour",
   day: "PF1.LimitedUses.Periods.day",
   week: "PF1.LimitedUses.Periods.week",
   charges: "PF1.LimitedUses.Periods.charges",
@@ -809,7 +810,7 @@ export const limitedUsePeriods = {
 /**
  * Order of limited use periods from smallest to biggest, omitting periods with no relation to time.
  */
-export const limitedUsePeriodOrder = ["round", "day", "week"];
+export const limitedUsePeriodOrder = ["round", "hour", "day", "week"];
 
 /* -------------------------------------------- */
 

@@ -909,16 +909,15 @@ export class ItemAction {
         return c.operator !== "set";
       }),
       { ignoreTarget: true }
-    )
-      .filter((c) => c.value != 0)
-      .forEach((c) => {
-        let value = c.value;
-        // BAB override
-        if (actionData.bab && c._id === "_bab") {
-          value = RollPF.safeRollSync(c.formula, data).total || 0;
-        }
-        parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
-      });
+    ).forEach((c) => {
+      let value = c.value;
+      // BAB override
+      if (actionData.bab && c._id === "_bab") {
+        value = RollPF.safeRollSync(c.formula, data).total || 0;
+      }
+      if (value == 0) return;
+      parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
+    });
 
     // Add bonus parts
     parts.push(...extraParts);

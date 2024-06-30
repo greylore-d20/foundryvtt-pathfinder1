@@ -2283,7 +2283,14 @@ export class ItemPF extends ItemBasePF {
     const changeSources = action.attackSources;
 
     const effectiveChanges = getHighestChanges(changeSources, { ignoreTarget: true });
-    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, ic.type, -800));
+    effectiveChanges.forEach((ic) => {
+      let value = ic.value;
+      // BAB override
+      if (actionData.bab && ic._id === "_bab") {
+        value = RollPF.safeRollSync(ic.formula, rollData).total || 0;
+      }
+      describePart(value, ic.flavor, ic.type, -800);
+    });
 
     if (actionData.ability.attack) {
       const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;

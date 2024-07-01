@@ -503,8 +503,6 @@ export class ItemAction {
       result.cl += result.attributes?.spells?.school?.[this.item.system.school]?.cl ?? 0;
     }
 
-    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
-
     // BAB override
     if (result.action.bab) {
       const bab = RollPF.safeRollSync(result.action.bab, result).total;
@@ -513,6 +511,8 @@ export class ItemAction {
 
     // Add @bab
     result.bab = result.attributes?.bab?.total || 0;
+
+    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
 
     return result;
   }

@@ -471,6 +471,7 @@ export class ActorSheetPF extends ActorSheet {
     result.showUnidentifiedData = item.showUnidentifiedData;
     result.name = item.name; // Copy name over from item to handle identified state correctly
 
+    result.isEmpty = false;
     if (result.isPhysical) {
       result.quantity ||= 0;
       result.isStack = result.quantity > 1;
@@ -480,16 +481,15 @@ export class ActorSheetPF extends ActorSheet {
       result.disabled ||= result.destroyed;
     }
 
-    result.empty = false;
-    if (result.isCharged && !result.isSingleUse) {
+    result.uncharged = false;
+    if (result.isActive && result.isCharged && !result.isSingleUse) {
       // TODO: Do charge test in action selection instead of here
       //const smallestUsage = Math.min(...item.actions.map((a) => a.getChargeCost()));
       //const itemCharges = result.uses?.value != null ? result.uses.value : 1;
       //if (itemCharges < smallestUsage) result.empty = true;
     }
 
-    if (result.isPhysical && result.quantity <= 0) result.empty = true;
-    result.disabled = result.destroyed || (!result.isActive && !result.empty);
+    result.disabled = result.destroyed || result.uncharged || (!result.isActive && !result.isEmpty);
 
     if (result.isPhysical) {
       // Do not count unequipped physical items as disabled

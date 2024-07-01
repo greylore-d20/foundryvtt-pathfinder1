@@ -72,59 +72,24 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    * Start with the base item data and extending with additional properties for rendering.
    */
   async getData() {
-    const data = await super.getData();
+    const context = await super.getData();
 
-    data.units = {
+    context.units = {
       weight: pf1.utils.getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
 
     // Add filters
-    data.filters = this._filters;
-
-    // The item's items
-    data.items = this.item.items.reduce((cur, item) => {
-      const itemData = item.system;
-      const i = { ...item };
-      i.id = item.id; // Alias
-      cur.push(i);
-      i.type = item.type;
-      i.subType = item.subType;
-      i.document = item;
-      i.labels = item.getLabels();
-      i.hasAttack = item.hasAttack;
-      i.hasDamage = item.hasDamage;
-      i.hasAction = item.hasAction || item.isCharged;
-      i.showUnidentifiedData = item.showUnidentifiedData;
-
-      //i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
-
-      if (item.isPhysical) {
-        i.quantity = itemData.quantity || 0;
-        i.isStack = i.quantity > 1;
-        i.destroyed = itemData.hp?.value <= 0;
-        i.isEmpty = i.quantity <= 0;
-        i.isBroken = item.isBroken;
-      }
-
-      if (!i.isEmpty && item.isCharged && !itemData.isSingleUse) {
-        if (item.charges <= 0) i.isEmpty = true;
-      }
-
-      i.disabled = i.destroyed || false;
-
-      return cur;
-    }, []);
-    data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.filters = this._filters;
 
     // Show whether the item has currency
-    data.hasCurrency = Object.values(this.item.system.currency).some((o) => o > 0);
+    context.hasCurrency = Object.values(this.item.system.currency).some((o) => o > 0);
 
     // Prepare inventory
-    this._prepareContents(data);
+    this._prepareContents(context);
 
     // Get contents weight
     const usystem = pf1.utils.getWeightSystem();
-    data.weight = {
+    context.weight = {
       contents: this.item.system.weight.converted.contents,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
@@ -141,17 +106,17 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       this.item.getValue({ recursive: false, inLowestDenomination: true }) -
       coinage;
 
-    data.totalValue = pf1.utils.currency.split(cpValue);
-    data.sellValue = pf1.utils.currency.split(cpSellValue);
-    data.currency = pf1.utils.currency.split(coinage);
+    context.totalValue = pf1.utils.currency.split(cpValue);
+    context.sellValue = pf1.utils.currency.split(cpSellValue);
+    context.currency = pf1.utils.currency.split(coinage);
 
     // Set value labels
-    data.labels ??= {};
-    data.labels.totalValue = game.i18n.format("PF1.SplitValue", data.totalValue);
-    data.labels.sellValue = game.i18n.format("PF1.SplitValue", data.sellValue);
-    data.labels.currency = game.i18n.format("PF1.SplitValue", data.currency);
+    context.labels ??= {};
+    context.labels.totalValue = game.i18n.format("PF1.SplitValue", context.totalValue);
+    context.labels.sellValue = game.i18n.format("PF1.SplitValue", context.sellValue);
+    context.labels.currency = game.i18n.format("PF1.SplitValue", context.currency);
 
-    return data;
+    return context;
   }
 
   /**
@@ -172,32 +137,53 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     });
   }
 
-  _prepareContents(data) {
+  _prepareContents(context) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = Object.values(pf1.config.sheetSections.inventory)
       .map((data) => ({ ...data }))
       .sort((a, b) => a.sort - b.sort);
 
-    // Partition items by category
-    const items = data.items.reduce((arr, item) => {
-      item.img = item.img || DEFAULT_TOKEN;
-      item.isStack = item.system.quantity ? item.system.quantity > 1 : false;
-      item.hasUses = item.system.uses && item.system.uses.max > 0;
-      item.isCharged = ["day", "week", "charges"].includes(item.system.uses?.per);
-      item.price = item.system.identified === false ? item.system.unidentified?.price ?? 0 : item.system.price ?? 0;
+    // The item's items
+    context.items = this.item.items.map((/** @type {pf1.documents.item.ItemPhysicalPF} */ item) => {
+      const itemData = item.system;
+      const i = { ...item };
+      i.id = item.id; // Alias
+      i.name = item.name;
+      i.img ||= item.getDefaultArtwork();
+      i.subType = item.subType;
+      i.document = item;
+      i.labels = item.getLabels();
+      i.isCharged = !item.isSingleUse && item.isCharged;
+      i.charges = i.isCharged ? item.charges : Infinity;
+      i.hasAttack = item.hasAttack;
+      i.hasDamage = item.hasDamage;
+      i.hasAction = item.hasAction || item.isCharged;
+      i.showUnidentifiedData = item.showUnidentifiedData;
 
-      const itemQuantity = item.system.quantity || 0;
-      const itemCharges = item.system.uses?.value || 0;
-      item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
-      item.destroyed = item.system.hp?.value <= 0;
-      item.disabled = item.empty || item.destroyed;
+      i.hasUses = item.system.uses?.max > 0;
+      //i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
 
-      arr.push(item);
-      return arr;
+      i.quantity = itemData.quantity || 0;
+      i.isStack = i.quantity > 1;
+      i.destroyed = itemData.hp?.value <= 0;
+      i.isEmpty = i.quantity <= 0;
+      i.isBroken = item.isBroken;
+
+      i.price = item.getValue({ single: true, recursive: false, sellValue: 1 });
+
+      if (!i.isEmpty && i.isCharged) {
+        if (i.charges <= 0) i.isEmpty = true;
+      }
+
+      i.disabled = i.isEmpty || i.destroyed || false;
+
+      return i;
     }, []);
 
+    context.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+
     // Organize Inventory
-    for (const i of items) {
+    for (const i of context.items) {
       const section = inventory.find((section) => this._applySectionFilter(i, section));
       if (section) {
         section.items ??= [];
@@ -207,7 +193,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       }
     }
 
-    data.inventory = inventory;
+    context.inventory = inventory;
   }
 
   async _renderInner(...args) {

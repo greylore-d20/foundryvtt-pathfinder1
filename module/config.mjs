@@ -1971,6 +1971,7 @@ export const conditionTypes = {
   deathEffects: "PF1.Condition.deathEffects",
   disease: "PF1.Condition.disease",
   energyDrain: "PF1.Condition.energyDrain",
+  exhausted: "PF1.Condition.exhausted",
   fatigue: "PF1.Condition.fatigued",
   fear: "PF1.Condition.fear",
   mindAffecting: "PF1.Condition.mindAffecting",

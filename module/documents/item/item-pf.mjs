@@ -368,9 +368,6 @@ export class ItemPF extends ItemBasePF {
 
   /** @type {number} Remaining charges */
   get charges() {
-    // No actor? No charges!
-    if (!this.actor) return 0;
-
     // Get linked charges
     const link = this.links?.charges;
     if (link) return link.charges;

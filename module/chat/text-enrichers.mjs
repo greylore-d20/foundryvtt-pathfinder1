@@ -352,13 +352,14 @@ export function onAction(event, target) {
  * @param {HTMLElement} target - Triggered element
  */
 export function onHealth(event, target) {
-  const { command, formula, speaker, nonlethal } = target.dataset;
+  const { command, formula, speaker, nonlethal, dual } = target.dataset;
 
   const actors = getRelevantActors(target);
 
   // Add additional options
   const options = {};
   if (nonlethal) options.asNonlethal = true;
+  if (dual) options.dualHeal = true;
 
   for (const actor of actors) {
     let value = RollPF.safeRollAsync(formula, actor.getRollData()).total;

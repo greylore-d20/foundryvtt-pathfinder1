@@ -115,10 +115,12 @@ The key is heal formula instead.
 | :------------------- | :------------------------------------------- |
 | `@Heal[3d6]`         | Rolls 3d6 and heals the actors by that much. |
 | `@Heal[6;nonlethal]` | Heals 6 nonlethal damage.                    |
+| `@Heal[17;dual]`     | Heals 17 health _and_ nonlethal damage.      |
 
 #### Special Options
 
 - `nonlethal` - Heals nonlethal damage.
+- `dual` - Heals both normal health and nonlethal.
 
 ### `@Save`
 

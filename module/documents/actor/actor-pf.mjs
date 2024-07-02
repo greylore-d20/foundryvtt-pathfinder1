@@ -3709,6 +3709,7 @@ export class ActorPF extends ActorBasePF {
    * @param {Element} [options.element] - Triggering element, if any.
    * @param {ChatMessage} [options.message] - Chat message reference if any. This is to help modules, the system does not use it.
    * @param {DamageInstance[]} [options.instances] - Individual instances of damage. This is not processed currently.
+   * @param {boolean} [options.dualHeal] - Is this dual dealing? If enabled, healing affects both normal health and nonlethal.
    * @returns {Promise<false|Actor[]>} - False if cancelled or array of updated actors.
    */
   static async applyDamage(
@@ -3719,6 +3720,7 @@ export class ActorPF extends ActorBasePF {
       asNonlethal = false,
       targets = null,
       critMult = 0,
+      dualHeal = false,
       asWounds = false,
       instances = [],
       event,
@@ -3727,6 +3729,8 @@ export class ActorPF extends ActorBasePF {
     } = {}
   ) {
     if (value == 0 || !Number.isFinite(value)) return void console.warn("Attempting to apply 0 damage.");
+
+    const isHealing = value < 0;
 
     const promises = [];
     let controlled = canvas.tokens.controlled,
@@ -3823,16 +3827,27 @@ export class ActorPF extends ActorBasePF {
         else {
           // Nonlethal damage
           let nld = 0;
-          if (asNonlethal && value > 0) {
-            nld = Math.min(hp.max - hp.nonlethal, value);
-            value -= nld;
+          if (asNonlethal) {
+            if (value > 0) {
+              nld = Math.min(hp.max - hp.nonlethal, value);
+              value -= nld;
+            }
+            // Nonlethal healing
+            else if (value < 0) {
+              nld = value;
+              value = 0;
+            }
+          }
+          // Dual healing heals also nonlethal
+          else if (isHealing && dualHeal) {
+            nld = value;
           }
 
           // Temp HP adjustment
           const dt = value > 0 ? Math.min(tmp, value) : 0;
 
           // Create update data
-          if (nld != 0) updateData["system.attributes.hp.nonlethal"] = hp.nonlethal + nld;
+          if (nld != 0) updateData["system.attributes.hp.nonlethal"] = Math.max(0, hp.nonlethal + nld);
           if (dt != 0) updateData["system.attributes.hp.temp"] = tmp - dt;
           const newHp = Math.min(hp.value - (value - dt), hp.max);
           if (newHp != hp.value) updateData["system.attributes.hp.value"] = newHp;
@@ -3844,7 +3859,7 @@ export class ActorPF extends ActorBasePF {
     };
 
     if (pf1.skipConfirmPrompt ? !forceDialog : forceDialog) {
-      if (value < 0) {
+      if (isHealing) {
         healingInvert = -1;
         value = -1 * value;
       }

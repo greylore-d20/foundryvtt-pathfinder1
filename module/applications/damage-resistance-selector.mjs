@@ -1,6 +1,7 @@
 import { damageTypes } from "module/registry/damage-types.mjs";
 import { materialTypes } from "module/registry/material-types.mjs";
 import { DamageTypeSelector } from "./damage-type-selector.mjs";
+import { naturalSort } from "@utils";
 
 /**
  * Extend the FormApplication to handle creating, removing, and editing
@@ -37,7 +38,7 @@ export class ActorResistanceSelector extends FormApplication {
     this.entries = resistances.value;
 
     /** Processing Damage sources */
-    const damageOBJ = pf1.registry.damageTypes.filter((dType) => !dType.isModifier);
+    const damageOBJ = naturalSort([...pf1.registry.damageTypes], "name").filter((dType) => !dType.isModifier);
     const damages = {};
 
     // Loop through the registry to filter not-applicable damage sources
@@ -64,7 +65,7 @@ export class ActorResistanceSelector extends FormApplication {
         damages[dType] = pf1.config.damageResistances[dType];
       });
 
-      pf1.registry.materialTypes.forEach((material) => {
+      naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
         if (
           material.allowed.lightBlade ||
           material.allowed.oneHandBlade ||

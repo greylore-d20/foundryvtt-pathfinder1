@@ -1,3 +1,5 @@
+import { naturalSort } from "@utils";
+
 export class ItemActionSheet extends FormApplication {
   constructor(...args) {
     super(...args);
@@ -222,7 +224,7 @@ export class ItemActionSheet extends FormApplication {
   _prepareMaterialsAndAddons() {
     const materialList = {};
     const addonList = [];
-    pf1.registry.materialTypes.forEach((material) => {
+    naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
       if (
         material.allowed.lightBlade ||
         material.allowed.oneHandBlade ||

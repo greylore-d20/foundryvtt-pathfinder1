@@ -1,4 +1,10 @@
-import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets, enrichHTMLUnrolledAsync } from "@utils";
+import {
+  adjustNumberByStringCommand,
+  getBuffTargetDictionary,
+  getBuffTargets,
+  enrichHTMLUnrolledAsync,
+  naturalSort,
+} from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { SpeedEditor } from "@app/speed-editor.mjs";
@@ -911,7 +917,7 @@ export class ItemSheetPF extends ItemSheet {
     const addonList = [];
     const basicList = {};
 
-    pf1.registry.materialTypes.forEach((material) => {
+    naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
       if (this._isMaterialAllowed(itemType, itemSubtype, subType, material)) {
         materialList[material.id] = material.name;
       }

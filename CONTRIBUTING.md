@@ -26,7 +26,7 @@ When creating a new issue, the following information is especially appreciated:
 
 ## Localization
 
-Translations of `lang` files are managed using [Weblate](https://weblate.foundryvtt-hub.com/git/pf1/main/), a web-based translation platform.
+Translations of `lang` files are managed using [Weblate](https://weblate.vtthub.de/projects/pf1/), a web-based translation platform.
 Editing translations on Weblate is the preferred way to contribute translations.
 
 The contents of the help browser are written in Markdown and managed separately.

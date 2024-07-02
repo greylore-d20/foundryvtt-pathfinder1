@@ -9,8 +9,8 @@
   <a href="https://www.foundryvtt-hub.com/package/pf1/">
     <img src="https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fpf1%2Fshield%2Fendorsements" alt="Foundry Hub Endorsements" />
   </a>
-  <a href="https://weblate.foundryvtt-hub.com/engage/pf1/">
-    <img src="https://weblate.foundryvtt-hub.com/widgets/pf1/-/svg-badge.svg" alt="Translation status" />
+  <a href="https://weblate.vtthub.de/engage/pf1/">
+    <img src="https://weblate.vtthub.de/widgets/pf1/-/svg-badge.svg" alt="Translation status" />
   </a>
 </div>
 

@@ -33,6 +33,13 @@
       <h4 class="trait-type">{{labels.traitType}}</h4>
       {{/if}}
 
+      {{#if labels.raceType}}
+      <h4 class="trait-racetype">{{labels.raceType}}</h4>
+      {{/if}}
+
+      {{#if labels.traitCategory}}
+      <h4 class="trait-category">{{labels.traitCategory}}</h4>
+      {{/if}}
     </header>
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
@@ -107,7 +114,7 @@
           </select>
         </div>
       </div>
-      
+
       {{! Racial trait }}
       {{else if (eq system.subType "racial")}}
       <div class="form-group select">

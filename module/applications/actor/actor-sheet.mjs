@@ -1279,7 +1279,7 @@ export class ActorSheetPF extends ActorSheet {
           { path: "@attributes.hp.temp", value: system.attributes.hp.temp },
           { path: "@attributes.hp.nonlethal", value: system.attributes.hp.nonlethal }
         );
-        sources.push({ sources: getSource("system.attributes.hp.max") });
+        sources.push({ sources: getSource("system.attributes.hp.max"), untyped: true });
         break;
       case "vigor": // Wounds & Vigor
         paths.push(
@@ -1290,6 +1290,7 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({
           sources: getSource("system.attributes.vigor.max"),
+          untyped: true,
         });
         break;
       case "wounds": // Wounds & Vigor
@@ -1301,6 +1302,7 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({
           sources: getSource("system.attributes.wounds.max"),
+          untyped: true,
         });
         break;
       case "speed": {

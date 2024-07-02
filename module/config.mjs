@@ -1004,6 +1004,22 @@ export const traitTypes = {
   drawback: "PF1.Trait.drawback",
 };
 
+export const racialTraitCategories = {
+  defense: "PF1.RacialTraitCategories.defense",
+  featSkills: "PF1.RacialTraitCategories.featSkills",
+  magical: "PF1.RacialTraitCategories.magical",
+  senses: "PF1.RacialTraitCategories.senses",
+  offense: "PF1.RacialTraitCategories.offense",
+  other: "PF1.RacialTraitCategories.other",
+  weakness: "PF1.RacialTraitCategories.weakness",
+};
+
+export const raceTypes = {
+  standard: "PF1.RaceTypes.standard",
+  advanced: "PF1.RaceTypes.advanced",
+  monstrous: "PF1.RaceTypes.monstrous",
+};
+
 /**
  * Ability types, each with their short and their long form
  */

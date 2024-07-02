@@ -41,7 +41,12 @@ export class ItemFeatPF extends ItemPF {
     labels.featType = pf1.config.featTypes[subType];
 
     labels.abilityType = pf1.config.abilityTypes[this.system.abilityType]?.short;
-    labels.traitType = pf1.config.traitTypes[this.system.traitType];
+    if (this.subType === "trait") {
+      labels.traitType = pf1.config.traitTypes[this.system.traitType];
+    } else if (this.subType === "racial") {
+      labels.raceType = pf1.config.raceTypes[this.system.traitType];
+    }
+    labels.traitCategory = pf1.config.racialTraitCategories[this.system.traitCategory];
 
     // Ability type
     if (abilityType && abilityType !== "none") {

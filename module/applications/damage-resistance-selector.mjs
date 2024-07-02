@@ -67,12 +67,14 @@ export class ActorResistanceSelector extends FormApplication {
 
       naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
         if (
-          material.allowed.lightBlade ||
-          material.allowed.oneHandBlade ||
-          material.allowed.twoHandBlade ||
-          material.allowed.rangedWeapon
+          material.dr &&
+          !material.treatedAs &&
+          (material.allowed.lightBlade ||
+            material.allowed.oneHandBlade ||
+            material.allowed.twoHandBlade ||
+            material.allowed.rangedWeapon)
         ) {
-          damages[material.id] = material.name;
+          damages[material.id] = material.shortName || material.name;
         }
       });
     }

@@ -3643,11 +3643,13 @@ export class ActorPF extends ActorBasePF {
       const { amount, operator } = entry;
       const type1 =
         pf1.registry.damageTypes.get(entry.types[0])?.name ??
+        pf1.registry.materialTypes.get(entry.types[0])?.shortName ??
         pf1.registry.materialTypes.get(entry.types[0])?.name ??
         pf1.config.damageResistances[entry.types[0]] ??
         "-";
       const type2 =
         pf1.registry.damageTypes.get(entry.types[1])?.name ??
+        pf1.registry.materialTypes.get(entry.types[1])?.shortName ??
         pf1.registry.materialTypes.get(entry.types[1])?.name ??
         pf1.config.damageResistances[entry.types[1]] ??
         "";

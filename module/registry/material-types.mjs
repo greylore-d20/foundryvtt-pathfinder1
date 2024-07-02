@@ -11,6 +11,9 @@ export class MaterialType extends RegistryEntry {
   static defineSchema() {
     return {
       ...super.defineSchema(),
+      dr: new fields.BooleanField({ required: false, initial: false }),
+      shortName: new fields.StringField({ required: false, initial: undefined, blank: false, localize: true }),
+      treatedAs: new fields.StringField({ required: false, initial: undefined, blank: false }),
       baseMaterial: new fields.StringField({ required: false, initial: "steel" }),
       addon: new fields.BooleanField({ required: false, initial: false }),
       basic: new fields.BooleanField({ required: false, initial: false }),
@@ -93,6 +96,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "adamantine",
       name: "PF1.Materials.Types.Adamantine",
+      dr: true,
       masterwork: true,
       allowed: {
         buckler: false,
@@ -117,6 +121,8 @@ export class MaterialTypes extends Registry {
     {
       _id: "alchemicalsilver",
       name: "PF1.Materials.Types.AlchemicalSilver",
+      shortName: "PF1.Materials.Types.Silver",
+      dr: true,
       addon: true,
       allowed: {
         buckler: false,
@@ -244,6 +250,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "coldiron",
       name: "PF1.Materials.Types.ColdIron",
+      dr: true,
       price: {
         multiplier: 2.0,
       },
@@ -626,6 +633,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "mithral",
       name: "PF1.Materials.Types.Mithral",
+      treatedAs: "alchemicalsilver",
       masterwork: true,
       armor: {
         acp: 3,
@@ -646,6 +654,15 @@ export class MaterialTypes extends Registry {
       },
       weight: {
         multiplier: 0.5,
+      },
+    },
+    {
+      _id: "nexavarianSteel",
+      name: "PF1.Materials.Types.NexavarianSteel",
+      dr: true,
+      treatedAs: "coldiron",
+      price: {
+        multiplier: 1.5,
       },
     },
     {
@@ -826,6 +843,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "sunsilver",
       name: "PF1.Materials.Types.Sunsilver",
+      treatedAs: "alchemicalsilver",
       masterwork: true,
       hardness: 8,
       healthMultiplier: 0.34,
@@ -1000,11 +1018,13 @@ export class MaterialTypes extends Registry {
       _id: "magic",
       name: "PF1.Materials.Types.Magic",
       addon: true,
+      dr: true,
     },
     {
       _id: "epic",
       name: "PF1.Materials.Types.Epic",
       addon: true,
+      dr: true,
     },
   ];
 }

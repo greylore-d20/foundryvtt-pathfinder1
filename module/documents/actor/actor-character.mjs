@@ -84,6 +84,7 @@ export class ActorCharacterPF extends ActorPF {
    */
   getLevelExp(level, { rollData = null } = {}) {
     if (!Number.isInteger(level) || !(level >= 0)) throw new Error(`Level "${level}" must be zero or greater integer.`);
+    if (level === 0) return 0; // Explicit case for absolute minimum.
 
     const config = game.settings.get("pf1", "experienceConfig");
     const track = config.track;
@@ -109,7 +110,7 @@ export class ActorCharacterPF extends ActorPF {
       delete rollData.level; // Cleanup
     }
 
-    return Math.max(1, totalXP);
+    return totalXP;
   }
 
   /**

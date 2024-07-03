@@ -462,13 +462,20 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (!this.item.isOwner) return void ui.notifications.warn("PF1.Error.NoItemPermission", { localize: true });
 
     const { actorUuid, containerId } = data;
-    const item = await Item.implementation.fromDropData(data);
+    const droppedItem = await Item.implementation.fromDropData(data);
     let sourceActor = actorUuid ? await fromUuid(actorUuid) : null;
-    sourceActor ??= item.actor;
+    sourceActor ??= droppedItem.actor;
+
+    if (droppedItem === this.item || droppedItem === this.item.rootItem)
+      throw new Error("Can not place item into itself");
 
     const sameActor = sourceActor && sourceActor === this.item.actor;
 
-    const itemData = game.items.fromCompendium(item, { clearFolder: true, keepId: sameActor, clearSort: !sameActor });
+    const itemData = game.items.fromCompendium(droppedItem, {
+      clearFolder: true,
+      keepId: sameActor,
+      clearSort: !sameActor,
+    });
 
     // Sort item
     if (sameActor && containerId === this.item.id) {
@@ -486,7 +493,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Create or transfer item
-    if (item.isPhysical) {
+    if (droppedItem.isPhysical) {
       await this.item.createContainerContent(itemData);
       // TODO: Verify item was created so we don't delete source item without reason
 
@@ -496,7 +503,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             .find((i) => i.id === data.itemId && i.parentItem?.id === containerId)
             ?.parentItem.deleteContainerContent(data.itemId);
         } else {
-          sourceActor.items.get(item.id)?.delete();
+          sourceActor.items.get(droppedItem.id)?.delete();
         }
       }
     }

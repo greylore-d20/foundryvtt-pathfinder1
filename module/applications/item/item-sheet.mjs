@@ -1753,6 +1753,10 @@ export class ItemSheetPF extends ItemSheet {
     return this.isEditable;
   }
 
+  /**
+   * @internal
+   * @param {DragEvent} event
+   */
   async _onDrop(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -1828,6 +1832,28 @@ export class ItemSheetPF extends ItemSheet {
         const linksTab = event.target.closest(".tab.links .tab[data-group='links']");
         if (linksTab) {
           this._onLinksDrop(event, data);
+        }
+        break;
+      }
+      case "pf1ContentSourceEntry": {
+        const src = data.data;
+        const origin = fromUuidSync(data.uuid);
+        if (!origin) return;
+        if (origin === this.item) return; // From same item
+
+        const sources = this.item.toObject().system.sources ?? [];
+
+        // Disallow same ID source copy
+        if (src.id && sources.some((osrc) => (src.id ? osrc.id === src.id : osrc.title === src.title))) {
+          ui.notifications.warn("PF1.ContentSource.Errors.DuplicateID", { localize: true });
+          return;
+        }
+
+        sources.push(src);
+        await this.document.update({ "system.sources": sources });
+        if (!event.shiftKey) {
+          pf1.applications.ContentSourceEditor.open(this.item);
+          // TODO: Activate desired tab.
         }
         break;
       }

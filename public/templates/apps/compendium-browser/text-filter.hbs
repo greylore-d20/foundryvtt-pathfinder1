@@ -5,11 +5,7 @@
     {{/if}}
     <div class="form-fields">
       <input
-        {{#if choice.type}}
-          type="{{choice.type}}"
-        {{else}}
-          type="text"
-        {{/if}}
+        type="{{choice.type}}"
         name="filter.{{../id}}.choice.{{choice.key}}"
         value="{{choice.value}}"
         placeholder="{{choice.placeholder}}"

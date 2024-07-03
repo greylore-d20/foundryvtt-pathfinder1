@@ -79,7 +79,7 @@ export class HelpBrowserPF extends Application {
 
     // Get markdown string from localisation, and parse it
     data.pageContent = this.#converter.makeHtml(game.i18n.localize(`PF1.${this.currentUrl}`));
-    data.isHome = this.currentUrl === "Help/Home";
+    data.url = this.currentUrl.slugify({ strict: true });
 
     return data;
   }
@@ -190,15 +190,6 @@ export class HelpBrowserPF extends Application {
         replace: function (match, src, _offset, _string) {
           const foundrySrc = game.i18n.localize(`PF1.${src.startsWith("/") ? src.slice(1) : src}`);
           return match.replace(src, foundry.utils.getRoute(`systems/pf1/${foundrySrc}`));
-        },
-      },
-      // Replace `::: <block>` with `<div class="<block>">` and `:::` with `</div>
-      {
-        type: "output",
-        regex: /<p>:::(\s\w+)?<\/p>/g,
-        replace: function (_match, blockName, _offset, _string) {
-          if (blockName) return `<div class="${blockName.slugify()}">`;
-          else return "</div>";
         },
       },
     ];

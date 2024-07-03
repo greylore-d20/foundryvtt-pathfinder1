@@ -2,26 +2,16 @@
 
 ## Rules
 
-::: articles
-
 - [Core Rules](Help/Rules)
 - [Optional](Help/Rules/Optional)
 - [Homebrew](Help/Rules/Homebrew)
 
-:::
-
 ## Actors
-
-::: articles
 
 - [Character](Help/Actors/Character)
 - [NPC](Help/Actors/NPC)
 
-:::
-
 ## Items
-
-::: articles
 
 ### Item Types
 
@@ -40,13 +30,7 @@
 - [Flags](Help/Items/Flags)
 - [Script Calls](Help/Items/Script-Calls)
 
-:::
-
 ## Special
-
-::: articles
 
 - [Formulas](Help/Formulas)
 - [Enrichers](Help/Enrichers)
-
-:::

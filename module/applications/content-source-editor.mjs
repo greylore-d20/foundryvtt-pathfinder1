@@ -213,14 +213,14 @@ export class ContentSourceEditor extends DocumentSheet {
     if (origin === this.document) {
       if (!Number.isFinite(dropIndex) || dropIndex < 0) return;
       if (dropIndex === dropData.index) return;
-      const sources = foundry.utils.deepClone(this.document.system.sources ?? []);
+      const sources = this.document.toObject().system.sources ?? [];
       const [moved] = sources.splice(dropData.index, 1);
       sources.splice(dropIndex, 0, moved);
       this.document.update({ "system.sources": sources });
     }
     // Copy
     else {
-      const sources = foundry.utils.deepClone(this.document.system.sources ?? []);
+      const sources = this.document.toObject().system.sources ?? [];
 
       // Disallow same ID source copy
       if (src.id && sources.some((osrc) => osrc.id === src.id)) return; // TODO: Add error notification?

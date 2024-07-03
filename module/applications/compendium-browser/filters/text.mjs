@@ -61,7 +61,7 @@ export class TextFilter extends baseFilter.BaseFilter {
       const key = input.name.split("choice.").pop();
       const choice = this.choices.get(key);
       if (choice) {
-        choice.value = this._parseInput(value);
+        choice.value = this._parseInput(value, choice);
         choice.active = Boolean(value);
       }
       this.compendiumBrowser.render();
@@ -69,16 +69,13 @@ export class TextFilter extends baseFilter.BaseFilter {
   }
 
   /**
-   * Parse the input string into a RegExp if valid.
+   * Parse the input before it is stored in the choice value.
    *
    * @param {string} textInput - The text input to parse.
-   * @returns {RegExp | string} - The parsed RegExp if valid, otherwise the original string.
+   * @param {import("./base.mjs").FilterChoice} choice - The choice object for custom handle by choice.
+   * @returns {string} - The parsed value if any transformation, otherwise the original string.
    */
-  _parseInput(textInput) {
-    // Transform the plain string into a RegExp
-    if (textInput.match(/^\//) && textInput.match(/\/$/)) {
-      return new RegExp(textInput.replace(/^\//, "").replace(/\/$/, ""));
-    }
+  _parseInput(textInput, choice) {
     return textInput;
   }
 }

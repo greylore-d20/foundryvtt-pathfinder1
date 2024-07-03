@@ -10,13 +10,25 @@ export class NumberRangeFilter extends TextFilter {
     { key: "max", label: "PF1.Maximum", placeholder: "∞", type: "number" },
   ];
 
+  /** @inheritdoc */
+  _parseInput(textInput, choice) {
+    let parsedInput = super._parseInput(textInput, choice);
+    if (choice.key === "min") {
+      parsedInput = Number(parsedInput) || 0;
+    } else if (choice.key === "max") {
+      parsedInput = Number(parsedInput) || Number.POSITIVE_INFINITY;
+    } else {
+      throw new Error("Invalid choice key for NumberRangeFilter");
+    }
+    return parsedInput;
+  }
+
   /** @inheritDoc */
   applyFilter(entry) {
     const value = foundry.utils.getProperty(entry, this.constructor.indexField) ?? 0;
-    const min = this.choices.get("min").value ?? 0;
-    const max = this.choices.get("max").value ?? Number.POSITIVE_INFINITY;
-    if (value < Number(min)) return false;
-    if (value > Number(max)) return false;
+    const min = this.choices.get("min").value;
+    const max = this.choices.get("max").value;
+    if (value < min || value > max) return false;
     return true;
   }
 }

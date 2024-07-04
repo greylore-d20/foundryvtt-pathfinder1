@@ -1,6 +1,6 @@
 {
   "PF1": {
-    "Title": "Pathfinder 1",
+    "Title": "Pathfinder 1e",
     "OptionalAndVariantRules": "Reglas Opcionales y Alternativas",
     "WoundThresholdOverride": "Anular Umbrales de Herida",
     "ExperienceConfigName": "Configuración de Experiencia",
@@ -735,7 +735,8 @@
         "round": "Por ronda",
         "day": "Al día",
         "week": "A la semana",
-        "charges": "Cargas"
+        "charges": "Cargas",
+        "hour": "Por hora"
       }
     },
     "MaximumUsesFormula": "Fórmula de Usos Máximos",
@@ -1429,7 +1430,7 @@
       "flails": "Mayales",
       "hammers": "Martillos",
       "monk": "Monje",
-      "natural": "Natural",
+      "natural": "Armas naturales",
       "polearms": "Armas de hasta",
       "siegeEngines": "Armas de asedio",
       "spears": "Lanzas",
@@ -1627,7 +1628,7 @@
             "Plural": "Equipo de aventurero"
           },
           "animal": {
-            "Single": "Animal",
+            "Single": "Animal/Montura",
             "Plural": "Animales"
           },
           "animalGear": {
@@ -1951,7 +1952,7 @@
       },
       "special": {
         "Single": "Especial",
-        "Plural": "Espciales"
+        "Plural": "Especiales"
       },
       "nonaction": {
         "Single": "Sin acción"
@@ -2038,7 +2039,7 @@
     },
     "Warning": {
       "NoSizeDie": "No se pudo determinar el dado del tamaño apropiado para {formula}, estandarizando la tirada a {fallback}",
-      "DuplicateDFlag": "Etiqueta de diccionario conflictiva \"{key}\" en el item \"{item}\" (con el identificador \"{tag}\") en el actor \"{actor}\"",
+      "DuplicateDFlag": "Etiqueta de diccionario conflictiva \"{key}\" en el objeto \"{item}\" (con el identificador \"{tag}\") en el actor \"{actor}\"",
       "DuplicateTag": "Se encontró una etiqueta de elemento duplicada \"{tag}\" en el elemento \"{item}\" en el actor \"{actor}\"",
       "NoDiceAllowedInFormula": "No se permiten tiradas de dados en la fórmula '{formula}' para {context}",
       "InsufficientAmmunition": "No tienes suficiente munición del tipo {type}",
@@ -2246,7 +2247,9 @@
         "Stone": "Piedra",
         "Wood": "Madera",
         "Magic": "Mágica",
-        "Epic": "Épica"
+        "Epic": "Épica",
+        "Silver": "Plata",
+        "NexavarianSteel": "Acero nexavariano"
       }
     },
     "NaturalArmor": "Armadura natural",
@@ -2412,6 +2415,9 @@
         "PagesHint": "Número de la página, un rango (ej: 276-278) o una lista (ej: 124,270)",
         "Publisher": "Editorial",
         "PublisherHint": "ej: Paizo"
+      },
+      "Errors": {
+        "DuplicateID": "Una fuente con el mismo ID ya existe."
       }
     },
     "EnrichedText": {
@@ -2470,7 +2476,8 @@
             "Fast": "Rápido",
             "Custom": "Personalizado"
           },
-          "CustomPlaceholder": "ej: '@level * 1000'"
+          "CustomPlaceholder": "ej: '@level * 1000'",
+          "CustomUsage": "La fórmula de experiencia personalizada es acumulativa. Esto significa que, por ejemplo, para imitar la experiencia al estilo de PF2, simplemente tendrías que introducir <code>1000</code>, ya que cada nivel requiere 1000 de experiencia exactamente, mientras que establecerlo en <code>@nivel * 1000</code> significaría que cada nivel requiere mil más que el anterior. Utiliza los datos de la tirada normal del personaje añadiendo <code>@nivel</code> para el nivel actual."
         },
         "Disable": "Desactivar",
         "DisableHint": "Desactiva el Seguimiento de Experiencia del sistema, así como barras de experiencia, detectores de subida de nivel, categorías de avance de personaje, etc.",
@@ -2658,6 +2665,22 @@
       "OverlandVariantL": "Variante de cómo se calcula la velocidad por tierra con distancias métricas.",
       "OverlandMetricRounded": "Redondeado (Alemás & Francés)",
       "OverlandMetricExact": "Exacto (Español)"
+    },
+    "RacePoints": "Puntos de raza",
+    "RacialTraitCategories": {
+      "defense": "Defensa",
+      "featSkills": "Rasgos y Habilidades",
+      "magical": "Mágica",
+      "senses": "Sentidos",
+      "offense": "Ataque",
+      "other": "Otro",
+      "weakness": "Debilidades"
+    },
+    "RaceType": "Tipo de raza",
+    "RaceTypes": {
+      "standard": "Estándar",
+      "advanced": "Avanzada",
+      "monstrous": "Monstruosa"
     }
   },
   "TOKEN": {

@@ -531,6 +531,14 @@ export class ActorPF extends ActorBasePF {
       if (this.system.attributes.bab.value) this.system.attributes.bab.total += this.system.attributes.bab.value ?? 0;
     }
 
+    // Refresh senses
+    for (const sense of Object.values(this.system.traits.senses)) {
+      if (typeof sense !== "object") continue;
+
+      sense.total = sense.value;
+      sense.base = sense.total;
+    }
+
     this._prepareClassSkills();
 
     // Reset HD

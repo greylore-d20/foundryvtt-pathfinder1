@@ -2201,6 +2201,12 @@ export const buffTargets = /** @type {const} */ ({
   concentration: { label: "PF1.Concentration", category: "spell", sort: 220000 },
   cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
   dc: { label: "PF1.SpellDC", category: "spell", sort: 240000 },
+  sensedv: { label: "PF1.Sense.darkvision", category: "vision", sort: 100000 },
+  sensets: { label: "PF1.Sense.tremorsense", category: "vision", sort: 110000 },
+  sensebse: { label: "PF1.Sense.blindsense", category: "vision", sort: 120000 },
+  sensebs: { label: "PF1.Sense.blindsight", category: "vision", sort: 130000 },
+  sensesc: { label: "PF1.Sense.scent", category: "vision", sort: 140000 },
+  sensetr: { label: "PF1.Sense.trueseeing", category: "vision", sort: 150000 },
 });
 
 /**
@@ -2219,6 +2225,7 @@ export const buffTargetCategories = /** @type {const} */ ({
   speed: { label: "PF1.Movement.Speed" },
   spell: { label: "PF1.BuffTarSpells" },
   misc: { label: "PF1.Misc" },
+  vision: { label: "PF1.Vision" },
 });
 
 export const contextNoteTargets = {

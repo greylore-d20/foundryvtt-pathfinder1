@@ -126,6 +126,8 @@ export class ActionUse {
     rollData.chargeCost ||= 0;
     rollData.chargeCostBonus ||= 0;
 
+    rollData.critMultBonus ||= 0;
+
     return rollData;
   }
 

@@ -1608,11 +1608,9 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Enable senses based on flags
-    console.log(this.system);
     const senses = this.system.traits.senses;
     for (const senseId of ["ll", "si", "sid"]) {
       const sense = senses[senseId];
-      console.log(sense.base, "hasSense" + senseId.toUpperCase(), this.changeFlags);
       if (sense) {
         sense.enabled = sense.base || this.changeFlags["hasSense" + senseId.toUpperCase()];
       }

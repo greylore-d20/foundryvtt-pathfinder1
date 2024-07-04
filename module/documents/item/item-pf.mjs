@@ -1026,7 +1026,6 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    console.log(this, changed);
     if ((changed?.system?.active !== undefined && this.adjustsVision) || this.isVisionChange(changed)) {
       const initializeVision = true;
       const refreshLighting = this.system.changeFlags.hasSenseLL || false;

@@ -543,7 +543,7 @@ export class ActorPF extends ActorBasePF {
           break;
 
         default:
-          sense.total = sense.value;
+          sense.total = pf1.utils.convertDistanceBack(sense.value)[0];
           sense.base = sense.total;
           break;
       }

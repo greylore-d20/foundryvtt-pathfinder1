@@ -26,41 +26,41 @@
 
   {{!-- Darkvision --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.darkvision"}} <span class="units">(ft)</span></label>
+    <label>{{localize "PF1.Sense.darkvision"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="5{" name="system.traits.senses.dv.value" value="{{senses.dv.value}}" placeholder="0">
+      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.dv.value" value="{{senses.dv.value}}" placeholder="0">
     </div>
   </div>
 
   {{!-- Tremorsense --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.tremorsense"}} <span class="units">(ft)</span></label>
+    <label>{{localize "PF1.Sense.tremorsense"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="5" name="system.traits.senses.ts.value" value="{{senses.ts.value}}"  placeholder="0">
+      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.ts.value" value="{{senses.ts.value}}"  placeholder="0">
     </div>
   </div>
 
   {{!-- Blindsense --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.blindsense"}} <span class="units">(ft)</span></label>
+    <label>{{localize "PF1.Sense.blindsense"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="5" name="system.traits.senses.bse.value" value="{{senses.bse.value}}" placeholder="0">
+      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.bse.value" value="{{senses.bse.value}}" placeholder="0">
     </div>
   </div>
 
   {{!-- Blindsight --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.blindsight"}} <span class="units">(ft)</span></label>
+    <label>{{localize "PF1.Sense.blindsight"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="5" name="system.traits.senses.bs.value" value="{{senses.bs.value}}" placeholder="0">
+      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.bs.value" value="{{senses.bs.value}}" placeholder="0">
     </div>
   </div>
 
   {{!-- Scent --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.scent"}}* <span class="units">(ft)</span></label>
+    <label>{{localize "PF1.Sense.scent"}}* <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="5" name="system.traits.senses.sc.value" value="{{senses.sc.value}}" placeholder="0">
+      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.sc.value" value="{{senses.sc.value}}" placeholder="0">
     </div>
   </div>
 
@@ -74,9 +74,9 @@
 
   {{!-- True seeing --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.trueseeing"}} <span class="units">(ft)</span></label>
+    <label>{{localize "PF1.Sense.trueseeing"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="number" min="0" step="5" name="system.traits.senses.tr.value" value="{{senses.tr.value}}" placeholder="0">
+      <input type="number" data-dtype="number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.tr.value" value="{{senses.tr.value}}" placeholder="0">
     </div>
   </div>
 

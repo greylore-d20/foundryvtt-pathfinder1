@@ -79,7 +79,7 @@ export class HelpBrowserPF extends Application {
 
     // Get markdown string from localisation, and parse it
     data.pageContent = this.#converter.makeHtml(game.i18n.localize(`PF1.${this.currentUrl}`));
-    data.isHome = this.currentUrl === "Help/Home";
+    data.url = this.currentUrl.slugify({ strict: true });
 
     return data;
   }
@@ -160,6 +160,12 @@ export class HelpBrowserPF extends Application {
     const links = html.find("a[href]");
     for (const l of links) {
       const href = l.getAttribute("href");
+      if (!href.startsWith("Help")) {
+        l.addEventListener("contextmenu", (event) => {
+          event.stopImmediatePropagation();
+        });
+        continue;
+      }
       l.removeAttribute("href");
       // Store target in dataset
       l.dataset.url = href;
@@ -190,15 +196,6 @@ export class HelpBrowserPF extends Application {
         replace: function (match, src, _offset, _string) {
           const foundrySrc = game.i18n.localize(`PF1.${src.startsWith("/") ? src.slice(1) : src}`);
           return match.replace(src, foundry.utils.getRoute(`systems/pf1/${foundrySrc}`));
-        },
-      },
-      // Replace `::: <block>` with `<div class="<block>">` and `:::` with `</div>
-      {
-        type: "output",
-        regex: /<p>:::(\s\w+)?<\/p>/g,
-        replace: function (_match, blockName, _offset, _string) {
-          if (blockName) return `<div class="${blockName.slugify()}">`;
-          else return "</div>";
         },
       },
     ];

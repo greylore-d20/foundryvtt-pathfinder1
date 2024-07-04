@@ -4539,7 +4539,7 @@ export class ActorPF extends ActorBasePF {
       Object.entries(this.itemFlags?.boolean ?? {}).map(([key, { sources }]) => [key, sources.length > 0 ? 1 : 0])
     );
 
-    result.range = this.system.traits?.reach?.total ?? NaN;
+    result.range = this.system.traits?.reach?.total ?? { melee: NaN, reach: NaN };
 
     // Add class info
     result.classes = this.classes;

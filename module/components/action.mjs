@@ -243,11 +243,10 @@ export class ItemAction {
     if (type === "min" && !["reach", "ft", "mi", "seeText"].includes(baseRange)) return 0;
 
     if (!rangeType) {
-      if (type === "min") {
-        // Downgrade range to melee when getting minimum range of reach weapons and no explicit minimum range is defined
-        if (baseRange === "reach") rangeType = "melee";
-        else return 0;
-      } else return null;
+      if (type !== "min") return null;
+      // Special handling for reach minimum range to account for natural reach when no explicit minimum range is defined
+      if (baseRange === "reach") rangeType = "natural";
+      else return 0;
     }
 
     rollData ??= this.getRollData();

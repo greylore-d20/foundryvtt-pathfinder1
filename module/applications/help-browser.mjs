@@ -160,6 +160,7 @@ export class HelpBrowserPF extends Application {
     const links = html.find("a[href]");
     for (const l of links) {
       const href = l.getAttribute("href");
+      if (!href.startsWith("Help")) continue;
       l.removeAttribute("href");
       // Store target in dataset
       l.dataset.url = href;

@@ -532,11 +532,21 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Refresh senses
-    for (const sense of Object.values(this.system.traits.senses)) {
+    for (const [senseId, sense] of Object.entries(this.system.traits.senses)) {
       if (typeof sense !== "object") continue;
 
-      sense.total = sense.value;
-      sense.base = sense.total;
+      switch (senseId) {
+        case "ll":
+        case "si":
+        case "sid":
+          sense.enabled = sense.base;
+          break;
+
+        default:
+          sense.total = sense.value;
+          sense.base = sense.total;
+          break;
+      }
     }
 
     this._prepareClassSkills();
@@ -1595,6 +1605,17 @@ export class ActorPF extends ActorBasePF {
         name: encLabel,
         value: maxDexLabel,
       });
+    }
+
+    // Enable senses based on flags
+    console.log(this.system);
+    const senses = this.system.traits.senses;
+    for (const senseId of ["ll", "si", "sid"]) {
+      const sense = senses[senseId];
+      console.log(sense.base, "hasSense" + senseId.toUpperCase(), this.changeFlags);
+      if (sense) {
+        sense.enabled = sense.base || this.changeFlags["hasSense" + senseId.toUpperCase()];
+      }
     }
 
     this.updateSpellbookInfo();

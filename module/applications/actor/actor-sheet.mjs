@@ -581,22 +581,32 @@ export class ActorSheetPF extends ActorSheet {
     const senses = this.actor.system.traits.senses ?? {};
 
     for (const [key, value] of Object.entries(senses)) {
-      if (value === 0 || value === false) continue;
-      else if (key === "ll" && senses[key].enabled) {
-        result[key] = pf1.config.senses[key];
-      } else if (key === "custom") {
-        if (value.length) {
-          value
-            .split(pf1.config.re.traitSeparator)
-            .map((c) => c.trim())
-            .filter((c) => c)
-            .forEach((svalue, idx) => (result[`custom${idx + 1}`] = svalue));
-        }
-      } else if (value === true) {
-        result[key] = pf1.config.senses[key];
-      } else if (typeof value === "object" && value.total > 0) {
-        const converted = pf1.utils.convertDistance(value.total);
-        result[key] = `${pf1.config.senses[key]} ${converted[0]} ${converted[1]}`;
+      // if (value === 0 || value === false) continue;
+      switch (key) {
+        case "ll":
+        case "si":
+        case "sid":
+          if (senses[key].enabled) {
+            result[key] = pf1.config.senses[key];
+          }
+          break;
+
+        case "custom":
+          if (value.length) {
+            value
+              .split(pf1.config.re.traitSeparator)
+              .map((c) => c.trim())
+              .filter((c) => c)
+              .forEach((svalue, idx) => (result[`custom${idx + 1}`] = svalue));
+          }
+          break;
+
+        default:
+          if (value.total > 0) {
+            const converted = pf1.utils.convertDistance(value.total);
+            result[key] = `${pf1.config.senses[key]} ${converted[0]} ${converted[1]}`;
+          }
+          break;
       }
     }
 
@@ -1580,8 +1590,6 @@ export class ActorSheetPF extends ActorSheet {
         break;
       case "senses":
         for (const i of ["dv", "ts", "bse", "bs", "sc", "tr"]) {
-          // paths.push({ path: `@traits.senses.${i}.value`, value: system.traits.senses[i]?.value, signed: false });
-
           const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
           paths.push({
             path: `@traits.senses.${i}.total`,

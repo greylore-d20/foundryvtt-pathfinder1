@@ -147,7 +147,7 @@ export class TokenDocumentPF extends TokenDocument {
     // -----------------------
 
     // See invisibility
-    if (senses.si) {
+    if (senses.si.enabled) {
       this.detectionModes.push({ id: "seeInvisibility", enabled: true, range: basicMode.range });
     }
 

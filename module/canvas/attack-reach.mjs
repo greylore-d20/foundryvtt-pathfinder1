@@ -236,7 +236,7 @@ class SquareGridHighlight extends AttackHighlightBase {
 
     squares.normal = this.#getReachSquares(token, r, minRange, { useReachRule: isFeet ? true : useReachRule });
 
-    if (rangeKey === "ft") {
+    if (isFeet) {
       // Add range increments
       const ftDistance = convertDistance(r)[0];
       const userLimit = game.settings.get("pf1", "performance").reachLimit;

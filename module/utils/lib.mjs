@@ -780,12 +780,14 @@ export async function enrichHTMLUnrolledAsync(
  * Resolve range formula to numeric value.
  *
  * @param {string} [formula] Range formula. Only used with "mi", "ft", "m", "km" and similar types.
- * @param {"melee"|"touch"|"reach"|"close"|"medium"|"long"|"mi"} [type="ft"] Formula type
+ * @param {"natural"|"melee"|"touch"|"reach"|"close"|"medium"|"long"|"mi"} [type="ft"] Formula type
  * @param {object} [rollData] Roll data for evaluating the formula
  * @returns {number} Range in feet for the defined formula
  */
 export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {
   switch (type) {
+    case "natural":
+      return rollData.traits?.reach?.natural?.melee ?? 0;
     case "melee":
     case "touch":
       return rollData.range?.melee ?? 0;

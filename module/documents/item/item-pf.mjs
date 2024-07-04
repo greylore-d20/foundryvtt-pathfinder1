@@ -943,6 +943,52 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Determine whether this item adjusts senses
+   *
+   * @type {boolean}
+   * @readonly
+   * @private
+   */
+  get adjustsVision() {
+    if (
+      this.system.changeFlags.hasSenseLL ||
+      this.system.changeFlags.hasSenseSI ||
+      this.system.changeFlags.hasSenseSID
+    ) {
+      return true;
+    }
+
+    for (const change of this.system?.changes || []) {
+      if (change.target.match(/^sense/i)) return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Determine whether a given change set affect senses
+   *
+   * @param {object} changes
+   * @returns {boolean}
+   * @internal
+   */
+  isVisionChange(changes) {
+    if (
+      changes?.system?.changeFlags?.hasSenseLL !== undefined ||
+      changes?.system?.changeFlags?.hasSenseSI !== undefined ||
+      changes?.system?.changeFlags?.hasSenseSID !== undefined
+    ) {
+      return true;
+    }
+
+    for (const change of changes.system?.changes || []) {
+      if (change.target.match(/^sense/i)) return true;
+    }
+
+    return false;
+  }
+
+  /**
    * @override
    * @param {object} changed
    * @param {object} context
@@ -978,6 +1024,13 @@ export class ItemPF extends ItemBasePF {
           this.executeScriptCalls("changeLevel", { level });
         }
       }
+    }
+
+    console.log(this, changed);
+    if ((changed?.system?.active !== undefined && this.adjustsVision) || this.isVisionChange(changed)) {
+      const initializeVision = true;
+      const refreshLighting = this.system.changeFlags.hasSenseLL || false;
+      this.actor.updateVision(initializeVision, refreshLighting);
     }
 
     // Forget memory variables

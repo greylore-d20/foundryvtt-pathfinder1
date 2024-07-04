@@ -2249,6 +2249,38 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Synchronize actor and token vision
+   *
+   * @internal
+   * @param {boolean} initializeVision
+   * @param {boolean} refreshLighting
+   */
+  updateVision(initializeVision = false, refreshLighting = false) {
+    console.log(initializeVision, refreshLighting);
+    if (this.testUserPermission(game.user, "OBSERVER")) {
+      const visionUpdate = {
+        refreshLighting: true,
+        refreshVision: true,
+      };
+
+      // Ensure vision immediately updates
+      if (initializeVision) {
+        for (const token of this.getActiveTokens(false, true)) {
+          token._syncSenses();
+        }
+        visionUpdate.initializeVision = true;
+      }
+
+      // Ensure LLV functions correctly
+      if (refreshLighting) {
+        visionUpdate.initializeLighting = true;
+      }
+
+      canvas.perception.update(visionUpdate, true);
+    }
+  }
+
+  /**
    * @override
    * @param {object} changed
    * @param {object} context
@@ -2276,27 +2308,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (initializeVision || refreshLighting) {
-      if (this.testUserPermission(game.user, "OBSERVER")) {
-        const visionUpdate = {
-          refreshLighting: true,
-          refreshVision: true,
-        };
-
-        // Ensure vision immediately updates
-        if (initializeVision) {
-          for (const token of this.getActiveTokens(false, true)) {
-            token._syncSenses();
-          }
-          visionUpdate.initializeVision = true;
-        }
-
-        // Ensure LLV functions correctly
-        if (refreshLighting) {
-          visionUpdate.initializeLighting = true;
-        }
-
-        canvas.perception.update(visionUpdate, true);
-      }
+      this.updateVision(initializeVision, refreshLighting);
     }
 
     if (sourceUser) {

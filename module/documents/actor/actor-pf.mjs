@@ -2256,7 +2256,6 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} refreshLighting
    */
   updateVision(initializeVision = false, refreshLighting = false) {
-    console.log(initializeVision, refreshLighting);
     if (this.testUserPermission(game.user, "OBSERVER")) {
       const visionUpdate = {
         refreshLighting: true,

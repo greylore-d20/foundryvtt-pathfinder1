@@ -2839,6 +2839,22 @@ const _migrateActorSenses = function (ent, updateData, token) {
   if (typeof oldSenses?.tr === "boolean") {
     updateData["system.traits.senses.tr"] = oldSenses.tr ? 120 : 0;
   }
+
+  for (const id of ["dv", "ts", "bs", "bse", "sc", "tr"]) {
+    if (typeof oldSenses?.[id] === "number") {
+      updateData[`system.traits.senses.${id}`] = { value: pf1.utils.convertDistance(oldSenses[id])[0] };
+    }
+  }
+
+  for (const id of ["sid", "si"]) {
+    if (typeof oldSenses?.[id] === "boolean") {
+      updateData[`system.traits.senses.${id}`] = { base: oldSenses[id] };
+    }
+  }
+
+  if (oldSenses.ll.enabled && oldSenses.ll.base === undefined) {
+    updateData["system.traits.senses.ll.base"] = oldSenses.ll.enabled;
+  }
 };
 
 const _migrateActorSkillJournals = function (ent, updateData) {

@@ -37,7 +37,7 @@ export class SensesSelector extends DocumentSheet {
   async getData() {
     const actor = this.document;
 
-    const senses = foundry.utils.deepClone(actor.system.traits?.senses ?? {});
+    const senses = foundry.utils.deepClone(actor.toObject().system.traits?.senses ?? {});
     for (const [key, type] of Object.entries(this.constructor.convertKeys)) {
       const value = senses[key];
       if (type === "distance" && value.value > 0) {

@@ -539,12 +539,10 @@ export class ActorPF extends ActorBasePF {
         case "ll":
         case "si":
         case "sid":
-          sense.enabled = sense.base;
           break;
 
         default:
           sense.total = sense.value;
-          sense.base = sense.total;
           break;
       }
     }
@@ -1609,12 +1607,9 @@ export class ActorPF extends ActorBasePF {
 
     // Enable senses based on flags
     const senses = this.system.traits.senses;
-    for (const senseId of ["ll", "si", "sid"]) {
-      const sense = senses[senseId];
-      if (sense) {
-        sense.enabled = sense.base || this.changeFlags["hasSense" + senseId.toUpperCase()];
-      }
-    }
+    senses.ll.enabled = senses.ll.enabled || this.changeFlags.hasSenseLL;
+    senses.si = senses.si || this.changeFlags.hasSenseSI;
+    senses.sid = senses.sid || this.changeFlags.hasSenseSID;
 
     this.updateSpellbookInfo();
   }

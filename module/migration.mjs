@@ -2845,16 +2845,6 @@ const _migrateActorSenses = function (ent, updateData, token) {
       updateData[`system.traits.senses.${id}`] = { value: oldSenses[id] };
     }
   }
-
-  for (const id of ["sid", "si"]) {
-    if (typeof oldSenses?.[id] === "boolean") {
-      updateData[`system.traits.senses.${id}`] = { base: oldSenses[id] };
-    }
-  }
-
-  if (oldSenses.ll.enabled && oldSenses.ll.base === undefined) {
-    updateData["system.traits.senses.ll.base"] = oldSenses.ll.enabled;
-  }
 };
 
 const _migrateActorSkillJournals = function (ent, updateData) {

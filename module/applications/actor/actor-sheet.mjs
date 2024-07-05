@@ -584,9 +584,14 @@ export class ActorSheetPF extends ActorSheet {
       // if (value === 0 || value === false) continue;
       switch (key) {
         case "ll":
+          if (senses[key].enabled) {
+            result[key] = pf1.config.senses[key];
+          }
+          break;
+
         case "si":
         case "sid":
-          if (senses[key].enabled) {
+          if (senses[key]) {
             result[key] = pf1.config.senses[key];
           }
           break;

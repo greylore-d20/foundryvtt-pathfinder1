@@ -3126,37 +3126,32 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.currentTarget;
 
     const [categoryId, sectionId] = el.dataset.create?.split(".") ?? [];
-    const createData = pf1.config.sheetSections[categoryId]?.[sectionId]?.create;
+    const createData = foundry.utils.deepClone(pf1.config.sheetSections[categoryId]?.[sectionId]?.create);
     if (!createData) throw new Error(`No creation data found for "${categoryId}.${sectionId}"`);
-    createData.type ||= el.dataset.type;
-    const type = createData.type;
+    const type = createData.type || el.dataset.type;
     const subType = createData.system?.subType;
     const typeName = game.i18n.localize(
       subType ? `PF1.Subtypes.Item.${type}.${subType}.Single` : CONFIG.Item.typeLabels[type]
     );
 
-    const itemData = foundry.utils.mergeObject(
-      {
-        name: game.i18n.format("PF1.NewItem", { type: typeName }),
-        system: {},
-      },
-      createData,
-      { inplace: false }
-    );
+    const newItem = new Item.implementation({ name: game.i18n.format("PF1.NewItem", { type: typeName }), type });
+    newItem.updateSource(createData);
 
     // Add type specific data
     if (type === "spell") {
-      itemData.system.level = parseInt(el.dataset.level);
-      itemData.system.spellbook = el.dataset.book;
+      newItem.updateSource({
+        system: {
+          level: parseInt(el.dataset.level),
+          spellbook: el.dataset.book,
+        },
+      });
     }
-
-    const newItem = new Item.implementation(itemData);
 
     this._sortNewItem(newItem);
 
     // Get old items of same general category
     const oldItems = this.actor.itemTypes[type]
-      .filter((oldItem) => this._isItemSameSubGroup(newItem, oldItem))
+      .filter((oldItem) => pf1.utils.isItemSameSubGroup(newItem, oldItem))
       .sort((a, b) => b.sort - a.sort);
 
     if (oldItems.length) {
@@ -3872,25 +3867,6 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /**
-   * Tests if two items in same sub-group.
-   *
-   * @private
-   * @param {ItemPF} item0
-   * @param {ItemPF} item1
-   * @returns {boolean}
-   */
-  _isItemSameSubGroup(item0, item1) {
-    if (item0.type === "spell") {
-      return item0.system.spellbook === item1.system.spellbook && item0.system.level === item1.system.level;
-    }
-
-    if (item0.subType) return item0.subType === item1.subType;
-
-    // Assume everything else is only categorized by main type
-    return true;
-  }
-
-  /**
    * Sort item at the bottom of the list instead of seemingly random position
    *
    * @private
@@ -3899,9 +3875,11 @@ export class ActorSheetPF extends ActorSheet {
   _sortNewItem(item) {
     const type = item.type;
 
+    const isClass = type === "class";
+
     // Get old items of same general category
     const oldItems = this.actor.itemTypes[type]
-      .filter((oldItem) => this._isItemSameSubGroup(item, oldItem))
+      .filter((oldItem) => (isClass ? true : pf1.utils.isItemSameSubGroup(item, oldItem)))
       .sort((a, b) => b.sort - a.sort);
 
     if (oldItems.length) {

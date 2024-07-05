@@ -1266,12 +1266,18 @@ export class ActorSheetPF extends ActorSheet {
     const { id, detail } = re?.groups ?? {};
 
     switch (id) {
-      case "level":
-        paths.push({ path: "@attributes.hd.total", value: system.attributes?.hd?.total });
-        if (system.details?.mythicTier > 0) {
-          paths.push({ path: "@details.mythicTier", value: system.details.mythicTier });
+      case "level": {
+        const hd = system.attributes?.hd?.total ?? NaN;
+        if (hd > 0) {
+          paths.push({ path: "@attributes.hd.total", value: hd });
+          if (system.details?.mythicTier > 0) {
+            paths.push({ path: "@details.mythicTier", value: system.details.mythicTier });
+          }
         }
+        const cr = this.actor.system.details?.cr?.total ?? NaN;
+        if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
         break;
+      }
       case "hit-points":
         paths.push(
           { path: "@attributes.hp.value", value: system.attributes.hp.value },

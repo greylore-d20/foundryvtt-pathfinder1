@@ -308,10 +308,6 @@ export class ItemBuffPF extends ItemPF {
 
     createData.statuses = Array.from(this.system.conditions.all);
 
-    const hideIcon = this.system.hideFromToken;
-    const flags = { duration: {} };
-    flags.show = !hideIcon;
-
     // Add buff durations
     const duration = this.system.duration;
     const formula = `${duration.value}`;
@@ -324,6 +320,7 @@ export class ItemBuffPF extends ItemPF {
       seconds = await this.getDuration({ rollData });
     }
 
+    const flags = { duration: {} };
     // Record end timing
     flags.duration.end = endTiming;
 

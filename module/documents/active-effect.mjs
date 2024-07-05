@@ -105,7 +105,12 @@ export class ActiveEffectPF extends ActiveEffect {
 
     // Hide buffs if buff hiding option is enabled
     const isTracker = this.isTracker;
-    if (isTracker && game.settings.get("pf1", "hideTokenConditions")) return false;
+    if (isTracker) {
+      // Hide based on parent item hide toggle
+      if (this.parent?.system?.hideFromToken) return false;
+      // Hide based on global setting
+      if (game.settings.get("pf1", "hideTokenConditions")) return false;
+    }
 
     return isTracker || super.isTemporary;
   }

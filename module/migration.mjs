@@ -2842,7 +2842,7 @@ const _migrateActorSenses = function (ent, updateData, token) {
 
   for (const id of ["dv", "ts", "bs", "bse", "sc", "tr"]) {
     if (typeof oldSenses?.[id] === "number") {
-      updateData[`system.traits.senses.${id}`] = { value: pf1.utils.convertDistance(oldSenses[id])[0] };
+      updateData[`system.traits.senses.${id}`] = { value: oldSenses[id] };
     }
   }
 

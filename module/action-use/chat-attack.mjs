@@ -87,7 +87,6 @@ export class ChatAttack {
     const data = this.rollData;
     // Set critical hit multiplier
     data.critMult = 1;
-    data.critMultBonus = 0;
     data.critCount = 0;
     // Determine ability multiplier
     if (data.action.ability.damageMult != null) {

@@ -842,7 +842,7 @@ export class ItemAction {
 
     const config = {};
 
-    rollData.item.primaryAttack = primaryAttack;
+    itemData.primaryAttack = primaryAttack;
 
     const isRanged = this.isRanged;
     const isCMB = this.isCombatManeuver;
@@ -853,7 +853,7 @@ export class ItemAction {
     rollData.sizeBonus = !isCMB ? pf1.config.sizeMods[size] : pf1.config.sizeSpecialMods[size];
 
     // Add misc bonuses/penalties
-    rollData.item.proficiencyPenalty = -4;
+    itemData.proficiencyPenalty = -4;
 
     // Determine ability score modifier
     const abl = actionData.ability.attack;
@@ -926,7 +926,7 @@ export class ItemAction {
     }
     // Backwards compatibility
     else if (typeof actionData.attackBonus === "number") {
-      rollData.item.attackBonus = actionData.attackBonus;
+      itemData.attackBonus = actionData.attackBonus;
       parts.push(`@item.attackBonus[${game.i18n.localize("PF1.AttackRollBonus")}]`);
     }
 
@@ -1006,6 +1006,8 @@ export class ItemAction {
     primaryAttack = true,
   } = {}) {
     const rollData = data ?? this.getRollData();
+    const itemData = rollData.item;
+    const actionData = rollData.action;
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Action.");
@@ -1015,12 +1017,12 @@ export class ItemAction {
 
     // Determine critical multiplier
     rollData.critMult = 1;
-    if (critical) rollData.critMult = this.data.ability.critMult;
+    if (critical) rollData.critMult = actionData.ability.critMult;
     // Determine ability multiplier
     if (rollData.ablMult == null) {
-      const held = rollData.action?.held || rollData.item?.held || "1h";
+      const held = actionData?.held || itemData?.held || "1h";
       rollData.ablMult =
-        rollData.action?.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
+        actionData?.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
     }
 
     // Define Roll parts
@@ -1106,11 +1108,11 @@ export class ItemAction {
     }
 
     // Determine ability score modifier
-    const abl = this.data.ability.damage;
+    const abl = actionData.ability.damage;
     const ability = rollData.abilities?.[abl];
     if (ability) {
       // Determine ability score bonus
-      const max = this.data.ability?.max ?? Infinity;
+      const max = actionData.ability?.max ?? Infinity;
       if (ability.mod < 0) rollData.ablDamage = Math.min(max, ability.mod);
       else rollData.ablDamage = Math.floor(Math.min(max, ability.mod) * rollData.ablMult);
 

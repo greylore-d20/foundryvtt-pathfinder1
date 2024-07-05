@@ -136,12 +136,15 @@ export class TokenDocumentPF extends TokenDocument {
 
     const convertDistance = (d) => pf1.utils.convertDistance(d)[0];
 
-    // Darkvision
+    // Darkvision, also includes blindsight until we have a better representation
     const darkvision = senses.dv?.total ?? 0;
-    if (darkvision > 0) {
+    const blindsight = senses.bs?.total ?? 0;
+    const blackAndWhite = Math.max(darkvision, blindsight);
+
+    if (blackAndWhite > 0) {
       this.sight.visionMode = "darkvision";
       // Upgrade basic mode range if greater
-      basicMode.range = Math.max(baseRange, convertDistance(darkvision));
+      basicMode.range = Math.max(baseRange, convertDistance(blackAndWhite));
     }
 
     // -----------------------
@@ -157,7 +160,7 @@ export class TokenDocumentPF extends TokenDocument {
       // Add normal vision within range of true seeing
       const trr = convertDistance(trueseeing);
       basicMode.range = Math.max(trr, basicMode.range);
-      if (trueseeing > darkvision) this.sight.visionMode = "basic";
+      if (trueseeing > blackAndWhite) this.sight.visionMode = "basic";
 
       this.detectionModes.push({ id: "seeInvisibility", enabled: true, range: trr, limited: true });
     }

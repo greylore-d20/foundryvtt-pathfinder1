@@ -4538,6 +4538,7 @@ export class ActorPF extends ActorBasePF {
     const negLevels = result.attributes.energyDrain ?? 0;
     if (negLevels > 0 && result.classes) {
       for (const cls of Object.values(result.classes)) {
+        if (cls.isMythic) continue;
         cls.level = Math.max(0, cls.unlevel - negLevels);
       }
     }

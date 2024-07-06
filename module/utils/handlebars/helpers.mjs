@@ -1,4 +1,4 @@
-import { convertDistance, calculateRange } from "../lib.mjs";
+import { convertDistance, calculateRange, fractionalToString } from "../lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
 /**
@@ -77,7 +77,8 @@ export const registerHandlebarsHelpers = function () {
   });
 
   // Alt numberFormat helper
-  Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) =>
-    pf1.utils.limitPrecision(number, hash.decimals)
-  );
+  Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) => {
+    if (hash.fraction) return fractionalToString(number);
+    else return pf1.utils.limitPrecision(number, hash.decimals);
+  });
 };

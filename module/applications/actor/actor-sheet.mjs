@@ -1649,8 +1649,19 @@ export class ActorSheetPF extends ActorSheet {
           case "level":
             paths.push({
               path: `@classes.${item.system.tag}.level`,
-              value: item.system.level,
+              value: lazy.rollData.classes[item.system.tag].level,
             });
+            if (item.subType === "mythic") {
+              paths.push({
+                path: `@classes.${item.system.tag}.mythicTier`,
+                value: lazy.rollData.classes[item.system.tag].mythicTier,
+              });
+            } else {
+              paths.push({
+                path: `@classes.${item.system.tag}.unlevel`,
+                value: lazy.rollData.classes[item.system.tag].unlevel,
+              });
+            }
             break;
           case "resources": {
             if (item.isCharged && item.system.uses?.max > 0) {

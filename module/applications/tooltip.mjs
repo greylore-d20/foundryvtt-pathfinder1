@@ -260,8 +260,8 @@ export class TooltipPF extends Application {
         x: this.mousePos.x - position.width + position.width * anchor.x + offset.x,
         y: this.mousePos.y - position.height + position.height * anchor.y + offset.y,
       };
-      position.left = Math.clamped(pos.x, minPos.x, maxPos.x);
-      position.top = Math.clamped(pos.y, minPos.y, maxPos.y);
+      position.left = Math.clamp(pos.x, minPos.x, maxPos.x);
+      position.top = Math.clamp(pos.y, minPos.y, maxPos.y);
     } else {
       position.left = v.left + mw * anchor.x + offset.x;
       position.top = v.top + mh * anchor.y + offset.y;

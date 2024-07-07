@@ -8,7 +8,7 @@ import { FunctionTerm } from "../base/function-term.mjs";
  * If index goes out of bounds, first value is used as fallback.
  *
  * Usage:
- * - For bounding lookups, use min(), max() and clamped() functions as appropriate.
+ * - For bounding lookups, use min(), max() and clamp() functions as appropriate.
  * - You may add +1 to your formula to use the first value as explicit error fallback.
  *
  * @example

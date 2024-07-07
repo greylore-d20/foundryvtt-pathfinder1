@@ -204,7 +204,7 @@ export class ItemAction {
 
     rollData ??= this.getRollData();
     const cost = RollPF.safeRollAsync(formula, rollData).total;
-    return this.item.isSingleUse ? Math.clamped(cost, -1, 1) : cost;
+    return this.item.isSingleUse ? Math.clamp(cost, -1, 1) : cost;
   }
 
   /**

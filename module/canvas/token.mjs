@@ -106,13 +106,13 @@ export class TokenPF extends Token {
 
     const val = Number(data.value);
     data.max = Math.max(data.max, (boost?.value ?? 0) + val);
-    const pct = Math.clamped(val, 0, data.max) / data.max;
-    const boostlessPct = Math.clamped(val, 0, boostlessMax) / boostlessMax;
+    const pct = Math.clamp(val, 0, data.max) / data.max;
+    const boostlessPct = Math.clamp(val, 0, boostlessMax) / boostlessMax;
 
     // Determine sizing
     let h = Math.max(canvas.dimensions.size / 12, 8);
     const w = this.w;
-    const bs = Math.clamped(h / 8, 1, 2);
+    const bs = Math.clamp(h / 8, 1, 2);
     if (this.document.height >= 2) h *= 1.6; // Enlarge the bar for large tokens
 
     // Determine the color to use
@@ -127,7 +127,7 @@ export class TokenPF extends Token {
     bar.beginFill(blk, 0.5).lineStyle(bs, blk, 1.0).drawRoundedRect(0, 0, this.w, h, 3);
     // Draw bar boost
     if (boost?.value > 0) {
-      const pct = Math.clamped(val + boost.value, 0, data.max) / data.max;
+      const pct = Math.clamp(val + boost.value, 0, data.max) / data.max;
       bar
         .beginFill(boost.color, 1.0)
         .lineStyle(bs, blk, 1.0)
@@ -141,7 +141,7 @@ export class TokenPF extends Token {
       .drawRoundedRect(0, 0, pct * w, h, 2);
     // Draw bar underline
     if (underline?.value > 0) {
-      const pct = Math.clamped(underline.value, 0, data.max) / data.max;
+      const pct = Math.clamp(underline.value, 0, data.max) / data.max;
       bar
         .beginFill(underline.color, 1.0)
         .lineStyle(bs, blk, 1.0)

@@ -760,7 +760,7 @@ export class ActorPF extends ActorBasePF {
       if (book.autoSpellLevelCalculation) {
         const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
         const autoBonus = RollPF.safeRollSync(autoFormula, rollData).total ?? 0;
-        const autoTotal = Math.clamped(total + autoBonus, 1, 20);
+        const autoTotal = Math.clamp(total + autoBonus, 1, 20);
         book.cl.autoSpellLevelTotal = autoTotal;
 
         clTotal += autoBonus;
@@ -877,7 +877,7 @@ export class ActorPF extends ActorBasePF {
 
       const castsForLevels =
         pf1.config.casterProgression[isSpontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
-      let classLevel = Math.clamped(book.cl.autoSpellLevelTotal, 1, 20);
+      let classLevel = Math.clamp(book.cl.autoSpellLevelTotal, 1, 20);
 
       // Protect against invalid class level bricking actors
       if (!Number.isSafeInteger(classLevel)) {
@@ -996,7 +996,7 @@ export class ActorPF extends ActorBasePF {
       const allLevelMod = RollPF.safeRollSync(allLevelModFormula, rollData).total ?? 0;
 
       const casterType = book.casterType || "high";
-      const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
+      const classLevel = Math.floor(Math.clamp(book.cl.autoSpellLevelTotal, 1, 20));
 
       for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
         const spellLevelData = book.spells[`spell${spellLevel}`];
@@ -3696,7 +3696,7 @@ export class ActorPF extends ActorBasePF {
 
           if (woundAdjust != 0) {
             const wounds = a.system.attributes.wounds;
-            updateData["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);
+            updateData["system.attributes.wounds.value"] = Math.clamp(wounds.value + woundAdjust, 0, wounds.max);
           }
         }
         // Normal Hit Points
@@ -3895,7 +3895,7 @@ export class ActorPF extends ActorBasePF {
       tempHP = hp.temp ?? 0,
       maxHP = hp.max;
 
-    let level = usage > 0 ? Math.clamped(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
+    let level = usage > 0 ? Math.clamp(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
     if (Number.isNaN(level)) level = 0; // Division by 0 due to max HP on new actors.
 
     const wtMult = this.getWoundThresholdMultiplier({ healthConfig: variant });
@@ -4863,14 +4863,14 @@ export class ActorPF extends ActorBasePF {
         updates["system.uses.value"] = Math.min(current.value + value, current.max);
       } else {
         if (isBar)
-          updates[`system.${attribute}.value`] = Math.clamped(current.value + value, current.min || 0, current.max);
+          updates[`system.${attribute}.value`] = Math.clamp(current.value + value, current.min || 0, current.max);
         else updates[`system.${attribute}`] = current + value;
       }
     }
     // Absolute
     else {
       if (isResource) {
-        updates["system.uses.value"] = Math.clamped(value, 0, current.max);
+        updates["system.uses.value"] = Math.clamp(value, 0, current.max);
       } else {
         if (isBar) updates[`system.${attribute}.value`] = Math.min(value, current.max);
         else updates[`system.${attribute}`] = value;

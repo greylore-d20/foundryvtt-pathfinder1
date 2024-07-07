@@ -103,7 +103,7 @@ export class ItemSpellPF extends ItemPF {
     const book = this.system.spellbook;
     const cls = actor?.system.attributes?.spells?.spellbooks?.[book]?.class;
     const level = this.system.learnedAt?.class?.[cls];
-    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamped(level, 0, 9) });
+    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamp(level, 0, 9) });
   }
 
   /** @inheritDoc */
@@ -350,7 +350,7 @@ export class ItemSpellPF extends ItemPF {
     // Set value
     if (maximize) value = prep.max || 0;
     // Clamp charge value
-    value = Math.clamped(value, 0, prep.max || 0);
+    value = Math.clamp(value, 0, prep.max || 0);
 
     // Cancel pointless or bad update
     if (value === (prep.value || 0) || !Number.isFinite(value)) return;

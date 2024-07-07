@@ -813,9 +813,9 @@ export class ActorSheetPF extends ActorSheet {
 
     const enc = {
       pct: {
-        light: Math.clamped((carriedWeight * 100) / load.light, 0, 99.5),
-        medium: Math.clamped(((carriedWeight - load.light) * 100) / (load.medium - load.light), 0, 99.5),
-        heavy: Math.clamped(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 0, 99.5),
+        light: Math.clamp((carriedWeight * 100) / load.light, 0, 99.5),
+        medium: Math.clamp(((carriedWeight - load.light) * 100) / (load.medium - load.light), 0, 99.5),
+        heavy: Math.clamp(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 0, 99.5),
       },
       encumbered: {
         light: system.attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium,

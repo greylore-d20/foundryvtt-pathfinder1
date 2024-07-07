@@ -505,7 +505,7 @@ export class ItemPF extends ItemBasePF {
     if (maximize) value = uses.max;
 
     // Clamp charge value to
-    value = Math.clamped(value, 0, uses.max);
+    value = Math.clamp(value, 0, uses.max);
 
     const updateData = { system: {} };
 

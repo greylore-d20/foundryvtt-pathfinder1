@@ -881,11 +881,11 @@ export class LevelUpForm extends FormApplication {
         {
           system: {
             changes: Object.entries(choices).reduce((cur, [target, formula]) => {
-              const change = foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
-                subTarget: target,
+              const change = new pf1.components.ItemChange({
+                target: target,
                 formula: `${formula}`,
-                modifier: "untypedPerm",
-              });
+                type: "untypedPerm",
+              }).toObject();
 
               cur.push(change);
               return cur;
@@ -920,11 +920,11 @@ export class LevelUpForm extends FormApplication {
 
         // Add new change
         changes.push(
-          foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
-            subTarget: target,
+          new pf1.components.ItemChange({
+            target: target,
             formula: `${formula}`,
-            modifier: "untypedPerm",
-          })
+            type: "untypedPerm",
+          }).toObject()
         );
       }
 

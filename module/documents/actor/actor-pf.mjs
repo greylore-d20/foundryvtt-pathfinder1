@@ -567,21 +567,6 @@ export class ActorPF extends ActorBasePF {
         conditions[status] = true;
       }
     }
-
-    // Conditions backwards compatibility
-    if (!Object.getOwnPropertyDescriptor(this.system.attributes, "conditions")?.["get"]) {
-      delete this.system.attributes.conditions;
-      Object.defineProperty(this.system.attributes, "conditions", {
-        get() {
-          foundry.utils.logCompatibilityWarning(
-            "actor.system.attributes.conditions is deprecated in favor of actor.system.conditions and actor.statuses",
-            { since: "PF1 v10", until: "PF1 v11" }
-          );
-          return conditions;
-        },
-        enumerable: false,
-      });
-    }
   }
 
   /**
@@ -1160,21 +1145,6 @@ export class ActorPF extends ActorBasePF {
     for (const bookKey of Object.keys(spellbooks)) {
       this._updateSpellBook(bookKey, rollData, cache);
     }
-
-    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
-    Object.defineProperty(this.system.attributes.spells, "usedSpellbooks", {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "actor.system.attributes.spells.usedSpellbooks is deprecated with no replacement.",
-          {
-            since: "PF1 v10",
-            until: "PF1 v11",
-          }
-        );
-
-        return Object.keys(spellbooks).filter((book) => spellbooks[book].inUse);
-      },
-    });
   }
 
   /**
@@ -2187,22 +2157,6 @@ export class ActorPF extends ActorBasePF {
     if (changed.system.conditions !== undefined) {
       delete changed.system.conditions;
     }
-
-    if (conditions) {
-      foundry.utils.logCompatibilityWarning(
-        "Toggling conditions via Actor.update() is deprecated in favor of Actor.setCondition()",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
-
-      // Prevent data storage
-      delete changed.system.attributes.conditions;
-
-      // Toggle AEs
-      await this.setConditions(conditions);
-    }
   }
 
   /**
@@ -2535,42 +2489,6 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   /**
-   * @deprecated - See {@link pf1.documents.item.ItemAttackPF.fromItem ItemAttackPF.fromItem()}
-   * @param {pf1.documents.item.ItemWeaponPF} item - Weapon to create attack from
-   * @returns {Item|undefined} - Created item.
-   */
-  async createAttackFromWeapon(item) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.createAttackFromWeapon() is deprecated in favor of ItemAttackPF.fromItem()",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
-    }
-
-    const attackItem = pf1.documents.item.ItemAttackPF.fromItem(item);
-
-    // Create attack
-    const [newItem] = await this.createEmbeddedDocuments("Item", [attackItem]);
-    if (!newItem) throw new Error("Failed to create attack from weapon");
-
-    // Create link
-    await item.createItemLink("children", "data", newItem, newItem.id);
-
-    // Notify user
-    ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: item.name }));
-
-    // Disable quick use of weapon
-    await item.update({ "system.showInQuickbar": false });
-
-    return newItem;
-  }
-
-  /**
    * Enable and configure a new spellbook.
    *
    * @example
@@ -2819,25 +2737,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Roll a basic CMB check for this actor
-   *
-   * @deprecated
-   * @param {ActorRollOptions & {ranged: boolean, ability: string | null}} [options={}]
-   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
-   */
-  async rollCMB(options = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.rollCMB() is deprecated in favor of ActorPF.rollAttack({maneuver:true})",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return this.rollAttack({ maneuver: true, ...options });
-  }
-
-  /**
    * Roll a generic attack
    *
    * @example
@@ -2853,16 +2752,6 @@ export class ActorPF extends ActorBasePF {
   async rollAttack({ maneuver = false, ranged = false, ability = null, ...options } = {}) {
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
-    }
-
-    if (options.melee !== undefined) {
-      foundry.utils.logCompatibilityWarning("ActorPF.rollAttack() melee parameter has been deprecated.", {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-
-      ranged = !options.melee;
-      delete options.melee;
     }
 
     const rangeLabel = {
@@ -3448,22 +3337,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @internal
-   * @param key
-   */
-  _deprecatePF1PrefixConditions(key) {
-    if (/^pf1_/.test(key)) {
-      const newKey = key.replace(/^pf1_/, "");
-      foundry.utils.logCompatibilityWarning(`Condition "${key}" is deprecated in favor of "${newKey}"`, {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-      key = newKey;
-    }
-    return key;
-  }
-
-  /**
    * Easy way to toggle a condition.
    *
    * @example
@@ -3507,15 +3380,6 @@ export class ActorPF extends ActorBasePF {
    */
   async setConditions(conditions = {}, context = {}) {
     conditions = foundry.utils.deepClone(conditions);
-
-    // Backgrounds compatibility
-    for (const key of Object.keys(conditions)) {
-      const newKey = this._deprecatePF1PrefixConditions(key);
-      if (newKey !== key) {
-        conditions[newKey] = conditions[key];
-        delete conditions[key];
-      }
-    }
 
     // Handle Condition tracks
     const tracks = pf1.registry.conditions.trackedConditions();
@@ -3604,11 +3468,11 @@ export class ActorPF extends ActorBasePF {
    * @example
    * actor.hasCondition("grappled");
    *
+   * @deprecated This is identical to `actor.statuses.has("conditionId")`
    * @param {string} conditionId - A direct condition key, as per pf1.registry.conditions, such as `shaken` or `dazed`.
    * @returns {boolean} Condition state
    */
   hasCondition(conditionId) {
-    conditionId = this._deprecatePF1PrefixConditions(conditionId);
     return this.statuses.has(conditionId);
   }
 
@@ -4360,26 +4224,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Total coinage in both weighted and weightless.
-   *
-   * @deprecated Use {@link ActorPF.getTotalMergedCurrency} instead.
-   * @param {object} [options] - Additional options
-   * @param {boolean} [options.inLowestDenomination=false] - Use copper for calculations and return.
-   * @returns {number} - The total amount of currency, in gold pieces.
-   */
-  mergeCurrency({ inLowestDenomination = false } = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.mergeCurrency() is deprecated in favor of ActorPF.getTotalCurrency()",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return this.getTotalCurrency({ inLowestDenomination }, { v2: true });
-  }
-
-  /**
    * Get total currency in category.
    *
    * @param {"currency"|"altCurrency"} [category="currency"] - Currency category.
@@ -4402,29 +4246,13 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {object} [options] - Additional options
    * @param {boolean} [options.inLowestDenomination=true] - Use copper for calculations and return.
-   * @param {object} [deprecated] - Deprecated options
    * @returns {number} - The total amount of currency, in copper pieces.
    */
-  getTotalCurrency(options, deprecated) {
-    if (typeof options === "string" || options === undefined) {
-      foundry.utils.logCompatibilityWarning(
-        "ActorPF.getTotalCurrency() parameters changed. Options are now the first and only parameter. Old behaviour is found in getCurrency()",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
-
-      return this.getCurrency(options, deprecated);
-    }
-
-    options ??= {};
-    options.inLowestDenomination ??= true;
-
+  getTotalCurrency({ inLowestDenomination = true } = {}) {
     const total =
       this.getCurrency("currency", { inLowestDenomination: true }) +
       this.getCurrency("altCurrency", { inLowestDenomination: true });
-    return options.inLowestDenomination ? total : total / 100;
+    return inLowestDenomination ? total : total / 100;
   }
 
   /**
@@ -4745,17 +4573,6 @@ export class ActorPF extends ActorBasePF {
       excess: 0,
       missing: 0,
     };
-
-    Object.defineProperty(result, "value", {
-      get() {
-        foundry.utils.logCompatibilityWarning("getFeatCount().value is deprecated in favor of getFeatCount().active", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-
-        return this.active;
-      },
-    });
 
     const isMindless = this.system.abilities?.int?.value === null;
 

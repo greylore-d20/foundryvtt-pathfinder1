@@ -577,19 +577,6 @@ export class ItemPF extends ItemBasePF {
     return 4;
   }
 
-  /**
-   * @type {ActorPF|null} Parent actor
-   * @deprecated Use {@link actor instead}
-   */
-  get parentActor() {
-    foundry.utils.logCompatibilityWarning("ItemPF.parentActor is deprecated in favor of Item.actor", {
-      since: "PF1 v9",
-      until: "PF1 v11",
-    });
-
-    return this.actor;
-  }
-
   get limited() {
     if (this.parentItem) return this.parentItem.limited;
     return super.limited;
@@ -651,15 +638,6 @@ export class ItemPF extends ItemBasePF {
   get actionTypes() {
     const actionTypes = this.actions?.map((action) => action.data.actionType).filter(Boolean) ?? [];
     return [...new Set(actionTypes)];
-  }
-
-  static get defaultContextNote() {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF#defaultContextNote is deprecated in favor of pf1.components.ContextNote",
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return new pf1.components.ContextNote().toObject();
   }
 
   /**
@@ -1379,7 +1357,6 @@ export class ItemPF extends ItemBasePF {
    *
    * @see {@link SharedActionData}
    * @param {string} [actionId=""] - The ID of the action to use, defaults to the first action
-   * @param {string} [actionID=""] - Deprecated in favor of `actionId`
    * @param {number} [cost=null] - Cost override. Replaces charge cost or slot cost as appropriate.
    * @param {Event | null} [ev=null] - The event that triggered the use, if any
    * @param {boolean} [skipDialog=getSkipActionPrompt()] - Whether to skip the dialog for this action
@@ -1393,7 +1370,6 @@ export class ItemPF extends ItemBasePF {
    */
   async use({
     actionId = "",
-    actionID = "",
     cost = null,
     ev = null,
     skipDialog = getSkipActionPrompt(),
@@ -1406,15 +1382,6 @@ export class ItemPF extends ItemBasePF {
     rollMode ||= game.settings.get("core", "rollMode");
 
     if (cost !== null && !Number.isSafeInteger(cost)) throw new Error(`Invalid value for cost override: ${cost}`);
-
-    if (actionID) {
-      foundry.utils.logCompatibilityWarning("ItemPF.use() actionID parameter is deprecated in favor of actionId", {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-
-      actionId ||= actionID;
-    }
 
     if (options.held) {
       // Convert human friendly options to internal types
@@ -2054,50 +2021,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * @deprecated
-   * @param {object} linkData - Link data
-   * @param {boolean} [extraData=false] - Deprecated: Include link data in return value
-   * @returns {Item|null} - Linked item if it exists
-   */
-  async getLinkItem(linkData, extraData = false) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF.getLinkItem() is deprecated in favor of fromUuid(linkData.uuid, {relative:actor})",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    const item = await fromUuid(linkData.uuid, { relative: this.actor });
-
-    // Package extra data
-    if (extraData) {
-      return { item, linkData };
-    }
-
-    return item;
-  }
-
-  /**
-   * Retrieve item referred to by a link in .system.links data
-   *
-   * @deprecated
-   * @param {object} linkData Link data
-   * @returns {Item|object|undefined} Linked item, undefined, or compendium index data
-   */
-  getLinkedItemSync(linkData = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF.getLinkedItemSync() is deprecated in favor of fromUuidSync(linkData.uuid, {relative:actor})",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return fromUuidSync(linkData.uuid, { relative: this.actor });
-  }
-
-  /**
    * Generates lists of change targets this item can have.
    *
    * @param {string} target - The target key, as defined in PF1.buffTargets.
@@ -2133,23 +2056,6 @@ export class ItemPF extends ItemBasePF {
     }
 
     return result;
-  }
-
-  getChangeSubTargets(target) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF.getChangeSubTargets() is deprecated in favor of ItemPF.getChangeTargets",
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-    return this.getChangeTargets(target);
-  }
-
-  getValue() {
-    foundry.utils.logCompatibilityWarning("ItemPF.getValue() is deprecated, only physical items have value", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return 0;
   }
 
   /**
@@ -2269,45 +2175,6 @@ export class ItemPF extends ItemBasePF {
   getItemDictionaryFlags() {
     const flags = this.system.flags?.dictionary || {};
     return flags;
-  }
-
-  /**
-   * Get attack array for specific action.
-   *
-   * @param {string} actionId Action identifier.
-   * @returns {number[]} Simple array describing the individual guaranteed attacks.
-   */
-  getAttackArray(actionId) {
-    foundry.utils.logCompatibilityWarning(
-      `ItemPF.getAttackArray() is deprecated. Use ItemAction.getAttacks() instead.`,
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    const action = this.actions.get(actionId),
-      actionData = action?.data,
-      rollData = action?.getRollData();
-    if (!actionData) return [0];
-
-    const attacks = action.getAttacks({ full: true, rollData, conditionals: true, bonuses: true });
-
-    return attacks;
-  }
-
-  /**
-   * Get default action's attack array.
-   *
-   * @returns {number[]} Simple array describing the individual guaranteed attacks.
-   */
-  get attackArray() {
-    foundry.utils.logCompatibilityWarning(`ItemPF.attackArray is deprecated. Use ItemAction.getAttacks() instead.`, {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.getAttackArray(this.defaultAction.id);
   }
 
   /**

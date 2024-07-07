@@ -217,46 +217,6 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /**
-   * Prepare .system.duration
-   *
-   * @deprecated Remove with PF1 v11
-   * @internal
-   * @param {object} [options] Additional options
-   * @param {object} [options.rollData] Roll data instance. New instance is generated if undefined and needed.
-   */
-  _prepareDuration({ rollData } = {}) {
-    const itemData = this.system;
-
-    const duration = itemData.duration ?? {};
-    const { units, value: formula } = duration;
-    if (!units) return;
-
-    // Add total duration in seconds
-    let seconds = NaN;
-    if (units === "turn") {
-      seconds = CONFIG.time.roundTime;
-    } else {
-      if (!formula) return;
-      rollData ??= this.getRollData();
-      const roll = RollPF.safeRollSync(formula, rollData, { formula, item: this }, {}, { minimize: true });
-      if (!roll.isDeterministic) return;
-      const duration = roll.isDeterministic ? roll.total : roll.formula;
-      switch (units) {
-        case "hour":
-          seconds = duration * 60 * 60;
-          break;
-        case "minute":
-          seconds = duration * 60;
-          break;
-        case "round":
-          seconds = duration * CONFIG.time.roundTime;
-          break;
-      }
-    }
-    itemData.duration.totalSeconds = seconds;
-  }
-
-  /**
    * Duration of the buff in seconds.
    *
    * @internal

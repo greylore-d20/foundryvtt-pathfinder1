@@ -25,18 +25,6 @@ async function duplicateCombatantInitiativeDialog(combatantId) {
   return combatant.duplicateWithData({ initiative: (combatant.initiative ?? 0) + offset });
 }
 
-// Deprecated
-export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
-  foundry.utils.logCompatibilityWarning(
-    "pf1.documents.duplicateCombatantInitiative() is deprecated in favor of CombatantPF.duplicateWithData()",
-    {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    }
-  );
-  return combatant.duplicateWithData({ initiative });
-};
-
 Hooks.on("getCombatTrackerEntryContext", function addCombatTrackerContextOptions(html, menuItems) {
   menuItems.push({
     name: "PF1.DuplicateInitiative",

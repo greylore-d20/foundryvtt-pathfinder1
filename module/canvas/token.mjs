@@ -11,18 +11,6 @@ export class TokenPF extends Token {
    */
   async toggleEffect(effect, { active, overlay = false } = {}) {
     const effectId = typeof effect === "string" ? effect : effect?.id;
-    if (this.actor) {
-      const buff = this.actor.items.get(effectId);
-      if (buff) {
-        foundry.utils.logCompatibilityWarning("Toggling buffs via TokenPF.toggleEffect() is deprecated.", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-
-        await buff.setActive(active ?? !buff.isActive);
-        return buff.isActive;
-      }
-    }
 
     if (this.actor && pf1.registry.conditions.has(effectId) && typeof this.actor.toggleCondition === "function") {
       let rv;

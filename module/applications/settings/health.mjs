@@ -1,22 +1,4 @@
 export class HealthConfigModel extends foundry.abstract.DataModel {
-  constructor(...args) {
-    super(...args);
-
-    Object.defineProperty(this, "continuity", {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "continuity string property in health configuration is deprecated in favor of continuous boolean property",
-          {
-            since: "PF1 v10",
-            until: "PF1 v11",
-          }
-        );
-
-        return this.continuous ? "continuous" : "discrete";
-      },
-    });
-  }
-
   static defineSchema() {
     const fields = foundry.data.fields;
     return {

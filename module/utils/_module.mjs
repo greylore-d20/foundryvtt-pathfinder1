@@ -23,8 +23,6 @@ export {
   overlandSpeed,
   getWeightSystem,
   getActors,
-  getActorFromId,
-  getItemOwner,
   isMinimumCoreVersion,
   measureDistance,
   refreshActors,

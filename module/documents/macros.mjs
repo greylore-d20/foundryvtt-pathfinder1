@@ -1,5 +1,4 @@
 import { ActorPF } from "./actor/actor-pf.mjs";
-import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
 
 /**
  * Finds old macro with same name and command that user can execute and see.

@@ -52,14 +52,6 @@ export class ItemChange extends foundry.abstract.DataModel {
   }
 
   constructor(data, options = {}) {
-    if (options instanceof Item || options instanceof Actor) {
-      foundry.utils.logCompatibilityWarning(
-        "ItemChange constructor's second parameter is now options object for datamodel instead of direct parent reference",
-        { since: "PF1 v10", until: "PF1 v11" }
-      );
-
-      options = { parent: options };
-    }
     super(data, options);
     this.updateTime = new Date();
   }
@@ -138,44 +130,9 @@ export class ItemChange extends foundry.abstract.DataModel {
     return item.update({ "system.changes": changes });
   }
 
-  static get defaultData() {
-    foundry.utils.logCompatibilityWarning(
-      "ItemChange.defaultData() is deprecated in favor of using ItemChange DataModel",
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return new this().toObject();
-  }
-
-  get data() {
-    foundry.utils.logCompatibilityWarning("ItemChange.data is deprecated in favor of accessing the model directly.", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-    return this;
-  }
-
   /** @type {string} - Change ID */
   get id() {
     return this._id;
-  }
-
-  get subTarget() {
-    foundry.utils.logCompatibilityWarning("ItemChange.subTarget is deprecated in favor of ItemChange.target", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.target;
-  }
-
-  get modifier() {
-    foundry.utils.logCompatibilityWarning("ItemChange.modifier is deprecated in favor of ItemChange.type", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.type;
   }
 
   /** @type {boolean} */
@@ -334,13 +291,7 @@ export class ItemChange extends foundry.abstract.DataModel {
 
       let value = 0;
       if (this.formula) {
-        if (operator === "function") {
-          foundry.utils.logCompatibilityWarning(
-            "ItemChange function operator is no longer supported with no replacement.",
-            { since: "PF1 v10", until: "PF1 v11" }
-          );
-          continue;
-        } else if (!isNaN(this.formula)) {
+        if (!isNaN(this.formula)) {
           value = parseFloat(this.formula);
         } else if (this.isDeferred && RollPF.parse(this.formula).some((t) => !t.isDeterministic)) {
           value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });

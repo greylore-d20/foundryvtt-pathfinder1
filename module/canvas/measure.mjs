@@ -74,20 +74,6 @@ export class TemplateLayerPF extends TemplateLayer {
 
 export class MeasuredTemplatePF extends MeasuredTemplate {
   /**
-   * @deprecated
-   */
-  getHighlightedSquares() {
-    foundry.utils.logCompatibilityWarning(
-      "MeasuredTemplatePF.getHighlightedSquares() deprecated in favor of MeasuredTemplate._getGridHighlightPositions()",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-    return this._getGridHighlightPositions();
-  }
-
-  /**
    * Get highlighted square coordinates.
    *
    * Supports only circle, cone and ray templates.

@@ -643,7 +643,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   // Ignore basic actor type
   if (actorData.type === "basic") return {};
   // Ignore module introduced types
-  if (!game.system.template.Actor.types.includes(actorData.type)) return {};
+  if (!game.template.Actor.types.includes(actorData.type)) return {};
 
   const updateData = {};
 
@@ -979,22 +979,6 @@ export async function migrateScene(scene, { state, tracker } = {}) {
     console.error(`PF1 | Migration | Scene: ${scene.name} | Error`, err);
   }
   console.log(`PF1 | Migration | Scene: ${scene.name} | Complete!`);
-}
-
-/**
- * Migrate a single Scene data object
- *
- * @deprecated
- */
-export async function migrateSceneData() {
-  foundry.utils.logCompatibilityWarning(
-    "pf1.migrations.migrateSceneData() is obsolete, please use pf1.migrations.migrateScene() instead",
-    {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    }
-  );
-  return {};
 }
 
 /**

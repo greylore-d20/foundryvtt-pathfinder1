@@ -2,53 +2,6 @@ import { ItemSelector } from "module/applications/item-selector.mjs";
 import { ActorSelector } from "module/applications/actor-selector.mjs";
 
 /**
- * @deprecated - Use {@link pf1.utils.dialog.getNumber} instead
- * @param options
- * @param options.title
- * @param options.initial
- * @param options.min
- * @param options.max
- */
-export async function dialogGetNumber({
-  title = "Input Number",
-  initial = null,
-  min = Number.NEGATIVE_INFINITY,
-  max = Number.POSITIVE_INFINITY,
-} = {}) {
-  foundry.utils.logCompatibilityWarning(
-    "pf1.utils.dialog.dialogGetNumber is deprecated in favor of pf1.utils.dialog.getNumber",
-    {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    }
-  );
-
-  let num = await pf1.utils.dialog.getNumber({ title, initial, min, max });
-  // match old return type and value
-  if (Number.isNaN(num)) num = initial;
-  return `${num}`;
-}
-
-/**
- * @deprecated - Use {@link pf1.utils.dialog.getActor} instead
- * @param title
- * @param actors
- * @returns {Promise<{type: string, id: string}>}
- */
-export async function dialogGetActor(title = "", actors = []) {
-  foundry.utils.logCompatibilityWarning(
-    "pf1.utils.dialog.dialogGetActor is deprecated in favor of pf1.utils.dialog.getActor",
-    {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    }
-  );
-
-  const actorId = await pf1.utils.dialog.getActor({ actors: actors, title: title });
-  return { type: "actor", id: actorId };
-}
-
-/**
  * Choose actor from list.
  *
  * This is simplified interface to {@link pf1.applications.ActorSelector}

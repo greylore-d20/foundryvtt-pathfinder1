@@ -93,18 +93,6 @@ export class ItemScriptCall {
   }
 
   /**
-   * @deprecated
-   * @returns {string}
-   */
-  async getScriptBody() {
-    foundry.utils.logCompatibilityWarning("ItemScriptCall.getScriptBody() has been deprecated with no replacement.", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-    return this.type === "script" ? this.value : (await fromUuid(this.value))?.command ?? "";
-  }
-
-  /**
    * Get macro delegate for executing this script call with.
    *
    * @returns {Macro}

@@ -172,26 +172,6 @@ export function alterTargetDefense(cm, jq) {
 export function applyAccessibilitySettings(app, html, data, conf) {}
 
 /**
- * Returns an inline roll string suitable for chat messages.
- *
- * @deprecated
- * @param {Roll} roll - The roll to be stringified
- * @param {object} [options] - Additional options affecting the inline roll
- * @param {boolean} [options.hide3d] - Whether the roll should be hidden from DsN
- * @returns {string} The inline roll string
- */
-export function createInlineRollString(roll, { hide3d = true } = {}) {
-  foundry.utils.logCompatibilityWarning("pf1.utils.chat.createInlineRollString() is deprecated with no replacement", {
-    since: "PF1 v10",
-    until: "PF1 v11",
-  });
-
-  const a = roll.toAnchor();
-  if (hide3d) a.classList.add("inline-dsn-hidden");
-  return a.outerHTML;
-}
-
-/**
  * @param {ChatMessage} cm - Chat message instance
  * @param {HTMLElement} html - HTML element
  * @param recursive

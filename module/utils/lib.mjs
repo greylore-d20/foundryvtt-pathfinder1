@@ -39,21 +39,6 @@ export const isMinimumCoreVersion = function (version) {
 };
 
 /**
- * @deprecated - Use `item.actor` instead
- * @param {object} item Item data
- * @returns {User|null}
- */
-export const getItemOwner = function (item) {
-  foundry.utils.logCompatibilityWarning("pf1.utils.getItemOwner() is deprecated with no replacement", {
-    since: "PF1 v10",
-    until: "PF1 v11",
-  });
-  if (item.actor) return item.actor;
-  if (item.id) return game.actors.find((o) => o.items.get(item.id));
-  return null;
-};
-
-/**
  * Turn some fractional numbers into pretty strings.
  *
  * @param {number} v
@@ -92,27 +77,6 @@ export const CR = {
     if (!Number.isNumeric(value)) return "0";
     return value?.toString() ?? "";
   },
-};
-
-/**
- * @deprecated - Use `game.actors.get(id)` instead
- * @param {*} id
- * @returns
- */
-export const getActorFromId = function (id) {
-  foundry.utils.logCompatibilityWarning("pf1.utils.getActorFromId() is deprecated with no replacement", {
-    since: "PF1 v10",
-    until: "PF1 v11",
-  });
-  const speaker = ChatMessage.getSpeaker();
-  let actor = null;
-  if (id) {
-    actor = game.actors.tokens[id];
-    if (!actor) actor = game.actors.get(id);
-  }
-  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
-  return actor;
 };
 
 /**

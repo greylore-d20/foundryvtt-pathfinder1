@@ -193,21 +193,6 @@ export class ItemContainerPF extends ItemPhysicalPF {
   }
 
   /**
-   * @deprecated
-   * @param itemId
-   */
-  getContainerContent(itemId) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemContainerPF.getContainerContent() is deprecated in favor of ItemContainerPF.items collection usage.",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-    return this.items.get(itemId);
-  }
-
-  /**
    * @protected
    * @param {object[]} itemData Item creation data
    * @param itemsData

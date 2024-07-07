@@ -32,30 +32,6 @@ export class ItemSpellPF extends ItemPF {
     {
       const prep = data.system.preparation ?? {};
       const prepUpdate = {};
-      if (prep.maxAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prepUpdate.max = prep.maxAmount;
-        prepUpdate["-=maxAmount"] = null;
-      }
-      if (prep.preparedAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.preparedAmount is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prepUpdate.value = prep.preparedAmount;
-        prepUpdate["-=preparedAmount"] = null;
-      }
-      if (prep.spontaneousPrepared !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.spontaneousPrepared is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prepUpdate.value = prep.spontaneousPrepared ? 1 : 0;
-        prepUpdate["-=spontaneousPrepared"] = null;
-      }
 
       // Add preparation
       if (this.actor && prepUpdate.value === undefined) {
@@ -85,34 +61,6 @@ export class ItemSpellPF extends ItemPF {
     if (!changed.system) return;
 
     this._preparationPreUpdate(changed);
-
-    const prep = changed.system.preparation;
-    if (prep) {
-      if (prep.maxAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prep.max = prep.maxAmount;
-        delete prep.maxAmount;
-      }
-      if (prep.preparedAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.preparedAmount is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prep.value = prep.preparedAmount;
-        delete prep.preparedAmount;
-      }
-      if (prep.spontaneousPrepared !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.spontaneousPrepared is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prep.value = prep.spontaneousPrepared ? 1 : 0;
-        delete prep.spontaneousPrepared;
-      }
-    }
   }
 
   /**
@@ -171,38 +119,6 @@ export class ItemSpellPF extends ItemPF {
     return labels;
   }
 
-  /**
-   * Returns the spell's effective spell level, after counting in offsets.
-   *
-   * @deprecated
-   * @param {number} [bonus=0] - Another bonus to account for.
-   * @returns {number} The spell's effective spell level.
-   */
-  getEffectiveSpellLevel(bonus = 0) {
-    foundry.utils.logCompatibilityWarning(
-      `ItemSpellPF.getEffectiveSpellLevel() is deprecated. Use ItemSpellPF.spellLevel instead.`,
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return (this.spellLevel ?? 0) + bonus;
-  }
-
-  /**
-   * Returns the spell's effective caster level, after counting in offsets.
-   *
-   * @deprecated
-   * @param {number} [bonus=0] - Another bonus to account for.
-   * @returns {number} The spell's effective caster level.
-   */
-  getEffectiveCasterLevel(bonus = 0) {
-    foundry.utils.logCompatibilityWarning(
-      `ItemSpellPF.getEffectiveCasterLevel() is deprecated. Use ItemSpellPF.casterLevel instead.`,
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return (this.casterLevel ?? 0) + bonus;
-  }
-
   preCreateData(data, options, user) {
     const updates = super.preCreateData(data, options, user);
 
@@ -222,35 +138,6 @@ export class ItemSpellPF extends ItemPF {
     }
 
     return updates;
-  }
-
-  /** @override */
-  prepareBaseData() {
-    super.prepareBaseData();
-
-    this.system.preparation ??= {};
-    const prep = this.system.preparation;
-    // Compatibility shims
-    const compat = [
-      ["maxAmount", "max"],
-      ["preparedAmount", "value"],
-      ["spontaneousPrepared", "value"],
-    ];
-    for (const [oldk, newk] of compat) {
-      if (!Object.getOwnPropertyDescriptor(prep, oldk)?.["get"]) {
-        delete prep[oldk];
-        Object.defineProperty(prep, oldk, {
-          get() {
-            foundry.utils.logCompatibilityWarning(
-              `ItemSpellPF preparation.${oldk} is deprecated in favor of preparation.${newk}`,
-              { since: "PF1 v10", until: "PF1 v11" }
-            );
-            return prep[newk];
-          },
-          enumerable: false,
-        });
-      }
-    }
   }
 
   /** @override */
@@ -284,15 +171,6 @@ export class ItemSpellPF extends ItemPF {
       if (spellbook.class === "_hd")
         result.class = { level: result.attributes.hd?.total ?? result.details?.level?.value ?? 0 };
       else result.class = result.classes?.[spellbook.class] ?? {};
-      Object.defineProperty(result, "classLevel", {
-        get() {
-          foundry.utils.logCompatibilityWarning("@classLevel is deprecated in favor of @class.level", {
-            since: "PF1 v10",
-            until: "PF1 v11",
-          });
-          return this.class?.level;
-        },
-      });
 
       // Add @spellbook shortcut to @spells[bookId]
       result.spellbook = result.spells[this.system.spellbook];
@@ -500,15 +378,6 @@ export class ItemSpellPF extends ItemPF {
   get spellbook() {
     const bookId = this.system.spellbook;
     return this.actor?.system.attributes?.spells.spellbooks[bookId];
-  }
-
-  getDC(rollData = null) {
-    foundry.utils.logCompatibilityWarning("ItemSpellPF.getDC() is deprecated in favor of ItemAction.getDC()", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.defaultAction?.getDC(rollData) ?? 10;
   }
 
   getSpellUses(max = false) {
@@ -882,21 +751,6 @@ export class ItemSpellPF extends ItemPF {
         jQuery: false,
       }
     );
-  }
-
-  /**
-   * @type {boolean} - true if the default action is prepared to cast
-   */
-  get canCast() {
-    foundry.utils.logCompatibilityWarning(
-      "ItemSpellPF.canCast is deprecated in favor of ItemBasePF.canUse and ItemAction.canUse",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return this.canUse && (this.defaultAction?.canUse ?? true);
   }
 
   /**

@@ -42,22 +42,12 @@ export class RollPF extends Roll {
    * @param {object} [evalOpts] - Additional options to pass to Roll.evaluate()
    * @returns {RollPF} - Evaluated roll, or placeholder if error occurred.
    */
-  static safeRoll(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
-    if (evalOpts.async !== true) {
-      foundry.utils.logCompatibilityWarning(
-        "RollPF.safeRoll() is becoming async to match upstream API changes. Use RollPF.safeRollSync() for any non-dice synchronous rolling. Pass async=true to evalOpts to suppress this warning.",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
-    }
-
+  static async safeRoll(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
     let roll;
     try {
-      roll = this.create(formula, rollData).evaluate({ ...evalOpts, async: false });
+      roll = this.create(formula, rollData).evaluate({ ...evalOpts });
     } catch (err) {
-      roll = this.create("0", rollData).evaluate({ ...evalOpts, async: false });
+      roll = this.create("0", rollData).evaluate({ ...evalOpts });
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
@@ -71,21 +61,27 @@ export class RollPF extends Roll {
   /**
    * Synchronous version of {@link safeRoll safeRoll()}
    *
-   * @ignore
-   * @see {@link safeRoll}
+   * {@inheritDoc safeRoll}
+   *
+   * @param formula
+   * @param rollData
+   * @param context
+   * @param root0
+   * @param root0.suppressError
+   * @param evalOpts
    */
-  static safeRollSync(formula, rollData, context, options, evalOpts = {}) {
-    // TODO: Recreate safeRoll() with .evaluateSync() usage
-    evalOpts.async = true; // HACK, API hasn't actually changed yet
-    const roll = this.safeRoll(formula, rollData, context, options, evalOpts);
-    if (!roll.isDeterministic && evalOpts.maximize !== true && evalOpts.minimize !== true) {
-      foundry.utils.logCompatibilityWarning(
-        "RollPF.safeRollSync() will not support non-deterministic formulas in the future.",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
+  static safeRollSync(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
+    let roll;
+    try {
+      roll = new this(formula, rollData).evaluateSync({ ...evalOpts });
+    } catch (err) {
+      roll = new this("0", rollData).evaluateSync({ ...evalOpts });
+      roll.err = err;
+    }
+    if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
+    if (roll.err) {
+      if (context && !suppressError) console.error(context, roll.err);
+      else if (CONFIG.debug.roll) console.error(roll.err);
     }
     return roll;
   }
@@ -99,15 +95,6 @@ export class RollPF extends Roll {
   static safeRollAsync(formula, rollData, context, options, evalOpts = {}) {
     evalOpts.async = true;
     return this.safeRoll(formula, rollData, context, options, evalOpts);
-  }
-
-  static safeTotal(formula, data) {
-    foundry.utils.logCompatibilityWarning("RollPF.safeTotal() is deprecated in favor of RollPF.safeRoll().total", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return RollPF.safeRoll(formula, data).total;
   }
 
   /**

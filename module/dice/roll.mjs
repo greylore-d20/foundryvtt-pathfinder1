@@ -14,8 +14,8 @@ export class RollPF extends Roll {
     return (
       this.terms
         .reduce((dice, t) => {
-          if (t instanceof DiceTerm) dice.push(t);
-          else if (t instanceof PoolTerm) dice = dice.concat(t.dice);
+          if (t instanceof foundry.dice.terms.DiceTerm) dice.push(t);
+          else if (t instanceof foundry.dice.terms.PoolTerm) dice = dice.concat(t.dice);
           else if (t.inheritDice) dice = dice.concat(t.dice);
           return dice;
         }, [])
@@ -107,15 +107,15 @@ export class RollPF extends Roll {
       const isOperator = term instanceof OperatorTerm;
 
       // Combine a non-operator term with prior StringTerm
-      if (!isOperator && prior instanceof StringTerm) {
+      if (!isOperator && prior instanceof foundry.dice.terms.StringTerm) {
         prior.term += term.total;
         foundry.utils.mergeObject(prior.options, term.options);
         return terms;
       }
 
       // Attach string terms as flavor texts to numeric terms, if appropriate
-      const priorNumeric = prior instanceof NumericTerm;
-      if (prior && priorNumeric && term instanceof StringTerm && term.term.match(/\[(.+)\]/)) {
+      const priorNumeric = prior instanceof foundry.dice.terms.NumericTerm;
+      if (prior && priorNumeric && term instanceof foundry.dice.terms.StringTerm && term.term.match(/\[(.+)\]/)) {
         prior.options.flavor = RegExp.$1;
         return terms;
       }
@@ -140,7 +140,7 @@ export class RollPF extends Roll {
       */
 
       // Custom handling
-      if (prior && term instanceof StringTerm) {
+      if (prior && term instanceof foundry.dice.terms.StringTerm) {
         const flavor = /^\[(?<flavor>.+)\]$/.exec(term.term)?.groups.flavor;
         if (flavor) {
           // Attach string terms as flavor texts to function terms, if appropriate
@@ -152,8 +152,8 @@ export class RollPF extends Roll {
       }
 
       // Combine StringTerm with a prior non-operator term
-      const priorOperator = prior instanceof OperatorTerm;
-      if (prior && !priorOperator && term instanceof StringTerm) {
+      const priorOperator = prior instanceof foundry.dice.terms.OperatorTerm;
+      if (prior && !priorOperator && term instanceof foundry.dice.terms.StringTerm) {
         term.term = String(prior.total) + term.term;
         foundry.utils.mergeObject(term.options, prior.options);
         terms[terms.length - 1] = term;
@@ -167,15 +167,15 @@ export class RollPF extends Roll {
 
     // Convert remaining String terms to a RollTerm which can be evaluated
     simplified = simplified.map((term) => {
-      if (!(term instanceof StringTerm)) return term;
+      if (!(term instanceof foundry.dice.terms.StringTerm)) return term;
       const t = this._classifyStringTerm(term.formula, { intermediate: false });
       t.options = foundry.utils.mergeObject(term.options, t.options, { inplace: false });
       return t;
     });
 
     // Eliminate leading or trailing arithmetic
-    if (simplified[0] instanceof OperatorTerm && simplified[0].operator !== "-") simplified.shift();
-    if (simplified.at(-1) instanceof OperatorTerm) simplified.pop();
+    if (simplified[0] instanceof foundry.dice.terms.OperatorTerm && simplified[0].operator !== "-") simplified.shift();
+    if (simplified.at(-1) instanceof foundry.dice.terms.OperatorTerm) simplified.pop();
     return simplified;
   }
 
@@ -191,11 +191,17 @@ export class RollPF extends Roll {
   async getTooltip() {
     const parts = this.dice.filter((d) => d.results.some((r) => r.active)).map((d) => d.getTooltipData());
     const numericParts = this.terms.reduce((cur, t, idx, arr) => {
-      const ttdata = t instanceof NumericTerm || t.hasNumericTooltip ? t.getTooltipData() : undefined;
+      const ttdata =
+        t instanceof foundry.dice.terms.NumericTerm || t.hasNumericTooltip ? t.getTooltipData() : undefined;
 
       if (ttdata !== undefined) {
         const prior = arr[idx - 1];
-        if (t instanceof NumericTerm && prior && prior instanceof OperatorTerm && prior.operator === "-") {
+        if (
+          t instanceof foundry.dice.terms.NumericTerm &&
+          prior &&
+          prior instanceof foundry.dice.terms.OperatorTerm &&
+          prior.operator === "-"
+        ) {
           ttdata.total = -ttdata.total;
         }
 
@@ -218,7 +224,7 @@ export class RollPF extends Roll {
         prior = terms[i - 1];
 
       // Standalone terms
-      if (term instanceof StringTerm) {
+      if (term instanceof foundry.dice.terms.StringTerm) {
         const systerm = Object.values(pf1.dice.terms.aux).find((t) => t.matchTerm(term.term));
         if (systerm) {
           final.push(new systerm({ term: term.term }));
@@ -226,7 +232,7 @@ export class RollPF extends Roll {
         }
       }
       // Function terms
-      else if (term instanceof ParentheticalTerm && prior instanceof StringTerm) {
+      else if (term instanceof foundry.dice.terms.ParentheticalTerm && prior instanceof foundry.dice.terms.StringTerm) {
         const systerm = Object.values(pf1.dice.terms.fn).find((t) => t.matchTerm(prior.term));
         if (systerm?.isFunction) {
           const args = systerm.parseArgs(this._lenientSplitArgs(term.term));
@@ -246,7 +252,7 @@ export class RollPF extends Roll {
    * Variant of _splitMathArgs that takes system terms into consideration.
    *
    * @param {string} expression
-   * @returns {RollTerm[]}
+   * @returns {foundry.dice.terms.RollTerm[]}
    */
   static _lenientSplitArgs(expression) {
     return expression.split(",").reduce((args, t) => {

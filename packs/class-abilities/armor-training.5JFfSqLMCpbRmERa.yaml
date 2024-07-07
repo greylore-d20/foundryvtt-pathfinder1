@@ -11,11 +11,11 @@ system:
     mediumArmorFullSpeed: true
   changes:
     - _id: pv0gclyb
-      formula: '-clamped(floor((@class.level + 1) / 4), 0, 4)'
+      formula: '-clamp(floor((@class.level + 1) / 4), 0, 4)'
       target: acpA
       type: untyped
     - _id: e0zzcqzk
-      formula: clamped(floor((@class.level + 1) / 4), 0, 4)
+      formula: clamp(floor((@class.level + 1) / 4), 0, 4)
       target: mDexA
       type: untyped
   description:

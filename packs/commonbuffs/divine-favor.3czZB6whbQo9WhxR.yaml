@@ -5,11 +5,11 @@ name: Divine Favor
 system:
   changes:
     - _id: ha13jllu
-      formula: clamped(floor(@item.level / 3), 1, 3)
+      formula: clamp(floor(@item.level / 3), 1, 3)
       target: attack
       type: luck
     - _id: 4n037d0l
-      formula: clamped(floor(@item.level / 3), 1, 3)
+      formula: clamp(floor(@item.level / 3), 1, 3)
       target: wdamage
       type: luck
   description:

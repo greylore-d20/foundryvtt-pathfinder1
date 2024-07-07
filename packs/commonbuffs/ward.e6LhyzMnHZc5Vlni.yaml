@@ -5,11 +5,11 @@ name: Ward
 system:
   changes:
     - _id: yXliK2TX
-      formula: 2 + clamped(floor(@item.level / 8), 0, 2)
+      formula: 2 + clamp(floor(@item.level / 8), 0, 2)
       target: ac
       type: deflection
     - _id: ztHP3if0
-      formula: 2 + clamped(floor(@item.level / 8), 0, 2)
+      formula: 2 + clamp(floor(@item.level / 8), 0, 2)
       target: allSavingThrows
       type: resist
   description:

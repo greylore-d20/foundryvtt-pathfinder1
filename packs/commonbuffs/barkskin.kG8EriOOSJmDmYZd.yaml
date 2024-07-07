@@ -5,7 +5,7 @@ name: Barkskin
 system:
   changes:
     - _id: zjfo24qt
-      formula: clamped(2 + floor((@item.level - 3) / 3), 2, 5)
+      formula: clamp(2 + floor((@item.level - 3) / 3), 2, 5)
       target: nac
       type: enh
   description:

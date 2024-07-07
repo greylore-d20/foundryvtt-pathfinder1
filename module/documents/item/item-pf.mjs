@@ -358,7 +358,7 @@ export class ItemPF extends ItemBasePF {
 
   /** @type {boolean} */
   get isCharged() {
-    return this.isSingleUse || ["round", "day", "week", "charges"].includes(this.system.uses?.per);
+    return this.isSingleUse || !!this.system.uses?.per;
   }
 
   /** @type {boolean} Does the item has finite number of charges */
@@ -428,7 +428,7 @@ export class ItemPF extends ItemBasePF {
    * Recharges item's uses, if any.
    *
    * @param {object} options Options
-   * @param {"round"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
+   * @param {"round"|"hour"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
    * @param {boolean} [options.exact=false] Use exact time period. Otherwise "week" for example will also recharge items with "day" period.
    * @param {number} [options.value] Recharge to specific value, respecting maximum and minimum bounds.
    * @param {boolean} [options.maximize=false] Recharge to full regardless of recharge formula.

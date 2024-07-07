@@ -4867,32 +4867,12 @@ export class ActorPF extends ActorBasePF {
     // Update charged items
     // TODO: Await all item recharges in one go.
     for (const item of this.items) {
-      const itemUpdate = (await item.recharge({ ...rechargeOptions, commit: false })) ?? {};
-      itemUpdate.system ??= {};
-
-      // Update charged actions
-      // TODO: Move to ItemPF.recharge()
-      if (item.system.actions?.length > 0 && (rechargeOptions.period || "day") === "day") {
-        const actions = item.toObject().system.actions;
-        let _changed = false;
-        for (const actionData of actions) {
-          // TODO: Handle time period correctly
-          if (actionData.uses?.self?.per === "day") {
-            const maxUses = actionData.uses.self.max || 0;
-            if (actionData.uses.self.value < maxUses) {
-              actionData.uses.self.value = maxUses;
-              _changed = true;
-            }
-          }
-        }
-
-        if (_changed) {
-          itemUpdate.system.actions = actions;
-        }
-      }
+      const itemUpdate = (await item.recharge({ ...rechargeOptions, commit: false })) ?? { system: {} };
+      const actionUpdate = await item.rechargeActions({ ...rechargeOptions, commit: false });
+      if (actionUpdate?.system.actions) itemUpdate.system.actions = actionUpdate?.system.actions;
 
       // Append update to queue
-      if (!foundry.utils.isEmpty(itemUpdate.system)) {
+      if (itemUpdate?.system && !foundry.utils.isEmpty(itemUpdate.system)) {
         itemUpdate._id = item.id;
         itemUpdates.push(itemUpdate);
       }

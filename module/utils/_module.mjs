@@ -33,4 +33,5 @@ export {
   parseAlignment,
   enrichHTMLUnrolled,
   limitPrecision,
+  isItemSameSubGroup,
 } from "./lib.mjs";

@@ -281,18 +281,43 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   _onItemCreate(event) {
     event.preventDefault();
-    const header = event.currentTarget;
-    const type = header.dataset.type;
-    const typeName = header.dataset.typeName || header.dataset.type;
-    const itemData = {
-      name: `New ${typeName.capitalize()}`,
-      type: type,
-      system: {
-        subType: header.dataset.subType,
-      },
-    };
+    const el = event.currentTarget;
 
-    return this.item.createContainerContent(itemData, { renderSheet: true });
+    const [categoryId, sectionId] = el.dataset.create?.split(".") ?? [];
+    const createData = foundry.utils.deepClone(pf1.config.sheetSections[categoryId]?.[sectionId]?.create);
+    if (!createData) throw new Error(`No creation data found for "${categoryId}.${sectionId}"`);
+    const type = createData.type || el.dataset.type;
+    const subType = createData.system?.subType;
+    const typeName = game.i18n.localize(
+      subType ? `PF1.Subtypes.Item.${type}.${subType}.Single` : CONFIG.Item.typeLabels[type]
+    );
+
+    const newItem = new Item.implementation({ name: game.i18n.format("PF1.NewItem", { type: typeName }), type });
+    newItem.updateSource(createData);
+
+    // Get old items of same general category
+    const oldItems = this.items
+      .filter((oldItem) => pf1.utils.isItemSameSubGroup(newItem, oldItem))
+      .sort((a, b) => (b.sort || 0) - (a.sort || 0));
+
+    if (oldItems.length) {
+      // Ensure no duplicate names occur
+      const baseName = newItem.name;
+      let newName = baseName;
+      let i = 2;
+      const names = new Set(oldItems.map((i) => i.name));
+      while (names.has(newName)) {
+        newName = `${baseName} (${i++})`;
+      }
+
+      if (newName !== newItem.name) newItem.updateSource({ name: newName });
+    }
+
+    // Add to the end of the list of old items
+    const sort = oldItems.reduce((max, i) => Math.max(max, i.sort || 0), 0) + CONST.SORT_INTEGER_DENSITY;
+    newItem.updateSource({ sort });
+
+    return this.item.createContainerContent(newItem.toObject(), { renderSheet: true });
   }
 
   _onItemEdit(event) {

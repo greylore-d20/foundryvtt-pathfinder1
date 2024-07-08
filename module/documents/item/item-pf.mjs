@@ -358,7 +358,7 @@ export class ItemPF extends ItemBasePF {
 
   /** @type {boolean} */
   get isCharged() {
-    return this.isSingleUse || ["round", "day", "week", "charges"].includes(this.system.uses?.per);
+    return this.isSingleUse || !!this.system.uses?.per;
   }
 
   /** @type {boolean} Does the item has finite number of charges */
@@ -427,17 +427,43 @@ export class ItemPF extends ItemBasePF {
   /**
    * Recharges item's uses, if any.
    *
-   * @param {object} options Options
-   * @param {"round"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
-   * @param {boolean} [options.exact=false] Use exact time period. Otherwise "week" for example will also recharge items with "day" period.
-   * @param {number} [options.value] Recharge to specific value, respecting maximum and minimum bounds.
-   * @param {boolean} [options.maximize=false] Recharge to full regardless of recharge formula.
-   * @param {boolean} [options.commit=true] Commit update directly. If false, returns the update data instead.
-   * @param {object} [options.rollData] Roll data instance to use for formulas.
-   * @param {object} [options.context] Update context
-   * @returns {Promise<this|object|undefined>} Promise for the update, update data object, or undefined (no update needed).
+   * @param {object} options - Options
+   * @param {"round"|"hour"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
+   * @param {boolean} [options.exact=false] - Use exact time period. Otherwise "week" for example will also recharge items with "day" period.
+   * @param {number} [options.value] - Recharge to specific value, respecting maximum and minimum bounds.
+   * @param {boolean} [options.maximize=false] - Recharge to full regardless of recharge formula.
+   * @param {boolean} [options.commit=true] - Commit update directly. If false, returns the update data instead.
+   * @param {object} [options.rollData] - Roll data instance to use for formulas.
+   * @param {object} [options.context] - Update context
+   * @returns {Promise<this|object|undefined>} - Promise for the update, update data object, or undefined (no update needed).
    */
   async recharge({ value, period = "day", exact = false, maximize = false, commit = true, rollData, context } = {}) {
+    const updateData = (await this._rechargeUses({ value, period, exact, maximize, rollData })) ?? { system: {} };
+    const actionUpdate = this._rechargeActions({ period, exact, rollData });
+    if (actionUpdate) updateData.system.actions = actionUpdate.system.actions;
+
+    // Cancel empty update
+    if (foundry.utils.isEmpty(updateData.system)) return;
+
+    if (commit) return this.update(updateData, context);
+    return updateData;
+  }
+
+  /**
+   * Recharge item uses
+   *
+   * {@inheritDoc recharge}
+   *
+   * @internal
+   * @param options
+   * @param options.value
+   * @param options.period
+   * @param options.exact
+   * @param options.maximize
+   * @param options.rollData
+   * @returns {Promise<object | undefined>} - Update data or undefined if no update is necessary.
+   */
+  async _rechargeUses({ value, period, exact, maximize, rollData } = {}) {
     const uses = this.system.uses ?? {};
     if (!uses.per) return; // Unlimited uses, recharging meaningless
 
@@ -481,13 +507,57 @@ export class ItemPF extends ItemBasePF {
     // Clamp charge value to
     value = Math.clamped(value, 0, uses.max);
 
-    // Cancel pointless update
-    if (value === uses.value) return;
+    const updateData = { system: {} };
 
-    const updateData = { system: { uses: { value } } };
+    if (value !== uses.value) {
+      return { system: { uses: { value } } };
+    }
+  }
 
-    if (commit) return this.update(updateData, context);
-    return updateData;
+  /**
+   * Update action limited uses
+   *
+   * {@inheritDoc ItemPF.recharge}
+   *
+   * @internal
+   * @param {object} options
+   * @param options.period
+   * @param options.exact
+   * @param options.rollData
+   * @returns {object|undefined} - Update data or undefined if no update is needed.
+   */
+  _rechargeActions({ period, exact, rollData } = {}) {
+    if (!(this.system.actions?.length > 0)) return;
+
+    const actions = this.toObject().system.actions;
+    let changedActions = false;
+    for (const actionData of actions) {
+      const action = this.actions.get(actionData._id);
+      const max = action.data.uses?.self?.max ?? 0;
+      if (!(max > 0)) continue;
+
+      const uses = actionData.uses?.self;
+      const per = uses?.per;
+      if (!per) continue;
+
+      if (["charges"].includes(uses.per)) {
+        continue;
+      } else if (pf1.config.limitedUsePeriodOrder.includes(period) && !exact) {
+        // Recharge lesser time periods when using inexact matching
+        const idx = pf1.config.limitedUsePeriodOrder.indexOf(period);
+        const validPeriods = pf1.config.limitedUsePeriodOrder.slice(0, idx + 1);
+        if (!validPeriods.includes(per)) continue;
+      }
+
+      if (uses.value < max) {
+        uses.value = max;
+        changedActions = true;
+      }
+    }
+
+    if (!changedActions) return;
+
+    return { system: { actions } };
   }
 
   /**

@@ -170,6 +170,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "aszite",
       name: "PF1.Materials.Types.Aszite",
+      addon: true,
       allowed: {
         lightBlade: false,
         oneHandBlade: false,
@@ -203,6 +204,28 @@ export class MaterialTypes extends Registry {
       },
       weight: {
         multiplier: 0.5,
+      },
+    },
+    {
+      _id: "blightQuartz",
+      name: "PF1.Materials.Types.BlightQuartz",
+      addon: true,
+      allowed: {
+        buckler: false,
+        lightShield: false,
+        heavyShield: false,
+        towerShield: false,
+        lightArmor: false,
+        mediumArmor: false,
+        heavyArmor: false,
+      },
+      price: {
+        ammunition: 200.0,
+        lightWeapon: 2500.0,
+        oneHandWeapon: 2500.0,
+        twoHandWeapon: 2500.0,
+        rangedOneHandWeapon: 2500.0,
+        rangedTwoHandWeapon: 2500.0,
       },
     },
     {
@@ -342,6 +365,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "druchite",
       name: "PF1.Materials.Types.Druchite",
+      addon: true,
       allowed: {
         buckler: false,
         lightShield: false,

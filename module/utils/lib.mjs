@@ -1138,3 +1138,24 @@ export function limitPrecision(number, decimals = 2) {
   const mult = Math.pow(10, decimals);
   return Math.floor(number * mult) / mult;
 }
+
+/**
+ * Tests if two items are in same sub-group.
+ *
+ * This does not test main grouping (that is, item type itself).
+ *
+ * @param {ItemPF} item0
+ * @param {ItemPF} item1
+ * @returns {boolean}
+ */
+export function isItemSameSubGroup(item0, item1) {
+  if (item0.type === "spell") {
+    // Spells sort by spell level instead of subtype
+    return item0.system.spellbook === item1.system.spellbook && item0.system.level === item1.system.level;
+  }
+
+  if (item0.subType) return item0.subType === item1.subType;
+
+  // Assume everything else is only categorized by main type
+  return true;
+}

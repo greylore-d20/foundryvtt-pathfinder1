@@ -44,13 +44,6 @@
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
 
-    {{#if hasAction}}
-    <label class="checkbox" data-tooltip="PF1.QuickbarHint">
-      <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
-      {{localize "PF1.Quickbar"}}
-    </label>
-    {{/if}}
-
     {{#if (and (eq system.subType "racial") system.racePoints)}}
     <label class="race-points">
       <span>{{localize "PF1.RacePoints"}}</span>

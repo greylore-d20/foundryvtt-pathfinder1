@@ -1636,26 +1636,21 @@ const _migrateItemChanges = function (itemData, updateData) {
   if (Array.isArray(changes)) {
     const newChanges = [];
     for (const c of changes) {
+      let cd;
       if (Array.isArray(c)) {
-        const newChange = new ItemChange({
+        cd = {
           formula: c[0],
           target: c[1],
           subTarget: c[2],
-          modifier: c[3],
-        });
-
-        newChanges.push(newChange.toObject());
+          type: c[3],
+        };
       } else {
-        const cd = foundry.utils.deepClone(c); // Avoid mutating source data so diff works properly
-        // Transform legacy operators
-        if (cd.operator === "=") cd.operator = "set";
-        if (cd.operator === "+") cd.operator = "add";
-
-        // Value should not exist, yet it was added previously by using derived data for updates.
-        delete cd.value;
-
-        newChanges.push(new ItemChange(cd).toObject());
+        cd = foundry.utils.deepClone(c); // Avoid mutating source data so diff works properly
       }
+      ItemChange.migrateData(cd);
+      // Value should not exist, yet it was added previously by using derived data for updates.
+      delete cd.value;
+      newChanges.push(new ItemChange(cd).toObject());
     }
 
     // Alter the changes list, but only if changes actually occurred. Bidirectional to detect deletions.
@@ -1671,25 +1666,30 @@ const _migrateItemChanges = function (itemData, updateData) {
   const newChanges = [];
   let updateChanges = false;
   for (const change of oldChanges) {
-    const newChange = { ...change };
+    const cd = foundry.utils.deepClone(change);
+    ItemChange.migrateData(cd);
+    if (foundry.utils.diffObject(change, cd)) {
+      updateChanges = true;
+    }
+
     // Replace targets with .subSkills. for ones without
     // @since PF1 v10
-    if (/\.subSkills\./.test(change.subTarget)) {
-      newChange.subTarget = change.subTarget.replace(".subSkills.", ".");
+    if (/\.subSkills\./.test(cd.target)) {
+      cd.target = cd.target.replace(".subSkills.", ".");
       updateChanges = true;
     }
     // Remove use of penalty bonus type
     // @since PF1 v10
-    if (change.modifier === "penalty") {
+    if (cd.type === "penalty") {
       // Convert the special ability score case to specific target
-      if (["str", "dex", "con", "int", "wis", "cha"].includes(change.subTarget)) {
-        newChange.subTarget = `${change.subTarget}Pen`;
+      if (["str", "dex", "con", "int", "wis", "cha"].includes(cd.target)) {
+        cd.target = `${cd.target}Pen`;
       }
-      // Convert all to untyped modifiers
-      newChange.modifier = "untyped";
+      // Convert all to untyped changes
+      cd.type = "untyped";
       updateChanges = true;
     }
-    newChanges.push(newChange);
+    newChanges.push(cd);
   }
   if (updateChanges) {
     updateData["system.changes"] = newChanges;

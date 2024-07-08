@@ -297,6 +297,7 @@ export class ItemClassPF extends ItemPF {
     const healthConfig = game.settings.get("pf1", "healthConfig").getClassHD(this);
 
     const isBaseClass = (itemData.subType || "base") === "base";
+    const isMythic = itemData.subType === "mythic";
 
     actor.classes[itemData.tag] = {
       _id: this.id,
@@ -308,6 +309,9 @@ export class ItemClassPF extends ItemPF {
       mythicTier: this.mythicTier,
       bab: itemData.bab,
       hp: healthConfig.auto,
+      type: itemData.subType,
+      isBase: isBaseClass,
+      isMythic,
       savingThrows: {
         fort: itemData.savingThrows.fort.base,
         ref: itemData.savingThrows.ref.base,

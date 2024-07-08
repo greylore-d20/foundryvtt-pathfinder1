@@ -54,7 +54,7 @@ export class PF1TextEnricher {
 function setIcon(el, icon) {
   const i = document.createElement("i");
   i.classList.add(...icon.split(" "));
-  el.prepend(i, " ");
+  el.prepend(i, " ");
 }
 
 /**
@@ -162,7 +162,7 @@ export function getRelevantActors(target) {
  * @param {Element} el Target element
  */
 export function generateTooltip(el) {
-  const { roll, formula, bonus, speaker, name } = el.dataset;
+  const { roll, formula, bonus, speaker, name, level } = el.dataset;
 
   const tooltip = [];
   if (name) tooltip.push(name);
@@ -172,6 +172,7 @@ export function generateTooltip(el) {
   } else if (formula) {
     tooltip.push(formula);
   }
+  if (level) tooltip.push(game.i18n.localize("PF1.Level") + `: ${level}`);
   if (bonus) tooltip.push(game.i18n.localize("PF1.Bonus") + `: ${bonus}`);
   if (speaker) tooltip.push(game.i18n.localize("PF1.EnrichedText.AsSpeaker"));
 
@@ -463,19 +464,24 @@ export const enrichers = [
     (match, _options) => {
       const { uuid, options, label } = match.groups;
 
+      // TODO: Allow plain name instead of UUID. Needs configuration where to find said things.
       const item = fromUuidSync(uuid);
       if (!item) console.warn("PF1 | @Apply | Could not find item", uuid);
 
-      // TODO: Allow plain name instead of UUID. Needs configuration where to find said things.
-      const a = createElement({ label, click: true, handler: "apply", options, broken: !item });
+      const broken = !item;
+
+      const a = createElement({ label, click: true, handler: "apply", options, broken });
 
       if (item) {
         a.dataset.name = `${game.i18n.localize("DOCUMENT.Item")}: ${item.name}`;
         a.dataset.uuid = item.uuid;
         a.append(item.name);
-      } else a.replaceChildren(`@Apply[${uuid}]`);
 
-      generateTooltip(a);
+        generateTooltip(a);
+      } else {
+        a.replaceChildren(uuid);
+      }
+
       setIcon(a, "fa-solid fa-angles-right");
 
       return a;
@@ -690,7 +696,9 @@ export const enrichers = [
       const cond = pf1.registry.conditions.get(condition);
       const text = cond?.name || condition;
 
-      const a = createElement({ click: true, handler: "condition", options });
+      const broken = !cond;
+
+      const a = createElement({ click: true, handler: "condition", options, broken });
       if (!cond) a.classList.add("broken");
 
       a.dataset.condition = condition;

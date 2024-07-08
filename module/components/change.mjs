@@ -45,6 +45,7 @@ export class ItemChange extends foundry.abstract.DataModel {
       delete data.modifier;
     }
     // Script operator is no longer supported
+    // And migrate legacy operators
     if (data.operator === "script") data.operator = "add";
     else if (data.operator === "+") data.operator = "add";
     else if (data.operator === "=") data.operator = "set";

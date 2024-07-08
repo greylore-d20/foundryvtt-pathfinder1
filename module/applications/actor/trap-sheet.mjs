@@ -92,25 +92,12 @@ export class ActorSheetPFTrap extends ActorSheetPFNPC {
   /**
    * Organize and classify Owned Items - We just need attacks
    *
-   * @param data
+   * @param context
    * @private
    * @override
    */
-  _prepareItems(data) {
-    const [attacks] = data.items.reduce(
-      (arr, item) => {
-        item.img = item.img || Item.implementation.getDefaultArtwork(item);
-        item.hasUses = item.uses && item.uses.max > 0;
-        item.isCharged = ["day", "week", "charges"].includes(foundry.utils.getProperty(item, "uses.per"));
-
-        const itemCharges =
-          foundry.utils.getProperty(item, "uses.value") != null ? foundry.utils.getProperty(item, "uses.value") : 1;
-
-        if (item.type === "attack") arr[0].push(item);
-        return arr;
-      },
-      [[]]
-    );
+  _prepareItems(context) {
+    const attacks = context.items.filter((i) => i.type === "attack");
 
     const attackSections = Object.values(pf1.config.sheetSections.combatlite)
       .map((data) => ({ ...data }))
@@ -125,6 +112,6 @@ export class ActorSheetPFTrap extends ActorSheetPFNPC {
       }
     }
 
-    data.attacks = attackSections;
+    context.attacks = attackSections;
   }
 }

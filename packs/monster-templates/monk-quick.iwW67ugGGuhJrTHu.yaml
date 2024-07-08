@@ -1,6 +1,6 @@
 _id: iwW67ugGGuhJrTHu
 _key: '!items!iwW67ugGGuhJrTHu'
-img: systems/pf1/icons/skills/violet_07.jpg
+img: systems/pf1/icons/items/equipment/gloves.jpg
 name: Monk (Quick)
 system:
   changes:
@@ -32,6 +32,10 @@ system:
       formula: '@abilities.wis.mod + (2 + floor(@attributes.hd.total / 4))'
       target: ac
       type: untyped
+    - _id: reDnttzI
+      formula: '1'
+      target: bonusFeats
+      type: untyped
   crOffset: '@attributes.hd.total >= 10 ? 3 : 2'
   description:
     value: >-
@@ -62,6 +66,12 @@ system:
       uses natural attacks increases the damage dealt by all of its natural
       attacks by one die step instead; Ability Scores +4 Dexterity and Wisdom;
       Feats Improved Unarmed Strike.</p>
+  links:
+    supplements:
+      - uuid: Compendium.pf1.feats.Item.2aTFNMs3pW6nUBlr
+  sources:
+    - id: PZO1130
+      pages: '247'
   subType: template
 type: feat
 

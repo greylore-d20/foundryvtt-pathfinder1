@@ -236,7 +236,7 @@ export async function hideInvisibleTargets(cm, html, recursive = false) {
 
   // Hide targets if there's none visible to not reveal presence of invisible targets
   if (!hasVisible) targetsElem.remove();
-  else targetElems.style.removeProperty("display");
+  else targetsElem.style.removeProperty("display");
 }
 
 const getTokenByUuid = (uuid) => fromUuidSync(uuid)?.object;

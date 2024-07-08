@@ -1314,12 +1314,15 @@ export class ActorPF extends ActorBasePF {
       weaponProf: pf1.config.weaponProficiencies,
       languages: pf1.config.languages,
     };
+
+    const validItems = this.items.filter((i) => i.isActive);
+
     for (const [prof, translations] of Object.entries(proficiencies)) {
       // Custom proficiency baseline from actor
       const customProficiencies = actorData.traits[prof]?.custom || [];
 
       // Iterate over all items to create one array of non-custom proficiencies
-      const proficiencies = this.items.reduce(
+      const proficiencies = validItems.reduce(
         (profs, item) => {
           // Check only items able to grant proficiencies
           if (foundry.utils.hasProperty(item, `system.${prof}`)) {
@@ -4571,6 +4574,7 @@ export class ActorPF extends ActorBasePF {
     const negLevels = result.attributes.energyDrain ?? 0;
     if (negLevels > 0 && result.classes) {
       for (const cls of Object.values(result.classes)) {
+        if (cls.isMythic) continue;
         cls.level = Math.max(0, cls.unlevel - negLevels);
       }
     }
@@ -4899,32 +4903,10 @@ export class ActorPF extends ActorBasePF {
     // Update charged items
     // TODO: Await all item recharges in one go.
     for (const item of this.items) {
-      const itemUpdate = (await item.recharge({ ...rechargeOptions, commit: false })) ?? {};
-      itemUpdate.system ??= {};
-
-      // Update charged actions
-      // TODO: Move to ItemPF.recharge()
-      if (item.system.actions?.length > 0 && (rechargeOptions.period || "day") === "day") {
-        const actions = item.toObject().system.actions;
-        let _changed = false;
-        for (const actionData of actions) {
-          // TODO: Handle time period correctly
-          if (actionData.uses?.self?.per === "day") {
-            const maxUses = actionData.uses.self.max || 0;
-            if (actionData.uses.self.value < maxUses) {
-              actionData.uses.self.value = maxUses;
-              _changed = true;
-            }
-          }
-        }
-
-        if (_changed) {
-          itemUpdate.system.actions = actions;
-        }
-      }
+      const itemUpdate = await item.recharge({ ...rechargeOptions, commit: false });
 
       // Append update to queue
-      if (!foundry.utils.isEmpty(itemUpdate.system)) {
+      if (itemUpdate?.system && !foundry.utils.isEmpty(itemUpdate.system)) {
         itemUpdate._id = item.id;
         itemUpdates.push(itemUpdate);
       }

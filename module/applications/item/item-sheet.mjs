@@ -129,6 +129,7 @@ export class ItemSheetPF extends ItemSheet {
 
     const context = {
       item,
+      document: item, // Reference used by unknown data
       name: item.name,
       system: itemData,
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[item.type]),
@@ -194,6 +195,7 @@ export class ItemSheetPF extends ItemSheet {
     context.isSpell = item.type === "spell";
     context.isImplant = item.type === "implant";
 
+    context.isActivatable = !["race", "class", "container", "loot"].includes(item.type);
     context.hasAction = item.hasAction;
     context.hasAttack = item.hasAttack;
     context.hasDamage = item.hasDamage;
@@ -1850,7 +1852,7 @@ export class ItemSheetPF extends ItemSheet {
         }
 
         sources.push(src);
-        await this.document.update({ "system.sources": sources });
+        await this.item.update({ "system.sources": sources });
         if (!event.shiftKey) {
           pf1.applications.ContentSourceEditor.open(this.item);
           // TODO: Activate desired tab.

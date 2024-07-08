@@ -31,11 +31,6 @@
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
 
-    <label class="descriptor checkbox quickbar" data-tooltip="PF1.QuickbarHint">
-      <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
-      {{localize "PF1.Quickbar"}}
-    </label>
-
     {{#if system.weaponGroups.total.size}}
     <ul class="property-list weapon-groups">
       <h5>{{localize "PF1.WeaponGroups"}}</h5>

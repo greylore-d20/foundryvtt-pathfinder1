@@ -195,6 +195,7 @@ export class ItemSheetPF extends ItemSheet {
     context.isSpell = item.type === "spell";
     context.isImplant = item.type === "implant";
 
+    context.isActivatable = !["race", "class", "container", "loot"].includes(item.type);
     context.hasAction = item.hasAction;
     context.hasAttack = item.hasAttack;
     context.hasDamage = item.hasDamage;

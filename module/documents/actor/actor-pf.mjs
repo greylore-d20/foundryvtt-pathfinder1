@@ -1298,12 +1298,15 @@ export class ActorPF extends ActorBasePF {
       weaponProf: pf1.config.weaponProficiencies,
       languages: pf1.config.languages,
     };
+
+    const validItems = this.items.filter((i) => i.isActive);
+
     for (const [prof, translations] of Object.entries(proficiencies)) {
       // Custom proficiency baseline from actor
       const customProficiencies = actorData.traits[prof]?.custom || [];
 
       // Iterate over all items to create one array of non-custom proficiencies
-      const proficiencies = this.items.reduce(
+      const proficiencies = validItems.reduce(
         (profs, item) => {
           // Check only items able to grant proficiencies
           if (foundry.utils.hasProperty(item, `system.${prof}`)) {

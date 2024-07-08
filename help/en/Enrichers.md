@@ -36,17 +36,23 @@ Meant as a shorthand for `@Use` when you don't need to refer to different items.
 
 ### `@Apply`
 
-Apply defined buff (by UUID) to actors. The buff is set to active state automatically.
+Apply defined buff (by UUID or name) to actors. The buff is set to active state automatically.
 
 If the item is found, displays the item name as default label.
+
+If name is defined instead of UUID, item is searched from items directory and compendiums.
 
 #### Examples
 
 | Input                                                              | Explanation                              |
 | :----------------------------------------------------------------- | :--------------------------------------- |
+| `@Apply[Special Mood]`                                             | Add custom buff with level untouched.    |
 | `@Apply[Compendium.pf1.commonbuffs.Item.IlO0CNpAIKZtNYu8;level=5]` | Add Mage Armor with buff level set to 5. |
+| `@Apply[Rage;level=3]`                                             | Add Rage with buff level set to 10.      |
 
 #### Special Options
+
+- `level` for setting buff level.
 
 ### `@Browse`
 

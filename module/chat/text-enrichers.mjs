@@ -1,6 +1,61 @@
 import { RollPF } from "module/dice/roll.mjs";
 import { openJournal } from "@utils";
 
+export const searchLimit = 500;
+
+// Was game.documentIndex.index() called?
+let indexed = false;
+
+/**
+ * @internal
+ * @param {string} name - Item name to search for
+ * @param {object} [options] - Additional options
+ * @param {string} [options.type]
+ * @returns {string|null} - Most appropriate matching item's UUID
+ */
+async function findItem(name, { type } = {}) {
+  // HACK: Early need of documentIndex
+  if (!indexed && !game.ready) {
+    console.debug("PF1 | Forcing early document index creation");
+    await game.documentIndex.index();
+    indexed = true;
+  }
+
+  let items = game.documentIndex
+    .lookup(name, { documentTypes: ["Item"], limit: searchLimit })
+    .Item // Omit items on actors and items of wrong type
+    .filter((e) => !e.entry.actor && (!type || e.entry.type === type));
+
+  const packTypePriority = {
+    items: 1_000,
+    world: 2_000,
+    module: 3_000,
+    system: 4_000,
+  };
+
+  items = items
+    .map((e) => {
+      const pack = game.packs.get(e.pack);
+      const packType = pack?.metadata.packageType ?? "items";
+
+      return {
+        ...e,
+        exact: e.entry.name === name,
+        visible: pack?.visible ?? true,
+        disabled: pack?.config.pf1?.disabled ?? false,
+        sort: packTypePriority[packType],
+      };
+    })
+    .filter((e) => !e.disabled && e.visible)
+    // Priotizie by item location
+    .sort((a, b) => a.sort - b.sort)
+    // Prioritize exact matches
+    .sort((a, b) => (a.exact ? -1 : 0) + (b.exact ? 1 : 0));
+
+  // Return most likely match
+  return items[0]?.uuid ?? null;
+}
+
 /**
  * Helper class for making `CONFIG.TextEditor.enrichers` usage easier.
  */
@@ -448,8 +503,17 @@ export async function onApply(event, target) {
 
   // Apply
   for (const actor of actors) {
-    // TODO: Activate existing item with same sourceId
-    Item.implementation.create(itemData, { parent: actor });
+    // Activate existing item with same sourceId
+    const old = actor.itemTypes[item.type].find((i) => i.getFlag("core", "sourceId") === uuid);
+    if (old) {
+      const activationData = { system: { active: true } };
+      if (level !== undefined) activationData.system.level = level;
+      old.update(activationData);
+    }
+    // Add new
+    else {
+      Item.implementation.create(itemData, { parent: actor });
+    }
   }
 }
 
@@ -460,13 +524,13 @@ export const enrichers = [
   // @Apply
   new PF1TextEnricher(
     "apply",
-    /@Apply\[(?<uuid>.*?)(?:;(?<options>.*?))?\](?:\{(?<label>.*?)})?/g,
-    (match, _options) => {
-      const { uuid, options, label } = match.groups;
+    /@Apply\[(?<ident>.*?)(?:;(?<options>.*?))?\](?:\{(?<label>.*?)})?/g,
+    async (match, _options) => {
+      const { ident, options, label } = match.groups;
 
-      // TODO: Allow plain name instead of UUID. Needs configuration where to find said things.
-      const item = fromUuidSync(uuid);
-      if (!item) console.warn("PF1 | @Apply | Could not find item", uuid);
+      const item = fromUuidSync(ident) ?? fromUuidSync(await findItem(ident, { type: "buff" }));
+
+      if (!item) console.warn("PF1 | @Apply | Could not find item", ident);
 
       const broken = !item;
 
@@ -479,7 +543,7 @@ export const enrichers = [
 
         generateTooltip(a);
       } else {
-        a.replaceChildren(uuid);
+        a.replaceChildren(ident);
       }
 
       setIcon(a, "fa-solid fa-angles-right");

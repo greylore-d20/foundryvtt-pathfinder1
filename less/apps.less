@@ -106,8 +106,7 @@
   input[type="number"] {
     &:hover,
     &:focus {
-      &:not(:disabled),
-      &:not([disabled]) {
+      &:not(:disabled, [disabled], :read-only) {
         border: 1px solid #111;
         box-shadow: 0 0 8px red;
       }
@@ -121,7 +120,7 @@
   input {
     &:disabled,
     &[disabled],
-    &:readonly {
+    &:read-only {
       color: var(--pf1-olive);
       &:hover,
       &:focus {

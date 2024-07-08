@@ -2201,12 +2201,12 @@ export const buffTargets = /** @type {const} */ ({
   concentration: { label: "PF1.Concentration", category: "spell", sort: 220000 },
   cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
   dc: { label: "PF1.SpellDC", category: "spell", sort: 240000 },
-  sensedv: { label: "PF1.Sense.darkvision", category: "senses", sort: 100000 },
-  sensets: { label: "PF1.Sense.tremorsense", category: "senses", sort: 110000 },
-  sensebse: { label: "PF1.Sense.blindsense", category: "senses", sort: 120000 },
-  sensebs: { label: "PF1.Sense.blindsight", category: "senses", sort: 130000 },
-  sensesc: { label: "PF1.Sense.scent", category: "senses", sort: 140000 },
-  sensetr: { label: "PF1.Sense.trueseeing", category: "senses", sort: 150000 },
+  sensedv: { label: "PF1.Sense.darkvision", category: "senses", sort: 250000 },
+  sensets: { label: "PF1.Sense.tremorsense", category: "senses", sort: 250100 },
+  sensebse: { label: "PF1.Sense.blindsense", category: "senses", sort: 250200 },
+  sensebs: { label: "PF1.Sense.blindsight", category: "senses", sort: 250300 },
+  sensesc: { label: "PF1.Sense.scent", category: "senses", sort: 250400 },
+  sensetr: { label: "PF1.Sense.trueseeing", category: "senses", sort: 250500 },
 });
 
 /**

@@ -581,7 +581,6 @@ export class ActorSheetPF extends ActorSheet {
     const senses = this.actor.system.traits.senses ?? {};
 
     for (const [key, value] of Object.entries(senses)) {
-      // if (value === 0 || value === false) continue;
       switch (key) {
         case "ll":
           if (senses[key].enabled) {

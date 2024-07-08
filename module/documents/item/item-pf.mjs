@@ -438,6 +438,32 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<this|object|undefined>} - Promise for the update, update data object, or undefined (no update needed).
    */
   async recharge({ value, period = "day", exact = false, maximize = false, commit = true, rollData, context } = {}) {
+    const updateData = (await this._rechargeUses({ value, period, exact, maximize, rollData })) ?? { system: {} };
+    const actionUpdate = this._rechargeActions({ period, exact, rollData });
+    if (actionUpdate) updateData.system.actions = actionUpdate.system.actions;
+
+    // Cancel empty update
+    if (foundry.utils.isEmpty(updateData.system)) return;
+
+    if (commit) return this.update(updateData, context);
+    return updateData;
+  }
+
+  /**
+   * Recharge item uses
+   *
+   * {@inheritDoc recharge}
+   *
+   * @internal
+   * @param options
+   * @param options.value
+   * @param options.period
+   * @param options.exact
+   * @param options.maximize
+   * @param options.rollData
+   * @returns {Promise<object | undefined>} - Update data or undefined if no update is necessary.
+   */
+  async _rechargeUses({ value, period, exact, maximize, rollData } = {}) {
     const uses = this.system.uses ?? {};
     if (!uses.per) return; // Unlimited uses, recharging meaningless
 
@@ -484,26 +510,23 @@ export class ItemPF extends ItemBasePF {
     const updateData = { system: {} };
 
     if (value !== uses.value) {
-      updateData.system.uses = { value };
+      return { system: { uses: { value } } };
     }
-
-    // Cancel empty update
-    if (foundry.utils.isEmpty(updateData.system)) return null;
-
-    if (commit) return this.update(updateData, context);
-    return updateData;
   }
 
-  // Update action limited uses
-  async rechargeActions({
-    value,
-    period = "day",
-    exact = false,
-    maximize = false,
-    commit = true,
-    rollData,
-    context,
-  } = {}) {
+  /**
+   * Update action limited uses
+   *
+   * {@inheritDoc ItemPF.recharge}
+   *
+   * @internal
+   * @param {object} options
+   * @param options.period
+   * @param options.exact
+   * @param options.rollData
+   * @returns {object|undefined} - Update data or undefined if no update is needed.
+   */
+  _rechargeActions({ period, exact, rollData } = {}) {
     if (!(this.system.actions?.length > 0)) return;
 
     const actions = this.toObject().system.actions;
@@ -534,10 +557,7 @@ export class ItemPF extends ItemBasePF {
 
     if (!changedActions) return;
 
-    const updateData = { system: { actions } };
-
-    if (commit) return this.update(updateData, context);
-    return updateData;
+    return { system: { actions } };
   }
 
   /**

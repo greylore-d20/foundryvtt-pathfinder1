@@ -4870,9 +4870,7 @@ export class ActorPF extends ActorBasePF {
     // Update charged items
     // TODO: Await all item recharges in one go.
     for (const item of this.items) {
-      const itemUpdate = (await item.recharge({ ...rechargeOptions, commit: false })) ?? { system: {} };
-      const actionUpdate = await item.rechargeActions({ ...rechargeOptions, commit: false });
-      if (actionUpdate?.system.actions) itemUpdate.system.actions = actionUpdate?.system.actions;
+      const itemUpdate = await item.recharge({ ...rechargeOptions, commit: false });
 
       // Append update to queue
       if (itemUpdate?.system && !foundry.utils.isEmpty(itemUpdate.system)) {

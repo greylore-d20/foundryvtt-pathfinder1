@@ -1332,12 +1332,10 @@ export class ActorSheetPF extends ActorSheet {
           { path: `@attributes.speed.${mode}.base`, value: tB, unit: tU },
           { path: `@attributes.speed.${mode}.unhindered`, value: tR, unit: tU }
         );
-        // Add overland speed if we have actual speed
-        if (tD > 0) {
-          const [oD] = pf1.utils.convertDistance(speed.overland);
-          const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
-          paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
-        }
+        // Add overland speed
+        const [oD] = pf1.utils.convertDistance(speed.overland);
+        const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
+        paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
         break;
       }
       case "flyManeuverability":

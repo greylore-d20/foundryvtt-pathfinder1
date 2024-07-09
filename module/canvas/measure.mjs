@@ -40,7 +40,9 @@ export class TemplateLayerPF extends TemplateLayer {
     // Snap the destination to the grid
     const snapToGrid = !event.shiftKey;
     if (snapToGrid) {
-      interaction.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, this.gridPrecision);
+      const snapMode =
+        CONST.GRID_SNAPPING_MODES.CENTER | CONST.GRID_SNAPPING_MODES.EDGE_MIDPOINT | CONST.GRID_SNAPPING_MODES.CORNER;
+      interaction.destination = canvas.grid.getSnappedPoint(destination, { mode: snapMode });
     }
 
     // Compute the ray
@@ -179,7 +181,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     for (let a = -nc; a < nc; a++) {
       for (let b = -nr; b < nr; b++) {
         // Position of cell's top-left corner, in pixels
-        const [gx, gy] = canvas.grid.grid.getPixelsFromGridPosition(col0 + a, row0 + b);
+        const { x: gx, y: gy } = canvas.grid.getTopLeftPoint({ i: col0 + a, j: row0 + b });
 
         // Determine point we're measuring the distance to - always in the center of a grid square
         const destination = { x: gx + gridSizePx * 0.5, y: gy + gridSizePx * 0.5 };
@@ -358,7 +360,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
   }
 
   getHighlightLayer() {
-    return canvas.grid.getHighlightLayer(this.highlightId);
+    return canvas.interface.grid.getHighlightLayer(this.highlightId);
   }
 
   /**

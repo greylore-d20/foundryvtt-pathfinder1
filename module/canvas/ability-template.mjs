@@ -116,7 +116,9 @@ export class AbilityTemplate extends MeasuredTemplatePF {
       handlers.mm = (event) => {
         event.stopPropagation();
         const center = event.data.getLocalPosition(this.layer);
-        const pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
+        const snapMode =
+          CONST.GRID_SNAPPING_MODES.CENTER | CONST.GRID_SNAPPING_MODES.EDGE_MIDPOINT | CONST.GRID_SNAPPING_MODES.CORNER;
+        const pos = canvas.grid.getSnappedPoint(center, { mode: snapMode });
         this.document.x = pos.x;
         this.document.y = pos.y;
         throttleRefresh();
@@ -134,7 +136,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         canvas.app.view.removeEventListener("wheel", handlers.mw);
         // Clear highlight
         this.active = false;
-        const hl = canvas.grid.getHighlightLayer(this.highlightId);
+        const hl = canvas.interface.grid.getHighlightLayer(this.highlightId);
         hl.clear();
         _clear();
 

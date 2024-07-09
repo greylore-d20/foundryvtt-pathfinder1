@@ -19,7 +19,7 @@ class SquareHighlight {
 
     this._id = foundry.utils.randomID();
 
-    canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
+    canvas.interface.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
 
   addSquare(x, y) {
@@ -27,7 +27,7 @@ class SquareHighlight {
   }
 
   clear() {
-    const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+    const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
     if (!hl) return;
     hl.clear();
   }
@@ -35,7 +35,7 @@ class SquareHighlight {
   render() {
     const grid = canvas.grid;
     const gridSize = grid.size;
-    const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+    const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
 
     this.clear();
 
@@ -135,12 +135,12 @@ class GridlessHighlight extends AttackHighlightBase {
     });
 
     this._id = foundry.utils.randomID();
-    canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
+    canvas.interface.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
 
   clearHighlight() {
     if (this.isValid) {
-      const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
       if (!hl) return;
       hl.removeChildren();
       this.#rangeStops = undefined;
@@ -149,7 +149,7 @@ class GridlessHighlight extends AttackHighlightBase {
 
   renderHighlight() {
     if (this.isValid) {
-      const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
       if (!hl) return;
       hl.clear();
 

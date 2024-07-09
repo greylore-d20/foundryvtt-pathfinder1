@@ -10,6 +10,9 @@
 
 - [Character](Help/Actors/Character)
 - [NPC](Help/Actors/NPC)
+- [Haunt](Help/Actors/Haunt)
+- [Trap](Help/Actors/Trap)
+- [Vehicle](Help/Actors/Vehicle)
 
 ## Items
 

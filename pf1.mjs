@@ -12,7 +12,6 @@ import "module/compendium-directory.mjs";
 import "./module/chatlog.mjs";
 
 // Import Modules
-import { measureDistances } from "./module/utils/canvas.mjs";
 import { moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
 import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
@@ -241,9 +240,6 @@ Hooks.once("init", function () {
 
   //Calculate conditions for world
   CONFIG.statusEffects = pf1.utils.init.getConditions();
-
-  // Diagonal ruleset implementation
-  SquareGrid.prototype.measureDistances = measureDistances;
 
   // Call post-init hook
   Hooks.callAll("pf1PostInit");

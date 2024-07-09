@@ -183,9 +183,11 @@ export const getWeightSystem = () => {
 /**
  * Measure distance between two points.
  *
+ * @deprecated
  * @example
+ * ```js
  * pf1.utils.measureDistance(token, game.user.targets.first());
- *
+ * ```
  * @param {Point} p0 - Start point on canvas
  * @param {Point} p1 - End point on canvas
  * @param {object} [options] - Measuring options.
@@ -199,6 +201,14 @@ export const measureDistance = function (
   p1,
   { ray = null, diagonalRule = "5105", state = { diagonals: 0, cells: 0 } } = {}
 ) {
+  foundry.utils.logCompatibilityWarning(
+    "pf1.utils.measureDistance() is deprecated in favor of canvas.grid.measurePath()",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
+
   // TODO: Optionally adjust start and end point to closest grid
   ray ??= new Ray(p0, p1);
   const gs = canvas.dimensions.size,

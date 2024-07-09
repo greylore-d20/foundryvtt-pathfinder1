@@ -1,21 +1,20 @@
-import { measureDistance as unifiedMeasureDistance } from "./lib.mjs";
-
 /**
  * Measure the distance between two pixel coordinates
  * See BaseGrid.measureDistance for more details
  *
+ * @deprecated
  * @param segments
  * @param options
  */
 export const measureDistances = function (segments, options = {}) {
-  if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
-
-  // Track the total number of diagonals
-  const diagonalRule = game.settings.get("pf1", "diagonalMovement");
-  const state = { diagonals: 0 };
-
-  // Iterate over measured segments
-  return segments.map((s) => unifiedMeasureDistance(null, null, { ray: s.ray, diagonalRule, state }));
+  foundry.utils.logCompatibilityWarning(
+    "pf1.utils.canvas.measureDistances() is deprecated in favor of canvas.grid.measurePath()",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
+  return canvas.grid.measureDistances(segments, options);
 };
 
 /* -------------------------------------------- */

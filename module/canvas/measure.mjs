@@ -195,7 +195,8 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         }
 
         // Check distance, add 1 pixel to avoid rounding issues
-        const cdistance = measureDistance(origin, destination, { ray });
+        // TODO: Chekc if the result of measurePath() can be used to replace above Ray creation
+        const cdistance = canvas.grid.measurePath([ray.A, ray.B]).distance;
         if (cdistance <= distance + 1) {
           result.push({ x: gx, y: gy });
         }

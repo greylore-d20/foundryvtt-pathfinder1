@@ -362,17 +362,25 @@ class SquareGridHighlight extends AttackHighlightBase {
     return result;
   }
 
-  #shouldAddReachSquare(pos, closestTokenSquare, range, minRange, options = { useReachRule: false }) {
+  #shouldAddReachSquare(pos, closestTokenSquare, range, minRange, { useReachRule = false } = {}) {
     const gridSize = canvas.grid.size;
     const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
     const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
 
-    const dist = measureDistance(p0, p1);
-    const dist2 = options.useReachRule ? measureDistance(p0, p1, { diagonalRule: "555" }) : null;
+    // BUG: This will fail if user is using non 1/2/1 diagonals
+    const dist = canvas.grid.measurePath([p0, p1]).distance;
+    // TODO: https://github.com/foundryvtt/foundryvtt/issues/11428
+    const dist2 = useReachRule
+      ? new foundry.grid.SquareGrid({
+          size: canvas.grid.size,
+          diagonals: CONST.GRID_DIAGONALS.EQUIDISTANT,
+        }).measurePath([p0, p1]).distance
+      : null;
+
     const reachRuleRange = convertDistance(10)[0];
     if (dist > range) {
       // Special rule for 10-ft. reach
-      if (!(options.useReachRule && range === reachRuleRange)) {
+      if (!(useReachRule && range === reachRuleRange)) {
         return false;
       }
     }
@@ -382,7 +390,7 @@ class SquareGridHighlight extends AttackHighlightBase {
     }
 
     // Special rule for minimum ranges >= 10-ft.
-    if (options.useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
+    if (useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
       return false;
     }
 

@@ -127,7 +127,7 @@ export class ItemBuffPF extends ItemPF {
       const aeData = await this.getRawEffectData();
       aeData.active = isActive;
       aeData.transfer = true;
-      setProperty(aeData, "flags.pf1.tracker", true);
+      foundry.utils.setProperty(aeData, "flags.pf1.tracker", true);
 
       // Update old
       if (oldEffect) oldEffect.update(aeData);

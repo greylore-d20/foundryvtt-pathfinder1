@@ -576,7 +576,7 @@ export class LevelUpForm extends FormApplication {
     this.simulacra.updateSource({ system: { abilities: { [ablKey]: { value: upgrades.value } } } });
 
     // Cross-pollinate new data
-    mergeObject(upgrades, this.simulacra.system.abilities[ablKey]);
+    foundry.utils.mergeObject(upgrades, this.simulacra.system.abilities[ablKey]);
     this._initData();
 
     this.render();

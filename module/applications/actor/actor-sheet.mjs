@@ -2530,7 +2530,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let updateData;
     if (name) {
-      if (value === getProperty(this.actor, name)) {
+      if (value === foundry.utils.getProperty(this.actor, name)) {
         // Restore input
         if (oldEl) el.parentElement.replaceChild(oldEl, el);
         return;

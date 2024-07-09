@@ -2022,7 +2022,7 @@ export class ActorPF extends ActorBasePF {
 
     for (const data of this._getBaseValueFillKeys()) {
       const { parent, key, value } = data;
-      const o = getProperty(this.system, parent);
+      const o = foundry.utils.getProperty(this.system, parent);
       if (!o) continue; // Not all actor types have these
       o[key] ??= value;
     }

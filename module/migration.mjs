@@ -615,7 +615,7 @@ export async function migrateActiveEffectsToItems(actor) {
       if (ae.parent === buff) continue; // Already migrated
 
       const aeData = ae.toObject();
-      setProperty(aeData, "flags.pf1.tracker", true);
+      foundry.utils.setProperty(aeData, "flags.pf1.tracker", true);
       aeData.transfer = true;
 
       const p0 = ActiveEffect.implementation.create(aeData, { parent: buff });

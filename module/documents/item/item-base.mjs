@@ -107,7 +107,7 @@ export class ItemBasePF extends Item {
         const parentUuid = parent?.uuid ?? parent?.flags?.core?.sourceId;
         const itemData = game.items.fromCompendium(item, { clearFolder: true });
         if (parentUuid) {
-          setProperty(itemData, "flags.pf1.source", parentUuid);
+          foundry.utils.setProperty(itemData, "flags.pf1.source", parentUuid);
         }
         // Adjust quantity of physical items if more than one was added of the same item
         if (item.isPhysical && itemData.system.quantity > 0) {

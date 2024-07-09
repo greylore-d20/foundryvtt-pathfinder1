@@ -42,7 +42,7 @@ export class TokenPF extends Token {
    * @since PF1 v10
    */
   _isVisionSource() {
-    if (!canvas.effects.visibility.tokenVision || !this.hasSight) return false;
+    if (!canvas.visibility.tokenVision || !this.hasSight) return false;
 
     // Only display hidden tokens for the GM
     const isGM = game.user.isGM;

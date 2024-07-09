@@ -56,6 +56,7 @@ export class ChatMessagePF extends ChatMessage {
   get measureTemplate() {
     const templateId = this.flags?.pf1?.metadata?.template;
     if (!templateId) return null;
+
     const template = canvas.templates.get(templateId);
     return template || null;
   }
@@ -65,7 +66,12 @@ export class ChatMessagePF extends ChatMessage {
    */
   get targets() {
     const targetIds = this.flags?.pf1?.metadata?.targets ?? [];
-    return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
+    if (targetIds.length === 0) return targetIds;
+
+    // Legacy IDs from old messages
+    if (/^\w{16}$/.test(targetIds[0])) return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
+
+    return targetIds.map((uuid) => fromUuidSync(uuid)?.object).filter((t) => !!t);
   }
 
   /** @inheritDoc */

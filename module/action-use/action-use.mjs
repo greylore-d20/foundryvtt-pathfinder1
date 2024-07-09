@@ -1283,7 +1283,7 @@ export class ActionUse {
       item: this.item.id,
       action: this.action.id,
       combat: undefined,
-      template: this.shared.template?.id ?? null,
+      template: this.shared.template?.id ?? null, // BUG: Fails when multiple scenes are involved
       rolls: {
         attacks: [],
       },

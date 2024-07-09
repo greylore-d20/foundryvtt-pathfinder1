@@ -383,19 +383,28 @@ export class ActorPF extends ActorBasePF {
         remaining = (rounds - elapsed) * CONFIG.time.roundTime;
       }
 
-      const flags = ae.getFlag("pf1", "duration") ?? {};
-      const endOn = flags.end || "turnStart";
+      // Time still remaining
       if (remaining > 0) return false;
-      // Initiative based ending
-      if (initiative !== null) {
-        // Anything not on initiative expires if they have negative time remaining
-        if (endOn !== "initiative") return remaining < 0;
-        return flags.initiative <= initiative;
+
+      const flags = ae.getFlag("pf1", "duration") ?? {};
+
+      switch (flags.end || "turnStart") {
+        // Initiative based ending
+        case "initiative":
+          if (initiative !== null) {
+            return initiative <= flags.initiative;
+          }
+          // Anything not on initiative expires if they have negative time remaining
+          return remaining < 0;
+        // End on turn end, but we're not quite there yet
+        case "turnEnd":
+          if (remaining === 0 && event !== "turnEnd") {
+            return false;
+          }
+          break;
       }
-      // End on turn end, but we're at turn start and there's 0 or more seconds left
-      else if (remaining === 0 && endOn === "turnEnd" && event === "turnStart") {
-        return false;
-      }
+
+      // Otherwise end when time is out
       return remaining <= 0;
     });
 

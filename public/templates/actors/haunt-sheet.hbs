@@ -48,7 +48,7 @@
         </div>
 
         {{! Caster Level }}
-        <div class="info-box caster-level">
+        <div class="info-box caster-level" data-tooltip-extended="cl">
           <h5>{{localize "PF1.CasterLevel"}}</h5>
           <span class="value">
             <input name="system.details.cl"  value="{{system.details.cl}}"  data-dtype="Number" type="number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
@@ -56,7 +56,7 @@
         </div>
 
         {{! Initiative }}
-        <div class="info-box attribute initiative">
+        <div class="info-box attribute initiative" data-tooltip-extended="init">
           <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Initiative"}}</span></a></h5>
           <span class="value">
             <span class="text-box direct allow-relative" name="system.attributes.init.value" data-dtype="Number">
@@ -73,7 +73,7 @@
 
       <div class="details">
         {{! Health }}
-        <div class="info-box-joined info-box-header health">
+        <div class="info-box-joined info-box-header health" data-tooltip-extended="health">
           <h3>{{localize "PF1.HitPoints"}}</h3>
           <div class="info-box current">
             <h5>{{localize "PF1.Current"}}</h5>

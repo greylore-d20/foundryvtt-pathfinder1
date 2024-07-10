@@ -103,6 +103,55 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
     return context;
   }
 
+  /**
+   * @private
+   * @param {string} fullId - Target ID
+   * @param {object} context - Context object to store data into
+   * @throws {Error} - If provided ID is invalid.
+   */
+  _getTooltipContext(fullId, context) {
+    const actor = this.actor,
+      system = actor.system;
+
+    // Lazy roll data
+    const lazy = {
+      get rollData() {
+        this._rollData ??= actor.getRollData();
+        return this._rollData;
+      },
+    };
+
+    let header, subHeader;
+    const details = [];
+    const paths = [];
+    const sources = [];
+    let notes;
+
+    const re = /^(?<id>[\w-]+)(?:\.(?<detail>.*))?$/.exec(fullId);
+    const { id, detail } = re?.groups ?? {};
+
+    switch (id) {
+      case "hp":
+        paths.push(
+          { path: "@attributes.hp.value", value: lazy.rollData.attributes.hp.value },
+          { path: "@attributes.hp.max", value: lazy.rollData.attributes.hp.max }
+        );
+        break;
+      case "ac":
+        paths.push({ path: "@attributes.ac.normal.total", value: lazy.rollData.attributes.ac.normal.total });
+        break;
+      default:
+        return super._getTooltipContext(fullId, context);
+    }
+
+    context.header = header;
+    context.subHeader = subHeader;
+    context.details = details;
+    context.paths = paths;
+    context.sources = sources;
+    context.notes = notes ?? [];
+  }
+
   /* -------------------------------------------- */
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */

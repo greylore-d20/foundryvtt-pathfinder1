@@ -2,6 +2,17 @@ import { ActorPF } from "./actor/actor-pf.mjs";
 import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
 
 /**
+ * Finds old macro with same name and command that user can execute and see.
+ *
+ * @param {string} name
+ * @param {string} command
+ * @returns {Macro|undefined}
+ */
+function findOldMacro(name, command) {
+  return game.macros.find((m) => m.name === name && m.command === command && m.canExecute && m.visible && m.isAuthor);
+}
+
+/**
  * Various functions dealing with the creation and usage of macros.
  *
  * @module macros
@@ -19,14 +30,14 @@ import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
 export const createItemMacro = async (uuid, slot) => {
   const item = fromUuidSync(uuid);
   const command = `fromUuidSync("${uuid}").use();`;
-  let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
+  let macro = findOldMacro(item.name, command);
   if (!macro) {
     macro = await Macro.create(
       {
         name: item.name,
         type: "script",
         img: item.img,
-        command: command,
+        command,
         flags: { "pf1.itemMacro": true },
       },
       { displaySheet: false }
@@ -56,7 +67,7 @@ export const createActionMacro = async (actionId, uuid, slot) => {
 
   const command = `fromUuidSync("${uuid}")\n\t.actions.get("${actionId}")\n\t.use();`;
 
-  let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
+  let macro = findOldMacro(item.name, command);
   if (!macro) {
     macro = await Macro.create(
       {
@@ -89,14 +100,14 @@ export const createSkillMacro = async (skillId, uuid, slot) => {
   const skillInfo = actor.getSkillInfo(skillId);
   const command = `fromUuidSync("${actor.uuid}")\n\t.rollSkill("${skillId}");`;
   const name = game.i18n.format("PF1.RollSkillMacroName", { actor: actor.name, skill: skillInfo.fullName });
-  let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
+  let macro = findOldMacro(name, command);
   if (!macro) {
     macro = await Macro.create(
       {
         name: name,
         type: "script",
         img: "systems/pf1/icons/items/inventory/dice.jpg",
-        command: command,
+        command,
         flags: { "pf1.skillMacro": true },
       },
       { displaySheet: false }
@@ -123,7 +134,7 @@ export const createSaveMacro = async (saveId, uuid, slot) => {
 
   const command = `fromUuidSync("${actor.uuid}")\n\t.rollSavingThrow("${saveId}");`;
   const name = game.i18n.format("PF1.RollSaveMacroName", { actor: actor.name, type: saveName });
-  let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
+  let macro = findOldMacro(name, command);
   if (!macro) {
     macro = await Macro.create(
       {
@@ -216,7 +227,7 @@ export const createMiscActorMacro = async (type, uuid, slot, data) => {
 
   if (!name) return;
 
-  let macro = game.macros.contents.find((o) => o.name === name && o.command === command);
+  let macro = findOldMacro(name, command);
   macro ??= await Macro.create(
     {
       name,

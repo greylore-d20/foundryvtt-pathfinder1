@@ -198,6 +198,9 @@ export class ActorTrapPF extends ActorNPCPF {
     // Traps don't have ACP
     result.attributes.acp = { attackPenalty: 0 };
 
+    // Call hook
+    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
+
     this._rollData = result;
     return result;
   }

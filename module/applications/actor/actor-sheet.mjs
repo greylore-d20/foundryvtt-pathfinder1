@@ -84,11 +84,9 @@ export class ActorSheetPF extends ActorSheet {
         ".editor-content[data-edit='system.details.biography.value']",
       ],
       dragDrop: [
-        { dragSelector: "li.item[data-item-id]" },
+        { dragSelector: ".item[data-item-id]" },
         { dragSelector: ".currency .denomination" },
-        { dragSelector: ".race-container.item[data-item-id]" },
         { dragSelector: "li.skill[data-skill]" },
-        { dragSelector: "li.sub-skill[data-skill]" },
         { dragSelector: ".saving-throw[data-savingthrow]" },
         { dragSelector: ".attribute[data-attribute]" },
         { dragSelector: ".attribute[data-attack]" },

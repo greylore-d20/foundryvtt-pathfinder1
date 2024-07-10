@@ -115,14 +115,14 @@
         <div class="info-box attribute attack cmb" data-tooltip-extended="cmb">
           <h5><a class="rollable" data-type="cmb" data-ranged="false"><i class="fas fa-dice"></i> <span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
           <span class="value">
-            <input name="system.abilities.str.value" value="{{system.abilities.str.value}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+            <span class="text-box direct wheel-change allow-relative cmb-current-input" name="system.abilities.str.value" data-dtype="Number">{{system.attributes.cmb.total}}</span>
           </span>
         </div>
         {{! CMD }}
         <div class="info-box" data-tooltip-extended="cmd.total">
           <h5>{{localize "PF1.CMDAbbr"}}</h5>
           <span class="value">
-            <input name="system.attributes.cmd.value" value="{{system.attributes.cmd.value}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+            <span class="text-box direct wheel-change allow-relative cmd-current-input" name="system.attributes.cmd.value" data-dtype="Number">{{system.attributes.cmd.total}}</span>
           </span>
         </div>
 

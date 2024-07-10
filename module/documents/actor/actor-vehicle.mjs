@@ -8,9 +8,13 @@ export class ActorVehiclePF extends ActorPF {
 
     this._resetInherentTotals();
 
+    this.sourceInfo = {};
+    this.changeFlags = {};
+    this.system.resources ??= {};
+
     // Add base initiative
     this.system.attributes.init.total = this.system.attributes.init.value;
-    this.system.attributes.cmd.total = this.system.attributes.cmd.value;
+    this.system.attributes.cmd.total = 10;
     this.system.attributes.ac.normal.total = this.system.attributes.ac.normal.base;
     this.system.attributes.savingThrows.save.total = this.system.attributes.savingThrows.save.base;
 
@@ -19,6 +23,7 @@ export class ActorVehiclePF extends ActorPF {
     this.system.attributes.woundThresholds ??= {};
     this.system.skills ??= {};
     this.system.attributes.speed ??= {};
+    this.system.attributes.cmb ??= {};
 
     const strValue = this.system.abilities.str.value;
     this.system.abilities = {
@@ -72,6 +77,8 @@ export class ActorVehiclePF extends ActorPF {
       },
     };
 
+    this.system.attributes.cmbAbility = "str";
+
     this.sourceDetails = {};
 
     //  Init resources structure
@@ -110,6 +117,8 @@ export class ActorVehiclePF extends ActorPF {
     this.prepareHealth();
     this._computeEncumbrance();
 
+    this.prepareCMB();
+
     // Setup links
     this.prepareItemLinks();
 
@@ -124,6 +133,19 @@ export class ActorVehiclePF extends ActorPF {
     });
 
     this._initialized = true;
+
+    this._setSourceDetails();
+  }
+
+  /**
+   * @override
+   */
+  prepareCMB() {
+    const base = this.system.abilities.str.value || 0,
+      size = this.system.traits.size || "med",
+      szCMBMod = pf1.config.sizeSpecialMods[size] ?? 0;
+
+    this.system.attributes.cmb.total = base + szCMBMod;
   }
 
   prepareHealth() {
@@ -143,6 +165,8 @@ export class ActorVehiclePF extends ActorPF {
   /**
    * Needed to prevent unnecessary behavior in ActorPF
    *
+   * Skips addDefaultChanges() step
+   *
    * @override
    */
   _prepareChanges() {
@@ -156,6 +180,25 @@ export class ActorVehiclePF extends ActorPF {
     for (const i of this.changeItems) {
       changes.push(...i.changes);
     }
+
+    changes.push(
+      // CMB
+      new pf1.components.ItemChange({
+        formula: "@abilities.str.value",
+        operator: "add",
+        target: "cmb",
+        type: "base",
+        flavor: game.i18n.localize("PF1.Base"),
+      }),
+      // CMD
+      new pf1.components.ItemChange({
+        formula: "@attributes.cmd.value",
+        operator: "add",
+        target: "cmd",
+        type: "base",
+        flavor: game.i18n.localize("PF1.Base"),
+      })
+    );
 
     const c = new Collection();
     for (const change of changes) {

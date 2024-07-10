@@ -125,6 +125,10 @@ export const customRolls = function (message, speaker, rollData) {
             tokenId: tokenUuid,
             isHealing,
             css: isHealing ? "heal" : "damage",
+            value: {
+              total: roll.total * (isHealing ? -1 : 1),
+              half: Math.floor(roll.total / 2) * (isHealing ? -1 : 1),
+            },
             roll,
           });
           const chatOptions = {

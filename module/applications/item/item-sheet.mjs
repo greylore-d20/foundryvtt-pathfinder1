@@ -1770,7 +1770,7 @@ export class ItemSheetPF extends ItemSheet {
     /** @type {ItemPF} */
     const item = this.item;
 
-    const srcItem = uuid ? fromUuidSync(uuid) : null;
+    const srcItem = uuid ? await fromUuid(uuid) : null;
 
     switch (type) {
       // Handle actions
@@ -1839,7 +1839,7 @@ export class ItemSheetPF extends ItemSheet {
       }
       case "pf1ContentSourceEntry": {
         const src = data.data;
-        const origin = fromUuidSync(data.uuid);
+        const origin = await fromUuid(data.uuid);
         if (!origin) return;
         if (origin === this.item) return; // From same item
 

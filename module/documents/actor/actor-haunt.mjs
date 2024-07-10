@@ -168,6 +168,9 @@ export class ActorHauntPF extends ActorNPCPF {
       };
     }
 
+    // Caster Level
+    result.cl = result.details.cl;
+
     // Return cached data, if applicable
     if (skipRefresh) return result;
 
@@ -190,6 +193,9 @@ export class ActorHauntPF extends ActorNPCPF {
 
     // Haunts don't have ACP
     result.attributes.acp = { attackPenalty: 0 };
+
+    // Call hook
+    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
 
     this._rollData = result;
     return result;

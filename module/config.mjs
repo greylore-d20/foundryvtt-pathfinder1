@@ -80,6 +80,29 @@ export const levelAbilityScores = {
 };
 
 /**
+ * How many points are assigned per choice.
+ *
+ * For homebrew support.
+ */
+export const levelAbilityScoreMult = 1;
+
+/**
+ * At which mythic tiers you receive how many new ability points.
+ */
+export const tierAbilityScores = {
+  2: 2,
+  4: 2,
+  6: 2,
+  8: 2,
+  10: 2,
+};
+
+/**
+ * How many points are assigned per choice.
+ */
+export const tierAbilityScoreMult = 2;
+
+/**
  * Valid hit die sizes.
  */
 export const hitDieSizes = [6, 8, 10, 12];

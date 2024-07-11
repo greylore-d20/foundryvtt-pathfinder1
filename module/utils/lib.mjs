@@ -46,7 +46,7 @@ export const isMinimumCoreVersion = function (version) {
  */
 export const fractionalToString = (v) => {
   const base = Math.floor(v);
-  const f = Math.roundDecimals(v - base, 3);
+  const f = pf1.utils.limitPrecision(v - base, 3, "round");
   if (f === 0) return `${base}`;
   const rv = [];
   if (base !== 0) rv.push(base);
@@ -1095,12 +1095,13 @@ export function parseAlignment(align) {
  *
  * @beta
  * @param {number} number - Number to adjust
- * @param {number} decimals - Maximum number of decimals
+ * @param {number} [decimals] - Maximum number of decimals
+ * @param {"floor"|"ceil"|"round"} [method] - Rounding method.
  * @returns {number} - Adjusted number
  */
-export function limitPrecision(number, decimals = 2) {
+export function limitPrecision(number, decimals = 2, method = "floor") {
   const mult = Math.pow(10, decimals);
-  return Math.floor(number * mult) / mult;
+  return Math[method](number * mult) / mult;
 }
 
 /**

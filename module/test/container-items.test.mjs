@@ -215,7 +215,7 @@ export const registerContainerItemTests = () => {
             });
             it("should add its weight to the actor", function () {
               expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(
-                Math.roundDecimals(pf1.utils.convertWeight(11.5), 1)
+                pf1.utils.limitPrecision(pf1.utils.convertWeight(11.5), 1, "round")
               );
             });
             it("should add its value to the actor", function () {

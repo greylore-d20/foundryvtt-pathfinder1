@@ -396,7 +396,7 @@ export class ItemPF extends ItemBasePF {
   getDefaultChargeCost({ rollData } = {}) {
     rollData ??= this.getRollData();
     const formula = this.getDefaultChargeFormula();
-    return RollPF.safeRollAsync(formula, rollData).total;
+    return RollPF.safeRoll(formula, rollData).total;
   }
 
   /**
@@ -492,7 +492,7 @@ export class ItemPF extends ItemBasePF {
       if (!formula) maximize = true;
       else {
         rollData ??= this.getRollData();
-        const roll = await RollPF.safeRollAsync(formula, rollData, "recharge");
+        const roll = await RollPF.safeRoll(formula, rollData, "recharge");
         value = roll.total;
 
         // Cancel if formula produced invalid value
@@ -1171,7 +1171,6 @@ export class ItemPF extends ItemBasePF {
     const enrichOptions = {
       rollData,
       secrets: this.isOwner,
-      async: true,
       relativeTo: this.actor,
     };
 
@@ -1304,7 +1303,7 @@ export class ItemPF extends ItemBasePF {
         if (actionData.duration.units === "spec") {
           duration = actionData.duration.value;
         } else if (!["inst", "perm"].includes(actionData.duration.units)) {
-          const value = await RollPF.safeRollAsync(actionData.duration.value || "0", rollData).total;
+          const value = await RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
           duration = [value, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
         if (duration) props.push(duration);
@@ -2232,7 +2231,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRollAsync(actionData.attackBonus || "0", rollData);
+    const bonusRoll = RollPF.safeRoll(actionData.attackBonus || "0", rollData);
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), "untyped", -100);
 
@@ -2274,7 +2273,7 @@ export class ItemPF extends ItemBasePF {
       .forEach((c) => {
         c.modifiers.forEach((cc) => {
           if (cc.subTarget === "allAttack") {
-            const bonusRoll = RollPF.safeRollAsync(cc.formula, rollData);
+            const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
             if (bonusRoll.total == 0) return;
             describePart(bonusRoll.total, c.name, cc.type, -5000);
           }

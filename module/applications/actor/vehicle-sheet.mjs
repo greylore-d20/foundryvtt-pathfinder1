@@ -68,7 +68,6 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       ? await TextEditor.enrichHTML(notes, {
           secrets: isOwner,
           rollData: context.rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : null;

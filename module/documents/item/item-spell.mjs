@@ -301,7 +301,7 @@ export class ItemSpellPF extends ItemPF {
     if (this.useSpellPoints()) {
       rollData ??= this.getRollData();
       const formula = this.getDefaultChargeFormula();
-      return RollPF.safeRollAsync(formula, rollData).total;
+      return RollPF.safeRollSync(formula, rollData).total;
     } else {
       return super.getDefaultChargeCost({ rollData });
     }
@@ -878,7 +878,7 @@ export class ItemSpellPF extends ItemPF {
       case "year":
         if (duration.value) {
           const unit = pf1.config.timePeriods[duration.units];
-          const roll = Roll.defaultImplementation.safeRollAsync(duration.value, rollData);
+          const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
           const value = roll.total;
           if (!roll.err) {
             label.duration = game.i18n.format("PF1.Time.Format", { value, unit });

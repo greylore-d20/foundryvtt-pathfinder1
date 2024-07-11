@@ -76,17 +76,17 @@ export class LookupTerm extends FunctionTerm {
   }
 
   _evaluateSync({ minimize = false, maximize = false } = {}) {
-    const rollOpts = { minimize, maximize, async: false };
+    const rollOpts = { minimize, maximize };
     const evalOffset = (i) => {
       const term = this.terms[i];
-      if (!term._evaluated) term.evaluate(rollOpts);
+      if (!term._evaluated) term.evaluateSync(rollOpts);
     };
 
     const terms = [];
     for (let term of this.terms) {
       if (!term._evaluated) {
         if (term.isIntermediate) {
-          term.evaluate(rollOpts);
+          term.evaluateSync(rollOpts);
           term = new NumericTerm({ number: term.total, options: term.options });
         }
       }
@@ -98,7 +98,7 @@ export class LookupTerm extends FunctionTerm {
 
     const search = this.terms[0];
     const searchRoll = Roll.defaultImplementation.fromTerms([search]);
-    if (!searchRoll._evaluated) searchRoll.evaluate(rollOpts);
+    if (!searchRoll._evaluated) searchRoll.evaluateSync(rollOpts);
     let offset = Math.max(0, searchRoll.total);
     if (!this.terms[1 + offset]) offset = 0;
 

@@ -693,7 +693,7 @@ export class LevelUpForm extends FormApplication {
    * @returns {Roll}
    */
   _getHealthRoll(type, formula) {
-    const roll = Roll.defaultImplementation.safeRollAsync(formula);
+    const roll = Roll.defaultImplementation.safeRoll(formula);
     switch (type) {
       case "auto":
       case "max":

@@ -462,15 +462,14 @@ export class ActionUse {
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
           // Due to being its own roll, this will only correctly work for static formulae.
-          const conditionalRoll = RollPF.safeRollAsync(modifier.formula, this.shared.rollData);
+          const conditionalRoll = RollPF.safeRoll(modifier.formula, this.shared.rollData);
           if (conditionalRoll.err) {
             ui.notifications.warn(
               game.i18n.format("PF1.Warning.ConditionalRoll", { number: i + 1, name: conditional.name })
             );
             // Skip modifier to avoid multiple errors from one non-evaluating entry
             continue;
-          } else
-            conditionalData[[tag, i].join(".")] = RollPF.safeRollAsync(modifier.formula, this.shared.rollData).total;
+          } else conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, this.shared.rollData).total;
 
           // Create a key string for the formula array
           const partString = `${modifier.target}.${modifier.subTarget}${
@@ -508,7 +507,7 @@ export class ActionUse {
       for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
         if (this.shared.conditionalPartsCommon[target] != null) {
           const formula = this.shared.conditionalPartsCommon[target].join("+");
-          const roll = RollPF.safeRollAsync(formula, this.shared.rollData, [target, formula]).total;
+          const roll = RollPF.safeRoll(formula, this.shared.rollData, [target, formula]).total;
           switch (target) {
             case "effect.cl":
               this.shared.rollData.cl += roll;
@@ -1051,7 +1050,7 @@ export class ActionUse {
           `attributes.spells.spellbooks.${this.item.system.spellbook}`
         );
         if (spellbook && spellbook.arcaneSpellFailure) {
-          const roll = RollPF.safeRollAsync("1d100");
+          const roll = RollPF.safeRoll("1d100");
           this.shared.templateData.spellFailure = roll.total;
           this.shared.templateData.spellFailureRoll = roll;
           this.shared.templateData.spellFailureSuccess = this.shared.templateData.spellFailure > actor.spellFailure;
@@ -1101,7 +1100,6 @@ export class ActionUse {
 
     const enrichOptions = {
       rollData: this.shared.rollData,
-      async: true,
       relativeTo: this.actor,
     };
 
@@ -1389,7 +1387,6 @@ export class ActionUse {
       const enrichOptions = {
         rollData: this.shared.rollData,
         secrets: this.isOwner,
-        async: true,
         relativeTo: this.actor,
       };
 

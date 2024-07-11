@@ -55,7 +55,7 @@ export function registerConfigTests() {
 
             // Assume strings that can be parsed as formulas are not i18n strings
             try {
-              const roll = Roll.defaultImplementation.create(value).evaluate({ async: false });
+              const roll = Roll.defaultImplementation.create(value).evaluateSync({ maximize: true });
               return false;
             } catch (e) {
               /* nop */

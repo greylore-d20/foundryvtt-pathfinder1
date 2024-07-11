@@ -67,7 +67,6 @@ export class ActorSheetPFTrap extends ActorSheetPFNPC {
       ? await TextEditor.enrichHTML(notes, {
           secrets: isOwner,
           rollData: data.rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : null;

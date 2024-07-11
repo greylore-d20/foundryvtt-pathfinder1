@@ -1849,7 +1849,7 @@ export class ActorPF extends ActorBasePF {
           let srcValue =
             src.value != null
               ? src.value
-              : RollPF.safeRollAsync(src.formula || "0", rollData, [changeTarget, src, this], {
+              : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
                   suppressError: !this.isOwner,
                 }).total;
           if (src.operator === "set") {
@@ -4080,7 +4080,6 @@ export class ActorPF extends ActorBasePF {
         const enrichOptions = {
           rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
           rolls: roll,
-          async: false,
           relativeTo: this,
         };
         cur.push(enrichHTMLUnrolled(note, enrichOptions));
@@ -4658,7 +4657,7 @@ export class ActorPF extends ActorBasePF {
         // Try to roll restoreFormula, fall back to restoring max spell points
         let restorePoints = spellbook.spellPoints.max;
         if (spellbook.spellPoints.restoreFormula) {
-          const restoreRoll = await RollPF.safeRollAsync(spellbook.spellPoints.restoreFormula, rollData);
+          const restoreRoll = await RollPF.safeRoll(spellbook.spellPoints.restoreFormula, rollData);
           if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
           else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
         }

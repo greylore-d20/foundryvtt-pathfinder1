@@ -129,7 +129,6 @@ export class ItemActionSheet extends FormApplication {
       ? await TextEditor.enrichHTML(description, {
           secrets: context.owner,
           rollData: context.rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : null;

@@ -362,7 +362,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.document.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, secrets: this.document.isOwner });
 
       const div = $(content);
 

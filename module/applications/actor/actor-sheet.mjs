@@ -195,7 +195,6 @@ export class ActorSheetPF extends ActorSheet {
     const enrichHTMLOptions = {
       secrets: isOwner,
       rollData: context.rollData,
-      async: true,
       relativeTo: this.actor,
     };
     const bio = context.system.details?.biography?.value;
@@ -2757,7 +2756,7 @@ export class ActorSheetPF extends ActorSheet {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.actor.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, secrets: this.actor.isOwner });
 
       const div = $(content);
 

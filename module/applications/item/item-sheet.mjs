@@ -840,7 +840,6 @@ export class ItemSheetPF extends ItemSheet {
     const enrichOptions = {
       secrets: context.owner,
       rollData: rollData,
-      async: true,
       relativeTo: this.actor,
     };
     const pIdentDesc = description ? enrichHTMLUnrolledAsync(description, enrichOptions) : Promise.resolve();
@@ -852,7 +851,6 @@ export class ItemSheetPF extends ItemSheet {
     const pTopDesc = topDescription
       ? TextEditor.enrichHTML(topDescription, {
           rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : Promise.resolve();
@@ -1970,7 +1968,7 @@ export class ItemSheetPF extends ItemSheet {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.item.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, secrets: this.item.isOwner });
 
       const div = $(content);
       div.hide();

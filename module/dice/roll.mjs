@@ -40,14 +40,14 @@ export class RollPF extends Roll {
    * @param {object} [options] - Additional options
    * @param {boolean} [options.suppressError=false] - If true, no error will be printed even if one occurs.
    * @param {object} [evalOpts] - Additional options to pass to Roll.evaluate()
-   * @returns {RollPF} - Evaluated roll, or placeholder if error occurred.
+   * @returns {Promise<RollPF>} - Evaluated roll, or placeholder if error occurred.
    */
   static async safeRoll(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
     let roll;
     try {
-      roll = this.create(formula, rollData).evaluate({ ...evalOpts });
+      roll = await this.create(formula, rollData).evaluate({ ...evalOpts });
     } catch (err) {
-      roll = this.create("0", rollData).evaluate({ ...evalOpts });
+      roll = this.create("0", rollData).evaluateSync({ ...evalOpts });
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
@@ -84,17 +84,6 @@ export class RollPF extends Roll {
       else if (CONFIG.debug.roll) console.error(roll.err);
     }
     return roll;
-  }
-
-  /**
-   * Temporary helper function to handle transition to Foundry v12. Remove with Foundry v12 support.
-   *
-   * @ignore
-   * @internal
-   */
-  static safeRollAsync(formula, rollData, context, options, evalOpts = {}) {
-    evalOpts.async = true;
-    return this.safeRoll(formula, rollData, context, options, evalOpts);
   }
 
   /**

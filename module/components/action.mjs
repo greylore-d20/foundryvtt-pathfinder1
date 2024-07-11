@@ -203,7 +203,7 @@ export class ItemAction {
     }
 
     rollData ??= this.getRollData();
-    const cost = RollPF.safeRollAsync(formula, rollData).total;
+    const cost = RollPF.safeRoll(formula, rollData).total;
     return this.item.isSingleUse ? Math.clamp(cost, -1, 1) : cost;
   }
 
@@ -451,7 +451,7 @@ export class ItemAction {
     for (const c of conds) {
       for (const m of c.modifiers) {
         if (m.target !== "damage") continue;
-        const roll = RollPF.safeRollAsync(m.formula, rollData);
+        const roll = RollPF.safeRoll(m.formula, rollData);
         if (roll.err) continue;
         const isModifier = mods.includes(m.type);
         fakeCondChanges.push({
@@ -944,7 +944,7 @@ export class ItemAction {
     config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
 
     // Add bonus
-    rollData.bonus = bonus ? await RollPF.safeRollAsync(bonus, rollData).total : 0;
+    rollData.bonus = bonus ? await RollPF.safeRoll(bonus, rollData).total : 0;
 
     // Options for D20RollPF
     const rollOptions = {
@@ -1295,14 +1295,14 @@ export class ItemAction {
       let attackCount = 0;
 
       const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
-        const exAtkCount = RollPF.safeRollAsync(countFormula, rollData)?.total ?? 0;
+        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
         if (exAtkCount <= 0) return;
 
         try {
           for (let i = 0; i < exAtkCount; i++) {
             rollData.attackCount = attackCount += 1;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRollAsync(
+            const bonus = RollPF.safeRoll(
               bonusFormula || "0",
               rollData,
               { formula: bonusFormula, action: this },
@@ -1370,7 +1370,7 @@ export class ItemAction {
           .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
           .forEach((c) => {
             c.modifiers.forEach((cc) => {
-              const bonusRoll = RollPF.safeRollAsync(cc.formula, rollData);
+              const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
               if (bonusRoll.total == 0) return;
               if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
                 const atk = parseInt(RegExp.$1, 10);
@@ -1388,7 +1388,7 @@ export class ItemAction {
 
       attacks.forEach((atk, i) => {
         rollData.attackCount = i;
-        atk.bonus = RollPF.safeRollAsync(atk.bonus, rollData).total + totalBonus + condBonuses[i];
+        atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
         delete rollData.attackCount;
       });
     }

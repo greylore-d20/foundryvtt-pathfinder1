@@ -97,6 +97,8 @@ Hooks.once("init", function () {
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
   CONFIG.Token.objectClass = _canvas.TokenPF;
 
+  CONFIG.Token.hudClass = _canvas.TokenHUDPF;
+
   // Document classes
   CONFIG.Actor.documentClass = ActorPFProxy;
   CONFIG.Actor.documentClasses = {

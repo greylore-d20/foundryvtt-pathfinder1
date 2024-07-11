@@ -125,6 +125,33 @@ export class ActorBasePF extends Actor {
     }
     return effects;
   }
+
+  /**
+   * Synced with Foundry v12.328
+   *
+   * Called by {@link pf1.canvas.TokenHUDPF TokenHUD}
+   *
+   * @override
+   * @param {string} statusId
+   * @param {object} options
+   */
+  toggleStatusEffect(statusId, { active, overlay = false } = {}) {
+    // Support toggling buffs via token  HUD
+    const [_, buffId] = statusId?.split("buff-") ?? [];
+    if (buffId) {
+      const buff = this.items.get(buffId);
+      if (!buff) throw new Error(`Buff not found to toggle: ${buffId}`);
+      const isActive = buff.isActive;
+      const state = active ?? !isActive;
+      if (state === isActive) return;
+
+      buff.setActive(state);
+      // Slight deviaton from API, we do not return created AE here.
+      return state;
+    }
+
+    return super.toggleStatusEffect(statusId, { active, overlay });
+  }
 }
 
 /**

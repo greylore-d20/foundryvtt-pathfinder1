@@ -1,27 +1,4 @@
 export class TokenPF extends Token {
-  /**
-   * Synced with Foundry 11.315
-   *
-   * @override
-   * @param {string|object} effect
-   * @param {object} options
-   * @param {boolean} options.active - Force active state
-   * @param {boolean} [options.overlay=false] - Overlay effect
-   * @returns {boolean} - was it applied or removed
-   */
-  async toggleEffect(effect, { active, overlay = false } = {}) {
-    const effectId = typeof effect === "string" ? effect : effect?.id;
-
-    if (this.actor && pf1.registry.conditions.has(effectId) && typeof this.actor.toggleCondition === "function") {
-      let rv;
-      if (active === undefined) rv = await this.actor.toggleCondition(effectId);
-      else rv = await this.actor.setCondition(effectId, active);
-      return rv[effectId];
-    } else {
-      return super.toggleEffect(effect, { active, overlay });
-    }
-  }
-
   get actorVision() {
     const ll = this.actor.system.traits?.senses?.ll ?? {};
     return {

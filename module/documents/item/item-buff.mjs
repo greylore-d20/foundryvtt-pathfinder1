@@ -202,7 +202,6 @@ export class ItemBuffPF extends ItemPF {
   _prepareDependentData(final = false) {
     super._prepareDependentData(final);
 
-    this._prepareDuration();
     this._prepareTraits();
   }
 

@@ -132,8 +132,7 @@ export const customRolls = function (message, speaker, rollData) {
             roll,
           });
           const chatOptions = {
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            roll: roll,
+            rolls: [roll],
             flavor,
             sound: CONFIG.sounds.dice,
             speaker: speaker,

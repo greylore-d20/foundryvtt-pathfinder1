@@ -1210,7 +1210,7 @@ export class ItemPF extends ItemBasePF {
     // Basic chat message data
     const chatData = foundry.utils.mergeObject(
       {
-        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         speaker: ChatMessage.implementation.getSpeaker({ actor, token, alias: token?.name }),
         flags: {
           core: {

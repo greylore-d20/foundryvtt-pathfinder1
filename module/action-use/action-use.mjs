@@ -935,7 +935,7 @@ export class ActionUse {
     this.shared.templateData = {
       ...this.shared.templateData,
       name: this.item.name,
-      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      style: CONST.CHAT_MESSAGE_STYLES.OTHER,
       rollMode: this.shared.rollMode,
       attacks: this.shared.chatAttacks.map((o) => o.finalize()),
     };

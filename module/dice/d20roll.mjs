@@ -335,7 +335,7 @@ export class D20RollPF extends RollPF {
     const rollMode = options.rollMode || this.options.rollMode || game.settings.get("core", "rollMode");
     messageData = foundry.utils.mergeObject(
       {
-        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+        style: CONST.CHAT_MESSAGE_STYLES.ROLL,
         sound: options.noSound ? undefined : CONFIG.sounds.dice,
         content: await renderTemplate(chatTemplate, chatTemplateData),
       },

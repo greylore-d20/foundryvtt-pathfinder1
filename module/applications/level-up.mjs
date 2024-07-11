@@ -944,7 +944,7 @@ export class LevelUpForm extends FormApplication {
 
     const messageData = {
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
-      type: CONST.CHAT_MESSAGE_TYPES.OOC,
+      style: CONST.CHAT_MESSAGE_STYLES.OOC,
       speaker: ChatMessage.getSpeaker({ actor: this.actor, token: this.token }),
       rolls,
       flags: {

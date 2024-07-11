@@ -4,7 +4,6 @@
   - Aktortypen
     - [Spielercharaktere (SCs)](Help/Actors/Character)
     - [Nichtspielercharaktere (NCSs)](Help/Actors/NPC)
-    - [Basic](Help/Actors/Basic)
 - [Gegenstände](Help/Items)
   - Gegenstandstypen
     - [Verbrauchsgegenstände](Help/Items/Consumables)

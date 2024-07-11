@@ -640,10 +640,8 @@ export async function migrateActiveEffectsToItems(actor) {
  * @returns {object} - The updateData to apply
  */
 export async function migrateActorData(actorData, token, { actor } = {}) {
-  // Ignore basic actor type
-  if (actorData.type === "basic") return {};
   // Ignore module introduced types
-  if (!game.template.Actor.types.includes(actorData.type)) return {};
+  if (actorData.type.indexOf(".") !== -1) return {};
 
   const updateData = {};
 

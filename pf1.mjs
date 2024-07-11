@@ -193,11 +193,6 @@ Hooks.once("init", function () {
     types: ["vehicle"],
     makeDefault: true,
   });
-  Actors.registerSheet("pf1", applications.actor.ActorSheetPFBasic, {
-    label: "PF1.Sheet.Basic",
-    types: ["basic"],
-    makeDefault: true,
-  });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("pf1", applications.item.ItemSheetPF, {
     label: "PF1.Sheet.Item",

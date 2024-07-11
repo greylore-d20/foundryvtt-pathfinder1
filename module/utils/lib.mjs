@@ -1011,11 +1011,11 @@ export function moduleToObject(module) {
 export function setDefaultSceneScaling(system) {
   system ??= getDistanceSystem();
   if (system == "metric") {
-    game.system.gridUnits = "m";
-    game.system.gridDistance = 1.5;
+    game.system.grid.units = "m";
+    game.system.grid.distance = 1.5;
   } else {
-    game.system.gridUnits = "ft";
-    game.system.gridDistance = 5;
+    game.system.grid.units = "ft";
+    game.system.grid.distance = 5;
   }
 }
 

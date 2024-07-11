@@ -149,15 +149,16 @@ Hooks.once("init", function () {
 
   // Dice config
   CONFIG.Dice.rolls.unshift(dice.RollPF);
-  for (const [key, term] of Object.entries(dice.terms.fn)) {
-    CONFIG.Dice.termTypes[key] = term;
-  }
-  for (const [key, term] of Object.entries(dice.terms.aux)) {
-    CONFIG.Dice.termTypes[key] = term;
-  }
+
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.push(dice.DamageRoll);
 
+  // Roll functions
+  for (const [key, fn] of Object.entries(pf1.utils.roll.functions)) {
+    CONFIG.Dice.functions[key] = fn;
+  }
+
+  // Combat time progression
   CONFIG.time.roundTime = 6;
 
   // Register System Settings

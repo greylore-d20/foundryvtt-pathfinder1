@@ -109,25 +109,6 @@ export class RollPF extends Roll {
         return terms;
       }
 
-      /*
-      // Attach string terms as flavor texts to size roll terms, if appropriate
-      // TODO: Review the need for this bit with Foundry v10, according to staff it will no longer be required.
-      const priorSizeRoll = prior instanceof pf1.dice.terms.SizeRollTerm;
-      if (prior && priorSizeRoll && term instanceof StringTerm) {
-        const re = term.term.match(pf1.dice.terms.SizeRollTerm.TRAILER_REGEXP);
-        const [match, modifiers, flavor] = re;
-        // Attach Flavor
-        if (flavor) {
-          prior.options.flavor = flavor;
-        }
-        // Attach modifiers
-        if (modifiers) {
-          prior.modifiers = Array.from((modifiers || "").matchAll(DiceTerm.MODIFIER_REGEXP)).map((m) => m[0]);
-        }
-        return terms;
-      }
-      */
-
       // Custom handling
       if (prior && term instanceof foundry.dice.terms.StringTerm) {
         const flavor = /^\[(?<flavor>.+)\]$/.exec(term.term)?.groups.flavor;
@@ -203,64 +184,7 @@ export class RollPF extends Roll {
   }
 
   static parse(formula, data) {
-    const terms = super.parse(formula, data);
-
-    const final = [];
-
-    for (let i = 0; i < terms.length; i++) {
-      const term = terms[i],
-        next = terms[i + 1],
-        prior = terms[i - 1];
-
-      // Standalone terms
-      if (term instanceof foundry.dice.terms.StringTerm) {
-        const systerm = Object.values(pf1.dice.terms.aux).find((t) => t.matchTerm(term.term));
-        if (systerm) {
-          final.push(new systerm({ term: term.term }));
-          continue;
-        }
-      }
-      // Function terms
-      else if (term instanceof foundry.dice.terms.ParentheticalTerm && prior instanceof foundry.dice.terms.StringTerm) {
-        const systerm = Object.values(pf1.dice.terms.fn).find((t) => t.matchTerm(prior.term));
-        if (systerm?.isFunction) {
-          const args = systerm.parseArgs(this._lenientSplitArgs(term.term));
-          final.pop();
-          final.push(new systerm({ terms: args }));
-          continue;
-        }
-      }
-
-      final.push(term);
-    }
-
-    return final;
-  }
-
-  /**
-   * Variant of _splitMathArgs that takes system terms into consideration.
-   *
-   * @param {string} expression
-   * @returns {foundry.dice.terms.RollTerm[]}
-   */
-  static _lenientSplitArgs(expression) {
-    return expression.split(",").reduce((args, t) => {
-      t = t.trim();
-      if (!t) return args; // Blank args
-      if (!args.length) {
-        // First arg
-        args.push(t);
-        return args;
-      }
-      const p = args[args.length - 1]; // Prior arg
-      const priorValid = this.validate(p);
-      if (priorValid) args.push(t);
-      else {
-        const aux = Object.values(pf1.dice.terms.aux).find((t) => t.matchTerm(p));
-        if (aux) args.push(t);
-        else args[args.length - 1] = [p, t].join(","); // Collect inner parentheses or pools
-      }
-      return args;
-    }, []);
+    // TODO: transform func()dX and a?b:c to something compatible
+    return super.parse(formula, data);
   }
 }

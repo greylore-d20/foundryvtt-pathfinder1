@@ -176,7 +176,7 @@ export function applyAccessibilitySettings(app, html, data, conf) {}
  * @param {HTMLElement} html - HTML element
  * @param recursive
  */
-export async function hideInvisibleTargets(cm, html, recursive = false) {
+export function hideInvisibleTargets(cm, html, recursive = false) {
   const targetsElem = html.querySelector(".pf1.chat-card .attack-targets");
   if (!targetsElem) return; // No targets
 
@@ -207,11 +207,8 @@ export async function hideInvisibleTargets(cm, html, recursive = false) {
     const isObserver = token.actor?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) ?? false;
 
     // Hide if token invisible and user isn't observer of token
-    if (!isVisible && !isObserver) $(t.elem).hide();
-    else {
-      hasVisible = true;
-      $(t.elem).show();
-    }
+    if (!isVisible && !isObserver) t.elem.remove();
+    else hasVisible = true;
   }
 
   // Hide targets if there's none visible to not reveal presence of invisible targets

@@ -3417,8 +3417,7 @@ export class ActorPF extends ActorBasePF {
             },
             statuses: [conditionId],
             name: currentCondition.name,
-            icon: currentCondition.texture,
-            label: currentCondition.name,
+            img: currentCondition.texture,
           };
 
           if (typeof value !== "boolean") {

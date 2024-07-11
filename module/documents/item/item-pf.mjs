@@ -1106,7 +1106,7 @@ export class ItemPF extends ItemBasePF {
   async getRawEffectData() {
     return {
       name: this.name,
-      icon: this.img,
+      img: this.img,
       origin: this.getRelativeUUID(this.actor),
       duration: {
         startTime: game.time.worldTime,

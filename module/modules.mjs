@@ -38,7 +38,7 @@ export function initializeModuleIntegration() {
         }
 
         getBaseSpeed(token) {
-          const { i: y, j: x } = canvas.grid.getOffset(token);
+          const { i: x, j: y } = canvas.grid.getOffset(token);
           const useElevation = this.getSetting("useElevation");
           const speeds = token.actor.system.attributes.speed;
 

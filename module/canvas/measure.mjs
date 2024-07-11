@@ -146,14 +146,14 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     }
 
     // Get number of rows and columns
-    const nr = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.h)),
-      nc = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.w));
+    const nr = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.sizeY)),
+      nc = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.sizeX));
 
     // Get the center of the grid position occupied by the template
     const { x, y } = this.document;
 
-    const [cx, cy] = grid.getCenter(x, y),
-      [col0, row0] = grid.grid.getGridPositionFromPixels(cx, cy),
+    const { x: cx, y: cy } = grid.getCenterPoint({ x, y }),
+      { j: col0, i: row0 } = grid.getOffset({ x: cx, y: cy }),
       minAngle = Math.normalizeDegrees(direction - angle / 2),
       maxAngle = Math.normalizeDegrees(direction + angle / 2);
 
@@ -181,7 +181,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     for (let a = -nc; a < nc; a++) {
       for (let b = -nr; b < nr; b++) {
         // Position of cell's top-left corner, in pixels
-        const { x: gx, y: gy } = canvas.grid.getTopLeftPoint({ i: col0 + a, j: row0 + b });
+        const { x: gx, y: gy } = canvas.grid.getTopLeftPoint({ j: col0 + a, i: row0 + b });
 
         // Determine point we're measuring the distance to - always in the center of a grid square
         const destination = { x: gx + gridSizePx * 0.5, y: gy + gridSizePx * 0.5 };
@@ -341,10 +341,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     )
       return super.highlightGrid();
 
-    const grid = canvas.grid,
-      bc = this.borderColor,
-      fc = this.fillColor;
-
     // Only highlight for objects which have a defined shape
     if (!this.id || !this.shape) return;
 
@@ -353,10 +349,15 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     hl.clear();
     if (!this.isVisible) return;
 
+    const grid = canvas.interface.grid,
+      bc = this.document.borderColor,
+      fc = this.document.fillColor;
+
     // Get grid squares to highlight
     const highlightSquares = this._getGridHighlightPositions();
+
     for (const s of highlightSquares) {
-      grid.grid.highlightGridPosition(hl, { x: s.x, y: s.y, color: fc, border: bc });
+      grid.highlightPosition(hl.name, { x: s.x, y: s.y, color: fc, border: bc });
     }
   }
 

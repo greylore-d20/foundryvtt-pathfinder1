@@ -369,10 +369,12 @@ class SquareGridHighlight extends AttackHighlightBase {
 
     // BUG: This will fail if user is using non 1/2/1 diagonals
     const dist = canvas.grid.measurePath([p0, p1]).distance;
+
     // TODO: https://github.com/foundryvtt/foundryvtt/issues/11428
     const dist2 = useReachRule
       ? new foundry.grid.SquareGrid({
           size: canvas.grid.size,
+          distance: canvas.grid.distance,
           diagonals: CONST.GRID_DIAGONALS.EQUIDISTANT,
         }).measurePath([p0, p1]).distance
       : null;

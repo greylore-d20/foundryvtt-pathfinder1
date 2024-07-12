@@ -48,17 +48,12 @@ export class ChatMessagePF extends ChatMessage {
     return this.flags?.pf1?.metadata?.item !== undefined;
   }
 
-  /**
-   * Return associated template or null.
-   *
-   * @type {MeasuredTemplatePF}
-   */
+  /** @type {MeasuredTemplatePF|null} - Associated measured template */
   get measureTemplate() {
     const templateId = this.flags?.pf1?.metadata?.template;
     if (!templateId) return null;
 
-    const template = canvas.templates.get(templateId);
-    return template || null;
+    return fromUuidSync(templateId) ?? canvas.templates.get(templateId) ?? null;
   }
 
   /**

@@ -26,6 +26,7 @@ import * as PF1 from "./module/config.mjs";
 import * as PF1CONST from "./module/const.mjs";
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
+import * as models from "./module/models/_module.mjs";
 import * as actionUse from "./module/action-use/_module.mjs";
 import * as chat from "./module/chat/_module.mjs";
 import * as _canvas from "./module/canvas/_module.mjs";
@@ -46,6 +47,7 @@ export {
   PF1CONST as const,
   dice,
   documents,
+  models,
   migrations,
   registry,
   utils,
@@ -61,6 +63,7 @@ globalThis.pf1 = moduleToObject({
   const: PF1CONST,
   dice,
   documents,
+  models,
   migrations,
   registry,
   /** @type {TooltipPF|null} */
@@ -90,14 +93,18 @@ Hooks.once("init", function () {
   // Record Configuration Values
   CONFIG.PF1 = pf1.config;
 
-  // Canvas object classes and configuration
+  // Canvas
   CONFIG.Canvas.layers.templates.layerClass = _canvas.TemplateLayerPF;
+
+  // Measured Template
   CONFIG.MeasuredTemplate.objectClass = _canvas.MeasuredTemplatePF;
   CONFIG.MeasuredTemplate.defaults.originalAngle = CONFIG.MeasuredTemplate.defaults.angle;
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
-  CONFIG.Token.objectClass = _canvas.TokenPF;
 
+  // Token
+  CONFIG.Token.objectClass = _canvas.TokenPF;
   CONFIG.Token.hudClass = _canvas.TokenHUDPF;
+  CONFIG.Token.documentClass = documents.TokenDocumentPF;
 
   // Document classes
   CONFIG.Actor.documentClass = ActorPFProxy;
@@ -124,11 +131,17 @@ Hooks.once("init", function () {
     implant: documents.item.ItemImplantPF,
   };
 
-  CONFIG.Token.documentClass = documents.TokenDocumentPF;
+  // Active Effects
   CONFIG.ActiveEffect.documentClass = documents.ActiveEffectPF;
   CONFIG.ActiveEffect.legacyTransferral = false; // TODO: Remove once legacy transferral is no longer default.
+  CONFIG.ActiveEffect.dataModels.base = models.ae.AEBase;
+  CONFIG.ActiveEffect.dataModels.buff = models.ae.AEBuff;
+
+  // Combat
   CONFIG.Combat.documentClass = documents.CombatPF;
   CONFIG.Combatant.documentClass = documents.CombatantPF;
+
+  // Chat
   CONFIG.ChatMessage.documentClass = documents.ChatMessagePF;
 
   // UI classes

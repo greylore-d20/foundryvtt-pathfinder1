@@ -604,17 +604,19 @@ export async function migrateToken(token) {
  * Migrate singular actor document.
  *
  * @param {Actor} actor - Actor to migrate.
- * @returns {Promise<Actor|null>}
+ * @returns {Promise<void>}
  */
 export async function migrateActor(actor) {
+  console.debug("PF1 | Migration | Starting |", actor.name, actor.uuid);
+
   await migrateActiveEffectsToItems(actor);
 
   const updateData = await migrateActorData(actor.toObject(), actor.token, { actor });
   if (!foundry.utils.isEmpty(updateData)) {
-    return actor.update(updateData, marker());
+    await actor.update(updateData, marker());
   }
 
-  return null;
+  console.debug("PF1 | Migration | Finished |", actor.name, actor.uuid);
 }
 
 /**
@@ -747,11 +749,82 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
  * @returns {Promise<Item|null>} - Promise to updated item document, or null if no update was performed.
  */
 export async function migrateItem(item) {
+  let updated = false;
   const updateData = await migrateItemData(item.toObject(), item.actor, { item });
   if (!foundry.utils.isEmpty(updateData)) {
-    return item.update(updateData, marker());
+    updated = true;
+    await item.update(updateData, marker());
   }
+
+  await migrateItemActiveEffects(item);
+
+  return updated ? item : null;
+}
+
+/**
+ * Migrate active effects on an item.
+ *
+ * @param {Item} item
+ * @returns {Promise<ActiveEffect[]|null>} - Updated active effects, or null if no updates were needed.
+ */
+export async function migrateItemActiveEffects(item) {
+  const itemData = item.toObject();
+
+  const updateData = {};
+  await migrateItemDataActiveEffects(itemData, updateData);
+
+  if (updateData.effects?.length) {
+    return item.updateEmbeddedDocuments("ActiveEffect", updateData.effects);
+  }
+
   return null;
+}
+
+/**
+ * Migrate active effects in item data
+ *
+ * @param {object} itemData - Item data
+ * @param {object} updateData - Object to hold update data
+ */
+async function migrateItemDataActiveEffects(itemData, updateData) {
+  const { effects = [] } = itemData;
+
+  const updates = [];
+  for (const effect of effects) {
+    const updateData = {};
+
+    // Convert method of tracker identification
+    if (itemData.type === "buff") {
+      if (effect.flags?.pf1?.tracker && effect.type === "base") {
+        updateData.type = "buff";
+        updateData["flags.pf1.-=tracker"] = null;
+      }
+    }
+
+    const duration = effect.flags?.pf1?.duration;
+    if (duration) {
+      // Transfer initiative value to system data
+      const init = effect.flags?.pf1?.duration?.initiative;
+      if (init !== undefined) {
+        if (effect.system?.initiative === undefined) updateData["system.initiative"] = init;
+      }
+
+      // End timing
+      const endTiminig = effect.flags?.pf1?.duration?.end;
+      if (endTiminig !== undefined) {
+        if (!effect.system?.end) updateData["system.end"] = endTiminig;
+      }
+
+      updateData["flags.pf1.-=duration"] = null;
+    }
+
+    if (!foundry.utils.isEmpty(updateData)) {
+      updateData._id = effect._id;
+      updates.push(updateData);
+    }
+  }
+
+  updateData.effects = updates;
 }
 
 /**
@@ -887,6 +960,8 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   };
 
   await migrateContainerItems(itemData.system.items);
+
+  await migrateItemDataActiveEffects(itemData, updateData);
 
   // Record migrated version
   if (!foundry.utils.isEmpty(updateData)) {

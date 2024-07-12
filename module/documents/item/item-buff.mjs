@@ -266,11 +266,12 @@ export class ItemBuffPF extends ItemPF {
   async getRawEffectData({ rollData } = {}) {
     const createData = await super.getRawEffectData();
 
+    createData.type = "buff";
+
     createData.statuses = Array.from(this.system.conditions.all);
 
     // Add buff durations
     const duration = this.system.duration;
-    const formula = `${duration.value}`;
 
     let endTiming = this.system.duration.end || "turnStart";
 
@@ -278,7 +279,7 @@ export class ItemBuffPF extends ItemPF {
     if (duration.units === "turn") {
       endTiming = "turnEnd";
       seconds = 0;
-    } else if (formula) {
+    } else if (duration.value) {
       seconds = await this.getDuration({ rollData });
     }
 
@@ -286,15 +287,10 @@ export class ItemBuffPF extends ItemPF {
       createData.duration.seconds = seconds;
     }
 
-    const flags = { duration: {} };
-
-    // Record end timing
-    flags.duration.end = endTiming;
-
-    // Record initiative
-    flags.duration.initiative = game.combat?.initiative;
-
-    foundry.utils.mergeObject(createData, { "flags.pf1": flags });
+    // Record timing
+    createData.system ??= {};
+    createData.system.end = endTiming;
+    createData.system.initiative = game.combat?.initiative;
 
     return createData;
   }

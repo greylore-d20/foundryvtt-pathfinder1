@@ -378,13 +378,14 @@ export class ActorPF extends ActorBasePF {
       // Time still remaining
       if (remaining > 0) return false;
 
-      const flags = ae.getFlag("pf1", "duration") ?? {};
+      const aeInit = ae.system?.initiative;
+      const endTiming = ae.system?.end || "turnStart";
 
-      switch (flags.end || "turnStart") {
+      switch (endTiming) {
         // Initiative based ending
         case "initiative":
           if (initiative !== null) {
-            return initiative <= flags.initiative;
+            return initiative <= aeInit;
           }
           // Anything not on initiative expires if they have negative time remaining
           return remaining < 0;

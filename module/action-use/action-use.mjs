@@ -151,7 +151,7 @@ export class ActionUse {
     const useOptions = this.shared.useOptions;
     formData["power-attack"] ??= useOptions.powerAttack;
     formData["primary-attack"] ??= useOptions.primaryAttack;
-    formData["cl-check"] ??= useOptions.clCheck;
+    formData["cl-check"] ??= useOptions.clCheck ?? this.item?.system.clCheck === true;
     formData["measure-template"] ??= useOptions.measureTemplate;
     formData["haste-attack"] ??= useOptions.haste;
     formData["manyshot"] ??= useOptions.manyshot;

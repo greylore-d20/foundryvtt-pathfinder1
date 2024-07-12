@@ -13,6 +13,7 @@ export class AttackDialog extends Application {
     this.object = actionUse.action;
 
     const action = actionUse.action;
+    const item = actionUse.item;
     const shared = actionUse.shared;
     this.shared = shared;
 
@@ -36,7 +37,7 @@ export class AttackDialog extends Application {
     this.flags = {
       "power-attack": useOptions.powerAttack ?? false,
       "primary-attack": useOptions.primaryAttack ?? isPrimaryAttack,
-      "cl-check": useOptions.clCheck ?? action.clCheck === true,
+      "cl-check": useOptions.clCheck ?? item?.system.clCheck === true,
       "measure-template": useOptions.measureTemplate ?? true,
       "haste-attack": useOptions.haste,
       manyshot: useOptions.manyshot,

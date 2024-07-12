@@ -131,7 +131,7 @@ class GridlessHighlight extends AttackHighlightBase {
 
     this.#rangeStops = rangeMeasurements.map((r) => {
       const tokenOffset = r === 0 ? 0 : (tw * gridSize) / 2;
-      return (r * canvas.dimensions.size) / canvas.dimensions.distance + tokenOffset;
+      return r * canvas.dimensions.distancePixels + tokenOffset;
     });
 
     this._id = foundry.utils.randomID();
@@ -243,8 +243,8 @@ class SquareGridHighlight extends AttackHighlightBase {
       const maxSquareRange = Math.min(
         userLimit, // arbitrary limit to enhance performance on large canvases
         Math.max(
-          (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
-          (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
+          canvas.dimensions.width / canvas.dimensions.distancePixels,
+          canvas.dimensions.height / canvas.dimensions.distancePixels
         ) + ftDistance
       );
       const rangeIncrements = action.data.range.maxIncrements;

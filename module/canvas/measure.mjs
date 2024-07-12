@@ -47,8 +47,7 @@ export class TemplateLayerPF extends TemplateLayer {
 
     // Compute the ray
     const ray = new Ray(origin, destination);
-    const dist = canvas.dimensions.distance;
-    const ratio = canvas.dimensions.size / dist;
+    const ratio = canvas.dimensions.distancePixels;
 
     // Update the preview object
     const baseDistance = ray.distance / ratio;

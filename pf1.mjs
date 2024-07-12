@@ -564,10 +564,6 @@ Hooks.on("renderAmbientLightConfig", (app, html) => {
   _canvas.lowLightVision.addLowLightVisionToLightConfig(app, html);
 });
 
-Hooks.on("renderTokenHUD", (app, html, data) => {
-  _canvas.TokenQuickActions.addQuickActions(app, html, data);
-});
-
 // Hide token tooltip on token update or deletion
 Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
 Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));

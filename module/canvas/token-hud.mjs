@@ -1,3 +1,5 @@
+import { TokenQuickActions } from "./token-quick-actions.mjs";
+
 /**
  * Extension of core Token HUD
  *
@@ -23,5 +25,11 @@ export class TokenHUDPF extends TokenHUD {
     }
 
     return { ...core, ...buffs };
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    pf1.canvas.TokenQuickActions.addQuickActions(this, html);
   }
 }

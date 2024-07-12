@@ -70,7 +70,7 @@ export class ItemBasePF extends Item {
         const extraItem = await fromUuid(uuid);
         if (!extraItem) {
           // TODO: Display notification instead when this is from UI interaction.
-          console.warn("Supplement", uuid, "not found for", item.uuid ?? item.flags?.core?.sourceId ?? item);
+          console.warn("Supplement", uuid, "not found for", item.uuid ?? item._stats?.compendiumSource ?? item);
           continue;
         }
         const old = allSupplements.get(uuid);
@@ -104,7 +104,7 @@ export class ItemBasePF extends Item {
       // Add to items array
       for (const supplement of allSupplements) {
         const { item, count, parent } = supplement;
-        const parentUuid = parent?.uuid ?? parent?.flags?.core?.sourceId;
+        const parentUuid = parent?.uuid ?? parent?._stats?.compendiumSource;
         const itemData = game.items.fromCompendium(item, { clearFolder: true });
         if (parentUuid) {
           foundry.utils.setProperty(itemData, "flags.pf1.source", parentUuid);
@@ -136,7 +136,7 @@ export class ItemBasePF extends Item {
     const updates = new Collection();
     const collection = new Collection();
     for (const item of items) {
-      const source = item.getFlag("core", "sourceId");
+      const source = item._stats?.compendiumSource;
       if (source) collection.set(source, item);
     }
 

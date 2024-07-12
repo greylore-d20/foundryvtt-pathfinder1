@@ -503,8 +503,8 @@ export async function onApply(event, target) {
 
   // Apply
   for (const actor of actors) {
-    // Activate existing item with same sourceId
-    const old = actor.itemTypes[item.type].find((i) => i.getFlag("core", "sourceId") === uuid);
+    // Activate existing item with same source
+    const old = actor.itemTypes[item.type].find((i) => i._stats?.compendiumSource === uuid);
     if (old) {
       const activationData = { system: { active: true } };
       if (level !== undefined) activationData.system.level = level;

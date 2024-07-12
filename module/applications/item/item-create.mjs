@@ -87,8 +87,16 @@ export class ItemCreateDialog extends FormApplication {
   getData() {
     const lang = game.settings.get("core", "language");
 
+    let collection;
+    if (!this.parent) {
+      if (this.pack) collection = game.packs.get(this.pack);
+      else collection = game.items;
+    }
+
     // TODO: Visualize folder tree better
-    const folders = this.parent ? [] : game.folders.filter((f) => f.type === "Item" && f.displayed);
+    const folders = Object.fromEntries(
+      (collection?._formatFolderSelectOptions() ?? []).map(({ id, name }) => [id, name])
+    );
 
     const createData = this.createData;
 
@@ -108,11 +116,11 @@ export class ItemCreateDialog extends FormApplication {
     delete types.base; // base is Foundry's unusable default
 
     return {
-      folders: Object.fromEntries(folders.map((f) => [f.id, f.name])),
+      folders,
       name: createData.name,
       defaultName: Item.implementation.defaultName(),
       folder: createData.folder,
-      hasFolders: folders.length > 0,
+      hasFolders: Object.keys(folders).length > 0,
       type: createData.type,
       types,
       subtype: createData.system?.subType || null,

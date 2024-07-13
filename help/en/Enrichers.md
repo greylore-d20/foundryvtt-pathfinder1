@@ -78,6 +78,8 @@ Add, remove, toggle or link conditions.
 
 If toggle or removal is not defined, the condition is added.
 
+Label replaces the entire text unlike with most enrichers.
+
 #### Examples
 
 | Input                               | Explanation                            |

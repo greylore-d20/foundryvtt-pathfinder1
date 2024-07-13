@@ -174,20 +174,27 @@ export function createElement({ label, icon, click = false, drag = false, handle
   return a;
 }
 
+function getSpeaker(target) {
+  const messageId = target.closest("[data-message-id]")?.dataset.messageId;
+  const message = game.messages.get(messageId);
+  return ChatMessage.getSpeakerActor(message.speaker);
+}
+
 /**
  * Get relevant actors based on the enriched element data.
  *
- * @param {HTMLElement} target - Clicked element.
+ * @param {HTMLElement} button - Clicked element.
  * @returns {ActorPF[]} - Relevant actors
  */
-export function getRelevantActors(target) {
+export function getRelevantActors(button) {
   const actors = [];
 
+  const as = button.dataset.as;
+  const asSpeaker = button.dataset.speaker || as === "speaker";
+
   // Speaker
-  if (target.dataset.speaker) {
-    const messageId = target.closest("[data-message-id]")?.dataset.messageId;
-    const message = game.messages.get(messageId);
-    const actor = ChatMessage.getSpeakerActor(message.speaker);
+  if (asSpeaker) {
+    const actor = getSpeaker(button);
     if (actor) actors.push(actor);
   }
   // Controlled tokens
@@ -407,8 +414,8 @@ export function onAction(event, target) {
  * @param {Event} event - Triggering event
  * @param {HTMLElement} target - Triggered element
  */
-export function onHealth(event, target) {
-  const { command, formula, speaker, nonlethal, dual } = target.dataset;
+export async function onHealth(event, target) {
+  const { command, formula, speaker, nonlethal, vars, dual } = target.dataset;
 
   const actors = getRelevantActors(target);
 
@@ -417,8 +424,14 @@ export function onHealth(event, target) {
   if (nonlethal) options.asNonlethal = true;
   if (dual) options.dualHeal = true;
 
+  const targetRolldata = vars === "target";
+
+  let rollData;
+  if (!targetRolldata) rollData = getSpeaker(target)?.getRollData();
+
   for (const actor of actors) {
-    let value = RollPF.safeRoll(formula, actor.getRollData()).total;
+    if (targetRolldata) rollData = actor.getRollData();
+    let value = await RollPF.safeRoll(formula, rollData).total;
     if (command === "heal") value = -value;
     actor.applyDamage(value, { ...options, event, element: target });
   }

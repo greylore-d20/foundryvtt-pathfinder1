@@ -1376,10 +1376,15 @@ export class ItemSheetPF extends ItemSheet {
     // Create new change
     html.find(".tab.changes .controls a.add-change").click(this._onCreateChange.bind(this));
 
-    // Open Changes editor
-    html[0]
-      .querySelectorAll(".tab.changes .changes .controls a.menu")
-      .forEach((el) => el.addEventListener("pointerenter", this._onOpenChangeMenu.bind(this), { passive: true }));
+    // Changes
+    html[0].querySelectorAll(".tab.changes .changes .change[data-change-id]").forEach((el) => {
+      // Sticky tooltip cotrols
+      el.querySelector(".controls a.menu").addEventListener("pointerenter", this._onOpenChangeMenu.bind(this), {
+        passive: true,
+      });
+      // Right click open change editor
+      el.addEventListener("contextmenu", this._onEditChange.bind(this));
+    });
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
@@ -2084,7 +2089,7 @@ export class ItemSheetPF extends ItemSheet {
 
     content.querySelector(".duplicate").addEventListener("click", (ev) => this._onDuplicateChange(ev, el));
     content.querySelector(".delete").addEventListener("click", (ev) => this._onDeleteChange(ev, el));
-    content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el));
+    content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el, true));
 
     await game.tooltip.activate(el, {
       content,
@@ -2097,14 +2102,15 @@ export class ItemSheetPF extends ItemSheet {
   /**
    * @internal
    * @param {Event} event - Click event
+   * @param {boolean} [tooltip] - Is this event from locked tooltip?
    */
-  _onEditChange(event) {
+  _onEditChange(event, tooltip = false) {
     event.preventDefault();
     const el = event.target;
-    const changeId = el.dataset.changeId;
+    const changeId = el.closest("[data-change-id]").dataset.changeId;
     const change = this.item.changes.get(changeId);
     if (change) {
-      game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
+      if (tooltip) game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
       return void pf1.applications.ChangeEditor.wait(change);
     }
   }

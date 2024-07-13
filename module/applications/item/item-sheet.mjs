@@ -190,7 +190,7 @@ export class ItemSheetPF extends ItemSheet {
     context.isRechargeable = pf1.config.limitedUsePeriodOrder.includes(itemData.uses?.per);
 
     // Item type identifiers
-    context.isPhysical = itemData.quantity !== undefined;
+    context.isPhysical = item.isPhysical;
     context.isNaturalAttack = itemData.subType === "natural";
     context.isSpell = item.type === "spell";
     context.isImplant = item.type === "implant";
@@ -203,7 +203,7 @@ export class ItemSheetPF extends ItemSheet {
     context.showUnidentifiedData = item.showUnidentifiedData;
     context.showIdentified = !item.showUnidentifiedData;
     context.showIdentifiedData = context.showIdentified;
-    if (context.showIdentified) context.showBothDescriptions = true;
+    if (context.showIdentified && context.isPhysical) context.showBothDescriptions = true;
     context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 
     // Identification information

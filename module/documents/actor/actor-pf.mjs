@@ -3967,6 +3967,32 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Adjust temporary hit points.
+   *
+   * @example
+   * ```js
+   * actor.addTempHP(50); // Gain 50 THP
+   * actor.addTempHP(-10); // Lose 10 THP
+   * actor.addTempHP(0, {set:true}); // Set THP to zero
+   * ```
+   *
+   * @param {number} value - Value to add to temp HP
+   * @param {object} [options] - Additonal optons
+   * @param {boolean} [options.set] - If true, the temporary hit points are set to the provide value instead of added to existing.
+   * @returns {Promise<this|undefined>} - Updated document or undefined if no update occurred
+   */
+  async addTempHP(value, { set = false } = {}) {
+    const hpconf = game.settings.get("pf1", "healthConfig").variants;
+    const variant = this.type === "npc" ? hpconf.npc : hpconf.pc;
+    const vigor = variant.useWoundsAndVigor;
+
+    const curTHP = (vigor ? this.system.attributes.vigor.temp : this.system.attributes.hp.temp) || 0;
+    const newTHP = Math.max(0, !set ? curTHP + value : value);
+
+    return this.update({ system: { attributes: { [vigor ? "vigor" : "hp"]: { temp: newTHP } } } });
+  }
+
+  /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    *
    * @protected

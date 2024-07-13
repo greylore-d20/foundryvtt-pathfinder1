@@ -771,7 +771,7 @@ export const enrichers = [
 
       // TODO: Find closest condition via Sørensen–Dice coefficient or something.
       const cond = pf1.registry.conditions.get(condition);
-      const text = cond?.name || condition;
+      const text = label || cond?.name || condition;
 
       const broken = !cond;
 

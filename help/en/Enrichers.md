@@ -113,6 +113,18 @@ The key is damage formula instead.
 
 - `nonlethal` - Adds nonlethal damage.
 
+### `@Draw`
+
+Draws an entry from the given Roll Table.
+
+#### Examples
+
+| Input                                                          | Explanation                                                                 |
+| :------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `@Draw[Your Roll Table]`                                       | Draws from the tabled named "Your Roll Table" within your world.            |
+| `@Draw[Compendium.pf1.roll-tables.RollTable.NQ3T7rnXC5agjl6D]` | Draws from the system's Confusion table.                                    |
+| `@Draw[Your Roll Table]{Displayed Name}`                       | Draws from "Your Roll Table" but the button shows "Displayed Name" instead. |
+
 ### `@Heal`
 
 Heals selected tokens by defined amount.

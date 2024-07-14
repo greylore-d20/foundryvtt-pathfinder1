@@ -298,6 +298,19 @@ export function onAbility(event, target) {
 }
 
 /**
+ * @param {Event} _event - Triggering event
+ * @param {HTMLElement} target - Triggered element
+ */
+export async function onDraw(_event, target) {
+  const { ident } = target.dataset;
+  if (!ident) throw new Error("No roll table defined");
+
+  const table = await fromUuid(ident);
+  if (!table) throw new Error(`Roll table not found for "${ident}"`);
+  await table.draw({ roll: true, displayChat: true });
+}
+
+/**
  * @param {Event} event - Triggering event
  * @param {HTMLElement} target - Triggered element
  */
@@ -671,6 +684,7 @@ export const enrichers = [
       click: onUse,
     }
   ),
+  // @Action
   new PF1TextEnricher(
     "action",
     /@Action\[(?<action>.[\w\d\s]+)(?:;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
@@ -812,6 +826,45 @@ export const enrichers = [
     },
     {
       click: onCondition,
+    }
+  ),
+  // @Draw
+  new PF1TextEnricher(
+    "draw",
+    /@Draw\[(?<ident>.*?)\](?:\{(?<label>.*?)\})?/g,
+    /**
+     * @param {any} match
+     * @param {unknown} _options
+     * @returns
+     */
+    async (match, _options) => {
+      const { ident, label } = match.groups;
+
+      const table = fromUuidSync(ident) || game.tables.getName(ident);
+
+      if (!table) console.warn("PF1 | @Draw | Could not find roll table", ident);
+
+      const broken = !table;
+
+      const a = createElement({ click: true, handler: "draw", broken });
+
+      if (table) {
+        a.dataset.name = `${game.i18n.localize("DOCUMENT.RollTable")}: ${table.name}`;
+        a.dataset.ident = table.uuid;
+
+        a.append(label || table.name);
+
+        generateTooltip(a);
+      } else {
+        a.replaceChildren(ident);
+      }
+
+      setIcon(a, "fas fa-th-list");
+
+      return a;
+    },
+    {
+      click: onDraw,
     }
   ),
 ];

@@ -5,18 +5,28 @@ import { RollPF } from "../dice/roll.mjs";
  * Creates a tag from a string.
  *
  * @example
+ * ```js
  * pf1.utils.createTag("Wizard of Oz 2"); // => "wizardOfOz2"
- *
- * @param {string} str
+ * pf1.utils.createTag("Wizard of Oz 2", {camelCase:false}); // => wizardofoz2
+ * pf1.utils.createTag("Wizard of Oz 2", {camelCase:false,allowUpperCase:true}); // => WizardofOz2
+ * pf1.utils.createTag("d'Artagnan"); // => dartagnan
+ * pf1.utils.createTag("d'Artagnan", {allowUpperCase:true}); // => dArtagnan
+ * ```
+ * @param {string} str - String to convert
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.allowUpperCase] - Do not forcibly lowercase everything.
+ * @param {boolean} [options.camelCase] - Automatic camel case
+ * @param {string | Function} [options.replacement] - Replacement for disallowed characters.
+ * @returns {string} - String suitable as a tag
  */
-export const createTag = function (str) {
-  if (str.length === 0) str = "tag";
+export const createTag = function (str, { allowUpperCase = false, camelCase = true, replacement = "" } = {}) {
+  if (!str) return "";
   return str
-    .replace(/[^a-zA-Z0-9\s]/g, "")
+    .replace(/[^a-zA-Z0-9\s]/g, replacement)
     .split(/\s+/)
     .map((s, a) => {
-      s = s.toLowerCase();
-      if (a > 0) s = s.substring(0, 1).toUpperCase() + s.substring(1);
+      if (!allowUpperCase) s = s.toLowerCase();
+      if (a > 0 && camelCase) s = s.substring(0, 1).toUpperCase() + s.substring(1);
       return s;
     })
     .join("");

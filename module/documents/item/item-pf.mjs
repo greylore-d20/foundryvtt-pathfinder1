@@ -142,6 +142,11 @@ export class ItemPF extends ItemBasePF {
 
     this._preUpdateNumericValueGuard(changed.system);
 
+    // Ensure tag is not invalid
+    if (changed.system.tag) {
+      changed.system.tag = pf1.utils.createTag(changed.system.tag, { allowUpperCase: true, camelCase: false });
+    }
+
     // Make sure stuff remains an array
     const keepPaths = [
       "system.attackNotes",

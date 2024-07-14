@@ -1368,8 +1368,8 @@ export class ItemSheetPF extends ItemSheet {
       return;
     }
 
-    // Add drop handler to textareas
-    html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
+    // Add drop handler to textareas and text inputs
+    html.find("textarea, input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
     // Create new change
     html.find(".tab.changes .controls a.add-change").click(this._onCreateChange.bind(this));
@@ -1649,6 +1649,12 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
+  /**
+   * Handle dropping content-linkable data to `<textarea>` or text `<input>`
+   *
+   * @internal
+   * @param {DragEvent} event
+   */
   async _onTextAreaDrop(event) {
     event.preventDefault();
 
@@ -1657,13 +1663,13 @@ export class ItemSheetPF extends ItemSheet {
 
     const elem = event.currentTarget;
     const link = await TextEditor.getContentLink(eventData, { relativeTo: this.actor });
+    if (!link) return void ui.notifications.warn("PF1.Error.InvalidContentLinkDrop", { localize: true });
 
     // Insert link
-    if (link) {
-      elem.value = !elem.value ? link : elem.value + "\n" + link;
+    // TODO: Replace painted text if any
+    elem.value = !elem.value ? link : elem.value + "\n" + link;
 
-      return this._onSubmit(event); // Save
-    }
+    return this._onSubmit(event); // Save
   }
 
   async _onScriptCallDrop(event) {

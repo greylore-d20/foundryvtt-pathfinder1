@@ -1520,10 +1520,11 @@ export class ActorSheetPF extends ActorSheet {
           }
         );
         break;
-      case "max-dex":
+      case "max-dex": {
+        const mdex = system.attributes.maxDexBonus;
         paths.push({
           path: "@attributes.maxDexBonus",
-          value: system.attributes.maxDexBonus,
+          value: Number.isFinite(mdex) ? mdex : "null",
         });
 
         sources.push(
@@ -1543,6 +1544,7 @@ export class ActorSheetPF extends ActorSheet {
           }
         );
         break;
+      }
       case "asf": {
         // TODO: Make ASF proper change target
         const asfSources = [];

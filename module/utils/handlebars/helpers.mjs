@@ -81,4 +81,8 @@ export const registerHandlebarsHelpers = function () {
     if (hash.fraction) return fractionalToString(number);
     else return pf1.utils.limitPrecision(number, hash.decimals);
   });
+
+  Handlebars.registerHelper("isNumber", (number) => {
+    return Number.isFinite(number);
+  });
 };

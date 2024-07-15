@@ -1,7 +1,7 @@
 {{!-- Buffs --}}
 <div class="flexrow buffs-conditions">
   {{#each conditions}}
-  <div class="condition {{#if active}}active{{/if}}">
+  <div class="condition{{#if active}} active{{/if}}{{#if immune}} immune{{/if}}">
     <a class="checkbox" data-condition-id="{{id}}">
       <img src="{{img}}" width="32" height="32">
       <div class="details">
@@ -12,6 +12,8 @@
         <span class="source">{{name}}</span>
         {{/each}}
         </div>
+        {{else if immune}}
+        <div class="note">{{localize "PF1.Immune"}}</div>
         {{/if}}
       </div>
     </a>

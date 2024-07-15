@@ -389,6 +389,21 @@ export class ItemPhysicalPF extends ItemPF {
     return labels;
   }
 
+  /** @inheritDoc */
+  adjustContained() {
+    super.adjustContained();
+
+    this.system.carried = true;
+
+    // Auto-unequip
+    if (!this.canEquip) this.system.equipped = false;
+  }
+
+  /** @type {boolean} - If the item can be equipped currently */
+  get canEquip() {
+    return !this.inContainer;
+  }
+
   /**
    * @remarks
    * Identified state is the only thing that can alter the result.

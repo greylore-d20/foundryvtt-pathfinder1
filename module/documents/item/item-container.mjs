@@ -137,6 +137,18 @@ export class ItemContainerPF extends ItemPhysicalPF {
   }
 
   /**
+   * Prepare dependent data for contained items.
+   *
+   * @inheritDoc
+   */
+  _prepareDependentData() {
+    // Update dependant data and resources
+    this.items.forEach((item) => {
+      item._prepareDependentData();
+    });
+  }
+
+  /**
    * Prepare .items collection for contained items.
    *
    * @private

@@ -1937,7 +1937,6 @@ export class ActorPF extends ActorBasePF {
       "attributes.damage.shared": 0,
       "attributes.woundThresholds.level": 0,
       "attributes.woundThresholds.mod": 0,
-      "attributes.woundThresholds.override": -1,
       "attributes.woundThresholds.penaltyBase": 0,
       "attributes.woundThresholds.penalty": 0,
       "abilities.str.checkMod": 0,
@@ -3866,9 +3865,7 @@ export class ActorPF extends ActorBasePF {
   getWoundThresholdMultiplier({ healthConfig } = {}) {
     healthConfig ??= game.settings.get("pf1", "healthConfig").variants[this.type === "npc" ? "npc" : "pc"];
 
-    const wt = this.system.attributes?.woundThresholds ?? {};
-    const override = wt.override ?? -1;
-    return override >= 0 && healthConfig.allowWoundThresholdOverride ? override : healthConfig.useWoundThresholds;
+    return healthConfig.useWoundThresholds;
   }
 
   /**

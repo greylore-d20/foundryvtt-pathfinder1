@@ -322,14 +322,6 @@ export class ActorSheetPF extends ActorSheet {
       const actorType = { character: "pc", npc: "npc" }[this.actor.type];
       context.healthConfig = game.settings.get("pf1", "healthConfig");
       context.useWoundsAndVigor = context.healthConfig.variants[actorType].useWoundsAndVigor;
-      context.useWoundThresholds = context.healthConfig.variants[actorType].useWoundThresholds > 0;
-
-      if (context.useWoundThresholds) {
-        context.woundThresholdOptions = {
-          "-1": "PF1.Default",
-          ...context.healthConfig.woundThresholdOptions,
-        };
-      }
     }
 
     // Determine hidden elements

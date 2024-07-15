@@ -26,12 +26,10 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
         pc: new fields.SchemaField({
           useWoundsAndVigor: new fields.BooleanField({ initial: false }),
           useWoundThresholds: new fields.NumberField({ initial: 0 }),
-          allowWoundThresholdOverride: new fields.BooleanField({ initial: false }),
         }),
         npc: new fields.SchemaField({
           useWoundsAndVigor: new fields.BooleanField({ initial: false }),
           useWoundThresholds: new fields.NumberField({ initial: 0 }),
-          allowWoundThresholdOverride: new fields.BooleanField({ initial: true }),
         }),
       }),
     };

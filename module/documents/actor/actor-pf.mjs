@@ -4432,8 +4432,9 @@ export class ActorPF extends ActorBasePF {
    */
   static getReach(size = "med", stature = "tall") {
     let effectiveSize = size >= 0 ? size : Object.keys(pf1.config.sizeChart).indexOf(size);
-    // Long creatures count as one size smaller
-    if (stature !== "tall" && effectiveSize > 0) effectiveSize -= 1;
+    // Long creatures larger than medium count as one size smaller
+    // https://www.aonprd.com/Rules.aspx?ID=179
+    if (stature !== "tall" && effectiveSize > 4) effectiveSize -= 1;
 
     const reachStruct = (melee, reach) => ({ melee, reach });
 

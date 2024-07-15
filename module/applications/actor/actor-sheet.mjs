@@ -389,10 +389,12 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
+    const condImmunities = new Set(this.actor.system.traits?.ci?.value ?? []);
     context.conditions = naturalSort(
       pf1.registry.conditions.map((cond) => ({
         id: cond.id,
         img: cond.texture,
+        immune: condImmunities.has(cond.id),
         active: conditions[cond.id] ?? false,
         items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
         get inherited() {
@@ -2591,6 +2593,17 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const conditionId = a.dataset.conditionId;
 
+    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+      if (!this.actor.hasCondition(conditionId)) {
+        return void ui.notifications.warn(
+          game.i18n.format("PF1.Warning.ImmuneToCondition", {
+            name: this.actor.name,
+            condition: pf1.registry.conditions.get(conditionId)?.name || conditionId,
+          })
+        );
+      }
+    }
+
     this.actor.toggleCondition(conditionId);
   }
 
@@ -2600,6 +2613,17 @@ export class ActorSheetPF extends ActorSheet {
     const conditionId = a.dataset.conditionId;
     const cond = pf1.registry.conditions.get(conditionId);
     if (!cond) throw new Error(`Invalid condition ID: ${conditionId}`);
+
+    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+      if (!this.actor.hasCondition(conditionId)) {
+        return void ui.notifications.warn(
+          game.i18n.format("PF1.Warning.ImmuneToCondition", {
+            name: this.actor.name,
+            condition: pf1.registry.conditions.get(conditionId)?.name || conditionId,
+          })
+        );
+      }
+    }
 
     let ae;
 

@@ -21,7 +21,7 @@ const PACK_CACHE = "../public/packs";
  * This should include paths to any objects that can contain arbitrary (i.e. not in template) properties.
  */
 const TEMPLATE_EXCEPTION_PATHS = {
-  Actor: ["attributes.spells.spellbooks"],
+  Actor: ["attributes.spells.spellbooks", "skills"],
   Item: ["classSkills", "links.supplements", "flags", "casting", "learnedAt", "properties", "source", "items", "ammo"],
   Component: [],
   Token: [],

@@ -925,14 +925,14 @@ export const addDefaultChanges = function (changes) {
         flavor: game.i18n.localize("PF1.BAB"),
       })
     );
-    // Energy drain to attack
+    // Negative levels to attack
     changes.push(
       new pf1.components.ItemChange({
         formula: "-@attributes.energyDrain",
         operator: "add",
         target: "~attackCore",
         type: "untypedPerm",
-        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
+        flavor: game.i18n.localize("PF1.NegativeLevels"),
       })
     );
     // ACP to attack
@@ -971,14 +971,14 @@ export const addDefaultChanges = function (changes) {
         })
       );
     }
-    // Energy Drain to CMD
+    // Negative levels to CMD
     changes.push(
       new pf1.components.ItemChange({
         formula: "-@attributes.energyDrain",
         operator: "add",
         target: "cmd",
         type: "untypedPerm",
-        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
+        flavor: game.i18n.localize("PF1.NegativeLevels"),
       })
     );
   }
@@ -1014,7 +1014,7 @@ export const addDefaultChanges = function (changes) {
     }
   }
 
-  // Add Ability modifiers and Energy Drain to saving throws
+  // Add Ability modifiers and negative levels to saving throws
   {
     // Ability Mod to Fortitude
     let abl = actorData.attributes.savingThrows.fort.ability;
@@ -1055,14 +1055,14 @@ export const addDefaultChanges = function (changes) {
         })
       );
     }
-    // Energy Drain
+    // Negative level to saves
     changes.push(
       new pf1.components.ItemChange({
         formula: "-@attributes.energyDrain",
         operator: "add",
         target: "allSavingThrows",
         type: "untyped",
-        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
+        flavor: game.i18n.localize("PF1.NegativeLevels"),
       })
     );
   }
@@ -1228,7 +1228,7 @@ export const addDefaultChanges = function (changes) {
     );
   }
 
-  // Add energy drain to skills
+  // Negative level to skills
   {
     changes.push(
       new pf1.components.ItemChange({
@@ -1236,7 +1236,7 @@ export const addDefaultChanges = function (changes) {
         operator: "add",
         target: "skills",
         type: "untypedPerm",
-        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
+        flavor: game.i18n.localize("PF1.NegativeLevels"),
       })
     );
   }
@@ -1319,8 +1319,8 @@ export const addDefaultChanges = function (changes) {
     }
   }
 
-  // Apply level drain to hit points
-  if (!Number.isNaN(actorData.attributes.energyDrain) && actorData.attributes.energyDrain > 0) {
+  // Negative level to hit points and init
+  if (actorData.attributes.energyDrain > 0) {
     changes.push(
       new pf1.components.ItemChange({
         formula: "-(@attributes.energyDrain * 5)",
@@ -1328,7 +1328,7 @@ export const addDefaultChanges = function (changes) {
         target: "mhp",
         type: "untyped",
         priority: -750,
-        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
+        flavor: game.i18n.localize("PF1.NegativeLevels"),
       })
     );
 
@@ -1339,7 +1339,7 @@ export const addDefaultChanges = function (changes) {
         target: "vigor",
         type: "untyped",
         priority: -750,
-        flavor: game.i18n.localize("PF1.Condition.energyDrain"),
+        flavor: game.i18n.localize("PF1.NegativeLevels"),
       })
     );
   }

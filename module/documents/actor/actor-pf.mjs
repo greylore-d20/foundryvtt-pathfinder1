@@ -783,13 +783,13 @@ export class ActorPF extends ActorBasePF {
         setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
       }
 
-      // Subtract energy drain
+      // Apply negative levels
       if (rollData.attributes.energyDrain) {
         clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
         setSourceInfoByName(
           this.sourceInfo,
           key,
-          game.i18n.localize("PF1.Condition.energyDrain"),
+          game.i18n.localize("PF1.NegativeLevels"),
           -Math.abs(rollData.attributes.energyDrain),
           false
         );

@@ -1249,7 +1249,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Formulas not meant for checks or other rolls must be deterministic
     // TODO: Make this selection better
-    if (!el.classList.contains("roll")) {
+    if (!el.classList.contains("check")) {
       if (!roll.isDeterministic) {
         el.dataset.tooltip = "PF1.Warning.FormulaMustBeDeterministic";
         el.classList.add("invalid");

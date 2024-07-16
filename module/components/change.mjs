@@ -137,9 +137,25 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   /** @type {boolean} */
   get isDeferred() {
-    if (["damage", "wdamage", "mwdamage", "twdamage", "rwdamage", "sdamage", "skills"].includes(this.target))
+    if (
+      [
+        "damage",
+        "wdamage",
+        "rdamage",
+        "mdamage",
+        "ndamage",
+        "sdamage",
+        "mwdamage",
+        "twdamage",
+        "rwdamage",
+        "sdamage",
+        "skills",
+        "unskills",
+      ].includes(this.target)
+    )
       return true;
-    return /^skill\./.test(this.target);
+
+    return /^skill\./.test(this.target) || /Skills$/.test(this.target);
   }
 
   /** @type {boolean} - Does this change refer to a distance? */

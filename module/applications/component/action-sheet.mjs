@@ -9,9 +9,11 @@ export class ItemActionSheet extends FormApplication {
   }
 
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...options,
       template: "systems/pf1/templates/apps/item-action.hbs",
-      classes: ["pf1", "sheet", "action", "item-action"],
+      classes: [...options.classes, "pf1", "sheet", "action", "item-action"],
       width: 580,
       height: 720,
       closeOnSubmit: false,
@@ -33,7 +35,7 @@ export class ItemActionSheet extends FormApplication {
           dropSelector: 'div[data-tab="conditionals"]',
         },
       ],
-    });
+    };
   }
 
   get title() {
@@ -41,7 +43,7 @@ export class ItemActionSheet extends FormApplication {
   }
 
   get id() {
-    return `item-${this.item.uuid}-action-${this.action.id}`;
+    return `item-${this.item.uuid.replaceAll(".", "-")}-action-${this.action.id}`;
   }
 
   /** @type {ItemAction} */

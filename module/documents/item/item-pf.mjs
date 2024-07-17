@@ -1665,6 +1665,17 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /**
+   * Chat card actions
+   *
+   * @internal
+   * @param {string} action
+   * @param {object} options
+   * @param {Element} [options.button] - Button element
+   * @param {ItemPF} [options.item] - Item associated with card
+   * @param {Event} [options.event] - Triggering event
+   * @returns
+   */
   static async _onChatCardAction(action, { button = null, item = null, event } = {}) {
     const message = game.messages.get(button.closest(".chat-message").dataset.messageId);
 

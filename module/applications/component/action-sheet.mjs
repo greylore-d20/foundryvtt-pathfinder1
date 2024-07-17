@@ -640,7 +640,7 @@ export class ItemActionSheet extends FormApplication {
   async close(options) {
     delete this.item.apps[this.appId];
     delete this.action.apps[this.appId];
-    this.action._sheet = null;
+    if (this.action._sheet === this) this.action._sheet = null;
     return super.close(options);
   }
 }

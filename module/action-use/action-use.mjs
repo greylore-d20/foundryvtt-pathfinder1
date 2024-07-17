@@ -992,6 +992,26 @@ export class ActionUse {
           value: clNotes,
         });
       }
+
+      const school = this.item.system.school;
+      if (school) {
+        // Add DC School notes
+        const dcSchoolNotes = actor.getContextNotesParsed(`dc.school.${school}`);
+        if (dcSchoolNotes.length) {
+          props.push({
+            header: game.i18n.format("PF1.DCSchoolNotes", { school: pf1.config.spellSchools[school] }),
+            value: dcSchoolNotes,
+          });
+        }
+        // Add CL School notes
+        const clSchoolNotes = actor.getContextNotesParsed(`cl.school.${school}`);
+        if (clSchoolNotes.length) {
+          props.push({
+            header: game.i18n.format("PF1.CLSchoolNotes", { school: pf1.config.spellSchools[school] }),
+            value: clSchoolNotes,
+          });
+        }
+      }
     }
 
     // Parse template data

@@ -4048,12 +4048,12 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
-      const spellbookKey = RegExp.$1;
+      const bookId = RegExp.$1;
       for (const noteSource of result) {
         noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
       }
 
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.concentrationNotes;
+      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.concentrationNotes;
       if (spellbookNotes?.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
@@ -4062,12 +4062,12 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (context.match(/^spell\.cl\.([a-z]+)$/)) {
-      const spellbookKey = RegExp.$1;
+      const bookId = RegExp.$1;
       for (const noteSource of result) {
         noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
       }
 
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.clNotes;
+      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.clNotes;
       if (spellbookNotes?.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
@@ -4083,7 +4083,13 @@ export class ActorPF extends ActorBasePF {
       return result;
     }
 
-    return [];
+    // Otherwise return notes if they directly match context
+    const notes = result.filter((n) => n.target == context);
+    for (const note of result) {
+      note.notes = note.notes.filter((o) => o.target === context).map((o) => o.text);
+    }
+
+    return result.filter((n) => n.notes.length);
   }
 
   /**

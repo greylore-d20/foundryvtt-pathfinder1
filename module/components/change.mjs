@@ -180,25 +180,11 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   /** @type {boolean} */
   get isDeferred() {
-    if (
-      [
-        "damage",
-        "wdamage",
-        "rdamage",
-        "mdamage",
-        "ndamage",
-        "sdamage",
-        "mwdamage",
-        "twdamage",
-        "rwdamage",
-        "sdamage",
-        "skills",
-        "unskills",
-      ].includes(this.target)
-    )
-      return true;
+    const targetData = pf1.config.buffTargets[this.target];
+    if (targetData) return targetData.deferred ?? false;
 
-    return /^skill\./.test(this.target) || /Skills$/.test(this.target);
+    // Also any per-skill change is deferred
+    return /^skill\./.test(this.target);
   }
 
   /** @type {boolean} - Does this change refer to a distance? */

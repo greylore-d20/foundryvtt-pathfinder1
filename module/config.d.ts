@@ -36,4 +36,4 @@ type ActorStature = keyof typeof pf1.config.actorStatures;
  *
  * Used e.g. in actors' `system.attributes.currency`.
  */
-type CoinType = "pp" | "gp" | "sp" | "cp";
+type CoinType = keyof typeof pf1.config.currencies;

@@ -901,23 +901,6 @@ export class ItemAction {
       );
     }
 
-    // Get attack bonus
-    getHighestChanges(
-      changes.filter((c) => {
-        c.applyChange(this.actor);
-        return c.operator !== "set";
-      }),
-      { ignoreTarget: true }
-    ).forEach((c) => {
-      let value = c.value;
-      // BAB override
-      if (actionData.bab && c._id === "_bab") {
-        value = RollPF.safeRollSync(c.formula, data).total || 0;
-      }
-      if (value == 0) return;
-      parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
-    });
-
     // Add bonus parts
     parts.push(...extraParts);
     // Add attack bonus
@@ -951,7 +934,30 @@ export class ItemAction {
       critical: this.critRange,
     };
 
-    Hooks.call("pf1PreAttackRoll", this, config, rollData, rollOptions);
+    if (this.ammoType && this.ammoCost > 0) {
+      const misfire = this.misfire;
+      if (misfire > 0) rollOptions.misfire = misfire;
+    }
+
+    // call pre attack hook before changes are filtered and before specific [parts] from config and roll data are created
+    Hooks.call("pf1PreAttackRoll", this, config, rollData, rollOptions, parts, changes);
+
+    // Get attack bonus
+    getHighestChanges(
+      changes.filter((c) => {
+        c.applyChange(this.actor);
+        return c.operator !== "set";
+      }),
+      { ignoreTarget: true }
+    ).forEach((c) => {
+      let value = c.value;
+      // BAB override
+      if (actionData.bab && c._id === "_bab") {
+        value = RollPF.safeRollSync(c.formula, data).total || 0;
+      }
+      if (value == 0) return;
+      parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
+    });
 
     // Convert config to roll part
     if (config.secondaryPenalty != 0) {
@@ -964,11 +970,6 @@ export class ItemAction {
 
     if (!config.proficient) {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.Proficiency.Penalty")}]`);
-    }
-
-    if (this.ammoType && this.ammoCost > 0) {
-      const misfire = this.misfire;
-      if (misfire > 0) rollOptions.misfire = misfire;
     }
 
     const roll = await new pf1.dice.D20RollPF(
@@ -1068,9 +1069,15 @@ export class ItemAction {
       });
     }
 
+    /**
+     * Initialize changes to empty array so mods can still add changes for healing "attacks" via the pre-roll hook below
+     *
+     *  @type {ItemChange[]}
+     */
+    let changes = [];
     if (!this.isHealing) {
       // Gather changes
-      const changes = this.damageSources;
+      changes = this.damageSources;
 
       // Add enhancement bonus to changes
       if (this.enhancementBonus) {
@@ -1086,26 +1093,29 @@ export class ItemAction {
         );
       }
 
-      // Get damage bonus
-      getHighestChanges(
-        changes.filter((c) => {
-          c.applyChange(this.actor);
-          return c.operator !== "set";
-        }),
-        { ignoreTarget: true }
-      ).forEach((c) => {
-        let value = c.value;
-        // Put in parenthesis if there's a chance it is more complex
-        if (/[\s+-?:]/.test(value)) value = `(${value})`;
-        parts[0].extra.push(`${value}[${c.flavor}]`);
-      });
-
       // Add broken penalty
       if (this.item.isBroken) {
         const label = game.i18n.localize("PF1.Broken");
         parts[0].extra.push(`-2[${label}]`);
       }
     }
+
+    // call pre damage hook before changes are filtered and before specific [parts] from roll data are created
+    Hooks.call("pf1PreDamageRoll", this, rollData, parts, changes);
+
+    // Get damage bonus
+    getHighestChanges(
+      changes.filter((c) => {
+        c.applyChange(this.actor);
+        return c.operator !== "set";
+      }),
+      { ignoreTarget: true }
+    ).forEach((c) => {
+      let value = c.value;
+      // Put in parenthesis if there's a chance it is more complex
+      if (/[\s+-?:]/.test(value)) value = `(${value})`;
+      parts[0].extra.push(`${value}[${c.flavor}]`);
+    });
 
     // Determine ability score modifier
     const abl = actionData.ability.damage;

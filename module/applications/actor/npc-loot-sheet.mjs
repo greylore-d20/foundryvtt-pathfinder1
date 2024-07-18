@@ -44,8 +44,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
     const cpSellValue = this.calculateSellItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
 
-    data.totalValue = pf1.utils.currency.split(cpValue);
-    data.sellValue = pf1.utils.currency.split(cpSellValue);
+    data.totalValue = pf1.utils.currency.split(cpValue, { pad: true });
+    data.sellValue = pf1.utils.currency.split(cpSellValue, { pad: true });
 
     // Set labels
     if (!data.labels) data.labels = {};

@@ -241,12 +241,8 @@ export class ActorSheetPF extends ActorSheet {
     // Add inventory value
     {
       const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
-      const totalValue = pf1.utils.currency.split(cpValue);
-      context.labels.totalValue = game.i18n.format("PF1.TotalItemValue", {
-        gp: totalValue.gp,
-        sp: totalValue.sp,
-        cp: totalValue.cp,
-      });
+      const totalValue = pf1.utils.currency.split(cpValue, { pad: true });
+      context.labels.totalValue = game.i18n.format("PF1.TotalItemValue", totalValue);
     }
 
     // Ability Scores

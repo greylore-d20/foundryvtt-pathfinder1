@@ -106,9 +106,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       this.item.getValue({ recursive: false, inLowestDenomination: true }) -
       coinage;
 
-    context.totalValue = pf1.utils.currency.split(cpValue);
-    context.sellValue = pf1.utils.currency.split(cpSellValue);
-    context.currency = pf1.utils.currency.split(coinage);
+    context.totalValue = pf1.utils.currency.split(cpValue, { pad: true });
+    context.sellValue = pf1.utils.currency.split(cpSellValue, { pad: true });
+    context.currency = pf1.utils.currency.split(coinage, { pad: true });
 
     // Set value labels
     context.labels ??= {};

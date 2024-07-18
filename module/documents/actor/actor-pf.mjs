@@ -4475,7 +4475,7 @@ export class ActorPF extends ActorBasePF {
       return;
     }
 
-    const currency = pf1.utils.currency.convert(cp, type);
+    const currency = pf1.utils.currency.convert(cp, type, { pad: true });
 
     return this.update({ system: { [category]: currency } });
   }

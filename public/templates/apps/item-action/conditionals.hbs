@@ -48,7 +48,7 @@
           {{#if (or (eq modifier.target "attack") (eq modifier.target "damage"))}}
           <select class="conditional-critical" name="conditionals.{{a}}.modifiers.{{m}}.critical">
             {{#if target}}
-            {{selectOptions conditionalCritical selected=critical}}
+            {{selectOptions conditionalCritical selected=critical localize=true}}
             {{else}}
             <option value=""></option>
             {{/if}}

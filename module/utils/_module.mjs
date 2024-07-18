@@ -14,6 +14,8 @@ export {
   convertDistanceBack,
   convertWeight,
   convertWeightBack,
+  swapDistance,
+  swapWeight,
   calculateRange,
   createTag,
   diffObjectAndArray,

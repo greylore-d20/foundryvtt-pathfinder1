@@ -200,3 +200,59 @@ Item use button.
 | `#tag:TAG` | Action tag, needs to be part of the item name.  |
 | `#id:ID`   | Action ID, needs to be part of the item name.   |
 | `#name`    | Action name, needs to be part of the item name. |
+
+### `@Weight`
+
+Informational weight conversion and display.
+
+Format: `@Weight[value;options]`
+
+Value parameter can either be a formula, or a number with or without `lbs` or `kg` unit attached.
+
+Default unit is imperial pounds unless otherwise specified.
+
+#### Examples
+
+Examples outputs are with imperial unit system enabled.
+
+| Input                   | Explanation                                                                     | Output           |
+| :---------------------- | :------------------------------------------------------------------------------ | :--------------- |
+| `@Weight[100]`          | Convert and display 100 lbs.                                                    | `100 lbs`        |
+| `@Weight[3 * 5;metric]` | Convert and display result of 3×5, treating the math result to be in kilograms. | `30 lbs`         |
+| `@Weight[30 lbs;dual]`  | Convert and display 30 lbs in both imperial and metric.                         | `30 lbs (15 kg)` |
+
+#### Special Options
+
+| Options    | Description                                |
+| :--------- | :----------------------------------------- |
+| `dual`     | Displays both imperial and metric weights. |
+| `metric`   | Treats provided weight as kilograms.       |
+| `imperial` | Treats provided weight as pounds.          |
+
+### `@Distance`
+
+Informational distance conversion and display.
+
+Format: `@Distance[value;options]`
+
+Value parameter can either be a formula, or a number with `ft` or `m` unit.
+
+Default unit is imperial feet unless otherwise specified.
+
+#### Examples
+
+Examples outputs are with imperial unit system enabled.
+
+| Input                     | Explanation                                                                  | Output        |
+| :------------------------ | :--------------------------------------------------------------------------- | :------------ |
+| `@Distance[100]`          | Convert and display 100 feet.                                                | `100 ft`      |
+| `@Distance[9 * 4;metric]` | Convert and display result of 9×4, treating the math result to be in meters. | `120 ft`      |
+| `@Distance[30 ft;dual]`   | Convert and display 30 feet in both imperial and metric.                     | `30 ft (9 m)` |
+
+#### Special Options
+
+| Options    | Description                                  |
+| :--------- | :------------------------------------------- |
+| `dual`     | Displays both imperial and metric distances. |
+| `metric`   | Treats provided distance as meters.          |
+| `imperial` | Treats provided distance as feet.            |

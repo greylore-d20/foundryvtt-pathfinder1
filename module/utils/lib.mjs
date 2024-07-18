@@ -139,6 +139,56 @@ export const convertDistanceBack = function (value, type = "ft") {
 };
 
 /**
+ * Convert feet or meters distance to the opposite regardless of what configuration is used.
+ *
+ * @example
+ * ```js
+ * pf1.utils.swapDistance(30, "ft"); // => 9
+ * pf1.utils.swapDistance(9, "m"); // => 30
+ * ```
+ * @param {number} value - Feet or meters
+ * @param {"ft"|"m"} type - Type the value is in
+ * @throws {Error} - On invalid parameters.
+ * @returns {number} - Feet or meters, opposite of what set type was
+ */
+export function swapDistance(value, type) {
+  if (!Number.isFinite(value)) throw new Error("value parameter must be a number");
+  switch (type) {
+    case "ft":
+      return Math.round(((value * 100) / 5) * 1.5) / 100; // to meters
+    case "m":
+      return Math.round(((value * 100) / 1.5) * 5) / 100; // to feet
+    default:
+      throw new Error("type parameter must be defined");
+  }
+}
+
+/**
+ * Convert pounds or kilograms weight to the opposite regardless of what configuration is used.
+ *
+ * @example
+ * ```js
+ * pf1.utils.swapWeight(5, "kg"); // => 10
+ * pf1.utils.swapWeight(10, "lbs"); // => 5
+ * ```
+ * @param {number} value - Pounds or kilos
+ * @param {"kg"|"lbs"} type - Type the value is in
+ * @throws {Error} - On invalid parameters.
+ * @returns {number} - Pounds or kilos, opposite of what set type was
+ */
+export function swapWeight(value, type) {
+  if (!Number.isFinite(value)) throw new Error("value parameter must be a number");
+  switch (type) {
+    case "kg":
+      return value * 2; // to lbs
+    case "lbs":
+      return value / 2; // to kg
+    default:
+      throw new Error("type parameter must be defined");
+  }
+}
+
+/**
  * Calculate overland speed per hour
  *
  * @see {@link https://www.aonprd.com/Rules.aspx?Name=Movement&Category=Exploration Exploration Movement rules}

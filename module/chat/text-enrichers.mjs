@@ -93,12 +93,12 @@ export class PF1TextEnricher {
    */
   constructor(id, pattern, enricher, { click, drag } = {}) {
     if (!(pattern instanceof RegExp)) throw new Error("TextEnricher pattern must be a regular expression");
-    if (!pattern.global) throw new Error("TextEnricher pattern must be global and multiline");
+    if (!pattern.global) throw new Error("TextEnricher pattern must be global");
     this.id = id;
     this.pattern = pattern;
     this.enricher = enricher.bind(this);
-    this.click = click;
-    this.drag = drag;
+    if (click) this.click = click;
+    if (drag) this.drag = drag;
   }
 }
 
@@ -156,7 +156,8 @@ function parseDuration(duration) {
  */
 export function createElement({ label, icon, click = false, drag = false, handler, options, broken = false } = {}) {
   const a = document.createElement("a");
-  a.classList.add("pf1-link");
+  if (click || drag) a.classList.add("pf1-link");
+  else a.classList.add("pf1-info");
   if (click) a.classList.add("button");
   if (drag) {
     a.classList.add("content");
@@ -780,6 +781,94 @@ export const enrichers = [
       click: onBrowse,
     }
   ),
+  // Weight
+  new PF1TextEnricher("weight", /@Weight\[(?<formula>.+?)(?:;(?<options>.*?))?\]/g, (match, rollData) => {
+    const { formula, options } = match.groups;
+
+    const a = createElement({ options });
+
+    const isDual = !!a.dataset.dual;
+
+    const re = /^(?<value>.+?)\s*(?<unit>lbs|kg)?$/.exec(formula);
+    const { value, unit } = re?.groups ?? {};
+    if (unit === "kg") {
+      a.dataset.metric = "true";
+      delete a.dataset.imperial;
+    } else if (unit === "lbs") {
+      a.dataset.imperial = "true";
+      delete a.dataset.metric;
+    }
+
+    const sourceMetric = !!a.dataset.metric;
+    const sourceImperial = !sourceMetric;
+
+    const total = RollPF.safeRollSync(value || "0", rollData).total;
+
+    let lbs = total,
+      kg = total;
+
+    if (sourceImperial) kg = pf1.utils.swapWeight(total, "lbs");
+    if (sourceMetric) lbs = pf1.utils.swapWeight(total, "kg");
+
+    const kgl = `${pf1.utils.limitPrecision(kg, 3)} ${game.i18n.localize("PF1.Kgs")}`;
+    const lbsl = `${pf1.utils.limitPrecision(lbs, 3)} ${game.i18n.localize("PF1.Lbs")}`;
+
+    const isMetric = pf1.utils.getWeightSystem() == "metric";
+
+    let label;
+    if (isDual) label = `${lbsl} (${kgl})`;
+    else if (isMetric) label = kgl;
+    else label = lbsl;
+
+    a.textContent = label;
+
+    return a;
+  }),
+  // Distance
+  new PF1TextEnricher("distance", /@Distance\[(?<formula>.+?)(?:;(?<options>.*?))?\]/g, (match, rollData) => {
+    const { formula, options } = match.groups;
+
+    const a = createElement({ options });
+
+    const isDual = !!a.dataset.dual;
+
+    const re = /^(?<value>.+?)\s*(?<unit>ft|m)?$/.exec(formula);
+    const { value, unit } = re?.groups ?? {};
+    if (unit === "m") {
+      a.dataset.metric = "true";
+      delete a.dataset.imperial;
+    } else if (unit === "ft") {
+      a.dataset.imperial = "true";
+      delete a.dataset.metric;
+    }
+
+    const sourceMetric = !!a.dataset.metric;
+    const sourceImperial = !sourceMetric;
+
+    const total = RollPF.safeRollSync(value || "0", rollData).total;
+    console.log(value);
+    let ft = total,
+      m = total;
+
+    if (sourceImperial) m = pf1.utils.swapDistance(total, "ft");
+    if (sourceMetric) ft = pf1.utils.swapDistance(total, "m");
+
+    const ml = `${pf1.utils.limitPrecision(m, 3)} ${pf1.config.measureUnitsShort.m}`;
+    const ftl = `${pf1.utils.limitPrecision(ft, 3)} ${pf1.config.measureUnitsShort.ft}`;
+
+    const isMetric = pf1.utils.getDistanceSystem() == "metric";
+
+    let label;
+    if (isDual) label = `${ftl} (${ml})`;
+    else if (isMetric) label = ml;
+    else label = ftl;
+
+    a.textContent = label;
+
+    a.dataset.tooltip = formula;
+
+    return a;
+  }),
   // @Condition
   new PF1TextEnricher(
     "condition",

@@ -344,7 +344,7 @@ export function onSkill(event, target) {
 export function onUse(event, target) {
   // Add additional options
   const options = {};
-  const { type, item: itemName, action: actionData, speaker } = target.dataset;
+  const { type, item: itemName, action: actionIdent, speaker } = target.dataset;
   if (!itemName) throw new Error("No item name defined");
 
   const actors = getRelevantActors(target);
@@ -363,13 +363,14 @@ export function onUse(event, target) {
     }
 
     let itemAction = item.defaultAction;
-    if (actionData) {
-      const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionData);
+    if (actionIdent) {
+      const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionIdent);
       const { actionTag, actionId } = re?.groups ?? {};
+      const actionName = !actionTag && !actionId ? actionIdent : null;
       itemAction = item.actions.find((act) => {
-        if (act.id === actionId) return true;
-        if (act.data.tag === actionTag) return true;
-        return act.name.localeCompare(actionData, undefined, { usage: "search" }) == 0;
+        if (actionId) return act.id === actionId;
+        if (actionTag) return act.data.tag === actionTag;
+        return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
       });
     }
 
@@ -391,7 +392,7 @@ export function onUse(event, target) {
 export function onAction(event, target) {
   // Add additional options
   const options = {};
-  const { action: actionData } = target.dataset;
+  const { action: actionIdent } = target.dataset;
 
   const msgId = target.closest(".chat-message[data-message-id]")?.dataset.messageId;
   const msg = game.messages.get(msgId);
@@ -405,13 +406,14 @@ export function onAction(event, target) {
 
   const actor = item.actor;
 
-  const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionData);
+  const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionIdent);
   const { actionTag, actionId } = re?.groups ?? {};
+  const actionName = !actionTag && !actionId ? actionIdent : null;
 
   const action = item.actions.find((act) => {
-    if (act.id === actionId) return true;
-    if (act.data.tag === actionTag) return true;
-    return act.name.localeCompare(actionData, undefined, { usage: "search" }) == 0;
+    if (actionId) return act.id === actionId;
+    if (actionTag) return act.data.tag === actionTag;
+    return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
   });
 
   if (!action) {
@@ -667,12 +669,13 @@ export const enrichers = [
     (match, _options) => {
       const { item, action, label, options } = match.groups;
       const a = createElement({ label, click: true, handler: "use", options });
-      a.append(item);
-      a.dataset.item = item;
+      a.append(item?.trim());
+      a.dataset.item = item?.trim();
       if (action) {
-        const displayAction = action.replace(/^(id|tag):\s*/, "");
+        const displayAction = action.replace(/^(id|tag):\s*/, "")?.trim();
+        // TODO: pretty print action name if speaker option is enabled
         a.append(` (${displayAction})`);
-        a.dataset.actionId = action;
+        a.dataset.action = action?.trim();
       }
 
       generateTooltip(a);
@@ -687,13 +690,14 @@ export const enrichers = [
   // @Action
   new PF1TextEnricher(
     "action",
-    /@Action\[(?<action>.[\w\d\s]+)(?:;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
+    /@Action\[(?<action>.*?)(?:;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
     (match, _options) => {
       const { action, label, options } = match.groups;
       const a = createElement({ label, click: true, handler: "action", options });
+      // TODO: Pretty print the action name, especially if speaker option is enabled
       a.append(action);
       a.dataset.speaker = true;
-      a.dataset.action = action;
+      a.dataset.action = action?.trim();
 
       generateTooltip(a);
       setIcon(a, "fa-solid fa-trowel");

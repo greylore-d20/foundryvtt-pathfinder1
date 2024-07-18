@@ -3053,43 +3053,34 @@ const _migrateItemFlags = (itemData, updateData) => {
 };
 
 const _migrateItemMaterials = (itemData, updateData) => {
-  const tg = "throneglass";
+  for (const materialPath of ["material", "armor.material"]) {
+    const material = foundry.utils.getProperty(itemData.system, materialPath);
+    if (!material) continue;
 
-  // Convert incorrect material addon data
-  // Weapon
-  if (itemData.system.material?.addon) {
-    let addon = itemData.system.material.addon;
-    if (!Array.isArray(addon)) {
-      updateData["system.material.addon"] = Object.entries(addon)
-        .filter(([_, chosen]) => chosen)
-        .map(([key]) => key);
-      addon = updateData["system.material.addon"];
-    }
-    // Convert Throneglass into main material
-    // Since PF1 v10.3
-    if (addon.includes(tg)) {
-      updateData["system.material.addon"] = addon.filter((ma) => ma !== tg);
-      if (!itemData.system.material?.normal?.value) {
-        updateData["system.material.normal.value"] = tg;
+    // Convert incorrect material addon data
+    const tg = "throneglass";
+    // Weapon
+    if (material?.addon) {
+      let addon = material.addon;
+      if (!Array.isArray(addon)) {
+        updateData[`system.${material}.addon`] = Object.entries(addon)
+          .filter(([_, chosen]) => chosen)
+          .map(([key]) => key);
+        addon = updateData[`system.${materialPath}.addon`];
+      }
+      // Convert Throneglass into main material
+      // Since PF1 v10.3
+      if (addon.includes(tg)) {
+        updateData[`system.${materialPath}.addon`] = addon.filter((ma) => ma !== tg);
+        if (!itemData.system.material?.normal?.value) {
+          updateData[`system.${materialPath}.normal.value`] = tg;
+        }
       }
     }
-  }
-  // Armor
-  if (itemData.system.armor?.material?.addon) {
-    let addon = itemData.system.armor?.material?.addon;
-    if (!Array.isArray(addon)) {
-      updateData["system.armor.material.addon"] = Object.entries(addon)
-        .filter(([_, chosen]) => chosen)
-        .map(([key]) => key);
-      addon = updateData["system.armor.material.addon"];
-    }
-    // Convert Throneglass into main material
-    // Since PF1 v10.3
-    if (addon.includes(tg)) {
-      updateData["system.armor.material.addon"] = addon.filter((ma) => ma !== tg);
-      if (!itemData.system.armor?.material?.normal?.value) {
-        updateData["system.armor.material.normal.value"] = tg;
-      }
+
+    // Since PF1 v10.5
+    if (material.normal?.value === "nexavarianSteel") {
+      updateData[`system.${materialPath}.normal.value`] = "nexavaranSteel";
     }
   }
 };

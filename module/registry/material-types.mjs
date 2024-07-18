@@ -681,8 +681,8 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "nexavarianSteel",
-      name: "PF1.Materials.Types.NexavarianSteel",
+      _id: "nexavaranSteel",
+      name: "PF1.Materials.Types.NexavaranSteel",
       dr: true,
       treatedAs: "coldiron",
       price: {

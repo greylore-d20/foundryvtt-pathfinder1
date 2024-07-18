@@ -91,8 +91,8 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
     const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
     const cpSellValue = this.calculateSellItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
 
-    context.totalValue = pf1.utils.currency.split(cpValue);
-    context.sellValue = pf1.utils.currency.split(cpSellValue);
+    context.totalValue = pf1.utils.currency.split(cpValue, { pad: true });
+    context.sellValue = pf1.utils.currency.split(cpSellValue, { pad: true });
     context.labels.totalValue = game.i18n.format("PF1.Containers.TotalValue", context.totalValue);
     context.labels.sellValue = game.i18n.format("PF1.Containers.SellValue", context.sellValue);
 

@@ -359,7 +359,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
   convertCurrency(type = "pp") {
     const cp = this.getTotalCurrency({ inLowestDenomination: true });
 
-    const currency = pf1.utils.currency.convert(cp, type);
+    const currency = pf1.utils.currency.convert(cp, type, { pad: true });
 
     return this.update({ system: { currency } });
   }
@@ -400,7 +400,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     const cpValue =
       this.getValue({ sellValue: 1, recursive: true, inLowestDenomination: true }) -
       this.getValue({ sellValue: 1, recursive: false, inLowestDenomination: true });
-    const totalValue = pf1.utils.currency.split(cpValue);
+    const totalValue = pf1.utils.currency.split(cpValue, { pad: true });
     const value =
       game.i18n.localize("PF1.Containers.Contents.Value") + ": " + game.i18n.format("PF1.SplitValue", totalValue);
     context.properties.push(value);

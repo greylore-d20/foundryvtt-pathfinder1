@@ -1078,6 +1078,30 @@ export const currencies = {
 };
 
 /**
+ * Currency
+ */
+export const currency = /** @type {const} */ ({
+  /**
+   * Conversion rates in relation to {@link currencyBase base currency}.
+   */
+  rate: {
+    pp: 1_000,
+    gp: 100,
+    sp: 10,
+  },
+
+  /**
+   * Standard currency. Most things are valued in this unit.
+   */
+  standard: "gp",
+
+  /**
+   * Baseline currency.
+   */
+  base: "cp",
+});
+
+/**
  * Resultant armor types for an actor's worn armor as per their roll data
  *
  * @see {@link ActorPF.getRollData ActorRollData.armor.type}

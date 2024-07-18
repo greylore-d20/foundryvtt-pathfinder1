@@ -816,8 +816,10 @@ export const enrichers = [
     const isMetric = pf1.utils.getWeightSystem() == "metric";
 
     let label;
-    if (isDual) label = `${lbsl} (${kgl})`;
-    else if (isMetric) label = kgl;
+    if (isDual) {
+      if (isMetric) label = `${kgl} (${lbsl})`;
+      else label = `${lbsl} (${kgl})`;
+    } else if (isMetric) label = kgl;
     else label = lbsl;
 
     a.textContent = label;
@@ -859,8 +861,10 @@ export const enrichers = [
     const isMetric = pf1.utils.getDistanceSystem() == "metric";
 
     let label;
-    if (isDual) label = `${ftl} (${ml})`;
-    else if (isMetric) label = ml;
+    if (isDual) {
+      if (isMetric) label = `${ml} (${ftl})`;
+      else label = `${ftl} (${ml})`;
+    } else if (isMetric) label = ml;
     else label = ftl;
 
     a.textContent = label;

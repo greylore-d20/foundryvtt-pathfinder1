@@ -127,7 +127,7 @@ export class TooltipConfig extends FormApplication {
 
   async _onReset(event) {
     event.preventDefault();
-    await game.settings.set("pf1", "tooltipConfig", this.constructor.defaultSettings);
+    await game.settings.set("pf1", "tooltipConfig", {});
     this._cachedData = null;
     ui.notifications.info(game.i18n.localize("PF1.SETTINGS.TokenTooltip.ResetInfo"));
     return this.render();

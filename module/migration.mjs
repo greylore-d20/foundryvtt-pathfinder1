@@ -497,14 +497,7 @@ export async function migrateCompendium(pack, { unlock = false, noHooks = false 
 /**
  * Migrates world settings.
  */
-async function _migrateWorldSettings() {
-  const tooltipWorldConfig = game.settings.get("pf1", "tooltipWorldConfig");
-  if (tooltipWorldConfig.hideActorName !== undefined) {
-    // 1 (All) for true, -2 (None) for false
-    tooltipWorldConfig.hideActorNameByDisposition == tooltipWorldConfig.hideActorName ? 1 : -2;
-    game.settings.set("pf1", "tooltipWorldConfig", tooltipWorldConfig);
-  }
-}
+async function _migrateWorldSettings() {}
 
 /* -------------------------------------------- */
 /*  Document Type Migration Helpers               */

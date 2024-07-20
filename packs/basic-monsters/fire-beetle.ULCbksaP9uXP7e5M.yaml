@@ -1,0 +1,210 @@
+_id: ULCbksaP9uXP7e5M
+_key: '!actors!ULCbksaP9uXP7e5M'
+img: systems/pf1/icons/skills/fire_01.jpg
+items:
+  - _id: NDsOpKu3vouOU59k
+    _key: '!actors.items!ULCbksaP9uXP7e5M.NDsOpKu3vouOU59k'
+    flags:
+      core:
+        sourceId: Compendium.pf1.racialhd.Item.g3gX00gTvJU478ju
+    img: systems/pf1/icons/skills/green_05.jpg
+    name: Vermin
+    system:
+      bab: med
+      description:
+        value: >-
+          <p>This type includes insects, arachnids, other arthropods, worms, and
+          similar invertebrates.</p>
+
+          <h2>Features</h2>
+
+          <p>Vermin have the following features.</p>
+
+          <ul>
+
+          <li>d8 Hit Die.</li>
+
+          <li>Base attack bonus equal to 3/4 total Hit Dice (medium
+          progression).</li>
+
+          <li>Good <em>Fortitude</em> saves.</li>
+
+          <li>Skill points equal to 2 + Int modifier (minimum 1) per Hit Die.
+          Most vermin, however, are mindless and gain no skill points or feats.
+          Vermin have no class skills.</li>
+
+          </ul>
+
+          <h2>Traits</h2>
+
+          <p>Vermin possess the following traits (unless otherwise noted in a
+          creature’s entry).</p>
+
+          <ul>
+
+          <li>Mindless: No <em>Intelligence</em> score, and immunity to all
+          mind-affecting effects (charms, compulsions, morale effects, patterns,
+          and phantasms). A vermin-like creature with an <em>Intelligence</em>
+          score is usually either an animal or a magical beast, depending on its
+          other abilities.</li>
+
+          <li><em>Darkvision</em> 60 feet.</li>
+
+          <li>Proficient with its natural weapons only.</li>
+
+          <li>Proficient with no armor.</li>
+
+          <li>Vermin breathe, eat, and sleep.</li>
+
+          </ul>
+      hp: 4
+      savingThrows:
+        fort:
+          value: high
+      skillsPerLevel: 2
+      subType: racial
+      tag: vermin
+    type: class
+  - _id: ch1Ye5qIAv8KvW0M
+    _key: '!actors.items!ULCbksaP9uXP7e5M.ch1Ye5qIAv8KvW0M'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.szjeStouwI3F3WdP
+    img: systems/pf1/icons/skills/red_29.jpg
+    name: Bite
+    system:
+      actions:
+        - _id: jxtofrfc2lcw0osl
+          ability:
+            attack: str
+            damage: str
+            damageMult: 1
+          actionType: mwak
+          activation:
+            type: attack
+            unchained:
+              type: attack
+          damage:
+            parts:
+              - formula: sizeRoll(1, 6, @size)
+                type:
+                  custom: ''
+                  values:
+                    - piercing
+                    - bludgeoning
+                    - slashing
+          img: systems/pf1/icons/skills/red_29.jpg
+          name: Attack
+          range:
+            units: melee
+            value: 'null'
+          tag: bite
+      baseTypes:
+        - Bite
+      description:
+        value: >-
+          <p>A primary natural weapon that crushes, tears and tears with teeth
+          and jaws.</p><p>It deals bludgeoning, slashing or piercing damage,
+          whichever is most beneficial one.</p><hr /><p>For general rules on
+          natural attacks, see:
+          @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
+          Attacks} (UMR).</p>
+      proficient: true
+      subType: natural
+      weaponGroups:
+        value:
+          - natural
+    type: attack
+  - _id: qahEsoY1PKsoWPPX
+    _key: '!actors.items!ULCbksaP9uXP7e5M.qahEsoY1PKsoWPPX'
+    img: systems/pf1/icons/spells/light-sky-3.jpg
+    name: Luminescence
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>A fire beetle's glowing glands provide light in a 10-foot radius. A
+          dead fire beetle’s luminescent glands continue to glow for 1d6 days
+          after its death.</p>
+      sources:
+        - id: PZO1112
+          pages: '33'
+      subType: misc
+      uses:
+        maxFormula: '1'
+        value: 1
+    type: feat
+  - _id: p6CcTmUYKQ9l0ozO
+    _key: '!actors.items!ULCbksaP9uXP7e5M.p6CcTmUYKQ9l0ozO'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.qe671ZP4ZsO5cbrt
+    img: icons/creatures/eyes/humanoid-single-yellow.webp
+    name: Low-Light Vision
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>A creature with low-light vision can see twice as far as a human in
+          starlight, moonlight, torchlight, and similar conditions of dim light.
+          It retains the ability to distinguish color and detail under these
+          conditions.</p><p><em>Format:</em> low-light
+          vision</p><p><em>Location:</em> Senses.</p>
+      sources:
+        - id: PZO1112
+          pages: '301'
+        - id: PZO1127
+          pages: '296'
+        - id: PZO1133
+          pages: '295'
+        - id: PZO1137
+          pages: '295'
+      subType: misc
+    type: feat
+name: Fire Beetle
+prototypeToken:
+  light:
+    color: '#f57900'
+    dim: 10
+  sight:
+    enabled: true
+  texture:
+    src: systems/pf1/icons/skills/fire_01.jpg
+system:
+  abilities:
+    cha:
+      value: 7
+    con:
+      value: 11
+    dex:
+      value: 11
+    int:
+      value: null
+  attributes:
+    cmdNotes: 17 vs. trip
+    naturalAC: 1
+    quadruped: true
+    speed:
+      fly:
+        base: 30
+        maneuverability: poor
+  details:
+    biography:
+      value: >-
+        <p>Although nocturnal, the fire beetle lacks darkvision—it relies on its
+        own glowing glands for illumination. Caged fire beetles are a popular
+        source of long-lasting illumination among eccentrics and miners.</p>
+    cr:
+      base: 0.3375
+    notes:
+      value: <p><strong>Source</strong> <em>Pathfinder RPG Bestiary pg. 33</em></p>
+  traits:
+    ci:
+      value:
+        - mindAffecting
+    senses:
+      ll:
+        enabled: true
+    size: sm
+type: npc
+

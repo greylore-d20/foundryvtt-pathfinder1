@@ -4,6 +4,31 @@ img: systems/pf1/icons/items/potions/unique-7.jpg
 name: Mutagen
 system:
   abilityType: su
+  actions:
+    - _id: P9tmWMNjLZV9UqGN
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: minute
+        value: 10 * @class.level
+      name: Consume
+      range:
+        units: personal
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Fortitude negates
+        type: fort
+    - _id: IKt8O7nVpiqd9TRD
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      name: Brew
+      uses:
+        autoDeductChargesCost: '-1'
   associations:
     classes:
       - Alchemist
@@ -38,5 +63,9 @@ system:
     - id: PZO1115
       pages: '28'
   subType: classFeat
+  uses:
+    maxFormula: '1'
+    per: charges
+    value: 1
 type: feat
 

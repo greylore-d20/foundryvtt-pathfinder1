@@ -1,0 +1,306 @@
+_id: Mqwr6WSbeY662Qvb
+_key: '!actors!Mqwr6WSbeY662Qvb'
+img: systems/pf1/icons/skills/red_19.jpg
+items:
+  - _id: OZQZFUH5KJpfRkye
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.OZQZFUH5KJpfRkye'
+    flags:
+      core:
+        sourceId: Compendium.pf1.racialhd.Item.AjUleVwKSsSaDI4N
+    img: systems/pf1/icons/skills/green_13.jpg
+    name: Magical Beast
+    system:
+      bab: high
+      classSkills:
+        acr: true
+        clm: true
+        fly: true
+        per: true
+        ste: true
+        swm: true
+      description:
+        value: >-
+          <p>Magical beasts are similar to animals but can have
+          <em>Intelligence</em> scores higher than 2 (in which case the magical
+          beast knows at least one language, but can’t necessarily speak).
+          Magical beasts usually have supernatural or extraordinary abilities,
+          but are sometimes merely bizarre in appearance or habits.</p>
+
+          <h2>Features</h2>
+
+          <p>A magical beast has the following features.</p>
+
+          <ul>
+
+          <li>d10 Hit Die.</li>
+
+          <li>Base attack bonus equal to total Hit Dice (fast progression).</li>
+
+          <li>Good <em>Fortitude</em> and <em>Reflex</em> saves.</li>
+
+          <li>Skill points equal to 2 + Int modifier (minimum 1) per Hit Die.
+          The following are class skills for magical beasts:
+          <em>Acrobatics</em>, <em>Climb</em>, <em>Fly</em>,
+          <em>Perception</em>, <em>Stealth</em>, <em>Swim</em>.</li>
+
+          </ul>
+
+          <h2>Traits</h2>
+
+          <p>A magical beast possesses the following traits (unless otherwise
+          noted in a creature’s entry).</p>
+
+          <ul>
+
+          <li><em>Darkvision</em> 60 feet.</li>
+
+          <li><em>Low-light vision</em>.</li>
+
+          <li>Proficient with its natural weapons only.</li>
+
+          <li>Proficient with no armor.</li>
+
+          <li>Magical beasts breathe, eat, and sleep.</li>
+
+          </ul>
+      hd: 10
+      hp: 5
+      savingThrows:
+        fort:
+          value: high
+        ref:
+          value: high
+      skillsPerLevel: 2
+      subType: racial
+      tag: magicalBeast
+    type: class
+  - _id: NBzvKVdAYFUQsZNF
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.NBzvKVdAYFUQsZNF'
+    flags:
+      core:
+        sourceId: Compendium.pf1.feats.Item.vWiTqHC4Y3Xn1Pme
+    img: systems/pf1/icons/feats/weapon-finesse.jpg
+    name: Weapon Finesse
+    system:
+      description:
+        value: >-
+          <i>You are trained in using your agility in melee combat, as opposed
+          to brute strength.</i><p><strong>Benefits</strong>: With a light
+          weapon, rapier, whip, or spiked chain made for a creature of your size
+          category, you may use your Dexterity modifier instead of your Strength
+          modifier on attack rolls. If you carry a shield, its armor check
+          penalty applies to your attack rolls.</p><p><strong>Special</strong>:
+          Natural weapons are considered light weapons.</p>
+      sources:
+        - id: PZO1110
+          pages: 117, 136
+      tags:
+        - Combat
+        - Weapon
+    type: feat
+  - _id: fFyyUAIuU5ISR4Px
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.fFyyUAIuU5ISR4Px'
+    img: systems/pf1/icons/skills/blood_05.jpg
+    name: Touch
+    system:
+      actions:
+        - _id: UBemTuAhYInP1vCg
+          ability:
+            attack: dex
+          actionType: mwak
+          activation:
+            type: nonaction
+            unchained:
+              type: nonaction
+          ammo:
+            type: ''
+          effectNotes:
+            - Attach
+          name: Attack
+          touch: true
+      subType: natural
+    type: attack
+  - _id: UwmDYgwda6BGsH7B
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.UwmDYgwda6BGsH7B'
+    img: systems/pf1/icons/skills/blood_07.jpg
+    name: Attach
+    system:
+      abilityType: ex
+      contextNotes:
+        - target: cmb
+          text: +8 racial bonus to maintain grapple.
+      description:
+        value: >-
+          <p>When a stirge hits with a touch attack, its barbed legs latch onto
+          the target, anchoring it in place. An attached stirge is effectively
+          grappling its prey. The stirge loses its Dexterity bonus to AC and has
+          an AC of 12, but holds on with great tenacity and inserts its
+          proboscis into the grappled target’s flesh. A stirge has a +8 racial
+          bonus to maintain its grapple on a foe once it is attached. An
+          attached stirge can be struck with a weapon or grappled itself—if its
+          prey manages to win a grapple check or Escape Artist check against it,
+          the stirge is removed.</p>
+      sources:
+        - id: PZO1112
+          pages: '260'
+      subType: misc
+    type: feat
+  - _id: Cw10hlnmvejJz6mQ
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.Cw10hlnmvejJz6mQ'
+    img: systems/pf1/icons/skills/blood_09.jpg
+    name: Blood Drain
+    system:
+      abilityType: ex
+      actions:
+        - _id: DUaMTTqeScAK1qba
+          activation:
+            type: nonaction
+            unchained:
+              type: nonaction
+          effectNotes:
+            - 1 point of Constitution damage.
+          name: Use
+      attackNotes:
+        - plus diseased
+      description:
+        value: >-
+          <p>A stirge drains blood at the end of its turn if it is attached to a
+          foe, inflicting 1 point of Constitution damage. Once a stirge has
+          dealt 4 points of Constitution damage, it detaches and flies off to
+          digest the meal. If its victim dies before the stirge's appetite has
+          been sated, the stirge detaches and seeks a new target.</p>
+      showInQuickbar: true
+      sources:
+        - id: PZO1112
+          pages: '260'
+      subType: misc
+    type: feat
+  - _id: ssjENYwvDD4kZ14H
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.ssjENYwvDD4kZ14H'
+    img: systems/pf1/icons/skills/affliction_01.jpg
+    name: Diseased
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>Due to the stagnant swamps in which they live and their contact
+          with the blood of numerous creatures, stirges are harbingers of
+          disease. Any creature subjected to a stirge's blood drain attack has a
+          10% chance of being exposed to filth fever, blinding sickness, or a
+          similar disease. Once this check is made, the victim can no longer be
+          infected by this particular stirge, though attacks by different
+          stirges are resolved normally and may result in multiple
+          illnesses.</p>
+      sources:
+        - id: PZO1112
+          pages: '260'
+      subType: misc
+    type: feat
+  - _id: y5pemrdnq7YuNwAE
+    _key: '!actors.items!Mqwr6WSbeY662Qvb.y5pemrdnq7YuNwAE'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.ePCw9eVAidI9uc5I
+    img: icons/creatures/eyes/lizard-single-slit-pink.webp
+    name: Scent
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>This special sense allows a creature to detect approaching enemies,
+          sniff out hidden foes, and track by sense of smell. Creatures with the
+          scent ability can identify familiar odors just as humans do familiar
+          sights.</p><p>The creature can detect opponents within 30 feet by
+          sense of smell. If the opponent is upwind, the range increases to 60
+          feet; if downwind, it drops to 15 feet. Strong scents, such as smoke
+          or rotting garbage, can be detected at twice the ranges noted above.
+          Overpowering scents, such as skunk musk or troglodyte stench, can be
+          detected at triple the normal range.</p><p>When a creature detects a
+          scent, the exact location of the source is not revealed—only its
+          presence somewhere within range. The creature can take a move action
+          to note the direction of the scent. When the creature is within 5 feet
+          of the source, it pinpoints the source’s location.</p><p>A creature
+          with the scent ability can follow tracks by smell, attempting a Wisdom
+          or Survival check to find or follow a track. The typical DC for a
+          fresh trail is 10 (no matter what kind of surface holds the scent).
+          This DC increases or decreases depending on how strong the quarry’s
+          odor is, the number of creatures, and the age of the trail. For each
+          hour that the trail is cold, the DC increases by 2. Creatures tracking
+          by scent ignore the effects of surface conditions and poor visibility.
+          The ability otherwise follows the rules for the Survival
+          skill.</p><p><em>Format:</em> scent</p><p><em>Location:</em>
+          Senses.</p>
+      sources:
+        - id: PZO1112
+          pages: '304'
+        - id: PZO1116
+          pages: '301'
+        - id: PZO1120
+          pages: '299'
+        - id: PZO1127
+          pages: '299'
+        - id: PZO1133
+          pages: '298'
+        - id: PZO1137
+          pages: '298'
+      subType: misc
+    type: feat
+name: Stirge
+prototypeToken:
+  sight:
+    enabled: true
+  texture:
+    src: systems/pf1/icons/skills/red_19.jpg
+system:
+  abilities:
+    cha:
+      value: 6
+    dex:
+      value: 19
+    int:
+      value: 1
+    str:
+      value: 3
+    wis:
+      value: 12
+  attributes:
+    cmdNotes: 17 vs. trip
+    speed:
+      fly:
+        base: 40
+      land:
+        base: 10
+  details:
+    biography:
+      value: >-
+        <p>Stirges are vicious, blood-drinking swamp pests that prey on wild
+        animals, livestock, and unwary travelers. While weak individually,
+        swarms of the creatures are capable of draining a man dry in minutes,
+        leaving only a desiccated husk in their wake.</p><p>Closer to mammals
+        than insects, stirges carry their bodies through the air on four fleshy
+        wings, searching out warm-blooded prey. They are fond of hiding near
+        watering holes and waiting for travelers to drop their guard, then
+        swooping out to attach and drink their fill by thrusting their long
+        feeding tubes into unprotected veins. After feeding they flap heavily
+        off into the mud and reeds to lay their eggs and rest until hunger
+        drives them to hunt again.</p><p>Stirges are usually 1 foot long, with a
+        wingspan of twice that, and weigh just under a pound. Their coloration
+        is rust-red or reddish-brown with a dirty yellow underbelly, though
+        stirges that have not fed in some time are often pale pink, their color
+        deepening as they gorge.</p>
+    cr:
+      base: 0.5
+    notes:
+      value: <p><strong>Source</strong> <em>Pathfinder RPG Bestiary pg. 260</em></p>
+  skills:
+    ste:
+      rank: 1
+  traits:
+    senses:
+      dv: 60
+      ll:
+        enabled: true
+      sc: 30
+    size: tiny
+type: npc
+

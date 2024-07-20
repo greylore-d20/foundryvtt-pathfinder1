@@ -29,6 +29,11 @@
   "styles": ["pf1.css"],
   "packFolders": [
     {
+      "name": "Actors",
+      "packs": ["basic-monsters"],
+      "color": "#CE5C00"
+    },
+    {
       "name": "Equipment",
       "packs": ["weapons-and-ammo", "armors-and-shields", "items", "technology"],
       "color": "#777777"
@@ -65,6 +70,14 @@
     }
   ],
   "packs": [
+    {
+      "name": "basic-monsters",
+      "label": "Basic Monsters",
+      "type": "Actor",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
     {
       "name": "classes",
       "label": "Classes",

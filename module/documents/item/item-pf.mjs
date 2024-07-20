@@ -1409,6 +1409,9 @@ export class ItemPF extends ItemBasePF {
     options = {},
   } = {}) {
     rollMode ||= game.settings.get("core", "rollMode");
+    token ||= this.actor?.token ?? this.actor?.getActiveTokens({ document: true, linked: true })[0];
+
+    if (ev?.originalEvent) ev = ev.originalEvent;
 
     if (cost !== null && !Number.isSafeInteger(cost)) throw new Error(`Invalid value for cost override: ${cost}`);
 
@@ -1427,12 +1430,44 @@ export class ItemPF extends ItemBasePF {
       else if (options.held === "offhand") options.held = "oh";
     }
 
+    // Prepare variables
+    /** @type {SharedActionData} */
+    const shared = {
+      event: ev,
+      action: null,
+      item: null,
+      token: null,
+      rollData: {},
+      skipDialog,
+      chatMessage,
+      dice,
+      cost,
+      fullAttack: true,
+      useOptions: options,
+      attackBonus: [],
+      damageBonus: [],
+      attacks: [],
+      chatAttacks: [],
+      rollMode,
+      useMeasureTemplate: false,
+      conditionals: null,
+      conditionalPartsCommon: {},
+      casterLevelCheck: false, // TODO: Move to use-options
+      concentrationCheck: false, // TODO: Move to use-options
+      scriptData: {},
+    };
+
+    // Prevent reassigning the ActionUse's item and token
+    Object.defineProperties(shared, {
+      item: { value: this, writable: false, enumerable: true },
+      token: { value: token, writable: false, enumerable: true },
+    });
+
     // Old use method
     if (!this.hasAction) {
       // Use
-      const sharedData = { event: ev, skipDialog, chatMessage, rollMode };
-      if (!("attackData" in sharedData)) {
-        Object.defineProperty(sharedData, "attackData", {
+      if (!("attackData" in shared)) {
+        Object.defineProperty(shared, "attackData", {
           get: () => {
             foundry.utils.logCompatibilityWarning(
               "shared.attackData is deprecated in favor of directly accessing shared",
@@ -1441,12 +1476,12 @@ export class ItemPF extends ItemBasePF {
                 until: "PF1 v12",
               }
             );
-            return sharedData;
+            return shared;
           },
         });
       }
 
-      const shared = await this.executeScriptCalls("use", {}, sharedData);
+      const shared = await this.executeScriptCalls("use", {}, shared);
       rollMode = shared.rollMode || rollMode;
       if (shared.reject) return shared;
 
@@ -1471,8 +1506,6 @@ export class ItemPF extends ItemBasePF {
       return shared;
     }
 
-    if (ev && ev.originalEvent) ev = ev.originalEvent;
-
     /** @type {ItemAction | undefined} */
     let action;
     if (this.system.actions.length > 0) {
@@ -1489,35 +1522,9 @@ export class ItemPF extends ItemBasePF {
       return;
     }
 
-    // Prepare variables
-    /** @type {SharedActionData} */
-    const shared = {
-      event: ev,
-      rollData: {},
-      skipDialog,
-      chatMessage,
-      dice,
-      cost,
-      fullAttack: true,
-      useOptions: options,
-      attackBonus: [],
-      damageBonus: [],
-      attacks: [],
-      chatAttacks: [],
-      rollMode,
-      useMeasureTemplate: action.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
-      conditionals: null,
-      conditionalPartsCommon: {},
-      casterLevelCheck: false,
-      concentrationCheck: false,
-      scriptData: {},
-    };
-
-    // Prevent reassigning the ActionUse's item, action, and token
+    // Prevent reassigning the ActionUse's action
     Object.defineProperties(shared, {
       action: { value: action, writable: false, enumerable: true },
-      item: { value: this, writable: false, enumerable: true },
-      token: { value: token, writable: false, enumerable: true },
     });
 
     if (shared.useOptions.ammo) {
@@ -1528,9 +1535,10 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    const actionUse = new ActionUse(shared);
+    // TODO: Remove this variable usage
+    shared.useMeasureTemplate = action.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls");
 
-    return actionUse.process({ skipDialog });
+    return new ActionUse(shared).process({ skipDialog });
   }
 
   /**

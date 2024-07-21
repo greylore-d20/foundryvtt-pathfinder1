@@ -4,13 +4,35 @@ folder: DtVJVwL87ELQxk7u
 img: systems/pf1/icons/items/armor/shield-heavy-wood.png
 name: Wooden Snarlshield
 system:
+  actions:
+    - _id: T05SJ7ZCEohKivG5
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      name: Bash
+      range:
+        units: melee
   armor:
     acp: 3
     material:
       base:
-        value: leather
-      normal:
-        value: leather
+        value: wood
     value: 2
   description:
     value: >-
@@ -24,6 +46,11 @@ system:
     value: 15
   price: 50
   slot: shield
+  sources:
+    - id: PZO9481
+      pages: '6'
+    - id: PZO9411
+      pages: '22'
   spellFailure: 15
   subType: shield
   weight:

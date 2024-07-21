@@ -2102,7 +2102,7 @@ export const extraAttacks = {
   flurry: {
     label: "PF1.ExtraAttacks.Flurry",
     count: "min(4, ceil(@bab / 5)) + ceil((@class.level - 7) / 7)",
-    bonus: "-(floor((@attackCount+1) / 2) * 5 + @fullAttack * 2)",
+    bonus: "-(floor(@attackCount / 2) * 5 + @fullAttack * 2)",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
     iteratives: false,
     manual: false,

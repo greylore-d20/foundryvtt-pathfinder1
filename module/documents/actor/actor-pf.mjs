@@ -666,8 +666,15 @@ export class ActorPF extends ActorBasePF {
     const wprof = this.system.traits?.weaponProf;
     if (!wprof) return false;
 
-    // Match basic proficiencies (only present on weapons)
-    if (item.type === "weapon" && wprof.total.includes(item.subType)) return true;
+    // Match basic proficiencies, e.g. simple and martial (only present on weapons)
+    // TODO: Make the item identify it's own weapon type
+    let category;
+    if (item.type === "weapon") {
+      category = item.subType;
+    } else if (item.type === "attack") {
+      category = item.subType === "weapon" ? item.system.weapon?.category : null;
+    }
+    if (wprof.total.includes(category)) return true;
 
     // Match base types
     const profs = wprof.customTotal ?? [];

@@ -4,13 +4,35 @@ folder: DtVJVwL87ELQxk7u
 img: systems/pf1/icons/items/armor/shield-heavy-metal.png
 name: Heavy Steel Shield
 system:
+  actions:
+    - _id: 6JirvCBGQLj1EafK
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      name: Bash
+      range:
+        units: melee
   armor:
     acp: 2
     material:
       base:
-        value: leather
-      normal:
-        value: leather
+        value: steel
     value: 2
   description:
     value: >-
@@ -29,7 +51,7 @@ system:
   slot: shield
   sources:
     - id: PZO1110
-      pages: 151-152
+      pages: 142, 148, 151-152
   spellFailure: 15
   subType: shield
   weight:

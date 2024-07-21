@@ -1286,16 +1286,25 @@ export class ItemAction {
      * Counter for unnamed or other numbered attacks, to be incremented with each usage.
      * Starts at 1 to account for the base attack.
      */
-    let unnamedAttackIndex = 1;
-
-    const attackName =
-      actionData.attackName || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttackIndex });
+    let unnamedAttack = 0;
+    const unnamedAttackNames = new Set();
+    const getUniqueName = (name, template) => {
+      if (template && template.indexOf("{0}") == -1) template = null;
+      let label = name;
+      while (unnamedAttackNames.has(label) || !label) {
+        unnamedAttack += 1;
+        if (template) label = template.replace("{0}", unnamedAttack);
+        else label = game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttack });
+      }
+      unnamedAttackNames.add(label);
+      return label;
+    };
 
     rollData.attackCount = 0;
 
     const flavor = game.i18n.localize(exAtkCfg.flavor || "");
     const formula = flavor ? `(${exAtkCfg.bonus || "0"})[${flavor}]` : exAtkCfg.bonus;
-    const attacks = [{ bonus: formula, label: attackName }];
+    const attacks = [{ bonus: formula, label: getUniqueName(actionData.attackName) }];
 
     // Extra attacks
     if (full) {
@@ -1321,12 +1330,12 @@ export class ItemAction {
                 minimize: true,
               }
             ).total;
+
             attacks.push({
               bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
+              // Continue counting if similar to initial attack name
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
-              label:
-                label?.replace("{0}", i + 1) ||
-                game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+              label: getUniqueName(label?.replace("{0}", i + 1), label),
             });
           }
         } catch (err) {
@@ -1354,10 +1363,11 @@ export class ItemAction {
       if (exAtkCfg.manual) {
         const extraAttacks = actionData.extraAttacks?.manual ?? [];
         for (const { name, formula } of extraAttacks) {
+          if (name) unnamedAttackNames.add(name);
           attacks.push({
             bonus: formula,
             // Use defined label, or fall back to continuously numbered default attack name
-            label: name || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+            label: name || getUniqueName(),
           });
         }
       }

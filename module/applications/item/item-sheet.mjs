@@ -146,6 +146,27 @@ export class ItemSheetPF extends ItemSheet {
       tag: this.item._source.system.tag,
     };
 
+    // Item type identifiers
+    const isPhysical = item.isPhysical;
+    const isWeapon = item.type === "weapon";
+    const isAttack = item.type === "attack";
+    const isWeaponLike = isAttack && item.subType === "weapon";
+    const isNaturalAttack = isAttack && itemData.subType === "natural";
+    const isClass = item.type === "class";
+    const isSpell = item.type === "spell";
+    const isImplant = item.type === "implant";
+    const isEquipment = item.type === "equipment";
+
+    context.isPhysical = isPhysical;
+    context.isWeapon = isWeapon;
+    context.isAttack = isAttack;
+    context.isWeaponLike = isWeaponLike;
+    context.isNaturalAttack = isNaturalAttack;
+    context.isClass = isClass;
+    context.isSpell = isSpell;
+    context.isImplant = isImplant;
+    context.isEquipment = isEquipment;
+
     if (context.canClassLink) {
       context.hasClassLink = !!item.system.class;
       context.classes = {};
@@ -158,7 +179,7 @@ export class ItemSheetPF extends ItemSheet {
     context.items = item.items?.map((i) => i.toObject()) ?? [];
 
     // Add hit die size options for classes
-    if (item.type === "class") {
+    if (isClass) {
       context.hitDieSizes = context.config.hitDieSizes.reduce((all, size) => {
         all[size] = game.i18n.format("PF1.DieSize", { size });
         return all;
@@ -189,12 +210,6 @@ export class ItemSheetPF extends ItemSheet {
     if (!item.isPhysical) delete context.limitedUsePeriods.single;
     context.isRechargeable = pf1.config.limitedUsePeriodOrder.includes(itemData.uses?.per);
 
-    // Item type identifiers
-    context.isPhysical = item.isPhysical;
-    context.isNaturalAttack = itemData.subType === "natural";
-    context.isSpell = item.type === "spell";
-    context.isImplant = item.type === "implant";
-
     context.isActivatable = !["race", "class", "container", "loot"].includes(item.type);
     context.hasAction = item.hasAction;
     context.hasAttack = item.hasAttack;
@@ -223,7 +238,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add spellcasting configuration
-    if (item.type === "class") {
+    if (isClass) {
       context.casting = {
         types: pf1.config.spellcasting.type,
         spells: pf1.config.spellcasting.spells,
@@ -480,10 +495,11 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare attack-specific stuff
-    if (item.type === "attack") {
+    if (isAttack) {
+      const wtype = (isWeaponLike ? itemData.weapon?.type : null) || "all";
       context.materialCategories = this._prepareMaterialsAndAddons(
         "weapon",
-        "all",
+        wtype,
         itemData.subType,
         itemData.material?.normal.value
       );
@@ -491,7 +507,7 @@ export class ItemSheetPF extends ItemSheet {
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
-    const material = this.item.type === "equipment" ? this.item.system.armor?.material : this.item.system.material;
+    const material = isEquipment ? this.item.system.armor?.material : this.item.system.material;
     if (material?.addon?.length) {
       context.materialAddons =
         material.addon.reduce((obj, v) => {
@@ -501,22 +517,37 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare weapon specific stuff
-    if (item.type === "weapon") {
-      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties["thr"] === true;
+    if (isWeapon) {
+      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties?.["thr"] === true;
+    }
 
-      // Prepare categories for weapons
+    // Prepare categories for weapons
+    if (isWeaponLike) {
+      itemData.weapon ??= {};
+      itemData.weapon.category ||= "simple";
+      itemData.weapon.type ||= "1h";
+
+      context.isRanged = itemData.weapon.type === "ranged";
+    }
+
+    if (isWeapon || isWeaponLike) {
       context.weaponCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(pf1.config.weaponTypes)) {
         context.weaponCategories.types[k] = v._label;
       }
-      const type = itemData.subType;
+      let type;
+      if (isWeapon) type = itemData.subType;
+      else if (isWeaponLike) type = itemData.weapon?.category;
+
       if (type in pf1.config.weaponTypes) {
         for (const [k, v] of Object.entries(pf1.config.weaponTypes[type])) {
           // Add static targets
           if (!k.startsWith("_")) context.weaponCategories.subTypes[k] = v;
         }
       }
+    }
 
+    if (isWeapon) {
       context.materialCategories = this._prepareMaterialsAndAddons(
         item.type,
         itemData.weaponSubtype,
@@ -528,7 +559,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare equipment specific stuff
-    if (item.type === "equipment") {
+    if (isEquipment) {
       // Prepare categories for equipment
       context.equipmentCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(pf1.config.equipmentTypes)) {
@@ -561,7 +592,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    if (item.type === "implant") {
+    if (isImplant) {
       context.subTypes = pf1.config.implantTypes;
 
       context.isCybertech = item.subType === "cybertech";
@@ -632,7 +663,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare class specific stuff
-    if (item.type === "class") {
+    if (isClass) {
       context.isMythicPath = itemData.subType === "mythic";
 
       for (const [a, s] of Object.entries(itemData.savingThrows)) {
@@ -1008,7 +1039,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add class associations
-    if (this.item.type === "class") {
+    if (context.isClass) {
       context.links.list.push({
         id: "classAssociations",
         label: game.i18n.localize("PF1.LinkTypeClassAssociations"),

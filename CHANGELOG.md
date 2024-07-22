@@ -2429,7 +2429,7 @@
 
 - Added script calls for changing buff and class levels
 
-## API
+### API
 
 - Added `utils.findInCompendia` to fuzzy search loaded compendia by name as fast as possible
 - Added `utils.sortArrayByName` to sort compendium index arrays for localization

@@ -625,12 +625,12 @@ Hooks.once("ready", async function () {
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {
-    const v = game.settings.get("pf1", "changelogVersion") || "0.0.1";
+    const v = game.settings.get("pf1", "changelogVersion");
     const changelogVersion = SemanticVersion.fromString(v);
     const curVersion = SemanticVersion.fromString(game.system.version);
 
     if (curVersion.isHigherThan(changelogVersion)) {
-      const app = new pf1.applications.ChangeLogWindow(changelogVersion);
+      const app = new pf1.applications.ChangeLogWindow(true);
       app.render(true, { focus: true });
       game.settings.set("pf1", "changelogVersion", curVersion.toString());
     }
@@ -845,7 +845,7 @@ Hooks.on(
 Hooks.on("renderSidebarTab", (app, html) => {
   if (app instanceof Settings) {
     // Add buttons
-    const chlogButton = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
+    const chlogButton = $(`<button>${game.i18n.localize("PF1.Application.Changelog.Title")}</button>`);
     const helpButton = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
     const tshooterButton = $(`<button>${game.i18n.localize("PF1.Troubleshooter.Button")}</button>`);
     html

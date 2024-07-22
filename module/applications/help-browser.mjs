@@ -47,9 +47,7 @@ export class HelpBrowserPF extends Application {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "help-browser"],
       template: "systems/pf1/templates/apps/help-browser.hbs",
-      minWidth: 800,
-      minHeight: 450,
-      width: 960,
+      width: 620,
       height: 600,
       resizable: true,
       id: "pf1-help-browser",

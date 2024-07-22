@@ -276,6 +276,11 @@ export class MaterialTypes extends Registry {
       dr: true,
       price: {
         multiplier: 2.0,
+        lightWeapon: 2_000,
+        oneHandWeapon: 2_000,
+        twoHandWeapon: 2_000,
+        rangedOneHandWeapon: 2_000,
+        rangedTwoHandWeapon: 2_000,
       },
     },
     {
@@ -671,6 +676,7 @@ export class MaterialTypes extends Registry {
       },
       hardness: 15,
       price: {
+        perPound: 500, // Non-armor/shield only
         shield: 1000.0,
         lightArmor: 1000.0,
         mediumArmor: 4000.0,
@@ -687,6 +693,11 @@ export class MaterialTypes extends Registry {
       treatedAs: "coldiron",
       price: {
         multiplier: 1.5,
+        lightWeapon: 3_000,
+        oneHandWeapon: 3_000,
+        twoHandWeapon: 3_000,
+        rangedOneHandWeapon: 3_000,
+        rangedTwoHandWeapon: 3_000,
       },
     },
     {

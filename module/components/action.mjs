@@ -5,6 +5,9 @@ import { keepUpdateArray, createTag } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 
+/**
+ * Action pseudo-document
+ */
 export class ItemAction {
   /**
    * @internal
@@ -56,8 +59,10 @@ export class ItemAction {
     return ["mcman", "rcman"].includes(this.data.actionType);
   }
 
-  /*
+  /**
    * General activation accessor that removes determining which action economy is in use.
+   *
+   * @type {string} - Activation type.
    */
   get activation() {
     return (
@@ -98,22 +103,32 @@ export class ItemAction {
     };
   }
 
+  /** @type {ItemPF|undefined} - Parent item */
   get item() {
     return this.parent;
   }
+
+  /** @type {ActorPF|undefined} - Parent actor of the parent item. */
   get actor() {
     return this.parent.actor;
   }
 
+  /** @type {string} - Action ID */
   get id() {
     return this.data._id;
   }
+
+  /** @type {string} - Image with fallback handling. */
   get img() {
     return this.data.img || this.item?.img || this.constructor.FALLBACK_IMAGE;
   }
+
+  /** @type {string} - Name */
   get name() {
     return this.data.name;
   }
+
+  /** @type {string} - Tag */
   get tag() {
     return this.data.tag || createTag(this.name);
   }
@@ -161,24 +176,29 @@ export class ItemAction {
     return true;
   }
 
+  /** @type {boolean} - Is some type of attack action. */
   get hasAttack() {
     return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
   }
 
+  /** @type {boolean} - Has multiple attacks */
   get hasMultiAttack() {
     if (!this.hasAttack) return false;
     const exAtk = this.data.extraAttacks ?? {};
     return exAtk.manual?.length > 0 || !!exAtk.type;
   }
 
+  /** @type {boolean} - Consumes charges on use */
   get autoDeductCharges() {
     return this.getChargeCost() > 0;
   }
 
+  /** @type {boolean} - Does parent item have charges */
   get isCharged() {
     return this.item.isCharged;
   }
 
+  /** @type {boolean} - Action has charges of its own */
   get isSelfCharged() {
     return !!this.data.uses?.self?.per;
   }
@@ -214,9 +234,7 @@ export class ItemAction {
     return this.getRange({ type: "single" });
   }
 
-  /**
-   * @type {number} The action's minimum range.
-   */
+  /** @type {number} - The action's exclusive minimum range. */
   get minRange() {
     return this.getRange({ type: "min" });
   }
@@ -230,7 +248,7 @@ export class ItemAction {
 
   /**
    * @param {object} [options] - Additional options to configure behavior.
-   * @param {string} [options.type="single"] - What type of range to query. Either "single" (for a single range increment), "max" or "min".
+   * @param {"single"|"min"|"max"} [options.type="single"] - What type of range to query. Either "single" (for a single range increment), "max" or "min".
    * @param {object} [options.rollData=null] - Specific roll data to pass.
    * @returns {number|null} The given range, in system configured units, or `null` if no range is applicable.
    */
@@ -400,18 +418,22 @@ export class ItemAction {
     }
   }
 
+  /** @type {boolean} - Is sound effect defined? */
   get hasSound() {
     return !!this.data.soundEffect;
   }
 
+  /** @type {number|null} - Effective enhancement bonus */
   get enhancementBonus() {
     return this.data.enh?.value ?? this.item.system.enh;
   }
 
+  /** @type {boolean} - Is ranged action */
   get isRanged() {
     return ["rwak", "twak", "rsak", "rcman"].includes(this.data.actionType);
   }
 
+  /** @type {boolean} - Is spell action? */
   get isSpell() {
     return ["rsak", "msak"].includes(this.data.actionType);
   }
@@ -491,6 +513,10 @@ export class ItemAction {
     return getHighestChanges(allChanges, { ignoreTarget: true });
   }
 
+  /**
+   * @internal
+   * @returns {object}
+   */
   getRollData() {
     const result = foundry.utils.deepClone(this.item.getRollData());
 
@@ -631,6 +657,11 @@ export class ItemAction {
     };
   }
 
+  /**
+   * Data preparation
+   *
+   * @internal
+   */
   prepareData() {
     // Default action type to other if undefined.
     // Optimally this would be in constructor only, but item action handling can cause that to be lost
@@ -666,6 +697,12 @@ export class ItemAction {
     }
   }
 
+  /**
+   * @internal
+   *
+   * @param {Array} conditionals
+   * @returns {Collection<string,ItemConditional>}
+   */
   _prepareConditionals(conditionals) {
     const prior = this.conditionals;
     const collection = new Collection();
@@ -681,6 +718,11 @@ export class ItemAction {
     return collection;
   }
 
+  /**
+   * Delete this action
+   *
+   * @returns {Item} - Updated parent item document.
+   */
   async delete() {
     const actions = foundry.utils.deepClone(this.item.system.actions);
     actions.findSplice((a) => a._id == this.id);
@@ -696,7 +738,13 @@ export class ItemAction {
     return this.item.update({ "system.actions": actions });
   }
 
-  async update(updateData, options = {}) {
+  /**
+   * Update the action
+   *
+   * @param {object} updateData - Update data
+   * @param {object} context - Update context
+   */
+  async update(updateData, context = {}) {
     updateData = foundry.utils.expandObject(updateData);
     const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
     if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
@@ -723,7 +771,7 @@ export class ItemAction {
       }
     }
 
-    await this.item.update({ "system.actions": { [idx]: newUpdateData } }, options);
+    await this.item.update({ "system.actions": { [idx]: newUpdateData } }, context);
   }
 
   /* -------------------------------------------- */
@@ -1417,8 +1465,12 @@ export class ItemAction {
   }
 
   /**
-   * @param {object} options - See ItemPF#useAttack.
-   * @returns {Promise<void>}
+   * Use action.
+   *
+   * Wrapper for {@link pf1.documents.item.ItemPF.use() ItemPF.use()}
+   *
+   * @param {object} options - Options passed to `ItemPF.use()`.
+   * @returns {Promise<void>} - Returns what `ItemPF.use()` returns.
    */
   async use(options = {}) {
     options.actionId = this.id;

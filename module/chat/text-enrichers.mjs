@@ -363,7 +363,7 @@ export function onUse(event, target) {
       continue;
     }
 
-    let itemAction = item.defaultAction;
+    let itemAction;
     if (actionIdent) {
       const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionIdent);
       const { actionTag, actionId } = re?.groups ?? {};
@@ -373,16 +373,18 @@ export function onUse(event, target) {
         if (actionTag) return act.data.tag === actionTag;
         return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
       });
-    }
 
-    if (!itemAction) {
-      const msg = game.i18n.format("PF1.Warning.NoActionInItem", { item: item.name, actor: actor.name });
-      ui.notifications.warn(msg, { console: false });
-      console.warn("PF1 | @Use |", msg, actor);
-      continue;
-    }
+      if (!itemAction) {
+        const msg = game.i18n.format("PF1.Warning.NoActionInItem", { item: item.name, action: actionIdent });
+        ui.notifications.warn(msg, { console: false });
+        console.warn("PF1 | @Use |", msg, actor);
+        continue;
+      }
 
-    itemAction.use();
+      itemAction.use();
+    } else {
+      item.use();
+    }
   }
 }
 

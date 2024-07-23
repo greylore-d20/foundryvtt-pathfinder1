@@ -848,7 +848,6 @@ export const enrichers = [
     const sourceImperial = !sourceMetric;
 
     const total = RollPF.safeRollSync(value || "0", rollData).total;
-    console.log(value);
     let ft = total,
       m = total;
 

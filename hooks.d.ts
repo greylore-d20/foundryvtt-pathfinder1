@@ -607,6 +607,21 @@ declare global {
       pf1GetRollData: (document: ActorPF | ItemPF | ItemAction, data: Record<string, unknown>) => void;
 
       // ------------------------- //
+      //        D20 Rolls          //
+      // ------------------------- //
+
+      /**
+       * A hook event fired by the system when a {@link pf1.dice.d20Roll} is rolled. Primarily used by actor non-attack rolls (e.g. skills, attributes, etc).
+       *
+       * @group D20 Rolls
+       * @remarks Called by {@link Hooks.call}
+       * @param roll - The roll object, before it's evaluated
+       * @param options - Options used to create the roll
+       * @returns Explicitly return `false` to prevent the roll.
+       */
+      pf1PreD20Roll: (roll: D20RollPF, options: Partial<D20ActorRollOptions>) => boolean;
+
+      // ------------------------- //
       //          Combat           //
       // ------------------------- //
 
@@ -733,6 +748,9 @@ export declare const pf1DeleteItemLink: Hooks.StaticCallbacks["pf1DeleteItemLink
 
 // Roll Data
 export declare const pf1GetRollData: Hooks.StaticCallbacks["pf1GetRollData"];
+
+// D20 Rolls
+export declare const pf1PreD20Roll: Hooks.StaticCallbacks["pf1PreD20Roll"];
 
 // Combat
 export declare const pf1CombatTurnSkip: Hooks.StaticCallbacks["pf1CombatTurnSkip"];

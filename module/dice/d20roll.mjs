@@ -428,6 +428,7 @@ export class D20RollPF extends RollPF {
  *   rollMode: "gmroll", // Make roll only visible to user and GM
  * });
  * ```
+ * @returns {Promise<ChatMessage | object | undefined>} The created ChatMessage document, the object of data that would be used to create one, or undefined if cancelled
  */
 export async function d20Roll(options = {}) {
   const {
@@ -460,6 +461,8 @@ export async function d20Roll(options = {}) {
     rollMode = roll.options.rollMode;
     delete roll.options.rollMode;
   }
+
+  if (Hooks.call("pf1PreD20Roll", roll, options) === false) return;
 
   return roll.toMessage({ speaker }, { create: chatMessage, noSound, chatTemplateData, compendium, subject, rollMode });
 }

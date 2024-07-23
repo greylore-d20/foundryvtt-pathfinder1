@@ -21,15 +21,21 @@ import { RollPF } from "../dice/roll.mjs";
  */
 export const createTag = function (str, { allowUpperCase = false, camelCase = true, replacement = "" } = {}) {
   if (!str) return "";
-  return str
-    .replace(/[^a-zA-Z0-9\s]/g, replacement)
-    .split(/\s+/)
-    .map((s, a) => {
-      if (!allowUpperCase) s = s.toLowerCase();
-      if (a > 0 && camelCase) s = s.substring(0, 1).toUpperCase() + s.substring(1);
-      return s;
-    })
-    .join("");
+
+  return (
+    str
+      .normalize("NFD") // Normalize
+      .replace(/\p{Diacritic}/gu, "") // Remove diacritics
+      .replace(/[^a-zA-Z0-9\s]/g, replacement) // Replace remaining non-latin letters
+      // Camel case and such
+      .split(/\s+/)
+      .map((s, a) => {
+        if (!allowUpperCase) s = s.toLowerCase();
+        if (a > 0 && camelCase) s = s.substring(0, 1).toUpperCase() + s.substring(1);
+        return s;
+      })
+      .join("")
+  );
 };
 
 /**

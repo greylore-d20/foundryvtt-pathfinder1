@@ -3009,7 +3009,7 @@ export class ActorPF extends ActorBasePF {
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, bookId) === false) return;
-    const result = pf1.dice.d20Roll(rollOptions);
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollConcentration", this, result, bookId);
     return result;
   }

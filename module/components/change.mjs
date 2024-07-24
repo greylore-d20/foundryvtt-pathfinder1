@@ -450,20 +450,21 @@ export class ItemChange extends foundry.abstract.DataModel {
             }
 
             // Determine whether there is an entry with a higher value; remove entries with lower values
-            sInfo.forEach((infoEntry) => {
-              const isSameType = infoEntry.change?.type === infoEntry.type;
-              if (isSameType) {
-                if (infoEntry.value < sumValue) {
-                  sInfo.splice(sInfo.indexOf(infoEntry), 1);
-                } else {
-                  doAdd = false;
+            if (this.type) {
+              sInfo.forEach((oldEntry) => {
+                if (!oldEntry.type) return;
+                const isSameType = oldEntry.change?.type === oldEntry.type;
+                if (isSameType) {
+                  if (oldEntry.value < sumValue) {
+                    sInfo.splice(sInfo.indexOf(oldEntry), 1);
+                  } else {
+                    doAdd = false;
+                  }
                 }
-              }
-            });
-
-            if (doAdd) {
-              sInfo.push({ ...infoEntry });
+              });
             }
+
+            if (doAdd) sInfo.push({ ...infoEntry });
           }
         }
         break;

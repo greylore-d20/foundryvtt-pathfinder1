@@ -98,7 +98,9 @@ export class ItemPhysicalPF extends ItemPF {
     if (equipped != null) {
       this.executeScriptCalls("equip", { equipped });
     }
+  }
 
+  _onMemorizedUpdate(changed, context) {
     // Call 'changeQuantity' script calls
     const oldQuantity = this._memoryVariables?.quantity;
     if (oldQuantity !== undefined) {
@@ -111,6 +113,9 @@ export class ItemPhysicalPF extends ItemPF {
         this.executeScriptCalls("changeQuantity", { quantity });
       }
     }
+
+    // Must call super last or the memory data gets cleared too soon
+    super._onMemorizedUpdate(changed, context);
   }
 
   /**

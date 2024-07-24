@@ -1004,32 +1004,34 @@ export class ItemPF extends ItemBasePF {
   _onUpdate(changed, context, userId) {
     super._onUpdate(changed, context, userId);
 
-    if (userId === game.user.id) {
-      // Call 'toggle' script calls
-      {
-        let state = null;
-        if (this.type === "buff") state = changed.system?.active;
-        else if (this.type === "feat" && changed.system?.disabled !== undefined)
-          state = changed.system.disabled === true ? false : true;
-        if (state != null) {
-          const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
-          this.executeScriptCalls("toggle", { state, startTime });
-        }
-      }
+    if (userId !== game.user.id) return;
 
-      // Call 'changeLevel' script calls
-      const oldLevel = this._memoryVariables?.level;
-      if (oldLevel !== undefined && changed.system?.level !== undefined) {
-        const level = {
-          previous: parseInt(oldLevel),
-          new: parseInt(this.system.level),
-        };
-        for (const [k, v] of Object.entries(level)) {
-          if (Number.isNaN(v)) level[k] = null;
-        }
-        if (level.new !== undefined && level.new !== level.previous) {
-          this.executeScriptCalls("changeLevel", { level });
-        }
+    // Call 'toggle' script calls
+    let state = null;
+    if (this.type === "buff") state = changed.system?.active;
+    else if (this.type === "feat" && changed.system?.disabled !== undefined)
+      state = changed.system.disabled === true ? false : true;
+    if (state != null) {
+      const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
+      this.executeScriptCalls("toggle", { state, startTime });
+    }
+
+    if (this._memoryVariables) this._onMemorizedUpdate(changed, context);
+  }
+
+  _onMemorizedUpdate(changed, context) {
+    // Call 'changeLevel' script calls
+    const oldLevel = this._memoryVariables?.level;
+    if (oldLevel !== undefined && changed.system?.level !== undefined) {
+      const level = {
+        previous: parseInt(oldLevel),
+        new: parseInt(this.system.level),
+      };
+      for (const [k, v] of Object.entries(level)) {
+        if (Number.isNaN(v)) level[k] = null;
+      }
+      if (level.new !== undefined && level.new !== level.previous) {
+        this.executeScriptCalls("changeLevel", { level });
       }
     }
 

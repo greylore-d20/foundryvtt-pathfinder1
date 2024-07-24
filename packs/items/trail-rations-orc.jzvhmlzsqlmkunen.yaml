@@ -1,14 +1,20 @@
 _id: jzvhmlzsqlmkunen
 _key: '!items!jzvhmlzsqlmkunen'
+folder: HgoXgv3wPvnAB4ZR
 img: systems/pf1/icons/items/inventory/meat.jpg
-name: Rations, Orc Trail
+name: Trail Rations, Orc
 system:
+  actions:
+    - _id: kIsQdVENyT6DpWeG
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      ammo:
+        type: ''
+      name: Use
   description:
     value: >-
-      <h4>Rations, Orc Trail</h4>
-
-      <p><b>Price</b> 1 gp; <b>Weight</b> 1 lb.</p>
-
       <p>A typical orc trail ration consists of coarse black bread, thin
       sausages as hard as leather that must be chewed slowly to soften them,
       dried meat of uncertain origin, and pungent peppers. If you are an orc or
@@ -18,7 +24,12 @@ system:
       without eating a day's worth.</p>
   equipped: false
   price: 1
-  subType: gear
+  sources:
+    - id: PZO1123
+      pages: '96'
+  subType: food
+  uses:
+    per: single
   weight:
     value: 1
 type: loot

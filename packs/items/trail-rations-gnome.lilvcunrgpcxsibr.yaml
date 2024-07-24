@@ -1,14 +1,18 @@
 _id: lilvcunrgpcxsibr
 _key: '!items!lilvcunrgpcxsibr'
+folder: HgoXgv3wPvnAB4ZR
 img: systems/pf1/icons/items/inventory/meat.jpg
-name: Rations, Gnome Trail
+name: Trail Rations, Gnome
 system:
+  actions:
+    - _id: uUWyuRJJsiWGzElu
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      name: Use
   description:
     value: >-
-      <h4>Rations, Gnome Trail</h4>
-
-      <p><b>Price</b> 2 gp; <b>Weight</b> 1 lb.</p>
-
       <p>Almost any preserved food can be found in gnome trail rations, which
       are designed to keep a wandering gnome from needing to dine on the same
       meal twice in a week. If you are a gnome who subsists on nothing but these
@@ -20,7 +24,12 @@ system:
       or go for a full day without eating a day's worth.</p>
   equipped: false
   price: 2
-  subType: gear
+  sources:
+    - id: PZO1123
+      pages: '95'
+  subType: food
+  uses:
+    per: single
   weight:
     value: 1
 type: loot

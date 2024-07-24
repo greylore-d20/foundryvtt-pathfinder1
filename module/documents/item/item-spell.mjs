@@ -546,9 +546,15 @@ export class ItemSpellPF extends ItemPF {
   /**
    * Spell components
    *
-   * @param {object} options
-   * @param {boolean} [options.compact]
-   * @returns {string[]}
+   * @example
+   * ```js
+   * // Discern Lies on Cleric
+   * spell.getSpellComponents(); // V S M/DF
+   * spell.getSpellComponents({compact:true}); // V S DF
+   * ```
+   * @param {object} options - Additional options
+   * @param {boolean} [options.compact] - Remove redundant components (e.g. M/DF becomes DF for divine caster)
+   * @returns {string[]} - Component keys
    */
   getSpellComponents({ compact = false } = {}) {
     const reSplit = pf1.config.re.traitSeparator,

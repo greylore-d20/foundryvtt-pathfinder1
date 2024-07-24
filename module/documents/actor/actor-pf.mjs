@@ -1688,7 +1688,7 @@ export class ActorPF extends ActorBasePF {
             maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
             for (const p of ["system.attributes.ac.normal.total", "system.attributes.ac.touch.total"]) {
               // Use special maxDex id to ensure only the worst is shown
-              const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDex");
+              const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDexEq");
               if (sInfoA) {
                 if (mDex < sInfoA.value) {
                   sInfoA.value = maxDexLabel;
@@ -1700,7 +1700,7 @@ export class ActorPF extends ActorBasePF {
                   name: item.name,
                   value: maxDexLabel,
                   itemId: item.id,
-                  id: "maxDex",
+                  id: "maxDexEq",
                 });
               }
             }
@@ -1848,9 +1848,9 @@ export class ActorPF extends ActorBasePF {
     const rollData = this.getRollData();
     for (const [changeTarget, changeGrp] of Object.entries(this.sourceInfo)) {
       for (const grp of Object.values(changeGrp)) {
-        sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
+        sourceDetails[changeTarget] ||= [];
         for (const src of grp) {
-          if (!src.operator) src.operator = "add";
+          src.operator ||= "add";
           // TODO: Separate source name from item type label
           const label = this.constructor._getSourceLabel(src);
           let srcValue =
@@ -1864,6 +1864,8 @@ export class ActorPF extends ActorBasePF {
             if (src.change?.isDistance) displayValue = pf1.utils.convertDistance(displayValue)[0];
             srcValue = game.i18n.format("PF1.SetTo", { value: displayValue });
           }
+
+          // Add sources only if they actually add something else than zero
           if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
             // Account for dex denied denying dodge bonuses
             if (dexDenied && srcValue > 0 && src.modifier === "dodge" && src.operator === "add" && src.change?.isAC)

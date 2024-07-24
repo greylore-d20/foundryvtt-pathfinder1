@@ -525,20 +525,6 @@ export class ItemChange extends foundry.abstract.DataModel {
     }
   }
 
-  createFunction(funcDef, funcArgs = []) {
-    try {
-      const preDef = `const actor = item.actor; const result = { operator: "add", value: 0, };`;
-      const postDef = `return result;`;
-      const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}\n${postDef}};`;
-      return new Function(fullDef)();
-    } catch (e) {
-      console.warn("Could not create change function with definition", funcDef);
-      return function () {
-        return { operator: "add", value: 0 };
-      };
-    }
-  }
-
   /**
    * @see {@link getChangeFlat}
    * @param {ActorPF} actor - Actor instance

@@ -26,24 +26,22 @@ export function applyChanges() {
   for (const i of this.changeItems) {
     if (!i.system.changeFlags) continue;
     for (const [k, v] of Object.entries(i.system.changeFlags)) {
-      if (v === true) {
-        this.changeFlags[k] = true;
+      if (v !== true) continue;
+      this.changeFlags[k] = true;
+      if (k !== "loseDexToAC") continue;
 
-        if (k === "loseDexToAC") {
-          for (const k2 of ["normal", "touch"]) {
-            getSourceInfo(this.sourceInfo, `system.attributes.ac.${k2}.total`).negative.push({
-              value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
-              name: i.name,
-              type: i.type,
-            });
-          }
-          getSourceInfo(this.sourceInfo, "system.attributes.cmd.total").negative.push({
-            value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
-            name: i.name,
-            type: i.type,
-          });
-        }
+      for (const k2 of ["normal", "touch"]) {
+        getSourceInfo(this.sourceInfo, `system.attributes.ac.${k2}.total`).negative.push({
+          value: game.i18n.localize("PF1.ChangeFlags.LoseDexToAC"),
+          name: i.name,
+          type: i.type,
+        });
       }
+      getSourceInfo(this.sourceInfo, "system.attributes.cmd.total").negative.push({
+        value: game.i18n.localize("PF1.ChangeFlags.LoseDexToAC"),
+        name: i.name,
+        type: i.type,
+      });
     }
   }
   this.refreshDerivedData();
@@ -1406,9 +1404,7 @@ function finalizeSkills() {
 }
 
 export const getSourceInfo = function (obj, key) {
-  if (!obj[key]) {
-    obj[key] = { negative: [], positive: [] };
-  }
+  obj[key] ??= { negative: [], positive: [] };
   return obj[key];
 };
 

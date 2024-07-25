@@ -355,18 +355,26 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {object} [options] Additional options
    * @param {Combat} [options.combat] Combat to expire data in, if relevant
+   * @param {number} [options.worldTime] - World time
    * @param {number} [options.timeOffset=0] Time offset from world time
    * @param {string} [options.event] - Expiration event
    * @param {number} [options.initiative] - Initiative based expiration marker
    * @param {DocumentModificationContext} [context] Document update context
    * @throws {Error} - With insufficient permissions to control the actor.
    */
-  async expireActiveEffects({ combat, timeOffset = 0, event = null, initiative = null } = {}, context = {}) {
+  async expireActiveEffects(
+    { combat, timeOffset = 0, worldTime = null, event = null, initiative = null } = {},
+    context = {}
+  ) {
     if (!this.isOwner) throw new Error("Must be owner");
 
-    const worldTime = game.time.worldTime + timeOffset;
+    // Canonical world time.
+    // Due to async code in numerous places and no awaiting of time updates, this can go out of sync of actual time.
+    worldTime ??= game.time.worldTime;
+    worldTime += timeOffset;
 
-    const temporaryEffects = this._effectsWithDuration.filter((ae) => {
+    // Effects that have timed out
+    const expiredEffects = this._effectsWithDuration.filter((ae) => {
       const { seconds, startTime } = ae.duration;
       const { rounds, startRound } = ae.duration;
 
@@ -396,11 +404,13 @@ export class ActorPF extends ActorBasePF {
           }
           // Anything not on initiative expires if they have negative time remaining
           return remaining < 0;
+        // End on turn start, but we're not there yet
+        case "turnStart":
+          if (remaining === 0 && !["turnStart", "turnEnd"].includes(event)) return false;
+          break;
         // End on turn end, but we're not quite there yet
         case "turnEnd":
-          if (remaining === 0 && event !== "turnEnd") {
-            return false;
-          }
+          if (remaining === 0 && event !== "turnEnd") return false;
           break;
       }
 
@@ -412,7 +422,7 @@ export class ActorPF extends ActorBasePF {
       deleteActiveEffects = [],
       disableBuffs = [];
 
-    for (const ae of temporaryEffects) {
+    for (const ae of expiredEffects) {
       let item;
       // Use AE parent when available
       if (ae.parent instanceof Item) item = ae.parent;

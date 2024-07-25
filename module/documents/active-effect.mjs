@@ -121,8 +121,9 @@ export class ActiveEffectPF extends ActiveEffect {
    * @internal
    */
   get _hasDuration() {
-    const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns) ?? 0;
-    return duration > 0;
+    const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns);
+    // Allow zero for single-turn duration effects to register correctly.
+    return Number.isFinite(duration) && duration >= 0;
   }
 
   /** @type {number|undefined} - Initiative counter if this effect started during combat */

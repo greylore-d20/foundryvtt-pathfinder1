@@ -3059,24 +3059,41 @@ export class ActorPF extends ActorBasePF {
           if (t.inCombat) continue;
           toCreate.push({ tokenId: t.id, sceneId: t.parent.id, actorId: this.id, hidden: t.hidden });
         }
-      } else toCreate.push({ actorId: this.id, hidden: false });
-      await combat.createEmbeddedDocuments("Combatant", toCreate);
+      }
+      // No tokens on scene
+      else {
+        const existing = combat.combatants.filter((t) => t.actor == this && !t.token);
+        if (!existing.length) {
+          toCreate.push({ actorId: this.id, hidden: false });
+        }
+      }
+
+      if (toCreate.length) await combat.createEmbeddedDocuments("Combatant", toCreate);
     }
 
+    let untokened = 0;
     // Roll initiative for combatants
-    const combatants = combat.combatants
-      .filter((c) => {
-        if (token && c.token?.id !== token.id) return false;
-        if (c.actor?.id !== this.id) return false;
-        return rerollInitiative || c.initiative === null;
-      })
-      .map((c) => c.id);
+    let combatants = combat.combatants.filter((c) => {
+      if (!c.token) untokened += 1;
+      if (token && c.token?.id !== token.id) return false;
+      if (c.actor?.id !== this.id) return false;
+      return rerollInitiative || c.initiative === null;
+    });
+
+    // If more than one relevant combatants with no token present, prune list of valid combatants.
+    if (untokened > 1) {
+      combatants = combatants.filter((c) => !!c.token || c.initiative === null);
+      if (combatants.length == 0) ui.notifications.warn(game.i18n.localize("PF1.Error.NoInitOnDuplicateCombatant"));
+    }
 
     // No combatants. Possibly from reroll being disabled.
     if (combatants.length == 0) return combat;
 
     foundry.utils.mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
-    await combat.rollInitiative(combatants, initiativeOptions);
+    await combat.rollInitiative(
+      combatants.map((c) => c.id),
+      initiativeOptions
+    );
     return combat;
   }
 

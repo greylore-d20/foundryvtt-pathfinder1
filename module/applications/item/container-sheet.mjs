@@ -276,7 +276,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     sb.each(function () {
       if (this.value.length > 0) $(this).change();
     });
-    html.find(".clear-search").on("click", this._clearSearch.bind(this));
   }
 
   _onItemCreate(event) {
@@ -743,11 +742,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
           else jq.hide();
         } else jq.show();
       });
-  }
-
-  _clearSearch(event) {
-    this._filters.search.container = "";
-    $(event.target).prev(".search-input").val("").change();
   }
 
   // IME related

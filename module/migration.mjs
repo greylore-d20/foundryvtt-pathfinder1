@@ -18,6 +18,27 @@ export const moved = {
   "Compendium.pf1.class-abilities.dvQdP8QfrDA9Lxzk": "Compendium.pf1.class-abilities.Item.9EX00obqhGHcrOdp",
 };
 
+/**
+ * Material ID changes done with v10.5
+ */
+const materialChanges = {
+  nexavarianSteel: "nexavaranSteel",
+  alchemicalsilver: "alchemicalSilver",
+  angelskin: "angelSkin",
+  bloodcrystal: "bloodCrystal",
+  coldiron: "coldIron",
+  darkleafcloth: "darkleafCloth",
+  eelhide: "eelHide",
+  elysianbronze: "elysianBronze",
+  fireforgedsteel: "fireForgedSteel",
+  frostforgedsteel: "frostForgedSteel",
+  griffonmane: "griffonMane",
+  liquidglass: "liquidGlass",
+  livingsteel: "livingSteel",
+  singingsteel: "singingSteel",
+  spiresteel: "spireSteel",
+};
+
 const marker = () => ({ pf1: { action: "migration" } });
 
 /**
@@ -2235,16 +2256,26 @@ const _migrateActionDuration = (action, itemData) => {
 };
 
 const _migrateActionMaterials = (action, itemData) => {
-  const addons = action.material?.addon;
+  let addons = action.material?.addon;
   if (addons) {
+    // Since PF1 v10.5
+    if (addons.some((ma) => !!materialChanges[ma])) {
+      action.material.addon = action.material.addon.map((ma) => materialChanges[ma] || ma);
+      addons = action.material.addon; // Ensure following code gets updated addons
+    }
+
     // Convert Throneglass into non-addon material
     // Since PF1 v10.3
     const tg = "throneglass";
-    if (action.material.addon.includes(tg)) {
+    if (addons.includes(tg)) {
       action.material.addon = action.material.addon.filter((ma) => ma !== tg);
       action.material.normal.value ||= tg;
     }
   }
+
+  // Since PF1 v10.5
+  const newMat = materialChanges[action.material?.normal?.value];
+  if (newMat) action.material.normal.value = newMat;
 };
 
 /**
@@ -3071,10 +3102,15 @@ const _migrateItemMaterials = (itemData, updateData) => {
       }
     }
 
+    // Convert material IDs
     // Since PF1 v10.5
-    if (material.normal?.value === "nexavarianSteel") {
-      updateData[`system.${materialPath}.normal.value`] = "nexavaranSteel";
+    const addons = updateData[`system.${materialPath}.addon`] ?? material?.addon ?? [];
+    if (addons?.some((ma) => !!materialChanges[ma])) {
+      updateData[`system.${materialPath}.addon`] = addons.map((ma) => materialChanges[ma] ?? ma);
     }
+
+    const newMat = materialChanges[material?.normal?.value];
+    if (newMat) updateData[`system.${materialPath}.normal.value`] = newMat;
   }
 };
 

@@ -7,6 +7,7 @@ import { registerActorConditionsTests } from "./actor-conditions.test.mjs";
 import { registerActorItemRaceTests } from "./actor-races.test.mjs";
 import { registerActorItemClassTests } from "./actor-classes.test.mjs";
 import { registerActorItemAttackTests } from "./actor-attacks.test.mjs";
+import { registerAttackIterativesTests } from "./attack-iteratives.test.mjs";
 import { registerContainerItemTests } from "./container-items.test.mjs";
 import { registerItemWeightTests } from "./item-weight.test.mjs";
 import { registerD20RollTests } from "./d20roll.test.mjs";
@@ -26,6 +27,7 @@ Hooks.on("quenchReady", () => {
   registerActorItemRaceTests();
   registerActorItemClassTests();
   registerActorItemAttackTests();
+  registerAttackIterativesTests();
   registerActorRestTests();
   registerContainerItemTests();
   registerItemWeightTests();

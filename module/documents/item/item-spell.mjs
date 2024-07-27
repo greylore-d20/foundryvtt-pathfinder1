@@ -828,7 +828,10 @@ export class ItemSpellPF extends ItemPF {
       ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach(
         (category) =>
           (data.learnedAt[category] = Object.entries(srcData.learnedAt[category])
-            .map(([classId, level]) => `${classId} ${level}`)
+            .map(([classId, level]) => {
+              classId = pf1.config.classNames[classId] || classId;
+              return `${classId} ${level}`;
+            })
             .join(", "))
       );
     }

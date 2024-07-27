@@ -1805,7 +1805,7 @@ export const classCasterType = {
   skald: "med",
   spiritualist: "med",
   summoner: "med",
-  "unchained Summoner": "med",
+  summonerUnchained: "med",
   antipaladin: "low",
   bloodrager: "low",
   medium: "low",

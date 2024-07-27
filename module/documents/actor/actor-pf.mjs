@@ -190,7 +190,7 @@ export class ActorPF extends ActorBasePF {
       const subtype = item.subType;
       let typeLabel;
 
-      if (subtype && ((item.system.identified ?? true) || game.user.isGM))
+      if (subtype && ((item.system.identified ?? true) || game.user.isGM) && !["weapon"].includes(item.type))
         typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${item.type}.${subtype}.Single`);
       else typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
 

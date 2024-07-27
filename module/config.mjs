@@ -1887,28 +1887,28 @@ export const auraStrengths = {
 // Weapon Types
 export const weaponTypes = {
   simple: {
-    _label: "PF1.WeaponTypeSimple",
+    _label: "PF1.Subtypes.Item.weapon.simple.Single",
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   martial: {
-    _label: "PF1.WeaponTypeMartial",
+    _label: "PF1.Subtypes.Item.weapon.martial.Single",
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   exotic: {
-    _label: "PF1.WeaponTypeExotic",
+    _label: "PF1.Subtypes.Item.weapon.exotic.Single",
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   misc: {
-    _label: "PF1.Misc",
+    _label: "PF1.Subtypes.Item.weapon.misc.Single",
     splash: "PF1.WeaponTypeSplash",
     other: "PF1.Other",
   },

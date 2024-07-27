@@ -947,9 +947,9 @@ export class ItemSheetPF extends ItemSheet {
       if (
         material.addon && // Filter addons by chosen material
         !(
-          (material.id === "alchemicalsilver" &&
-            ["adamantine", "coldiron", "mithral", "sunsilver"].includes(chosenMaterial)) ||
-          (["heatstoneplating", "lazurite", "sunsilk"].includes(material.id) && itemType === "weapon")
+          (material.id === "alchemicalSilver" &&
+            ["adamantine", "coldIron", "mithral", "sunsilver"].includes(chosenMaterial)) ||
+          (["heatstonePlating", "lazurite", "sunsilk"].includes(material.id) && itemType === "weapon")
         )
       ) {
         addonList.push({ key: material.id, name: material.name });

@@ -235,7 +235,7 @@ export class ItemActionSheet extends FormApplication {
       ) {
         if (!material.addon && !material.basic) {
           materialList[material.id] = material.name;
-        } else if (!material.basic && !["heatstoneplating", "lazurite", "sunsilk"].includes(material.id)) {
+        } else if (!material.basic && !["heatstonePlating", "lazurite", "sunsilk"].includes(material.id)) {
           addonList.push({ key: material.id, name: material.name });
         }
       }

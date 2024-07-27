@@ -119,7 +119,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "alchemicalsilver",
+      _id: "alchemicalSilver",
       name: "PF1.Materials.Types.AlchemicalSilver",
       shortName: "PF1.Materials.Types.Silver",
       dr: true,
@@ -145,7 +145,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "angelskin",
+      _id: "angelSkin",
       name: "PF1.Materials.Types.AngelSkin",
       baseMaterial: "leather",
       masterwork: true,
@@ -229,7 +229,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "bloodcrystal",
+      _id: "bloodCrystal",
       name: "PF1.Materials.Types.BloodCrystal",
       allowed: {
         buckler: false,
@@ -271,7 +271,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "coldiron",
+      _id: "coldIron",
       name: "PF1.Materials.Types.ColdIron",
       dr: true,
       price: {
@@ -307,7 +307,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "darkleafcloth",
+      _id: "darkleafCloth",
       name: "PF1.Materials.Types.DarkleafCloth",
       baseMaterial: "leather",
       masterwork: true,
@@ -391,7 +391,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "eelhide",
+      _id: "eelHide",
       name: "PF1.Materials.Types.EelHide",
       baseMaterial: "leather",
       masterwork: true,
@@ -416,7 +416,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "elysianbronze",
+      _id: "elysianBronze",
       name: "PF1.Materials.Types.ElysianBronze",
       allowed: {
         buckler: false,
@@ -437,7 +437,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "fireforgedsteel",
+      _id: "fireForgedSteel",
       name: "PF1.Materials.Types.FireForgedSteel",
       masterwork: true,
       allowed: {
@@ -459,7 +459,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "frostforgedsteel",
+      _id: "frostForgedSteel",
       name: "PF1.Materials.Types.FrostForgedSteel",
       masterwork: true,
       allowed: {
@@ -514,7 +514,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "griffonmane",
+      _id: "griffonMane",
       name: "PF1.Materials.Types.GriffonMane",
       baseMaterial: "cloth",
       allowed: {
@@ -537,7 +537,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "heatstoneplating",
+      _id: "heatstonePlating",
       name: "PF1.Materials.Types.HeatstonePlating",
       addon: true,
       allowed: {
@@ -627,7 +627,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "liquidglass",
+      _id: "liquidGlass",
       name: "PF1.Materials.Types.LiquidGlass",
       healthMultiplier: 0.34,
       price: {
@@ -641,7 +641,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "livingsteel",
+      _id: "livingSteel",
       name: "PF1.Materials.Types.LivingSteel",
       hardness: 15,
       healthMultiplier: 1.16,
@@ -662,7 +662,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "mithral",
       name: "PF1.Materials.Types.Mithral",
-      treatedAs: "alchemicalsilver",
+      treatedAs: "alchemicalSilver",
       masterwork: true,
       armor: {
         acp: 3,
@@ -690,7 +690,7 @@ export class MaterialTypes extends Registry {
       _id: "nexavaranSteel",
       name: "PF1.Materials.Types.NexavaranSteel",
       dr: true,
-      treatedAs: "coldiron",
+      treatedAs: "coldIron",
       price: {
         multiplier: 1.5,
         lightWeapon: 3_000,
@@ -799,7 +799,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "singingsteel",
+      _id: "singingSteel",
       name: "PF1.Materials.Types.SingingSteel",
       masterwork: true,
       armor: {
@@ -828,7 +828,7 @@ export class MaterialTypes extends Registry {
       },
     },
     {
-      _id: "spiresteel",
+      _id: "spireSteel",
       name: "PF1.Materials.Types.SpireSteel",
       masterwork: true,
       allowed: {
@@ -878,7 +878,7 @@ export class MaterialTypes extends Registry {
     {
       _id: "sunsilver",
       name: "PF1.Materials.Types.Sunsilver",
-      treatedAs: "alchemicalsilver",
+      treatedAs: "alchemicalSilver",
       masterwork: true,
       hardness: 8,
       healthMultiplier: 0.34,

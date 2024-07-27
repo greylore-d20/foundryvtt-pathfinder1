@@ -182,7 +182,7 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @internal
-   * @param src - Source info
+   * @param {SourceInfo} src - Source info
    */
   static _getSourceLabel(src) {
     const item = src.change?.parent;
@@ -475,6 +475,7 @@ export class ActorPF extends ActorBasePF {
     this.system.details ??= {};
     this.system.details.level ??= {};
 
+    /** @type {Record<string, SourceInfo>} */
     this.sourceInfo = {};
     this.changeFlags = {};
 
@@ -1886,9 +1887,11 @@ export class ActorPF extends ActorBasePF {
 
     // Add extra data
     const rollData = this.getRollData();
-    for (const [changeTarget, changeGrp] of Object.entries(this.sourceInfo)) {
-      for (const grp of Object.values(changeGrp)) {
-        sourceDetails[changeTarget] ||= [];
+    for (const [path, changeGrp] of Object.entries(this.sourceInfo)) {
+      /** @type {Array<SourceInfo[]>} */
+      const sourceGroups = Object.values(changeGrp);
+      for (const grp of sourceGroups) {
+        sourceDetails[path] ||= [];
         for (const src of grp) {
           src.operator ||= "add";
           // TODO: Separate source name from item type label
@@ -1896,7 +1899,7 @@ export class ActorPF extends ActorBasePF {
           let srcValue =
             src.value != null
               ? src.value
-              : RollPF.safeRollAsync(src.formula || "0", rollData, [changeTarget, src, this], {
+              : RollPF.safeRollAsync(src.formula || "0", rollData, [path, src, this], {
                   suppressError: !this.isOwner,
                 }).total;
           if (src.operator === "set") {
@@ -1911,7 +1914,7 @@ export class ActorPF extends ActorBasePF {
             if (dexDenied && srcValue > 0 && src.modifier === "dodge" && src.operator === "add" && src.change?.isAC)
               continue;
 
-            sourceDetails[changeTarget].push({
+            sourceDetails[path].push({
               name: label.replace(/[[\]]/g, ""),
               modifier: src.modifier || "",
               value: srcValue,
@@ -5167,4 +5170,16 @@ export class ActorPF extends ActorBasePF {
  * @property {object} types - Damage type data
  * @property {string} types.custom - Custom damage types
  * @property {string[]} types.values - Standard damage types
+ */
+
+/**
+ * TODO: Merge data/handling to changes
+ *
+ * @typedef {object} SourceInfo
+ * @property {string} modifier - Bonus type
+ * @property {string} name - Item name or other label
+ * @property {"add"|"set"} operator - Change operator
+ * @property {string} type - Arbitrary type
+ * @property {number} value - Change value
+ * @property {ItemChange} change - Parent change
  */

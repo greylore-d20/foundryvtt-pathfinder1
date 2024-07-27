@@ -20,7 +20,7 @@ export const registerActorItemAttackTests = () => {
       let actor;
       const messages = [];
       before(async () => {
-        actor = await createTestActor({ system: { abilities: { str: { value: 18 } } } }, { temporary: false });
+        actor = await createTestActor({ system: { abilities: { str: { value: 18 } } } });
         shared.actor = actor;
       });
       after(async () => {

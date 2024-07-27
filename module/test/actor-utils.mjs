@@ -30,14 +30,16 @@ export const createTestActor = async (data = {}, options = {}) => {
           cha: { value: 17 },
         },
       },
+      flags: {
+        pf1: {
+          forTesting: true,
+        },
+      },
     },
     data
   );
-  const { temporary = false, prepareData = true } = options;
-  /** @type {ActorPF} */
-  const actor = await Actor.implementation.create(createData, { temporary });
-  if (temporary && prepareData) actor.reset();
-  return actor;
+
+  return Actor.implementation.create(createData);
 };
 
 /**
@@ -53,9 +55,15 @@ export const createTestActor = async (data = {}, options = {}) => {
 export const addCompendiumItemToActor = async (actor, packName, itemName, extraData = {}) => {
   const packItemData = await fetchPackEntryData(packName, itemName, true);
   const data = foundry.utils.mergeObject(packItemData, extraData, { inplace: false });
-  const isTemporaryActor = !actor.id;
-  const item = await Item.implementation.create(data, { parent: actor, temporary: isTemporaryActor });
-  if (isTemporaryActor) actor.reset();
+  foundry.utils.mergeObject(data, {
+    flags: {
+      pf1: {
+        forTesting: true,
+      },
+    },
+  });
+
+  const item = await Item.implementation.create(data, { parent: actor });
   return item;
 };
 

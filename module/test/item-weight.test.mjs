@@ -20,7 +20,7 @@ export const registerItemWeightTests = () => {
 
       before(async () => {
         // Use permanent actor to allow testing regular item creation calls
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
 
         // Create world item
         const acid = await fetchPackEntryData("pf1.items", "Acid");

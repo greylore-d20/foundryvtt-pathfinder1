@@ -2111,7 +2111,7 @@ export const extraAttacks = {
   // Unchained Monk's Flurry of Blows
   unflurry: {
     label: "PF1.ExtraAttacks.UnFlurry",
-    count: "min(4, ceil(@bab / 5)) + floor((@class.level + 9) / 10)",
+    count: "min(3, ceil(@bab / 5) - 1) + floor((@class.level + 9) / 10)",
     bonus: "max(0, @attackCount - floor((@class.level + 9) / 10)) * -5",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
     iteratives: false,

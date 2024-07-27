@@ -12,6 +12,7 @@ import { RollPF } from "../dice/roll.mjs";
  * @property {number} value
  * @property {string} flavor
  * @property {boolean} continuous
+ * @property {ItemPF|ActorPF} parent
  */
 export class ItemChange extends foundry.abstract.DataModel {
   static defineSchema() {

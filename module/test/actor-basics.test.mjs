@@ -21,7 +21,7 @@ export const registerActorBasicTests = () => {
       const messages = [];
       before(async () => {
         // Requires actor to NOT be temporary for initiative rolls
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
         shared.actor = actor;
       });
       after(async () => {

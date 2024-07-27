@@ -18,7 +18,7 @@ export const registerActorItemClassTests = () => {
       /** @type {ActorPF} */
       let actor;
       before(async () => {
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
         shared.actor = actor;
       });
       after(async () => {

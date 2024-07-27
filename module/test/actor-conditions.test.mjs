@@ -13,7 +13,7 @@ export const registerActorConditionsTests = () => {
       /** @type {ActorPF} */
       let actor;
       before(async () => {
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
       });
 
       after(async () => {

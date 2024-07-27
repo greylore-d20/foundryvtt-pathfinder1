@@ -28,7 +28,7 @@ export const registerContainerItemTests = () => {
 
       before(async () => {
         // Use permanent actor to allow testing regular item creation calls
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
         shared.actor = actor;
 
         settingUnits = game.settings.get("pf1", "units");

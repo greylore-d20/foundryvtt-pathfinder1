@@ -611,7 +611,7 @@ export class ItemSpellPF extends ItemPF {
 
   /**
    * @param {object} itemData - A spell item's data.
-   * @returns {number[]} An array containing the spell level and caster level.
+   * @returns {[number,number]} - A tuple containing the spell level and caster level in order.
    */
   static getMinimumCasterLevelBySpellData(itemData) {
     const learnedAt = Object.entries(itemData.system.learnedAt?.class ?? {})?.reduce((cur, [classId, level]) => {

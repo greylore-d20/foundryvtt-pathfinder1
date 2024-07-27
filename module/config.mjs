@@ -2101,7 +2101,7 @@ export const extraAttacks = {
   // TODO: Make attack handling allow flurries to use normal iteratives.
   flurry: {
     label: "PF1.ExtraAttacks.Flurry",
-    count: "min(4, ceil(@bab / 5)) + ceil((@class.level - 7) / 7)",
+    count: "min(3, ceil(@bab / 5) - 1) + ceil(@class.level / 7)",
     bonus: "-(floor(@attackCount / 2) * 5 + @fullAttack * 2)",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
     iteratives: false,

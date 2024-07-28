@@ -3967,9 +3967,9 @@ export class ActorPF extends ActorBasePF {
     wt.penalty = level * wtMult + wtMod;
 
     const penalty = wt.penalty;
-    const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
     // TODO: Convert to changes
     if (penalty != 0) {
+      const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
       for (const fk of changeFlatKeys) {
         const flats = getChangeFlat.call(this, fk, "untyped", -penalty);
         for (const k of flats) {
@@ -3978,6 +3978,19 @@ export class ActorPF extends ActorBasePF {
           foundry.utils.setProperty(this, k, curValue - penalty);
         }
       }
+
+      // Soft add change for attacks
+      const ch = new pf1.components.ItemChange({
+        _id: "woundThreshold",
+        formula: `-${penalty}`,
+        flavor: pf1.config.woundThresholdConditions[wt.level],
+        target: "attack",
+        type: "untyped",
+        value: -penalty,
+      });
+      this.changes.set(ch.id, ch);
+    } else {
+      this.changes.delete("woundThreshold");
     }
   }
 

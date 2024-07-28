@@ -1415,10 +1415,6 @@ export class ActorSheetPF extends ActorSheet {
           });
         }
 
-        sources.push({
-          sources: getSource("system.attributes.attack.shared"),
-        });
-
         if (system.attributes.cmbAbility) {
           sources.push({
             sources: [
@@ -1432,7 +1428,8 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push(
           { sources: getSource("system.attributes.attack.general") },
-          { sources: getSource("system.attributes.cmb.bonus") }
+          { sources: getSource("system.attributes.cmb.bonus") },
+          { sources: getSource("system.attributes.attack.shared") }
         );
 
         notes = [...getNotes("attacks.attack"), ...getNotes("attacks.melee"), ...getNotes("misc.cmb")];

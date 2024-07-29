@@ -40,7 +40,7 @@ export function registerCurrencyTests() {
       describe("convert", function () {
         for (const [input, type, output] of conversions) {
           it(`${input} = ${objStr(output)}`, function () {
-            expect(pf1.utils.currency.convert(input, type)).to.deep.equal(output);
+            expect(pf1.utils.currency.convert(input, type, { pad: false })).to.deep.equal(output);
           });
         }
       });
@@ -48,7 +48,7 @@ export function registerCurrencyTests() {
       describe("split", function () {
         for (const [input, output] of splits) {
           it(`${input} = ${objStr(output)}`, function () {
-            expect(pf1.utils.currency.split(input)).to.deep.equal(output);
+            expect(pf1.utils.currency.split(input, { pad: false })).to.deep.equal(output);
           });
         }
       });

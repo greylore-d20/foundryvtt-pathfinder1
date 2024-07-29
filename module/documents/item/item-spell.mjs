@@ -687,8 +687,27 @@ export class ItemSpellPF extends ItemPF {
         hardness: 0,
         hp: { value: 1, max: 1 },
         actions: origData.system.actions ?? [],
+        sources: origData.system.sources ?? [],
       },
     };
+
+    // Add basic item type source as source for the consumable
+    const extraSources = {
+      wand: { id: "PZO1110", pages: "496" },
+      scroll: { id: "PZO1110", pages: "490-491" },
+      potion: { id: "PZO1110", pages: "477-478" },
+    };
+    const xsrc = extraSources[type];
+    if (xsrc) {
+      const osrc = itemData.system.sources.find((s) => s.id == xsrc.id);
+      if (osrc) {
+        // Merge pages when same source already exists
+        if (osrc.pages) osrc.pages += `, ${xsrc.pages}`;
+        else osrc.pages = xsrc.pages;
+      } else {
+        itemData.sources.push(xsrc);
+      }
+    }
 
     // Initialize default action
     if (itemData.system.actions.length == 0) itemData.system.actions.push(defaultAction);

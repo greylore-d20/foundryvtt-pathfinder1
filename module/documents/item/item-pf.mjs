@@ -1449,7 +1449,7 @@ export class ItemPF extends ItemBasePF {
         });
       }
 
-      const shared = await this.executeScriptCalls("use", {}, shared);
+      await this.executeScriptCalls("use", {}, shared);
       rollMode = shared.rollMode || rollMode;
       if (shared.reject) return shared;
 

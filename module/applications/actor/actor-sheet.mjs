@@ -424,7 +424,8 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
     result.labels = item.getLabels({ actionId: defaultAction?.id, rollData });
-    result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
+    result.hasAction =
+      item.hasAction || item.getScriptCalls("use").length > 0 || item.getScriptCalls("postUse").length > 0;
     if (defaultAction) {
       result.hasAttack = defaultAction.hasAttack;
       result.hasMultiAttack = defaultAction.hasMultiAttack;

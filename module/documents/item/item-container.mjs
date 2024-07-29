@@ -146,7 +146,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
 
     // Update dependant data and resources
     this.items.forEach((item) => {
-      item._prepareDependentData();
+      item._prepareDependentData(final);
     });
   }
 

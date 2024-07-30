@@ -6,33 +6,42 @@ People and credits are listed in no particular order.
 
 ## Lorc's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 
-- [Heart Inside](https://game-icons.net/1x1/lorc/heart-inside.html)
-- [Punch Blast](https://game-icons.net/1x1/lorc/punch-blast.html)
+- [Battle Gear](https://game-icons.net/1x1/lorc/battle-gear.html)
 - [Brain](https://game-icons.net/1x1/lorc/brain.html)
 - [Divert](https://game-icons.net/1x1/lorc/divert.html)
-- [Magic Swirl](https://game-icons.net/1x1/lorc/magic-swirl.html)
-- [Magic Palm](https://game-icons.net/1x1/lorc/magic-palm.html)
-- [Hand](https://game-icons.net/1x1/lorc/hand.html)
-- [Battle Gear](https://game-icons.net/1x1/lorc/battle-gear.html)
-- [Quill and Ink](https://game-icons.net/1x1/lorc/quill-ink.html)
+- [Dying](https://game-icons.net/1x1/lorc/pummeled.html)
+- [Flat-Footed](https://game-icons.net/1x1/lorc/footprint.html)
 - [Gears](https://game-icons.net/1x1/lorc/gears.html)
+- [Hand](https://game-icons.net/1x1/lorc/hand.html)
 - [Hazard Sign](https://game-icons.net/1x1/lorc/hazard-sign.html)
+- [Heart Inside](https://game-icons.net/1x1/lorc/heart-inside.html)
+- [Magic Palm](https://game-icons.net/1x1/lorc/magic-palm.html)
+- [Magic Swirl](https://game-icons.net/1x1/lorc/magic-swirl.html)
+- [Punch Blast](https://game-icons.net/1x1/lorc/punch-blast.html)
+- [Quill and Ink](https://game-icons.net/1x1/lorc/quill-ink.html)
 
 ## Delapouite's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 
-- [Expense](https://game-icons.net/1x1/delapouite/expense.html)
-- [Spellbook](https://game-icons.net/1x1/delapouite/spell-book.html)
-- [Upgrade](https://game-icons.net/1x1/delapouite/upgrade.html)
-- [Plug](https://game-icons.net/1x1/delapouite/plug.html)
-- [Wheelbarrow](https://game-icons.net/1x1/delapouite/wheelbarrow.html)
-- [Weight](https://game-icons.net/1x1/delapouite/weight.html)
 - [Coins](https://game-icons.net/1x1/delapouite/coins.html)
-- [Skills](https://game-icons.net/1x1/delapouite/skills.html)
+- [Expense](https://game-icons.net/1x1/delapouite/expense.html)
 - [Info](https://game-icons.net/1x1/delapouite/info.html)
+- [Plug](https://game-icons.net/1x1/delapouite/plug.html)
+- [Skills](https://game-icons.net/1x1/delapouite/skills.html)
+- [Spellbook](https://game-icons.net/1x1/delapouite/spell-book.html)
+- [Stable](https://game-icons.net/1x1/delapouite/heart-beats.html)
+- [Upgrade](https://game-icons.net/1x1/delapouite/upgrade.html)
+- [Weight](https://game-icons.net/1x1/delapouite/weight.html)
+- [Wheelbarrow](https://game-icons.net/1x1/delapouite/wheelbarrow.html)
 
 ## sbed's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 
 - [Battery Pack](https://game-icons.net/1x1/sbed/battery-pack.html)
+
+## tw-dnd's icons ([GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html))
+
+- [Disabled](https://github.com/intrinsical/tw-dnd/blob/main/icons/condition/stunned.svg)
+- [Petrified](https://github.com/intrinsical/tw-dnd/blob/main/icons/condition/petrified.svg)
+- [Unconscious](https://github.com/intrinsical/tw-dnd/blob/main/icons/condition/unconscious.svg)
 
 ## Simone Ricciardi
 

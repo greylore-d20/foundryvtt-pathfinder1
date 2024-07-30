@@ -387,18 +387,20 @@ export class ActorSheetPF extends ActorSheet {
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
     const condImmunities = new Set(this.actor.system.traits?.ci?.value ?? []);
     context.conditions = naturalSort(
-      pf1.registry.conditions.map((cond) => ({
-        id: cond.id,
-        img: cond.texture,
-        immune: condImmunities.has(cond.id),
-        active: conditions[cond.id] ?? false,
-        items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
-        get inherited() {
-          return this.items.size > 0;
-        },
-        label: cond.name,
-        compendium: cond.journal,
-      })),
+      pf1.registry.conditions
+        .filter((cond) => cond.showInBuffsTab)
+        .map((cond) => ({
+          id: cond.id,
+          img: cond.texture,
+          immune: condImmunities.has(cond.id),
+          active: conditions[cond.id] ?? false,
+          items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
+          get inherited() {
+            return this.items.size > 0;
+          },
+          label: cond.name,
+          compendium: cond.journal,
+        })),
       "label"
     );
 

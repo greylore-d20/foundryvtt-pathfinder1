@@ -41,6 +41,7 @@ export class Condition extends RegistryEntry {
       journal: new fields.StringField({ nullable: true, blank: false, required: false }),
       showInDefense: new fields.BooleanField({ required: false, initial: true }),
       showInAction: new fields.BooleanField({ required: false, initial: true }),
+      showInBuffsTab: new fields.BooleanField({ required: false, initial: true }),
     };
   }
 }
@@ -61,7 +62,7 @@ export class Conditions extends Registry {
   /**
    * An array of allowed tracks of condition advancement.
    */
-  static TRACKS = /** @type {const} */ (["fear", "lethargy"]);
+  static TRACKS = /** @type {const} */ (["dying", "fear", "lethargy"]);
 
   /**
    * @internal
@@ -149,6 +150,14 @@ export class Conditions extends Registry {
       showInAction: false,
     },
     {
+      _id: "dead",
+      name: "PF1.Condition.dead",
+      texture: "icons/svg/skull.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.YvycF7bsU1hPm4pX",
+      track: "dying",
+      showInBuffsTab: false,
+    },
+    {
       _id: "deaf",
       name: "PF1.Condition.deaf",
       texture: "systems/pf1/icons/conditions/deaf.png",
@@ -162,6 +171,31 @@ export class Conditions extends Registry {
           },
         ],
       },
+    },
+    {
+      _id: "disabled",
+      name: "PF1.Condition.disabled",
+      texture: "systems/pf1/icons/conditions/disabled.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.dtHHibCiKZzdjyvp",
+      track: "dying",
+      showInDefense: false,
+    },
+    {
+      _id: "dying",
+      name: "PF1.Condition.dying",
+      texture: "systems/pf1/icons/conditions/dying.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.zG6xEGMIerpbnND0",
+      mechanics: {
+        changes: [
+          {
+            ...this.SET_TO_ZERO,
+            target: "dex",
+          },
+        ],
+        flags: ["loseDexToAC"],
+      },
+      track: "dying",
+      showInDefense: false,
     },
     {
       _id: "entangled",
@@ -226,6 +260,16 @@ export class Conditions extends Registry {
       },
       track: "lethargy",
       showInDefense: false,
+    },
+    {
+      _id: "flatFooted",
+      name: "PF1.Condition.flatFooted",
+      texture: "systems/pf1/icons/conditions/flat-footed.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.eSvkrrl3US7RJTai",
+      mechanics: {
+        flags: ["loseDexToAC"],
+      },
+      showInAction: false,
     },
     {
       _id: "frightened",
@@ -385,6 +429,23 @@ export class Conditions extends Registry {
       showInAction: false,
     },
     {
+      _id: "petrified",
+      name: "PF1.Condition.petrified",
+      texture: "systems/pf1/icons/conditions/petrified.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.ayGQWwbrhAc99pkH",
+      mechanics: {
+        changes: [
+          {
+            ...this.SET_TO_ZERO,
+            target: "dex",
+          },
+        ],
+        flags: ["loseDexToAC"],
+      },
+      showInAction: false,
+      showInDefense: false,
+    },
+    {
       _id: "pinned",
       name: "PF1.Condition.pinned",
       texture: "systems/pf1/icons/conditions/pinned.png",
@@ -516,6 +577,44 @@ export class Conditions extends Registry {
       showInAction: false,
     },
     {
+      _id: "squeezing",
+      name: "PF1.Condition.squeezing",
+      texture: "systems/pf1/icons/conditions/squeezing.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.jzeZ0Uf31CAMZra9",
+      mechanics: {
+        changes: [
+          {
+            formula: -4,
+            target: "ac",
+            type: "untyped",
+          },
+          {
+            formula: -4,
+            target: "attack",
+            type: "untyped",
+          },
+        ],
+      },
+    },
+    {
+      _id: "stable",
+      name: "PF1.Condition.stable",
+      texture: "systems/pf1/icons/conditions/stable.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.krgVb43Vd62dqpYr",
+      mechanics: {
+        changes: [
+          {
+            ...this.SET_TO_ZERO,
+            target: "dex",
+          },
+        ],
+        flags: ["loseDexToAC"],
+      },
+      track: "dying",
+      showInAction: false,
+      showInDefense: false,
+    },
+    {
       _id: "staggered",
       name: "PF1.Condition.staggered",
       texture: "systems/pf1/icons/conditions/staggered.png",
@@ -539,23 +638,18 @@ export class Conditions extends Registry {
       showInAction: false,
     },
     {
-      _id: "squeezing",
-      name: "PF1.Condition.squeezing",
-      texture: "systems/pf1/icons/conditions/squeezing.png",
-      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.jzeZ0Uf31CAMZra9",
+      _id: "unconscious",
+      name: "PF1.Condition.unconscious",
+      texture: "systems/pf1/icons/conditions/unconscious.svg",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.kHwbZ38VHCa1wkUF",
       mechanics: {
         changes: [
           {
-            formula: -4,
-            target: "ac",
-            type: "untyped",
-          },
-          {
-            formula: -4,
-            target: "attack",
-            type: "untyped",
+            ...this.SET_TO_ZERO,
+            target: "dex",
           },
         ],
+        flags: ["loseDexToAC"],
       },
     },
   ];

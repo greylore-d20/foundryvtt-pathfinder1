@@ -2610,8 +2610,9 @@ export class ActorPF extends ActorBasePF {
    * @param {number} [casting.offset] - Level offset
    * @returns {Promise<this>} - Promise to updated document
    */
-  createSpellbook(casting = {}) {
+  createSpellbook(casting = {}, { commit = true } = {}) {
     const books = this.system.attributes.spells.spellbooks ?? {};
+
     const oldBook = casting.class
       ? Object.entries(books).find(([_, book]) => !!book.class && book.class === casting.class)
       : null;
@@ -2654,7 +2655,8 @@ export class ActorPF extends ActorBasePF {
       },
     };
 
-    return this.update(updateData);
+    if (commit) return this.update(updateData);
+    else return updateData;
   }
 
   /* -------------------------------------------- */

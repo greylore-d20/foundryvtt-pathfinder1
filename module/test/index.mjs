@@ -17,12 +17,14 @@ import { registerActorRestTests } from "./actor-rest.test.mjs";
 import { registerActorStaticTests } from "./actor-static.tests.mjs";
 import { registerConfigTests } from "./config.test.mjs";
 import { registerCurrencyTests } from "./currency.test.mjs";
+import { registerWoundThresholdsTests } from "./wound-thresholds.test.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
   registerConfigTests();
   registerActorBasicTests();
   registerActorConditionsTests();
+  registerWoundThresholdsTests();
   registerActorStaticTests();
   registerActorItemRaceTests();
   registerActorItemClassTests();

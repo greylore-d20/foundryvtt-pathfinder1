@@ -543,7 +543,12 @@
 
           > img {
             border: none;
-            filter: invert(88%) sepia(11%) saturate(158%) hue-rotate(13deg) brightness(98%) contrast(93%);
+            &[src*=".png"] {
+              filter: invert(88%) sepia(11%) saturate(158%) hue-rotate(13deg) brightness(98%) contrast(93%);
+            }
+            &[src*=".svg"] {
+              filter: invert(1);
+            }
           }
 
           > .details {
@@ -596,6 +601,10 @@
 
         &.active a.checkbox > img {
           filter: unset;
+
+          &[src*=".svg"] {
+            background: black;
+          }
         }
       }
     }

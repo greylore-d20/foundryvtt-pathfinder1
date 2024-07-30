@@ -64,15 +64,18 @@ To create a development setup:
 
 To build the system, you now have multiple options:
 
-- Run `npm run build`.
-  This builds the complete, production-ready system into a `dist` directory.
-  Copying this directory into your game's `Data/systems/` folder with its name changed to `pf1`, or symlinking the `dist` directory as `pf1` will install the system.
-- Run `npm run build:watch`.
-  This builds the system and afterwards watches for changes, rebuilding the system when a change is detected.
-- Run `npm run build:serve`.
-  This builds the system _and_ starts a Vite development server, which serves as a proxy for a Foundry server running on port `30000`.
-  File changes will either trigger a reload of the browser page, or be hot reloaded (in case of less or handlebars files).
-  _This is the recommended development setup._
+- Recommended:
+
+  - Run `npm run build:serve`.
+    This builds the system _and_ starts a Vite development server, which serves as a proxy for a Foundry server running on port `30000`.
+    File changes will either trigger a reload of the browser page, or be hot reloaded (in case of less or handlebars files).
+
+- Alternative methods:
+  - Run `npm run build`.
+    This builds the complete, production-ready system into a `dist` directory.
+    Copying this directory into your game's `Data/systems/` folder with its name changed to `pf1`, or symlinking the `dist` directory as `pf1` will install the system.
+  - Run `npm run build:watch`.
+    This builds the system and afterwards watches for changes, rebuilding the system when a change is detected.
 
 > _Note_:
 > If you want the build process to skip building packs, you can run `npx vite build`.

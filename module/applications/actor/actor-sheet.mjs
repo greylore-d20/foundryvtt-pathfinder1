@@ -1267,39 +1267,60 @@ export class ActorSheetPF extends ActorSheet {
         if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
         break;
       }
-      case "hit-points":
+      case "hit-points": {
+        const hp = system.attributes.hp;
         paths.push(
-          { path: "@attributes.hp.value", value: system.attributes.hp.value },
-          { path: "@attributes.hp.max", value: system.attributes.hp.max },
-          { path: "@attributes.hp.temp", value: system.attributes.hp.temp },
-          { path: "@attributes.hp.nonlethal", value: system.attributes.hp.nonlethal }
+          { path: "@attributes.hp.value", value: hp.value },
+          { path: "@attributes.hp.max", value: hp.max },
+          { path: "@attributes.hp.temp", value: hp.temp },
+          { path: "@attributes.hp.nonlethal", value: hp.nonlethal }
         );
+        if (hp.base) {
+          // npc lite sheet forced max
+          paths.push({ path: "@attributes.hp.base", value: hp.base });
+        }
+
         sources.push({ sources: getSource("system.attributes.hp.max"), untyped: true });
         break;
-      case "vigor": // Wounds & Vigor
+      }
+      case "vigor": {
+        // Wounds & Vigor
+        const vigor = system.attributes.vigor;
         paths.push(
-          { path: "@attributes.vigor.value", value: system.attributes.vigor.value },
-          { path: "@attributes.vigor.temp", value: system.attributes.vigor.temp },
-          { path: "@attributes.vigor.max", value: system.attributes.vigor.max }
+          { path: "@attributes.vigor.value", value: vigor.value },
+          { path: "@attributes.vigor.temp", value: vigor.temp },
+          { path: "@attributes.vigor.max", value: vigor.max }
         );
+        if (vigor.base) {
+          // npc lite sheet forced max
+          paths.push({ path: "@attributes.vigor.base", value: vigor.base });
+        }
 
         sources.push({
           sources: getSource("system.attributes.vigor.max"),
           untyped: true,
         });
         break;
-      case "wounds": // Wounds & Vigor
+      }
+      case "wounds": {
+        // Wounds & Vigor
+        const wounds = system.attributes.wounds;
         paths.push(
-          { path: "@attributes.wounds.value", value: system.attributes.wounds.value },
-          { path: "@attributes.wounds.max", value: system.attributes.wounds.max },
-          { path: "@attributes.wounds.threshold", value: system.attributes.wounds.threshold }
+          { path: "@attributes.wounds.value", value: wounds.value },
+          { path: "@attributes.wounds.max", value: wounds.max },
+          { path: "@attributes.wounds.threshold", value: wounds.threshold }
         );
+        if (wounds.base) {
+          // npc lite sheet forced max
+          paths.push({ path: "@attributes.wounds.base", value: wounds.base });
+        }
 
         sources.push({
           sources: getSource("system.attributes.wounds.max"),
           untyped: true,
         });
         break;
+      }
       case "speed": {
         const mode = detail;
 
@@ -1335,8 +1356,13 @@ export class ActorSheetPF extends ActorSheet {
         break;
       case "ac": {
         const ac = system.attributes.ac[detail];
+        if (!ac) return;
+        paths.push({ path: `@attributes.ac.${detail}.total`, value: ac.total });
+        if (ac.value) {
+          // lite sheet forced value
+          paths.push({ path: `@attributes.ac.${detail}.value`, value: ac.value });
+        }
         paths.push(
-          { path: `@attributes.ac.${detail}.total`, value: ac?.total },
           { path: "@armor.type", value: lazy.rollData.armor?.type },
           { path: "@shield.type", value: lazy.rollData.shield?.type }
         );
@@ -1359,11 +1385,17 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes(`misc.cmd`);
         break;
-      case "save":
+      case "save": {
+        const save = system.attributes.savingThrows[detail];
+        if (!save) return;
         paths.push({
           path: `@attributes.savingThrows.${detail}.total`,
-          value: system.attributes.savingThrows[detail]?.total,
+          value: save.total,
         });
+        if (save.base) {
+          // npc lite sheet forced value
+          paths.push({ path: `@attributes.savingThrows.${detail}.base`, value: save.base });
+        }
 
         sources.push({
           sources: getSource(`system.attributes.savingThrows.${detail}.total`),
@@ -1371,6 +1403,7 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes(`savingThrow.${detail}`);
         break;
+      }
       case "sr":
         paths.push({
           path: "@attributes.sr.total",
@@ -1384,17 +1417,24 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes("misc.sr");
         break;
-      case "bab":
+      case "bab": {
+        const bab = system.attributes.bab;
         paths.push({
           path: "@attributes.bab.total",
-          value: system.attributes.bab.total,
+          value: bab.total,
         });
+
+        // lite sheet forced value
+        if (bab.value) {
+          paths.push({ path: "@attributes.bab.value", value: bab.value });
+        }
 
         sources.push({
           sources: getSource("system.attributes.bab.total"),
           untyped: true,
         });
         break;
+      }
       case "cmb":
         paths.push({
           path: "@attributes.cmb.total",
@@ -1428,11 +1468,13 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = [...getNotes("attacks.attack"), ...getNotes("attacks.melee"), ...getNotes("misc.cmb")];
         break;
-      case "init":
-        paths.push({
-          path: "@attributes.init.total",
-          value: system.attributes.init.total,
-        });
+      case "init": {
+        const init = system.attributes.init;
+        paths.push({ path: "@attributes.init.total", value: init.total });
+        if (init.value) {
+          // npc lite sheet forced value
+          paths.push({ path: "@attributes.init.value", value: init.value });
+        }
 
         sources.push({
           sources: getSource("system.attributes.init.total"),
@@ -1440,6 +1482,7 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes("misc.init");
         break;
+      }
       case "abilityScore": {
         const abl = detail;
         const ability = system.abilities[detail] ?? {};

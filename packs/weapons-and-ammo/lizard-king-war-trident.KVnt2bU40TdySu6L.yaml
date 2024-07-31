@@ -16,7 +16,7 @@ system:
           type: attack
       damage:
         parts:
-          - formula: 'NULL'
+          - formula: sizeRoll(1,10, @size)
             type:
               custom: ''
               values:
@@ -28,6 +28,31 @@ system:
       name: Attack
       range:
         units: melee
+        value: '10'
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: 6SHOqEdKMKkNixDJ
+      ability:
+        attack: dex
+        critMult: 3
+        damage: str
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      name: Throw
+      range:
+        units: ft
         value: '10'
   baseTypes:
     - Lizard King War Trident
@@ -49,8 +74,6 @@ system:
   material:
     base:
       value: steel
-    normal:
-      value: steel
   price: 20
   properties:
     brc: true
@@ -60,6 +83,8 @@ system:
   subType: martial
   tags:
     - D&D 3.5
+  uses:
+    per: single
   weaponSubtype: 2h
   weight:
     value: 12

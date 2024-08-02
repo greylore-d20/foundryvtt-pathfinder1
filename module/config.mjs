@@ -2633,7 +2633,7 @@ export const sheetSections = {
       interface: {
         create: true,
       },
-      create: { type: "attack", system: { subType: "weapon" } },
+      create: { type: "attack", system: { subType: "weapon", proficient: true } },
       sort: 1_000,
     },
     natural: {
@@ -2952,7 +2952,7 @@ export const sheetSections = {
         create: true,
         types: true,
       },
-      create: { type: "attack", system: { subType: "weapon" } },
+      create: { type: "attack", system: { subType: "weapon", proficient: true } },
     },
   },
   // Misc section is only informal for sheet handling of special cases

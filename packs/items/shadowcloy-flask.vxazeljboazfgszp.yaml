@@ -1,8 +1,26 @@
 _id: vxazeljboazfgszp
 _key: '!items!vxazeljboazfgszp'
-img: systems/pf1/icons/items/inventory/dice.jpg
-name: Shadowcloy
+folder: kB3UEM2uyAcNWHIc
+img: icons/tools/laboratory/bowl-liquid-black.webp
+name: Shadowcloy flask
 system:
+  actions:
+    - _id: qAEbQ6nYUomVVD5x
+      ability:
+        attack: dex
+      actionType: twak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      name: Throw
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      touch: true
   description:
     value: >-
       <p>This thin black liquid is stored in airtight flasks because it
@@ -13,12 +31,15 @@ system:
       category darker than normal, with a creature already in natural darkness
       treating it as <em>supernatural</em> darkness. This effect lasts for 1
       round. A thrown shadowcloy flask has no effect on adjacent creatures or if
-      it misses.</p>
-  equipped: false
+      it misses.</p><h3>Construction</h3><p><strong>Craft (Alchemy)</strong> DC
+      20</p>
   price: 25
   sources:
     - id: PZO1121
+      pages: '111'
   subType: gear
+  tags:
+    - Fetchling
   weight:
     value: 1
 type: loot

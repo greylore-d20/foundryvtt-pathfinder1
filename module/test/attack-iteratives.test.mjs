@@ -162,6 +162,6 @@ export const registerAttackIterativesTests = () => {
         }
       });
     },
-    { displayName: "PF1: Attack Iteratives" }
+    { displayName: "PF1: Item – Attack Iteratives" }
   );
 };

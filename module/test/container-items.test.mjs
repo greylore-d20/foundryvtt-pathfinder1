@@ -248,6 +248,6 @@ export const registerContainerItemTests = () => {
         });
       }
     },
-    { displayName: "PF1: Container Item Tests" }
+    { displayName: "PF1: Item – Containers" }
   );
 };

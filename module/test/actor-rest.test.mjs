@@ -130,6 +130,6 @@ export const registerActorRestTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Rest Test" }
+    { displayName: "PF1: Actor – Resting" }
   );
 };

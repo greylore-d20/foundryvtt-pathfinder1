@@ -308,6 +308,6 @@ export const registerActorItemClassTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Class Item Tests" }
+    { displayName: "PF1: Actor – Class Items" }
   );
 };

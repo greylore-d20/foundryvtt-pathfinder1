@@ -241,6 +241,6 @@ export const registerActorConditionsTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Conditions Tests" }
+    { displayName: "PF1: Actor – Conditions" }
   );
 };

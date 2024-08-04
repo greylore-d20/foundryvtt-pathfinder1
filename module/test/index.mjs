@@ -21,20 +21,26 @@ import { registerWoundThresholdsTests } from "./wound-thresholds.test.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
+  // Config
   registerConfigTests();
-  registerActorBasicTests();
-  registerActorConditionsTests();
-  registerWoundThresholdsTests();
-  registerActorStaticTests();
-  registerActorItemRaceTests();
-  registerActorItemClassTests();
-  registerActorItemAttackTests();
-  registerAttackIterativesTests();
-  registerActorRestTests();
-  registerContainerItemTests();
-  registerItemWeightTests();
+  // Rolls (core functionality other things depend on)
   registerD20RollTests();
   registerFormulaParsingTests();
   registerSizeRollTests();
+  // Actor
+  registerActorStaticTests();
+  registerActorBasicTests();
+  registerActorConditionsTests();
+  registerActorItemRaceTests();
+  registerActorItemClassTests();
+  registerActorItemAttackTests();
+  // Actor functionality
+  registerActorRestTests();
+  registerWoundThresholdsTests();
+  // Items
+  registerAttackIterativesTests();
+  registerContainerItemTests();
+  registerItemWeightTests();
+  // Misc
   registerCurrencyTests();
 });

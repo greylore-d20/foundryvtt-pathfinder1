@@ -345,7 +345,7 @@ export const registerActorItemAttackTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Attack Item Tests" }
+    { displayName: "PF1: Actor – Attack Items" }
   );
 };
 

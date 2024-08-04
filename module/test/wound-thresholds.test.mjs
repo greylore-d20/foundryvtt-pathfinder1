@@ -176,7 +176,7 @@ export function registerWoundThresholdsTests() {
       });
     },
     {
-      displayName: "PF1: Wound Thresholds",
+      displayName: "PF1: Actor – Optional – Wound Thresholds",
     }
   );
 }

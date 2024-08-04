@@ -59,7 +59,7 @@ export function registerFormulaParsingTests() {
       });
     },
     {
-      displayName: "PF1: Formula Parsing",
+      displayName: "PF1: Roll – Formula Parsing",
     }
   );
 }

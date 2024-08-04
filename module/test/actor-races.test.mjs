@@ -54,6 +54,6 @@ export const registerActorItemRaceTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Race Item Tests" }
+    { displayName: "PF1: Actor – Race Items" }
   );
 };

@@ -26,6 +26,6 @@ export const registerActorStaticTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor static functions" }
+    { displayName: "PF1: Actor – Static Functions" }
   );
 };

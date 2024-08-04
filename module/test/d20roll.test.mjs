@@ -256,7 +256,7 @@ export function registerD20RollTests() {
       });
     },
     {
-      displayName: "PF1: D20RollPF Tests",
+      displayName: "PF1: Roll – D20RollPF",
     }
   );
 }

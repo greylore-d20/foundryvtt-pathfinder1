@@ -150,7 +150,7 @@ export const registerItemWeightTests = () => {
         });
       }
     },
-    { displayName: "PF1: Item Weight and Price Tests" }
+    { displayName: "PF1: Item – Weight and Price" }
   );
 };
 

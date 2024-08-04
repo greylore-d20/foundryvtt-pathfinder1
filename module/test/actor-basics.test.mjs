@@ -285,6 +285,6 @@ export const registerActorBasicTests = () => {
         unitTest_renderActorSheet(shared, context);
       });
     },
-    { displayName: "PF1: Basic Actor Tests" }
+    { displayName: "PF1: Actor – Basics" }
   );
 };

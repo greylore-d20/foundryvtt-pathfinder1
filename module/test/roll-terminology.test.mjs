@@ -250,7 +250,7 @@ export function registerSizeRollTests() {
       });
     },
     {
-      displayName: "PF1: Roll Terminology",
+      displayName: "PF1: Roll – Terminology",
     }
   );
 }

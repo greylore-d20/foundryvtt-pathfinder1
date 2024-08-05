@@ -191,7 +191,7 @@ export const registerActorBasicTests = () => {
             let msg;
             before(async () => {
               await actor.update({ "system.skills.crf.subSkills": { crf1: { name: "foo", ability: "int", rank: 1 } } });
-              msg = await actor.rollSkill("crf.subSkills.crf1", { skipDialog: true });
+              msg = await actor.rollSkill("crf.crf1", { skipDialog: true });
               messages.push(msg);
             });
 
@@ -204,7 +204,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct subject", function () {
-              expect(msg?.flags.pf1?.subject?.skill).to.equal("crf.subSkills.crf1");
+              expect(msg?.flags.pf1?.subject?.skill).to.equal("crf.crf1");
             });
           });
 

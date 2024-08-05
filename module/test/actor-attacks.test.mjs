@@ -25,7 +25,9 @@ export const registerActorItemAttackTests = () => {
       });
       after(async () => {
         await actor.delete();
-        await ChatMessage.implementation.deleteDocuments(messages.map((o) => o.id));
+      });
+      after(async () => {
+        await ChatMessage.implementation.deleteDocuments(messages.filter((m) => m).map((o) => o.id));
       });
 
       describe("longsword", function () {
@@ -50,8 +52,8 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.wLongsword.use({ skipDialog: true });
-            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
+            rolls = roll.systemRolls.attacks[0];
           });
 
           it("should have the correct attack formula", function () {
@@ -72,8 +74,8 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.aLongsword.use({ skipDialog: true });
-            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
+            rolls = roll.systemRolls.attacks[0];
           });
 
           it("should have the correct attack formula", function () {
@@ -97,8 +99,8 @@ export const registerActorItemAttackTests = () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "tiny" });
                 roll = await items.aLongsword.use({ skipDialog: true });
-                rolls = roll.systemRolls.attacks[0];
                 messages.push(roll);
+                rolls = roll.systemRolls.attacks[0];
               });
               after(async () => {
                 await actor.update({ "system.traits.size": prevSize });
@@ -121,8 +123,8 @@ export const registerActorItemAttackTests = () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "huge" });
                 roll = await items.aLongsword.use({ skipDialog: true });
-                rolls = roll.systemRolls.attacks[0];
                 messages.push(roll);
+                rolls = roll.systemRolls.attacks[0];
               });
               after(async () => {
                 await actor.update({ "system.traits.size": prevSize });
@@ -202,8 +204,8 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.bite.use({ skipDialog: true });
-            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
+            rolls = roll.systemRolls.attacks[0];
           });
 
           it("should have the correct attack formula", function () {
@@ -225,8 +227,8 @@ export const registerActorItemAttackTests = () => {
               const action = items.bite.defaultAction;
               await action.update({ naturalAttack: { primaryAttack: false } });
               roll = await items.bite.use({ skipDialog: true });
-              rolls = roll.systemRolls.attacks[0];
               messages.push(roll);
+              rolls = roll.systemRolls.attacks[0];
             });
 
             it("should have the correct attack formula", function () {

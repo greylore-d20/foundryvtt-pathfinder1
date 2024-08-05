@@ -91,6 +91,8 @@ export class ItemBasePF extends Item {
         }
 
         for (const newItem of newItems) {
+          if (!newItem.system) continue; // No system data in creation data
+
           // TODO: Somehow add child relation to the children
           await collect(newItem, { depth: depth + 1 });
         }
@@ -98,7 +100,10 @@ export class ItemBasePF extends Item {
     };
 
     // Collect supplements for all items
-    for (const item of items) await collect(item);
+    for (const item of items) {
+      if (!item.system) continue; // Creation data lacks .system
+      await collect(item);
+    }
 
     if (allSupplements.size) {
       // Add to items array

@@ -20,7 +20,7 @@ export const registerActorConditionsTests = () => {
         await actor.delete();
       });
 
-      const shakenCondition = { name: "Shaken", value: -2, type: "untyped" };
+      const shakenCondition = /** @type {const} */ ({ name: "Shaken", value: -2, type: "untyped" });
 
       // ---------------------------------- //
       // Shaken                             //
@@ -101,7 +101,7 @@ export const registerActorConditionsTests = () => {
           await actor.setCondition("sickened", false);
         });
 
-        const sickenedCondition = { name: "Sickened", value: -2, type: "untyped" };
+        const sickenedCondition = /** @type {const} */ ({ name: "Sickened", value: -2, type: "untyped" });
 
         it("can be enabled", async function () {
           expect(actor.hasCondition("sickened")).to.be.true;

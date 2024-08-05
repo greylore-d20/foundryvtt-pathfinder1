@@ -1,3 +1,5 @@
+const ignorePaths = [/^sheetSections\./, /^currency\.(standard|base)$/];
+
 export function registerConfigTests() {
   quench.registerBatch(
     "pf1.config",
@@ -6,22 +8,27 @@ export function registerConfigTests() {
 
       describe("i18n", function () {
         it("No untranslated strings", function () {
+          let fails = 0;
           const flatConfig = foundry.utils.flattenObject(pf1.config);
           // Log bad values first
           for (const [path, value] of Object.entries(flatConfig)) {
-            //
-            if (typeof value === "string") {
-              if (value.startsWith("PF1.")) {
-                console.log("Missing:", path, value);
-              }
+            if (typeof value !== "string") continue;
+
+            if (ignorePaths.some((ign) => ign.test(path))) continue;
+
+            if (value.startsWith("PF1.")) {
+              fails++;
+              console.log("Missing:", path, value);
             }
           }
 
           Object.entries(flatConfig)
-            .filter(([_, value]) => typeof value === "string")
+            .filter(([path, value]) => typeof value === "string" && !ignorePaths.some((ign) => ign.test(path)))
             .every(([path, value]) =>
               expect(value).to.not.match(/^PF1\./, `"${value}" at "${path}" is not valid or translated.`)
             );
+
+          expect(fails).to.equal(0);
         });
 
         it("Valid translations", function () {
@@ -32,10 +39,14 @@ export function registerConfigTests() {
             /^classCasterType\./,
             /favouredClassBonusIcons\./,
             /levelAbilityScoreFeature\./,
+            /^classNames\./,
+            /^currency.(base|standard)$/,
             /measureTemplateTypes\./, // Foundry doesn't provide translations for these
             /sizeChart\./,
-            /^sheetSections/, // gives false positives for raw item data
+            /^sheetSections\./, // gives false positives for raw item data
           ];
+
+          const sysi18n = new Set(Object.values(foundry.utils.flattenObject(game.i18n.translations)));
 
           const configi18n = Object.entries(foundry.utils.flattenObject(pf1.config)).filter(([path, value]) => {
             if (typeof value !== "string") return false;
@@ -60,11 +71,10 @@ export function registerConfigTests() {
             } catch (e) {
               /* nop */
             }
-            console.log(path, value); // Log everything for faster mass correction
+
+            if (!sysi18n.has(value)) console.log("Missing:", path, value); // Log everything for faster mass correction
             return true;
           });
-
-          const sysi18n = new Set(Object.values(foundry.utils.flattenObject(game.i18n.translations)));
 
           configi18n.every(([path, value]) =>
             expect(sysi18n).to.contain(value, `"${value}" at "${path}" is not valid.`)

@@ -670,6 +670,8 @@ export class LevelUpForm extends FormApplication {
   _initHPChoices() {
     this.config.health.type = this._getDefaultHealthOption();
 
+    if (this.config.isMythic) return;
+
     const hpConf = game.settings.get("pf1", "healthConfig");
     const clsConf = hpConf.getClassHD(this.item);
 

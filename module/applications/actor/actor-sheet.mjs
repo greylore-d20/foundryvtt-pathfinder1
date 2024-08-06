@@ -1845,16 +1845,19 @@ export class ActorSheetPF extends ActorSheet {
         });
         break;
       case "feats": {
-        const isMindless = this.actor.system.abilities?.int?.value === null;
-        if (!isMindless) {
-          const levels = Math.ceil(this.actor.system.attributes.hd.total / 2);
-          if (levels > 0) {
-            sources.push({ sources: [{ name: game.i18n.localize("PF1.FromLevels"), value: levels }], untyped: true });
-          }
-          const mythic = Math.ceil(this.actor.system.details.mythicTier / 2);
-          if (mythic > 0) {
-            sources.push({ sources: [{ name: game.i18n.localize("PF1.FromMythic"), value: mythic }], untyped: true });
-          }
+        const feats = this.actor.getFeatCount();
+
+        if (feats.levels > 0) {
+          sources.push({
+            sources: [{ name: game.i18n.localize("PF1.FromLevels"), value: feats.levels }],
+            untyped: true,
+          });
+        }
+        if (feats.mythic > 0) {
+          sources.push({
+            sources: [{ name: game.i18n.localize("PF1.FromMythic"), value: feats.mythic }],
+            untyped: true,
+          });
         }
 
         // Generate fake sources
@@ -1871,7 +1874,6 @@ export class ActorSheetPF extends ActorSheet {
             }
           });
 
-        const feats = this.actor.getFeatCount();
         if (feats.formula !== 0) {
           featSources.push({
             name: game.i18n.localize("PF1.BonusFeatFormula"),

@@ -4643,17 +4643,28 @@ export class ActorPF extends ActorBasePF {
   getFeatCount() {
     const feats = this.itemTypes.feat.filter((o) => o.subType === "feat");
 
+    const active = feats.filter((o) => o.isActive).length;
+    const owned = feats.length;
+
     const result = {
       max: 0,
-      active: feats.filter((o) => o.isActive).length,
-      owned: feats.length,
+      active,
+      owned,
+      disabled: owned - active,
       levels: 0,
       mythic: 0,
       formula: 0,
       changes: 0,
-      disabled: 0,
-      excess: 0,
-      missing: 0,
+      // Count totals
+      get discrepancy() {
+        return this.max - this.active;
+      },
+      get missing() {
+        return Math.max(0, this.discrepancy);
+      },
+      get excess() {
+        return Math.max(0, -this.discrepancy);
+      },
     };
 
     const isMindless = this.system.abilities?.int?.value === null;
@@ -4697,12 +4708,6 @@ export class ActorPF extends ActorBasePF {
       { ignoreTarget: true }
     ).reduce((cur, c) => cur + c.value, 0);
     result.max += result.changes;
-
-    // Count totals
-    const diff = result.max - result.active;
-    result.missing = Math.max(0, diff);
-    result.excess = Math.max(0, -diff);
-    result.disabled = result.owned - result.active;
 
     return result;
   }

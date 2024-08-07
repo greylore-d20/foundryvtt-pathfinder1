@@ -160,6 +160,7 @@ export class HealthConfig extends FormApplication {
     event.preventDefault();
 
     await game.settings.set("pf1", "healthConfig", {});
+    this.healthConfig = null; // remove cache
     return this.render();
   }
 

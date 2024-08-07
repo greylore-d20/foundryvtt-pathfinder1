@@ -2304,6 +2304,13 @@ export const contextNoteTargets = {
   cmd: { label: "PF1.CMD", category: "defense" },
   sr: { label: "PF1.SpellResistance", category: "defense" },
   init: { label: "PF1.Initiative", category: "misc" },
+  // Speeds
+  landSpeed: { label: "PF1.Movement.Mode.land", category: "speed" },
+  climbSpeed: { label: "PF1.Movement.Mode.climb", category: "speed" },
+  swimSpeed: { label: "PF1.Movement.Mode.swim", category: "speed" },
+  burrowSpeed: { label: "PF1.Movement.Mode.burrow", category: "speed" },
+  flySpeed: { label: "PF1.Movement.Mode.fly", category: "speed" },
+  allSpeeds: { label: "PF1.BuffTarAllSpeeds", category: "speed" },
 };
 
 export const contextNoteCategories = {
@@ -2314,6 +2321,7 @@ export const contextNoteCategories = {
   abilityChecks: { label: "PF1.BuffTarAbilityChecks" },
   spell: { label: "PF1.BuffTarSpells" },
   defense: { label: "PF1.Defense" },
+  speed: { label: "PF1.Movement.Speed" },
   misc: { label: "PF1.Misc" },
 };
 

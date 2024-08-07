@@ -240,13 +240,20 @@ export class ActionUse {
     }
 
     // Conditionals
-    Object.keys(formData).forEach((f) => {
-      const idx = f.match(/conditional\.(\d+)/)?.[1];
-      if (idx && formData[f]) {
-        if (!this.shared.conditionals) this.shared.conditionals = [parseInt(idx)];
-        else this.shared.conditionals.push(parseInt(idx));
-      }
-    });
+    const { conditional: conditionals } = foundry.utils.expandObject(formData);
+    if (conditionals) {
+      this.shared.conditionals = [];
+      Object.entries(conditionals).forEach(([idx, value]) => {
+        if (value) this.shared.conditionals.push(parseInt(idx));
+      });
+    }
+    // Conditional defaults for fast-forwarding
+    if (!this.shared.conditionals) {
+      this.shared.conditionals = this.shared.action.data.conditionals?.reduce((arr, con, i) => {
+        if (con.default) arr.push(i);
+        return arr;
+      }, []);
+    }
 
     // Apply secondary attack penalties
     if (
@@ -266,14 +273,6 @@ export class ActionUse {
 
     // Concentration enabled
     this.shared.concentrationCheck = formData["concentration"];
-
-    // Conditional defaults for fast-forwarding
-    if (!this.shared.conditionals && foundry.utils.isEmpty(formData)) {
-      this.shared.conditionals = this.shared.action.data.conditionals?.reduce((arr, con, i) => {
-        if (con.default) arr.push(i);
-        return arr;
-      }, []);
-    }
   }
 
   /**

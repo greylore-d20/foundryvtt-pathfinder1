@@ -1355,6 +1355,8 @@ export class ActorSheetPF extends ActorSheet {
         const [oD] = pf1.utils.convertDistance(speed.overland);
         const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
         paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
+
+        notes = [...getNotes(`${mode}Speed`), ...getNotes("allSpeeds")];
         break;
       }
       case "flyManeuverability":

@@ -634,11 +634,12 @@ function calculateHealth(actor, allClasses, changes) {
   const { continuous } = healthConfig;
 
   /**
-   * @param {number} value
-   * @param {number} fcb
-   * @param {ItemPF} source
+   * @param {number} value - Amount of health to add
+   * @param {ItemPF} source - Source item
    */
-  function pushHealth(value, fcb, source) {
+  function pushHealth(value, source) {
+    const fcb = pf1.config.favoredClassTypes.includes(source.subType) ? source.system.fc?.hp?.value || 0 : 0;
+
     changes.push(
       new pf1.components.ItemChange({
         formula: value,
@@ -672,38 +673,33 @@ function calculateHealth(actor, allClasses, changes) {
   }
 
   /**
-   * @param {ItemPF} healthSource
+   * @param {ItemPF} source - Source item
    */
-  function manualHealth(healthSource) {
-    const fcbHp = pf1.config.favoredClassTypes.includes(healthSource.subType)
-      ? healthSource.system.fc.hp.value || 0
-      : 0;
-
-    let health = healthSource.system.hp;
+  function manualHealth(source) {
+    let health = source.system.hp;
     if (!continuous) health = round(health);
 
-    pushHealth(health, fcbHp, healthSource);
+    pushHealth(health, source);
   }
 
   /**
-   * @param {ItemPF} healthSource - Class granting health
+   * @param {ItemPF} source - Class granting health
    * @param {object} config - Class type configuration
    * @param {number} config.rate - Automatic HP rate
    * @param {boolean} config.maximized - Is this class allowed to grant maximized HP
    * @param {object} state - State tracking
    */
-  function autoHealth(healthSource, { rate, maximized } = {}, state) {
-    const hpPerHD = healthSource.system.hd ?? 0;
+  function autoHealth(source, { rate, maximized } = {}, state) {
+    const hpPerHD = source.system.hd ?? 0;
     if (hpPerHD === 0) return;
 
-    let health = 0,
-      fcbHp = 0;
+    let health = 0;
 
     // Mythic
-    if (healthSource.subType === "mythic") {
+    if (source.subType === "mythic") {
       const hpPerTier = hpPerHD ?? 0;
       if (hpPerTier === 0) return;
-      const tiers = healthSource.system.level ?? 0;
+      const tiers = source.system.level ?? 0;
       if (tiers === 0) return;
       health = hpPerTier * tiers;
     }
@@ -712,7 +708,7 @@ function calculateHealth(actor, allClasses, changes) {
       let dieHealth = 1 + (hpPerHD - 1) * rate;
       if (!continuous) dieHealth = round(dieHealth);
 
-      const hitDice = healthSource.hitDice;
+      const hitDice = source.hitDice;
 
       let maxedHD = 0;
       if (maximized) {
@@ -721,10 +717,10 @@ function calculateHealth(actor, allClasses, changes) {
       }
       const maxedHp = maxedHD * hpPerHD;
       const levelHp = Math.max(0, hitDice - maxedHD) * dieHealth;
-      fcbHp = pf1.config.favoredClassTypes.includes(healthSource.subType) ? healthSource.system.fc.hp.value || 0 : 0;
       health = maxedHp + levelHp;
     }
-    pushHealth(health, fcbHp, healthSource);
+
+    pushHealth(health, source);
   }
 
   /**

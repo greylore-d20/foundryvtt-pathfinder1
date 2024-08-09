@@ -56,6 +56,10 @@ export class MaterialType extends RegistryEntry {
         lightArmor: new fields.NumberField({ required: false, initial: 0.0, integer: false, positive: false }),
         mediumArmor: new fields.NumberField({ required: false, initial: 0.0, integer: false, positive: false }),
         heavyArmor: new fields.NumberField({ required: false, initial: 0.0, integer: false, positive: false }),
+        enhancement: new fields.SchemaField({
+          // Bonus cost to apply enhancement. One time price increase on first enhancement.
+          weapon: new fields.NumberField({ required: false, initial: 0, min: 0 }),
+        }),
       }),
       weight: new fields.SchemaField({
         multiplier: new fields.NumberField({ required: false, initial: 1.0, integer: false, positive: true }),
@@ -64,6 +68,7 @@ export class MaterialType extends RegistryEntry {
     };
   }
 }
+
 /**
  * The singleton registry of material types.
  * At runtime this registry is accessible as `pf1.registry.materialTypes`.
@@ -276,11 +281,9 @@ export class MaterialTypes extends Registry {
       dr: true,
       price: {
         multiplier: 2.0,
-        lightWeapon: 2_000,
-        oneHandWeapon: 2_000,
-        twoHandWeapon: 2_000,
-        rangedOneHandWeapon: 2_000,
-        rangedTwoHandWeapon: 2_000,
+        enhancement: {
+          weapon: 2_000,
+        },
       },
     },
     {
@@ -693,11 +696,9 @@ export class MaterialTypes extends Registry {
       treatedAs: "coldIron",
       price: {
         multiplier: 1.5,
-        lightWeapon: 3_000,
-        oneHandWeapon: 3_000,
-        twoHandWeapon: 3_000,
-        rangedOneHandWeapon: 3_000,
-        rangedTwoHandWeapon: 3_000,
+        enhancement: {
+          weapon: 3_000,
+        },
       },
     },
     {

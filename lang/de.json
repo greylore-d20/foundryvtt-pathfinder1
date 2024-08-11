@@ -176,13 +176,15 @@
         }
       },
       "AbilityScore": {
-        "Label": "Eigenschaftswert",
+        "Label": "Attributswert",
         "PointsLeft": "Punkte übrig: {value}",
         "Item": {
-          "Name": "Erhöhte Eigenschaftswerte",
-          "Desc": "<p>Diese Funktion wird verwendet, um die Eigenschaftserhöhungen beim Stufenaufstieg nachzuverfolgen.</p>"
+          "Name": "Attributswerterhöhung",
+          "Desc": "<p>Diese Funktion wird verwendet, um die Attributswerterhöhung beim Stufenaufstieg nachzuverfolgen.</p>"
         },
-        "Next": "Das nächste mal für Charakterstufe {level}."
+        "Next": "Das nächste mal für Charakterstufe {level}.",
+        "NextLevel": "Nächste Erhöhung auf Charakterlevel {level}.",
+        "NextTier": "Nächste Erhöhung auf Legendenstufe {level}."
       },
       "Summary": {
         "Label": "Zusammenfassung",
@@ -202,7 +204,7 @@
           "Header": "Bonus für bevorzugte Klasse"
         },
         "AbilityScore": {
-          "Header": "Eigenschaftswerterhöhung",
+          "Header": "Attributswerterhöhung",
           "Gain": "{abl}: +{value}"
         },
         "Extra": {
@@ -805,7 +807,7 @@
     "BGSkillRanks": "Hintergrundfertigkeitsränge",
     "BGUsed": "Hintergrund verwendet",
     "AllSkills": "Alle Fertigkeiten",
-    "AutomaticSpellSlots": "Bonuszauberplätze für hohe Eigenschaftenswerte",
+    "AutomaticSpellSlots": "Bonuszauberplätze durch Attributswerte",
     "Uses": "Benutzt",
     "SeeText": "Siehe Text",
     "DC": "SG",
@@ -1116,7 +1118,7 @@
         "Confirm": "Bestätigen"
       },
       "PointBuy": {
-        "Warning": "Der Punkte-Kauf-Rechner ÜBERSCHREIBT die Attribute des Charakters.",
+        "Warning": "Der Punkte-Kauf-Rechner ÜBERSCHREIBT die Attributswerte des Charakters.",
         "Type": {
           "epic": "Epische-Fantasy",
           "low": "Low-Fantasy",
@@ -1347,7 +1349,10 @@
       "DelTitle": "Quelle entfernen: {entry}",
       "DelEntryDesc": "Möchtest du wirklich \"{entry}\" löschen?",
       "Extras": "Weitere Quellen",
-      "DateFormat": "YYYY-MM-DD"
+      "DateFormat": "YYYY-MM-DD",
+      "Errors": {
+        "DuplicateID": "Quelleintrag mit gleicher ID existiert bereits."
+      }
     },
     "ThrownWeaponDamage": "Wurfwaffenschaden",
     "MeleeWeaponDamage": "Nahkampfwaffenschaden",
@@ -1506,7 +1511,10 @@
         "Glaucite": "Glauzit",
         "Druchite": "Druchit",
         "Magic": "Magie",
-        "Epic": "Episch"
+        "Epic": "Episch",
+        "Silver": "Silber",
+        "BlightQuartz": "Todesquarz",
+        "NexavarianSteel": "Nexavar-Stahl"
       },
       "Base": "Ausgangsmaterial",
       "Normal": "Material",
@@ -2052,7 +2060,8 @@
             "Fast": "Schnell",
             "Custom": "Eigen"
           },
-          "CustomPlaceholder": "z.b. '@level * 1000'"
+          "CustomPlaceholder": "z.b. '@level * 1000'",
+          "CustomUsage": "Die Formel für benutzerdefinierte Erfahrung ist kumulativ. Das bedeutet zum Beispiel, dass man, um Erfahrung im Stil von PF2 zu imitieren, einfach <code>1000</code> eingeben würde, da jede einzelne Stufe genau 1000 Erfahrung erfordert, während die Einstellung auf <code>@level * 1000</code> bedeuten würde, dass jede einzelne Stufe tausend mehr als die letzte erfordert. Verwende die normalen Wurfdaten des Charakters und fügt <code>@level</code> für die aktuelle Stufe hinzu."
         },
         "Disable": "Erfahrungspunktefortschritt deaktivieren",
         "Distributor": "Öffne EP Verteiler",
@@ -2548,7 +2557,8 @@
       "NoItemPermission": "Du bist nicht authorisiert dieses Gegenstand zu verändern.",
       "TooManyConditionSources": "Zu viele Zustandsquellen zum editieren.",
       "NoGiftTargets": "Kein gültiges Ziel um etwas zu übergeben.",
-      "InsufficientPreparation": "{name} wurde nicht vorbereitet oder ist nicht bekannt."
+      "InsufficientPreparation": "{name} wurde nicht vorbereitet oder ist nicht bekannt.",
+      "InvalidContentLinkDrop": "Es konnte keine Inhaltsverknüpfung bei Drag & Drop erstellt werden."
     },
     "Warning": {
       "NoDiceAllowedInFormula": "In Formel '{formula}' für {context} sind keine Würfelwürfe erlaubt",
@@ -2650,7 +2660,7 @@
     "AbilityDexPen": "Geschicklichkeitsmalus",
     "MaxShort": "Max",
     "SkillJournalHint": "Drag & Drop Journal oder Journalseite, um diese zu verlinken.",
-    "MaxAbilityHint": "Maximaler erlaubter Attributswert Modifikator. Limit gilt vor dem Multiplikator. Unbegrenzt falls nicht definiert.",
+    "MaxAbilityHint": "Maximal erlaubter Attributsmodifikator. Limit gilt vor dem Multiplikator. Unbegrenzt falls nicht definiert.",
     "FromLevels": "Aus Stufen",
     "GiveItemToActor": "Gegenstand übergeben",
     "AbilityConPen": "Konstitutionsmalus",
@@ -2660,7 +2670,25 @@
     "DurationEndTiming": "Endzeitpunkt",
     "FromMythic": "Aus Legendenstufen",
     "AbilityPlural": "Attribute",
-    "RacePoints": "Volkspunkte"
+    "RacePoints": "Volkspunkte",
+    "RacialTraitCategories": {
+      "offense": "Angriff",
+      "other": "Sonstige",
+      "weakness": "Schwächen",
+      "defense": "Verteidigung",
+      "featSkills": "Talente und Fertigkeiten",
+      "magical": "Magie",
+      "senses": "Sinne"
+    },
+    "RaceTypes": {
+      "standard": "Standard",
+      "advanced": "Verbessert",
+      "monstrous": "Monströs"
+    },
+    "RaceType": "Machtniveau",
+    "RechargeFormulaHint": "Setzt die aktuellen Ladungen auf das Ergebnis der Formel. Wenn der Wert zum aktuellen Wert hinzugefügt werden soll, addiere <code>@item.uses.value</code> in der Formel.",
+    "ChargeCostItemFormulaHint": "Wie viele Aufladungen (oder Nutzungen, Zauberpunkte, etc.) dieser Gegenstand standardmäßig verbraucht. Negative Werte stellen stattdessen Ladungen wieder her.",
+    "ChargeCostActionFormulaHint": "Wie viele Aufladungen (oder Nutzungen, Zauberpunkte, etc.) diese Aktion standardmäßig verbraucht. Negative Werte stellen stattdessen Ladungen wieder her."
   },
   "TOKEN": {
     "VisionLowLight": "Dämmersicht",

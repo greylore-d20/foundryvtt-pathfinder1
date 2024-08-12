@@ -188,7 +188,7 @@ export class ItemActionSheet extends FormApplication {
     context.materialCategories = this._prepareMaterialsAndAddons();
 
     context.materialAddons =
-      this.action.data.material?.addon?.reduce((obj, v) => {
+      this.action.addonMaterial.reduce((obj, v) => {
         obj[v] = true;
         return obj;
       }, {}) ?? {};

@@ -29,12 +29,15 @@ export class ItemAction {
     this.prepareData();
   }
 
+  /** @type {string|null} - Normal material */
   get normalMaterial() {
-    return this.data.material?.normal || this.item.system.material?.normal || "";
+    return this.data.material?.normal || this.item.normalMaterial;
   }
 
+  /** @type {string[]} - Addon materials */
   get addonMaterial() {
-    return (this.data.material?.addon || this.item.system.material?.addon || []).filter((o) => o ?? false);
+    const addons = this.data.material?.addon || this.item.addonMaterial || [];
+    return addons.filter((o) => !!o);
   }
 
   /**

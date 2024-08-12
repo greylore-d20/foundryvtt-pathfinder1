@@ -4,12 +4,11 @@ img: systems/pf1/icons/feats/extra-rage.jpg
 name: Deafening Critical
 system:
   contextNotes:
-    - target: effect
+    - target: critical
       text: >-
-        Deafening Critical: permanently
-        @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}.
-        A successful Fortitude save DC [[10 + @attributes.bab.total]] reduces
-        the deafness to [[1]] round.
+        Deafening Critical: permanently @Condition[deaf]{Deafened}. A successful
+        Fortitude save DC [[10 + @attributes.bab.total]] reduces the deafness to
+        [[1]] round.
   description:
     value: >-
       <p><em>Your critical hits cause enemies to lose their

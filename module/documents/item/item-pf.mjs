@@ -260,7 +260,7 @@ export class ItemPF extends ItemBasePF {
 
   /** @type {string|null} - Base material this item has. */
   get baseMaterial() {
-    return this.system.armor?.material?.base.value || this.system.material?.base.value || null;
+    return this.system.armor?.material?.base?.value || this.system.material?.base?.value || null;
   }
 
   /**
@@ -269,7 +269,9 @@ export class ItemPF extends ItemBasePF {
    * @type {string|null}
    */
   get normalMaterial() {
-    return this.system.armor?.material?.normal.value || this.system.material?.normal.value || this.baseMaterial || null;
+    return (
+      this.system.armor?.material?.normal?.value || this.system.material?.normal?.value || this.baseMaterial || null
+    );
   }
 
   /**

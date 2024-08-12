@@ -258,14 +258,18 @@ export class ItemPF extends ItemBasePF {
     return this.system.subType ?? null;
   }
 
+  /** @type {string|null} - Base material this item has. */
+  get baseMaterial() {
+    return this.system.armor?.material?.base.value || this.system.material?.base.value || null;
+  }
+
   /**
    * The item's material.
    *
    * @type {string|null}
    */
   get normalMaterial() {
-    if (this.type === "equipment") return this.system.armor?.material?.normal.value || null;
-    else return this.system.material?.normal.value || null;
+    return this.system.armor?.material?.normal.value || this.system.material?.normal.value || this.baseMaterial || null;
   }
 
   /**
@@ -274,8 +278,8 @@ export class ItemPF extends ItemBasePF {
    * @type {string[]}
    */
   get addonMaterial() {
-    if (this.type === "equipment") return this.system.armor?.material?.addon?.filter((o) => o ?? false) ?? [];
-    else return this.system.material?.addon?.filter((o) => o ?? false) ?? [];
+    const addons = this.system.armor?.material?.addon || this.system.material?.addon || [];
+    return addons.filter((o) => !!o);
   }
 
   /**

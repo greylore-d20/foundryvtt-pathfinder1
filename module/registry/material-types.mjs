@@ -857,7 +857,6 @@ export class MaterialTypes extends Registry {
     {
       _id: "sunsilk",
       name: "PF1.Materials.Types.Sunsilk",
-      baseMaterial: "cloth",
       addon: true,
       allowed: {
         lightBlade: false,

@@ -18,6 +18,7 @@ import { registerActorStaticTests } from "./actor-static.tests.mjs";
 import { registerConfigTests } from "./config.test.mjs";
 import { registerCurrencyTests } from "./currency.test.mjs";
 import { registerWoundThresholdsTests } from "./wound-thresholds.test.mjs";
+import { registerMaterialTests } from "./material.test.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
@@ -41,6 +42,7 @@ Hooks.on("quenchReady", () => {
   registerAttackIterativesTests();
   registerContainerItemTests();
   registerItemWeightTests();
+  registerMaterialTests();
   // Misc
   registerCurrencyTests();
 });

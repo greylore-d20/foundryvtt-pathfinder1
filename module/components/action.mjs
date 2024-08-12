@@ -31,7 +31,7 @@ export class ItemAction {
 
   /** @type {string|null} - Normal material */
   get normalMaterial() {
-    return this.data.material?.normal || this.item.normalMaterial;
+    return this.data.material?.normal.value || this.item.normalMaterial;
   }
 
   /** @type {string[]} - Addon materials */

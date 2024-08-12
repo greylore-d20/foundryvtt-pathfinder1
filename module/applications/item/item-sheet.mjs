@@ -497,12 +497,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare attack-specific stuff
     if (isAttack) {
       const wtype = (isWeaponLike ? itemData.weapon?.type : null) || "all";
-      context.materialCategories = this._prepareMaterialsAndAddons(
-        "weapon",
-        wtype,
-        itemData.subType,
-        itemData.material?.normal.value
-      );
+      context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
@@ -548,12 +543,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     if (isWeapon) {
-      context.materialCategories = this._prepareMaterialsAndAddons(
-        item.type,
-        itemData.weaponSubtype,
-        null,
-        itemData.material?.normal.value
-      );
+      context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
@@ -583,12 +573,7 @@ export class ItemSheetPF extends ItemSheet {
 
       // Prepare materials where they're needed.
       if (["armor", "shield"].includes(item.subType)) {
-        context.materialCategories = this._prepareMaterialsAndAddons(
-          item.type,
-          itemData.equipmentSubtype,
-          itemData.subType,
-          itemData.armor.material?.normal.value ?? ""
-        );
+        context.materialCategories = this._prepareMaterialsAndAddons(item);
       }
     }
 
@@ -648,12 +633,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Material for spells to emulate
-      context.materialCategories = this._prepareMaterialsAndAddons(
-        "spell",
-        "all",
-        itemData.subType,
-        itemData.material?.normal.value
-      );
+      context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
@@ -932,30 +912,24 @@ export class ItemSheetPF extends ItemSheet {
     });
   }
 
-  _prepareMaterialsAndAddons(itemType, itemSubtype, subType, chosenMaterial = "") {
+  _prepareMaterialsAndAddons(item) {
     const materialList = {};
     const addonList = [];
     const basicList = {};
 
     naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
-      if (this._isMaterialAllowed(itemType, itemSubtype, subType, material)) {
-        materialList[material.id] = material.name;
-      }
-
-      if (
-        material.addon && // Filter addons by chosen material
-        !(
-          (material.id === "alchemicalSilver" &&
-            ["adamantine", "coldIron", "mithral", "sunsilver"].includes(chosenMaterial)) ||
-          (["heatstonePlating", "lazurite", "sunsilk"].includes(material.id) && itemType === "weapon")
-        )
-      ) {
-        addonList.push({ key: material.id, name: material.name });
-      }
-
       if (material.basic) {
         // Filter basic materials
         basicList[material.id] = material.name;
+      } else {
+        const isAllowed = material.isAllowed(item);
+        if (!isAllowed) return;
+
+        if (!material.addon) {
+          materialList[material.id] = material.name;
+        } else {
+          addonList.push({ key: material.id, name: material.name });
+        }
       }
     });
 
@@ -977,48 +951,6 @@ export class ItemSheetPF extends ItemSheet {
       choices: alignmentChoices,
       values: foundry.utils.deepClone(alignments),
     };
-  }
-
-  /**
-   * Check if a given material is okay to be added to our materials list
-   * for the item sheet.
-   *
-   * @param {string} itemType - Whether we're checking weapons or equipment
-   * @param {string} itemSubtype - Item-specific typing to filter with
-   * @param {string} subType - Only relevant with shields, since "other" is used in both shield and general gear
-   * @param {pf1.registry.MaterialType} material - The Material object from the registry that has our needed metadata
-   * @returns {boolean}
-   */
-  _isMaterialAllowed(itemType, itemSubtype, subType, material) {
-    // Let's end this early if we can never be allowed
-    if (material.addon || material.basic) return false;
-
-    // Check whether the material is allowed for the given item
-    switch (itemType) {
-      case "weapon": {
-        switch (itemSubtype) {
-          case "light":
-            return material.allowed.lightBlade;
-          case "1h":
-            return material.allowed.oneHandBlade;
-          case "2h":
-            return material.allowed.twoHandBlade;
-          case "ranged":
-            return material.allowed.rangedWeapon;
-          case "all": // We're prepping an Attack and don't care (don't have the info anyways)
-            return true;
-          default:
-            // Shouldn't find this
-            return false;
-        }
-      }
-      case "equipment": {
-        if (subType === "shield") return material.allowed.buckler;
-        return material.allowed[itemSubtype];
-      }
-    }
-
-    return true; // Finally made it through the gauntlet!
   }
 
   _prepareLinks(context) {

@@ -1271,6 +1271,7 @@ export class ActorSheetPF extends ActorSheet {
         const hp = system.attributes.hp;
         paths.push(
           { path: "@attributes.hp.value", value: hp.value },
+          { path: "@attributes.hp.offset", value: hp.offset },
           { path: "@attributes.hp.max", value: hp.max },
           { path: "@attributes.hp.temp", value: hp.temp },
           { path: "@attributes.hp.nonlethal", value: hp.nonlethal }
@@ -1288,6 +1289,7 @@ export class ActorSheetPF extends ActorSheet {
         const vigor = system.attributes.vigor;
         paths.push(
           { path: "@attributes.vigor.value", value: vigor.value },
+          { path: "@attributes.vigor.offset", value: vigor.offset },
           { path: "@attributes.vigor.temp", value: vigor.temp },
           { path: "@attributes.vigor.max", value: vigor.max }
         );
@@ -1307,6 +1309,7 @@ export class ActorSheetPF extends ActorSheet {
         const wounds = system.attributes.wounds;
         paths.push(
           { path: "@attributes.wounds.value", value: wounds.value },
+          { path: "@attributes.wounds.offset", value: wounds.offset },
           { path: "@attributes.wounds.max", value: wounds.max },
           { path: "@attributes.wounds.threshold", value: wounds.threshold }
         );

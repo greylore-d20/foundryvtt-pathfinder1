@@ -382,17 +382,26 @@ export class CompendiumBrowser extends Application {
     return context;
   }
 
+  _refocus = true;
   /** @inheritDoc */
   activateListeners(html) {
     super.activateListeners(html);
     /** @type {HTMLElement} */
     const el = html[0];
 
+    if (this._priorState <= this.constructor.RENDER_STATES.NONE) this._refocus = true;
+
     // If the browser is not set up yet, start the process and render again once it is done
     if (!this.#setup) {
       this.setup().then(() => this.render());
       // No listeners have to be activated yet, so we can return here
       return;
+    }
+
+    // Fix autofocus (the above re-render breaks it)
+    if (this._refocus) {
+      el.querySelector("[autofocus]")?.focus();
+      this._refocus = false;
     }
 
     this._initLazyScrolling(el);

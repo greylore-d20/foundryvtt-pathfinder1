@@ -160,6 +160,8 @@ export class AttackDialog extends Application {
   }
 
   activateListeners(html) {
+    super.activateListeners(html);
+
     // Form changing
     html.find(`.flags input[type="checkbox"]`).on("change", this._onToggleFlag.bind(this));
     html.find(`input.attribute`).on("change", this._onChangeAttribute.bind(this));

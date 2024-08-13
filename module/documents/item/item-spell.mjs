@@ -705,7 +705,7 @@ export class ItemSpellPF extends ItemPF {
         if (osrc.pages) osrc.pages += `, ${xsrc.pages}`;
         else osrc.pages = xsrc.pages;
       } else {
-        itemData.sources.push(xsrc);
+        itemData.system.sources.push(xsrc);
       }
     }
 

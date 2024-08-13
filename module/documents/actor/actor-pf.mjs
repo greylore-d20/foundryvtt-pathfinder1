@@ -4606,6 +4606,18 @@ export class ActorPF extends ActorBasePF {
     /* Set the following data on a refresh
     /* ----------------------------- */
 
+    // Sync health values
+    for (const hpKey of ["hp", "wounds", "vigor"]) {
+      const hp = result.attributes[hpKey];
+      hp.value = hp.max + hp.offset;
+      /*
+      // Supporting values
+      const thp = hp.temp ?? 0;
+      hp.effective = hp.value + thp;
+      hp.ratio = hp.effective / (hp.max + thp);
+      */
+    }
+
     // Set size index
     const sizeChart = Object.keys(pf1.config.sizeChart);
     result.size = sizeChart.indexOf(result.traits.size);

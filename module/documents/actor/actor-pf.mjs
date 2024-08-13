@@ -2574,7 +2574,7 @@ export class ActorPF extends ActorBasePF {
         arcaneSpellFailure: casting.spells === "arcane",
         hasCantrips: casting.cantrips,
         domainSlotValue: casting.domain,
-        "cl.autoSpellLevelCalculationFormula": casting.offset || "",
+        "cl.formula": casting.offset ? `${casting.offset}` : "",
       },
     };
 

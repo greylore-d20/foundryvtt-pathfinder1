@@ -1879,7 +1879,7 @@ function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
 }
 
 const _migrateLootEquip = function (ent, updateData) {
-  if (ent.type === "loot" && !ent.system.equipped) {
+  if (ent.type === "loot" && typeof ent.system.equipped !== "boolean") {
     updateData["system.equipped"] = false;
   }
 };

@@ -1393,7 +1393,7 @@ export class ItemPF extends ItemBasePF {
     options = {},
   } = {}) {
     rollMode ||= game.settings.get("core", "rollMode");
-    token ||= this.actor?.token ?? this.actor?.getActiveTokens({ document: true, linked: true })[0];
+    token ||= this.actor?.token ?? this.actor?.getActiveTokens(true, true)[0];
 
     if (ev?.originalEvent) ev = ev.originalEvent;
 

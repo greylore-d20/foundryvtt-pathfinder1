@@ -886,6 +886,7 @@ export class ItemPF extends ItemBasePF {
       let scriptCall = prior?.get(sid);
       if (scriptCall) scriptCall.data = s;
       else scriptCall = new pf1.components.ItemScriptCall(s, this);
+      scriptCall.prepareData();
 
       collection.set(sid, scriptCall);
     }

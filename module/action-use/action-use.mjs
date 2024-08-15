@@ -1573,9 +1573,6 @@ export class ActionUse {
     reqErr = await this.checkAttackRequirements();
     if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
 
-    // Generate chat attacks
-    await this.generateChatAttacks();
-
     // Prompt measure template
     let measureResult;
     if (shared.useMeasureTemplate && canvas.scene) {
@@ -1583,13 +1580,16 @@ export class ActionUse {
       if (!measureResult.result) return;
     }
 
+    await this.getTargets();
+
+    // Generate chat attacks - leave this just before `pf1PreActionuse` hook call
+    await this.generateChatAttacks();
+
     // Call itemUse hook and determine whether the item can be used based off that
     if (Hooks.call("pf1PreActionUse", this) === false) {
       await measureResult?.delete();
       return;
     }
-
-    await this.getTargets();
 
     // Call script calls
     await this.executeScriptCalls();

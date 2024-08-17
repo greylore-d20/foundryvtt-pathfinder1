@@ -6,6 +6,9 @@ system:
   abilityType: su
   actions:
     - _id: ukhho0vqra4cwi09
+      ability:
+        attack: str
+      actionType: mwak
       activation:
         type: full
         unchained:
@@ -16,6 +19,7 @@ system:
         units: touch
       target:
         value: object touched
+      touch: true
   associations:
     classes:
       - Arcanist
@@ -30,10 +34,12 @@ system:
       reservoir, and doing so provokes an attack of opportunity. This ability
       cannot be used on an item in the possession of an unwilling creature. This
       change lasts for a number of minutes equal to the arcanist’s Charisma
-      modifier (minimum 1).</p>
-
-      <p>The arcanist must have the arcane weapon exploit to select this
-      exploit.</p>
+      modifier (minimum 1).</p><p>The arcanist must have the
+      @UUID[Compendium.pf1.class-abilities.8LTtHB6wiIh5tB6J]{arcane weapon}
+      exploit to select this exploit.</p>
+  sources:
+    - id: PZO1129
+      pages: '13'
   subType: classFeat
   tags:
     - Arcanist Exploit, Greater

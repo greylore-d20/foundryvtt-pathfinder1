@@ -1,7 +1,7 @@
 _id: TRu1NMreURd0IPpe
 _key: '!items!TRu1NMreURd0IPpe'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
-name: Fiendish Probiscus
+name: Fiendish Probiscis
 system:
   abilityType: su
   actions:
@@ -14,7 +14,38 @@ system:
       duration:
         units: round
         value: '@class.level'
-      name: Use
+      name: Grow
+      range:
+        units: personal
+    - _id: QvEcdLe53Q0PFnL6
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      name: End early
+      range:
+        units: personal
+    - _id: LuutyHR0XtjIeYSS
+      actionType: mwak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      effectNotes:
+        - >-
+          Drains [[1]] point  of arcane reservoir from spellcasters or [[1d6]]
+          hitpoints from other creatures
+      name: Attack
+      range:
+        units: reach
+      target:
+        value: one creature
+      touch: true
   associations:
     classes:
       - Arcanist
@@ -39,6 +70,9 @@ system:
       the target’s ability to use magic, the tongue’s unnerving siphoning of
       magical or life energy causes the struck creature to become sickened for 1
       round.</p>
+  sources:
+    - id: PZO9297
+      pages: '6'
   subType: classFeat
   tags:
     - Arcanist Exploit, Outer Rift

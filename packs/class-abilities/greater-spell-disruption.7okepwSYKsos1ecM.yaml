@@ -6,14 +6,25 @@ system:
   abilityType: su
   actions:
     - _id: 0h432bwhdboe085j
+      actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      duration:
+        units: round
+        value: '@abilities.cha.mod'
       name: Use
       range:
         units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod)
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+      touch: true
   associations:
     classes:
       - Arcanist
@@ -22,10 +33,13 @@ system:
       <p>The arcanist can disrupt a spell effect or magic item by expending 1
       point from her arcane reservoir. This acts like a targeted
       @Compendium[pf1.spells.gmgwyjfpeuuc4t4o]{Dispel Magic} with a range of
-      touch. The arcanist can add her Charisma modifier to the dispel check.</p>
-
-      <p>The arcanist must have the spell disruption exploit to select this
-      exploit.</p>
+      touch. The arcanist can add her Charisma modifier to the dispel
+      check.</p><p>The arcanist must have the
+      @UUID[Compendium.pf1.class-abilities.1dZxb8Eii34a6YS4]{spell disruption}
+      exploit to select this exploit.</p>
+  sources:
+    - id: PZO1129
+      pages: '13'
   subType: classFeat
   tags:
     - Arcanist Exploit, Greater

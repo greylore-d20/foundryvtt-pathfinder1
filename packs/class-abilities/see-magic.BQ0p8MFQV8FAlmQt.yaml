@@ -15,6 +15,24 @@ system:
         units: minute
         value: '1'
       name: Use
+    - _id: 6DfFK33xzDRr5Dzo
+      ability:
+        attack: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      name: Touch to identify
+      range:
+        units: touch
+      target:
+        value: one object
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Arcanist
@@ -30,6 +48,9 @@ system:
       Spellcraft without needing to spend 3 rounds examining the object. If an
       enemy possesses the object, the arcanist must first succeed at a melee
       touch attack to identify the item.</p>
+  sources:
+    - id: PZO1129
+      pages: '12'
   subType: classFeat
   tags:
     - Arcanist Exploit

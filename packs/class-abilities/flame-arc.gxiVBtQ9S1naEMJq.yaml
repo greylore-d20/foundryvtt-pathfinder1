@@ -12,6 +12,7 @@ system:
         unchained:
           cost: 2
           type: action
+      area: 30-foot line
       damage:
         parts:
           - formula: (ceil(@class.level / 2))d6 + @abilities.cha.mod
@@ -21,6 +22,10 @@ system:
                 - fire
       duration:
         units: inst
+      measureTemplate:
+        color: '#cf7826'
+        size: '30'
+        type: ray
       name: Use
       range:
         units: ft
@@ -30,7 +35,7 @@ system:
         description: Reflex half
         type: ref
       target:
-        value: 30-ft. line
+        value: Creatures in the area
   associations:
     classes:
       - Arcanist
@@ -43,6 +48,9 @@ system:
       maximum of 10d6 at 19th level) to each target in the line. Creatures in
       the area of effect may attempt a Reflex saving throw to halve the
       damage.</p>
+  sources:
+    - id: PZO1129
+      pages: '11'
   subType: classFeat
   tags:
     - Arcanist Exploit

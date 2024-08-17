@@ -6,11 +6,38 @@ system:
   abilityType: su
   actions:
     - _id: n606k5ocednkxul4
+      actionType: spellsave
       activation:
-        type: free
+        type: standard
         unchained:
-          type: free
+          cost: 2
+          type: action
+      area: 30-foot line
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      measureTemplate:
+        color: '#cf7826'
+        size: '30'
+        type: ray
       name: Use
+      range:
+        units: ft
+        value: '30'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
+        description: Reflex half and negates catching fire
+        type: ref
+      target:
+        value: Creatures in the area
+      uses:
+        autoDeductChargesCost: '2'
   associations:
     classes:
       - Arcanist
@@ -22,10 +49,13 @@ system:
       extinguished, the target takes 3d6 points of fire damage at the start of
       each of its turns. The target can attempt a Reflex saving throw as a
       full-round action to extinguish the flames. Applying at least 1 gallon of
-      water to the target automatically extinguishes the flames.</p>
-
-      <p>The arcanist must have the flame arc exploit to select this
-      exploit.</p>
+      water to the target automatically extinguishes the flames.</p><p>The
+      arcanist must have the
+      @UUID[Compendium.pf1.class-abilities.gxiVBtQ9S1naEMJq]{flame arc} exploit
+      to select this exploit.</p>
+  sources:
+    - id: PZO1129
+      pages: '13'
   subType: classFeat
   tags:
     - Arcanist Exploit, Greater

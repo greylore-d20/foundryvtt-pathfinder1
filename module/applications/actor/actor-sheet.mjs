@@ -891,6 +891,11 @@ export class ActorSheetPF extends ActorSheet {
     // Open compendium browser
     html.find('a[data-action="browse"]').click(this._onOpenCompendiumBrowser.bind(this));
 
+    html
+      // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
+      .on("pointerover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
+      .on("pointerleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -1161,15 +1166,6 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     html.find(".skill-lock-button").on("click", this._onToggleSkillLock.bind(this));
-
-    /* -------------------------------------------- */
-    /*  Links
-    /* -------------------------------------------- */
-
-    html
-      // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
-      .on("pointerover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
-      .on("pointerleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
   }
 
   /**

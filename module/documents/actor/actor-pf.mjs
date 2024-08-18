@@ -1701,8 +1701,9 @@ export class ActorPF extends ActorBasePF {
               // Use special maxDex id to ensure only the worst is shown
               const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDexEq");
               if (sInfoA) {
-                if (mDex < sInfoA.value) {
+                if (mDex < sInfoA.valueAsNumber) {
                   sInfoA.value = maxDexLabel;
+                  sInfoA.valueAsNumber = mDex;
                   sInfoA.itemId = item.id;
                   sInfoA.name = item.name;
                 }
@@ -1710,6 +1711,7 @@ export class ActorPF extends ActorBasePF {
                 getSourceInfo(this.sourceInfo, p).negative.push({
                   name: item.name,
                   value: maxDexLabel,
+                  valueAsNumber: mDex,
                   itemId: item.id,
                   id: "maxDexEq",
                 });

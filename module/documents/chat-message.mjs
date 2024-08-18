@@ -28,6 +28,16 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
+   * Linked action.
+   *
+   * @type {ItemAction|undefined|null} - Null is returned if no action is linked and ItemAction otherwise.
+   */
+  get actionSource() {
+    const id = this.flags?.pf1?.metadata?.action;
+    return id ? this.itemSource?.actions.get(id) : null;
+  }
+
+  /**
    * Linked item.
    *
    * @type {ItemPF|undefined|null} - Null is returned if no item is linked, undefined if item is not found, and ItemPF otherwise.

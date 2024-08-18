@@ -980,6 +980,7 @@ export const consumableTypes = {
   wand: "PF1.Subtypes.Item.consumable.wand.Single",
   rod: "PF1.Subtypes.Item.consumable.rod.Single",
   staff: "PF1.Subtypes.Item.consumable.staff.Single",
+  pharmaceutical: "PF1.Subtypes.Item.consumable.pharmaceutical.Single",
   misc: "PF1.Misc",
 };
 

@@ -1723,7 +1723,7 @@ export class ActorSheetPF extends ActorSheet {
 
             if (attacks.length == 0) return;
 
-            const formatter = new Intl.NumberFormat("nu", { signDisplay: "always" });
+            const formatter = new Intl.NumberFormat(undefined, { signDisplay: "always" });
             header = attacks.map((n) => formatter.format(n)).join("/");
 
             sources.push({

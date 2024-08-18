@@ -476,12 +476,17 @@ export class ItemAction {
     for (const c of conds) {
       for (const m of c.modifiers) {
         if (m.target !== "damage") continue;
-        const roll = RollPF.safeRoll(m.formula, rollData);
-        if (roll.err) continue;
+        const roll = new RollPF(m.formula, rollData);
+        const isDeterministic = roll.isDeterministic;
+        try {
+          if (isDeterministic) roll.evaluate({ async: false });
+        } catch (err) {
+          // Ignore
+        }
         const isModifier = mods.includes(m.type);
         fakeCondChanges.push({
           flavor: c.name,
-          value: roll.total,
+          value: isDeterministic ? roll.total : m.formula,
           modifier: isModifier ? m.type : "untyped", // Turn unrecognized types to untyped
           type: isModifier ? undefined : m.type, // Preserve damage type if present
           formula: m.formula,

@@ -305,6 +305,74 @@ export function registerMaterialTests() {
           });
         });
       });
+
+      describe("Shield", function () {
+        describe("Light Wooden Shield", function () {
+          let item;
+          before(async () => {
+            item = await getArmor("Light Wooden Shield");
+          });
+
+          it("Valid base item", () => {
+            expect(item).to.be.instanceOf(Item);
+            expect(item.type).to.equal("equipment");
+            expect(item.subType).to.equal("shield");
+          });
+
+          it("material is Wood", () => {
+            expect(item.baseMaterial).to.equal("wood");
+          });
+
+          describe("Compatible", () => {
+            it("can be made of Darkwood", () => {
+              expect(materials.darkwood.isAllowed(item)).to.be.true;
+            });
+          });
+
+          describe("Incompatible", () => {
+            it("can't be made of Mithral", () => {
+              expect(materials.mithral.isAllowed(item)).to.be.false;
+            });
+
+            it("can't be made of Dragonhide", () => {
+              expect(materials.dragonhide.isAllowed(item)).to.be.false;
+            });
+          });
+        });
+
+        describe("Buckler", function () {
+          let item;
+          before(async () => {
+            item = await getArmor("Buckler");
+          });
+
+          it("Valid base item", () => {
+            expect(item).to.be.instanceOf(Item);
+            expect(item.type).to.equal("equipment");
+            expect(item.subType).to.equal("shield");
+          });
+
+          it("material is Steel", () => {
+            expect(item.baseMaterial).to.equal("steel");
+          });
+
+          describe("Compatible", () => {
+            it("can be made of Mithral", () => {
+              expect(materials.mithral.isAllowed(item)).to.be.false;
+            });
+          });
+
+          describe("Incompatible", () => {
+            it("can't be made of Darkwood", () => {
+              expect(materials.darkwood.isAllowed(item)).to.be.false;
+            });
+
+            it("can't be made of Dragonhide", () => {
+              expect(materials.dragonhide.isAllowed(item)).to.be.false;
+            });
+          });
+        });
+      });
     },
     {
       displayName: "PF1: Materials",

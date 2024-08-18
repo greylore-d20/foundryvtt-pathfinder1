@@ -3454,6 +3454,7 @@ export class ActorPF extends ActorBasePF {
         notes: cmdNotes,
       },
       misc: {
+        hardness: actorData.traits.hardness,
         sr: actorData.attributes.sr.total,
         srNotes: srNotes,
         drNotes: drNotes,
@@ -3933,6 +3934,7 @@ export class ActorPF extends ActorBasePF {
           isToken,
           dr: Object.values(actor.parseResistances("dr")),
           eres: Object.values(actor.parseResistances("eres")),
+          hardness: actor.system.traits.hardness,
           di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom || [])],
           dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom || [])],
           checked: true,

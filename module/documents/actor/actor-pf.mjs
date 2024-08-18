@@ -1577,7 +1577,7 @@ export class ActorPF extends ActorBasePF {
         name: encLabel,
         value: encMaxDex,
       });
-      let maxDexLabel = new Intl.NumberFormat("nu", { signDisplay: "always" }).format(encMaxDex);
+      let maxDexLabel = new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(encMaxDex);
       maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
       getSourceInfo(this.sourceInfo, "system.attributes.ac.normal.total").negative.push({
         name: encLabel,
@@ -1695,7 +1695,7 @@ export class ActorPF extends ActorBasePF {
             }
 
             // Add max dex to AC, too.
-            let maxDexLabel = new Intl.NumberFormat("nu", { signDisplay: "always" }).format(mDex);
+            let maxDexLabel = new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(mDex);
             maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
             for (const p of ["system.attributes.ac.normal.total", "system.attributes.ac.touch.total"]) {
               // Use special maxDex id to ensure only the worst is shown

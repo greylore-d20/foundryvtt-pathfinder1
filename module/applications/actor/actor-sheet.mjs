@@ -1632,6 +1632,9 @@ export class ActorSheetPF extends ActorSheet {
       case "energyResistance":
         paths.push({ path: "@traits.eres.total", empty: true });
         break;
+      case "hardness":
+        paths.push({ path: "@traits.hardness", empty: true });
+        break;
       case "damageReduction":
         paths.push({ path: "@traits.dr.total", empty: true });
         break;

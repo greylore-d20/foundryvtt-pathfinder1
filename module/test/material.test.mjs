@@ -79,7 +79,7 @@ export function registerMaterialTests() {
 
           describe("Compatible", () => {
             it("can be made of Darkwood", () => {
-              expect(materials.darkwood.isAllowed(item)).to.be.false;
+              expect(materials.darkwood.isAllowed(item)).to.be.true;
             });
           });
 

@@ -358,7 +358,7 @@ export function registerMaterialTests() {
 
           describe("Compatible", () => {
             it("can be made of Mithral", () => {
-              expect(materials.mithral.isAllowed(item)).to.be.false;
+              expect(materials.mithral.isAllowed(item)).to.be.true;
             });
           });
 

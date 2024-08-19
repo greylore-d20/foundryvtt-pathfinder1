@@ -1612,10 +1612,12 @@ export class ActorPF extends ActorBasePF {
       getSourceInfo(this.sourceInfo, "system.attributes.ac.normal.total").negative.push({
         name: encLabel,
         value: maxDexLabel,
+        valueAsNumber: encMaxDex,
       });
       getSourceInfo(this.sourceInfo, "system.attributes.ac.touch.total").negative.push({
         name: encLabel,
         value: maxDexLabel,
+        valueAsNumber: encMaxDex,
       });
     }
 
@@ -1705,7 +1707,7 @@ export class ActorPF extends ActorBasePF {
         }
 
         if (item.system.armor.dex !== null && isShieldOrArmor) {
-          const mDex = Number.parseInt(item.system.armor.dex, 10);
+          const mDex = item.system.armor.dex;
           if (Number.isInteger(mDex)) {
             const mod = this.system.attributes?.mDex?.[`${eqType}Bonus`] ?? 0;
             const itemMDex = mDex + mod;
@@ -1714,34 +1716,38 @@ export class ActorPF extends ActorBasePF {
             const sInfo = getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.find(
               (o) => o.itemId === item.id
             );
-            if (sInfo) sInfo.value = mDex;
+            if (sInfo) sInfo.value = itemMDex;
             else {
               getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.push({
                 name: item.name,
                 itemId: item.id,
-                value: mDex,
+                value: itemMDex,
                 ignoreNull: false,
               });
             }
 
             // Add max dex to AC, too.
-            let maxDexLabel = new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(mDex);
+            let maxDexLabel = new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(itemMDex);
             maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
             for (const p of ["system.attributes.ac.normal.total", "system.attributes.ac.touch.total"]) {
               // Use special maxDex id to ensure only the worst is shown
               const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDexEq");
               if (sInfoA) {
-                if (mDex < sInfoA.valueAsNumber) {
+                if (itemMDex < sInfoA.valueAsNumber) {
                   sInfoA.value = maxDexLabel;
-                  sInfoA.valueAsNumber = mDex;
+                  sInfoA.valueAsNumber = itemMDex;
                   sInfoA.itemId = item.id;
                   sInfoA.name = item.name;
+                } else if (sInfoA.itemId == item.id) {
+                  // Update existing (armor training or the like)
+                  sInfoA.value = maxDexLabel;
+                  sInfoA.valueAsNumber = itemMDex;
                 }
               } else {
                 getSourceInfo(this.sourceInfo, p).negative.push({
                   name: item.name,
                   value: maxDexLabel,
-                  valueAsNumber: mDex,
+                  valueAsNumber: itemMDex,
                   itemId: item.id,
                   id: "maxDexEq",
                 });

@@ -1,13 +1,13 @@
-_id: HGF43OZjDpRz9gn1
-_key: '!items!HGF43OZjDpRz9gn1'
-folder: BzkdxtDgGZ96mdwR
-img: icons/equipment/head/helm-goggles-leather.webp
-name: Miner's lantern
+_id: khmR334BidfHHSA3
+_key: '!items!khmR334BidfHHSA3'
+folder: Xsrr4hrzufdySmSQ
+img: icons/sundries/lights/lantern-iron-lit-yellow.webp
+name: Lantern of Revealing
 system:
   actions:
-    - _id: 3p8sLmYNJfNOS31e
+    - _id: duSBHR0cCUYXhd2M
       activation:
-        type: nonaction
+        type: special
         unchained:
           type: nonaction
       duration:
@@ -15,27 +15,29 @@ system:
         value: '6'
       name: Ignite
       tag: ignite
-    - _id: 8GhzwJkSnh3i1RpQ
+    - _id: askmHMomLt5Jfy3Z
       activation:
         type: nonaction
         unchained:
           type: nonaction
       name: Extinguish
       tag: extinguish
+  aura:
+    school: evo
+  cl: 5
   description:
     value: >-
-      <p>A smaller version of the
-      @UUID[Compendium.pf1.items.e9tokjwpM4sqNd2I]{Bullseye lantern}, a miner's
-      lantern provides normal light in a 30- foot cone and increases the light
-      level by one step in the area beyond that, out to a 60-foot cone (darkness
-      becomes dim light and dim light becomes normal light). A miner's lantern
-      does not increase the light level in normal light or bright light. It
-      burns for 6 hours on 1 pint of oil. A miner's lantern comes with straps
-      for attachment to a helmet or other piece of sturdy headgear, but it can
-      also be carried in one hand.</p>
-  price: 15
+      <p>This lantern operates as a normal
+      @UUID[Compendium.pf1.items.Item.zylvLcc5P4EPkxzu]{hooded lantern}. While
+      it is lit, it also reveals all invisible creatures and objects within 25
+      feet of it, just like the spell invisibility
+      purge.</p><h3>Construction</h3><p><strong>Requirements</strong>
+      @UUID[Compendium.pf1.feats.Item.tD76K8QGco9scT0r]{Craft Wondrous Item},
+      @UUID[Compendium.pf1.spells.Item.xsecnbuvc3rbrefu]{invisibility purge};
+      <strong>Cost</strong> 15,000 gp</p>
+  price: 30000
   scriptCalls:
-    - _id: NE8eCx54Y5Ts0gBC
+    - _id: OdBwULcXLKhoIN1q
       category: use
       hidden: false
       img: icons/svg/dice-target.svg
@@ -58,29 +60,30 @@ system:
           dim: 60,
           color: "#fcba03",
           alpha: 0.3,
-          angle: 45,
+          angle: 360,
           animation: {...flameAnimation},
         };
 
         token.document.update({light: {...lightSource}});
-    - _id: d1YkCXCouuWKDr6Z
+    - _id: kSy8RBgNWvtE79hq
       category: use
       hidden: false
       img: icons/svg/dice-target.svg
       name: Turn off light
       type: script
-      value: |-
+      value: |
         if (!token) return;
         if (action.tag !== "extinguish") return;
 
-        // Lights off as it comes from Foundry default
         const lightOff = new foundry.data.LightData().toObject();
-        token.document.update({light: {...lightOff}});
+        token.document.update({ light: { ...lightOff } });
   sources:
-    - id: PZO9235
-      pages: '47'
-  subType: adventuring
+    - id: PZO1123
+      pages: '307'
+    - id: PZO1110
+      pages: '522'
+  subType: wondrous
   weight:
     value: 2
-type: loot
+type: equipment
 

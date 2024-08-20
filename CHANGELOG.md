@@ -1,5 +1,12 @@
 # Changelog
 
+## 10.6 - 2024-8-21
+
+### Bug Fixes
+
+- Editable and uneditable item sheets were not very distinguishable from each other.
+- Scene loading hanging at ~62% in Firefox.
+
 ## 10.5 - 2024-8-20
 
 ### Bug Fixes

@@ -1,9 +1,16 @@
+import fuzzysort from "fuzzysort";
+
 /**
  * A specialized form used to select types.
  *
  * @type {DocumentSheet}
  */
 export class ActorTraitSelector extends DocumentSheet {
+  _searchFilter = "";
+
+  /** @type {boolean} - Include language agnostic ID in search. */
+  static SEARCH_INCLUDE_ID = true;
+
   constructor(doc, options) {
     super(doc, options);
     // Enrich dialog identity
@@ -15,6 +22,21 @@ export class ActorTraitSelector extends DocumentSheet {
     custom ||= [];
 
     this.attributes = { value, custom };
+
+    const searchIndex = [];
+    for (const [id, label] of Object.entries(this.options.choices)) {
+      searchIndex.push({
+        id,
+        _id: fuzzysort.prepare(id.normalize("NFKD")),
+        _name: fuzzysort.prepare(label.normalize("NFKD")),
+      });
+    }
+    this._searchIndex = searchIndex;
+
+    this._collator = new Intl.Collator(game.i18n.lang, {
+      numeric: true,
+      ignorePunctuation: true,
+    });
   }
 
   splitCustom(value) {
@@ -85,6 +107,7 @@ export class ActorTraitSelector extends DocumentSheet {
       choices,
       custom: Array.from(new Set(custom)),
       updateButton,
+      search: this._searchFilter,
     };
   }
 
@@ -160,6 +183,9 @@ export class ActorTraitSelector extends DocumentSheet {
   activateListeners(jq) {
     super.activateListeners(jq);
 
+    // Stop auto-height adjusts after first render
+    delete this.options.height;
+
     // Custom tag handling
     const customInput = this.form.querySelector("input[name='custom']");
     customInput.addEventListener("input", this._onCustomInput.bind(this), { passive: true });
@@ -168,8 +194,42 @@ export class ActorTraitSelector extends DocumentSheet {
       el.addEventListener("click", this._deleteCustomTag.bind(this), { passive: true });
     });
 
+    const search = this.form.querySelector("input[type='search']");
+    search.addEventListener("input", (ev) => this._onSearch(ev.target.value), { passive: true });
+    search.addEventListener("change", (ev) => this._onSearch(ev.target.value), { passive: true });
+
+    this._onSearch(this._searchFilter);
+
     // Submit button
     this.form.querySelector("button[type='submit']").addEventListener("click", this._updateDocument.bind(this));
+  }
+
+  /**
+   * @internal
+   * @param {string} query - Seach string
+   */
+  _onSearch(query) {
+    query = query?.normalize("NFKD");
+    this._searchFilter = query;
+
+    const keys = ["_name"];
+    if (this.constructor.SEARCH_INCLUDE_ID) keys.push("_id");
+
+    const matches = query
+      ? fuzzysort
+          .go(query, this._searchIndex, { keys, threshold: -10000 })
+          .sort((a, b) => {
+            // Sort by score first, then alphabetically by name
+            if (a.score !== b.score) return b.score - a.score;
+            else return this._collator.compare(a.obj.name, b.obj.name);
+          })
+          .map((r) => r.obj.id)
+      : null;
+
+    const els = this.form.querySelectorAll(".trait-list li");
+    for (const el of els) {
+      el.classList.toggle("search-mismatch", query && !matches.includes(el.dataset.choice));
+    }
   }
 
   /**
@@ -180,7 +240,9 @@ export class ActorTraitSelector extends DocumentSheet {
    * @private
    */
   _updateObject(event, formData) {
-    let { choices, custom } = foundry.utils.expandObject(formData);
+    let { choices, custom, search } = foundry.utils.expandObject(formData);
+
+    this._searchFilter = search;
 
     choices = Object.entries(choices)
       .filter(([_, v]) => v)

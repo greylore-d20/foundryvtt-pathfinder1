@@ -128,6 +128,7 @@ export class ItemSheetPF extends ItemSheet {
     const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
     const context = {
+      cssClass: this.isEditable ? "editable" : "locked",
       item,
       document: item, // Reference used by unknown data
       name: item.name,

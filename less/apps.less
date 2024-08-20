@@ -114,19 +114,13 @@
   }
 
   // Disabled Fields
-  input,
-  select,
-  textarea,
-  input {
-    &:disabled,
-    &[disabled],
-    &:read-only {
-      color: var(--pf1-olive);
-      &:hover,
-      &:focus {
-        box-shadow: none !important;
-      }
-    }
+  :is(input, textarea):is(:disabled, [disabled]),
+  // :read-only is only supported by text and number
+  input:is([type="text"], [type="number"]):read-only,
+  // <select> misbehaves with :read-only
+  select:is(:disabled, [disabled]) {
+    color: var(--pf1-olive);
+    opacity: 0.7;
   }
 
   // Checkbox Labels

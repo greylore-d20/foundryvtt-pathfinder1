@@ -4189,4 +4189,17 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
   }
+
+  /**
+   * @override
+   * @param {HTMLElement} form
+   */
+  _disableFields(form) {
+    super._disableFields(form);
+
+    // Ensure search inputs are always functional
+    for (const el of form.getElementsByTagName("INPUT")) {
+      if (el.type === "search") el.disabled = false;
+    }
+  }
 }

@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.7 - 2024-8-21
+
+### Bug Fixes
+
+- Actor sheet search inputs were not usable on uneditable sheets. ([3525](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3525))
+
+### Changelog
+
+- Misfire and Capacity are no longer displayed if item has no ammo type set.
+
 ## 10.6 - 2024-8-21
 
 ### Bug Fixes

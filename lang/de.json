@@ -1152,7 +1152,11 @@
         "Help": {
           "Link": "Informationen über die Änderungen",
           "Deterministic": "Deterministisch",
-          "DeterministicHint": "Gewähltes Ziel unterstützt keine Zufallselemente wie Würfel."
+          "DeterministicHint": "Gewähltes Ziel unterstützt keine Zufallselemente wie Würfel.",
+          "ValueHint": "Muss deterministisch sein und darf keine Zufallselemente wie Würfel enthalten.",
+          "Value": "Wert",
+          "Roll": "Wurf",
+          "RollHint": "Unterstützt Zufallselemente wie Würfel."
         },
         "Label": "Änderungseditor",
         "AddChange": "Füge Änderung hinzu",
@@ -1165,6 +1169,14 @@
       },
       "ActionSelector": {
         "Title": "{actor} nutzt {item}"
+      },
+      "Changelog": {
+        "Title": "Änderungsprotokoll",
+        "DontShowAgain": "Änderungsprotokoll nach Aktualisierungen nicht anzeigen",
+        "OpenInBrowser": "Im Browser öffnen",
+        "Latest": "Neuste",
+        "Legacy": "Altversion",
+        "Major": "Hauptversion"
       }
     },
     "Dialog": {
@@ -1514,7 +1526,8 @@
         "Epic": "Episch",
         "Silver": "Silber",
         "BlightQuartz": "Todesquarz",
-        "NexavarianSteel": "Nexavar-Stahl"
+        "NexavarianSteel": "Nexavar-Stahl",
+        "NexavaranSteel": "Nexavar Stahl"
       },
       "Base": "Ausgangsmaterial",
       "Normal": "Material",
@@ -1719,6 +1732,9 @@
           },
           "staff": {
             "Single": "Zauberstecken"
+          },
+          "pharmaceutical": {
+            "Single": "Pharmazeutika"
           }
         },
         "attack": {
@@ -1802,6 +1818,20 @@
         "implant": {
           "cybertech": {
             "Single": "Kybernetik"
+          }
+        },
+        "weapon": {
+          "simple": {
+            "Single": "Einfach"
+          },
+          "misc": {
+            "Single": "Verschiedenes"
+          },
+          "martial": {
+            "Single": "Krieg"
+          },
+          "exotic": {
+            "Single": "Exotisch"
           }
         }
       }
@@ -2258,7 +2288,8 @@
       "poison": "Gift",
       "petrified": "Versteinert",
       "helpless": "Hilflos",
-      "polymorph": "Verwandlung"
+      "polymorph": "Verwandlung",
+      "flatFooted": "Auf dem falschen Fuß erwischt"
     },
     "Alignments": {
       "c": "Chaotisch",
@@ -2558,7 +2589,8 @@
       "TooManyConditionSources": "Zu viele Zustandsquellen zum editieren.",
       "NoGiftTargets": "Kein gültiges Ziel um etwas zu übergeben.",
       "InsufficientPreparation": "{name} wurde nicht vorbereitet oder ist nicht bekannt.",
-      "InvalidContentLinkDrop": "Es konnte keine Inhaltsverknüpfung bei Drag & Drop erstellt werden."
+      "InvalidContentLinkDrop": "Es konnte keine Inhaltsverknüpfung bei Drag & Drop erstellt werden.",
+      "NoInitOnDuplicateCombatant": "Konnte nicht bestimmen, für welchen Kämpfer die Initiative gewürfelt werden soll."
     },
     "Warning": {
       "NoDiceAllowedInFormula": "In Formel '{formula}' für {context} sind keine Würfelwürfe erlaubt",
@@ -2575,7 +2607,8 @@
       "NoActionInItem": "Gegenstand \"{item}\" hat keine Aktion \"{action}\"",
       "InvalidUUID": "Ungültige UUID \"{uuid}\"",
       "CannotCreateChargeLink2": "Konnte keinen Ladungen-Link zwischen {source} und {target} erstellen, da {target} bereit mit {deeptarget} verlinkt ist",
-      "NoCombatantFound": "Kein Kampfteilnehmer gefunden"
+      "NoCombatantFound": "Kein Kampfteilnehmer gefunden",
+      "ImmuneToCondition": "{name} ist immun gegen {condition} Zustand."
     },
     "NaturalArmor": "Natürliche Rüstung",
     "ModifierOnly": "Nur Modifikator",
@@ -2688,7 +2721,10 @@
     "RaceType": "Machtniveau",
     "RechargeFormulaHint": "Setzt die aktuellen Ladungen auf das Ergebnis der Formel. Wenn der Wert zum aktuellen Wert hinzugefügt werden soll, addiere <code>@item.uses.value</code> in der Formel.",
     "ChargeCostItemFormulaHint": "Wie viele Aufladungen (oder Nutzungen, Zauberpunkte, etc.) dieser Gegenstand standardmäßig verbraucht. Negative Werte stellen stattdessen Ladungen wieder her.",
-    "ChargeCostActionFormulaHint": "Wie viele Aufladungen (oder Nutzungen, Zauberpunkte, etc.) diese Aktion standardmäßig verbraucht. Negative Werte stellen stattdessen Ladungen wieder her."
+    "ChargeCostActionFormulaHint": "Wie viele Aufladungen (oder Nutzungen, Zauberpunkte, etc.) diese Aktion standardmäßig verbraucht. Negative Werte stellen stattdessen Ladungen wieder her.",
+    "Immune": "Immun",
+    "CLSchoolNotes": "ZS Hinweise ({school})",
+    "DCSchoolNotes": "SG Hinweise ({school})"
   },
   "TOKEN": {
     "VisionLowLight": "Dämmersicht",

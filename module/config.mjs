@@ -2160,24 +2160,27 @@ export const extraAttacks = {
     formula: true,
   },
   // Chained Monk's Flurry of Blows
-  // Requires BAB override
-  // TODO: Make attack handling allow flurries to use normal iteratives.
+  // Requires BAB override and class association
   flurry: {
     label: "PF1.ExtraAttacks.Flurry",
-    count: "min(3, ceil(@bab / 5) - 1) + ceil(@class.level / 7)",
-    bonus: "-(floor(@attackCount / 2) * 5 + @fullAttack * 2)",
+    count: "ceil(@class.level / 7)",
+    bonus: "-(@attackSetCount * 5)",
+    attackName: "PF1.ExtraAttacks.FlurryAttack",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
-    iteratives: false,
+    modToAll: "-(@fullAttack * 2)",
+    iteratives: true,
     manual: false,
     formula: false,
   },
   // Unchained Monk's Flurry of Blows
+  // Requires class association
   unflurry: {
     label: "PF1.ExtraAttacks.UnFlurry",
-    count: "min(3, ceil(@bab / 5) - 1) + floor((@class.level + 9) / 10)",
-    bonus: "max(0, @attackCount - floor((@class.level + 9) / 10)) * -5",
+    count: "floor((@class.level + 9) / 10)",
+    //bonus: "0",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
-    iteratives: false,
+    attackName: "PF1.ExtraAttacks.FlurryAttack",
+    iteratives: true,
     manual: false,
     formula: false,
   },

@@ -126,7 +126,7 @@ export const registerAttackIterativesTests = () => {
               .getAttacks({ full: true, resolve: true, bonuses: true })
               .map((i) => i.bonus);
 
-            expect(attacks).to.deep.equal(expectedProg);
+            expect(attacks.sort()).to.deep.equal(expectedProg.sort());
           });
         }
       });
@@ -157,7 +157,7 @@ export const registerAttackIterativesTests = () => {
               .getAttacks({ full: true, resolve: true, bonuses: true })
               .map((i) => i.bonus);
 
-            expect(attacks).to.deep.equal(expectedProg);
+            expect(attacks.sort()).to.deep.equal(expectedProg.sort());
           });
         }
       });

@@ -1723,7 +1723,8 @@ export class ActorSheetPF extends ActorSheet {
             const attacks =
               action
                 ?.getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true })
-                ?.map((atk) => atk.bonus) ?? [];
+                ?.map((atk) => atk.bonus)
+                .sort((a, b) => b - a) ?? [];
 
             if (attacks.length == 0) return;
 

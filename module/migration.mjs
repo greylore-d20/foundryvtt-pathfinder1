@@ -104,14 +104,12 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
   }
 
   // Migrate World Actors
-  await migrateActors({ state, noHooks: true });
+  const actorMigration = migrateActors({ state, noHooks: true });
 
   // Migrate World Items
-  await migrateItems({ state, noHooks: true });
+  const itemMigration = migrateItems({ state, noHooks: true });
 
-  // Migrate Actor Override Tokens
-  await migrateScenes({ state, noHooks: true });
-
+  let packMigration = Promise.resolve();
   if (isGM) {
     // Migrate Compendium Packs
     const packs = game.packs.filter((p) => {
@@ -124,8 +122,15 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
       return ["Actor", "Item", "Scene"].includes(p.metadata.type);
     });
 
-    await migrateCompendiums(packs, { unlock, state, noHooks: true });
+    packMigration = migrateCompendiums(packs, { unlock, state, noHooks: true });
   }
+
+  // Migrate Unlinked Actors
+  await actorMigration; // Base actors must be migrated before unlinked actors are migrated
+  const sceneMigration = migrateScenes({ state, noHooks: true });
+
+  // Wait for migrations to finish
+  await Promise.allSettled([itemMigration, packMigration, sceneMigration]);
 
   // Remove start message
   ui.notifications.remove(smsgId);

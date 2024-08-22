@@ -52,9 +52,17 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
+   * @deprecated
    * @type {boolean} True if item source is defined, regardless if that item source still exists.
    */
   get hasItemSource() {
+    foundry.utils.logCompatibilityWarning(
+      "ChatMessagePF.hasItemSource has been deprecated in favor of ChatMessagePF.itemSource",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
     return this.flags?.pf1?.metadata?.item !== undefined;
   }
 

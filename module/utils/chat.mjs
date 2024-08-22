@@ -47,7 +47,7 @@ export function hideGMSensitiveInfo(cm, html, data) {
     // Show identified info box for GM if item was unidentified when rolled
     const identifiedInfo = cm.flags.pf1?.identifiedInfo ?? {};
     const { identified = true } = identifiedInfo;
-    if (!identified && cm.hasItemSource) {
+    if (!identified && cm.itemSource !== null) {
       const cardContent = html.find(".card-content");
       cardContent.append(getIdentifiedBlock(identifiedInfo));
     }

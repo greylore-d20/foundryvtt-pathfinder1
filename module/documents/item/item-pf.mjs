@@ -353,11 +353,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   /** @type {boolean} */
-  get isOwned() {
-    return super.isOwned || this.parentItem != null;
-  }
-
-  /** @type {boolean} */
   get hasAction() {
     return this.system.actions?.length > 0;
   }
@@ -588,11 +583,6 @@ export class ItemPF extends ItemBasePF {
     return 4;
   }
 
-  get limited() {
-    if (this.parentItem) return this.parentItem.limited;
-    return super.limited;
-  }
-
   get uuid() {
     if (this.parentItem) this.parentItem.uuid + `.Item.${this.id}`;
     return super.uuid;
@@ -600,13 +590,7 @@ export class ItemPF extends ItemBasePF {
 
   testUserPermission(user, permission, { exact = false } = {}) {
     if (this.isEmbedded) return this.parent.testUserPermission(user, permission, { exact });
-    if (this.parentItem) return this.parentItem.testUserPermission(user, permission, { exact });
     return super.testUserPermission(user, permission, { exact });
-  }
-
-  get permission() {
-    if (this.actor) return this.actor.permission;
-    return super.permission;
   }
 
   get fullDescription() {

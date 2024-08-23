@@ -312,15 +312,20 @@ export class ItemBuffPF extends ItemPF {
     const duration = this.system.duration;
     const formula = `${duration.value}`;
 
-    let seconds = 0;
     let endTiming = this.system.duration.end || "turnStart";
+
+    let seconds;
     if (duration.units === "turn") {
       endTiming = "turnEnd";
+      seconds = 0;
     } else if (formula) {
       seconds = await this.getDuration({ rollData });
     }
 
+    createData.duration.seconds = seconds;
+
     const flags = { duration: {} };
+
     // Record end timing
     flags.duration.end = endTiming;
 
@@ -328,8 +333,6 @@ export class ItemBuffPF extends ItemPF {
     flags.duration.initiative = game.combat?.initiative;
 
     foundry.utils.mergeObject(createData, { "flags.pf1": flags });
-
-    if (seconds >= 0) createData.duration.seconds = seconds;
 
     return createData;
   }

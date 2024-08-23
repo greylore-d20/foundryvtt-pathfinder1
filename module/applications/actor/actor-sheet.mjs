@@ -385,7 +385,8 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
-    const condImmunities = new Set(this.actor.system.traits?.ci?.value ?? []);
+    const condImmunities = this.getConditionImmunities();
+
     context.conditions = naturalSort(
       pf1.registry.conditions
         .filter((cond) => cond.showInBuffsTab)
@@ -2637,7 +2638,9 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const conditionId = a.dataset.conditionId;
 
-    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+    const immunities = this.getConditionImmunities();
+
+    if (immunities.has(conditionId)) {
       if (!this.actor.hasCondition(conditionId)) {
         return void ui.notifications.warn(
           game.i18n.format("PF1.Warning.ImmuneToCondition", {
@@ -2658,7 +2661,9 @@ export class ActorSheetPF extends ActorSheet {
     const cond = pf1.registry.conditions.get(conditionId);
     if (!cond) throw new Error(`Invalid condition ID: ${conditionId}`);
 
-    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+    const immunities = this.getConditionImmunities();
+
+    if (immunities.has(conditionId)) {
       if (!this.actor.hasCondition(conditionId)) {
         return void ui.notifications.warn(
           game.i18n.format("PF1.Warning.ImmuneToCondition", {
@@ -4201,5 +4206,30 @@ export class ActorSheetPF extends ActorSheet {
     for (const el of form.getElementsByTagName("INPUT")) {
       if (el.type === "search") el.disabled = false;
     }
+  }
+
+  getConditionImmunities() {
+    const list = new Set(this.actor.system.traits?.ci?.value ?? []);
+
+    // Map immunities to actual conditions
+    // TODO: Unify the IDs where possible
+    const condToImmMap = {
+      confuse: ["confused"],
+      daze: ["dazed"],
+      dazzle: ["dazzled"],
+      fatigue: ["fatigued"],
+      fear: pf1.registry.conditions.conditionsInTrack("fear"),
+      sicken: ["sickened"],
+      paralyze: ["paralyzed"],
+      petrify: ["petrified"],
+      stun: ["stunned"],
+    };
+    for (const [key, conditions] of Object.entries(condToImmMap)) {
+      if (list.has(key)) {
+        for (const cond of conditions) list.add(cond);
+      }
+    }
+
+    return list;
   }
 }

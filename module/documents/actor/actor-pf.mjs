@@ -3483,6 +3483,10 @@ export class ActorPF extends ActorBasePF {
             img: currentCondition.texture,
           };
 
+          if (currentCondition.overlay) {
+            foundry.utils.setProperty(aeData.flags, "core.overlay", true);
+          }
+
           if (typeof value !== "boolean") {
             foundry.utils.mergeObject(aeData, value);
           }

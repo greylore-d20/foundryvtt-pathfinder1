@@ -50,5 +50,5 @@ TokenHUD.prototype._onToggleEffect = function (event, { overlay = false } = {}) 
       ? CONFIG.statusEffects.find((e) => e.id === statusId) ?? statusId
       : img.getAttribute("src");
 
-  return this.object.toggleEffect(effect, { overlay });
+  return this.object.toggleEffect(effect, { overlay, interaction: true });
 };

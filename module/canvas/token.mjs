@@ -9,7 +9,7 @@ export class TokenPF extends Token {
    * @param {boolean} [options.overlay=false] - Overlay effect
    * @returns {boolean} - was it applied or removed
    */
-  async toggleEffect(effect, { active, overlay = false } = {}) {
+  async toggleEffect(effect, { active, overlay = false, interaction = true } = {}) {
     const effectId = typeof effect === "string" ? effect : effect?.id;
     if (this.actor) {
       const buff = this.actor.items.get(effectId);
@@ -25,6 +25,19 @@ export class TokenPF extends Token {
     }
 
     if (this.actor && pf1.registry.conditions.has(effectId) && typeof this.actor.toggleCondition === "function") {
+      const enable = active ?? !this.actor.hasCondition(effectId);
+      if (enable && this.actor.getConditionImmunities().has(effectId)) {
+        if (interaction) {
+          ui.notifications.warn(
+            game.i18n.format("PF1.Warning.ImmuneToCondition", {
+              name: this.actor.name,
+              condition: pf1.registry.conditions.get(effectId)?.name || effectId,
+            })
+          );
+        }
+        return false;
+      }
+
       let rv;
       if (active === undefined) rv = await this.actor.toggleCondition(effectId);
       else rv = await this.actor.setCondition(effectId, active);

@@ -501,18 +501,22 @@ export class ActorPF extends ActorBasePF {
 
     // Update total level and mythic tier
     const classes = this.itemTypes.class;
-    const { level, mythicTier } = classes.reduce(
+    /** @type {{hd:number,mythic:number,level:number}} */
+    const levels = classes.reduce(
       (cur, o) => {
         o.reset(); // HACK: Out of order preparation for later.
-        cur.level += o.hitDice;
-        cur.mythicTier += o.mythicTier;
+        cur.hd += o.hitDice;
+        if (!["mythic", "racial"].includes(o.subType)) {
+          cur.level += o.system.level ?? 0;
+        }
+        cur.mythic += o.mythicTier;
         return cur;
       },
-      { level: 0, mythicTier: 0 }
+      { hd: 0, mythic: 0, level: 0 }
     );
 
-    this.system.details.level.value = level;
-    this.system.details.mythicTier = mythicTier;
+    this.system.details.level.value = levels.level;
+    this.system.details.mythicTier = levels.mythic;
 
     // Refresh ability scores
     for (const ability of Object.values(this.system.abilities)) {
@@ -554,7 +558,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareClassSkills();
 
     // Reset HD
-    foundry.utils.setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
+    foundry.utils.setProperty(this.system, "attributes.hd.total", levels.hd);
   }
 
   /**

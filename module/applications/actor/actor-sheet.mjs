@@ -491,6 +491,12 @@ export class ActorSheetPF extends ActorSheet {
 
     result.typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${type}.${subType}.Single`);
 
+    if (item.type === "class") {
+      if (["mythic", "racial"].includes(item.subType)) {
+        result.xpUnbound = true;
+      }
+    }
+
     return result;
   }
 
@@ -1253,14 +1259,16 @@ export class ActorSheetPF extends ActorSheet {
 
     switch (id) {
       case "level": {
-        const hd = system.attributes?.hd?.total ?? NaN;
+        const hd = lazy.rollData.attributes.hd.total ?? NaN;
         if (hd > 0) {
           paths.push({ path: "@attributes.hd.total", value: hd });
-          if (system.details?.mythicTier > 0) {
-            paths.push({ path: "@details.mythicTier", value: system.details.mythicTier });
+          const mythic = lazy.rollData.details?.mythicTier ?? NaN;
+          if (mythic > 0) {
+            paths.push({ path: "@details.mythicTier", value: mythic });
           }
         }
-        const cr = this.actor.system.details?.cr?.total ?? NaN;
+        paths.push({ path: "@details.level.value", value: lazy.rollData.details?.level?.value ?? NaN });
+        const cr = lazy.rollData.details?.cr?.total ?? NaN;
         if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
         break;
       }

@@ -385,7 +385,7 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
-    const condImmunities = this.getConditionImmunities();
+    const condImmunities = this.actor.getConditionImmunities();
 
     context.conditions = naturalSort(
       pf1.registry.conditions
@@ -2638,7 +2638,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const conditionId = a.dataset.conditionId;
 
-    const immunities = this.getConditionImmunities();
+    const immunities = this.actor.getConditionImmunities();
 
     if (immunities.has(conditionId)) {
       if (!this.actor.hasCondition(conditionId)) {
@@ -2661,7 +2661,7 @@ export class ActorSheetPF extends ActorSheet {
     const cond = pf1.registry.conditions.get(conditionId);
     if (!cond) throw new Error(`Invalid condition ID: ${conditionId}`);
 
-    const immunities = this.getConditionImmunities();
+    const immunities = this.actor.getConditionImmunities();
 
     if (immunities.has(conditionId)) {
       if (!this.actor.hasCondition(conditionId)) {
@@ -4206,30 +4206,5 @@ export class ActorSheetPF extends ActorSheet {
     for (const el of form.getElementsByTagName("INPUT")) {
       if (el.type === "search") el.disabled = false;
     }
-  }
-
-  getConditionImmunities() {
-    const list = new Set(this.actor.system.traits?.ci?.value ?? []);
-
-    // Map immunities to actual conditions
-    // TODO: Unify the IDs where possible
-    const condToImmMap = {
-      confuse: ["confused"],
-      daze: ["dazed"],
-      dazzle: ["dazzled"],
-      fatigue: ["fatigued"],
-      fear: pf1.registry.conditions.conditionsInTrack("fear"),
-      sicken: ["sickened"],
-      paralyze: ["paralyzed"],
-      petrify: ["petrified"],
-      stun: ["stunned"],
-    };
-    for (const [key, conditions] of Object.entries(condToImmMap)) {
-      if (list.has(key)) {
-        for (const cond of conditions) list.add(cond);
-      }
-    }
-
-    return list;
   }
 }

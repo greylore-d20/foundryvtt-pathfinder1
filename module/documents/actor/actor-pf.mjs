@@ -3559,7 +3559,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {object} conditions Condition ID to boolean (or update data) mapping of new condition states. See {@link setCondition()}
    * @param {object} [context] Update context
-   * @returns {object} Condition ID to boolean mapping of actual updates.
+   * @returns {Record<string,boolean>} Condition ID to boolean mapping of actual updates.
    */
   async setConditions(conditions = {}, context = {}) {
     conditions = foundry.utils.deepClone(conditions);
@@ -3588,10 +3588,18 @@ export class ActorPF extends ActorBasePF {
     const toDelete = [],
       toCreate = [];
 
+    const immunities = this.getConditionImmunities();
+
     for (const [conditionId, value] of Object.entries(conditions)) {
       const currentCondition = pf1.registry.conditions.get(conditionId);
       if (currentCondition === undefined) {
         console.error("Unrecognized condition:", conditionId);
+        delete conditions[conditionId];
+        continue;
+      }
+
+      if (value === true && immunities.has(conditionId)) {
+        console.warn("Actor is immune to condition:", conditionId, this);
         delete conditions[conditionId];
         continue;
       }

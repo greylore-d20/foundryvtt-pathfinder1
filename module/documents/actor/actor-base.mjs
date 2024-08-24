@@ -152,6 +152,35 @@ export class ActorBasePF extends Actor {
 
     return super.toggleStatusEffect(statusId, { active, overlay });
   }
+
+  /**
+   * @internal
+   * @returns {Set<string>}
+   */
+  getConditionImmunities() {
+    const list = new Set(this.system.traits?.ci?.value ?? []);
+
+    // Map immunities to actual conditions
+    // TODO: Unify the IDs where possible
+    const condToImmMap = {
+      confuse: ["confused"],
+      daze: ["dazed"],
+      dazzle: ["dazzled"],
+      fatigue: ["fatigued"],
+      fear: pf1.registry.conditions.conditionsInTrack("fear"),
+      sicken: ["sickened"],
+      paralyze: ["paralyzed"],
+      petrify: ["petrified"],
+      stun: ["stunned"],
+    };
+    for (const [key, conditions] of Object.entries(condToImmMap)) {
+      if (list.has(key)) {
+        for (const cond of conditions) list.add(cond);
+      }
+    }
+
+    return list;
+  }
 }
 
 /**

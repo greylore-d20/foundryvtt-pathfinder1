@@ -8,7 +8,7 @@
  */
 export const measureDistances = function (segments, options = {}) {
   foundry.utils.logCompatibilityWarning(
-    "pf1.utils.canvas.measureDistances() is deprecated in favor of canvas.grid.measurePath()",
+    "pf1.utils.canvas.measureDistances() is deprecated in favor of canvas.grid.measureDistances() and canvas.grid.measurePath()",
     {
       since: "PF1 vNEXT",
       until: "PF1 vNEXT+1",

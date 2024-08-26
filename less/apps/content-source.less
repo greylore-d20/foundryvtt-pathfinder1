@@ -62,8 +62,8 @@
       }
     }
 
-    section {
-      > .tab.source {
+    section.content {
+      > .source {
         width: 100%;
       }
     }
@@ -75,6 +75,8 @@
 
       &:read-only {
         border: 1px solid var(--color-border-light-secondary);
+
+        box-shadow: unset; // Remove Foundry styling
       }
     }
 

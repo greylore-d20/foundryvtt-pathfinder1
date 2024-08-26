@@ -27,7 +27,7 @@ export function hideRollInfo(cm, jq, data) {
 function getIdentifiedBlock(info) {
   const hasCombinedName = info.actionName && !info.actionDescription;
   return (
-    _templateCache["systems/pf1/templates/chat/parts/gm-description.hbs"]?.(
+    Handlebars.partials["systems/pf1/templates/chat/parts/gm-description.hbs"]?.(
       { ...info, hasCombinedName },
       { allowProtoMethodsByDefault: true, allowProtoPropertiesByDefault: true }
     ) ?? ""

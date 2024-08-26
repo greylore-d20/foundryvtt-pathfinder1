@@ -4,7 +4,6 @@ if (import.meta.hot) {
   import.meta.hot.on("hotHandle:update", ({ file, content }) => {
     const compiled = Handlebars.compile(content);
     Handlebars.registerPartial(file, compiled);
-    _templateCache[file] = compiled;
     console.log(`PF1 | Compiled template ${file}`);
 
     // Rerender opened applications to make use of updated templates

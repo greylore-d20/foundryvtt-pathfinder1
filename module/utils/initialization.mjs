@@ -12,8 +12,14 @@ export const getConditions = function () {
       get label() {
         return this.name;
       },
+      set label(v) {
+        this.name = v;
+      },
       get icon() {
         return this.img;
+      },
+      set icon(v) {
+        this.img = v;
       },
     };
   });

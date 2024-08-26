@@ -445,6 +445,7 @@ export async function d20Roll(options = {}) {
     subject,
     bonus = "",
     speaker,
+    messageData = undefined,
   } = options;
 
   let rollMode = options.rollMode;
@@ -464,5 +465,8 @@ export async function d20Roll(options = {}) {
 
   if (Hooks.call("pf1PreD20Roll", roll, options) === false) return;
 
-  return roll.toMessage({ speaker }, { create: chatMessage, noSound, chatTemplateData, compendium, subject, rollMode });
+  return roll.toMessage(
+    { ...messageData, speaker },
+    { create: chatMessage, noSound, chatTemplateData, compendium, subject, rollMode }
+  );
 }

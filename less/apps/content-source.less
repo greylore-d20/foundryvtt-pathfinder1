@@ -49,7 +49,10 @@
       }
 
       a.control {
+        pointer-events: visible; // Undo Foundry disabling events under nav tabs
+
         &.disabled {
+          pointer-events: none;
           opacity: 0.6;
         }
 
@@ -64,7 +67,7 @@
 
     section.content {
       > .source {
-        width: 100%;
+        //width: 100%;
       }
     }
 

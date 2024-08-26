@@ -16,8 +16,8 @@ export class ContentSourceEditor extends DocumentSheet {
       ...options,
       tabs: [
         {
-          contentSelector: "section.tabs",
-          navSelector: "nav.tabs[data-group='sources']",
+          contentSelector: "section.content",
+          navSelector: "nav.tabs",
           group: "sources",
         },
       ],

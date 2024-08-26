@@ -10,7 +10,10 @@ export class PackFilter extends CheckboxFilter {
     const entries = this.compendiumBrowser?.entries.contents;
     const usedPacks = this.compendiumBrowser?.packs
       ?.filter((pack) => entries.some((entry) => entry.__pack === pack.collection))
-      .map((pack) => ({ key: pack.collection, label: pack.metadata.label }));
+      .map((pack) => {
+        const label = pack.metadata.label;
+        return { key: pack.collection, label: game.i18n.has(label) ? game.i18n.localize(label) : label };
+      });
     const orderedPacks = naturalSort(usedPacks, "label").map((pack) => [pack.key, pack]);
     this.choices = new foundry.utils.Collection(orderedPacks);
   }

@@ -2733,6 +2733,15 @@ export class ActorPF extends ActorBasePF {
 
     const token = options.token ?? this.token;
 
+    // Add metadata about the skill
+    const metadata = { skill: { rank: skl.rank ?? 0 } };
+    if (["acr", "swm", "clm"].includes(skillId)) {
+      const speeds = this.system.attributes?.speed ?? {};
+      metadata.speed = { base: speeds.land?.total ?? 0 };
+      if (skillId === "swm") metadata.speed.swim = speeds.swim?.total ?? 0;
+      if (skillId === "clm") metadata.speed.climb = speeds.climb?.total ?? 0;
+    }
+
     const rollOptions = {
       ...options,
       parts,
@@ -2742,6 +2751,13 @@ export class ActorPF extends ActorBasePF {
       compendium: { entry: pf1.config.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
+      messageData: {
+        flags: {
+          pf1: {
+            metadata,
+          },
+        },
+      },
     };
     if (Hooks.call("pf1PreActorRollSkill", this, rollOptions, skillId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);

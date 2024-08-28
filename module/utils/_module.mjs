@@ -7,6 +7,7 @@ export { SemanticVersion } from "./semver.mjs";
 export * as formula from "./formulas.mjs";
 export * as roll from "./roll-functions.mjs";
 export * as init from "./initialization.mjs";
+export * as rollData from "./roll-data.mjs";
 
 export {
   binarySearch,

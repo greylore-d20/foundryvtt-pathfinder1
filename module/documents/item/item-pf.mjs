@@ -1598,6 +1598,8 @@ export class ItemPF extends ItemBasePF {
     const actor = this.actor;
     const result = { ...(actor?.getRollData() ?? {}) };
 
+    if (!actor) pf1.utils.rollData.addStatic(result);
+
     result.item = foundry.utils.deepClone(this.system);
 
     // Add @class

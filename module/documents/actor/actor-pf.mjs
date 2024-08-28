@@ -4430,6 +4430,8 @@ export class ActorPF extends ActorBasePF {
 
     const result = { ...(skipRefresh ? this._rollData : foundry.utils.deepClone(this.system)) };
 
+    pf1.utils.rollData.addStatic(result);
+
     // Clear certain fields if not refreshing
     if (skipRefresh) {
       for (const path of pf1.config.temporaryRollDataFields.actor) {

@@ -4186,7 +4186,6 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Otherwise return notes if they directly match context
-    const notes = result.filter((n) => n.target == context);
     for (const note of result) {
       note.notes = note.notes.filter((o) => o.target === context).map((o) => o.text);
     }

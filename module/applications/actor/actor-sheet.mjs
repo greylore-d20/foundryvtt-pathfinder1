@@ -1259,7 +1259,7 @@ export class ActorSheetPF extends ActorSheet {
 
     switch (id) {
       case "level": {
-        const hd = lazy.rollData.attributes.hd.total ?? NaN;
+        const hd = lazy.rollData.attributes?.hd?.total ?? NaN;
         if (hd > 0) {
           paths.push({ path: "@attributes.hd.total", value: hd });
           const mythic = lazy.rollData.details?.mythicTier ?? NaN;
@@ -1267,7 +1267,10 @@ export class ActorSheetPF extends ActorSheet {
             paths.push({ path: "@details.mythicTier", value: mythic });
           }
         }
-        paths.push({ path: "@details.level.value", value: lazy.rollData.details?.level?.value ?? NaN });
+        const level = lazy.rollData.details?.level?.value ?? NaN;
+        if (level) {
+          paths.push({ path: "@details.level.value", value: lazy.rollData.details?.level?.value ?? NaN });
+        }
         const cr = lazy.rollData.details?.cr?.total ?? NaN;
         if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
         break;

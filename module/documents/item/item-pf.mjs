@@ -1322,8 +1322,9 @@ export class ItemPF extends ItemBasePF {
         const range = action.getRange({ type: "max", rollData }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = pf1.utils.convertDistance(range, units);
+        // TODO: Display range increment and max range instead of just the latter when max increment is higher than 1
         const rangeLabel =
-          range > 0 ? game.i18n.format("PF1.RangeNote", { distance: range, units: distanceValues[1] }) : null;
+          range > 0 ? game.i18n.format("PF1.MaxRangeNote", { distance: range, units: distanceValues[1] }) : null;
         if (rangeLabel) props.push(rangeLabel);
       }
 

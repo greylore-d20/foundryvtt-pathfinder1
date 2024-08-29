@@ -3225,9 +3225,9 @@ export class ActorPF extends ActorBasePF {
     let untokened = 0;
     // Roll initiative for combatants
     let combatants = combat.combatants.filter((c) => {
-      if (!c.token) untokened += 1;
-      if (token && c.token?.id !== token.id) return false;
       if (c.actor?.id !== this.id) return false;
+      if (token && c.token?.id !== token.id) return false;
+      if (!c.token) untokened += 1;
       return rerollInitiative || c.initiative === null;
     });
 
@@ -3241,10 +3241,12 @@ export class ActorPF extends ActorBasePF {
     if (combatants.length == 0) return combat;
 
     foundry.utils.mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
+
     await combat.rollInitiative(
       combatants.map((c) => c.id),
       initiativeOptions
     );
+
     return combat;
   }
 

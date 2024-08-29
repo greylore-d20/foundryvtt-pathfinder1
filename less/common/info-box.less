@@ -25,9 +25,10 @@
       flex: 1;
       display: flex;
       flex-flow: column;
-      padding: 1px 3px;
       align-items: center;
       justify-content: center;
+
+      padding: 1px 3px;
 
       > select {
         width: 100%;
@@ -35,18 +36,25 @@
 
       > input {
         text-align: center;
-        line-height: inherit;
-        height: unset;
 
-        border: 1px solid transparent;
-        background-color: unset;
+        padding: unset;
+        background-color: var(--pf1-bg-dark-0);
 
         &:hover {
           border: unset;
         }
       }
 
-      line-height: 1.5em;
+      line-height: 1.5;
+    }
+
+    input {
+      line-height: 1.5;
+      height: unset;
+
+      &:is([type="text"], [type="number"]) {
+        border: 1px solid transparent;
+      }
     }
   }
 

@@ -201,7 +201,7 @@ export const createMiscActorMacro = async (type, uuid, slot, data) => {
       img = "systems/pf1/icons/skills/yellow_08.jpg";
       break;
     case "initiative":
-      command += ".rollInitiative();";
+      command += ".rollInitiative({ createCombatants: true });";
       name = game.i18n.format("PF1.RollInitiativeMacroName", { actor: actor.name });
       img = "systems/pf1/icons/skills/weapon_41.jpg";
       break;

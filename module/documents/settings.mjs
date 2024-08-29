@@ -12,7 +12,6 @@ export const registerSystemSettings = function () {
    * Track the system version upon which point a migration was last applied
    */
   game.settings.register("pf1", "systemMigrationVersion", {
-    name: "System Migration Version",
     scope: "world",
     config: false,
     type: String,
@@ -32,14 +31,15 @@ export const registerSystemSettings = function () {
    * Track when the last changelog was shown
    */
   game.settings.register("pf1", "changelogVersion", {
-    name: "Changelog Version",
     scope: "client",
     config: false,
     type: String,
     default: "0.74.9",
   });
+  /**
+   * Don't automatically show changelog
+   */
   game.settings.register("pf1", "dontShowChangelog", {
-    name: "Don't Automatically Show Changelog",
     scope: "client",
     config: false,
     type: Boolean,
@@ -74,7 +74,6 @@ export const registerSystemSettings = function () {
     restricted: true,
   });
   game.settings.register("pf1", "experienceConfig", {
-    name: "PF1.ExperienceConfigName",
     scope: "world",
     default: new ExperienceConfigModel(),
     type: ExperienceConfigModel,
@@ -94,7 +93,6 @@ export const registerSystemSettings = function () {
   });
   */
   game.settings.register("pf1", "accessibilityConfig", {
-    name: "PF1.AccessibilityConfigName",
     scope: "client",
     default: new AccessibilityConfigModel(),
     type: AccessibilityConfigModel,

@@ -14,6 +14,7 @@ export class MaterialType extends RegistryEntry {
       shortName: new fields.StringField({ required: false, initial: undefined, blank: false, localize: true }),
       treatedAs: new fields.StringField({ required: false, initial: undefined, blank: false }),
       addon: new fields.BooleanField({ required: false, initial: false }),
+      intrinsic: new fields.BooleanField({ required: false, initial: false }), // Always available, same as base materials
       primitive: new fields.BooleanField({ required: false, initial: false }),
       baseMaterial: new fields.ArrayField(new fields.StringField(), { required: false, initial: [] }),
       hardness: new fields.NumberField({ required: false, initial: 10, integer: true, min: 0 }),
@@ -166,7 +167,10 @@ export class MaterialType extends RegistryEntry {
     if (material instanceof Item) material = pf1.registry.materialTypes.get(material.normalMaterial);
     else if (typeof material === "string") material = pf1.registry.materialTypes.get(material);
 
-    if (!(material instanceof MaterialType)) return null; // Material not found or is invalid data
+    if (!(material instanceof MaterialType)) {
+      if (this.intrinsic) return true;
+      return null; // Material not found or is invalid data
+    }
 
     if (this.addon === material.addon) return false; // Both are addons or both are not addons
 
@@ -1287,6 +1291,7 @@ export class MaterialTypes extends Registry {
       _id: "magic",
       name: "PF1.Materials.Types.Magic",
       addon: true,
+      intrinsic: true,
       allowed: {
         buckler: false,
         lightShield: false,
@@ -1302,6 +1307,7 @@ export class MaterialTypes extends Registry {
       _id: "epic",
       name: "PF1.Materials.Types.Epic",
       addon: true,
+      intrinsic: true,
       allowed: {
         buckler: false,
         lightShield: false,

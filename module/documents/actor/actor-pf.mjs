@@ -1024,8 +1024,11 @@ export class ActorPF extends ActorBasePF {
         const spellLevelData = book.spells[`spell${spellLevel}`];
         // Insufficient ability score for the level
         if (maxLevelByAblScore < spellLevel) {
-          spellLevelData.hasIssues = true;
-          spellLevelData.lowAbilityScore = true;
+          const unlimit = bookInfo.data.noAbilityLimit ?? false;
+          if (!unlimit) {
+            spellLevelData.hasIssues = true;
+            spellLevelData.lowAbilityScore = true;
+          }
         }
 
         spellLevelData.known = { unused: 0, max: 0 };

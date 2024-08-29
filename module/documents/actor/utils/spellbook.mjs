@@ -29,6 +29,7 @@ export class Spellbook {
    * @param {ActorPF} actor Owning actor.
    */
   constructor(bookKey, actor) {
+    this.key = bookKey;
     this.actor = actor;
     this.data = actor.system.attributes.spells.spellbooks[bookKey];
   }

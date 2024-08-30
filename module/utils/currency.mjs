@@ -1,12 +1,12 @@
 /**
- * Split copper currency into gold, silver and copper.
+ * Split copper currency into multiple currencies favoring the one with highest rates.
  *
  * @param {number} cp - Copper
  * @param {object} [options] - Additional options
- * @param {CoinType[]} [options.omit] - Omit these types from the result. Baseline currency can not be omitted.
- * @param {boolean} [options.pad] - Pad return value by including zeroed currencies
- * @param {CoinType} [options.standard] - If true, no coinage of greater value than the {@link pf1.config.currency.standard standard currency} is included.
- * @returns {Record<CoinType,number>} Gold, silver, and copper
+ * @param {CoinType[]} [options.omit=[]] - Omit these types from the result. Baseline currency can not be omitted.
+ * @param {boolean} [options.pad=true] - Pad return value by including zeroed currencies
+ * @param {boolean} [options.standard=true] - If true, no coinage of greater value than the {@link pf1.config.currency.standard standard currency} is included.
+ * @returns {Record<CoinType,number>} The various currencies.
  */
 export function split(cp, { omit = [], standard = true, pad = true } = {}) {
   const rates = Object.entries(pf1.config.currency.rate)

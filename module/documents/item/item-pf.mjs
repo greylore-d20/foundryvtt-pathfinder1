@@ -56,19 +56,6 @@ export class ItemPF extends ItemBasePF {
   /**
    * @internal
    * @override
-   * @param {object} [itemData]
-   * @returns {object}
-   */
-  static getDefaultArtwork(itemData) {
-    const result = super.getDefaultArtwork(itemData);
-    const image = pf1.config.defaultIcons.items[itemData?.type];
-    if (image) result.img = image;
-    return result;
-  }
-
-  /**
-   * @internal
-   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user

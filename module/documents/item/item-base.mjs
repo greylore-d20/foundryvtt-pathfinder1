@@ -5,6 +5,23 @@
  */
 export class ItemBasePF extends Item {
   /**
+   * Add default artwork.
+   *
+   * @see {@link pf1.config.defaultIcons.items}
+   *
+   * @internal
+   * @override
+   * @param {object} [itemData]
+   * @returns {object}
+   */
+  static getDefaultArtwork(itemData) {
+    const result = super.getDefaultArtwork(itemData);
+    const image = pf1.config.defaultIcons.items[itemData?.type];
+    if (image) result.img = image;
+    return result;
+  }
+
+  /**
    * Item create dialog.
    *
    * @override

@@ -12,6 +12,26 @@ export class ActorBasePF extends Actor {
   }
 
   /**
+   * Add default artwork.
+   *
+   * @see {@link pf1.config.defaultIcons.actors}
+   *
+   * @internal
+   * @override
+   * @param {object} [actorData]
+   * @returns {object}
+   */
+  static getDefaultArtwork(actorData) {
+    const result = super.getDefaultArtwork(actorData);
+    const image = pf1.config.defaultIcons.actors[actorData?.type];
+    if (image) {
+      result.img = image;
+      result.texture.src = image;
+    }
+    return result;
+  }
+
+  /**
    * Resets internal itemTypes cache.
    *
    * @protected

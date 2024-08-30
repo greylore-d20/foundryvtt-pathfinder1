@@ -68,22 +68,6 @@ export class ActorPF extends ActorBasePF {
   /**
    * @internal
    * @override
-   * @param {object} [actorData]
-   * @returns {object}
-   */
-  static getDefaultArtwork(actorData) {
-    const result = super.getDefaultArtwork(actorData);
-    const image = pf1.config.defaultIcons.actors[actorData?.type];
-    if (image) {
-      result.img = image;
-      result.texture.src = image;
-    }
-    return result;
-  }
-
-  /**
-   * @internal
-   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user

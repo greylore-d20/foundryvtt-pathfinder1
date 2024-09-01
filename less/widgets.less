@@ -44,19 +44,44 @@
 
     .item-picker-categories {
       display: flex;
+      flex-flow: column nowrap;
+      gap: 3px;
+
+      overflow: hidden auto;
+
       flex: 1;
-      flex-direction: column;
       max-width: 45%;
       border-right: 3px groove rgba(155, 155, 155, 0.5);
       background: rgba(155, 155, 155, 0.2);
 
       .category {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        padding: 0 3px 0 0.5em;
+
+        line-height: 2;
+
+        align-items: center;
+
+        > i {
+          flex: 0;
+        }
+
         border-radius: 10px 0 0 10px;
         border: 1px transparent;
         transition: background-color 100ms ease;
 
+        &.invalid {
+          opacity: 0.6;
+          background-color: rgba(255, 0, 0, 0.2);
+        }
+
         &.active {
           background: rgba(155, 155, 155, 0.5);
+          &.invalid {
+            background-color: rgba(255, 155, 155, 0.5);
+          }
+          opacity: 1;
           a > h2 {
             text-shadow: 0 0 8px red;
           }
@@ -70,15 +95,13 @@
         }
 
         a {
+          flex: 1;
+
           h2 {
             font-weight: bold;
             font-size: var(--font-size-14);
-            margin-right: -1px;
-            margin-bottom: 1px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            padding-left: 5px;
-            border-bottom: unset;
+            margin: 0;
+            border: unset;
           }
         }
       }
@@ -111,6 +134,35 @@
         cursor: pointer;
         max-width: calc(100% - 8px);
         word-break: break-word;
+
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 3px;
+
+        align-items: center;
+
+        &.hidden {
+          display: none;
+        }
+
+        &.invalid {
+          opacity: 0.6;
+          background-color: rgba(255, 0, 0, 0.2);
+        }
+
+        &.pre-select {
+          opacity: 1;
+
+          &.invalid {
+            background-color: rgba(255, 155, 155, 0.3);
+          }
+        }
+
+        h4 {
+          flex: 1;
+          margin: 0;
+          border: none;
+        }
 
         &:hover {
           box-shadow: 0 0 6px var(--pf1-red);

@@ -152,7 +152,7 @@ export class TooltipPF extends Application {
     // Get conditions
     if (fullInfo || !config.hideConditions) {
       const conditions = actor.system.conditions;
-      for (const [conditionId, active] of Object.entries(conditions)) {
+      for (const [conditionId, active] of Object.entries(conditions ?? {})) {
         if (active === true) {
           context.conditions = context.conditions || [];
           const condition = pf1.registry.conditions.get(conditionId);

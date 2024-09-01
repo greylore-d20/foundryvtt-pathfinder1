@@ -14,29 +14,45 @@ import { RollPF } from "../dice/roll.mjs";
  * ```
  * @param {string} str - String to convert
  * @param {object} [options] - Additional options
- * @param {boolean} [options.allowUpperCase] - Do not forcibly lowercase everything.
- * @param {boolean} [options.camelCase] - Automatic camel case
- * @param {string | Function} [options.replacement] - Replacement for disallowed characters.
+ * @param {boolean} [options.allowUpperCase=false] - Do not forcibly lowercase everything.
+ * @param {boolean} [options.camelCase=true] - Automatic camel case
+ * @param {string | Function} [options.replacement=""] - Replacement for disallowed characters.
+ * @param {boolean} [options.allowInitialNumbers=false] - If false, number prefix is removed.
+ * @param {boolean} [options.allowUnderScore=true] - If false, underscore is removed.
  * @returns {string} - String suitable as a tag
  */
-export const createTag = function (str, { allowUpperCase = false, camelCase = true, replacement = "" } = {}) {
+export function createTag(
+  str,
+  {
+    allowUpperCase = false,
+    camelCase = true,
+    replacement = "",
+    allowInitialNumbers = false,
+    allowUnderScore = true,
+  } = {}
+) {
   if (!str) return "";
 
-  return (
-    str
-      .normalize("NFD") // Normalize
-      .replace(/\p{Diacritic}/gu, "") // Remove diacritics
-      .replace(/[^a-zA-Z0-9\s]/g, replacement) // Replace remaining non-latin letters
-      // Camel case and such
-      .split(/\s+/)
-      .map((s, a) => {
-        if (!allowUpperCase) s = s.toLowerCase();
-        if (a > 0 && camelCase) s = s.substring(0, 1).toUpperCase() + s.substring(1);
-        return s;
-      })
-      .join("")
-  );
-};
+  str = str
+    .normalize("NFD") // Normalize
+    .replace(/\p{Diacritic}/gu, "") // Remove diacritics
+    .replace(/[^a-zA-Z0-9_\s]/g, replacement) // Replace remaining non-latin letters
+    // Camel case and such
+    .split(/\s+/)
+    .map((s, a) => {
+      if (!allowUpperCase) s = s.toLowerCase();
+      if (a > 0 && camelCase) s = s.substring(0, 1).toUpperCase() + s.substring(1);
+      return s;
+    })
+    .join("");
+
+  if (!allowUnderScore) str = str.replaceAll("_", "");
+
+  // Remove number prefix
+  if (!allowInitialNumbers) str = str.replace(/^\d/, "");
+
+  return str;
+}
 
 /**
  * @deprecated

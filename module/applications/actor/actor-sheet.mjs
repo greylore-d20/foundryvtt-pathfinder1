@@ -2969,7 +2969,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     const baseName = skillData.name || "skill";
-    const baseTag = pf1.utils.createTag(baseName);
+    const baseTag = pf1.utils.createTag(baseName, { allowUnderScore: false });
     let tag = baseTag;
     let count = 1;
     while (this.actor.system.skills[tag] != null) {

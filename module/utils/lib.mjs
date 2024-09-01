@@ -356,7 +356,7 @@ export const convertWeightBack = function (value) {
 };
 
 /**
- * Sort an array using a language-aware comparison function that can sort by a property key.
+ * Sort an array in-place using a language-aware comparison function that can sort by a property key.
  * If no property key is provided, the array is sorted directly.
  *
  * @template T
@@ -440,6 +440,44 @@ export async function openJournal(uuid, options = {}) {
 }
 
 /**
+ * Determine if buff target or buff target category is valid for the defined actor and item.
+ *
+ * @param {object} data - Buff target or category data
+ * @param {object} options - Additional options
+ * @param {Actor} [options.actor] - Actor to test
+ * @param {Item} [options.item] - Item to test
+ * @returns {{actor:boolean,item:boolean,valid:boolean}}
+ */
+export function isValidChangeTarget(data, { actor, item } = {}) {
+  const { filters } = data;
+  if (!filters) return { actor: true, item: true, valid: true };
+
+  let ar = true;
+  if (filters.actor && actor) {
+    const { include, exclude, fn } = filters.actor;
+    if (exclude && exclude.includes(actor.type)) ar = false;
+    else if (include && !include.includes(actor.type)) ar = false;
+    else if (typeof fn === "function") ar = fn(data, { actor, item });
+  }
+
+  let ir = true;
+  if (filters.item && item) {
+    const { include, exclude, fn } = filters.item;
+    if (exclude && exclude.includes(item.type)) ir = false;
+    else if (include && !include.includes(item.type)) ir = false;
+    else if (typeof fn === "function") ir = fn(data, { actor, item });
+  }
+
+  if (!(ar && ir)) console.log(data, actor?.name, item?.name);
+
+  return {
+    actor: actor ? ar : undefined,
+    item: item ? ir : undefined,
+    valid: ar && ir,
+  };
+}
+
+/**
  * @typedef {object} BuffTargetItem
  * @property {string} [label] - The buff target's label.
  * @property {string} category - The buff target's category.
@@ -448,11 +486,14 @@ export async function openJournal(uuid, options = {}) {
 /**
  * Assembles an array of all possible buff targets.
  *
- * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
- * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
+ * @internal
+ * @param {"buffs"|"contextNotes"} type - Type of targets to fetch
+ * @param {object} context - Additional context
+ * @param {Actor} [context.actor] - Actor for which to specifically get buff targets.
+ * @param {Item} [context.item] - Item on which this change is on.
  * @returns {Object<string, BuffTargetItem>} The resulting array of buff targets.
  */
-export const getBuffTargets = function (actor, type = "buffs") {
+export function getBuffTargets(type, { actor, item } = {}) {
   const buffTargets = foundry.utils.deepClone(
     {
       buffs: pf1.config.buffTargets,
@@ -461,19 +502,24 @@ export const getBuffTargets = function (actor, type = "buffs") {
   );
 
   // Append individual skills to buff targets
+  const allowSkills = isValidChangeTarget(pf1.config.buffTargetCategories.skills, { actor, item }).valid;
+
   if (actor) {
-    for (const s of actor._skillTargets) {
+    const skillTargets = actor._skillTargets ?? [];
+    for (const s of skillTargets) {
       const skillId = s.split(".").slice(1).join(".");
       const skill = actor.getSkillInfo(skillId);
-      buffTargets[s] = { label: skill.fullName, category: "skill" };
+      buffTargets[s] = { label: skill.fullName, category: "skill", valid: allowSkills };
     }
   } else {
     for (const [key, label] of Object.entries(pf1.config.skills)) {
-      buffTargets[`skill.${key}`] = { label, category: "skill" };
+      buffTargets[`skill.${key}`] = { label, category: "skill", valid: allowSkills };
     }
   }
 
   // Append spell targets
+  const allowSpells = isValidChangeTarget(pf1.config.buffTargetCategories.spell, { actor, item }).valid;
+
   const books = actor?.system.attributes?.spells?.spellbooks ?? {
     primary: { label: game.i18n.localize("PF1.SpellBookPrimary") },
     secondary: { label: game.i18n.localize("PF1.SpellBookSecondary") },
@@ -496,7 +542,7 @@ export const getBuffTargets = function (actor, type = "buffs") {
 
     let subLabel;
     if (category === "school") subLabel = CONFIG.PF1.spellSchools[subKey];
-    else subLabel = books[subKey]?.label ?? subKey;
+    else subLabel = books[subKey]?.label || subKey;
 
     const fullKey = category ? `${key}.${category}` : key;
     const mainLabel = game.i18n.localize(
@@ -511,11 +557,12 @@ export const getBuffTargets = function (actor, type = "buffs") {
     buffTargets[s] = {
       label: `${mainLabel} (${subLabel})`,
       category: "spell",
+      valid: allowSpells,
     };
   }
 
   return buffTargets;
-};
+}
 
 /**
  * @typedef {object} BuffTargetCategory
@@ -524,12 +571,15 @@ export const getBuffTargets = function (actor, type = "buffs") {
 /**
  * Assembles an array of buff targets and their categories, ready to be inserted into a Widget_CategorizedItemPicker.
  *
- * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
- * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
+ * @internal
+ * @param {"buffs"|"contextNotes"} type - Type of targets to retrieve
+ * @param {object} context - Additional context
+ * @param {Actor} [context.actor] - Actor for which to specifically get buff targets.
+ * @param {Item} [context.item] - Item on which this change is on.
  * @returns {Widget_CategorizedItemPicker~Category[]}
  */
-export const getBuffTargetDictionary = function (actor, type = "buffs") {
-  const buffTargets = getBuffTargets(actor, type);
+export function getBuffTargetDictionary(type = "buffs", { actor, item } = {}) {
+  const buffTargets = getBuffTargets(type, { actor, item });
 
   // Assemble initial categories and items
   const targetCategories = foundry.utils.deepClone(
@@ -538,35 +588,34 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
       contextNotes: pf1.config.contextNoteCategories,
     }[type]
   );
-  let categories = Object.entries(buffTargets).reduce((cur, o) => {
-    const key = o[0];
-    const label = o[1].label;
-    const category = o[1].category;
-    const icon = o[1].icon;
 
-    if (!key.startsWith("~")) {
-      cur[category] = cur[category] || {
-        label: targetCategories[category].label,
-        items: [],
-      };
-      cur[category].items.push({ key, label, icon });
-    }
-    return cur;
-  }, {});
+  const categories = Object.values(
+    Object.entries(buffTargets).reduce((cur, [key, { label, category, icon, ...options }]) => {
+      if (!key.startsWith("~")) {
+        cur[category] ??= {
+          key,
+          category,
+          label: targetCategories[category].label,
+          items: [],
+          validity: isValidChangeTarget(targetCategories[category], { actor, item }),
+        };
 
-  // Turn result into a usable format, and sort
-  categories = Object.entries(categories).reduce((cur, o) => {
-    const key = o[0];
-    const label = o[1].label;
-    const items = o[1].items;
-    cur.push({ key, label, items });
-    return cur;
-  }, []);
-  categories = naturalSort(categories, "label");
+        cur[category].items.push({
+          key,
+          label,
+          icon,
+          validity: isValidChangeTarget({ key, label, category, icon, ...options }, { actor, item }),
+        });
+      }
+      return cur;
+    }, {})
+  );
+
+  naturalSort(categories, "label");
 
   // Return result
   return categories;
-};
+}
 
 /**
  * A locale-safe insertion sort of an Array of Objects, not in place. Ignores punctuation and capitalization.

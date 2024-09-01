@@ -725,7 +725,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare stuff for changes
     if (item.changes?.size) {
-      const buffTargets = getBuffTargets(actor);
+      const buffTargets = getBuffTargets("buffs", { actor, item });
       let showPriority = false;
       context.changes =
         item.changes?.map((/** @type {ItemChange} */ ch) => {
@@ -755,7 +755,7 @@ export class ItemSheetPF extends ItemSheet {
     if (itemData.contextNotes) {
       // TODO: Remove .toObject() and move the supporting data to the datamodel
       context.contextNotes = itemData.contextNotes.map((cn) => cn.toObject());
-      const noteTargets = getBuffTargets(actor, "contextNotes");
+      const noteTargets = getBuffTargets("contextNotes", { actor, item });
       context.contextNotes.forEach((n) => {
         const target = noteTargets[n.target];
         n.isValid = !!target;
@@ -2130,7 +2130,7 @@ export class ItemSheetPF extends ItemSheet {
     const li = a.closest(".context-note");
     const noteIndex = Number(li.dataset.note);
     const note = this.item.system.contextNotes[noteIndex];
-    const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
+    const categories = getBuffTargetDictionary("contextNotes", { actor: this.item.actor, item: this.item });
 
     // Sort specific categories
     const sortable = new Set(["skill"]);

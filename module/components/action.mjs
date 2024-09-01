@@ -1,7 +1,7 @@
 import { calculateRange, convertDistance } from "../utils/lib.mjs";
 import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { keepUpdateArray, createTag } from "../utils/lib.mjs";
+import { keepUpdateArray } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 
@@ -133,7 +133,7 @@ export class ItemAction {
 
   /** @type {string} - Tag */
   get tag() {
-    return this.data.tag || createTag(this.name);
+    return this.data.tag || pf1.utils.createTag(this.name);
   }
 
   /**

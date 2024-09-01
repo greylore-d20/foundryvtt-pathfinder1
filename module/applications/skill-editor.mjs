@@ -108,7 +108,7 @@ export class SkillEditor extends DocumentSheet {
 
     formData = foundry.utils.expandObject(formData);
     // Forcibly slugify provided tag to ensure it is not invalid (e.g. contain periods)
-    const tag = formData.tag?.slugify({ strict: true });
+    const tag = pf1.utils.createTag(formData.tag, { allowUpperCase: true, camelCase: false });
     const newData = formData.skill;
 
     // Track old IDs for rename related data deletion

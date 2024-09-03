@@ -1,30 +1,32 @@
 import { RollPF } from "module/dice/roll.mjs";
 import { openJournal } from "@utils";
 
-export const searchLimit = 500;
-
-// Was game.documentIndex.index() called?
-let indexed = false;
+/**
+ * Basic item filter function for {@link findItem}
+ *
+ * @internal
+ * @param {Item|object} item - Item or index entry to match
+ * @param {object} query - Query data
+ * @returns {boolean}
+ */
+export function matchItem(item, query) {
+  const { name, type } = query;
+  return item.name === name && (type ? item.type === type : true);
+}
 
 /**
+ * Find item based on basic criteria.
+ *
  * @internal
  * @param {string} name - Item name to search for
  * @param {object} [options] - Additional options
- * @param {string} [options.type]
+ * @param {string} [options.type] - Document type, such as "buff"
  * @returns {string|null} - Most appropriate matching item's UUID
  */
-async function findItem(name, { type } = {}) {
-  // HACK: Early need of documentIndex
-  if (!indexed && !game.ready) {
-    console.debug("PF1 | Forcing early document index creation");
-    await game.documentIndex.index();
-    indexed = true;
-  }
-
-  let items = game.documentIndex
-    .lookup(name, { documentTypes: ["Item"], limit: searchLimit })
-    .Item // Omit items on actors and items of wrong type
-    .filter((e) => !e.entry.actor && (!type || e.entry.type === type));
+export async function findItem(name, { type } = {}) {
+  // Items directory has priority
+  const item = game.items.find((i) => pf1.chat.enrichers.matchItem(i, { name, type }));
+  if (item) return item.uuid;
 
   const packTypePriority = {
     items: 1_000,
@@ -33,27 +35,24 @@ async function findItem(name, { type } = {}) {
     system: 4_000,
   };
 
-  items = items
-    .map((e) => {
-      const pack = game.packs.get(e.pack);
-      const packType = pack?.metadata.packageType ?? "items";
+  // Sort packs by above criteria
+  const packs = [...game.packs]
+    .map((p) => ({
+      pack: p,
+      visible: p.visible ?? true,
+      disabled: p.config.pf1?.disabled ?? false,
+      sort: packTypePriority[p.metadata.packageType],
+    }))
+    .filter((p) => !p.disabled && p.visible && p.pack.metadata.type === "Item")
+    .sort((a, b) => a.sort - b.sort);
 
-      return {
-        ...e,
-        exact: e.entry.name === name,
-        visible: pack?.visible ?? true,
-        disabled: pack?.config.pf1?.disabled ?? false,
-        sort: packTypePriority[packType],
-      };
-    })
-    .filter((e) => !e.disabled && e.visible)
-    // Priotizie by item location
-    .sort((a, b) => a.sort - b.sort)
-    // Prioritize exact matches
-    .sort((a, b) => (a.exact ? -1 : 0) + (b.exact ? 1 : 0));
+  for (const { pack } of packs) {
+    if (!pack.indexed) await pack.getIndex();
+    const item = pack.index.find((i) => pf1.chat.enrichers.matchItem(i, { name, type }));
+    if (item) return item.uuid;
+  }
 
-  // Return most likely match
-  return items[0]?.uuid ?? null;
+  return null;
 }
 
 /**

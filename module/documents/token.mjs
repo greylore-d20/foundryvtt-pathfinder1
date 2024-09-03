@@ -61,13 +61,20 @@ export class TokenDocumentPF extends TokenDocument {
   static getTrackedAttributes(data, path = []) {
     const attr = super.getTrackedAttributes(data, path);
 
-    // Only append extra vars when not dealing with specific document type to avoid inserting them multiple times
+    // BUG: This causes these keys to be duplicated in default token config
+    if (path[0] === "attributes") {
+      if (path.length === 1) {
+        attr.value.push(
+          ["attributes", "hp", "temp"],
+          ["attributes", "hp", "nonlethal"],
+          ["attributes", "vigor", "temp"]
+        );
+      }
+    }
+
+    // If data is missing entirely, AC will not be listed but the others will
     if (!data) {
-      attr.value.push(
-        ["attributes", "hp", "temp"],
-        ["attributes", "hp", "nonlethal"],
-        ["attributes", "ac", "normal", "total"]
-      );
+      attr.value.push(["attributes", "ac", "normal", "total"]);
     }
 
     return attr;

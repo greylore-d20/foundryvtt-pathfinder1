@@ -7,13 +7,14 @@
   font-size: var(--font-size-12);
 
   .card-header {
-    padding: 3px 0;
+    padding: 3px;
     border-top: 2px groove #fff;
     border-bottom: 2px groove #fff;
+    gap: 0 3px;
 
     img {
       flex: 0 0 36px;
-      margin-right: 5px;
+      border: unset; // Undo Foundry's styling
     }
 
     .item-name {

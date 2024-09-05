@@ -17,18 +17,19 @@ system:
   description:
     value: >-
       <p><em>You can make additional attacks of
-      opportunity.</em><p><strong>Benefits</strong>: You may make a number of
-      additional attacks of opportunity per round equal to your Dexterity bonus.
-      With this feat, you may also make attacks of opportunity while
-      flat-footed.<p><strong>Normal</strong>: A character without this feat can
-      make only one attack of opportunity per round and can't make attacks of
-      opportunity while flat-footed.<p><strong>Special</strong>: The Combat
-      Reflexes feat does not allow a rogue to use her opportunist ability more
-      than once per round.<h3>Combat Trick</h3><p>When you miss with an attack
-      of opportunity, you can spend 5 stamina points to make a second attack for
-      the same provoking action. That second attack of opportunity takes a -5
-      penalty on the attack roll and costs one of your attacks of opportunity
-      for the round.</p><p><b>Usage</b>: spend 1 charge after use.</p>
+      opportunity.</em></p><p><strong>Benefits</strong>: You may make a number
+      of additional attacks of opportunity per round equal to your Dexterity
+      bonus. With this feat, you may also make attacks of opportunity while
+      flat-footed.</p><p><strong>Normal</strong>: A character without this feat
+      can make only one attack of opportunity per round and can't make attacks
+      of opportunity while flat-footed.</p><p><strong>Special</strong>: The
+      Combat Reflexes feat does not allow a rogue to use her opportunist ability
+      more than once per round.</p><h3>Combat Trick</h3><p>When you miss with an
+      attack of opportunity, you can spend 5 stamina points to make a second
+      attack for the same provoking action. That second attack of opportunity
+      takes a -5 penalty on the attack roll and costs one of your attacks of
+      opportunity for the round.</p><p><strong>Usage</strong>: Spend 1 charge
+      after use. Charges tracks total AoOs.</p>
   sources:
     - id: PZO1110
       pages: 114, 119-120
@@ -37,7 +38,8 @@ system:
     - Combat
     - Combat Trick
   uses:
-    maxFormula: 1 + @abilities.dex.mod
-    per: charges
+    maxFormula: 1 + max(0, @abilities.dex.mod)
+    per: round
+    value: 0
 type: feat
 

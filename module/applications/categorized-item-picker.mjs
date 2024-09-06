@@ -74,6 +74,13 @@ export class Widget_CategorizedItemPicker extends Application {
 
       for (const item of cat.items) {
         if (item.validity.item === false) continue;
+
+        // Mark items as invalid if the category is invalid
+        if (!cat.validity.valid) {
+          item.validity.category = false;
+          item.validity.valid = false;
+        }
+
         context.items.push({
           category: cat.key,
           ...item,
@@ -82,9 +89,10 @@ export class Widget_CategorizedItemPicker extends Application {
 
       // Has any valid choices
       cat.hasChoices = context.items.some((i) => i.category === cat.key && i.validity.valid);
+      cat.hasVisibleChoices = context.items.some((i) => i.category === cat.key && i.validity.item !== false);
     }
 
-    context.categories = context.categories.filter((cat) => !cat.hidden);
+    context.categories = context.categories.filter((cat) => !cat.hidden && cat.hasVisibleChoices);
 
     return context;
   }

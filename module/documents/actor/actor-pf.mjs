@@ -3407,10 +3407,13 @@ export class ActorPF extends ActorBasePF {
    * await actor.toggleCondition("dazzled");
    *
    * @param {boolean} conditionId - A direct condition key, as per {@link pf1.registry.conditions}, such as `shaken` or `dazed`.
+   * @param {object} [aeData] - Extra data to add to the AE if it's being enabled
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
-  async toggleCondition(conditionId) {
-    return this.setCondition(conditionId, !this.hasCondition(conditionId));
+  async toggleCondition(conditionId, aeData) {
+    let active = !this.hasCondition(conditionId);
+    if (active && aeData) active = aeData;
+    return this.setCondition(conditionId, active);
   }
 
   /**
@@ -3492,7 +3495,9 @@ export class ActorPF extends ActorBasePF {
             img: currentCondition.texture,
           };
 
-          if (currentCondition.overlay) {
+          // Special boolean for easy overlay
+          if (value?.overlay) {
+            delete value.overlay;
             foundry.utils.setProperty(aeData.flags, "core.overlay", true);
           }
 

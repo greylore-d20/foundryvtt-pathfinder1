@@ -5,7 +5,7 @@ export class TokenPF extends Token {
    * @override
    * @param {string|object} effect
    * @param {object} options
-   * @param {boolean} options.active - Force active state
+   * @param {boolean} [options.active] - Force active state
    * @param {boolean} [options.overlay=false] - Overlay effect
    * @returns {boolean} - was it applied or removed
    */
@@ -26,9 +26,14 @@ export class TokenPF extends Token {
         return false;
       }
 
+      const extraData = overlay ? { flags: { core: { overlay: true } } } : undefined;
+
       let rv;
-      if (active === undefined) rv = await this.actor.toggleCondition(effectId);
-      else rv = await this.actor.setCondition(effectId, active);
+      if (active === undefined) rv = await this.actor.toggleCondition(effectId, extraData);
+      else {
+        if (active && overlay) active = extraData; // Support right click
+        rv = await this.actor.setCondition(effectId, active);
+      }
       return rv[effectId];
     } else {
       return super.toggleEffect(effect, { active, overlay });

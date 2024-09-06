@@ -69,6 +69,7 @@ export class ItemActionSheet extends FormApplication {
     const context = {
       config: pf1.config,
       editable: this.isEditable,
+      cssClass: this.isEditable ? "editable" : "locked",
       user: game.user,
       action,
       item,

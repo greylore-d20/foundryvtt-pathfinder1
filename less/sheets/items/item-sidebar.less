@@ -82,6 +82,8 @@
 
     height: 1.5em;
 
+    border: 1px solid transparent;
+
     &[type="text"],
     &[type="number"] {
       border: 1px solid transparent;
@@ -194,8 +196,15 @@
 }
 
 .pf1.sheet.item form.editable > .sidebar {
-  input:is([type="number"], [type="text"]) {
-    color: var(--color-text-dark-primary);
-    opacity: 1;
+  input {
+    &:is([type="number"], [type="text"]) {
+      color: var(--color-text-dark-primary);
+      opacity: 1;
+    }
+
+    &:hover {
+      box-shadow: 0 0 8px red;
+      border-color: black;
+    }
   }
 }

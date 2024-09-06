@@ -93,32 +93,38 @@
   /* ----------------------------------------- */
 
   // Item Sheet form fields
-  input[type="text"],
-  input[type="number"],
-  select {
+  :is(input[type="text"], input[type="number"], select) {
     border: 1px solid var(--pf1-tan);
     background: var(--pf1-bg-dark-0);
     color: var(--color-text-dark-primary);
   }
 
-  // Hovered Fields
-  input[type="text"],
-  input[type="number"] {
-    &:hover,
-    &:focus {
-      &:not(:disabled, [disabled], :read-only) {
-        border: 1px solid #111;
-        box-shadow: 0 0 8px red;
+  form.editable {
+    // Hovered Fields
+    input:is([type="text"], [type="number"]) {
+      &:is(:hover, :focus) {
+        &:not(:disabled, [disabled], :read-only) {
+          border: 1px solid #111;
+          box-shadow: 0 0 8px red;
+        }
+      }
+    }
+
+    :is(select, input[type="checkbox"]) {
+      &:is(:hover, :focus) {
+        &:not(:disabled, [disabled]) {
+          border: 1px solid #111;
+          box-shadow: 0 0 8px red;
+        }
       }
     }
   }
 
   // Disabled Fields
-  :is(input, textarea):is(:disabled, [disabled]),
-  // :read-only is only supported by text and number
-  input:is([type="text"], [type="number"]):read-only,
   // <select> misbehaves with :read-only
-  select:is(:disabled, [disabled]) {
+  :is(input, textarea, select):is(:disabled, [disabled]),
+  // :read-only is only supported by text and number
+  input:is([type="text"], [type="number"]):read-only {
     color: var(--pf1-olive);
     opacity: 0.7;
   }

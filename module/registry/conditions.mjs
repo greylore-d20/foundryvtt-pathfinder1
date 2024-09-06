@@ -42,7 +42,6 @@ export class Condition extends RegistryEntry {
       showInDefense: new fields.BooleanField({ required: false, initial: true }),
       showInAction: new fields.BooleanField({ required: false, initial: true }),
       showInBuffsTab: new fields.BooleanField({ required: false, initial: true }),
-      overlay: new fields.BooleanField({ required: false, initial: false }),
     };
   }
 }
@@ -157,7 +156,6 @@ export class Conditions extends Registry {
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.YvycF7bsU1hPm4pX",
       track: "dying",
       showInBuffsTab: false,
-      overlay: true,
     },
     {
       _id: "deaf",

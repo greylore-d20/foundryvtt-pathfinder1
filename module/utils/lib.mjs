@@ -494,8 +494,6 @@ export function isValidChangeTarget(data, { actor, item } = {}) {
     else if (typeof fn === "function") ir = fn(data, { actor, item });
   }
 
-  if (!(ar && ir)) console.log(data, actor?.name, item?.name);
-
   return {
     actor: actor ? ar : undefined,
     item: item ? ir : undefined,

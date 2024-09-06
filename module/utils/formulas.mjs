@@ -55,14 +55,25 @@ class FormulaPart {
       .join("");
 
     const roll = Roll.create(f);
-    if (roll.isDeterministic) return roll.evaluate({ async: false }).total.toString();
+    if (roll.isDeterministic) return roll.evaluateSync().total.toString();
     else return f;
   }
 
+  _total = null;
+
+  async evaluate() {
+    const roll = await new Roll.defaultImplementation(this.formula).evaluate();
+    this._total = roll.total;
+  }
+
+  evaluateSync() {
+    const roll = new Roll.defaultImplementation(this.formula).evaluateSync();
+    this._total = roll.total;
+  }
+
   get total() {
-    const roll = Roll.create(this.formula);
-    roll.evaluate({ async: false });
-    return roll.total;
+    if (this._total === null) throw new Error("Must be evaluated first!");
+    return this._total;
   }
 }
 
@@ -79,7 +90,7 @@ function negativeTerms(terms) {
       // Add preceding + if operators are fully consumed
       if (!(nterms.at(-1) instanceof OperatorTerm)) {
         const nt = new OperatorTerm({ operator: "+" });
-        nt.evaluate({ async: false });
+        nt.evaluateSync();
         nterms.push(nt);
       }
       nterms.push(new FormulaPart([term, terms.shift()], true));
@@ -170,6 +181,7 @@ class TernaryTerm {
 
   get formula() {
     if (this.condition.isDeterministic) {
+      this.condition.evaluateSync();
       if (this.condition.total) {
         return this.ifTrue.formula;
       } else {
@@ -179,7 +191,8 @@ class TernaryTerm {
   }
 
   get total() {
-    return Roll.create(this.formula).evaluate({ async: false }).total;
+    throw new Error("TernaryTerm.total called");
+    //return Roll.create(this.formula).evaluate().total;
   }
 }
 
@@ -238,15 +251,14 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
   const roll = new Roll.defaultImplementation(formula);
 
   // Evaluate
-  // TODO: v12 this needs to call .evaluateSync()
   try {
-    roll.evaluate({ async: false, minimize: true });
+    roll.evaluateSync({ minimize: true });
   } catch (err) {
     if (strict) throw err;
     else return compress(formula);
   }
   // Old evaluation, fails with parenthetical terms followed by d6 or the like
-  //terms.forEach((term) => term.evaluate({ async: false, minimize: true }));
+  //terms.forEach((term) => term.evaluateSync({ minimize: true }));
   let terms = roll.terms;
 
   // Negatives (combine - with the following term)

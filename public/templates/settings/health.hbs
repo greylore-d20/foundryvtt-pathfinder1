@@ -45,7 +45,7 @@
       <div class="form-group">
         <label>{{localize 'PF1.SETTINGS.Health.Rounding'}}</label>
         <select name="rounding">
-          {{selectOptions healthRounding selected=rounding}}
+          {{selectOptions healthRounding selected=rounding localize=true}}
         </select>
         <p class="notes">{{localize 'PF1.SETTINGS.Health.RoundingHint'}}</p>
       </div>
@@ -53,7 +53,7 @@
       <div class="form-group">
         <label>{{localize 'PF1.SETTINGS.Health.Continuity'}}</label>
         <select name="continuous" data-dtype="Boolean">
-          {{selectOptions healthContinuity selected=continuous}}
+          {{selectOptions healthContinuity selected=continuous localize=true}}
         </select>
         <p class="notes">{{localize 'PF1.SETTINGS.Health.ContinuityHint'}}</p>
       </div>
@@ -97,13 +97,6 @@
         {{#if (and variants.npc.useWoundsAndVigor (ne variants.npc.useWoundThresholds 0))}}
         <p class="warning"><i class="fa-solid fa-triangle-exclamation"></i> {{localize "PF1.SETTINGS.Health.WoundThresholds.VigorConflict"}}</p>
         {{/if}}
-      </div>
-
-      <div class="form-group">
-        <label>{{localize 'PF1.SETTINGS.Health.WoundThresholds.PCOverride'}}</label>
-        <input data-dtype="Boolean" type="checkbox" {{checked variants.pc.allowWoundThresholdOverride}}
-          name="variants.pc.allowWoundThresholdOverride">
-        <p class="notes">{{localize 'PF1.SETTINGS.Health.WoundThresholds.PCOverrideHint'}}</p>
       </div>
     </section>
   </div>

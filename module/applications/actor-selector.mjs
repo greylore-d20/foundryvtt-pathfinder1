@@ -115,7 +115,6 @@ export class ActorSelector extends FormApplication {
     const sb = jq.find(".search-input");
     sb.on("keyup change", this._searchFilterChange.bind(this));
     sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
-    jq.find(".clear-search").on("click", this._clearSearch.bind(this));
   }
 
   _onSaveSelection(_event) {
@@ -141,12 +140,6 @@ export class ActorSelector extends FormApplication {
     if (this.search.effectiveSearch === searchTerm) return;
     this.search.effectiveSearch = searchTerm;
     this.render(true);
-  }
-
-  _clearSearch(event) {
-    const sb = $(event.target).prev(".search-input");
-    this.search.value = "";
-    sb.val("").trigger("change");
   }
 
   // IME related

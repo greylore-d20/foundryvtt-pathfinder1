@@ -1,22 +1,4 @@
 export class HealthConfigModel extends foundry.abstract.DataModel {
-  constructor(...args) {
-    super(...args);
-
-    Object.defineProperty(this, "continuity", {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "continuity string property in health configuration is deprecated in favor of continuous boolean property",
-          {
-            since: "PF1 v10",
-            until: "PF1 v11",
-          }
-        );
-
-        return this.continuous ? "continuous" : "discrete";
-      },
-    });
-  }
-
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
@@ -44,12 +26,10 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
         pc: new fields.SchemaField({
           useWoundsAndVigor: new fields.BooleanField({ initial: false }),
           useWoundThresholds: new fields.NumberField({ initial: 0 }),
-          allowWoundThresholdOverride: new fields.BooleanField({ initial: false }),
         }),
         npc: new fields.SchemaField({
           useWoundsAndVigor: new fields.BooleanField({ initial: false }),
           useWoundThresholds: new fields.NumberField({ initial: 0 }),
-          allowWoundThresholdOverride: new fields.BooleanField({ initial: true }),
         }),
       }),
     };
@@ -160,6 +140,7 @@ export class HealthConfig extends FormApplication {
     event.preventDefault();
 
     await game.settings.set("pf1", "healthConfig", {});
+    this.healthConfig = null; // remove cache
     return this.render();
   }
 

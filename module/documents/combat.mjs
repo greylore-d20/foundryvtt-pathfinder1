@@ -25,18 +25,6 @@ async function duplicateCombatantInitiativeDialog(combatantId) {
   return combatant.duplicateWithData({ initiative: (combatant.initiative ?? 0) + offset });
 }
 
-// Deprecated
-export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
-  foundry.utils.logCompatibilityWarning(
-    "pf1.documents.duplicateCombatantInitiative() is deprecated in favor of CombatantPF.duplicateWithData()",
-    {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    }
-  );
-  return combatant.duplicateWithData({ initiative });
-};
-
 Hooks.on("getCombatTrackerEntryContext", function addCombatTrackerContextOptions(html, menuItems) {
   menuItems.push({
     name: "PF1.DuplicateInitiative",
@@ -209,6 +197,9 @@ export class CombatPF extends Combat {
     super._onUpdate(changed, context, userId);
 
     if (changed.turn !== undefined || changed.round !== undefined) {
+      // Cache current world time here since actual time update can happen at random time in the future due to async code.
+      context.pf1 ??= {};
+      context.pf1.worldTime = game.time.worldTime;
       this._onNewTurn(changed, context, userId);
     }
   }
@@ -241,6 +232,8 @@ export class CombatPF extends Combat {
   async _onNewTurn(changed, context, userId) {
     if (!this._isForwardTime(changed, context)) return;
 
+    const timeOffset = context.advanceTime ?? 0;
+
     if (context.pf1?.from) {
       const skipped = this._detectSkippedTurns(context.pf1.from, context);
 
@@ -254,7 +247,7 @@ export class CombatPF extends Combat {
 
     this._processTurnStart(changed, context, userId);
 
-    this._processInitiative();
+    this._processInitiative(context);
   }
 
   _isForwardTime(changed, context) {
@@ -313,10 +306,10 @@ export class CombatPF extends Combat {
    */
   _handleSkippedTurns(skipped, context) {
     const currentTurn = this.turn;
-    const combat = this;
     const event = "turnEnd";
 
     const timeOffset = context.advanceTime ?? 0;
+    const worldTime = context.pf1?.worldTime ?? game.time.worldTime;
 
     // Expire effects for skipped combatants
     for (const combatant of skipped) {
@@ -327,7 +320,7 @@ export class CombatPF extends Combat {
       const turn = this.turns.findIndex((c) => c === combatant);
       const turnTimeOffset = timeOffset + (turn > currentTurn) ? -CONFIG.time.roundTime : 0;
 
-      actor.expireActiveEffects?.({ timeOffset: timeOffset + turnTimeOffset, combat, event });
+      actor.expireActiveEffects?.({ timeOffset: timeOffset + turnTimeOffset, worldTime, combat: this, event });
     }
   }
 
@@ -337,9 +330,10 @@ export class CombatPF extends Combat {
    * @internal
    * @param {object} originTime
    * @param {number} originTime.turn - Turn that ended
+   * @param {number} originTime.round - Round on which the turn ended
    * @param {object} context
    */
-  async _processEndTurn({ turn } = {}, context = {}) {
+  async _processEndTurn({ turn, round } = {}, context = {}) {
     const previous = this.turns.at(turn);
     const actor = previous.actor;
     if (!actor) return;
@@ -347,11 +341,16 @@ export class CombatPF extends Combat {
     const owner = actor.activeOwner;
     if (!owner?.isSelf) return;
 
-    let timeOffset = context.advanceTime ?? 0;
-    if (turn - 1 < 0) timeOffset -= CONFIG.time.roundTime; // Roll back time for a turn that ended on previous round
+    const timeOffset = context.advanceTime ?? 0;
+    const worldTime = context.pf1?.worldTime ?? game.time.worldTime;
 
     try {
-      await actor.expireActiveEffects?.({ timeOffset, combat: this, event: "turnEnd" });
+      await actor.expireActiveEffects?.({
+        combat: this,
+        worldTime,
+        timeOffset,
+        event: "turnEnd",
+      });
     } catch (error) {
       console.error(error, actor);
     }
@@ -373,8 +372,15 @@ export class CombatPF extends Combat {
     if (!owner?.isSelf) return;
 
     const timeOffset = context.advanceTime ?? 0;
+    const worldTime = context.pf1?.worldTime ?? game.time.worldTime;
+
     try {
-      await actor.expireActiveEffects?.({ timeOffset, combat: this, event: "turnStart" });
+      await actor.expireActiveEffects?.({
+        combat: this,
+        worldTime,
+        timeOffset,
+        event: "turnStart",
+      });
     } catch (error) {
       console.error(error, actor);
     }
@@ -392,9 +398,13 @@ export class CombatPF extends Combat {
    * Only active GM processes these to avoid conflicts and logic bloat.
    *
    * @internal
+   * @param {object} [context] - Update context
    */
-  _processInitiative() {
+  _processInitiative(context = {}) {
     if (!game.users.activeGM?.isSelf) return;
+
+    const worldTime = context.pf1?.worldTime ?? game.time.worldTime;
+    const timeOffset = context.advanceTime ?? 0;
 
     const initiative = this.initiative;
     for (const combatant of this.combatants) {
@@ -402,7 +412,7 @@ export class CombatPF extends Combat {
       const actor = combatant.actor;
       if (!actor) continue;
 
-      actor.expireActiveEffects?.({ combat: this, initiative });
+      actor.expireActiveEffects?.({ combat: this, initiative, timeOffset, worldTime });
     }
   }
 

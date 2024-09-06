@@ -4,7 +4,6 @@
   - Types d’acteur
     - [Personnage](Help/Actors/Character)
     - [PNJ](Help/Actors/NPC)
-    - [Basique](Help/Actors/Basic)
 - [Objets](Help/Items)
   - Types d’objet
     - [Consommables](Help/Items/Consumables)

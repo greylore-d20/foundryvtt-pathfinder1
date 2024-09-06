@@ -52,7 +52,6 @@ export class ItemRacePF extends ItemPF {
     if (!changed.system) return;
 
     const actor = this.actor;
-    if (actor?.type === "basic") return;
 
     // Track size change
     const newSize = changed.system?.size;

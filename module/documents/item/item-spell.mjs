@@ -32,30 +32,6 @@ export class ItemSpellPF extends ItemPF {
     {
       const prep = data.system.preparation ?? {};
       const prepUpdate = {};
-      if (prep.maxAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prepUpdate.max = prep.maxAmount;
-        prepUpdate["-=maxAmount"] = null;
-      }
-      if (prep.preparedAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.preparedAmount is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prepUpdate.value = prep.preparedAmount;
-        prepUpdate["-=preparedAmount"] = null;
-      }
-      if (prep.spontaneousPrepared !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.spontaneousPrepared is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prepUpdate.value = prep.spontaneousPrepared ? 1 : 0;
-        prepUpdate["-=spontaneousPrepared"] = null;
-      }
 
       // Add preparation
       if (this.actor && prepUpdate.value === undefined) {
@@ -85,34 +61,6 @@ export class ItemSpellPF extends ItemPF {
     if (!changed.system) return;
 
     this._preparationPreUpdate(changed);
-
-    const prep = changed.system.preparation;
-    if (prep) {
-      if (prep.maxAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prep.max = prep.maxAmount;
-        delete prep.maxAmount;
-      }
-      if (prep.preparedAmount !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.preparedAmount is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prep.value = prep.preparedAmount;
-        delete prep.preparedAmount;
-      }
-      if (prep.spontaneousPrepared !== undefined) {
-        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.spontaneousPrepared is now preparation.value", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-        prep.value = prep.spontaneousPrepared ? 1 : 0;
-        delete prep.spontaneousPrepared;
-      }
-    }
   }
 
   /**
@@ -155,7 +103,7 @@ export class ItemSpellPF extends ItemPF {
     const book = this.system.spellbook;
     const cls = actor?.system.attributes?.spells?.spellbooks?.[book]?.class;
     const level = this.system.learnedAt?.class?.[cls];
-    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamped(level, 0, 9) });
+    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamp(level, 0, 9) });
   }
 
   /** @inheritDoc */
@@ -169,38 +117,6 @@ export class ItemSpellPF extends ItemPF {
     labels.components = this.getSpellComponents({ compact: true }).join(" ");
 
     return labels;
-  }
-
-  /**
-   * Returns the spell's effective spell level, after counting in offsets.
-   *
-   * @deprecated
-   * @param {number} [bonus=0] - Another bonus to account for.
-   * @returns {number} The spell's effective spell level.
-   */
-  getEffectiveSpellLevel(bonus = 0) {
-    foundry.utils.logCompatibilityWarning(
-      `ItemSpellPF.getEffectiveSpellLevel() is deprecated. Use ItemSpellPF.spellLevel instead.`,
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return (this.spellLevel ?? 0) + bonus;
-  }
-
-  /**
-   * Returns the spell's effective caster level, after counting in offsets.
-   *
-   * @deprecated
-   * @param {number} [bonus=0] - Another bonus to account for.
-   * @returns {number} The spell's effective caster level.
-   */
-  getEffectiveCasterLevel(bonus = 0) {
-    foundry.utils.logCompatibilityWarning(
-      `ItemSpellPF.getEffectiveCasterLevel() is deprecated. Use ItemSpellPF.casterLevel instead.`,
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return (this.casterLevel ?? 0) + bonus;
   }
 
   preCreateData(data, options, user) {
@@ -222,35 +138,6 @@ export class ItemSpellPF extends ItemPF {
     }
 
     return updates;
-  }
-
-  /** @override */
-  prepareBaseData() {
-    super.prepareBaseData();
-
-    this.system.preparation ??= {};
-    const prep = this.system.preparation;
-    // Compatibility shims
-    const compat = [
-      ["maxAmount", "max"],
-      ["preparedAmount", "value"],
-      ["spontaneousPrepared", "value"],
-    ];
-    for (const [oldk, newk] of compat) {
-      if (!Object.getOwnPropertyDescriptor(prep, oldk)?.["get"]) {
-        delete prep[oldk];
-        Object.defineProperty(prep, oldk, {
-          get() {
-            foundry.utils.logCompatibilityWarning(
-              `ItemSpellPF preparation.${oldk} is deprecated in favor of preparation.${newk}`,
-              { since: "PF1 v10", until: "PF1 v11" }
-            );
-            return prep[newk];
-          },
-          enumerable: false,
-        });
-      }
-    }
   }
 
   /** @override */
@@ -284,15 +171,6 @@ export class ItemSpellPF extends ItemPF {
       if (spellbook.class === "_hd")
         result.class = { level: result.attributes.hd?.total ?? result.details?.level?.value ?? 0 };
       else result.class = result.classes?.[spellbook.class] ?? {};
-      Object.defineProperty(result, "classLevel", {
-        get() {
-          foundry.utils.logCompatibilityWarning("@classLevel is deprecated in favor of @class.level", {
-            since: "PF1 v10",
-            until: "PF1 v11",
-          });
-          return this.class?.level;
-        },
-      });
 
       // Add @spellbook shortcut to @spells[bookId]
       result.spellbook = result.spells[this.system.spellbook];
@@ -423,7 +301,7 @@ export class ItemSpellPF extends ItemPF {
     if (this.useSpellPoints()) {
       rollData ??= this.getRollData();
       const formula = this.getDefaultChargeFormula();
-      return RollPF.safeRollAsync(formula, rollData).total;
+      return RollPF.safeRollSync(formula, rollData).total;
     } else {
       return super.getDefaultChargeCost({ rollData });
     }
@@ -472,7 +350,7 @@ export class ItemSpellPF extends ItemPF {
     // Set value
     if (maximize) value = prep.max || 0;
     // Clamp charge value
-    value = Math.clamped(value, 0, prep.max || 0);
+    value = Math.clamp(value, 0, prep.max || 0);
 
     // Cancel pointless or bad update
     if (value === (prep.value || 0) || !Number.isFinite(value)) return;
@@ -500,15 +378,6 @@ export class ItemSpellPF extends ItemPF {
   get spellbook() {
     const bookId = this.system.spellbook;
     return this.actor?.system.attributes?.spells.spellbooks[bookId];
-  }
-
-  getDC(rollData = null) {
-    foundry.utils.logCompatibilityWarning("ItemSpellPF.getDC() is deprecated in favor of ItemAction.getDC()", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.defaultAction?.getDC(rollData) ?? 10;
   }
 
   getSpellUses(max = false) {
@@ -546,9 +415,15 @@ export class ItemSpellPF extends ItemPF {
   /**
    * Spell components
    *
-   * @param {object} options
-   * @param {boolean} [options.compact]
-   * @returns {string[]}
+   * @example
+   * ```js
+   * // Discern Lies on Cleric
+   * spell.getSpellComponents(); // V S M/DF
+   * spell.getSpellComponents({compact:true}); // V S DF
+   * ```
+   * @param {object} options - Additional options
+   * @param {boolean} [options.compact] - Remove redundant components (e.g. M/DF becomes DF for divine caster)
+   * @returns {string[]} - Component keys
    */
   getSpellComponents({ compact = false } = {}) {
     const reSplit = pf1.config.re.traitSeparator,
@@ -605,7 +480,7 @@ export class ItemSpellPF extends ItemPF {
 
   /**
    * @param {object} itemData - A spell item's data.
-   * @returns {number[]} An array containing the spell level and caster level.
+   * @returns {[number,number]} - A tuple containing the spell level and caster level in order.
    */
   static getMinimumCasterLevelBySpellData(itemData) {
     const learnedAt = Object.entries(itemData.system.learnedAt?.class ?? {})?.reduce((cur, [classId, level]) => {
@@ -681,8 +556,27 @@ export class ItemSpellPF extends ItemPF {
         hardness: 0,
         hp: { value: 1, max: 1 },
         actions: origData.system.actions ?? [],
+        sources: origData.system.sources ?? [],
       },
     };
+
+    // Add basic item type source as source for the consumable
+    const extraSources = {
+      wand: { id: "PZO1110", pages: "496" },
+      scroll: { id: "PZO1110", pages: "490-491" },
+      potion: { id: "PZO1110", pages: "477-478" },
+    };
+    const xsrc = extraSources[type];
+    if (xsrc) {
+      const osrc = itemData.system.sources.find((s) => s.id == xsrc.id);
+      if (osrc) {
+        // Merge pages when same source already exists
+        if (osrc.pages) osrc.pages += `, ${xsrc.pages}`;
+        else osrc.pages = xsrc.pages;
+      } else {
+        itemData.system.sources.push(xsrc);
+      }
+    }
 
     // Initialize default action
     if (itemData.system.actions.length == 0) itemData.system.actions.push(defaultAction);
@@ -885,21 +779,6 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * @type {boolean} - true if the default action is prepared to cast
-   */
-  get canCast() {
-    foundry.utils.logCompatibilityWarning(
-      "ItemSpellPF.canCast is deprecated in favor of ItemBasePF.canUse and ItemAction.canUse",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return this.canUse && (this.defaultAction?.canUse ?? true);
-  }
-
-  /**
    * @remarks
    * Checks for at-will and preparation status.
    * @inheritDoc
@@ -968,7 +847,10 @@ export class ItemSpellPF extends ItemPF {
       ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach(
         (category) =>
           (data.learnedAt[category] = Object.entries(srcData.learnedAt[category])
-            .map(([classId, level]) => `${classId} ${level}`)
+            .map(([classId, level]) => {
+              classId = pf1.config.classNames[classId] || classId;
+              return `${classId} ${level}`;
+            })
             .join(", "))
       );
     }
@@ -1024,7 +906,7 @@ export class ItemSpellPF extends ItemPF {
       case "year":
         if (duration.value) {
           const unit = pf1.config.timePeriods[duration.units];
-          const roll = Roll.defaultImplementation.safeRollAsync(duration.value, rollData);
+          const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
           const value = roll.total;
           if (!roll.err) {
             label.duration = game.i18n.format("PF1.Time.Format", { value, unit });

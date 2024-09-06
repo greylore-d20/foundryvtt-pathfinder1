@@ -51,13 +51,13 @@ export class SizeRollTerm extends FunctionTerm {
 
   /** @inheritDoc */
   _evaluateSync({ minimize = false, maximize = false } = {}) {
-    const rollOpts = { minimize, maximize, async: false };
+    const rollOpts = { minimize, maximize };
 
     const terms = [];
     for (let term of this.terms) {
       if (!term._evaluated) {
         if (term.isIntermediate) {
-          term.evaluate(rollOpts);
+          term.evaluateSync(rollOpts);
           term = new NumericTerm({ number: term.total, options: term.options });
         }
       }
@@ -67,7 +67,7 @@ export class SizeRollTerm extends FunctionTerm {
 
     for (const term of this.terms) {
       if (!term._evaluated) {
-        term.evaluate(rollOpts);
+        term.evaluateSync(rollOpts);
       }
     }
 
@@ -82,7 +82,7 @@ export class SizeRollTerm extends FunctionTerm {
     // Copy flavor
     if (this.flavor) this.roll.options.flavor ??= this.flavor;
 
-    if (!this.roll._evaluated) this.roll.evaluate(rollOpts);
+    if (!this.roll._evaluated) this.roll.evaluateSync(rollOpts);
 
     return this;
   }

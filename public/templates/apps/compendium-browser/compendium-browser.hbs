@@ -1,14 +1,14 @@
 <div class="flexrow" data-type="{{type}}">
   <aside class="sidebar flexcol">
     <div class="entry-filter search-form formgroup flexrow">
-      <input type="search" name="filter" value="{{query}}" placeholder="{{localize "PF1.SearchFilterPlaceholder"}}" autocomplete="off">
+      <input type="search" name="filter" value="{{query}}" placeholder="{{localize "PF1.SearchFilterPlaceholder"}}" autocomplete="off" autofocus>
       <i class="fas fa-search"></i>
     </div>
 
     <div class="filter-container">
       {{#each filters as |filter|}}
         <div class="filter" data-filter-id="{{filter.id}}">
-          <h3 class="rollable">{{filter.label}}
+          <h3>{{filter.label}}
             {{#if filter.active}}<span class="filter-count"><i class="fas fa-filter"></i>×{{filter.activeCount}}</span>{{/if}}
           </h3>
           <div class="filter-content flexcol {{filter.collapsed}}">

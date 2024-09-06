@@ -198,7 +198,8 @@
           "Name": "Added Ability Scores",
           "Desc": "<p>This feature is used for tracking your ability score changes from gaining hit die.</p>"
         },
-        "Next": "Next gained at character level {level}."
+        "NextLevel": "Next gained at character level {level}.",
+        "NextTier": "Next gained at mythic tier {tier}."
       },
       "Summary": {
         "Label": "Summary",
@@ -344,37 +345,43 @@
       "bleed": "Bleed",
       "blind": "Blind",
       "confused": "Confused",
+      "cowering": "Cowering",
+      "dazed": "Dazed",
       "dazzled": "Dazzled",
+      "dead": "Dead",
       "deaf": "Deaf",
+      "deathEffects": "Death Effects",
+      "disabled": "Disabled",
+      "disease": "Disease",
+      "dying": "Dying",
+      "energyDrain": "Energy Drain",
       "entangled": "Entangled",
-      "fatigued": "Fatigued",
       "exhausted": "Exhausted",
+      "fatigued": "Fatigued",
+      "fear": "Fear",
+      "flatFooted": "Flat-Footed",
+      "frightened": "Frightened",
       "grappled": "Grappled",
       "helpless": "Helpless",
       "incorporeal": "Incorporeal",
       "invisible": "Invisible",
-      "paralyzed": "Paralyzed",
-      "pinned": "Pinned",
-      "prone": "Prone",
-      "fear": "Fear",
-      "shaken": "Shaken",
-      "frightened": "Frightened",
-      "panicked": "Panicked",
-      "sickened": "Sickened",
-      "staggered": "Staggered",
-      "stunned": "Stunned",
-      "nauseated": "Nauseated",
-      "dazed": "Dazed",
-      "sleep": "Sleep",
-      "cowering": "Cowering",
-      "squeezing": "Squeezing",
-      "deathEffects": "Death Effects",
-      "disease": "Disease",
-      "energyDrain": "Energy Drain",
       "mindAffecting": "Mind-affecting",
+      "nauseated": "Nauseated",
+      "panicked": "Panicked",
+      "paralyzed": "Paralyzed",
+      "petrified": "Petrified",
+      "pinned": "Pinned",
       "poison": "Poison",
       "polymorph": "Polymorph",
-      "petrified": "Petrified"
+      "prone": "Prone",
+      "shaken": "Shaken",
+      "sickened": "Sickened",
+      "sleep": "Sleep",
+      "squeezing": "Squeezing",
+      "stable": "Stable",
+      "staggered": "Staggered",
+      "stunned": "Stunned",
+      "unconscious": "Unconscious"
     },
 
     "CostGP": "Cost (GP)",
@@ -427,9 +434,6 @@
       "Override": "Overrides parent item",
       "Inherit": "Inherited from parent item"
     },
-
-    "ChatReqMats": "Required Materials",
-    "ChatOtherFormula": "Other Formula",
 
     "StartingWealth": "Starting Wealth",
     "Currency": {
@@ -623,6 +627,9 @@
           },
           "staff": {
             "Single": "Staff"
+          },
+          "pharmaceutical": {
+            "Single": "Pharmaceutical"
           }
         },
         "attack": {
@@ -649,6 +656,20 @@
           "misc": {
             "Single": "Miscellaneous",
             "Plural": "Miscellaneous"
+          }
+        },
+        "weapon": {
+          "simple": {
+            "Single": "Simple"
+          },
+          "martial": {
+            "Single": "Martial"
+          },
+          "exotic": {
+            "Single": "Exotic"
+          },
+          "misc": {
+            "Single": "Miscellaneous"
           }
         },
         "feat": {
@@ -913,9 +934,6 @@
     "CopyUuidToClipboard": "Copy UUID to clipboard",
 
     "WeaponType": "Weapon Type",
-    "WeaponTypeSimple": "Simple",
-    "WeaponTypeMartial": "Martial",
-    "WeaponTypeExotic": "Exotic",
     "WeaponTypeSplash": "Splash",
 
     "WeaponProperty": {
@@ -1190,6 +1208,8 @@
       "ItemNoOwner": "This item has no owner",
       "SpellbookExists": "Spellbook already exists",
       "NoFreeSpellbooks": "No free spellbooks",
+      "NoInitOnDuplicateCombatant": "Could not determine which combatant to roll initiative for.",
+      "InvalidContentLinkDrop": "Could not create content link from drop data.",
       "NoGiftTargets": "No valid targets to give something to.",
       "ItemFormula": "There's a formula error in item \"{item}\" on actor \"{actor}\"",
       "ActionFormula": "There's a formula error in action \"{action}\" in item \"{item}\" on actor \"{actor}\"",
@@ -1218,6 +1238,7 @@
       "NoItemOnActor": "Actor \"{actor}\" has no item \"{item}\"",
       "NoActionInItem": "Item \"{item}\" has no action \"{action}\"",
       "InvalidUUID": "Invalid UUID \"{uuid}\"",
+      "ImmuneToCondition": "{name} is immune to {condition} condition.",
       "CannotCreateChargeLink": "Could not create a Charge type link between {source} and {target}, because {target} has Charge type links of its own",
       "CannotCreateChargeLink2": "Could not create a Charge type link between {source} and {target}, because {target} is already linked to {deeptarget}",
       "NoCombatantFound": "No combatant found",
@@ -1242,6 +1263,9 @@
     "ACNotes": "AC Notes",
     "SaveNotes": "Save Notes",
     "CLNotes": "Caster Level Notes",
+    "CLSchoolNotes": "CL Notes ({school})",
+    "DCSchoolNotes": "DC Notes ({school})",
+
     "NonApplicable": "N/A",
 
     "SkillTypeAdventure": "Adventure",
@@ -1500,7 +1524,7 @@
         "LiquidGlass": "Liquid Glass",
         "LivingSteel": "Living Steel",
         "Mithral": "Mithral",
-        "NexavarianSteel": "Nexavarian Steel",
+        "NexavaranSteel": "Nexavaran Steel",
         "Noqual": "Noqual",
         "Paueliel": "Paueliel",
         "PyreSteel": "Pyre Steel",
@@ -1836,6 +1860,7 @@
     "MiscShort": "Misc",
     "HitPoints": "Hit Points",
     "VulnerableTo": "Vulnerable to {vulnerability}",
+    "Immune": "Immune",
     "ImmuneTo": "Immune to {immunity}",
     "AbilityTest": "{ability} Ability Test",
     "SkillCheck": "{skill} Skill Check",
@@ -2157,9 +2182,12 @@
     "Creatures": "Creatures",
     "ChargeCost": "Charge Cost",
     "ChargeCostFormula": "Charge Cost Formula",
+    "ChargeCostItemFormulaHint": "How many charges (or casts, spell points, etc.) this item consumes by default. Negative values will restore charges instead.",
+    "ChargeCostActionFormulaHint": "How many charges (or casts, spell points, etc.) this action consumes. Negative values will restore charges instead.",
     "PerAttack": "Per Attack",
     "ChargeSource": "Charge Source",
     "RechargeFormula": "Recharge Formula",
+    "RechargeFormulaHint": "Recharging sets the current charges to result of the formula. For relative recharging, use the current charge value <code>@item.uses.value</code> as part of the formula.",
     "Value": "Value",
     "SellValue": "Sell Value",
     "TotalItems": "{count} Total Items",
@@ -2235,8 +2263,6 @@
     "HeavyEncumbrance": "Heavy Encumbrance",
     "Raw": "Raw",
     "Normal": "Normal",
-    "Changelog": "Changelog",
-    "DontShowAgain": "Don't show changelog after system updates",
     "IdentifyDC": "Identify DC",
     "IdentifyCurseDC": "Identify Curse DC",
     "IdentifyDCNumber": "Identify DC {dc}",
@@ -2376,6 +2402,14 @@
     },
 
     "Application": {
+      "Changelog": {
+        "Title": "Changelog",
+        "DontShowAgain": "Don't show changelog after system updates",
+        "OpenInBrowser": "Open in Browser",
+        "Latest": "Latest",
+        "Major": "Major",
+        "Legacy": "Legacy"
+      },
       "ActionSelector": {
         "Title": "{actor} using {item}"
       },
@@ -2445,8 +2479,10 @@
         },
         "Help": {
           "Link": "Information on Changes",
-          "Deterministic": "Deterministic",
-          "DeterministicHint": "Specified target does not support random elements such as dice."
+          "Value": "Value",
+          "ValueHint": "Must be deterministic with no random elements such as dice.",
+          "Roll": "Roll",
+          "RollHint": "Supports random elements such as dice."
         },
         "AsType": "As",
         "CopyId": "Copy change ID"
@@ -2531,8 +2567,8 @@
         "Label": "Steps",
         "Foundry": "Read Foundry's {link}.",
         "FoundryLink": "user documentation",
-        "Help": "Check the {link} (help button near where you opened this dialog).",
-        "HelpLink": "help browser",
+        "Help": "Check the {link}, found normally near the troubleshooter button.",
+        "HelpLink": "system documentation",
         "FAQ": "Check the FAQ",
         "Log": "Check dev tools console log for errors (F12 [or Option+Command+I on Mac], console tab)",
         "Modules": "Ensure modules are not the cause.",
@@ -2555,7 +2591,7 @@
     },
 
     "Help": {
-      "Label": "Help"
+      "Label": "Documentation"
     },
 
     "EnrichedText": {
@@ -2781,10 +2817,6 @@
           "PCHint": "Use wound threshold optional ruleset for player characters.",
           "NPC": "Wound thresholds for NPCs",
           "NPCHint": "Use wound threshold optional ruleset for nonplayer characters.",
-          "PCOverride": "Allow wound threshold override for PCs",
-          "PCOverrideHint": "Allows per character override modification of wound threshold rule for player characters in character ",
-          "NPCOverride": "Allow wound threshold override for NPCs",
-          "NPCOverrideHint": "Allows per character override modification of wound threshold rule for nonplayer characters in character ",
           "VigorConflict": "Wound Thresholds has no effect with Wounds & Vigor optional rule also enabled.",
           "Disabled": "Disabled",
           "Normal": "Normal",
@@ -2819,6 +2851,29 @@
       "OverlandVariantL": "Variant of how overland speed is calculated with metric distances.",
       "OverlandMetricRounded": "Rounded (German & French)",
       "OverlandMetricExact": "Exact (Spanish)"
+    },
+
+    "PACKS": {
+      "classes": "Classes",
+      "companion-features": "Companion Features",
+      "mythicpaths": "Mythic Paths",
+      "commonbuffs": "Common Buffs",
+      "spells": "Spells",
+      "feats": "Feats",
+      "items": "Items",
+      "armors-and-shields": "Armor & Shields",
+      "weapons-and-ammo": "Weapons & Ammo",
+      "technology": "Technology",
+      "monster-abilities": "Monster Abilities",
+      "monsters": "Basic Monsters",
+      "racialhd": "Racial HD",
+      "races": "Races",
+      "class-abilities": "Class Abilities",
+      "monster-templates": "Monster Templates",
+      "sample-macros": "Sample Macros",
+      "roll-tables": "Roll Tables",
+      "ultimate-equipment": "Ultimate Equipment",
+      "pf1e-rules": "Pathfinder 1e Rules"
     }
   },
 

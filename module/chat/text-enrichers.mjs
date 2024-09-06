@@ -1,6 +1,61 @@
 import { RollPF } from "module/dice/roll.mjs";
 import { openJournal } from "@utils";
 
+export const searchLimit = 500;
+
+// Was game.documentIndex.index() called?
+let indexed = false;
+
+/**
+ * @internal
+ * @param {string} name - Item name to search for
+ * @param {object} [options] - Additional options
+ * @param {string} [options.type]
+ * @returns {string|null} - Most appropriate matching item's UUID
+ */
+async function findItem(name, { type } = {}) {
+  // HACK: Early need of documentIndex
+  if (!indexed && !game.ready) {
+    console.debug("PF1 | Forcing early document index creation");
+    await game.documentIndex.index();
+    indexed = true;
+  }
+
+  let items = game.documentIndex
+    .lookup(name, { documentTypes: ["Item"], limit: searchLimit })
+    .Item // Omit items on actors and items of wrong type
+    .filter((e) => !e.entry.actor && (!type || e.entry.type === type));
+
+  const packTypePriority = {
+    items: 1_000,
+    world: 2_000,
+    module: 3_000,
+    system: 4_000,
+  };
+
+  items = items
+    .map((e) => {
+      const pack = game.packs.get(e.pack);
+      const packType = pack?.metadata.packageType ?? "items";
+
+      return {
+        ...e,
+        exact: e.entry.name === name,
+        visible: pack?.visible ?? true,
+        disabled: pack?.config.pf1?.disabled ?? false,
+        sort: packTypePriority[packType],
+      };
+    })
+    .filter((e) => !e.disabled && e.visible)
+    // Priotizie by item location
+    .sort((a, b) => a.sort - b.sort)
+    // Prioritize exact matches
+    .sort((a, b) => (a.exact ? -1 : 0) + (b.exact ? 1 : 0));
+
+  // Return most likely match
+  return items[0]?.uuid ?? null;
+}
+
 /**
  * Helper class for making `CONFIG.TextEditor.enrichers` usage easier.
  */
@@ -38,12 +93,12 @@ export class PF1TextEnricher {
    */
   constructor(id, pattern, enricher, { click, drag } = {}) {
     if (!(pattern instanceof RegExp)) throw new Error("TextEnricher pattern must be a regular expression");
-    if (!pattern.global) throw new Error("TextEnricher pattern must be global and multiline");
+    if (!pattern.global) throw new Error("TextEnricher pattern must be global");
     this.id = id;
     this.pattern = pattern;
     this.enricher = enricher.bind(this);
-    this.click = click;
-    this.drag = drag;
+    if (click) this.click = click;
+    if (drag) this.drag = drag;
   }
 }
 
@@ -101,7 +156,8 @@ function parseDuration(duration) {
  */
 export function createElement({ label, icon, click = false, drag = false, handler, options, broken = false } = {}) {
   const a = document.createElement("a");
-  a.classList.add("pf1-link");
+  if (click || drag) a.classList.add("pf1-link");
+  else a.classList.add("pf1-info");
   if (click) a.classList.add("button");
   if (drag) {
     a.classList.add("content");
@@ -119,20 +175,27 @@ export function createElement({ label, icon, click = false, drag = false, handle
   return a;
 }
 
+function getSpeaker(target) {
+  const messageId = target.closest("[data-message-id]")?.dataset.messageId;
+  const message = game.messages.get(messageId);
+  return ChatMessage.getSpeakerActor(message.speaker);
+}
+
 /**
  * Get relevant actors based on the enriched element data.
  *
- * @param {HTMLElement} target - Clicked element.
+ * @param {HTMLElement} button - Clicked element.
  * @returns {ActorPF[]} - Relevant actors
  */
-export function getRelevantActors(target) {
+export function getRelevantActors(button) {
   const actors = [];
 
+  const as = button.dataset.as;
+  const asSpeaker = button.dataset.speaker || as === "speaker";
+
   // Speaker
-  if (target.dataset.speaker) {
-    const messageId = target.closest("[data-message-id]")?.dataset.messageId;
-    const message = game.messages.get(messageId);
-    const actor = ChatMessage.getSpeakerActor(message.speaker);
+  if (asSpeaker) {
+    const actor = getSpeaker(button);
     if (actor) actors.push(actor);
   }
   // Controlled tokens
@@ -236,6 +299,19 @@ export function onAbility(event, target) {
 }
 
 /**
+ * @param {Event} _event - Triggering event
+ * @param {HTMLElement} target - Triggered element
+ */
+export async function onDraw(_event, target) {
+  const { ident } = target.dataset;
+  if (!ident) throw new Error("No roll table defined");
+
+  const table = await fromUuid(ident);
+  if (!table) throw new Error(`Roll table not found for "${ident}"`);
+  await table.draw({ roll: true, displayChat: true });
+}
+
+/**
  * @param {Event} event - Triggering event
  * @param {HTMLElement} target - Triggered element
  */
@@ -269,7 +345,7 @@ export function onSkill(event, target) {
 export function onUse(event, target) {
   // Add additional options
   const options = {};
-  const { type, item: itemName, action: actionData, speaker } = target.dataset;
+  const { type, item: itemName, action: actionIdent, speaker } = target.dataset;
   if (!itemName) throw new Error("No item name defined");
 
   const actors = getRelevantActors(target);
@@ -287,25 +363,28 @@ export function onUse(event, target) {
       continue;
     }
 
-    let itemAction = item.defaultAction;
-    if (actionData) {
-      const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionData);
+    let itemAction;
+    if (actionIdent) {
+      const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionIdent);
       const { actionTag, actionId } = re?.groups ?? {};
+      const actionName = !actionTag && !actionId ? actionIdent : null;
       itemAction = item.actions.find((act) => {
-        if (act.id === actionId) return true;
-        if (act.data.tag === actionTag) return true;
-        return act.name.localeCompare(actionData, undefined, { usage: "search" }) == 0;
+        if (actionId) return act.id === actionId;
+        if (actionTag) return act.data.tag === actionTag;
+        return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
       });
-    }
 
-    if (!itemAction) {
-      const msg = game.i18n.format("PF1.Warning.NoActionInItem", { item: item.name, actor: actor.name });
-      ui.notifications.warn(msg, { console: false });
-      console.warn("PF1 | @Use |", msg, actor);
-      continue;
-    }
+      if (!itemAction) {
+        const msg = game.i18n.format("PF1.Warning.NoActionInItem", { item: item.name, action: actionIdent });
+        ui.notifications.warn(msg, { console: false });
+        console.warn("PF1 | @Use |", msg, actor);
+        continue;
+      }
 
-    itemAction.use();
+      itemAction.use();
+    } else {
+      item.use();
+    }
   }
 }
 
@@ -316,7 +395,7 @@ export function onUse(event, target) {
 export function onAction(event, target) {
   // Add additional options
   const options = {};
-  const { action: actionData } = target.dataset;
+  const { action: actionIdent } = target.dataset;
 
   const msgId = target.closest(".chat-message[data-message-id]")?.dataset.messageId;
   const msg = game.messages.get(msgId);
@@ -330,13 +409,14 @@ export function onAction(event, target) {
 
   const actor = item.actor;
 
-  const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionData);
+  const re = /^(?:tag:(?<actionTag>.*?)|id:(?<actionId>.*?))$/.exec(actionIdent);
   const { actionTag, actionId } = re?.groups ?? {};
+  const actionName = !actionTag && !actionId ? actionIdent : null;
 
   const action = item.actions.find((act) => {
-    if (act.id === actionId) return true;
-    if (act.data.tag === actionTag) return true;
-    return act.name.localeCompare(actionData, undefined, { usage: "search" }) == 0;
+    if (actionId) return act.id === actionId;
+    if (actionTag) return act.data.tag === actionTag;
+    return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
   });
 
   if (!action) {
@@ -352,8 +432,8 @@ export function onAction(event, target) {
  * @param {Event} event - Triggering event
  * @param {HTMLElement} target - Triggered element
  */
-export function onHealth(event, target) {
-  const { command, formula, speaker, nonlethal, dual } = target.dataset;
+export async function onHealth(event, target) {
+  const { command, formula, speaker, nonlethal, vars, dual } = target.dataset;
 
   const actors = getRelevantActors(target);
 
@@ -362,8 +442,14 @@ export function onHealth(event, target) {
   if (nonlethal) options.asNonlethal = true;
   if (dual) options.dualHeal = true;
 
+  const targetRolldata = vars === "target";
+
+  let rollData;
+  if (!targetRolldata) rollData = getSpeaker(target)?.getRollData();
+
   for (const actor of actors) {
-    let value = RollPF.safeRollAsync(formula, actor.getRollData()).total;
+    if (targetRolldata) rollData = actor.getRollData();
+    let value = await RollPF.safeRoll(formula, rollData).total;
     if (command === "heal") value = -value;
     actor.applyDamage(value, { ...options, event, element: target });
   }
@@ -448,8 +534,17 @@ export async function onApply(event, target) {
 
   // Apply
   for (const actor of actors) {
-    // TODO: Activate existing item with same sourceId
-    Item.implementation.create(itemData, { parent: actor });
+    // Activate existing item with same source
+    const old = actor.itemTypes[item.type].find((i) => i._stats?.compendiumSource === uuid);
+    if (old) {
+      const activationData = { system: { active: true } };
+      if (level !== undefined) activationData.system.level = level;
+      old.update(activationData);
+    }
+    // Add new
+    else {
+      Item.implementation.create(itemData, { parent: actor });
+    }
   }
 }
 
@@ -460,13 +555,13 @@ export const enrichers = [
   // @Apply
   new PF1TextEnricher(
     "apply",
-    /@Apply\[(?<uuid>.*?)(?:;(?<options>.*?))?\](?:\{(?<label>.*?)})?/g,
-    (match, _options) => {
-      const { uuid, options, label } = match.groups;
+    /@Apply\[(?<ident>.*?)(?:;(?<options>.*?))?\](?:\{(?<label>.*?)})?/g,
+    async (match, _options) => {
+      const { ident, options, label } = match.groups;
 
-      // TODO: Allow plain name instead of UUID. Needs configuration where to find said things.
-      const item = fromUuidSync(uuid);
-      if (!item) console.warn("PF1 | @Apply | Could not find item", uuid);
+      const item = fromUuidSync(ident) ?? fromUuidSync(await findItem(ident, { type: "buff" }));
+
+      if (!item) console.warn("PF1 | @Apply | Could not find item", ident);
 
       const broken = !item;
 
@@ -479,7 +574,7 @@ export const enrichers = [
 
         generateTooltip(a);
       } else {
-        a.replaceChildren(uuid);
+        a.replaceChildren(ident);
       }
 
       setIcon(a, "fa-solid fa-angles-right");
@@ -577,12 +672,13 @@ export const enrichers = [
     (match, _options) => {
       const { item, action, label, options } = match.groups;
       const a = createElement({ label, click: true, handler: "use", options });
-      a.append(item);
-      a.dataset.item = item;
+      a.append(item?.trim());
+      a.dataset.item = item?.trim();
       if (action) {
-        const displayAction = action.replace(/^(id|tag):\s*/, "");
+        const displayAction = action.replace(/^(id|tag):\s*/, "")?.trim();
+        // TODO: pretty print action name if speaker option is enabled
         a.append(` (${displayAction})`);
-        a.dataset.actionId = action;
+        a.dataset.action = action?.trim();
       }
 
       generateTooltip(a);
@@ -594,15 +690,17 @@ export const enrichers = [
       click: onUse,
     }
   ),
+  // @Action
   new PF1TextEnricher(
     "action",
-    /@Action\[(?<action>.[\w\d\s]+)(?:;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
+    /@Action\[(?<action>.*?)(?:;(?<options>.*?))?](?:\{(?<label>.*?)})?/g,
     (match, _options) => {
       const { action, label, options } = match.groups;
       const a = createElement({ label, click: true, handler: "action", options });
+      // TODO: Pretty print the action name, especially if speaker option is enabled
       a.append(action);
       a.dataset.speaker = true;
-      a.dataset.action = action;
+      a.dataset.action = action?.trim();
 
       generateTooltip(a);
       setIcon(a, "fa-solid fa-trowel");
@@ -685,6 +783,97 @@ export const enrichers = [
       click: onBrowse,
     }
   ),
+  // Weight
+  new PF1TextEnricher("weight", /@Weight\[(?<formula>.+?)(?:;(?<options>.*?))?\]/g, (match, rollData) => {
+    const { formula, options } = match.groups;
+
+    const a = createElement({ options });
+
+    const isDual = !!a.dataset.dual;
+
+    const re = /^(?<value>.+?)\s*(?<unit>lbs|kg)?$/.exec(formula);
+    const { value, unit } = re?.groups ?? {};
+    if (unit === "kg") {
+      a.dataset.metric = "true";
+      delete a.dataset.imperial;
+    } else if (unit === "lbs") {
+      a.dataset.imperial = "true";
+      delete a.dataset.metric;
+    }
+
+    const sourceMetric = !!a.dataset.metric;
+    const sourceImperial = !sourceMetric;
+
+    const total = RollPF.safeRollSync(value || "0", rollData).total;
+
+    let lbs = total,
+      kg = total;
+
+    if (sourceImperial) kg = pf1.utils.swapWeight(total, "lbs");
+    if (sourceMetric) lbs = pf1.utils.swapWeight(total, "kg");
+
+    const kgl = `${pf1.utils.limitPrecision(kg, 3)} ${game.i18n.localize("PF1.Kgs")}`;
+    const lbsl = `${pf1.utils.limitPrecision(lbs, 3)} ${game.i18n.localize("PF1.Lbs")}`;
+
+    const isMetric = pf1.utils.getWeightSystem() == "metric";
+
+    let label;
+    if (isDual) {
+      if (isMetric) label = `${kgl} (${lbsl})`;
+      else label = `${lbsl} (${kgl})`;
+    } else if (isMetric) label = kgl;
+    else label = lbsl;
+
+    a.textContent = label;
+
+    return a;
+  }),
+  // Distance
+  new PF1TextEnricher("distance", /@Distance\[(?<formula>.+?)(?:;(?<options>.*?))?\]/g, (match, rollData) => {
+    const { formula, options } = match.groups;
+
+    const a = createElement({ options });
+
+    const isDual = !!a.dataset.dual;
+
+    const re = /^(?<value>.+?)\s*(?<unit>ft|m)?$/.exec(formula);
+    const { value, unit } = re?.groups ?? {};
+    if (unit === "m") {
+      a.dataset.metric = "true";
+      delete a.dataset.imperial;
+    } else if (unit === "ft") {
+      a.dataset.imperial = "true";
+      delete a.dataset.metric;
+    }
+
+    const sourceMetric = !!a.dataset.metric;
+    const sourceImperial = !sourceMetric;
+
+    const total = RollPF.safeRollSync(value || "0", rollData).total;
+    let ft = total,
+      m = total;
+
+    if (sourceImperial) m = pf1.utils.swapDistance(total, "ft");
+    if (sourceMetric) ft = pf1.utils.swapDistance(total, "m");
+
+    const ml = `${pf1.utils.limitPrecision(m, 3)} ${pf1.config.measureUnitsShort.m}`;
+    const ftl = `${pf1.utils.limitPrecision(ft, 3)} ${pf1.config.measureUnitsShort.ft}`;
+
+    const isMetric = pf1.utils.getDistanceSystem() == "metric";
+
+    let label;
+    if (isDual) {
+      if (isMetric) label = `${ml} (${ftl})`;
+      else label = `${ftl} (${ml})`;
+    } else if (isMetric) label = ml;
+    else label = ftl;
+
+    a.textContent = label;
+
+    a.dataset.tooltip = formula;
+
+    return a;
+  }),
   // @Condition
   new PF1TextEnricher(
     "condition",
@@ -694,7 +883,7 @@ export const enrichers = [
 
       // TODO: Find closest condition via Sørensen–Dice coefficient or something.
       const cond = pf1.registry.conditions.get(condition);
-      const text = cond?.name || condition;
+      const text = label || cond?.name || condition;
 
       const broken = !cond;
 
@@ -735,6 +924,45 @@ export const enrichers = [
     },
     {
       click: onCondition,
+    }
+  ),
+  // @Draw
+  new PF1TextEnricher(
+    "draw",
+    /@Draw\[(?<ident>.*?)\](?:\{(?<label>.*?)\})?/g,
+    /**
+     * @param {any} match
+     * @param {unknown} _options
+     * @returns
+     */
+    async (match, _options) => {
+      const { ident, label } = match.groups;
+
+      const table = fromUuidSync(ident) || game.tables.getName(ident);
+
+      if (!table) console.warn("PF1 | @Draw | Could not find roll table", ident);
+
+      const broken = !table;
+
+      const a = createElement({ click: true, handler: "draw", broken });
+
+      if (table) {
+        a.dataset.name = `${game.i18n.localize("DOCUMENT.RollTable")}: ${table.name}`;
+        a.dataset.ident = table.uuid;
+
+        a.append(label || table.name);
+
+        generateTooltip(a);
+      } else {
+        a.replaceChildren(ident);
+      }
+
+      setIcon(a, "fas fa-th-list");
+
+      return a;
+    },
+    {
+      click: onDraw,
     }
   ),
 ];

@@ -4,13 +4,35 @@ folder: DtVJVwL87ELQxk7u
 img: systems/pf1/icons/items/armor/shield-light-metal.png
 name: Light Steel Shield (Quickdraw)
 system:
+  actions:
+    - _id: ZhdEskX7UWBenKy2
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 3, @size)
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      name: Bash
+      range:
+        units: melee
   armor:
     acp: 2
     material:
       base:
-        value: leather
-      normal:
-        value: leather
+        value: steel
     value: 1
   description:
     value: >-
@@ -27,6 +49,11 @@ system:
   hardness: 10
   price: 59
   slot: shield
+  sources:
+    - id: PZO1123
+      pages: '9'
+    - id: PZO1115
+      pages: '179'
   spellFailure: 5
   subType: shield
   weight:

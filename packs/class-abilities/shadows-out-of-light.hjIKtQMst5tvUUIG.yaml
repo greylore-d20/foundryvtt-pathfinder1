@@ -1,7 +1,7 @@
 _id: hjIKtQMst5tvUUIG
 _key: '!items!hjIKtQMst5tvUUIG'
 img: systems/pf1/icons/spells/runes-blue-2.jpg
-name: Shadows Out of Light
+name: Shadows out of Light
 system:
   abilityType: su
   actions:
@@ -19,6 +19,37 @@ system:
         units: personal
       target:
         value: self
+    - _id: ZsG9UNoSXRGZ2hDx
+      ability:
+        attack: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: 1d6 + @abilities.cha.mod
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      effectNotes:
+        - +[[1]] Strength damage
+      name: Attack of Opportunity
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level /2) + @abilities.cha.mod
+        description: Fortitude negates strength damage
+        type: fort
+      target:
+        value: one creature
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
   associations:
     classes:
       - Arcanist
@@ -42,6 +73,9 @@ system:
       attacks of opportunity with his shadow. The shadows cannot be compelled to
       make normal attacks—they lash out in this way only as a reaction to being
       provoked.</p>
+  sources:
+    - id: PZO9297
+      pages: '7'
   subType: classFeat
   tags:
     - Arcanist Exploit, Outer Rift

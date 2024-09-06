@@ -6,6 +6,9 @@ system:
   abilityType: su
   actions:
     - _id: 70fm8i8x4xdaqqct
+      ability:
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
@@ -15,6 +18,15 @@ system:
         units: round
         value: '@abilities.cha.mod'
       name: Use
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod)
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+      touch: true
   associations:
     classes:
       - Arcanist
@@ -32,6 +44,9 @@ system:
       attempt a Will saving throw to negate the effect. This ability has no
       effect on spells that are instantaneous or have a duration of
       permanent.</p>
+  sources:
+    - id: PZO1129
+      pages: '12'
   subType: classFeat
   tags:
     - Arcanist Exploit

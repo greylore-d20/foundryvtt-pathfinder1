@@ -80,6 +80,29 @@ export const levelAbilityScores = {
 };
 
 /**
+ * How many points are assigned per choice.
+ *
+ * For homebrew support.
+ */
+export const levelAbilityScoreMult = 1;
+
+/**
+ * At which mythic tiers you receive how many new ability points.
+ */
+export const tierAbilityScores = {
+  2: 2,
+  4: 2,
+  6: 2,
+  8: 2,
+  10: 2,
+};
+
+/**
+ * How many points are assigned per choice.
+ */
+export const tierAbilityScoreMult = 2;
+
+/**
  * Valid hit die sizes.
  */
 export const hitDieSizes = [6, 8, 10, 12];
@@ -957,6 +980,7 @@ export const consumableTypes = {
   wand: "PF1.Subtypes.Item.consumable.wand.Single",
   rod: "PF1.Subtypes.Item.consumable.rod.Single",
   staff: "PF1.Subtypes.Item.consumable.staff.Single",
+  pharmaceutical: "PF1.Subtypes.Item.consumable.pharmaceutical.Single",
   misc: "PF1.Misc",
 };
 
@@ -1053,6 +1077,30 @@ export const currencies = {
   sp: "PF1.Currency.Abbr.sp",
   cp: "PF1.Currency.Abbr.cp",
 };
+
+/**
+ * Currency
+ */
+export const currency = /** @type {const} */ ({
+  /**
+   * Conversion rates in relation to {@link currencyBase base currency}.
+   */
+  rate: {
+    pp: 1_000,
+    gp: 100,
+    sp: 10,
+  },
+
+  /**
+   * Standard currency. Most things are valued in this unit.
+   */
+  standard: "gp",
+
+  /**
+   * Baseline currency.
+   */
+  base: "cp",
+});
 
 /**
  * Resultant armor types for an actor's worn armor as per their roll data
@@ -1758,7 +1806,7 @@ export const classCasterType = {
   skald: "med",
   spiritualist: "med",
   summoner: "med",
-  "unchained Summoner": "med",
+  summonerUnchained: "med",
   antipaladin: "low",
   bloodrager: "low",
   medium: "low",
@@ -1840,28 +1888,28 @@ export const auraStrengths = {
 // Weapon Types
 export const weaponTypes = {
   simple: {
-    _label: "PF1.WeaponTypeSimple",
+    _label: "PF1.Subtypes.Item.weapon.simple.Single",
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   martial: {
-    _label: "PF1.WeaponTypeMartial",
+    _label: "PF1.Subtypes.Item.weapon.martial.Single",
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   exotic: {
-    _label: "PF1.WeaponTypeExotic",
+    _label: "PF1.Subtypes.Item.weapon.exotic.Single",
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   misc: {
-    _label: "PF1.Misc",
+    _label: "PF1.Subtypes.Item.weapon.misc.Single",
     splash: "PF1.WeaponTypeSplash",
     other: "PF1.Other",
   },
@@ -2054,8 +2102,8 @@ export const extraAttacks = {
   // TODO: Make attack handling allow flurries to use normal iteratives.
   flurry: {
     label: "PF1.ExtraAttacks.Flurry",
-    count: "min(4, ceil(@bab / 5)) + ceil((@class.level - 7) / 7)",
-    bonus: "-(floor((@attackCount+1) / 2) * 5 + @fullAttack * 2)",
+    count: "min(3, ceil(@bab / 5) - 1) + ceil(@class.level / 7)",
+    bonus: "-(floor(@attackCount / 2) * 5 + @fullAttack * 2)",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
     iteratives: false,
     manual: false,
@@ -2064,7 +2112,7 @@ export const extraAttacks = {
   // Unchained Monk's Flurry of Blows
   unflurry: {
     label: "PF1.ExtraAttacks.UnFlurry",
-    count: "min(4, ceil(@bab / 5)) + floor((@class.level + 9) / 10)",
+    count: "min(3, ceil(@bab / 5) - 1) + floor((@class.level + 9) / 10)",
     bonus: "max(0, @attackCount - floor((@class.level + 9) / 10)) * -5",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
     iteratives: false,
@@ -2138,23 +2186,23 @@ export const buffTargets = /** @type {const} */ ({
   intPen: { label: "PF1.AbilityIntPen", category: "ability", sort: 53000 },
   wisPen: { label: "PF1.AbilityWisPen", category: "ability", sort: 54000 },
   chaPen: { label: "PF1.AbilityChaPen", category: "ability", sort: 55000 },
-  skills: { label: "PF1.BuffTarAllSkills", category: "skills", sort: 50000 },
-  unskills: { label: "PF1.BuffTarUntrainedSkills", category: "skills", sort: 100000 },
+  skills: { label: "PF1.BuffTarAllSkills", category: "skills", sort: 50000, deferred: true },
+  unskills: { label: "PF1.BuffTarUntrainedSkills", category: "skills", sort: 100000, deferred: true },
   carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000 },
   carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000 },
-  strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 },
-  dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills", sort: 71000 },
-  conSkills: { label: "PF1.BuffTarConSkills", category: "skills", sort: 72000 },
-  intSkills: { label: "PF1.BuffTarIntSkills", category: "skills", sort: 73000 },
-  wisSkills: { label: "PF1.BuffTarWisSkills", category: "skills", sort: 74000 },
-  chaSkills: { label: "PF1.BuffTarChaSkills", category: "skills", sort: 75000 },
-  allChecks: { label: "PF1.BuffTarAllAbilityChecks", category: "abilityChecks", sort: 80000 },
-  strChecks: { label: "PF1.BuffTarStrChecks", category: "abilityChecks", sort: 81000 },
-  dexChecks: { label: "PF1.BuffTarDexChecks", category: "abilityChecks", sort: 82000 },
-  conChecks: { label: "PF1.BuffTarConChecks", category: "abilityChecks", sort: 83000 },
-  intChecks: { label: "PF1.BuffTarIntChecks", category: "abilityChecks", sort: 84000 },
-  wisChecks: { label: "PF1.BuffTarWisChecks", category: "abilityChecks", sort: 85000 },
-  chaChecks: { label: "PF1.BuffTarChaChecks", category: "abilityChecks", sort: 86000 },
+  strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 }, // TODO: Should be deferred
+  dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills", sort: 71000 }, // TODO: Should be deferred
+  conSkills: { label: "PF1.BuffTarConSkills", category: "skills", sort: 72000 }, // TODO: Should be deferred
+  intSkills: { label: "PF1.BuffTarIntSkills", category: "skills", sort: 73000 }, // TODO: Should be deferred
+  wisSkills: { label: "PF1.BuffTarWisSkills", category: "skills", sort: 74000 }, // TODO: Should be deferred
+  chaSkills: { label: "PF1.BuffTarChaSkills", category: "skills", sort: 75000 }, // TODO: Should be deferred
+  allChecks: { label: "PF1.BuffTarAllAbilityChecks", category: "abilityChecks", sort: 80000 }, // TODO: Should be deferred
+  strChecks: { label: "PF1.BuffTarStrChecks", category: "abilityChecks", sort: 81000 }, // TODO: Should be deferred
+  dexChecks: { label: "PF1.BuffTarDexChecks", category: "abilityChecks", sort: 82000 }, // TODO: Should be deferred
+  conChecks: { label: "PF1.BuffTarConChecks", category: "abilityChecks", sort: 83000 }, // TODO: Should be deferred
+  intChecks: { label: "PF1.BuffTarIntChecks", category: "abilityChecks", sort: 84000 }, // TODO: Should be deferred
+  wisChecks: { label: "PF1.BuffTarWisChecks", category: "abilityChecks", sort: 85000 }, // TODO: Should be deferred
+  chaChecks: { label: "PF1.BuffTarChaChecks", category: "abilityChecks", sort: 86000 }, // TODO: Should be deferred
   landSpeed: { label: "PF1.Movement.Mode.land", category: "speed", sort: 90000 },
   climbSpeed: { label: "PF1.Movement.Mode.climb", category: "speed", sort: 91000 },
   swimSpeed: { label: "PF1.Movement.Mode.swim", category: "speed", sort: 92000 },
@@ -2169,36 +2217,36 @@ export const buffTargets = /** @type {const} */ ({
   ffac: { label: "PF1.BuffTarACFlatFooted", category: "defense", sort: 105000 },
   bab: { label: "PF1.BAB", category: "attack", sort: 111000 },
   "~attackCore": { label: "", category: "attack", sort: 112000 },
-  attack: { label: "PF1.BuffTarAllAttackRolls", category: "attack", sort: 110000 },
-  mattack: { label: "PF1.BuffTarMeleeAttack", category: "attack", sort: 111000 },
-  nattack: { label: "PF1.BuffTarNaturalAttack", category: "attack", sort: 112000 },
-  rattack: { label: "PF1.BuffTarRangedAttack", category: "attack", sort: 113000 },
-  tattack: { label: "PF1.BuffTarThrownAttack", category: "attack", sort: 114000 },
-  damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage", sort: 120000 },
-  wdamage: { label: "PF1.WeaponDamage", category: "damage", sort: 121000 },
-  mwdamage: { label: "PF1.MeleeWeaponDamage", category: "damage", sort: 121100 },
-  rwdamage: { label: "PF1.RangedWeaponDamage", category: "damage", sort: 121200 },
-  twdamage: { label: "PF1.ThrownWeaponDamage", category: "damage", sort: 121300 },
-  rdamage: { label: "PF1.AllRangedDamage", category: "damage", sort: 122100 },
-  mdamage: { label: "PF1.AllMeleeDamage", category: "damage", sort: 122200 },
-  ndamage: { label: "PF1.NaturalAttackDamage", category: "damage", sort: 123000 },
-  sdamage: { label: "PF1.SpellDamage", category: "damage", sort: 124000 },
-  critConfirm: { label: "PF1.CriticalConfirmation", category: "attack", sort: 130000 },
-  allSavingThrows: { label: "PF1.BuffTarAllSavingThrows", category: "savingThrows", sort: 140000 },
-  fort: { label: "PF1.SavingThrowFort", category: "savingThrows", sort: 141000 },
-  ref: { label: "PF1.SavingThrowRef", category: "savingThrows", sort: 142000 },
-  will: { label: "PF1.SavingThrowWill", category: "savingThrows", sort: 143000 },
+  attack: { label: "PF1.BuffTarAllAttackRolls", category: "attack", sort: 110000, deferred: true },
+  mattack: { label: "PF1.BuffTarMeleeAttack", category: "attack", sort: 111000, deferred: true },
+  nattack: { label: "PF1.BuffTarNaturalAttack", category: "attack", sort: 112000, deferred: true },
+  rattack: { label: "PF1.BuffTarRangedAttack", category: "attack", sort: 113000, deferred: true },
+  tattack: { label: "PF1.BuffTarThrownAttack", category: "attack", sort: 114000, deferred: true },
+  damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage", sort: 120000, deferred: true },
+  wdamage: { label: "PF1.WeaponDamage", category: "damage", sort: 121000, deferred: true },
+  mwdamage: { label: "PF1.MeleeWeaponDamage", category: "damage", sort: 121100, deferred: true },
+  rwdamage: { label: "PF1.RangedWeaponDamage", category: "damage", sort: 121200, deferred: true },
+  twdamage: { label: "PF1.ThrownWeaponDamage", category: "damage", sort: 121300, deferred: true },
+  rdamage: { label: "PF1.AllRangedDamage", category: "damage", sort: 122100, deferred: true },
+  mdamage: { label: "PF1.AllMeleeDamage", category: "damage", sort: 122200, deferred: true },
+  ndamage: { label: "PF1.NaturalAttackDamage", category: "damage", sort: 123000, deferred: true },
+  sdamage: { label: "PF1.SpellDamage", category: "damage", sort: 124000, deferred: true },
+  critConfirm: { label: "PF1.CriticalConfirmation", category: "attack", sort: 130000, deferred: true },
+  allSavingThrows: { label: "PF1.BuffTarAllSavingThrows", category: "savingThrows", sort: 140000, deferred: true },
+  fort: { label: "PF1.SavingThrowFort", category: "savingThrows", sort: 141000, deferred: true },
+  ref: { label: "PF1.SavingThrowRef", category: "savingThrows", sort: 142000, deferred: true },
+  will: { label: "PF1.SavingThrowWill", category: "savingThrows", sort: 143000, deferred: true },
   cmb: { label: "PF1.CMB", category: "attack", sort: 150000 },
   cmd: { label: "PF1.CMD", category: "defense", sort: 151000 },
   ffcmd: { label: "PF1.CMDFlatFooted", category: "defense", sort: 152000 },
-  init: { label: "PF1.Initiative", category: "misc", sort: 160000 },
+  init: { label: "PF1.Initiative", category: "misc", sort: 160000 }, // TODO: Should be deferred
   mhp: { label: "PF1.HitPoints", category: "health", sort: 170000 },
   wounds: { label: "PF1.Wounds", category: "health", sort: 180000 },
   vigor: { label: "PF1.Vigor", category: "health", sort: 181000 },
   spellResist: { label: "PF1.SpellResistance", category: "defense", sort: 190000 },
   bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc", sort: 200000 },
   bonusSkillRanks: { label: "PF1.BuffTarBonusSkillRanks", category: "skills", sort: 210000 },
-  concentration: { label: "PF1.Concentration", category: "spell", sort: 220000 },
+  concentration: { label: "PF1.Concentration", category: "spell", sort: 220000, deferred: true },
   cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
   dc: { label: "PF1.SpellDC", category: "spell", sort: 240000 },
   sensedv: { label: "PF1.Sense.darkvision", category: "senses", sort: 250000 },
@@ -2264,6 +2312,13 @@ export const contextNoteTargets = {
   cmd: { label: "PF1.CMD", category: "defense" },
   sr: { label: "PF1.SpellResistance", category: "defense" },
   init: { label: "PF1.Initiative", category: "misc" },
+  // Speeds
+  landSpeed: { label: "PF1.Movement.Mode.land", category: "speed" },
+  climbSpeed: { label: "PF1.Movement.Mode.climb", category: "speed" },
+  swimSpeed: { label: "PF1.Movement.Mode.swim", category: "speed" },
+  burrowSpeed: { label: "PF1.Movement.Mode.burrow", category: "speed" },
+  flySpeed: { label: "PF1.Movement.Mode.fly", category: "speed" },
+  allSpeeds: { label: "PF1.BuffTarAllSpeeds", category: "speed" },
 };
 
 export const contextNoteCategories = {
@@ -2274,6 +2329,7 @@ export const contextNoteCategories = {
   abilityChecks: { label: "PF1.BuffTarAbilityChecks" },
   spell: { label: "PF1.BuffTarSpells" },
   defense: { label: "PF1.Defense" },
+  speed: { label: "PF1.Movement.Speed" },
   misc: { label: "PF1.Misc" },
 };
 
@@ -2593,7 +2649,7 @@ export const sheetSections = {
       interface: {
         create: true,
       },
-      create: { type: "attack", system: { subType: "weapon" } },
+      create: { type: "attack", system: { subType: "weapon", proficient: true } },
       sort: 1_000,
     },
     natural: {
@@ -2912,7 +2968,7 @@ export const sheetSections = {
         create: true,
         types: true,
       },
-      create: { type: "attack", system: { subType: "weapon" } },
+      create: { type: "attack", system: { subType: "weapon", proficient: true } },
     },
   },
   // Misc section is only informal for sheet handling of special cases
@@ -2922,6 +2978,23 @@ export const sheetSections = {
     },
   },
 };
+
+/** @type {Record<string,string>} - Class ID to name mappings */
+export const classNames = {};
+
+// Update classNames with pack contents, leave any other mapping filling to modules and content owners
+Hooks.once("ready", async () => {
+  const index = await game.packs.get("pf1.classes").getIndex({ fields: ["system.tag", "system.subType"] });
+
+  index.forEach((e) => {
+    if (e.system?.subType && e.system?.subType !== "base") return;
+
+    const tag = e.system?.tag;
+    if (!tag) return;
+
+    pf1.config.classNames[tag] = e.name;
+  });
+});
 
 // Prepare sheet sections with data available later
 // ... allowing module modification also.

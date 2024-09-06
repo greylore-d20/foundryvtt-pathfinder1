@@ -67,7 +67,6 @@ export class ActorSheetPFTrap extends ActorSheetPFNPC {
       ? await TextEditor.enrichHTML(notes, {
           secrets: isOwner,
           rollData: data.rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : null;
@@ -83,6 +82,52 @@ export class ActorSheetPFTrap extends ActorSheetPFNPC {
     this._prepareItems(data);
 
     return data;
+  }
+
+  /**
+   * @private
+   * @param {string} fullId - Target ID
+   * @param {object} context - Context object to store data into
+   * @throws {Error} - If provided ID is invalid.
+   */
+  _getTooltipContext(fullId, context) {
+    const actor = this.actor,
+      system = actor.system;
+
+    // Lazy roll data
+    const lazy = {
+      get rollData() {
+        this._rollData ??= actor.getRollData();
+        return this._rollData;
+      },
+    };
+
+    let header, subHeader;
+    const details = [];
+    const paths = [];
+    const sources = [];
+    let notes;
+
+    const re = /^(?<id>[\w-]+)(?:\.(?<detail>.*))?$/.exec(fullId);
+    const { id, detail } = re?.groups ?? {};
+
+    switch (id) {
+      case "detect":
+        paths.push({ path: "@details.perception", value: lazy.rollData.details.perception });
+        break;
+      case "disarm":
+        paths.push({ path: "@details.disarm", value: lazy.rollData.details.disarm });
+        break;
+      default:
+        return super._getTooltipContext(fullId, context);
+    }
+
+    context.header = header;
+    context.subHeader = subHeader;
+    context.details = details;
+    context.paths = paths;
+    context.sources = sources;
+    context.notes = notes ?? [];
   }
 
   /* -------------------------------------------- */

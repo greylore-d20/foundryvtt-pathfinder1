@@ -144,7 +144,7 @@ export class ItemClassPF extends ItemPF {
         sources.set(item.uuid, link);
 
         // Apply Foundry's transformations for importing (automatically calls .toObject())
-        // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.
+        // This adds _stats.compendiumSource, removes extraneous permissions, resets sorting, etc.
         const itemData = game.items.fromCompendium(item, { clearFolder: true });
 
         // Set associated class
@@ -167,7 +167,7 @@ export class ItemClassPF extends ItemPF {
         const classAssociations = {};
         const updateData = { flags: { pf1: { links: { classAssociations } } } };
         for (const item of items) {
-          const link = sources.get(item.getFlag("core", "sourceId"));
+          const link = sources.get(item._stats?.compendiumSource);
 
           // Set class association flags
           classAssociations[item.id] = link?.level ?? 1;

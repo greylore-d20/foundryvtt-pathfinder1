@@ -28,6 +28,16 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
+   * Linked action.
+   *
+   * @type {ItemAction|undefined|null} - Null is returned if no action is linked and ItemAction otherwise.
+   */
+  get actionSource() {
+    const id = this.flags?.pf1?.metadata?.action;
+    return id ? this.itemSource?.actions.get(id) : null;
+  }
+
+  /**
    * Linked item.
    *
    * @type {ItemPF|undefined|null} - Null is returned if no item is linked, undefined if item is not found, and ItemPF otherwise.
@@ -42,22 +52,26 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
+   * @deprecated
    * @type {boolean} True if item source is defined, regardless if that item source still exists.
    */
   get hasItemSource() {
+    foundry.utils.logCompatibilityWarning(
+      "ChatMessagePF.hasItemSource has been deprecated in favor of ChatMessagePF.itemSource",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
     return this.flags?.pf1?.metadata?.item !== undefined;
   }
 
-  /**
-   * Return associated template or null.
-   *
-   * @type {MeasuredTemplatePF}
-   */
+  /** @type {MeasuredTemplatePF|null} - Associated measured template */
   get measureTemplate() {
     const templateId = this.flags?.pf1?.metadata?.template;
     if (!templateId) return null;
-    const template = canvas.templates.get(templateId);
-    return template || null;
+
+    return fromUuidSync(templateId) ?? canvas.templates.get(templateId) ?? null;
   }
 
   /**
@@ -65,7 +79,12 @@ export class ChatMessagePF extends ChatMessage {
    */
   get targets() {
     const targetIds = this.flags?.pf1?.metadata?.targets ?? [];
-    return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
+    if (targetIds.length === 0) return targetIds;
+
+    // Legacy IDs from old messages
+    if (/^\w{16}$/.test(targetIds[0])) return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
+
+    return targetIds.map((uuid) => fromUuidSync(uuid)?.object).filter((t) => !!t);
   }
 
   /** @inheritDoc */
@@ -119,11 +138,14 @@ export const customRolls = function (message, speaker, rollData) {
             tokenId: tokenUuid,
             isHealing,
             css: isHealing ? "heal" : "damage",
+            value: {
+              total: roll.total * (isHealing ? -1 : 1),
+              half: Math.floor(roll.total / 2) * (isHealing ? -1 : 1),
+            },
             roll,
           });
           const chatOptions = {
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            roll: roll,
+            rolls: [roll],
             flavor,
             sound: CONFIG.sounds.dice,
             speaker: speaker,

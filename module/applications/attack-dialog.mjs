@@ -13,6 +13,7 @@ export class AttackDialog extends Application {
     this.object = actionUse.action;
 
     const action = actionUse.action;
+    const item = actionUse.item;
     const shared = actionUse.shared;
     this.shared = shared;
 
@@ -36,7 +37,7 @@ export class AttackDialog extends Application {
     this.flags = {
       "power-attack": useOptions.powerAttack ?? false,
       "primary-attack": useOptions.primaryAttack ?? isPrimaryAttack,
-      "cl-check": useOptions.clCheck ?? action.clCheck === true,
+      "cl-check": useOptions.clCheck ?? item?.system.clCheck === true,
       "measure-template": useOptions.measureTemplate ?? true,
       "haste-attack": useOptions.haste,
       manyshot: useOptions.manyshot,
@@ -159,6 +160,8 @@ export class AttackDialog extends Application {
   }
 
   activateListeners(html) {
+    super.activateListeners(html);
+
     // Form changing
     html.find(`.flags input[type="checkbox"]`).on("change", this._onToggleFlag.bind(this));
     html.find(`input.attribute`).on("change", this._onChangeAttribute.bind(this));
@@ -351,7 +354,7 @@ export class AttackDialog extends Application {
     this.attacks = this.shared.attacks;
 
     for (const atk of this.attacks) {
-      atk.attackBonusTotal = RollPF.safeRollAsync(atk.attackBonus, this.rollData).total ?? 0;
+      atk.attackBonusTotal = RollPF.safeRoll(atk.attackBonus, this.rollData).total ?? 0;
     }
 
     // Set ammo usage

@@ -5,21 +5,37 @@ import { RollPF } from "../dice/roll.mjs";
  * Creates a tag from a string.
  *
  * @example
+ * ```js
  * pf1.utils.createTag("Wizard of Oz 2"); // => "wizardOfOz2"
- *
- * @param {string} str
+ * pf1.utils.createTag("Wizard of Oz 2", {camelCase:false}); // => wizardofoz2
+ * pf1.utils.createTag("Wizard of Oz 2", {camelCase:false,allowUpperCase:true}); // => WizardofOz2
+ * pf1.utils.createTag("d'Artagnan"); // => dartagnan
+ * pf1.utils.createTag("d'Artagnan", {allowUpperCase:true}); // => dArtagnan
+ * ```
+ * @param {string} str - String to convert
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.allowUpperCase] - Do not forcibly lowercase everything.
+ * @param {boolean} [options.camelCase] - Automatic camel case
+ * @param {string | Function} [options.replacement] - Replacement for disallowed characters.
+ * @returns {string} - String suitable as a tag
  */
-export const createTag = function (str) {
-  if (str.length === 0) str = "tag";
-  return str
-    .replace(/[^a-zA-Z0-9\s]/g, "")
-    .split(/\s+/)
-    .map((s, a) => {
-      s = s.toLowerCase();
-      if (a > 0) s = s.substring(0, 1).toUpperCase() + s.substring(1);
-      return s;
-    })
-    .join("");
+export const createTag = function (str, { allowUpperCase = false, camelCase = true, replacement = "" } = {}) {
+  if (!str) return "";
+
+  return (
+    str
+      .normalize("NFD") // Normalize
+      .replace(/\p{Diacritic}/gu, "") // Remove diacritics
+      .replace(/[^a-zA-Z0-9\s]/g, replacement) // Replace remaining non-latin letters
+      // Camel case and such
+      .split(/\s+/)
+      .map((s, a) => {
+        if (!allowUpperCase) s = s.toLowerCase();
+        if (a > 0 && camelCase) s = s.substring(0, 1).toUpperCase() + s.substring(1);
+        return s;
+      })
+      .join("")
+  );
 };
 
 /**
@@ -39,21 +55,6 @@ export const isMinimumCoreVersion = function (version) {
 };
 
 /**
- * @deprecated - Use `item.actor` instead
- * @param {object} item Item data
- * @returns {User|null}
- */
-export const getItemOwner = function (item) {
-  foundry.utils.logCompatibilityWarning("pf1.utils.getItemOwner() is deprecated with no replacement", {
-    since: "PF1 v10",
-    until: "PF1 v11",
-  });
-  if (item.actor) return item.actor;
-  if (item.id) return game.actors.find((o) => o.items.get(item.id));
-  return null;
-};
-
-/**
  * Turn some fractional numbers into pretty strings.
  *
  * @param {number} v
@@ -61,7 +62,7 @@ export const getItemOwner = function (item) {
  */
 export const fractionalToString = (v) => {
   const base = Math.floor(v);
-  const f = Math.roundDecimals(v - base, 3);
+  const f = pf1.utils.limitPrecision(v - base, 3, "round");
   if (f === 0) return `${base}`;
   const rv = [];
   if (base !== 0) rv.push(base);
@@ -92,27 +93,6 @@ export const CR = {
     if (!Number.isNumeric(value)) return "0";
     return value?.toString() ?? "";
   },
-};
-
-/**
- * @deprecated - Use `game.actors.get(id)` instead
- * @param {*} id
- * @returns
- */
-export const getActorFromId = function (id) {
-  foundry.utils.logCompatibilityWarning("pf1.utils.getActorFromId() is deprecated with no replacement", {
-    since: "PF1 v10",
-    until: "PF1 v11",
-  });
-  const speaker = ChatMessage.getSpeaker();
-  let actor = null;
-  if (id) {
-    actor = game.actors.tokens[id];
-    if (!actor) actor = game.actors.get(id);
-  }
-  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
-  return actor;
 };
 
 /**
@@ -163,6 +143,56 @@ export const convertDistanceBack = function (value, type = "ft") {
       return [value, type];
   }
 };
+
+/**
+ * Convert feet or meters distance to the opposite regardless of what configuration is used.
+ *
+ * @example
+ * ```js
+ * pf1.utils.swapDistance(30, "ft"); // => 9
+ * pf1.utils.swapDistance(9, "m"); // => 30
+ * ```
+ * @param {number} value - Feet or meters
+ * @param {"ft"|"m"} type - Type the value is in
+ * @throws {Error} - On invalid parameters.
+ * @returns {number} - Feet or meters, opposite of what set type was
+ */
+export function swapDistance(value, type) {
+  if (!Number.isFinite(value)) throw new Error("value parameter must be a number");
+  switch (type) {
+    case "ft":
+      return Math.round(((value * 100) / 5) * 1.5) / 100; // to meters
+    case "m":
+      return Math.round(((value * 100) / 1.5) * 5) / 100; // to feet
+    default:
+      throw new Error("type parameter must be defined");
+  }
+}
+
+/**
+ * Convert pounds or kilograms weight to the opposite regardless of what configuration is used.
+ *
+ * @example
+ * ```js
+ * pf1.utils.swapWeight(5, "kg"); // => 10
+ * pf1.utils.swapWeight(10, "lbs"); // => 5
+ * ```
+ * @param {number} value - Pounds or kilos
+ * @param {"kg"|"lbs"} type - Type the value is in
+ * @throws {Error} - On invalid parameters.
+ * @returns {number} - Pounds or kilos, opposite of what set type was
+ */
+export function swapWeight(value, type) {
+  if (!Number.isFinite(value)) throw new Error("value parameter must be a number");
+  switch (type) {
+    case "kg":
+      return value * 2; // to lbs
+    case "lbs":
+      return value / 2; // to kg
+    default:
+      throw new Error("type parameter must be defined");
+  }
+}
 
 /**
  * Calculate overland speed per hour
@@ -219,9 +249,11 @@ export const getWeightSystem = () => {
 /**
  * Measure distance between two points.
  *
+ * @deprecated
  * @example
+ * ```js
  * pf1.utils.measureDistance(token, game.user.targets.first());
- *
+ * ```
  * @param {Point} p0 - Start point on canvas
  * @param {Point} p1 - End point on canvas
  * @param {object} [options] - Measuring options.
@@ -235,6 +267,14 @@ export const measureDistance = function (
   p1,
   { ray = null, diagonalRule = "5105", state = { diagonals: 0, cells: 0 } } = {}
 ) {
+  foundry.utils.logCompatibilityWarning(
+    "pf1.utils.measureDistance() is deprecated in favor of canvas.grid.measurePath()",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
+
   // TODO: Optionally adjust start and end point to closest grid
   ray ??= new Ray(p0, p1);
   const gs = canvas.dimensions.size,
@@ -731,8 +771,8 @@ export function createInlineFormula(match, rollData, options) {
  * @returns {string} - Enriched HTML string
  * Synchronized with Foundry VTT v11.315
  */
-export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents, relativeTo } = {}) {
-  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false, relativeTo });
+export async function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents, relativeTo } = {}) {
+  let pcontent = await TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, relativeTo });
 
   if (!rolls) {
     const html = document.createElement("div");
@@ -762,7 +802,7 @@ export async function enrichHTMLUnrolledAsync(
   content,
   { rollData, secrets, rolls = false, documents, relativeTo } = {}
 ) {
-  let pcontent = await TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: true, relativeTo });
+  let pcontent = await TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, relativeTo });
 
   if (!rolls) {
     const html = document.createElement("div");
@@ -1011,11 +1051,11 @@ export function moduleToObject(module) {
 export function setDefaultSceneScaling(system) {
   system ??= getDistanceSystem();
   if (system == "metric") {
-    game.system.gridUnits = "m";
-    game.system.gridDistance = 1.5;
+    game.system.grid.units = "m";
+    game.system.grid.distance = 1.5;
   } else {
-    game.system.gridUnits = "ft";
-    game.system.gridDistance = 5;
+    game.system.grid.units = "ft";
+    game.system.grid.distance = 5;
   }
 }
 
@@ -1131,12 +1171,13 @@ export function parseAlignment(align) {
  *
  * @beta
  * @param {number} number - Number to adjust
- * @param {number} decimals - Maximum number of decimals
+ * @param {number} [decimals] - Maximum number of decimals
+ * @param {"floor"|"ceil"|"round"} [method] - Rounding method.
  * @returns {number} - Adjusted number
  */
-export function limitPrecision(number, decimals = 2) {
+export function limitPrecision(number, decimals = 2, method = "floor") {
   const mult = Math.pow(10, decimals);
-  return Math.floor(number * mult) / mult;
+  return Math[method](number * mult) / mult;
 }
 
 /**

@@ -21,8 +21,19 @@ const PACK_CACHE = "../public/packs";
  * This should include paths to any objects that can contain arbitrary (i.e. not in template) properties.
  */
 const TEMPLATE_EXCEPTION_PATHS = {
-  Actor: ["attributes.spells.spellbooks"],
-  Item: ["classSkills", "links.supplements", "flags", "casting", "learnedAt", "properties", "source", "items", "ammo"],
+  Actor: ["attributes.spells.spellbooks", "skills"],
+  Item: [
+    "classSkills",
+    "links.supplements",
+    "flags",
+    "casting",
+    "learnedAt",
+    "properties",
+    "source",
+    "items",
+    "ammo",
+    "recoverChance",
+  ],
   Component: [],
   Token: [],
 };
@@ -300,14 +311,26 @@ function sanitizeActiveEffects(effects) {
  *
  * @param {object} entry Loaded compendium content.
  * @param {string} [documentType] The document type of the entry, determining which data is scrubbed.
- * @param {object} [options]
- * @param {boolean} [options.inActor]
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.childDocument] - Is this document within another?
  * @returns {object} The sanitized content.
  */
-function sanitizePackEntry(entry, documentType = "", { inActor = false } = {}) {
+function sanitizePackEntry(entry, documentType = "", { childDocument = false } = {}) {
   // Delete unwanted fields
   delete entry.ownership;
-  delete entry._stats;
+
+  // Prune _stats
+  if (childDocument && entry._stats) {
+    Object.keys(entry._stats).forEach((key) => {
+      if (key !== "compendiumSource") delete entry._stats[key];
+    });
+
+    if (Object.keys(entry._stats).length === 0) {
+      delete entry._stats;
+    }
+  } else {
+    delete entry._stats;
+  }
 
   if ("effects" in entry) {
     if (entry.effects.length === 0) delete entry.effects;
@@ -363,7 +386,7 @@ function sanitizePackEntry(entry, documentType = "", { inActor = false } = {}) {
   }
 
   // Remove folders anyway if null or document is in actor
-  if (entry.folder === null || inActor) delete entry.folder;
+  if (entry.folder === null || childDocument) delete entry.folder;
 
   // Adhere to template data
   if (templateData) {
@@ -373,32 +396,29 @@ function sanitizePackEntry(entry, documentType = "", { inActor = false } = {}) {
       entry.system = enforceTemplate(systemData, template, {
         documentName: documentType,
         type: entry.type,
-        inActor,
+        childDocument,
       });
     }
     if (documentType === "Actor") {
       if (entry.items?.length > 0) {
         // Treat embedded items like normal items for sanitization
-        entry.items = entry.items.map((i) => sanitizePackEntry(i, "Item", { inActor: true }));
+        entry.items = entry.items.map((i) => sanitizePackEntry(i, "Item", { childDocument: true }));
       }
       if (entry.prototypeToken) {
-        entry.prototypeToken = sanitizePackEntry(entry.prototypeToken, "Token", { inActor: true });
+        entry.prototypeToken = sanitizePackEntry(entry.prototypeToken, "Token", { childDocument: true });
       }
     }
     if (documentType === "Item" && entry.system.items && Object.keys(entry.system.items).length > 0) {
       // Treat embedded items like normal items for sanitization
       for (const [itemId, itemData] of Object.entries(entry.system.items)) {
-        entry.system.items[itemId] = sanitizePackEntry(itemData, "Item");
+        entry.system.items[itemId] = sanitizePackEntry(itemData, "Item", { childDocument: true });
       }
     }
   }
 
   if (documentType === "Token") {
     const defaultData = getTokenDefaultData();
-    return enforceTemplate(entry, defaultData, {
-      documentName: "Token",
-      inActor: true,
-    });
+    return enforceTemplate(entry, defaultData, { documentName: "Token", childDocument: true });
   }
 
   return entry;
@@ -412,7 +432,7 @@ function sanitizePackEntry(entry, documentType = "", { inActor = false } = {}) {
  * @param {object} [options={}] - Additional options to augment the behavior.
  * @param {"Actor" | "Item" | "Component"} [options.documentName] - The document(-like) name to which this template belongs.
  * @param {"Action" | "Change"} [options.componentName] - The component name to which this template belongs.
- * @param {boolean} [options.inActor] - Is this child document of an actor?
+ * @param {boolean} [options.childDocument] - Is this child document of an actor?
  * @param {string} [options.type] - The document type of the object, if it is not already present.
  * @returns {object} A data object which has been trimmed to match the template
  */
@@ -432,7 +452,7 @@ function enforceTemplate(object, template, options = {}) {
       TEMPLATE_EXCEPTION_PATHS[options.documentName].some((exceptionPath) => path.startsWith(exceptionPath));
 
     // Excemptions when this document is in actor
-    if (options.inActor && !isExempt)
+    if (options.childDocument && !isExempt)
       isExempt =
         TEMPLATE_ACTOR_EXCEPTION_PATHS[options.documentName]?.some((exceptionPath) => path.startsWith(exceptionPath)) ??
         false;

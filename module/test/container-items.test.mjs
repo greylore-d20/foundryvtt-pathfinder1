@@ -28,7 +28,7 @@ export const registerContainerItemTests = () => {
 
       before(async () => {
         // Use permanent actor to allow testing regular item creation calls
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
         shared.actor = actor;
 
         settingUnits = game.settings.get("pf1", "units");
@@ -122,7 +122,7 @@ export const registerContainerItemTests = () => {
             describe("should be usable from inside the container and", function () {
               let roll;
               before(async () => {
-                roll = await items.alchemistsFire.use({ skipDialog: true });
+                roll = await items.alchemistsFire.use({ skipDialog: true, options: { measureTemplate: false } });
                 messages.push(roll);
               });
 
@@ -215,7 +215,7 @@ export const registerContainerItemTests = () => {
             });
             it("should add its weight to the actor", function () {
               expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(
-                Math.roundDecimals(pf1.utils.convertWeight(11.5), 1)
+                pf1.utils.limitPrecision(pf1.utils.convertWeight(11.5), 1, "round")
               );
             });
             it("should add its value to the actor", function () {
@@ -248,6 +248,6 @@ export const registerContainerItemTests = () => {
         });
       }
     },
-    { displayName: "PF1: Container Item Tests" }
+    { displayName: "PF1: Item – Containers" }
   );
 };

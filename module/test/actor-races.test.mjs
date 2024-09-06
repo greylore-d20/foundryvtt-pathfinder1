@@ -13,7 +13,7 @@ export const registerActorItemRaceTests = () => {
       /** @type {ActorPF} */
       let actor;
       before(async () => {
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
       });
       after(async () => {
         await actor.delete();
@@ -54,6 +54,6 @@ export const registerActorItemRaceTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Race Item Tests" }
+    { displayName: "PF1: Actor – Race Items" }
   );
 };

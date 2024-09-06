@@ -19,7 +19,7 @@ class SquareHighlight {
 
     this._id = foundry.utils.randomID();
 
-    canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
+    canvas.interface.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
 
   addSquare(x, y) {
@@ -27,7 +27,7 @@ class SquareHighlight {
   }
 
   clear() {
-    const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+    const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
     if (!hl) return;
     hl.clear();
   }
@@ -35,7 +35,7 @@ class SquareHighlight {
   render() {
     const grid = canvas.grid;
     const gridSize = grid.size;
-    const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+    const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
 
     this.clear();
 
@@ -131,16 +131,16 @@ class GridlessHighlight extends AttackHighlightBase {
 
     this.#rangeStops = rangeMeasurements.map((r) => {
       const tokenOffset = r === 0 ? 0 : (tw * gridSize) / 2;
-      return (r * canvas.dimensions.size) / canvas.dimensions.distance + tokenOffset;
+      return r * canvas.dimensions.distancePixels + tokenOffset;
     });
 
     this._id = foundry.utils.randomID();
-    canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
+    canvas.interface.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
 
   clearHighlight() {
     if (this.isValid) {
-      const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
       if (!hl) return;
       hl.removeChildren();
       this.#rangeStops = undefined;
@@ -149,7 +149,7 @@ class GridlessHighlight extends AttackHighlightBase {
 
   renderHighlight() {
     if (this.isValid) {
-      const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
       if (!hl) return;
       hl.clear();
 
@@ -243,8 +243,8 @@ class SquareGridHighlight extends AttackHighlightBase {
       const maxSquareRange = Math.min(
         userLimit, // arbitrary limit to enhance performance on large canvases
         Math.max(
-          (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
-          (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
+          canvas.dimensions.width / canvas.dimensions.distancePixels,
+          canvas.dimensions.height / canvas.dimensions.distancePixels
         ) + ftDistance
       );
       const rangeIncrements = action.data.range.maxIncrements;
@@ -362,17 +362,27 @@ class SquareGridHighlight extends AttackHighlightBase {
     return result;
   }
 
-  #shouldAddReachSquare(pos, closestTokenSquare, range, minRange, options = { useReachRule: false }) {
+  #shouldAddReachSquare(pos, closestTokenSquare, range, minRange, { useReachRule = false } = {}) {
     const gridSize = canvas.grid.size;
     const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
     const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
 
-    const dist = measureDistance(p0, p1);
-    const dist2 = options.useReachRule ? measureDistance(p0, p1, { diagonalRule: "555" }) : null;
+    // BUG: This will fail if user is using non 1/2/1 diagonals
+    const dist = canvas.grid.measurePath([p0, p1]).distance;
+
+    // TODO: https://github.com/foundryvtt/foundryvtt/issues/11428
+    const dist2 = useReachRule
+      ? new foundry.grid.SquareGrid({
+          size: canvas.grid.size,
+          distance: canvas.grid.distance,
+          diagonals: CONST.GRID_DIAGONALS.EQUIDISTANT,
+        }).measurePath([p0, p1]).distance
+      : null;
+
     const reachRuleRange = convertDistance(10)[0];
     if (dist > range) {
       // Special rule for 10-ft. reach
-      if (!(options.useReachRule && range === reachRuleRange)) {
+      if (!(useReachRule && range === reachRuleRange)) {
         return false;
       }
     }
@@ -382,7 +392,7 @@ class SquareGridHighlight extends AttackHighlightBase {
     }
 
     // Special rule for minimum ranges >= 10-ft.
-    if (options.useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
+    if (useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
       return false;
     }
 

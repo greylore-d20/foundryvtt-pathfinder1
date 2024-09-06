@@ -64,18 +64,6 @@ export class ItemWeaponPF extends ItemPhysicalPF {
   }
 
   /** @inheritDoc */
-  adjustContained() {
-    super.adjustContained();
-
-    this.system.equipped = false;
-    this.system.carried = true;
-  }
-
-  get canEquip() {
-    return !this.inContainer;
-  }
-
-  /** @inheritDoc */
   getProficiency(weapon = true) {
     if (!weapon) throw new Error("Weapons do not support non-weapon proficiency");
 

@@ -1,7 +1,7 @@
 _id: hcqcp6ggD1tXo5Js
 _key: '!items!hcqcp6ggD1tXo5Js'
 folder: InUvu8pSIVYU8kHo
-img: icons/sundries/lights/lantern-iron-yellow.webp
+img: icons/magic/light/circle-window-clock-blue.webp
 name: Flashlight
 system:
   actions:
@@ -10,12 +10,14 @@ system:
         type: move
         unchained:
           type: action
+      area: 60-foot cone
       duration:
         units: hour
         value: '8'
+      measureTemplate:
+        size: '60'
+        type: cone
       name: Use
-      save:
-        dc: 0
   description:
     value: >-
       <h3>Statistics</h3><p><strong>Slot</strong>

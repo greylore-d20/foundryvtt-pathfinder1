@@ -56,7 +56,7 @@ export const registerActorRestTests = () => {
             { inplace: false }
           )
         );
-        actor = await createTestActor({ system: { abilities: { con: { value: 14 } } } }, { temporary: false });
+        actor = await createTestActor({ system: { abilities: { con: { value: 14 } } } });
       });
       after(async () => {
         await game.settings.set("pf1", "healthConfig", healthConfig);
@@ -130,6 +130,6 @@ export const registerActorRestTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Rest Test" }
+    { displayName: "PF1: Actor – Resting" }
   );
 };

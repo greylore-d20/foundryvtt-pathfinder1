@@ -13,7 +13,7 @@ system:
         unchained:
           cost: 2
           type: action
-      attackName: Ray
+      attackName: 'Ray #1'
       damage:
         parts:
           - formula: 4d6
@@ -25,7 +25,7 @@ system:
         units: inst
       extraAttacks:
         formula:
-          count: clamped(floor((@cl - 3) / 4), 0, 2)
+          count: clamp(floor((@cl - 3) / 4), 0, 2)
           label: 'Ray #{0}'
         type: custom
       name: Use

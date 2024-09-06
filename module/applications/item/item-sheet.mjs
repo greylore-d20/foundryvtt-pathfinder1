@@ -128,6 +128,7 @@ export class ItemSheetPF extends ItemSheet {
     const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
     const context = {
+      cssClass: this.isEditable ? "editable" : "locked",
       item,
       document: item, // Reference used by unknown data
       name: item.name,
@@ -146,6 +147,27 @@ export class ItemSheetPF extends ItemSheet {
       tag: this.item._source.system.tag,
     };
 
+    // Item type identifiers
+    const isPhysical = item.isPhysical;
+    const isWeapon = item.type === "weapon";
+    const isAttack = item.type === "attack";
+    const isWeaponLike = isAttack && item.subType === "weapon";
+    const isNaturalAttack = isAttack && itemData.subType === "natural";
+    const isClass = item.type === "class";
+    const isSpell = item.type === "spell";
+    const isImplant = item.type === "implant";
+    const isEquipment = item.type === "equipment";
+
+    context.isPhysical = isPhysical;
+    context.isWeapon = isWeapon;
+    context.isAttack = isAttack;
+    context.isWeaponLike = isWeaponLike;
+    context.isNaturalAttack = isNaturalAttack;
+    context.isClass = isClass;
+    context.isSpell = isSpell;
+    context.isImplant = isImplant;
+    context.isEquipment = isEquipment;
+
     if (context.canClassLink) {
       context.hasClassLink = !!item.system.class;
       context.classes = {};
@@ -158,7 +180,7 @@ export class ItemSheetPF extends ItemSheet {
     context.items = item.items?.map((i) => i.toObject()) ?? [];
 
     // Add hit die size options for classes
-    if (item.type === "class") {
+    if (isClass) {
       context.hitDieSizes = context.config.hitDieSizes.reduce((all, size) => {
         all[size] = game.i18n.format("PF1.DieSize", { size });
         return all;
@@ -189,12 +211,6 @@ export class ItemSheetPF extends ItemSheet {
     if (!item.isPhysical) delete context.limitedUsePeriods.single;
     context.isRechargeable = pf1.config.limitedUsePeriodOrder.includes(itemData.uses?.per);
 
-    // Item type identifiers
-    context.isPhysical = itemData.quantity !== undefined;
-    context.isNaturalAttack = itemData.subType === "natural";
-    context.isSpell = item.type === "spell";
-    context.isImplant = item.type === "implant";
-
     context.isActivatable = !["race", "class", "container", "loot"].includes(item.type);
     context.hasAction = item.hasAction;
     context.hasAttack = item.hasAttack;
@@ -203,7 +219,7 @@ export class ItemSheetPF extends ItemSheet {
     context.showUnidentifiedData = item.showUnidentifiedData;
     context.showIdentified = !item.showUnidentifiedData;
     context.showIdentifiedData = context.showIdentified;
-    if (context.showIdentified) context.showBothDescriptions = true;
+    if (context.showIdentified && context.isPhysical) context.showBothDescriptions = true;
     context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 
     // Identification information
@@ -223,7 +239,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add spellcasting configuration
-    if (item.type === "class") {
+    if (isClass) {
       context.casting = {
         types: pf1.config.spellcasting.type,
         spells: pf1.config.spellcasting.spells,
@@ -378,19 +394,8 @@ export class ItemSheetPF extends ItemSheet {
 
       let disableEquipping = false;
       if (item.inContainer) {
-        // Apply similar logic as in .adjustContained()
-        if (item.type === "weapon") disableEquipping = true;
-        else if (item.type === "equipment") {
-          if (["armor", "shield", "clothing"].includes(item.subType)) {
-            disableEquipping = true;
-          }
-          // For items not matching the above, only slotless are allowed
-          else if (["wondrous", "other"].includes(item.subType) && itemData.slot !== "slotless") {
-            disableEquipping = true;
-          }
-        } else if (context.isImplant) {
-          disableEquipping = true;
-        }
+        if (item.canEquip === false) disableEquipping = true;
+        else if (context.isImplant) disableEquipping = true;
       }
 
       // Add equipped/implanted flag
@@ -491,18 +496,14 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare attack-specific stuff
-    if (item.type === "attack") {
-      context.materialCategories = this._prepareMaterialsAndAddons(
-        "weapon",
-        "all",
-        itemData.subType,
-        itemData.material?.normal.value
-      );
+    if (isAttack) {
+      const wtype = (isWeaponLike ? itemData.weapon?.type : null) || "all";
+      context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
-    const material = this.item.type === "equipment" ? this.item.system.armor?.material : this.item.system.material;
+    const material = isEquipment ? this.item.system.armor?.material : this.item.system.material;
     if (material?.addon?.length) {
       context.materialAddons =
         material.addon.reduce((obj, v) => {
@@ -512,34 +513,44 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare weapon specific stuff
-    if (item.type === "weapon") {
-      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties["thr"] === true;
+    if (isWeapon) {
+      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties?.["thr"] === true;
+    }
 
-      // Prepare categories for weapons
+    // Prepare categories for weapons
+    if (isWeaponLike) {
+      itemData.weapon ??= {};
+      itemData.weapon.category ||= "simple";
+      itemData.weapon.type ||= "1h";
+
+      context.isRanged = itemData.weapon.type === "ranged";
+    }
+
+    if (isWeapon || isWeaponLike) {
       context.weaponCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(pf1.config.weaponTypes)) {
         context.weaponCategories.types[k] = v._label;
       }
-      const type = itemData.subType;
+      let type;
+      if (isWeapon) type = itemData.subType;
+      else if (isWeaponLike) type = itemData.weapon?.category;
+
       if (type in pf1.config.weaponTypes) {
         for (const [k, v] of Object.entries(pf1.config.weaponTypes[type])) {
           // Add static targets
           if (!k.startsWith("_")) context.weaponCategories.subTypes[k] = v;
         }
       }
+    }
 
-      context.materialCategories = this._prepareMaterialsAndAddons(
-        item.type,
-        itemData.weaponSubtype,
-        null,
-        itemData.material?.normal.value
-      );
+    if (isWeapon) {
+      context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
     // Prepare equipment specific stuff
-    if (item.type === "equipment") {
+    if (isEquipment) {
       // Prepare categories for equipment
       context.equipmentCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(pf1.config.equipmentTypes)) {
@@ -563,16 +574,11 @@ export class ItemSheetPF extends ItemSheet {
 
       // Prepare materials where they're needed.
       if (["armor", "shield"].includes(item.subType)) {
-        context.materialCategories = this._prepareMaterialsAndAddons(
-          item.type,
-          itemData.equipmentSubtype,
-          itemData.subType,
-          itemData.armor.material?.normal.value ?? ""
-        );
+        context.materialCategories = this._prepareMaterialsAndAddons(item);
       }
     }
 
-    if (item.type === "implant") {
+    if (isImplant) {
       context.subTypes = pf1.config.implantTypes;
 
       context.isCybertech = item.subType === "cybertech";
@@ -628,12 +634,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Material for spells to emulate
-      context.materialCategories = this._prepareMaterialsAndAddons(
-        "spell",
-        "all",
-        itemData.subType,
-        itemData.material?.normal.value
-      );
+      context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
@@ -643,7 +644,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare class specific stuff
-    if (item.type === "class") {
+    if (isClass) {
       context.isMythicPath = itemData.subType === "mythic";
 
       for (const [a, s] of Object.entries(itemData.savingThrows)) {
@@ -840,7 +841,6 @@ export class ItemSheetPF extends ItemSheet {
     const enrichOptions = {
       secrets: context.owner,
       rollData: rollData,
-      async: true,
       relativeTo: this.actor,
     };
     const pIdentDesc = description ? enrichHTMLUnrolledAsync(description, enrichOptions) : Promise.resolve();
@@ -852,7 +852,6 @@ export class ItemSheetPF extends ItemSheet {
     const pTopDesc = topDescription
       ? TextEditor.enrichHTML(topDescription, {
           rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : Promise.resolve();
@@ -914,30 +913,24 @@ export class ItemSheetPF extends ItemSheet {
     });
   }
 
-  _prepareMaterialsAndAddons(itemType, itemSubtype, subType, chosenMaterial = "") {
+  _prepareMaterialsAndAddons(item) {
     const materialList = {};
     const addonList = [];
     const basicList = {};
 
     naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
-      if (this._isMaterialAllowed(itemType, itemSubtype, subType, material)) {
-        materialList[material.id] = material.name;
-      }
-
-      if (
-        material.addon && // Filter addons by chosen material
-        !(
-          (material.id === "alchemicalsilver" &&
-            ["adamantine", "coldiron", "mithral", "sunsilver"].includes(chosenMaterial)) ||
-          (["heatstoneplating", "lazurite", "sunsilk"].includes(material.id) && itemType === "weapon")
-        )
-      ) {
-        addonList.push({ key: material.id, name: material.name });
-      }
-
       if (material.basic) {
         // Filter basic materials
         basicList[material.id] = material.name;
+      } else {
+        const isAllowed = material.isAllowed(item);
+        if (!isAllowed) return;
+
+        if (!material.addon) {
+          materialList[material.id] = material.name;
+        } else {
+          addonList.push({ key: material.id, name: material.name });
+        }
       }
     });
 
@@ -961,48 +954,6 @@ export class ItemSheetPF extends ItemSheet {
     };
   }
 
-  /**
-   * Check if a given material is okay to be added to our materials list
-   * for the item sheet.
-   *
-   * @param {string} itemType - Whether we're checking weapons or equipment
-   * @param {string} itemSubtype - Item-specific typing to filter with
-   * @param {string} subType - Only relevant with shields, since "other" is used in both shield and general gear
-   * @param {pf1.registry.MaterialType} material - The Material object from the registry that has our needed metadata
-   * @returns {boolean}
-   */
-  _isMaterialAllowed(itemType, itemSubtype, subType, material) {
-    // Let's end this early if we can never be allowed
-    if (material.addon || material.basic) return false;
-
-    // Check whether the material is allowed for the given item
-    switch (itemType) {
-      case "weapon": {
-        switch (itemSubtype) {
-          case "light":
-            return material.allowed.lightBlade;
-          case "1h":
-            return material.allowed.oneHandBlade;
-          case "2h":
-            return material.allowed.twoHandBlade;
-          case "ranged":
-            return material.allowed.rangedWeapon;
-          case "all": // We're prepping an Attack and don't care (don't have the info anyways)
-            return true;
-          default:
-            // Shouldn't find this
-            return false;
-        }
-      }
-      case "equipment": {
-        if (subType === "shield") return material.allowed.buckler;
-        return material.allowed[itemSubtype];
-      }
-    }
-
-    return true; // Finally made it through the gauntlet!
-  }
-
   _prepareLinks(context) {
     context.links = {
       list: [],
@@ -1019,7 +970,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add class associations
-    if (this.item.type === "class") {
+    if (context.isClass) {
       context.links.list.push({
         id: "classAssociations",
         label: game.i18n.localize("PF1.LinkTypeClassAssociations"),
@@ -1370,16 +1321,21 @@ export class ItemSheetPF extends ItemSheet {
       return;
     }
 
-    // Add drop handler to textareas
-    html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
+    // Add drop handler to textareas and text inputs
+    html.find("textarea, input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
     // Create new change
     html.find(".tab.changes .controls a.add-change").click(this._onCreateChange.bind(this));
 
-    // Open Changes editor
-    html[0]
-      .querySelectorAll(".tab.changes .changes .controls a.menu")
-      .forEach((el) => el.addEventListener("pointerenter", this._onOpenChangeMenu.bind(this), { passive: true }));
+    // Changes
+    html[0].querySelectorAll(".tab.changes .changes .change[data-change-id]").forEach((el) => {
+      // Sticky tooltip cotrols
+      el.querySelector(".controls a.menu").addEventListener("pointerenter", this._onOpenChangeMenu.bind(this), {
+        passive: true,
+      });
+      // Right click open change editor
+      el.addEventListener("contextmenu", this._onEditChange.bind(this));
+    });
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
@@ -1646,6 +1602,12 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
+  /**
+   * Handle dropping content-linkable data to `<textarea>` or text `<input>`
+   *
+   * @internal
+   * @param {DragEvent} event
+   */
   async _onTextAreaDrop(event) {
     event.preventDefault();
 
@@ -1654,13 +1616,13 @@ export class ItemSheetPF extends ItemSheet {
 
     const elem = event.currentTarget;
     const link = await TextEditor.getContentLink(eventData, { relativeTo: this.actor });
+    if (!link) return void ui.notifications.warn("PF1.Error.InvalidContentLinkDrop", { localize: true });
 
     // Insert link
-    if (link) {
-      elem.value = !elem.value ? link : elem.value + "\n" + link;
+    // TODO: Replace painted text if any
+    elem.value = !elem.value ? link : elem.value + "\n" + link;
 
-      return this._onSubmit(event); // Save
-    }
+    return this._onSubmit(event); // Save
   }
 
   async _onScriptCallDrop(event) {
@@ -1770,7 +1732,7 @@ export class ItemSheetPF extends ItemSheet {
     /** @type {ItemPF} */
     const item = this.item;
 
-    const srcItem = uuid ? fromUuidSync(uuid) : null;
+    const srcItem = uuid ? await fromUuid(uuid) : null;
 
     switch (type) {
       // Handle actions
@@ -1839,7 +1801,7 @@ export class ItemSheetPF extends ItemSheet {
       }
       case "pf1ContentSourceEntry": {
         const src = data.data;
-        const origin = fromUuidSync(data.uuid);
+        const origin = await fromUuid(data.uuid);
         if (!origin) return;
         if (origin === this.item) return; // From same item
 
@@ -1970,7 +1932,7 @@ export class ItemSheetPF extends ItemSheet {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.item.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, secrets: this.item.isOwner });
 
       const div = $(content);
       div.hide();
@@ -2084,7 +2046,7 @@ export class ItemSheetPF extends ItemSheet {
 
     content.querySelector(".duplicate").addEventListener("click", (ev) => this._onDuplicateChange(ev, el));
     content.querySelector(".delete").addEventListener("click", (ev) => this._onDeleteChange(ev, el));
-    content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el));
+    content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el, true));
 
     await game.tooltip.activate(el, {
       content,
@@ -2097,14 +2059,15 @@ export class ItemSheetPF extends ItemSheet {
   /**
    * @internal
    * @param {Event} event - Click event
+   * @param {boolean} [tooltip] - Is this event from locked tooltip?
    */
-  _onEditChange(event) {
+  _onEditChange(event, tooltip = false) {
     event.preventDefault();
     const el = event.target;
-    const changeId = el.dataset.changeId;
+    const changeId = el.closest("[data-change-id]").dataset.changeId;
     const change = this.item.changes.get(changeId);
     if (change) {
-      game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
+      if (tooltip) game.tooltip.dismissLockedTooltip(el.closest(".locked-tooltip"));
       return void pf1.applications.ChangeEditor.wait(change);
     }
   }

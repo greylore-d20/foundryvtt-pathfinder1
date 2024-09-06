@@ -70,7 +70,7 @@ export class ItemBasePF extends Item {
         const extraItem = await fromUuid(uuid);
         if (!extraItem) {
           // TODO: Display notification instead when this is from UI interaction.
-          console.warn("Supplement", uuid, "not found for", item.uuid ?? item.flags?.core?.sourceId ?? item);
+          console.warn("Supplement", uuid, "not found for", item.uuid ?? item._stats?.compendiumSource ?? item);
           continue;
         }
         const old = allSupplements.get(uuid);
@@ -91,6 +91,8 @@ export class ItemBasePF extends Item {
         }
 
         for (const newItem of newItems) {
+          if (!newItem.system) continue; // No system data in creation data
+
           // TODO: Somehow add child relation to the children
           await collect(newItem, { depth: depth + 1 });
         }
@@ -98,16 +100,19 @@ export class ItemBasePF extends Item {
     };
 
     // Collect supplements for all items
-    for (const item of items) await collect(item);
+    for (const item of items) {
+      if (!item.system) continue; // Creation data lacks .system
+      await collect(item);
+    }
 
     if (allSupplements.size) {
       // Add to items array
       for (const supplement of allSupplements) {
         const { item, count, parent } = supplement;
-        const parentUuid = parent?.uuid ?? parent?.flags?.core?.sourceId;
+        const parentUuid = parent?.uuid ?? parent?._stats?.compendiumSource;
         const itemData = game.items.fromCompendium(item, { clearFolder: true });
         if (parentUuid) {
-          setProperty(itemData, "flags.pf1.source", parentUuid);
+          foundry.utils.setProperty(itemData, "flags.pf1.source", parentUuid);
         }
         // Adjust quantity of physical items if more than one was added of the same item
         if (item.isPhysical && itemData.system.quantity > 0) {
@@ -136,7 +141,7 @@ export class ItemBasePF extends Item {
     const updates = new Collection();
     const collection = new Collection();
     for (const item of items) {
-      const source = item.getFlag("core", "sourceId");
+      const source = item._stats?.compendiumSource;
       if (source) collection.set(source, item);
     }
 

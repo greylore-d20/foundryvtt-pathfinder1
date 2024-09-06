@@ -1,0 +1,363 @@
+_id: kbRxOWri3GzpgSx5
+_key: '!actors!kbRxOWri3GzpgSx5'
+img: icons/creatures/invertebrates/wasp-swarm-attack.webp
+items:
+  - _id: pSvEXKEqAjadbkA0
+    _key: '!actors.items!kbRxOWri3GzpgSx5.pSvEXKEqAjadbkA0'
+    flags:
+      core:
+        sourceId: Compendium.pf1.racialhd.Item.g3gX00gTvJU478ju
+    img: systems/pf1/icons/skills/green_05.jpg
+    name: Vermin
+    system:
+      bab: med
+      changes:
+        - _id: AH2l0Fte
+          formula: '8'
+          target: skill.per
+          type: racial
+      description:
+        value: >-
+          <p>This type includes insects, arachnids, other arthropods, worms, and
+          similar invertebrates.</p>
+
+          <h2>Features</h2>
+
+          <p>Vermin have the following features.</p>
+
+          <ul>
+
+          <li>d8 Hit Die.</li>
+
+          <li>Base attack bonus equal to 3/4 total Hit Dice (medium
+          progression).</li>
+
+          <li>Good <em>Fortitude</em> saves.</li>
+
+          <li>Skill points equal to 2 + Int modifier (minimum 1) per Hit Die.
+          Most vermin, however, are mindless and gain no skill points or feats.
+          Vermin have no class skills.</li>
+
+          </ul>
+
+          <h2>Traits</h2>
+
+          <p>Vermin possess the following traits (unless otherwise noted in a
+          creature’s entry).</p>
+
+          <ul>
+
+          <li>Mindless: No <em>Intelligence</em> score, and immunity to all
+          mind-affecting effects (charms, compulsions, morale effects, patterns,
+          and phantasms). A vermin-like creature with an <em>Intelligence</em>
+          score is usually either an animal or a magical beast, depending on its
+          other abilities.</li>
+
+          <li><em>Darkvision</em> 60 feet.</li>
+
+          <li>Proficient with its natural weapons only.</li>
+
+          <li>Proficient with no armor.</li>
+
+          <li>Vermin breathe, eat, and sleep.</li>
+
+          </ul>
+      hp: 31
+      level: 7
+      savingThrows:
+        fort:
+          value: high
+      skillsPerLevel: 2
+      subType: racial
+      tag: vermin
+    type: class
+  - _id: GAbLV8OVXrFGtOAD
+    _key: '!actors.items!kbRxOWri3GzpgSx5.GAbLV8OVXrFGtOAD'
+    img: systems/pf1/icons/skills/green_23.jpg
+    name: Swarm traits
+    system:
+      contextNotes:
+        - target: cmd
+          text: |-
+            Cannot be tripped.
+            Cannot be grappled.
+            Cannot be bull rushed.
+        - target: ac
+          text: |-
+            Immune to flaking.
+            Immune to critical hits.
+        - target: cmb
+          text: Cannot grapple.
+      description:
+        value: >-
+          <p>A swarm has no clear front or back and no discernable anatomy, so
+          it is not subject to <em>critical hits</em> or <em>flanking</em>. A
+          swarm made up of <em>Tiny</em> creatures takes half damage from
+          <em>slashing</em> and <em>piercing</em> weapons. A swarm composed of
+          <em>Fine</em> or <em>Diminutive</em> creatures is immune to all weapon
+          damage. Reducing a swarm to 0 hit points or less causes it to break
+          up, though damage taken until that point does not degrade its ability
+          to attack or resist attack. Swarms are never
+          @UUID[Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.TTp8q9Vb2PNAujWu]{staggered}
+          or reduced to a dying state by damage. Also, they cannot be
+          <em>tripped</em>,
+          @UUID[Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.i4gHNAVajJWs4cFI]{grappled},
+          or <em>bull rushed</em>, and they cannot <em>grapple</em> an
+          opponent.</p><p>A swarm is immune to any spell or effect that targets
+          a specific number of creatures (including single-target spells such as
+          disintegrate), with the exception of mind-affecting effects (charms,
+          compulsions, morale effects, patterns, and phantasms) if the swarm has
+          an Intelligence score and a hive mind. A swarm takes half again as
+          much damage (+50%) from spells or effects that affect an area, such as
+          splash weapons and many evocation spells.</p><p>Swarms made up of
+          <em>Diminutive</em> or <em>Fine</em> creatures are susceptible to high
+          winds, such as those created by a gust of wind spell. For purposes of
+          determining the effects of wind on a swarm, treat the swarm as a
+          creature of the same size as its constituent creatures. A swarm
+          rendered unconscious by means of nonlethal damage becomes disorganized
+          and dispersed, and does not reform until its hit points exceed its
+          nonlethal damage.</p>
+      sources:
+        - id: PZO1112
+          pages: '313'
+      subType: misc
+    type: feat
+  - _id: gaXVwktVkdJKCgME
+    _key: '!actors.items!kbRxOWri3GzpgSx5.gaXVwktVkdJKCgME'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.qP52Vv8OelEql6Oq
+    img: icons/creatures/invertebrates/wasp-swarm-attack.webp
+    name: Swarm Attack
+    system:
+      actions:
+        - _id: RPbC0gO0bojimD6B
+          activation:
+            type: nonaction
+            unchained:
+              type: nonaction
+          damage:
+            parts:
+              - formula: ceil(@attributes.hd.total / 5)d6
+                type:
+                  custom: ''
+                  values:
+                    - untyped
+          name: Attack
+          save:
+            dc: 10 + floor(@attributes.hd.total /2) + @abilities.con.mod
+            description: Fortitude negates nauseated condition
+            type: fort
+      description:
+        value: >-
+          <p>Creatures with the swarm subtype don't make standard melee attacks.
+          Instead, they deal automatic damage to any creature whose space they
+          occupy at the end of their move, with no attack roll needed. Swarm
+          attacks are not subject to a miss chance for concealment or cover. A
+          swarm's statistics block has "swarm" in the Melee entries, with no
+          attack bonus given. The amount of damage a swarm deals is based on its
+          Hit Dice, as shown below.</p><table><thead><tr><th>Swarm
+          HD</th><th>Swarm Base
+          Damage</th></tr></thead><tbody><tr><td><p>1-5</p></td><td><p>1d6</p></td></tr><tr><td><p>6-10</p></td><td><p>2d6</p></td></tr><tr><td><p>11-15</p></td><td><p>3d6</p></td></tr><tr><td><p>16-20</p></td><td><p>4d6</p></td></tr><tr><td><p>21
+          or more</p></td><td><p>5d6</p></td></tr></tbody></table><p>A swarm's
+          attacks are nonmagical, unless the swarm's description states
+          otherwise. Damage reduction sufficient to reduce a swarm attack's
+          damage to 0, being incorporeal, or other special abilities usually
+          give a creature immunity (or at least resistance) to damage from a
+          swarm. Some swarms also have acid, blood drain, poison, or other
+          special attacks in addition to normal damage.</p><p>Swarms do not
+          threaten creatures, and do not make attacks of opportunity with their
+          swarm attack. However, they distract foes whose squares they occupy,
+          as described below.</p><p>Swarms possess the
+          @UUID[Compendium.pf1.monster-abilities.Item.WMwjQfyTC5BCoZlf]{distraction}
+          universal monster rule. Spellcasting or concentrating on spells within
+          the area of a swarm requires a caster level check (DC 20 + spell
+          level). Using skills that involve patience and concentration requires
+          a DC 20 Will save.</p>
+      effectNotes:
+        - plus poison
+      sources:
+        - id: PZO1112
+          pages: '313'
+      subType: natural
+    type: attack
+  - _id: d87C6WS76kg5n92q
+    _key: '!actors.items!kbRxOWri3GzpgSx5.d87C6WS76kg5n92q'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.R4HTn8pmyiBaMTC5
+    img: systems/pf1/icons/races/drow.png
+    name: Poison
+    system:
+      abilityType: ex
+      actions:
+        - _id: nWQEJMqSqeqKAevY
+          actionType: save
+          activation:
+            type: nonaction
+            unchained:
+              type: nonaction
+          duration:
+            units: round
+            value: '4'
+          name: Use
+          save:
+            dc: 10 + floor(@attributes.hd.total / 2) + @abilities.con.mod
+            description: Fortitude negates
+            type: fort
+      description:
+        value: >-
+          <p>A creature with this ability can poison those it attacks. The
+          effects of the poison, including its save, frequency, and cure, are
+          included in the creature's description. The saving throw to resist a
+          poison is usually a Fortitude save (DC = 10 + 1/2 poisoning creature’s
+          racial HD + that creature’s Constitution modifier; the exact DC is
+          given in the creature’s descriptive text). Poisons can be removed
+          through neutralize poison and similar effects.</p><p><em>Format:</em>
+          <strong>Poison Name (Ex)</strong> Sting - injury; save Fort DC 22,
+          frequency 1/round for 6 rounds, effect 1d4 Con damage, cure 2
+          consecutive saves</p><p><em>Location:</em> Special Attacks and
+          individual attacks.</p><section class="secret"
+          id="secret-sCgoWOfowByja0kp"><p>Swarm - injury; save Fort DC 13;
+          frequency 1/round for 4 rounds; effect 1 Dexterity damage; cure 1
+          save. The save DC is Constitution-based.</p></section><section
+          class="secret" id="secret-QK39LbVHekafjpba"><p><strong>Use:</strong>
+          change the description above, then on <em>Use</em> (Details tab)
+          change effect and the save DC.</p></section>
+      showInQuickbar: true
+      sources:
+        - id: PZO1112
+          pages: '302'
+        - id: PZO1116
+          pages: '300'
+        - id: PZO1120
+          pages: '297'
+        - id: PZO1127
+          pages: '297'
+        - id: PZO1133
+          pages: '297'
+        - id: PZO1137
+          pages: '296'
+      subType: misc
+    type: feat
+  - _id: zm5dBJNhAWVkHSP9
+    _key: '!actors.items!kbRxOWri3GzpgSx5.zm5dBJNhAWVkHSP9'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.WMwjQfyTC5BCoZlf
+    img: systems/pf1/icons/skills/affliction_13.jpg
+    name: Distraction
+    system:
+      abilityType: ex
+      actions:
+        - _id: DRdZAz8xlCa6bsVl
+          actionType: save
+          activation:
+            type: nonaction
+            unchained:
+              type: nonaction
+          name: Use
+          save:
+            dc: 10 + floor(@attributes.hd.total /2) + @abilities.con.mod
+            description: Fortitude negates
+            type: fort
+      description:
+        value: >-
+          <p>A creature with this ability can nauseate creatures it damages. Any
+          living creature that takes damage from a creature with the distraction
+          ability is nauseated for 1 round; a Fortitude save (DC = 10 + 1/2
+          creature’s HD + creature’s Constitution modifier) negates the
+          effect.</p><p><em>Format:</em> distraction (DC
+          14)</p><p><em>Location:</em> Special Attacks.</p>
+      sources:
+        - id: PZO1112
+          pages: '299'
+        - id: PZO1116
+          pages: '296'
+        - id: PZO1120
+          pages: '294'
+        - id: PZO1127
+          pages: '293'
+        - id: PZO1133
+          pages: '292'
+        - id: PZO1137
+          pages: '292'
+      subType: misc
+    type: feat
+  - _id: 3RRZ0nxswdGpRIL1
+    _key: '!actors.items!kbRxOWri3GzpgSx5.3RRZ0nxswdGpRIL1'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.abPQPu23CmkfWudq
+    img: icons/creatures/eyes/humanoid-single-blind.webp
+    name: Darkvision
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>A creature with darkvision can see in total darkness, usually to a
+          range of 60 feet. Within this range, the creature can see as clearly
+          as a sighted creature could see in an area of bright light. Darkvision
+          is black and white only but otherwise like normal
+          sight.</p><p><em>Format:</em> darkvision 60
+          ft.</p><p><em>Location:</em> Senses.</p>
+      sources:
+        - id: PZO1133
+          pages: '292'
+        - id: PZO1127
+          pages: '292'
+        - id: PZO1137
+          pages: '292'
+      subType: misc
+    type: feat
+name: Wasp Swarm
+prototypeToken:
+  flags:
+    pf1:
+      staticSize: true
+  height: 2
+  sight:
+    enabled: true
+  texture:
+    src: icons/creatures/invertebrates/wasp-swarm-attack.webp
+  width: 2
+system:
+  abilities:
+    cha:
+      value: 9
+    dex:
+      value: 13
+    int:
+      value: null
+    str:
+      value: 1
+    wis:
+      value: 12
+  attributes:
+    speed:
+      fly:
+        base: 40
+        maneuverability: good
+      land:
+        base: 5
+  details:
+    cr:
+      base: 3
+    notes:
+      value: <p><strong>Source</strong> <em>Pathfinder RPG Bestiary pg. 275</em></p>
+  traits:
+    ci:
+      custom:
+        - Staggered
+      value:
+        - mindAffecting
+    di:
+      custom:
+        - Weapon Damage
+        - Critical Hits
+    senses:
+      dv: 60
+    size: dim
+    stature: long
+type: npc
+

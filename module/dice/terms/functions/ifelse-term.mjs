@@ -100,13 +100,13 @@ export class IfElseTerm extends FunctionTerm {
   }
 
   _evaluateSync({ minimize = false, maximize = false } = {}) {
-    const rollOpts = { minimize, maximize, async: false };
+    const rollOpts = { minimize, maximize };
 
     const terms = [];
     for (let term of this.terms) {
       if (!term._evaluated) {
         if (term.isIntermediate) {
-          term.evaluate(rollOpts);
+          term.evaluateSync(rollOpts);
           term = new NumericTerm({ number: term.total, options: term.options });
         }
       }
@@ -116,7 +116,7 @@ export class IfElseTerm extends FunctionTerm {
 
     for (const term of this.terms) {
       if (!term._evaluated) {
-        term.evaluate(rollOpts);
+        term.evaluateSync(rollOpts);
       }
     }
 

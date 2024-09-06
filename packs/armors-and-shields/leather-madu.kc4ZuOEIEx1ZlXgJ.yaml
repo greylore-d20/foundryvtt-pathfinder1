@@ -4,12 +4,35 @@ folder: DtVJVwL87ELQxk7u
 img: systems/pf1/icons/items/armor/madu.png
 name: Leather Madu
 system:
+  actions:
+    - _id: Kfatx6l3DTy93Nfb
+      ability:
+        attack: str
+        damage: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              custom: ''
+              values:
+                - piercing
+      duration:
+        units: inst
+      extraAttacks:
+        type: standard
+      name: Bash
+      range:
+        units: melee
+        value: '0'
   armor:
     acp: 2
     material:
       base:
-        value: leather
-      normal:
         value: leather
     value: 1
   description:
@@ -26,13 +49,22 @@ system:
       same basic protection and attack benefits, though the two varieties
       respond differently to some spells and effects (such as rusting grasp). A
       druid can use a leather madu, but not a steel madu.</p>
-  equipmentSubtype: other
+  equipmentSubtype: lightShield
   hardness: 2
   hp:
     max: 7
     value: 7
   price: 40
   slot: shield
+  sources:
+    - id: PZO1123
+      pages: '20'
+    - id: PZO9404
+      pages: '22'
+    - id: PZO9410
+      pages: '4'
+    - id: PZO1118
+      pages: '144'
   spellFailure: 5
   subType: shield
   weight:

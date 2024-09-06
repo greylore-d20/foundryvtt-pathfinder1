@@ -5,6 +5,9 @@ import { keepUpdateArray, createTag } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 
+/**
+ * Action pseudo-document
+ */
 export class ItemAction {
   /**
    * @internal
@@ -26,12 +29,15 @@ export class ItemAction {
     this.prepareData();
   }
 
+  /** @type {string|null} - Normal material */
   get normalMaterial() {
-    return this.data.material?.normal || this.item.system.material?.normal || "";
+    return this.data.material?.normal.value || this.item.normalMaterial;
   }
 
+  /** @type {string[]} - Addon materials */
   get addonMaterial() {
-    return (this.data.material?.addon || this.item.system.material?.addon || []).filter((o) => o ?? false);
+    const addons = this.data.material?.addon || this.item.addonMaterial || [];
+    return addons.filter((o) => !!o);
   }
 
   /**
@@ -56,8 +62,10 @@ export class ItemAction {
     return ["mcman", "rcman"].includes(this.data.actionType);
   }
 
-  /*
+  /**
    * General activation accessor that removes determining which action economy is in use.
+   *
+   * @type {string} - Activation type.
    */
   get activation() {
     return (
@@ -98,22 +106,32 @@ export class ItemAction {
     };
   }
 
+  /** @type {ItemPF|undefined} - Parent item */
   get item() {
     return this.parent;
   }
+
+  /** @type {ActorPF|undefined} - Parent actor of the parent item. */
   get actor() {
     return this.parent.actor;
   }
 
+  /** @type {string} - Action ID */
   get id() {
     return this.data._id;
   }
+
+  /** @type {string} - Image with fallback handling. */
   get img() {
     return this.data.img || this.item?.img || this.constructor.FALLBACK_IMAGE;
   }
+
+  /** @type {string} - Name */
   get name() {
     return this.data.name;
   }
+
+  /** @type {string} - Tag */
   get tag() {
     return this.data.tag || createTag(this.name);
   }
@@ -161,24 +179,29 @@ export class ItemAction {
     return true;
   }
 
+  /** @type {boolean} - Is some type of attack action. */
   get hasAttack() {
     return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
   }
 
+  /** @type {boolean} - Has multiple attacks */
   get hasMultiAttack() {
     if (!this.hasAttack) return false;
     const exAtk = this.data.extraAttacks ?? {};
     return exAtk.manual?.length > 0 || !!exAtk.type;
   }
 
+  /** @type {boolean} - Consumes charges on use */
   get autoDeductCharges() {
     return this.getChargeCost() > 0;
   }
 
+  /** @type {boolean} - Does parent item have charges */
   get isCharged() {
     return this.item.isCharged;
   }
 
+  /** @type {boolean} - Action has charges of its own */
   get isSelfCharged() {
     return !!this.data.uses?.self?.per;
   }
@@ -203,8 +226,8 @@ export class ItemAction {
     }
 
     rollData ??= this.getRollData();
-    const cost = RollPF.safeRollAsync(formula, rollData).total;
-    return this.item.isSingleUse ? Math.clamped(cost, -1, 1) : cost;
+    const cost = RollPF.safeRoll(formula, rollData).total;
+    return this.item.isSingleUse ? Math.clamp(cost, -1, 1) : cost;
   }
 
   /**
@@ -214,9 +237,7 @@ export class ItemAction {
     return this.getRange({ type: "single" });
   }
 
-  /**
-   * @type {number} The action's minimum range.
-   */
+  /** @type {number} - The action's exclusive minimum range. */
   get minRange() {
     return this.getRange({ type: "min" });
   }
@@ -230,7 +251,7 @@ export class ItemAction {
 
   /**
    * @param {object} [options] - Additional options to configure behavior.
-   * @param {string} [options.type="single"] - What type of range to query. Either "single" (for a single range increment), "max" or "min".
+   * @param {"single"|"min"|"max"} [options.type="single"] - What type of range to query. Either "single" (for a single range increment), "max" or "min".
    * @param {object} [options.rollData=null] - Specific roll data to pass.
    * @returns {number|null} The given range, in system configured units, or `null` if no range is applicable.
    */
@@ -400,18 +421,22 @@ export class ItemAction {
     }
   }
 
+  /** @type {boolean} - Is sound effect defined? */
   get hasSound() {
     return !!this.data.soundEffect;
   }
 
+  /** @type {number|null} - Effective enhancement bonus */
   get enhancementBonus() {
     return this.data.enh?.value ?? this.item.system.enh;
   }
 
+  /** @type {boolean} - Is ranged action */
   get isRanged() {
     return ["rwak", "twak", "rsak", "rcman"].includes(this.data.actionType);
   }
 
+  /** @type {boolean} - Is spell action? */
   get isSpell() {
     return ["rsak", "msak"].includes(this.data.actionType);
   }
@@ -451,12 +476,17 @@ export class ItemAction {
     for (const c of conds) {
       for (const m of c.modifiers) {
         if (m.target !== "damage") continue;
-        const roll = RollPF.safeRollAsync(m.formula, rollData);
-        if (roll.err) continue;
+        const roll = new RollPF(m.formula, rollData);
+        const isDeterministic = roll.isDeterministic;
+        try {
+          if (isDeterministic) roll.evaluate({ async: false });
+        } catch (err) {
+          // Ignore
+        }
         const isModifier = mods.includes(m.type);
         fakeCondChanges.push({
           flavor: c.name,
-          value: roll.total,
+          value: isDeterministic ? roll.total : m.formula,
           modifier: isModifier ? m.type : "untyped", // Turn unrecognized types to untyped
           type: isModifier ? undefined : m.type, // Preserve damage type if present
           formula: m.formula,
@@ -491,6 +521,10 @@ export class ItemAction {
     return getHighestChanges(allChanges, { ignoreTarget: true });
   }
 
+  /**
+   * @internal
+   * @returns {object}
+   */
   getRollData() {
     const result = foundry.utils.deepClone(this.item.getRollData());
 
@@ -631,6 +665,11 @@ export class ItemAction {
     };
   }
 
+  /**
+   * Data preparation
+   *
+   * @internal
+   */
   prepareData() {
     // Default action type to other if undefined.
     // Optimally this would be in constructor only, but item action handling can cause that to be lost
@@ -666,6 +705,12 @@ export class ItemAction {
     }
   }
 
+  /**
+   * @internal
+   *
+   * @param {Array} conditionals
+   * @returns {Collection<string,ItemConditional>}
+   */
   _prepareConditionals(conditionals) {
     const prior = this.conditionals;
     const collection = new Collection();
@@ -681,6 +726,11 @@ export class ItemAction {
     return collection;
   }
 
+  /**
+   * Delete this action
+   *
+   * @returns {Item} - Updated parent item document.
+   */
   async delete() {
     const actions = foundry.utils.deepClone(this.item.system.actions);
     actions.findSplice((a) => a._id == this.id);
@@ -696,7 +746,13 @@ export class ItemAction {
     return this.item.update({ "system.actions": actions });
   }
 
-  async update(updateData, options = {}) {
+  /**
+   * Update the action
+   *
+   * @param {object} updateData - Update data
+   * @param {object} context - Update context
+   */
+  async update(updateData, context = {}) {
     updateData = foundry.utils.expandObject(updateData);
     const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
     if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
@@ -723,7 +779,7 @@ export class ItemAction {
       }
     }
 
-    await this.item.update({ "system.actions": { [idx]: newUpdateData } }, options);
+    await this.item.update({ "system.actions": { [idx]: newUpdateData } }, context);
   }
 
   /* -------------------------------------------- */
@@ -901,23 +957,6 @@ export class ItemAction {
       );
     }
 
-    // Get attack bonus
-    getHighestChanges(
-      changes.filter((c) => {
-        c.applyChange(this.actor);
-        return c.operator !== "set";
-      }),
-      { ignoreTarget: true }
-    ).forEach((c) => {
-      let value = c.value;
-      // BAB override
-      if (actionData.bab && c._id === "_bab") {
-        value = RollPF.safeRollSync(c.formula, data).total || 0;
-      }
-      if (value == 0) return;
-      parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
-    });
-
     // Add bonus parts
     parts.push(...extraParts);
     // Add attack bonus
@@ -944,14 +983,37 @@ export class ItemAction {
     config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
 
     // Add bonus
-    rollData.bonus = bonus ? await RollPF.safeRollAsync(bonus, rollData).total : 0;
+    rollData.bonus = bonus ? await RollPF.safeRoll(bonus, rollData).total : 0;
 
     // Options for D20RollPF
     const rollOptions = {
       critical: this.critRange,
     };
 
-    Hooks.call("pf1PreAttackRoll", this, config, rollData, rollOptions);
+    if (this.ammoType && this.ammoCost > 0) {
+      const misfire = this.misfire;
+      if (misfire > 0) rollOptions.misfire = misfire;
+    }
+
+    // call pre attack hook before changes are filtered and before specific [parts] from config and roll data are created
+    Hooks.call("pf1PreAttackRoll", this, config, rollData, rollOptions, parts, changes);
+
+    // Get attack bonus
+    getHighestChanges(
+      changes.filter((c) => {
+        c.applyChange(this.actor);
+        return c.operator !== "set";
+      }),
+      { ignoreTarget: true }
+    ).forEach((c) => {
+      let value = c.value;
+      // BAB override
+      if (actionData.bab && c._id === "_bab") {
+        value = RollPF.safeRollSync(c.formula, data).total || 0;
+      }
+      if (value == 0) return;
+      parts.push(`${value}[${RollPF.cleanFlavor(c.flavor)}]`);
+    });
 
     // Convert config to roll part
     if (config.secondaryPenalty != 0) {
@@ -964,11 +1026,6 @@ export class ItemAction {
 
     if (!config.proficient) {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.Proficiency.Penalty")}]`);
-    }
-
-    if (this.ammoType && this.ammoCost > 0) {
-      const misfire = this.misfire;
-      if (misfire > 0) rollOptions.misfire = misfire;
     }
 
     const roll = await new pf1.dice.D20RollPF(
@@ -1068,9 +1125,15 @@ export class ItemAction {
       });
     }
 
+    /**
+     * Initialize changes to empty array so mods can still add changes for healing "attacks" via the pre-roll hook below
+     *
+     *  @type {ItemChange[]}
+     */
+    let changes = [];
     if (!this.isHealing) {
       // Gather changes
-      const changes = this.damageSources;
+      changes = this.damageSources;
 
       // Add enhancement bonus to changes
       if (this.enhancementBonus) {
@@ -1086,26 +1149,29 @@ export class ItemAction {
         );
       }
 
-      // Get damage bonus
-      getHighestChanges(
-        changes.filter((c) => {
-          c.applyChange(this.actor);
-          return c.operator !== "set";
-        }),
-        { ignoreTarget: true }
-      ).forEach((c) => {
-        let value = c.value;
-        // Put in parenthesis if there's a chance it is more complex
-        if (/[\s+-?:]/.test(value)) value = `(${value})`;
-        parts[0].extra.push(`${value}[${c.flavor}]`);
-      });
-
       // Add broken penalty
       if (this.item.isBroken) {
         const label = game.i18n.localize("PF1.Broken");
         parts[0].extra.push(`-2[${label}]`);
       }
     }
+
+    // call pre damage hook before changes are filtered and before specific [parts] from roll data are created
+    Hooks.call("pf1PreDamageRoll", this, rollData, parts, changes);
+
+    // Get damage bonus
+    getHighestChanges(
+      changes.filter((c) => {
+        c.applyChange(this.actor);
+        return c.operator !== "set";
+      }),
+      { ignoreTarget: true }
+    ).forEach((c) => {
+      let value = c.value;
+      // Put in parenthesis if there's a chance it is more complex
+      if (/[\s+-?:]/.test(value)) value = `(${value})`;
+      parts[0].extra.push(`${value}[${c.flavor}]`);
+    });
 
     // Determine ability score modifier
     const abl = actionData.ability.damage;
@@ -1276,16 +1342,25 @@ export class ItemAction {
      * Counter for unnamed or other numbered attacks, to be incremented with each usage.
      * Starts at 1 to account for the base attack.
      */
-    let unnamedAttackIndex = 1;
-
-    const attackName =
-      actionData.attackName || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttackIndex });
+    let unnamedAttack = 0;
+    const unnamedAttackNames = new Set();
+    const getUniqueName = (name, template) => {
+      if (template && template.indexOf("{0}") == -1) template = null;
+      let label = name;
+      while (unnamedAttackNames.has(label) || !label) {
+        unnamedAttack += 1;
+        if (template) label = template.replace("{0}", unnamedAttack);
+        else label = game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttack });
+      }
+      unnamedAttackNames.add(label);
+      return label;
+    };
 
     rollData.attackCount = 0;
 
     const flavor = game.i18n.localize(exAtkCfg.flavor || "");
     const formula = flavor ? `(${exAtkCfg.bonus || "0"})[${flavor}]` : exAtkCfg.bonus;
-    const attacks = [{ bonus: formula, label: attackName }];
+    const attacks = [{ bonus: formula, label: getUniqueName(actionData.attackName) }];
 
     // Extra attacks
     if (full) {
@@ -1295,14 +1370,14 @@ export class ItemAction {
       let attackCount = 0;
 
       const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
-        const exAtkCount = RollPF.safeRollAsync(countFormula, rollData)?.total ?? 0;
+        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
         if (exAtkCount <= 0) return;
 
         try {
           for (let i = 0; i < exAtkCount; i++) {
             rollData.attackCount = attackCount += 1;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRollAsync(
+            const bonus = RollPF.safeRoll(
               bonusFormula || "0",
               rollData,
               { formula: bonusFormula, action: this },
@@ -1311,12 +1386,12 @@ export class ItemAction {
                 minimize: true,
               }
             ).total;
+
             attacks.push({
               bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
+              // Continue counting if similar to initial attack name
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
-              label:
-                label?.replace("{0}", i + 1) ||
-                game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+              label: getUniqueName(label?.replace("{0}", i + 1), label),
             });
           }
         } catch (err) {
@@ -1344,10 +1419,11 @@ export class ItemAction {
       if (exAtkCfg.manual) {
         const extraAttacks = actionData.extraAttacks?.manual ?? [];
         for (const { name, formula } of extraAttacks) {
+          if (name) unnamedAttackNames.add(name);
           attacks.push({
             bonus: formula,
             // Use defined label, or fall back to continuously numbered default attack name
-            label: name || game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: (unnamedAttackIndex += 1) }),
+            label: name || getUniqueName(),
           });
         }
       }
@@ -1370,7 +1446,7 @@ export class ItemAction {
           .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
           .forEach((c) => {
             c.modifiers.forEach((cc) => {
-              const bonusRoll = RollPF.safeRollAsync(cc.formula, rollData);
+              const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
               if (bonusRoll.total == 0) return;
               if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
                 const atk = parseInt(RegExp.$1, 10);
@@ -1388,7 +1464,7 @@ export class ItemAction {
 
       attacks.forEach((atk, i) => {
         rollData.attackCount = i;
-        atk.bonus = RollPF.safeRollAsync(atk.bonus, rollData).total + totalBonus + condBonuses[i];
+        atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
         delete rollData.attackCount;
       });
     }
@@ -1397,8 +1473,12 @@ export class ItemAction {
   }
 
   /**
-   * @param {object} options - See ItemPF#useAttack.
-   * @returns {Promise<void>}
+   * Use action.
+   *
+   * Wrapper for {@link pf1.documents.item.ItemPF.use() ItemPF.use()}
+   *
+   * @param {object} options - Options passed to `ItemPF.use()`.
+   * @returns {Promise<void>} - Returns what `ItemPF.use()` returns.
    */
   async use(options = {}) {
     options.actionId = this.id;

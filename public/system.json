@@ -2,7 +2,7 @@
   "id": "pf1",
   "title": "Pathfinder 1e",
   "description": "A comprehensive implementation of the Pathfinder 1e tabletop RPG.",
-  "version": "10.4",
+  "version": "10.7",
   "authors": [
     {
       "name": "Furyspark",
@@ -28,6 +28,11 @@
   "esmodules": ["pf1.js"],
   "styles": ["pf1.css"],
   "packFolders": [
+    {
+      "name": "Actors",
+      "packs": ["basic-monsters"],
+      "color": "#CE5C00"
+    },
     {
       "name": "Equipment",
       "packs": ["weapons-and-ammo", "armors-and-shields", "items", "technology"],
@@ -66,8 +71,16 @@
   ],
   "packs": [
     {
+      "name": "basic-monsters",
+      "label": "PF1.PACKS.monsters",
+      "type": "Actor",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
       "name": "classes",
-      "label": "Classes",
+      "label": "PF1.PACKS.classes",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -75,7 +88,7 @@
     },
     {
       "name": "companion-features",
-      "label": "Companion Features",
+      "label": "PF1.PACKS.companion-features",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -83,7 +96,7 @@
     },
     {
       "name": "mythicpaths",
-      "label": "Mythic Paths",
+      "label": "PF1.PACKS.mythicpaths",
       "path": "packs/mythic-paths",
       "type": "Item",
       "ownership": {
@@ -92,7 +105,7 @@
     },
     {
       "name": "commonbuffs",
-      "label": "Common Buffs",
+      "label": "PF1.PACKS.commonbuffs",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -100,7 +113,7 @@
     },
     {
       "name": "spells",
-      "label": "Spells",
+      "label": "PF1.PACKS.spells",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -108,7 +121,7 @@
     },
     {
       "name": "feats",
-      "label": "Feats",
+      "label": "PF1.PACKS.feats",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -116,7 +129,7 @@
     },
     {
       "name": "items",
-      "label": "Items",
+      "label": "PF1.PACKS.items",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -124,7 +137,7 @@
     },
     {
       "name": "armors-and-shields",
-      "label": "Armor and Shields",
+      "label": "PF1.PACKS.armors-and-shields",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -132,7 +145,7 @@
     },
     {
       "name": "weapons-and-ammo",
-      "label": "Weapons and Ammo",
+      "label": "PF1.PACKS.weapons-and-ammo",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -140,7 +153,7 @@
     },
     {
       "name": "technology",
-      "label": "Technology",
+      "label": "PF1.PACKS.technology",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -148,7 +161,7 @@
     },
     {
       "name": "monster-abilities",
-      "label": "Monster Abilities",
+      "label": "PF1.PACKS.monster-abilities",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -156,8 +169,8 @@
     },
     {
       "name": "racialhd",
-      "label": "Racial HD",
       "path": "packs/racial-hd",
+      "label": "PF1.PACKS.racialhd",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -165,7 +178,7 @@
     },
     {
       "name": "races",
-      "label": "Races",
+      "label": "PF1.PACKS.races",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -173,7 +186,7 @@
     },
     {
       "name": "class-abilities",
-      "label": "Class Abilities",
+      "label": "PF1.PACKS.class-abilities",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -181,7 +194,7 @@
     },
     {
       "name": "monster-templates",
-      "label": "Monster Templates",
+      "label": "PF1.PACKS.monster-templates",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -189,7 +202,7 @@
     },
     {
       "name": "sample-macros",
-      "label": "Sample Macros",
+      "label": "PF1.PACKS.sample-macros",
       "type": "Macro",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -197,7 +210,7 @@
     },
     {
       "name": "roll-tables",
-      "label": "Roll Tables",
+      "label": "PF1.PACKS.roll-tables",
       "type": "RollTable",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -205,7 +218,7 @@
     },
     {
       "name": "ultimate-equipment",
-      "label": "Ultimate Equipment",
+      "label": "PF1.PACKS.ultimate-equipment",
       "type": "RollTable",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -213,7 +226,7 @@
     },
     {
       "name": "pf1e-rules",
-      "label": "Pathfinder 1e Rules",
+      "label": "PF1.PACKS.pf1e-rules",
       "type": "JournalEntry",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -259,14 +272,17 @@
   ],
   "socket": true,
   "initiative": "1d20 + @attributes.init.total + (@attributes.init.total / 100)",
-  "gridDistance": 5,
-  "gridUnits": "ft",
+  "grid": {
+    "distance": 5,
+    "diagonals": 4,
+    "units": "ft"
+  },
   "primaryTokenAttribute": "attributes.hp",
   "secondaryTokenAttribute": null,
   "compatibility": {
-    "minimum": "11",
-    "verified": "11",
-    "maximum": "11"
+    "minimum": "12",
+    "verified": "12",
+    "maximum": "12"
   },
   "relationships": {
     "recommends": [
@@ -290,6 +306,7 @@
       "thumbnail": "systems/pf1/pf1-logo.webp"
     }
   ],
+  "changelog": "https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/blob/master/CHANGELOG.md",
   "bugs": "https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues",
   "url": "https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1",
   "manifest": "https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/releases/permalink/latest/downloads/system.json",

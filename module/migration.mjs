@@ -18,6 +18,27 @@ export const moved = {
   "Compendium.pf1.class-abilities.dvQdP8QfrDA9Lxzk": "Compendium.pf1.class-abilities.Item.9EX00obqhGHcrOdp",
 };
 
+/**
+ * Material ID changes done with v10.5
+ */
+const materialChanges = {
+  nexavarianSteel: "nexavaranSteel",
+  alchemicalsilver: "alchemicalSilver",
+  angelskin: "angelSkin",
+  bloodcrystal: "bloodCrystal",
+  coldiron: "coldIron",
+  darkleafcloth: "darkleafCloth",
+  eelhide: "eelHide",
+  elysianbronze: "elysianBronze",
+  fireforgedsteel: "fireForgedSteel",
+  frostforgedsteel: "frostForgedSteel",
+  griffonmane: "griffonMane",
+  liquidglass: "liquidGlass",
+  livingsteel: "livingSteel",
+  singingsteel: "singingSteel",
+  spiresteel: "spireSteel",
+};
+
 const marker = () => ({ pf1: { action: "migration" } });
 
 /**
@@ -83,14 +104,12 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
   }
 
   // Migrate World Actors
-  await migrateActors({ state, noHooks: true });
+  const actorMigration = migrateActors({ state, noHooks: true });
 
   // Migrate World Items
-  await migrateItems({ state, noHooks: true });
+  const itemMigration = migrateItems({ state, noHooks: true });
 
-  // Migrate Actor Override Tokens
-  await migrateScenes({ state, noHooks: true });
-
+  let packMigration = Promise.resolve();
   if (isGM) {
     // Migrate Compendium Packs
     const packs = game.packs.filter((p) => {
@@ -103,8 +122,15 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
       return ["Actor", "Item", "Scene"].includes(p.metadata.type);
     });
 
-    await migrateCompendiums(packs, { unlock, state, noHooks: true });
+    packMigration = migrateCompendiums(packs, { unlock, state, noHooks: true });
   }
+
+  // Migrate Unlinked Actors
+  await actorMigration; // Base actors must be migrated before unlinked actors are migrated
+  const sceneMigration = migrateScenes({ state, noHooks: true });
+
+  // Wait for migrations to finish
+  await Promise.allSettled([itemMigration, packMigration, sceneMigration]);
 
   // Remove start message
   ui.notifications.remove(smsgId);
@@ -497,14 +523,7 @@ export async function migrateCompendium(pack, { unlock = false, noHooks = false 
 /**
  * Migrates world settings.
  */
-async function _migrateWorldSettings() {
-  const tooltipWorldConfig = game.settings.get("pf1", "tooltipWorldConfig");
-  if (tooltipWorldConfig.hideActorName !== undefined) {
-    // 1 (All) for true, -2 (None) for false
-    tooltipWorldConfig.hideActorNameByDisposition == tooltipWorldConfig.hideActorName ? 1 : -2;
-    game.settings.set("pf1", "tooltipWorldConfig", tooltipWorldConfig);
-  }
-}
+async function _migrateWorldSettings() {}
 
 /* -------------------------------------------- */
 /*  Document Type Migration Helpers               */
@@ -615,7 +634,7 @@ export async function migrateActiveEffectsToItems(actor) {
       if (ae.parent === buff) continue; // Already migrated
 
       const aeData = ae.toObject();
-      setProperty(aeData, "flags.pf1.tracker", true);
+      foundry.utils.setProperty(aeData, "flags.pf1.tracker", true);
       aeData.transfer = true;
 
       const p0 = ActiveEffect.implementation.create(aeData, { parent: buff });
@@ -640,10 +659,8 @@ export async function migrateActiveEffectsToItems(actor) {
  * @returns {object} - The updateData to apply
  */
 export async function migrateActorData(actorData, token, { actor } = {}) {
-  // Ignore basic actor type
-  if (actorData.type === "basic") return {};
   // Ignore module introduced types
-  if (!game.system.template.Actor.types.includes(actorData.type)) return {};
+  if (actorData.type.indexOf(".") !== -1) return {};
 
   const updateData = {};
 
@@ -979,22 +996,6 @@ export async function migrateScene(scene, { state, tracker } = {}) {
     console.error(`PF1 | Migration | Scene: ${scene.name} | Error`, err);
   }
   console.log(`PF1 | Migration | Scene: ${scene.name} | Complete!`);
-}
-
-/**
- * Migrate a single Scene data object
- *
- * @deprecated
- */
-export async function migrateSceneData() {
-  foundry.utils.logCompatibilityWarning(
-    "pf1.migrations.migrateSceneData() is obsolete, please use pf1.migrations.migrateScene() instead",
-    {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    }
-  );
-  return {};
 }
 
 /**
@@ -1883,7 +1884,7 @@ function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
 }
 
 const _migrateLootEquip = function (ent, updateData) {
-  if (ent.type === "loot" && !ent.system.equipped) {
+  if (ent.type === "loot" && typeof ent.system.equipped !== "boolean") {
     updateData["system.equipped"] = false;
   }
 };
@@ -2260,16 +2261,26 @@ const _migrateActionDuration = (action, itemData) => {
 };
 
 const _migrateActionMaterials = (action, itemData) => {
-  const addons = action.material?.addon;
+  let addons = action.material?.addon;
   if (addons) {
+    // Since PF1 v10.5
+    if (addons.some((ma) => !!materialChanges[ma])) {
+      action.material.addon = action.material.addon.map((ma) => materialChanges[ma] || ma);
+      addons = action.material.addon; // Ensure following code gets updated addons
+    }
+
     // Convert Throneglass into non-addon material
     // Since PF1 v10.3
     const tg = "throneglass";
-    if (action.material.addon.includes(tg)) {
+    if (addons.includes(tg)) {
       action.material.addon = action.material.addon.filter((ma) => ma !== tg);
       action.material.normal.value ||= tg;
     }
   }
+
+  // Since PF1 v10.5
+  const newMat = materialChanges[action.material?.normal?.value];
+  if (newMat) action.material.normal.value = newMat;
 };
 
 /**
@@ -3077,44 +3088,40 @@ const _migrateItemFlags = (itemData, updateData) => {
 };
 
 const _migrateItemMaterials = (itemData, updateData) => {
-  const tg = "throneglass";
+  for (const materialPath of ["material", "armor.material"]) {
+    const material = foundry.utils.getProperty(itemData.system, materialPath);
+    if (!material) continue;
 
-  // Convert incorrect material addon data
-  // Weapon
-  if (itemData.system.material?.addon) {
-    let addon = itemData.system.material.addon;
-    if (!Array.isArray(addon)) {
-      updateData["system.material.addon"] = Object.entries(addon)
-        .filter(([_, chosen]) => chosen)
-        .map(([key]) => key);
-      addon = updateData["system.material.addon"];
-    }
-    // Convert Throneglass into main material
-    // Since PF1 v10.3
-    if (addon.includes(tg)) {
-      updateData["system.material.addon"] = addon.filter((ma) => ma !== tg);
-      if (!itemData.system.material?.normal?.value) {
-        updateData["system.material.normal.value"] = tg;
+    // Convert incorrect material addon data
+    const tg = "throneglass";
+    // Weapon
+    if (material?.addon) {
+      let addon = material.addon;
+      if (!Array.isArray(addon)) {
+        updateData[`system.${material}.addon`] = Object.entries(addon)
+          .filter(([_, chosen]) => chosen)
+          .map(([key]) => key);
+        addon = updateData[`system.${materialPath}.addon`];
+      }
+      // Convert Throneglass into main material
+      // Since PF1 v10.3
+      if (addon.includes(tg)) {
+        updateData[`system.${materialPath}.addon`] = addon.filter((ma) => ma !== tg);
+        if (!itemData.system.material?.normal?.value) {
+          updateData[`system.${materialPath}.normal.value`] = tg;
+        }
       }
     }
-  }
-  // Armor
-  if (itemData.system.armor?.material?.addon) {
-    let addon = itemData.system.armor?.material?.addon;
-    if (!Array.isArray(addon)) {
-      updateData["system.armor.material.addon"] = Object.entries(addon)
-        .filter(([_, chosen]) => chosen)
-        .map(([key]) => key);
-      addon = updateData["system.armor.material.addon"];
+
+    // Convert material IDs
+    // Since PF1 v10.5
+    const addons = updateData[`system.${materialPath}.addon`] ?? material?.addon ?? [];
+    if (addons?.some((ma) => !!materialChanges[ma])) {
+      updateData[`system.${materialPath}.addon`] = addons.map((ma) => materialChanges[ma] ?? ma);
     }
-    // Convert Throneglass into main material
-    // Since PF1 v10.3
-    if (addon.includes(tg)) {
-      updateData["system.armor.material.addon"] = addon.filter((ma) => ma !== tg);
-      if (!itemData.system.armor?.material?.normal?.value) {
-        updateData["system.armor.material.normal.value"] = tg;
-      }
-    }
+
+    const newMat = materialChanges[material?.normal?.value];
+    if (newMat) updateData[`system.${materialPath}.normal.value`] = newMat;
   }
 };
 

@@ -256,7 +256,14 @@ export class LevelUpForm extends FormApplication {
     result.health.rate = Math.round(hpOptions.rate * 100);
 
     const hd = this.config.level.hd.total;
-    result.abilityScore.new = pf1.config.levelAbilityScores[hd] ?? 0;
+    const tier = this.config.level.tier.total;
+
+    result.abilityScore.new = 0;
+    if (this.config.isMythic) {
+      result.abilityScore.new = pf1.config.tierAbilityScores[tier] ?? 0;
+    } else {
+      result.abilityScore.new = pf1.config.levelAbilityScores[hd] ?? 0;
+    }
 
     result.health.value = result.health.delta;
     switch (result.health.type) {
@@ -302,7 +309,6 @@ export class LevelUpForm extends FormApplication {
    * @returns {boolean}
    */
   isReady() {
-    if (this.config.isMythic) return true;
     if (!this.config.health.type) return false;
     return this.config.abilityScore.available == 0;
   }
@@ -314,17 +320,19 @@ export class LevelUpForm extends FormApplication {
    * @returns {number|null}
    */
   _getNextAbilityScoreLandmark() {
-    if (this.config.isMythic) return null;
+    // Progression table
+    const table = this.config.isMythic ? pf1.config.tierAbilityScores : pf1.config.levelAbilityScores;
 
-    const hd = this.config.level.hd.total;
+    // HD or tier
+    const hdt = this.config.isMythic ? this.config.level.tier.total : this.config.level.hd.total;
 
-    const current = pf1.config.levelAbilityScores[hd] ?? 0;
+    const current = table[hdt] ?? 0;
     if (current > 0) return null;
 
     // Next ability score
-    const gains = Object.entries(pf1.config.levelAbilityScores)
+    const gains = Object.entries(table)
       .map(([level, gained]) => Number(level))
-      .filter((level) => level > hd);
+      .filter((level) => level > hdt);
 
     return gains[0] ?? null;
   }
@@ -425,6 +433,11 @@ export class LevelUpForm extends FormApplication {
       old: this.oldLevel.hd,
       total: newLevel.totalHD,
     };
+    cfg.level.tier = {
+      new: newLevel.mythicTier,
+      old: this.oldLevel.mythicTier,
+      total: newLevel.totalMythicTier,
+    };
     cfg.level.feats = newLevel.feats - this.oldLevel.feats;
     // Saves
     const oldSaves = this.actor.system.attributes?.savingThrows;
@@ -501,6 +514,8 @@ export class LevelUpForm extends FormApplication {
       feats,
       hd: cls.hitDice,
       totalHD: tempActor.system.attributes.hd.total,
+      mythicTier: cls.mythicTier,
+      totalMythicTier: tempActor.system.details.mythicTier,
       hp: tempActor.system.attributes.hp.max,
       bab: cls.system.babBase,
       fort: cls.system.savingThrows?.fort?.base || 0,
@@ -564,22 +579,72 @@ export class LevelUpForm extends FormApplication {
     const operator = a.dataset.operator;
     const ablKey = a.closest(".ability-score").dataset.key;
 
+    // Determine how to adjust ability score
     const add = this._adjustAbilityScore(ablKey, operator);
+    // Determine by how much
+    const value = this._adjustAbilityScoreValue(ablKey, add);
 
     const abls = this.config.abilityScore;
     const upgrades = abls.upgrades[ablKey];
 
-    upgrades.value += add;
-    upgrades.added += add;
-    abls.used += add;
+    const cost = this._adjustAbilityScoreCost(ablKey, value);
+
+    upgrades.value += value;
+    upgrades.added += cost;
+    abls.used += cost;
 
     this.simulacra.updateSource({ system: { abilities: { [ablKey]: { value: upgrades.value } } } });
 
     // Cross-pollinate new data
-    mergeObject(upgrades, this.simulacra.system.abilities[ablKey]);
+    foundry.utils.mergeObject(upgrades, this.simulacra.system.abilities[ablKey]);
     this._initData();
 
     this.render();
+  }
+
+  /**
+   * @internal
+   * @param {string} key - Ability score key
+   * @param {string} op - Operator clicked
+   * @returns {-1|0|1} - Direction of adjustment
+   */
+  _adjustAbilityScore(key, op = null) {
+    switch (op) {
+      case "add":
+        return 1;
+      default:
+        return 0;
+      case "subtract":
+        return -1;
+    }
+  }
+
+  /**
+   * Determine actual ability score adjustment value.
+   *
+   * By default 1 for normal level-ups, 2 for mythic tiers.
+   *
+   * Uses {@link pf1.config.levelAbilityScoreMult} and {@link pf1.config.tierAbilityScoreMult} as multipliers.
+   *
+   * @param {string} key
+   * @param {number} value
+   * @returns {number}
+   */
+  _adjustAbilityScoreValue(key, value) {
+    return value * (this.config.isMythic ? pf1.config.tierAbilityScoreMult : pf1.config.levelAbilityScoreMult);
+  }
+
+  /**
+   * Return cost of the adjustment.
+   *
+   * For homebrew support.
+   *
+   * @param {string} key
+   * @param {number} value
+   * @returns {number}
+   */
+  _adjustAbilityScoreCost(key, value) {
+    return value;
   }
 
   _initChoices() {
@@ -605,6 +670,8 @@ export class LevelUpForm extends FormApplication {
   _initHPChoices() {
     this.config.health.type = this._getDefaultHealthOption();
 
+    if (this.config.isMythic) return;
+
     const hpConf = game.settings.get("pf1", "healthConfig");
     const clsConf = hpConf.getClassHD(this.item);
 
@@ -624,22 +691,6 @@ export class LevelUpForm extends FormApplication {
         this.config.health.delta = this.config.health.hitDie;
         this.config.health.type = "max";
       }
-    }
-  }
-
-  /**
-   * @param {string} key - Ability score key
-   * @param {string} op - Operator clicked
-   * @returns {number} - Actual ability score adjustment
-   */
-  _adjustAbilityScore(key, op = null) {
-    switch (op) {
-      case "add":
-        return 1;
-      default:
-        return 0;
-      case "subtract":
-        return -1;
     }
   }
 
@@ -693,7 +744,7 @@ export class LevelUpForm extends FormApplication {
    * @returns {Roll}
    */
   _getHealthRoll(type, formula) {
-    const roll = Roll.defaultImplementation.safeRollAsync(formula);
+    const roll = Roll.defaultImplementation.safeRoll(formula);
     switch (type) {
       case "auto":
       case "max":
@@ -720,6 +771,7 @@ export class LevelUpForm extends FormApplication {
 
     const newLevel = itemData.level + 1;
     const cardData = {
+      isMythic: this.config.isMythic,
       level: {
         previous: itemData.level,
         new: newLevel,
@@ -881,11 +933,11 @@ export class LevelUpForm extends FormApplication {
         {
           system: {
             changes: Object.entries(choices).reduce((cur, [target, formula]) => {
-              const change = foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
-                subTarget: target,
+              const change = new pf1.components.ItemChange({
+                target: target,
                 formula: `${formula}`,
-                modifier: "untypedPerm",
-              });
+                type: "untypedPerm",
+              }).toObject();
 
               cur.push(change);
               return cur;
@@ -904,7 +956,7 @@ export class LevelUpForm extends FormApplication {
     }
     // If a level up ability score feature already exists, update it
     else {
-      const changes = foundry.utils.deepClone(item.toObject().system.changes ?? []);
+      const changes = item.toObject().system.changes ?? [];
       for (const [target, formula] of Object.entries(choices)) {
         const change = changes.find((o) => o.target === target);
 
@@ -920,11 +972,11 @@ export class LevelUpForm extends FormApplication {
 
         // Add new change
         changes.push(
-          foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
-            subTarget: target,
+          new pf1.components.ItemChange({
+            target: target,
             formula: `${formula}`,
-            modifier: "untypedPerm",
-          })
+            type: "untypedPerm",
+          }).toObject()
         );
       }
 
@@ -944,7 +996,7 @@ export class LevelUpForm extends FormApplication {
 
     const messageData = {
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
-      type: CONST.CHAT_MESSAGE_TYPES.OOC,
+      style: CONST.CHAT_MESSAGE_STYLES.OOC,
       speaker: ChatMessage.getSpeaker({ actor: this.actor, token: this.token }),
       rolls,
       flags: {

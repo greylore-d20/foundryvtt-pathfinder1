@@ -11,15 +11,6 @@ export class ContextNote extends foundry.abstract.DataModel {
     };
   }
 
-  get subTarget() {
-    foundry.utils.logCompatibilityWarning("ContextNote.subTarget is deprecated in favor of ContextNote.target", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.target;
-  }
-
   static migrateData(source) {
     if (source.subTarget) {
       // Transfer a special tuple format target

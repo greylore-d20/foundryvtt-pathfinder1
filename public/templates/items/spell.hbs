@@ -322,14 +322,14 @@
 
       {{#unless isAtWill}}
       {{#if usesSpellpoints}}
-      <div class="form-group spellpoint-cost">
+      <div class="form-group spellpoint-cost" data-tooltip="PF1.ChargeCostItemFormulaHint">
         <label>{{localize "PF1.SpellPointsCost"}}</label>
         <div class="form-fields">
           <input type="text" class="formula" name="system.spellPoints.cost" value="{{system.spellPoints.cost}}" placeholder="{{defaultChargeFormula}}">
         </div>
       </div>
       {{else}}
-      <div class="form-group charge-cost">
+      <div class="form-group charge-cost" data-tooltip="PF1.ChargeCostActionFormulaHint">
         <label>
           {{#if isSpell}}
           {{localize "PF1.CastsPerDayUsedFormula"}}

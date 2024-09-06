@@ -85,6 +85,10 @@ export class ItemAttackPF extends ItemPF {
       img: item.img,
       system: {
         subType: "weapon",
+        weapon: {
+          category: srcData.subType,
+          type: srcData.weaponSubtype,
+        },
         held: srcData.held,
         masterwork: srcData.masterwork,
         proficient: srcData.proficient,
@@ -121,6 +125,17 @@ export class ItemAttackPF extends ItemPF {
 
     const itemData = this.system;
     labels.subType = pf1.config.attackTypes[this.subType];
+
+    if (this.subType === "weapon") {
+      // Type and subtype labels
+      const wcat = itemData.weapon?.category || "simple";
+      const wtype = itemData.weapon?.type || "light";
+
+      labels.weapon ??= {};
+      const cat = pf1.config.weaponTypes[wcat];
+      labels.weapon.category = cat?._label;
+      labels.weapon.type = cat?.[wtype];
+    }
 
     return labels;
   }

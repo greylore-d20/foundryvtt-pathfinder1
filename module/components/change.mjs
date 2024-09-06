@@ -12,6 +12,7 @@ import { RollPF } from "../dice/roll.mjs";
  * @property {number} value
  * @property {string} flavor
  * @property {boolean} continuous
+ * @property {ItemPF|ActorPF} parent
  */
 export class ItemChange extends foundry.abstract.DataModel {
   static defineSchema() {
@@ -52,14 +53,6 @@ export class ItemChange extends foundry.abstract.DataModel {
   }
 
   constructor(data, options = {}) {
-    if (options instanceof Item || options instanceof Actor) {
-      foundry.utils.logCompatibilityWarning(
-        "ItemChange constructor's second parameter is now options object for datamodel instead of direct parent reference",
-        { since: "PF1 v10", until: "PF1 v11" }
-      );
-
-      options = { parent: options };
-    }
     super(data, options);
     this.updateTime = new Date();
   }
@@ -138,50 +131,17 @@ export class ItemChange extends foundry.abstract.DataModel {
     return item.update({ "system.changes": changes });
   }
 
-  static get defaultData() {
-    foundry.utils.logCompatibilityWarning(
-      "ItemChange.defaultData() is deprecated in favor of using ItemChange DataModel",
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return new this().toObject();
-  }
-
-  get data() {
-    foundry.utils.logCompatibilityWarning("ItemChange.data is deprecated in favor of accessing the model directly.", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-    return this;
-  }
-
   /** @type {string} - Change ID */
   get id() {
     return this._id;
   }
 
-  get subTarget() {
-    foundry.utils.logCompatibilityWarning("ItemChange.subTarget is deprecated in favor of ItemChange.target", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.target;
-  }
-
-  get modifier() {
-    foundry.utils.logCompatibilityWarning("ItemChange.modifier is deprecated in favor of ItemChange.type", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.type;
-  }
-
   /** @type {boolean} */
   get isDeferred() {
-    if (["damage", "wdamage", "mwdamage", "twdamage", "rwdamage", "sdamage", "skills"].includes(this.target))
-      return true;
+    const targetData = pf1.config.buffTargets[this.target];
+    if (targetData) return targetData.deferred ?? false;
+
+    // Also any per-skill change is deferred
     return /^skill\./.test(this.target);
   }
 
@@ -334,13 +294,7 @@ export class ItemChange extends foundry.abstract.DataModel {
 
       let value = 0;
       if (this.formula) {
-        if (operator === "function") {
-          foundry.utils.logCompatibilityWarning(
-            "ItemChange function operator is no longer supported with no replacement.",
-            { since: "PF1 v10", until: "PF1 v11" }
-          );
-          continue;
-        } else if (!isNaN(this.formula)) {
+        if (!isNaN(this.formula)) {
           value = parseFloat(this.formula);
         } else if (this.isDeferred && RollPF.parse(this.formula).some((t) => !t.isDeterministic)) {
           value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
@@ -497,20 +451,21 @@ export class ItemChange extends foundry.abstract.DataModel {
             }
 
             // Determine whether there is an entry with a higher value; remove entries with lower values
-            sInfo.forEach((infoEntry) => {
-              const isSameType = infoEntry.change?.type === infoEntry.type;
-              if (isSameType) {
-                if (infoEntry.value < sumValue) {
-                  sInfo.splice(sInfo.indexOf(infoEntry), 1);
-                } else {
-                  doAdd = false;
+            if (this.type) {
+              sInfo.forEach((oldEntry) => {
+                if (!oldEntry.type) return;
+                const isSameType = oldEntry.change?.type === oldEntry.type;
+                if (isSameType) {
+                  if (oldEntry.value < sumValue) {
+                    sInfo.splice(sInfo.indexOf(oldEntry), 1);
+                  } else {
+                    doAdd = false;
+                  }
                 }
-              }
-            });
-
-            if (doAdd) {
-              sInfo.push({ ...infoEntry });
+              });
             }
+
+            if (doAdd) sInfo.push({ ...infoEntry });
           }
         }
         break;
@@ -520,20 +475,6 @@ export class ItemChange extends foundry.abstract.DataModel {
         }
         break;
       }
-    }
-  }
-
-  createFunction(funcDef, funcArgs = []) {
-    try {
-      const preDef = `const actor = item.actor; const result = { operator: "add", value: 0, };`;
-      const postDef = `return result;`;
-      const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}\n${postDef}};`;
-      return new Function(fullDef)();
-    } catch (e) {
-      console.warn("Could not create change function with definition", funcDef);
-      return function () {
-        return { operator: "add", value: 0 };
-      };
     }
   }
 

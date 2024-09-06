@@ -151,7 +151,7 @@ export class ActionUse {
     const useOptions = this.shared.useOptions;
     formData["power-attack"] ??= useOptions.powerAttack;
     formData["primary-attack"] ??= useOptions.primaryAttack;
-    formData["cl-check"] ??= useOptions.clCheck;
+    formData["cl-check"] ??= useOptions.clCheck ?? this.item?.system.clCheck === true;
     formData["measure-template"] ??= useOptions.measureTemplate;
     formData["haste-attack"] ??= useOptions.haste;
     formData["manyshot"] ??= useOptions.manyshot;
@@ -240,13 +240,20 @@ export class ActionUse {
     }
 
     // Conditionals
-    Object.keys(formData).forEach((f) => {
-      const idx = f.match(/conditional\.(\d+)/)?.[1];
-      if (idx && formData[f]) {
-        if (!this.shared.conditionals) this.shared.conditionals = [parseInt(idx)];
-        else this.shared.conditionals.push(parseInt(idx));
-      }
-    });
+    const { conditional: conditionals } = foundry.utils.expandObject(formData);
+    if (conditionals) {
+      this.shared.conditionals = [];
+      Object.entries(conditionals).forEach(([idx, value]) => {
+        if (value) this.shared.conditionals.push(parseInt(idx));
+      });
+    }
+    // Conditional defaults for fast-forwarding
+    if (!this.shared.conditionals) {
+      this.shared.conditionals = this.shared.action.data.conditionals?.reduce((arr, con, i) => {
+        if (con.default) arr.push(i);
+        return arr;
+      }, []);
+    }
 
     // Apply secondary attack penalties
     if (
@@ -266,14 +273,6 @@ export class ActionUse {
 
     // Concentration enabled
     this.shared.concentrationCheck = formData["concentration"];
-
-    // Conditional defaults for fast-forwarding
-    if (!this.shared.conditionals && foundry.utils.isEmpty(formData)) {
-      this.shared.conditionals = this.shared.action.data.conditionals?.reduce((arr, con, i) => {
-        if (con.default) arr.push(i);
-        return arr;
-      }, []);
-    }
   }
 
   /**
@@ -462,15 +461,14 @@ export class ActionUse {
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
           // Due to being its own roll, this will only correctly work for static formulae.
-          const conditionalRoll = RollPF.safeRollAsync(modifier.formula, this.shared.rollData);
+          const conditionalRoll = RollPF.safeRoll(modifier.formula, this.shared.rollData);
           if (conditionalRoll.err) {
             ui.notifications.warn(
               game.i18n.format("PF1.Warning.ConditionalRoll", { number: i + 1, name: conditional.name })
             );
             // Skip modifier to avoid multiple errors from one non-evaluating entry
             continue;
-          } else
-            conditionalData[[tag, i].join(".")] = RollPF.safeRollAsync(modifier.formula, this.shared.rollData).total;
+          } else conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, this.shared.rollData).total;
 
           // Create a key string for the formula array
           const partString = `${modifier.target}.${modifier.subTarget}${
@@ -508,7 +506,7 @@ export class ActionUse {
       for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
         if (this.shared.conditionalPartsCommon[target] != null) {
           const formula = this.shared.conditionalPartsCommon[target].join("+");
-          const roll = RollPF.safeRollAsync(formula, this.shared.rollData, [target, formula]).total;
+          const roll = RollPF.safeRoll(formula, this.shared.rollData, [target, formula]).total;
           switch (target) {
             case "effect.cl":
               this.shared.rollData.cl += roll;
@@ -936,7 +934,7 @@ export class ActionUse {
     this.shared.templateData = {
       ...this.shared.templateData,
       name: this.item.name,
-      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      style: CONST.CHAT_MESSAGE_STYLES.OTHER,
       rollMode: this.shared.rollMode,
       attacks: this.shared.chatAttacks.map((o) => o.finalize()),
     };
@@ -992,6 +990,26 @@ export class ActionUse {
           header: game.i18n.localize("PF1.CLNotes"),
           value: clNotes,
         });
+      }
+
+      const school = this.item.system.school;
+      if (school) {
+        // Add DC School notes
+        const dcSchoolNotes = actor.getContextNotesParsed(`dc.school.${school}`);
+        if (dcSchoolNotes.length) {
+          props.push({
+            header: game.i18n.format("PF1.DCSchoolNotes", { school: pf1.config.spellSchools[school] }),
+            value: dcSchoolNotes,
+          });
+        }
+        // Add CL School notes
+        const clSchoolNotes = actor.getContextNotesParsed(`cl.school.${school}`);
+        if (clSchoolNotes.length) {
+          props.push({
+            header: game.i18n.format("PF1.CLSchoolNotes", { school: pf1.config.spellSchools[school] }),
+            value: clSchoolNotes,
+          });
+        }
       }
     }
 
@@ -1051,7 +1069,7 @@ export class ActionUse {
           `attributes.spells.spellbooks.${this.item.system.spellbook}`
         );
         if (spellbook && spellbook.arcaneSpellFailure) {
-          const roll = RollPF.safeRollAsync("1d100");
+          const roll = RollPF.safeRoll("1d100");
           this.shared.templateData.spellFailure = roll.total;
           this.shared.templateData.spellFailureRoll = roll;
           this.shared.templateData.spellFailureSuccess = this.shared.templateData.spellFailure > actor.spellFailure;
@@ -1101,7 +1119,6 @@ export class ActionUse {
 
     const enrichOptions = {
       rollData: this.shared.rollData,
-      async: true,
       relativeTo: this.actor,
     };
 
@@ -1283,7 +1300,7 @@ export class ActionUse {
       item: this.item.id,
       action: this.action.id,
       combat: undefined,
-      template: this.shared.template?.id ?? null,
+      template: this.shared.template?.uuid ?? null,
       rolls: {
         attacks: [],
       },
@@ -1389,7 +1406,6 @@ export class ActionUse {
       const enrichOptions = {
         rollData: this.shared.rollData,
         secrets: this.isOwner,
-        async: true,
         relativeTo: this.actor,
       };
 
@@ -1557,9 +1573,6 @@ export class ActionUse {
     reqErr = await this.checkAttackRequirements();
     if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
 
-    // Generate chat attacks
-    await this.generateChatAttacks();
-
     // Prompt measure template
     let measureResult;
     if (shared.useMeasureTemplate && canvas.scene) {
@@ -1567,13 +1580,16 @@ export class ActionUse {
       if (!measureResult.result) return;
     }
 
+    await this.getTargets();
+
+    // Generate chat attacks - leave this just before `pf1PreActionuse` hook call
+    await this.generateChatAttacks();
+
     // Call itemUse hook and determine whether the item can be used based off that
     if (Hooks.call("pf1PreActionUse", this) === false) {
       await measureResult?.delete();
       return;
     }
-
-    await this.getTargets();
 
     // Call script calls
     await this.executeScriptCalls();

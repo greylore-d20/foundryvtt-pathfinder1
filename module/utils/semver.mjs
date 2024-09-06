@@ -11,7 +11,7 @@ export class SemanticVersion {
 
   static fromString(str) {
     if (str.match(this.re)) {
-      let result = new this();
+      const result = new this();
       result.major = parseInt(RegExp.$1);
       result.minor = parseInt(RegExp.$2);
       result.patch = parseInt(RegExp.$3 || 0);
@@ -42,5 +42,9 @@ export class SemanticVersion {
       && this.minor === otherVersion.minor
       && this.patch < otherVersion.patch) return true;
     return false;
+  }
+
+  isSame(otherVersion) {
+    return this.major == otherVersion.major && this.minor == otherVersion.minor && this.patch == otherVersion.patch;
   }
 }

@@ -142,6 +142,11 @@ export class ItemPF extends ItemBasePF {
 
     this._preUpdateNumericValueGuard(changed.system);
 
+    // Ensure tag is not invalid
+    if (changed.system.tag) {
+      changed.system.tag = pf1.utils.createTag(changed.system.tag, { allowUpperCase: true, camelCase: false });
+    }
+
     // Make sure stuff remains an array
     const keepPaths = [
       "system.attackNotes",
@@ -253,14 +258,20 @@ export class ItemPF extends ItemBasePF {
     return this.system.subType ?? null;
   }
 
+  /** @type {string|null} - Base material this item has. */
+  get baseMaterial() {
+    return this.system.armor?.material?.base?.value || this.system.material?.base?.value || null;
+  }
+
   /**
    * The item's material.
    *
    * @type {string|null}
    */
   get normalMaterial() {
-    if (this.type === "equipment") return this.system.armor?.material?.normal.value || null;
-    else return this.system.material?.normal.value || null;
+    return (
+      this.system.armor?.material?.normal?.value || this.system.material?.normal?.value || this.baseMaterial || null
+    );
   }
 
   /**
@@ -269,8 +280,8 @@ export class ItemPF extends ItemBasePF {
    * @type {string[]}
    */
   get addonMaterial() {
-    if (this.type === "equipment") return this.system.armor?.material?.addon?.filter((o) => o ?? false) ?? [];
-    else return this.system.material?.addon?.filter((o) => o ?? false) ?? [];
+    const addons = this.system.armor?.material?.addon || this.system.material?.addon || [];
+    return addons.filter((o) => !!o);
   }
 
   /**
@@ -342,11 +353,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   /** @type {boolean} */
-  get isOwned() {
-    return super.isOwned || this.parentItem != null;
-  }
-
-  /** @type {boolean} */
   get hasAction() {
     return this.system.actions?.length > 0;
   }
@@ -396,7 +402,7 @@ export class ItemPF extends ItemBasePF {
   getDefaultChargeCost({ rollData } = {}) {
     rollData ??= this.getRollData();
     const formula = this.getDefaultChargeFormula();
-    return RollPF.safeRollAsync(formula, rollData).total;
+    return RollPF.safeRoll(formula, rollData).total;
   }
 
   /**
@@ -492,7 +498,7 @@ export class ItemPF extends ItemBasePF {
       if (!formula) maximize = true;
       else {
         rollData ??= this.getRollData();
-        const roll = await RollPF.safeRollAsync(formula, rollData, "recharge");
+        const roll = await RollPF.safeRoll(formula, rollData, "recharge");
         value = roll.total;
 
         // Cancel if formula produced invalid value
@@ -505,7 +511,7 @@ export class ItemPF extends ItemBasePF {
     if (maximize) value = uses.max;
 
     // Clamp charge value to
-    value = Math.clamped(value, 0, uses.max);
+    value = Math.clamp(value, 0, uses.max);
 
     const updateData = { system: {} };
 
@@ -577,24 +583,6 @@ export class ItemPF extends ItemBasePF {
     return 4;
   }
 
-  /**
-   * @type {ActorPF|null} Parent actor
-   * @deprecated Use {@link actor instead}
-   */
-  get parentActor() {
-    foundry.utils.logCompatibilityWarning("ItemPF.parentActor is deprecated in favor of Item.actor", {
-      since: "PF1 v9",
-      until: "PF1 v11",
-    });
-
-    return this.actor;
-  }
-
-  get limited() {
-    if (this.parentItem) return this.parentItem.limited;
-    return super.limited;
-  }
-
   get uuid() {
     if (this.parentItem) this.parentItem.uuid + `.Item.${this.id}`;
     return super.uuid;
@@ -602,13 +590,7 @@ export class ItemPF extends ItemBasePF {
 
   testUserPermission(user, permission, { exact = false } = {}) {
     if (this.isEmbedded) return this.parent.testUserPermission(user, permission, { exact });
-    if (this.parentItem) return this.parentItem.testUserPermission(user, permission, { exact });
     return super.testUserPermission(user, permission, { exact });
-  }
-
-  get permission() {
-    if (this.actor) return this.actor.permission;
-    return super.permission;
   }
 
   get fullDescription() {
@@ -651,15 +633,6 @@ export class ItemPF extends ItemBasePF {
   get actionTypes() {
     const actionTypes = this.actions?.map((action) => action.data.actionType).filter(Boolean) ?? [];
     return [...new Set(actionTypes)];
-  }
-
-  static get defaultContextNote() {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF#defaultContextNote is deprecated in favor of pf1.components.ContextNote",
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-
-    return new pf1.components.ContextNote().toObject();
   }
 
   /**
@@ -897,6 +870,7 @@ export class ItemPF extends ItemBasePF {
       let scriptCall = prior?.get(sid);
       if (scriptCall) scriptCall.data = s;
       else scriptCall = new pf1.components.ItemScriptCall(s, this);
+      scriptCall.prepareData();
 
       collection.set(sid, scriptCall);
     }
@@ -1067,32 +1041,34 @@ export class ItemPF extends ItemBasePF {
   _onUpdate(changed, context, userId) {
     super._onUpdate(changed, context, userId);
 
-    if (userId === game.user.id) {
-      // Call 'toggle' script calls
-      {
-        let state = null;
-        if (this.type === "buff") state = changed.system?.active;
-        else if (this.type === "feat" && changed.system?.disabled !== undefined)
-          state = changed.system.disabled === true ? false : true;
-        if (state != null) {
-          const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
-          this.executeScriptCalls("toggle", { state, startTime });
-        }
-      }
+    if (userId !== game.user.id) return;
 
-      // Call 'changeLevel' script calls
-      const oldLevel = this._memoryVariables?.level;
-      if (oldLevel !== undefined && changed.system?.level !== undefined) {
-        const level = {
-          previous: parseInt(oldLevel),
-          new: parseInt(this.system.level),
-        };
-        for (const [k, v] of Object.entries(level)) {
-          if (Number.isNaN(v)) level[k] = null;
-        }
-        if (level.new !== undefined && level.new !== level.previous) {
-          this.executeScriptCalls("changeLevel", { level });
-        }
+    // Call 'toggle' script calls
+    let state = null;
+    if (this.type === "buff") state = changed.system?.active;
+    else if (this.type === "feat" && changed.system?.disabled !== undefined)
+      state = changed.system.disabled === true ? false : true;
+    if (state != null) {
+      const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
+      this.executeScriptCalls("toggle", { state, startTime });
+    }
+
+    if (this._memoryVariables) this._onMemorizedUpdate(changed, context);
+  }
+
+  _onMemorizedUpdate(changed, context) {
+    // Call 'changeLevel' script calls
+    const oldLevel = this._memoryVariables?.level;
+    if (oldLevel !== undefined && changed.system?.level !== undefined) {
+      const level = {
+        previous: parseInt(oldLevel),
+        new: parseInt(this.system.level),
+      };
+      for (const [k, v] of Object.entries(level)) {
+        if (Number.isNaN(v)) level[k] = null;
+      }
+      if (level.new !== undefined && level.new !== level.previous) {
+        this.executeScriptCalls("changeLevel", { level });
       }
     }
 
@@ -1180,7 +1156,7 @@ export class ItemPF extends ItemBasePF {
   async getRawEffectData() {
     return {
       name: this.name,
-      icon: this.img,
+      img: this.img,
       origin: this.getRelativeUUID(this.actor),
       duration: {
         startTime: game.time.worldTime,
@@ -1245,7 +1221,6 @@ export class ItemPF extends ItemBasePF {
     const enrichOptions = {
       rollData,
       secrets: this.isOwner,
-      async: true,
       relativeTo: this.actor,
     };
 
@@ -1285,7 +1260,7 @@ export class ItemPF extends ItemBasePF {
     // Basic chat message data
     const chatData = foundry.utils.mergeObject(
       {
-        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         speaker: ChatMessage.implementation.getSpeaker({ actor, token, alias: token?.name }),
         flags: {
           core: {
@@ -1378,7 +1353,7 @@ export class ItemPF extends ItemBasePF {
         if (actionData.duration.units === "spec") {
           duration = actionData.duration.value;
         } else if (!["inst", "perm"].includes(actionData.duration.units)) {
-          const value = await RollPF.safeRollAsync(actionData.duration.value || "0", rollData).total;
+          const value = await RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
           duration = [value, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
         if (duration) props.push(duration);
@@ -1431,7 +1406,6 @@ export class ItemPF extends ItemBasePF {
    *
    * @see {@link SharedActionData}
    * @param {string} [actionId=""] - The ID of the action to use, defaults to the first action
-   * @param {string} [actionID=""] - Deprecated in favor of `actionId`
    * @param {number} [cost=null] - Cost override. Replaces charge cost or slot cost as appropriate.
    * @param {Event | null} [ev=null] - The event that triggered the use, if any
    * @param {boolean} [skipDialog=getSkipActionPrompt()] - Whether to skip the dialog for this action
@@ -1445,7 +1419,6 @@ export class ItemPF extends ItemBasePF {
    */
   async use({
     actionId = "",
-    actionID = "",
     cost = null,
     ev = null,
     skipDialog = getSkipActionPrompt(),
@@ -1456,17 +1429,11 @@ export class ItemPF extends ItemBasePF {
     options = {},
   } = {}) {
     rollMode ||= game.settings.get("core", "rollMode");
+    token ||= this.actor?.token ?? this.actor?.getActiveTokens(true, true)[0];
+
+    if (ev?.originalEvent) ev = ev.originalEvent;
 
     if (cost !== null && !Number.isSafeInteger(cost)) throw new Error(`Invalid value for cost override: ${cost}`);
-
-    if (actionID) {
-      foundry.utils.logCompatibilityWarning("ItemPF.use() actionID parameter is deprecated in favor of actionId", {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-
-      actionId ||= actionID;
-    }
 
     if (options.held) {
       // Convert human friendly options to internal types
@@ -1474,12 +1441,44 @@ export class ItemPF extends ItemBasePF {
       else if (options.held === "offhand") options.held = "oh";
     }
 
+    // Prepare variables
+    /** @type {SharedActionData} */
+    const shared = {
+      event: ev,
+      action: null,
+      item: null,
+      token: null,
+      rollData: {},
+      skipDialog,
+      chatMessage,
+      dice,
+      cost,
+      fullAttack: true,
+      useOptions: options,
+      attackBonus: [],
+      damageBonus: [],
+      attacks: [],
+      chatAttacks: [],
+      rollMode,
+      useMeasureTemplate: false,
+      conditionals: null,
+      conditionalPartsCommon: {},
+      casterLevelCheck: false, // TODO: Move to use-options
+      concentrationCheck: false, // TODO: Move to use-options
+      scriptData: {},
+    };
+
+    // Prevent reassigning the ActionUse's item and token
+    Object.defineProperties(shared, {
+      item: { value: this, writable: false, enumerable: true },
+      token: { value: token, writable: false, enumerable: true },
+    });
+
     // Old use method
     if (!this.hasAction) {
       // Use
-      const sharedData = { event: ev, skipDialog, chatMessage, rollMode };
-      if (!("attackData" in sharedData)) {
-        Object.defineProperty(sharedData, "attackData", {
+      if (!("attackData" in shared)) {
+        Object.defineProperty(shared, "attackData", {
           get: () => {
             foundry.utils.logCompatibilityWarning(
               "shared.attackData is deprecated in favor of directly accessing shared",
@@ -1488,12 +1487,12 @@ export class ItemPF extends ItemBasePF {
                 until: "PF1 v12",
               }
             );
-            return sharedData;
+            return shared;
           },
         });
       }
 
-      const shared = await this.executeScriptCalls("use", {}, sharedData);
+      await this.executeScriptCalls("use", {}, shared);
       rollMode = shared.rollMode || rollMode;
       if (shared.reject) return shared;
 
@@ -1518,8 +1517,6 @@ export class ItemPF extends ItemBasePF {
       return shared;
     }
 
-    if (ev && ev.originalEvent) ev = ev.originalEvent;
-
     /** @type {ItemAction | undefined} */
     let action;
     if (this.system.actions.length > 0) {
@@ -1536,35 +1533,9 @@ export class ItemPF extends ItemBasePF {
       return;
     }
 
-    // Prepare variables
-    /** @type {SharedActionData} */
-    const shared = {
-      event: ev,
-      rollData: {},
-      skipDialog,
-      chatMessage,
-      dice,
-      cost,
-      fullAttack: true,
-      useOptions: options,
-      attackBonus: [],
-      damageBonus: [],
-      attacks: [],
-      chatAttacks: [],
-      rollMode,
-      useMeasureTemplate: action.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
-      conditionals: null,
-      conditionalPartsCommon: {},
-      casterLevelCheck: false,
-      concentrationCheck: false,
-      scriptData: {},
-    };
-
-    // Prevent reassigning the ActionUse's item, action, and token
+    // Prevent reassigning the ActionUse's action
     Object.defineProperties(shared, {
       action: { value: action, writable: false, enumerable: true },
-      item: { value: this, writable: false, enumerable: true },
-      token: { value: token, writable: false, enumerable: true },
     });
 
     if (shared.useOptions.ammo) {
@@ -1575,9 +1546,10 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    const actionUse = new ActionUse(shared);
+    // TODO: Remove this variable usage
+    shared.useMeasureTemplate = action.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls");
 
-    return actionUse.process({ skipDialog });
+    return new ActionUse(shared).process({ skipDialog });
   }
 
   /**
@@ -1712,6 +1684,17 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /**
+   * Chat card actions
+   *
+   * @internal
+   * @param {string} action
+   * @param {object} options
+   * @param {Element} [options.button] - Button element
+   * @param {ItemPF} [options.item] - Item associated with card
+   * @param {Event} [options.event] - Triggering event
+   * @returns
+   */
   static async _onChatCardAction(action, { button = null, item = null, event } = {}) {
     const message = game.messages.get(button.closest(".chat-message").dataset.messageId);
 
@@ -2106,50 +2089,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * @deprecated
-   * @param {object} linkData - Link data
-   * @param {boolean} [extraData=false] - Deprecated: Include link data in return value
-   * @returns {Item|null} - Linked item if it exists
-   */
-  async getLinkItem(linkData, extraData = false) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF.getLinkItem() is deprecated in favor of fromUuid(linkData.uuid, {relative:actor})",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    const item = await fromUuid(linkData.uuid, { relative: this.actor });
-
-    // Package extra data
-    if (extraData) {
-      return { item, linkData };
-    }
-
-    return item;
-  }
-
-  /**
-   * Retrieve item referred to by a link in .system.links data
-   *
-   * @deprecated
-   * @param {object} linkData Link data
-   * @returns {Item|object|undefined} Linked item, undefined, or compendium index data
-   */
-  getLinkedItemSync(linkData = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF.getLinkedItemSync() is deprecated in favor of fromUuidSync(linkData.uuid, {relative:actor})",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return fromUuidSync(linkData.uuid, { relative: this.actor });
-  }
-
-  /**
    * Generates lists of change targets this item can have.
    *
    * @param {string} target - The target key, as defined in PF1.buffTargets.
@@ -2185,23 +2124,6 @@ export class ItemPF extends ItemBasePF {
     }
 
     return result;
-  }
-
-  getChangeSubTargets(target) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemPF.getChangeSubTargets() is deprecated in favor of ItemPF.getChangeTargets",
-      { since: "PF1 v10", until: "PF1 v11" }
-    );
-    return this.getChangeTargets(target);
-  }
-
-  getValue() {
-    foundry.utils.logCompatibilityWarning("ItemPF.getValue() is deprecated, only physical items have value", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return 0;
   }
 
   /**
@@ -2324,45 +2246,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * Get attack array for specific action.
-   *
-   * @param {string} actionId Action identifier.
-   * @returns {number[]} Simple array describing the individual guaranteed attacks.
-   */
-  getAttackArray(actionId) {
-    foundry.utils.logCompatibilityWarning(
-      `ItemPF.getAttackArray() is deprecated. Use ItemAction.getAttacks() instead.`,
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    const action = this.actions.get(actionId),
-      actionData = action?.data,
-      rollData = action?.getRollData();
-    if (!actionData) return [0];
-
-    const attacks = action.getAttacks({ full: true, rollData, conditionals: true, bonuses: true });
-
-    return attacks;
-  }
-
-  /**
-   * Get default action's attack array.
-   *
-   * @returns {number[]} Simple array describing the individual guaranteed attacks.
-   */
-  get attackArray() {
-    foundry.utils.logCompatibilityWarning(`ItemPF.attackArray is deprecated. Use ItemAction.getAttacks() instead.`, {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-
-    return this.getAttackArray(this.defaultAction.id);
-  }
-
-  /**
    * Attack sources for a specific action.
    *
    * @param {string} actionId Action ID
@@ -2417,7 +2300,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRollAsync(actionData.attackBonus || "0", rollData);
+    const bonusRoll = RollPF.safeRoll(actionData.attackBonus || "0", rollData);
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), "untyped", -100);
 
@@ -2459,7 +2342,7 @@ export class ItemPF extends ItemBasePF {
       .forEach((c) => {
         c.modifiers.forEach((cc) => {
           if (cc.subTarget === "allAttack") {
-            const bonusRoll = RollPF.safeRollAsync(cc.formula, rollData);
+            const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
             if (bonusRoll.total == 0) return;
             describePart(bonusRoll.total, c.name, cc.type, -5000);
           }

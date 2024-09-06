@@ -20,7 +20,7 @@ export const registerItemWeightTests = () => {
 
       before(async () => {
         // Use permanent actor to allow testing regular item creation calls
-        actor = await createTestActor({}, { temporary: false });
+        actor = await createTestActor({});
 
         // Create world item
         const acid = await fetchPackEntryData("pf1.items", "Acid");
@@ -150,7 +150,7 @@ export const registerItemWeightTests = () => {
         });
       }
     },
-    { displayName: "PF1: Item Weight and Price Tests" }
+    { displayName: "PF1: Item – Weight and Price" }
   );
 };
 
@@ -160,7 +160,7 @@ export const registerItemWeightTests = () => {
  * @param {number} weight - The weight for which a string is generated
  * @returns {string} The weight's presentation
  */
-const getPresentationForWeight = (weight) => `${Math.roundDecimals(pf1.utils.convertWeight(weight), 2).toFixed(2)}`;
+const getPresentationForWeight = (weight) => `${pf1.utils.convertWeight(weight).toFixed(2)}`;
 
 /**
  * Returns a weight's presentation as it its shown in the actor sheet's carried weight tag
@@ -171,7 +171,7 @@ const getPresentationForWeight = (weight) => `${Math.roundDecimals(pf1.utils.con
 const getCarriedPresentationForWeight = (weight) => {
   let usystem = game.settings.get("pf1", "weightUnits"); // override
   if (usystem === "default") usystem = game.settings.get("pf1", "units");
-  const displayWeight = Math.roundDecimals(pf1.utils.convertWeight(weight), 1);
+  const displayWeight = pf1.utils.limitPrecision(pf1.utils.convertWeight(weight), 1, "round");
   if (usystem === "metric") return game.i18n.format("PF1.CarryLabelKg", { kg: displayWeight });
   else return game.i18n.format("PF1.CarryLabel", { lbs: displayWeight });
 };

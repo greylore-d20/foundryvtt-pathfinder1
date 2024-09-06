@@ -10,17 +10,21 @@
 
 - [Character](Help/Actors/Character)
 - [NPC](Help/Actors/NPC)
+- [Haunt](Help/Actors/Haunt)
+- [Trap](Help/Actors/Trap)
+- [Vehicle](Help/Actors/Vehicle)
 
 ## Items
 
 ### Item Types
 
+- [Attacks](Help/Items/Attacks)
+- [Classes](Help/Items/Classes)
 - [Consumables](Help/Items/Consumables)
 - [Containers](Help/Items/Containers)
 - [Equipment](Help/Items/Equipment)
 - [Loot](/Help/Items/Loot)
 - [Weapons](Help/Items/Weapons)
-- [Attacks](Help/Items/Attacks)
 
 ### Concepts
 

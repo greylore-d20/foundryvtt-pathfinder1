@@ -4,11 +4,11 @@ img: systems/pf1/icons/skills/light_01.jpg
 name: Blinding Critical
 system:
   contextNotes:
-    - target: effect
+    - target: critical
       text: >-
-        Blinding Critical: permanently blinded. A successful Fortitude save DC
-        [[10 + @attributes.bab.total]] reduces this to dazzled for [[1d4]]
-        rounds.
+        Blinding Critical: permanently @Condition[blind]{blinded}. A successful
+        Fortitude save DC [[10 + @attributes.bab.total]] reduces this to
+        @Condition[dazzled] for [[1d4]] rounds.
   description:
     value: >-
       <p><em>Your critical hits blind your

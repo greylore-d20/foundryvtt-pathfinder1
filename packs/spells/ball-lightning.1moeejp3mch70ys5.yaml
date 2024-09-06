@@ -24,7 +24,7 @@ system:
         value: 1 round/level
       extraAttacks:
         formula:
-          count: clamped(floor((@cl - 3) / 4), 1, 4)
+          count: clamp(floor((@cl - 3) / 4), 1, 4)
         type: custom
       name: Use
       range:

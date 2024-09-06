@@ -1,70 +1,106 @@
 /**
  * Split copper currency into gold, silver and copper.
  *
- * @param {number} cp Copper
- * @returns {{gp:number,sp:number,cp:number}} Gold, silver, and copper.
+ * @param {number} cp - Copper
+ * @param {object} [options] - Additional options
+ * @param {CoinType[]} [options.omit] - Omit these types from the result. Baseline currency can not be omitted.
+ * @param {boolean} [options.pad] - Pad return value by including zeroed currencies
+ * @param {CoinType} [options.standard] - If true, no coinage of greater value than the {@link pf1.config.currency.standard standard currency} is included.
+ * @returns {Record<CoinType,number>} Gold, silver, and copper
  */
-export function split(cp) {
-  const gp = Math.floor(cp / 100);
-  const sp = Math.floor(cp / 10) - gp * 10;
-  cp = cp - gp * 100 - sp * 10;
-  return {
-    gp: Math.max(0, gp),
-    sp: Math.max(0, sp),
-    cp: Math.max(0, cp),
-  };
+export function split(cp, { omit = [], standard = true, pad = true } = {}) {
+  const rates = Object.entries(pf1.config.currency.rate)
+    .filter(([key]) => !omit.includes(key))
+    .sort((a, b) => b[1] - a[1]);
+
+  const currencies = {};
+
+  const maxRate = standard ? pf1.config.currency.rate[pf1.config.currency.standard] ?? 1 : Infinity;
+
+  for (const [key, rate] of rates) {
+    if (rate > maxRate) {
+      if (pad) currencies[key] = 0;
+      continue;
+    }
+
+    const value = Math.floor(cp / rate);
+    if (value != 0 || pad) {
+      currencies[key] = value;
+      cp -= value * rate;
+    }
+  }
+
+  if (cp != 0 || pad) {
+    currencies[pf1.config.currency.base] = cp;
+  }
+
+  return currencies;
 }
 
 /**
  * Merges provided currencies into specified type.
  *
- * @param {object} currency - Currency object
- * @param {number} [currency.pp] - Platinum
- * @param {number} [currency.gp] - Gold
- * @param {number} [currency.sp] - Silver
- * @param {number} [currency.cp] - Copper
- * @param {CoinType} [type] - Return coinage, defaults to copper.
+ * @param {object} currency - Currency object with keys according to {@link pf1.config.currencies}
+ * @param {CoinType} [type] - Return coinage, defaults to {@link pf1.config.currency.base baseline currency}.
  * @returns {number} - Merged currency
  */
-export function merge({ pp = 0, gp = 0, sp = 0, cp = 0 } = {}, type = "cp") {
-  const copper = pp * 1_000 + gp * 100 + sp * 10 + cp;
-  switch (type) {
-    case "pp":
-      return copper / 1_000;
-    case "gp":
-      return copper / 100;
-    case "sp":
-      return copper / 10;
-    default:
-      return copper;
+export function merge({ ...currency } = {}, type) {
+  const { rate: rates, base } = pf1.config.currency;
+  type ||= pf1.config.currency.base;
+
+  let copper = 0;
+  for (let [type, value] of Object.entries(currency)) {
+    value ??= 0;
+    if (!Number.isFinite(value)) throw new Error(`Invalid currency value "${value}" for type "${type}"`);
+    if (value == 0) continue;
+    const rate = rates[type];
+    if (rate) {
+      copper += value * rate;
+    } else {
+      if (type === base) copper += value;
+      else throw new Error(`Invalid currency type: "${type}"`);
+    }
   }
+
+  if (type === base) return copper;
+  return copper / rates[type];
 }
 
 /**
  * Convert given amount of copper to some other currency, excess is placed on less valuable coinage.
  *
  * @param {number} cp - Copper quantity
- * @param {CoinType} [target="gp"] - Target unit
- * @returns {{pp:number,gp:number,sp:number,cp:number}} - Resulting conversion
+ * @param {CoinType} [target] - Target unit. Defaults to {@link pf1.config.currency.standard standard currency}.
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.pad] - Pad return value by including zeroed currencies
+ * @returns {Record<CoinType,number>} - Resulting conversion
  */
-export function convert(cp, target = "gp") {
+export function convert(cp, target, { pad = true } = {}) {
+  target ||= pf1.config.currency.standard;
   if (!Number.isFinite(cp) || !(cp >= 0)) throw new Error(`Invalid copper quantity: ${cp}`);
-  let pp = 0,
-    gp = 0,
-    sp = 0;
-  const types = { pp: 3, gp: 2, sp: 1, cp: 0 };
-  const largestType = types[target];
-  if (largestType >= types.pp) {
-    pp = Math.floor(cp / 1_000);
-    cp -= pp * 1_000;
+
+  const { base, rate } = pf1.config.currency;
+  const rates = Object.entries(rate).sort((a, b) => b[1] - a[1]);
+
+  const maxRate = rate[target] ?? 1;
+
+  const currencies = {};
+  for (const [key, rate] of rates) {
+    if (rate > maxRate) {
+      if (pad) currencies[key] = 0;
+      continue;
+    }
+
+    const value = Math.floor(cp / rate);
+    if (value !== 0 || pad) {
+      currencies[key] = value;
+      cp -= value * rate;
+    }
   }
-  if (largestType >= types.gp) {
-    gp = Math.max(0, Math.floor(cp / 100));
-    cp -= gp * 100;
+
+  if (cp != 0 || pad) {
+    currencies[base] = cp;
   }
-  if (largestType >= types.sp) {
-    sp = Math.max(0, Math.floor(cp / 10));
-    cp -= sp * 10;
-  }
-  return { pp, gp, sp, cp };
+
+  return currencies;
 }

@@ -43,7 +43,7 @@ export class Spellbook {
 
     // Basic sanity check
     const level = spell.system.level;
-    if (Math.clamped(level, 0, 9) !== level) {
+    if (Math.clamp(level, 0, 9) !== level) {
       console.error("Spell with impossible spell level:", spell);
       return;
     }

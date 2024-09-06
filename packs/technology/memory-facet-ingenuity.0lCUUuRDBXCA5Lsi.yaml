@@ -4,6 +4,27 @@ folder: XzcgfkYgrzGgkdab
 img: icons/commodities/tech/metal-panel.webp
 name: Memory Facet (Ingenuity)
 system:
+  actions:
+    - _id: j062jsXWfkHbOKEr
+      actionType: heal
+      activation:
+        type: full
+        unchained:
+          type: action
+      damage:
+        parts:
+          - formula: 3d8+15
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      name: Repair Robot
+      range:
+        units: touch
+      target:
+        value: One robot (including itself)
   artifact: true
   changes:
     - _id: oIbAWbb8
@@ -29,9 +50,17 @@ system:
       facet given the AI the ability to repair 3d8+15 points of damage to any
       robot it can touch (including itself) as a full-round action at will, but
       only once per day for any given robot.</p>
+  links:
+    supplements:
+      - uuid: Compendium.pf1.feats.Item.u9wRB7bsYgX0jCdk
+      - uuid: Compendium.pf1.feats.Item.SkiZsGPMlsMNeBhf
   sources:
     - id: PZO9088
       pages: '62'
   subType: other
+  uses:
+    maxFormula: '1'
+    per: day
+    value: 1
 type: equipment
 

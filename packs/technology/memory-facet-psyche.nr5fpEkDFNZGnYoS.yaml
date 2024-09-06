@@ -4,6 +4,21 @@ folder: XzcgfkYgrzGgkdab
 img: icons/commodities/tech/metal-panel.webp
 name: Memory Facet (Psyche)
 system:
+  actions:
+    - _id: UXswgDh7MAcRg5a3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      name: Restore Robot
+      range:
+        units: touch
+      target:
+        value: object or construct touched
   artifact: true
   changes:
     - _id: iYJh8Ylf
@@ -20,8 +35,9 @@ system:
       Facet</strong>: A psyche facet bolsters a robot's sense of self and
       enhances its ability to resist peril and danger. It grants a +3 resistance
       bonus on all saving throws. In addition, once per day the AI can restore a
-      destroyed robot to activity, as <em>memory of function</em><sup>TG</sup>,
-      using the AI's CR as the effective caster level.</p>
+      destroyed robot to activity, as
+      @UUID[Compendium.pf1.spells.snrnhiwqet5dmas0]{Memory of Function} , using
+      the AI's CR as the effective caster level.</p>
   sources:
     - id: PZO9090
       pages: '61'

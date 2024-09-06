@@ -9,9 +9,11 @@ export class ItemActionSheet extends FormApplication {
   }
 
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...options,
       template: "systems/pf1/templates/apps/item-action.hbs",
-      classes: ["pf1", "sheet", "action", "item-action"],
+      classes: [...options.classes, "pf1", "sheet", "action", "item-action"],
       width: 580,
       height: 720,
       closeOnSubmit: false,
@@ -33,7 +35,7 @@ export class ItemActionSheet extends FormApplication {
           dropSelector: 'div[data-tab="conditionals"]',
         },
       ],
-    });
+    };
   }
 
   get title() {
@@ -41,7 +43,7 @@ export class ItemActionSheet extends FormApplication {
   }
 
   get id() {
-    return `item-${this.item.uuid}-action-${this.action.id}`;
+    return `item-${this.item.uuid.replaceAll(".", "-")}-action-${this.action.id}`;
   }
 
   /** @type {ItemAction} */
@@ -129,7 +131,6 @@ export class ItemActionSheet extends FormApplication {
       ? await TextEditor.enrichHTML(description, {
           secrets: context.owner,
           rollData: context.rollData,
-          async: true,
           relativeTo: this.actor,
         })
       : null;
@@ -186,7 +187,7 @@ export class ItemActionSheet extends FormApplication {
     context.materialCategories = this._prepareMaterialsAndAddons();
 
     context.materialAddons =
-      this.action.data.material?.addon?.reduce((obj, v) => {
+      this.action.addonMaterial.reduce((obj, v) => {
         obj[v] = true;
         return obj;
       }, {}) ?? {};
@@ -233,7 +234,7 @@ export class ItemActionSheet extends FormApplication {
       ) {
         if (!material.addon && !material.basic) {
           materialList[material.id] = material.name;
-        } else if (!material.basic && !["heatstoneplating", "lazurite", "sunsilk"].includes(material.id)) {
+        } else if (material.addon && material.isValidAddon(this.action.normalMaterial)) {
           addonList.push({ key: material.id, name: material.name });
         }
       }
@@ -640,7 +641,7 @@ export class ItemActionSheet extends FormApplication {
   async close(options) {
     delete this.item.apps[this.appId];
     delete this.action.apps[this.appId];
-    this.action._sheet = null;
+    if (this.action._sheet === this) this.action._sheet = null;
     return super.close(options);
   }
 }

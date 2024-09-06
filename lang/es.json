@@ -89,7 +89,9 @@
           "Name": "Puntuaciones de habilidad añadidos",
           "Desc": "<p>Esta función se utiliza para realizar un seguimiento de los cambios en la puntuación de habilidad al obtener un dado de golpe.</p>"
         },
-        "Next": "El siguiente punto de característica se obtendrá a nivel de personaje {level}."
+        "Next": "El siguiente punto de característica se obtendrá a nivel de personaje {level}.",
+        "NextLevel": "Se obtiene la siguiente puntuación de característica al nivel {level} de personaje.",
+        "NextTier": "Se obtiene la siguiente puntuación de característica al rango mítico {tier}."
       },
       "Add": "Añadir clase {class}",
       "Increase": "{class} sube de nivel",
@@ -719,7 +721,7 @@
         "Label": "Fuerza"
       },
       "negative": {
-        "Label": "Neativa"
+        "Label": "Negativa"
       },
       "positive": {
         "Label": "Positiva"
@@ -1035,7 +1037,11 @@
         "Help": {
           "Link": "Información sobre Cambios",
           "Deterministic": "Determinista",
-          "DeterministicHint": "El objetivo especificado no soporta valores aleatorios, como dados."
+          "DeterministicHint": "El objetivo especificado no soporta valores aleatorios, como dados.",
+          "RollHint": "Permite elementos aleatorios, como los dados.",
+          "Value": "Valor",
+          "ValueHint": "Debe ser determinista, sin elementos aleatorios involucrados, como los dados.",
+          "Roll": "Tirada"
         },
         "AsType": "Como",
         "CopyId": "Copiar el ID del Cambio"
@@ -1095,6 +1101,14 @@
         "UnownedActors": "Otros",
         "NoUnownedActors": "No tienes permiso para ver ninguno de estos actores.",
         "MinimumPermissionLevel": "El permiso mínimo requerido es Limitado."
+      },
+      "Changelog": {
+        "Title": "Registro de cambios",
+        "DontShowAgain": "No enseñar el registro de cambios tras actualizar el sistema",
+        "OpenInBrowser": "Abrir en el navegador",
+        "Latest": "Últimos cambios",
+        "Major": "Mayor",
+        "Legacy": "Heredado (Legacy)"
       }
     },
     "Info": {
@@ -1103,7 +1117,7 @@
       "NotFunctioning": "El sistema (actualmente) no utiliza esta función"
     },
     "Help": {
-      "Label": "Ayuda"
+      "Label": "Documentación"
     },
     "Sheet": {
       "PC": "Personaje Jugador (PJ)",
@@ -1143,8 +1157,8 @@
         "DiscordChannel": "<code>{channel}</code> El canal es para sus necesidades Pathfinder 1e.",
         "ReportLinkText": "reportando tu problema",
         "Label": "Pasos",
-        "Help": "Verifique el {link} (botón de ayuda cerca de donde abrió este cuadro de diálogo).",
-        "HelpLink": "navegador de ayuda",
+        "Help": "Ver el {link}, normalmente se encuentra cerca del botón del solucionador.",
+        "HelpLink": "documentación del sistema",
         "FAQ": "Consulté las FAQ",
         "Log": "Compruebe si hay errores en el registro de la consola de herramientas de desarrollo (F12 [u Opción+Comando+I en Mac], pestaña de la consola)",
         "Modules": "Asegúrese de que los módulos no sean la causa.",
@@ -1213,7 +1227,7 @@
     "SavingThrowButtonLabelGMSensitive": "{save} Salvación",
     "Enhancement": "+{bonus} Mejora",
     "Preparation": "Preparación",
-    "CastsPerDayUsedFormula": "Fórmula de hechizos utilizados por día",
+    "CastsPerDayUsedFormula": "Fórmula de conjuros diarios",
     "ArcaneSpellFailureAbbr": "FCA",
     "DamageModifiers": "Modificadores de daño",
     "DCFormula": "Fórmula CD",
@@ -1307,7 +1321,7 @@
     "Any": "Cualquiera",
     "Skill": "Habilidad",
     "Subtype": "Subtipo",
-    "CreateSpellbook": "Crear Libro de hechizos",
+    "CreateSpellbook": "Crear libro de conjuros",
     "SpellBookTertiary": "Terciario",
     "CreateItemNamePlaceholder": "Varita, pergamino, o poción",
     "Undefined": "Indefinido",
@@ -1330,7 +1344,7 @@
     "DescriptorPlural": "Descriptores",
     "Precision": "Precisión",
     "SpellBookSecondary": "Secundario",
-    "SpellBookSpelllike": "Como un Hechizo",
+    "SpellBookSpelllike": "Aptitudes sortílegas",
     "Haunt": {
       "Notice": "Noticia",
       "Weakness": "Debilidad",
@@ -1358,12 +1372,12 @@
       "MaximumSpeed": "Velocidad Máxima",
       "Acceleration": "Aceleración",
       "Propulsion": "Propulsión",
-      "DrivingCheck": "Chequeo de Conducción",
-      "ForwardFacing": "Orientado hacia adelante",
-      "DrivingDevice": "Dispositivo de conducción",
+      "DrivingCheck": "Prueba de conducción",
+      "ForwardFacing": "Encaramiento frontal",
+      "DrivingDevice": "Mecanismo de conducción",
       "DrivingSpace": "Espacio de conducción",
       "Crew": "Tripulación",
-      "Decks": "Puertos",
+      "Decks": "Cubiertas",
       "OccupiedSpace": "Espacio ocupado"
     },
     "Trigger": "Disparador",
@@ -1471,7 +1485,13 @@
       "mindAffecting": "Enajenador",
       "poison": "Veneno",
       "polymorph": "Polimorfia",
-      "petrified": "Petrificado/a"
+      "petrified": "Petrificado/a",
+      "disabled": "Incapacitado/a",
+      "dead": "Muerto/a",
+      "dying": "Moribundo/a",
+      "flatFooted": "Desprevenido/a",
+      "stable": "Estable",
+      "unconscious": "Inconsciente"
     },
     "ActionTypes": {
       "mwak": "Ataque con Arma Cuerpo a Cuerpo",
@@ -1681,6 +1701,9 @@
           },
           "staff": {
             "Single": "Bastón"
+          },
+          "pharmaceutical": {
+            "Single": "Farmacéutica"
           }
         },
         "attack": {
@@ -1765,6 +1788,20 @@
           "cybertech": {
             "Single": "Implante"
           }
+        },
+        "weapon": {
+          "simple": {
+            "Single": "Simple"
+          },
+          "martial": {
+            "Single": "Marcial"
+          },
+          "exotic": {
+            "Single": "Exótica"
+          },
+          "misc": {
+            "Single": "Miscelánea"
+          }
         }
       }
     },
@@ -1816,7 +1853,7 @@
           "Short": "min."
         },
         "hour": {
-          "Label": "Hora",
+          "Label": "Horas",
           "Short": "hs."
         },
         "day": {
@@ -2035,15 +2072,17 @@
       "FeatDisabled": "Esta dote/rasgo está desactivada",
       "NoMacroID": "No se ha encontrado el marco con ID '{id}'",
       "EmptySkillTag": "La etiqueta de habilidad no puede estar vacía",
-      "SkillTagAlreadyExists": "La etiqueta de habilidad '{tag}' ya existe"
+      "SkillTagAlreadyExists": "La etiqueta de habilidad '{tag}' ya existe",
+      "InvalidContentLinkDrop": "No se ha podido crear un enlace de contenido al soltar el objeto.",
+      "NoInitOnDuplicateCombatant": "No se pudo determinar por qué combatiente tirar iniciativa."
     },
     "Warning": {
       "NoSizeDie": "No se pudo determinar el dado del tamaño apropiado para {formula}, estandarizando la tirada a {fallback}",
       "DuplicateDFlag": "Etiqueta de diccionario conflictiva \"{key}\" en el objeto \"{item}\" (con el identificador \"{tag}\") en el actor \"{actor}\"",
-      "DuplicateTag": "Se encontró una etiqueta de elemento duplicada \"{tag}\" en el elemento \"{item}\" en el actor \"{actor}\"",
+      "DuplicateTag": "Se encontró una etiqueta de elemento duplicada \"{tag}\" en el elemento \"{item}\" en el actor \"{actor}\".",
       "NoDiceAllowedInFormula": "No se permiten tiradas de dados en la fórmula '{formula}' para {context}",
       "InsufficientAmmunition": "No tienes suficiente munición del tipo {type}",
-      "MissingAmmunition": "Faltan municiones relacionadas con el ataque",
+      "MissingAmmunition": "Faltan municiones relacionadas con el ataque.",
       "ConditionalRoll": "La tirada de la fórmula condicional № {number} del condicional {name} causó un error",
       "NoItemOnActor": "El Personaje {actor} no posee el objeto {item}",
       "NoActionInItem": "El item \"{item}\" no posee la acción \"{action}\"",
@@ -2051,8 +2090,9 @@
       "CannotCreateChargeLink": "No se pudo crear un enlace de Carga entre {source} y {target} porque {target} ya posee cargas enlazadas por su cuenta",
       "CannotCreateChargeLink2": "No se pudo crear un enlace de Carga entre {source} y {target} porque {target} ya está enlazado a {deeptarget}",
       "NoCombatantFound": "No se encontró un combatiente",
-      "FormulaMustBeDeterministic": "La fórmula debe ser determinista (sin dados ni ningún elemento aleatorio)",
-      "InvalidInput": "Valor inválido"
+      "FormulaMustBeDeterministic": "La fórmula debe ser determinista (sin dados ni ningún elemento aleatorio).",
+      "InvalidInput": "Valor inválido",
+      "ImmuneToCondition": "{name} es inmune al estado {condition}."
     },
     "Footnotes": "Notas",
     "FootnotesHint": "Notas que solo se reflejan en la parte inferior de los mensajes del chat.",
@@ -2105,7 +2145,7 @@
       "sasquatch": "Sasquatch",
       "shadowtongue": "Lengua sombría",
       "shoanti": "Shoanti",
-      "skald": "Skald",
+      "skald": "Escaldo",
       "sphinx": "Esfinge",
       "strix": "Estrícido",
       "sylvan": "Silvano",
@@ -2249,7 +2289,9 @@
         "Magic": "Mágica",
         "Epic": "Épica",
         "Silver": "Plata",
-        "NexavarianSteel": "Acero nexavariano"
+        "NexavarianSteel": "Acero nexavariano",
+        "BlightQuartz": "Cuarzo marchito",
+        "NexavaranSteel": "Acero nexavarano"
       }
     },
     "NaturalArmor": "Armadura natural",
@@ -2536,7 +2578,7 @@
         "CoinDivisor": "Divisor de Peso por Moneda",
         "CoinDivisorHint": "Declara cuántas monedas juntas pesan 1lb. Pon cero (0) para desactivar el peso de las monedas. Por defecto es 50.",
         "SpellPointCost": "Coste de puntos de conjuro predeterminado",
-        "SpellPointCostHint": "Costos de puntos de hechizo para hechizos que no tienen costos configurados propios.",
+        "SpellPointCostHint": "Coste de puntos de conjuro para conjuros que no tienen costes configurados propios.",
         "AltReach": "Regla de alcance alternativa",
         "AltReachHint": "Oculta las esquinas exteriores de las medidas de alcance de 10 pies.",
         "NPCProficiencies": "Competencias de PNJ",
@@ -2681,7 +2723,13 @@
       "standard": "Estándar",
       "advanced": "Avanzada",
       "monstrous": "Monstruosa"
-    }
+    },
+    "ChargeCostItemFormulaHint": "Cuántas cargas (o lanzamientos, puntos de conjuros, etc.) consume este objeto por defecto. Los valores negativos restauran las cargas en su lugar.",
+    "ChargeCostActionFormulaHint": "Cuántas cargas (o lanzamientos, puntos de conjuros, etc.) consume esta acción por defecto. Los valores negativos restauran las cargas en su lugar.",
+    "RechargeFormulaHint": "Al recargar, las cargas pasan a ser el resultado de esta fórmula. Para recargas relativas, usa el valor de las cargas <code>@item.uses.value</code> como parte de la fórmula.",
+    "Immune": "Inmune",
+    "CLSchoolNotes": "Notas de NL ({school})",
+    "DCSchoolNotes": "Notas de CD ({school})"
   },
   "TOKEN": {
     "VisionLowLight": "Visión en la Penumbra",

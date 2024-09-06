@@ -1,5 +1,8 @@
 import { keepUpdateArray } from "../utils/lib.mjs";
 
+/**
+ * Conditional modifier bundle.
+ */
 export class ItemConditional {
   constructor(data, parent) {
     this.data = data;
@@ -8,8 +11,18 @@ export class ItemConditional {
     this.prepareData();
   }
 
+  /**
+   * Create new conditional
+   *
+   * @param {object|object[]} data - Data to create conditional(s) from.
+   * @param {object} context - Context data
+   * @param {ItemAction} context.parent Parent action to add the conditional to.
+   * @returns {ItemConditional[]} - Created conditionals
+   */
   static async create(data, context = {}) {
     const { parent } = context;
+
+    if (!Array.isArray(data)) data = [data];
 
     if (parent instanceof pf1.components.ItemAction) {
       // Prepare data
@@ -46,6 +59,9 @@ export class ItemConditional {
     return this.data.name;
   }
 
+  /**
+   * @internal
+   */
   prepareData() {
     // Update modifiers
     if (this.data.modifiers instanceof Array) {
@@ -53,6 +69,11 @@ export class ItemConditional {
     }
   }
 
+  /**
+   * @internal
+   * @param modifiers
+   * @returns {Collection<string,ItemConditionalModifier>}
+   */
   _prepareModifiers(modifiers) {
     const prior = this.modifiers;
     const collection = new Collection();
@@ -68,6 +89,12 @@ export class ItemConditional {
     return collection;
   }
 
+  /**
+   * Update conditional
+   *
+   * @param {object} updateData
+   * @param {object} options
+   */
   async update(updateData, options = {}) {
     const idx = this.parent.data.conditionals.indexOf(this.data);
     const prevData = foundry.utils.deepClone(this.data);
@@ -87,6 +114,9 @@ export class ItemConditional {
   }
 }
 
+/**
+ * Individual modifier in a conditional bundle.
+ */
 export class ItemConditionalModifier {
   /**
    * @param {object} data
@@ -99,8 +129,18 @@ export class ItemConditionalModifier {
     this.prepareData();
   }
 
+  /**
+   * Create conditional modifier
+   *
+   * @param {object} data - Creation data
+   * @param {object} context
+   * @param {ItemConditional} context.parent - Parent conditional
+   * @returns
+   */
   static async create(data, context = {}) {
     const { parent } = context;
+
+    if (!Array.isArray(data)) data = [data];
 
     if (parent instanceof pf1.components.ItemConditional) {
       // Prepare data
@@ -135,8 +175,18 @@ export class ItemConditionalModifier {
     return this.data._id;
   }
 
+  /**
+   * @internal
+   */
   prepareData() {}
 
+  /**
+   * Update modifier
+   *
+   * @param {object} updateData
+   * @param {object} [options]
+   * @returns - Updated action
+   */
   async update(updateData, options = {}) {
     const idx = this.parent.data.modifiers.indexOf(this.data);
     const prevData = foundry.utils.deepClone(this.data);
@@ -146,6 +196,11 @@ export class ItemConditionalModifier {
     await this.parent.update({ [`modifiers.${idx}`]: foundry.utils.expandObject(newUpdateData) });
   }
 
+  /**
+   * Delete this individual modifier.
+   *
+   * @returns - Updated action
+   */
   async delete() {
     const idx = this.parent.data.modifiers.indexOf(this.data);
     if (idx < 0) throw new Error(`Modifier not found in parent ${this.parent.name}`);

@@ -424,8 +424,17 @@ declare global {
        * @param config - Attack configuration
        * @param rollData - Roll data
        * @param rollOptions - Options to be passed to D20RollPF
+       * @param parts - Individual Roll parts added to formula
+       * @param changes - The {@link pf1.components.ItemChange ItemChange}s applicable to this attack before they're reduced to the highest bonus of each type
        */
-      pf1PreAttackRoll: (action: ItemAction, config: object, rollData: object, rollOptions: object) => void;
+      pf1PreAttackRoll: (
+        action: ItemAction,
+        config: object,
+        rollData: object,
+        rollOptions: object,
+        parts: string[],
+        changes: ItemChange[]
+      ) => void;
 
       /**
        * Post attack roll hook fired after evaluating attack roll.
@@ -435,6 +444,16 @@ declare global {
        * @param {object} config - Attack configuration
        */
       pf1AttackRoll: (action: ItemAction, roll: D20RollPF, context: object) => void;
+
+      /**
+       * Pre-attack roll hook fired before rolling an attack.
+       *
+       * @param action - Action triggering the attack roll
+       * @param rollData - Roll data
+       * @param parts - Individual DamageParts added to formula (only the first's `extra` is used)
+       * @param changes - The ItemChanges applicable to this attack before they're reduced to the highest bonus of each type
+       */
+      pf1PreDamageRoll: (action: ItemAction, rollData: object, parts: DamagePart[], changes: ItemChange[]) => void;
 
       // ------------------------- //
       //          Changes          //
@@ -588,6 +607,21 @@ declare global {
       pf1GetRollData: (document: ActorPF | ItemPF | ItemAction, data: Record<string, unknown>) => void;
 
       // ------------------------- //
+      //        D20 Rolls          //
+      // ------------------------- //
+
+      /**
+       * A hook event fired by the system when a {@link pf1.dice.d20Roll} is rolled. Primarily used by actor non-attack rolls (e.g. skills, attributes, etc).
+       *
+       * @group D20 Rolls
+       * @remarks Called by {@link Hooks.call}
+       * @param roll - The roll object, before it's evaluated
+       * @param options - Options used to create the roll
+       * @returns Explicitly return `false` to prevent the roll.
+       */
+      pf1PreD20Roll: (roll: D20RollPF, options: Partial<D20ActorRollOptions>) => boolean;
+
+      // ------------------------- //
       //          Combat           //
       // ------------------------- //
 
@@ -627,6 +661,17 @@ declare global {
      */
     export type pf1RegisterRegistry<R extends pf1.registry.Registry = pf1.registry.Registry> = (registry: R) => void;
   }
+}
+
+interface DamagePart {
+  /** The base damage formula */
+  base: string;
+  /** The damage types for the damage */
+  damageType: { custom: string; values: string[] };
+  /** Extra damage parts, used only by the first damage part instance in the array (e.g. `5[bonus damage]`) */
+  extra: string[];
+  /** Type type of damage */
+  type: "crit" | "nonCrit" | "normal";
 }
 
 interface ItemLink {
@@ -682,6 +727,7 @@ export declare const pf1CreateActionUse: Hooks.StaticCallbacks["pf1CreateActionU
 export declare const pf1PostActionUse: Hooks.StaticCallbacks["pf1PostActionUse"];
 export declare const pf1PreActionUse: Hooks.StaticCallbacks["pf1PreActionUse"];
 export declare const pf1PreAttackRoll: Hooks.StaticCallbacks["pf1PreAttackRoll"];
+export declare const pf1PreDamageRoll: Hooks.StaticCallbacks["pf1PreDamageRoll"];
 export declare const pf1AttackRoll: Hooks.StaticCallbacks["pf1AttackRoll"];
 export declare const pf1PreDisplayActionUse: Hooks.StaticCallbacks["pf1PreDisplayActionUse"];
 
@@ -702,6 +748,9 @@ export declare const pf1DeleteItemLink: Hooks.StaticCallbacks["pf1DeleteItemLink
 
 // Roll Data
 export declare const pf1GetRollData: Hooks.StaticCallbacks["pf1GetRollData"];
+
+// D20 Rolls
+export declare const pf1PreD20Roll: Hooks.StaticCallbacks["pf1PreD20Roll"];
 
 // Combat
 export declare const pf1CombatTurnSkip: Hooks.StaticCallbacks["pf1CombatTurnSkip"];

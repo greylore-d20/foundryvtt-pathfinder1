@@ -6,13 +6,17 @@ Options format: `key=value` pairs separated with semicolon (`;`)
 
 Label adds a prefix to the button, for example `@Ability[str]{Flex}` would show up as `Flex: Strength`. Some enrichers deviate from this however.
 
+Roll data is drawn from the card speaker by default.
+
 ## Common Options
 
-| Option    | Explanation                                           |
-| :-------- | :---------------------------------------------------- |
-| `speaker` | Limit activation to card speaker.                     |
-| `bonus`   | Bonus to the roll.                                    |
-| `roll`    | Roll replacement, e.g. for Fake 10 or fortune effect. |
+| Option    | Example                                   | Explanation                                                                                     |
+| :-------- | :---------------------------------------- | :---------------------------------------------------------------------------------------------- |
+| `speaker` | `@Use[Cure Light Wounds;speaker]`         | Limit activation to card speaker. Alias of `as=speaker`.                                        |
+| `as`      | `@Use[Cure Light Wounds;as=speaker]`      | Limit activation.<br>`speaker` is only valid option for now.                                    |
+| `bonus`   | `@Skill[per;bonus=15]`                    | Bonus to the roll.                                                                              |
+| `roll`    | `@Skill[dip;roll=10]`                     | Roll replacement, e.g. for Take 10 or fortune effect.                                           |
+| `vars`    | `@Heal[@attributes.hd.total;vars=target]` | Roll data is pulled from something else than speaker.<br>`target` is only valid option for now. |
 
 ## Enricher Usage
 
@@ -36,17 +40,23 @@ Meant as a shorthand for `@Use` when you don't need to refer to different items.
 
 ### `@Apply`
 
-Apply defined buff (by UUID) to actors. The buff is set to active state automatically.
+Apply defined buff (by UUID or name) to actors. The buff is set to active state automatically.
 
 If the item is found, displays the item name as default label.
+
+If name is defined instead of UUID, item is searched from items directory and compendiums.
 
 #### Examples
 
 | Input                                                              | Explanation                              |
 | :----------------------------------------------------------------- | :--------------------------------------- |
+| `@Apply[Special Mood]`                                             | Add custom buff with level untouched.    |
 | `@Apply[Compendium.pf1.commonbuffs.Item.IlO0CNpAIKZtNYu8;level=5]` | Add Mage Armor with buff level set to 5. |
+| `@Apply[Rage;level=3]`                                             | Add Rage with buff level set to 10.      |
 
 #### Special Options
+
+- `level` for setting buff level.
 
 ### `@Browse`
 
@@ -67,6 +77,8 @@ Unlike other enrichers, custom label replaces the text entirely.
 Add, remove, toggle or link conditions.
 
 If toggle or removal is not defined, the condition is added.
+
+Label replaces the entire text unlike with most enrichers.
 
 #### Examples
 
@@ -100,6 +112,18 @@ The key is damage formula instead.
 #### Special Options
 
 - `nonlethal` - Adds nonlethal damage.
+
+### `@Draw`
+
+Draws an entry from the given Roll Table.
+
+#### Examples
+
+| Input                                                          | Explanation                                                                 |
+| :------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `@Draw[Your Roll Table]`                                       | Draws from the tabled named "Your Roll Table" within your world.            |
+| `@Draw[Compendium.pf1.roll-tables.RollTable.NQ3T7rnXC5agjl6D]` | Draws from the system's Confusion table.                                    |
+| `@Draw[Your Roll Table]{Displayed Name}`                       | Draws from "Your Roll Table" but the button shows "Displayed Name" instead. |
 
 ### `@Heal`
 
@@ -176,3 +200,59 @@ Item use button.
 | `#tag:TAG` | Action tag, needs to be part of the item name.  |
 | `#id:ID`   | Action ID, needs to be part of the item name.   |
 | `#name`    | Action name, needs to be part of the item name. |
+
+### `@Weight`
+
+Informational weight conversion and display.
+
+Format: `@Weight[value;options]`
+
+Value parameter can either be a formula, or a number with or without `lbs` or `kg` unit attached.
+
+Default unit is imperial pounds unless otherwise specified.
+
+#### Examples
+
+Examples outputs are with imperial unit system enabled.
+
+| Input                   | Explanation                                                                     | Output           |
+| :---------------------- | :------------------------------------------------------------------------------ | :--------------- |
+| `@Weight[100]`          | Convert and display 100 lbs.                                                    | `100 lbs`        |
+| `@Weight[3 * 5;metric]` | Convert and display result of 3×5, treating the math result to be in kilograms. | `30 lbs`         |
+| `@Weight[30 lbs;dual]`  | Convert and display 30 lbs in both imperial and metric.                         | `30 lbs (15 kg)` |
+
+#### Special Options
+
+| Options    | Description                                |
+| :--------- | :----------------------------------------- |
+| `dual`     | Displays both imperial and metric weights. |
+| `metric`   | Treats provided weight as kilograms.       |
+| `imperial` | Treats provided weight as pounds.          |
+
+### `@Distance`
+
+Informational distance conversion and display.
+
+Format: `@Distance[value;options]`
+
+Value parameter can either be a formula, or a number with `ft` or `m` unit.
+
+Default unit is imperial feet unless otherwise specified.
+
+#### Examples
+
+Examples outputs are with imperial unit system enabled.
+
+| Input                     | Explanation                                                                  | Output        |
+| :------------------------ | :--------------------------------------------------------------------------- | :------------ |
+| `@Distance[100]`          | Convert and display 100 feet.                                                | `100 ft`      |
+| `@Distance[9 * 4;metric]` | Convert and display result of 9×4, treating the math result to be in meters. | `120 ft`      |
+| `@Distance[30 ft;dual]`   | Convert and display 30 feet in both imperial and metric.                     | `30 ft (9 m)` |
+
+#### Special Options
+
+| Options    | Description                                  |
+| :--------- | :------------------------------------------- |
+| `dual`     | Displays both imperial and metric distances. |
+| `metric`   | Treats provided distance as meters.          |
+| `imperial` | Treats provided distance as feet.            |

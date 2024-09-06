@@ -6,12 +6,26 @@ system:
   abilityType: su
   actions:
     - _id: lmo388v4sug7e4e7
+      ability:
+        attack: str
+      actionType: mwak
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      duration:
+        units: seeText
       name: Use
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Will negates
+        type: will
+      target:
+        value: one creature
+      touch: true
   associations:
     classes:
       - Arcanist
@@ -29,10 +43,12 @@ system:
       duration (such as at the end of each round), this ability doesn’t grant
       the arcanist a saving throw against it. The arcanist cannot use this
       ability to steal a spell with a range of personal or a duration of
-      permanent.</p>
-
-      <p>The arcanist must have the spell tinkerer exploit to select this
-      exploit.</p>
+      permanent.</p><p>The arcanist must have the
+      @UUID[Compendium.pf1.class-abilities.lguuanLKWDVYPleV]{spell tinkerer}
+      exploit to select this exploit.</p>
+  sources:
+    - id: PZO1129
+      pages: '14'
   subType: classFeat
   tags:
     - Arcanist Exploit, Greater

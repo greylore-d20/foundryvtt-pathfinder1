@@ -106,17 +106,6 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     return labels;
   }
 
-  /** @inheritDoc */
-  adjustContained() {
-    super.adjustContained();
-
-    // Everything in containers count as carried
-    this.system.carried = true;
-
-    // Auto-unequip
-    if (!this.canEquip) this.system.equipped = false;
-  }
-
   /** @type {boolean} - If the item can be equipped currently */
   get canEquip() {
     // Always true if not in container

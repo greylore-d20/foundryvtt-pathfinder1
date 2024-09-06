@@ -104,7 +104,6 @@ export class ChatAttack {
     const rollData = this.rollData;
     const enrichOptions = {
       rollData,
-      async: true,
       relativeTo: this.action.actor,
     };
 

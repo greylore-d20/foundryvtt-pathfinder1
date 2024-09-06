@@ -138,7 +138,7 @@ export class ActorCharacterPF extends ActorPF {
       actorData.details.xp.pct = 100;
     } else {
       const prior = this.getLevelExp(level - 1 || 0);
-      actorData.details.xp.pct = ((Math.clamped(curXp, prior, maxExp) - prior) / (maxExp - prior)) * 100;
+      actorData.details.xp.pct = ((Math.clamp(curXp, prior, maxExp) - prior) / (maxExp - prior)) * 100;
     }
   }
 }

@@ -137,6 +137,20 @@ export class ItemContainerPF extends ItemPhysicalPF {
   }
 
   /**
+   * Prepare dependent data for contained items.
+   *
+   * @inheritDoc
+   */
+  _prepareDependentData(final = false) {
+    super._prepareDependentData(final);
+
+    // Update dependant data and resources
+    this.items.forEach((item) => {
+      item._prepareDependentData(final);
+    });
+  }
+
+  /**
    * Prepare .items collection for contained items.
    *
    * @private
@@ -190,21 +204,6 @@ export class ItemContainerPF extends ItemPhysicalPF {
     weight.converted.currency = pf1.utils.convertWeight(weight.currency);
 
     super.prepareWeight();
-  }
-
-  /**
-   * @deprecated
-   * @param itemId
-   */
-  getContainerContent(itemId) {
-    foundry.utils.logCompatibilityWarning(
-      "ItemContainerPF.getContainerContent() is deprecated in favor of ItemContainerPF.items collection usage.",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-    return this.items.get(itemId);
   }
 
   /**
@@ -360,7 +359,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
   convertCurrency(type = "pp") {
     const cp = this.getTotalCurrency({ inLowestDenomination: true });
 
-    const currency = pf1.utils.currency.convert(cp, type);
+    const currency = pf1.utils.currency.convert(cp, type, { pad: true });
 
     return this.update({ system: { currency } });
   }
@@ -401,7 +400,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     const cpValue =
       this.getValue({ sellValue: 1, recursive: true, inLowestDenomination: true }) -
       this.getValue({ sellValue: 1, recursive: false, inLowestDenomination: true });
-    const totalValue = pf1.utils.currency.split(cpValue);
+    const totalValue = pf1.utils.currency.split(cpValue, { pad: true });
     const value =
       game.i18n.localize("PF1.Containers.Contents.Value") + ": " + game.i18n.format("PF1.SplitValue", totalValue);
     context.properties.push(value);

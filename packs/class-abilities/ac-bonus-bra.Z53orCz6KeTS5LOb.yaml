@@ -11,13 +11,13 @@ system:
     - _id: ipjt76kz
       formula: >-
         (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
-        clamped(floor((@class.level - 1) / 4), 0, 4)
+        clamp(floor((@class.level - 1) / 4), 0, 4)
       target: ac
       type: dodge
     - _id: tvl84rm2
       formula: >-
         (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
-        clamped(floor((@class.level - 1) / 4), 0, 4)
+        clamp(floor((@class.level - 1) / 4), 0, 4)
       target: cmd
       type: dodge
   description:

@@ -40,13 +40,14 @@ export class TemplateLayerPF extends TemplateLayer {
     // Snap the destination to the grid
     const snapToGrid = !event.shiftKey;
     if (snapToGrid) {
-      interaction.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, this.gridPrecision);
+      const snapMode =
+        CONST.GRID_SNAPPING_MODES.CENTER | CONST.GRID_SNAPPING_MODES.EDGE_MIDPOINT | CONST.GRID_SNAPPING_MODES.CORNER;
+      interaction.destination = canvas.grid.getSnappedPoint(destination, { mode: snapMode });
     }
 
     // Compute the ray
     const ray = new Ray(origin, destination);
-    const dist = canvas.dimensions.distance;
-    const ratio = canvas.dimensions.size / dist;
+    const ratio = canvas.dimensions.distancePixels;
 
     // Update the preview object
     const baseDistance = ray.distance / ratio;
@@ -73,20 +74,6 @@ export class TemplateLayerPF extends TemplateLayer {
 }
 
 export class MeasuredTemplatePF extends MeasuredTemplate {
-  /**
-   * @deprecated
-   */
-  getHighlightedSquares() {
-    foundry.utils.logCompatibilityWarning(
-      "MeasuredTemplatePF.getHighlightedSquares() deprecated in favor of MeasuredTemplate._getGridHighlightPositions()",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-    return this._getGridHighlightPositions();
-  }
-
   /**
    * Get highlighted square coordinates.
    *
@@ -158,14 +145,14 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     }
 
     // Get number of rows and columns
-    const nr = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.h)),
-      nc = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.w));
+    const nr = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.sizeY)),
+      nc = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.sizeX));
 
     // Get the center of the grid position occupied by the template
     const { x, y } = this.document;
 
-    const [cx, cy] = grid.getCenter(x, y),
-      [col0, row0] = grid.grid.getGridPositionFromPixels(cx, cy),
+    const { x: cx, y: cy } = grid.getCenterPoint({ x, y }),
+      { j: col0, i: row0 } = grid.getOffset({ x: cx, y: cy }),
       minAngle = Math.normalizeDegrees(direction - angle / 2),
       maxAngle = Math.normalizeDegrees(direction + angle / 2);
 
@@ -193,7 +180,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     for (let a = -nc; a < nc; a++) {
       for (let b = -nr; b < nr; b++) {
         // Position of cell's top-left corner, in pixels
-        const [gx, gy] = canvas.grid.grid.getPixelsFromGridPosition(col0 + a, row0 + b);
+        const { x: gx, y: gy } = canvas.grid.getTopLeftPoint({ j: col0 + a, i: row0 + b });
 
         // Determine point we're measuring the distance to - always in the center of a grid square
         const destination = { x: gx + gridSizePx * 0.5, y: gy + gridSizePx * 0.5 };
@@ -207,7 +194,8 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         }
 
         // Check distance, add 1 pixel to avoid rounding issues
-        const cdistance = measureDistance(origin, destination, { ray });
+        // TODO: Chekc if the result of measurePath() can be used to replace above Ray creation
+        const cdistance = canvas.grid.measurePath([ray.A, ray.B]).distance;
         if (cdistance <= distance + 1) {
           result.push({ x: gx, y: gy });
         }
@@ -352,10 +340,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     )
       return super.highlightGrid();
 
-    const grid = canvas.grid,
-      bc = this.borderColor,
-      fc = this.fillColor;
-
     // Only highlight for objects which have a defined shape
     if (!this.id || !this.shape) return;
 
@@ -364,15 +348,20 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     hl.clear();
     if (!this.isVisible) return;
 
+    const grid = canvas.interface.grid,
+      bc = this.document.borderColor,
+      fc = this.document.fillColor;
+
     // Get grid squares to highlight
     const highlightSquares = this._getGridHighlightPositions();
+
     for (const s of highlightSquares) {
-      grid.grid.highlightGridPosition(hl, { x: s.x, y: s.y, color: fc, border: bc });
+      grid.highlightPosition(hl.name, { x: s.x, y: s.y, color: fc, border: bc });
     }
   }
 
   getHighlightLayer() {
-    return canvas.grid.getHighlightLayer(this.highlightId);
+    return canvas.interface.grid.getHighlightLayer(this.highlightId);
   }
 
   /**

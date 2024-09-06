@@ -29,7 +29,7 @@ export class SplitStack extends Dialog {
     if (total == 2) return [1, 1];
 
     step ||= 1;
-    initial = Math.clamped(initial || 0, 1, total);
+    initial = Math.clamp(initial || 0, 1, total);
     const max = total - 1;
 
     const content = await renderTemplate("systems/pf1/templates/apps/split-stack.hbs", {
@@ -47,7 +47,7 @@ export class SplitStack extends Dialog {
             // icon: `<i class="fas fa-people-arrows></i>`,
             label: game.i18n.localize("PF1.Split"),
             callback: async ([html]) => {
-              const splitValue = Math.clamped(html.querySelector(`input.split`).valueAsNumber, 1, max);
+              const splitValue = Math.clamp(html.querySelector(`input.split`).valueAsNumber, 1, max);
               if (Number.isNumeric(splitValue)) {
                 return [Math.max(1, total - splitValue), splitValue];
               }

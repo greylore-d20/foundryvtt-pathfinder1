@@ -12,7 +12,6 @@ import "module/compendium-directory.mjs";
 import "./module/chatlog.mjs";
 
 // Import Modules
-import { measureDistances } from "./module/utils/canvas.mjs";
 import { moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
 import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
@@ -98,6 +97,8 @@ Hooks.once("init", function () {
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
   CONFIG.Token.objectClass = _canvas.TokenPF;
 
+  CONFIG.Token.hudClass = _canvas.TokenHUDPF;
+
   // Document classes
   CONFIG.Actor.documentClass = ActorPFProxy;
   CONFIG.Actor.documentClasses = {
@@ -106,7 +107,6 @@ Hooks.once("init", function () {
     haunt: documents.actor.ActorHauntPF,
     trap: documents.actor.ActorTrapPF,
     vehicle: documents.actor.ActorVehiclePF,
-    basic: documents.actor.BasicActorPF,
   };
   CONFIG.Item.documentClass = ItemPFProxy;
   CONFIG.Item.documentClasses = {
@@ -144,97 +144,6 @@ Hooks.once("init", function () {
   }
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.push(dice.DamageRoll);
-  Object.defineProperties(CONFIG.Dice, {
-    RollPF: {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "CONFIG.Dice.RollPF is deprecated in favor of RollPF global and pf1.dice.RollPF",
-          { since: "PF1 v10", until: "PF1 v11" }
-        );
-        return pf1.dice.RollPF;
-      },
-    },
-  });
-  Object.defineProperties(CONFIG.Dice.rolls, {
-    DamageRoll: {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "CONFIG.Dice.rolls.DamageRoll is deprecated in favor of pf1.dice.DamageRoll",
-          { since: "PF1 v10", until: "PF1 v11" }
-        );
-        return pf1.dice.DamageRoll;
-      },
-    },
-    D20RollPF: {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "CONFIG.Dice.rolls.D20RollPF is deprecated in favor of pf1.dice.D20RollPF",
-          { since: "PF1 v10", until: "PF1 v11" }
-        );
-        return pf1.dice.D20RollPF;
-      },
-    },
-  });
-
-  // Modifier -> Type
-  Object.defineProperties(pf1.config, {
-    bonusModifiers: {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "pf1.config.bonusModifiers is deprecated in favor of pf1.config.bonusTypes",
-          { since: "PF1 v10", until: "PF1 v11" }
-        );
-        return this.bonusTypes;
-      },
-    },
-    stackingBonusModifiers: {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "pf1.config.stackingBonusModifiers is deprecated in favor of pf1.config.stackingBonusTypes",
-          { since: "PF1 v10", until: "PF1 v11" }
-        );
-        return this.stackingBonusTypes;
-      },
-    },
-  });
-
-  Object.defineProperty(pf1.config, "itemTypes", {
-    get() {
-      foundry.utils.logCompatibilityWarning("pf1.config.itemTypes is deprecated in favor of CONFIG.Item.typeLabels", {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-
-      return Object.fromEntries(
-        Object.entries(CONFIG.Item.typeLabels).map(([key, label]) => [key, game.i18n.localize(label)])
-      );
-    },
-  });
-
-  Object.defineProperty(pf1.utils, "rollPreProcess", {
-    get() {
-      foundry.utils.logCompatibilityWarning("pf1.utils.rollPreProcess.* is deprecated in favor of pf1.utils.roll.*", {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-
-      return pf1.utils.roll;
-    },
-  });
-
-  Object.defineProperty(pf1.applications, "ActionChooser", {
-    get() {
-      foundry.utils.logCompatibilityWarning(
-        "pf1.utils.ActionChooser is deprecated in favor of pf1.utils.ActionSelector",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
-
-      return pf1.applications.ActionSelector;
-    },
-  });
 
   CONFIG.time.roundTime = 6;
 
@@ -284,11 +193,6 @@ Hooks.once("init", function () {
     types: ["vehicle"],
     makeDefault: true,
   });
-  Actors.registerSheet("pf1", applications.actor.ActorSheetPFBasic, {
-    label: "PF1.Sheet.Basic",
-    types: ["basic"],
-    makeDefault: true,
-  });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("pf1", applications.item.ItemSheetPF, {
     label: "PF1.Sheet.Item",
@@ -333,45 +237,6 @@ Hooks.once("init", function () {
 
   //Calculate conditions for world
   CONFIG.statusEffects = pf1.utils.init.getConditions();
-
-  Object.defineProperty(pf1.config, "conditions", {
-    get: () => {
-      foundry.utils.logCompatibilityWarning(
-        "Conditions have been moved into the Conditions registry. " +
-          "Use pf1.registry.conditions.getLabels() for the old format, or access the collection for full condition data.",
-        { since: "PF1 v10", until: "PF1 v11" }
-      );
-      return pf1.registry.conditions.getLabels();
-    },
-  });
-
-  Object.defineProperty(pf1.config, "conditionTextures", {
-    get: () => {
-      foundry.utils.logCompatibilityWarning(
-        "Condition textures have been moved into the Conditions registry. " +
-          "Access the collection for full condition data.",
-        { since: "PF1 v10", until: "PF1 v11" }
-      );
-      return Object.fromEntries(
-        pf1.registry.conditions.map((registryObject) => [registryObject.id, registryObject.texture])
-      );
-    },
-  });
-
-  Object.defineProperty(pf1.config, "conditionMechanics", {
-    get: () => {
-      foundry.utils.logCompatibilityWarning(
-        "Condition mechanics have been moved into the Conditions registry. " +
-          "Access the collection for full condition data.",
-        { since: "PF1 v10", until: "PF1 v11" }
-      );
-      return Object.fromEntries(
-        pf1.registry.conditions.map((registryObject) => [registryObject.id, registryObject.mechanics])
-      );
-    },
-  });
-  // Diagonal ruleset implementation
-  SquareGrid.prototype.measureDistances = measureDistances;
 
   // Call post-init hook
   Hooks.callAll("pf1PostInit");
@@ -590,7 +455,7 @@ Hooks.once("ready", async function () {
   });
 
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "10.4";
+  const NEEDS_MIGRATION_VERSION = "10.5";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -625,12 +490,12 @@ Hooks.once("ready", async function () {
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {
-    const v = game.settings.get("pf1", "changelogVersion") || "0.0.1";
+    const v = game.settings.get("pf1", "changelogVersion");
     const changelogVersion = SemanticVersion.fromString(v);
     const curVersion = SemanticVersion.fromString(game.system.version);
 
     if (curVersion.isHigherThan(changelogVersion)) {
-      const app = new pf1.applications.ChangeLogWindow(changelogVersion);
+      const app = new pf1.applications.ChangeLogWindow(true);
       app.render(true, { focus: true });
       game.settings.set("pf1", "changelogVersion", curVersion.toString());
     }
@@ -697,10 +562,6 @@ Hooks.on("renderChatPopout", (_, html) => documents.actor.ActorPF.chatListeners(
 
 Hooks.on("renderAmbientLightConfig", (app, html) => {
   _canvas.lowLightVision.addLowLightVisionToLightConfig(app, html);
-});
-
-Hooks.on("renderTokenHUD", (app, html, data) => {
-  _canvas.TokenQuickActions.addQuickActions(app, html, data);
 });
 
 // Hide token tooltip on token update or deletion
@@ -845,7 +706,7 @@ Hooks.on(
 Hooks.on("renderSidebarTab", (app, html) => {
   if (app instanceof Settings) {
     // Add buttons
-    const chlogButton = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
+    const chlogButton = $(`<button>${game.i18n.localize("PF1.Application.Changelog.Title")}</button>`);
     const helpButton = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
     const tshooterButton = $(`<button>${game.i18n.localize("PF1.Troubleshooter.Button")}</button>`);
     html

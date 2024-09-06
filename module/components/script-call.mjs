@@ -6,6 +6,10 @@ export class ItemScriptCall {
     this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
     this.parent = parent;
 
+    this.prepareData();
+  }
+
+  prepareData() {
     if (this.type === "macro") {
       const macro = fromUuidSync(this.value);
       this.data.name = macro?.name || `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
@@ -90,18 +94,6 @@ export class ItemScriptCall {
   /** @type {boolean} */
   get hide() {
     return this.hidden && !game.user.isGM;
-  }
-
-  /**
-   * @deprecated
-   * @returns {string}
-   */
-  async getScriptBody() {
-    foundry.utils.logCompatibilityWarning("ItemScriptCall.getScriptBody() has been deprecated with no replacement.", {
-      since: "PF1 v10",
-      until: "PF1 v11",
-    });
-    return this.type === "script" ? this.value : (await fromUuid(this.value))?.command ?? "";
   }
 
   /**

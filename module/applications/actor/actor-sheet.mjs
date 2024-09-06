@@ -84,11 +84,9 @@ export class ActorSheetPF extends ActorSheet {
         ".editor-content[data-edit='system.details.biography.value']",
       ],
       dragDrop: [
-        { dragSelector: "li.item[data-item-id]" },
+        { dragSelector: ".item[data-item-id]" },
         { dragSelector: ".currency .denomination" },
-        { dragSelector: ".race-container.item[data-item-id]" },
         { dragSelector: "li.skill[data-skill]" },
-        { dragSelector: "li.sub-skill[data-skill]" },
         { dragSelector: ".saving-throw[data-savingthrow]" },
         { dragSelector: ".attribute[data-attribute]" },
         { dragSelector: ".attribute[data-attack]" },
@@ -197,7 +195,6 @@ export class ActorSheetPF extends ActorSheet {
     const enrichHTMLOptions = {
       secrets: isOwner,
       rollData: context.rollData,
-      async: true,
       relativeTo: this.actor,
     };
     const bio = context.system.details?.biography?.value;
@@ -243,12 +240,8 @@ export class ActorSheetPF extends ActorSheet {
     // Add inventory value
     {
       const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
-      const totalValue = pf1.utils.currency.split(cpValue);
-      context.labels.totalValue = game.i18n.format("PF1.TotalItemValue", {
-        gp: totalValue.gp,
-        sp: totalValue.sp,
-        cp: totalValue.cp,
-      });
+      const totalValue = pf1.utils.currency.split(cpValue, { pad: true });
+      context.labels.totalValue = game.i18n.format("PF1.TotalItemValue", totalValue);
     }
 
     // Ability Scores
@@ -325,14 +318,6 @@ export class ActorSheetPF extends ActorSheet {
       const actorType = { character: "pc", npc: "npc" }[this.actor.type];
       context.healthConfig = game.settings.get("pf1", "healthConfig");
       context.useWoundsAndVigor = context.healthConfig.variants[actorType].useWoundsAndVigor;
-      context.useWoundThresholds = context.healthConfig.variants[actorType].useWoundThresholds > 0;
-
-      if (context.useWoundThresholds) {
-        context.woundThresholdOptions = {
-          "-1": "PF1.Default",
-          ...context.healthConfig.woundThresholdOptions,
-        };
-      }
     }
 
     // Determine hidden elements
@@ -391,18 +376,22 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
+    const condImmunities = new Set(this.actor.system.traits?.ci?.value ?? []);
     context.conditions = naturalSort(
-      pf1.registry.conditions.map((cond) => ({
-        id: cond.id,
-        img: cond.texture,
-        active: conditions[cond.id] ?? false,
-        items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
-        get inherited() {
-          return this.items.size > 0;
-        },
-        label: cond.name,
-        compendium: cond.journal,
-      })),
+      pf1.registry.conditions
+        .filter((cond) => cond.showInBuffsTab)
+        .map((cond) => ({
+          id: cond.id,
+          img: cond.texture,
+          immune: condImmunities.has(cond.id),
+          active: conditions[cond.id] ?? false,
+          items: new Set(inheritedEffects.filter((ae) => ae.statuses.has(cond.id)).map((ae) => ae.parent)),
+          get inherited() {
+            return this.items.size > 0;
+          },
+          label: cond.name,
+          compendium: cond.journal,
+        })),
       "label"
     );
 
@@ -437,7 +426,8 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = defaultAction?.getRollData() ?? item.getRollData();
 
     result.labels = item.getLabels({ actionId: defaultAction?.id, rollData });
-    result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
+    result.hasAction =
+      item.hasAction || item.getScriptCalls("use").length > 0 || item.getScriptCalls("postUse").length > 0;
     if (defaultAction) {
       result.hasAttack = defaultAction.hasAttack;
       result.hasMultiAttack = defaultAction.hasMultiAttack;
@@ -829,9 +819,9 @@ export class ActorSheetPF extends ActorSheet {
 
     const enc = {
       pct: {
-        light: Math.clamped((carriedWeight * 100) / load.light, 0, 99.5),
-        medium: Math.clamped(((carriedWeight - load.light) * 100) / (load.medium - load.light), 0, 99.5),
-        heavy: Math.clamped(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 0, 99.5),
+        light: Math.clamp((carriedWeight * 100) / load.light, 0, 99.5),
+        medium: Math.clamp(((carriedWeight - load.light) * 100) / (load.medium - load.light), 0, 99.5),
+        heavy: Math.clamp(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 0, 99.5),
       },
       encumbered: {
         light: system.attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium,
@@ -881,7 +871,6 @@ export class ActorSheetPF extends ActorSheet {
       sb.each(function () {
         if (this.value.length > 0) $(this).change();
       });
-      html.find(".clear-search").on("click", this._clearSearch.bind(this));
     }
 
     // Item summaries
@@ -906,6 +895,11 @@ export class ActorSheetPF extends ActorSheet {
 
     // Open compendium browser
     html.find('a[data-action="browse"]').click(this._onOpenCompendiumBrowser.bind(this));
+
+    html
+      // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
+      .on("pointerover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
+      .on("pointerleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
@@ -1177,15 +1171,6 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     html.find(".skill-lock-button").on("click", this._onToggleSkillLock.bind(this));
-
-    /* -------------------------------------------- */
-    /*  Links
-    /* -------------------------------------------- */
-
-    html
-      // "pointerenter" would be better, but Foundry tooltip behaves unpredictably with it.
-      .on("pointerover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
-      .on("pointerleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
   }
 
   /**
@@ -1292,39 +1277,63 @@ export class ActorSheetPF extends ActorSheet {
         if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
         break;
       }
-      case "hit-points":
+      case "hit-points": {
+        const hp = system.attributes.hp;
         paths.push(
-          { path: "@attributes.hp.value", value: system.attributes.hp.value },
-          { path: "@attributes.hp.max", value: system.attributes.hp.max },
-          { path: "@attributes.hp.temp", value: system.attributes.hp.temp },
-          { path: "@attributes.hp.nonlethal", value: system.attributes.hp.nonlethal }
+          { path: "@attributes.hp.value", value: hp.value },
+          { path: "@attributes.hp.offset", value: hp.offset },
+          { path: "@attributes.hp.max", value: hp.max },
+          { path: "@attributes.hp.temp", value: hp.temp },
+          { path: "@attributes.hp.nonlethal", value: hp.nonlethal }
         );
+        if (hp.base) {
+          // npc lite sheet forced max
+          paths.push({ path: "@attributes.hp.base", value: hp.base });
+        }
+
         sources.push({ sources: getSource("system.attributes.hp.max"), untyped: true });
         break;
-      case "vigor": // Wounds & Vigor
+      }
+      case "vigor": {
+        // Wounds & Vigor
+        const vigor = system.attributes.vigor;
         paths.push(
-          { path: "@attributes.vigor.value", value: system.attributes.vigor.value },
-          { path: "@attributes.vigor.temp", value: system.attributes.vigor.temp },
-          { path: "@attributes.vigor.max", value: system.attributes.vigor.max }
+          { path: "@attributes.vigor.value", value: vigor.value },
+          { path: "@attributes.vigor.offset", value: vigor.offset },
+          { path: "@attributes.vigor.temp", value: vigor.temp },
+          { path: "@attributes.vigor.max", value: vigor.max }
         );
+        if (vigor.base) {
+          // npc lite sheet forced max
+          paths.push({ path: "@attributes.vigor.base", value: vigor.base });
+        }
 
         sources.push({
           sources: getSource("system.attributes.vigor.max"),
           untyped: true,
         });
         break;
-      case "wounds": // Wounds & Vigor
+      }
+      case "wounds": {
+        // Wounds & Vigor
+        const wounds = system.attributes.wounds;
         paths.push(
-          { path: "@attributes.wounds.value", value: system.attributes.wounds.value },
-          { path: "@attributes.wounds.max", value: system.attributes.wounds.max },
-          { path: "@attributes.wounds.threshold", value: system.attributes.wounds.threshold }
+          { path: "@attributes.wounds.value", value: wounds.value },
+          { path: "@attributes.wounds.offset", value: wounds.offset },
+          { path: "@attributes.wounds.max", value: wounds.max },
+          { path: "@attributes.wounds.threshold", value: wounds.threshold }
         );
+        if (wounds.base) {
+          // npc lite sheet forced max
+          paths.push({ path: "@attributes.wounds.base", value: wounds.base });
+        }
 
         sources.push({
           sources: getSource("system.attributes.wounds.max"),
           untyped: true,
         });
         break;
+      }
       case "speed": {
         const mode = detail;
 
@@ -1346,12 +1355,12 @@ export class ActorSheetPF extends ActorSheet {
           { path: `@attributes.speed.${mode}.base`, value: tB, unit: tU },
           { path: `@attributes.speed.${mode}.unhindered`, value: tR, unit: tU }
         );
-        // Add overland speed if we have actual speed
-        if (tD > 0) {
-          const [oD] = pf1.utils.convertDistance(speed.overland);
-          const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
-          paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
-        }
+        // Add overland speed
+        const [oD] = pf1.utils.convertDistance(speed.overland);
+        const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
+        paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
+
+        notes = [...getNotes(`${mode}Speed`), ...getNotes("allSpeeds")];
         break;
       }
       case "flyManeuverability":
@@ -1362,8 +1371,13 @@ export class ActorSheetPF extends ActorSheet {
         break;
       case "ac": {
         const ac = system.attributes.ac[detail];
+        if (!ac) return;
+        paths.push({ path: `@attributes.ac.${detail}.total`, value: ac.total });
+        if (ac.value) {
+          // lite sheet forced value
+          paths.push({ path: `@attributes.ac.${detail}.value`, value: ac.value });
+        }
         paths.push(
-          { path: `@attributes.ac.${detail}.total`, value: ac?.total },
           { path: "@armor.type", value: lazy.rollData.armor?.type },
           { path: "@shield.type", value: lazy.rollData.shield?.type }
         );
@@ -1386,11 +1400,17 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes(`misc.cmd`);
         break;
-      case "save":
+      case "save": {
+        const save = system.attributes.savingThrows[detail];
+        if (!save) return;
         paths.push({
           path: `@attributes.savingThrows.${detail}.total`,
-          value: system.attributes.savingThrows[detail]?.total,
+          value: save.total,
         });
+        if (save.base) {
+          // npc lite sheet forced value
+          paths.push({ path: `@attributes.savingThrows.${detail}.base`, value: save.base });
+        }
 
         sources.push({
           sources: getSource(`system.attributes.savingThrows.${detail}.total`),
@@ -1398,6 +1418,7 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes(`savingThrow.${detail}`);
         break;
+      }
       case "sr":
         paths.push({
           path: "@attributes.sr.total",
@@ -1411,17 +1432,24 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes("misc.sr");
         break;
-      case "bab":
+      case "bab": {
+        const bab = system.attributes.bab;
         paths.push({
           path: "@attributes.bab.total",
-          value: system.attributes.bab.total,
+          value: bab.total,
         });
+
+        // lite sheet forced value
+        if (bab.value) {
+          paths.push({ path: "@attributes.bab.value", value: bab.value });
+        }
 
         sources.push({
           sources: getSource("system.attributes.bab.total"),
           untyped: true,
         });
         break;
+      }
       case "cmb":
         paths.push({
           path: "@attributes.cmb.total",
@@ -1436,10 +1464,6 @@ export class ActorSheetPF extends ActorSheet {
           });
         }
 
-        sources.push({
-          sources: getSource("system.attributes.attack.shared"),
-        });
-
         if (system.attributes.cmbAbility) {
           sources.push({
             sources: [
@@ -1453,16 +1477,19 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push(
           { sources: getSource("system.attributes.attack.general") },
-          { sources: getSource("system.attributes.cmb.bonus") }
+          { sources: getSource("system.attributes.cmb.bonus") },
+          { sources: getSource("system.attributes.attack.shared") }
         );
 
         notes = [...getNotes("attacks.attack"), ...getNotes("attacks.melee"), ...getNotes("misc.cmb")];
         break;
-      case "init":
-        paths.push({
-          path: "@attributes.init.total",
-          value: system.attributes.init.total,
-        });
+      case "init": {
+        const init = system.attributes.init;
+        paths.push({ path: "@attributes.init.total", value: init.total });
+        if (init.value) {
+          // npc lite sheet forced value
+          paths.push({ path: "@attributes.init.value", value: init.value });
+        }
 
         sources.push({
           sources: getSource("system.attributes.init.total"),
@@ -1470,6 +1497,7 @@ export class ActorSheetPF extends ActorSheet {
 
         notes = getNotes("misc.init");
         break;
+      }
       case "abilityScore": {
         const abl = detail;
         const ability = system.abilities[detail] ?? {};
@@ -1538,10 +1566,11 @@ export class ActorSheetPF extends ActorSheet {
           }
         );
         break;
-      case "max-dex":
+      case "max-dex": {
+        const mdex = system.attributes.maxDexBonus;
         paths.push({
           path: "@attributes.maxDexBonus",
-          value: system.attributes.maxDexBonus,
+          value: Number.isFinite(mdex) ? mdex : "null",
         });
 
         sources.push(
@@ -1561,6 +1590,7 @@ export class ActorSheetPF extends ActorSheet {
           }
         );
         break;
+      }
       case "asf": {
         // TODO: Make ASF proper change target
         const asfSources = [];
@@ -1632,6 +1662,9 @@ export class ActorSheetPF extends ActorSheet {
         break;
       case "energyResistance":
         paths.push({ path: "@traits.eres.total", empty: true });
+        break;
+      case "hardness":
+        paths.push({ path: "@traits.hardness", empty: true });
         break;
       case "damageReduction":
         paths.push({ path: "@traits.dr.total", empty: true });
@@ -1712,7 +1745,7 @@ export class ActorSheetPF extends ActorSheet {
 
             if (attacks.length == 0) return;
 
-            const formatter = new Intl.NumberFormat("nu", { signDisplay: "always" });
+            const formatter = new Intl.NumberFormat(undefined, { signDisplay: "always" });
             header = attacks.map((n) => formatter.format(n)).join("/");
 
             sources.push({
@@ -1838,16 +1871,19 @@ export class ActorSheetPF extends ActorSheet {
         });
         break;
       case "feats": {
-        const isMindless = this.actor.system.abilities?.int?.value === null;
-        if (!isMindless) {
-          const levels = Math.ceil(this.actor.system.attributes.hd.total / 2);
-          if (levels > 0) {
-            sources.push({ sources: [{ name: game.i18n.localize("PF1.FromLevels"), value: levels }], untyped: true });
-          }
-          const mythic = Math.ceil(this.actor.system.details.mythicTier / 2);
-          if (mythic > 0) {
-            sources.push({ sources: [{ name: game.i18n.localize("PF1.FromMythic"), value: mythic }], untyped: true });
-          }
+        const feats = this.actor.getFeatCount();
+
+        if (feats.levels > 0) {
+          sources.push({
+            sources: [{ name: game.i18n.localize("PF1.FromLevels"), value: feats.levels }],
+            untyped: true,
+          });
+        }
+        if (feats.mythic > 0) {
+          sources.push({
+            sources: [{ name: game.i18n.localize("PF1.FromMythic"), value: feats.mythic }],
+            untyped: true,
+          });
         }
 
         // Generate fake sources
@@ -1864,7 +1900,6 @@ export class ActorSheetPF extends ActorSheet {
             }
           });
 
-        const feats = this.actor.getFeatCount();
         if (feats.formula !== 0) {
           featSources.push({
             name: game.i18n.localize("PF1.BonusFeatFormula"),
@@ -2565,7 +2600,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let updateData;
     if (name) {
-      if (value === getProperty(this.actor, name)) {
+      if (value === foundry.utils.getProperty(this.actor, name)) {
         // Restore input
         if (oldEl) el.parentElement.replaceChild(oldEl, el);
         return;
@@ -2624,6 +2659,17 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const conditionId = a.dataset.conditionId;
 
+    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+      if (!this.actor.hasCondition(conditionId)) {
+        return void ui.notifications.warn(
+          game.i18n.format("PF1.Warning.ImmuneToCondition", {
+            name: this.actor.name,
+            condition: pf1.registry.conditions.get(conditionId)?.name || conditionId,
+          })
+        );
+      }
+    }
+
     this.actor.toggleCondition(conditionId);
   }
 
@@ -2633,6 +2679,17 @@ export class ActorSheetPF extends ActorSheet {
     const conditionId = a.dataset.conditionId;
     const cond = pf1.registry.conditions.get(conditionId);
     if (!cond) throw new Error(`Invalid condition ID: ${conditionId}`);
+
+    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+      if (!this.actor.hasCondition(conditionId)) {
+        return void ui.notifications.warn(
+          game.i18n.format("PF1.Warning.ImmuneToCondition", {
+            name: this.actor.name,
+            condition: pf1.registry.conditions.get(conditionId)?.name || conditionId,
+          })
+        );
+      }
+    }
 
     let ae;
 
@@ -2792,7 +2849,7 @@ export class ActorSheetPF extends ActorSheet {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.actor.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, secrets: this.actor.isOwner });
 
       const div = $(content);
 
@@ -3658,12 +3715,6 @@ export class ActorSheetPF extends ActorSheet {
       });
   }
 
-  _clearSearch(event) {
-    const sb = $(event.target).prev(".search-input");
-    this._filters.search[sb.get(0).dataset.category] = "";
-    sb.val("").change();
-  }
-
   // IME related
   _searchFilterCompositioning(event) {
     this.searchCompositioning = event.type === "compositionstart";
@@ -4158,6 +4209,19 @@ export class ActorSheetPF extends ActorSheet {
         el.classList.add("placeholder");
         el.innerText = el.dataset.placeholder;
       }
+    }
+  }
+
+  /**
+   * @override
+   * @param {HTMLElement} form
+   */
+  _disableFields(form) {
+    super._disableFields(form);
+
+    // Ensure search inputs are always functional
+    for (const el of form.getElementsByTagName("INPUT")) {
+      if (el.type === "search") el.disabled = false;
     }
   }
 }

@@ -1,0 +1,343 @@
+_id: FcnBThxlSwMpdl4H
+_key: '!actors!FcnBThxlSwMpdl4H'
+img: systems/pf1/icons/skills/blue_29.jpg
+items:
+  - _id: ZsLzNOdrjEIDVOTK
+    _key: '!actors.items!FcnBThxlSwMpdl4H.ZsLzNOdrjEIDVOTK'
+    flags:
+      core:
+        sourceId: Compendium.pf1.racialhd.Item.WJqmmfXscPVpcISH
+    img: systems/pf1/icons/skills/blue_29.jpg
+    name: Animal
+    system:
+      bab: med
+      classSkills:
+        acr: true
+        clm: true
+        fly: true
+        per: true
+        ste: true
+        swm: true
+      contextNotes:
+        - target: skill.sur
+          text: +[[4]] when tracking by scent.
+      description:
+        value: >-
+          <p>An animal is a living, nonhuman creature, usually a vertebrate with
+          no magical abilities and no innate capacity for language or culture.
+          Animals usually have additional information on how they can serve as
+          companions.</p>
+
+          <h2>Features</h2>
+
+          <p>An animal has the following features (unless otherwise noted).</p>
+
+          <ul>
+
+          <li>d8 Hit Die.</li>
+
+          <li>Base attack bonus equal to 3/4 total Hit Dice (medium
+          progression).</li>
+
+          <li>Good <em>Fortitude</em> and <em>Reflex</em> saves.</li>
+
+          <li>Skill points equal to 2 + <em>Int</em> modifier (minimum 1) per
+          Hit Die. The following are class skills for animals:
+          <em>Acrobatics</em>, <em>Climb</em>, <em>Fly</em>,
+          <em>Perception</em>, <em>Stealth</em>, and <em>Swim</em>.</li>
+
+          </ul>
+
+          <h2>Traits</h2>
+
+          <p>An animal possesses the following traits (unless otherwise noted in
+          a creature’s entry).</p>
+
+          <ul>
+
+          <li><em>Intelligence</em> score of 1 or 2 (no creature with an
+          <em>Intelligence</em> score of 3 or higher can be an animal).</li>
+
+          <li><em>Low-light vision</em>.</li>
+
+          <li>Alignment: Always neutral.</li>
+
+          <li>Treasure: None.</li>
+
+          <li>Proficient with its natural weapons only. A non-combative
+          herbivore treats its natural weapons as secondary attacks. Such
+          attacks are made with a –5 penalty on the creature’s attack rolls, and
+          the animal receives only 1/2 its <em>Strength</em> modifier as a
+          damage adjustment.</li>
+
+          <li>Proficient with no armor unless trained for war. (See
+          <em>FAQ</em>s and <em>Handle Animal Skill</em>.)</li>
+
+          <li>Animals breathe, eat, and sleep.</li>
+
+          </ul>
+      hp: 9
+      level: 2
+      savingThrows:
+        fort:
+          value: high
+        ref:
+          value: high
+      skillsPerLevel: 2
+      subType: racial
+      tag: animal
+    type: class
+  - _id: BeqHwmBOIHJlZYnj
+    _key: '!actors.items!FcnBThxlSwMpdl4H.BeqHwmBOIHJlZYnj'
+    flags:
+      core:
+        sourceId: Compendium.pf1.feats.Item.7zJTztNW7hdaqjKc
+    img: systems/pf1/icons/feats/skill-focus.jpg
+    name: Skill Focus (Perception)
+    system:
+      changes:
+        - _id: vIGW8638
+          formula: '@skills.per.rank < 10 ? 3 : 6'
+          target: skill.per
+          type: untyped
+      description:
+        value: >-
+          <i>Choose a skill. You are particularly adept at that
+          skill.</i><p><strong>Benefits</strong>: You get a +3 bonus on all
+          checks involving the chosen skill. If you have 10 or more ranks in
+          that skill, this bonus increases to
+          +6.</p><p><strong>Special</strong>: You can gain this feat multiple
+          times. Its effects do not stack. Each time you take the feat, it
+          applies to a new skill.</p>
+      sources:
+        - id: PZO1110
+          pages: 116, 134
+      tags:
+        - General
+        - Skill
+    type: feat
+  - _id: A0ShhYj2xD07tYla
+    _key: '!actors.items!FcnBThxlSwMpdl4H.A0ShhYj2xD07tYla'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.szjeStouwI3F3WdP
+    img: systems/pf1/icons/skills/red_29.jpg
+    name: Bite
+    system:
+      actions:
+        - _id: jxtofrfc2lcw0osl
+          ability:
+            attack: str
+            damage: str
+            damageMult: 1
+          actionType: mwak
+          activation:
+            type: attack
+            unchained:
+              type: attack
+          damage:
+            parts:
+              - formula: sizeRoll(1, 6, @size)
+                type:
+                  custom: ''
+                  values:
+                    - piercing
+                    - bludgeoning
+                    - slashing
+          img: systems/pf1/icons/skills/red_29.jpg
+          name: Attack
+          range:
+            units: melee
+          tag: bite
+      baseTypes:
+        - Bite
+      description:
+        value: >-
+          <p>A primary natural weapon that crushes, tears and tears with teeth
+          and jaws.</p><p>It deals bludgeoning, slashing or piercing damage,
+          whichever is most beneficial one.</p><hr /><p>For general rules on
+          natural attacks, see:
+          @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
+          Attacks} (UMR).</p>
+      effectNotes:
+        - plus trip
+      proficient: true
+      subType: natural
+      weaponGroups:
+        value:
+          - natural
+    type: attack
+  - _id: fGtamGVwS60iZLIc
+    _key: '!actors.items!FcnBThxlSwMpdl4H.fGtamGVwS60iZLIc'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.qe671ZP4ZsO5cbrt
+    img: icons/creatures/eyes/humanoid-single-yellow.webp
+    name: Low-Light Vision
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>A creature with low-light vision can see twice as far as a human in
+          starlight, moonlight, torchlight, and similar conditions of dim light.
+          It retains the ability to distinguish color and detail under these
+          conditions.</p><p><em>Format:</em> low-light
+          vision</p><p><em>Location:</em> Senses.</p>
+      sources:
+        - id: PZO1112
+          pages: '301'
+        - id: PZO1127
+          pages: '296'
+        - id: PZO1133
+          pages: '295'
+        - id: PZO1137
+          pages: '295'
+      subType: misc
+    type: feat
+  - _id: MjvYXkgeck7wlRYx
+    _key: '!actors.items!FcnBThxlSwMpdl4H.MjvYXkgeck7wlRYx'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.ePCw9eVAidI9uc5I
+    img: icons/creatures/eyes/lizard-single-slit-pink.webp
+    name: Scent
+    system:
+      abilityType: ex
+      description:
+        value: >-
+          <p>This special sense allows a creature to detect approaching enemies,
+          sniff out hidden foes, and track by sense of smell. Creatures with the
+          scent ability can identify familiar odors just as humans do familiar
+          sights.</p><p>The creature can detect opponents within 30 feet by
+          sense of smell. If the opponent is upwind, the range increases to 60
+          feet; if downwind, it drops to 15 feet. Strong scents, such as smoke
+          or rotting garbage, can be detected at twice the ranges noted above.
+          Overpowering scents, such as skunk musk or troglodyte stench, can be
+          detected at triple the normal range.</p><p>When a creature detects a
+          scent, the exact location of the source is not revealed—only its
+          presence somewhere within range. The creature can take a move action
+          to note the direction of the scent. When the creature is within 5 feet
+          of the source, it pinpoints the source’s location.</p><p>A creature
+          with the scent ability can follow tracks by smell, attempting a Wisdom
+          or Survival check to find or follow a track. The typical DC for a
+          fresh trail is 10 (no matter what kind of surface holds the scent).
+          This DC increases or decreases depending on how strong the quarry’s
+          odor is, the number of creatures, and the age of the trail. For each
+          hour that the trail is cold, the DC increases by 2. Creatures tracking
+          by scent ignore the effects of surface conditions and poor visibility.
+          The ability otherwise follows the rules for the Survival
+          skill.</p><p><em>Format:</em> scent</p><p><em>Location:</em>
+          Senses.</p>
+      sources:
+        - id: PZO1112
+          pages: '304'
+        - id: PZO1116
+          pages: '301'
+        - id: PZO1120
+          pages: '299'
+        - id: PZO1127
+          pages: '299'
+        - id: PZO1133
+          pages: '298'
+        - id: PZO1137
+          pages: '298'
+      subType: misc
+    type: feat
+  - _id: DElwe3hCfxaaRD8D
+    _key: '!actors.items!FcnBThxlSwMpdl4H.DElwe3hCfxaaRD8D'
+    flags:
+      core:
+        sourceId: Compendium.pf1.monster-abilities.Item.LdUxqwe1uKw5DVNS
+    img: icons/magic/control/silhouette-fall-slip-prone.webp
+    name: Trip
+    system:
+      abilityType: ex
+      actions:
+        - _id: C2nGMdHfD2zy4x0z
+          ability:
+            attack: str
+          actionType: mcman
+          activation:
+            type: free
+            unchained:
+              type: free
+          duration:
+            units: inst
+          name: Trip
+      description:
+        value: >-
+          <p>A creature with the trip special attack can attempt to trip its
+          opponent as a free action without provoking an attack of opportunity
+          if it hits with the specified attack. If the attempt fails, the
+          creature is not tripped in return.</p><p><em>Format:</em> trip
+          (bite)</p><p><em>Location:</em> individual attacks.</p>
+      sources:
+        - id: PZO1112
+          pages: '305'
+        - id: PZO1116
+          pages: '302'
+        - id: PZO1120
+          pages: '300'
+        - id: PZO1133
+          pages: '301'
+        - id: PZO1137
+          pages: '300'
+      subType: misc
+    type: feat
+name: Wolf
+prototypeToken:
+  sight:
+    enabled: true
+  texture:
+    src: systems/pf1/icons/skills/blue_29.jpg
+system:
+  abilities:
+    cha:
+      value: 6
+    con:
+      value: 15
+    dex:
+      value: 15
+    int:
+      value: 2
+    str:
+      value: 13
+    wis:
+      value: 12
+  attributes:
+    cmdNotes: 18 vs. trip
+    naturalAC: 2
+    quadruped: true
+    speed:
+      land:
+        base: 50
+  details:
+    biography:
+      value: >-
+        <p>Wandering alone or in packs, wolves sit at the top of the food chain.
+        Ferociously territorial and exceptionally wide-ranging in their hunting,
+        wolf packs cover broad areas. A wolf’s wide paws contain slight webbing
+        between the toes that assists in moving over snow, and its fur is a
+        thick, water-resistant coat ranging in color from gray to brown and even
+        black in some species. Its paws contain scent glands that mark the
+        ground as it travels, assisting in navigation as well as broadcasting
+        its whereabouts to fellow pack members. Generally, a wolf stands from
+        2-1/2 to 3 feet tall at the shoulder and weighs between 45 and 150
+        pounds, with females being slightly smaller.</p>
+    cr:
+      base: 1
+    notes:
+      value: <p><strong>Source</strong> <em>Pathfinder RPG Bestiary pg. 278</em></p>
+  skills:
+    per:
+      rank: 1
+    ste:
+      rank: 1
+  traits:
+    senses:
+      ll:
+        enabled: true
+      sc: 30
+    stature: long
+type: npc
+

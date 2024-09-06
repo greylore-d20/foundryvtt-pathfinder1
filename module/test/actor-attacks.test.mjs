@@ -20,12 +20,14 @@ export const registerActorItemAttackTests = () => {
       let actor;
       const messages = [];
       before(async () => {
-        actor = await createTestActor({ system: { abilities: { str: { value: 18 } } } }, { temporary: false });
+        actor = await createTestActor({ system: { abilities: { str: { value: 18 } } } });
         shared.actor = actor;
       });
       after(async () => {
         await actor.delete();
-        await ChatMessage.implementation.deleteDocuments(messages.map((o) => o.id));
+      });
+      after(async () => {
+        await ChatMessage.implementation.deleteDocuments(messages.filter((m) => m).map((o) => o.id));
       });
 
       describe("longsword", function () {
@@ -50,8 +52,8 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.wLongsword.use({ skipDialog: true });
-            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
+            rolls = roll.systemRolls.attacks[0];
           });
 
           it("should have the correct attack formula", function () {
@@ -72,8 +74,8 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.aLongsword.use({ skipDialog: true });
-            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
+            rolls = roll.systemRolls.attacks[0];
           });
 
           it("should have the correct attack formula", function () {
@@ -97,8 +99,8 @@ export const registerActorItemAttackTests = () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "tiny" });
                 roll = await items.aLongsword.use({ skipDialog: true });
-                rolls = roll.systemRolls.attacks[0];
                 messages.push(roll);
+                rolls = roll.systemRolls.attacks[0];
               });
               after(async () => {
                 await actor.update({ "system.traits.size": prevSize });
@@ -121,8 +123,8 @@ export const registerActorItemAttackTests = () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "huge" });
                 roll = await items.aLongsword.use({ skipDialog: true });
-                rolls = roll.systemRolls.attacks[0];
                 messages.push(roll);
+                rolls = roll.systemRolls.attacks[0];
               });
               after(async () => {
                 await actor.update({ "system.traits.size": prevSize });
@@ -202,8 +204,8 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.bite.use({ skipDialog: true });
-            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
+            rolls = roll.systemRolls.attacks[0];
           });
 
           it("should have the correct attack formula", function () {
@@ -225,8 +227,8 @@ export const registerActorItemAttackTests = () => {
               const action = items.bite.defaultAction;
               await action.update({ naturalAttack: { primaryAttack: false } });
               roll = await items.bite.use({ skipDialog: true });
-              rolls = roll.systemRolls.attacks[0];
               messages.push(roll);
+              rolls = roll.systemRolls.attacks[0];
             });
 
             it("should have the correct attack formula", function () {
@@ -273,7 +275,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack without ammo usage", function () {
           let roll;
           before(async () => {
-            await items.longbow.defaultAction.update({ ammoType: "none" });
+            await items.longbow.defaultAction.update({ ammo: { type: "none" } });
             roll = await items.longbow.use({ skipDialog: true });
             messages.push(roll);
           });
@@ -292,7 +294,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack with ammo usage and ammo present", function () {
           let roll;
           before(async () => {
-            await items.longbow.defaultAction.update({ ammoType: "arrow" });
+            await items.longbow.defaultAction.update({ ammo: { type: "arrow" } });
 
             items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
@@ -345,7 +347,7 @@ export const registerActorItemAttackTests = () => {
         });
       });
     },
-    { displayName: "PF1: Actor Attack Item Tests" }
+    { displayName: "PF1: Actor – Attack Items" }
   );
 };
 

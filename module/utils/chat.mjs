@@ -27,7 +27,7 @@ export function hideRollInfo(cm, jq, data) {
 function getIdentifiedBlock(info) {
   const hasCombinedName = info.actionName && !info.actionDescription;
   return (
-    _templateCache["systems/pf1/templates/chat/parts/gm-description.hbs"]?.(
+    Handlebars.partials["systems/pf1/templates/chat/parts/gm-description.hbs"]?.(
       { ...info, hasCombinedName },
       { allowProtoMethodsByDefault: true, allowProtoPropertiesByDefault: true }
     ) ?? ""
@@ -47,7 +47,7 @@ export function hideGMSensitiveInfo(cm, html, data) {
     // Show identified info box for GM if item was unidentified when rolled
     const identifiedInfo = cm.flags.pf1?.identifiedInfo ?? {};
     const { identified = true } = identifiedInfo;
-    if (!identified && cm.hasItemSource) {
+    if (!identified && cm.itemSource !== null) {
       const cardContent = html.find(".card-content");
       cardContent.append(getIdentifiedBlock(identifiedInfo));
     }
@@ -172,31 +172,11 @@ export function alterTargetDefense(cm, jq) {
 export function applyAccessibilitySettings(app, html, data, conf) {}
 
 /**
- * Returns an inline roll string suitable for chat messages.
- *
- * @deprecated
- * @param {Roll} roll - The roll to be stringified
- * @param {object} [options] - Additional options affecting the inline roll
- * @param {boolean} [options.hide3d] - Whether the roll should be hidden from DsN
- * @returns {string} The inline roll string
- */
-export function createInlineRollString(roll, { hide3d = true } = {}) {
-  foundry.utils.logCompatibilityWarning("pf1.utils.chat.createInlineRollString() is deprecated with no replacement", {
-    since: "PF1 v10",
-    until: "PF1 v11",
-  });
-
-  const a = roll.toAnchor();
-  if (hide3d) a.classList.add("inline-dsn-hidden");
-  return a.outerHTML;
-}
-
-/**
  * @param {ChatMessage} cm - Chat message instance
  * @param {HTMLElement} html - HTML element
  * @param recursive
  */
-export async function hideInvisibleTargets(cm, html, recursive = false) {
+export function hideInvisibleTargets(cm, html, recursive = false) {
   const targetsElem = html.querySelector(".pf1.chat-card .attack-targets");
   if (!targetsElem) return; // No targets
 
@@ -227,11 +207,8 @@ export async function hideInvisibleTargets(cm, html, recursive = false) {
     const isObserver = token.actor?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) ?? false;
 
     // Hide if token invisible and user isn't observer of token
-    if (!isVisible && !isObserver) $(t.elem).hide();
-    else {
-      hasVisible = true;
-      $(t.elem).show();
-    }
+    if (!isVisible && !isObserver) t.elem.remove();
+    else hasVisible = true;
   }
 
   // Hide targets if there's none visible to not reveal presence of invisible targets

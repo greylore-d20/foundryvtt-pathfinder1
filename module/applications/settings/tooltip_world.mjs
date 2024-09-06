@@ -18,9 +18,15 @@ export class TokenTooltipWorldConfigModel extends foundry.abstract.DataModel {
     };
   }
 
-  /*
-  static migrateData(data) {}
-  */
+  static migrateData(data) {
+    if (data.hideActorName !== undefined) {
+      if (data.hideActorNameByDisposition === undefined) {
+        // 1 (All) for true, -2 (None) for false
+        data.hideActorNameByDisposition == data.hideActorName ? 1 : -2;
+      }
+      delete data.hideActorName;
+    }
+  }
 }
 
 export class TooltipWorldConfig extends FormApplication {
@@ -68,7 +74,7 @@ export class TooltipWorldConfig extends FormApplication {
 
   async _onReset(event) {
     event.preventDefault();
-    await game.settings.set("pf1", "tooltipWorldConfig", new TokenTooltipWorldConfigModel());
+    await game.settings.set("pf1", "tooltipWorldConfig", {});
     ui.notifications.info(game.i18n.localize("PF1.SETTINGS.TokenTooltip.ResetInfo"));
     return this.render();
   }

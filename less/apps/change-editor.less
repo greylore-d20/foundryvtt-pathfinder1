@@ -25,7 +25,14 @@
       background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
     }
 
+    .formula-type {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
     .radio {
+      flex: 0;
+      gap: 0.5em;
       display: flex;
       flex-flow: row nowrap;
 
@@ -34,10 +41,16 @@
         flex-flow: row nowrap;
         gap: 0 0.3em;
         line-height: 1.5;
-        align-items: center;
+        font-weight: normal;
+
+        &.disabled {
+          color: var(--pf1-olive);
+          opacity: 0.8;
+        }
 
         > input {
-          height: unset;
+          flex: 0 16px;
+          height: 16px;
           flex: unset;
           top: unset;
           margin: unset;

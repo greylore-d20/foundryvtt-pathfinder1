@@ -182,7 +182,7 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @internal
-   * @param src - Source info
+   * @param {SourceInfo} src - Source info
    */
   static _getSourceLabel(src) {
     const item = src.change?.parent;
@@ -190,7 +190,7 @@ export class ActorPF extends ActorBasePF {
       const subtype = item.subType;
       let typeLabel;
 
-      if (subtype && ((item.system.identified ?? true) || game.user.isGM))
+      if (subtype && ((item.system.identified ?? true) || game.user.isGM) && !["weapon"].includes(item.type))
         typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${item.type}.${subtype}.Single`);
       else typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
 
@@ -355,18 +355,26 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {object} [options] Additional options
    * @param {Combat} [options.combat] Combat to expire data in, if relevant
+   * @param {number} [options.worldTime] - World time
    * @param {number} [options.timeOffset=0] Time offset from world time
    * @param {string} [options.event] - Expiration event
    * @param {number} [options.initiative] - Initiative based expiration marker
    * @param {DocumentModificationContext} [context] Document update context
    * @throws {Error} - With insufficient permissions to control the actor.
    */
-  async expireActiveEffects({ combat, timeOffset = 0, event = null, initiative = null } = {}, context = {}) {
+  async expireActiveEffects(
+    { combat, timeOffset = 0, worldTime = null, event = null, initiative = null } = {},
+    context = {}
+  ) {
     if (!this.isOwner) throw new Error("Must be owner");
 
-    const worldTime = game.time.worldTime + timeOffset;
+    // Canonical world time.
+    // Due to async code in numerous places and no awaiting of time updates, this can go out of sync of actual time.
+    worldTime ??= game.time.worldTime;
+    worldTime += timeOffset;
 
-    const temporaryEffects = this._effectsWithDuration.filter((ae) => {
+    // Effects that have timed out
+    const expiredEffects = this._effectsWithDuration.filter((ae) => {
       const { seconds, startTime } = ae.duration;
       const { rounds, startRound } = ae.duration;
 
@@ -383,19 +391,30 @@ export class ActorPF extends ActorBasePF {
         remaining = (rounds - elapsed) * CONFIG.time.roundTime;
       }
 
-      const flags = ae.getFlag("pf1", "duration") ?? {};
-      const endOn = flags.end || "turnStart";
+      // Time still remaining
       if (remaining > 0) return false;
-      // Initiative based ending
-      if (initiative !== null) {
-        // Anything not on initiative expires if they have negative time remaining
-        if (endOn !== "initiative") return remaining < 0;
-        return flags.initiative <= initiative;
+
+      const flags = ae.getFlag("pf1", "duration") ?? {};
+
+      switch (flags.end || "turnStart") {
+        // Initiative based ending
+        case "initiative":
+          if (initiative !== null) {
+            return initiative <= flags.initiative;
+          }
+          // Anything not on initiative expires if they have negative time remaining
+          return remaining < 0;
+        // End on turn start, but we're not there yet
+        case "turnStart":
+          if (remaining === 0 && !["turnStart", "turnEnd"].includes(event)) return false;
+          break;
+        // End on turn end, but we're not quite there yet
+        case "turnEnd":
+          if (remaining === 0 && event !== "turnEnd") return false;
+          break;
       }
-      // End on turn end, but we're at turn start and there's 0 or more seconds left
-      else if (remaining === 0 && endOn === "turnEnd" && event === "turnStart") {
-        return false;
-      }
+
+      // Otherwise end when time is out
       return remaining <= 0;
     });
 
@@ -403,7 +422,7 @@ export class ActorPF extends ActorBasePF {
       deleteActiveEffects = [],
       disableBuffs = [];
 
-    for (const ae of temporaryEffects) {
+    for (const ae of expiredEffects) {
       let item;
       // Use AE parent when available
       if (ae.parent instanceof Item) item = ae.parent;
@@ -456,6 +475,7 @@ export class ActorPF extends ActorBasePF {
     this.system.details ??= {};
     this.system.details.level ??= {};
 
+    /** @type {Record<string, SourceInfo>} */
     this.sourceInfo = {};
     this.changeFlags = {};
 
@@ -574,21 +594,6 @@ export class ActorPF extends ActorBasePF {
         conditions[status] = true;
       }
     }
-
-    // Conditions backwards compatibility
-    if (!Object.getOwnPropertyDescriptor(this.system.attributes, "conditions")?.["get"]) {
-      delete this.system.attributes.conditions;
-      Object.defineProperty(this.system.attributes, "conditions", {
-        get() {
-          foundry.utils.logCompatibilityWarning(
-            "actor.system.attributes.conditions is deprecated in favor of actor.system.conditions and actor.statuses",
-            { since: "PF1 v10", until: "PF1 v11" }
-          );
-          return conditions;
-        },
-        enumerable: false,
-      });
-    }
   }
 
   /**
@@ -688,8 +693,15 @@ export class ActorPF extends ActorBasePF {
     const wprof = this.system.traits?.weaponProf;
     if (!wprof) return false;
 
-    // Match basic proficiencies (only present on weapons)
-    if (item.type === "weapon" && wprof.total.includes(item.subType)) return true;
+    // Match basic proficiencies, e.g. simple and martial (only present on weapons)
+    // TODO: Make the item identify it's own weapon type
+    let category;
+    if (item.type === "weapon") {
+      category = item.subType;
+    } else if (item.type === "attack") {
+      category = item.subType === "weapon" ? item.system.weapon?.category : null;
+    }
+    if (wprof.total.includes(category)) return true;
 
     // Match base types
     const profs = wprof.customTotal ?? [];
@@ -782,7 +794,7 @@ export class ActorPF extends ActorBasePF {
       if (book.autoSpellLevelCalculation) {
         const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
         const autoBonus = RollPF.safeRollSync(autoFormula, rollData).total ?? 0;
-        const autoTotal = Math.clamped(total + autoBonus, 1, 20);
+        const autoTotal = Math.clamp(total + autoBonus, 1, 20);
         book.cl.autoSpellLevelTotal = autoTotal;
 
         clTotal += autoBonus;
@@ -805,13 +817,13 @@ export class ActorPF extends ActorBasePF {
         setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
       }
 
-      // Subtract energy drain
+      // Apply negative levels
       if (rollData.attributes.energyDrain) {
         clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
         setSourceInfoByName(
           this.sourceInfo,
           key,
-          game.i18n.localize("PF1.Condition.energyDrain"),
+          game.i18n.localize("PF1.NegativeLevels"),
           -Math.abs(rollData.attributes.energyDrain),
           false
         );
@@ -899,7 +911,7 @@ export class ActorPF extends ActorBasePF {
 
       const castsForLevels =
         pf1.config.casterProgression[isSpontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
-      let classLevel = Math.clamped(book.cl.autoSpellLevelTotal, 1, 20);
+      let classLevel = Math.clamp(book.cl.autoSpellLevelTotal, 1, 20);
 
       // Protect against invalid class level bricking actors
       if (!Number.isSafeInteger(classLevel)) {
@@ -1018,7 +1030,7 @@ export class ActorPF extends ActorBasePF {
       const allLevelMod = RollPF.safeRollSync(allLevelModFormula, rollData).total ?? 0;
 
       const casterType = book.casterType || "high";
-      const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
+      const classLevel = Math.floor(Math.clamp(book.cl.autoSpellLevelTotal, 1, 20));
 
       for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
         const spellLevelData = book.spells[`spell${spellLevel}`];
@@ -1167,21 +1179,6 @@ export class ActorPF extends ActorBasePF {
     for (const bookKey of Object.keys(spellbooks)) {
       this._updateSpellBook(bookKey, rollData, cache);
     }
-
-    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
-    Object.defineProperty(this.system.attributes.spells, "usedSpellbooks", {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "actor.system.attributes.spells.usedSpellbooks is deprecated with no replacement.",
-          {
-            since: "PF1 v10",
-            until: "PF1 v11",
-          }
-        );
-
-        return Object.keys(spellbooks).filter((book) => spellbooks[book].inUse);
-      },
-    });
   }
 
   /**
@@ -1596,15 +1593,17 @@ export class ActorPF extends ActorBasePF {
         name: encLabel,
         value: encMaxDex,
       });
-      let maxDexLabel = new Intl.NumberFormat("nu", { signDisplay: "always" }).format(encMaxDex);
+      let maxDexLabel = new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(encMaxDex);
       maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
       getSourceInfo(this.sourceInfo, "system.attributes.ac.normal.total").negative.push({
         name: encLabel,
         value: maxDexLabel,
+        valueAsNumber: encMaxDex,
       });
       getSourceInfo(this.sourceInfo, "system.attributes.ac.touch.total").negative.push({
         name: encLabel,
         value: maxDexLabel,
+        valueAsNumber: encMaxDex,
       });
     }
 
@@ -1700,7 +1699,7 @@ export class ActorPF extends ActorBasePF {
         }
 
         if (item.system.armor.dex !== null && isShieldOrArmor) {
-          const mDex = Number.parseInt(item.system.armor.dex, 10);
+          const mDex = item.system.armor.dex;
           if (Number.isInteger(mDex)) {
             const mod = this.system.attributes?.mDex?.[`${eqType}Bonus`] ?? 0;
             const itemMDex = mDex + mod;
@@ -1709,34 +1708,40 @@ export class ActorPF extends ActorBasePF {
             const sInfo = getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.find(
               (o) => o.itemId === item.id
             );
-            if (sInfo) sInfo.value = mDex;
+            if (sInfo) sInfo.value = itemMDex;
             else {
               getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.push({
                 name: item.name,
                 itemId: item.id,
-                value: mDex,
+                value: itemMDex,
                 ignoreNull: false,
               });
             }
 
             // Add max dex to AC, too.
-            let maxDexLabel = new Intl.NumberFormat("nu", { signDisplay: "always" }).format(mDex);
+            let maxDexLabel = new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(itemMDex);
             maxDexLabel = `${game.i18n.localize("PF1.MaxDexShort")} ${maxDexLabel}`;
             for (const p of ["system.attributes.ac.normal.total", "system.attributes.ac.touch.total"]) {
               // Use special maxDex id to ensure only the worst is shown
-              const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDex");
+              const sInfoA = getSourceInfo(this.sourceInfo, p).negative.find((o) => o.id === "maxDexEq");
               if (sInfoA) {
-                if (mDex < sInfoA.value) {
+                if (itemMDex < sInfoA.valueAsNumber) {
                   sInfoA.value = maxDexLabel;
+                  sInfoA.valueAsNumber = itemMDex;
                   sInfoA.itemId = item.id;
                   sInfoA.name = item.name;
+                } else if (sInfoA.itemId == item.id) {
+                  // Update existing (armor training or the like)
+                  sInfoA.value = maxDexLabel;
+                  sInfoA.valueAsNumber = itemMDex;
                 }
               } else {
                 getSourceInfo(this.sourceInfo, p).negative.push({
                   name: item.name,
                   value: maxDexLabel,
+                  valueAsNumber: itemMDex,
                   itemId: item.id,
-                  id: "maxDex",
+                  id: "maxDexEq",
                 });
               }
             }
@@ -1882,17 +1887,19 @@ export class ActorPF extends ActorBasePF {
 
     // Add extra data
     const rollData = this.getRollData();
-    for (const [changeTarget, changeGrp] of Object.entries(this.sourceInfo)) {
-      for (const grp of Object.values(changeGrp)) {
-        sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
+    for (const [path, changeGrp] of Object.entries(this.sourceInfo)) {
+      /** @type {Array<SourceInfo[]>} */
+      const sourceGroups = Object.values(changeGrp);
+      for (const grp of sourceGroups) {
+        sourceDetails[path] ||= [];
         for (const src of grp) {
-          if (!src.operator) src.operator = "add";
+          src.operator ||= "add";
           // TODO: Separate source name from item type label
           const label = this.constructor._getSourceLabel(src);
           let srcValue =
             src.value != null
               ? src.value
-              : RollPF.safeRollAsync(src.formula || "0", rollData, [changeTarget, src, this], {
+              : RollPF.safeRollSync(src.formula || "0", rollData, [path, src, this], {
                   suppressError: !this.isOwner,
                 }).total;
           if (src.operator === "set") {
@@ -1900,12 +1907,14 @@ export class ActorPF extends ActorBasePF {
             if (src.change?.isDistance) displayValue = pf1.utils.convertDistance(displayValue)[0];
             srcValue = game.i18n.format("PF1.SetTo", { value: displayValue });
           }
+
+          // Add sources only if they actually add something else than zero
           if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
             // Account for dex denied denying dodge bonuses
             if (dexDenied && srcValue > 0 && src.modifier === "dodge" && src.operator === "add" && src.change?.isAC)
               continue;
 
-            sourceDetails[changeTarget].push({
+            sourceDetails[path].push({
               name: label.replace(/[[\]]/g, ""),
               modifier: src.modifier || "",
               value: srcValue,
@@ -1980,21 +1989,26 @@ export class ActorPF extends ActorBasePF {
       "attributes.damage.shared": 0,
       "attributes.woundThresholds.level": 0,
       "attributes.woundThresholds.mod": 0,
-      "attributes.woundThresholds.override": -1,
       "attributes.woundThresholds.penaltyBase": 0,
       "attributes.woundThresholds.penalty": 0,
       "abilities.str.checkMod": 0,
       "abilities.str.total": 0,
+      "abilities.str.undrained": 0,
       "abilities.dex.checkMod": 0,
       "abilities.dex.total": 0,
+      "abilities.dex.undrained": 0,
       "abilities.con.checkMod": 0,
       "abilities.con.total": 0,
+      "abilities.con.undrained": 0,
       "abilities.int.checkMod": 0,
       "abilities.int.total": 0,
+      "abilities.int.undrained": 0,
       "abilities.wis.checkMod": 0,
       "abilities.wis.total": 0,
+      "abilities.wis.undrained": 0,
       "abilities.cha.checkMod": 0,
       "abilities.cha.total": 0,
+      "abilities.cha.undrained": 0,
       "attributes.spells.spellbooks.primary.concentration.total": 0,
       "attributes.spells.spellbooks.secondary.concentration.total": 0,
       "attributes.spells.spellbooks.tertiary.concentration.total": 0,
@@ -2065,7 +2079,7 @@ export class ActorPF extends ActorBasePF {
 
     for (const data of this._getBaseValueFillKeys()) {
       const { parent, key, value } = data;
-      const o = getProperty(this.system, parent);
+      const o = foundry.utils.getProperty(this.system, parent);
       if (!o) continue; // Not all actor types have these
       o[key] ??= value;
     }
@@ -2199,22 +2213,6 @@ export class ActorPF extends ActorBasePF {
     // Never allow updates to the new condtions location
     if (changed.system.conditions !== undefined) {
       delete changed.system.conditions;
-    }
-
-    if (conditions) {
-      foundry.utils.logCompatibilityWarning(
-        "Toggling conditions via Actor.update() is deprecated in favor of Actor.setCondition()",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
-
-      // Prevent data storage
-      delete changed.system.attributes.conditions;
-
-      // Toggle AEs
-      await this.setConditions(conditions);
     }
   }
 
@@ -2559,42 +2557,6 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   /**
-   * @deprecated - See {@link pf1.documents.item.ItemAttackPF.fromItem ItemAttackPF.fromItem()}
-   * @param {pf1.documents.item.ItemWeaponPF} item - Weapon to create attack from
-   * @returns {Item|undefined} - Created item.
-   */
-  async createAttackFromWeapon(item) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.createAttackFromWeapon() is deprecated in favor of ItemAttackPF.fromItem()",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
-    }
-
-    const attackItem = pf1.documents.item.ItemAttackPF.fromItem(item);
-
-    // Create attack
-    const [newItem] = await this.createEmbeddedDocuments("Item", [attackItem]);
-    if (!newItem) throw new Error("Failed to create attack from weapon");
-
-    // Create link
-    await item.createItemLink("children", "data", newItem, newItem.id);
-
-    // Notify user
-    ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: item.name }));
-
-    // Disable quick use of weapon
-    await item.update({ "system.showInQuickbar": false });
-
-    return newItem;
-  }
-
-  /**
    * Enable and configure a new spellbook.
    *
    * @example
@@ -2612,8 +2574,9 @@ export class ActorPF extends ActorBasePF {
    * @param {number} [casting.offset] - Level offset
    * @returns {Promise<this>} - Promise to updated document
    */
-  createSpellbook(casting = {}) {
+  createSpellbook(casting = {}, { commit = true } = {}) {
     const books = this.system.attributes.spells.spellbooks ?? {};
+
     const oldBook = casting.class
       ? Object.entries(books).find(([_, book]) => !!book.class && book.class === casting.class)
       : null;
@@ -2652,11 +2615,12 @@ export class ActorPF extends ActorBasePF {
         arcaneSpellFailure: casting.spells === "arcane",
         hasCantrips: casting.cantrips,
         domainSlotValue: casting.domain,
-        "cl.autoSpellLevelCalculationFormula": casting.offset || "",
+        "cl.formula": casting.offset ? `${casting.offset}` : "",
       },
     };
 
-    return this.update(updateData);
+    if (commit) return this.update(updateData);
+    else return updateData;
   }
 
   /* -------------------------------------------- */
@@ -2843,25 +2807,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Roll a basic CMB check for this actor
-   *
-   * @deprecated
-   * @param {ActorRollOptions & {ranged: boolean, ability: string | null}} [options={}]
-   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
-   */
-  async rollCMB(options = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.rollCMB() is deprecated in favor of ActorPF.rollAttack({maneuver:true})",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return this.rollAttack({ maneuver: true, ...options });
-  }
-
-  /**
    * Roll a generic attack
    *
    * @example
@@ -2877,16 +2822,6 @@ export class ActorPF extends ActorBasePF {
   async rollAttack({ maneuver = false, ranged = false, ability = null, ...options } = {}) {
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
-    }
-
-    if (options.melee !== undefined) {
-      foundry.utils.logCompatibilityWarning("ActorPF.rollAttack() melee parameter has been deprecated.", {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-
-      ranged = !options.melee;
-      delete options.melee;
     }
 
     const rangeLabel = {
@@ -3026,7 +2961,7 @@ export class ActorPF extends ActorBasePF {
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, bookId) === false) return;
-    const result = pf1.dice.d20Roll(rollOptions);
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollConcentration", this, result, bookId);
     return result;
   }
@@ -3176,24 +3111,41 @@ export class ActorPF extends ActorBasePF {
           if (t.inCombat) continue;
           toCreate.push({ tokenId: t.id, sceneId: t.parent.id, actorId: this.id, hidden: t.hidden });
         }
-      } else toCreate.push({ actorId: this.id, hidden: false });
-      await combat.createEmbeddedDocuments("Combatant", toCreate);
+      }
+      // No tokens on scene
+      else {
+        const existing = combat.combatants.filter((t) => t.actor == this && !t.token);
+        if (!existing.length) {
+          toCreate.push({ actorId: this.id, hidden: false });
+        }
+      }
+
+      if (toCreate.length) await combat.createEmbeddedDocuments("Combatant", toCreate);
     }
 
+    let untokened = 0;
     // Roll initiative for combatants
-    const combatants = combat.combatants
-      .filter((c) => {
-        if (token && c.token?.id !== token.id) return false;
-        if (c.actor?.id !== this.id) return false;
-        return rerollInitiative || c.initiative === null;
-      })
-      .map((c) => c.id);
+    let combatants = combat.combatants.filter((c) => {
+      if (!c.token) untokened += 1;
+      if (token && c.token?.id !== token.id) return false;
+      if (c.actor?.id !== this.id) return false;
+      return rerollInitiative || c.initiative === null;
+    });
+
+    // If more than one relevant combatants with no token present, prune list of valid combatants.
+    if (untokened > 1) {
+      combatants = combatants.filter((c) => !!c.token || c.initiative === null);
+      if (combatants.length == 0) ui.notifications.warn(game.i18n.localize("PF1.Error.NoInitOnDuplicateCombatant"));
+    }
 
     // No combatants. Possibly from reroll being disabled.
     if (combatants.length == 0) return combat;
 
     foundry.utils.mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
-    await combat.rollInitiative(combatants, initiativeOptions);
+    await combat.rollInitiative(
+      combatants.map((c) => c.id),
+      initiativeOptions
+    );
     return combat;
   }
 
@@ -3431,6 +3383,7 @@ export class ActorPF extends ActorBasePF {
         notes: cmdNotes,
       },
       misc: {
+        hardness: actorData.traits.hardness,
         sr: actorData.attributes.sr.total,
         srNotes: srNotes,
         drNotes: drNotes,
@@ -3469,22 +3422,6 @@ export class ActorPF extends ActorBasePF {
     ChatMessage.implementation.applyRollMode(chatData, rollMode);
 
     return ChatMessage.implementation.create(chatData);
-  }
-
-  /**
-   * @internal
-   * @param key
-   */
-  _deprecatePF1PrefixConditions(key) {
-    if (/^pf1_/.test(key)) {
-      const newKey = key.replace(/^pf1_/, "");
-      foundry.utils.logCompatibilityWarning(`Condition "${key}" is deprecated in favor of "${newKey}"`, {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      });
-      key = newKey;
-    }
-    return key;
   }
 
   /**
@@ -3532,15 +3469,6 @@ export class ActorPF extends ActorBasePF {
   async setConditions(conditions = {}, context = {}) {
     conditions = foundry.utils.deepClone(conditions);
 
-    // Backgrounds compatibility
-    for (const key of Object.keys(conditions)) {
-      const newKey = this._deprecatePF1PrefixConditions(key);
-      if (newKey !== key) {
-        conditions[newKey] = conditions[key];
-        delete conditions[key];
-      }
-    }
-
     // Handle Condition tracks
     const tracks = pf1.registry.conditions.trackedConditions();
     for (const conditionGroup of tracks) {
@@ -3577,8 +3505,7 @@ export class ActorPF extends ActorBasePF {
             },
             statuses: [conditionId],
             name: currentCondition.name,
-            icon: currentCondition.texture,
-            label: currentCondition.name,
+            img: currentCondition.texture,
           };
 
           if (typeof value !== "boolean") {
@@ -3628,11 +3555,11 @@ export class ActorPF extends ActorBasePF {
    * @example
    * actor.hasCondition("grappled");
    *
+   * @deprecated This is identical to `actor.statuses.has("conditionId")`
    * @param {string} conditionId - A direct condition key, as per pf1.registry.conditions, such as `shaken` or `dazed`.
    * @returns {boolean} Condition state
    */
   hasCondition(conditionId) {
-    conditionId = this._deprecatePF1PrefixConditions(conditionId);
     return this.statuses.has(conditionId);
   }
 
@@ -3856,7 +3783,7 @@ export class ActorPF extends ActorBasePF {
 
           if (woundAdjust != 0) {
             const wounds = a.system.attributes.wounds;
-            updateData["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);
+            updateData["system.attributes.wounds.value"] = Math.clamp(wounds.value + woundAdjust, 0, wounds.max);
           }
         }
         // Normal Hit Points
@@ -3910,6 +3837,7 @@ export class ActorPF extends ActorBasePF {
           isToken,
           dr: Object.values(actor.parseResistances("dr")),
           eres: Object.values(actor.parseResistances("eres")),
+          hardness: actor.system.traits.hardness,
           di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom || [])],
           dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom || [])],
           checked: true,
@@ -3991,6 +3919,32 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Adjust temporary hit points.
+   *
+   * @example
+   * ```js
+   * actor.addTempHP(50); // Gain 50 THP
+   * actor.addTempHP(-10); // Lose 10 THP
+   * actor.addTempHP(0, {set:true}); // Set THP to zero
+   * ```
+   *
+   * @param {number} value - Value to add to temp HP
+   * @param {object} [options] - Additonal optons
+   * @param {boolean} [options.set] - If true, the temporary hit points are set to the provide value instead of added to existing.
+   * @returns {Promise<this|undefined>} - Updated document or undefined if no update occurred
+   */
+  async addTempHP(value, { set = false } = {}) {
+    const hpconf = game.settings.get("pf1", "healthConfig").variants;
+    const variant = this.type === "npc" ? hpconf.npc : hpconf.pc;
+    const vigor = variant.useWoundsAndVigor;
+
+    const curTHP = (vigor ? this.system.attributes.vigor.temp : this.system.attributes.hp.temp) || 0;
+    const newTHP = Math.max(0, !set ? curTHP + value : value);
+
+    return this.update({ system: { attributes: { [vigor ? "vigor" : "hp"]: { temp: newTHP } } } });
+  }
+
+  /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    *
    * @protected
@@ -4001,9 +3955,7 @@ export class ActorPF extends ActorBasePF {
   getWoundThresholdMultiplier({ healthConfig } = {}) {
     healthConfig ??= game.settings.get("pf1", "healthConfig").variants[this.type === "npc" ? "npc" : "pc"];
 
-    const wt = this.system.attributes?.woundThresholds ?? {};
-    const override = wt.override ?? -1;
-    return override >= 0 && healthConfig.allowWoundThresholdOverride ? override : healthConfig.useWoundThresholds;
+    return healthConfig.useWoundThresholds;
   }
 
   /**
@@ -4055,7 +4007,7 @@ export class ActorPF extends ActorBasePF {
       tempHP = hp.temp ?? 0,
       maxHP = hp.max;
 
-    let level = usage > 0 ? Math.clamped(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
+    let level = usage > 0 ? Math.clamp(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
     if (Number.isNaN(level)) level = 0; // Division by 0 due to max HP on new actors.
 
     const wtMult = this.getWoundThresholdMultiplier({ healthConfig: variant });
@@ -4066,9 +4018,9 @@ export class ActorPF extends ActorBasePF {
     wt.penalty = level * wtMult + wtMod;
 
     const penalty = wt.penalty;
-    const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
     // TODO: Convert to changes
     if (penalty != 0) {
+      const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
       for (const fk of changeFlatKeys) {
         const flats = getChangeFlat.call(this, fk, "untyped", -penalty);
         for (const k of flats) {
@@ -4077,6 +4029,19 @@ export class ActorPF extends ActorBasePF {
           foundry.utils.setProperty(this, k, curValue - penalty);
         }
       }
+
+      // Soft add change for attacks
+      const ch = new pf1.components.ItemChange({
+        _id: "woundThreshold",
+        formula: `-${penalty}`,
+        flavor: pf1.config.woundThresholdConditions[wt.level],
+        target: "attack",
+        type: "untyped",
+        value: -penalty,
+      });
+      this.changes.set(ch.id, ch);
+    } else {
+      this.changes.delete("woundThreshold");
     }
   }
 
@@ -4186,12 +4151,12 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
-      const spellbookKey = RegExp.$1;
+      const bookId = RegExp.$1;
       for (const noteSource of result) {
         noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
       }
 
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.concentrationNotes;
+      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.concentrationNotes;
       if (spellbookNotes?.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
@@ -4200,12 +4165,12 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (context.match(/^spell\.cl\.([a-z]+)$/)) {
-      const spellbookKey = RegExp.$1;
+      const bookId = RegExp.$1;
       for (const noteSource of result) {
         noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
       }
 
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.clNotes;
+      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.clNotes;
       if (spellbookNotes?.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
@@ -4221,7 +4186,13 @@ export class ActorPF extends ActorBasePF {
       return result;
     }
 
-    return [];
+    // Otherwise return notes if they directly match context
+    const notes = result.filter((n) => n.target == context);
+    for (const note of result) {
+      note.notes = note.notes.filter((o) => o.target === context).map((o) => o.text);
+    }
+
+    return result.filter((n) => n.notes.length);
   }
 
   /**
@@ -4240,7 +4211,6 @@ export class ActorPF extends ActorBasePF {
         const enrichOptions = {
           rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
           rolls: roll,
-          async: false,
           relativeTo: this,
         };
         cur.push(enrichHTMLUnrolled(note, enrichOptions));
@@ -4384,26 +4354,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Total coinage in both weighted and weightless.
-   *
-   * @deprecated Use {@link ActorPF.getTotalMergedCurrency} instead.
-   * @param {object} [options] - Additional options
-   * @param {boolean} [options.inLowestDenomination=false] - Use copper for calculations and return.
-   * @returns {number} - The total amount of currency, in gold pieces.
-   */
-  mergeCurrency({ inLowestDenomination = false } = {}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorPF.mergeCurrency() is deprecated in favor of ActorPF.getTotalCurrency()",
-      {
-        since: "PF1 v10",
-        until: "PF1 v11",
-      }
-    );
-
-    return this.getTotalCurrency({ inLowestDenomination }, { v2: true });
-  }
-
-  /**
    * Get total currency in category.
    *
    * @param {"currency"|"altCurrency"} [category="currency"] - Currency category.
@@ -4426,29 +4376,13 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {object} [options] - Additional options
    * @param {boolean} [options.inLowestDenomination=true] - Use copper for calculations and return.
-   * @param {object} [deprecated] - Deprecated options
    * @returns {number} - The total amount of currency, in copper pieces.
    */
-  getTotalCurrency(options, deprecated) {
-    if (typeof options === "string" || options === undefined) {
-      foundry.utils.logCompatibilityWarning(
-        "ActorPF.getTotalCurrency() parameters changed. Options are now the first and only parameter. Old behaviour is found in getCurrency()",
-        {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        }
-      );
-
-      return this.getCurrency(options, deprecated);
-    }
-
-    options ??= {};
-    options.inLowestDenomination ??= true;
-
+  getTotalCurrency({ inLowestDenomination = true } = {}) {
     const total =
       this.getCurrency("currency", { inLowestDenomination: true }) +
       this.getCurrency("altCurrency", { inLowestDenomination: true });
-    return options.inLowestDenomination ? total : total / 100;
+    return inLowestDenomination ? total : total / 100;
   }
 
   /**
@@ -4467,7 +4401,7 @@ export class ActorPF extends ActorBasePF {
       return;
     }
 
-    const currency = pf1.utils.currency.convert(cp, type);
+    const currency = pf1.utils.currency.convert(cp, type, { pad: true });
 
     return this.update({ system: { [category]: currency } });
   }
@@ -4538,6 +4472,18 @@ export class ActorPF extends ActorBasePF {
     /* Set the following data on a refresh
     /* ----------------------------- */
 
+    // Sync health values
+    for (const hpKey of ["hp", "wounds", "vigor"]) {
+      const hp = result.attributes[hpKey];
+      hp.value = hp.max + hp.offset;
+      /*
+      // Supporting values
+      const thp = hp.temp ?? 0;
+      hp.effective = hp.value + thp;
+      hp.ratio = hp.effective / (hp.max + thp);
+      */
+    }
+
     // Set size index
     const sizeChart = Object.keys(pf1.config.sizeChart);
     result.size = sizeChart.indexOf(result.traits.size);
@@ -4607,8 +4553,9 @@ export class ActorPF extends ActorBasePF {
    */
   static getReach(size = "med", stature = "tall") {
     let effectiveSize = size >= 0 ? size : Object.keys(pf1.config.sizeChart).indexOf(size);
-    // Long creatures count as one size smaller
-    if (stature !== "tall" && effectiveSize > 0) effectiveSize -= 1;
+    // Long creatures larger than medium count as one size smaller
+    // https://www.aonprd.com/Rules.aspx?ID=179
+    if (stature !== "tall" && effectiveSize > 4) effectiveSize -= 1;
 
     const reachStruct = (melee, reach) => ({ melee, reach });
 
@@ -4757,29 +4704,29 @@ export class ActorPF extends ActorBasePF {
   getFeatCount() {
     const feats = this.itemTypes.feat.filter((o) => o.subType === "feat");
 
+    const active = feats.filter((o) => o.isActive).length;
+    const owned = feats.length;
+
     const result = {
       max: 0,
-      active: feats.filter((o) => o.isActive).length,
-      owned: feats.length,
+      active,
+      owned,
+      disabled: owned - active,
       levels: 0,
       mythic: 0,
       formula: 0,
       changes: 0,
-      disabled: 0,
-      excess: 0,
-      missing: 0,
-    };
-
-    Object.defineProperty(result, "value", {
-      get() {
-        foundry.utils.logCompatibilityWarning("getFeatCount().value is deprecated in favor of getFeatCount().active", {
-          since: "PF1 v10",
-          until: "PF1 v11",
-        });
-
-        return this.active;
+      // Count totals
+      get discrepancy() {
+        return this.max - this.active;
       },
-    });
+      get missing() {
+        return Math.max(0, this.discrepancy);
+      },
+      get excess() {
+        return Math.max(0, -this.discrepancy);
+      },
+    };
 
     const isMindless = this.system.abilities?.int?.value === null;
 
@@ -4823,12 +4770,6 @@ export class ActorPF extends ActorBasePF {
     ).reduce((cur, c) => cur + c.value, 0);
     result.max += result.changes;
 
-    // Count totals
-    const diff = result.max - result.active;
-    result.missing = Math.max(0, diff);
-    result.excess = Math.max(0, -diff);
-    result.disabled = result.owned - result.active;
-
     return result;
   }
 
@@ -4865,7 +4806,7 @@ export class ActorPF extends ActorBasePF {
         // Try to roll restoreFormula, fall back to restoring max spell points
         let restorePoints = spellbook.spellPoints.max;
         if (spellbook.spellPoints.restoreFormula) {
-          const restoreRoll = await RollPF.safeRollAsync(spellbook.spellPoints.restoreFormula, rollData);
+          const restoreRoll = await RollPF.safeRoll(spellbook.spellPoints.restoreFormula, rollData);
           if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
           else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
         }
@@ -5070,14 +5011,14 @@ export class ActorPF extends ActorBasePF {
         updates["system.uses.value"] = Math.min(current.value + value, current.max);
       } else {
         if (isBar)
-          updates[`system.${attribute}.value`] = Math.clamped(current.value + value, current.min || 0, current.max);
+          updates[`system.${attribute}.value`] = Math.clamp(current.value + value, current.min || 0, current.max);
         else updates[`system.${attribute}`] = current + value;
       }
     }
     // Absolute
     else {
       if (isResource) {
-        updates["system.uses.value"] = Math.clamped(value, 0, current.max);
+        updates["system.uses.value"] = Math.clamp(value, 0, current.max);
       } else {
         if (isBar) updates[`system.${attribute}.value`] = Math.min(value, current.max);
         else updates[`system.${attribute}`] = value;
@@ -5122,4 +5063,16 @@ export class ActorPF extends ActorBasePF {
  * @property {object} types - Damage type data
  * @property {string} types.custom - Custom damage types
  * @property {string[]} types.values - Standard damage types
+ */
+
+/**
+ * TODO: Merge data/handling to changes
+ *
+ * @typedef {object} SourceInfo
+ * @property {string} modifier - Bonus type
+ * @property {string} name - Item name or other label
+ * @property {"add"|"set"} operator - Change operator
+ * @property {string} type - Arbitrary type
+ * @property {number} value - Change value
+ * @property {ItemChange} change - Parent change
  */

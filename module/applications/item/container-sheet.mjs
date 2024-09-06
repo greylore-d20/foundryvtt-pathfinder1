@@ -106,9 +106,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       this.item.getValue({ recursive: false, inLowestDenomination: true }) -
       coinage;
 
-    context.totalValue = pf1.utils.currency.split(cpValue);
-    context.sellValue = pf1.utils.currency.split(cpSellValue);
-    context.currency = pf1.utils.currency.split(coinage);
+    context.totalValue = pf1.utils.currency.split(cpValue, { pad: true });
+    context.sellValue = pf1.utils.currency.split(cpSellValue, { pad: true });
+    context.currency = pf1.utils.currency.split(coinage, { pad: true });
 
     // Set value labels
     context.labels ??= {};
@@ -276,7 +276,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     sb.each(function () {
       if (this.value.length > 0) $(this).change();
     });
-    html.find(".clear-search").on("click", this._clearSearch.bind(this));
   }
 
   _onItemCreate(event) {
@@ -362,7 +361,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.document.isOwner });
+      content = await TextEditor.enrichHTML(content, { rollData, secrets: this.document.isOwner });
 
       const div = $(content);
 
@@ -743,11 +742,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
           else jq.hide();
         } else jq.show();
       });
-  }
-
-  _clearSearch(event) {
-    this._filters.search.container = "";
-    $(event.target).prev(".search-input").val("").change();
   }
 
   // IME related

@@ -69,6 +69,9 @@ export class Widget_CategorizedItemPicker extends Application {
     context.items = [];
 
     for (const cat of this.categories) {
+      cat.hidden = cat.validity.item === false;
+      if (cat.hidden) continue;
+
       for (const item of cat.items) {
         if (item.validity.item === false) continue;
         context.items.push({
@@ -80,6 +83,8 @@ export class Widget_CategorizedItemPicker extends Application {
       // Has any valid choices
       cat.hasChoices = context.items.some((i) => i.category === cat.key && i.validity.valid);
     }
+
+    context.categories = context.categories.filter((cat) => !cat.hidden);
 
     return context;
   }

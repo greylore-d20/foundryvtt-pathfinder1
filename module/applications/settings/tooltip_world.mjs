@@ -80,6 +80,8 @@ export class TooltipWorldConfig extends FormApplication {
   }
 
   async _updateObject(event, formData) {
+    if (!this.form.reportValidity()) return;
+
     const settings = foundry.utils.expandObject(formData);
 
     await game.settings.set("pf1", "tooltipWorldConfig", settings);

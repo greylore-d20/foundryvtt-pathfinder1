@@ -13,9 +13,17 @@ system:
           type: action
       duration:
         units: inst
+      measureTemplate:
+        color: '#1eb300'
+        size: '30'
+        type: cone
       name: Use
       range:
         units: seeText
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Fortitude negates
+        type: fort
       target:
         value: 30-ft. cone
   associations:
@@ -39,8 +47,14 @@ system:
       of the Pathfinder RPG Core Rulebook. At 17th level, you can use this
       ability twice per day. At 20th level you can use this ability three times
       per day.</p>
+  sources:
+    - id: PZO9029
+      pages: '29'
   subType: classFeat
   tag: classFeat_pestilentialBreath
+  tags:
+    - Bloodline Power
+    - Pestilence Bloodline
   uses:
     maxFormula: >-
       @class.level >= 20 ? 3 : ((@class.level > 16 && @class.level < 20) ? 2 :

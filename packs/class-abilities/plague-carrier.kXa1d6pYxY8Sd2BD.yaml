@@ -4,6 +4,37 @@ img: systems/pf1/icons/skills/green_05.jpg
 name: Plague Carrier
 system:
   abilityType: su
+  actions:
+    - _id: CroLorHFMhVlsJXH
+      ability:
+        attack: str
+      actionType: mwak
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      name: Attack
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
+        description: Fortitude negates
+        type: fort
+      target:
+        value: One target
+      touch: true
+    - _id: JUezfJb6ajdZPm6f
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      name: Surpess
+      range:
+        units: personal
   associations:
     classes:
       - Sorcerer
@@ -17,6 +48,12 @@ system:
       contracting mummy rot by making a <em>Fortitude</em> save – the DC is
       equal to 10 + 1/2 your <em>sorcerer</em> level + your <em>Charisma</em>
       modifier.</p>
+  sources:
+    - id: PZO9029
+      pages: '29'
   subType: classFeat
+  tags:
+    - Bloodline Power
+    - Pestilence Bloodline
 type: feat
 

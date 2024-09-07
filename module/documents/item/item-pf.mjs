@@ -1562,6 +1562,8 @@ export class ItemPF extends ItemBasePF {
     const result = new Set(contexts);
     for (const context of contexts) {
       switch (context) {
+        case "sattack":
+        case "wattack":
         case "mattack":
         case "rattack":
         case "nattack":

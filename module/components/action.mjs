@@ -876,8 +876,25 @@ export class ItemAction {
     if (this.isCombatManeuver) contexts.push("cmb");
     if (this.isRanged) contexts.push("rattack");
     else contexts.push("mattack");
-    if (this.item.subType === "natural") contexts.push("nattack");
-    if (this.data.actionType === "twak") contexts.push("tattack");
+
+    const isNatural = this.item.subType === "natural";
+    if (isNatural) contexts.push("nattack");
+
+    switch (this.data.actionType) {
+      case "twak":
+        contexts.push("tattack");
+        if (!isNatural) contexts.push("wattack");
+        break;
+      case "mwak":
+      case "rwak":
+        if (!isNatural) contexts.push("wattack");
+        break;
+      case "msak":
+      case "rsak":
+        contexts.push("sattack");
+        break;
+    }
+
     return this.item.getContextChanges(contexts);
   }
 

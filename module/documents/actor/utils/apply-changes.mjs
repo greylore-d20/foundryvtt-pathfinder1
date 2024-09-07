@@ -268,6 +268,12 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "attack":
       result.push("system.attributes.attack.general");
       break;
+    case "wattack":
+      result.push("system.attributes.attack.weapon");
+      break;
+    case "sattack":
+      result.push("system.attributes.attack.spell");
+      break;
     case "mattack":
       result.push("system.attributes.attack.melee");
       break;

@@ -3008,7 +3008,7 @@ Hooks.once("ready", async () => {
   const index = await game.packs.get("pf1.classes").getIndex({ fields: ["system.tag", "system.subType"] });
 
   index.forEach((e) => {
-    if (e.system?.subType && e.system?.subType !== "base") return;
+    if (e.system?.subType && !["base", "npc"].includes(e.system?.subType)) return;
 
     const tag = e.system?.tag;
     if (!tag) return;

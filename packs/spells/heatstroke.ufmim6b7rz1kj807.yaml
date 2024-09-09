@@ -14,10 +14,18 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: 1d4
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: spec
         value: 1 minute/level
       name: Use
+      nonlethal: true
       range:
         units: close
       save:
@@ -35,9 +43,10 @@ system:
       ranged touch attack with the ray to hit your target.</p><p>The ray
       inflicts 1d4 points of nonlethal damage, causing the target to suffer from
       heatstroke as its body temperature dramatically increases. Except as noted
-      above, this spell otherwise functions as <i>ray of
-      exhaustion</i>.</p><p>Characters wearing heavy clothing or armor of any
-      sort take a -4 penalty on their saves.</p>
+      above, this spell otherwise functions as
+      @UUID[Compendium.pf1.spells.Item.vlzave855irdc7yu]{ray of
+      exhaustion}.</p><p>Characters wearing heavy clothing or armor of any sort
+      take a –4 penalty on their saves.</p>
   descriptors:
     value:
       - fire

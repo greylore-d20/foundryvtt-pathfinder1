@@ -13,6 +13,13 @@ system:
           cost: 2
           type: action
       area: 15-ft.-radius burst
+      damage:
+        parts:
+          - formula: 3d6 + @cl
+            type:
+              custom: ''
+              values:
+                - positive
       duration:
         units: spec
         value: instantaneous plus 1 round (see text)
@@ -31,9 +38,10 @@ system:
     verbal: true
   description:
     value: >-
-      <p>This spell functions like <i>positive pulse</i>, except that the damage
-      dealt increases to 3d6 plus your caster level, and the bonus on saving
-      throws increases to +8.</p>
+      <p>This spell functions like
+      @UUID[Compendium.pf1.spells.Item.bvvjjjidh2duqwta]{positive pulse}, except
+      that the damage dealt increases to 3d6 plus your caster level, and the
+      bonus on saving throws increases to +8.</p>
   learnedAt:
     class:
       arcanist: 4

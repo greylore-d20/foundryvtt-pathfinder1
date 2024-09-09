@@ -13,6 +13,13 @@ system:
           cost: 2
           type: action
       area: cone-shaped burst
+      damage:
+        parts:
+          - formula: 10d6
+            type:
+              custom: ''
+              values:
+                - sonic
       duration:
         units: inst
       measureTemplate:
@@ -25,20 +32,49 @@ system:
       save:
         description: Fortitude partial or Reflex negates (object); see text
         type: ref
+    - _id: pUjVh1fUYtjPaZF3
+      actionType: spellsave
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      area: cone-shaped burst
+      damage:
+        parts:
+          - formula: (min(20, @cl))d6
+            type:
+              custom: ''
+              values:
+                - sonic
+      duration:
+        units: inst
+      measureTemplate:
+        size: '60'
+        type: cone
+      name: Against Crystalline
+      range:
+        units: ft
+        value: '60'
+      save:
+        description: Fortitude partial or Reflex negates (object); see text
+        type: ref
   components:
     focus: true
     somatic: true
     verbal: true
   description:
     value: >-
-      <p>This spell functions like <i>shout,</i> except that the cone deals 10d6
-      points of sonic damage (or 1d6 points of sonic damage per caster level,
-      maximum 20d6, against exposed brittle or crystalline objects or
-      crystalline creatures). It also causes creatures to be stunned for 1 round
-      and deafened for 4d6 rounds. A creature in the area of the cone can negate
-      the stunning and halve both the damage and the duration of the deafness
-      with a successful Fortitude save. A creature holding vulnerable objects
-      can attempt a Reflex save to negate the damage to those objects.</p>
+      <p>This spell functions like
+      @UUID[Compendium.pf1.spells.Item.bacuzpculp9tld48]{shout}, except that the
+      cone deals 10d6 points of sonic damage (or 1d6 points of sonic damage per
+      caster level, maximum 20d6, against exposed brittle or crystalline objects
+      or crystalline creatures). It also causes creatures to be stunned for 1
+      round and deafened for 4d6 rounds. A creature in the area of the cone can
+      negate the stunning and halve both the damage and the duration of the
+      deafness with a successful Fortitude save. A creature holding vulnerable
+      objects can attempt a Reflex save to negate the damage to those
+      objects.</p>
   descriptors:
     value:
       - sonic

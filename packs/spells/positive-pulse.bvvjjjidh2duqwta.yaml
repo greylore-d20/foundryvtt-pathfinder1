@@ -13,6 +13,13 @@ system:
           cost: 2
           type: action
       area: 5-ft.-radius burst
+      damage:
+        parts:
+          - formula: 1d6 + min(5, floor(@cl / 2))
+            type:
+              custom: ''
+              values:
+                - positive
       duration:
         units: spec
         value: instantaneous plus 1 round (see text)

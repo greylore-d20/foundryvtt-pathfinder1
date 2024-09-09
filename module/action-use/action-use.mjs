@@ -1159,7 +1159,8 @@ export class ActionUse {
       .map((c) => c.name);
 
     // Special case
-    if (this.actor.system.conditions?.deaf && this.item.type === "spell") {
+    // TODO: Move this configuration to conditions registry
+    if (this.actor.statuses.has("deaf") && this.item.type === "spell") {
       // TODO: Check if someone modified the conditions to show anyway?
       conditions.push(pf1.registry.conditions.get("deaf").name);
     }

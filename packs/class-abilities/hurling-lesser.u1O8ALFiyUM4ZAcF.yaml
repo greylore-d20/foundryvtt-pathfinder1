@@ -4,6 +4,32 @@ img: systems/pf1/icons/feats/deafening-critical.jpg
 name: Hurling, Lesser
 system:
   abilityType: ex
+  actions:
+    - _id: uCN9jkVFPJiAKBR6
+      ability:
+        attack: dex
+        damage: str
+        damageMult: 1
+      actionType: twak
+      activation:
+        type: full
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        units: inst
+      name: Use
+      range:
+        maxIncrements: 5
+        units: ft
+        value: '10'
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.str.mod
+        description: Reflex halfes
+        type: ref
+      target:
+        value: One object
+      touch: true
   associations:
     classes:
       - Barbarian
@@ -22,7 +48,9 @@ system:
       the barbarian’s level + the barbarian’s Strength modifier) for half
       damage. The barbarian may apply
       @Compendium[pf1.feats.FUW5mIXHNBBIQ1Sq]{Power Attack} to this attack as a
-      one- or two-handed weapon, as appropriate.</p>
+      one- or two-handed weapon, as appropriate.</p><hr
+      /><p><strong>Usage</strong>: Add damage formula according to object
+      size.</p>
   sources:
     - id: PZO1115
       pages: '76'

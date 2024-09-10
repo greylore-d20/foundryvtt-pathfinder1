@@ -6,17 +6,23 @@ name: Make Whole, Greater
 system:
   actions:
     - _id: ok17q189gcrbvgd6
-      actionType: spellsave
+      actionType: heal
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: (min(10, @cl))d6 + min(10, @cl)
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       name: Use
       range:
-        maxIncrements: '1'
         units: ft
         value: '10'
       save:

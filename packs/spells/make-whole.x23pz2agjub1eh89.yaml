@@ -6,13 +6,20 @@ name: Make Whole
 system:
   actions:
     - _id: s6bdbadonrhk2419
-      actionType: spellsave
+      actionType: heal
       activation:
         cost: 10
         type: minute
         unchained:
           cost: 10
           type: minute
+      damage:
+        parts:
+          - formula: (min(5, @cl))d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       name: Use

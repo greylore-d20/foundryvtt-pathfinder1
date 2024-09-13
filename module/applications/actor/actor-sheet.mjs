@@ -557,7 +557,7 @@ export class ActorSheetPF extends ActorSheet {
         values = trait.value instanceof Array ? trait.value : [trait.value];
       }
       trait.selected = values.reduce((obj, t) => {
-        obj[t] = choices[t];
+        obj[t] = choices[t] || t;
         return obj;
       }, {});
 
@@ -3743,11 +3743,24 @@ export class ActorSheetPF extends ActorSheet {
     const label = a.parentElement.querySelector("label");
     const choices =
       a.dataset.options in pf1.registry ? pf1.registry[a.dataset.options].getLabels() : pf1.config[a.dataset.options];
+
+    const path = a.dataset.for;
+
+    const { value: keys } = foundry.utils.getProperty(this.actor, path) ?? {};
+    // Display invalid choices
+    if (Array.isArray(keys)) {
+      for (const key of keys) {
+        if (!(key in choices)) {
+          choices[key] = key;
+        }
+      }
+    }
+
     const options = {
-      name: a.dataset.for,
+      name: path,
       title: label.innerText,
       subject: a.dataset.options,
-      choices: choices,
+      choices,
     };
 
     let app = Object.values(this.actor.apps).find(

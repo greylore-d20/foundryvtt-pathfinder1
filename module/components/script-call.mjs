@@ -177,7 +177,7 @@ export class ItemScriptCall {
     const item = this.parent;
     const actor = item.actor;
     const action = shared.action ?? null;
-    const token = actor?.token?.object ?? actor.getActiveTokens(false, false)[0];
+    const token = actor?.token?.object ?? actor?.getActiveTokens(false, false)[0];
 
     const scm = await this.getDelegate();
     if (!scm) return;

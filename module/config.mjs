@@ -1032,6 +1032,7 @@ export const racialTraitCategories = {
   defense: "PF1.RacialTraitCategories.defense",
   featSkills: "PF1.RacialTraitCategories.featSkills",
   magical: "PF1.RacialTraitCategories.magical",
+  movement: "PF1.RacialTraitCategories.movement",
   senses: "PF1.RacialTraitCategories.senses",
   offense: "PF1.RacialTraitCategories.offense",
   other: "PF1.RacialTraitCategories.other",

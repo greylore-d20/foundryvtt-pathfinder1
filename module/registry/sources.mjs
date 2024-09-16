@@ -3688,6 +3688,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9270",
       name: "Numeria, Land of Fallen Stars",
+      abbr: "NLFS",
       date: "2014-06-01",
       pages: 64,
       isbn: "978-1-60125-653-9",

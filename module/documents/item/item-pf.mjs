@@ -594,7 +594,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get uuid() {
-    if (this.parentItem) this.parentItem.uuid + `.Item.${this.id}`;
+    if (this.parentItem) return this.parentItem.uuid + `.Item.${this.id}`;
     return super.uuid;
   }
 

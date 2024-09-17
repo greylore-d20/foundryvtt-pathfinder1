@@ -2797,7 +2797,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _onLevelUp(event) {
-    event.preventDefault;
+    event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 

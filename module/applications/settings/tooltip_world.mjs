@@ -22,7 +22,7 @@ export class TokenTooltipWorldConfigModel extends foundry.abstract.DataModel {
     if (data.hideActorName !== undefined) {
       if (data.hideActorNameByDisposition === undefined) {
         // 1 (All) for true, -2 (None) for false
-        data.hideActorNameByDisposition == data.hideActorName ? 1 : -2;
+        data.hideActorNameByDisposition = data.hideActorName ? 1 : -2;
       }
       delete data.hideActorName;
     }

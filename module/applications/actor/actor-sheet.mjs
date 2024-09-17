@@ -3322,7 +3322,9 @@ export class ActorSheetPF extends ActorSheet {
     if (!target) throw new Error(`Invalid actor ID as gift target: "${targetActorId}"`);
 
     if (target.isOwner) {
-      const docs = await target.createEmbeddedDocuments("Item", [item.toObject()]);
+      const itemData = item.toObject();
+      delete itemData.system?.links?.children;
+      const docs = await target.createEmbeddedDocuments("Item", [itemData]);
       // Delete only if item was successfully created
       if (docs.length > 0) await item.delete();
     } else {

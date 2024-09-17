@@ -866,7 +866,7 @@ export class ActorSheetPF extends ActorSheet {
     // Search boxes
     {
       const sb = html.find(".search-input");
-      sb.on("keyup change", this._searchFilterChange.bind(this));
+      sb.on("change input", this._searchFilterChange.bind(this));
       sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
       this.searchRefresh = true;
       // Filter tabs on followup refreshes
@@ -3732,7 +3732,7 @@ export class ActorSheetPF extends ActorSheet {
     //if (unchanged) return; // nothing changed
     this._filters.search[category] = search;
 
-    if (event.type === "keyup") {
+    if (event.type === "input") {
       // Delay search
       if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), this.searchDelay);
     } else {

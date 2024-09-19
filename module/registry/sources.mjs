@@ -95,7 +95,7 @@ export class Sources extends Registry {
       date: "2009-08-13",
       pages: 576,
       isbn: "978-1-60125-150-3",
-      url: "http://paizo.com/products/btpy88yj",
+      url: "https://paizo.com/products/btpy88yj",
       type: "core",
     },
     {
@@ -105,7 +105,7 @@ export class Sources extends Registry {
       date: "2010-06-23",
       pages: 320,
       isbn: "978-1-60125-217-3",
-      url: "http://paizo.com/products/btpy8ffn",
+      url: "https://paizo.com/products/btpy8ffn",
       type: "core",
     },
     {
@@ -114,7 +114,7 @@ export class Sources extends Registry {
       date: "2009-10-21",
       pages: 320,
       isbn: "978-1-60125-183-1",
-      url: "http://paizo.com/products/btpy8auu",
+      url: "https://paizo.com/products/btpy8auu",
       type: "core",
     },
     {
@@ -123,7 +123,7 @@ export class Sources extends Registry {
       date: "2010-12-29",
       pages: 320,
       isbn: "978-1-60125-268-5",
-      url: "http://paizo.com/products/btpy8hif",
+      url: "https://paizo.com/products/btpy8hif",
       type: "core",
     },
     {
@@ -132,7 +132,7 @@ export class Sources extends Registry {
       date: "2011-12-21",
       pages: 320,
       isbn: "978-1-60125-378-1",
-      url: "http://paizo.com/products/btpy8odu",
+      url: "https://paizo.com/products/btpy8odu",
       type: "core",
     },
     {
@@ -141,7 +141,7 @@ export class Sources extends Registry {
       date: "2013-10-30",
       pages: 320,
       isbn: "978-1-60125-575-4",
-      url: "http://paizo.com/products/btpy91ds",
+      url: "https://paizo.com/products/btpy91ds",
       type: "core",
     },
     {
@@ -150,7 +150,7 @@ export class Sources extends Registry {
       date: "2015-11-18",
       pages: 320,
       isbn: "978-1-60125-792-5",
-      url: "http://paizo.com/products/btpy9g9x",
+      url: "https://paizo.com/products/btpy9g9x",
       type: "core",
     },
     {
@@ -159,7 +159,7 @@ export class Sources extends Registry {
       date: "2017-04-26",
       pages: 320,
       isbn: "978-1-60125-931-8",
-      url: "http://paizo.com/products/btpy9r1y",
+      url: "https://paizo.com/products/btpy9r1y",
       type: "core",
     },
     {
@@ -169,7 +169,7 @@ export class Sources extends Registry {
       date: "2015-08-14",
       pages: 256,
       isbn: "978-1-60125-671-3",
-      url: "http://paizo.com/products/btpy978v",
+      url: "https://paizo.com/products/btpy978v",
       type: "core",
     },
     {
@@ -179,7 +179,7 @@ export class Sources extends Registry {
       date: "2010-08-05",
       pages: 320,
       isbn: "978-1-60125-246-3",
-      url: "http://paizo.com/products/btpy8fo1",
+      url: "https://paizo.com/products/btpy8fo1",
       type: "core",
     },
     {
@@ -189,7 +189,7 @@ export class Sources extends Registry {
       date: "2012-06-20",
       pages: 256,
       isbn: "978-1-60125-390-3",
-      url: "http://paizo.com/products/btpy8rv2",
+      url: "https://paizo.com/products/btpy8rv2",
       type: "core",
     },
     {
@@ -198,7 +198,7 @@ export class Sources extends Registry {
       date: "2017-05-24",
       pages: 192,
       isbn: "978-1-60125-938-7",
-      url: "http://paizo.com/products/btpy9sjo",
+      url: "https://paizo.com/products/btpy9sjo",
       type: "core",
     },
     {
@@ -207,7 +207,7 @@ export class Sources extends Registry {
       date: "2015-03-25",
       pages: 160,
       isbn: "978-1-60125-626-3",
-      url: "http://paizo.com/products/btpy99sk",
+      url: "https://paizo.com/products/btpy99sk",
       type: "core",
     },
     {
@@ -217,7 +217,7 @@ export class Sources extends Registry {
       date: "2015-07-29",
       pages: 272,
       isbn: "978-1-60125-762-8",
-      url: "http://paizo.com/products/btpy9egu",
+      url: "https://paizo.com/products/btpy9egu",
       type: "core",
     },
     {
@@ -226,7 +226,7 @@ export class Sources extends Registry {
       date: "2015-04-29",
       pages: 256,
       isbn: "978-1-60125-715-4",
-      url: "http://paizo.com/products/btpy9c25",
+      url: "https://paizo.com/products/btpy9c25",
       type: "core",
     },
     {
@@ -235,7 +235,7 @@ export class Sources extends Registry {
       date: "2016-11-16",
       pages: 256,
       isbn: "978-1-60125-906-6",
-      url: "http://paizo.com/products/btpy9oo7",
+      url: "https://paizo.com/products/btpy9oo7",
       type: "core",
     },
     {
@@ -245,7 +245,7 @@ export class Sources extends Registry {
       date: "2014-10-22",
       pages: 256,
       isbn: "978-1-60125-686-7",
-      url: "http://paizo.com/products/btpy9926",
+      url: "https://paizo.com/products/btpy9926",
       type: "core",
     },
     {
@@ -254,7 +254,7 @@ export class Sources extends Registry {
       date: "2016-08-04",
       pages: 256,
       isbn: "978-1-60125-849-6",
-      url: "http://paizo.com/products/btpy9n5a",
+      url: "https://paizo.com/products/btpy9n5a",
       type: "core",
     },
     {
@@ -263,7 +263,7 @@ export class Sources extends Registry {
       date: "2013-08-14",
       pages: 256,
       isbn: "978-1-60125-549-5",
-      url: "http://paizo.com/products/btpy8ywe",
+      url: "https://paizo.com/products/btpy8ywe",
       type: "core",
     },
     {
@@ -272,7 +272,7 @@ export class Sources extends Registry {
       date: "2012-11-21",
       pages: 320,
       isbn: "978-1-60125-467-2",
-      url: "http://paizo.com/products/btpy8v3a",
+      url: "https://paizo.com/products/btpy8v3a",
       type: "core",
     },
     {
@@ -281,7 +281,7 @@ export class Sources extends Registry {
       date: "2013-05-29",
       pages: 256,
       isbn: "978-1-60125-498-6",
-      url: "http://paizo.com/products/btpy8x64",
+      url: "https://paizo.com/products/btpy8x64",
       type: "core",
     },
     {
@@ -291,7 +291,7 @@ export class Sources extends Registry {
       date: "2011-08-04",
       pages: 256,
       isbn: "978-1-60125-359-0",
-      url: "http://paizo.com/products/btpy8mcz",
+      url: "https://paizo.com/products/btpy8mcz",
       type: "core",
     },
     {
@@ -301,7 +301,7 @@ export class Sources extends Registry {
       date: "2012-08-16",
       pages: 400,
       isbn: "978-1-60125-449-8",
-      url: "http://paizo.com/products/btpy8tmc",
+      url: "https://paizo.com/products/btpy8tmc",
       type: "core",
     },
     {
@@ -311,7 +311,7 @@ export class Sources extends Registry {
       date: "2016-03-30",
       pages: 256,
       isbn: "978-1-60125-826-7",
-      url: "http://paizo.com/products/btpy9j6p",
+      url: "https://paizo.com/products/btpy9j6p",
       type: "core",
     },
     {
@@ -321,7 +321,7 @@ export class Sources extends Registry {
       date: "2011-05-08",
       pages: 256,
       isbn: "978-1-60125-299-9",
-      url: "http://paizo.com/products/btpy8k8r",
+      url: "https://paizo.com/products/btpy8k8r",
       type: "core",
     },
     {
@@ -437,7 +437,7 @@ export class Sources extends Registry {
       date: "2016-10-01",
       pages: 480,
       isbn: "978-1-60125-890-8",
-      url: "http://paizo.com/products/btpy9nme",
+      url: "https://paizo.com/products/btpy9nme",
       type: "ap",
     },
     {
@@ -1034,7 +1034,7 @@ export class Sources extends Registry {
       date: "2012-07-01",
       pages: 432,
       isbn: "978-1-60125-436-8",
-      url: "http://paizo.com/products/btpy8tc0",
+      url: "https://paizo.com/products/btpy8tc0",
       type: "ap",
     },
     {
@@ -3239,7 +3239,7 @@ export class Sources extends Registry {
       date: "2008-08-01",
       pages: 256,
       isbn: "978-1-60125-112-1",
-      url: "http://paizo.com/products/btpy84eo",
+      url: "https://paizo.com/products/btpy84eo",
       type: "setting",
     },
     {
@@ -3413,7 +3413,7 @@ export class Sources extends Registry {
       date: "2011-03-01",
       pages: 320,
       isbn: "978-1-60125-269-2",
-      url: "http://paizo.com/products/btpy8ief",
+      url: "https://paizo.com/products/btpy8ief",
       type: "setting",
     },
     {
@@ -3665,7 +3665,7 @@ export class Sources extends Registry {
       date: "2014-04-01",
       pages: 320,
       isbn: "978-1-60125-597-6",
-      url: "http://paizo.com/products/btpy94wj",
+      url: "https://paizo.com/products/btpy94wj",
       type: "setting",
     },
     {
@@ -3782,7 +3782,7 @@ export class Sources extends Registry {
       date: "2015-09-01",
       pages: 256,
       isbn: "978-1-60125-722-2",
-      url: "http://paizo.com/products/btpy9g9v",
+      url: "https://paizo.com/products/btpy9g9v",
       type: "setting",
     },
     {

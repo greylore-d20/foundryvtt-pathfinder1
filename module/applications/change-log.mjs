@@ -57,15 +57,20 @@ export class ChangeLogWindow extends FormApplication {
       const promise = new Promise((resolve) => {
         xhr.onload = () => {
           if (xhr.status === 200) {
-            context.changelog = this._processChangelog(xhr.response);
-            this._cache = context.changelog;
-            resolve(context);
+            this._cache = this._processChangelog(xhr.response);
+          } else {
+            context.error = {
+              number: xhr.status,
+              message: xhr.statusText,
+              url: xhr.responseURL,
+            };
           }
+          resolve();
         };
       });
       xhr.send(null);
 
-      return promise;
+      await promise;
     }
 
     context.changelog = this._cache;

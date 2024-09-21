@@ -24,6 +24,7 @@ export class PointBuyCalculator extends DocumentSheet {
       template: "systems/pf1/templates/apps/point-buy-calculator.hbs",
       width: 320,
       height: "auto",
+      sheetConfig: false,
       closeOnSubmit: false,
       submitOnClose: false,
     });

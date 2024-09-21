@@ -91,7 +91,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     const mdex = itemData.armor?.dex ?? null;
     if (Number.isFinite(mdex)) labels.mdex = true;
 
-    if (this.hasSlots) {
+    if (this.hasSlots || ["armor", "shield"].includes(this.subType)) {
       if (this.subType === "armor") {
         labels.slot = pf1.config.equipmentSlots.armor.armor;
       } else if (this.subType === "shield") {

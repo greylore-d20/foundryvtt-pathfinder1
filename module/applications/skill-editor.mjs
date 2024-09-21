@@ -17,6 +17,7 @@ export class SkillEditor extends DocumentSheet {
       template: "systems/pf1/templates/apps/skill-editor.hbs",
       dragDrop: [{ dragSelector: null, dropSelector: "*" }],
       classes: [...options.classes, "pf1", "skill-editor"],
+      sheetConfig: false,
       submitOnChange: true,
       closeOnSubmit: false,
       submitOnClose: false,

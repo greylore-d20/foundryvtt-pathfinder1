@@ -5,6 +5,7 @@ export class ActorRestDialog extends DocumentSheet {
       classes: ["pf1", "actor-rest"],
       template: "systems/pf1/templates/apps/actor-rest.hbs",
       width: 500,
+      sheetConfig: false,
       closeOnSubmit: true,
     });
   }

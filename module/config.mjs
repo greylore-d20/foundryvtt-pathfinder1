@@ -2729,7 +2729,7 @@ export const sheetSections = {
         actions: true,
         equip: true,
       },
-      create: { type: "weapon" },
+      create: { type: "weapon", system: { subType: "simple" } },
       sort: 1_000,
     },
     armor: {

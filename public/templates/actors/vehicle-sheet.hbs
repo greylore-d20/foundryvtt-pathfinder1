@@ -197,7 +197,7 @@
           <ol class="item-groups-list">
           {{#each attacks as |section sid|}}
           {{#unless section._hidden}}
-            <ol class="item-list" data-type="attack" data-subtype="{{id}}">
+            <ol class="item-list" data-list="{{id}}" data-type="{{create.type}}" data-subtype="{{create.system.subType}}">
               <li class="item-list-header flexrow attacks-{{id}}">
                 <div class="item-name">
                   <h3>{{section.label}}</h3>
@@ -222,7 +222,7 @@
 
               {{#each section.items as |item iid|}}
               <li class="item flexrow" data-item-id="{{item.id}}">
-                <div class="item-name flexrow rollable">
+                <div class="item-name rollable">
                   <div class="item-image" style='background-image: url("{{item.img}}")'></div>
                   <h4>
                     {{item.name~}}

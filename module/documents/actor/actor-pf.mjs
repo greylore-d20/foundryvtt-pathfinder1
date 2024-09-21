@@ -4757,13 +4757,7 @@ export class ActorPF extends ActorBasePF {
    */
   getQuickActions() {
     return this.items
-      .filter(
-        (o) =>
-          o.isActive &&
-          o.system.showInQuickbar === true &&
-          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type) &&
-          !o.showUnidentifiedData
-      )
+      .filter((o) => o.isActive && o.system.showInQuickbar === true && o.showUnidentifiedData !== true)
       .sort((a, b) => a.sort - b.sort)
       .map((item) => {
         const qi = {

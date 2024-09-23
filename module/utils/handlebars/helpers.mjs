@@ -23,7 +23,8 @@ export const registerHandlebarsHelpers = function () {
     const range = action.data.range.value;
     const rangeType = action.data.range.units;
 
-    if (rangeType == null) return null;
+    if (!rangeType) return null;
+    if (rangeType === "spec") return null; // Special is its own thing
 
     const [rng, unit] = calculateRange(range, rangeType, rollData);
     return `${rng} ${unit}`;

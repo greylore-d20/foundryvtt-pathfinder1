@@ -843,7 +843,9 @@ export class ItemAction {
     if (this.hasRange) {
       const sourceUnits = actionData.range.units;
       const rangeLabel = pf1.config.distanceUnits[sourceUnits];
-      if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
+      if (sourceUnits === "spec") {
+        // Special can not be displayed reasonably
+      } else if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
         labels.range = rangeLabel;
       } else {
         const range = this.getRange({ type: "single", rollData });

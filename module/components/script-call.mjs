@@ -1,10 +1,27 @@
 /**
  * Script Call
  */
-export class ItemScriptCall {
-  constructor(data, parent) {
-    this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
-    this.parent = parent;
+export class ItemScriptCall extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      _id: foundry.utils.randomID(16),
+      name: game.i18n.localize("PF1.ScriptCalls.NewName"),
+      img: "icons/svg/dice-target.svg",
+      type: "script",
+      value: "",
+      category: "",
+      hidden: false,
+    };
+  }
+
+  /**
+   * @override
+   * @protected
+   * @param {object} options - Constructor options
+   */
+  _initialize(options = {}) {
+    super._initialize(options);
 
     this.prepareData();
   }
@@ -12,8 +29,8 @@ export class ItemScriptCall {
   prepareData() {
     if (this.type === "macro") {
       const macro = fromUuidSync(this.value);
-      this.data.name = macro?.name || `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
-      this.data.img = macro?.img || "icons/svg/hazard.svg";
+      this.name = macro?.name || `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
+      this.img = macro?.img || "icons/svg/hazard.svg";
     }
   }
 
@@ -30,7 +47,7 @@ export class ItemScriptCall {
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
-      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
+      data = data.map((dataObj) => new this(dataObj).toObject());
       const newScriptCallData = parent.toObject().system.scriptCalls || [];
       newScriptCallData.push(...data);
 
@@ -45,50 +62,17 @@ export class ItemScriptCall {
   }
 
   static get defaultData() {
-    return {
-      _id: foundry.utils.randomID(16),
-      name: game.i18n.localize("PF1.ScriptCalls.NewName"),
-      img: "icons/svg/dice-target.svg",
-      type: "script",
-      value: "",
-      category: "",
-      hidden: false,
-    };
+    foundry.utils.logCompatibilityWarning("ItemScriptCall.defaultData has been deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return new this().toObject();
   }
 
   /** @type {string} */
   get id() {
-    return this.data._id;
-  }
-
-  /** @type {string} */
-  get type() {
-    return this.data.type;
-  }
-
-  /** @type {string} */
-  get value() {
-    return this.data.value;
-  }
-
-  /** @type {string} */
-  get category() {
-    return this.data.category;
-  }
-
-  /** @type {string} */
-  get name() {
-    return this.data.name;
-  }
-
-  /** @type {string} */
-  get img() {
-    return this.data.img;
-  }
-
-  /** @type {boolean} */
-  get hidden() {
-    return this.data.hidden;
+    return this._id;
   }
 
   /** @type {boolean} */
@@ -114,17 +98,17 @@ export class ItemScriptCall {
   }
 
   async update(data, options = {}) {
-    if (this.parent != null) {
-      const rawChange = this.parent.system.scriptCalls.find((o) => o._id === this.id);
-      const idx = this.parent.system.scriptCalls.indexOf(rawChange);
-      if (idx >= 0) {
-        data = Object.entries(data).reduce((cur, o) => {
-          cur[`system.scriptCalls.${idx}.${o[0]}`] = o[1];
-          return cur;
-        }, {});
-        return this.parent.update(data, options);
-      }
-    }
+    if (!this.parent) throw new Error("Can not update ScriptCall that has no parent.");
+
+    const idx = this.parent.system.scriptCalls.findIndex((o) => o._id === this.id);
+    if (idx < 0) throw new Error(`ScriptCall [${this.id}] not found on parent.`);
+
+    data = Object.entries(data).reduce((cur, [key, scdata]) => {
+      cur[`system.scriptCalls.${idx}.${key}`] = scdata;
+      return cur;
+    }, {});
+
+    return this.parent.update(data, options);
   }
 
   // Opens up the editor for this script call

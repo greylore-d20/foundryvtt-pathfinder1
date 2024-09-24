@@ -993,19 +993,8 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   return updateData;
 }
 
-// Migrate empty action type to "other"
-// Added with PF1 v10
-const _migrateActionType = (action, itemData) => {
-  action.actionType ||= "other";
-};
-
 // Added with PF1 v10
 const _migrateActionLimitedUses = (action, itemData) => {
-  // Migrate unlimited to empty selection, as the two are identical in meaning
-  if (action.uses?.self?.per === "unlimited") {
-    delete action.uses.self.per;
-  }
-
   // Only physical items can be single use
   const isPhysical = CONFIG.Item.documentClasses[itemData.type]?.isPhysical;
   if (!isPhysical) {
@@ -1013,21 +1002,6 @@ const _migrateActionLimitedUses = (action, itemData) => {
       action.uses.self.per = "charges";
       action.uses.self.maxFormula = "1";
     }
-  }
-};
-
-/**
- * Older actors incorrectly has .range.value as number instead of string
- *
- * @param {object} action - Action data
- * @param {object} itemData - Parent item data
- */
-const _migrateActionRange = (action, itemData) => {
-  const range = action.range?.value;
-  if (range === null || range === "") {
-    delete action.range.value;
-  } else if (range !== undefined && typeof range !== "string") {
-    action.range.value = String(range);
   }
 };
 
@@ -1042,27 +1016,20 @@ const _migrateActionRange = (action, itemData) => {
  * @returns {object} The resulting action data.
  */
 export const migrateItemActionData = function (action, updateData, { itemData, item = null } = {}) {
-  action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
+  action = foundry.utils.deepClone(action);
 
-  _migrateActionType(action, itemData);
-  _migrateActionLimitedUses(action, itemData);
-  _migrateActionRange(action, itemData);
-  _migrateActionDamageParts(action, itemData);
-  _migrateUnchainedActionEconomy(action, itemData);
+  // Migrations that must be done before datamodel cleans the needed data out
   _migrateActionDamageType(action, itemData);
-  _migrateActionConditionals(action, itemData);
-  _migrateActionEnhOverride(action, itemData);
-  _migrateActionPrimaryAttack(action, itemData);
-  _migrateActionChargeUsage(action, itemData);
+  _migrateActionLimitedUses(action, itemData);
   _migrateActionExtraAttacks(action, itemData);
   _migrateActionAmmunitionUsage(action, itemData, updateData);
-  _migrateActionHarmlessSpell(action, itemData);
-  _migrateActionSpellArea(action, itemData);
-  _migrateActionTemplate(action, itemData);
   _migrateActionDuration(action, itemData);
   _migrateActionMaterials(action, itemData);
-  _migrateActionObsoleteTypes(action, itemData);
-  _migrateActionUnusedData(action, itemData);
+
+  action = new pf1.components.ItemAction(action).toObject();
+
+  _migrateActionConditionals(action, itemData);
+  _migrateActionHarmlessSpell(action, itemData);
 
   // Return the migrated update data
   return action;
@@ -2009,15 +1976,6 @@ const _migrateLootEquip = function (ent, updateData) {
   }
 };
 
-const _migrateUnchainedActionEconomy = (action, item) => {
-  action.activation ??= {};
-  // Migrate .unchainedAction.activation to .activation.unchained
-  if (action.unchainedAction?.activation) {
-    action.activation.unchained = action.unchainedAction.activation;
-    delete action.unchainedAction;
-  }
-};
-
 const _migrateItemLinks = async function (itemData, updateData, { item, actor }) {
   const linkData = itemData.system.links ?? {};
   for (const [linkType, oldLinks] of Object.entries(linkData)) {
@@ -2128,7 +2086,7 @@ const _migrateItemActions = function (item, updateData, actor = null) {
   if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
 
   // Transfer data to an action
-  const actionData = pf1.components.ItemAction.defaultData;
+  const actionData = {};
   const removeKeys = ["_id", "name", "img"];
   for (const k of Object.keys(actionData)) {
     if (!removeKeys.includes(k)) {
@@ -2175,7 +2133,7 @@ const _migrateItemActions = function (item, updateData, actor = null) {
   updateData["system.attackNotes"] = [];
   updateData["system.effectNotes"] = [];
 
-  updateData["system.actions"] = [actionData];
+  updateData["system.actions"] = [new pf1.components.ItemAction(actionData).toObject()];
 };
 
 const _migrateScriptCalls = (item, updateData) => {
@@ -2224,19 +2182,6 @@ const _migrateItemLearnedAt = (item, updateData) => {
 };
 
 /**
- * @param {object} action - Action data
- * @param {object} itemData - Parent item data
- */
-const _migrateActionChargeUsage = function (action, itemData) {
-  if (action.uses?.autoDeductCharges !== undefined) {
-    if (action.uses.autoDeductCharges === false) {
-      action.uses.autoDeductChargesCost = "0";
-    } else if (action.uses.autoDeductChargesCost === "1") action.uses.autoDeductChargesCost = "";
-    delete action.uses.autoDeductCharges;
-  }
-};
-
-/**
  * Migrate action..
  * - ... usesAmmo boolean away
  * - ... ammoType to item.system.ammo.type
@@ -2278,7 +2223,7 @@ const _migrateActionAmmunitionUsage = function (action, itemData, updateData) {
 // Migrate harmless from save descriptor to the harmless toggle.
 // Added with PF1 v10
 const _migrateActionHarmlessSpell = (action, itemData) => {
-  if (!action.save.description) return;
+  if (!action.save?.description) return;
 
   if (/\bharmless\b/.test(action.save.description)) {
     action.save.description = action.save.description
@@ -2289,32 +2234,6 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
       .trim();
     action.save.harmless = true;
   }
-};
-
-// Migrate .spellArea to .area
-// Added with PF1 v10
-const _migrateActionSpellArea = (action, itemData) => {
-  action.area ||= action.spellArea;
-  delete action.spellArea;
-};
-
-/**
- * @since PF1 v10
- * @param action
- * @param itemData
- */
-const _migrateActionTemplate = (action, itemData) => {
-  //
-  const mt = action.measureTemplate;
-  if (!mt) return;
-
-  mt.color ||= mt.customColor;
-  delete mt.overrideColor;
-  delete mt.customColor;
-
-  mt.texture ||= mt.customTexture;
-  delete mt.overrideTexture;
-  delete mt.customTexture;
 };
 
 // Action duration
@@ -2460,50 +2379,15 @@ const _migrateActionExtraAttacks = (action, itemData) => {
     }
 
     // Delete unused data
-    if (!action.extraAttacks.formula?.count) delete action.extraAttacks.formula.count;
-    if (!action.extraAttacks.formula?.bonus) delete action.extraAttacks.formula.bonus;
-    if (!action.extraAttacks.formula?.label) delete action.extraAttacks.formula.label;
-    if (!(action.extraAttacks.manual?.length > 0)) delete action.extraAttacks.manual;
+    if (!action.extraAttacks.formula?.count) delete action.extraAttacks?.formula?.count;
+    if (!action.extraAttacks.formula?.bonus) delete action.extraAttacks?.formula?.bonus;
+    if (!action.extraAttacks.formula?.label) delete action.extraAttacks?.formula?.label;
+    if (!(action.extraAttacks.manual?.length > 0)) delete action.extraAttacks?.manual;
   }
 
   if (foundry.utils.isEmpty(action.extraAttacks.formula)) {
     delete action.extraAttacks.formula;
   }
-};
-
-/**
- * Migrate value types that should never have been those types.
- *
- * This may be only correcting macro/module errors and not things caused by the system.
- * Previously these were type checked in code with special handling.
- *
- * @param action
- * @param itemData
- */
-const _migrateActionObsoleteTypes = (action, itemData) => {
-  const templateSize = action.measureTemplate?.size;
-  if (templateSize !== undefined) {
-    if (typeof templateSize !== "string") {
-      action.measureTemplate.size = `${templateSize}`;
-    }
-  }
-  const durVal = action.duration?.value;
-  if (durVal !== undefined && durVal !== null) {
-    if (typeof durVal !== "string") {
-      action.duration.value = `${durVal}`;
-    }
-  }
-};
-
-/**
- * Remove dead data
- *
- * @param action
- * @param itemData
- */
-const _migrateActionUnusedData = (action, itemData) => {
-  // Added with PF1 v10
-  if (!action.formula) delete action.formula;
 };
 
 const _migrateItemChargeCost = function (item, updateData) {
@@ -2546,29 +2430,6 @@ const _migrateItemLimitedUses = (itemData, updateData) => {
 };
 
 /**
- * Migrate damage part tuples into objects
- *
- * Introduced with PF1 v9
- *
- * @param {object} action - Action data
- * @param {object} itemData - Parent item data
- */
-const _migrateActionDamageParts = function (action, itemData) {
-  const categories = action.damage;
-  for (const part of ["parts", "critParts", "nonCritParts"]) {
-    const category = categories[part];
-    if (!category) continue;
-
-    category.forEach((damage, index) => {
-      if (Array.isArray(damage)) {
-        const [formula, type] = damage;
-        category[index] = { formula, type };
-      }
-    });
-  }
-};
-
-/**
  * @param {object} action - Action data
  * @param {object} itemData - Parent item data
  */
@@ -2576,7 +2437,7 @@ const _migrateActionDamageType = function (action, itemData) {
   // Determine data paths using damage types
   const damageGroupPaths = ["damage.parts", "damage.critParts", "damage.nonCritParts"];
   for (const damageGroupPath of damageGroupPaths) {
-    const damageGroup = foundry.utils.getProperty(action, damageGroupPath);
+    const damageGroup = foundry.utils.getProperty(action, damageGroupPath) ?? [];
     for (const damagePart of damageGroup) {
       // Convert damage types
       const damageType = damagePart.type;
@@ -2637,37 +2498,6 @@ const _migrateActionConditionals = function (action, itemData) {
         modifier.type = "";
       }
     }
-  }
-};
-
-/**
- * @param {object} action - Action data
- * @param {object} itemData - Parent item data
- */
-const _migrateActionEnhOverride = function (action, itemData) {
-  if (typeof action.enh !== "object") {
-    action.enh = { value: action.enh ?? null };
-  }
-
-  // Set to null if disabled.
-  if (action.enh.override == false) {
-    action.enh.value = null;
-  }
-  // Reset odd values to null, too.
-  else if (action.enh.value !== null && typeof action.enh.value !== "number") {
-    action.enh.value = null;
-  }
-  // Delete now unused .override toggle
-  delete action.enh.override;
-};
-
-/**
- * @param {object} action - Action data
- * @param {object} itemData - Parent item data
- */
-const _migrateActionPrimaryAttack = function (action, itemData) {
-  if (action.naturalAttack?.primaryAttack === undefined) {
-    foundry.utils.setProperty(action, "naturalAttack.primaryAttack", itemData.system.primaryAttack ?? true);
   }
 };
 

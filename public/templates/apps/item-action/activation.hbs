@@ -10,7 +10,7 @@
       {{/if}}
       value="{{@root.activation.cost}}">
     <select name="activation{{#if unchainedActionEconomy}}.unchained{{/if}}.type">
-      {{selectOptions @root.abilityActivationTypes selected=@root.activation.type}}
+      {{selectOptions @root.abilityActivationTypes selected=@root.action.activation.type}}
     </select>
   </div>
 </div>
@@ -18,9 +18,9 @@
 <hr>
 {{#if isSpell}}
 <div class="form-group">
-  <label>{{localize "PF1.SpellEffect"}}</label>
+  <label>{{localize "PF1.Effect"}}</label>
   <div class="form-fields">
-    <input type="text" name="spellEffect" value="{{data.spellEffect}}" placeholder="{{localize "PF1.SpellEffectExample"}}">
+    <input type="text" name="effect" value="{{data.effect}}" placeholder="{{localize "PF1.SpellEffectExample"}}">
   </div>
 </div>
 {{/if}}
@@ -29,7 +29,7 @@
 <div class="form-group input-select-select">
   <label>{{localize "PF1.Target"}}</label>
   <div class="form-fields">
-    <input type="text" name="target.value" value="{{data.target.value}}">
+    <input type="text" name="target.value" value="{{action.target.value}}">
   </div>
 </div>
 
@@ -37,9 +37,9 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.Range"}}</label>
   <div class="form-fields">
-    {{#if canInputRange}}<input class="formula" type="text" name="range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}">{{/if}}
+    {{#if canInputRange}}<input class="formula" type="text" name="range.value" value="{{action.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}">{{/if}}
     <select name="range.units">
-      {{selectOptions distanceUnits selected=data.range.units blank=""}}
+      {{selectOptions distanceUnits selected=action.range.units blank=(localize "PF1.None")}}
     </select>
   </div>
 </div>
@@ -52,7 +52,7 @@
   <div class="form-fields">
     {{#if canInputMinRange}}<input class="formula" type="text" name="range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}">{{/if}}
     <select name="range.minUnits">
-      {{selectOptions distanceUnits selected=data.range.minUnits blank=""}}
+      {{selectOptions distanceUnits selected=data.range.minUnits blank=(localize "PF1.None")}}
     </select>
   </div>
 </div>
@@ -135,9 +135,9 @@
 
 <h3 class="form-header">{{localize "PF1.Notes"}}</h3>
 {{!-- Effect Notes --}}
-{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="effectNotes" title="PF1.EffectNotes" hint="PF1.EffectNotesHint" notes=data.effectNotes css="effect"}}
+{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="notes.effect" title="PF1.EffectNotes" hint="PF1.EffectNotesHint" notes=action.notes.effect css="effect"}}
 {{!-- Footnotes --}}
-{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="attackNotes" title="PF1.Footnotes" hint="PF1.FootnotesHint" notes=data.attackNotes css="footnotes"}}
+{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="notes.footer" title="PF1.Footnotes" hint="PF1.FootnotesHint" notes=action.notes.footer css="footnotes"}}
 
 {{!-- Uses and charges --}}
 <h3 class="form-header">{{localize "PF1.LimitedUses.Label"}}</h3>

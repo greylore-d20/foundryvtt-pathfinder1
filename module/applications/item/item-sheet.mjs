@@ -1746,7 +1746,7 @@ export class ItemSheetPF extends ItemSheet {
     const actionId = elem.dataset.actionId;
     if (actionId) {
       const action = this.item.actions.get(actionId);
-      const obj = { type: "action", uuid: this.item.uuid, actionId: action.id, data: action.data };
+      const obj = { type: "action", uuid: this.item.uuid, actionId: action.id, data: action.toObject() };
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
       return;
     }

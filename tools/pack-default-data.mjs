@@ -82,8 +82,10 @@ export function getActionDefaultData() {
       description: "",
       harmless: false,
     },
-    effectNotes: [],
-    attackNotes: [],
+    notes: {
+      effect: [],
+      footer: [],
+    },
     soundEffect: "",
     powerAttack: {
       multiplier: null,
@@ -91,7 +93,7 @@ export function getActionDefaultData() {
       critMultiplier: 1,
     },
     naturalAttack: {
-      primaryAttack: true,
+      primary: true,
       secondary: {
         attackBonus: "-5",
         damageMult: 0.5,
@@ -101,7 +103,7 @@ export function getActionDefaultData() {
     splash: false,
     touch: false,
     usesAmmo: false,
-    spellEffect: "",
+    effect: "",
     area: "",
     conditionals: [],
     enh: {

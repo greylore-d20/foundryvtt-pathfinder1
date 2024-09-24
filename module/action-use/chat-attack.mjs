@@ -125,8 +125,8 @@ export class ChatAttack {
 
     /** @type {D20RollPF} */
     if (critical === true) {
-      if (this.action.data.critConfirmBonus) {
-        let critConfirm = this.action.data.critConfirmBonus;
+      if (this.action.critConfirmBonus) {
+        let critConfirm = this.action.critConfirmBonus;
         if (RollPF.parse(critConfirm).length > 1) critConfirm = `(${critConfirm})`;
         extraParts.push(`${critConfirm}[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
@@ -269,8 +269,8 @@ export class ChatAttack {
       this.effectNotes.push(...item.system.effectNotes.map((text) => ({ text })));
     }
     // Add action notes
-    if (this.action.data.effectNotes?.length) {
-      this.effectNotes.push(...this.action.data.effectNotes.map((text) => ({ text })));
+    if (this.action.notes.effect.length) {
+      this.effectNotes.push(...this.action.notes.effect.map((text) => ({ text })));
     }
 
     // Misfire

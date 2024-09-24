@@ -30,7 +30,7 @@ export class AttackDialog extends Application {
     };
 
     const isNaturalAttack = action.item.subType === "natural",
-      isPrimaryAttack = isNaturalAttack ? action.data.naturalAttack.primaryAttack !== false : true;
+      isPrimaryAttack = isNaturalAttack ? action.naturalAttack.primary !== false : true;
 
     const useOptions = this.useOptions;
 
@@ -125,11 +125,11 @@ export class AttackDialog extends Application {
       rollModes: CONFIG.Dice.rollModes,
       hasAttack: action.hasAttack,
       hasDamage: action.hasDamage,
-      hasDamageAbility: action.data.ability?.damage ?? "" !== "",
+      hasDamageAbility: action.ability?.damage ?? "" !== "",
       isNaturalAttack: item.system.subType === "natural",
       isWeaponAttack: item.system.subType === "weapon",
       isRanged: action.isRanged,
-      isMeleeWeaponAttackAction: action.data.actionType === "mwak",
+      isMeleeWeaponAttackAction: action.actionType === "mwak",
       isRangedWeaponAttackAction: action.isRanged && !action.isCombatManeuver,
       isAttack: item.type === "attack",
       isWeapon: item.type === "weapon",
@@ -141,7 +141,7 @@ export class AttackDialog extends Application {
       flags: this.flags,
       attributes: this.attributes,
       conditionals: this.conditionals,
-      usesAmmo: !!this.action.ammoType,
+      usesAmmo: !!this.action.ammo.type,
       ammo: this.actionUse.getAmmo(),
     };
 
@@ -152,7 +152,7 @@ export class AttackDialog extends Application {
       (context.isAttack || context.isWeapon) &&
       !context.isNaturalAttack;
 
-    if (!Number.isFinite(action.data.ability?.damageMult)) {
+    if (!Number.isFinite(action.ability?.damageMult)) {
       context.canConfigureHeld = true;
     }
 
@@ -359,7 +359,7 @@ export class AttackDialog extends Application {
     }
 
     // Set ammo usage
-    if (this.action.ammoType) {
+    if (this.action.ammo.type) {
       const ammoId = this.action.item.getFlag("pf1", "defaultAmmo");
       if (ammoId != null) {
         for (let a = 0; a < this.attacks.length; a++) {
@@ -382,7 +382,7 @@ export class AttackDialog extends Application {
   }
 
   setAttackAmmo(attackIndex, ammoId = null) {
-    if (!this.action.ammoType) return;
+    if (!this.action.ammo.type) return;
 
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.id;

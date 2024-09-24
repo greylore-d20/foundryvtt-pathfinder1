@@ -2807,16 +2807,17 @@ export class ActorPF extends ActorBasePF {
     else actionType = ranged ? "rcman" : "mcman";
 
     const atkData = {
-      ...pf1.components.ItemAction.defaultData,
       name: !ranged ? game.i18n.localize("PF1.Melee") : game.i18n.localize("PF1.Ranged"),
       actionType,
     };
 
     // Alter attack ability
     const atkAbl = this.system.attributes?.attack?.[`${ranged ? "ranged" : "melee"}Ability`];
+    atkData.abiliy ??= {};
     atkData.ability.attack = ability ?? (atkAbl || (ranged ? "dex" : "str"));
 
     // Alter activation type
+    atkData.activation ??= {};
     atkData.activation.type = "attack";
     atkData.activation.unchained.type = "attack";
 
@@ -2827,7 +2828,7 @@ export class ActorPF extends ActorBasePF {
         type: "attack",
         name: !maneuver ? game.i18n.localize("TYPES.Item.weapon") : game.i18n.localize("PF1.CMBAbbr"),
         system: {
-          actions: [atkData],
+          actions: [new pf1.components.ItemAction(atkData).toObject()],
         },
       },
       { parent: this }
@@ -4622,7 +4623,7 @@ export class ActorPF extends ActorBasePF {
         } else {
           const action = item.defaultAction;
           // Add fake charges for ammo using items
-          if (action?.ammoType) {
+          if (action?.ammo.type) {
             const ammo = item.defaultAmmo;
             if (ammo) {
               qi.isCharged = true;

@@ -2,12 +2,14 @@
  * Script Call
  */
 export class ItemScriptCall extends foundry.abstract.DataModel {
+  static DEFAULT_ICON = /** @type {const} */ ("icons/svg/dice-target.svg");
+
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
       _id: foundry.utils.randomID(16),
       name: game.i18n.localize("PF1.ScriptCalls.NewName"),
-      img: "icons/svg/dice-target.svg",
+      img: this.DEFAULT_ICON,
       type: "script",
       value: "",
       category: "",
@@ -59,6 +61,21 @@ export class ItemScriptCall extends foundry.abstract.DataModel {
     }
 
     return [];
+  }
+
+  /**
+   * @deprecated
+   * @returns {this}
+   */
+  get data() {
+    foundry.utils.logCompatibilityWarning(
+      "ItemScriptCall.data has been deprecated. Access the data directly on the script call instead.",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+    return this;
   }
 
   static get defaultData() {

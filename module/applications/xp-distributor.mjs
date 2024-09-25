@@ -213,8 +213,15 @@ export class ExperienceDistributor extends FormApplication {
     const isPC = actor.type === "character";
     if (isPC) return true;
 
-    const isDefeated = actor.system.attributes?.hp?.value < 0;
-    return isDefeated;
+    const healthConfig = game.settings.get("pf1", "healthConfig");
+    const actorType = { character: "pc", npc: "npc" }[actor.type];
+    const useWoundsAndVigor = healthConfig.variants[actorType]?.useWoundsAndVigor ?? false;
+
+    if (useWoundsAndVigor) {
+      return actor.system.attributes?.wounds?.value <= 0;
+    } else {
+      return actor.system.attributes?.hp?.value < 0;
+    }
   }
 
   /**

@@ -3310,7 +3310,9 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    const targets = game.actors.filter((a) => a !== this.actor && (a.isOwner || a.hasPlayerOwner));
+    const targets = game.actors.filter(
+      (a) => a !== this.actor && a.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED)
+    );
     if (targets.length === 0) ui.notifications.warn("PF1.Error.NoGiftTargets", { localize: true });
 
     const targetActorId = await pf1.utils.dialog.getActor({

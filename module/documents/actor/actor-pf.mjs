@@ -4834,22 +4834,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @override
-   * @protected
-   * @param {object} json
-   * @returns {Promise<this>}
-   */
-  async importFromJSON(json) {
-    // Import from JSON
-    const data = JSON.parse(json);
-    delete data._id;
-    data.effects = [];
-
-    // Update data
-    return this.update(data, { diff: false, recursive: false });
-  }
-
-  /**
    * Return feat counts.
    *
    * @typedef FeatCounts

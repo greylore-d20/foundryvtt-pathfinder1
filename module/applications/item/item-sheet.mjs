@@ -477,22 +477,21 @@ export class ItemSheetPF extends ItemSheet {
       );
     }
 
-    if (["class", "feat", "race"].includes(item.type)) {
-      // Add skill list
-      if (!actor) {
-        context.skills = Object.entries(pf1.config.skills).reduce((cur, [skillId, label]) => {
-          cur[skillId] = { name: label, classSkill: itemData.classSkills?.[skillId] === true };
-          return cur;
-        }, {});
-      } else {
-        // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = foundry.utils.mergeObject(foundry.utils.deepClone(pf1.config.skills), actorData.skills ?? {});
-        context.skills = Object.entries(skills).reduce((cur, [skillId, skillIdata]) => {
-          const name = pf1.config.skills[skillId] || skillIdata.name;
-          cur[skillId] = { name: name, classSkill: item.system.classSkills?.[skillId] === true };
-          return cur;
-        }, {});
-      }
+    // Add skill list to items that support them
+    // TODO: Make this ask the item itself if they have class skills
+    if (itemData.classSkills || ["class", "feat", "race"].includes(item.type)) {
+      const classSkills = itemData.classSkills ?? {};
+      // Get all skills
+      const skills = foundry.utils.mergeObject(pf1.config.skills, actorData?.skills ?? {}, { inplace: false });
+      // Build skill context
+      context.skills = Object.entries(skills)
+        .map(([skillId, skilldata]) => ({
+          ...skilldata,
+          key: skillId,
+          name: pf1.config.skills[skillId] || skilldata.name,
+          isCS: classSkills[skillId] === true,
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     }
 
     // Prepare attack-specific stuff
@@ -661,22 +660,6 @@ export class ItemSheetPF extends ItemSheet {
 
       const healthConfig = game.settings.get("pf1", "healthConfig");
       context.healthConfig = healthConfig.getClassHD(this.item);
-
-      // Add skill list
-      if (!actor) {
-        context.skills = Object.entries(pf1.config.skills).reduce((cur, [skillId, label]) => {
-          cur[skillId] = { name: label, classSkill: itemData.classSkills?.[skillId] === true };
-          return cur;
-        }, {});
-      } else {
-        // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = foundry.utils.mergeObject(foundry.utils.deepClone(pf1.config.skills), actorData.skills ?? {});
-        context.skills = Object.entries(skills).reduce((cur, [skillId, skillData]) => {
-          const name = pf1.config.skills[skillId] != null ? pf1.config.skills[skillId] : skillData.name;
-          cur[skillId] = { name: name, classSkill: itemData.classSkills?.[skillId] === true };
-          return cur;
-        }, {});
-      }
     }
 
     if (item.type === "consumable") {

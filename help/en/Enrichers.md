@@ -18,7 +18,9 @@ Roll data is drawn from the card speaker by default.
 | `roll`    | `@Skill[dip;roll=10]`                     | Roll replacement, e.g. for Take 10 or fortune effect.                                           |
 | `vars`    | `@Heal[@attributes.hd.total;vars=target]` | Roll data is pulled from something else than speaker.<br>`target` is only valid option for now. |
 
-## Enricher Usage
+## Button Enrichers
+
+These enrichers provide buttons you may press.
 
 ### `@Ability`
 
@@ -201,33 +203,9 @@ Item use button.
 | `#id:ID`   | Action ID, needs to be part of the item name.   |
 | `#name`    | Action name, needs to be part of the item name. |
 
-### `@Weight`
+## Information Enrichers
 
-Informational weight conversion and display.
-
-Format: `@Weight[value;options]`
-
-Value parameter can either be a formula, or a number with or without `lbs` or `kg` unit attached.
-
-Default unit is imperial pounds unless otherwise specified.
-
-#### Examples
-
-Examples outputs are with imperial unit system enabled.
-
-| Input                   | Explanation                                                                     | Output           |
-| :---------------------- | :------------------------------------------------------------------------------ | :--------------- |
-| `@Weight[100]`          | Convert and display 100 lbs.                                                    | `100 lbs`        |
-| `@Weight[3 * 5;metric]` | Convert and display result of 3×5, treating the math result to be in kilograms. | `30 lbs`         |
-| `@Weight[30 lbs;dual]`  | Convert and display 30 lbs in both imperial and metric.                         | `30 lbs (15 kg)` |
-
-#### Special Options
-
-| Options    | Description                                |
-| :--------- | :----------------------------------------- |
-| `dual`     | Displays both imperial and metric weights. |
-| `metric`   | Treats provided weight as kilograms.       |
-| `imperial` | Treats provided weight as pounds.          |
+These enhance provided information.
 
 ### `@Distance`
 
@@ -256,3 +234,31 @@ Examples outputs are with imperial unit system enabled.
 | `dual`     | Displays both imperial and metric distances. |
 | `metric`   | Treats provided distance as meters.          |
 | `imperial` | Treats provided distance as feet.            |
+
+### `@Weight`
+
+Informational weight conversion and display.
+
+Format: `@Weight[value;options]`
+
+Value parameter can either be a formula, or a number with or without `lbs` or `kg` unit attached.
+
+Default unit is imperial pounds unless otherwise specified.
+
+#### Examples
+
+Examples outputs are with imperial unit system enabled.
+
+| Input                   | Explanation                                                                     | Output           |
+| :---------------------- | :------------------------------------------------------------------------------ | :--------------- |
+| `@Weight[100]`          | Convert and display 100 lbs.                                                    | `100 lbs`        |
+| `@Weight[3 * 5;metric]` | Convert and display result of 3×5, treating the math result to be in kilograms. | `30 lbs`         |
+| `@Weight[30 lbs;dual]`  | Convert and display 30 lbs in both imperial and metric.                         | `30 lbs (15 kg)` |
+
+#### Special Options
+
+| Options    | Description                                |
+| :--------- | :----------------------------------------- |
+| `dual`     | Displays both imperial and metric weights. |
+| `metric`   | Treats provided weight as kilograms.       |
+| `imperial` | Treats provided weight as pounds.          |

@@ -650,12 +650,13 @@ export const enrichers = [
         const compendium = pf1.config.skillCompendiumEntries[skill];
         if (!compendium) return;
         setIcon(a, "fa-solid fa-book");
+      } else {
+        setIcon(a, "fa-solid fa-hands-clapping");
       }
 
       a.append(title);
 
       generateTooltip(a);
-      setIcon(a, "fa-solid fa-hands-clapping");
 
       return a;
     },
@@ -894,7 +895,7 @@ export const enrichers = [
       if (a.dataset.disable) a.dataset.remove = true;
 
       if (a.dataset.info) {
-        setIcon(a, "fa-solid fa-atlas");
+        setIcon(a, "fa-solid fa-book");
         if (!cond?.journal) a.classList.add("broken");
       } else if (a.dataset.remove) {
         setIcon(a, "fa-solid fa-minus");

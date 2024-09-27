@@ -174,10 +174,28 @@ export function createElement({ label, icon, click = false, drag = false, handle
   return a;
 }
 
+/**
+ * Get cards speaker
+ *
+ * @param {Element} target
+ * @returns {Actor|undefined}
+ */
 function getSpeaker(target) {
   const messageId = target.closest("[data-message-id]")?.dataset.messageId;
   const message = game.messages.get(messageId);
+  if (!message) return;
   return ChatMessage.getSpeakerActor(message.speaker);
+}
+
+/**
+ * Get sheet actor
+ *
+ * @param {Element} target
+ * @returns {Actor|undefined}
+ */
+function getSheetActor(target) {
+  const appId = target.closest(".app[data-appid]")?.dataset.appid;
+  return ui.windows[appId]?.actor;
 }
 
 /**
@@ -191,23 +209,32 @@ export function getRelevantActors(button) {
 
   const as = button.dataset.as;
   const asSpeaker = button.dataset.speaker || as === "speaker";
+  const asSheet = as === "sheet";
+  const auto = ["auto", "context"].includes(as);
 
   // Speaker
-  if (asSpeaker) {
+  if (asSpeaker || auto) {
     const actor = getSpeaker(button);
     if (actor) actors.push(actor);
   }
-  // Controlled tokens
-  else if (canvas.tokens.controlled.length) {
-    const tokenActors = canvas.tokens.controlled.map((t) => t.actor);
-    for (const actor of tokenActors) {
+  if (asSheet || auto) {
+    const actor = getSheetActor(button);
+    if (actor) actors.push(actor);
+  }
+
+  if (!as) {
+    // Controlled tokens
+    if (canvas.tokens.controlled.length) {
+      const tokenActors = canvas.tokens.controlled.map((t) => t.actor);
+      for (const actor of tokenActors) {
+        if (actor) actors.push(actor);
+      }
+    }
+    // Configured character
+    else {
+      const actor = game.user.character;
       if (actor) actors.push(actor);
     }
-  }
-  // Configured character
-  else {
-    const actor = game.user.character;
-    if (actor) actors.push(actor);
   }
 
   if (actors.length == 0) {

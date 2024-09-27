@@ -10,13 +10,13 @@ Roll data is drawn from the card speaker by default.
 
 ## Common Options
 
-| Option    | Example                                   | Explanation                                                                                     |
-| :-------- | :---------------------------------------- | :---------------------------------------------------------------------------------------------- |
-| `speaker` | `@Use[Cure Light Wounds;speaker]`         | Limit activation to card speaker. Alias of `as=speaker`.                                        |
-| `as`      | `@Use[Cure Light Wounds;as=speaker]`      | Limit activation.<br>`speaker` is only valid option for now.                                    |
-| `bonus`   | `@Skill[per;bonus=15]`                    | Bonus to the roll.                                                                              |
-| `roll`    | `@Skill[dip;roll=10]`                     | Roll replacement, e.g. for Take 10 or fortune effect.                                           |
-| `vars`    | `@Heal[@attributes.hd.total;vars=target]` | Roll data is pulled from something else than speaker.<br>`target` is only valid option for now. |
+| Option    | Example                                   | Explanation                                                                                                                                                                                                   |
+| :-------- | :---------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `speaker` | `@Use[Cure Light Wounds;speaker]`         | Limit activation to card speaker. Alias of `as=speaker`.                                                                                                                                                      |
+| `as`      | `@Use[Cure Light Wounds;as=speaker]`      | Limit or guide activation.<br>`speaker`, `sheet`, and `auto` are the only valid options for now. Speaker is for chat cards, sheet is for sheets, and auto tries to automatically choose either of the former. |
+| `bonus`   | `@Skill[per;bonus=15]`                    | Bonus to the roll.                                                                                                                                                                                            |
+| `roll`    | `@Skill[dip;roll=10]`                     | Roll replacement, e.g. for Take 10 or fortune effect.                                                                                                                                                         |
+| `vars`    | `@Heal[@attributes.hd.total;vars=target]` | Roll data is pulled from something else than speaker.<br>`target` is only valid option for now.                                                                                                               |
 
 ## Button Enrichers
 

@@ -3356,6 +3356,7 @@ export class Sources extends Registry {
       pages: 64,
       isbn: "978-1-60125-220-3",
       type: "setting",
+      url: "https://paizo.com/products/btpy8dmn",
     },
     {
       _id: "PZO9221",

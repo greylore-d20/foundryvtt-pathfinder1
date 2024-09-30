@@ -6,6 +6,7 @@ system:
   abilityType: sp
   actions:
     - _id: ymmp2agvn5nmklee
+      actionType: mwak
       activation:
         type: standard
         unchained:
@@ -19,6 +20,7 @@ system:
         units: touch
       target:
         value: creature touched
+      touch: true
   associations:
     classes:
       - Sorcerer
@@ -31,8 +33,14 @@ system:
       the victim to become <em>sickened</em> for the duration of the effect;
       this is a <em>disease</em> effect. You can use this ability a number of
       times per day equal to 3 + your <em>Charisma</em> modifier.</p>
+  sources:
+    - id: PZO9029
+      pages: '29'
   subType: classFeat
   tag: classFeat_plaguesCaress
+  tags:
+    - Bloodline Power
+    - Pestilence Bloodline
   uses:
     maxFormula: 3 + @abilities.cha.mod
     per: day

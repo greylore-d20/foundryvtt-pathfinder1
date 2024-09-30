@@ -17,6 +17,9 @@
  */
 export class Widget_CategorizedItemPicker extends Application {
   constructor(options, categories, callback, selected) {
+    const classes = options.classes;
+    delete options.classes;
+
     super(options);
 
     /**
@@ -50,8 +53,8 @@ export class Widget_CategorizedItemPicker extends Application {
      */
     this._hiddenElems = {};
 
-    if (options.classes?.length) {
-      this.options.classes.push(...options.classes);
+    if (classes?.length) {
+      this.options.classes.push(...classes);
     }
   }
 
@@ -60,30 +63,38 @@ export class Widget_CategorizedItemPicker extends Application {
   }
 
   getData(options) {
-    const data = super.getData(options);
+    const context = super.getData(options);
 
-    data.categories = [];
-    data.items = [];
+    context.categories = this.categories;
+    context.items = [];
 
     for (const cat of this.categories) {
-      data.categories.push({
-        key: cat.key,
-        label: cat.label,
-      });
+      cat.hidden = cat.validity.item === false;
+      if (cat.hidden) continue;
 
       for (const item of cat.items) {
-        data.items.push(
-          foundry.utils.mergeObject(
-            {
-              category: cat.key,
-            },
-            item
-          )
-        );
+        if (item.validity.item === false) continue;
+
+        // Mark items as invalid if the category is invalid
+        if (!cat.validity.valid) {
+          item.validity.category = false;
+          item.validity.valid = false;
+        }
+
+        context.items.push({
+          category: cat.key,
+          ...item,
+        });
       }
+
+      // Has any valid choices
+      cat.hasChoices = context.items.some((i) => i.category === cat.key && i.validity.valid);
+      cat.hasVisibleChoices = context.items.some((i) => i.category === cat.key && i.validity.item !== false);
     }
 
-    return data;
+    context.categories = context.categories.filter((cat) => !cat.hidden && cat.hasVisibleChoices);
+
+    return context;
   }
 
   activateListeners(html) {
@@ -143,10 +154,10 @@ export class Widget_CategorizedItemPicker extends Application {
     $(a).closest(".category").addClass("active");
 
     // Hide all items
-    html.find(".item-picker-items").children().hide();
+    html.find(".item-picker-items").children().addClass("hidden");
 
     // Show items
-    html.find(`.item-picker-items .item[data-category="${a.dataset.category}"]`).show();
+    html.find(`.item-picker-items .item[data-category="${a.dataset.category}"]`).removeClass("hidden");
   }
 
   _onCancel(event) {

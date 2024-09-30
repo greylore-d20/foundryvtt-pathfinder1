@@ -376,7 +376,8 @@ export class ActorSheetPF extends ActorSheet {
     const conditions = this.actor.system.conditions;
     // Get conditions that are inherited from items
     const inheritedEffects = this.actor.appliedEffects.filter((ae) => ae.parent instanceof Item && ae.statuses.size);
-    const condImmunities = new Set(this.actor.system.traits?.ci?.value ?? []);
+    const condImmunities = this.actor.getConditionImmunities();
+
     context.conditions = naturalSort(
       pf1.registry.conditions
         .filter((cond) => cond.showInBuffsTab)
@@ -490,6 +491,12 @@ export class ActorSheetPF extends ActorSheet {
 
     result.typeLabel = game.i18n.localize(`PF1.Subtypes.Item.${type}.${subType}.Single`);
 
+    if (item.type === "class") {
+      if (["mythic", "racial"].includes(item.subType)) {
+        result.xpUnbound = true;
+      }
+    }
+
     return result;
   }
 
@@ -550,7 +557,7 @@ export class ActorSheetPF extends ActorSheet {
         values = trait.value instanceof Array ? trait.value : [trait.value];
       }
       trait.selected = values.reduce((obj, t) => {
-        obj[t] = choices[t];
+        obj[t] = choices[t] || t;
         return obj;
       }, {});
 
@@ -864,7 +871,7 @@ export class ActorSheetPF extends ActorSheet {
     // Search boxes
     {
       const sb = html.find(".search-input");
-      sb.on("keyup change", this._searchFilterChange.bind(this));
+      sb.on("change input", this._searchFilterChange.bind(this));
       sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
       this.searchRefresh = true;
       // Filter tabs on followup refreshes
@@ -1266,14 +1273,19 @@ export class ActorSheetPF extends ActorSheet {
 
     switch (id) {
       case "level": {
-        const hd = system.attributes?.hd?.total ?? NaN;
+        const hd = lazy.rollData.attributes?.hd?.total ?? NaN;
         if (hd > 0) {
           paths.push({ path: "@attributes.hd.total", value: hd });
-          if (system.details?.mythicTier > 0) {
-            paths.push({ path: "@details.mythicTier", value: system.details.mythicTier });
+          const mythic = lazy.rollData.details?.mythicTier ?? NaN;
+          if (mythic > 0) {
+            paths.push({ path: "@details.mythicTier", value: mythic });
           }
         }
-        const cr = this.actor.system.details?.cr?.total ?? NaN;
+        const level = lazy.rollData.details?.level?.value ?? NaN;
+        if (level) {
+          paths.push({ path: "@details.level.value", value: lazy.rollData.details?.level?.value ?? NaN });
+        }
+        const cr = lazy.rollData.details?.cr?.total ?? NaN;
         if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
         break;
       }
@@ -2230,7 +2242,7 @@ export class ActorSheetPF extends ActorSheet {
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
 
-            notes = [...getNotes("attacks.attack"), getNotes(`attacks.${subTarget}`)];
+            notes = [...getNotes("attacks.attack"), ...getNotes(`attacks.${subTarget}`)];
 
             break;
           }
@@ -2659,7 +2671,9 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const conditionId = a.dataset.conditionId;
 
-    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+    const immunities = this.actor.getConditionImmunities();
+
+    if (immunities.has(conditionId)) {
       if (!this.actor.hasCondition(conditionId)) {
         return void ui.notifications.warn(
           game.i18n.format("PF1.Warning.ImmuneToCondition", {
@@ -2680,7 +2694,9 @@ export class ActorSheetPF extends ActorSheet {
     const cond = pf1.registry.conditions.get(conditionId);
     if (!cond) throw new Error(`Invalid condition ID: ${conditionId}`);
 
-    if (this.actor.system.traits.ci.value.includes(conditionId)) {
+    const immunities = this.actor.getConditionImmunities();
+
+    if (immunities.has(conditionId)) {
       if (!this.actor.hasCondition(conditionId)) {
         return void ui.notifications.warn(
           game.i18n.format("PF1.Warning.ImmuneToCondition", {
@@ -2803,7 +2819,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _onLevelUp(event) {
-    event.preventDefault;
+    event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 
@@ -2975,7 +2991,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     const baseName = skillData.name || "skill";
-    const baseTag = pf1.utils.createTag(baseName);
+    const baseTag = pf1.utils.createTag(baseName, { allowUnderScore: false });
     let tag = baseTag;
     let count = 1;
     while (this.actor.system.skills[tag] != null) {
@@ -3325,7 +3341,9 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
 
-    const targets = game.actors.filter((a) => a !== this.actor && (a.isOwner || a.hasPlayerOwner));
+    const targets = game.actors.filter(
+      (a) => a !== this.actor && a.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED)
+    );
     if (targets.length === 0) ui.notifications.warn("PF1.Error.NoGiftTargets", { localize: true });
 
     const targetActorId = await pf1.utils.dialog.getActor({
@@ -3337,7 +3355,9 @@ export class ActorSheetPF extends ActorSheet {
     if (!target) throw new Error(`Invalid actor ID as gift target: "${targetActorId}"`);
 
     if (target.isOwner) {
-      const docs = await target.createEmbeddedDocuments("Item", [item.toObject()]);
+      const itemData = item.toObject();
+      delete itemData.system?.links?.children;
+      const docs = await target.createEmbeddedDocuments("Item", [itemData]);
       // Delete only if item was successfully created
       if (docs.length > 0) await item.delete();
     } else {
@@ -3736,7 +3756,7 @@ export class ActorSheetPF extends ActorSheet {
     //if (unchanged) return; // nothing changed
     this._filters.search[category] = search;
 
-    if (event.type === "keyup") {
+    if (event.type === "input") {
       // Delay search
       if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), this.searchDelay);
     } else {
@@ -3758,11 +3778,24 @@ export class ActorSheetPF extends ActorSheet {
     const label = a.parentElement.querySelector("label");
     const choices =
       a.dataset.options in pf1.registry ? pf1.registry[a.dataset.options].getLabels() : pf1.config[a.dataset.options];
+
+    const path = a.dataset.for;
+
+    const { value: keys } = foundry.utils.getProperty(this.actor, path) ?? {};
+    // Display invalid choices
+    if (Array.isArray(keys)) {
+      for (const key of keys) {
+        if (!(key in choices)) {
+          choices[key] = key;
+        }
+      }
+    }
+
     const options = {
-      name: a.dataset.for,
+      name: path,
       title: label.innerText,
       subject: a.dataset.options,
-      choices: choices,
+      choices,
     };
 
     let app = Object.values(this.actor.apps).find(

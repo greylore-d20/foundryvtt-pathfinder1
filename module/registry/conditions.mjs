@@ -171,6 +171,7 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false, // TODO: Add configuraton that this is to be true for spells only
     },
     {
       _id: "disabled",

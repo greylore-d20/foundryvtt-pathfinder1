@@ -11,7 +11,18 @@ export class MaterialType extends RegistryEntry {
   static defineSchema() {
     return {
       ...super.defineSchema(),
+      shortName: new fields.StringField({ required: false, initial: undefined, blank: false, localize: true }),
+      treatedAs: new fields.StringField({ required: false, initial: undefined, blank: false }),
       addon: new fields.BooleanField({ required: false, initial: false }),
+      intrinsic: new fields.BooleanField({ required: false, initial: false }), // Always available, same as base materials
+      primitive: new fields.BooleanField({ required: false, initial: false }),
+      baseMaterial: new fields.ArrayField(new fields.StringField(), { required: false, initial: [] }),
+      hardness: new fields.NumberField({ required: false, initial: 10, integer: true, min: 0 }),
+      hardnessMultiplier: new fields.NumberField({ required: false, initial: null, nullable: true, min: 0 }),
+      healthPerInch: new fields.NumberField({ required: false, initial: null, integer: true, min: 0, nullable: true }),
+      healthBonus: new fields.NumberField({ required: false, initial: 0, integer: true, min: 0 }),
+      healthMultiplier: new fields.NumberField({ required: false, initial: 1.0, integer: false, positive: true }),
+      masterwork: new fields.BooleanField({ required: false, initial: false }),
       allowed: new fields.SchemaField({
         lightBlade: new fields.BooleanField({ required: false, initial: true }),
         oneHandBlade: new fields.BooleanField({ required: false, initial: true }),
@@ -30,18 +41,11 @@ export class MaterialType extends RegistryEntry {
         maxDex: new fields.NumberField({ required: false, initial: 0, integer: true }),
         asf: new fields.NumberField({ required: false, initial: 0, integer: true }),
       }),
-      baseMaterial: new fields.ArrayField(new fields.StringField(), {
-        required: false,
-        initial: [],
-      }),
       dr: new fields.BooleanField({ required: false, initial: false }),
-      hardness: new fields.NumberField({ required: false, initial: 10, integer: true, min: 0, positive: false }),
-      healthMultiplier: new fields.NumberField({ required: false, initial: 1.0, integer: false, positive: true }),
       incompatible: new fields.ArrayField(new fields.StringField(), {
         required: false,
         initial: [],
       }),
-      masterwork: new fields.BooleanField({ required: false, initial: false }),
       price: new fields.SchemaField({
         multiplier: new fields.NumberField({ required: false, initial: 1.0, integer: false, positive: true }),
         perPound: new fields.NumberField({ required: false, initial: 0.0, integer: false, positive: false }),
@@ -65,8 +69,6 @@ export class MaterialType extends RegistryEntry {
         maxDex: new fields.NumberField({ required: false, initial: 0, integer: true }),
         asf: new fields.NumberField({ required: false, initial: 0, integer: true }),
       }),
-      shortName: new fields.StringField({ required: false, initial: undefined, blank: false, localize: true }),
-      treatedAs: new fields.StringField({ required: false, initial: undefined, blank: false }),
       weight: new fields.SchemaField({
         multiplier: new fields.NumberField({ required: false, initial: 1.0, integer: false, positive: true }),
         bonusPerPound: new fields.NumberField({ required: false, initial: 0.0, integer: false, positive: false }),
@@ -165,7 +167,10 @@ export class MaterialType extends RegistryEntry {
     if (material instanceof Item) material = pf1.registry.materialTypes.get(material.normalMaterial);
     else if (typeof material === "string") material = pf1.registry.materialTypes.get(material);
 
-    if (!(material instanceof MaterialType)) return null; // Material not found or is invalid data
+    if (!(material instanceof MaterialType)) {
+      if (this.intrinsic) return true;
+      return null; // Material not found or is invalid data
+    }
 
     if (this.addon === material.addon) return false; // Both are addons or both are not addons
 
@@ -192,18 +197,22 @@ export class MaterialTypes extends Registry {
       _id: "cloth",
       name: "PF1.Materials.Types.Cloth",
       hardness: 0,
+      healthPerInch: 2,
       healthMultiplier: 0.07,
     },
     {
       _id: "leather",
       name: "PF1.Materials.Types.Leather",
       hardness: 2,
+      healthPerInch: 5,
       healthMultiplier: 0.17,
     },
     {
       _id: "adamantine",
       name: "PF1.Materials.Types.Adamantine",
       baseMaterial: ["steel"],
+      hardness: 20,
+      healthPerInch: 40,
       dr: true,
       masterwork: true,
       allowed: {
@@ -212,7 +221,6 @@ export class MaterialTypes extends Registry {
         heavyShield: false,
         towerShield: false,
       },
-      hardness: 20,
       healthMultiplier: 1.34,
       price: {
         ammunition: 60.0,
@@ -231,6 +239,8 @@ export class MaterialTypes extends Registry {
       name: "PF1.Materials.Types.AlchemicalSilver",
       shortName: "PF1.Materials.Types.Silver",
       baseMaterial: ["steel"],
+      hardness: 8,
+      healthPerInch: 10,
       incompatible: ["adamantine", "coldIron", "mithral", "nexavaranSteel", "silversheen", "sunsilver"],
       dr: true,
       addon: true,
@@ -243,7 +253,6 @@ export class MaterialTypes extends Registry {
         mediumArmor: false,
         heavyArmor: false,
       },
-      hardness: 8,
       healthMultiplier: 0.34,
       price: {
         ammunition: 2.0,
@@ -258,6 +267,8 @@ export class MaterialTypes extends Registry {
       _id: "angelSkin",
       name: "PF1.Materials.Types.AngelSkin",
       baseMaterial: ["leather"],
+      hardness: 5,
+      healthPerInch: 5,
       masterwork: true,
       allowed: {
         lightBlade: false,
@@ -270,7 +281,6 @@ export class MaterialTypes extends Registry {
         towerShield: false,
         heavyArmor: false,
       },
-      hardness: 5,
       healthMultiplier: 0.17,
       price: {
         lightArmor: 1000.0,
@@ -304,11 +314,12 @@ export class MaterialTypes extends Registry {
       _id: "blackwood",
       name: "PF1.Materials.Types.Blackwood",
       baseMaterial: ["wood"],
+      hardness: 7,
+      healthPerInch: 10,
       masterwork: true,
       shield: {
         acp: -2,
       },
-      hardness: 7,
       price: {
         perPound: 20.0,
       },
@@ -342,6 +353,8 @@ export class MaterialTypes extends Registry {
       _id: "bloodCrystal",
       name: "PF1.Materials.Types.BloodCrystal",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 10,
       allowed: {
         buckler: false,
         lightShield: false,
@@ -365,6 +378,9 @@ export class MaterialTypes extends Registry {
       _id: "caphorite",
       name: "PF1.Materials.Types.Caphorite",
       baseMaterial: ["steel"],
+      // No official hardness stat
+      // No official hp per inch stat
+      // Only allowed to be used for ammunition so these stats are not necessary
       allowed: {
         lightBlade: false,
         oneHandBlade: false,
@@ -386,6 +402,8 @@ export class MaterialTypes extends Registry {
       _id: "coldIron",
       name: "PF1.Materials.Types.ColdIron",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       dr: true,
       price: {
         multiplier: 2.0,
@@ -397,7 +415,9 @@ export class MaterialTypes extends Registry {
     {
       _id: "cryptstone",
       name: "PF1.Materials.Types.Cryptstone",
-      baseMaterial: ["stone"],
+      baseMaterial: ["stone", "steel", "wood"],
+      hardness: 10,
+      healthPerInch: 30,
       masterwork: true,
       allowed: {
         buckler: false,
@@ -421,6 +441,8 @@ export class MaterialTypes extends Registry {
       _id: "darkleafCloth",
       name: "PF1.Materials.Types.DarkleafCloth",
       baseMaterial: ["leather", "cloth"],
+      hardness: 10,
+      healthPerInch: 20,
       masterwork: true,
       allowed: {
         lightBlade: false,
@@ -451,11 +473,12 @@ export class MaterialTypes extends Registry {
       _id: "darkwood",
       name: "PF1.Materials.Types.Darkwood",
       baseMaterial: ["wood"],
+      hardness: 5,
+      healthPerInch: 10,
       masterwork: true,
       shield: {
         acp: -2,
       },
-      hardness: 5,
       price: {
         perPound: 10.0,
       },
@@ -467,6 +490,8 @@ export class MaterialTypes extends Registry {
       _id: "dragonhide",
       name: "PF1.Materials.Types.Dragonhide",
       baseMaterial: ["leather"],
+      hardness: 10,
+      healthPerInch: 10, // Typically ½ and 1 inch thick
       masterwork: true,
       allowed: {
         lightBlade: false,
@@ -506,6 +531,8 @@ export class MaterialTypes extends Registry {
       _id: "eelHide",
       name: "PF1.Materials.Types.EelHide",
       baseMaterial: ["leather"],
+      hardness: 2,
+      healthPerInch: 5,
       masterwork: true,
       allowed: {
         lightBlade: false,
@@ -531,6 +558,8 @@ export class MaterialTypes extends Registry {
       _id: "elysianBronze",
       name: "PF1.Materials.Types.ElysianBronze",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       allowed: {
         buckler: false,
         lightShield: false,
@@ -553,6 +582,8 @@ export class MaterialTypes extends Registry {
       _id: "fireForgedSteel",
       name: "PF1.Materials.Types.FireForgedSteel",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       masterwork: true,
       allowed: {
         buckler: false,
@@ -576,6 +607,8 @@ export class MaterialTypes extends Registry {
       _id: "frostForgedSteel",
       name: "PF1.Materials.Types.FrostForgedSteel",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       masterwork: true,
       allowed: {
         buckler: false,
@@ -599,10 +632,11 @@ export class MaterialTypes extends Registry {
       _id: "glaucite",
       name: "PF1.Materials.Types.Glaucite",
       baseMaterial: ["steel"],
+      hardness: 15,
+      healthPerInch: 30,
       allowed: {
         buckler: false,
       },
-      hardness: 15,
       price: {
         multiplier: 3.0,
       },
@@ -614,6 +648,8 @@ export class MaterialTypes extends Registry {
       _id: "greenwood",
       name: "PF1.Materials.Types.Greenwood",
       baseMaterial: ["wood"],
+      hardness: 5,
+      healthPerInch: 10,
       masterwork: true,
       price: {
         perPound: 50.0,
@@ -633,6 +669,8 @@ export class MaterialTypes extends Registry {
       _id: "griffonMane",
       name: "PF1.Materials.Types.GriffonMane",
       baseMaterial: ["cloth"],
+      hardness: 1,
+      healthPerInch: 4,
       allowed: {
         lightBlade: false,
         oneHandBlade: false,
@@ -645,7 +683,6 @@ export class MaterialTypes extends Registry {
         mediumArmor: false,
         heavyArmor: false,
       },
-      hardness: 1,
       healthMultiplier: 2.0,
       price: {
         perPound: 50.0,
@@ -679,6 +716,8 @@ export class MaterialTypes extends Registry {
       _id: "horacalcum",
       name: "PF1.Materials.Types.Horacalcum",
       baseMaterial: ["steel"],
+      hardness: 15,
+      healthPerInch: 30,
       masterwork: true,
       allowed: {
         buckler: false,
@@ -686,8 +725,7 @@ export class MaterialTypes extends Registry {
         heavyShield: false,
         towerShield: false,
       },
-      hardness: 15,
-      healthMultiplier: 1.25,
+      healthMultiplier: 1.25, // Horacalcum actually has additional multiplier over health per inch
       price: {
         ammunition: 120.0,
         lightWeapon: 6000.0,
@@ -704,6 +742,8 @@ export class MaterialTypes extends Registry {
       _id: "inubrix",
       name: "PF1.Materials.Types.Inubrix",
       baseMaterial: ["steel"],
+      hardness: 5,
+      healthPerInch: 10,
       allowed: {
         buckler: false,
         lightShield: false,
@@ -713,7 +753,6 @@ export class MaterialTypes extends Registry {
         mediumArmor: false,
         heavyArmor: false,
       },
-      hardness: 5,
       healthMultiplier: 0.34,
       price: {
         ammunition: 100.0,
@@ -771,7 +810,9 @@ export class MaterialTypes extends Registry {
     {
       _id: "liquidGlass",
       name: "PF1.Materials.Types.LiquidGlass",
-      baseMaterial: ["glass"],
+      baseMaterial: ["glass", "steel", "wood", "stone"], // BUG: Does not actually state base material
+      hardness: 10,
+      healthPerInch: 10,
       healthMultiplier: 0.34,
       price: {
         perPound: 250.0,
@@ -788,6 +829,7 @@ export class MaterialTypes extends Registry {
       name: "PF1.Materials.Types.LivingSteel",
       baseMaterial: ["steel"],
       hardness: 15,
+      healthPerInch: 35,
       healthMultiplier: 1.16,
       price: {
         perPound: 250.0,
@@ -808,6 +850,8 @@ export class MaterialTypes extends Registry {
       name: "PF1.Materials.Types.Mithral",
       baseMaterial: ["steel"],
       treatedAs: "alchemicalSilver",
+      hardness: 15,
+      healthPerInch: 30,
       masterwork: true,
       armor: {
         acp: 3,
@@ -819,7 +863,6 @@ export class MaterialTypes extends Registry {
         maxDex: 2,
         asf: -10,
       },
-      hardness: 15,
       price: {
         perPound: 500, // Non-armor/shield only
         shield: 1000.0,
@@ -835,6 +878,8 @@ export class MaterialTypes extends Registry {
       _id: "nexavaranSteel",
       name: "PF1.Materials.Types.NexavaranSteel",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       dr: true,
       treatedAs: "coldIron",
       price: {
@@ -848,6 +893,8 @@ export class MaterialTypes extends Registry {
       _id: "noqual",
       name: "PF1.Materials.Types.Noqual",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       armor: {
         acp: -3,
         maxDex: 2,
@@ -878,11 +925,12 @@ export class MaterialTypes extends Registry {
       _id: "paueliel",
       name: "PF1.Materials.Types.Paueliel",
       baseMaterial: ["wood"],
+      hardness: 7,
+      healthPerInch: 10,
       masterwork: true,
       shield: {
         acp: -2,
       },
-      hardness: 7,
       price: {
         perPound: 15.0,
       },
@@ -894,6 +942,8 @@ export class MaterialTypes extends Registry {
       _id: "pyresteel",
       name: "PF1.Materials.Types.PyreSteel",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 15,
       allowed: {
         buckler: false,
       },
@@ -906,6 +956,8 @@ export class MaterialTypes extends Registry {
       _id: "siccatite",
       name: "PF1.Materials.Types.Siccatite",
       baseMaterial: ["steel"],
+      hardness: 10, // Not officially statted
+      healthPerInch: 30, // Not officially statted
       allowed: {
         buckler: false,
         lightShield: false,
@@ -929,6 +981,8 @@ export class MaterialTypes extends Registry {
       name: "PF1.Materials.Types.Silversheen",
       baseMaterial: ["steel"],
       treatedAs: "alchemicalSilver",
+      hardness: 10, // Not officially statted
+      healthPerInch: 30, // Not officially statted
       masterwork: true,
       allowed: {
         buckler: false,
@@ -952,6 +1006,8 @@ export class MaterialTypes extends Registry {
       _id: "singingSteel",
       name: "PF1.Materials.Types.SingingSteel",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 20,
       masterwork: true,
       armor: {
         acp: -1,
@@ -982,6 +1038,8 @@ export class MaterialTypes extends Registry {
       _id: "spireSteel",
       name: "PF1.Materials.Types.SpireSteel",
       baseMaterial: ["steel"],
+      hardness: 10,
+      healthPerInch: 30,
       masterwork: true,
       allowed: {
         buckler: false,
@@ -1004,6 +1062,8 @@ export class MaterialTypes extends Registry {
     {
       _id: "steel",
       name: "PF1.Materials.Types.Steel",
+      hardness: 10,
+      healthPerInch: 30,
     },
     {
       _id: "sunsilk",
@@ -1030,8 +1090,9 @@ export class MaterialTypes extends Registry {
       name: "PF1.Materials.Types.Sunsilver",
       baseMaterial: ["steel"],
       treatedAs: "alchemicalSilver",
-      masterwork: true,
       hardness: 8,
+      healthPerInch: 10,
+      masterwork: true,
       healthMultiplier: 0.34,
       price: {
         perPound: 25.0,
@@ -1040,7 +1101,9 @@ export class MaterialTypes extends Registry {
     {
       _id: "throneglass",
       name: "PF1.Materials.Types.Throneglass",
-      baseMaterial: ["glass"],
+      baseMaterial: ["glass", "steel", "wood", "stone"], // BUG: Does not actually state base material
+      hardness: 10, // "as durable as steel"
+      healthPerInch: 30, // "as durable as steel"
       allowed: {
         rangedWeapon: false,
         buckler: false,
@@ -1061,6 +1124,8 @@ export class MaterialTypes extends Registry {
       _id: "viridium",
       name: "PF1.Materials.Types.Viridium",
       baseMaterial: ["steel"],
+      hardness: 5,
+      healthPerInch: 30, // Not officially statted
       allowed: {
         buckler: false,
         lightShield: false,
@@ -1070,7 +1135,6 @@ export class MaterialTypes extends Registry {
         mediumArmor: false,
         heavyArmor: false,
       },
-      hardness: 5,
       price: {
         ammunition: 20.0,
         lightWeapon: 200.0,
@@ -1083,7 +1147,9 @@ export class MaterialTypes extends Registry {
     {
       _id: "voidglass",
       name: "PF1.Materials.Types.Voidglass",
-      baseMaterial: ["glass"],
+      baseMaterial: ["glass", "steel"],
+      hardness: 10,
+      healthPerInch: 30,
       price: {
         lightWeapon: 1000.0,
         oneHandWeapon: 1000.0,
@@ -1100,6 +1166,9 @@ export class MaterialTypes extends Registry {
       _id: "whipwood",
       name: "PF1.Materials.Types.Whipwood",
       baseMaterial: ["wood"],
+      hardness: 5,
+      healthPerInch: 10,
+      healthBonus: 5, // Grants flat +5 hp bonus to item regardless of anything else
       allowed: {
         buckler: false,
         lightShield: false,
@@ -1121,6 +1190,8 @@ export class MaterialTypes extends Registry {
       _id: "wyroot",
       name: "PF1.Materials.Types.Wyroot",
       baseMaterial: ["wood"],
+      hardness: 5,
+      healthPerInch: 10,
       allowed: {
         rangedWeapon: false,
         buckler: false,
@@ -1135,10 +1206,16 @@ export class MaterialTypes extends Registry {
     {
       _id: "bone",
       name: "PF1.Materials.Types.Bone",
+      primitive: true,
+      hardness: 5, // Actually half of whatever the base material is for weapons, 5 is true for armor
+      healthPerInch: null, // Same as base material
     },
     {
       _id: "bronze",
       name: "PF1.Materials.Types.Bronze",
+      primitive: true,
+      hardness: 9,
+      healthPerInch: 30, // Not officially statted, but speaks of steel
       allowed: {
         buckler: false,
       },
@@ -1146,6 +1223,8 @@ export class MaterialTypes extends Registry {
     {
       _id: "glass",
       name: "PF1.Materials.Types.Glass",
+      primitive: true,
+      hardnessMultiplier: 0.5,
       allowed: {
         buckler: false,
       },
@@ -1153,6 +1232,8 @@ export class MaterialTypes extends Registry {
     {
       _id: "gold",
       name: "PF1.Materials.Types.Gold",
+      primitive: true,
+      hardnessMultiplier: 0.5,
       allowed: {
         buckler: false,
       },
@@ -1160,12 +1241,14 @@ export class MaterialTypes extends Registry {
         multiplier: 10.0,
       },
       weight: {
-        multiplier: 0.5,
+        multiplier: 1.5,
       },
     },
     {
       _id: "obsidian",
       name: "PF1.Materials.Types.Obsidian",
+      primitive: true,
+      hardnessMultiplier: 0.5,
       allowed: {
         rangedWeapon: false,
         buckler: false,
@@ -1186,6 +1269,8 @@ export class MaterialTypes extends Registry {
     {
       _id: "stone",
       name: "PF1.Materials.Types.Stone",
+      primitive: true,
+      hardnessMultiplier: 0.5,
       allowed: {
         buckler: false,
       },
@@ -1200,11 +1285,13 @@ export class MaterialTypes extends Registry {
       _id: "wood",
       name: "PF1.Materials.Types.Wood",
       hardness: 5,
+      healthPerInch: 10,
     },
     {
       _id: "magic",
       name: "PF1.Materials.Types.Magic",
       addon: true,
+      intrinsic: true,
       allowed: {
         buckler: false,
         lightShield: false,
@@ -1220,6 +1307,7 @@ export class MaterialTypes extends Registry {
       _id: "epic",
       name: "PF1.Materials.Types.Epic",
       addon: true,
+      intrinsic: true,
       allowed: {
         buckler: false,
         lightShield: false,

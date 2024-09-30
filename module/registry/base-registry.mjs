@@ -124,7 +124,7 @@ export class Registry extends foundry.utils.Collection {
    * @param {string} [id] - The unique key of the value, or `undefined` to unregister all values belonging to the namespace.
    */
   unregister(namespace, id) {
-    if (!namespace | !id) throw new Error("Unregistering requires both a namespace and an ID");
+    if (!namespace) throw new Error("Unregistering requires a namespace");
     if (id) {
       const entry = this.get(id);
       if (entry && entry.namespace === namespace) this.delete(id);

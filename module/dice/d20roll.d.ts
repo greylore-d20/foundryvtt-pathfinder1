@@ -140,6 +140,11 @@ interface D20ActorRollOptions
    * @defaultValue `true`
    */
   skipDialog?: boolean;
+
+  /**
+   * Additional data to add to the chat message.
+   */
+  messageData?: object;
 }
 
 interface ActorRollOptions

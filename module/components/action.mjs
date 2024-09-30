@@ -1,7 +1,7 @@
 import { calculateRange, convertDistance } from "../utils/lib.mjs";
 import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { keepUpdateArray, createTag } from "../utils/lib.mjs";
+import { keepUpdateArray } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 
@@ -133,7 +133,7 @@ export class ItemAction {
 
   /** @type {string} - Tag */
   get tag() {
-    return this.data.tag || createTag(this.name);
+    return this.data.tag || pf1.utils.createTag(this.name);
   }
 
   /**
@@ -843,7 +843,9 @@ export class ItemAction {
     if (this.hasRange) {
       const sourceUnits = actionData.range.units;
       const rangeLabel = pf1.config.distanceUnits[sourceUnits];
-      if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
+      if (sourceUnits === "spec") {
+        // Special can not be displayed reasonably
+      } else if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
         labels.range = rangeLabel;
       } else {
         const range = this.getRange({ type: "single", rollData });
@@ -876,8 +878,25 @@ export class ItemAction {
     if (this.isCombatManeuver) contexts.push("cmb");
     if (this.isRanged) contexts.push("rattack");
     else contexts.push("mattack");
-    if (this.item.subType === "natural") contexts.push("nattack");
-    if (this.data.actionType === "twak") contexts.push("tattack");
+
+    const isNatural = this.item.subType === "natural";
+    if (isNatural) contexts.push("nattack");
+
+    switch (this.data.actionType) {
+      case "twak":
+        contexts.push("tattack");
+        if (!isNatural) contexts.push("wattack");
+        break;
+      case "mwak":
+      case "rwak":
+        if (!isNatural) contexts.push("wattack");
+        break;
+      case "msak":
+      case "rsak":
+        contexts.push("sattack");
+        break;
+    }
+
     return this.item.getContextChanges(contexts);
   }
 

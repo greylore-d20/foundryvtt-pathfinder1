@@ -7,11 +7,11 @@
 
     > i {
       font-size: var(--font-size-16);
+    }
 
-      &:hover {
-        animation: dice-spin 250ms cubic-bezier(0.6, -0.28, 0.735, 0.045) 1 forwards;
-        color: var(--pf1-color-text-hover);
-      }
+    &:hover > i {
+      animation: dice-spin 1s cubic-bezier(0.6, -0.28, 0.735, 0.045) infinite;
+      transform: scale(1.2);
     }
   }
 }

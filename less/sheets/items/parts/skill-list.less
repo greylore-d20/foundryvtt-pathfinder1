@@ -1,0 +1,33 @@
+.pf1.sheet.item {
+  .class-skills {
+    .skill-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(max(12rem, min-content), 1fr));
+      gap: 3px;
+
+      > .skill {
+        &.custom {
+          font-style: italic;
+        }
+
+        > label {
+          display: flex;
+          gap: 3px;
+          height: unset;
+
+          input[type="checkbox"] {
+            height: 16px;
+            width: 16px;
+            flex: 0 16px;
+            top: unset; // Undo Foundry styling
+            margin: 0; // Undo Foundry styling
+          }
+        }
+      }
+    }
+  }
+}

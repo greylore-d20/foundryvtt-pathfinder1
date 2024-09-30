@@ -5,7 +5,9 @@ import { RollPF } from "../../dice/roll.mjs";
  * @internal
  */
 export const registerHandlebarsHelpers = function () {
-  Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
+  Handlebars.registerHelper("convertDistance", (value, type) =>
+    Number.isFinite(value) ? convertDistance(value, typeof type === "string" ? type : undefined)[0] : value
+  );
 
   Handlebars.registerHelper("actionRange", (action, rollData) => {
     if (!action?.hasRange) return null;
@@ -13,7 +15,8 @@ export const registerHandlebarsHelpers = function () {
     const range = action.data.range.value;
     const rangeType = action.data.range.units;
 
-    if (rangeType == null) return null;
+    if (!rangeType) return null;
+    if (rangeType === "spec") return null; // Special is its own thing
 
     const [rng, unit] = calculateRange(range, rangeType, rollData);
     return `${rng} ${unit}`;

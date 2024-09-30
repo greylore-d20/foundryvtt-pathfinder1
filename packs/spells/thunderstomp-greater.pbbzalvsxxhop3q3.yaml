@@ -1,16 +1,20 @@
 _id: pbbzalvsxxhop3q3
 _key: '!items!pbbzalvsxxhop3q3'
+folder: NE0tEwSvcr71GnPC
 img: systems/pf1/icons/spells/lightning-orange-3.jpg
 name: Thunderstomp, Greater
 system:
   actions:
     - _id: 4x3jfy76hmfeufgj
+      actionType: rcman
       activation:
         type: standard
         unchained:
           cost: 2
           type: action
       area: 60-ft. line
+      attackBonus: '@ablMod[Sepllcasting Ability]'
+      bab: '@cl'
       duration:
         units: inst
       measureTemplate:
@@ -18,7 +22,6 @@ system:
         type: ray
       name: Use
       range:
-        maxIncrements: '1'
         units: ft
         value: '60'
   components:
@@ -26,10 +29,12 @@ system:
     verbal: true
   description:
     value: >-
-      <p>This spell functions as <i>thunderstomp</i>, except as noted. It allows
-      you target multiple creatures with this spell, including creatures more
-      than one size category larger than you. When you attempt the combat
-      maneuver check, apply its result to each creature within the area.</p>
+      <p>This spell functions as
+      @UUID[Compendium.pf1.spells.Item.8c326bzvz1dbe6q4]{thunderstomp}, except
+      as noted. It allows you target multiple creatures with this spell,
+      including creatures more than one size category larger than you. When you
+      attempt the combat maneuver check, apply its result to each creature
+      within the area.</p>
   descriptors:
     value:
       - earth

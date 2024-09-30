@@ -4,6 +4,38 @@ img: systems/pf1/icons/feats/deafening-critical.jpg
 name: Hissing Rage
 system:
   abilityType: su
+  actions:
+    - _id: tqRLkk9V5AZiifw6
+      actionType: save
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      name: Spit
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.con.mod
+        description: Fortitude negates
+        type: fort
+    - _id: zXgOgXsGA5TYugjg
+      actionType: save
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: seeText
+      name: Part of bite attack
+      range:
+        units: touch
+      save:
+        dc: 10 + floor(@class.level / 2) + @abilities.con.mod
+        description: Fortitude negates
+        type: fort
   associations:
     classes:
       - Barbarian
@@ -15,11 +47,18 @@ system:
       foe in this way, but she can also apply this poison as a swift action when
       she hits with a bite attack. The DC of the save against this poison is
       equal to 10 + half the barbarian’s level + the barbarian’s Constitution
-      modifier.<p>Hissing Rage Poison (Su) Bite—contact or injury; save Fort;
-      frequency 1/round for 6 rounds; effect 1d2 Str damage; cure 2 consecutive
-      saves.</p>
+      modifier.</p><p><strong>Hissing Rage Poison (Su)</strong> Bite—contact or
+      injury; save Fort; frequency 1/round for 6 rounds; effect 1d2 Str damage;
+      cure 2 consecutive saves.</p>
+  sources:
+    - id: PZO1140
+      pages: '36'
   subType: classFeat
   tags:
     - Rage Power
+  uses:
+    maxFormula: '1'
+    per: hour
+    value: 1
 type: feat
 

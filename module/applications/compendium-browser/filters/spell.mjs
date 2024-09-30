@@ -40,6 +40,22 @@ export class SpellLearnedByClassFilter extends CheckboxFilter {
   static label = "PF1.Classes";
   static indexField = "system.learnedAt.class";
   static type = "spell";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    super.prepareChoices();
+    const choices = this.choices;
+
+    // Display human readable name instead of the class identifier
+    const configChoices = this.constructor.getChoicesFromConfig(pf1.config.classNames);
+    for (const choice of configChoices) {
+      if (choices.has(choice.key)) {
+        choices.set(choice.key, choice);
+      }
+    }
+
+    this.choices = choices;
+  }
 }
 
 export class SpellLearnedByDomainFilter extends CheckboxFilter {

@@ -68,22 +68,6 @@ export class ActorPF extends ActorBasePF {
   /**
    * @internal
    * @override
-   * @param {object} [actorData]
-   * @returns {object}
-   */
-  static getDefaultArtwork(actorData) {
-    const result = super.getDefaultArtwork(actorData);
-    const image = pf1.config.defaultIcons.actors[actorData?.type];
-    if (image) {
-      result.img = image;
-      result.texture.src = image;
-    }
-    return result;
-  }
-
-  /**
-   * @internal
-   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user
@@ -501,18 +485,22 @@ export class ActorPF extends ActorBasePF {
 
     // Update total level and mythic tier
     const classes = this.itemTypes.class;
-    const { level, mythicTier } = classes.reduce(
+    /** @type {{hd:number,mythic:number,level:number}} */
+    const levels = classes.reduce(
       (cur, o) => {
         o.reset(); // HACK: Out of order preparation for later.
-        cur.level += o.hitDice;
-        cur.mythicTier += o.mythicTier;
+        cur.hd += o.hitDice;
+        if (!["mythic", "racial"].includes(o.subType)) {
+          cur.level += o.system.level ?? 0;
+        }
+        cur.mythic += o.mythicTier;
         return cur;
       },
-      { level: 0, mythicTier: 0 }
+      { hd: 0, mythic: 0, level: 0 }
     );
 
-    this.system.details.level.value = level;
-    this.system.details.mythicTier = mythicTier;
+    this.system.details.level.value = levels.level;
+    this.system.details.mythicTier = levels.mythic;
 
     // Refresh ability scores
     for (const ability of Object.values(this.system.abilities)) {
@@ -570,7 +558,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareClassSkills();
 
     // Reset HD
-    foundry.utils.setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
+    foundry.utils.setProperty(this.system, "attributes.hd.total", levels.hd);
   }
 
   /**
@@ -1036,8 +1024,11 @@ export class ActorPF extends ActorBasePF {
         const spellLevelData = book.spells[`spell${spellLevel}`];
         // Insufficient ability score for the level
         if (maxLevelByAblScore < spellLevel) {
-          spellLevelData.hasIssues = true;
-          spellLevelData.lowAbilityScore = true;
+          const unlimit = bookInfo.data.noAbilityLimit ?? false;
+          if (!unlimit) {
+            spellLevelData.hasIssues = true;
+            spellLevelData.lowAbilityScore = true;
+          }
         }
 
         spellLevelData.known = { unused: 0, max: 0 };
@@ -2762,6 +2753,15 @@ export class ActorPF extends ActorBasePF {
 
     const token = options.token ?? this.token;
 
+    // Add metadata about the skill
+    const metadata = { skill: { rank: skl.rank ?? 0 } };
+    if (["acr", "swm", "clm"].includes(skillId)) {
+      const speeds = this.system.attributes?.speed ?? {};
+      metadata.speed = { base: speeds.land?.total ?? 0 };
+      if (skillId === "swm") metadata.speed.swim = speeds.swim?.total ?? 0;
+      if (skillId === "clm") metadata.speed.climb = speeds.climb?.total ?? 0;
+    }
+
     const rollOptions = {
       ...options,
       parts,
@@ -2771,6 +2771,13 @@ export class ActorPF extends ActorBasePF {
       compendium: { entry: pf1.config.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
+      messageData: {
+        flags: {
+          pf1: {
+            metadata,
+          },
+        },
+      },
     };
     if (Hooks.call("pf1PreActorRollSkill", this, rollOptions, skillId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -3126,9 +3133,9 @@ export class ActorPF extends ActorBasePF {
     let untokened = 0;
     // Roll initiative for combatants
     let combatants = combat.combatants.filter((c) => {
-      if (!c.token) untokened += 1;
-      if (token && c.token?.id !== token.id) return false;
       if (c.actor?.id !== this.id) return false;
+      if (token && c.token?.id !== token.id) return false;
+      if (!c.token) untokened += 1;
       return rerollInitiative || c.initiative === null;
     });
 
@@ -3142,10 +3149,12 @@ export class ActorPF extends ActorBasePF {
     if (combatants.length == 0) return combat;
 
     foundry.utils.mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
+
     await combat.rollInitiative(
       combatants.map((c) => c.id),
       initiativeOptions
     );
+
     return combat;
   }
 
@@ -3431,10 +3440,13 @@ export class ActorPF extends ActorBasePF {
    * await actor.toggleCondition("dazzled");
    *
    * @param {boolean} conditionId - A direct condition key, as per {@link pf1.registry.conditions}, such as `shaken` or `dazed`.
+   * @param {object} [aeData] - Extra data to add to the AE if it's being enabled
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
-  async toggleCondition(conditionId) {
-    return this.setCondition(conditionId, !this.hasCondition(conditionId));
+  async toggleCondition(conditionId, aeData) {
+    let active = !this.hasCondition(conditionId);
+    if (active && aeData) active = aeData;
+    return this.setCondition(conditionId, active);
   }
 
   /**
@@ -3464,7 +3476,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {object} conditions Condition ID to boolean (or update data) mapping of new condition states. See {@link setCondition()}
    * @param {object} [context] Update context
-   * @returns {object} Condition ID to boolean mapping of actual updates.
+   * @returns {Record<string,boolean>} Condition ID to boolean mapping of actual updates.
    */
   async setConditions(conditions = {}, context = {}) {
     conditions = foundry.utils.deepClone(conditions);
@@ -3484,10 +3496,18 @@ export class ActorPF extends ActorBasePF {
     const toDelete = [],
       toCreate = [];
 
+    const immunities = this.getConditionImmunities();
+
     for (const [conditionId, value] of Object.entries(conditions)) {
       const currentCondition = pf1.registry.conditions.get(conditionId);
       if (currentCondition === undefined) {
         console.error("Unrecognized condition:", conditionId);
+        delete conditions[conditionId];
+        continue;
+      }
+
+      if (value === true && immunities.has(conditionId)) {
+        console.warn("Actor is immune to condition:", conditionId, this);
         delete conditions[conditionId];
         continue;
       }
@@ -3507,6 +3527,12 @@ export class ActorPF extends ActorBasePF {
             name: currentCondition.name,
             img: currentCondition.texture,
           };
+
+          // Special boolean for easy overlay
+          if (value?.overlay) {
+            delete value.overlay;
+            foundry.utils.setProperty(aeData.flags, "core.overlay", true);
+          }
 
           if (typeof value !== "boolean") {
             foundry.utils.mergeObject(aeData, value);
@@ -4187,7 +4213,6 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Otherwise return notes if they directly match context
-    const notes = result.filter((n) => n.target == context);
     for (const note of result) {
       note.notes = note.notes.filter((o) => o.target === context).map((o) => o.text);
     }
@@ -4443,6 +4468,8 @@ export class ActorPF extends ActorBasePF {
 
     const result = { ...(skipRefresh ? this._rollData : foundry.utils.deepClone(this.system)) };
 
+    pf1.utils.rollData.addStatic(result);
+
     // Clear certain fields if not refreshing
     if (skipRefresh) {
       for (const path of pf1.config.temporaryRollDataFields.actor) {
@@ -4586,13 +4613,7 @@ export class ActorPF extends ActorBasePF {
    */
   getQuickActions() {
     return this.items
-      .filter(
-        (o) =>
-          o.isActive &&
-          o.system.showInQuickbar === true &&
-          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type) &&
-          !o.showUnidentifiedData
-      )
+      .filter((o) => o.isActive && o.system.showInQuickbar === true && o.showUnidentifiedData !== true)
       .sort((a, b) => a.sort - b.sort)
       .map((item) => {
         const qi = {
@@ -4666,22 +4687,6 @@ export class ActorPF extends ActorBasePF {
       const newMod = pf1.utils.getAbilityModifier(total, { penalty, damage });
       this.system.abilities[k].mod = newMod;
     }
-  }
-
-  /**
-   * @override
-   * @protected
-   * @param {object} json
-   * @returns {Promise<this>}
-   */
-  async importFromJSON(json) {
-    // Import from JSON
-    const data = JSON.parse(json);
-    delete data._id;
-    data.effects = [];
-
-    // Update data
-    return this.update(data, { diff: false, recursive: false });
   }
 
   /**

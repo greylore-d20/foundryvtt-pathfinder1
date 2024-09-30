@@ -1,5 +1,6 @@
 _id: 5pgzvhlvzhi16ek1
 _key: '!items!5pgzvhlvzhi16ek1'
+folder: 9hBqwSiT8GIHl0Ht
 img: systems/pf1/icons/misc/magic-swirl.png
 name: Psychic Crush V
 system:
@@ -11,6 +12,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: 11d6 + @cl
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       name: Use
@@ -25,11 +33,12 @@ system:
     somatic: true
   description:
     value: >-
-      <p>This functions as <i>psychic crush IV</i>, but on a successful
-      Fortitude or Will save, the target takes 11d6 points of damage + 1 point
-      of damage per caster level. If it is at fewer than half its total hit
-      points, the target takes a -2 penalty on the Will save to resist this
-      spell. This spell can be undercast.</p>
+      <p>This functions as
+      @UUID[Compendium.pf1.spells.Item.wtw123wqg2eej75w]{psychic crush IV}, but
+      on a successful Fortitude or Will save, the target takes 11d6 points of
+      damage + 1 point of damage per caster level. If it is at fewer than half
+      its total hit points, the target takes a -2 penalty on the Will save to
+      resist this spell. This spell can be undercast.</p>
   descriptors:
     value:
       - mindAffecting

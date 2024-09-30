@@ -1159,7 +1159,8 @@ export class ActionUse {
       .map((c) => c.name);
 
     // Special case
-    if (this.actor.system.conditions?.deaf && this.item.type === "spell") {
+    // TODO: Move this configuration to conditions registry
+    if (this.actor.statuses.has("deaf") && this.item.type === "spell") {
       // TODO: Check if someone modified the conditions to show anyway?
       conditions.push(pf1.registry.conditions.get("deaf").name);
     }
@@ -1627,7 +1628,7 @@ export class ActionUse {
     await this.getMessageData();
 
     // Post message
-    let result = Promise.resolve();
+    let result = Promise.resolve(null);
     if (shared.scriptData?.hideChat !== true) {
       result = this.postMessage();
     }
@@ -1645,7 +1646,7 @@ export class ActionUse {
     // Call post-use script calls
     await this.executeScriptCalls("postUse");
 
-    Hooks.callAll("pf1PostActionUse", this, result instanceof pf1.documents.ChatMessagePF ? result : null);
+    Hooks.callAll("pf1PostActionUse", this, this.shared.message ?? null);
 
     return result;
   }

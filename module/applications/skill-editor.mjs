@@ -17,6 +17,7 @@ export class SkillEditor extends DocumentSheet {
       template: "systems/pf1/templates/apps/skill-editor.hbs",
       dragDrop: [{ dragSelector: null, dropSelector: "*" }],
       classes: [...options.classes, "pf1", "skill-editor"],
+      sheetConfig: false,
       submitOnChange: true,
       closeOnSubmit: false,
       submitOnClose: false,
@@ -108,7 +109,7 @@ export class SkillEditor extends DocumentSheet {
 
     formData = foundry.utils.expandObject(formData);
     // Forcibly slugify provided tag to ensure it is not invalid (e.g. contain periods)
-    const tag = formData.tag?.slugify({ strict: true });
+    const tag = pf1.utils.createTag(formData.tag, { allowUpperCase: true, camelCase: false });
     const newData = formData.skill;
 
     // Track old IDs for rename related data deletion
@@ -136,7 +137,7 @@ export class SkillEditor extends DocumentSheet {
     if (tagChanged) {
       const skillsData = this.isSubSkill ? this.actor.system.skills[skillId].subSkills : this.actor.system.skills;
       if (tag in skillsData) {
-        const msgOpts = { tag: this.isSubSkill ? `${this.skillId}.subSkills.${tag}` : tag };
+        const msgOpts = { tag: this.isSubSkill ? `${this.skillId}.${tag}` : tag };
         return void ui.notifications.error(game.i18n.format("PF1.Error.SkillTagAlreadyExists", msgOpts));
       }
     }

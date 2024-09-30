@@ -1,4 +1,45 @@
 export class TokenPF extends Token {
+  /**
+   * Synced with Foundry v12
+   *
+   * @override
+   * @param {string|object} effect
+   * @param {object} options
+   * @param {boolean} [options.active] - Force active state
+   * @param {boolean} [options.overlay=false] - Overlay effect
+   * @returns {boolean} - was it applied or removed
+   */
+  async toggleEffect(effect, { active, overlay = false, interaction = true } = {}) {
+    const effectId = typeof effect === "string" ? effect : effect?.id;
+
+    if (this.actor && pf1.registry.conditions.has(effectId) && typeof this.actor.toggleCondition === "function") {
+      const enable = active ?? !this.actor.hasCondition(effectId);
+      if (enable && this.actor.getConditionImmunities().has(effectId)) {
+        if (interaction) {
+          ui.notifications.warn(
+            game.i18n.format("PF1.Warning.ImmuneToCondition", {
+              name: this.actor.name,
+              condition: pf1.registry.conditions.get(effectId)?.name || effectId,
+            })
+          );
+        }
+        return false;
+      }
+
+      const extraData = overlay ? { flags: { core: { overlay: true } } } : undefined;
+
+      let rv;
+      if (active === undefined) rv = await this.actor.toggleCondition(effectId, extraData);
+      else {
+        if (active && overlay) active = extraData; // Support right click
+        rv = await this.actor.setCondition(effectId, active);
+      }
+      return rv[effectId];
+    } else {
+      return super.toggleEffect(effect, { active, overlay });
+    }
+  }
+
   get actorVision() {
     const ll = this.actor.system.traits?.senses?.ll ?? {};
     return {

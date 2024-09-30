@@ -22,7 +22,7 @@ export class TokenTooltipWorldConfigModel extends foundry.abstract.DataModel {
     if (data.hideActorName !== undefined) {
       if (data.hideActorNameByDisposition === undefined) {
         // 1 (All) for true, -2 (None) for false
-        data.hideActorNameByDisposition == data.hideActorName ? 1 : -2;
+        data.hideActorNameByDisposition = data.hideActorName ? 1 : -2;
       }
       delete data.hideActorName;
     }
@@ -80,6 +80,8 @@ export class TooltipWorldConfig extends FormApplication {
   }
 
   async _updateObject(event, formData) {
+    if (!this.form.reportValidity()) return;
+
     const settings = foundry.utils.expandObject(formData);
 
     await game.settings.set("pf1", "tooltipWorldConfig", settings);

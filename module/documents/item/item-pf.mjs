@@ -56,19 +56,6 @@ export class ItemPF extends ItemBasePF {
   /**
    * @internal
    * @override
-   * @param {object} [itemData]
-   * @returns {object}
-   */
-  static getDefaultArtwork(itemData) {
-    const result = super.getDefaultArtwork(itemData);
-    const image = pf1.config.defaultIcons.items[itemData?.type];
-    if (image) result.img = image;
-    return result;
-  }
-
-  /**
-   * @internal
-   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user
@@ -584,7 +571,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get uuid() {
-    if (this.parentItem) this.parentItem.uuid + `.Item.${this.id}`;
+    if (this.parentItem) return this.parentItem.uuid + `.Item.${this.id}`;
     return super.uuid;
   }
 
@@ -1335,8 +1322,9 @@ export class ItemPF extends ItemBasePF {
         const range = action.getRange({ type: "max", rollData }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = pf1.utils.convertDistance(range, units);
+        // TODO: Display range increment and max range instead of just the latter when max increment is higher than 1
         const rangeLabel =
-          range > 0 ? game.i18n.format("PF1.RangeNote", { distance: range, units: distanceValues[1] }) : null;
+          range > 0 ? game.i18n.format("PF1.MaxRangeNote", { distance: range, units: distanceValues[1] }) : null;
         if (rangeLabel) props.push(rangeLabel);
       }
 
@@ -1576,6 +1564,8 @@ export class ItemPF extends ItemBasePF {
     const result = new Set(contexts);
     for (const context of contexts) {
       switch (context) {
+        case "sattack":
+        case "wattack":
         case "mattack":
         case "rattack":
         case "nattack":
@@ -1611,6 +1601,8 @@ export class ItemPF extends ItemBasePF {
   getRollData() {
     const actor = this.actor;
     const result = { ...(actor?.getRollData() ?? {}) };
+
+    if (!actor) pf1.utils.rollData.addStatic(result);
 
     result.item = foundry.utils.deepClone(this.system);
 

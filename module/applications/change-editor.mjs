@@ -78,7 +78,7 @@ export class ChangeEditor extends ItemSheet {
       actor = this.actor,
       item = this.item;
 
-    const buffTargets = getBuffTargets(actor);
+    const buffTargets = getBuffTargets("buffs", { actor, item });
     const target = buffTargets[change.target];
 
     const context = {
@@ -103,7 +103,7 @@ export class ChangeEditor extends ItemSheet {
     const a = event.currentTarget;
 
     // Prepare categories and changes to display
-    const categories = getBuffTargetDictionary(this.item.actor);
+    const categories = getBuffTargetDictionary("buffs", { actor: this.item.actor, item: this.item });
 
     // Sort specific categories
     const sortable = new Set(["skill"]);

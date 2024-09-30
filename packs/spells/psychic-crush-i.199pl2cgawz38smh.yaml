@@ -1,5 +1,6 @@
 _id: 199pl2cgawz38smh
 _key: '!items!199pl2cgawz38smh'
+folder: 9hBqwSiT8GIHl0Ht
 img: systems/pf1/icons/misc/magic-swirl.png
 name: Psychic Crush I
 system:
@@ -11,6 +12,13 @@ system:
         unchained:
           cost: 2
           type: action
+      damage:
+        parts:
+          - formula: 3d6 + @cl
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       name: Use

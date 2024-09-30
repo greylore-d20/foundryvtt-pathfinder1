@@ -2211,7 +2211,7 @@ export class ActorSheetPF extends ActorSheet {
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
 
-            notes = [...getNotes("attacks.attack"), getNotes(`attacks.${subTarget}`)];
+            notes = [...getNotes("attacks.attack"), ...getNotes(`attacks.${subTarget}`)];
 
             break;
           }

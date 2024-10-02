@@ -182,21 +182,13 @@ export class ActorTrapPF extends ActorNPCPF {
     /* Set the following data on a refresh
     /* ----------------------------- */
 
-    // Set size index
-    const sizeChart = Object.keys(pf1.config.sizeChart);
-    result.size = sizeChart.indexOf(result.traits.size);
+    // Spoof size as Medium instead of letting it fail to Fine
+    result.size = 4;
+    // Spoof range as medium tall creature
+    result.range = pf1.documents.actor.ActorPF.getReach();
 
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};
-
-    // Add range info
-    result.range = pf1.documents.actor.ActorPF.getReach(this.system.traits.size, this.system.traits.stature);
-
-    // Wound Threshold isn't applicable
-    result.attributes.woundThresholds = { level: 0 };
-
-    // Traps don't have ACP
-    result.attributes.acp = { attackPenalty: 0 };
 
     // Call hook
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);

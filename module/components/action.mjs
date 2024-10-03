@@ -823,7 +823,9 @@ export class ItemAction {
           : pf1.config.abilityActivationTypesPlurals;
 
         const activationType = activation.type || "nonaction";
-        if (activation.cost > 1 && !!activationTypesPlural[activationType]) {
+        if (activation.type === "special") {
+          labels.activation = activation.cost || activationTypes.special;
+        } else if (activation.cost > 1 && !!activationTypesPlural[activationType]) {
           labels.activation = [activation.cost.toString(), activationTypesPlural[activationType]].filterJoin(" ");
         } else {
           labels.activation = [

@@ -870,12 +870,16 @@ export class ItemSpellPF extends ItemPF {
         : pf1.config.abilityActivationTypesPlurals;
 
       if (activationType) {
-        if (activationTypesPlurals[activationType] != null) {
+        if (activationType === "special") {
+          label.castingTime = activationCost || activationTypes.special;
+        } else if (activationTypesPlurals[activationType] != null) {
           if (activationCost === 1) label.castingTime = `${activationTypes[activationType]}`;
           else label.castingTime = `${activationTypesPlurals[activationType]}`;
-        } else label.castingTime = `${activationTypes[activationType]}`;
+        } else {
+          label.castingTime = `${activationTypes[activationType]}`;
+        }
       }
-      if (!Number.isNaN(activationCost) && label.castingTime != null)
+      if (Number.isFinite(activationCost) && label.castingTime != null)
         label.castingTime = `${activationCost} ${label.castingTime}`;
     }
 

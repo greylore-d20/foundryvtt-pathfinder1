@@ -202,13 +202,13 @@ function getSheetActor(target) {
  * Get relevant actors based on the enriched element data.
  *
  * @param {HTMLElement} button - Clicked element.
- * @returns {ActorPF[]} - Relevant actors
+ * @returns {Set<ActorPF>} - Relevant actors
  */
 export function getRelevantActors(button) {
   const actors = [];
 
-  const as = button.dataset.as;
-  const asSpeaker = button.dataset.speaker || as === "speaker";
+  const as = button.dataset.as || (button.dataset.speaker ? "speaker" : null);
+  const asSpeaker = as === "speaker";
   const asSheet = as === "sheet";
   const auto = ["auto", "context"].includes(as);
 
@@ -217,6 +217,7 @@ export function getRelevantActors(button) {
     const actor = getSpeaker(button);
     if (actor) actors.push(actor);
   }
+
   if (asSheet || auto) {
     const actor = getSheetActor(button);
     if (actor) actors.push(actor);
@@ -242,7 +243,7 @@ export function getRelevantActors(button) {
     throw new Error("No valid actors found.");
   }
 
-  return actors;
+  return new Set(actors);
 }
 
 /**

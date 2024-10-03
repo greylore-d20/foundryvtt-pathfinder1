@@ -320,7 +320,7 @@
     "RollConcentrationMacroName": "{actor}: Tira Concentración ({book})",
     "RollBABMacroName": "{actor}: Tira BAB",
     "SourceInfoSkillRank_ClassBase": "{className} (Base)",
-    "SourceInfoSkillRank_ClassFC": "{className} (Favoured Class)",
+    "SourceInfoSkillRank_ClassFC": "{className} (Clase favorita)",
     "CreateItemForSpell": "Crear Objeto para {name}",
     "CreateItemWand": "Varita",
     "CreateItemScroll": "Pergamino",
@@ -335,23 +335,23 @@
       "NewName": "Nueva Llamada de Script",
       "Use": {
         "Name": "Usar",
-        "Info": "Llamada cuando el objeto se 'utiliza' (Ataque, Beber Poción, etc.). Tiene la variable extra `attacks`, un arreglo que contiene las tiradas de ataque de la acción, si las hubiera."
+        "Info": "Llamada cuando el objeto se 'utiliza' (Ataque, Beber Poción, etc.). Tiene la variable extra <code>attacks</code>, un arreglo que contiene las tiradas de ataque de la acción, si las hubiera."
       },
       "Equip": {
         "Name": "Equipar",
-        "Info": "Llamada cuando el objeto se ha equipado o desequipado. Tiene la variable extra `equipped`, que puede ser `true` o `false`."
+        "Info": "Llamada cuando el objeto se ha equipado o desequipado. Tiene la variable booleana extra <code>equipped</code>."
       },
       "Toggle": {
         "Name": "Conmutar",
-        "Info": "Llamada cuando el objeto se ha activado o desactivado. Tiene la variable extra `state`, que puede ser `true` o `false`."
+        "Info": "Llamada cuando el objeto se ha activado o desactivado. Tiene la variable booleana extra <code>state</code>."
       },
       "ChangeQuantity": {
         "Name": "Cambiar Cantidad",
-        "Info": "Llamada cuando la cantidad del objeto se ha cambiado. Tiene la variable extra `quantity.previous` y `quantity.new`, las cuales son números."
+        "Info": "Llamada cuando la cantidad del objeto se ha cambiado. Tiene las variables numéricas extras <code>quantity.previous</code> y <code>quantity.new</code>."
       },
       "ChangeLevel": {
         "Name": "Cambiar Nivel",
-        "Info": "Llamada cuando el nivel del objeto se ha cambiado. Tiene la variable extra `quantity.previous` y `quantity.new`, las cuales son números."
+        "Info": "Llamada cuando el nivel del objeto se ha cambiado. Tiene la variables numéricas extras <code>quantity.previous</code> y <code>quantity.new</code>."
       },
       "Create": "Generar llamada de script incrustado",
       "PostUse": {
@@ -383,7 +383,7 @@
     "ArmorClass": "Clase de Armadura",
     "Attacks": "Ataques",
     "Biography": "Biografía",
-    "Buffs": "Buffs",
+    "Buffs": "Potenciadores (Buffs)",
     "Change": "Cambio",
     "Changes": "Cambios",
     "ClassAbilities": "Habilidades de Clase",
@@ -734,7 +734,7 @@
       "Label": "Usos Limitados",
       "Periods": {
         "single": "Uso único",
-        "round": "Por ronda",
+        "round": "Por asalto",
         "day": "Al día",
         "week": "A la semana",
         "charges": "Cargas",
@@ -887,7 +887,7 @@
     "MaxDexArmor": "Bono de Des. Máxima (Armadura)",
     "MaxDexShield": "Bono de Des. Máxima (Escudo)",
     "Encumbrance": "Impedimenta",
-    "Raw": "Raw",
+    "Raw": "En bruto (Raw)",
     "Normal": "Normal",
     "Changelog": "Changelog",
     "DontShowAgain": "No mostrar el registro de cambios después de las actualizaciones del sistema",
@@ -930,7 +930,7 @@
       "Start": "Aplicando Migración del Sistema PF1 para la versión {version}. Por favor, espere.",
       "Ongoing": "Migración en marcha. Por favor espere a que finalice.",
       "End": "¡La Migración del Sistema de PF1 a la versión {version} a sido un éxito!",
-      "InProgress": "En marcha",
+      "InProgress": "Migración del sistema PF1 en proceso. Por favor, espere a que termine.",
       "Dialog": {
         "Title": "Migración",
         "Ongoing": "¡Migración en marcha!",
@@ -968,7 +968,8 @@
     },
     "Application": {
       "ChangeTargetSelector": {
-        "Title": "Selecciona objetivo del cambio"
+        "Title": "Selecciona objetivo del cambio",
+        "InvalidChoice": "La elección no es válida para este actor."
       },
       "ContextNoteTargetSelector": {
         "Title": "Selecciona objetivo para la nota de contexto"
@@ -1003,7 +1004,7 @@
       },
       "TraitSelector": {
         "CustomHint": "Puede separar entradas distintas con punto y coma (;). Pulsar Backspace dos veces cuando la caja de texto esté vacía borra la última entrada.",
-        "NoCustomEntries": "Sin entradas personalizadas",
+        "NoCustomEntries": "Sin entradas personalizadas.",
         "CustomPlaceholder": "Introduce una entrada personalizada"
       },
       "ActionSelector": {
@@ -1014,7 +1015,7 @@
       },
       "CurrencyTransfer": {
         "Send": "Enviar divisas",
-        "Failed": "Envío de divisas fallido",
+        "Failed": "Envío de divisas fallido: ",
         "GMRequired": "Un DJ es necesario para completar la transferencia.",
         "Insufficient": "Dinero insuficiente"
       },
@@ -1162,7 +1163,7 @@
         "FAQ": "Consulté las FAQ",
         "Log": "Compruebe si hay errores en el registro de la consola de herramientas de desarrollo (F12 [u Opción+Comando+I en Mac], pestaña de la consola)",
         "Modules": "Asegúrese de que los módulos no sean la causa.",
-        "Foundry": "Read Foundry's {link}",
+        "Foundry": "Lee {link} de Foundry.",
         "FoundryLink": "documentación de usuario"
       }
     },
@@ -1259,7 +1260,7 @@
     "ProficientAttack": "Competente (Ataque)",
     "UseBuff": "Usar Buff",
     "Identify": "Identificar",
-    "Bonus": "Bonus",
+    "Bonus": "Bonificador",
     "Properties": "Propiedades",
     "DeleteSkill": "Borrar habilidad",
     "DeleteSkillTitle": "Borrar habilidad: {name}",
@@ -1841,8 +1842,8 @@
           "Short": "turno"
         },
         "round": {
-          "Label": "Rondas",
-          "Short": "rondas"
+          "Label": "Asaltos",
+          "Short": "asaltos"
         },
         "second": {
           "Label": "Segundos",
@@ -1976,8 +1977,8 @@
         "Plural": "Ataques"
       },
       "round": {
-        "Single": "Ronda",
-        "Plural": "Rondas"
+        "Single": "Asalto",
+        "Plural": "Asaltos"
       },
       "minute": {
         "Single": "Minuto",
@@ -2312,7 +2313,7 @@
       },
       "FlyManeuverability": {
         "Label": "Maniobrabilidad de vuelo",
-        "Abbr": "Vuelo",
+        "Abbr": "Manio. de vuelo",
         "Quality": {
           "clumsy": "Torpe",
           "poor": "Pobre",
@@ -2350,7 +2351,7 @@
     "CriticalHitPlural": "Impactos críticos",
     "HalfBAB": "1/2 At. Base",
     "BABOverride": "Sobreescritura de At. Base",
-    "ACFFAbbr": "CA Desp.",
+    "ACFFAbbr": "CA Desprev.",
     "Radius": "Radio",
     "EnhancementInline": "+{bonus} por mejora",
     "AttackAlignment": "Rasgos de alineamiento",
@@ -2394,7 +2395,7 @@
     "Manual": "Manual",
     "NoOverride": "Sin sobreescritura",
     "Finish": "Finalizar",
-    "Quickbar": "Quickbar",
+    "Quickbar": "Acceso rápido",
     "QuickbarHint": "Se ve en el HUD del token y en el sumario de acciones rápidas.",
     "AmmunitionType": "Tipo de munición",
     "AmmunitionPerAttack": "Coste de munición (por ataque)",
@@ -2475,7 +2476,7 @@
       },
       "Errors": {
         "NoCategory": "No se ha encontrado categoría",
-        "ItemNotFound": "El objeto especificado no se ha encontrado",
+        "ItemNotFound": "El objeto especificado no se ha encontrado.",
         "UnsupportedItemType": "Tipo de objeto \"{type}\" no soportado",
         "NoItemInMessage": "No se ha encontrado el objeto relevante en el mensaje.",
         "BrowserNotFound": "¡No se ha encontrado un Compendium Browser para la categoría \"{category}\"!",
@@ -2716,7 +2717,8 @@
       "senses": "Sentidos",
       "offense": "Ataque",
       "other": "Otro",
-      "weakness": "Debilidades"
+      "weakness": "Debilidades",
+      "movement": "Movimiento"
     },
     "RaceType": "Tipo de raza",
     "RaceTypes": {
@@ -2751,7 +2753,12 @@
       "sample-macros": "Macros de ejemplo",
       "roll-tables": "Tablas aleatorias",
       "pf1e-rules": "Reglas de Pathfinder 1e"
-    }
+    },
+    "MaxRangeNote": "Rango máximo: {distance} {units}",
+    "CustomSkill": "Habilidad personalizada",
+    "BuffTarWeaponAttack": "Tiradas de ataque con armas",
+    "BuffTarSpellAttack": "Tiradas de ataque con conjuro",
+    "NoCastingAbilityLimit": "Ignorar límite de característica"
   },
   "TOKEN": {
     "VisionLowLight": "Visión en la Penumbra",

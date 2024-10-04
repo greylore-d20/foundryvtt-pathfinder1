@@ -1765,14 +1765,10 @@ export class ActorPF extends ActorBasePF {
 
       for (const type of Object.keys(links)) {
         for (const link of links[type]) {
-          const linkedItem = fromUuidSync(link.uuid, { relative: this });
-          if (!linkedItem) continue;
-
-          // Detect bad links pointing to other actors
-          if (linkedItem.actor && linkedItem.actor !== this) {
-            console.error("Invalid item link:", { type, uuid: link.uuid, actor: this, item, linked: linkedItem });
-            continue;
-          }
+          // HACK: fromUuid[Sync]() causes recursive synth actor initialization at world launch, so we do this instead
+          const linkData = foundry.utils.parseUuid(link.uuid, { relative: this });
+          const linkedItem = this.items.get(linkData?.id);
+          if (!linkedItem) continue; // Ignore items not on current actor
 
           switch (type) {
             case "charges": {

@@ -1104,47 +1104,26 @@ export class ItemAction {
     }
 
     // Define Roll parts
-    const parts =
-      this.data.damage.parts?.map((damage) => {
-        return { base: damage.formula, extra: [], damageType: damage.type, type: "normal" };
-      }) ?? [];
-    // Add conditionals damage
-    conditionalParts["damage.normal"]?.forEach((p) => {
-      const [base, damageType, isExtra] = p;
-      isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "normal" });
-    });
-    // Add critical damage parts
-    if (critical === true) {
-      const critParts = this.data.damage?.critParts;
-      if (critParts) {
-        parts.push(
-          ...critParts.map((damage) => {
-            return { base: damage.formula, extra: [], damageType: damage.type, type: "crit" };
-          })
-        );
-      }
-      // Add conditional critical damage parts
-      conditionalParts["damage.crit"]?.forEach((p) => {
+    const parts = [];
+    const addParts = (property, type) => {
+      parts.push(
+        ...(actionData.damage[property]?.map((damage) => ({
+          base: damage.formula,
+          extra: [],
+          damageType: damage.type,
+          type,
+        })) ?? [])
+      );
+
+      // add typed conditionals
+      conditionalParts[`damage.${type}`]?.forEach((p) => {
         const [base, damageType, isExtra] = p;
-        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "crit" });
+        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type });
       });
-    }
-    // Add non-critical damage parts
-    if (critical === false) {
-      const nonCritParts = this.data.damage?.nonCritParts;
-      if (nonCritParts) {
-        parts.push(
-          ...nonCritParts.map((damage) => {
-            return { base: damage.formula, extra: [], damageType: damage.type, type: "nonCrit" };
-          })
-        );
-      }
-      // Add conditional non-critical damage parts
-      conditionalParts["damage.nonCrit"]?.forEach((p) => {
-        const [base, damageType, isExtra] = p;
-        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "nonCrit" });
-      });
-    }
+    };
+    addParts("parts", "normal");
+    if (critical) addParts("critParts", "crit");
+    else addParts("nonCritParts", "nonCrit");
 
     /**
      * Initialize changes to empty array so mods can still add changes for healing "attacks" via the pre-roll hook below

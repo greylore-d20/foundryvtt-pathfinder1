@@ -389,7 +389,8 @@ export class ItemPF extends ItemBasePF {
   getDefaultChargeCost({ rollData } = {}) {
     rollData ??= this.getRollData();
     const formula = this.getDefaultChargeFormula();
-    return RollPF.safeRoll(formula, rollData).total;
+    // TODO: Support default cost being variable
+    return RollPF.safeRollSync(formula, rollData, undefined, undefined, { maximize: true }).total;
   }
 
   /**
@@ -1289,7 +1290,8 @@ export class ItemPF extends ItemBasePF {
         if (actionData.duration.units === "spec") {
           duration = actionData.duration.value;
         } else if (!["inst", "perm"].includes(actionData.duration.units)) {
-          const value = await RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
+          const roll = await RollPF.safeRoll(actionData.duration.value || "0", rollData);
+          const value = roll.total;
           duration = [value, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
         if (duration) props.push(duration);

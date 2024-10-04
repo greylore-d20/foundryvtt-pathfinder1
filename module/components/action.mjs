@@ -158,7 +158,7 @@ export class ItemAction {
     }
 
     if (this.isCharged) {
-      const cost = this.getChargeCost();
+      const cost = this.getChargeCostSync({ maximize: true })?.total ?? 0;
       const charges = item.charges;
       if (cost > 0) {
         if (cost > charges) return false;
@@ -193,7 +193,7 @@ export class ItemAction {
 
   /** @type {boolean} - Consumes charges on use */
   get autoDeductCharges() {
-    return this.getChargeCost() > 0;
+    return this.getChargeCostSync({ maximize: true })?.total > 0;
   }
 
   /** @type {boolean} - Does parent item have charges */
@@ -209,10 +209,12 @@ export class ItemAction {
   /**
    * @param {object} [options] - Additional options to configure behavior.
    * @param {object} [options.rollData=null] - Pre-determined roll data to pass for determining the charge cost.
-   * @returns {number} Cost in charges for this action.
+   * @param {boolean} [options.minimize=false]
+   * @param {boolean} [options.maximize=false]
+   * @returns {Roll|null} - Cost in charges for this action. Null if not charged.
    */
-  getChargeCost({ rollData = null } = {}) {
-    if (!this.isCharged) return 0;
+  async getChargeCost({ minimize = false, maximize = false, rollData = null } = {}) {
+    if (!this.isCharged) return null;
 
     const isSpell = this.item.type === "spell";
     const isSpellpointSpell = isSpell && this.item.useSpellPoints();
@@ -226,8 +228,45 @@ export class ItemAction {
     }
 
     rollData ??= this.getRollData();
-    const cost = RollPF.safeRoll(formula, rollData).total;
-    return this.item.isSingleUse ? Math.clamp(cost, -1, 1) : cost;
+
+    const roll = await RollPF.safeRoll(formula, rollData, undefined, undefined, { maximize, minimize });
+
+    // Clamp single use
+    if (this.item.isSingleUse) roll._total = Math.clamp(roll._total, -1, 1);
+
+    return roll;
+  }
+
+  /**
+   * @param {object} [options] - Additional options to configure behavior.
+   * @param {object} [options.rollData=null] - Pre-determined roll data to pass for determining the charge cost.
+   * @param {boolean} [options.minimize=false]
+   * @param {boolean} [options.maximize=false]
+   * @returns {Roll|null} - Cost in charges for this action. Null if not charged.
+   */
+  getChargeCostSync({ minimize = false, maximize = false, rollData = null } = {}) {
+    if (!this.isCharged) return null;
+
+    const isSpell = this.item.type === "spell";
+    const isSpellpointSpell = isSpell && this.item.useSpellPoints();
+
+    let formula = !isSpellpointSpell ? this.data.uses.autoDeductChargesCost : this.data.uses.spellPointCost;
+    if (!formula) {
+      formula = this.item.getDefaultChargeFormula();
+    } else if (typeof formula !== "string") {
+      console.warn(this.item.name, "action", this.name, "has invalid charge formula:", formula, this);
+      formula = this.item.getDefaultChargeFormula();
+    }
+
+    rollData ??= this.getRollData();
+
+    if (!maximize && !minimize) maximize = true; // Enforce maximization if neither is called in case this is a die
+    const roll = RollPF.safeRollSync(formula, rollData, undefined, undefined, { maximize, minimize });
+
+    // Clamp single use
+    if (this.item.isSingleUse) roll._total = Math.clamp(roll._total, -1, 1);
+
+    return roll;
   }
 
   /**
@@ -1004,7 +1043,12 @@ export class ItemAction {
     config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
 
     // Add bonus
-    rollData.bonus = bonus ? await RollPF.safeRoll(bonus, rollData).total : 0;
+    rollData.bonus = 0;
+    if (bonus) {
+      // TODO: Do not pre-roll
+      const roll = await RollPF.safeRoll(bonus, rollData);
+      rollData.bonus = roll.total;
+    }
 
     // Options for D20RollPF
     const rollOptions = {
@@ -1464,7 +1508,8 @@ export class ItemAction {
 
       attacks.forEach((atk, i) => {
         rollData.attackCount = i;
-        atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
+        const roll = RollPF.safeRollSync(atk.bonus, rollData, undefined, undefined, { minimize: true });
+        atk.bonus = roll.total + totalBonus + condBonuses[i];
         delete rollData.attackCount;
       });
     }

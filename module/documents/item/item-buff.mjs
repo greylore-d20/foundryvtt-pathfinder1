@@ -238,7 +238,8 @@ export class ItemBuffPF extends ItemPF {
       if (!formula) return;
       rollData ??= this.getRollData();
       // TODO: Make this roll somehow known
-      const duration = await RollPF.safeRoll(formula, rollData).total;
+      const droll = await RollPF.safeRoll(formula, rollData);
+      const duration = droll.total;
       switch (units) {
         case "hour":
           seconds = duration * 60 * 60;
@@ -281,7 +282,9 @@ export class ItemBuffPF extends ItemPF {
       seconds = await this.getDuration({ rollData });
     }
 
-    createData.duration.seconds = seconds;
+    if (Number.isFinite(seconds)) {
+      createData.duration.seconds = seconds;
+    }
 
     const flags = { duration: {} };
 

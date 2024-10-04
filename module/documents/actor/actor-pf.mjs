@@ -4607,7 +4607,8 @@ export class ActorPF extends ActorBasePF {
         // Fill in charge details
         qi.isCharged = qi.haveAnyCharges;
         if (qi.isCharged) {
-          let chargeCost = item.defaultAction?.getChargeCost() ?? item.getDefaultChargeCost();
+          let chargeCost =
+            item.defaultAction?.getChargeCostSync({ maximize: true })?.total ?? item.getDefaultChargeCost();
           if (chargeCost == 0) qi.isCharged = false;
 
           qi.recharging = chargeCost < 0;

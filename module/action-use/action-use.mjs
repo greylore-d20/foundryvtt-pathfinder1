@@ -452,7 +452,7 @@ export class ActionUse {
     }
   }
 
-  handleConditionals() {
+  async handleConditionals() {
     if (this.shared.conditionals) {
       const conditionalData = {};
       for (const i of this.shared.conditionals) {
@@ -461,14 +461,16 @@ export class ActionUse {
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
           // Due to being its own roll, this will only correctly work for static formulae.
-          const conditionalRoll = RollPF.safeRoll(modifier.formula, this.shared.rollData);
+          const conditionalRoll = await RollPF.safeRoll(modifier.formula, this.shared.rollData);
           if (conditionalRoll.err) {
             ui.notifications.warn(
               game.i18n.format("PF1.Warning.ConditionalRoll", { number: i + 1, name: conditional.name })
             );
             // Skip modifier to avoid multiple errors from one non-evaluating entry
             continue;
-          } else conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, this.shared.rollData).total;
+          } else {
+            conditionalData[[tag, i].join(".")] = conditionalRoll.total;
+          }
 
           // Create a key string for the formula array
           const partString = `${modifier.target}.${modifier.subTarget}${
@@ -506,16 +508,16 @@ export class ActionUse {
       for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
         if (this.shared.conditionalPartsCommon[target] != null) {
           const formula = this.shared.conditionalPartsCommon[target].join("+");
-          const roll = RollPF.safeRoll(formula, this.shared.rollData, [target, formula]).total;
+          const roll = await RollPF.safeRoll(formula, this.shared.rollData, [target, formula]);
           switch (target) {
             case "effect.cl":
-              this.shared.rollData.cl += roll;
+              this.shared.rollData.cl += roll.total;
               break;
             case "effect.dc":
-              this.shared.rollData.dcBonus += roll;
+              this.shared.rollData.dcBonus += roll.total;
               break;
             case "misc.charges":
-              this.shared.rollData.chargeCostBonus += roll;
+              this.shared.rollData.chargeCostBonus += roll.total;
               break;
           }
         }
@@ -1478,11 +1480,12 @@ export class ActionUse {
     return parts;
   }
 
-  prepareChargeCost() {
+  async prepareChargeCost() {
     const rollData = this.shared.rollData;
 
     // Determine charge cost
-    const baseCost = this.shared.action.getChargeCost({ rollData });
+    const baseCostRoll = await this.shared.action.getChargeCost({ rollData });
+    const baseCost = baseCostRoll?.total || 0;
 
     // Bonus cost, e.g. from a conditional modifier
     const bonusCost = this.shared.rollData.chargeCostBonus ?? 0;
@@ -1551,7 +1554,7 @@ export class ActionUse {
     await this.handleConditionals();
 
     // Prepare charge cost
-    this.prepareChargeCost();
+    await this.prepareChargeCost();
 
     // Filter out attacks without charge usage (out of charges)
     if (shared.rollData.chargeCost != 0 && this.shared.action.data.uses?.perAttack) {

@@ -476,7 +476,8 @@ export async function onHealth(event, target) {
 
   for (const actor of actors) {
     if (targetRolldata) rollData = actor.getRollData();
-    let value = await RollPF.safeRoll(formula, rollData).total;
+    const roll = await RollPF.safeRoll(formula, rollData);
+    let value = roll.total;
     if (command === "heal") value = -value;
     actor.applyDamage(value, { ...options, event, element: target });
   }

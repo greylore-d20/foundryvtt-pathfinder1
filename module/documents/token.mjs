@@ -120,18 +120,14 @@ export class TokenDocumentPF extends TokenDocument {
    * Synchronize senses from actor.
    */
   _syncSenses() {
-    if (!this.actor) return;
+    if (!this.actorId || !this.actor) return;
     if (!game.settings.get("pf1", "systemVision")) return;
     if (this.getFlag("pf1", "customVisionRules")) return;
 
     this.detectionModes = [];
 
-    if (!this.sight.enabled) return;
-
     // Get base range from source data
     const baseRange = this._source.sight.range;
-
-    this.detectionModes = [];
 
     this.sight.visionMode = "basic";
 

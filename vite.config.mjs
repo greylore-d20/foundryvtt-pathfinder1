@@ -25,17 +25,19 @@ function resolve(relativePath) {
 const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.txt", "help"];
 
 const config = defineConfig(({ command, mode }) => {
+  const port = FOUNDRY_CONFIG.port;
+
   return {
     root: ".",
     base: resolveUrl("systems/pf1/"),
     publicDir: resolve("public"),
     server: {
       port: 30001,
-      open: FOUNDRY_CONFIG.openBrowser ?? false,
+      open: FOUNDRY_CONFIG.openBrowser,
       proxy: {
-        [`^(?!${resolveUrl("systems/pf1")})`]: "http://localhost:30000/",
+        [`^(?!${resolveUrl("systems/pf1")})`]: `http://localhost:${port}/`,
         [resolveUrl("socket.io/")]: {
-          target: "ws://localhost:30000",
+          target: `ws://localhost:${port}`,
           ws: true,
         },
       },

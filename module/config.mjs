@@ -336,6 +336,9 @@ export const armorProficiencies = {
 export const weaponProficiencies = {
   simple: "PF1.Proficiency.Weapon.simple",
   martial: "PF1.Proficiency.Weapon.martial",
+  firearm: "PF1.Proficiency.Weapon.firearm",
+  siege: "PF1.Proficiency.Weapon.siege",
+  heavy: "PF1.Proficiency.Weapon.heavy",
 };
 
 /* -------------------------------------------- */
@@ -1907,6 +1910,20 @@ export const weaponTypes = {
     light: "PF1.WeaponSubtypeLight",
     "1h": "PF1.WeaponSubtypeOneHanded",
     "2h": "PF1.WeaponSubtypeTwoHanded",
+    ranged: "PF1.WeaponSubtypeRanged",
+  },
+  firearm: {
+    _label: "PF1.Subtypes.Item.weapon.firearm.Single",
+    ranged: "PF1.WeaponSubtypeRanged",
+  },
+  siege: {
+    _label: "PF1.Subtypes.Item.weapon.siege.Single",
+    assault: "PF1.WeaponSubtypeAssault",
+    indirect: "PF1.WeaponSubtypeIndirect",
+    direct: "PF1.WeaponSubtypeDirect",
+  },
+  heavy: {
+    _label: "PF1.Subtypes.Item.weapon.heavy.Single",
     ranged: "PF1.WeaponSubtypeRanged",
   },
   misc: {

@@ -511,18 +511,30 @@ export class ItemSheetPF extends ItemSheet {
         }, {}) ?? {};
     }
 
-    // Prepare weapon specific stuff
-    if (isWeapon) {
-      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties?.["thr"] === true;
-    }
-
     // Prepare categories for weapons
     if (isWeaponLike) {
       itemData.weapon ??= {};
       itemData.weapon.category ||= "simple";
       itemData.weapon.type ||= "1h";
+    }
 
-      context.isRanged = itemData.weapon.type === "ranged";
+    // Prepare weapon specific stuff
+    if (isWeapon || isWeaponLike) {
+      const category = isWeapon ? itemData.subType : itemData.weapon.category;
+      const wsubtype = isWeapon ? itemData.weaponSubtype : itemData.weapon.type;
+
+      switch (category) {
+        case "siege":
+          context.isRanged = ["direct", "indirect"].includes(wsubtype);
+          break;
+        case "heavy":
+        case "firearm":
+          context.isRanged = true;
+          break;
+        default:
+          context.isRanged = wsubtype === "ranged" || itemData.properties?.["thr"] === true;
+          break;
+      }
     }
 
     if (isWeapon || isWeaponLike) {

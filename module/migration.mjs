@@ -775,7 +775,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   }
 
   // Ignore module introduced types
-  if (!game.system.template.Item.types.includes(itemData.type)) return {};
+  if (!Object.keys(game.system.documentTypes.Item).includes(itemData.type)) return {};
 
   _migrateItemArrayTypes(itemData, updateData);
   _migrateFlagsArrayToObject(itemData, updateData);

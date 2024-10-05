@@ -11,7 +11,7 @@
     {{#each materialCategories.addons}}
     <label class="checkbox">
       <input type="checkbox" value="{{key}}" name="{{../reference}}.{{key}}" {{checked (lookup @root.materialAddons key)}}>
-      {{localize name}}
+      {{name}}
     </label>
     {{/each}}
   </div>

@@ -131,7 +131,7 @@
   <label>{{localize "PF1.ExtraAttacks.Label"}}</label>
   <div class="form-fields">
     <select name="extraAttacks.type">
-      {{selectOptions extraAttacksTypes selected=data.extraAttacks.type blank="PF1.None" localize=true}}
+      {{selectOptions extraAttacksTypes selected=data.extraAttacks.type blank=(localize "PF1.None")}}
     </select>
   </div>
 </div>
@@ -332,7 +332,7 @@
   <div class="form-fields">
     <input class="formula" type="text" name="save.dc" value="{{data.save.dc}}" placeholder="0">
     <select name="save.type">
-      {{selectOptions config.savingThrows selected=data.save.type blank="PF1.None" localize=true}}
+      {{selectOptions config.savingThrows selected=data.save.type blank=(localize "PF1.None")}}
     </select>
   </div>
 </div>

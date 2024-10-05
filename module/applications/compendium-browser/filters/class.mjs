@@ -37,6 +37,8 @@ export class ClassSkillPointsFilter extends CheckboxFilter {
 class ClassSavingThrowFilter extends CheckboxFilter {
   static type = "class";
   static savingThrow = "";
+  static localizeLabel = false;
+
   static get label() {
     return pf1.config.savingThrows[this.savingThrow] ?? "";
   }

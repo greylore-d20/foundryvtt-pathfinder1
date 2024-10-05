@@ -5,7 +5,7 @@
         <input type="text" name={{value_ref}} value="{{value}}" placeholder="{{localize label}}">
       {{else}}
         <select name={{value_ref}}>
-          {{selectOptions choices selected=value blank="PF1.None" localize=true}}
+          {{selectOptions choices selected=value blank=(localize "PF1.None")}}
         </select>
       {{/if}}
       <label class="checkbox">

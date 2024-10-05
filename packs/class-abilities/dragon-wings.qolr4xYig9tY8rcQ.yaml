@@ -9,7 +9,7 @@ system:
       - Bloodrager
   changes:
     - _id: ib7i7j1s
-      formula: '@class.level >= 16 ? 80 : 60'
+      formula: 60 + if(gte(@class.level, 16), 20)
       target: flySpeed
       type: base
   description:

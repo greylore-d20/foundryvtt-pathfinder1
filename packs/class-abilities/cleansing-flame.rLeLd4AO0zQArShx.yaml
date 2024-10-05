@@ -43,7 +43,7 @@ system:
   subType: classFeat
   tag: classFeat_cleansingFlame
   uses:
-    maxFormula: '@class.level >= 20 ? 3 : 2'
+    maxFormula: 2 + if(gte(@class.level, 20), 1)
     per: day
 type: feat
 

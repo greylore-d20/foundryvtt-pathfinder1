@@ -13,9 +13,7 @@ system:
           type: action
       duration:
         units: round
-        value: >-
-          @class.level <= 16 ? 3 : ((@class.level >= 8 && @class.level < 16) ? 2
-          : 1)
+        value: 1 + if(gte(@class.level, 8), 1) + if(lte(@class.level, 16), 1)
       name: Use
       range:
         units: ft

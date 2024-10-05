@@ -5,11 +5,11 @@ name: Acrobatic
 system:
   changes:
     - _id: 90jgn1dn
-      formula: '@skills.acr.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.acr.rank, 10), 2)
       target: skill.acr
       type: untyped
     - _id: 7c8pfth0
-      formula: '@skills.fly.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.fly.rank, 10), 2)
       target: skill.fly
       type: untyped
   description:

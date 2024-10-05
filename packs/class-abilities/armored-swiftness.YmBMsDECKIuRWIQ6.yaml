@@ -11,7 +11,7 @@ system:
     heavyArmorFullSpeed: true
   changes:
     - _id: f3teDhAD
-      formula: '(@armor.type === 3) ? (floor(@class.level / 6)) : 0'
+      formula: if(eq(@armor.type, 3), floor(@class.level / 6))
       target: mDexA
       type: untyped
   description:

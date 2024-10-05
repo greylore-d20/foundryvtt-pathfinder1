@@ -47,7 +47,7 @@ system:
     - Ancestor Mystery
     - Occult Mystery
   uses:
-    maxFormula: '@class.level >= 15 ? 2 : 1'
+    maxFormula: 1 + if(gte(@class.level, 15), 1)
     per: day
 type: feat
 

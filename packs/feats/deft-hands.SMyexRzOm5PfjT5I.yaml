@@ -5,11 +5,11 @@ name: Deft Hands
 system:
   changes:
     - _id: znpaklyl
-      formula: '@skills.dev.rank>=10?4:2'
+      formula: 2 + if(gte(@skills.dev.rank, 10), 2)
       target: skill.dev
       type: untyped
     - _id: mst1c6vi
-      formula: '@skills.slt.rank>=10?4:2'
+      formula: 2 + if(gte(@skills.slt.rank, 10), 2)
       target: skill.slt
       type: untyped
   description:

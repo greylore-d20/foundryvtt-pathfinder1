@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: '(@class.level >= 15 ? 4 : 3)d8 + min(20, @class.level)'
+          - formula: (3 + if(gte(@class.level, 15), 1))d8 + min(20, @class.level)
             type:
               custom: ''
               values:

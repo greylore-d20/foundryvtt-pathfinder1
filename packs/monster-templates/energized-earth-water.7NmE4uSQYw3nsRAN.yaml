@@ -9,11 +9,11 @@ system:
       target: nac
       type: untyped
     - _id: mxxfzrms
-      formula: '@attributes.hd.total > 9 ? 4 : 2'
+      formula: 2 + if(gt(@attributes.hd.total, 9), 2)
       target: dex
       type: untyped
     - _id: sbap02gv
-      formula: '@attributes.hd.total > 9 ? 8 : 4'
+      formula: 4 + if(gt(@attributes.hd.total, 9), 4)
       target: str
       type: untyped
   crOffset: '2'

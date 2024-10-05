@@ -10,11 +10,11 @@ system:
   contextNotes:
     - target: skill.per
       text: >-
-        +[[2 + (@class.level >= 10 ? 2 : 0)]] against spirit creatures, such as
+        +[[2 + if(gte(@class.level, 10), 2)]] against spirit creatures, such as
         outsiders, fey, and incorporeal undead.
     - target: skill.sen
       text: >-
-        +[[2 + (@class.level >= 10 ? 2 : 0)]] against spirit creatures, such as
+        +[[2 + if(gte(@class.level, 10), 2)]] against spirit creatures, such as
         outsiders, fey, and incorporeal undead.
   description:
     value: >-

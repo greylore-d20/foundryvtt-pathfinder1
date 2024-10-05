@@ -10,8 +10,8 @@ system:
       type: untyped
     - _id: 19d9kfhn
       formula: >-
-        (@attributes.hd.total >= 17) ? 2 : ((@attributes.hd.total >= 9 &&
-        @attributes.hd.total < 17) ? 1 : 0)
+        if(gte(@attributes.hd.total, 9), 1) + if(gte(@attributes.hd.total, 17),
+        1)
       target: sac
       type: untyped
   crOffset: '1'

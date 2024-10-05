@@ -9,7 +9,7 @@ system:
       - Sorcerer
   changes:
     - _id: wvgstkuo
-      formula: '@class.level > 14 ? 4 : @class.level > 8 ? 2 : 1'
+      formula: 1 + if(gt(@class.level, 8), 1) + if(gt(@class.level, 14), 2)
       target: nac
       type: untyped
   description:

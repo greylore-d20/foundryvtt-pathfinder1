@@ -5,11 +5,11 @@ name: Magical Aptitude
 system:
   changes:
     - _id: eo8ln916
-      formula: '@skills.spl.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.spl.rank, 10), 2)
       target: skill.spl
       type: untyped
     - _id: 6inqws2o
-      formula: '@skills.umd.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.umd.rank, 10), 2)
       target: skill.umd
       type: untyped
   description:

@@ -5,11 +5,11 @@ name: Alertness
 system:
   changes:
     - _id: 4lwdra12
-      formula: '@skills.sen.rank>=10?4:2'
+      formula: 2 + if(gte(@skills.sen.rank, 10), 2)
       target: skill.sen
       type: untyped
     - _id: 3f1srila
-      formula: '@skills.per.rank>=10?4:2'
+      formula: 2 + if(gte(@skills.per.rank, 10), 2)
       target: skill.per
       type: untyped
   description:

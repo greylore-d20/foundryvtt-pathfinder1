@@ -8,7 +8,7 @@ system:
       formula: '2'
       target: will
       type: untyped
-  crOffset: '@attributes.hd.total >= 5 ? 1 : 0'
+  crOffset: if(gte(@attributes.hd.total, 5), 1)
   description:
     value: >-
       <p><strong>Acquired/Inherited Template</strong> Inherited<br

@@ -12,7 +12,7 @@ system:
           type: attack
       duration:
         units: round
-        value: '@class.level < 4 ? 1 : (floor(@class.level / 2))'
+        value: max(1, floor(@class.level / 2))
       name: Use
       range:
         units: touch

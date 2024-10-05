@@ -23,9 +23,7 @@ system:
       - Sorcerer
   changes:
     - _id: rp0h8aqw
-      formula: >-
-        @class.level >= 17 ? 3 : ((@class.level > 10 && @class.level < 17) ? 2 :
-        1)
+      formula: 1 + if(gt(@class.level, 10), 1) + if(gte(@class.level, 17), 1)
       target: nac
       type: untyped
   description:

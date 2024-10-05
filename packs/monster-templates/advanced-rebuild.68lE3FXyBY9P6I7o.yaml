@@ -9,27 +9,27 @@ system:
       target: nac
       type: untypedPerm
     - _id: uhg21xnq
-      formula: '@abilities.str.total > 0 ? 4 : 0'
+      formula: if(gt(@abilities.str.total, 0), 4)
       target: str
       type: untypedPerm
     - _id: zzxxz9rv
-      formula: '@abilities.dex.total > 0 ? 4 : 0'
+      formula: if(gt(@abilities.dex.total, 0), 4)
       target: dex
       type: untypedPerm
     - _id: xzfdoozh
-      formula: '@abilities.con.total > 0 ? 4 : 0'
+      formula: if(gt(@abilities.con.total, 0), 4)
       target: con
       type: untypedPerm
     - _id: ub0w5h5m
-      formula: '@abilities.int.total > 2 ? 4 : 0'
+      formula: if(gt(@abilities.int.total, 2), 4)
       target: int
       type: untypedPerm
     - _id: xmmu6br9
-      formula: '@abilities.wis.total > 0 ? 4 : 0'
+      formula: if(gt(@abilities.wis.total, 0), 4)
       target: wis
       type: untypedPerm
     - _id: 3cs5sd5j
-      formula: '@abilities.cha.total > 0 ? 4 : 0'
+      formula: if(gt(@abilities.cha.total, 0), 4)
       target: cha
       type: untypedPerm
   crOffset: '1'

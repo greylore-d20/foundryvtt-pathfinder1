@@ -9,7 +9,7 @@ system:
       - Sorcerer
   contextNotes:
     - target: allSavingThrows
-      text: '+[[@class.level >=  9 ? 4 : 2]] vs Poisons.'
+      text: +[[2 + if(gte(@class.level, 9), 2)]] vs Poisons.
   description:
     value: >-
       <p>At 3rd level, you gain resist fire 5 and a +2 bonus on <em>saving

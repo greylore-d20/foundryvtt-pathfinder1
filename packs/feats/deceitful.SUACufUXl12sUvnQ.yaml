@@ -5,11 +5,11 @@ name: Deceitful
 system:
   changes:
     - _id: d6rirc2a
-      formula: '@skills.blf.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.blf.rank, 10), 2)
       target: skill.blf
       type: untyped
     - _id: u9gcikyo
-      formula: '@skills.dis.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.dis.rank, 10), 2)
       target: skill.dis
       type: untyped
   description:

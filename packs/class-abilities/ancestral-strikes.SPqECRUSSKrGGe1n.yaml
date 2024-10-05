@@ -34,7 +34,7 @@ system:
   subType: classFeat
   tag: classFeat_ancestralStrikes
   uses:
-    maxFormula: '@class.level >= 8 ? 5 : 3'
+    maxFormula: 3 + if(gte(@class.level, 8), 2)
     per: day
 type: feat
 

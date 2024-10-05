@@ -9,11 +9,11 @@ system:
       - Sorcerer
   changes:
     - _id: vk3jemkk
-      formula: '@class.level >= 15 ? 60 : 30'
+      formula: 30 + if(gte(@class.level, 15), 30)
       target: swimSpeed
       type: base
     - _id: uq8lnaor
-      formula: '@class.level >= 9 ? 1 : 0'
+      formula: if(gte(@class.level, 9), 1)
       target: nac
       type: untyped
   description:

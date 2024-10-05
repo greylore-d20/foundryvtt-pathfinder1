@@ -48,7 +48,7 @@ system:
     - Revelation
     - Time Mystery
   uses:
-    maxFormula: '@class.level >= 11 ? 2 : 1'
+    maxFormula: 1 + if(gte(@class.level, 11), 1)
     per: day
 type: feat
 

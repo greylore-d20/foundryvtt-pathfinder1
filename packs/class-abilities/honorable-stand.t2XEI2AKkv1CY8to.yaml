@@ -31,7 +31,7 @@ system:
   subType: classFeat
   tag: classFeat_honorableStand
   uses:
-    maxFormula: '@class.level >= 16 ? 2 : 1'
+    maxFormula: 1 + if(gte(@class.level, 16), 1)
     per: day
 type: feat
 

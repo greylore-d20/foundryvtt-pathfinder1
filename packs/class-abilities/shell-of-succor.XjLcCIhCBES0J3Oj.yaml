@@ -49,9 +49,7 @@ system:
     - Revelation
     - Succor Mystery
   uses:
-    maxFormula: >-
-      @class.level >= 19 ? 3 : ((@class.level > 10 && @class.level < 19) ? 2 :
-      1)
+    maxFormula: 1 + if(gt(@class.level, 10), 1) + if(gte(@class.level, 19), 1)
     per: day
 type: feat
 

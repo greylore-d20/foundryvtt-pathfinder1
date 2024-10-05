@@ -6,8 +6,8 @@ system:
   changes:
     - _id: 4qvp061g
       formula: >-
-        (@ac.natural.total > @attributes.hd.total / 2) ? 0 :
-        (@attributes.hd.total / 2)
+        if(lte(@ac.natural.total, @attributes.hd.total / 2),
+        floor(@attributes.hd.total / 2))
       target: nac
       type: untyped
     - _id: qjxpngza

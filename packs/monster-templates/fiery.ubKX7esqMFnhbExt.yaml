@@ -3,7 +3,7 @@ _key: '!items!ubKX7esqMFnhbExt'
 img: systems/pf1/icons/skills/violet_07.jpg
 name: Fiery
 system:
-  crOffset: '@attributes.hd.total >= 5 ? 1 : 0'
+  crOffset: if(gte(@attributes.hd.total, 5), 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>

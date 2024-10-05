@@ -97,7 +97,7 @@ items:
     system:
       changes:
         - _id: vIGW8638
-          formula: '@skills.per.rank < 10 ? 3 : 6'
+          formula: 3 + if(lt(@skills.per.rank, 10), 3)
           target: skill.per
           type: untyped
       description:

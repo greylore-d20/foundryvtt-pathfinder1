@@ -139,7 +139,7 @@ system:
   subType: classFeat
   tag: classFeat_sacredWeapon
   uses:
-    maxFormula: '@class.level >= 4 ? @class.level : 0'
+    maxFormula: if(gte(@class.level, 4), @class.level)
     per: day
 type: feat
 

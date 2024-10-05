@@ -17,8 +17,8 @@ system:
       target: wisChecks
       type: untyped
   crOffset: >-
-    (@attributes.hd.total >= 13) ? 3 : ((@attributes.hd.total > 6 &&
-    @attributes.hd.total < 13) ? 2 : 1)
+    1 + if(gt(@attributes.hd.total, 6), 1) + if(gte(@attributes.hd.total, 13),
+    1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>

@@ -5,11 +5,11 @@ name: Self-Sufficient
 system:
   changes:
     - _id: itrf3f4h
-      formula: '@skills.hea.ranks >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.hea.ranks, 10), 2)
       target: skill.hea
       type: untyped
     - _id: ph7lqkbj
-      formula: '@skills.sur.ranks >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.sur.ranks, 10), 2)
       target: skill.sur
       type: untyped
   description:

@@ -5,7 +5,7 @@ name: Fleet
 system:
   changes:
     - _id: y4qckv6r
-      formula: '(@armor.type < 2 && @attributes.encumbrance.level < 1) ? 5 : 0'
+      formula: if(and(lt(@armor.type, 2), lt(@attributes.encumbrance.level, 1)), 5)
       target: landSpeed
       type: base
   description:

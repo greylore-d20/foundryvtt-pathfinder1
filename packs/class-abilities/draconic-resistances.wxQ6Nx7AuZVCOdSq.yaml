@@ -9,9 +9,7 @@ system:
       - Bloodrager
   changes:
     - _id: amfwsk0c
-      formula: >-
-        @class.level >= 16 ? 4 : ((@class.level >= 8 && @class.level < 16)  ? 2
-        : 1)
+      formula: 1 + if(gte(@class.level, 8), 1) + if(gte(@class.level, 16), 2)
       target: nac
       type: untyped
   description:

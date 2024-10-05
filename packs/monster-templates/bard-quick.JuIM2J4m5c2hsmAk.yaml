@@ -12,7 +12,7 @@ system:
       formula: '2'
       target: chaChecks
       type: untyped
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
+  crOffset: 1 + if(gte(@attributes.hd.total, 10), 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>

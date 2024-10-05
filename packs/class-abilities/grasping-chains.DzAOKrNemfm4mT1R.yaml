@@ -9,11 +9,11 @@ system:
       - Bloodrager
   changes:
     - _id: 8c5qur3o
-      formula: '@class.level >= 9 ? 8 : 4'
+      formula: 4 + if(gte(@class.level, 9), 4)
       target: skill.clm
       type: untyped
     - _id: ow8gnugm
-      formula: '@class.level >= 9 ? (floor(@attributes.speed.land.base / 2)) : 0'
+      formula: if(gte(@class.level, 9), floor(@attributes.speed.land.base / 2))
       target: climbSpeed
       type: base
   description:

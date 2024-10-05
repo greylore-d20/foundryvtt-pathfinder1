@@ -6,8 +6,8 @@ system:
   changes:
     - _id: t7xzgayi
       formula: >-
-        @abilities.dex.mod > @abilities.str.mod ? (@abilities.dex.mod -
-        @abilities.str.mod) : 0
+        if(gt(@abilities.dex.mod, @abilities.str.mod), @abilities.dex.mod -
+        @abilities.str.mod)
       target: cmb
       type: untyped
   description:

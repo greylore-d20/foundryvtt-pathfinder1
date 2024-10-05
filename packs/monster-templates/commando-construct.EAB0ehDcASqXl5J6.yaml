@@ -16,7 +16,7 @@ system:
       formula: '4'
       target: dex
       type: untyped
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
+  crOffset: 1 + if(gte(@attributes.hd.total, 10), 1)
   description:
     value: >-
       <p><strong>Acquired/Inherited Template</strong> Acquired<br

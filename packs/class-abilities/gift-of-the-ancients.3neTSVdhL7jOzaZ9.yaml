@@ -9,7 +9,7 @@ system:
       - Bloodrager
   changes:
     - _id: 8uflro54
-      formula: '@class.level >= 8 ? 4 : 2'
+      formula: 2 + if(gte(@class.level, 8), 2)
       target: skill.per
       type: competence
   description:

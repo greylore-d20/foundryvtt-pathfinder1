@@ -3,7 +3,7 @@ import { RollPF } from "../../roll.mjs";
 /**
  * Base term to identify function terms.
  */
-export class FunctionTerm extends RollTerm {
+export class FunctionTerm extends foundry.dice.terms.RollTerm {
   constructor({ terms = [], options = {}, maxArgs } = {}) {
     super({ options });
 

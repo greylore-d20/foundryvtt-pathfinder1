@@ -2196,6 +2196,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {object[]|undefined} Array of value and label pairs for attack bonus sources on the main attack, or undefined if the action is missing.
    */
   getAttackSources(actionId, { rollData } = {}) {
+    actionId ??= this.defaultAction?.id;
+
     /** @type {pf1.components.ItemAction} */
     const action = this.actions.get(actionId);
     if (!action) return;
@@ -2242,7 +2244,10 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRoll(actionData.attackBonus || "0", rollData);
+    // TODO: Don't pre-eval
+    const bonusRoll = RollPF.safeRollSync(actionData.attackBonus || "0", rollData, undefined, undefined, {
+      minimuze: true,
+    });
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), "untyped", -100);
 

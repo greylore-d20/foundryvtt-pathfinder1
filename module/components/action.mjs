@@ -1421,7 +1421,7 @@ export class ItemAction {
           for (let i = 0; i < exAtkCount; i++) {
             rollData.attackCount = attackCount += 1;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRoll(
+            const bonus = RollPF.safeRollSync(
               bonusFormula || "0",
               rollData,
               { formula: bonusFormula, action: this },
@@ -1482,6 +1482,7 @@ export class ItemAction {
       }
     }
 
+    // TODO: Move this to be part of the output data as formulas
     if (resolve) {
       const condBonuses = new Array(attacks.length).fill(0);
       if (conditionals) {
@@ -1490,7 +1491,7 @@ export class ItemAction {
           .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
           .forEach((c) => {
             c.modifiers.forEach((cc) => {
-              const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+              const bonusRoll = RollPF.safeRollSync(cc.formula, rollData, undefined, undefined, { minimize: true });
               if (bonusRoll.total == 0) return;
               if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
                 const atk = parseInt(RegExp.$1, 10);

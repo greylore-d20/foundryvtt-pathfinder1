@@ -153,31 +153,45 @@ export class RollPF extends Roll {
     return flavor.replace(/\[\];/g, "");
   }
 
+  static getTermTooltipData(term) {
+    if (typeof term.total !== "number") return null; // Ignore terms that don't result in numbers
+
+    const ttdata = term.getTooltipData?.() ?? {
+      formula: term.expression,
+      total: term.total,
+      flavor: term.flavor,
+    };
+
+    ttdata.flavor ||= game.i18n.localize("PF1.Undefined");
+
+    return ttdata;
+  }
+
   /**
    * Render the tooltip HTML for a RollPF instance
    *
    * @returns {Promise<string>} The rendered HTML tooltip as a string
    */
   async getTooltip() {
-    const parts = this.dice.filter((d) => d.results.some((r) => r.active)).map((d) => d.getTooltipData());
+    const parts = this.dice.filter((d) => d.results.some((r) => r.active)).map(this.constructor.getTermTooltipData);
     const numericParts = this.terms.reduce((cur, t, idx, arr) => {
-      const ttdata =
-        t instanceof foundry.dice.terms.NumericTerm || t.hasNumericTooltip ? t.getTooltipData() : undefined;
+      if (t instanceof foundry.dice.terms.DiceTerm) return cur; // Ignore dice already handled above
 
-      if (ttdata !== undefined) {
-        const prior = arr[idx - 1];
-        if (
-          t instanceof foundry.dice.terms.NumericTerm &&
-          prior &&
-          prior instanceof foundry.dice.terms.OperatorTerm &&
-          prior.operator === "-"
-        ) {
-          ttdata.total = -ttdata.total;
-        }
+      const ttdata = this.constructor.getTermTooltipData(t);
+      if (!ttdata) return cur;
 
-        ttdata.flavor ??= game.i18n.localize("PF1.Undefined");
-        cur.push(ttdata);
+      const prior = arr[idx - 1];
+      if (
+        t instanceof foundry.dice.terms.NumericTerm &&
+        prior &&
+        prior instanceof foundry.dice.terms.OperatorTerm &&
+        prior.operator === "-"
+      ) {
+        ttdata.total = -ttdata.total;
       }
+
+      cur.push(ttdata);
+
       return cur;
     }, []);
     return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });

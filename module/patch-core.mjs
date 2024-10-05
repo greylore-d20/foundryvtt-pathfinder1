@@ -52,15 +52,6 @@ import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs"
   };
 }
 
-// Patch NumericTerm
-NumericTerm.prototype.getTooltipData = function () {
-  return {
-    formula: this.expression,
-    total: this.total,
-    flavor: this.flavor,
-  };
-};
-
 // Document link attribute stuffing
 {
   const origFunc = TextEditor._createContentLink;

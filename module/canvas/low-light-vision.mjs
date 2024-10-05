@@ -24,8 +24,8 @@ export const addLowLightVisionToLightConfig = function (app, html) {
  */
 export const patchCore = function () {
   // Low-light vision light radius initialization (v10 & v11)
-  const LightSource_initialize = LightSource.prototype.initialize;
-  LightSource.prototype.initialize = function (data = {}) {
+  const LightSource_initialize = foundry.canvas.sources.PointLightSource.prototype.initialize;
+  foundry.canvas.sources.PointLightSource.prototype.initialize = function (data = {}) {
     const { dim, bright } = this.getRadius(data.dim, data.bright);
 
     // Avoid NaN and introducing keys that shouldn't be in the data
@@ -37,7 +37,7 @@ export const patchCore = function () {
     return LightSource_initialize.call(this, data);
   };
 
-  LightSource.prototype.getRadius = function (dim, bright) {
+  foundry.canvas.sources.PointLightSource.prototype.getRadius = function (dim, bright) {
     const result = { dim, bright };
     let multiplier = { dim: 1, bright: 1 };
 

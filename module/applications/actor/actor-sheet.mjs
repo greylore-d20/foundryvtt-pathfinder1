@@ -447,12 +447,17 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       if (result.hasAttack) {
-        const attacks = defaultAction
-          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData })
-          .map((atk) => atk.bonus);
-        result.attackArray = attacks;
-        const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
-        result.attackSummary = `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${
+        const attacks = defaultAction.getAttacks({
+          full: true,
+          resolve: true,
+          conditionals: true,
+          bonuses: true,
+          rollData,
+        });
+        const attackBonuses = attacks.map((atk) => atk.bonus);
+        result.attackArray = attackBonuses;
+        const highest = Math.max(...attackBonuses); // Highest bonus, with assumption the first might not be that.
+        result.attackSummary = `${attackBonuses.length} (${highest < 0 ? highest : `+${highest}`}${
           attacks.length > 1 ? "/…" : ""
         })`;
       }

@@ -541,18 +541,18 @@ export class ActionUse {
         }
       }
 
-      // Only spells have variable max uses
-      if (this.item?.type === "spell") {
-        const maxUses = this.item.maxCharges;
-        if (maxUses <= 0) {
-          ui.notifications.warn(game.i18n.format("PF1.Error.InsufficientPreparation", { name: this.item.name }));
-          return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
-        }
-      }
-
       // Cancel usage on insufficient charges
       if (cost > uses) {
         ui.notifications.warn(game.i18n.format("PF1.Error.InsufficientCharges", { name: this.item.name }));
+        return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
+      }
+    }
+
+    // Only spells have variable max uses
+    if (this.item?.type === "spell") {
+      const maxUses = this.item.maxCharges;
+      if (maxUses <= 0) {
+        ui.notifications.warn(game.i18n.format("PF1.Error.InsufficientPreparation", { name: this.item.name }));
         return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
       }
     }

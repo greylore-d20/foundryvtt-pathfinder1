@@ -1445,9 +1445,7 @@ export class ActionUse {
     let targets = template ? await template.getTokensWithin() : null;
     targets ??= Array.from(game.user.targets);
     // Ignore defeated and secret tokens
-    this.shared.targets = targets.filter(
-      (t) => t.document.disposition !== CONST.TOKEN_DISPOSITIONS.SECRET && t.combatant?.isDefeated !== true
-    );
+    this.shared.targets = targets.filter((t) => t.combatant?.isDefeated !== true);
   }
 
   /**

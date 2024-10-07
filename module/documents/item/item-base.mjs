@@ -34,8 +34,8 @@ export class ItemBasePF extends Item {
    *
    * Synchronized with Foundry VTT v11.315
    */
-  static async createDialog(data = {}, { parent = null, pack = null, ...options } = {}) {
-    return pf1.applications.item.CreateDialog.waitPrompt(data, { parent, pack, options });
+  static async createDialog(data = {}, { parent = null, pack = null, types, ...options } = {}) {
+    return pf1.applications.item.CreateDialog.waitPrompt(data, { parent, pack, types, options });
   }
 
   /**

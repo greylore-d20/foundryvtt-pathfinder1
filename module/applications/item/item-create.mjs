@@ -9,13 +9,15 @@ export class ItemCreateDialog extends FormApplication {
    * @param {*} [options.pack=null] - Pack reference given to Item.create()
    * @param {*} [options.parent=null] - Parent reference given to Item.create()
    * @param {object} [options.options] - FormApplication options
+   * @param {Array<string>} options.types - Array of types to limit the choices to.
    */
-  constructor(data = {}, { resolve, pack = null, parent = null, options = {} } = {}) {
+  constructor(data = {}, { resolve, pack = null, parent = null, types = null, options = {} } = {}) {
     super(data, options);
 
     this.resolve = resolve;
     this.pack = pack;
     this.parent = parent;
+    this.types = types;
 
     this._updateCreationData(data);
   }
@@ -114,6 +116,11 @@ export class ItemCreateDialog extends FormApplication {
       )
     );
     delete types.base; // base is Foundry's unusable default
+    if (this.types) {
+      for (const type of Object.keys(types)) {
+        if (!this.types.includes(type)) delete types[type];
+      }
+    }
 
     return {
       folders,
@@ -148,6 +155,8 @@ export class ItemCreateDialog extends FormApplication {
   _updateCreationData(data = {}) {
     // Fill in default type if missing
     data.type ||= CONFIG.Item.defaultType || game.documentTypes.Item[1];
+    // If type does not match restrictions, assume first type is correct
+    if (this.types && !this.types.includes(data.type)) data.type = this.types[0];
 
     this.createData = foundry.utils.mergeObject(this.initialData, data, { inplace: false });
     this.createData.system ??= {};

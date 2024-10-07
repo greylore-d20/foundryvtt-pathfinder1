@@ -584,10 +584,6 @@ Hooks.on("renderChatLog", (_, html) => _canvas.attackReach.addReachListeners(htm
 Hooks.on("renderChatPopout", (_, html) => documents.item.ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => documents.actor.ActorPF.chatListeners(html));
 
-Hooks.on("renderAmbientLightConfig", (app, html) => {
-  _canvas.lowLightVision.addLowLightVisionToLightConfig(app, html);
-});
-
 // Hide token tooltip on token update or deletion
 Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
 Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));

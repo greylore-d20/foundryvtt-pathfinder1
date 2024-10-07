@@ -1,22 +1,36 @@
 /**
  * Add a checkbox to enable/disable low-light vision effects to a light's configuration
  *
- * @param {FormApplication} app - The LightConfig app
- * @param {jQuery} html - The jQuery of the inner html
+ * @param {AmbientLightConfig} app - The LightConfig app
+ * @param {Element} html - The application HTML element
  */
 export const addLowLightVisionToLightConfig = function (app, html) {
   /** @type {AmbientLightDocument} */
-  const light = app.object;
+  const light = app.document;
 
   // Create checkbox HTML element
-  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
-  checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
-  if (light.getFlag("pf1", "disableLowLight")) checkboxStr += " checked";
-  checkboxStr += "></div>";
-  const checkbox = $(checkboxStr);
+  const bf = new foundry.data.fields.BooleanField();
+
+  /** @type {Element} */
+  const el = bf.toFormGroup(
+    {
+      label: game.i18n.localize("PF1.SETTINGS.DisableLLV.Label"),
+      hint: game.i18n.localize("PF1.SETTINGS.DisableLLV.Hint"),
+    },
+    {
+      name: "flags.pf1.disableLowLight",
+      value: light.getFlag("pf1", "disableLowLight") ?? false,
+    }
+  );
+
+  // Create containing fieldset
+  const field = document.createElement("fieldset");
+  const legend = document.createElement("legend");
+  legend.innerText = game.i18n.localize("PF1.Title");
+  field.append(legend, el);
 
   // Insert new checkbox
-  html.find('div.tab[data-tab="basic"]').append(checkbox);
+  html.querySelector('section.tab[data-tab="advanced"]').append(field);
 };
 
 /**
@@ -87,3 +101,7 @@ export const patchCore = function () {
     return result;
   };
 };
+
+Hooks.on("renderAmbientLightConfig", (app, html) => {
+  pf1.canvas.lowLightVision.addLowLightVisionToLightConfig(app, html);
+});

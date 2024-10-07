@@ -174,6 +174,10 @@ export class ItemSpellPF extends ItemPF {
 
       // Add @spellbook shortcut to @spells[bookId]
       result.spellbook = result.spells[this.system.spellbook];
+
+      if (this.useSpellPoints()) {
+        result.sp = result.spellbook.spellPoints;
+      }
     } else {
       const [sl, cl] = this.constructor.getMinimumCasterLevelBySpellData(this);
 

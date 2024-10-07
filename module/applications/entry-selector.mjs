@@ -90,13 +90,13 @@ export class EntrySelector extends FormApplication {
     html.find('tr td input[type="text"]').change(this._onEntryChange.bind(this));
   }
 
-  async _updateObject(event, formData) {
+  async _updateObject(_event, _formData) {
     const updateData = {};
 
     if (this.isFlag) {
       // Convert editor data for flags
       const newKeys = new Set(); // Needed for deletion detection
-      const entries = this.entries.forEach(([key, value]) => {
+      this.entries.forEach(([key, value]) => {
         newKeys.add(key);
         updateData[`${this.attribute}.${key}`] = this.isBoolean ? true : value;
       });

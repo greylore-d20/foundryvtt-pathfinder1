@@ -5,7 +5,6 @@ import {
   enrichHTMLUnrolledAsync,
   naturalSort,
 } from "@utils";
-import { ItemPF } from "@item/item-pf.mjs";
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { SpeedEditor } from "@app/speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "@app/categorized-item-picker.mjs";
@@ -496,7 +495,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare attack-specific stuff
     if (isAttack) {
-      const wtype = (isWeaponLike ? itemData.weapon?.type : null) || "all";
       context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);

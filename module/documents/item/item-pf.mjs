@@ -1823,26 +1823,25 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * @param {string} linkType - The type of link.
-   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {string} category - The type of link.
+   * @param {string} sourceType - Either "compendium", "data" or "world".
    * @param {object} targetItem - The target item to link to.
-   * @param {string} itemLink - The link identifier for the item.
+   * @param {string} uuid - The link identifier for the item.
    * @param {object} extraData - Additional data
    * @returns {Array} An array to insert into this item's link data.
    */
-  generateInitialLinkData(linkType, dataType, targetItem, itemLink, extraData = {}) {
+  generateInitialLinkData(category, sourceType, targetItem, uuid, extraData = {}) {
     const result = {
       name: targetItem.name,
+      uuid,
     };
 
-    result.uuid = itemLink;
-
-    if (linkType === "classAssociations") {
+    if (category === "classAssociations") {
       result.level = 1;
     }
 
     // Remove name for various links
-    switch (linkType) {
+    switch (category) {
       case "classAssociations":
       case "supplements":
         // System packs are assumed static
@@ -1866,26 +1865,25 @@ export class ItemPF extends ItemBasePF {
   /**
    * Creates a link to another item.
    *
-   * @param {string} linkType - The type of link.
+   * @param {string} category - The type of link.
    * e.g. "children", "charges", "classAssociations" or "ammunition".
-   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {string} sourceType - Either "compendium", "data" or "world".
    * @param {object} targetItem - The target item to link to.
-   * @param {string} itemLink - The link identifier for the item.
+   * @param {string} uuid - The link identifier for the item.
    * e.g. UUID for items external to the actor, and item ID for same actor items.
    * @param {object} [extraData] - Additional data to store int he link
    * @returns {boolean} Whether a link was created.
    */
-  async createItemLink(linkType, dataType, targetItem, itemLink, extraData) {
-    if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
-      const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink, extraData);
-      const itemData = this.toObject();
-      const links = foundry.utils.deepClone(itemData.system.links?.[linkType] ?? []);
-      links.push(link);
-      const itemUpdate = { _id: this.id, [`system.links.${linkType}`]: links };
-      const itemUpdates = [];
+  async createItemLink(category, sourceType, targetItem, uuid, extraData) {
+    if (this.canCreateItemLink(category, sourceType, targetItem, uuid)) {
+      const links = this.toObject().system.links?.[category] ?? [];
+      const linkData = this.generateInitialLinkData(category, sourceType, targetItem, uuid, extraData);
+      links.push(linkData);
+      const itemUpdate = { _id: this.id, [`system.links.${category}`]: links };
 
       // Clear value, maxFormula and per from link target to avoid odd behaviour
-      if (linkType === "charges") {
+      const itemUpdates = [];
+      if (category === "charges") {
         itemUpdates.push({
           _id: targetItem.id,
           system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null, "-=rechargeFormula": null } },
@@ -1899,10 +1897,10 @@ export class ItemPF extends ItemBasePF {
       }
 
       // Call link creation hook
-      Hooks.callAll("pf1CreateItemLink", this, link, linkType);
+      Hooks.callAll("pf1CreateItemLink", this, linkData, category);
 
       return true;
-    } else if (linkType === "children" && dataType !== "data") {
+    } else if (category === "children" && sourceType !== "data") {
       const itemData = targetItem.toObject();
 
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
@@ -1910,7 +1908,8 @@ export class ItemPF extends ItemBasePF {
 
       const [newItem] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
 
-      await this.createItemLink("children", "data", newItem, newItem.getRelativeUUID(this.actor));
+      const itemUuid = newItem.getRelativeUUID(this.actor);
+      await this.createItemLink("children", "data", newItem, itemUuid);
     }
 
     return false;
@@ -1944,7 +1943,7 @@ export class ItemPF extends ItemBasePF {
 
         // Recursive
         if (type !== "charges" && recursive) {
-          await item.getLinkedItems(type, { recursive, _results: results });
+          await item.getLinkedItems(type, { recursive, includeLinkData, _results: results });
         }
       }
     }
@@ -1971,15 +1970,15 @@ export class ItemPF extends ItemBasePF {
     const results = _results ?? new Set();
     for (const linkData of links) {
       if (!linkData.uuid) continue;
-      const item = fromUuidSync(linkData.uuid, { relative: this.actor });
-      if (item) {
-        if (results.has(item)) continue;
-        results.add(item);
 
-        // Recursive
-        if (type !== "charges" && recursive) {
-          item.getLinkedItemsSync(type, { recursive, _results: results });
-        }
+      const parsed = foundry.utils.parseUuid(linkData.uuid, { relative: this.actor });
+      const item = this.actor?.items.get(parsed?.id);
+      if (!item || results.has(item)) continue;
+      results.add(item);
+
+      // Recursive
+      if (type !== "charges" && recursive) {
+        item.getLinkedItemsSync(type, { recursive, _results: results });
       }
     }
 

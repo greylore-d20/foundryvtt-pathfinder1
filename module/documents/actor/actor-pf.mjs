@@ -412,7 +412,7 @@ export class ActorPF extends ActorBasePF {
       // Use AE parent when available
       if (ae.parent instanceof Item) item = ae.parent;
       // Otherwise support older origin cases
-      else item = ae.origin ? fromUuidSync(ae.origin, { relative: this }) : null;
+      else item = ae.origin ? await fromUuid(ae.origin, { relative: this }) : null;
 
       if (item?.type === "buff") {
         disableBuffs.push({ _id: item.id, "system.active": false });

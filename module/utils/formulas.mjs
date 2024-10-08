@@ -40,7 +40,7 @@ class FormulaPart {
     this.terms = terms.filter((t) => !!t);
     this.simple = simple;
 
-    if (evaluate) this.evaluateSync({ minimize: true });
+    if (evaluate) this.evaluate();
   }
 
   get isDeterministic() {
@@ -56,20 +56,15 @@ class FormulaPart {
       })
       .join("");
 
-    const roll = Roll.create(f);
-    if (roll.isDeterministic) return roll.evaluateSync().total.toString();
+    const roll = new Roll.defaultImplementation(f);
+    if (roll.isDeterministic) return roll.evaluateSync({ minimize: true }).total.toString();
     else return f;
   }
 
   _total = null;
 
-  async evaluate() {
-    const roll = await new Roll.defaultImplementation(this.formula).evaluate();
-    this._total = roll.total;
-  }
-
-  evaluateSync() {
-    const roll = new Roll.defaultImplementation(this.formula).evaluateSync();
+  evaluate() {
+    const roll = new Roll.defaultImplementation(this.formula).evaluateSync({ minimize: true });
     this._total = roll.total;
   }
 
@@ -197,7 +192,6 @@ class TernaryTerm {
 
   get total() {
     throw new Error("TernaryTerm.total called");
-    //return Roll.create(this.formula).evaluate().total;
   }
 }
 
@@ -245,7 +239,7 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
     .parse(formula)
     .map((t) => {
       if (t instanceof foundry.dice.terms.ParentheticalTerm) {
-        t.evaluate();
+        t.evaluateSync({ minimize: true });
         const v = t.total;
         return v >= 0 ? `${t.total}` : `(${t.total})`;
       }

@@ -854,7 +854,7 @@ export class ItemSheetPF extends ItemSheet {
     const pScripts = this._prepareScriptCalls(context);
 
     // Add links
-    const pLinks = this._prepareLinks(context);
+    const pLinks = await this._prepareLinks(context);
 
     await Promise.all([pIdentDesc, pUnidentDesc, pTopDesc, pScripts, pLinks]);
 
@@ -947,7 +947,7 @@ export class ItemSheetPF extends ItemSheet {
     };
   }
 
-  _prepareLinks(context) {
+  async _prepareLinks(context) {
     context.links = {
       list: [],
     };
@@ -1011,7 +1011,7 @@ export class ItemSheetPF extends ItemSheet {
         const linkData = foundry.utils.deepClone(items[index]);
         linkData.index = index; // Record index so sorted lists maintain data cohesion
 
-        const linkedItem = fromUuidSync(linkData.uuid, { relative: actor });
+        const linkedItem = await fromUuid(linkData.uuid, { relative: actor });
         if (!linkedItem) linkData.broken = true;
         linkData.img = linkedItem?.img || Item.implementation.getDefaultArtwork(linkedItem);
 
@@ -1819,10 +1819,10 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onLinksDrop(event, data) {
     const elem = event.target;
-    let linkType = elem.closest("[data-tab]").dataset.tab;
+    let category = elem.closest("[data-tab]").dataset.tab;
 
     // Default selection for dropping on tab instead of body
-    if (linkType === "links") linkType = "children";
+    if (category === "links") category = "children";
 
     // Try to extract the data
     if (!data.type) throw new Error("Invalid drop data received");
@@ -1831,26 +1831,25 @@ export class ItemSheetPF extends ItemSheet {
     if (!targetItem || !(targetItem instanceof Item))
       throw new Error(`UUID did not resolve to valid item: ${data.uuid}`);
 
-    let dataType,
-      itemLink = data.uuid;
-    // Case 1 - Import from a Compendium pack
-    if (targetItem.pack) {
-      dataType = "compendium";
+    let sourceType,
+      uuid = data.uuid;
+    // Import from same actor
+    if (targetItem.actor === this.item.actor) {
+      sourceType = "data";
+      uuid = targetItem.getRelativeUUID(this.actor);
     }
-    // Case 2 - Import from same actor
-    else if (targetItem.actor === this.item.actor) {
-      dataType = "data";
-      itemLink = targetItem.getRelativeUUID(this.actor);
+    // Import from a Compendium pack
+    else if (targetItem.pack) {
+      sourceType = "compendium";
     }
-
-    // Case 3 - Import from World Document
+    // Import from World Document
     else {
-      dataType = "world";
+      sourceType = "world";
     }
 
     // Add extra data
     const extraData = {};
-    switch (linkType) {
+    switch (category) {
       case "classAssociations": {
         const level = data.pf1Link?.level;
         if (Number.isNumeric(level)) extraData.level = level;
@@ -1858,7 +1857,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    await this.item.createItemLink(linkType, dataType, targetItem, itemLink, extraData);
+    await this.item.createItemLink(category, sourceType, targetItem, uuid, extraData);
   }
 
   /**

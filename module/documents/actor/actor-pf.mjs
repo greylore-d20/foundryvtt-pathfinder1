@@ -1,6 +1,6 @@
 import { ActorBasePF } from "./actor-base.mjs";
-import { ItemPF, ItemRacePF } from "@item/_module.mjs";
-import { createTag, fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
+import { ItemPF } from "@item/_module.mjs";
+import { fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
   applyChanges,
   addDefaultChanges,
@@ -9,9 +9,9 @@ import {
   setSourceInfoByName,
   getHighestChanges,
 } from "./utils/apply-changes.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
-import { ItemChange } from "../../components/change.mjs";
+import { ItemChange } from "@component/change.mjs";
 import { VisionSharingSheet } from "module/applications/vision-sharing.mjs";
 import { Resource } from "./components/resource.mjs";
 

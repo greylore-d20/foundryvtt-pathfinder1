@@ -1,4 +1,4 @@
-import { ItemPF } from "../documents/item/item-pf.mjs";
+import { ItemPF } from "@item/item-pf.mjs";
 
 /**
  * Fetches a pack entry's data, or the actual stored document

@@ -1,5 +1,5 @@
 import { ActionUse, ActionUseAttack } from "../action-use/action-use.mjs";
-import { RollPF } from "../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 export class AttackDialog extends Application {
   /**

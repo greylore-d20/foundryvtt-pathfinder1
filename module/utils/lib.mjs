@@ -1,5 +1,5 @@
 import { SemanticVersion } from "./semver.mjs";
-import { RollPF } from "../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 /**
  * Creates a tag from a string.

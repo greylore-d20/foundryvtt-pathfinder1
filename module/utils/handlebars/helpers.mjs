@@ -1,5 +1,4 @@
-import { convertDistance, calculateRange, fractionalToString } from "../lib.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { convertDistance, calculateRange, fractionalToString } from "@utils";
 
 /**
  * @internal

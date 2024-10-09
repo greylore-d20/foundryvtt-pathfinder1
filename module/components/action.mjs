@@ -1,7 +1,6 @@
-import { calculateRange, convertDistance } from "../utils/lib.mjs";
-import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
+import { calculateRange, keepUpdateArray } from "@utils";
+import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { keepUpdateArray } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 

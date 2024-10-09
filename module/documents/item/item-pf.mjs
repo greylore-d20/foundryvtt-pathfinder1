@@ -1,11 +1,11 @@
-import { ItemBasePF } from "./item-base.mjs";
-import { keepUpdateArray } from "../../utils/lib.mjs";
-import { ItemChange } from "../../components/change.mjs";
-import { ItemAction } from "../../components/action.mjs";
-import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { ItemBasePF } from "@item/item-base.mjs";
+import { keepUpdateArray } from "@utils";
+import { ItemChange } from "@component/change.mjs";
+import { ItemAction } from "@component/action.mjs";
+import { getHighestChanges } from "@documents/actor/utils/apply-changes.mjs";
+import { RollPF } from "@dice/roll.mjs";
 import { ActionUse } from "@actionUse/action-use.mjs";
-import { getSkipActionPrompt } from "../settings.mjs";
+import { getSkipActionPrompt } from "@documents/settings.mjs";
 
 /**
  * Override and extend the basic :class:`Item` implementation

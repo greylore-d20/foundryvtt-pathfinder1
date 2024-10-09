@@ -1,4 +1,4 @@
-import { RollPF } from "../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 export class ChatAttack {
   /** @type {ItemAction} */

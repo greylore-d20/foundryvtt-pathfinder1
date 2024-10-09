@@ -1,4 +1,4 @@
-import { RollPF } from "../../roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 /**
  * Base term to identify function terms.

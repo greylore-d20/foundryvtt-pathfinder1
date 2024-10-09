@@ -8,7 +8,7 @@ import {
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { SpeedEditor } from "@app/speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "@app/categorized-item-picker.mjs";
-import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**

@@ -4,12 +4,11 @@ import { ActorRestDialog } from "./actor-rest.mjs";
 import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
-import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { ItemPF } from "@item/item-pf.mjs";
 import { applyAccessibilitySettings } from "@utils/chat.mjs";
 import { LevelUpForm } from "@app/level-up.mjs";
 import { CurrencyTransfer } from "@app/currency-transfer.mjs";
-import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 

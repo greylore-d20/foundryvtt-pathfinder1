@@ -1,5 +1,5 @@
 import { ActorPF } from "./actor-pf.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 export class ActorNPCPF extends ActorPF {
   /**

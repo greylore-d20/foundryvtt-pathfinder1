@@ -1,5 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 import { calculateRangeFormula } from "@utils";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 

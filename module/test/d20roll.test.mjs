@@ -1,4 +1,4 @@
-import { D20RollPF } from "../dice/d20roll.mjs";
+import { D20RollPF } from "@dice/d20roll.mjs";
 
 /**
  * @param {string} formula

@@ -1,5 +1,3 @@
-import { refreshActors } from "./utils/lib.mjs";
-
 export function initializeSocket() {
   game.socket.on("system.pf1", runSocketFunction);
 }

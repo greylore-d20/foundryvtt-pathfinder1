@@ -1,7 +1,6 @@
-import { ItemPF } from "./documents/item/item-pf.mjs";
 import { ItemChange } from "./components/change.mjs";
 
-import { MigrationDialog } from "./applications/migration/migration-dialog.mjs";
+import { MigrationDialog } from "@app/migration/migration-dialog.mjs";
 import { MigrationState } from "./migration/migration-state.mjs";
 
 /**

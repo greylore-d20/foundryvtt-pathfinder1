@@ -1,5 +1,3 @@
-import { ActorPF } from "./actor/actor-pf.mjs";
-
 /**
  * Finds old macro with same name and command that user can execute and see.
  *

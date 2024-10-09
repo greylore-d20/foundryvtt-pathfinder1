@@ -1,4 +1,3 @@
-import { DamageTypeSelector } from "./damage-type-selector.mjs";
 import { naturalSort } from "@utils";
 
 /**

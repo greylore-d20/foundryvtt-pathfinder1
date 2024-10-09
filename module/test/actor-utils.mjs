@@ -1,5 +1,5 @@
-import { ActorPF } from "../documents/actor/actor-pf.mjs";
-import { ItemPF } from "../documents/item/item-pf.mjs";
+import { ActorPF } from "@actor/actor-pf.mjs";
+import { ItemPF } from "@item/item-pf.mjs";
 import { fetchPackEntryData } from "./utils.mjs";
 
 /**

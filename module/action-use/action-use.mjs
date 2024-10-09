@@ -1,5 +1,5 @@
 import { ChatAttack } from "./chat-attack.mjs";
-import { RollPF } from "../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 // Documentation/type imports
 /** @typedef {import("@item/item-pf.mjs").SharedActionData} SharedActionData */

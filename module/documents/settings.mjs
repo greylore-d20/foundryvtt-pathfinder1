@@ -1,11 +1,11 @@
-import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
-import { ExperienceConfig, ExperienceConfigModel } from "../applications/settings/experience.mjs";
-import { AccessibilityConfig, AccessibilityConfigModel } from "../applications/settings/accessibility.mjs";
-import { TooltipConfig, TokenTooltipConfigModel } from "../applications/settings/tooltip.mjs";
-import { TooltipWorldConfig, TokenTooltipWorldConfigModel } from "../applications/settings/tooltip_world.mjs";
+import { HealthConfig, HealthConfigModel } from "@app/settings/health.mjs";
+import { ExperienceConfig, ExperienceConfigModel } from "@app/settings/experience.mjs";
+import { AccessibilityConfigModel } from "@app/settings/accessibility.mjs";
+import { TooltipConfig, TokenTooltipConfigModel } from "@app/settings/tooltip.mjs";
+import { TokenTooltipWorldConfigModel } from "@app/settings/tooltip_world.mjs";
 import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
 import { PerformanceConfig, PerformanceModel } from "module/applications/settings/performance.mjs";
-import { TooltipPF } from "../applications/tooltip.mjs";
+import { TooltipPF } from "@app/tooltip.mjs";
 
 export const registerSystemSettings = function () {
   /**

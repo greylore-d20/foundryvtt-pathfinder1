@@ -1,4 +1,4 @@
-import { openJournal } from "../utils/lib.mjs";
+import { openJournal } from "@utils";
 
 export class SkillEditor extends DocumentSheet {
   constructor(actor, skillId, subSkillId, options = {}) {

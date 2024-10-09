@@ -1,5 +1,3 @@
-import { naturalSort } from "@utils";
-
 /**
  * @typedef {object} FilterChoice
  * @property {string} label - The label for this choice visible to the user; will be localized

@@ -1,5 +1,4 @@
 import { customRolls } from "./documents/chat-message.mjs";
-import { sortArrayByName } from "./utils/lib.mjs";
 import { RollPF } from "./dice/roll.mjs";
 import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs";
 

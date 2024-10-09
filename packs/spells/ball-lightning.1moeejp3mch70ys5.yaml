@@ -21,8 +21,8 @@ system:
               values:
                 - electric
       duration:
-        units: spec
-        value: 1 round/level
+        units: round
+        value: '@cl'
       extraAttacks:
         formula:
           count: clamp(floor((@cl - 3) / 4), 1, 4)

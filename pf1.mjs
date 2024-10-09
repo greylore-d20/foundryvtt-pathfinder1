@@ -161,6 +161,10 @@ Hooks.once("init", function () {
   // Combat time progression
   CONFIG.time.roundTime = 6;
 
+  // Low-Light Vision mixin
+  CONFIG.AmbientLight.objectClass = _canvas.lowLightVision.LLVMixin(CONFIG.AmbientLight.objectClass);
+  CONFIG.Token.objectClass = _canvas.lowLightVision.LLVMixin(CONFIG.Token.objectClass);
+
   // Register System Settings
   documents.settings.registerSystemSettings();
   documents.settings.registerClientSettings();

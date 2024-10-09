@@ -1,6 +1,5 @@
 import { customRolls } from "./documents/chat-message.mjs";
 import { RollPF } from "./dice/roll.mjs";
-import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs";
 
 // Add inline support for extra /commands
 {
@@ -144,6 +143,3 @@ import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs"
     },
   });
 }
-
-// Call patch functions
-patchLowLightVision();

@@ -54,6 +54,26 @@ export class TokenPF extends Token {
   }
 
   /**
+   * @override
+   * @param {object} options - Control options
+   */
+  _onControl(options) {
+    super._onControl(options);
+
+    pf1.canvas.lowLightVision.debouncedLightSourceReInit();
+  }
+
+  /**
+   * @override
+   * @param {object} options - Release options
+   */
+  _onRelease(options) {
+    super._onRelease(options);
+
+    pf1.canvas.lowLightVision.debouncedLightSourceReInit();
+  }
+
+  /**
    * Synced with Foundry v11.315
    *
    * @override

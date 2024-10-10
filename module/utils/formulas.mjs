@@ -47,18 +47,37 @@ class FormulaPart {
     return this.terms.every((t) => t.isDeterministic);
   }
 
+  #formula;
   get formula() {
+    if (this.#formula) return this.#formula;
+
     const f = this.terms
       .map((t) => {
         if (t.constructor.isFunction) return `${t.simplify}`;
         else if (t.isDeterministic) return `${t.total}`;
-        else return t.formula;
+        // Dice eat up prefix parentheticals in v12
+        else if (
+          t instanceof foundry.dice.terms.Die &&
+          t._number instanceof Roll &&
+          t._number.terms.length == 1 &&
+          t._number.terms[0] instanceof foundry.dice.terms.ParentheticalTerm
+        ) {
+          // Simplify prefix parenthetical part of (X)dY
+          const formula = t._number.terms[0].roll.formula;
+          const iformula = simplify(formula);
+          t._number = new Roll.defaultImplementation(iformula).evaluateSync({ maximize: true });
+          return t.formula;
+        } else {
+          return t.formula;
+        }
       })
       .join("");
 
     const roll = new Roll.defaultImplementation(f);
-    if (roll.isDeterministic) return roll.evaluateSync({ minimize: true }).total.toString();
-    else return f;
+    if (roll.isDeterministic) this.#formula = roll.evaluateSync({ minimize: true }).total.toString();
+    else this.#formula = f;
+
+    return this.#formula;
   }
 
   _total = null;
@@ -288,7 +307,7 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
   terms = ternaryTerms(terms);
 
   // Make final pass
-  const final = new FormulaPart(terms);
+  const final = new FormulaPart(terms, undefined, false);
 
   return final.formula.replace(/ \+ 0\b/g, "");
 }

@@ -31,7 +31,7 @@
         {{#if isBoolean}}
         {{value}}
         {{else}}
-        {{#if value.length}}{{value}}{{else}}{{numberFormat value sign=true}}{{/if}}
+        {{#if value.length}}{{value}}{{else}}{{numberFormat value sign=true decimals=../decimals}}{{/if}}
         {{/if}}
       {{/unless}}
     </span>

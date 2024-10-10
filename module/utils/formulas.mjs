@@ -239,9 +239,17 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
     .parse(formula)
     .map((t) => {
       if (t instanceof foundry.dice.terms.ParentheticalTerm) {
-        t.evaluateSync({ minimize: true });
-        const v = t.total;
-        return v >= 0 ? `${t.total}` : `(${t.total})`;
+        if (t.isDeterministic) {
+          // Parenthetical term doesn't have separate evaluate calls yet
+          t.evaluate({ minimize: true });
+          const v = t.total;
+          return `${v}`;
+        } else {
+          const iformula = simplify(t.roll.formula);
+          const isSingleTerm = Roll.defaultImplementation.parse(iformula).length === 1;
+          if (isSingleTerm) return iformula;
+          else return `(${iformula})`;
+        }
       }
       return t.formula;
     })

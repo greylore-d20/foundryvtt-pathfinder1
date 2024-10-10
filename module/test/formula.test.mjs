@@ -17,6 +17,8 @@ const simplificationTestFormulas = [
   //["(ceil(@classes.alchemist.level / 2) - 1)d6", "(-1)d6"], // This is expected to fail since Foundry breaks on this, omitted from system testing
   ["4 + max(0, ceil(@classes.alchemist.level / 2) - 1)d6", "4 + 0d6"], // incorrectly produces 4d6
   ["floor(((min(5, 23))d4) / 2)", "floor(5d4 / 2)"], // This is expected to forever fail
+  ["@item.level * (1d4)", "5 * 1d4"],
+  ["@item.level * (1d4 + 2)", "5 * (1d4 + 2)"],
 ];
 
 const generalTestFormulas = [
@@ -33,6 +35,7 @@ export function registerFormulaParsingTests() {
 
       const rollData = {
         size: 4,
+        item: { level: 5 },
         attributes: {
           dex: {
             mod: 3,

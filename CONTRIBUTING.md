@@ -140,3 +140,7 @@ This project's CI/ CD will run after opening a merge request and create a result
 In the latter case, check the job for which error caused it to fail, and correct the issue if possible.
 
 If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord, or leave a message in the `#pf1e` channel of the [FoundryVTT Discord server](https://discord.gg/foundryvtt) or the [PF1 system Discord community server](https://discord.gg/WpaDMqWCwK).
+
+### Merge Conflicts
+
+Please use rebasing (`git rebase`) instead of merge commits when resolving branches that are out of date. Merge commits are source of endless problems even if they are convenient that one time.

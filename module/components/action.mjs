@@ -574,13 +574,19 @@ export class ItemAction {
       result.cl += result.attributes?.spells?.school?.[this.item.system.school]?.cl ?? 0;
     }
 
+    // Determine size bonus
+    if (this.hasAttack) {
+      const size = result.traits?.size || "med";
+      result.sizeBonus = this.isCombatManeuver ? pf1.config.sizeSpecialMods[size] : pf1.config.sizeMods[size];
+    }
+
     // BAB override
     if (result.action.bab) {
       const bab = RollPF.safeRollSync(result.action.bab, result).total;
       foundry.utils.setProperty(result, "attributes.bab.total", bab || 0);
     }
 
-    // Add @bab
+    // Add @bab alias
     result.bab = result.attributes?.bab?.total || 0;
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
@@ -958,14 +964,6 @@ export class ItemAction {
     const config = {};
 
     itemData.primaryAttack = primaryAttack;
-
-    const isRanged = this.isRanged;
-    const isCMB = this.isCombatManeuver;
-
-    const size = rollData.traits?.size ?? "med";
-
-    // Determine size bonus
-    rollData.sizeBonus = !isCMB ? pf1.config.sizeMods[size] : pf1.config.sizeSpecialMods[size];
 
     // Add misc bonuses/penalties
     itemData.proficiencyPenalty = -4;

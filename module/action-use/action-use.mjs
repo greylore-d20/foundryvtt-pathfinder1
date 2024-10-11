@@ -740,6 +740,9 @@ export class ActionUse {
   async addFootnotes() {
     if (!this.item) return;
 
+    const actor = this.actor;
+    const rollData = this.shared.rollData;
+
     const type = this.action.data.actionType;
     const typeMap = {
       rsak: ["ranged", "rangedSpell"],
@@ -756,26 +759,28 @@ export class ActionUse {
     const notes = [];
     // Add actor notes for attacks
     if (this.actor && isAttack) {
-      notes.push(...this.actor.getContextNotesParsed("attacks.attack"));
-      typeMap[type]?.forEach((subTarget) => notes.push(...this.actor.getContextNotesParsed(`attacks.${subTarget}`)));
+      notes.push(...(await actor.getContextNotesParsed("attacks.attack", { rollData })));
+      for (const subTarget of typeMap[type]) {
+        notes.push(...(await actor.getContextNotesParsed(`attacks.${subTarget}`, { rollData })));
+      }
     }
     // Add item notes
     if (this.item?.system.attackNotes) {
-      notes.push(...this.item.system.attackNotes);
+      notes.push(...this.item.system.attackNotes.map((text) => ({ text })));
     }
     // Add action notes
     if (this.action.data.attackNotes) {
-      notes.push(...this.action.data.attackNotes);
+      notes.push(...this.action.data.attackNotes.map((text) => ({ text })));
     }
 
     // Add CMB notes
     if (this.action.isCombatManeuver) {
-      notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
+      notes.push(...((await actor?.getContextNotesParsed("misc.cmb", { rollData })) ?? []));
     }
 
     if (isAttack) {
       const hasCritConfirm = this.shared.attacks.some((atk) => !!atk.chatAttack?.hasCritConfirm);
-      if (hasCritConfirm) notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
+      if (hasCritConfirm) notes.push(...((await actor?.getContextNotesParsed("attacks.critical", { rollData })) ?? []));
     }
 
     this.shared.templateData.footnotes = notes;
@@ -932,6 +937,8 @@ export class ActionUse {
   async getMessageData() {
     if (this.shared.chatAttacks.length === 0) return;
 
+    const rollData = this.shared.rollData;
+
     // Create chat template data
     this.shared.templateData = {
       ...this.shared.templateData,
@@ -985,7 +992,7 @@ export class ActionUse {
 
     // Add CL notes
     if (this.item.type === "spell" && actor) {
-      const clNotes = actor.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`);
+      const clNotes = await actor.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`, { rollData });
 
       if (clNotes.length) {
         props.push({
@@ -997,7 +1004,7 @@ export class ActionUse {
       const school = this.item.system.school;
       if (school) {
         // Add DC School notes
-        const dcSchoolNotes = actor.getContextNotesParsed(`dc.school.${school}`);
+        const dcSchoolNotes = await actor.getContextNotesParsed(`dc.school.${school}`, { rollData });
         if (dcSchoolNotes.length) {
           props.push({
             header: game.i18n.format("PF1.DCSchoolNotes", { school: pf1.config.spellSchools[school] }),
@@ -1005,7 +1012,7 @@ export class ActionUse {
           });
         }
         // Add CL School notes
-        const clSchoolNotes = actor.getContextNotesParsed(`cl.school.${school}`);
+        const clSchoolNotes = await actor.getContextNotesParsed(`cl.school.${school}`, { rollData });
         if (clSchoolNotes.length) {
           props.push({
             header: game.i18n.format("PF1.CLSchoolNotes", { school: pf1.config.spellSchools[school] }),
@@ -1119,18 +1126,16 @@ export class ActionUse {
   async enrichNotes(notes, title, css) {
     if (notes.length === 0) return;
 
+    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
+      notes,
+      css,
+      header: game.i18n.localize(title),
+    });
+
     const enrichOptions = {
       rollData: this.shared.rollData,
       relativeTo: this.actor,
     };
-
-    const renderContext = {
-      notes,
-      css,
-      title,
-    };
-
-    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", renderContext);
 
     return TextEditor.enrichHTML(content, enrichOptions);
   }

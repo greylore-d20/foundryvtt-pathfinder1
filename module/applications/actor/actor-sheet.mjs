@@ -1,7 +1,7 @@
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { DamageResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, naturalSort } from "@utils";
+import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolled, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
@@ -195,10 +195,10 @@ export class ActorSheetPF extends ActorSheet {
       relativeTo: this.actor,
     };
     const bio = context.system.details?.biography?.value;
-    const pBio = bio ? enrichHTMLUnrolledAsync(bio, enrichHTMLOptions) : Promise.resolve();
+    const pBio = bio ? enrichHTMLUnrolled(bio, enrichHTMLOptions) : Promise.resolve();
     pBio.then((html) => (context.biographyHTML = html));
     const notes = context.system.details?.notes?.value;
-    const pNotes = notes ? enrichHTMLUnrolledAsync(notes, enrichHTMLOptions) : Promise.resolve();
+    const pNotes = notes ? enrichHTMLUnrolled(notes, enrichHTMLOptions) : Promise.resolve();
     pNotes.then((html) => (context.notesHTML = html));
     await Promise.all([pBio, pNotes]);
 
@@ -1182,7 +1182,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!id) return;
 
     const context = { actor: this.actor, bonusTypes: pf1.config.bonusTypes, config: pf1.config };
-    this._getTooltipContext(id, context);
+    await this._getTooltipContext(id, context);
 
     context.sources = context.sources?.filter((list) => list.sources?.length > 0);
 
@@ -1222,7 +1222,7 @@ export class ActorSheetPF extends ActorSheet {
    * @param {object} context - Context object to store data into
    * @throws {Error} - If provided ID is invalid.
    */
-  _getTooltipContext(fullId, context) {
+  async _getTooltipContext(fullId, context) {
     const actor = this.actor,
       system = actor.system;
 
@@ -1236,10 +1236,8 @@ export class ActorSheetPF extends ActorSheet {
 
     const getSource = (path) => this.actor.sourceDetails[path];
 
-    const getNotes = (context, all = true) => {
-      const noteObjs = actor.getContextNotes(context, all);
-      return actor.formatContextNotes(noteObjs, lazy.rollData, { roll: false });
-    };
+    const getNotes = async (context, all = true) =>
+      (await actor.getContextNotesParsed(context, { all, rollData: lazy.rollData, roll: false })).map((n) => n.text);
 
     const damageTypes = (d) => {
       const values = d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? [];
@@ -1361,7 +1359,7 @@ export class ActorSheetPF extends ActorSheet {
         const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
         paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
 
-        notes = [...getNotes(`${mode}Speed`), ...getNotes("allSpeeds")];
+        notes = [...(await getNotes(`${mode}Speed`)), ...(await getNotes("allSpeeds"))];
         break;
       }
       case "flyManeuverability":
@@ -1386,7 +1384,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.ac.${detail}.total`),
         });
 
-        notes = getNotes("misc.ac");
+        notes = await getNotes("misc.ac");
         break;
       }
       case "cmd":
@@ -1399,7 +1397,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.cmd.${detail}`),
         });
 
-        notes = getNotes(`misc.cmd`);
+        notes = await getNotes(`misc.cmd`);
         break;
       case "save": {
         const save = system.attributes.savingThrows[detail];
@@ -1417,7 +1415,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.savingThrows.${detail}.total`),
         });
 
-        notes = getNotes(`savingThrow.${detail}`);
+        notes = await getNotes(`savingThrow.${detail}`);
         break;
       }
       case "sr":
@@ -1431,7 +1429,7 @@ export class ActorSheetPF extends ActorSheet {
           untyped: true,
         });
 
-        notes = getNotes("misc.sr");
+        notes = await getNotes("misc.sr");
         break;
       case "bab": {
         const bab = system.attributes.bab;
@@ -1482,7 +1480,11 @@ export class ActorSheetPF extends ActorSheet {
           { sources: getSource("system.attributes.attack.shared") }
         );
 
-        notes = [...getNotes("attacks.attack"), ...getNotes("attacks.melee"), ...getNotes("misc.cmb")];
+        notes = [
+          ...(await getNotes("attacks.attack")),
+          ...(await getNotes("attacks.melee")),
+          ...(await getNotes("misc.cmb")),
+        ];
         break;
       case "init": {
         const init = system.attributes.init;
@@ -1496,7 +1498,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource("system.attributes.init.total"),
         });
 
-        notes = getNotes("misc.init");
+        notes = await getNotes("misc.init");
         break;
       }
       case "abilityScore": {
@@ -1527,7 +1529,7 @@ export class ActorSheetPF extends ActorSheet {
           }
         );
 
-        notes = getNotes(`abilityChecks.${abl}`);
+        notes = await getNotes(`abilityChecks.${abl}`);
         break;
       }
       case "acp":
@@ -2041,8 +2043,8 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({ sources: skillSources }, { sources: getSource(`system.skills.${path}.mod`) });
 
-        notes = getNotes(`skill.${fullSkillId}`);
-        if (subSkillId) notes.push(...getNotes(`skill.${mainId}`, false));
+        notes = await getNotes(`skill.${fullSkillId}`);
+        if (subSkillId) notes.push(...(await getNotes(`skill.${mainId}`, false)));
         break;
       }
       case "spellbook": {
@@ -2218,7 +2220,7 @@ export class ActorSheetPF extends ActorSheet {
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
 
-            notes = [...getNotes("attacks.attack"), ...getNotes(`attacks.${subTarget}`)];
+            notes = [...(await getNotes("attacks.attack")), ...(await getNotes(`attacks.${subTarget}`))];
 
             break;
           }

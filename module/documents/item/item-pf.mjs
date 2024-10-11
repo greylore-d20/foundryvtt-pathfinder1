@@ -1321,7 +1321,6 @@ export class ItemPF extends ItemBasePF {
     const action = actionId ? this.actions.get(actionId) : this.defaultAction;
 
     rollData ??= action ? action.getRollData() : this.getRollData();
-    const itemData = rollData.item ?? this.system;
     const actionData = rollData.action ?? action?.data ?? {};
 
     const labels = this.getLabels({ actionId, rollData });
@@ -1329,7 +1328,7 @@ export class ItemPF extends ItemBasePF {
     // Rich text descriptions
     data.identifiedDescription = this.getDescription({ chatcard, rollData, isolated: extended });
 
-    data.unidentifiedDescription = itemData.description.unidentified;
+    data.unidentifiedDescription = this.system.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;
     data.actionDescription = actionData.description;
 
@@ -1375,7 +1374,7 @@ export class ItemPF extends ItemBasePF {
       }
 
       // Enhancement Bonus
-      const enhBonus = actionData.enh?.value ?? itemData.enh ?? 0;
+      const enhBonus = actionData.enh?.value ?? rollData.item.enh ?? 0;
       if (enhBonus > 0) {
         props.push(game.i18n.format("PF1.EnhancementInline", { bonus: enhBonus }));
       }

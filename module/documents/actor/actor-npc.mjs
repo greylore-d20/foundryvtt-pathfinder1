@@ -1,5 +1,6 @@
 import { ActorPF } from "./actor-pf.mjs";
 import { RollPF } from "@dice/roll.mjs";
+import { addDefaultChanges } from "./utils/apply-changes.mjs";
 
 export class ActorNPCPF extends ActorPF {
   /**
@@ -26,9 +27,21 @@ export class ActorNPCPF extends ActorPF {
     }
   }
 
+  /**
+   * @protected
+   * @override
+   */
   prepareBaseData() {
     super.prepareBaseData();
     this.system.details.cr.total = this.getCR();
+  }
+
+  /**
+   * @protected
+   * @override
+   */
+  _prepareTypeChanges(changes) {
+    addDefaultChanges.call(this, changes);
   }
 
   prepareSpecificDerivedData() {

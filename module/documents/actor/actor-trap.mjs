@@ -3,9 +3,6 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorTrapPF extends ActorNPCPF {
   prepareBaseData() {
-    // Forced deletion to ensure rolldata gets refreshed.
-    delete this._rollData;
-
     // Everything below this is needed for getRollData and ActorPF, but useless for the actor
     this.system.traits = { size: "med" };
 
@@ -91,7 +88,7 @@ export class ActorTrapPF extends ActorNPCPF {
     this.prepareItemLinks();
 
     // Reset roll data cache again to include processed info
-    delete this._rollData;
+    this._rollData = null;
 
     // Update item resources
     this.items.forEach((item) => {
@@ -99,8 +96,6 @@ export class ActorTrapPF extends ActorNPCPF {
       // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
       this.updateItemResources(item, { warnOnDuplicate: false });
     });
-
-    this._initialized = true;
   }
 
   /**
@@ -124,32 +119,8 @@ export class ActorTrapPF extends ActorNPCPF {
    */
   _setSourceDetails() {}
 
-  /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
-   * @override
-   */
-  _prepareChanges() {
-    this.changeItems = this.items.filter(
-      (item) =>
-        item.isActive &&
-        (item.system.changes?.length > 0 || Object.values(item.system.changeFlags ?? {}).some((v) => !!v))
-    );
-
-    const changes = [];
-    for (const i of this.changeItems) {
-      changes.push(...i.changes);
-    }
-
-    const c = new Collection();
-    for (const change of changes) {
-      // Avoid ID conflicts
-      const parentId = change.parent?.id ?? "Actor";
-      const uniqueId = `${parentId}-${change._id}`;
-      c.set(uniqueId, change);
-    }
-    this.changes = c;
-  }
+  /** @override */
+  _prepareTypeChanges(changes) {}
 
   getRollData(options = { refresh: false }) {
     // Return cached data, if applicable

@@ -3,9 +3,6 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorVehiclePF extends ActorPF {
   prepareBaseData() {
-    // Forced deletion to ensure rolldata gets refreshed.
-    delete this._rollData;
-
     this._resetInherentTotals();
 
     this.sourceInfo = {};
@@ -123,7 +120,7 @@ export class ActorVehiclePF extends ActorPF {
     this.prepareItemLinks();
 
     // Reset roll data cache again to include processed info
-    delete this._rollData;
+    this._rollData = null;
 
     // Update item resources
     this.items.forEach((item) => {
@@ -131,8 +128,6 @@ export class ActorVehiclePF extends ActorPF {
       // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
       this.updateItemResources(item, { warnOnDuplicate: false });
     });
-
-    this._initialized = true;
 
     this._setSourceDetails();
   }
@@ -162,25 +157,7 @@ export class ActorVehiclePF extends ActorPF {
    */
   refreshDerivedData() {}
 
-  /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
-   * Skips addDefaultChanges() step
-   *
-   * @override
-   */
-  _prepareChanges() {
-    this.changeItems = this.items.filter(
-      (item) =>
-        item.isActive &&
-        (item.system.changes?.length > 0 || Object.values(item.system.changeFlags ?? {}).some((v) => !!v))
-    );
-
-    const changes = [];
-    for (const i of this.changeItems) {
-      changes.push(...i.changes);
-    }
-
+  _prepareTypeChanges(changes) {
     changes.push(
       // CMB
       new pf1.components.ItemChange({
@@ -199,15 +176,6 @@ export class ActorVehiclePF extends ActorPF {
         flavor: game.i18n.localize("PF1.Base"),
       })
     );
-
-    const c = new Collection();
-    for (const change of changes) {
-      // Avoid ID conflicts
-      const parentId = change.parent?.id ?? "Actor";
-      const uniqueId = `${parentId}-${change._id}`;
-      c.set(uniqueId, change);
-    }
-    this.changes = c;
   }
 
   getRollData(options = { refresh: false }) {

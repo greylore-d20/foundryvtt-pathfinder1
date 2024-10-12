@@ -1,5 +1,4 @@
 import { ActorBasePF } from "./actor-base.mjs";
-import { ItemPF } from "@item/_module.mjs";
 import { fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
   applyChanges,
@@ -11,7 +10,6 @@ import {
 } from "./utils/apply-changes.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
-import { ItemChange } from "@component/change.mjs";
 import { VisionSharingSheet } from "module/applications/vision-sharing.mjs";
 import { Resource } from "./components/resource.mjs";
 
@@ -19,50 +17,52 @@ import { Resource } from "./components/resource.mjs";
  * Extend the base Actor class to implement additional game system logic.
  */
 export class ActorPF extends ActorBasePF {
-  constructor(...args) {
-    super(...args);
+  /**
+   * Configure actor before data preparation.
+   *
+   * @override
+   * @param {object} options
+   */
+  _configure(options = {}) {
+    super._configure(options);
 
-    if (this.itemFlags === undefined)
-      /**
-       * Init item flags.
-       */
-      this.itemFlags = { boolean: {}, dictionary: {} };
+    /**
+     * Stores all ItemChanges from carried items.
+     *
+     * @public
+     * @type {Collection<ItemChange>}
+     */
+    this.changes ??= new Collection();
 
-    if (this.changeItems === undefined)
-      /**
-       * A list of all the active items with changes.
-       *
-       * @type {ItemPF[]}
-       */
-      this.changeItems = [];
+    /**
+     * Cached roll data for this item.
+     *
+     * @internal
+     * @type {object}
+     */
+    Object.defineProperties(this, {
+      itemFlags: {
+        value: { boolean: {}, dictionary: {} },
+        writable: false,
+      },
+      _rollData: {
+        value: null,
+        enumerable: false,
+        writable: true,
+      },
+      _visionSharingSheet: {
+        value: null,
+        enumerable: false,
+        writable: true,
+      },
+    });
 
-    if (this.changes === undefined)
-      /**
-       * Stores all ItemChanges from carried items.
-       *
-       * @public
-       * @type {Collection<ItemChange>}
-       */
-      this.changes = new Collection();
-
-    if (this._rollData === undefined)
-      /**
-       * Cached roll data for this item.
-       *
-       * @internal
-       * @type {object}
-       */
-      this._rollData = null;
-
-    if (this.containerItems === undefined)
-      /**
-       * All items this actor is holding in containers.
-       *
-       * @type {ItemPF[]}
-       */
-      this.containerItems = [];
-
-    this._visionSharingSheet ??= null;
+    /**
+     * All items this actor is holding in containers.
+     *
+     * @type {ItemPF[]}
+     */
+    this.containerItems ??= [];
   }
 
   /**
@@ -290,24 +290,22 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    this.itemFlags = {
-      boolean: bFlags,
-      dictionary: dFlags,
-    };
+    this.itemFlags.boolean = bFlags;
+    this.itemFlags.dictionary = dFlags;
   }
 
   /**
    * @internal
    */
   _prepareChanges() {
-    this.changeItems = this.items.filter((item) => item.hasChanges && item.isActive);
-
     const changes = [];
-    for (const i of this.changeItems) {
-      changes.push(...i.changes);
+    for (const item of this.items) {
+      if (item.isActive && item.hasChanges && item.changes.size) {
+        changes.push(...item.changes);
+      }
     }
 
-    addDefaultChanges.call(this, changes);
+    this._prepareTypeChanges(changes);
 
     const c = new Collection();
     for (const change of changes) {
@@ -316,8 +314,17 @@ export class ActorPF extends ActorBasePF {
       const uniqueId = `${parentId}-${change._id}`;
       c.set(uniqueId, change);
     }
+
     this.changes = c;
   }
+
+  /**
+   * Add actor type specific changes.
+   *
+   * @abstract
+   * @param {ItemChange[]} changes
+   */
+  _prepareTypeChanges(changes) {}
 
   /**
    * @internal
@@ -453,8 +460,6 @@ export class ActorPF extends ActorBasePF {
    * @override
    */
   prepareBaseData() {
-    this._initialized = false; // For preventing items initializing certain data too early
-
     super.prepareBaseData();
 
     this.system.details ??= {};
@@ -1219,7 +1224,7 @@ export class ActorPF extends ActorBasePF {
     // Reset roll data cache
     // Some changes act wonky without this
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    delete this._rollData;
+    this._rollData = null;
 
     // Update dependant data and resources
     this.items.forEach((item) => {
@@ -1246,7 +1251,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareOverlandSpeeds();
 
     // Reset roll data cache again to include processed info
-    delete this._rollData;
+    this._rollData = null;
 
     // Update items
     this.items.forEach((item) => {
@@ -1254,9 +1259,6 @@ export class ActorPF extends ActorBasePF {
       // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
       this.updateItemResources(item, { warnOnDuplicate: false });
     });
-
-    // Initialization is effectively complete at this point
-    this._initialized = true;
 
     this._setSourceDetails();
   }
@@ -4500,9 +4502,9 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add item dictionary flags
-    result.dFlags = this.itemFlags?.dictionary ?? {};
+    result.dFlags = this.itemFlags.dictionary ?? {};
     result.bFlags = Object.fromEntries(
-      Object.entries(this.itemFlags?.boolean ?? {}).map(([key, { sources }]) => [key, sources.length > 0 ? 1 : 0])
+      Object.entries(this.itemFlags.boolean ?? {}).map(([key, { sources }]) => [key, sources.length > 0 ? 1 : 0])
     );
 
     result.range = this.system.traits?.reach?.total ?? { melee: NaN, reach: NaN };

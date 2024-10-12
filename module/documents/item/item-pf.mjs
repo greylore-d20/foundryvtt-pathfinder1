@@ -676,8 +676,6 @@ export class ItemPF extends ItemBasePF {
 
     this.prepareLinks();
 
-    const itemData = this.system;
-
     // Update changes
     if (this.hasChanges) {
       this._prepareChanges();
@@ -700,6 +698,9 @@ export class ItemPF extends ItemBasePF {
 
   /**
    * Prepare data potentially dependent on other items.
+   *
+   * This should be run at in Item.prepareDerivedData() if no actor is present,
+   * or in actor's prepareDerivedData after document preparation is done.
    *
    * @param {boolean} final - Is this final call to this?
    */

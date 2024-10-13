@@ -1,3 +1,4 @@
+import { naturalSort } from "@utils";
 import fuzzysort from "fuzzysort";
 
 /**
@@ -90,14 +91,11 @@ export class ActorTraitSelector extends DocumentSheet {
   getData() {
     const { value, custom } = this.attributes;
 
-    // Populate choices
-    const choices = foundry.utils.deepClone(this.options.choices);
-    for (const [k, v] of Object.entries(choices)) {
-      choices[k] = {
-        label: v,
-        chosen: value.includes(k),
-      };
-    }
+    // Sort and Populate choices
+    const choices = {};
+    naturalSort(Object.entries(this.options.choices), "1").forEach(
+      ([key, label]) => (choices[key] = { label, chosen: value.includes(key) })
+    );
 
     // Object type
     const updateButton = this.document instanceof Actor ? "PF1.UpdateActor" : "PF1.UpdateItem";
@@ -106,9 +104,9 @@ export class ActorTraitSelector extends DocumentSheet {
     return {
       choices,
       custom: Array.from(new Set(custom)),
-      updateButton,
-      hideSearch: Object.keys(choices).length < 6,
+      hideSearch: Object.keys(choices) < pf1.config.traitSelector.minChoicesForSearch,
       search: this._searchFilter,
+      updateButton,
     };
   }
 

@@ -2683,6 +2683,10 @@ export const temporaryRollDataFields = {
   ],
 };
 
+export const traitSelector = {
+  minChoicesForSearch: 6,
+};
+
 export const defaultIcons = {
   items: {
     attack: "icons/svg/explosion.svg",

@@ -148,14 +148,14 @@ export class ItemSpellPF extends ItemPF {
     if (descs) {
       descs.custom ??= [];
       descs.value ??= [];
-      descs.total = new Set(pf1.utils.traits.translateTraits(descs, pf1.config.spellDescriptors));
+      descs.total = new Set(pf1.utils.traits.translate(descs, pf1.config.spellDescriptors));
     }
 
     const subs = this.system.subschool;
     if (subs) {
       subs.custom ??= [];
       subs.value ??= [];
-      subs.total = new Set(pf1.utils.traits.translateTraits(subs, pf1.config.spellSubschools));
+      subs.total = new Set(pf1.utils.traits.translate(subs, pf1.config.spellSubschools));
     }
   }
 
@@ -828,8 +828,8 @@ export class ItemSpellPF extends ItemPF {
 
     const label = {
       school: pf1.config.spellSchools[srcData.school],
-      subschool: pf1.utils.traits.traitsToString(srcData.subschool, pf1.config.spellSubschools, "or"),
-      descriptors: pf1.utils.traits.traitsToString(srcData.descriptors, pf1.config.spellDescriptors, ","),
+      subschool: pf1.utils.traits.toString(srcData.subschool, "and"),
+      descriptors: pf1.utils.traits.toString(srcData.descriptors, ","),
     };
     const data = {
       data: foundry.utils.mergeObject(this.system, srcData, { inplace: false }),

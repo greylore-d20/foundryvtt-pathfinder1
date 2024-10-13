@@ -6,8 +6,8 @@
  * @param {'and'|'or'|','} [join]
  * @returns {string}
  */
-export function traitsToString(traits, lookup, join = "and") {
-  const all = translateTraits(traits, lookup);
+export function toString(traits, join = "and") {
+  const all = [...(traits.total ?? [])];
 
   if (join === ",") return all.join(", ");
 
@@ -23,7 +23,15 @@ export function traitsToString(traits, lookup, join = "and") {
   return `${all.join(", ")}, ${j} ${last}`;
 }
 
-export function translateTraits(traits, lookup) {
+/**
+ * Translate and combine traits.
+ *
+ * @internal
+ * @param {object} traits
+ * @param {object} lookup
+ * @returns {Array<string>}
+ */
+export function translate(traits, lookup) {
   const value = traits.value?.map((key) => lookup[key] || key) ?? [];
   const custom = traits.custom ?? [];
   return [...value, ...custom];

@@ -107,6 +107,7 @@ export class ActorTraitSelector extends DocumentSheet {
       choices,
       custom: Array.from(new Set(custom)),
       updateButton,
+      hideSearch: Object.keys(choices).length < 6,
       search: this._searchFilter,
     };
   }
@@ -195,10 +196,12 @@ export class ActorTraitSelector extends DocumentSheet {
     });
 
     const search = this.form.querySelector("input[type='search']");
-    search.addEventListener("input", (ev) => this._onSearch(ev.target.value), { passive: true });
-    search.addEventListener("change", (ev) => this._onSearch(ev.target.value), { passive: true });
+    if (search) {
+      search.addEventListener("input", (ev) => this._onSearch(ev.target.value), { passive: true });
+      search.addEventListener("change", (ev) => this._onSearch(ev.target.value), { passive: true });
 
-    this._onSearch(this._searchFilter);
+      this._onSearch(this._searchFilter);
+    }
 
     // Submit button
     this.form.querySelector("button[type='submit']").addEventListener("click", this._updateDocument.bind(this));

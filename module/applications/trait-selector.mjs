@@ -244,7 +244,7 @@ export class ActorTraitSelector extends DocumentSheet {
 
     this._searchFilter = search;
 
-    choices = Object.entries(choices)
+    choices = Object.entries(choices || {})
       .filter(([_, v]) => v)
       .map(([k]) => k);
 

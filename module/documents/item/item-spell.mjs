@@ -148,7 +148,14 @@ export class ItemSpellPF extends ItemPF {
     if (descs) {
       descs.custom ??= [];
       descs.value ??= [];
-      descs.total = new Set([...descs.value.map((d) => pf1.config.spellDescriptors[d] || d), ...descs.custom]);
+      descs.total = new Set(pf1.utils.traits.translateTraits(descs, pf1.config.spellDescriptors));
+    }
+
+    const subs = this.system.subschool;
+    if (subs) {
+      subs.custom ??= [];
+      subs.value ??= [];
+      subs.total = new Set(pf1.utils.traits.translateTraits(subs, pf1.config.spellSubschools));
     }
   }
 
@@ -813,7 +820,6 @@ export class ItemSpellPF extends ItemPF {
 
   /** @inheritDoc */
   getDescriptionData({ rollData } = {}) {
-    const reSplit = pf1.config.re.traitSeparator;
     const srcData = this.system;
     const defaultAction = this.defaultAction;
     const actionData = defaultAction?.data ?? {};
@@ -822,25 +828,14 @@ export class ItemSpellPF extends ItemPF {
 
     const label = {
       school: pf1.config.spellSchools[srcData.school],
-      subschool: srcData.subschool || "",
-      descriptors: "",
+      subschool: pf1.utils.traits.traitsToString(srcData.subschool, pf1.config.spellSubschools, "or"),
+      descriptors: pf1.utils.traits.traitsToString(srcData.descriptors, pf1.config.spellDescriptors, ","),
     };
     const data = {
       data: foundry.utils.mergeObject(this.system, srcData, { inplace: false }),
       label: label,
     };
 
-    // Set subschool and descriptors label
-    {
-      const value = srcData.descriptors?.value ?? [];
-      const custom = srcData.descriptors?.custom ?? [];
-      label.descriptors = [
-        ...value.map((descriptor) => pf1.config.spellDescriptors[descriptor] ?? descriptor),
-        ...custom,
-      ]
-        .filter((x) => x)
-        .join(", ");
-    }
     // Set information about when the spell is learned
     data.learnedAt = {};
     if (srcData.learnedAt) {

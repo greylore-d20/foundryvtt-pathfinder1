@@ -2023,6 +2023,48 @@ export const spellSchools = {
 };
 
 /**
+ * Spell subschools
+ */
+export const spellSubschools = {
+  calling: "PF1.SpellSubschools.calling",
+  charm: "PF1.SpellSubschools.charm",
+  compulsion: "PF1.SpellSubschools.compulsion",
+  creation: "PF1.SpellSubschools.creation",
+  figment: "PF1.SpellSubschools.figment",
+  glamer: "PF1.SpellSubschools.glamer",
+  haunted: "PF1.SpellSubschools.haunted",
+  healing: "PF1.SpellSubschools.healing",
+  pattern: "PF1.SpellSubschools.pattern",
+  phantasm: "PF1.SpellSubschools.phantasm",
+  polymorph: "PF1.SpellSubschools.polymorph",
+  scrying: "PF1.SpellSubschools.scrying",
+  shadow: "PF1.SpellSubschools.shadow",
+  summoning: "PF1.SpellSubschools.summoning",
+  teleportation: "PF1.SpellSubschools.teleportation",
+};
+
+/**
+ * Dictionary of subschools per shool
+ *
+ * @template {keyof typeof spellSchools} school
+ * @template {keyof typeof spellSubschools} subschool
+ *
+ * @type {Record<school, subschool[]>}
+ */
+export const spellSubschoolsMap = /** @type {const} */ ({
+  abj: [],
+  con: ["calling", "creation", "healing", "summoning", "teleportation"],
+  div: ["scrying"],
+  enc: ["charm", "compulsion"],
+  evo: [],
+  ill: ["figment", "glamer", "pattern", "phantasm", "shadow"],
+  nec: ["haunted"],
+  trs: ["polymorph"],
+  uni: [],
+  misc: Object.keys(spellSubschools),
+});
+
+/**
  * Spell levels
  */
 export const spellLevels = {

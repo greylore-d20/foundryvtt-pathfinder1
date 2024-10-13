@@ -26,8 +26,10 @@
 
       <h4 class="school">
         <span>{{labels.school}}</span>
-        {{#if system.subschool}}
-        (<span class="subschool">{{system.subschool}}</span>)
+        {{#if system.subschool.total.size}}
+        <span class="subschools">
+          ({{#each system.subschool.total}}{{this}}{{#if (not @last)}}, {{/if}}{{/each}})
+        </span>
         {{/if}}
       </h4>
     </header>
@@ -134,12 +136,7 @@
       </div>
 
       {{!-- Subschool --}}
-      <div class="form-group flexrow">
-        <label>{{localize "PF1.SubSchool"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.subschool" value="{{system.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}">
-        </div>
-      </div>
+      {{> "systems/pf1/templates/items/parts/spell-subschool.hbs"}}
 
       {{!-- Descriptors --}}
       {{> "systems/pf1/templates/items/parts/spell-descriptors.hbs"}}

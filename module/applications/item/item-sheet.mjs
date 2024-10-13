@@ -690,6 +690,7 @@ export class ItemSheetPF extends ItemSheet {
       armorProf: pf1.config.armorProficiencies,
       descriptors: pf1.config.spellDescriptors,
       languages: pf1.config.languages,
+      subschool: pf1.config.spellSubschools,
       weaponGroups: pf1.config.weaponGroups,
       weaponProf: pf1.config.weaponProficiencies,
     };
@@ -1879,6 +1880,13 @@ export class ItemSheetPF extends ItemSheet {
     switch (a.dataset.options) {
       case "conditions": {
         options.choices = pf1.registry.conditions.getLabels();
+        break;
+      }
+      case "subschool": {
+        const school = a.dataset.school;
+        const subs = new Set([...pf1.config.spellSubschoolsMap[school], ...this.item.system.subschool.value]);
+        const choices = subs.reduce((acc, curr) => ({ ...acc, [curr]: pf1.config.spellSubschools[curr] }), {});
+        options.choices = choices;
         break;
       }
     }

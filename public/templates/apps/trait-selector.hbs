@@ -1,5 +1,5 @@
 <form autocomplete="off" data-tooltip-class="pf1">
-  <input type="search" name="search" value="{{search}}" placeholder="{{localize "PF1.SearchFilterPlaceholder"}}">
+  {{#unless hideSearch}}<input type="search" name="search" value="{{search}}" placeholder="{{localize "PF1.SearchFilterPlaceholder"}}">{{/unless}}
   <ol class="trait-list">
     {{#each choices}}
     <li data-choice="{{@key}}">

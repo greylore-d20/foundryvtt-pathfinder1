@@ -2147,15 +2147,15 @@ export class ActorSheetPF extends ActorSheet {
           case "school": {
             if (item.system.subschool) {
               details.push({
-                key: game.i18n.localize("PF1.SubSchool"),
-                value: item.system.subschool,
+                key: game.i18n.localize("PF1.Subschool"),
+                value: pf1.utils.traits.traitsToString(item.system.subschool, pf1.config.spellSubschools, "or"),
               });
             }
 
             if (item.system.descriptors?.total?.size) {
               details.push({
                 key: game.i18n.localize("PF1.DescriptorPlural"),
-                value: Array.from(item.system.descriptors?.total).join(", "),
+                value: pf1.utils.traits.traitsToString(item.system.descriptors, pf1.config.spellDescriptors, ","),
               });
             }
 

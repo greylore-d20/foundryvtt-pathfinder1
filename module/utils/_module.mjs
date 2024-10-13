@@ -7,32 +7,33 @@ export { SemanticVersion } from "./semver.mjs";
 export * as formula from "./formulas.mjs";
 export * as roll from "./roll-functions.mjs";
 export * as init from "./initialization.mjs";
+export * as traits from "./traits.mjs";
 export * as rollData from "./roll-data.mjs";
 
 export {
   binarySearch,
+  calculateRange,
   convertDistance,
   convertDistanceBack,
   convertWeight,
   convertWeightBack,
-  swapDistance,
-  swapWeight,
-  calculateRange,
   createTag,
   diffObjectAndArray,
+  enrichHTMLUnrolled,
   findInCompendia,
   getAbilityModifier,
-  getDistanceSystem,
-  overlandSpeed,
-  getWeightSystem,
   getActors,
+  getDistanceSystem,
+  getWeightSystem,
+  isItemSameSubGroup,
   isMinimumCoreVersion,
+  limitPrecision,
   measureDistance,
+  overlandSpeed,
+  parseAlignment,
   refreshActors,
   refreshSheets,
   sortArrayByName,
-  parseAlignment,
-  enrichHTMLUnrolled,
-  limitPrecision,
-  isItemSameSubGroup,
+  swapDistance,
+  swapWeight,
 } from "./lib.mjs";

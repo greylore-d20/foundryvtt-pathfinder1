@@ -313,6 +313,7 @@ Hooks.once("i18nInit", function () {
     "spellComponents",
     "spellDescriptors",
     "spellSchools",
+    "spellSubschools",
     "spellLevels",
     "spellcasting",
     "armorProficiencies",

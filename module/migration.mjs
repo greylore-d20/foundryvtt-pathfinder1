@@ -892,6 +892,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemChangeFlags(itemData, updateData);
   _migrateItemMaterials(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
+  _migrateSpellSubschool(itemData, updateData);
 
   // Migrate action data
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
@@ -1638,6 +1639,30 @@ const _migrateSpellDescriptors = (item, updateData) => {
   updateData["system.-=types"] = null;
   updateData["system.descriptors.value"] = value;
   updateData["system.descriptors.custom"] = custom.join("; ");
+};
+
+const _migrateSpellSubschool = (item, updateData) => {
+  if (item.type !== "spell" || item.system.subschool === undefined || typeof item.system.subschool !== "string") return;
+
+  const current = item.system.subschool
+    .split(",")
+    .flatMap((x) => x.split(";"))
+    .map((x) => x.trim())
+    .filter((x) => x);
+
+  const value = [];
+  const custom = [];
+  const entries = Object.entries(pf1.config.spellSubschools);
+  current.forEach((c) => {
+    const exists = entries.find(([k, v]) => c.toLowerCase() === k.toLowerCase() || c.toLowerCase() === v.toLowerCase());
+    if (exists) {
+      value.push(exists[0]);
+    } else {
+      custom.push(c);
+    }
+  });
+
+  updateData["system.subschool"] = { value, custom };
 };
 
 const _migrateItemSize = function (ent, updateData) {

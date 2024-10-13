@@ -21,6 +21,35 @@ system:
       save:
         description: see text
       spellEffect: 10-ft.-deep wave 10 ft. wide/level and 2 ft. tall/level
+    - _id: 99VZ0dg5ykoc8atl
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 8d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      name: Damage
+      save:
+        description: Fortitude halfes
+        type: fort
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: sz7EGH6lEwUz0Xwn
+      ability:
+        attack: int
+      actionType: mcman
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      attackBonus: -@sizeBonus[Caster Size] + 8[Wave Size]
+      bab: '@cl'
+      name: CMB
   components:
     somatic: true
     verbal: true

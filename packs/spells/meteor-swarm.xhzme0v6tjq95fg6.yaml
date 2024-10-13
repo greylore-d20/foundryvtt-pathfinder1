@@ -1,7 +1,7 @@
 _id: xhzme0v6tjq95fg6
 _key: '!items!xhzme0v6tjq95fg6'
 folder: NE0tEwSvcr71GnPC
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/magic/fire/projectile-fireball-sparks-orange.webp
 name: Meteor Swarm
 system:
   actions:
@@ -21,6 +21,62 @@ system:
       save:
         description: none or Reflex half, see text
         type: ref
+    - _id: dvpQesUEbDNJdk32
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 2d6
+            type:
+              custom: ''
+              values:
+                - bludgeoning
+      duration:
+        units: inst
+      name: Target one Meteor
+      range:
+        units: long
+      target:
+        value: one creature
+      touch: true
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: JgrqZj04oXssbUCY
+      ability:
+        critMult: null
+        critRange: null
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      area: 40-ft.-radius spreads, see text
+      damage:
+        parts:
+          - formula: 6d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      measureTemplate:
+        color: '#ff9500'
+        size: '40'
+        type: circle
+      name: Explosion
+      range:
+        units: long
+      save:
+        description: Reflex half
+        type: ref
+      uses:
+        autoDeductChargesCost: '0'
   components:
     somatic: true
     verbal: true

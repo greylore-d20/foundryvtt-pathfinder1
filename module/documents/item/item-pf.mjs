@@ -422,7 +422,7 @@ export class ItemPF extends ItemBasePF {
    * Recharges item's uses, if any.
    *
    * @param {object} options - Options
-   * @param {"round"|"hour"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
+   * @param {"round"|"minute"|"hour"|"day"|"week"|"any"} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
    * @param {boolean} [options.exact=false] - Use exact time period. Otherwise "week" for example will also recharge items with "day" period.
    * @param {number} [options.value] - Recharge to specific value, respecting maximum and minimum bounds.
    * @param {boolean} [options.maximize=false] - Recharge to full regardless of recharge formula.

@@ -1243,14 +1243,15 @@ export class ActorSheetPF extends ActorSheet {
       return actor.formatContextNotes(noteObjs, lazy.rollData, { roll: false });
     };
 
-    const damageTypes = (d) =>
-      [
-        ...(d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? []),
-        ...(d.custom
+    const damageTypes = (d) => {
+      const values = d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? [];
+      const custom =
+        d.custom
           ?.split(";")
           .map((dv) => dv?.trim())
-          .filter((dv) => !!dv) ?? []),
-      ].flat();
+          .filter((dv) => !!dv) ?? [];
+      return [...values, ...custom];
+    };
 
     let header, subHeader;
     const details = [];
@@ -1758,7 +1759,7 @@ export class ActorSheetPF extends ActorSheet {
               dmgSources.push({
                 name: formula,
                 value: pf1.utils.formula.simplify(formula, rollData, { strict: false }),
-                type: damageTypes(type).join(", "),
+                type: pf1.utils.i18n.join(damageTypes(type)),
                 //unvalued: true,
               });
             }
@@ -1766,7 +1767,7 @@ export class ActorSheetPF extends ActorSheet {
               dmgSources.push({
                 name: formula,
                 value: pf1.utils.formula.simplify(formula, rollData, { strict: false }),
-                type: damageTypes(type).join(", "),
+                type: pf1.utils.i18n.join(damageTypes(type)),
                 //unvalued: true,
               });
             }
@@ -2148,26 +2149,30 @@ export class ActorSheetPF extends ActorSheet {
             if (item.system.subschool) {
               details.push({
                 key: game.i18n.localize("PF1.Subschool"),
-                value: pf1.utils.traits.toString(item.system.subschool, "and"),
+                value: pf1.utils.i18n.join([...(item.system.subschool.total ?? [])]),
               });
             }
 
             if (item.system.descriptors?.total?.size) {
               details.push({
                 key: game.i18n.localize("PF1.DescriptorPlural"),
-                value: pf1.utils.traits.toString(item.system.descriptors, ","),
+                value: pf1.utils.i18n.join([...(item.system.descriptors.total ?? [])], "conjunction", false),
               });
             }
 
             const action = item.defaultAction;
 
             if (action?.hasDamage) {
-              const types = action.data.damage?.parts?.map((d) => d.type).map(damageTypes) ?? [];
+              const types =
+                action.data.damage?.parts
+                  ?.map((d) => d.type)
+                  .map(damageTypes)
+                  .flat() ?? [];
 
               if (types.length) {
                 details.push({
                   key: game.i18n.localize("PF1.Damage"),
-                  value: types.join(", "),
+                  value: pf1.utils.i18n.join(types),
                 });
               }
             }

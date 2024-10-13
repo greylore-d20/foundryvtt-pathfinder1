@@ -148,14 +148,14 @@ export class ItemSpellPF extends ItemPF {
     if (descs) {
       descs.custom ??= [];
       descs.value ??= [];
-      descs.total = new Set(pf1.utils.traits.translate(descs, pf1.config.spellDescriptors));
+      pf1.utils.traits.translate(descs, pf1.config.spellDescriptors);
     }
 
     const subs = this.system.subschool;
     if (subs) {
       subs.custom ??= [];
       subs.value ??= [];
-      subs.total = new Set(pf1.utils.traits.translate(subs, pf1.config.spellSubschools));
+      pf1.utils.traits.translate(subs, pf1.config.spellSubschools);
     }
   }
 
@@ -828,8 +828,8 @@ export class ItemSpellPF extends ItemPF {
 
     const label = {
       school: pf1.config.spellSchools[srcData.school],
-      subschool: pf1.utils.traits.toString(srcData.subschool, "and"),
-      descriptors: pf1.utils.traits.toString(srcData.descriptors, ","),
+      subschool: pf1.utils.i18n.join([...(srcData.subschool.total ?? [])]),
+      descriptors: pf1.utils.i18n.join([...(srcData.descriptors.total ?? [])], "conjunction", false),
     };
     const data = {
       data: foundry.utils.mergeObject(this.system, srcData, { inplace: false }),
@@ -839,14 +839,13 @@ export class ItemSpellPF extends ItemPF {
     // Set information about when the spell is learned
     data.learnedAt = {};
     if (srcData.learnedAt) {
-      ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach(
-        (category) =>
-          (data.learnedAt[category] = Object.entries(srcData.learnedAt[category])
-            .map(([classId, level]) => {
-              classId = pf1.config.classNames[classId] || classId;
-              return `${classId} ${level}`;
-            })
-            .join(", "))
+      ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach((category) =>
+        pf1.utils.i18n.join(
+          (data.learnedAt[category] = Object.entries(srcData.learnedAt[category]).map(([classId, level]) => {
+            classId = pf1.config.classNames[classId] || classId;
+            return `${classId} ${level}`;
+          }))
+        )
       );
     }
 
@@ -879,7 +878,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Set components label
-    label.components = this.getSpellComponents().join(", ");
+    label.components = pf1.utils.i18n.join(this.getSpellComponents());
 
     // Set duration label
     const duration = actionData.duration;

@@ -1180,7 +1180,7 @@ export class ItemSheetPF extends ItemSheet {
       if (value > 0) inline.push(game.i18n.format(`PF1.Currency.Inline.${key}`, { value }));
     });
 
-    content.push(game.i18n.format("PF1.StackDetails.Base", { value: inline.join(", ") }));
+    content.push(game.i18n.format("PF1.StackDetails.Base", { value: pf1.utils.i18n.join(inline) }));
   }
 
   /**

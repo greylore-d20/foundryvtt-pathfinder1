@@ -1326,7 +1326,7 @@ export class ActorPF extends ActorBasePF {
               // Dedupe if adding to existing sourceInfo
               if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
               // Transform arrays into presentable strings
-              sInfo.value = sInfo.value.join(", ");
+              sInfo.value = pf1.utils.i18n.join(sInfo.value);
               // If sourceInfo was not a reference to existing info, push it now
               if (!hasInfo) getSourceInfo(this.sourceInfo, `system.traits.${prof}`).positive.push(sInfo);
             }

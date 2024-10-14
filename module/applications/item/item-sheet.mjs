@@ -10,6 +10,7 @@ import { SpeedEditor } from "@app/speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "@app/categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
+import { getItem } from "@utils/dialog.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -2294,18 +2295,19 @@ export class ItemSheetPF extends ItemSheet {
     };
 
     const options = {
+      window: {
+        title: `${game.i18n.format("PF1.SelectSpecific", { specifier: game.i18n.localize(label) })} - ${
+          this.actor.name
+        }`,
+      },
+      id: `${this.item.uuid}-item-selector`,
       actor: this.actor,
       empty: empty === "true" || empty !== "false",
-      filter,
+      filterFunc: filter,
       selected,
     };
 
-    const appOptions = {
-      title: `${game.i18n.format("PF1.SelectSpecific", { specifier: game.i18n.localize(label) })} - ${this.actor.name}`,
-      id: `${this.item.uuid}-item-selector`,
-    };
-
-    const item = await pf1.applications.ItemSelector.wait(options, appOptions);
+    const item = await getItem(options);
     if (item === null) return;
 
     this.item.update({ [name]: item });

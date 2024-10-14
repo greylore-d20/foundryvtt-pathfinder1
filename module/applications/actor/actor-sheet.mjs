@@ -11,6 +11,7 @@ import { LevelUpForm } from "@app/level-up.mjs";
 import { CurrencyTransfer } from "@app/currency-transfer.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
+import { getItem } from "@utils/dialog.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -3327,7 +3328,9 @@ export class ActorSheetPF extends ActorSheet {
     if (targets.length === 0) ui.notifications.warn("PF1.Error.NoGiftTargets", { localize: true });
 
     const targetActorId = await pf1.utils.dialog.getActor({
-      title: game.i18n.localize("PF1.GiveItemToActor"),
+      window: {
+        title: game.i18n.localize("PF1.GiveItemToActor"),
+      },
       actors: targets,
     });
 
@@ -4018,19 +4021,18 @@ export class ActorSheetPF extends ActorSheet {
         // Query which class to associate with
         else {
           const options = {
+            window: {
+              title: `${game.i18n.format("PF1.SelectSpecific", {
+                specifier: game.i18n.localize("TYPES.Item.class"),
+              })} - ${itemData.name} - ${this.actor.name}`,
+            },
             actor: this.actor,
             empty: true,
             items: classes,
             selected: classes[0]?._id,
           };
 
-          const appOptions = {
-            title: `${game.i18n.format("PF1.SelectSpecific", {
-              specifier: game.i18n.localize("TYPES.Item.class"),
-            })} - ${itemData.name} - ${this.actor.name}`,
-          };
-
-          const clsId = await pf1.applications.ItemSelector.wait(options, appOptions);
+          const clsId = await getItem(options);
           if (clsId) {
             const cls = this.actor.items.get(clsId);
             itemData.system.class = cls.system.tag;

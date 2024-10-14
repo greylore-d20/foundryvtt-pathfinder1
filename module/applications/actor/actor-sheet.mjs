@@ -1,5 +1,5 @@
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
-import { ActorResistanceSelector } from "@app/damage-resistance-selector.mjs";
+import { DamageResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
 import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
@@ -3811,14 +3811,19 @@ export class ActorSheetPF extends ActorSheet {
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
       width: a.dataset.options === "dr" ? 575 : 450,
-      isDR: a.dataset.options === "dr" ? true : false,
+      isDR: a.dataset.options === "dr",
     };
 
     const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof ActorResistanceSelector && o.options.name === options.name && o._element;
+      return o instanceof DamageResistanceSelector && o.options.name === options.name;
     });
-    if (app) app.render(true, { focus: true });
-    else new ActorResistanceSelector(this.actor, options).render(true);
+
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else {
+      new DamageResistanceSelector({ document: this.actor, ...options }).render(true);
+    }
   }
 
   setItemUpdate(id, key, value) {

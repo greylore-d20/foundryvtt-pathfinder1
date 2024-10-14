@@ -2276,7 +2276,19 @@ export class ItemSheetPF extends ItemSheet {
       dtypes: a.dataset.dtypes,
     };
 
-    pf1.applications.EntrySelector.open(this.item, options);
+    const app = Object.values(foundry.applications.instances).find((o) => {
+      return o instanceof pf1.applications.EntrySelector && o.name === options.name && o.document.id === this.id;
+    });
+
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else {
+      new pf1.applications.EntrySelector({
+        ...options,
+        document: this.item,
+      }).render({ force: true });
+    }
   }
 
   async _onItemSelector(event) {

@@ -41,11 +41,11 @@ system:
       target: skill.kpl
       type: untyped
     - _id: gsppmqas
-      formula: '@attributes.hd.total >= 5 ? 20 : 0'
+      formula: if(gte(@attributes.hd.total, 5), 20)
       target: flySpeed
       type: untyped
     - _id: ocn0a9fk
-      formula: '@attributes.hd.total >= 11 ? 20 : 0'
+      formula: if(gte(@attributes.hd.total, 11), 20)
       target: flySpeed
       type: untyped
   crOffset: '2'

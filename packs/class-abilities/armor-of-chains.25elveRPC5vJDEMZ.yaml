@@ -9,7 +9,7 @@ system:
       - Bloodrager
   changes:
     - _id: 8li97yz7
-      formula: '@class.level >= 16 ? 8 : 4'
+      formula: 4 + if(gte(@class.level, 16), 4)
       target: aac
       type: untyped
   description:

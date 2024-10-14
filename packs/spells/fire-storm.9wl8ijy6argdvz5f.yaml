@@ -13,6 +13,13 @@ system:
           cost: 2
           type: action
       area: two 10-ft. cubes per level (S)
+      damage:
+        parts:
+          - formula: (@cl)d6
+            type:
+              custom: ''
+              values:
+                - fire
       duration:
         units: inst
       name: Use
@@ -21,6 +28,21 @@ system:
       save:
         description: Reflex half
         type: ref
+    - _id: UflFYOYOzwXZNvSX
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      damage:
+        parts:
+          - formula: 4d6
+            type:
+              custom: ''
+              values:
+                - fire
+      name: Caught Fire
+      uses:
+        autoDeductChargesCost: '0'
   components:
     somatic: true
     verbal: true

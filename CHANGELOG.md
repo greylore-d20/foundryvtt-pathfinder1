@@ -1,5 +1,87 @@
 # Changelog
 
+## 10.8 - 2024-10-3
+
+### Bug Fixes
+
+- Range card note is now more specifically labeled max range. ([3534](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3534))
+- Remove child links from items when given to other actors ([3610](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3610))
+- Chat card targets would render in single column in some browsers. ([3651](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3651))
+- Importing actor from JSON could behave unexpectedly in some aspects compared to Foundry default behaviour.
+- Combat tab generic melee and ranged attacks did not display all context notes correctly. ([3650](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3650))
+- Identifiers and other tag-like entities now allow underscores.
+- Skill IDs no longer allow number prefixes.
+- Special range was incorrectly treated the same as feet.
+- Actions no longer show deaf condition tag and spells no longer show doubled deaf tag, leaving it only being shown once for spells.
+- Currency fields are no longer faded when you have no currencies. ([1118](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/1118))
+- Nonlethal, temporary HP and AC were inconsistently available in token resource bar options. ([3339](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3339))
+- Level-up dialog now displays total for ability scores directly and base in tooltip instead of vice versa. ([3487](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3487))
+- Large number of conditions were not disabled on sheet when the character was immune to them. ([3529](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3529))
+- Text enrichers did not find items with their Babele translated name. ([3542](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3542))
+- Character sheets had little layout jitter when certain inputs were focused. ([3544](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3544))
+- Quick actions now can be any item type that qualifies instead of specific subset. ([3628](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3628))
+- Trap actors would error constantly. ([3654](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3654))
+- Special activation type did not correctly allow arbitrary string. ([3658](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3658))
+- Open in browser button in changelog dialog was nonfunctional.
+- Warning sign on context notes displayed wrong.
+- Dead condition did not render as overlay since addition of the new conditions (in v10.5).
+- Skill enricher set to provide info link created two icons.
+- Infinite duration buffs unexpectedly ended on turn start.
+- Armor and shields had their slot column empty.
+- Voidglass, Liquid Glass and Throneglass incorrectly required glass as base material. Cryptstone similarly incorrectly required stone as base material.
+- Missing deeply embedded traits would not be rendered correctly or at all.
+- Roll initiative could sometimes spit out error that made no sense.
+- Clearing item filter list with the browser clear button would not correctly reset the filter.
+- Editing built-in skill via skill edit dialog would cause them to become corrupt.
+- Level-up prompt no longer is based on HD but rather actual level, allowing animal companions and eidolons for example to level-up correctly.
+- Racial HD and Mythic Paths no longer display their level-up buttons only when you have XP for regular levels. Instead the buttons are always displayed.
+- Experience Distributor not preselecting defeated NPCs when using Wounds & Vigor for NPCs.
+- Sheet d20 spin animation was nonfunctional.
+- Right-clicking conditions in token HUD did not turn them to overlays.
+- Token tooltip hidden replacement name is no longer allowed to be empty.
+- Fixed trying to fetch actor for actorless script calls. ([3579](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3579))
+- Give Item dialog target selection choices did not match visible actors.
+
+### Changelog
+
+- Spell Browser now attempts to display proper class name instead of identifier for the class filter choices. ([2540](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/2540))
+- Added Weapon and Spell attack change targets. ([3567](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3567))
+- Epic and Magic material traits are now available as choices even if no base material is chosen.
+- Token HUD and API now also block conditions the actor is immune to.
+- Text enricher `as` option now allows `sheet` and `auto` option too to increase versatility.
+- Added missing movement racial trait category.
+- Initiative macro created from drag&drop to hotbar now by default creates combatants.
+- Spellbooks now have Ignore Ability Limit option for spell-like books.
+- Improved input feedback consistency on actor, item and action sheets.
+- Removed enforced borders from all sheet and chat card images. ([3549](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3549))
+- Class skill selection in item sheets are now alphabetically sorted and in columns with greater visibility for custom skills.
+
+### Compendium
+
+- Updated Pestilence Bloodline and it's bloodline powers. ([3559](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3559))
+- Added missing actions to Hissing Rage and Lesser Hurling rage powers. ([3560](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3560))
+- Organized spells compendium content into school folders.
+- Organized weapons and ammunition compendium content into folders.
+- Added touch flag to all class feature actions that were missing it. ([3166](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3166))
+- Wyrwood is now correctly sized as small. ([3537](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3537))
+- Fixed typos in being of ib and syrinx race. ([3573](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3573), [3566](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3566))
+- Whips now more correctly have 15 ft range instead of reach. Monowhip no longer adds stregnth to damage.
+- Added missing minor bag of holding.
+
+### API
+
+- `convertDistance` HBS helper now passes second parameter to underlying function. ([3540](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3540))
+- `pf1.config.buffTargets` and `pf1.config.buffTargetCategories` now support actor and item type filters with actor filters adding warnings and item filters hiding the change options. ([3553](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3553))
+- Skill rank, and certain character speeds when relevant, are now included in skill roll chat message metadata.
+- Added universally available `@step` variable to roll data to allow system of units agnostic measurement formula creation (e.g. `6 * @step` instead of `30` to represent both `30 ft` and `9 m`).
+- Second parameter of `pf1PostActionUse` is now what it is documented to be. ([3554](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3554))
+- `CONFIG.statusEffects` once again includes `name` for full core Foundry data parity.
+- Module introduced actors and items can now define their default icon in `pf1.config.defaultIcons`.
+- Actor sheet item lists once again include type and subtype info in the lists.
+- Material registry now includes additional data such as health per inch, primitive flag, and others. ([3413](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/issues/3413))
+- ⚠️ `@details.level.value` no longer is synonym for HD, but rather actual levels (such as without racial HD and mythic paths).
+- `TooltipPF` altered to accommodate actors that don't conform to system expectations.
+
 ## 10.7 - 2024-8-21
 
 ### Bug Fixes

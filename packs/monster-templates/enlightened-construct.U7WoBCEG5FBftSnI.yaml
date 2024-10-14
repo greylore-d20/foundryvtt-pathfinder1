@@ -4,8 +4,8 @@ img: systems/pf1/icons/skills/violet_07.jpg
 name: Enlightened Construct
 system:
   crOffset: >-
-    (@attributes.hd.total >= 11) ? 3 : ((@attributes.hd.total > 4 &&
-    @attributes.hd.total < 11) ? 2 : 1)
+    1 + if(gt(@attributes.hd.total, 4), 1) + if(gte(@attributes.hd.total, 11),
+    1)
   description:
     value: >-
       <p><strong>Acquired/Inherited Template</strong> Acquired<br

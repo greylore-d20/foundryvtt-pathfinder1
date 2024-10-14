@@ -5,7 +5,7 @@ name: Fey Creature
 system:
   changes:
     - _id: 52jqw8b9
-      formula: '(@ac.natural.total >= 1) ? -1 : 0'
+      formula: if(gte(@ac.natural.total, 1), -1)
       target: nac
       type: untyped
     - _id: 49zh108t
@@ -24,7 +24,7 @@ system:
       formula: '-2'
       target: str
       type: untyped
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
+  crOffset: 1 + if(gte(@attributes.hd.total, 10), 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Both<br><b>Simple Template</b>

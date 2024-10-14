@@ -9,7 +9,7 @@ system:
       - Wizard
   changes:
     - _id: xia1jsup
-      formula: '@class.level < 4 ? 1 : (floor(@class.level / 2))'
+      formula: max(1, floor(@class.level / 2))
       target: init
       type: untyped
   description:

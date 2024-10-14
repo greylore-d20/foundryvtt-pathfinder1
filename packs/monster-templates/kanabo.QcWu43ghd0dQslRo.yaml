@@ -32,7 +32,7 @@ system:
       formula: '2'
       target: cha
       type: untyped
-  crOffset: '@attributes.hd.total >= 11 ? 2 : 1'
+  crOffset: 1 + if(gte(@attributes.hd.total, 11), 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Inherited<br><b>Simple Template</b>

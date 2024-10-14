@@ -5,12 +5,12 @@ import {
   enrichHTMLUnrolledAsync,
   naturalSort,
 } from "@utils";
-import { ItemPF } from "@item/item-pf.mjs";
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { SpeedEditor } from "@app/speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "@app/categorized-item-picker.mjs";
-import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
+import { getItem } from "@utils/dialog.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -496,7 +496,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare attack-specific stuff
     if (isAttack) {
-      const wtype = (isWeaponLike ? itemData.weapon?.type : null) || "all";
       context.materialCategories = this._prepareMaterialsAndAddons(item);
 
       context.alignmentTypes = this._prepareAlignments(itemData.alignments);
@@ -511,18 +510,30 @@ export class ItemSheetPF extends ItemSheet {
         }, {}) ?? {};
     }
 
-    // Prepare weapon specific stuff
-    if (isWeapon) {
-      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties?.["thr"] === true;
-    }
-
     // Prepare categories for weapons
     if (isWeaponLike) {
       itemData.weapon ??= {};
       itemData.weapon.category ||= "simple";
       itemData.weapon.type ||= "1h";
+    }
 
-      context.isRanged = itemData.weapon.type === "ranged";
+    // Prepare weapon specific stuff
+    if (isWeapon || isWeaponLike) {
+      const category = isWeapon ? itemData.subType : itemData.weapon.category;
+      const wsubtype = isWeapon ? itemData.weaponSubtype : itemData.weapon.type;
+
+      switch (category) {
+        case "siege":
+          context.isRanged = ["direct", "indirect"].includes(wsubtype);
+          break;
+        case "heavy":
+        case "firearm":
+          context.isRanged = true;
+          break;
+        default:
+          context.isRanged = wsubtype === "ranged" || itemData.properties?.["thr"] === true;
+          break;
+      }
     }
 
     if (isWeapon || isWeaponLike) {
@@ -680,6 +691,7 @@ export class ItemSheetPF extends ItemSheet {
       armorProf: pf1.config.armorProficiencies,
       descriptors: pf1.config.spellDescriptors,
       languages: pf1.config.languages,
+      subschool: pf1.config.spellSubschools,
       weaponGroups: pf1.config.weaponGroups,
       weaponProf: pf1.config.weaponProficiencies,
     };
@@ -844,7 +856,7 @@ export class ItemSheetPF extends ItemSheet {
     const pScripts = this._prepareScriptCalls(context);
 
     // Add links
-    const pLinks = this._prepareLinks(context);
+    const pLinks = await this._prepareLinks(context);
 
     await Promise.all([pIdentDesc, pUnidentDesc, pTopDesc, pScripts, pLinks]);
 
@@ -901,7 +913,7 @@ export class ItemSheetPF extends ItemSheet {
     const addonList = [];
     const basicList = {};
 
-    naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
+    naturalSort([...pf1.registry.materials], "name").forEach((material) => {
       if (material.basic) {
         // Filter basic materials
         basicList[material.id] = material.name;
@@ -937,7 +949,7 @@ export class ItemSheetPF extends ItemSheet {
     };
   }
 
-  _prepareLinks(context) {
+  async _prepareLinks(context) {
     context.links = {
       list: [],
     };
@@ -1001,7 +1013,7 @@ export class ItemSheetPF extends ItemSheet {
         const linkData = foundry.utils.deepClone(items[index]);
         linkData.index = index; // Record index so sorted lists maintain data cohesion
 
-        const linkedItem = fromUuidSync(linkData.uuid, { relative: actor });
+        const linkedItem = await fromUuid(linkData.uuid, { relative: actor });
         if (!linkedItem) linkData.broken = true;
         linkData.img = linkedItem?.img || Item.implementation.getDefaultArtwork(linkedItem);
 
@@ -1169,7 +1181,7 @@ export class ItemSheetPF extends ItemSheet {
       if (value > 0) inline.push(game.i18n.format(`PF1.Currency.Inline.${key}`, { value }));
     });
 
-    content.push(game.i18n.format("PF1.StackDetails.Base", { value: inline.join(", ") }));
+    content.push(game.i18n.format("PF1.StackDetails.Base", { value: pf1.utils.i18n.join(inline) }));
   }
 
   /**
@@ -1809,10 +1821,10 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onLinksDrop(event, data) {
     const elem = event.target;
-    let linkType = elem.closest("[data-tab]").dataset.tab;
+    let category = elem.closest("[data-tab]").dataset.tab;
 
     // Default selection for dropping on tab instead of body
-    if (linkType === "links") linkType = "children";
+    if (category === "links") category = "children";
 
     // Try to extract the data
     if (!data.type) throw new Error("Invalid drop data received");
@@ -1821,26 +1833,25 @@ export class ItemSheetPF extends ItemSheet {
     if (!targetItem || !(targetItem instanceof Item))
       throw new Error(`UUID did not resolve to valid item: ${data.uuid}`);
 
-    let dataType,
-      itemLink = data.uuid;
-    // Case 1 - Import from a Compendium pack
-    if (targetItem.pack) {
-      dataType = "compendium";
+    let sourceType,
+      uuid = data.uuid;
+    // Import from same actor
+    if (targetItem.actor === this.item.actor) {
+      sourceType = "data";
+      uuid = targetItem.getRelativeUUID(this.actor);
     }
-    // Case 2 - Import from same actor
-    else if (targetItem.actor === this.item.actor) {
-      dataType = "data";
-      itemLink = targetItem.getRelativeUUID(this.actor);
+    // Import from a Compendium pack
+    else if (targetItem.pack) {
+      sourceType = "compendium";
     }
-
-    // Case 3 - Import from World Document
+    // Import from World Document
     else {
-      dataType = "world";
+      sourceType = "world";
     }
 
     // Add extra data
     const extraData = {};
-    switch (linkType) {
+    switch (category) {
       case "classAssociations": {
         const level = data.pf1Link?.level;
         if (Number.isNumeric(level)) extraData.level = level;
@@ -1848,7 +1859,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    await this.item.createItemLink(linkType, dataType, targetItem, itemLink, extraData);
+    await this.item.createItemLink(category, sourceType, targetItem, uuid, extraData);
   }
 
   /**
@@ -1872,19 +1883,31 @@ export class ItemSheetPF extends ItemSheet {
         options.choices = pf1.registry.conditions.getLabels();
         break;
       }
+      case "subschool": {
+        const school = a.dataset.school;
+        const subs = new Set([...pf1.config.spellSubschoolsMap[school], ...this.item.system.subschool.value]);
+        const choices = subs.reduce((acc, curr) => ({ ...acc, [curr]: pf1.config.spellSubschools[curr] }), {});
+        options.choices = choices;
+        break;
+      }
     }
 
-    new ActorTraitSelector(this.item, options).render(true);
+    new ActorTraitSelector({
+      ...options,
+      document: this.item,
+    }).render(true);
   }
 
   _onSpeedEdit(event) {
     event.preventDefault();
 
-    let app = Object.values(ui.windows).find(
-      (oldApp) => oldApp instanceof SpeedEditor && oldApp.document === this.item
-    );
-    app ??= new SpeedEditor(this.item);
-    app.render(true, { focus: true });
+    const app = Object.values(ui.windows).find((o) => {
+      return o instanceof SpeedEditor && o.document === this.item;
+    });
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else new SpeedEditor({ document: this.item }).render({ force: true });
   }
 
   /**
@@ -2253,7 +2276,19 @@ export class ItemSheetPF extends ItemSheet {
       dtypes: a.dataset.dtypes,
     };
 
-    pf1.applications.EntrySelector.open(this.item, options);
+    const app = Object.values(foundry.applications.instances).find((o) => {
+      return o instanceof pf1.applications.EntrySelector && o.name === options.name && o.document.id === this.id;
+    });
+
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else {
+      new pf1.applications.EntrySelector({
+        ...options,
+        document: this.item,
+      }).render({ force: true });
+    }
   }
 
   async _onItemSelector(event) {
@@ -2274,18 +2309,19 @@ export class ItemSheetPF extends ItemSheet {
     };
 
     const options = {
+      window: {
+        title: `${game.i18n.format("PF1.SelectSpecific", { specifier: game.i18n.localize(label) })} - ${
+          this.actor.name
+        }`,
+      },
+      id: `${this.item.uuid}-item-selector`,
       actor: this.actor,
       empty: empty === "true" || empty !== "false",
-      filter,
+      filterFunc: filter,
       selected,
     };
 
-    const appOptions = {
-      title: `${game.i18n.format("PF1.SelectSpecific", { specifier: game.i18n.localize(label) })} - ${this.actor.name}`,
-      id: `${this.item.uuid}-item-selector`,
-    };
-
-    const item = await pf1.applications.ItemSelector.wait(options, appOptions);
+    const item = await getItem(options);
     if (item === null) return;
 
     this.item.update({ [name]: item });

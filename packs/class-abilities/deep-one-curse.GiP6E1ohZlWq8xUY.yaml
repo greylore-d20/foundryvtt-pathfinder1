@@ -8,7 +8,7 @@ system:
       - Oracle
   changes:
     - _id: a123bebl
-      formula: '@class.level >= 5 ? 1 : 0'
+      formula: if(gte(@class.level, 5), 1)
       target: nac
       type: untyped
   description:

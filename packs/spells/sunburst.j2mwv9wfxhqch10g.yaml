@@ -13,9 +13,17 @@ system:
           cost: 2
           type: action
       area: 80-ft.-radius burst
+      damage:
+        parts:
+          - formula: 6d6
+            type:
+              custom: ''
+              values:
+                - untyped
       duration:
         units: inst
       measureTemplate:
+        color: '#fa9e00'
         size: '80'
         type: circle
       name: Use
@@ -24,6 +32,32 @@ system:
       save:
         description: Reflex partial; see text
         type: ref
+    - _id: xCSNmN4nz9P2yRao
+      actionType: spellsave
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      area: 80-ft.-radius burst
+      damage:
+        parts:
+          - formula: (@cl)d6
+            type:
+              custom: ''
+              values:
+                - untyped
+      duration:
+        units: inst
+      measureTemplate:
+        size: '0'
+      name: Damage against vulnerable creatures
+      range:
+        units: long
+      save:
+        description: Reflex partial; see text
+        type: ref
+      target:
+        value: Undead, fungi, mold, oozes, and slimes
   components:
     divineFocus: 2
     material: true

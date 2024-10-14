@@ -10,13 +10,13 @@ system:
   changes:
     - _id: ipjt76kz
       formula: >-
-        (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
+        (if(and(lt(@armor.type, 2), lt(@attributes.encumbrance.level, 1)), 1)) *
         clamp(floor((@class.level - 1) / 4), 0, 4)
       target: ac
       type: dodge
     - _id: tvl84rm2
       formula: >-
-        (@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) *
+        (if(and(lt(@armor.type, 2), lt(@attributes.encumbrance.level, 1)), 1)) *
         clamp(floor((@class.level - 1) / 4), 0, 4)
       target: cmd
       type: dodge

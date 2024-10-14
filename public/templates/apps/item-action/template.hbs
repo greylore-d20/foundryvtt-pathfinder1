@@ -29,8 +29,7 @@
 <div class="form-group">
   <label>{{localize "PF1.CustomTexture"}}</label>
   <div class="form-fields">
-    <input class="image" type="text" name="measureTemplate.texture" placeholder="path/image.png" value="{{data.measureTemplate.texture}}">
-    {{filePicker target="measureTemplate.texture" type="imagevideo"}}
+    <file-picker name="measureTemplate.texture" type="imagevideo" placeholder="path/image.png" value="{{data.measureTemplate.texture}}"></file-picker>
   </div>
 </div>
 {{/if}}

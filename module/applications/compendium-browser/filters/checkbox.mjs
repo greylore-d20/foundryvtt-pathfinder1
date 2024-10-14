@@ -117,9 +117,21 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
         return [data];
       })
     );
+
+    const autoLocalize = this.constructor.localizeChoices;
+    const i18nPrefix = this.constructor.localizePrefix || "";
+
+    const localize = (key) => {
+      if (autoLocalize) {
+        const path = `${i18nPrefix}${key}`;
+        if (game.i18n.has(path)) return game.i18n.localize(path);
+      }
+      return key;
+    };
+
     this.choices = new foundry.utils.Collection(
       naturalSort(
-        [...observedValues].map((value) => ({ key: value, label: game.i18n.localize(`${value}`) })),
+        [...observedValues].map((key) => ({ key, label: localize(key) })),
         "label"
       ).map((choice) => [`${choice.key}`, choice])
     );

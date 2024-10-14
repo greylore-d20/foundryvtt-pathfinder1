@@ -1,6 +1,5 @@
 import { ActorBasePF } from "./actor-base.mjs";
-import { ItemPF, ItemRacePF } from "@item/_module.mjs";
-import { createTag, fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
+import { fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
   applyChanges,
   addDefaultChanges,
@@ -9,9 +8,8 @@ import {
   setSourceInfoByName,
   getHighestChanges,
 } from "./utils/apply-changes.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
-import { ItemChange } from "../../components/change.mjs";
 import { VisionSharingSheet } from "module/applications/vision-sharing.mjs";
 import { Resource } from "./components/resource.mjs";
 
@@ -19,50 +17,52 @@ import { Resource } from "./components/resource.mjs";
  * Extend the base Actor class to implement additional game system logic.
  */
 export class ActorPF extends ActorBasePF {
-  constructor(...args) {
-    super(...args);
+  /**
+   * Configure actor before data preparation.
+   *
+   * @override
+   * @param {object} options
+   */
+  _configure(options = {}) {
+    super._configure(options);
 
-    if (this.itemFlags === undefined)
-      /**
-       * Init item flags.
-       */
-      this.itemFlags = { boolean: {}, dictionary: {} };
+    /**
+     * Stores all ItemChanges from carried items.
+     *
+     * @public
+     * @type {Collection<ItemChange>}
+     */
+    this.changes ??= new Collection();
 
-    if (this.changeItems === undefined)
-      /**
-       * A list of all the active items with changes.
-       *
-       * @type {ItemPF[]}
-       */
-      this.changeItems = [];
+    /**
+     * Cached roll data for this item.
+     *
+     * @internal
+     * @type {object}
+     */
+    Object.defineProperties(this, {
+      itemFlags: {
+        value: { boolean: {}, dictionary: {} },
+        writable: false,
+      },
+      _rollData: {
+        value: null,
+        enumerable: false,
+        writable: true,
+      },
+      _visionSharingSheet: {
+        value: null,
+        enumerable: false,
+        writable: true,
+      },
+    });
 
-    if (this.changes === undefined)
-      /**
-       * Stores all ItemChanges from carried items.
-       *
-       * @public
-       * @type {Collection<ItemChange>}
-       */
-      this.changes = new Collection();
-
-    if (this._rollData === undefined)
-      /**
-       * Cached roll data for this item.
-       *
-       * @internal
-       * @type {object}
-       */
-      this._rollData = null;
-
-    if (this.containerItems === undefined)
-      /**
-       * All items this actor is holding in containers.
-       *
-       * @type {ItemPF[]}
-       */
-      this.containerItems = [];
-
-    this._visionSharingSheet ??= null;
+    /**
+     * All items this actor is holding in containers.
+     *
+     * @type {ItemPF[]}
+     */
+    this.containerItems ??= [];
   }
 
   /**
@@ -290,24 +290,22 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    this.itemFlags = {
-      boolean: bFlags,
-      dictionary: dFlags,
-    };
+    this.itemFlags.boolean = bFlags;
+    this.itemFlags.dictionary = dFlags;
   }
 
   /**
    * @internal
    */
   _prepareChanges() {
-    this.changeItems = this.items.filter((item) => item.hasChanges && item.isActive);
-
     const changes = [];
-    for (const i of this.changeItems) {
-      changes.push(...i.changes);
+    for (const item of this.items) {
+      if (item.isActive && item.hasChanges && item.changes.size) {
+        changes.push(...item.changes);
+      }
     }
 
-    addDefaultChanges.call(this, changes);
+    this._prepareTypeChanges(changes);
 
     const c = new Collection();
     for (const change of changes) {
@@ -316,8 +314,17 @@ export class ActorPF extends ActorBasePF {
       const uniqueId = `${parentId}-${change._id}`;
       c.set(uniqueId, change);
     }
+
     this.changes = c;
   }
+
+  /**
+   * Add actor type specific changes.
+   *
+   * @abstract
+   * @param {ItemChange[]} changes
+   */
+  _prepareTypeChanges(changes) {}
 
   /**
    * @internal
@@ -378,13 +385,14 @@ export class ActorPF extends ActorBasePF {
       // Time still remaining
       if (remaining > 0) return false;
 
-      const flags = ae.getFlag("pf1", "duration") ?? {};
+      const aeInit = ae.system?.initiative;
+      const endTiming = ae.system?.end || "turnStart";
 
-      switch (flags.end || "turnStart") {
+      switch (endTiming) {
         // Initiative based ending
         case "initiative":
           if (initiative !== null) {
-            return initiative <= flags.initiative;
+            return initiative <= aeInit;
           }
           // Anything not on initiative expires if they have negative time remaining
           return remaining < 0;
@@ -411,7 +419,7 @@ export class ActorPF extends ActorBasePF {
       // Use AE parent when available
       if (ae.parent instanceof Item) item = ae.parent;
       // Otherwise support older origin cases
-      else item = ae.origin ? fromUuidSync(ae.origin, { relative: this }) : null;
+      else item = ae.origin ? await fromUuid(ae.origin, { relative: this }) : null;
 
       if (item?.type === "buff") {
         disableBuffs.push({ _id: item.id, "system.active": false });
@@ -452,8 +460,6 @@ export class ActorPF extends ActorBasePF {
    * @override
    */
   prepareBaseData() {
-    this._initialized = false; // For preventing items initializing certain data too early
-
     super.prepareBaseData();
 
     this.system.details ??= {};
@@ -1234,7 +1240,7 @@ export class ActorPF extends ActorBasePF {
     // Reset roll data cache
     // Some changes act wonky without this
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    delete this._rollData;
+    this._rollData = null;
 
     // Update dependant data and resources
     this.items.forEach((item) => {
@@ -1261,7 +1267,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareOverlandSpeeds();
 
     // Reset roll data cache again to include processed info
-    delete this._rollData;
+    this._rollData = null;
 
     // Update items
     this.items.forEach((item) => {
@@ -1269,9 +1275,6 @@ export class ActorPF extends ActorBasePF {
       // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
       this.updateItemResources(item, { warnOnDuplicate: false });
     });
-
-    // Initialization is effectively complete at this point
-    this._initialized = true;
 
     this._setSourceDetails();
   }
@@ -1341,7 +1344,7 @@ export class ActorPF extends ActorBasePF {
               // Dedupe if adding to existing sourceInfo
               if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
               // Transform arrays into presentable strings
-              sInfo.value = sInfo.value.join(", ");
+              sInfo.value = pf1.utils.i18n.join(sInfo.value);
               // If sourceInfo was not a reference to existing info, push it now
               if (!hasInfo) getSourceInfo(this.sourceInfo, `system.traits.${prof}`).positive.push(sInfo);
             }
@@ -1786,14 +1789,10 @@ export class ActorPF extends ActorBasePF {
 
       for (const type of Object.keys(links)) {
         for (const link of links[type]) {
-          const linkedItem = fromUuidSync(link.uuid, { relative: this });
-          if (!linkedItem) continue;
-
-          // Detect bad links pointing to other actors
-          if (linkedItem.actor && linkedItem.actor !== this) {
-            console.error("Invalid item link:", { type, uuid: link.uuid, actor: this, item, linked: linkedItem });
-            continue;
-          }
+          // HACK: fromUuid[Sync]() causes recursive synth actor initialization at world launch, so we do this instead
+          const linkData = foundry.utils.parseUuid(link.uuid, { relative: this });
+          const linkedItem = this.items.get(linkData?.id);
+          if (!linkedItem) continue; // Ignore items not on current actor
 
           switch (type) {
             case "charges": {
@@ -3630,17 +3629,18 @@ export class ActorPF extends ActorBasePF {
     const resistances = {};
     damages.value.forEach((entry, counter) => {
       const { amount, operator } = entry;
+      const [typeId0, typeId1] = entry.types;
       const type1 =
-        pf1.registry.damageTypes.get(entry.types[0])?.name ??
-        pf1.registry.materialTypes.get(entry.types[0])?.shortName ??
-        pf1.registry.materialTypes.get(entry.types[0])?.name ??
-        pf1.config.damageResistances[entry.types[0]] ??
+        pf1.registry.damageTypes.get(typeId0)?.name ??
+        pf1.registry.materials.get(typeId0)?.shortName ??
+        pf1.registry.materials.get(typeId0)?.name ??
+        pf1.config.damageResistances[typeId0] ??
         "-";
       const type2 =
-        pf1.registry.damageTypes.get(entry.types[1])?.name ??
-        pf1.registry.materialTypes.get(entry.types[1])?.shortName ??
-        pf1.registry.materialTypes.get(entry.types[1])?.name ??
-        pf1.config.damageResistances[entry.types[1]] ??
+        pf1.registry.damageTypes.get(typeId1)?.name ??
+        pf1.registry.materials.get(typeId1)?.shortName ??
+        pf1.registry.materials.get(typeId1)?.name ??
+        pf1.config.damageResistances[typeId1] ??
         "";
 
       resistances[`${counter + 1}`] = format(amount, type1, operator, type2);
@@ -4535,9 +4535,9 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add item dictionary flags
-    result.dFlags = this.itemFlags?.dictionary ?? {};
+    result.dFlags = this.itemFlags.dictionary ?? {};
     result.bFlags = Object.fromEntries(
-      Object.entries(this.itemFlags?.boolean ?? {}).map(([key, { sources }]) => [key, sources.length > 0 ? 1 : 0])
+      Object.entries(this.itemFlags.boolean ?? {}).map(([key, { sources }]) => [key, sources.length > 0 ? 1 : 0])
     );
 
     result.range = this.system.traits?.reach?.total ?? { melee: NaN, reach: NaN };
@@ -4639,7 +4639,8 @@ export class ActorPF extends ActorBasePF {
         // Fill in charge details
         qi.isCharged = qi.haveAnyCharges;
         if (qi.isCharged) {
-          let chargeCost = item.defaultAction?.getChargeCost() ?? item.getDefaultChargeCost();
+          let chargeCost =
+            item.defaultAction?.getChargeCostSync({ maximize: true })?.total ?? item.getDefaultChargeCost();
           if (chargeCost == 0) qi.isCharged = false;
 
           qi.recharging = chargeCost < 0;

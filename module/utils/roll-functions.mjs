@@ -29,8 +29,8 @@ export function sizeRoll(origCount, origSides, targetSize = "M", initialSize = "
   // Do no conversion if no size change is occurring
   if (targetSize === initialSize) {
     // Special case for 1d1
-    if (origCount === 1 && origSides === 1) return [new NumericTerm({ number: 1 })];
-    return [new Die({ number: origCount, faces: origSides })];
+    if (origCount === 1 && origSides === 1) return [new foundry.dice.terms.NumericTerm({ number: 1 })];
+    return [new foundry.dice.terms.Die({ number: origCount, faces: origSides })];
   }
 
   // Special rules
@@ -133,8 +133,10 @@ export function sizeRoll(origCount, origSides, targetSize = "M", initialSize = "
   }
 
   const [number, faces] = formula.split("d").map((n) => parseInt(n));
-  if (!faces || (number === 1 && faces === 1)) return [new NumericTerm({ number: number })];
-  return [new Die({ number: number, faces: faces })];
+  if (!faces || (number === 1 && faces === 1)) {
+    return [new foundry.dice.terms.NumericTerm({ number })];
+  }
+  return [new foundry.dice.terms.Die({ number: number, faces: faces })];
 }
 
 /**
@@ -149,9 +151,109 @@ export const sizeReach = function (size = "M", reach = false, stature = "tall") 
   if (typeof size === "number") size = Object.values(pf1.config.sizeChart)[size];
   size = Object.entries(pf1.config.sizeChart).find((o) => o[1] === size)[0];
 
-  return [
-    new NumericTerm({
-      number: pf1.documents.actor.ActorPF.getReach(size, stature)[reach ? "reach" : "melee"],
-    }),
-  ];
+  return pf1.documents.actor.ActorPF.getReach(size, stature)[reach ? "reach" : "melee"];
+};
+
+/**
+ * For use with rolls
+ *
+ * @internal
+ * @param {*} count
+ * @param {*} sides
+ * @param {*} target
+ * @param {*} initial
+ */
+async function sizeRollFn(count, sides, target, initial) {
+  const rv = sizeRoll(count, sides, target, initial);
+
+  const roll = await Roll.fromTerms(rv).evaluate();
+  this.rolls = [roll];
+
+  return roll.total;
+}
+
+/**
+ * `if-else` roll function
+ *
+ * ifelse(condition, if-true, if-else)
+ *
+ * @example
+ * ```txt
+ * ifelse(@powerAttackPenalty, 4, 0)
+ * ```
+ *
+ * @param {*} condition
+ * @param {*} ifTrue
+ * @param {*} ifFalse
+ * @returns
+ */
+function ifelse(condition, ifTrue, ifFalse) {
+  return condition ? ifTrue : ifFalse;
+}
+
+/**
+ * `if` roll function
+ *
+ * Alias for ifelse()
+ *
+ * @param {*} condition
+ * @param {*} ifTrue
+ * @returns
+ */
+function _if(condition, ifTrue) {
+  return ifelse(condition, ifTrue, 0);
+}
+
+/**
+ * `lookup` roll function
+ *
+ * lookup(condition, fallback, ...results)
+ *
+ * @example
+ * ```txt
+ * lookup(1d4, 0, 4, 3, 2, 1)
+ * lookup(@cl, 0, 3, 2, 1)
+ * ```
+ *
+ * @param {*} condition
+ * @param {*} fallback
+ * @param  {...any} results
+ * @returns
+ */
+function lookup(condition, fallback, ...results) {
+  return results[condition - 1] ?? fallback;
+}
+
+/**
+ * Roll functions
+ *
+ * @example
+ * ```js
+ * eq(a,b) // equal (a === b)
+ * ne(a,b) // not equal (a !== b)
+ * lt(a,b) // less than (a < b)
+ * lte(a,b) // less than or equal (a <= b)
+ * gt(a,b) // greater than (a > b)
+ * gte(a,b) // greater than or equal (a >= b)
+ * and(a, b, ...) // all true
+ * or(a, b, ...) // some true
+ * xor(a, b, ...) // one true
+ * not(a) // not (!a)
+ * ```
+ */
+export const functions = {
+  sizeRoll: sizeRollFn,
+  sizeReach,
+  ifelse,
+  if: _if,
+  eq: (a, b) => (a === b ? 1 : 0),
+  ne: (a, b) => (a !== b ? 1 : 0),
+  lt: (a, b) => (a < b ? 1 : 0),
+  lte: (a, b) => (a <= b ? 1 : 0),
+  gt: (a, b) => (a > b ? 1 : 0),
+  gte: (a, b) => (a >= b ? 1 : 0),
+  and: (...args) => (args.every((a) => !!a) ? 1 : 0),
+  or: (...args) => (args.some((a) => !!a) ? 1 : 0),
+  xor: (...args) => (args.filter((a) => !!a).length == 1 ? 1 : 0),
+  not: (a) => !a,
 };

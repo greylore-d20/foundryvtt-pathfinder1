@@ -5,7 +5,7 @@ name: Shadow Animal
 system:
   changes:
     - _id: nxi7spwa
-      formula: '(@ac.natural.total > 0) ? -1 : 0'
+      formula: if(gt(@ac.natural.total, 0), -1)
       target: nac
       type: untyped
     - _id: ue6ocv11
@@ -36,7 +36,7 @@ system:
       formula: '4'
       target: skill.ste
       type: racial
-  crOffset: '@attributes.hd.total >= 10 ? 2 : 1'
+  crOffset: 1 + if(gte(@attributes.hd.total, 10), 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Both<br><b>Simple Template</b>

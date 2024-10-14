@@ -336,6 +336,9 @@ export const armorProficiencies = {
 export const weaponProficiencies = {
   simple: "PF1.Proficiency.Weapon.simple",
   martial: "PF1.Proficiency.Weapon.martial",
+  firearm: "PF1.Proficiency.Weapon.firearm",
+  siege: "PF1.Proficiency.Weapon.siege",
+  heavy: "PF1.Proficiency.Weapon.heavy",
 };
 
 /* -------------------------------------------- */
@@ -824,6 +827,7 @@ export const itemActionTypes = {
 export const limitedUsePeriods = {
   single: "PF1.LimitedUses.Periods.single",
   round: "PF1.LimitedUses.Periods.round",
+  minute: "PF1.LimitedUses.Periods.minute",
   hour: "PF1.LimitedUses.Periods.hour",
   day: "PF1.LimitedUses.Periods.day",
   week: "PF1.LimitedUses.Periods.week",
@@ -833,7 +837,7 @@ export const limitedUsePeriods = {
 /**
  * Order of limited use periods from smallest to biggest, omitting periods with no relation to time.
  */
-export const limitedUsePeriodOrder = ["round", "hour", "day", "week"];
+export const limitedUsePeriodOrder = ["round", "minute", "hour", "day", "week"];
 
 /* -------------------------------------------- */
 
@@ -1909,6 +1913,20 @@ export const weaponTypes = {
     "2h": "PF1.WeaponSubtypeTwoHanded",
     ranged: "PF1.WeaponSubtypeRanged",
   },
+  firearm: {
+    _label: "PF1.Subtypes.Item.weapon.firearm.Single",
+    ranged: "PF1.WeaponSubtypeRanged",
+  },
+  siege: {
+    _label: "PF1.Subtypes.Item.weapon.siege.Single",
+    assault: "PF1.WeaponSubtypeAssault",
+    indirect: "PF1.WeaponSubtypeIndirect",
+    direct: "PF1.WeaponSubtypeDirect",
+  },
+  heavy: {
+    _label: "PF1.Subtypes.Item.weapon.heavy.Single",
+    ranged: "PF1.WeaponSubtypeRanged",
+  },
   misc: {
     _label: "PF1.Subtypes.Item.weapon.misc.Single",
     splash: "PF1.WeaponTypeSplash",
@@ -2004,6 +2022,48 @@ export const spellSchools = {
   uni: "PF1.SpellSchools.uni",
   misc: "PF1.Misc",
 };
+
+/**
+ * Spell subschools
+ */
+export const spellSubschools = {
+  calling: "PF1.SpellSubschools.calling",
+  charm: "PF1.SpellSubschools.charm",
+  compulsion: "PF1.SpellSubschools.compulsion",
+  creation: "PF1.SpellSubschools.creation",
+  figment: "PF1.SpellSubschools.figment",
+  glamer: "PF1.SpellSubschools.glamer",
+  haunted: "PF1.SpellSubschools.haunted",
+  healing: "PF1.SpellSubschools.healing",
+  pattern: "PF1.SpellSubschools.pattern",
+  phantasm: "PF1.SpellSubschools.phantasm",
+  polymorph: "PF1.SpellSubschools.polymorph",
+  scrying: "PF1.SpellSubschools.scrying",
+  shadow: "PF1.SpellSubschools.shadow",
+  summoning: "PF1.SpellSubschools.summoning",
+  teleportation: "PF1.SpellSubschools.teleportation",
+};
+
+/**
+ * Dictionary of subschools per shool
+ *
+ * @template {keyof typeof spellSchools} school
+ * @template {keyof typeof spellSubschools} subschool
+ *
+ * @type {Record<school, subschool[]>}
+ */
+export const spellSubschoolsMap = /** @type {const} */ ({
+  abj: [],
+  con: ["calling", "creation", "healing", "summoning", "teleportation"],
+  div: ["scrying"],
+  enc: ["charm", "compulsion"],
+  evo: [],
+  ill: ["figment", "glamer", "pattern", "phantasm", "shadow"],
+  nec: ["haunted"],
+  trs: ["polymorph"],
+  uni: [],
+  misc: Object.keys(spellSubschools),
+});
 
 /**
  * Spell levels
@@ -2628,6 +2688,10 @@ export const temporaryRollDataFields = {
     "level",
     "mod",
   ],
+};
+
+export const traitSelector = {
+  minChoicesForSearch: 6,
 };
 
 export const defaultIcons = {

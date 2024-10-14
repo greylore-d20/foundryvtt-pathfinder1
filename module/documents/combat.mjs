@@ -1,6 +1,4 @@
-import { ActorPF } from "./actor/actor-pf.mjs";
 import { getSkipActionPrompt } from "./settings.mjs";
-import { RollPF } from "../dice/roll.mjs";
 
 /* -------------------------------------------- */
 

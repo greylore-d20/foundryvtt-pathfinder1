@@ -11,10 +11,21 @@ export class SpellSchoolFilter extends CheckboxFilter {
   }
 }
 
-export class SpellSubSchoolFilter extends CheckboxFilter {
-  static label = "PF1.SubSchool";
+export class SpellSubschoolFilter extends CheckboxFilter {
+  static label = "PF1.Subschool";
   static indexField = "system.subschool";
   static type = "spell";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    super.prepareChoices();
+    const choices = this.choices;
+
+    // this changes the value (the UI visible choice) to the translation from the config for pre-defined descriptors
+    const configChoices = this.constructor.getChoicesFromConfig(pf1.config.spellSubschools);
+    configChoices.forEach((choice) => choices.set(choice.key, choice));
+    this.choices = choices;
+  }
 }
 
 export class SpellDescriptorFilter extends CheckboxFilter {

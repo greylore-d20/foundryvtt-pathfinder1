@@ -37,7 +37,7 @@ system:
   subType: classFeat
   tag: classFeat_feyEnchantments
   uses:
-    maxFormula: '@class.level >= 16 ? 7 : 3'
+    maxFormula: 3 + if(gte(@class.level, 16), 4)
     per: day
 type: feat
 

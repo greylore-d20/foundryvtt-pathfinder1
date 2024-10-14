@@ -131,7 +131,7 @@
   <label>{{localize "PF1.ExtraAttacks.Label"}}</label>
   <div class="form-fields">
     <select name="extraAttacks.type">
-      {{selectOptions extraAttacksTypes selected=data.extraAttacks.type blank="PF1.None" localize=true}}
+      {{selectOptions extraAttacksTypes selected=data.extraAttacks.type blank=(localize "PF1.None")}}
     </select>
   </div>
 </div>
@@ -192,7 +192,7 @@
       {{#if canHold}}
       <option value="">{{localize "PF1.HeldMult" mult=heldAbilityMultiplier}}</option>
       {{/if}}
-      {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}
+      {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult valueAttr="value" labelAttr="label"}}
     </select>
     <label>{{localize "PF1.MaxShort"}}</label>
     <input type="number" class="max-ability" name="ability.max" value="{{data.ability.max}}"
@@ -206,7 +206,7 @@
   <div class="form-fields">
     <label style="flex:1;"><!-- Ensure Alignment --></label>
     <select name="naturalAttack.secondary.damageMult" data-dtype="Number">
-      {{selectOptions config.abilityDamageMultipliers selected=data.naturalAttack.secondary.damageMult nameAttr="value" labelAttr="label"}}
+      {{selectOptions config.abilityDamageMultipliers selected=data.naturalAttack.secondary.damageMult valueAttr="value" labelAttr="label"}}
     </select>
   </div>
 </div>
@@ -332,7 +332,7 @@
   <div class="form-fields">
     <input class="formula" type="text" name="save.dc" value="{{data.save.dc}}" placeholder="0">
     <select name="save.type">
-      {{selectOptions config.savingThrows selected=data.save.type blank="PF1.None" localize=true}}
+      {{selectOptions config.savingThrows selected=data.save.type blank=(localize "PF1.None")}}
     </select>
   </div>
 </div>

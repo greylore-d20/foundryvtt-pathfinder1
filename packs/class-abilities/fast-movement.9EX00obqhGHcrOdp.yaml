@@ -11,7 +11,7 @@ system:
       - Bloodrager
   changes:
     - _id: cu5r7fnq
-      formula: '@armor.type <= 2 && @attributes.encumbrance.level < 2 ? 10 : 0'
+      formula: if(and(lte(@armor.type, 2), lt(@attributes.encumbrance.level, 2)), 10)
       target: landSpeed
       type: base
   description:

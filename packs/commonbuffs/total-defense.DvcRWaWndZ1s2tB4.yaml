@@ -5,7 +5,7 @@ name: Total Defense
 system:
   changes:
     - _id: bhjbvsog
-      formula: '@skills.acr.rank>=3?6:4'
+      formula: 4 + if(gte(@skills.acr.rank, 3), 2)
       target: ac
       type: dodge
   description:

@@ -1,0 +1,23 @@
+.pf1-v2 {
+  :is(input, select) {
+    &:disabled {
+      &:after {
+        color: var(--color-text-dark-secondary) !important;
+      }
+    }
+  }
+
+  .hint {
+    color: var(--color-form-hint-hover);
+    font-size: var(--font-size-14);
+  }
+
+  .warning {
+    color: var(--pf1-v2-text-warning);
+    font-size: var(--font-size-14);
+  }
+
+  .form-footer {
+    display: flex;
+  }
+}

@@ -1,17 +1,16 @@
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
-import { ActorResistanceSelector } from "@app/damage-resistance-selector.mjs";
+import { DamageResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
 import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
-import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { ItemPF } from "@item/item-pf.mjs";
-import { applyAccessibilitySettings } from "@utils/chat.mjs";
 import { LevelUpForm } from "@app/level-up.mjs";
 import { CurrencyTransfer } from "@app/currency-transfer.mjs";
-import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
+import { getItem } from "@utils/dialog.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -447,12 +446,17 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       if (result.hasAttack) {
-        const attacks = defaultAction
-          .getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true, rollData })
-          .map((atk) => atk.bonus);
-        result.attackArray = attacks;
-        const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
-        result.attackSummary = `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${
+        const attacks = defaultAction.getAttacks({
+          full: true,
+          resolve: true,
+          conditionals: true,
+          bonuses: true,
+          rollData,
+        });
+        const attackBonuses = attacks.map((atk) => atk.bonus);
+        result.attackArray = attackBonuses;
+        const highest = Math.max(...attackBonuses); // Highest bonus, with assumption the first might not be that.
+        result.attackSummary = `${attackBonuses.length} (${highest < 0 ? highest : `+${highest}`}${
           attacks.length > 1 ? "/…" : ""
         })`;
       }
@@ -1253,14 +1257,15 @@ export class ActorSheetPF extends ActorSheet {
       return actor.formatContextNotes(noteObjs, lazy.rollData, { roll: false });
     };
 
-    const damageTypes = (d) =>
-      [
-        ...(d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? []),
-        ...(d.custom
+    const damageTypes = (d) => {
+      const values = d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? [];
+      const custom =
+        d.custom
           ?.split(";")
           .map((dv) => dv?.trim())
-          .filter((dv) => !!dv) ?? []),
-      ].flat();
+          .filter((dv) => !!dv) ?? [];
+      return [...values, ...custom];
+    };
 
     let header, subHeader;
     const details = [];
@@ -1785,7 +1790,7 @@ export class ActorSheetPF extends ActorSheet {
               dmgSources.push({
                 name: formula,
                 value: pf1.utils.formula.simplify(formula, rollData, { strict: false }),
-                type: damageTypes(type).join(", "),
+                type: pf1.utils.i18n.join(damageTypes(type)),
                 //unvalued: true,
               });
             }
@@ -1793,7 +1798,7 @@ export class ActorSheetPF extends ActorSheet {
               dmgSources.push({
                 name: formula,
                 value: pf1.utils.formula.simplify(formula, rollData, { strict: false }),
-                type: damageTypes(type).join(", "),
+                type: pf1.utils.i18n.join(damageTypes(type)),
                 //unvalued: true,
               });
             }
@@ -2174,27 +2179,31 @@ export class ActorSheetPF extends ActorSheet {
           case "school": {
             if (item.system.subschool) {
               details.push({
-                key: game.i18n.localize("PF1.SubSchool"),
-                value: item.system.subschool,
+                key: game.i18n.localize("PF1.Subschool"),
+                value: pf1.utils.i18n.join([...(item.system.subschool.total ?? [])]),
               });
             }
 
             if (item.system.descriptors?.total?.size) {
               details.push({
                 key: game.i18n.localize("PF1.DescriptorPlural"),
-                value: Array.from(item.system.descriptors?.total).join(", "),
+                value: pf1.utils.i18n.join([...(item.system.descriptors.total ?? [])], "conjunction", false),
               });
             }
 
             const action = item.defaultAction;
 
             if (action?.hasDamage) {
-              const types = action.data.damage?.parts?.map((d) => d.type).map(damageTypes) ?? [];
+              const types =
+                action.data.damage?.parts
+                  ?.map((d) => d.type)
+                  .map(damageTypes)
+                  .flat() ?? [];
 
               if (types.length) {
                 details.push({
                   key: game.i18n.localize("PF1.Damage"),
-                  value: types.join(", "),
+                  value: pf1.utils.i18n.join(types),
                 });
               }
             }
@@ -2480,10 +2489,12 @@ export class ActorSheetPF extends ActorSheet {
       }
     } else {
       const app = Object.values(this.actor.apps).find((o) => {
-        return o instanceof ActorRestDialog && o._element;
+        return o instanceof ActorRestDialog;
       });
-      if (app) app.render(true, { focus: true });
-      else new ActorRestDialog(this.actor).render(true);
+      if (app) {
+        app.render(true);
+        app.bringToFront();
+      } else new ActorRestDialog({ document: this.actor }).render({ force: true });
     }
   }
 
@@ -3064,20 +3075,26 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof PointBuyCalculator && o._element;
+      return o instanceof PointBuyCalculator;
     });
-    if (app) app.render(true, { focus: true });
-    else new PointBuyCalculator(this.actor).render(true);
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else new PointBuyCalculator({ document: this.actor }).render({ force: true });
   }
 
   async _onSensesSelector(event) {
     event.preventDefault();
 
     const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof pf1.applications.SensesSelector && o._element;
+      return o instanceof pf1.applications.SensesSelector;
     });
-    if (app) app.render(true, { focus: true });
-    else new pf1.applications.SensesSelector(this.actor).render(true);
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else {
+      new pf1.applications.SensesSelector({ document: this.actor }).render({ force: true });
+    }
   }
 
   async _onControlAlignment(event) {
@@ -3347,7 +3364,9 @@ export class ActorSheetPF extends ActorSheet {
     if (targets.length === 0) ui.notifications.warn("PF1.Error.NoGiftTargets", { localize: true });
 
     const targetActorId = await pf1.utils.dialog.getActor({
-      title: game.i18n.localize("PF1.GiveItemToActor"),
+      window: {
+        title: game.i18n.localize("PF1.GiveItemToActor"),
+      },
       actors: targets,
     });
 
@@ -3798,11 +3817,13 @@ export class ActorSheetPF extends ActorSheet {
       choices,
     };
 
-    let app = Object.values(this.actor.apps).find(
-      (app) => app instanceof ActorTraitSelector && app.options.name === options.name
-    );
-    app ??= new ActorTraitSelector(this.actor, options);
-    app.render(true, { focus: true });
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ActorTraitSelector && o.options.name === options.name;
+    });
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else new ActorTraitSelector({ ...options, document: this.actor }).render({ force: true });
   }
 
   /**
@@ -3821,14 +3842,19 @@ export class ActorSheetPF extends ActorSheet {
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
       width: a.dataset.options === "dr" ? 575 : 450,
-      isDR: a.dataset.options === "dr" ? true : false,
+      isDR: a.dataset.options === "dr",
     };
 
     const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof ActorResistanceSelector && o.options.name === options.name && o._element;
+      return o instanceof DamageResistanceSelector && o.options.name === options.name;
     });
-    if (app) app.render(true, { focus: true });
-    else new ActorResistanceSelector(this.actor, options).render(true);
+
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else {
+      new DamageResistanceSelector({ document: this.actor, ...options }).render(true);
+    }
   }
 
   setItemUpdate(id, key, value) {
@@ -3851,9 +3877,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Create placeholders
     this._createPlaceholders(this.element);
-
-    // Apply accessibility settings
-    applyAccessibilitySettings(this, this.element, {}, game.settings.get("pf1", "accessibilityConfig"));
 
     return result;
   }
@@ -4036,19 +4059,18 @@ export class ActorSheetPF extends ActorSheet {
         // Query which class to associate with
         else {
           const options = {
+            window: {
+              title: `${game.i18n.format("PF1.SelectSpecific", {
+                specifier: game.i18n.localize("TYPES.Item.class"),
+              })} - ${itemData.name} - ${this.actor.name}`,
+            },
             actor: this.actor,
             empty: true,
             items: classes,
             selected: classes[0]?._id,
           };
 
-          const appOptions = {
-            title: `${game.i18n.format("PF1.SelectSpecific", {
-              specifier: game.i18n.localize("TYPES.Item.class"),
-            })} - ${itemData.name} - ${this.actor.name}`,
-          };
-
-          const clsId = await pf1.applications.ItemSelector.wait(options, appOptions);
+          const clsId = await getItem(options);
           if (clsId) {
             const cls = this.actor.items.get(clsId);
             itemData.system.class = cls.system.tag;
@@ -4059,13 +4081,13 @@ export class ActorSheetPF extends ActorSheet {
 
       // Import spell as consumable
       if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
-        const spells = this.actor.system.attributes?.spells ?? {};
-        const spellType = spells.spellbooks?.[this.currentSpellbookKey]?.kind || "arcane";
+        const spells = this.actor.system.attributes?.spells?.spellbooks ?? {};
+        const spellType = spells[this.currentSpellbookKey]?.kind || "arcane";
 
         const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, {
           spellType,
           actor: this.actor,
-          allowSpell: spells.usedSpellbooks?.length > 0,
+          allowSpell: Object.values(spells).some((s) => s.inUse),
         });
 
         if (resultData) {

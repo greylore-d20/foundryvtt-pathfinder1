@@ -1,7 +1,6 @@
-import { ItemPF } from "./documents/item/item-pf.mjs";
 import { ItemChange } from "./components/change.mjs";
 
-import { MigrationDialog } from "./applications/migration/migration-dialog.mjs";
+import { MigrationDialog } from "@app/migration/migration-dialog.mjs";
 import { MigrationState } from "./migration/migration-state.mjs";
 
 /**
@@ -604,17 +603,19 @@ export async function migrateToken(token) {
  * Migrate singular actor document.
  *
  * @param {Actor} actor - Actor to migrate.
- * @returns {Promise<Actor|null>}
+ * @returns {Promise<void>}
  */
 export async function migrateActor(actor) {
+  console.debug("PF1 | Migration | Starting |", actor.name, actor.uuid);
+
   await migrateActiveEffectsToItems(actor);
 
   const updateData = await migrateActorData(actor.toObject(), actor.token, { actor });
   if (!foundry.utils.isEmpty(updateData)) {
-    return actor.update(updateData, marker());
+    await actor.update(updateData, marker());
   }
 
-  return null;
+  console.debug("PF1 | Migration | Finished |", actor.name, actor.uuid);
 }
 
 /**
@@ -747,11 +748,82 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
  * @returns {Promise<Item|null>} - Promise to updated item document, or null if no update was performed.
  */
 export async function migrateItem(item) {
+  let updated = false;
   const updateData = await migrateItemData(item.toObject(), item.actor, { item });
   if (!foundry.utils.isEmpty(updateData)) {
-    return item.update(updateData, marker());
+    updated = true;
+    await item.update(updateData, marker());
   }
+
+  await migrateItemActiveEffects(item);
+
+  return updated ? item : null;
+}
+
+/**
+ * Migrate active effects on an item.
+ *
+ * @param {Item} item
+ * @returns {Promise<ActiveEffect[]|null>} - Updated active effects, or null if no updates were needed.
+ */
+export async function migrateItemActiveEffects(item) {
+  const itemData = item.toObject();
+
+  const updateData = {};
+  await migrateItemDataActiveEffects(itemData, updateData);
+
+  if (updateData.effects?.length) {
+    return item.updateEmbeddedDocuments("ActiveEffect", updateData.effects);
+  }
+
   return null;
+}
+
+/**
+ * Migrate active effects in item data
+ *
+ * @param {object} itemData - Item data
+ * @param {object} updateData - Object to hold update data
+ */
+async function migrateItemDataActiveEffects(itemData, updateData) {
+  const { effects = [] } = itemData;
+
+  const updates = [];
+  for (const effect of effects) {
+    const updateData = {};
+
+    // Convert method of tracker identification
+    if (itemData.type === "buff") {
+      if (effect.flags?.pf1?.tracker && effect.type === "base") {
+        updateData.type = "buff";
+        updateData["flags.pf1.-=tracker"] = null;
+      }
+    }
+
+    const duration = effect.flags?.pf1?.duration;
+    if (duration) {
+      // Transfer initiative value to system data
+      const init = effect.flags?.pf1?.duration?.initiative;
+      if (init !== undefined) {
+        if (effect.system?.initiative === undefined) updateData["system.initiative"] = init;
+      }
+
+      // End timing
+      const endTiminig = effect.flags?.pf1?.duration?.end;
+      if (endTiminig !== undefined) {
+        if (!effect.system?.end) updateData["system.end"] = endTiminig;
+      }
+
+      updateData["flags.pf1.-=duration"] = null;
+    }
+
+    if (!foundry.utils.isEmpty(updateData)) {
+      updateData._id = effect._id;
+      updates.push(updateData);
+    }
+  }
+
+  updateData.effects = updates;
 }
 
 /**
@@ -775,7 +847,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   }
 
   // Ignore module introduced types
-  if (!game.system.template.Item.types.includes(itemData.type)) return {};
+  if (!Object.keys(game.system.documentTypes.Item).includes(itemData.type)) return {};
 
   _migrateItemArrayTypes(itemData, updateData);
   _migrateFlagsArrayToObject(itemData, updateData);
@@ -820,6 +892,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemChangeFlags(itemData, updateData);
   _migrateItemMaterials(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
+  _migrateSpellSubschool(itemData, updateData);
 
   // Migrate action data
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
@@ -887,6 +960,8 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   };
 
   await migrateContainerItems(itemData.system.items);
+
+  await migrateItemDataActiveEffects(itemData, updateData);
 
   // Record migrated version
   if (!foundry.utils.isEmpty(updateData)) {
@@ -1564,6 +1639,30 @@ const _migrateSpellDescriptors = (item, updateData) => {
   updateData["system.-=types"] = null;
   updateData["system.descriptors.value"] = value;
   updateData["system.descriptors.custom"] = custom.join("; ");
+};
+
+const _migrateSpellSubschool = (item, updateData) => {
+  if (item.type !== "spell" || item.system.subschool === undefined || typeof item.system.subschool !== "string") return;
+
+  const current = item.system.subschool
+    .split(",")
+    .flatMap((x) => x.split(";"))
+    .map((x) => x.trim())
+    .filter((x) => x);
+
+  const value = [];
+  const custom = [];
+  const entries = Object.entries(pf1.config.spellSubschools);
+  current.forEach((c) => {
+    const exists = entries.find(([k, v]) => c.toLowerCase() === k.toLowerCase() || c.toLowerCase() === v.toLowerCase());
+    if (exists) {
+      value.push(exists[0]);
+    } else {
+      custom.push(c);
+    }
+  });
+
+  updateData["system.subschool"] = { value, custom };
 };
 
 const _migrateItemSize = function (ent, updateData) {

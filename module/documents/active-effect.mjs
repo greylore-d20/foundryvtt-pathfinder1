@@ -128,12 +128,12 @@ export class ActiveEffectPF extends ActiveEffect {
 
   /** @type {number|undefined} - Initiative counter if this effect started during combat */
   get initiative() {
-    return this.getFlag("pf1", "initiative");
+    return this.system.initiative;
   }
 
   /** @type {boolean} - Is this tracking buff active state and duration? */
   get isTracker() {
-    return this.getFlag("pf1", "tracker") ?? false;
+    return this.system.isTracker ?? false;
   }
 
   get isSuppressed() {

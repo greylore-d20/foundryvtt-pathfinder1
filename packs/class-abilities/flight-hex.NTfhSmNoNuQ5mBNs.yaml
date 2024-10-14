@@ -37,7 +37,7 @@ system:
       name: Fly
       uses:
         self:
-          maxFormula: '(@class.level > 4) ? (@class.level) : 0'
+          maxFormula: if(gt(@class.level, 4), @class.level)
           per: day
   associations:
     classes:

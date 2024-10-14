@@ -9,9 +9,7 @@ system:
       - Bloodrager
   changes:
     - _id: e6davhgp
-      formula: >-
-        @class.level >= 20 ? 6 : ((@class.level >= 16 && @class.level < 20) ? 4
-        : 2)
+      formula: 2 + if(gte(@class.level, 16), 2) + if(gte(@class.level, 20), 2)
       target: nac
       type: enh
   description:

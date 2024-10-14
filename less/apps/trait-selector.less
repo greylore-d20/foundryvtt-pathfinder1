@@ -1,10 +1,14 @@
-.app.pf1.trait-selector {
+.application.pf1-v2.trait-selector {
   max-height: 720px;
 
-  form {
-    height: 100%;
+  .window-content > section {
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
+    overflow: hidden;
+
+    input[type="search"] {
+      margin-bottom: 0.5rem;
+    }
 
     .trait-list {
       flex: 1;
@@ -20,8 +24,6 @@
     }
 
     .custom-tags {
-      display: flex;
-      flex-flow: row wrap;
       gap: 0.5em;
 
       > h3 {

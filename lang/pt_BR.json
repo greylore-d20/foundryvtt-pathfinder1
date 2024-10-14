@@ -317,18 +317,37 @@
           "Desc": "Você decidirá quantos pontos de vida ganhará neste nível.",
           "Label": "Manual"
         },
-        "Label": "Saúde"
+        "Label": "Saúde",
+        "Maximized": {
+          "Desc": "Você ganha o máximo de PV possível neste nível com base no seu dado de vida.",
+          "Label": "Maximizado"
+        },
+        "Auto": {
+          "Label": "Automático",
+          "Desc": "Seus pontos de vida são definidos automaticamente de acordo com uma taxa predefinida ({rate}%)."
+        },
+        "Static": {
+          "Label": "Estático",
+          "Desc": "Você ganha uma quantidade definida de PV definida pela sua classe."
+        }
       },
       "FC": {
         "HP": {
-          "Desc": "Você ganhará um único ponto de vida como seu bônus de classe favorito para este nível."
+          "Desc": "Você ganhará um único ponto de vida como seu bônus de classe favorito para este nível.",
+          "Label": "Ponto de Vida"
         },
         "Alt": {
-          "Desc": "Você ganhará algo específico para sua combinação de classe e raça como seu bônus de classe favorito para este nível."
+          "Desc": "Você ganhará algo específico para sua combinação de classe e raça como seu bônus de classe favorito para este nível.",
+          "Label": "Alternativo"
         },
         "Label": "Bônus de Classe Favorita",
         "Skill": {
-          "Desc": "Você ganhará uma única graduação de perícia para gastar livremente como seu bônus de classe favorita para este nível."
+          "Desc": "Você ganhará uma única graduação de perícia para gastar livremente como seu bônus de classe favorita para este nível.",
+          "Label": "Ponto de Perícia"
+        },
+        "None": {
+          "Desc": "Você não ganha nada porque esta classe não pode ter BCF ou você não escolheu um bônus.",
+          "Label": "Nenhum"
         }
       },
       "AbilityScore": {
@@ -337,30 +356,43 @@
         "Item": {
           "Name": "Pontos de Atributo adicionados",
           "Desc": "<p>Este recurso é usado para rastrear suas mudanças no ponto de atributo ao ganhar dados de vida.</p>"
-        }
+        },
+        "NextLevel": "Próximo ganho no nível de personagem {level}.",
+        "NextTier": "Próximo ganho no nível mítico {tier}."
       },
       "Summary": {
-        "Label": "Resumo"
+        "Label": "Resumo",
+        "AdventureSkills": "Níveis de perícia de aventura",
+        "BackgroundSkills": "Níveis de perícia de antecedente"
       },
       "Chat": {
         "Header": "Relatório de Subida de Nível",
         "Health": {
           "Header": "Vida",
           "Manual": "Vida manual: {add}",
-          "Roll": "Vida rolada: {add}"
+          "Roll": "Vida rolada: {add}",
+          "Auto": "Automático: {add}",
+          "Static": "Estático: {add}"
         },
         "FC": {
           "Header": "Bônus de Classe Favorita"
         },
         "AbilityScore": {
-          "Header": "Aumento de ponto de atributo"
+          "Header": "Aumento de ponto de atributo",
+          "Gain": "{abl}: +{value}"
         },
         "Extra": {
           "Header": "Extra",
           "NewFeat": "Você tem 1 novo talento para escolher",
           "NewFeats": "Você tem {newValue} novos talentos para escolher"
         }
-      }
+      },
+      "SkipHint": "Adicione o nível de classe como está, ignorando as escolhas neste diálogo. Associações de classe e outras melhorias básicas (como BBA) ainda são adicionadas.",
+      "Add": "Add {class}",
+      "Increase": "Subir de nível {class}",
+      "Action": "Subir de Nível",
+      "NewLevel": "Novo Nível",
+      "NewTier": "Novo Tier"
     },
     "General": "Geral",
     "Apply": "Aplicar",
@@ -440,7 +472,15 @@
     "ActivationCost": "Custo de Ativação",
     "Duration": "Duração",
     "LimitedUses": {
-      "Label": "Usos limitados"
+      "Label": "Usos limitados",
+      "Periods": {
+        "single": "Uso Único",
+        "round": "Por Rodada",
+        "hour": "Por Hora",
+        "day": "Por Dia",
+        "week": "Por Semana",
+        "charges": "Cargas"
+      }
     },
     "MaximumUsesFormula": "Fórmula de Uso Máximo",
     "CheckFlags": "Bandeiras",
@@ -996,7 +1036,9 @@
     "CompendiumBrowser": {
       "ShowPack": "Mostrar em navegadores de compêndio",
       "HiddenPack": "Pacote oculto em navegadores de compêndio",
-      "HidePack": "Ocultar em navegadores de compêndio"
+      "HidePack": "Ocultar em navegadores de compêndio",
+      "ClearFilters": "Limpar Filtros",
+      "ReloadPacks": "Recarregar Pacotes"
     },
     "DCFormula": "Fórmula da CD",
     "DCOffsetFormula": "Fórmula de Deslocamento da CD",
@@ -1157,10 +1199,21 @@
         "equipment": {
           "armor": {
             "Plural": "Armaduras",
-            "Single": "Armadura"
+            "Single": "Armadura",
+            "Types": {
+              "light": "Armadura Leve",
+              "medium": "Armadura Média",
+              "heavy": "Armadura Pesada"
+            }
           },
           "shield": {
-            "Single": "Escudo"
+            "Single": "Escudo",
+            "Types": {
+              "misc": "Escudo Diverso",
+              "light": "Escudo Leve",
+              "heavy": "Escudo Pesado",
+              "tower": "Escudo Torre"
+            }
           },
           "wondrous": {
             "Single": "Maravilhoso"
@@ -1178,6 +1231,181 @@
           "gear": {
             "Plural": "Equipamentos",
             "Single": "Equipamento"
+          },
+          "entertainment": {
+            "Single": "Entretenimento",
+            "Plural": "Entretenimentos"
+          },
+          "adventuring": {
+            "Plural": "Equipamentos de Aventura",
+            "Single": "Equipamento de Aventura"
+          },
+          "tradeGoods": {
+            "Single": "Bem Comercial",
+            "Plural": "Bens Comerciais"
+          },
+          "tool": {
+            "Single": "Ferramenta",
+            "Plural": "Ferramentas"
+          },
+          "food": {
+            "Single": "Comida",
+            "Plural": "Comidas"
+          },
+          "herb": {
+            "Single": "Erva",
+            "Plural": "Ervas"
+          },
+          "animal": {
+            "Single": "Animal/Montaria",
+            "Plural": "Animais/Montarias"
+          },
+          "animalGear": {
+            "Single": "Equipamento para Animal",
+            "Plural": "Equipamentos para Animais"
+          },
+          "reagent": {
+            "Single": "Reagente Alquímico",
+            "Plural": "Reagentes Alquímicos"
+          },
+          "remedy": {
+            "Single": "Remédio Alquímico",
+            "Plural": "Remédios Alquímicos"
+          },
+          "treasure": {
+            "Single": "Tesouro",
+            "Plural": "Tesouros"
+          },
+          "vehicle": {
+            "Single": "Veículo/Transporte",
+            "Plural": "Veículos/Transportes"
+          },
+          "misc": {
+            "Single": "Variado",
+            "Plural": "Variados"
+          }
+        },
+        "attack": {
+          "ability": {
+            "Single": "Habilidade de Classe",
+            "Plural": "Habilidades de Classe"
+          },
+          "weapon": {
+            "Single": "Ataque de Arma",
+            "Plural": "Ataques de Armas"
+          },
+          "natural": {
+            "Single": "Ataque Natural",
+            "Plural": "Ataques Naturais"
+          },
+          "racialAbility": {
+            "Single": "Habilidade Racial",
+            "Plural": "Habilidades Raciais"
+          },
+          "item": {
+            "Single": "Item",
+            "Plural": "Itens"
+          },
+          "misc": {
+            "Single": "Variado",
+            "Plural": "Variados"
+          }
+        },
+        "buff": {
+          "feat": {
+            "Single": "Característica",
+            "Plural": "Características"
+          },
+          "temp": {
+            "Single": "Temporário",
+            "Plural": "Temporários"
+          },
+          "spell": {
+            "Single": "Magia",
+            "Plural": "Magias"
+          },
+          "perm": {
+            "Single": "Permanente",
+            "Plural": "Permanentes"
+          },
+          "item": {
+            "Single": "Item",
+            "Plural": "Itens"
+          },
+          "misc": {
+            "Single": "Variado",
+            "Plural": "Variados"
+          }
+        },
+        "feat": {
+          "classFeat": {
+            "Plural": "Características de Classe",
+            "Single": "Característica de Classe"
+          },
+          "feat": {
+            "Single": "Talento",
+            "Plural": "Talentos"
+          },
+          "trait": {
+            "Single": "Característica",
+            "Plural": "Características"
+          },
+          "racial": {
+            "Single": "Traço Racial",
+            "Plural": "Traços Raciais"
+          },
+          "template": {
+            "Single": "Modelo",
+            "Plural": "Modelos"
+          },
+          "misc": {
+            "Single": "Variado",
+            "Plural": "Variados"
+          }
+        },
+        "consumable": {
+          "pharmaceutical": {
+            "Single": "Farmacêutico"
+          },
+          "potion": {
+            "Single": "Poção/Óleo"
+          },
+          "poison": {
+            "Single": "Veneno"
+          },
+          "drug": {
+            "Single": "Droga"
+          },
+          "scroll": {
+            "Single": "Pergaminho"
+          },
+          "wand": {
+            "Single": "Varinha"
+          },
+          "rod": {
+            "Single": "Bastão"
+          },
+          "staff": {
+            "Single": "Cajado"
+          }
+        },
+        "weapon": {
+          "simple": {
+            "Single": "Simples"
+          },
+          "martial": {
+            "Single": "Marcial"
+          },
+          "exotic": {
+            "Single": "Exótico"
+          },
+          "misc": {
+            "Single": "Variado"
+          }
+        },
+        "implant": {
+          "cybertech": {
+            "Single": "Tecnologia cibernética"
           }
         }
       }
@@ -1199,7 +1427,9 @@
     },
     "TotalItemValue": "Valor Total do Item: {gp} po, {sp} pp, {cp} pc",
     "WeightReduction": {
-      "Label": "Redução de Peso"
+      "Label": "Redução de Peso",
+      "Percentage": "Porcentagem",
+      "Flat": "Fixo"
     },
     "WoundLevel": {
       "grazed": "Condição Ralado",
@@ -1259,7 +1489,14 @@
       "energyDrain": "Drenagem de Energia",
       "mindAffecting": "Afetando a Mente",
       "poison": "Veneno",
-      "petrified": "Petrificado"
+      "petrified": "Petrificado",
+      "dead": "Morto",
+      "disabled": "Incapacitado",
+      "dying": "Morrendo",
+      "flatFooted": "Desprevenido",
+      "polymorph": "Polimorfo",
+      "stable": "Estável",
+      "unconscious": "Inconsciente"
     },
     "Alignments": {
       "l": "Ordeiro",
@@ -1303,7 +1540,343 @@
       "mShort": "m",
       "km": "Quilômetros",
       "kmShort": "km"
-    }
+    },
+    "SpellDescriptors": {
+      "acid": "ácido",
+      "fear": "medo",
+      "shadow": "sombra",
+      "air": "ar",
+      "chaotic": "caótico",
+      "cold": "frio",
+      "curse": "maldição",
+      "darkness": "escuridão",
+      "death": "morte",
+      "disease": "doença",
+      "draconic": "dracônico",
+      "earth": "terra",
+      "electricity": "eletricidade",
+      "emotion": "emoção",
+      "evil": "mal",
+      "fire": "fogo",
+      "force": "força",
+      "good": "bem",
+      "languageDependent": "Dependente de idioma",
+      "lawful": "leal",
+      "light": "luz",
+      "meditative": "meditativo",
+      "mindAffecting": "efeito mental",
+      "pain": "dor",
+      "poison": "veneno",
+      "ruse": "ardil",
+      "sonic": "sônico",
+      "water": "água"
+    },
+    "Delete": "Excluir",
+    "WeaponProperty": {
+      "Finesse": "Acuidade",
+      "Distracting": "Distração",
+      "Deadly": "Mortal",
+      "Automatic": "Automático",
+      "Blocking": "Bloqueio",
+      "Brace": "Escorar",
+      "Disarm": "Desarmar",
+      "Double": "Dupla",
+      "Fragile": "Frágil",
+      "Grapple": "Agarrar",
+      "Improvised": "Improvisada",
+      "Monk": "Monge",
+      "NonLethal": "Não letal",
+      "Performance": "Atuação",
+      "Reach": "Alcance",
+      "Scatter": "Dispersão",
+      "SemiAutomatic": "Semi-automático",
+      "SlowFiring": "Disparo lento",
+      "Sunder": "Fender",
+      "Special": "Especial",
+      "Thrown": "Arremesso",
+      "Trip": "Derrubar"
+    },
+    "WeaponSubtypeLight": "Leve",
+    "SplitValue": "{gp} po, {sp} pp, {cp} pc",
+    "Time": {
+      "Format": "{value} {unit}",
+      "Period": {
+        "second": {
+          "Label": "Segundos",
+          "Short": "segundos"
+        },
+        "month": {
+          "Label": "Meses"
+        },
+        "inst": {
+          "Label": "Instantâneo"
+        },
+        "turn": {
+          "Label": "Turno",
+          "Short": "turno"
+        },
+        "round": {
+          "Label": "Rodadas",
+          "Short": "rodada"
+        },
+        "minute": {
+          "Label": "Minutos",
+          "Short": "minutos"
+        },
+        "hour": {
+          "Label": "Horas",
+          "Short": "horas"
+        },
+        "day": {
+          "Label": "Dias"
+        },
+        "year": {
+          "Label": "Anos"
+        },
+        "perm": {
+          "Label": "Permanente"
+        }
+      },
+      "Turn": {
+        "Start": "Início do Turno",
+        "End": "Final do Turno"
+      }
+    },
+    "AssociatedClass": "Classe Associada",
+    "EquipSlots": {
+      "wrists": "Pulsos",
+      "none": "Sem Espaço",
+      "armor": "Armadura",
+      "shield": "Escudo",
+      "clothing": "Roupa",
+      "head": "Cabeça",
+      "headband": "Tiara",
+      "eyes": "Olhos",
+      "shoulders": "Ombros",
+      "neck": "Pescoço",
+      "chest": "Peito",
+      "body": "Corpo",
+      "belt": "Cinto",
+      "hands": "Mãos",
+      "ring": "Anel",
+      "feet": "Pés"
+    },
+    "Cybertech": {
+      "Slots": {
+        "eyes": "Olhos",
+        "none": "Nenhum",
+        "arm": "Braço",
+        "body": "Corpo",
+        "brain": "Cérebro",
+        "ears": "Ouvidos",
+        "head": "Cabeça",
+        "legs": "Pernas"
+      },
+      "Implantation": "Implantação",
+      "Install": "CD Instalação",
+      "Disabled": "Desabilitado"
+    },
+    "Trait": {
+      "cosmic": "Cósmico",
+      "magic": "Mágico",
+      "combat": "Combate",
+      "faith": "Fé",
+      "social": "Social",
+      "campaign": "Campanha",
+      "equipment": "Equipamento",
+      "exemplar": "Exemplar",
+      "faction": "Facção",
+      "family": "Família",
+      "mount": "Montaria",
+      "race": "Raça",
+      "region": "Região",
+      "religion": "Religião",
+      "drawback": "Desvantagem"
+    },
+    "QuantityAdd": "Aumentar Quantidade<br><br>Clique: 1<br>Shift + Clique: 5<br>Ctrl + Clique: 10",
+    "AbilityWisPen": "Penalidade de Sabedoria",
+    "AmmoType": {
+      "gunBullet": "Bala (arma de fogo)",
+      "arrow": "Flecha",
+      "bolt": "Seta",
+      "repeatingBolt": "Seta (Repetição)",
+      "slingBullet": "Bala (Estilingue)",
+      "dragoonBullet": "Bala (arma de fogo dragão)",
+      "siege": "Cerco",
+      "dart": "Dardo"
+    },
+    "BuffTarReach": "Alcance Natural",
+    "Sense": {
+      "blindsense": "Percepção às Cegas",
+      "blindsight": "Sentido às Cegas",
+      "darkvision": "Visão no Escudo",
+      "tremorsense": "Sentido de Tremor",
+      "trueseeing": "Visão verdadeira",
+      "lowlight": "Visão na Penumbra",
+      "seeInvis": "Ver Invisibilidade",
+      "seeInDark": "Ver na escuridão",
+      "scent": "Odor"
+    },
+    "BuffTarNaturalAttack": "Rolagens de Ataque Natural",
+    "BuffTarThrownAttack": "Rolagens de Ataque de Arremesso",
+    "BuffTarSpellEffect": "Efeito Mágico",
+    "Spellbook": {
+      "OpenSlots": "Espaços Abertos",
+      "InsufficientAbility": "Pontuação de Atributos Insuficiente",
+      "InsufficientLevel": "Nível Insuficiente",
+      "Known": "Conhecido"
+    },
+    "WeaponSubtypeOneHanded": "Uma mão",
+    "WeaponSubtypeTwoHanded": "Duas mãos",
+    "Implanted": "Implantado",
+    "RacePoints": "Pontos Raciais",
+    "ModifierOnly": "Somente Modificador",
+    "CheckOnly": "Somente Verificação",
+    "Duplicate": "Duplicar",
+    "QuantitySub": "Diminuir quantidade<br><br>Clique: -1<br>Shift + Clique: -5<br>Ctrl + Clique: -10",
+    "AbilityStrPen": "Penalidade de Força",
+    "AbilityDexPen": "Penalidade de Destreza",
+    "AbilityConPen": "Penalidade de Constituição",
+    "AbilityIntPen": "Penalidade de Inteligência",
+    "AbilityChaPen": "Penalidade de Carisma",
+    "StartingWealth": "Riqueza Inicial",
+    "Activation": {
+      "aoo": {
+        "Plural": "Ataques de Oportunidade",
+        "Single": "Ataque de Oportunidade"
+      },
+      "passive": {
+        "Single": "Passivo",
+        "Plural": "Passivos"
+      },
+      "free": {
+        "Single": "Livre",
+        "Plural": "Ações Livres"
+      },
+      "swift": {
+        "Single": "Rápida",
+        "Plural": "Ações Rápidas"
+      },
+      "immediate": {
+        "Single": "Imediata",
+        "Plural": "Ações Imediatas"
+      },
+      "move": {
+        "Single": "Movimento",
+        "Plural": "Ações de Movimento"
+      },
+      "standard": {
+        "Single": "Padrão",
+        "Plural": "Ações Padrões"
+      },
+      "fullRound": {
+        "Single": "Rodada completa",
+        "Plural": "Ações de Rodada Completa"
+      },
+      "attack": {
+        "Single": "Ataque",
+        "Plural": "Ações de Ataque"
+      },
+      "round": {
+        "Single": "Rodada",
+        "Plural": "Rodadas"
+      },
+      "minute": {
+        "Single": "Minuto",
+        "Plural": "Minutos"
+      },
+      "hour": {
+        "Single": "Hora",
+        "Plural": "Horas"
+      },
+      "special": {
+        "Single": "Especial",
+        "Plural": "Especiais"
+      },
+      "nonaction": {
+        "Single": "Não ação"
+      },
+      "reaction": {
+        "Single": "Reação",
+        "Plural": "Reações"
+      },
+      "action": {
+        "Single": "Ação",
+        "Plural": "Ações"
+      }
+    },
+    "InventoryEquipment": "Equipamento",
+    "Proficiency": {
+      "Weapon": {
+        "simple": "Armas Simples",
+        "LabelPlural": "Proficiência em Armas",
+        "martial": "Armas Marciais"
+      },
+      "Armor": {
+        "LabelPlural": "Proficiências em Armadura",
+        "light": "Armadura Leve",
+        "medium": "Armadura Média",
+        "heavy": "Armadura Pesada",
+        "shield": "Escudos",
+        "tower": "Escudos Torre"
+      },
+      "Granted": "Proficiências Concedidas",
+      "Penalty": "Penalidade de Proficiência"
+    },
+    "SpellSchools": {
+      "uni": "Universal",
+      "abj": "Abjuração",
+      "con": "Conjuração",
+      "div": "Adivinhação",
+      "enc": "Encantamento",
+      "evo": "Evocação",
+      "ill": "Ilusão",
+      "nec": "Necromancia",
+      "tra": "Transmutação"
+    },
+    "FavouredClass": {
+      "Bonuses": {
+        "Label": "Bônus de Classe Favorecida",
+        "hp": "Pontos de Vida",
+        "skill": "Perícias",
+        "alt": "Alternativo"
+      }
+    },
+    "ChangeFlags": {
+      "NoHeavyEncumbrance": "Não afetado por sobrecarga pesada",
+      "LoseDexToAC": "Perde Des para CA",
+      "NoMediumEncumbrance": "Não afetado por sobrecarga média",
+      "MediumArmorFullSpeed": "Velocidade máxima em armadura média",
+      "HeavyArmorFullSpeed": "Velocidade máxima em armadura pesada"
+    },
+    "RacialTraitCategories": {
+      "defense": "Defesa",
+      "featSkills": "Talento e Perícia",
+      "magical": "Mágico",
+      "senses": "Sentidos",
+      "offense": "Ofensivo",
+      "other": "Outro",
+      "weakness": "Fraqueza"
+    },
+    "RaceType": "Tipo de Raça",
+    "RaceTypes": {
+      "standard": "Padrão",
+      "advanced": "Avançado",
+      "monstrous": "Monstruoso"
+    },
+    "SpellLevels": {
+      "0": "Truque/Prece",
+      "1": "1º Nível",
+      "2": "2º Nível",
+      "3": "3º Nível",
+      "4": "4º Nível",
+      "5": "5º Nível",
+      "6": "6º Nível",
+      "7": "7º Nível",
+      "8": "8º Nível",
+      "9": "9º Nível"
+    },
+    "InventoryImplants": "Implantes"
   },
   "TOKEN": {
     "VisionLowLight": "Visão na Penumbra",
@@ -1329,7 +1902,8 @@
       "spell": "Magia",
       "class": "Classe",
       "feat": "Talento",
-      "buff": "Buff"
+      "buff": "Buff",
+      "implant": "Implante"
     }
   }
 }

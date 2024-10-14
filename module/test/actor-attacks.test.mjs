@@ -1,4 +1,4 @@
-import { ActorPF } from "../documents/actor/actor-pf.mjs";
+import { ActorPF } from "@actor/actor-pf.mjs";
 import { createTestActor, addCompendiumItemToActor, unitTest_renderActorSheet } from "./actor-utils.mjs";
 
 export const registerActorItemAttackTests = () => {

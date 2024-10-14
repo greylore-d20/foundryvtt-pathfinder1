@@ -40,7 +40,7 @@ system:
   subType: classFeat
   tag: classFeat_dragonbreath
   uses:
-    maxFormula: '@class.level >= 14 ? 3 : 2'
+    maxFormula: 2 + if(gte(@class.level, 14), 1)
     per: day
 type: feat
 

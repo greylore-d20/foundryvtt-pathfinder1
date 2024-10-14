@@ -10,7 +10,7 @@ system:
   contextNotes:
     - target: cl
       text: >-
-        +[[2 + (@class.level >= 9 ? 2 : 0)]] bonus to dispel or remove a magic
+        +[[2 + if(gte(@class.level, 9), 2)]] bonus to dispel or remove a magic
         effect
   description:
     value: >-

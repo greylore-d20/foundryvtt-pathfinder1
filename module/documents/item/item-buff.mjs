@@ -1,5 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 /**
  * Buff item
@@ -238,7 +238,8 @@ export class ItemBuffPF extends ItemPF {
       if (!formula) return;
       rollData ??= this.getRollData();
       // TODO: Make this roll somehow known
-      const duration = await RollPF.safeRoll(formula, rollData).total;
+      const droll = await RollPF.safeRoll(formula, rollData);
+      const duration = droll.total;
       switch (units) {
         case "hour":
           seconds = duration * 60 * 60;
@@ -265,11 +266,12 @@ export class ItemBuffPF extends ItemPF {
   async getRawEffectData({ rollData } = {}) {
     const createData = await super.getRawEffectData();
 
+    createData.type = "buff";
+
     createData.statuses = Array.from(this.system.conditions.all);
 
     // Add buff durations
     const duration = this.system.duration;
-    const formula = `${duration.value}`;
 
     let endTiming = this.system.duration.end || "turnStart";
 
@@ -277,21 +279,18 @@ export class ItemBuffPF extends ItemPF {
     if (duration.units === "turn") {
       endTiming = "turnEnd";
       seconds = 0;
-    } else if (formula) {
+    } else if (duration.value) {
       seconds = await this.getDuration({ rollData });
     }
 
-    createData.duration.seconds = seconds;
+    if (Number.isFinite(seconds)) {
+      createData.duration.seconds = seconds;
+    }
 
-    const flags = { duration: {} };
-
-    // Record end timing
-    flags.duration.end = endTiming;
-
-    // Record initiative
-    flags.duration.initiative = game.combat?.initiative;
-
-    foundry.utils.mergeObject(createData, { "flags.pf1": flags });
+    // Record timing
+    createData.system ??= {};
+    createData.system.end = endTiming;
+    createData.system.initiative = game.combat?.initiative;
 
     return createData;
   }

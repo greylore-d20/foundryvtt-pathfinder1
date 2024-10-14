@@ -5,7 +5,7 @@ name: Siabrae
 system:
   changes:
     - _id: yz53naur
-      formula: '(@ac.natural.total >= 10) ? 0 : (10 - @ac.natural.total)'
+      formula: max(0, 10 - @ac.natural.total)
       target: nac
       type: untyped
     - _id: 355oedq0

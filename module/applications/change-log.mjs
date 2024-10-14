@@ -1,4 +1,4 @@
-import { SemanticVersion } from "../utils/semver.mjs";
+import { SemanticVersion } from "@utils/semver.mjs";
 
 /**
  * Changelog Dialog

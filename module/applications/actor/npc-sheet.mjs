@@ -1,6 +1,5 @@
 import { ActorSheetPF } from "./actor-sheet.mjs";
-import { CR } from "../../utils/lib.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { CR } from "@utils";
 
 /**
  * An Actor sheet for NPC type characters in the game system.

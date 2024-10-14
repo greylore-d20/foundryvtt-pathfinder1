@@ -1,12 +1,26 @@
-.pf1.pointbuy-calculator {
+.pf1-v2.pointbuy-calculator {
   .info {
     .usage {
       text-align: center;
+
+      &.invalid {
+        color: var(--pf1-v2-text-warning);
+      }
     }
 
     .categories {
+      margin: 0;
+
       .closest {
-        font-weight: bold;
+        color: var(--pf1-v2-text-highlight);
+      }
+
+      th:first-child {
+        text-align: left;
+      }
+
+      td:last-child {
+        text-align: center;
       }
     }
   }
@@ -16,24 +30,17 @@
     padding: 0;
 
     li {
-      height: 2em;
-      background-color: rgba(155, 155, 155, 0.3);
+      height: 2rem;
       &:nth-child(odd) {
-        background-color: rgba(210, 210, 210, 0.3);
+        background-color: rgba(255, 255, 255, 0.2);
       }
     }
 
-    h4 {
-      margin: 0;
-    }
-
     .name {
-      padding: 0 3px;
+      padding: 0 1rem;
     }
 
     .ability {
-      gap: 1px;
-
       .controls,
       .value {
         flex: 0 0 32px;

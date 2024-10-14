@@ -10,7 +10,7 @@ system:
   contextNotes:
     - target: allSavingThrows
       text: >-
-        +[[2 + (@class.level >= 11 ? 2 : 0)]] insight bonus against spells and
+        +[[2 + if(gte(@class.level, 11), 2)]] insight bonus against spells and
         spell-like abilities. At 7th level, this bonus also applies against
         supernatural abilities.
   description:

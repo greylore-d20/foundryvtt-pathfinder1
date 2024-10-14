@@ -8,7 +8,7 @@ system:
       - Oracle
   changes:
     - _id: qglb11lf
-      formula: '@class.level >= 10 ? 1 : 0'
+      formula: if(gte(@class.level, 10), 1)
       target: nac
       type: untyped
   description:

@@ -226,7 +226,7 @@ export class ItemActionSheet extends FormApplication {
   _prepareMaterialsAndAddons() {
     const materialList = {};
     const addonList = [];
-    naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
+    naturalSort([...pf1.registry.materials], "name").forEach((material) => {
       if (
         material.allowed.lightBlade ||
         material.allowed.oneHandBlade ||

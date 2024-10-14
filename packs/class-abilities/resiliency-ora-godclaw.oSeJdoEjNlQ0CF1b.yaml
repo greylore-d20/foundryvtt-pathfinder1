@@ -9,7 +9,7 @@ system:
       - Oracle
   changes:
     - _id: OkKBUhzJ
-      formula: '(@class.level >= 7 ? 1 : 0)'
+      formula: if(gte(@class.level, 7), 1)
       target: bonusFeats
       type: untyped
   description:
@@ -34,7 +34,7 @@ system:
     - Revelation
     - Godclaw Mystery
   uses:
-    maxFormula: '@class.level >= 15 ? 3 : 1'
+    maxFormula: 1 + if(gte(@class.level, 15), 2)
     per: day
 type: feat
 

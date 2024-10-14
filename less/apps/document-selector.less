@@ -1,0 +1,112 @@
+.pf1-v2.application.document-selector {
+  max-height: 720px;
+
+  .window-content > section {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+
+    input[type="search"] {
+      margin-bottom: 0.5rem;
+    }
+
+    .document-section-wrapper {
+      flex: 1;
+      overflow: auto;
+      .scrollbar();
+      list-style: none;
+
+      .documents-section-label {
+        margin: 1rem 0 0.5rem;
+      }
+
+      .document-sections-list {
+        list-style: none;
+        padding: unset;
+        display: flex;
+        flex-direction: column;
+        margin: unset;
+
+        .document-item {
+          padding: 0.5rem;
+          margin: unset;
+          border: 1px solid transparent;
+
+          label {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            cursor: pointer;
+
+            .item-details {
+              display: flex;
+              flex-direction: column;
+              width: calc(100% - 0.5rem - 36px);
+
+              .item-name {
+                font-size: var(--font-size-18);
+              }
+
+              .item-extras {
+                font-size: var(--font-size-10);
+                display: flex;
+                white-space: nowrap;
+                height: var(--font-size-10);
+                overflow: hidden;
+
+                .item-extra {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+
+                  &:not(:first-child)::before {
+                    content: "•";
+                    padding: 0 0.2rem;
+                  }
+                }
+              }
+            }
+
+            img {
+              width: 36px;
+              height: 36px;
+              border: unset;
+            }
+
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.application.document-selector {
+    .window-content > section {
+      .document-section-wrapper {
+        .document-sections-list {
+          .document-item.selected {
+            border-color: var(--color-warm-1);
+          }
+        }
+      }
+    }
+  }
+}
+
+.theme-light {
+  .pf1-v2.application.document-selector {
+    .window-content > section {
+      .document-section-wrapper {
+        .document-sections-list {
+          .document-item.selected {
+            border-color: var(--color-warm-2);
+          }
+        }
+      }
+    }
+  }
+}

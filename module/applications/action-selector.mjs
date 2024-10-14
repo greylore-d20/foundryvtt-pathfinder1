@@ -1,4 +1,4 @@
-import { getSkipActionPrompt } from "../documents/settings.mjs";
+import { getSkipActionPrompt } from "@documents/settings.mjs";
 
 export class ActionSelector extends Application {
   /**

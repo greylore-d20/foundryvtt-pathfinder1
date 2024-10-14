@@ -4,13 +4,6 @@
  * Provides only caching of .itemTypes and nothing else.
  */
 export class ActorBasePF extends Actor {
-  constructor(...args) {
-    super(...args);
-
-    // Init .itemTypes cache
-    this._itemTypes ??= null;
-  }
-
   /**
    * Add default artwork.
    *
@@ -32,18 +25,23 @@ export class ActorBasePF extends Actor {
   }
 
   /**
-   * Resets internal itemTypes cache.
-   *
-   * @protected
    * @override
    */
-  prepareBaseData() {
+  reset() {
     // Reset item types cache
     this._itemTypes = null;
     // Reset roll data cache if it exists.
-    delete this._rollData;
+    this._rollData = null;
 
-    super.prepareBaseData();
+    this._initialized = false; // For preventing items initializing certain data too early
+
+    super.reset();
+  }
+
+  /** @override */
+  _initialize(options) {
+    super._initialize(options);
+    this._initialized = true;
   }
 
   /**

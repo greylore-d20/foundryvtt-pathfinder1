@@ -13,8 +13,8 @@ system:
           type: action
       area: circle centered on you, with a radius of 100 feet + 10 feet per level
       duration:
-        units: spec
-        value: 1 hour/level
+        units: hour
+        value: '@cl'
       measureTemplate:
         size: 100 + (10 * @cl)
         type: circle

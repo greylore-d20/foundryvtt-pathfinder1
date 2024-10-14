@@ -1,7 +1,5 @@
 import { customRolls } from "./documents/chat-message.mjs";
-import { sortArrayByName } from "./utils/lib.mjs";
 import { RollPF } from "./dice/roll.mjs";
-import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs";
 
 // Add inline support for extra /commands
 {
@@ -51,24 +49,6 @@ import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs"
     if (!up) pf1.tooltip.lock.new = false;
   };
 }
-
-// Patch NumericTerm
-NumericTerm.prototype.getTooltipData = function () {
-  return {
-    formula: this.expression,
-    total: this.total,
-    flavor: this.flavor,
-  };
-};
-
-// Add support for numbers without prefix, e.g. .5
-// This was previously done in StringTerm monkeypatch
-NumericTerm.REGEXP = new RegExp(`^((?:\\d+\\.|\\.)?\\d+)${RollTerm.FLAVOR_REGEXP_STRING}?$`);
-
-// Patch ParentheticalTerm and allowed operators
-ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}?`, "g");
-OperatorTerm.REGEXP = /(?:&&|\|\||\*\*|%|\+|-|\*|\/|\\%|\||:|\?)|(?<![a-z])[!=<>]+/g;
-OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<=", ">=", "??", "||", "&&", "**");
 
 // Document link attribute stuffing
 {
@@ -163,6 +143,3 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
     },
   });
 }
-
-// Call patch functions
-patchLowLightVision();

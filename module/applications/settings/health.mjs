@@ -1,3 +1,5 @@
+import { AbstractSettingsApplication } from "@app/settings/abstract-settings.mjs";
+
 export class HealthConfigModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -61,123 +63,88 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
 
   static get woundThesholdOptions() {
     return {
-      0: game.i18n.localize("PF1.SETTINGS.Health.WoundThresholds.Disabled"),
-      1: game.i18n.localize("PF1.SETTINGS.Health.WoundThresholds.Normal"),
-      2: game.i18n.localize("PF1.SETTINGS.Health.WoundThresholds.Gritty"),
+      0: game.i18n.localize("PF1.Application.Settings.Health.WoundThresholds.Disabled"),
+      1: game.i18n.localize("PF1.Application.Settings.Health.WoundThresholds.Normal"),
+      2: game.i18n.localize("PF1.Application.Settings.Health.WoundThresholds.Gritty"),
     };
   }
 }
 
-export class HealthConfig extends FormApplication {
-  /**
-   * @readonly
-   */
-  static model = HealthConfigModel;
+export class HealthConfig extends AbstractSettingsApplication {
+  static DEFAULT_OPTIONS = {
+    configKey: "healthConfig",
+    position: {
+      width: 480,
+    },
+    window: {
+      title: "PF1.Application.Settings.Health.Title",
+    },
+  };
 
-  constructor(object = new HealthConfigModel(), options) {
-    super(object, options);
-  }
+  static PARTS = {
+    tabs: {
+      template: "templates/generic/tab-navigation.hbs",
+    },
+    form: {
+      template: "systems/pf1/templates/settings/health.hbs",
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
+
+  /* -------------------------------------------- */
 
   /**
-   * @override
+   * @inheritDoc
+   * @internal
+   * @async
    */
-  getData() {
+  async _prepareContext() {
     this.healthConfig ??= new HealthConfigModel(game.settings.get("pf1", "healthConfig").toObject());
 
     const context = {
       ...this.healthConfig,
       woundThesholdOptions: HealthConfigModel.woundThesholdOptions,
       healthRounding: {
-        up: "PF1.SETTINGS.Health.RoundingUp",
-        nearest: "PF1.SETTINGS.Health.RoundingNearest",
-        down: "PF1.SETTINGS.Health.RoundingDown",
+        up: "PF1.Application.Settings.Health.RoundingUp",
+        nearest: "PF1.Application.Settings.Health.RoundingNearest",
+        down: "PF1.Application.Settings.Health.RoundingDown",
       },
       healthContinuity: {
-        true: "PF1.SETTINGS.Health.Continuous",
-        false: "PF1.SETTINGS.Health.Discrete",
+        true: "PF1.Application.Settings.Health.Continuous",
+        false: "PF1.Application.Settings.Health.Discrete",
       },
     };
 
-    for (const [hdId, data] of Object.entries(context.hitdice)) {
-      data.label = `PF1.SETTINGS.Health.Class.${hdId.toLowerCase()}`;
+    for (const [hdId, hdData] of Object.entries(context.hitdice)) {
+      hdData.label = `PF1.Application.Settings.Health.Class.${hdId.toLowerCase()}`;
     }
 
-    return context;
-  }
-
-  /** @override */
-  static get defaultOptions() {
-    const options = super.defaultOptions;
     return {
-      ...options,
-      title: game.i18n.localize("PF1.SETTINGS.Health.Title"),
-      id: "health-config",
-      template: "systems/pf1/templates/settings/health.hbs",
-      classes: [...options.classes, "pf1", "health-config"],
-      width: 480,
-      height: "auto",
+      ...(await super._prepareContext()),
+      ...context,
+      showWoundsVigorWarning: {
+        pc: this.healthConfig.variants.pc.useWoundsAndVigor && this.healthConfig.variants.pc.useWoundThresholds !== 0,
+        npc:
+          this.healthConfig.variants.npc.useWoundsAndVigor && this.healthConfig.variants.npc.useWoundThresholds !== 0,
+      },
+      model: this.healthConfig.constructor.defineSchema(),
       tabs: [
         {
-          navSelector: ".tabs",
-          contentSelector: ".tabbed",
-          initial: "base",
+          id: "base",
+          icon: "fas fa-heartbeat",
+          label: "PF1.Application.Settings.Health.TabBase",
+          group: "primary",
+          cssClass: "active",
+        },
+        {
+          id: "variants",
+          icon: "fas fa-prescription-bottle-alt",
+          label: "PF1.Application.Settings.Health.TabVariant",
           group: "primary",
         },
       ],
-      submitOnChange: true,
-      submitOnClose: false,
-      closeOnSubmit: false,
     };
-  }
-
-  /**
-   * Handle button click to reset default settings
-   *
-   * @param event {Event}   The initial button click event
-   * @private
-   */
-  async _onReset(event) {
-    event.preventDefault();
-
-    await game.settings.set("pf1", "healthConfig", {});
-    this.healthConfig = null; // remove cache
-    return this.render();
-  }
-
-  async _onSave(event) {
-    event.preventDefault();
-
-    const settings = this.healthConfig.toObject();
-    const diff = game.settings.get("pf1", "healthConfig").updateSource(settings, { dry: true });
-    this.close();
-    if (foundry.utils.isEmpty(diff)) return;
-
-    await game.settings.set("pf1", "healthConfig", settings);
-
-    SettingsConfig.reloadConfirm({ world: true });
-  }
-
-  /**
-   * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
-   *
-   * @override
-   */
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find("button.reset").click(this._onReset.bind(this));
-    html.find("button.save").click(this._onSave.bind(this));
-  }
-
-  /**
-   * This method is called upon form submission after form data is validated.
-   *
-   * @override
-   */
-  async _updateObject(event, formData) {
-    formData = foundry.utils.expandObject(formData);
-    const settings = new HealthConfigModel(game.settings.get("pf1", "healthConfig").toObject());
-    settings.updateSource(formData); // Validate settings
-    this.healthConfig = settings;
-    this.render();
   }
 }

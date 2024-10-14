@@ -1,5 +1,3 @@
-import { RollPF } from "module/dice/roll.mjs";
-
 /**
  * Combatant extension.
  */

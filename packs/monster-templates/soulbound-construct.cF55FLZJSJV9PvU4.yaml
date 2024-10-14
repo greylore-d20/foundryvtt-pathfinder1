@@ -8,7 +8,7 @@ system:
       formula: '@abilities.cha.mod'
       target: ac
       type: deflection
-  crOffset: '@attributes.hd.total >= 11 ? 2 : 1'
+  crOffset: 1 + if(gte(@attributes.hd.total, 11), 1)
   description:
     value: >-
       <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>

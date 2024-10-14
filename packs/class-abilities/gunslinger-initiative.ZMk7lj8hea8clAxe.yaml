@@ -6,7 +6,7 @@ system:
   abilityType: ex
   changes:
     - _id: s57us5lv
-      formula: '(@resources.classFeat_gritGun.value > 0 ? 1 : 0)'
+      formula: if(gt(@resources.classFeat_gritGun.value, 0), 1)
       target: init
       type: untypedPerm
   description:

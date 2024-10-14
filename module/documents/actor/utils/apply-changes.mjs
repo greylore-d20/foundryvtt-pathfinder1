@@ -1,4 +1,4 @@
-import { RollPF } from "../../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 /**
  * @this {pf1.documents.actor.ActorPF}
@@ -22,8 +22,11 @@ export function applyChanges() {
   // Organize changes by priority
   changes.sort((a, b) => _sortChanges.call(this, a, b));
 
+  // Get items with change flags
+  const chflagItems = this.items.filter((i) => i.isActive && i.hasChanges && i.system.changeFlags);
+
   // Parse change flags
-  for (const i of this.changeItems) {
+  for (const i of chflagItems) {
     if (!i.system.changeFlags) continue;
     for (const [k, v] of Object.entries(i.system.changeFlags)) {
       if (v !== true) continue;

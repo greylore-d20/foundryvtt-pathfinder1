@@ -1,6 +1,6 @@
 // Test actor static functions
 
-import { ActorPF } from "../documents/actor/actor-pf.mjs";
+import { ActorPF } from "@actor/actor-pf.mjs";
 
 export const registerActorStaticTests = () => {
   quench.registerBatch(

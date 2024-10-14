@@ -1,124 +1,275 @@
-<form autocomplete="off" data-tooltip-class="pf1">
-  {{! Disable Tooltips globally }}
-  <div class="form-group">
-    <label>{{localize "PF1.SETTINGS.TokenTooltip.Disable"}}</label>
-    <div class="form-fields">
-      <input type="checkbox" name="disable" data-dtype="Boolean" {{checked data.disable}}>
-    </div>
-  </div>
-
-  {{! Anchor }}
-  <div class="flexrow">
-    <label>{{localize "PF1.SETTINGS.TokenTooltip.Anchor"}}</label>
-
+<section class="form-body">
+  {{! Player Tab }}
+  <section class="tab active" data-group="primary" data-tab="player">
+    {{! Disable Tooltips globally }}
     <div class="form-group">
-      <label>{{localize "PF1.Horizontal"}}</label>
-
+      <label for="player-tooltip-disable">
+        {{localize "PF1.Application.Settings.Tooltip.Disable"}}
+      </label>
       <div class="form-fields">
-        <input class="immediate-change" type="range" name="anchor.x" data-dtype="Number"
-          value="{{data.anchor.x}}" min="0" max="1" step="0.05">
-        <span class="range-value">{{data.anchor.x}}</span>
+        <input id="player-tooltip-disable" type="checkbox" name="player.disable"
+               data-dtype="Boolean" {{checked (or player.disable world.disable)}} {{disabled world.disable}} data-hide-on="1" data-hide="#player-tooltip-details">
       </div>
     </div>
 
-    <div class="form-group">
-      <label>{{localize "PF1.Vertical"}}</label>
+    <div id="player-tooltip-details" class="{{#if (or player.disable world.disable)}}hidden{{/if}}">
+      {{! Anchor }}
+      <div class="flexrow double-slider">
+        <label>
+          {{localize "PF1.Application.Settings.Tooltip.Anchor"}}
+        </label>
 
-      <div class="form-fields">
-        <input class="immediate-change" type="range" name="anchor.y" data-dtype="Number"
-          value="{{data.anchor.y}}" min="0" max="1" step="0.05">
-        <span class="range-value">{{data.anchor.y}}</span>
+        <div class="form-group">
+          <label>
+            {{localize "PF1.Horizontal"}}
+          </label>
+
+          <div class="form-fields form-slider">
+            <input class="immediate-change" type="range" name="player.anchor.x" data-dtype="Number"
+                   value="{{player.anchor.x}}" min="0" max="1" step="0.05">
+            <span class="range-value">{{player.anchor.x}}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            {{localize "PF1.Vertical"}}
+          </label>
+
+          <div class="form-fields form-slider">
+            <input class="immediate-change" type="range" name="player.anchor.y" data-dtype="Number"
+                   value="{{player.anchor.y}}" min="0" max="1" step="0.05">
+            <span class="range-value">{{player.anchor.y}}</span>
+          </div>
+        </div>
+      </div>
+
+      {{! Offset }}
+      <div class="flexrow double-slider">
+        <label>
+          {{localize "PF1.Application.Settings.Tooltip.Offset"}}
+        </label>
+
+        <div class="form-group">
+          <label>
+            {{localize "PF1.Horizontal"}}
+          </label>
+
+          <div class="form-fields form-slider">
+            <input class="immediate-change" type="range" name="player.offset.x" data-dtype="Number"
+                   value="{{player.offset.x}}" min="-100" max="100" step="1">
+            <span class="range-value">
+              {{player.offset.x}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            {{localize "PF1.Vertical"}}
+          </label>
+
+          <div class="form-fields form-slider">
+            <input class="immediate-change" type="range" name="player.offset.y" data-dtype="Number"
+                   value="{{player.offset.y}}" min="-100" max="100" step="1">
+            <span class="range-value">
+              {{player.offset.y}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {{! Other Positioning Settings }}
+      <div class="form-group">
+        <label for="tooltip-on-mouse">
+          {{localize "PF1.OnMouse"}}
+        </label>
+        <div class="form-fields">
+          <input id="tooltip-on-mouse" type="checkbox" name="player.onMouse"
+                 data-dtype="Boolean" {{checked player.onMouse}}>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tooltip-hide-portraits">
+          {{localize "PF1.Application.Settings.Tooltip.Hide.Portraits"}}
+        </label>
+        <div class="form-fields">
+          <input id="tooltip-hide-portraits" type="checkbox" name="player.portrait.hide"
+                 data-dtype="Boolean" {{checked player.portrait.hide}}>
+        </div>
+      </div>
+
+      {{! Portrait Settings }}
+      <div class="flexrow double-slider">
+        <label>
+          {{localize "PF1.Application.Settings.Tooltip.MaxPortraitSize"}}
+        </label>
+
+        <div class="form-group">
+          <label>
+            {{localize "PF1.Horizontal"}}
+          </label>
+
+          <div class="form-fields form-slider">
+            <input class="immediate-change" type="range" name="player.portrait.maxSize.width" data-dtype="Number"
+                   value="{{player.portrait.maxSize.width}}" min="64" max="720" step="1">
+            <span class="range-value">
+              {{player.portrait.maxSize.width}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            {{localize "PF1.Vertical"}}
+          </label>
+
+          <div class="form-fields form-slider">
+            <input class="immediate-change" type="range" name="player.portrait.maxSize.height" data-dtype="Number"
+                   value="{{player.portrait.maxSize.height}}" min="64" max="720" step="1">
+            <span class="range-value">
+              {{player.portrait.maxSize.height}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {{! Hide without key press }}
+      <div class="form-group">
+        <label for="tooltip-hide-without-key">
+          {{localize "PF1.Application.Settings.Tooltip.HideWithoutKey" key=hideKey}}
+        </label>
+
+        <div class="form-fields">
+          <input id="tooltip-hide-without-key" type="checkbox" name="player.hideWithoutKey"
+                 data-dtype="Boolean" {{checked player.hideWithoutKey}}>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  {{! Offset }}
-  <div class="flexrow">
-    <label>{{localize "PF1.SETTINGS.TokenTooltip.Offset"}}</label>
-
-    <div class="form-group">
-      <label>{{localize "PF1.Horizontal"}}</label>
-
-      <div class="form-fields">
-        <input class="immediate-change" type="range" name="offset.x" data-dtype="Number"
-          value="{{data.offset.x}}" min="-100" max="100" step="1">
-        <span class="range-value">{{data.offset.x}}</span>
+  {{! World Tab }}
+  {{#if isGM}}
+    <section class="tab" data-group="primary" data-tab="world">
+      {{! Disable Tooltips globally }}
+      <div class="form-group">
+        <label for="disable-tooltip">
+          {{localize "PF1.Application.Settings.TooltipWorld.Disable"}}
+        </label>
+        <div class="form-fields">
+          <input type="checkbox" id="disable-tooltip" name="world.disable"
+                 data-dtype="Boolean" {{checked world.disable}} data-hide-on="1" data-hide="#world-tooltip-details">
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>{{localize "PF1.Vertical"}}</label>
-
-      <div class="form-fields">
-        <input class="immediate-change" type="range" name="offset.y" data-dtype="Number"
-          value="{{data.offset.y}}" min="-100" max="100" step="1">
-        <span class="range-value">{{data.offset.y}}</span>
+      <div id="world-tooltip-details" class="{{#if world.disable}}hidden{{/if}}">
+      {{! Hide Portraits globally }}
+      <div class="form-group">
+        <label for="hide-portrait">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.Portraits"}}
+        </label>
+        <div class="form-fields">
+          <input type="checkbox" id="hide-portrait" name="world.portrait.hide"
+                 data-dtype="Boolean" {{checked world.portrait.hide}}>
+        </div>
       </div>
-    </div>
-  </div>
 
-  {{! Other Positioning Settings }}
-  <div class="form-group">
-    <label>{{localize "PF1.OnMouse"}}</label>
-    <div class="form-fields">
-      <input type="checkbox" name="onMouse" data-dtype="Boolean" {{checked data.onMouse}}>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label>{{localize "PF1.SETTINGS.TokenTooltip.Hide.Portraits"}}</label>
-    <div class="form-fields">
-      <input type="checkbox" name="portrait.hide" data-dtype="Boolean" {{checked data.portrait.hide}}>
-    </div>
-  </div>
-
-  {{! Portrait Settings }}
-  <div class="flexrow">
-    <label>{{localize "PF1.SETTINGS.TokenTooltip.MaxPortraitSize"}}</label>
-
-    <div class="form-group">
-      <label>{{localize "PF1.Horizontal"}}</label>
-
-      <div class="form-fields">
-        <input class="immediate-change" type="range" name="portrait.maxSize.width" data-dtype="Number"
-          value="{{data.portrait.maxSize.width}}" min="64" max="720" step="1">
-        <span class="range-value">{{data.portrait.maxSize.width}}</span>
+      {{! Hide Held items globally }}
+      <div class="form-group">
+        <label for="hide-held">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.Held"}}
+        </label>
+        <div class="form-fields">
+          <input type="checkbox" id="hide-held" name="world.hideHeld"
+                 data-dtype="Boolean" {{checked world.hideHeld}}>
+        </div>
+        <p class="hint">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.HeldHint"}}
+        </p>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>{{localize "PF1.Vertical"}}</label>
-
-      <div class="form-fields">
-        <input class="immediate-change" type="range" name="portrait.maxSize.height" data-dtype="Number"
-          value="{{data.portrait.maxSize.height}}" min="64" max="720" step="1">
-        <span class="range-value">{{data.portrait.maxSize.height}}</span>
+      {{! Hide Armor globally }}
+      <div class="form-group">
+        <label for="hide-armor">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.Armor"}}
+        </label>
+        <div class="form-fields">
+          <input type="checkbox" id="hide-armor" name="world.hideArmor"
+                 data-dtype="Boolean" {{checked world.hideArmor}}>
+        </div>
+        <p class="hint">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ArmorHint"}}
+        </p>
       </div>
-    </div>
-  </div>
 
-  {{! Hide without key press }}
-  <div class="form-group">
-    <label>{{localize "PF1.SETTINGS.TokenTooltip.HideWithoutKey" key=hideKey}}</label>
+      {{! Hide Buffs globally }}
+      <div class="form-group">
+        <label for="hide-buffs">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.Buffs"}}
+        </label>
+        <div class="form-fields">
+          <input type="checkbox" id="hide-buffs" name="world.hideBuffs"
+                 data-dtype="Boolean" {{checked world.hideBuffs}}>
+        </div>
+        <p class="hint">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.BuffsHint"}}
+        </p>
+      </div>
 
-    <div class="form-fields">
-      <input type="checkbox" name="hideWithoutKey" data-dtype="Boolean" {{checked data.hideWithoutKey}}>
-    </div>
-  </div>
+      {{! Hide Conditions globally }}
+      <div class="form-group">
+        <label for="hide-conditions">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.Conditions"}}
+        </label>
+        <div class="form-fields">
+          <input type="checkbox" id="hide-conditions" name="world.hideConditions"
+                 data-dtype="Boolean" {{checked world.hideConditions}}>
+        </div>
+        <p class="hint">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ConditionsHint"}}
+        </p>
+      </div>
 
-  <button class="world-settings" type="button" data-tooltip="PF1.SETTINGS.TokenTooltip.World.Hint" data-tooltip-direction="UP">
-    <span class="fas fa-window-maximize"></span>
-    {{localize "PF1.SETTINGS.TokenTooltip.World.Label"}}
-  </button>
+      {{! Hide Name globally }}
+      <div class="form-group">
+        <label for="minimum-permissions">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ActorName.MinimumPermission"}}
+        </label>
+        <div class="form-fields">
+          <select data-dtype="Number" id="minimum-permissions" name="world.minimumPermission">
+            {{selectOptions permissions selected=world.minimumPermission localize=true}}
+          </select>
+        </div>
+        <p class="hint">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ActorName.MinimumPermissionHint"}}
+        </p>
+      </div>
 
-  <div class="form-group">
-    <button type="submit" class="submit">
-      <i class="far fa-save"></i>
-      {{localize "SETTINGS.Save"}}
-    </button>
-    <button type="button" class="reset">
-      <i class="fas fa-undo"></i>
-      {{localize "SETTINGS.Reset"}}
-    </button>
-  </div>
-</form>
+      <div class="form-group">
+        <label for="hide-actor-name-by-disposition">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ActorName.ByDisposition"}}
+        </label>
+        <div class="form-fields">
+          <select data-dtype="Number" name="world.hideActorNameByDisposition" id="hide-actor-name-by-disposition">
+            {{selectOptions tokenNameDisposition selected=world.hideActorNameByDisposition localize=true}}
+          </select>
+        </div>
+        <p class="hint">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ActorName.ByDispositionHint"}}
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label for="hide-actor-name-replacement">
+          {{localize "PF1.Application.Settings.TooltipWorld.Hide.ActorName.Replacement"}}
+        </label>
+        <div class="form-fields">
+          <input type="text" id="hide-actor-name-replacement" name="world.hideActorNameReplacement"
+                 value="{{world.hideActorNameReplacement}}">
+        </div>
+      </div>
+      </div>
+    </section>
+  {{/if}}
+</section>

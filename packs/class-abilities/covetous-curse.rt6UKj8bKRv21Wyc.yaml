@@ -8,15 +8,15 @@ system:
       - Oracle
   changes:
     - _id: bqupe4f7
-      formula: '@class.level >= 5 ? 4 : 0'
+      formula: if(gte(@class.level, 5), 4)
       target: skill.apr
       type: insight
     - _id: s22762hv
-      formula: '@class.level >= 5 ? 4 : 0'
+      formula: if(gte(@class.level, 5), 4)
       target: skill.spl
       type: insight
     - _id: w05jp0uv
-      formula: '@class.level >= 5 ? 4 : 0'
+      formula: if(gte(@class.level, 5), 4)
       target: skill.umd
       type: insight
   description:

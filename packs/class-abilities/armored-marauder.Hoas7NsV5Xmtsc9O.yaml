@@ -12,7 +12,7 @@ system:
       - Slayer
   changes:
     - _id: 50bNxFUo
-      formula: '(@armor.type === 3) ? (-floor(@class.level / 6)) : 0'
+      formula: if(eq(@armor.type, 3), -floor(@class.level / 6))
       target: acpA
       type: untyped
   description:

@@ -21,12 +21,13 @@ const rawFoundryConfig = await fs.readJson(path.resolve(__dirname, "..", "foundr
  * An object containing various configuration values related to Foundry VTT and the system's build process.
  *
  * @type {FoundryConfig}
- * */
+ */
 export const FOUNDRY_CONFIG = Object.freeze({
   dataPath: null,
   appPath: null,
   routePrefix: null,
   openBrowser: false,
+  port: 30_000,
   ...rawFoundryConfig,
 });
 

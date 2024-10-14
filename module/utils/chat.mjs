@@ -207,7 +207,7 @@ export function hideInvisibleTargets(cm, html, recursive = false) {
     const isObserver = token.actor?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) ?? false;
 
     // Hide if token invisible and user isn't observer of token
-    if (!isVisible && !isObserver) t.elem.remove();
+    if ((!isVisible && !isObserver) || token.isSecret) t.elem.remove();
     else hasVisible = true;
   }
 

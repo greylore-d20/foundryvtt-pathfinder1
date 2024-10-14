@@ -38,7 +38,7 @@ system:
     - Revelation
     - Spellscar Mystery
   uses:
-    maxFormula: '@class.level >= 10 ? 2 : 1'
+    maxFormula: 1 + if(gte(@class.level, 10), 1)
     per: day
 type: feat
 

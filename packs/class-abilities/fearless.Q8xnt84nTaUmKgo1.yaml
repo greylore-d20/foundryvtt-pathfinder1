@@ -9,7 +9,7 @@ system:
       - Sorcerer
   changes:
     - _id: 2ro2xe0x
-      formula: '@class.level >= 9 ? 2 : 1'
+      formula: 1 + if(gte(@class.level, 9), 1)
       target: nac
       type: untyped
   description:

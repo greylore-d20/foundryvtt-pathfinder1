@@ -10,7 +10,7 @@ system:
   contextNotes:
     - target: allSavingThrows
       text: >-
-        +[[2 + (@class.level >= 11 ? 2 : 0)]] insight bonus against diseases,
+        +[[2 + if(gte(@class.level, 11), 2)]] insight bonus against diseases,
         mind-affecting effects, and poisons. At 7th level, this bonus also
         applies on saves against death effects, sleep effects, and stunning.
   description:

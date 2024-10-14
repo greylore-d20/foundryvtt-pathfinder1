@@ -2,8 +2,13 @@
 <div class="form-group input-select activation-cost">
   <label>{{localize "PF1.ActivationCost"}}</label>
   <div class="form-fields">
-    <input type="number" name="activation{{#if unchainedActionEconomy}}.unchained{{/if}}.cost"
-      value="{{@root.activation.cost}}" data-dtype="Number" placeholder="1" min="0">
+    <input name="activation{{#if unchainedActionEconomy}}.unchained{{/if}}.cost"
+      {{#if (eq action.activation.type "special")}}
+      type="text"
+      {{else}}
+      type="number" placeholder="1" min="0"
+      {{/if}}
+      value="{{@root.activation.cost}}">
     <select name="activation{{#if unchainedActionEconomy}}.unchained{{/if}}.type">
       {{selectOptions @root.abilityActivationTypes selected=@root.activation.type}}
     </select>

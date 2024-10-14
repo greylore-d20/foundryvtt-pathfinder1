@@ -3,11 +3,12 @@
  */
 
 .pf1 {
-  .fa-solid,
-  .fas {
-    &.fa-fw {
-      // Fixed width icons should not flex.
-      flex: 0 1.25em; // 1.25em is fa-fw width
+  i {
+    &:is(.fa-solid, .fas) {
+      &.fa-fw {
+        // Fixed width icons should not flex.
+        flex: 0 1.25em; // 1.25em is fa-fw width
+      }
     }
   }
 }

@@ -30,9 +30,7 @@ system:
   subType: classFeat
   tag: classFeat_spellKenning
   uses:
-    maxFormula: >-
-      @class.level >= 17 ? 3 : ((@class.level < 17 && @class.level >= 11) ? 2 :
-      1)
+    maxFormula: 1 + if(gte(@class.level, 11), 1) + if(gte(@class.level, 17), 1)
     per: day
 type: feat
 

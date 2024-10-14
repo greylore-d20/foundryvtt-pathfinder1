@@ -39,7 +39,7 @@ system:
     - Revelation
     - Dragon Mystery
   uses:
-    maxFormula: '@class.level >= 13 ? 2 : 1'
+    maxFormula: 1 + if(gte(@class.level, 13), 1)
     per: day
 type: feat
 

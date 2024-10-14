@@ -11,14 +11,16 @@ system:
   changes:
     - _id: c1v782dm
       formula: >-
-        (@shield.type < 1 && @armor.type < 1 && @attributes.encumbrance.level <
-        1 ? 1 : 0) * (@abilities.wis.mod + floor(@class.level / 4))
+        if(and(and(lt(@shield.type, 1), lt(@armor.type, 1)),
+        lt(@attributes.encumbrance.level, 1)), 1) * (@abilities.wis.mod +
+        floor(@class.level / 4))
       target: ac
       type: untyped
     - _id: 3n8ckhwe
       formula: >-
-        (@shield.type < 1 && @armor.type < 1 && @attributes.encumbrance.level <
-        1 ? 1 : 0) * (@abilities.wis.mod + floor(@class.level / 4))
+        if(and(and(lt(@shield.type, 1), lt(@armor.type, 1)),
+        lt(@attributes.encumbrance.level, 1)), 1) * (@abilities.wis.mod +
+        floor(@class.level / 4))
       target: cmd
       type: untyped
   description:

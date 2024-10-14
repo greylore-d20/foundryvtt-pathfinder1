@@ -1,5 +1,4 @@
 import { ActorSheetPF } from "./actor-sheet.mjs";
-import { LevelUpForm } from "../level-up.mjs";
 
 /**
  * An Actor sheet for player character type actors in the PF system.

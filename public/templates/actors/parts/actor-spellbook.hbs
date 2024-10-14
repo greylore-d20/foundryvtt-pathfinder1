@@ -97,7 +97,7 @@
           <h3>{{localize "PF1.Spellcasting.Type.Label"}}</h3>
           <div class="form-fields">
             <select name="system.attributes.spells.spellbooks.{{bookId}}.kind">
-              {{selectOptions @root.config.spellcasting.spells selected=spellbook.kind localize=true blank="PF1.NonApplicable"}}
+              {{selectOptions @root.config.spellcasting.spells selected=spellbook.kind blank=(localize "PF1.NonApplicable")}}
             </select>
           </div>
         </div>

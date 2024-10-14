@@ -8,7 +8,7 @@ system:
       - Oracle
   changes:
     - _id: 1novvvy9
-      formula: '@class.level >= 5 ? 4 : 0'
+      formula: if(gte(@class.level, 5), 4)
       target: init
       type: insight
   description:

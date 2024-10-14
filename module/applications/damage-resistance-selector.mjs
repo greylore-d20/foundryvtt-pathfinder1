@@ -1,24 +1,37 @@
-import { damageTypes } from "module/registry/damage-types.mjs";
-import { materialTypes } from "module/registry/material-types.mjs";
-import { DamageTypeSelector } from "./damage-type-selector.mjs";
 import { naturalSort } from "@utils";
+import { AbstractListSelector } from "@app/abstract-list-selector.mjs";
 
 /**
  * Extend the FormApplication to handle creating, removing, and editing
  * and Actor's Damage Reduction and Energy Resistances.
  *
+ * @augments {AbstractListSelector}
+ * @param {ActorPF} actor     The Actor instance
  */
-export class ActorResistanceSelector extends FormApplication {
+export class DamageResistanceSelector extends AbstractListSelector {
+  static DEFAULT_OPTIONS = {
+    classes: ["damage-resistance-selector"],
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/damage-resistance-selector.hbs",
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
+
   /** @override */
-  constructor(...args) {
-    super(...args);
+  constructor(options) {
+    super(options);
 
     /** Basic properties for handling operations */
     // Prepare data and convert it into format compatible with the editor
-    this.isDR = this.options.isDR === true;
+    this.isDR = options.isDR === true;
 
     /** Working copy of our trait's data */
-    const resistances = foundry.utils.deepClone(foundry.utils.getProperty(this.object, this.attribute) ?? {});
+    const resistances = foundry.utils.deepClone(foundry.utils.getProperty(this.document, this.attribute) ?? {});
 
     /**
      * Custom user input for damage sources
@@ -59,13 +72,11 @@ export class ActorResistanceSelector extends FormApplication {
       });
 
     if (this.isDR) {
-      this.options.id = "damage-resistance-selector";
-
       Object.keys(pf1.config.damageResistances).forEach((dType) => {
         damages[dType] = pf1.config.damageResistances[dType];
       });
 
-      naturalSort([...pf1.registry.materialTypes], "name").forEach((material) => {
+      naturalSort([...pf1.registry.materials], "name").forEach((material) => {
         if (
           material.dr &&
           !material.treatedAs &&
@@ -99,134 +110,110 @@ export class ActorResistanceSelector extends FormApplication {
     };
   }
 
-  /** @override */
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "energy-resistance-selector",
-      classes: ["pf1", "resistance"],
-      template: "systems/pf1/templates/apps/damage-resistance-selector.hbs",
-      height: "auto",
-      closeOnSubmit: true,
-      submitOnClose: false,
-    });
-  }
-
-  /** @override */
-  get title() {
-    return game.i18n.localize("PF1.Application.DamageResistanceSelector." + (this.isDR ? "DR" : "ER") + "Title");
-  }
-
-  get attribute() {
-    return this.options.name;
-  }
-
-  get fields() {
-    return this.options.fields.split(";");
-  }
-
-  get dtypes() {
-    return this.options.dtypes.split(";");
-  }
-
-  get dataCount() {
-    return this.fields.length;
-  }
+  /* -------------------------------------------- */
 
   /**
-   * Fetches simple data for the interface
+   * Initialize the configuration for this application. Override the default ID to be unique to this
+   * entry selector instance based on document and attribute that is being edited.
    *
+   * @override
+   * @param {ApplicationConfiguration} options    The provided configuration options for the Application
+   * @returns {ApplicationConfiguration}           The final configuration values for the application
    */
-  getData() {
+  _initializeApplicationOptions(options) {
+    options = super._initializeApplicationOptions(options);
+
+    const type = options.isDR ? "DR" : "ER";
+    options.id = `DamageResistanceSelector-${type}-${options.document.uuid.replaceAll(".", "-")}`;
+
+    return options;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     return {
+      ...(await super._prepareContext()),
       custom: this.custom,
       damages: this.damages,
       operators: this.operators,
-      entries: this.entries,
-      fields: this.fields,
-      dtypes: this.dtypes,
       isDR: this.isDR,
     };
   }
 
-  /**
-   * Activate event listeners using the prepared sheet HTML
-   *
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
-   */
-  activateListeners(html) {
-    html.find(".resistance-control").click(this._onResistanceControl.bind(this));
+  /* -------------------------------------------- */
 
-    html.find("tr td input").change(this._onResistanceChange.bind(this));
-    html.find("tr td select").change(this._onResistanceChange.bind(this));
-    html.find("input[name=custom]").change(this._onResistanceCustomChange.bind(this));
+  /**
+   * Alias the document property to actor
+   *
+   * @type {ActorPF}
+   */
+  get actor() {
+    return this.document;
   }
 
+  /* -------------------------------------------- */
+
   /**
-   * Updates the actor with the new resistances
+   * Configure the title of the window to include the Actor name
    *
    * @override
-   * @param {Event} event
-   * @param {any} formData
-   * @returns  The updated actor
+   * @type {string}
    */
-  async _updateObject(event, formData) {
-    const updateData = {};
-
-    const entries = this.entries.map((value) => {
-      // Ensure no matter what, we have values
-      value.types[0] ??= "";
-      value.types[1] ??= "";
-
-      if (value.types[0] === "" && value.types[1] !== "") {
-        value.types[0] = value.types[1];
-        value.types[1] = "";
-      }
-      if (value.types[0] === value.types[1]) {
-        value.types[1] = "";
-      }
-
-      // Convert from string key to boolean value
-      value.operator = String(value.operator).toLowerCase() === "true";
-      return value;
-    });
-
-    updateData[this.attribute + ".value"] = entries;
-    updateData[this.attribute + ".custom"] = this.custom;
-
-    return this.object.update(updateData);
+  get title() {
+    return `${game.i18n.localize("PF1.Application.DamageResistanceSelector." + (this.isDR ? "DR" : "ER") + "Title")}: ${
+      this.actor.name
+    }`;
   }
+
+  /* -------------------------------------------- */
 
   /**
-   * A trigger for an operation to add or delete a resistance entry
+   * Provides default data for a new list entry
    *
-   * @param {Event} event - The action and associated data that triggered the operation
-   * @returns A call to render (refresh) the UI
+   * @override
+   * @param event
+   * @protected
+   * @returns {object}
    */
-  async _onResistanceControl(event) {
-    event.preventDefault();
-    const target = event.currentTarget;
-
-    // Add a new blank entry
-    if (target.classList.contains("add-resistance")) {
-      const obj = {
-        amount: 0,
-        types: [this.isDR ? "" : "fire", ""],
-        operator: true,
-      };
-
-      this.entries.push(obj);
-
-      return this.render();
-    }
-
-    // Delete an existign entry instead
-    if (target.classList.contains("delete-resistance")) {
-      const tr = target.closest("tr");
-      const index = parseInt(tr.dataset.index);
-      this.entries.splice(index, 1);
-      return this.render();
-    }
+  _getNewEntry(event) {
+    return {
+      amount: 0,
+      types: [this.isDR ? "" : "fire", ""],
+      operator: true,
+    };
   }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Update internal data snapshot on form change
+   *
+   * @param formConfig
+   * @param event
+   * @override
+   * @internal
+   * @this {EntrySelector&AbstractListSelector}
+   * @returns {Promise<void>}
+   */
+  async _onChangeForm(formConfig, event) {
+    const target = event.target;
+
+    if (target.matches("[name=custom]")) {
+      this._onResistanceCustomChange(event);
+    } else {
+      this._onResistanceChange(event);
+    }
+
+    super._onChangeForm(formConfig, event);
+  }
+
+  /* -------------------------------------------- */
 
   /**
    * A triggered operation when any inputs or dropdowns are interacted
@@ -235,7 +222,7 @@ export class ActorResistanceSelector extends FormApplication {
    * @param {Event} event
    */
   async _onResistanceChange(event) {
-    const target = event.currentTarget;
+    const target = event.target;
 
     const tr = target.closest("tr.resistance");
     const index = parseInt(tr.dataset.index);
@@ -265,14 +252,49 @@ export class ActorResistanceSelector extends FormApplication {
     }
   }
 
+  /* -------------------------------------------- */
+
   /**
    * A triggered operation when the user modifies the custom input section
    *
    * @param {Event} event
    */
   async _onResistanceCustomChange(event) {
-    const target = event.currentTarget;
-
+    const target = event.target;
     this.custom = target.value;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Provides update data for saves
+   *
+   * @override
+   * @protected
+   * @returns {object}
+   */
+  _getUpdateData() {
+    const updateData = {};
+
+    updateData[this.attribute + ".value"] = this.entries.map((value) => {
+      // Ensure no matter what, we have values
+      value.types[0] ??= "";
+      value.types[1] ??= "";
+
+      if (value.types[0] === "" && value.types[1] !== "") {
+        value.types[0] = value.types[1];
+        value.types[1] = "";
+      }
+      if (value.types[0] === value.types[1]) {
+        value.types[1] = "";
+      }
+
+      // Convert from string key to boolean value
+      value.operator = String(value.operator).toLowerCase() === "true";
+      return value;
+    });
+    updateData[this.attribute + ".custom"] = this.custom;
+
+    return updateData;
   }
 }

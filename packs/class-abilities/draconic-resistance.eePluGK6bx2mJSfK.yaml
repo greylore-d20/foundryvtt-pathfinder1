@@ -9,9 +9,7 @@ system:
       - Oracle
   changes:
     - _id: 6u666ieo
-      formula: >-
-        @class.level >= 15 ? 4 : ((@class.level > 8 && @class.level < 15) ? 2 :
-        1)
+      formula: 1 + if(gt(@class.level, 8), 1) + if(gte(@class.level, 15), 2)
       target: nac
       type: untyped
   description:

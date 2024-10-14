@@ -1,10 +1,4 @@
-.app.pf1.health-config form {
-  nav.tabs {
-    font-size: var(--font-size-14);
-    line-height: 32px;
-    border-bottom: 1px solid var(--color-border-dark-primary);
-  }
-
+.application.pf1-v2.health-config {
   .hitdice-table {
     display: grid;
     grid-template: 32px 1fr 1fr 1fr e("/") 1fr 1fr 1fr 1fr;
@@ -13,12 +7,15 @@
     padding: 5px 0;
     align-items: center;
 
+    .index {
+      padding-left: 1rem;
+    }
+
     > * {
       display: inline-flex;
       align-items: center;
       height: 100%;
       padding: 5px;
-      border-bottom: 1px solid var(--color-border-dark-primary);
     }
 
     > span {
@@ -26,10 +23,8 @@
     }
 
     .table-header {
-      color: var(--color-text-light-highlight);
-      background: var(--pf1-dim-bg);
+      background: rgba(255, 255, 255, 0.2);
       font-weight: bold;
-      text-shadow: 1px 1px black;
       justify-content: center;
 
       &.index {
@@ -47,17 +42,11 @@
 
     .switch-label > span {
       display: block;
-      border: 1px solid var(--color-border-dark-primary);
       border-radius: 4px;
       cursor: pointer;
       margin: auto;
       padding: 2px;
       width: calc(100% - 2px);
-    }
-
-    .switch-label > span.switch-auto {
-      background-color: var(--pf1-dim-bg);
-      color: var(--color-text-light-highlight);
     }
 
     .switch-check:not(:checked) + .switch-label .switch-auto {
@@ -69,13 +58,44 @@
 
     .switch-label > span {
       display: block;
-      border: 1px solid var(--color-border-dark-primary);
       border-radius: 4px;
       cursor: pointer;
       margin: auto;
       padding: 2px;
       width: calc(100% - 2px);
       text-align: center;
+    }
+  }
+}
+
+.theme-light {
+  .application.pf1-v2.health-config {
+    .hitdice-table {
+      > * {
+        border-bottom: 1px solid var(--color-border-dark-primary);
+      }
+    }
+
+    .switch-label {
+      > span {
+        border: 1px solid var(--color-border-dark-primary);
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .application.pf1-v2.health-config {
+    .hitdice-table {
+      > * {
+        border-bottom: 1px solid var(--color-border-light-primary);
+      }
+
+      .switch-label {
+        > span {
+          border: 1px solid var(--color-border-light-primary);
+        }
+      }
     }
   }
 }

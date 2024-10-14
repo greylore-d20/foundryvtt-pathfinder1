@@ -9,9 +9,7 @@ system:
       - Sorcerer
   changes:
     - _id: 6wg7svns
-      formula: >-
-        @class.level >= 17 ? 6 : ((@class.level > 12 && @class.level < 17) ? 4 :
-        2)
+      formula: 2 + if(gt(@class.level, 12), 2) + if(gte(@class.level, 17), 2)
       target: str
       type: inherent
   description:

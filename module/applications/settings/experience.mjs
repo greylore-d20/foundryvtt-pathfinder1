@@ -1,3 +1,5 @@
+import { AbstractSettingsApplication } from "@app/settings/abstract-settings.mjs";
+
 export class ExperienceConfigModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -21,72 +23,57 @@ export class ExperienceConfigModel extends foundry.abstract.DataModel {
   }
 }
 
-export class ExperienceConfig extends FormApplication {
-  constructor(...args) {
-    super(...args);
+/**
+ * An application that lets the user configure experience related settings.
+ *
+ * @augments {AbstractSettingsApplication}
+ */
+export class ExperienceConfig extends AbstractSettingsApplication {
+  static DEFAULT_OPTIONS = {
+    configKey: "experienceConfig",
+    position: {
+      width: 560,
+    },
+    window: {
+      title: "PF1.Application.Settings.Experience.Title",
+    },
+  };
 
-    this._settings = game.settings.get("pf1", "experienceConfig").toObject();
-  }
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/settings/experience.hbs",
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
 
-  /** @override */
-  getData() {
-    const settings = this._settings;
+  /* -------------------------------------------- */
 
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
+    const settings = game.settings.get("pf1", "experienceConfig");
     return {
-      ...settings,
-      // Custom experience track booleans
+      ...(await super._prepareContext()),
+      settings,
       enabled: settings.disable !== true,
       hasCustomFormula: settings.track === "custom",
       config: pf1.config,
       const: pf1.const,
       progressionOptions: {
-        slow: "PF1.SETTINGS.Experience.Track.Options.Slow",
-        medium: "PF1.SETTINGS.Experience.Track.Options.Medium",
-        fast: "PF1.SETTINGS.Experience.Track.Options.Fast",
-        custom: "PF1.SETTINGS.Experience.Track.Options.Custom",
+        slow: "PF1.Application.Settings.Experience.Track.Options.Slow",
+        medium: "PF1.Application.Settings.Experience.Track.Options.Medium",
+        fast: "PF1.Application.Settings.Experience.Track.Options.Fast",
+        custom: "PF1.Application.Settings.Experience.Track.Options.Custom",
       },
+      buttons: [
+        { type: "submit", label: "PF1.Save", icon: "far fa-save" },
+        { type: "reset", action: "reset", label: "PF1.Reset", icon: "far fa-undo" },
+      ],
     };
-  }
-
-  /** @override */
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...super.defaultOptions,
-      title: game.i18n.localize("PF1.ExperienceConfigName"),
-      classes: [...options.classes, "pf1", "experience-config"],
-      id: "experience-config",
-      template: "systems/pf1/templates/settings/experience.hbs",
-      submitOnChange: true,
-      closeOnSubmit: false,
-      submitOnClose: false,
-      width: 560,
-      height: "auto",
-    };
-  }
-
-  /**
-   * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
-   *
-   * @override
-   */
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    this.form.querySelector("button.save").addEventListener("click", this._onSaveConfig.bind(this));
-  }
-
-  async _onSaveConfig(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    game.settings.set("pf1", "experienceConfig", this._settings);
-    this.close();
-  }
-
-  /** @override */
-  async _updateObject(event, formData) {
-    this._settings = foundry.utils.mergeObject(this._settings, foundry.utils.expandObject(formData));
-    this.render();
   }
 }

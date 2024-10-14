@@ -1,19 +1,17 @@
-<form autocomplete="off" data-tooltip-class="pf1">
+<section class="form-body">
   <div class="form-group">
-    <label>{{localize "PF1.Application.Performance.Options.reachLimit.Label"}}</label>
-    <input name="settings.reachLimit" type="range" step="1" min="{{model.reachLimit.min}}" max="260" value="{{reachLimit}}">
-    <span class="value reach-limit">{{reachLimit}}</span>
-    <p class="info">{{localize "PF1.Application.Performance.Options.reachLimit.Hint"}}</p>
+    <label for="reach-limit">
+      {{localize "PF1.Application.Settings.Performance.Options.reachLimit.Label"}}
+    </label>
+    <div class="form-fields form-slider">
+      <input id="reach-limit" name="reachLimit" type="range" step="1"
+             min="{{model.reachLimit.min}}" max="260" value="{{settings.reachLimit}}">
+      <span class="range-value">
+        {{settings.reachLimit}}
+      </span>
+    </div>
+    <p class="hint">
+      {{localize "PF1.Application.Settings.Performance.Options.reachLimit.Hint"}}
+    </p>
   </div>
-
-  <div class="buttons">
-    <button type="submit">
-      <i class="fas fa-save"></i>
-      {{localize "Save"}}
-    </button>
-    <button type="reset">
-      <i class="fa-solid fa-rotate-left"></i>
-      {{localize "Reset"}}
-    </button>
-  </div>
-</form>
+</section>

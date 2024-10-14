@@ -5,11 +5,11 @@ name: Persuasive
 system:
   changes:
     - _id: dxpiteim
-      formula: '@skills.dip.rank>=10?4:2'
+      formula: 2 + if(gte(@skills.dip.rank, 10), 2)
       target: skill.dip
       type: untyped
     - _id: phdvf0la
-      formula: '@skills.int.rank>=10?4:2'
+      formula: 2 + if(gte(@skills.int.rank, 10), 2)
       target: skill.int
       type: untyped
   description:

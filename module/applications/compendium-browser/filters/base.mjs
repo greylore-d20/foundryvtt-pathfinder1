@@ -1,5 +1,3 @@
-import { naturalSort } from "@utils";
-
 /**
  * @typedef {object} FilterChoice
  * @property {string} label - The label for this choice visible to the user; will be localized
@@ -16,6 +14,29 @@ import { naturalSort } from "@utils";
  * @abstract
  */
 export class BaseFilter {
+  /**
+   * Auto-localize choices.
+   *
+   * Defaults to false due to pre-translation.
+   *
+   * @type {boolean}
+   */
+  static localizeChoices = false;
+
+  /**
+   * Auto-localize filter label
+   *
+   * @type {boolean}
+   */
+  static localizeLabel = true;
+
+  /**
+   * Prefix to add to choices before localization.
+   *
+   * @type {string}
+   */
+  static localizePrefix = "";
+
   /**
    * The label for this filter visible to the user.
    *
@@ -191,7 +212,7 @@ export class BaseFilter {
     return {
       id: this.id,
       template: this.constructor.TEMPLATE,
-      label: game.i18n.localize(this.constructor.label),
+      label: this.constructor.localizeLabel ? game.i18n.localize(this.constructor.label) : this.constructor.label,
       active: this.active,
       activeCount: this.activeChoiceCount,
       choices: this.choices?.contents ?? [],

@@ -1,7 +1,6 @@
-import { calculateRange, convertDistance } from "../utils/lib.mjs";
-import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
+import { calculateRange, keepUpdateArray } from "@utils";
+import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { keepUpdateArray } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 
@@ -158,7 +157,7 @@ export class ItemAction {
     }
 
     if (this.isCharged) {
-      const cost = this.getChargeCost();
+      const cost = this.getChargeCostSync({ maximize: true })?.total ?? 0;
       const charges = item.charges;
       if (cost > 0) {
         if (cost > charges) return false;
@@ -193,7 +192,7 @@ export class ItemAction {
 
   /** @type {boolean} - Consumes charges on use */
   get autoDeductCharges() {
-    return this.getChargeCost() > 0;
+    return this.getChargeCostSync({ maximize: true })?.total > 0;
   }
 
   /** @type {boolean} - Does parent item have charges */
@@ -209,10 +208,12 @@ export class ItemAction {
   /**
    * @param {object} [options] - Additional options to configure behavior.
    * @param {object} [options.rollData=null] - Pre-determined roll data to pass for determining the charge cost.
-   * @returns {number} Cost in charges for this action.
+   * @param {boolean} [options.minimize=false]
+   * @param {boolean} [options.maximize=false]
+   * @returns {Roll|null} - Cost in charges for this action. Null if not charged.
    */
-  getChargeCost({ rollData = null } = {}) {
-    if (!this.isCharged) return 0;
+  async getChargeCost({ minimize = false, maximize = false, rollData = null } = {}) {
+    if (!this.isCharged) return null;
 
     const isSpell = this.item.type === "spell";
     const isSpellpointSpell = isSpell && this.item.useSpellPoints();
@@ -226,8 +227,45 @@ export class ItemAction {
     }
 
     rollData ??= this.getRollData();
-    const cost = RollPF.safeRoll(formula, rollData).total;
-    return this.item.isSingleUse ? Math.clamp(cost, -1, 1) : cost;
+
+    const roll = await RollPF.safeRoll(formula, rollData, undefined, undefined, { maximize, minimize });
+
+    // Clamp single use
+    if (this.item.isSingleUse) roll._total = Math.clamp(roll._total, -1, 1);
+
+    return roll;
+  }
+
+  /**
+   * @param {object} [options] - Additional options to configure behavior.
+   * @param {object} [options.rollData=null] - Pre-determined roll data to pass for determining the charge cost.
+   * @param {boolean} [options.minimize=false]
+   * @param {boolean} [options.maximize=false]
+   * @returns {Roll|null} - Cost in charges for this action. Null if not charged.
+   */
+  getChargeCostSync({ minimize = false, maximize = false, rollData = null } = {}) {
+    if (!this.isCharged) return null;
+
+    const isSpell = this.item.type === "spell";
+    const isSpellpointSpell = isSpell && this.item.useSpellPoints();
+
+    let formula = !isSpellpointSpell ? this.data.uses.autoDeductChargesCost : this.data.uses.spellPointCost;
+    if (!formula) {
+      formula = this.item.getDefaultChargeFormula();
+    } else if (typeof formula !== "string") {
+      console.warn(this.item.name, "action", this.name, "has invalid charge formula:", formula, this);
+      formula = this.item.getDefaultChargeFormula();
+    }
+
+    rollData ??= this.getRollData();
+
+    if (!maximize && !minimize) maximize = true; // Enforce maximization if neither is called in case this is a die
+    const roll = RollPF.safeRollSync(formula, rollData, undefined, undefined, { maximize, minimize });
+
+    // Clamp single use
+    if (this.item.isSingleUse) roll._total = Math.clamp(roll._total, -1, 1);
+
+    return roll;
   }
 
   /**
@@ -536,13 +574,19 @@ export class ItemAction {
       result.cl += result.attributes?.spells?.school?.[this.item.system.school]?.cl ?? 0;
     }
 
+    // Determine size bonus
+    if (this.hasAttack) {
+      const size = result.traits?.size || "med";
+      result.sizeBonus = this.isCombatManeuver ? pf1.config.sizeSpecialMods[size] : pf1.config.sizeMods[size];
+    }
+
     // BAB override
     if (result.action.bab) {
       const bab = RollPF.safeRollSync(result.action.bab, result).total;
       foundry.utils.setProperty(result, "attributes.bab.total", bab || 0);
     }
 
-    // Add @bab
+    // Add @bab alias
     result.bab = result.attributes?.bab?.total || 0;
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
@@ -823,7 +867,9 @@ export class ItemAction {
           : pf1.config.abilityActivationTypesPlurals;
 
         const activationType = activation.type || "nonaction";
-        if (activation.cost > 1 && !!activationTypesPlural[activationType]) {
+        if (activation.type === "special") {
+          labels.activation = activation.cost || activationTypes.special;
+        } else if (activation.cost > 1 && !!activationTypesPlural[activationType]) {
           labels.activation = [activation.cost.toString(), activationTypesPlural[activationType]].filterJoin(" ");
         } else {
           labels.activation = [
@@ -919,14 +965,6 @@ export class ItemAction {
 
     itemData.primaryAttack = primaryAttack;
 
-    const isRanged = this.isRanged;
-    const isCMB = this.isCombatManeuver;
-
-    const size = rollData.traits?.size ?? "med";
-
-    // Determine size bonus
-    rollData.sizeBonus = !isCMB ? pf1.config.sizeMods[size] : pf1.config.sizeSpecialMods[size];
-
     // Add misc bonuses/penalties
     itemData.proficiencyPenalty = -4;
 
@@ -1002,7 +1040,12 @@ export class ItemAction {
     config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
 
     // Add bonus
-    rollData.bonus = bonus ? await RollPF.safeRoll(bonus, rollData).total : 0;
+    rollData.bonus = 0;
+    if (bonus) {
+      // TODO: Do not pre-roll
+      const roll = await RollPF.safeRoll(bonus, rollData);
+      rollData.bonus = roll.total;
+    }
 
     // Options for D20RollPF
     const rollOptions = {
@@ -1102,47 +1145,26 @@ export class ItemAction {
     }
 
     // Define Roll parts
-    const parts =
-      this.data.damage.parts?.map((damage) => {
-        return { base: damage.formula, extra: [], damageType: damage.type, type: "normal" };
-      }) ?? [];
-    // Add conditionals damage
-    conditionalParts["damage.normal"]?.forEach((p) => {
-      const [base, damageType, isExtra] = p;
-      isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "normal" });
-    });
-    // Add critical damage parts
-    if (critical === true) {
-      const critParts = this.data.damage?.critParts;
-      if (critParts) {
-        parts.push(
-          ...critParts.map((damage) => {
-            return { base: damage.formula, extra: [], damageType: damage.type, type: "crit" };
-          })
-        );
-      }
-      // Add conditional critical damage parts
-      conditionalParts["damage.crit"]?.forEach((p) => {
+    const parts = [];
+    const addParts = (property, type) => {
+      parts.push(
+        ...(actionData.damage[property]?.map((damage) => ({
+          base: damage.formula,
+          extra: [],
+          damageType: damage.type,
+          type,
+        })) ?? [])
+      );
+
+      // add typed conditionals
+      conditionalParts[`damage.${type}`]?.forEach((p) => {
         const [base, damageType, isExtra] = p;
-        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "crit" });
+        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type });
       });
-    }
-    // Add non-critical damage parts
-    if (critical === false) {
-      const nonCritParts = this.data.damage?.nonCritParts;
-      if (nonCritParts) {
-        parts.push(
-          ...nonCritParts.map((damage) => {
-            return { base: damage.formula, extra: [], damageType: damage.type, type: "nonCrit" };
-          })
-        );
-      }
-      // Add conditional non-critical damage parts
-      conditionalParts["damage.nonCrit"]?.forEach((p) => {
-        const [base, damageType, isExtra] = p;
-        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "nonCrit" });
-      });
-    }
+    };
+    addParts("parts", "normal");
+    if (critical) addParts("critParts", "crit");
+    else addParts("nonCritParts", "nonCrit");
 
     /**
      * Initialize changes to empty array so mods can still add changes for healing "attacks" via the pre-roll hook below
@@ -1396,7 +1418,7 @@ export class ItemAction {
           for (let i = 0; i < exAtkCount; i++) {
             rollData.attackCount = attackCount += 1;
             rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRoll(
+            const bonus = RollPF.safeRollSync(
               bonusFormula || "0",
               rollData,
               { formula: bonusFormula, action: this },
@@ -1457,6 +1479,7 @@ export class ItemAction {
       }
     }
 
+    // TODO: Move this to be part of the output data as formulas
     if (resolve) {
       const condBonuses = new Array(attacks.length).fill(0);
       if (conditionals) {
@@ -1465,7 +1488,7 @@ export class ItemAction {
           .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
           .forEach((c) => {
             c.modifiers.forEach((cc) => {
-              const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+              const bonusRoll = RollPF.safeRollSync(cc.formula, rollData, undefined, undefined, { minimize: true });
               if (bonusRoll.total == 0) return;
               if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
                 const atk = parseInt(RegExp.$1, 10);
@@ -1483,7 +1506,8 @@ export class ItemAction {
 
       attacks.forEach((atk, i) => {
         rollData.attackCount = i;
-        atk.bonus = RollPF.safeRoll(atk.bonus, rollData).total + totalBonus + condBonuses[i];
+        const roll = RollPF.safeRollSync(atk.bonus, rollData, undefined, undefined, { minimize: true });
+        atk.bonus = roll.total + totalBonus + condBonuses[i];
         delete rollData.attackCount;
       });
     }

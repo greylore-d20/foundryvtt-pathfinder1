@@ -1,0 +1,53 @@
+<section class="form-body">
+  {{#*inline "documentEntry"}}
+    <li class="document-item {{#if (eq @root.selected document.id)}}selected{{/if}} {{#if document.isDisabled}}disabled{{/if}}">
+      <label>
+        <input type="radio" name="selected" value="{{document.id}}"
+          {{checked (eq @root.selected id)}}
+          {{#if isDisabled}}disabled{{/if}}>
+
+        <img class="image" src="{{document.img}}" alt="{{document.name}}" height="64" loading="lazy">
+
+        <span class="item-details">
+          <span class="item-name">{{document.name}}</span>
+          <span class="item-extras">
+            {{#each document.extras as |extra|}}
+              {{#if extra.value}}
+                <span class="item-extra">{{#if extra.label}}{{localize extra.label}}: {{/if}}{{extra.value}}</span>
+              {{/if}}
+            {{/each}}
+          </span>
+        </span>
+      </label>
+    </li>
+  {{/inline}}
+
+  <div class="document-list-search">
+    <input class="search-input" type="search" placeholder="{{localize 'PF1.SearchFilterPlaceholder'}}"
+           value="{{searchTerm}}">
+  </div>
+
+  <div class="document-section-wrapper">
+    {{#if none.include}}
+      <div class="documents-section">
+        <ul class="document-sections-list">
+          {{> documentEntry document=none.document}}
+        </ul>
+      </div>
+    {{/if}}
+
+    {{#each sections as |section|}}
+      <div class="documents-section">
+        {{#if @root.showSectionHeaders}}
+          <h3 class="documents-section-label">{{localize section.label}}</h3>
+        {{/if}}
+
+        <ul class="document-sections-list">
+          {{#each section.documents as |document|}}
+            {{> documentEntry document=document}}
+          {{/each}}
+        </ul>
+      </div>
+    {{/each}}
+  </div>
+</section>

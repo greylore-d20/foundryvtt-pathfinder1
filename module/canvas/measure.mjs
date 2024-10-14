@@ -1,4 +1,4 @@
-import { measureDistance } from "../utils/lib.mjs";
+import { measureDistance } from "@utils";
 
 const withinAngle = (min, max, value) => {
   min = Math.normalizeDegrees(min);

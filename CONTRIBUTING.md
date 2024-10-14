@@ -88,6 +88,21 @@ If you entered a `dataPath` in your `foundryconfig.json` and want to create a sy
 Installing the system's dependencies will also install a git commit hook, which will automatically lint and format files before they are committed.
 If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
 
+### Git Configuration
+
+Please run the following commands in your local repository:
+
+```sh
+git config pull.rebase true
+git config core.autocrlf false
+git config core.ignorecase false
+git config core.eol lf
+```
+
+These will help ensure the files are correct and desired workflow goes smoothly.
+
+Do NOT use merge commits, they're difficult to work with with merge requests.
+
 ### Compendium Changes
 
 The system provides extra tooling to deal with compendiums, including their compilation to and from JSON.
@@ -100,16 +115,37 @@ To then transfer these changes to the compendium's source files, run `npm run pa
 This will extract the contents of `dist/packs/*.db` into their respective directories.
 If Foundry's `Data/systems/pf1` is symlinked to `dist`, you can change content in Foundry, close the server, and then run `npm run packs:extract` to immediately see the changes in the source files.
 
+#### Content Guidelines
+
+These are not comprehensive, only providing some points that have come under discussion.
+
+- Content should match source content in the physical books as much as possible.
+  - Paizo compressed a lot of text to fit into their printing limitations, so improving legibility is allowed.
+  - Such as adding new paragraphs is fine. Especially splitting off the initial fluff text from the rules text is good starting point, if it is distinct from the actual rules.
+  - Similarly prettifying lists, options, or different uses is fine and preferable.
+  - Unifying styling of descriptions is good goal.
+  - Duplicating PDF features is not desired.
+- Link only features, spells, skills, etc. that are mandatory for figuring out how the item functions.
+  - Anything just mentioned as examples or hypothetical possibilities are not worth linking. For example, link any instance of "functions like sleep", but do not link instances of "can be dispelled with dispel magic, mage's disjunction, or disintegrate."
+  - Linking granted abilities, feats, etc. is desired despite the above.
+  - Duplicating PDF hotlinking of everything PDF editors thought of is not something we're aiming for. Consistency and meaningful linking is more important.
+- Script calls and scripts in general should be kept to minimum.
+  These can not be migrated so if there's issues with them, we can not automate fixing them.
+- Tags should be kept to minimum.
+  - These can however work as temporary solutions for finding things that otherwise can't reasonably be done so with.
+
 ### Documentation
 
-All changes have to be documented in the [changelog](CHANGELOG.md).
+All user or API consumer impacting changes have to be documented in the [changelog](CHANGELOG.md).
 To add your changes to it, run `npm run addlog`.
 [Changelogify](https://github.com/wanadev/changelogify) will then prompt you for a message that will appear in the changelog, the type of change, and an issue number that will be used to create a link in the log.
 The issue number is optional – if there is no issue your merge request will close, you can leave the number out.
 This prompt will create a file in `changelogs/unreleased`, which you will have to commit alongside your changes.
 
-For commit messages, describe what the commit does in a very short summary in the first line, e.g. "Add BAB to combat tab".
-After the first line, reference issues or merge requests the commit relates to, using [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically) recognized by GitLab whenever applicable (e.g. "Fixes #123").
+For changelog entries avoid unnecessarily duplicating log category name, such as "Fix BAB not being included with CMB.", which should rather be "BAB was not included with CMB." as this would be in "bug fixes" section. The message in the chagnelog should be in past tense.
+
+For _commit messages_, describe what the commit does in a very short summary in the first line, e.g. "Add BAB to combat tab".
+After the first line, reference issues or merge requests the commit relates to, using [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically) recognized by GitLab whenever applicable (e.g. "Fixes #123", "Implements #321", "Closes #231", or "Related to #213"). Commit messages should be in present tense.
 
 ### Opening merge requests
 
@@ -118,4 +154,8 @@ The description can also contain references to open issues to automatically clos
 This project's CI/ CD will run after opening a merge request and create a result of either "passed" or "failed".
 In the latter case, check the job for which error caused it to fail, and correct the issue if possible.
 
-If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord, or leave a message in the `#pf1e` channel of the [FoundryVTT Discord server](https://discord.gg/foundryvtt) or the `#pathfinder1e-dev` channel of the [League Discord server](https://discord.gg/rNzh6U2qMG).
+If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord, or leave a message in the `#pf1e` channel of the [FoundryVTT Discord server](https://discord.gg/foundryvtt) or the [PF1 system Discord community server](https://discord.gg/WpaDMqWCwK).
+
+### Merge Conflicts
+
+Please use rebasing (`git rebase`) instead of merge commits when resolving branches that are out of date. Merge commits are source of endless problems even if they are convenient that one time.

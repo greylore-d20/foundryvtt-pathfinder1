@@ -1,4 +1,4 @@
-<form autocomplete="off" data-tooltip-class="pf1">
+<section class="form-body">
   {{#if noSystemVision}}
   <p class="warning">
     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -7,9 +7,9 @@
   {{/if}}
   {{!-- Low Light vision --}}
   <div class="form-group">
-    <label>{{localize "TOKEN.VisionLowLight"}}</label>
+    <label for="senses-ll-enabled-{{actor.id}}">{{localize "TOKEN.VisionLowLight"}}</label>
     <div class="form-fields">
-      <input type="checkbox" name="system.traits.senses.ll.enabled" data-dtype="Boolean" {{checked senses.ll.enabled}}>
+      <input id="senses-ll-enabled-{{actor.id}}" type="checkbox" name="system.traits.senses.ll.enabled" data-dtype="Boolean" {{checked senses.ll.enabled}}>
     </div>
   </div>
 
@@ -17,86 +17,84 @@
   <div class="form-group slim">
     <label>{{localize "TOKEN.VisionLowLightMultiplier"}}</label>
     <div class="form-fields">
-      <label class="header">{{localize "LIGHT.Dim"}}</label>
-      <input type="number" data-dtype="Number" name="system.traits.senses.ll.multiplier.dim" value="{{senses.ll.multiplier.dim}}" min="0" placeholder="2">
-      <label class="header">{{localize "LIGHT.Bright"}}</label>
-      <input type="number" data-dtype="Number" name="system.traits.senses.ll.multiplier.bright" value="{{senses.ll.multiplier.bright}}" min="0" placeholder="2">
+      <label for="senses-ll-multiplier-dim-{{actor.id}}" class="header">{{localize "LIGHT.FIELDS.dim.label"}}</label>
+      <input id="senses-ll-multiplier-dim-{{actor.id}}" type="number" data-dtype="Number" name="system.traits.senses.ll.multiplier.dim" value="{{senses.ll.multiplier.dim}}" min="0" placeholder="2">
+      <label for="senses-ll-multiplier-bright-{{actor.id}}" class="header">{{localize "LIGHT.FIELDS.bright.label"}}</label>
+      <input id="senses-ll-multiplier-bright-{{actor.id}}" type="number" data-dtype="Number" name="system.traits.senses.ll.multiplier.bright" value="{{senses.ll.multiplier.bright}}" min="0" placeholder="2">
     </div>
   </div>
 
   {{!-- Darkvision --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.darkvision"}} <span class="units">({{gridUnits}})</span></label>
+    <label for="senses-darkvision-{{actor.id}}">{{localize "PF1.Sense.darkvision"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.dv.value" value="{{senses.dv.value}}" placeholder="0">
+      <input id="senses-darkvision-{{actor.id}}" type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.dv.value" value="{{senses.dv}}" placeholder="0">
     </div>
   </div>
 
   {{!-- Tremorsense --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.tremorsense"}} <span class="units">({{gridUnits}})</span></label>
+    <label for="senses-tremorsense-{{actor.id}}">{{localize "PF1.Sense.tremorsense"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.ts.value" value="{{senses.ts.value}}"  placeholder="0">
+      <input id="senses-tremorsense-{{actor.id}}" type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.ts.value" value="{{senses.ts}}"  placeholder="0">
     </div>
   </div>
 
   {{!-- Blindsense --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.blindsense"}} <span class="units">({{gridUnits}})</span></label>
+    <label for="senses-blindsense-{{actor.id}}">{{localize "PF1.Sense.blindsense"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.bse.value" value="{{senses.bse.value}}" placeholder="0">
+      <input id="senses-blindsense-{{actor.id}}" type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.bse.value" value="{{senses.bse}}" placeholder="0">
     </div>
   </div>
 
   {{!-- Blindsight --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.blindsight"}} <span class="units">({{gridUnits}})</span></label>
+    <label for="senses-blindsight-{{actor.id}}">{{localize "PF1.Sense.blindsight"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.bs.value" value="{{senses.bs.value}}" placeholder="0">
+      <input id="senses-blindsight-{{actor.id}}" type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.bs.value" value="{{senses.bs}}" placeholder="0">
     </div>
   </div>
 
   {{!-- Scent --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.scent"}}* <span class="units">({{gridUnits}})</span></label>
+    <label for="senses-scent-{{actor.id}}">{{localize "PF1.Sense.scent"}}* <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.sc.value" value="{{senses.sc.value}}" placeholder="0">
+      <input id="senses-scent-{{actor.id}}" type="number" data-dtype="Number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.sc.value" value="{{senses.sc}}" placeholder="0">
     </div>
   </div>
 
   {{!-- See invisibility --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.seeInvis"}}</label>
+    <label for="senses-see-invis-{{actor.id}}">{{localize "PF1.Sense.seeInvis"}}</label>
     <div class="form-fields">
-      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.si" {{checked senses.si}}>
+      <input id="senses-see-invis-{{actor.id}}" type="checkbox" data-dtype="Boolean" name="system.traits.senses.si" {{checked senses.si}}>
     </div>
   </div>
 
   {{!-- True seeing --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.trueseeing"}} <span class="units">({{gridUnits}})</span></label>
+    <label for="senses-trueseeing-{{actor.id}}">{{localize "PF1.Sense.trueseeing"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.tr.value" value="{{senses.tr.value}}" placeholder="0">
+      <input id="senses-trueseeing-{{actor.id}}" type="number" data-dtype="number" min="0" step="{{#if isMetric}}1.5{{else}}5{{/if}}" name="system.traits.senses.tr.value" value="{{senses.tr}}" placeholder="0">
     </div>
   </div>
 
   {{!-- See in darkness --}}
   <div class="form-group">
-    <label>{{localize "PF1.Sense.seeInDark"}}*</label>
+    <label for="senses-see-in-dark-{{actor.id}}">{{localize "PF1.Sense.seeInDark"}}*</label>
     <div class="form-fields">
-      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.sid" {{checked senses.sid}}>
+      <input id="senses-see-in-dark-{{actor.id}}" type="checkbox" data-dtype="Boolean" name="system.traits.senses.sid" {{checked senses.sid}}>
     </div>
   </div>
 
   {{!-- Custom --}}
   <div class="form-group">
-    <label>{{localize "PF1.Custom"}}</label>
+    <label for="senses-custom-{{actor.id}}">{{localize "PF1.Custom"}}</label>
     <div class="form-fields">
-      <input type="text" data-dtype="String" name="system.traits.senses.custom" value="{{senses.custom}}">
+      <input id="senses-custom-{{actor.id}}" type="text" data-dtype="String" name="system.traits.senses.custom" value="{{senses.custom}}">
     </div>
   </div>
 
-  <p class="footnote">* {{localize "PF1.Info.NotFunctioning"}}</p>
-
-  <button type="submit" name="submit"><i class="far fa-save"></i> {{localize "Save"}}</button>
-</form>
+  <p class="hint">* {{localize "PF1.Info.NotFunctioning"}}</p>
+</section>

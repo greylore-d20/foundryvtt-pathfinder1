@@ -23,7 +23,7 @@ module.exports = {
     "no-console": "off",
     "prefer-const": ["error", { destructuring: "all" }],
     "no-var": "error",
-    "no-unused-vars": "off",
+    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",

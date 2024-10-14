@@ -8,7 +8,7 @@ export class SpellBrowser extends CompendiumBrowser {
   static filterClasses = [
     commonFilters.PackFilter,
     spellFilter.SpellSchoolFilter,
-    spellFilter.SpellSubSchoolFilter,
+    spellFilter.SpellSubschoolFilter,
     spellFilter.SpellDescriptorFilter,
     spellFilter.SpellLearnedByClassFilter,
     spellFilter.SpellLearnedByDomainFilter,
@@ -20,42 +20,37 @@ export class SpellBrowser extends CompendiumBrowser {
   /** @override */
   static _mapEntry(entry, pack) {
     const result = super._mapEntry(entry, pack);
-    // HACK: This transforms the string into an array.
-    // Tt's completely hardcoded for English; should be replaced with proper AI word recognition :)
-    {
-      result.system.subschool =
-        entry.system.subschool
-          ?.split(/,|\bor\b/)
-          .map((type) => {
-            /** @type {string} */
-            let typeString = type.trim();
-            if (typeString.includes("see text")) return "see text";
-            if (typeString.startsWith("or")) typeString = typeString.replace("or").trim();
-            return typeString;
-          })
-          .filter((typeString) => typeString.length) ?? [];
-    }
 
-    {
-      const value = entry.system.descriptors?.value ?? [];
-      const custom = (entry.system.descriptors?.custom ?? [])
+    const and = game.i18n.localize("PF1.JoinAnd");
+    const or = game.i18n.localize("PF1.JoinOr");
+    const seeText = game.i18n.localize("PF1.SeeText").toLocaleLowerCase();
+    const seeTextRe = new RegExp(`\\b${seeText}\\b`, "i");
+
+    const splitExp = new RegExp(`,|\\b${or}\\b|\\b${and}\\b`, "i");
+
+    const prepareTrait = (systemPath, configPath) => {
+      const value = entry.system[systemPath]?.value ?? [];
+      const custom = (entry.system[systemPath]?.custom ?? [])
         .flatMap((c) =>
-          c?.split(/,|\bor\b/).map((type) => {
+          c?.split(splitExp).map((type) => {
             /** @type {string} */
-            let typeString = type.trim();
-            if (typeString.includes("see text")) return "see text";
-            if (typeString.startsWith("or")) typeString = typeString.replace("or").trim();
+            const typeString = type.trim();
+            if (seeTextRe.test(typeString)) return seeText;
             return typeString;
           })
         )
         .filter((typeString) => typeString?.length);
-      const values = [...value, ...custom].map((descriptor) => {
-        const entries = Object.entries(pf1.config.spellDescriptors);
-        const match = entries.find(([k, v]) => k === descriptor || v === descriptor);
-        return match?.[0] ?? descriptor;
+
+      const values = [...value, ...custom].map((key) => {
+        const entries = Object.entries(pf1.config[configPath]);
+        const match = entries.find(([k, v]) => k === key || v === key);
+        return match?.[0] ?? key;
       });
-      result.system.descriptors = [...new Set(values)];
-    }
+      result.system[systemPath] = [...new Set(values)];
+    };
+
+    prepareTrait("descriptors", "spellDescriptors");
+    prepareTrait("subschool", "spellSubschools");
 
     /** @type {Record<string, Record<string, number>>} */
     const learnedAtData = entry.system.learnedAt ?? {};

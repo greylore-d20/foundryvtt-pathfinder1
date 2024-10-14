@@ -1,0 +1,80 @@
+.pf1-v2.list-selector {
+  .window-content {
+    padding: 0;
+
+    > :not(section) {
+      padding: 0.5rem 1rem 1rem;
+    }
+  }
+
+  table {
+    margin: 0 0 0.5rem 0;
+    border-radius: unset;
+    border: unset;
+    table-layout: fixed;
+
+    thead {
+      background: none;
+      text-align: center;
+      text-shadow: unset;
+      font-size: var(--font-size-14);
+    }
+
+    :is(td, th) {
+      padding: 0.5rem;
+
+      &:first-child {
+        padding-left: 1rem;
+      }
+
+      &.entry-control {
+        padding-right: 1rem;
+        width: 3.5rem;
+
+        button {
+          padding: 0.5rem;
+
+          > i {
+            margin-right: unset;
+          }
+        }
+      }
+    }
+  }
+
+  div.add-entry {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+
+    &:before,
+    &:after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      border-top: 1px solid var(--color-form-hint);
+    }
+  }
+
+  .form-group {
+    padding: 0 1rem;
+  }
+}
+
+.theme-light {
+  .pf1-v2.list-selector {
+    table thead {
+      color: var(--color-dark-1);
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.list-selector {
+    table thead {
+      color: var(--color-light-1);
+    }
+  }
+}

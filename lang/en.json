@@ -111,10 +111,6 @@
       "critical": "Critical Condition"
     },
 
-    "ExperienceConfigName": "Experience Configuration",
-    "ExperienceConfigLabel": "Configure Experience",
-    "ExperienceConfigHint": "Configure aspects about leveling up.",
-
     "AccessibilityConfigName": "Accessibility Configuration",
     "AccessibilityConfigLabel": "Accessibility",
     "AccessibilityConfigHint": "Change accessibility settings",
@@ -668,6 +664,15 @@
           "exotic": {
             "Single": "Exotic"
           },
+          "firearm": {
+            "Single": "Firearm"
+          },
+          "siege": {
+            "Single": "Siege"
+          },
+          "heavy": {
+            "Single": "Heavy"
+          },
           "misc": {
             "Single": "Miscellaneous"
           }
@@ -968,6 +973,9 @@
     "WeaponSubtypeOneHanded": "One-handed",
     "WeaponSubtypeTwoHanded": "Two-handed",
     "WeaponSubtypeRanged": "Ranged",
+    "WeaponSubtypeAssault": "Assault",
+    "WeaponSubtypeDirect": "Direct-fire",
+    "WeaponSubtypeIndirect": "Indirect-fire",
 
     "EquipSlots": {
       "none": "Slotless",
@@ -1114,6 +1122,7 @@
       "Periods": {
         "single": "Single Use",
         "round": "Per Round",
+        "minute": "Per Minute",
         "hour": "Per Hour",
         "day": "Per Day",
         "week": "Per Week",
@@ -1131,6 +1140,24 @@
       "nec": "Necromancy",
       "tra": "Transmutation",
       "uni": "Universal"
+    },
+
+    "SpellSubschools": {
+      "calling": "Calling",
+      "charm": "Charm",
+      "compulsion": "Compulsion",
+      "creation": "Creation",
+      "figment": "Figment",
+      "glamer": "Glamer",
+      "haunted": "Haunted",
+      "healing": "Healing",
+      "pattern": "Pattern",
+      "phantasm": "Phantasm",
+      "polymorph": "Polymorph",
+      "scrying": "Scrying",
+      "shadow": "Shadow",
+      "summoning": "Summoning",
+      "teleportation": "Teleportation"
     },
 
     "SpellLevels": {
@@ -1176,7 +1203,10 @@
       "Weapon": {
         "LabelPlural": "Weapon Proficiencies",
         "simple": "Simple Weapons",
-        "martial": "Martial Weapons"
+        "martial": "Martial Weapons",
+        "firearm": "Firearms",
+        "siege": "Siege Weaponry",
+        "heavy": "Heavy Weaponry"
       },
       "Granted": "Granted Proficiencies",
       "Penalty": "Proficiency Penalty"
@@ -1493,65 +1523,65 @@
       "NormalOverride": "Material Override",
       "AddonOverride": "Add-on Overrides",
       "Types": {
-        "Abysium": "Abysium",
-        "Adamantine": "Adamantine",
-        "AlchemicalSilver": "Alchemical Silver",
-        "Silver": "Silver",
-        "AngelSkin": "Angelskin",
-        "Aszite": "Aszite",
-        "Blackwood": "Blackwood",
-        "BlightQuartz": "Blight Quartz",
-        "BloodCrystal": "Blood Crystal",
-        "BuletteArmor": "Bulette Armor",
-        "Caphorite": "Caphorite",
-        "Cloth": "Cloth",
-        "ColdIron": "Cold Iron",
-        "Cryptstone": "Cryptstone",
-        "DarkleafCloth": "Darkleaf Cloth",
-        "Darkwood": "Darkwood",
-        "Dragonhide": "Dragonhide",
-        "Druchite": "Druchite",
-        "EelHide": "Eel Hide",
-        "ElysianBronze": "Elysian Bronze",
-        "FireForgedSteel": "Fire-forged Steel",
-        "FrostForgedSteel": "Frost-forged Steel",
-        "Glaucite": "Glaucite",
-        "Greenwood": "Greenwood",
-        "GriffonMane": "Griffon Mane",
-        "HeatstonePlating": "Heatstone Plating",
-        "Horacalcum": "Horacalcum",
-        "Inubrix": "Inubrix",
-        "IrespanBasalt": "Irespan Basalt",
-        "Lazurite": "Lazurite",
-        "Leather": "Leather",
-        "LiquidGlass": "Liquid Glass",
-        "LivingSteel": "Living Steel",
-        "Mithral": "Mithral",
-        "NexavaranSteel": "Nexavaran Steel",
-        "Noqual": "Noqual",
-        "Paueliel": "Paueliel",
-        "PyreSteel": "Pyre Steel",
-        "Siccatite": "Siccatite",
-        "Silversheen": "Silversheen",
-        "SingingSteel": "Singing Steel",
-        "SpireSteel": "Spiresteel",
-        "Steel": "Steel",
-        "Sunsilk": "Sunsilk",
-        "Sunsilver": "Sunsilver",
-        "Throneglass": "Throneglass",
-        "Viridium": "Viridium",
-        "Voidglass": "Voidglass",
-        "Whipwood": "Whipwood",
-        "Wyroot": "Wyroot",
-        "Bone": "Bone",
-        "Bronze": "Bronze",
-        "Glass": "Glass",
-        "Gold": "Gold",
-        "Obsidian": "Obsidian",
-        "Stone": "Stone",
-        "Wood": "Wood",
-        "Magic": "Magic",
-        "Epic": "Epic"
+        "abysium": "Abysium",
+        "adamantine": "Adamantine",
+        "alchemicalSilver": "Alchemical Silver",
+        "angelSkin": "Angelskin",
+        "aszite": "Aszite",
+        "blackwood": "Blackwood",
+        "blightQuartz": "Blight Quartz",
+        "bloodCrystal": "Blood Crystal",
+        "buletteArmor": "Bulette Armor",
+        "caphorite": "Caphorite",
+        "cloth": "Cloth",
+        "coldIron": "Cold Iron",
+        "cryptstone": "Cryptstone",
+        "darkleafCloth": "Darkleaf Cloth",
+        "darkwood": "Darkwood",
+        "dragonhide": "Dragonhide",
+        "druchite": "Druchite",
+        "eelHide": "Eel Hide",
+        "elysianBronze": "Elysian Bronze",
+        "fireForgedSteel": "Fire-forged Steel",
+        "frostForgedSteel": "Frost-forged Steel",
+        "glaucite": "Glaucite",
+        "greenwood": "Greenwood",
+        "griffonMane": "Griffon Mane",
+        "heatstonePlating": "Heatstone Plating",
+        "horacalcum": "Horacalcum",
+        "inubrix": "Inubrix",
+        "irespanbasalt": "Irespan Basalt",
+        "lazurite": "Lazurite",
+        "leather": "Leather",
+        "liquidGlass": "Liquid Glass",
+        "livingSteel": "Living Steel",
+        "mithral": "Mithral",
+        "nexavaranSteel": "Nexavaran Steel",
+        "noqual": "Noqual",
+        "paueliel": "Paueliel",
+        "pyresteel": "Pyre Steel",
+        "siccatite": "Siccatite",
+        "silver": "Silver",
+        "silversheen": "Silversheen",
+        "singingSteel": "Singing Steel",
+        "spireSteel": "Spiresteel",
+        "steel": "Steel",
+        "sunsilk": "Sunsilk",
+        "sunsilver": "Sunsilver",
+        "throneglass": "Throneglass",
+        "viridium": "Viridium",
+        "voidglass": "Voidglass",
+        "whipwood": "Whipwood",
+        "wyroot": "Wyroot",
+        "bone": "Bone",
+        "bronze": "Bronze",
+        "glass": "Glass",
+        "gold": "Gold",
+        "obsidian": "Obsidian",
+        "stone": "Stone",
+        "wood": "Wood",
+        "magic": "Magic",
+        "epic": "Epic"
       }
     },
 
@@ -1809,6 +1839,8 @@
     "ChargePlural": "Charges",
     "ConditionPlural": "Conditions",
     "Add": "Add",
+    "JoinAnd": "and",
+    "JoinOr": "or",
     "ItemName": "Item Name",
     "BuffName": "Buff Name",
     "SkillName": "Skill Name",
@@ -1828,8 +1860,8 @@
     "SpellResistanceAbbr": "SR",
     "SpellEffect": "Spell Effect",
     "SpellEffects": "Spell Effects",
-    "SubSchool": "Subschool",
-    "SubSchoolExample": "e.g. summoning, compulsion",
+    "Subschool": "Subschool",
+    "SubschoolExample": "e.g. summoning, compulsion",
     "TypePlural": "Types",
     "SpellTypesExample": "e.g. acid, evil",
     "SpellEffectExample": "e.g. one glob of acid",
@@ -2310,7 +2342,6 @@
     },
     "DomainSlotValue": "Domain/School Slots",
     "DomainSlotValueDesc": "Number of bonus spell slots Domain/School spells have for each spell level.",
-    "DisableLightLowLightVision": "Disable Low-light Vision for Light Source",
     "Command": "Command",
     "MaximumRangeIncrements": "Maximum Range Increments",
     "DuplicateInitiative": "Duplicate Initiative",
@@ -2419,9 +2450,6 @@
       "ActionSelector": {
         "Title": "{actor} using {item}"
       },
-      "ItemSelector": {
-        "Title": "Item Selector"
-      },
       "ChangeTargetSelector": {
         "Title": "Select change target",
         "InvalidChoice": "Choice is not valid for the current actor."
@@ -2494,33 +2522,154 @@
         "AsType": "As",
         "CopyId": "Copy change ID"
       },
-      "Integration": {
-        "Title": "Module Integration",
-        "Label": "Configure Integration",
-        "Hint": "Alter which modules the system adds special functionality for.",
-        "Modules": {
-          "dice-so-nice": {
-            "Label": "Dice So Nice",
-            "Info": "Adds custom calls to trigger DSN rolling where the module's own detection fails and to group rolls by context."
-          },
-          "drag-ruler": {
-            "Label": "Drag Ruler",
-            "Info": "Adds speed provider to Drag Ruler."
-          },
-          "enhanced-terrain-layer": {
-            "Label": "Enhanced Terrain Layer",
-            "Info": "Enhances <em>Drag Ruler</em> integration support."
+      "Settings": {
+        "Player": "Player",
+        "World": "World",
+
+        "Integration": {
+          "Title": "Module Integration",
+          "Label": "Configure Integration",
+          "Hint": "Alter which modules the system adds special functionality for.",
+          "Modules": {
+            "dice-so-nice": {
+              "Label": "Dice So Nice",
+              "Info": "Adds custom calls to trigger DSN rolling where the module's own detection fails and to group rolls by context."
+            },
+            "drag-ruler": {
+              "Label": "Drag Ruler",
+              "Info": "Adds speed provider to Drag Ruler."
+            },
+            "enhanced-terrain-layer": {
+              "Label": "Enhanced Terrain Layer",
+              "Info": "Enhances <em>Drag Ruler</em> integration support."
+            }
           }
-        }
-      },
-      "Performance": {
-        "Title": "Performance Configuration",
-        "Button": "Performance Settings",
-        "Hint": "Adjust performance impacting settings.",
-        "Options": {
-          "reachLimit": {
-            "Label": "Reach highlight limit",
-            "Hint": "Maximum range in squares reach highlight is drawn. Default is 60 (300 ft). First increment is displayed fully regardless of this setting. Values below 10 disable reach highlight entirely."
+        },
+        "Performance": {
+          "Title": "Performance Configuration",
+          "Button": "Performance Settings",
+          "Hint": "Adjust performance impacting settings.",
+          "Options": {
+            "reachLimit": {
+              "Label": "Reach highlight limit",
+              "Hint": "Maximum range in squares reach highlight is drawn. Default is 60 (300 ft). First increment is displayed fully regardless of this setting. Values below 10 disable reach highlight entirely."
+            }
+          }
+        },
+        "Health": {
+          "Title": "Health Configuration",
+          "Label": "Configure Health",
+          "Hint": "Configure health computations for actors.",
+
+          "TabBase": "Base",
+          "TabVariant": "Variant Rules",
+
+          "Instructions": "Health computation for the various types of classes. For reference, Pathfinder Society uses the following configuration for player characters: automatic computation, 0.5 rate, one HD maximized, round up, discrete continuity.",
+
+          "Compute": "Compute",
+          "Rate": "Rate",
+          "CanMaximize": "Can Maximize",
+          "CanMaximizeHint": "Counts towards maximized hit dice.",
+          "ComputeAuto": "Auto",
+          "ComputeManual": "Manual",
+          "MaximizedLimit": "Maximized HD Limit",
+
+          "Rounding": "Health Rounding",
+          "RoundingHint": "Health values must be whole numbers. Which way to round them?",
+          "RoundingUp": "Up",
+          "RoundingDown": "Down",
+          "RoundingNearest": "Nearest",
+
+          "Continuity": "Health Continuity",
+          "ContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
+          "Continuous": "Continuous",
+          "Discrete": "Discrete",
+
+          "Class": {
+            "pc": "PC",
+            "npc": "NPC",
+            "racial": "Racial"
+          },
+
+          "WoundsAndVigor": {
+            "PC": "Wounds and Vigor for PCs",
+            "PCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
+            "NPC": "Wounds and Vigor for NPCs",
+            "NPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters."
+          },
+          "WoundThresholds": {
+            "PC": "Wound thresholds for PCs",
+            "PCHint": "Use wound threshold optional ruleset for player characters.",
+            "NPC": "Wound thresholds for NPCs",
+            "NPCHint": "Use wound threshold optional ruleset for nonplayer characters.",
+            "VigorConflict": "Wound Thresholds has no effect with Wounds & Vigor optional rule also enabled.",
+            "Disabled": "Disabled",
+            "Normal": "Normal",
+            "Gritty": "Gritty"
+          }
+        },
+        "Experience": {
+          "Title": "Experience Configuration",
+          "Name": "Experience Configuration",
+          "Label": "Configure Experience",
+          "Hint": "Configure aspects about leveling up.",
+
+          "Track": {
+            "Label": "Experience Track",
+            "Hint": "The rate at which characters advance in levels",
+            "Options": {
+              "Slow": "Slow",
+              "Medium": "Medium",
+              "Fast": "Fast",
+              "Custom": "Custom"
+            },
+            "CustomPlaceholder": "e.g. '@level * 1000'",
+            "CustomUsage": "Custom experience formula is cumulative. Meaning for example, to mimic PF2 style experience you would simply enter <code>1000</code>, since every single level requires 1000 experience exactly, while setting it to <code>@level * 1000</code> would mean every single level requires thousand more than the last. Uses character's normal roll data with added <code>@level</code> for the current level."
+          },
+          "Disable": "Disable Experience Tracking",
+          "DisableHint": "Disables experience tracking features from the system, such as experience bars, level up detection, XP thresholds, etc.",
+          "Distributor": "Open XP Distributor",
+          "DistributorHint": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed"
+        },
+        "Tooltip": {
+          "Title": "Token Tooltip Configuration",
+          "Label": "Token Tooltip",
+          "Name": "Token Tooltip Configuration",
+          "Hint": "Change tooltip settings",
+          "Anchor": "Tooltip Anchor",
+          "Offset": "Tooltip Offset",
+          "MaxPortraitSize": "Maximum Portrait Size",
+          "Disable": "Disable Tooltips",
+          "HideWithoutKey": "Hide unless {key} is held",
+          "Hide": {
+            "Portraits": "Hide Portraits"
+          }
+        },
+        "TooltipWorld": {
+          "Title": "Token Tooltip World Configuration",
+          "Name": "Token Tooltip World Configuration",
+          "Label": "World Configuration",
+          "Hint": "Change tooltip settings for all users",
+          "Disable": "Disable Tooltips",
+          "Hide": {
+            "Portraits": "Hide Portraits",
+            "Held": "Hide Held items",
+            "HeldHint": "Hide Held items from all players",
+            "Armor": "Hide Armor",
+            "ArmorHint": "Hide Armor from all players",
+            "Buffs": "Hide Buffs",
+            "BuffsHint": "Hide Buffs from all players",
+            "Conditions": "Hide Conditions",
+            "ConditionsHint": "Hide Conditions from all players",
+            "Clothing": "Hide Clothing",
+            "ClothingHint": "Hide Clothing from all players",
+            "ActorName": {
+              "ByDisposition": "Hide name by disposition",
+              "ByDispositionHint": "Hide name from all players when token disposition is worse than configured.",
+              "MinimumPermission": "Name minimum permission",
+              "MinimumPermissionHint": "Minimum ownership level needed to see real token name.",
+              "Replacement": "Hidden Replacement Name"
+            }
           }
         }
       },
@@ -2543,8 +2692,19 @@
           "epic": "Epic Fantasy"
         }
       },
+      "DocumentSelector": {
+        "Title": "Document Selector",
+        "None": "None"
+      },
+      "ItemSelector": {
+        "Title": "Item Selector",
+        "Items": "Items",
+        "Quantity": "Quantity"
+      },
       "ActorSelector": {
         "Title": "Actor Selector",
+        "You": "You",
+        "Owner": "Owner",
         "OwnedActors": "Owned",
         "UnownedActors": "Other",
         "NoUnownedActors": "You do not have permission to see any actors.",
@@ -2637,6 +2797,10 @@
     },
 
     "SETTINGS": {
+      "DisableLLV": {
+        "Label": "Disable LLV",
+        "Hint": "Prevent Low-light Vision from affecting this light source's radius."
+      },
       "DiagonalRule": {
         "Label": "Diagonal Movement Rule",
         "Hint": "Configure which diagonal movement rule should be used for games within this system.",
@@ -2648,24 +2812,6 @@
       "InitTiebreaker": {
         "Label": "Initiative Tiebreaker",
         "Hint": "Append total initiative divided by 100 to break ties in Initiative."
-      },
-      "Experience": {
-        "Track": {
-          "Label": "Experience Track",
-          "Hint": "The rate at which characters advance in levels",
-          "Options": {
-            "Slow": "Slow",
-            "Medium": "Medium",
-            "Fast": "Fast",
-            "Custom": "Custom"
-          },
-          "CustomPlaceholder": "e.g. '@level * 1000'",
-          "CustomUsage": "Custom experience formula is cumulative. Meaning for example, to mimic PF2 style experience you would simply enter <code>1000</code>, since every single level requires 1000 experience exactly, while setting it to <code>@level * 1000</code> would mean every single level requires thousand more than the last. Uses character's normal roll data with added <code>@level</code> for the current level."
-        },
-        "Disable": "Disable Experience Tracking",
-        "DisableHint": "Disables experience tracking features from the system, such as experience bars, level up detection, XP thresholds, etc.",
-        "Distributor": "Open XP Distributor",
-        "DistributorHint": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed"
       },
       "Vision": {
         "Sharing": "Shared Vision",
@@ -2740,95 +2886,6 @@
         "NoTargetsHint": "Disables targeted actors from showing up on attack cards",
         "ClearTargets": "Clear targets after attack",
         "ClearTargetsHint": "Whether to untarget everything after an attack roll."
-      },
-
-      "TokenTooltip": {
-        "Label": "Token Tooltip",
-        "Name": "Token Tooltip Configuration",
-        "Hint": "Change tooltip settings",
-        "ResetInfo": "Reset Pathfinder tooltip configuration.",
-        "UpdateInfo": "Updated Pathfinder tooltip configuration.",
-        "Anchor": "Tooltip Anchor",
-        "Offset": "Tooltip Offset",
-        "MaxPortraitSize": "Maximum Portrait Size",
-        "Disable": "Disable Tooltips",
-        "HideWithoutKey": "Hide unless {key} is held",
-        "World": {
-          "Name": "Token Tooltip World Configuration",
-          "Label": "World Configuration",
-          "Hint": "Change tooltip settings for all users"
-        },
-        "Hide": {
-          "Portraits": "Hide Portraits",
-          "Held": "Hide Held items",
-          "HeldHint": "Hide Held items from all players",
-          "Armor": "Hide Armor",
-          "ArmorHint": "Hide Armor from all players",
-          "Buffs": "Hide Buffs",
-          "BuffsHint": "Hide Buffs from all players",
-          "Conditions": "Hide Conditions",
-          "ConditionsHint": "Hide Conditions from all players",
-          "Clothing": "Hide Clothing",
-          "ClothingHint": "Hide Clothing from all players",
-          "ActorName": {
-            "ByDisposition": "Hide name by disposition",
-            "ByDispositionHint": "Hide name from all players when token disposition is worse than configured.",
-            "MinimumPermission": "Name minimum permission",
-            "MinimumPermissionHint": "Minimum ownership level needed to see real token name.",
-            "Replacement": "Hidden Replacement Name"
-          }
-        }
-      },
-
-      "Health": {
-        "Title": "Health Configuration",
-        "Button": "Configure Health",
-        "Hint": "Configure health computations for actors.",
-        "TabBase": "Base",
-        "TabVariant": "Variant Rules",
-
-        "Instructions": "Health computation for the various types of classes. For reference, Pathfinder Society uses the following configuration for player characters: automatic computation, 0.5 rate, one HD maximized, round up, discrete continuity.",
-        "Compute": "Compute",
-        "Rate": "Rate",
-        "CanMaximize": "Can Maximize",
-        "CanMaximizeHint": "Counts towards maximized hit dice.",
-        "MaximizedLimit": "Maximized HD Limit",
-        "ComputeAuto": "Auto",
-        "ComputeManual": "Manual",
-
-        "Rounding": "Health Rounding",
-        "RoundingHint": "Health values must be whole numbers. Which way to round them?",
-        "RoundingUp": "Up",
-        "RoundingDown": "Down",
-        "RoundingNearest": "Nearest",
-
-        "Continuity": "Health Continuity",
-        "ContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
-        "Continuous": "Continuous",
-        "Discrete": "Discrete",
-
-        "Class": {
-          "pc": "PC",
-          "npc": "NPC",
-          "racial": "Racial"
-        },
-
-        "WoundsAndVigor": {
-          "PC": "Wounds and Vigor for PCs",
-          "PCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
-          "NPC": "Wounds and Vigor for NPCs",
-          "NPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters."
-        },
-        "WoundThresholds": {
-          "PC": "Wound thresholds for PCs",
-          "PCHint": "Use wound threshold optional ruleset for player characters.",
-          "NPC": "Wound thresholds for NPCs",
-          "NPCHint": "Use wound threshold optional ruleset for nonplayer characters.",
-          "VigorConflict": "Wound Thresholds has no effect with Wounds & Vigor optional rule also enabled.",
-          "Disabled": "Disabled",
-          "Normal": "Normal",
-          "Gritty": "Gritty"
-        }
       },
 
       "DragRulerWalk": "walk",

@@ -29,50 +29,69 @@ export const compress = (formula) =>
  * @param {AnyTerm} t
  * @returns {boolean}
  */
-const isSimpleTerm = (t) => t instanceof NumericTerm || t?.simple || false;
+const isSimpleTerm = (t) => t instanceof foundry.dice.terms.NumericTerm || t?.simple || false;
 
 class FormulaPart {
   /** @type {AnyChunk[]} */
   terms = [];
   simple = false;
 
-  constructor(terms = [], simple = false) {
+  constructor(terms = [], simple = false, evaluate = true) {
     this.terms = terms.filter((t) => !!t);
     this.simple = simple;
+
+    if (evaluate) this.evaluate();
   }
 
   get isDeterministic() {
     return this.terms.every((t) => t.isDeterministic);
   }
 
+  #formula;
   get formula() {
+    if (this.#formula) return this.#formula;
+
     const f = this.terms
       .map((t) => {
         if (t.constructor.isFunction) return `${t.simplify}`;
         else if (t.isDeterministic) return `${t.total}`;
-        else return t.formula;
+        // Dice eat up prefix parentheticals in v12
+        else if (
+          t instanceof foundry.dice.terms.Die &&
+          t._number instanceof Roll &&
+          t._number.terms.length == 1 &&
+          t._number.terms[0] instanceof foundry.dice.terms.ParentheticalTerm
+        ) {
+          // Simplify prefix parenthetical part of (X)dY
+          const formula = t._number.terms[0].roll.formula;
+          const iformula = simplify(formula);
+          t._number = new Roll.defaultImplementation(iformula).evaluateSync({ maximize: true });
+          return t.formula;
+        } else {
+          return t.formula;
+        }
       })
       .join("");
 
-    const roll = Roll.create(f);
-    if (roll.isDeterministic) return roll.evaluateSync().total.toString();
-    else return f;
+    const roll = new Roll.defaultImplementation(f);
+    if (roll.isDeterministic) this.#formula = roll.evaluateSync({ minimize: true }).total.toString();
+    else this.#formula = f;
+
+    return this.#formula;
   }
 
   _total = null;
 
-  async evaluate() {
-    const roll = await new Roll.defaultImplementation(this.formula).evaluate();
-    this._total = roll.total;
-  }
-
-  evaluateSync() {
-    const roll = new Roll.defaultImplementation(this.formula).evaluateSync();
+  evaluate() {
+    const roll = new Roll.defaultImplementation(this.formula).evaluateSync({ minimize: true });
     this._total = roll.total;
   }
 
   get total() {
-    if (this._total === null) throw new Error("Must be evaluated first!");
+    if (this._total === null) {
+      console.error("Must be evaluated first!", this);
+      throw new Error("Must be evaluated first!");
+    }
     return this._total;
   }
 }
@@ -86,11 +105,11 @@ function negativeTerms(terms) {
   const nterms = [];
   while (terms.length) {
     const term = terms.shift();
-    if (term instanceof OperatorTerm && term.operator === "-") {
+    if (term instanceof foundry.dice.terms.OperatorTerm && term.operator === "-") {
       // Add preceding + if operators are fully consumed
-      if (!(nterms.at(-1) instanceof OperatorTerm)) {
-        const nt = new OperatorTerm({ operator: "+" });
-        nt.evaluateSync();
+      if (!(nterms.at(-1) instanceof foundry.dice.terms.OperatorTerm)) {
+        const nt = new foundry.dice.terms.OperatorTerm({ operator: "+" });
+        nt._evaluated = true;
         nterms.push(nt);
       }
       nterms.push(new FormulaPart([term, terms.shift()], true));
@@ -107,7 +126,7 @@ function stringTerms(terms) {
   const nterms = [];
   while (terms.length) {
     const term = terms.shift();
-    if (term instanceof StringTerm) {
+    if (term instanceof foundry.dice.terms.StringTerm) {
       // Partial dice terms combine left
       if (/^d\d/.test(term.expression)) {
         nterms.push(new FormulaPart([nterms.pop(), term]));
@@ -133,7 +152,7 @@ function triTermOps(terms, operators, simpleOnly = false) {
   const eterms = [];
   while (terms.length) {
     const term = terms.shift();
-    if (term instanceof OperatorTerm && operators.includes(term.operator)) {
+    if (term instanceof foundry.dice.terms.OperatorTerm && operators.includes(term.operator)) {
       // Only combine simple terms
       if (simpleOnly && !(isSimpleTerm(eterms.at(-1)) && isSimpleTerm(terms[0]))) {
         // Fall through
@@ -192,7 +211,6 @@ class TernaryTerm {
 
   get total() {
     throw new Error("TernaryTerm.total called");
-    //return Roll.create(this.formula).evaluate().total;
   }
 }
 
@@ -206,12 +224,12 @@ function ternaryTerms(terms) {
   const tterms = [];
   while (terms.length) {
     let term = terms.shift();
-    if (term instanceof OperatorTerm && term.operator === "?") {
+    if (term instanceof foundry.dice.terms.OperatorTerm && term.operator === "?") {
       const cond = tterms.pop();
       const ifTrue = [];
       while (terms.length) {
         term = terms.shift();
-        const endTern = term instanceof OperatorTerm && term.operator === ":";
+        const endTern = term instanceof foundry.dice.terms.OperatorTerm && term.operator === ":";
         if (endTern) break;
         ifTrue.push(term);
       }
@@ -239,10 +257,18 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
   formula = Roll.defaultImplementation
     .parse(formula)
     .map((t) => {
-      if (t instanceof ParentheticalTerm) {
-        t.evaluate();
-        const v = t.total;
-        return v >= 0 ? `${t.total}` : `(${t.total})`;
+      if (t instanceof foundry.dice.terms.ParentheticalTerm) {
+        if (t.isDeterministic) {
+          // Parenthetical term doesn't have separate evaluate calls yet
+          t.evaluate({ minimize: true });
+          const v = t.total;
+          return `${v}`;
+        } else {
+          const iformula = simplify(t.roll.formula);
+          const isSingleTerm = Roll.defaultImplementation.parse(iformula).length === 1;
+          if (isSingleTerm) return iformula;
+          else return `(${iformula})`;
+        }
       }
       return t.formula;
     })
@@ -281,7 +307,7 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
   terms = ternaryTerms(terms);
 
   // Make final pass
-  const final = new FormulaPart(terms);
+  const final = new FormulaPart(terms, undefined, false);
 
   return final.formula.replace(/ \+ 0\b/g, "");
 }

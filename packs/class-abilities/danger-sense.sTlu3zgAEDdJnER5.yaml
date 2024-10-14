@@ -10,15 +10,11 @@ system:
       - Barbarian (Unchained)
   contextNotes:
     - target: ref
-      text: '+[[@class.level < 3 ? 1 : (floor(@class.level / 3))]] vs Traps'
+      text: +[[max(1, floor(@class.level / 3))]] vs Traps
     - target: skill.per
-      text: >-
-        +[[@class.level < 3 ? 1 : (floor(@class.level / 3))]] to avoid being
-        surprised by a foe
+      text: +[[max(1, floor(@class.level / 3))]] to avoid being surprised by a foe
     - target: ac
-      text: >-
-        +[[@class.level < 3 ? 1 : (floor(@class.level / 3))]] vs attacks made by
-        traps
+      text: +[[max(1, floor(@class.level / 3))]] vs attacks made by traps
   description:
     value: >-
       <p>At 3rd level, the character gains a +1 bonus on <em>Reflex</em> saves

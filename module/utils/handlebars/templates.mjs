@@ -59,6 +59,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-tags.hbs",
   "systems/pf1/templates/items/parts/item-weapon-groups.hbs",
   "systems/pf1/templates/items/parts/spell-descriptors.hbs",
+  "systems/pf1/templates/items/parts/spell-subschool.hbs",
 
   "systems/pf1/templates/internal/content-source-view.hbs",
 

@@ -1,5 +1,6 @@
 import { ActorPF } from "./actor-pf.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { RollPF } from "@dice/roll.mjs";
+import { addDefaultChanges } from "./utils/apply-changes.mjs";
 
 export class ActorCharacterPF extends ActorPF {
   /**
@@ -111,6 +112,14 @@ export class ActorCharacterPF extends ActorPF {
     }
 
     return totalXP;
+  }
+
+  /**
+   * @protected
+   * @override
+   */
+  _prepareTypeChanges(changes) {
+    addDefaultChanges.call(this, changes);
   }
 
   /**

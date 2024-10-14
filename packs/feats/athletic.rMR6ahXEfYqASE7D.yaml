@@ -5,11 +5,11 @@ name: Athletic
 system:
   changes:
     - _id: 7x539gvc
-      formula: '@skills.clm.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.clm.rank, 10), 2)
       target: skill.clm
       type: untyped
     - _id: zgst782n
-      formula: '@skills.swm.rank >= 10 ? 4 : 2'
+      formula: 2 + if(gte(@skills.swm.rank, 10), 2)
       target: skill.swm
       type: untyped
   description:

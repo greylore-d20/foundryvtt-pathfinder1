@@ -1,0 +1,43 @@
+.application.pf1-v2.settings {
+  nav.tabs {
+    line-height: 32px;
+    margin-bottom: 1rem;
+  }
+
+  :is(div[data-application-part="form"], .tab) {
+    > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+
+      > :last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  footer.form-footer {
+    padding-top: 1rem;
+  }
+}
+
+.theme-light {
+  .application.pf1-v2.settings {
+    nav.tabs {
+      border-bottom: 1px solid var(--color-border-dark-primary);
+    }
+  }
+}
+
+.theme-dark {
+  .application.pf1-v2.settings {
+    nav.tabs {
+      border-bottom: 1px solid var(--color-border-light-primary);
+    }
+  }
+}

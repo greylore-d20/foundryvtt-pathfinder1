@@ -5,7 +5,7 @@ name: Shield Focus
 system:
   changes:
     - _id: insvnslf
-      formula: '@shield.type > 0 ? 1 : 0'
+      formula: if(@shield.type, 1)
       target: sac
       type: untyped
   description:

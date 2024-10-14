@@ -1,43 +1,49 @@
-<form autocomplete="off" data-tooltip-class="pf1">
+<section class="form-body">
   <table>
     <thead>
-      {{#each fields as |value|}}
+    {{#each fields as |value|}}
       <th>{{value}}</th>
-      {{/each}}
-      <th class="resistance-control"></th>
+    {{/each}}
+    <th class="entry-control"></th>
     </thead>
     <tbody>
-      {{#each entries as |entry index|}}
+    {{#each entries as |entry index|}}
       <tr class="resistance" data-index="{{index}}">
-        <td><input type="number" class="textarea" data-index="amount" value={{entry.amount}} data-dtype={{@root.dtypes.[0]}} name="{{index}}-amount"></td>
-        <td><select data-index="types0" value={{entry.types.[0]}} data-dtype={{@root.dtypes.[1]}} name="{{index}}-types0">
+        <td>
+          <input type="number" class="textarea" data-index="amount" value={{entry.amount}}
+                 data-dtype={{@root.dtypes.[0]}} name="{{index}}-amount">
+        </td>
+        <td>
+          <select data-index="types0" data-dtype={{@root.dtypes.[1]}} name="{{index}}-types0">
             {{#if @root.isDR}}
               {{selectOptions @root.damages localize=true selected=entry.types.[0] blank="PF1.None"}}
             {{else}}
               {{selectOptions @root.damages localize=true selected=entry.types.[0]}}
             {{/if}}
-            </select>
+          </select>
         </td>
-        <td><select data-index="operator" value={{entry.operator}} data-dtype={{@root.dtypes.[2]}} name="{{index}}-comboChoice">
+        <td>
+          <select data-index="operator" data-dtype={{@root.dtypes.[2]}} name="{{index}}-comboChoice">
             {{selectOptions @root.operators localize=true selected=entry.operator}}
-            </select>
+          </select>
         </td>
-        <td><select data-index="types1" value={{entry.types.[1]}} data-dtype={{@root.dtypes.[3]}} name="{{index}}-types1">
+        <td>
+          <select data-index="types1" data-dtype={{@root.dtypes.[3]}} name="{{index}}-types1">
             {{selectOptions @root.damages localize=true selected=entry.types.[1] blank="PF1.None"}}
-            </select>
+          </select>
         </td>
-        <td class="resistance-control"><a class="resistance-control delete-resistance"><i class="fas fa-minus"></i></a></td>
+        <td class="entry-control">
+          <button type="button" data-action="deleteEntry" class="entry-control delete-entry"><i class="fas fa-trash"></i></button>
+        </td>
       </tr>
-      {{/each}}
+    {{/each}}
     </tbody>
   </table>
-
-  <a class="resistance-control add-resistance"><i class="fas fa-plus"></i> {{localize "PF1.AddEntry"}}</a>
+  <div class="add-entry"><a data-action="addEntry"><i class="far fa-plus"></i> {{localize "PF1.AddEntry"}}</a></div>
 
   <div class="form-group stacked">
-    <label>{{localize "PF1.Special"}}</label>
-    <input type="text" name="custom" value="{{@root.custom}}" data-dtype="String">
+    <label for="resistance-custom-{{id}}-{{document.id}}">{{localize "PF1.Special"}}</label>
+    <input id="resistance-custom-{{id}}-{{document.id}}" type="text" name="custom" value="{{@root.custom}}"
+           data-dtype="String">
   </div>
-
-  <button type="submit" name="submit" value="1"><i class="far fa-save"></i> {{localize "PF1.UpdateActor"}}</button>
-</form>
+</section>

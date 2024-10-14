@@ -1,5 +1,5 @@
-import { getChangeFlat, getSourceInfo } from "../documents/actor/utils/apply-changes.mjs";
-import { RollPF } from "../dice/roll.mjs";
+import { getChangeFlat, getSourceInfo } from "@actor/utils/apply-changes.mjs";
+import { RollPF } from "@dice/roll.mjs";
 
 /**
  * Change datamodel

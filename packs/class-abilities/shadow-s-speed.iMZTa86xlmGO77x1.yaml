@@ -9,7 +9,7 @@ system:
       - Vigilante
   changes:
     - _id: an4f9gvm
-      formula: '@class.level >= 10 ? 20 : 10'
+      formula: 10 + if(gte(@class.level, 10), 10)
       target: landSpeed
       type: base
   description:

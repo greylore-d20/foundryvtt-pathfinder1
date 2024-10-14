@@ -1,4 +1,4 @@
-import { keepUpdateArray } from "../utils/lib.mjs";
+import { keepUpdateArray } from "@utils";
 
 /**
  * Conditional modifier bundle.

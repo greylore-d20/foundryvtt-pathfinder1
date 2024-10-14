@@ -49,7 +49,7 @@ system:
     - Revelation
     - Intrigue Mystery
   uses:
-    maxFormula: '@class.level >= 20 ? 3 : ((@class.level < 20 && @class.level > 9) ? 2 : 1)'
+    maxFormula: 1 + if(gt(@class.level, 9), 1) + if(gte(@class.level, 20), 1)
     per: day
 type: feat
 

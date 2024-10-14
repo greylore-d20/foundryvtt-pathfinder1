@@ -984,9 +984,9 @@ export class ItemPF extends ItemBasePF {
    */
   get adjustsVision() {
     if (
-      this.system.changeFlags.hasSenseLL ||
-      this.system.changeFlags.hasSenseSI ||
-      this.system.changeFlags.hasSenseSID
+      this.system.changeFlags.lowLightVision ||
+      this.system.changeFlags.seeInvisibility ||
+      this.system.changeFlags.seeInDarkness
     ) {
       return true;
     }
@@ -1007,7 +1007,7 @@ export class ItemPF extends ItemBasePF {
    */
   isVisionChange(changes) {
     if (
-      changes?.system?.changeFlags?.hasSenseLL !== undefined ||
+      changes?.system?.changeFlags?.lowLightVision !== undefined ||
       changes?.system?.changeFlags?.hasSenseSI !== undefined ||
       changes?.system?.changeFlags?.hasSenseSID !== undefined
     ) {
@@ -1063,7 +1063,7 @@ export class ItemPF extends ItemBasePF {
 
     if ((changed?.system?.active !== undefined && this.adjustsVision) || this.isVisionChange(changed)) {
       const initializeVision = true;
-      const refreshLighting = this.system.changeFlags.hasSenseLL || false;
+      const refreshLighting = this.system.changeFlags.lowLightVision || false;
       this.actor.updateVision(initializeVision, refreshLighting);
     }
 

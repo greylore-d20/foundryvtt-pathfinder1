@@ -1603,9 +1603,9 @@ export class ActorPF extends ActorBasePF {
 
     // Enable senses based on flags
     const senses = this.system.traits.senses;
-    senses.ll.enabled ||= this.changeFlags.hasSenseLL;
-    senses.si ||= this.changeFlags.hasSenseSI;
-    senses.sid ||= this.changeFlags.hasSenseSID;
+    senses.ll.enabled ||= this.changeFlags.lowLightVision;
+    senses.si ||= this.changeFlags.seeInvisibility;
+    senses.sid ||= this.changeFlags.seeInDarkness;
 
     this.updateSpellbookInfo();
   }

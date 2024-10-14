@@ -6,7 +6,6 @@ import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { ItemPF } from "@item/item-pf.mjs";
-import { applyAccessibilitySettings } from "@utils/chat.mjs";
 import { LevelUpForm } from "@app/level-up.mjs";
 import { CurrencyTransfer } from "@app/currency-transfer.mjs";
 import { RollPF } from "@dice/roll.mjs";
@@ -3842,9 +3841,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Create placeholders
     this._createPlaceholders(this.element);
-
-    // Apply accessibility settings
-    applyAccessibilitySettings(this, this.element, {}, game.settings.get("pf1", "accessibilityConfig"));
 
     return result;
   }

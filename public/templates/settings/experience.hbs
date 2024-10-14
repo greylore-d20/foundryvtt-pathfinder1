@@ -1,53 +1,60 @@
-<form autocomplete="off" data-tooltip-class="pf1">
+<section class="form-body">
   <div class="form-group">
     <label for="disable-experience-tracking">
-      {{localize "PF1.SETTINGS.Experience.Disable"}}
+      {{localize "PF1.Application.Settings.Experience.Disable"}}
     </label>
     <div class="form-fields">
-      <input type="checkbox" id="disable-experience-tracking" name="disable" data-dtype="Boolean" {{checked disable}}>
+      <input type="checkbox" id="disable-experience-tracking" name="disable" data-hide-on="1"
+             data-dtype="Boolean" {{checked settings.disable}} data-hide="#experience-details">
     </div>
-    <p class="notes">{{localize "PF1.SETTINGS.Experience.DisableHint"}}</p>
+    <p class="hint">
+      {{localize "PF1.Application.Settings.Experience.DisableHint"}}
+    </p>
   </div>
 
-  {{#if enabled}}
-  <div class="form-group">
-    <label for="xp-track">{{localize "PF1.SETTINGS.Experience.Track.Label"}}</label>
-    <div class="form-fields">
-      <select name="track" id="xp-track">
-        {{selectOptions progressionOptions selected=track localize=true}}
-      </select>
+  <div class="{{#if (not enabled)}}hidden{{/if}}" id="experience-details">
+    <div class="form-group">
+      <label for="xp-track">
+        {{localize "PF1.Application.Settings.Experience.Track.Label"}}
+      </label>
+      <div class="form-fields">
+        <select name="track" id="xp-track">
+          {{selectOptions progressionOptions selected=settings.track localize=true}}
+        </select>
+      </div>
+      <p class="hint">
+        {{localize "PF1.Application.Settings.Experience.Track.Hint"}}
+      </p>
     </div>
-    <p class="notes">{{localize "PF1.SETTINGS.Experience.Track.Hint"}}</p>
-  </div>
 
-  {{#if hasCustomFormula}}
-  <div class="form-group">
-    <label for="xp-custom-formula">{{localize "PF1.Formula"}}</label>
-    <div class="form-fields">
-      <input type="text" class="formula" placeholder="{{localize "PF1.SETTINGS.Experience.Track.CustomPlaceholder"}}" name="custom.formula" value="{{custom.formula}}">
+    {{#if hasCustomFormula}}
+      <div class="form-group">
+        <label for="xp-custom-formula">
+          {{localize "PF1.Formula"}}
+        </label>
+        <div class="form-fields">
+          <input type="text" class="formula" id="xp-custom-formula"
+                 placeholder="{{localize "PF1.Application.Settings.Experience.Track.CustomPlaceholder"}}"
+                 name="custom.formula" value="{{settings.custom.formula}}">
+        </div>
+      </div>
+      <p class="hint">
+        <i class="fa-solid fa-circle-info"></i>
+        {{{localize "PF1.Application.Settings.Experience.Track.CustomUsage"}}}
+      </p>
+    {{/if}}
+
+    <div class="form-group">
+      <label for="open-xp-distributor">
+        {{localize "PF1.Application.Settings.Experience.Distributor"}}
+      </label>
+      <div class="form-fields">
+        <input type="checkbox" id="open-xp-distributor" name="openDistributor"
+               data-dtype="Boolean" {{checked settings.openDistributor}}>
+      </div>
+      <p class="hint">
+        {{localize "PF1.Application.Settings.Experience.DistributorHint"}}
+      </p>
     </div>
   </div>
-  <p class="info">
-    <i class="fa-solid fa-circle-info"></i>
-    {{{localize "PF1.SETTINGS.Experience.Track.CustomUsage"}}}
-  </p>
-  {{/if}}
-
-  <div class="form-group">
-    <label for="open-xp-distributor">
-      {{localize "PF1.SETTINGS.Experience.Distributor"}}
-    </label>
-    <div class="form-fields">
-      <input type="checkbox" id="open-xp-distributor" name="openDistributor" data-dtype="Boolean" {{checked openDistributor}}>
-    </div>
-    <p class="notes">{{localize "PF1.SETTINGS.Experience.DistributorHint"}}</p>
-  </div>
-  {{/if}}
-
-  <div class="form-group">
-    <button type="button" class="save">
-      <i class="far fa-save"></i>
-      {{localize "SETTINGS.Save"}}
-    </button>
-  </div>
-</form>
+</section>

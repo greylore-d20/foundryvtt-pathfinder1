@@ -1,3 +1,5 @@
+import { AbstractSettingsApplication } from "@app/settings/abstract-settings.mjs";
+
 export class PerformanceModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -8,51 +10,44 @@ export class PerformanceModel extends foundry.abstract.DataModel {
   }
 }
 
-export class PerformanceConfig extends FormApplication {
-  /** @override */
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
-      title: game.i18n.localize("PF1.Application.Performance.Title"),
-      id: "performance-config",
-      template: "systems/pf1/templates/settings/performance.hbs",
-      classes: [...options.classes, "pf1", "performance-config"],
-      submitOnChange: false,
-      closeOnSubmit: true,
-      submitOnClose: false,
+/**
+ * An application that lets the user configure performance-related settings.
+ *
+ * @augments {AbstractSettingsApplication}
+ */
+export class PerformanceConfig extends AbstractSettingsApplication {
+  static DEFAULT_OPTIONS = {
+    configKey: "performance",
+    position: {
       width: 520,
-      height: "auto",
-    };
-  }
+    },
+    window: {
+      title: "PF1.Application.Settings.Performance.Title",
+    },
+  };
 
-  getData() {
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/settings/performance.hbs",
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
+
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     const settings = game.settings.get("pf1", "performance");
     return {
-      ...settings,
+      ...(await super._prepareContext()),
+      settings,
       model: settings.constructor.defineSchema(),
     };
-  }
-
-  activateListeners(jq) {
-    super.activateListeners(jq);
-
-    const [html] = jq;
-
-    const reachLabel = html.querySelector("span.reach-limit");
-    html
-      .querySelector("input[name='settings.reachLimit']")
-      .addEventListener("input", (event) => (reachLabel.textContent = event.target.value), { passive: true });
-
-    html.querySelector("button[type='reset']").addEventListener("click", (event) => {
-      event.preventDefault();
-      game.settings.set("pf1", "performance", {}).then(() => this.close());
-    });
-  }
-
-  _updateObject(event, formData) {
-    formData = foundry.utils.expandObject(formData);
-    console.table(formData.settings);
-    game.settings.set("pf1", "performance", formData.settings);
   }
 }

@@ -1,11 +1,13 @@
-import { HealthConfig, HealthConfigModel } from "@app/settings/health.mjs";
-import { ExperienceConfig, ExperienceConfigModel } from "@app/settings/experience.mjs";
-import { AccessibilityConfigModel } from "@app/settings/accessibility.mjs";
-import { TooltipConfig, TokenTooltipConfigModel } from "@app/settings/tooltip.mjs";
-import { TokenTooltipWorldConfigModel } from "@app/settings/tooltip_world.mjs";
+import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
+import { ExperienceConfig, ExperienceConfigModel } from "../applications/settings/experience.mjs";
+import {
+  TooltipConfig,
+  TokenTooltipWorldConfigModel,
+  TokenTooltipConfigModel,
+} from "../applications/settings/tooltip.mjs";
 import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
 import { PerformanceConfig, PerformanceModel } from "module/applications/settings/performance.mjs";
-import { TooltipPF } from "@app/tooltip.mjs";
+import { TooltipPF } from "../applications/tooltip.mjs";
 
 export const registerSystemSettings = function () {
   /**
@@ -48,9 +50,9 @@ export const registerSystemSettings = function () {
 
   // Health configuration
   game.settings.registerMenu("pf1", "healthConfig", {
-    name: "PF1.SETTINGS.Health.Title",
-    label: "PF1.SETTINGS.Health.Button",
-    hint: "PF1.SETTINGS.Health.Hint",
+    name: "PF1.Application.Settings.Health.Title",
+    label: "PF1.Application.Settings.Health.Label",
+    hint: "PF1.Application.Settings.Health.Hint",
     icon: "fas fa-heartbeat",
     type: HealthConfig,
     restricted: true,
@@ -66,9 +68,9 @@ export const registerSystemSettings = function () {
 
   // Experience configuration
   game.settings.registerMenu("pf1", "experienceConfig", {
-    name: "PF1.ExperienceConfigName",
-    label: "PF1.ExperienceConfigLabel",
-    hint: "PF1.ExperienceConfigHint",
+    name: "PF1.Application.Settings.Experience.Title",
+    label: "PF1.Application.Settings.Experience.Label",
+    hint: "PF1.Application.Settings.Experience.Hint",
     icon: "fas fa-book",
     type: ExperienceConfig,
     restricted: true,
@@ -81,30 +83,11 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
-  // Accessibility configuration
-  /*
-  game.settings.registerMenu("pf1", "accessibilityConfig", {
-    name: "PF1.AccessibilityConfigName",
-    label: "PF1.AccessibilityConfigLabel",
-    hint: "PF1.AccessibilityConfigHint",
-    restricted: false,
-    icon: "fas fa-wheelchair",
-    type: AccessibilityConfig,
-  });
-  */
-  game.settings.register("pf1", "accessibilityConfig", {
-    scope: "client",
-    default: new AccessibilityConfigModel(),
-    type: AccessibilityConfigModel,
-    config: false,
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
-  });
-
   // Tooltip configuration
   game.settings.registerMenu("pf1", "tooltipConfig", {
-    name: "PF1.SETTINGS.TokenTooltip.Name",
-    label: "PF1.SETTINGS.TokenTooltip.Label",
-    hint: "PF1.SETTINGS.TokenTooltip.Hint",
+    name: "PF1.Application.Settings.Tooltip.Title",
+    label: "PF1.Application.Settings.Tooltip.Label",
+    hint: "PF1.Application.Settings.Tooltip.Hint",
     restricted: false,
     icon: "fas fa-window-maximize",
     type: TooltipConfig,
@@ -142,9 +125,9 @@ export const registerSystemSettings = function () {
   });
 
   game.settings.registerMenu("pf1", "integration", {
-    name: "PF1.Application.Integration.Title",
-    label: "PF1.Application.Integration.Label",
-    hint: "PF1.Application.Integration.Hint",
+    name: "PF1.Application.Settings.Integration.Title",
+    label: "PF1.Application.Settings.Integration.Label",
+    hint: "PF1.Application.Settings.Integration.Hint",
     restricted: true,
     icon: "fa-solid fa-check-to-slot",
     type: IntegrationConfig,
@@ -158,9 +141,9 @@ export const registerSystemSettings = function () {
   });
 
   game.settings.registerMenu("pf1", "performance", {
-    name: "PF1.Application.Performance.Title",
-    label: "PF1.Application.Performance.Button",
-    hint: "PF1.Application.Performance.Hint",
+    name: "PF1.Application.Settings.Performance.Title",
+    label: "PF1.Application.Settings.Performance.Button",
+    hint: "PF1.Application.Settings.Performance.Hint",
     restricted: false,
     icon: "fa-solid fa-gauge",
     type: PerformanceConfig,

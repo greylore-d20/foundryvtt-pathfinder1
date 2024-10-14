@@ -111,10 +111,6 @@
       "critical": "Critical Condition"
     },
 
-    "ExperienceConfigName": "Experience Configuration",
-    "ExperienceConfigLabel": "Configure Experience",
-    "ExperienceConfigHint": "Configure aspects about leveling up.",
-
     "AccessibilityConfigName": "Accessibility Configuration",
     "AccessibilityConfigLabel": "Accessibility",
     "AccessibilityConfigHint": "Change accessibility settings",
@@ -2523,33 +2519,154 @@
         "AsType": "As",
         "CopyId": "Copy change ID"
       },
-      "Integration": {
-        "Title": "Module Integration",
-        "Label": "Configure Integration",
-        "Hint": "Alter which modules the system adds special functionality for.",
-        "Modules": {
-          "dice-so-nice": {
-            "Label": "Dice So Nice",
-            "Info": "Adds custom calls to trigger DSN rolling where the module's own detection fails and to group rolls by context."
-          },
-          "drag-ruler": {
-            "Label": "Drag Ruler",
-            "Info": "Adds speed provider to Drag Ruler."
-          },
-          "enhanced-terrain-layer": {
-            "Label": "Enhanced Terrain Layer",
-            "Info": "Enhances <em>Drag Ruler</em> integration support."
+      "Settings": {
+        "Player": "Player",
+        "World": "World",
+
+        "Integration": {
+          "Title": "Module Integration",
+          "Label": "Configure Integration",
+          "Hint": "Alter which modules the system adds special functionality for.",
+          "Modules": {
+            "dice-so-nice": {
+              "Label": "Dice So Nice",
+              "Info": "Adds custom calls to trigger DSN rolling where the module's own detection fails and to group rolls by context."
+            },
+            "drag-ruler": {
+              "Label": "Drag Ruler",
+              "Info": "Adds speed provider to Drag Ruler."
+            },
+            "enhanced-terrain-layer": {
+              "Label": "Enhanced Terrain Layer",
+              "Info": "Enhances <em>Drag Ruler</em> integration support."
+            }
           }
-        }
-      },
-      "Performance": {
-        "Title": "Performance Configuration",
-        "Button": "Performance Settings",
-        "Hint": "Adjust performance impacting settings.",
-        "Options": {
-          "reachLimit": {
-            "Label": "Reach highlight limit",
-            "Hint": "Maximum range in squares reach highlight is drawn. Default is 60 (300 ft). First increment is displayed fully regardless of this setting. Values below 10 disable reach highlight entirely."
+        },
+        "Performance": {
+          "Title": "Performance Configuration",
+          "Button": "Performance Settings",
+          "Hint": "Adjust performance impacting settings.",
+          "Options": {
+            "reachLimit": {
+              "Label": "Reach highlight limit",
+              "Hint": "Maximum range in squares reach highlight is drawn. Default is 60 (300 ft). First increment is displayed fully regardless of this setting. Values below 10 disable reach highlight entirely."
+            }
+          }
+        },
+        "Health": {
+          "Title": "Health Configuration",
+          "Label": "Configure Health",
+          "Hint": "Configure health computations for actors.",
+
+          "TabBase": "Base",
+          "TabVariant": "Variant Rules",
+
+          "Instructions": "Health computation for the various types of classes. For reference, Pathfinder Society uses the following configuration for player characters: automatic computation, 0.5 rate, one HD maximized, round up, discrete continuity.",
+
+          "Compute": "Compute",
+          "Rate": "Rate",
+          "CanMaximize": "Can Maximize",
+          "CanMaximizeHint": "Counts towards maximized hit dice.",
+          "ComputeAuto": "Auto",
+          "ComputeManual": "Manual",
+          "MaximizedLimit": "Maximized HD Limit",
+
+          "Rounding": "Health Rounding",
+          "RoundingHint": "Health values must be whole numbers. Which way to round them?",
+          "RoundingUp": "Up",
+          "RoundingDown": "Down",
+          "RoundingNearest": "Nearest",
+
+          "Continuity": "Health Continuity",
+          "ContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
+          "Continuous": "Continuous",
+          "Discrete": "Discrete",
+
+          "Class": {
+            "pc": "PC",
+            "npc": "NPC",
+            "racial": "Racial"
+          },
+
+          "WoundsAndVigor": {
+            "PC": "Wounds and Vigor for PCs",
+            "PCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
+            "NPC": "Wounds and Vigor for NPCs",
+            "NPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters."
+          },
+          "WoundThresholds": {
+            "PC": "Wound thresholds for PCs",
+            "PCHint": "Use wound threshold optional ruleset for player characters.",
+            "NPC": "Wound thresholds for NPCs",
+            "NPCHint": "Use wound threshold optional ruleset for nonplayer characters.",
+            "VigorConflict": "Wound Thresholds has no effect with Wounds & Vigor optional rule also enabled.",
+            "Disabled": "Disabled",
+            "Normal": "Normal",
+            "Gritty": "Gritty"
+          }
+        },
+        "Experience": {
+          "Title": "Experience Configuration",
+          "Name": "Experience Configuration",
+          "Label": "Configure Experience",
+          "Hint": "Configure aspects about leveling up.",
+
+          "Track": {
+            "Label": "Experience Track",
+            "Hint": "The rate at which characters advance in levels",
+            "Options": {
+              "Slow": "Slow",
+              "Medium": "Medium",
+              "Fast": "Fast",
+              "Custom": "Custom"
+            },
+            "CustomPlaceholder": "e.g. '@level * 1000'",
+            "CustomUsage": "Custom experience formula is cumulative. Meaning for example, to mimic PF2 style experience you would simply enter <code>1000</code>, since every single level requires 1000 experience exactly, while setting it to <code>@level * 1000</code> would mean every single level requires thousand more than the last. Uses character's normal roll data with added <code>@level</code> for the current level."
+          },
+          "Disable": "Disable Experience Tracking",
+          "DisableHint": "Disables experience tracking features from the system, such as experience bars, level up detection, XP thresholds, etc.",
+          "Distributor": "Open XP Distributor",
+          "DistributorHint": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed"
+        },
+        "Tooltip": {
+          "Title": "Token Tooltip Configuration",
+          "Label": "Token Tooltip",
+          "Name": "Token Tooltip Configuration",
+          "Hint": "Change tooltip settings",
+          "Anchor": "Tooltip Anchor",
+          "Offset": "Tooltip Offset",
+          "MaxPortraitSize": "Maximum Portrait Size",
+          "Disable": "Disable Tooltips",
+          "HideWithoutKey": "Hide unless {key} is held",
+          "Hide": {
+            "Portraits": "Hide Portraits"
+          }
+        },
+        "TooltipWorld": {
+          "Title": "Token Tooltip World Configuration",
+          "Name": "Token Tooltip World Configuration",
+          "Label": "World Configuration",
+          "Hint": "Change tooltip settings for all users",
+          "Disable": "Disable Tooltips",
+          "Hide": {
+            "Portraits": "Hide Portraits",
+            "Held": "Hide Held items",
+            "HeldHint": "Hide Held items from all players",
+            "Armor": "Hide Armor",
+            "ArmorHint": "Hide Armor from all players",
+            "Buffs": "Hide Buffs",
+            "BuffsHint": "Hide Buffs from all players",
+            "Conditions": "Hide Conditions",
+            "ConditionsHint": "Hide Conditions from all players",
+            "Clothing": "Hide Clothing",
+            "ClothingHint": "Hide Clothing from all players",
+            "ActorName": {
+              "ByDisposition": "Hide name by disposition",
+              "ByDispositionHint": "Hide name from all players when token disposition is worse than configured.",
+              "MinimumPermission": "Name minimum permission",
+              "MinimumPermissionHint": "Minimum ownership level needed to see real token name.",
+              "Replacement": "Hidden Replacement Name"
+            }
           }
         }
       },
@@ -2693,24 +2810,6 @@
         "Label": "Initiative Tiebreaker",
         "Hint": "Append total initiative divided by 100 to break ties in Initiative."
       },
-      "Experience": {
-        "Track": {
-          "Label": "Experience Track",
-          "Hint": "The rate at which characters advance in levels",
-          "Options": {
-            "Slow": "Slow",
-            "Medium": "Medium",
-            "Fast": "Fast",
-            "Custom": "Custom"
-          },
-          "CustomPlaceholder": "e.g. '@level * 1000'",
-          "CustomUsage": "Custom experience formula is cumulative. Meaning for example, to mimic PF2 style experience you would simply enter <code>1000</code>, since every single level requires 1000 experience exactly, while setting it to <code>@level * 1000</code> would mean every single level requires thousand more than the last. Uses character's normal roll data with added <code>@level</code> for the current level."
-        },
-        "Disable": "Disable Experience Tracking",
-        "DisableHint": "Disables experience tracking features from the system, such as experience bars, level up detection, XP thresholds, etc.",
-        "Distributor": "Open XP Distributor",
-        "DistributorHint": "Opens the XP distributor on combat end unless Shift is held when the combat's deletion is confirmed"
-      },
       "Vision": {
         "Sharing": "Shared Vision",
         "SharingHint": "How to handle Shared Vision between players.",
@@ -2784,95 +2883,6 @@
         "NoTargetsHint": "Disables targeted actors from showing up on attack cards",
         "ClearTargets": "Clear targets after attack",
         "ClearTargetsHint": "Whether to untarget everything after an attack roll."
-      },
-
-      "TokenTooltip": {
-        "Label": "Token Tooltip",
-        "Name": "Token Tooltip Configuration",
-        "Hint": "Change tooltip settings",
-        "ResetInfo": "Reset Pathfinder tooltip configuration.",
-        "UpdateInfo": "Updated Pathfinder tooltip configuration.",
-        "Anchor": "Tooltip Anchor",
-        "Offset": "Tooltip Offset",
-        "MaxPortraitSize": "Maximum Portrait Size",
-        "Disable": "Disable Tooltips",
-        "HideWithoutKey": "Hide unless {key} is held",
-        "World": {
-          "Name": "Token Tooltip World Configuration",
-          "Label": "World Configuration",
-          "Hint": "Change tooltip settings for all users"
-        },
-        "Hide": {
-          "Portraits": "Hide Portraits",
-          "Held": "Hide Held items",
-          "HeldHint": "Hide Held items from all players",
-          "Armor": "Hide Armor",
-          "ArmorHint": "Hide Armor from all players",
-          "Buffs": "Hide Buffs",
-          "BuffsHint": "Hide Buffs from all players",
-          "Conditions": "Hide Conditions",
-          "ConditionsHint": "Hide Conditions from all players",
-          "Clothing": "Hide Clothing",
-          "ClothingHint": "Hide Clothing from all players",
-          "ActorName": {
-            "ByDisposition": "Hide name by disposition",
-            "ByDispositionHint": "Hide name from all players when token disposition is worse than configured.",
-            "MinimumPermission": "Name minimum permission",
-            "MinimumPermissionHint": "Minimum ownership level needed to see real token name.",
-            "Replacement": "Hidden Replacement Name"
-          }
-        }
-      },
-
-      "Health": {
-        "Title": "Health Configuration",
-        "Button": "Configure Health",
-        "Hint": "Configure health computations for actors.",
-        "TabBase": "Base",
-        "TabVariant": "Variant Rules",
-
-        "Instructions": "Health computation for the various types of classes. For reference, Pathfinder Society uses the following configuration for player characters: automatic computation, 0.5 rate, one HD maximized, round up, discrete continuity.",
-        "Compute": "Compute",
-        "Rate": "Rate",
-        "CanMaximize": "Can Maximize",
-        "CanMaximizeHint": "Counts towards maximized hit dice.",
-        "MaximizedLimit": "Maximized HD Limit",
-        "ComputeAuto": "Auto",
-        "ComputeManual": "Manual",
-
-        "Rounding": "Health Rounding",
-        "RoundingHint": "Health values must be whole numbers. Which way to round them?",
-        "RoundingUp": "Up",
-        "RoundingDown": "Down",
-        "RoundingNearest": "Nearest",
-
-        "Continuity": "Health Continuity",
-        "ContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
-        "Continuous": "Continuous",
-        "Discrete": "Discrete",
-
-        "Class": {
-          "pc": "PC",
-          "npc": "NPC",
-          "racial": "Racial"
-        },
-
-        "WoundsAndVigor": {
-          "PC": "Wounds and Vigor for PCs",
-          "PCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
-          "NPC": "Wounds and Vigor for NPCs",
-          "NPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters."
-        },
-        "WoundThresholds": {
-          "PC": "Wound thresholds for PCs",
-          "PCHint": "Use wound threshold optional ruleset for player characters.",
-          "NPC": "Wound thresholds for NPCs",
-          "NPCHint": "Use wound threshold optional ruleset for nonplayer characters.",
-          "VigorConflict": "Wound Thresholds has no effect with Wounds & Vigor optional rule also enabled.",
-          "Disabled": "Disabled",
-          "Normal": "Normal",
-          "Gritty": "Gritty"
-        }
       },
 
       "DragRulerWalk": "walk",

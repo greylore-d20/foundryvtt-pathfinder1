@@ -88,6 +88,21 @@ If you entered a `dataPath` in your `foundryconfig.json` and want to create a sy
 Installing the system's dependencies will also install a git commit hook, which will automatically lint and format files before they are committed.
 If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
 
+### Git Configuration
+
+Please run the following commands in your local repository:
+
+```sh
+git config pull.rebase true
+git config core.autocrlf false
+git config core.ignorecase false
+git config core.eol lf
+```
+
+These will help ensure the files are correct and desired workflow goes smoothly.
+
+Do NOT use merge commits, they're difficult to work with with merge requests.
+
 ### Compendium Changes
 
 The system provides extra tooling to deal with compendiums, including their compilation to and from JSON.

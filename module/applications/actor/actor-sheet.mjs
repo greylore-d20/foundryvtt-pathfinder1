@@ -4037,13 +4037,13 @@ export class ActorSheetPF extends ActorSheet {
 
       // Import spell as consumable
       if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
-        const spells = this.actor.system.attributes?.spells ?? {};
-        const spellType = spells.spellbooks?.[this.currentSpellbookKey]?.kind || "arcane";
+        const spells = this.actor.system.attributes?.spells?.spellbooks ?? {};
+        const spellType = spells[this.currentSpellbookKey]?.kind || "arcane";
 
         const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, {
           spellType,
           actor: this.actor,
-          allowSpell: spells.usedSpellbooks?.length > 0,
+          allowSpell: Object.values(spells).some((s) => s.inUse),
         });
 
         if (resultData) {

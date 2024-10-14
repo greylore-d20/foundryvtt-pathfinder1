@@ -3778,11 +3778,13 @@ export class ActorSheetPF extends ActorSheet {
       choices,
     };
 
-    let app = Object.values(this.actor.apps).find(
-      (app) => app instanceof ActorTraitSelector && app.options.name === options.name
-    );
-    app ??= new ActorTraitSelector(this.actor, options);
-    app.render(true, { focus: true });
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ActorTraitSelector && o.options.name === options.name;
+    });
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else new ActorTraitSelector({ ...options, document: this.actor }).render({ force: true });
   }
 
   /**

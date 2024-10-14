@@ -1891,7 +1891,10 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    new ActorTraitSelector(this.item, options).render(true);
+    new ActorTraitSelector({
+      ...options,
+      document: this.item,
+    }).render(true);
   }
 
   _onSpeedEdit(event) {

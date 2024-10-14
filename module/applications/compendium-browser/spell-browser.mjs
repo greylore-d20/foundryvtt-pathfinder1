@@ -24,17 +24,18 @@ export class SpellBrowser extends CompendiumBrowser {
     const and = game.i18n.localize("PF1.JoinAnd");
     const or = game.i18n.localize("PF1.JoinOr");
     const seeText = game.i18n.localize("PF1.SeeText").toLocaleLowerCase();
+    const seeTextRe = new RegExp(`\\b${seeText}\\b`, "i");
+
+    const splitExp = new RegExp(`,|\\b${or}\\b|\\b${and}\\b`, "i");
 
     const prepareTrait = (systemPath, configPath) => {
       const value = entry.system[systemPath]?.value ?? [];
       const custom = (entry.system[systemPath]?.custom ?? [])
         .flatMap((c) =>
-          c?.split(/,|\bor\b/).map((type) => {
+          c?.split(splitExp).map((type) => {
             /** @type {string} */
-            let typeString = type.trim();
-            if (typeString.toLocaleLowerCase().includes(seeText)) return seeText;
-            if (typeString.startsWith(and)) typeString = typeString.replace(and).trim();
-            if (typeString.startsWith(or)) typeString = typeString.replace(or).trim();
+            const typeString = type.trim();
+            if (seeTextRe.test(typeString)) return seeText;
             return typeString;
           })
         )

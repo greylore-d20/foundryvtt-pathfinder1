@@ -1901,11 +1901,13 @@ export class ItemSheetPF extends ItemSheet {
   _onSpeedEdit(event) {
     event.preventDefault();
 
-    let app = Object.values(ui.windows).find(
-      (oldApp) => oldApp instanceof SpeedEditor && oldApp.document === this.item
-    );
-    app ??= new SpeedEditor(this.item);
-    app.render(true, { focus: true });
+    const app = Object.values(ui.windows).find((o) => {
+      return o instanceof SpeedEditor && o.document === this.item;
+    });
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else new SpeedEditor({ document: this.item }).render({ force: true });
   }
 
   /**

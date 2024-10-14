@@ -1,24 +1,24 @@
-<form autocomplete="off" data-tooltip-class="pf1">
+<section class="form-body">
   {{! Base Land Speed}}
   <div class="form-group">
-    <label>{{localize "PF1.Movement.Mode.land"}} <span class="units">({{units}})</span></label>
+    <label for="movement-speed-land-{{item.id}}">{{localize "PF1.Movement.Mode.land"}} <span class="units">({{units}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" name="system.speeds.land" min="0" value="{{speeds.land}}">
+      <input id="movement-speed-land-{{item.id}}" type="number" data-dtype="Number" name="system.speeds.land" min="0" value="{{speeds.land}}">
     </div>
   </div>
 
   {{! Fly Speed}}
   <div class="form-group">
-    <label>{{localize "PF1.Movement.Mode.fly"}} <span class="units">({{units}})</span></label>
+    <label for="movement-speed-fly-{{item.id}}">{{localize "PF1.Movement.Mode.fly"}} <span class="units">({{units}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" name="system.speeds.fly" min="0" value="{{speeds.fly}}">
+      <input id="movement-speed-fly-{{item.id}}" type="number" data-dtype="Number" name="system.speeds.fly" min="0" value="{{speeds.fly}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label>{{localize "PF1.Movement.FlyManeuverability.Label"}}</label>
+    <label for="maneuverability-fly-{{item.id}}">{{localize "PF1.Movement.FlyManeuverability.Label"}}</label>
     <div class="form-fields">
-      <select name="system.speeds.flyManeuverability">
+      <select id="maneuverability-fly-{{item.id}}" name="system.speeds.flyManeuverability">
         {{selectOptions flyManeuverability selected=speeds.flyManeuverability localize=true}}
       </select>
     </div>
@@ -26,25 +26,25 @@
 
   {{! Swim Speed }}
   <div class="form-group">
-    <label>{{localize "PF1.Movement.Mode.swim"}} <span class="units">({{units}})</span></label>
+    <label for="movement-speed-swim-{{item.id}}">{{localize "PF1.Movement.Mode.swim"}} <span class="units">({{units}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" name="system.speeds.swim" min="0" value="{{speeds.swim}}">
+      <input id="movement-speed-swim-{{item.id}}" type="number" data-dtype="Number" name="system.speeds.swim" min="0" value="{{speeds.swim}}">
     </div>
   </div>
 
   {{! Climb Speed }}
   <div class="form-group">
-    <label>{{localize "PF1.Movement.Mode.climb"}} <span class="units">({{units}})</span></label>
+    <label for="movement-speed-climb-{{item.id}}">{{localize "PF1.Movement.Mode.climb"}} <span class="units">({{units}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" name="system.speeds.climb" min="0" value="{{speeds.climb}}">
+      <input id="movement-speed-climb-{{item.id}}" type="number" data-dtype="Number" name="system.speeds.climb" min="0" value="{{speeds.climb}}">
     </div>
   </div>
 
   {{! Burrow Speed }}
   <div class="form-group">
-    <label>{{localize "PF1.Movement.Mode.burrow"}} <span class="units">({{units}})</span></label>
+    <label for="movement-speed-burrow-{{item.id}}">{{localize "PF1.Movement.Mode.burrow"}} <span class="units">({{units}})</span></label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" name="system.speeds.burrow" min="0" value="{{speeds.burrow}}">
+      <input id="movement-speed-burrow-{{item.id}}" type="number" data-dtype="Number" name="system.speeds.burrow" min="0" value="{{speeds.burrow}}">
     </div>
   </div>
-</form>
+</section>

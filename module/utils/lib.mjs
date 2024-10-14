@@ -591,8 +591,7 @@ export function getBuffTargetDictionary(type = "buffs", { actor, item } = {}) {
     Object.entries(buffTargets).reduce((cur, [key, { label, category, icon, ...options }]) => {
       if (!key.startsWith("~")) {
         cur[category] ??= {
-          key,
-          category,
+          key: category,
           label: targetCategories[category].label,
           items: [],
           validity: isValidChangeTarget(targetCategories[category], { actor, item }),

@@ -594,11 +594,86 @@ export class ItemPF extends ItemBasePF {
    * @param {object} [options.rollData] - Roll data for transforming description
    * @param {boolean} [options.header] - Include header if such exists.
    * @param {boolean} [options.body] - Include main description body if such exists.
+   * @param {boolean} [options.isolated] - Passed to {@link getDescriptionData}
    * @returns {string} - Full description.
    */
-  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true } = {}) {
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
     if (body) return this.system.description.value;
     return "";
+  }
+
+  /**
+   * Description Data
+   *
+   * @param {object} options - Additional options
+   * @param {object} [options.rollData] - Roll data instance
+   * @param {boolean} [options.isolated] - Include extra data to reflect it not being so easily available in context.
+   * @returns {object} - Description context data
+   */
+  getDescriptionData({ rollData, isolated = false } = {}) {
+    const context = {};
+
+    const action = this.defaultAction;
+    rollData ??= action?.getRollData() ?? this.getRollData();
+    context.rollData = rollData;
+    context.labels = action?.getLabels({ rollData }) ?? this.getLabels({ rollData });
+
+    const fullInfo = game.user.isGM ? true : this.system.identified ?? true;
+
+    // Attack data, for attacks and weapons primarily
+    if (!action) return context;
+    const actionData = action?.data ?? {};
+    if (action?.hasAttack) {
+      context.action = {};
+      if (action.hasDamage) {
+        const firstDamage = actionData.damage?.parts?.[0]?.formula;
+        // Spoof sizeRoll() to work based on weapon size insteead of actor size
+        const sizeKey = pf1.config.sizeChart[this.system.size || "med"] || "M";
+        const sizeIndex = Object.values(pf1.config.sizeChart).indexOf(sizeKey);
+        context.action.damage = pf1.utils.formula.simplify(firstDamage, {
+          ...rollData,
+          size: sizeIndex,
+        });
+        const critMult = actionData?.ability?.critMult || 1;
+        if (critMult > 1) {
+          const critRange = action.critRange || 20;
+          if (critRange === 20) context.action.critical = `×${critMult}`;
+          else context.action.critical = `${critRange}-20/×${critMult}`;
+        }
+        context.action.size = Object.values(pf1.config.actorSizes)[sizeIndex] || pf1.config.actorSizes.med;
+
+        const getTypes = (t) =>
+          [
+            ...(t.type?.values.map((dt) => pf1.registry.damageTypes.get(dt)?.name || dt) ?? []),
+            ...(t.type?.custom.split(";") ?? []),
+          ].filter((t) => !!t);
+
+        const types = fullInfo
+          ? actionData.damage?.parts?.map(getTypes).flat()
+          : getTypes(actionData.damage?.parts?.[0]);
+
+        context.action.type = types.join(", ");
+      }
+
+      // Range
+      if (["melee", "reach"].includes(actionData.range?.units)) context.action.range = "–";
+      else if (["ft"].includes(actionData.range?.units)) {
+        context.action.range = action.range;
+        context.action.unit =
+          pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
+      }
+
+      if (action.ammoType && action.ammoCost) {
+        const misfire = action.misfire;
+        const capacity = this.system.ammo?.capacity ?? 0;
+        context.action.ammo = {
+          misfire: misfire > 1 ? `1–${misfire}` : misfire > 0 ? misfire : null,
+          capacity: capacity > 0 ? capacity : "–",
+          enabled: misfire > 0 || capacity > 0,
+        };
+      }
+    }
+    return context;
   }
 
   /**
@@ -759,10 +834,14 @@ export class ItemPF extends ItemBasePF {
    */
   getLabels({ actionId, rollData } = {}) {
     const action = actionId ? this.actions.get(actionId) : this.defaultAction;
-    return {
-      activation: pf1.config.abilityActivationTypes.passive, // Default passive if no action is present
-      ...(action?.getLabels({ rollData }) ?? {}),
-    };
+    const labels = action?.getLabels({ rollData }) ?? {};
+    labels.activation ||= pf1.config.abilityActivationTypes.passive; // Default passive if no action is present
+    if (!action) labels.noAction = true;
+    if (!action || action.activation.type === "passive") labels.isPassive = true;
+    labels.hasEffect = Boolean(
+      labels.range || labels.area || labels.target || labels.effect || labels.duration || labels.savingThrow
+    );
+    return labels;
   }
 
   /**
@@ -1236,7 +1315,7 @@ export class ItemPF extends ItemBasePF {
    *                                      defaults to {@link ItemPF.defaultAction}
    * @returns {ChatData} The chat data for this item (+action)
    */
-  async getChatData({ chatcard = false, actionId = null, rollData = {} } = {}) {
+  async getChatData({ chatcard = false, actionId = null, rollData = {}, extended = false } = {}) {
     /** @type {ChatData} */
     const data = {};
     const action = actionId ? this.actions.get(actionId) : this.defaultAction;
@@ -1248,7 +1327,7 @@ export class ItemPF extends ItemBasePF {
     const labels = this.getLabels({ actionId, rollData });
 
     // Rich text descriptions
-    data.identifiedDescription = this.getDescription({ chatcard, rollData });
+    data.identifiedDescription = this.getDescription({ chatcard, rollData, isolated: extended });
 
     data.unidentifiedDescription = itemData.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;

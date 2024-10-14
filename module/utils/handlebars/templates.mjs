@@ -94,8 +94,10 @@ const templatePaths = /** @type {const} */ ([
 
   "systems/pf1/templates/chat/parts/item-notes.hbs",
 
+  // Item description headers
+  "systems/pf1/templates/items/headers/spell-header.hbs",
+
   // Internal Rendering Partials
-  "systems/pf1/templates/internal/spell-description.hbs",
   "systems/pf1/templates/internal/token-config_vision.hbs",
   "systems/pf1/templates/internal/damage-type-visual.hbs",
 

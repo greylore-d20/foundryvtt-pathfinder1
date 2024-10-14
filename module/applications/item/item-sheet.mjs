@@ -618,7 +618,7 @@ export class ItemSheetPF extends ItemSheet {
       );
 
       topDescription = renderCachedTemplate(
-        "systems/pf1/templates/internal/spell-description.hbs",
+        "systems/pf1/templates/items/headers/spell-header.hbs",
         item.getDescriptionData({ rollData })
       );
 

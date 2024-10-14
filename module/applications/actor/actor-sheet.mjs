@@ -3045,10 +3045,12 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof PointBuyCalculator && o._element;
+      return o instanceof PointBuyCalculator;
     });
-    if (app) app.render(true, { focus: true });
-    else new PointBuyCalculator(this.actor).render(true);
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else new PointBuyCalculator({ document: this.actor }).render({ force: true });
   }
 
   async _onSensesSelector(event) {

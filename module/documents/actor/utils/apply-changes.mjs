@@ -22,6 +22,8 @@ export function applyChanges() {
   // Organize changes by priority
   changes.sort((a, b) => _sortChanges.call(this, a, b));
 
+  this.changeFlags.immuneToMorale = this.system.traits?.ci?.value?.includes("moraleEffects") || false;
+
   // Parse change flags
   for (const i of this.changeItems) {
     if (!i.system.changeFlags) continue;
@@ -53,6 +55,8 @@ export function applyChanges() {
 
   // Apply all changes
   for (const change of changes) {
+    if (this.changeFlags.immuneToMorale && change.type === "morale") continue;
+
     const flats = change.getTargets(this);
     for (const f of flats) {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();

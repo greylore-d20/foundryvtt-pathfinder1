@@ -2039,6 +2039,7 @@ export const conditionTypes = {
   exhausted: "PF1.Condition.exhausted",
   fatigue: "PF1.Condition.fatigued",
   fear: "PF1.Condition.fear",
+  moraleEffects: "PF1.Condition.moraleEffects",
   mindAffecting: "PF1.Condition.mindAffecting",
   poison: "PF1.Condition.poison",
   sicken: "PF1.Condition.sickened",

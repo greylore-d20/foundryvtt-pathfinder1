@@ -3055,10 +3055,14 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof pf1.applications.SensesSelector && o._element;
+      return o instanceof pf1.applications.SensesSelector;
     });
-    if (app) app.render(true, { focus: true });
-    else new pf1.applications.SensesSelector(this.actor).render(true);
+    if (app) {
+      app.render(true);
+      app.bringToFront();
+    } else {
+      new pf1.applications.SensesSelector({ document: this.actor }).render({ force: true });
+    }
   }
 
   async _onControlAlignment(event) {

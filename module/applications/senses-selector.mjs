@@ -1,24 +1,40 @@
-export class SensesSelector extends DocumentSheet {
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return foundry.utils.mergeObject(options, {
-      classes: ["pf1", "senses-selector"],
-      template: "systems/pf1/templates/apps/senses-selector.hbs",
-      width: 500,
+const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+/**
+ * An application that allows a user to configure an actors senses.
+ *
+ * @augments {DocumentSheetV2&HandlebarsApplicationMixin}
+ * @param {ActorPF} actor     The Actor instance for which to configure senses
+ */
+export class SensesSelector extends HandlebarsApplicationMixin(DocumentSheetV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: SensesSelector._save,
+      submitOnChange: false,
       closeOnSubmit: true,
-    });
-  }
+    },
+    classes: ["pf1-v2", "senses-selector"],
+    window: {
+      minimizable: false,
+      resizable: false,
+    },
+    position: {
+      width: 375,
+    },
+    sheetConfig: false,
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/senses-selector.hbs",
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
 
   /* -------------------------------------------- */
-
-  /**
-   * Configure the title of the special traits selection window to include the Actor name
-   *
-   * @type {string}
-   */
-  get title() {
-    return `${game.i18n.localize("PF1.Senses")}: ${this.object.name}`;
-  }
 
   /**
    * Returns which keys to convert in distance or weight
@@ -34,7 +50,14 @@ export class SensesSelector extends DocumentSheet {
     };
   }
 
-  async getData() {
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     const actor = this.document;
 
     const senses = foundry.utils.deepClone(actor.system.traits?.senses ?? {});
@@ -48,6 +71,7 @@ export class SensesSelector extends DocumentSheet {
     const isMetric = pf1.utils.getDistanceSystem() !== "imperial";
 
     return {
+      actor: this.actor,
       noSystemVision:
         !game.settings.get("pf1", "systemVision") ||
         (actor.token?.getFlag("pf1", "customVisionRules") ??
@@ -56,11 +80,47 @@ export class SensesSelector extends DocumentSheet {
       senses,
       isMetric,
       gridUnits: isMetric ? game.i18n.localize("PF1.Distance.mShort") : game.i18n.localize("PF1.Distance.ftShort"),
+      buttons: [{ type: "submit", label: "PF1.Save", icon: "far fa-save" }],
     };
   }
 
-  async _updateObject(event, formData) {
-    formData = foundry.utils.expandObject(formData);
+  /* -------------------------------------------- */
+
+  /**
+   * Alias the document property to actor
+   *
+   * @type {ActorPF}
+   */
+  get actor() {
+    return this.document;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Configure the title of the vision configuration window to include the Actor name
+   *
+   * @type {string}
+   */
+  get title() {
+    return `${game.i18n.localize("PF1.Senses")}: ${this.document.name}`;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Save the new vision details for the actor.
+   *
+   * @internal
+   * @this {DocumentSheetV2&ActorRestDialog}
+   * @param {SubmitEvent} event                The originating form submission event
+   * @param {HTMLFormElement} form             The form element that was submitted
+   * @param {FormDataExtended} formData        Processed data for the submitted form
+   * @param {object} formData.object           The parsed form data object
+   * @returns {Promise<void>}
+   */
+  static async _save(event, form, formData) {
+    formData = foundry.utils.expandObject(formData.object);
     const senses = formData.system.traits.senses;
 
     // Convert data back
@@ -82,7 +142,6 @@ export class SensesSelector extends DocumentSheet {
       }
     }
 
-    // Update document
-    return super._updateObject(event, formData);
+    this.document.update({ "system.traits.senses": senses });
   }
 }

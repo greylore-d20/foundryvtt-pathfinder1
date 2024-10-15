@@ -15,3 +15,5 @@ export function join(strings, type = "u", short = true) {
 
   return new Intl.ListFormat(game.i18n.lang, { style: short ? "short" : "long", type }).format(strings);
 }
+
+export const numberFormat = new Intl.NumberFormat(undefined).format;

@@ -854,6 +854,8 @@ export class ItemAction {
     const labels = {};
     rollData ??= this.getRollData();
 
+    const hasActor = !!this.actor;
+
     // Activation method
     if (actionData.activation) {
       const activation = this.activation;
@@ -880,31 +882,108 @@ export class ItemAction {
       }
     }
 
+    // Duration
+    // Set duration label
+    const duration = actionData.duration;
+    switch (duration?.units) {
+      case "spec":
+        labels.duration = duration.value;
+        break;
+      case "seeText":
+      case "inst":
+      case "perm":
+        labels.duration = pf1.config.timePeriods[duration.units];
+        break;
+      case "turn": {
+        const unit = pf1.config.timePeriods[duration.units];
+        labels.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
+        break;
+      }
+      case "round":
+      case "minute":
+      case "hour":
+      case "day":
+      case "month":
+      case "year":
+        if (duration.value) {
+          const unit = pf1.config.timePeriods[duration.units];
+          const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
+          const value = roll.total;
+          if (!roll.err) {
+            labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+          } else {
+            console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
+          }
+          labels.durationFormula = duration.value;
+          labels.variableDuration = /@\w/.test(duration.value);
+        }
+        break;
+    }
+
+    // Dismissable, but only if special duration isn't used
+    // TODO: Better i18n support
+    if (labels.duration && duration.dismiss && duration.units !== "spec") {
+      labels.duration += " " + game.i18n.localize("PF1.DismissableMark");
+    }
+
     // Difficulty Class
     if (this.hasSave) {
       const totalDC = rollData.dc + (rollData.dcBonus ?? 0);
       labels.save = game.i18n.format("PF1.DCThreshold", { threshold: totalDC });
     }
 
+    // Range
     if (this.hasRange) {
-      const sourceUnits = actionData.range.units;
-      const rangeLabel = pf1.config.distanceUnits[sourceUnits];
-      if (sourceUnits === "spec") {
-        // Special can not be displayed reasonably
-      } else if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
-        labels.range = rangeLabel;
+      const rangeUnit = actionData.range.units;
+      const rangeValue = actionData.range.value;
+      const rangeLabel = pf1.config.distanceUnits[rangeUnit];
+      labels.range = rangeLabel;
+      if (rangeUnit === "spec") {
+        labels.range = rangeValue || labels.range;
+      } else if (["personal", "touch", "melee", "reach"].includes(rangeUnit)) {
+        // Display as is
       } else {
         const range = this.getRange({ type: "single", rollData });
         if (range > 0) {
           const usystem = pf1.utils.getDistanceSystem();
           const rangeUnit = usystem === "metric" ? "m" : "ft";
-          labels.range = `${range} ${rangeUnit}`;
+          const lrange = new Intl.NumberFormat(undefined).format(range);
+          labels.range = `${lrange} ${rangeUnit}`;
         }
-        if (["close", "medium", "long"].includes(sourceUnits)) {
+        if (["close", "medium", "long"].includes(rangeUnit)) {
           labels.range += ` (${rangeLabel})`;
         }
       }
+
+      // Special formatting when no actor present
+      if (!hasActor) {
+        const units = pf1.utils.getDistanceSystem();
+        switch (rangeUnit) {
+          case "close":
+            labels.range = `${rangeLabel} (${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
+            )})`;
+            break;
+          case "medium":
+            labels.range = `${rangeLabel} (${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
+            )})`;
+            break;
+          case "long":
+            labels.range = `${rangeLabel} (${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
+            )})`;
+            break;
+        }
+      }
     }
+
+    // Targets
+    const targets = actionData.target?.value;
+    if (targets) labels.targets = targets;
+
+    // Set area label
+    if (actionData?.area) labels.area = actionData.area;
 
     // Action type
     labels.actionType = pf1.config.itemActionTypes[actionData.actionType];

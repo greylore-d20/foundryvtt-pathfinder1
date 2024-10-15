@@ -1,0 +1,66 @@
+<form class="{{cssClass}}" data-tooltip-class="pf1" autocomplete="off">
+  <ul class="actor-list">
+    <li>
+      <span></span>
+      <h3 class="name">{{localize "Name"}}</h3>
+      <h3 class="toggle toggle-all" data-action="toggle" data-toggle="watch" data-tooltip-direction="UP" data-tooltip="PF1.Application.PartyRest.Watch"><i class="fa-solid fa-eye fa-fw"></i></i></h3>
+      <h3 class="toggle toggle-all" data-action="toggle" data-toggle="restoreHealth" data-tooltip-direction="UP" data-tooltip="PF1.RestoreHealth"><i class="fa-solid fa-heart-circle-plus fa-fw"></i></h3>
+      <h3 class="toggle toggle-all" data-action="toggle" data-toggle="restoreUses" data-tooltip-direction="UP" data-tooltip="PF1.RestoreDailyUses"><i class="fa-solid fa-car-battery fa-fw"></i></h3>
+      <h3 class="toggle toggle-all" data-action="toggle" data-toggle="longTermCare" data-tooltip-direction="UP" data-tooltip="PF1.LongTermCare"><i class="fa-solid fa-house-medical-circle-check fa-fw"></i></h3>
+    </li>
+  {{#each actors}}
+    <li class="actor" data-actor-uuid="{{uuid}}" data-actor-index="{{@index}}">
+      <img src="{{img}}" class="image">
+      <div>
+        <h4 class="name">{{name}}</h4>
+      </div>
+      <input name="actors.{{@index}}.uuid" value="{{uuid}}" type="hidden">
+      <div>
+        <input name="actors.{{@index}}.watch" type="checkbox" {{checked watch}} class="toggle" {{disabled (eq @root.watches "none")}}>
+      </div>
+      <div>
+        <input name="actors.{{@index}}.options.restoreHealth" type="checkbox" {{checked options.restoreHealth}} class="toggle">
+      </div>
+      <div>
+        <input name="actors.{{@index}}.options.restoreUses" type="checkbox" {{checked options.restoreUses}} class="toggle">
+      </div>
+      <div>
+        <input name="actors.{{@index}}.options.longTermCare" type="checkbox" {{checked options.longTermCare}} class="toggle">
+      </div>
+    </li>
+  {{/each}}
+  </ul>
+
+  <div class="form-group duration">
+    <label>{{localize "PF1.Duration"}} ({{localize "PF1.Time.Period.hour.Label"}})</label>
+    <div class="form-fields">
+      <input type="number" name="hours" value="{{hours}}" min="0" step="0.1">
+      <div class="watch-shift">
+        <span class="shift-duration">{{numberFormatAlt watchTime decimals=1}}</span>
+        <label>{{localize "PF1.Application.PartyRest.Watches.PerShift"}}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group watches">
+    <label>{{localize "PF1.Application.PartyRest.Watches.Label"}}</label>
+    <div class="form-fields choices">
+      <label class="no-watches" data-tooltip="PF1.Application.PartyRest.Watches.NoneHint">
+        <input type="radio" name="watches" value="none" {{checked (eq watches "none")}}>
+        {{localize "PF1.None"}}
+      </label>
+      <label class="solo-watch" data-tooltip="PF1.Application.PartyRest.Watches.SoloHint">
+        <input type="radio" name="watches" value="solo" {{checked (eq watches "solo")}}>
+        {{localize "PF1.Application.PartyRest.Watches.Solo"}}
+      </label>
+      <label class="duo-watch" data-tooltip="PF1.Application.PartyRest.Watches.DuoHint">
+        <input type="radio" name="watches" value="duo" {{checked (eq watches "duo")}} {{disabled (not duo)}}>
+        {{localize "PF1.Application.PartyRest.Watches.Duo"}}
+      </label>
+    </div>
+  </div>
+
+  <button type="button" class="submit">
+    {{localize "PF1.Rest"}}
+  </button>
+</form>

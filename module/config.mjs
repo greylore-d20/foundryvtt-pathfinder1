@@ -781,6 +781,49 @@ export const encumbranceMultipliers = {
 };
 
 /**
+ * Group Resting information
+ *
+ * Hours declares how many hours total rest are needed with single person watching.
+ *
+ * Double is for same as hours, but with two people watching at the same time.
+ */
+export const partyRest = {
+  1: {
+    hours: 8, // No watches
+    double: null,
+  },
+  2: {
+    hours: 16,
+    double: null,
+  },
+  3: {
+    hours: 12,
+    double: null,
+  },
+  4: {
+    hours: 10.667,
+    double: 16,
+  },
+  5: {
+    hours: 10,
+    double: 16,
+  },
+  6: {
+    hours: 9.6,
+    double: 12,
+  },
+  7: {
+    hours: 9.332,
+    double: 12,
+  },
+  8: {
+    hours: 9,
+    double: 10.667,
+  },
+  // Higher party numbers do not reduce total rest time but can reduce watch time or allow more people to watch
+};
+
+/**
  * Damage multipliers from ability score.
  */
 export const abilityDamageMultipliers = [

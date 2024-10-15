@@ -127,3 +127,46 @@ Generates a number equal to the reach of a creature of a certain size and statur
 **Example:** `sizeReach(@size + 1, false, @traits.stature)` – Returns the normal melee reach as if the actor was 1 size category higher.
 
 **Example:** `sizeReach(6, true, "long")` – Returns the reach a huge, long actor would have with a reach weapon.
+
+### `ifelse`
+
+If-Else logic, serving similar purpose to what ternary syntax did before, providing a method to have conditional numbers in the formulas.
+
+**Example:** `ifelse(gt(@class.level, 7), 4, 2)` – REturns 4 if class level is greater than 7, and 2 otherwise.
+
+### `if`
+
+Alias for `ifelse()` with `if(a, b)` being equivalent of `ifelse(a, b, 0)`, the else statement set to zero.
+
+**Example:** `if(gt(@attributes.hd.total, 5), 2)` – gives 2 if HD is greater than 5, and zero otherwise.
+
+### Basic Logic Functions
+
+| Function              | Name  | Math | Example                                                         | Example Explanation                                                   |
+| :-------------------- | :---- | :--- | :-------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| Equal                 | `eq`  | `=`  | `eq(@attributes.hd.total, 5)`                                   | HD equal to 5                                                         |
+| Not equal             | `ne`  | `!=` | `ne(@attributes.hd.total, 5)`                                   | HD not equal to 5                                                     |
+| Less than             | `lt`  | `<`  | `lt(@class.level, 5)`                                           | Class level is less than 5                                            |
+| Less or equal than    | `lte` | `<=` | `lte(@class.level, 9)`                                          | Class level is 9 or less                                              |
+| Greater than          | `gt`  | `>`  | `gt(@class.level, 5)`                                           | Class level is greater than 5                                         |
+| Greater or equal than | `gte` | `>=` | `gte(@class.level, 9)`                                          | Class level is 9 or greater                                           |
+| And                   | `and` |      | `and(lt(@attributes.encumbrance.level, 2), lt(@armor.type, 3))` | Encumbrance level is lesser than 2 and worn armor type is less than 3 |
+| Or                    | `or`  |      | `or(@armor.type, @shield.type)`                                 | Is equipped with any armor or shield (types is non-zero)              |
+| Exclusive or          | `xor` |      | `xor(@armor.type, @shield.type)`                                | Is wearing armor or shield, but not both.                             |
+| Not                   | `not` |      | `not(@armor.type)`                                              | Is not wearing armor (armor type is non-zero)                         |
+
+🛈 Note! And, Or, and Exclusive Or functions allow any number of parameters.
+
+### `lookup`
+
+Lookup function when none of the above provide meaningful solution.
+
+Format is approximately: `lookup(search, fallback, results...)`
+
+Fallback value is provided if the search formula goes off bounds. If other form of bounding is desired, include it in your formula.
+
+The results are 1-indexed, so 1 will give the first result. You can also treat the parameters as 0 indexed by using the fallback as result for 0, tho this does not strictly follow the underlying logic.
+
+**Example**: `lookup(1d6, 0, 0, 2, 2, 4, 4, 5)` – Resulting in 1d6 roll turning into [1=0, 1=2, 3=2, 4=4, 5=4, 6=5] mapping.
+
+**Example**: `lookup(min(@class.level, 7), 0, 1, 1, 1, 2, 2, 2, 4)` – resulting in 1 to 4 range from level being 1 to 7 or higher with 7 or higher giving 1 more than previous increments.

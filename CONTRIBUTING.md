@@ -142,7 +142,7 @@ To add your changes to it, run `npm run addlog`.
 The issue number is optional – if there is no issue your merge request will close, you can leave the number out.
 This prompt will create a file in `changelogs/unreleased`, which you will have to commit alongside your changes.
 
-For changelog entries avoid unnecessarily duplicating log category name, such as "Fix BAB not being included with CMB.", which should rather be "BAB was not included with CMB." as this would be in "bug fixes" section. The message in the chagnelog should be in past tense.
+For changelog entries avoid unnecessarily duplicating log category name, such as "Fix BAB not being included with CMB.", which should rather be "BAB was not included with CMB." as this would be in "bug fixes" section. The message in the changelog should be in past tense.
 
 For _commit messages_, describe what the commit does in a very short summary in the first line, e.g. "Add BAB to combat tab".
 After the first line, reference issues or merge requests the commit relates to, using [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically) recognized by GitLab whenever applicable (e.g. "Fixes #123", "Implements #321", "Closes #231", or "Related to #213"). Commit messages should be in present tense.

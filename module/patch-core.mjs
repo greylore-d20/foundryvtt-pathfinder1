@@ -39,17 +39,6 @@ import { RollPF } from "./dice/roll.mjs";
   }
 }
 
-// Change tooltip showing on alt
-{
-  const fn = KeyboardManager.prototype._onAlt;
-  KeyboardManager.prototype._onAlt = function (event, up, modifiers) {
-    if (!pf1.tooltip) return;
-    if (!up) pf1.tooltip.lock.new = true;
-    fn.call(this, event, up, modifiers);
-    if (!up) pf1.tooltip.lock.new = false;
-  };
-}
-
 // Document link attribute stuffing
 {
   const origFunc = TextEditor._createContentLink;

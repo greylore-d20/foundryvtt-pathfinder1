@@ -164,14 +164,6 @@ export function alterTargetDefense(cm, jq) {
 }
 
 /**
- * @param app
- * @param html
- * @param data
- * @param conf
- */
-export function applyAccessibilitySettings(app, html, data, conf) {}
-
-/**
  * @param {ChatMessage} cm - Chat message instance
  * @param {HTMLElement} html - HTML element
  * @param recursive

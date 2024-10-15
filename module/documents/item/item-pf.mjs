@@ -1186,10 +1186,6 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Render the chat card template
-    const templateType = ["consumable"].includes(this.type) ? this.type : "item";
-    const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
-
     // Determine metadata
     pfFlags.metadata = {};
     pfFlags.metadata.item = this.id;
@@ -1209,6 +1205,7 @@ export class ItemPF extends ItemBasePF {
       altChatData
     );
 
+    const template = `systems/pf1/templates/chat/items/item-card.hbs`;
     if (Hooks.call("pf1DisplayCard", this, { template, templateData, chatData }) === false) return;
 
     // Create the chat message

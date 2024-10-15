@@ -566,9 +566,6 @@ Hooks.on(
     // Optionally hide chat buttons
     if (game.settings.get("pf1", "hideChatButtons")) jq.find(".card-buttons").hide();
 
-    // Apply accessibility settings to chat message
-    chatUtils.applyAccessibilitySettings(cm, jq, options, game.settings.get("pf1", "accessibilityConfig"));
-
     // Alter ammo recovery options
     chatUtils.alterAmmoRecovery(cm, jq);
   }

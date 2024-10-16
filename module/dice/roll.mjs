@@ -1,14 +1,9 @@
 export class RollPF extends Roll {
   get totalHalved() {
-    foundry.utils.logCompatibilityWarning("RollPF.totalHalved is deprecated in favor fo RollPF.half.", {
+    foundry.utils.logCompatibilityWarning("RollPF.totalHalved is deprecated with no replacement", {
       since: "PF1 vNEXT",
       until: "PF1 vNEXT+1",
     });
-    return Math.floor(this.total / 2);
-  }
-
-  /** @type {number} - Half of the total, rounded down. */
-  get half() {
     return Math.floor(this.total / 2);
   }
 

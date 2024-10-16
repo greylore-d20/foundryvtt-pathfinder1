@@ -16,7 +16,7 @@
 export function sizeRoll(origCount, origSides, targetSize = "M", initialSize = "M") {
   // Return NaN from invalid input
   if (!Number.isFinite(origCount) || !Number.isFinite(origSides)) {
-    return [new NumericTerm({ number: NaN })];
+    return [new foundry.dice.terms.NumericTerm({ number: NaN })];
   }
 
   const _getSizeIndex = function (size) {

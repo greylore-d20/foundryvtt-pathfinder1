@@ -26,11 +26,11 @@ export class D20RollPF extends RollPF {
     this.context = context;
 
     // No dice in the formula
-    if (!(this.terms[0] instanceof Die)) {
+    if (!(this.terms[0] instanceof foundry.dice.terms.Die)) {
       // If the first term is a number, use it as the static roll
-      if (this.terms[0] instanceof NumericTerm && this.options.staticRoll === null) {
+      if (this.terms[0] instanceof foundry.dice.terms.NumericTerm && this.options.staticRoll === null) {
         this.options.staticRoll = this.terms[0].total;
-        this.terms[0] = new Die({ number: 1, faces: 20 });
+        this.terms[0] = new foundry.dice.terms.Die({ number: 1, faces: 20 });
         this._formula = this.constructor.getFormula(this.terms);
       } else {
         // Conflict between numeric term and static roll
@@ -271,8 +271,8 @@ export class D20RollPF extends RollPF {
     if (formData.d20) {
       const baseDice = this.constructor.parse(formData.d20, this.data);
       // If a static roll is given as d20 input, Take X button clicks are ignored
-      if (baseDice[0] instanceof NumericTerm) this.options.staticRoll = baseDice[0].total;
-      else if (baseDice[0] instanceof Die) {
+      if (baseDice[0] instanceof foundry.dice.terms.NumericTerm) this.options.staticRoll = baseDice[0].total;
+      else if (baseDice[0] instanceof foundry.dice.terms.Die) {
         this.terms = [...baseDice, ...this.terms.slice(1)];
         // d20 input is actual dice, so Take X buttons are respected
         if (staticRoll !== undefined) this.options.staticRoll = staticRoll;

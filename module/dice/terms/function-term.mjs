@@ -13,6 +13,19 @@ export class FunctionTermPF extends CONFIG.Dice.termTypes.FunctionTerm {
     return super.expression;
   }
 
+  /**
+   * Simpler formula expression if possible
+   *
+   * @remarks - Used mainly by {@link pf1.utils.formula.simplify()}
+   * @type {string}
+   */
+  get simplify() {
+    if (this.fn === "sizeRoll") {
+      return this.terms.at(-1);
+    }
+    return this.expression;
+  }
+
   /** @type {string} - Flavor text if any. */
   get flavor() {
     return this.options.flavor || "";

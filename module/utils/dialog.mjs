@@ -28,7 +28,8 @@ export async function getActor(options) {
  * @returns {Promise<Item|null>} - Chosen item or null.
  */
 export async function getItem(options) {
-  if (!options.type && !options.subType && !options.filterFunc) throw new Error("Insufficient filter rules provided.");
+  if (!options.type && !options.subType && !options.filterFunc && !options.items)
+    throw new Error("Insufficient filter rules provided.");
 
   options.filterFunc ||= (item) => {
     return (!options.type || item.type === options.type) && (!options.subType || item.subType === options.subType);

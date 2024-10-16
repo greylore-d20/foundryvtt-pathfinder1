@@ -53,7 +53,7 @@ class FormulaPart {
 
     const f = this.terms
       .map((t) => {
-        if (t.constructor.isFunction) return `${t.simplify}`;
+        if (t instanceof CONFIG.Dice.termTypes.FunctionTerm) return `${t.simplify}`;
         else if (t.isDeterministic) return `${t.total}`;
         // Dice eat up prefix parentheticals in v12
         else if (

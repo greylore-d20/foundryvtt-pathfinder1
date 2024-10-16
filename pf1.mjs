@@ -153,6 +153,8 @@ Hooks.once("init", function () {
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.push(dice.DamageRoll);
 
+  CONFIG.Dice.termTypes.FunctionTerm = pf1.dice.terms.FunctionTermPF;
+
   // Roll functions
   for (const [key, fn] of Object.entries(pf1.utils.roll.functions)) {
     CONFIG.Dice.functions[key] = fn;

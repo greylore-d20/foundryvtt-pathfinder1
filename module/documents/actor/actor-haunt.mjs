@@ -3,6 +3,8 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorHauntPF extends ActorNPCPF {
   prepareBaseData() {
+    this.changeFlags = {};
+
     // Needed for getRollData and ActorPF, but useless for the actor
     this.system.abilities = {
       str: {

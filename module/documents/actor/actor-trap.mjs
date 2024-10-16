@@ -3,6 +3,8 @@ import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorTrapPF extends ActorNPCPF {
   prepareBaseData() {
+    this.changeFlags = {};
+
     // Everything below this is needed for getRollData and ActorPF, but useless for the actor
     this.system.traits = { size: "med" };
 

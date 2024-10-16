@@ -6,17 +6,23 @@
   </nav>
   {{/if}}
 
-  <div class="flexrow description-container">
+  <div class="description-container">
+    {{{descriptionHTML.header}}}
+
     {{#if showBothDescriptions}}
     <section class="description-body">
       <div class="tab description-group flexcol" data-group="description" data-tab="identified">
       {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
       </div>
 
-      <div class="tab description-group flexcol" data-group="description" data-tab="unidentified">
-      {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
-      </div>
-    </section>
+    {{#if showIdentifyDescription}}
+    <div class="tab description-group flexcol" data-group="description" data-tab="identified">
+    {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
+    </div>
+
+    <div class="tab description-group flexcol" data-group="description" data-tab="unidentified">
+    {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
+    </div>
     {{else if showUnidentifiedData}}
     {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
     {{else}}

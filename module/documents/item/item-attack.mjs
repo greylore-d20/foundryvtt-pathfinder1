@@ -1,4 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
  * Attack item
@@ -116,10 +117,20 @@ export class ItemAttackPF extends ItemPF {
     return attackItem;
   }
 
-  /**
-   * @override
-   * @inheritDoc
-   */
+  /** @inheritDoc */
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
+    const headerContent = header
+      ? renderCachedTemplate("systems/pf1/templates/items/headers/attack-header.hbs", {
+          ...data,
+          ...this.getDescriptionData({ rollData, isolated }),
+          chatcard: chatcard === true,
+        })
+      : "";
+    const bodyContent = body ? this.system.description.value : "";
+    return headerContent + bodyContent;
+  }
+
+  /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId, rollData });
 

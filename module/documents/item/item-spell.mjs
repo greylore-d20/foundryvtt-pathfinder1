@@ -834,7 +834,8 @@ export class ItemSpellPF extends ItemPF {
     const defaultAction = this.defaultAction;
     const actionData = defaultAction?.data ?? {};
 
-    rollData ??= defaultAction?.getRollData() ?? this.getRollData();
+    const context = super.getDescriptionData({ rollData, isolated });
+    rollData ||= context.rollData;
 
     const labels = this.getLabels({ rollData });
     result.labels = labels;

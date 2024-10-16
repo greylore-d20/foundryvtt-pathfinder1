@@ -1,5 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "@dice/roll.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
  * Class-like item
@@ -376,5 +377,79 @@ export class ItemClassPF extends ItemPF {
     labels.hasFCB = itemData.fc?.hp > 0 || itemData.fc?.skill > 0 || itemData.fc?.alt > 0;
 
     return labels;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  getDescription({
+    chatcard = false,
+    data = {},
+    rollData,
+    header = true,
+    body = true,
+    footer = true,
+    isolated = false,
+  } = {}) {
+    let bodyContent = "";
+    if (body) bodyContent = `<div class="description-body">` + this.system.description.value + "</div>";
+
+    const footerContent = footer
+      ? renderCachedTemplate("systems/pf1/templates/items/footers/class-footer.hbs", {
+          ...data,
+          ...this.getDescriptionData({ rollData, isolated }),
+          chatcard: chatcard === true,
+        })
+      : "";
+
+    return bodyContent + footerContent;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  getDescriptionData({ rollData, isolated = false } = {}) {
+    const system = this.system;
+    const defaultAction = this.defaultAction;
+    const actionData = defaultAction?.data ?? {};
+
+    const context = super.getDescriptionData({ rollData, isolated });
+    rollData ||= context.rollData;
+
+    const lang = game.settings.get("core", "language");
+
+    // Hit Die / Health
+    context.isMythic = this.subType === "mythic";
+    if (context.isMythic) context.health = system.hd;
+    else context.hitDie = game.i18n.format("PF1.DieSize", { size: system.hd });
+
+    // Class skills
+    context.classSkills = Object.entries(system.classSkills ?? {})
+      .filter(([key, have]) => have)
+      .map(([key]) => {
+        const skill = this.actor?.getSkillInfo(key) ?? { name: pf1.config.skills[key] || key };
+        return {
+          ...skill,
+          key,
+        };
+      })
+      .sort((a, b) => a.name.localeCompare(b.name, lang));
+
+    // Wealth
+    if (system.wealth) {
+      const minWealth = RollPF.safeRollSync(system.wealth, rollData, undefined, undefined, { minimize: true }).total;
+      const maxWealth = RollPF.safeRollSync(system.wealth, rollData, undefined, undefined, { maximize: true }).total;
+      context.wealth = {
+        formula: system.wealth.replaceAll("*", "×").replaceAll("/", "÷"),
+        min: minWealth,
+        max: maxWealth,
+        average: Math.floor((minWealth + maxWealth) / 2),
+      };
+    }
+
+    // Alignment
+    context.alignment = system.alignment;
+
+    return context;
   }
 }

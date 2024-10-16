@@ -1,4 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
+import { calculateRangeFormula } from "@utils";
 
 /**
  * Feature item
@@ -57,6 +59,45 @@ export class ItemFeatPF extends ItemPF {
     }
 
     return labels;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
+    const headerContent = header
+      ? renderCachedTemplate("systems/pf1/templates/items/headers/effect-header.hbs", {
+          ...data,
+          ...this.getDescriptionData({ rollData, isolated }),
+          chatcard: chatcard === true,
+        })
+      : "";
+
+    let bodyContent = "";
+    if (body) bodyContent = `<div class="description-body">` + this.system.description.value + "</div>";
+
+    let separator = "";
+    if (header && body) separator = `<h3 class="description-header">${game.i18n.localize("PF1.Description")}</h3>`;
+
+    return headerContent + separator + bodyContent;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  getDescriptionData({ rollData, isolated = false } = {}) {
+    const reSplit = pf1.config.re.traitSeparator;
+    const srcData = this.system;
+    const defaultAction = this.defaultAction;
+    const actionData = defaultAction?.data ?? {};
+    const system = this.system;
+
+    rollData ??= defaultAction?.getRollData();
+    const context = super.getDescriptionData({ rollData, isolated });
+    context.labels = defaultAction?.getLabels({ rollData }) ?? this.getLabels({ rollData });
+    context.system = system;
+
+    return context;
   }
 
   /** @inheritDoc */

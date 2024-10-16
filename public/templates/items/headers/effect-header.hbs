@@ -1,0 +1,23 @@
+<header class="statistics effect">
+  {{#if labels.activation}}
+  <div class="activation">
+    {{#if labels.activation}}<div class="activation detail"><label>{{localize "PF1.ActionUsage"}}</label> <span>{{{labels.activation}}}</span></div>{{/if}}
+  </div>
+  {{/if}}
+  {{#if labels.hasEffect}}
+  <div class="effects">
+    {{#if labels.range}}<label>{{localize "PF1.Range"}}</label> <span class="value">{{{labels.range}}}</span><br>{{/if}}
+    {{#if labels.area}}<label>{{localize "PF1.Area"}}</label> <span class="value">{{{labels.area}}}</span><br>{{/if}}
+    {{#if labels.target}}<label>{{localize "PF1.Targets"}}</label> <span class="value">{{{labels.target}}}</span><br>{{/if}}
+    {{#if labels.effect}}<label>{{localize "PF1.Effect"}}</label> <span class="value">{{{labels.effect}}}</span><br>{{/if}}
+    {{#if labels.duration}}<label>{{localize "PF1.Duration"}}</label> <span class="value">{{{labels.duration}}}</span><br>{{/if}}
+    {{#if useDCandSR}}
+    <div class="resist">
+      <div class="detail"><label>{{localize "PF1.SavingThrow"}}</label> <span class="value">{{{labels.saveType}}}</span></div>
+      <div class="detail"><label>{{localize "PF1.SpellResistance"}}</label> <span class="value">{{{labels.sr}}}</span></div>
+      {{~#if label.harmless}}<div class="detail"><label>{{localize "PF1.Harmless"}}</label> <span class="value">{{{labels.harmless}}}</span></div>{{/if}}
+    </div>
+  {{/if}}
+  </div>
+  {{/if}}
+</header>

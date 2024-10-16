@@ -1,0 +1,35 @@
+{{#with action}}
+<header class="statistics">
+  <div class="attack">
+    {{#if damage}}
+    <div class="damage detail"><label>{{localize "PF1.Damage"}}</label> <span class="value">{{damage}}</span> {{#if size}}<span class="size">{{size}}</span>{{/if}}</div>
+    {{/if}}
+    {{#if critical}}
+    <div class="critical detail"><label>{{localize "PF1.Critical"}}</label> <span class="value">{{critical}}</span></div>
+    {{/if}}
+    {{#if range}}
+    <div class="range detail"><label>{{localize "PF1.Range"}}</label> <span class="value">{{range}}</span> {{#if unit}}<span class="unit">{{unit}}</span>{{/if}}</div>
+    {{/if}}
+    {{#if type}}
+    <div class="type detail"><label>{{localize "PF1.Type"}}</label> <span class="value">{{type}}</span></div>
+    {{/if}}
+  </div>
+
+  {{#if ammo.enabled}}
+  <div class="ammo">
+    {{#if ammo.misfire}}
+    <div class="misfire detail"><label>{{localize "PF1.Misfire"}}</label> <span class="value">{{ammo.misfire}}</span></div>
+    {{/if}}
+    {{#if ammo.capacity}}
+    <div class="capacity detail"><label>{{localize "PF1.Capacity"}}</label> <span class="value">{{ammo.capacity}}</span></div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if ../weaponGroups}}
+  <div class="extended">
+    <div class="detail weapon-groups"><label>{{localize "PF1.WeaponGroups"}}</label> <span class="value">{{../weaponGroups}}</span></div>
+  </div>
+  {{/if}}
+</header>
+{{/with}}

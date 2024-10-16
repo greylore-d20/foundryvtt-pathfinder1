@@ -561,7 +561,15 @@ Hooks.on(
     chatUtils.alterTargetDefense(cm, jq);
 
     // Optionally collapse the content
-    if (game.settings.get("pf1", "autoCollapseItemCards")) jq.find(".card-content").hide();
+    const collapse = game.settings.get("pf1", "autoCollapseItemCards");
+    if (collapse) {
+      const content = jq.find(".card-content");
+      if (collapse >= 2) {
+        content.hide();
+      } else {
+        content.find(".description-header,.description-body").hide();
+      }
+    }
 
     // Optionally hide chat buttons
     if (game.settings.get("pf1", "hideChatButtons")) jq.find(".card-buttons").hide();
@@ -570,14 +578,6 @@ Hooks.on(
     chatUtils.alterAmmoRecovery(cm, jq);
   }
 );
-
-Hooks.on("renderChatPopout", (app, html, data) => {
-  // Optionally collapse the content
-  if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
-
-  // Optionally hide chat buttons
-  if (game.settings.get("pf1", "hideChatButtons")) html.find(".card-buttons").hide();
-});
 
 Hooks.on("renderChatLog", (_, html) => documents.item.ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => documents.actor.ActorPF.chatListeners(html));

@@ -7,6 +7,12 @@ import { RollPF } from "@dice/roll.mjs";
  * For base classes, NPC classes, racial HD, and mythic paths.
  */
 export class ItemClassPF extends ItemPF {
+  /** @override */
+  static system = Object.freeze({
+    ...super.system,
+    hasActions: false,
+  });
+
   /**
    * @internal
    * @override

@@ -2,7 +2,6 @@ import { ActorBasePF } from "./actor-base.mjs";
 import { fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
   applyChanges,
-  addDefaultChanges,
   getChangeFlat,
   getSourceInfo,
   setSourceInfoByName,
@@ -2655,15 +2654,15 @@ export class ActorPF extends ActorBasePF {
     const skl = this.getSkillInfo(skillId);
     const haveParentSkill = !!subSkillId;
 
-    // Add contextual attack string
+    // Add context notes
     const rollData = this.getRollData();
-    const noteObjects = this.getContextNotes(`skill.${skillId}`);
-    if (haveParentSkill) noteObjects.push(...this.getContextNotes(`skill.${mainSkillId}`, false));
-    const notes = this.formatContextNotes(noteObjects, rollData);
+    const notes = await this.getContextNotesParsed(`skill.${skillId}`, { rollData });
+    if (haveParentSkill)
+      notes.push(...(await this.getContextNotesParsed(`skill.${mainSkillId}`, { rollData, all: false })));
 
     // Add untrained note
     if (skl.rt && !skl.rank) {
-      notes.push(game.i18n.localize("PF1.Untrained"));
+      notes.push({ text: game.i18n.localize("PF1.Untrained") });
     }
 
     // Gather changes
@@ -2699,7 +2698,7 @@ export class ActorPF extends ActorBasePF {
     // Add Wound Thresholds info
     if (rollData.attributes.woundThresholds?.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push(label);
+      notes.push({ text: label });
       parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
@@ -2859,11 +2858,11 @@ export class ActorPF extends ActorBasePF {
     srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${bookId}.cl.total`]);
 
     // Add contextual caster level string
-    const notes = this.getContextNotesParsed(`spell.cl.${bookId}`);
+    const notes = await this.getContextNotesParsed(`spell.cl.${bookId}`, { rollData });
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(pf1.config.woundThresholdConditions[wT.level]);
+    if (wT.valid) notes.push({ text: pf1.config.woundThresholdConditions[wT.level] });
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -2912,11 +2911,11 @@ export class ActorPF extends ActorBasePF {
     srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${bookId}.concentration.total`]);
 
     // Add contextual concentration string
-    const notes = this.getContextNotesParsed(`spell.concentration.${bookId}`);
+    const notes = await this.getContextNotesParsed(`spell.concentration.${bookId}`, { rollData });
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(game.i18n.localize(pf1.config.woundThresholdConditions[wT.level]));
+    if (wT.valid) notes.push({ text: game.i18n.localize(pf1.config.woundThresholdConditions[wT.level]) });
     // TODO: Make the penalty show separate of the CL.total.
 
     const props = [];
@@ -3141,8 +3140,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add contextual notes
     const rollData = this.getRollData();
-    const noteObjects = this.getContextNotes(`savingThrow.${savingThrowId}`);
-    const notes = this.formatContextNotes(noteObjects, rollData);
+    const notes = await this.getContextNotesParsed(`savingThrow.${savingThrowId}`, { rollData });
 
     const parts = [];
 
@@ -3176,7 +3174,7 @@ export class ActorPF extends ActorBasePF {
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push(label);
+      notes.push({ text: label });
       parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
@@ -3222,8 +3220,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add contextual notes
     const rollData = options.rollData || this.getRollData();
-    const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
-    const notes = this.formatContextNotes(noteObjects, rollData);
+    const notes = await this.getContextNotesParsed(`abilityChecks.${abilityId}`, { rollData });
 
     const label = pf1.config.abilities[abilityId];
     const abl = this.system.abilities[abilityId];
@@ -3240,7 +3237,7 @@ export class ActorPF extends ActorBasePF {
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push(label);
+      notes.push({ text: label });
       parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
@@ -3276,35 +3273,34 @@ export class ActorPF extends ActorBasePF {
       return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
     const rollData = this.getRollData();
-    const damageTypes = pf1.registry.damageTypes.getLabels();
+
+    const formatTextNotes = (notes) => acNotes?.split(/[\n\r]+/).map((text) => ({ text })) ?? [];
 
     // Add contextual AC notes
-    const acNoteObjects = this.getContextNotes("misc.ac");
-    const acNotes = this.formatContextNotes(acNoteObjects, rollData);
-    if (this.system.attributes.acNotes) acNotes.push(...this.system.attributes.acNotes.split(/[\n\r]+/));
+    const acNotes = await this.getContextNotesParsed("misc.ac", { rollData });
+    if (this.system.attributes.acNotes) acNotes.push(...formatTextNotes(this.system.attributes.acNotes));
 
     // Add contextual CMD notes
-    const cmdNoteObjects = this.getContextNotes("misc.cmd");
-    const cmdNotes = this.formatContextNotes(cmdNoteObjects, rollData);
-    if (this.system.attributes.cmdNotes) cmdNotes.push(...this.system.attributes.cmdNotes.split(/[\n\r]+/));
+    const cmdNotes = await this.getContextNotesParsed("misc.cmd", { rollData });
+    if (this.system.attributes.cmdNotes) cmdNotes.push(...formatTextNotes(this.system.attributes.cmdNotes));
 
     // Add contextual SR notes
-    const srNoteObjects = this.getContextNotes("misc.sr");
-    const srNotes = this.formatContextNotes(srNoteObjects, rollData);
-    if (this.system.attributes.srNotes) srNotes.push(...this.system.attributes.srNotes.split(/[\n\r]+/));
+    const srNotes = await this.getContextNotesParsed("misc.sr", { rollData });
+    if (this.system.attributes.srNotes) srNotes.push(...formatTextNotes(this.system.attributes.srNotes));
 
     // BUG: No specific saving throw notes are included
-    const saveNotesObjects = this.getContextNotes("allSavingThrows");
-    const saveNotes = this.formatContextNotes(saveNotesObjects, rollData);
-    if (this.system.attributes.saveNotes) saveNotes.push(...this.system.attributes.saveNotes.split(/[\n\r]+/));
+    const saveNotes = await this.getContextNotesParsed("allSavingThrows", { rollData });
+    if (this.system.attributes.saveNotes) saveNotes.push(...formatTextNotes(this.system.attributes.saveNotes));
 
     // Add misc data
-    const reSplit = pf1.config.re.traitSeparator;
+
     // Damage Reduction
     const drNotes = Object.values(this.parseResistances("dr"));
 
     // Energy Resistance
     const energyResistance = Object.values(this.parseResistances("eres"));
+
+    const damageTypes = pf1.registry.damageTypes.getLabels();
 
     // Damage Immunity
     if (this.system.traits.di.value.length || this.system.traits.di.custom.length) {
@@ -3322,6 +3318,7 @@ export class ActorPF extends ActorBasePF {
       ];
       energyResistance.push(...values.map((o) => game.i18n.format("PF1.VulnerableTo", { vulnerability: o })));
     }
+
     // Conditions
     const conditions = Object.entries(this.system.conditions ?? {})
       .filter(([_, enabled]) => enabled)
@@ -3333,8 +3330,8 @@ export class ActorPF extends ActorBasePF {
     const wT = this.getWoundThresholdData();
     if (wT.valid) {
       const wTlabel = pf1.config.woundThresholdConditions[wT.level];
-      acNotes.push(wTlabel);
-      cmdNotes.push(wTlabel);
+      acNotes.push({ text: wTlabel });
+      cmdNotes.push({ text: wTlabel });
     }
 
     // Get actor's token
@@ -3377,7 +3374,7 @@ export class ActorPF extends ActorBasePF {
       };
     }
 
-    rollMode ??= game.settings.get("core", "rollMode");
+    rollMode ||= game.settings.get("core", "rollMode");
 
     const chatData = {
       content: await renderTemplate("systems/pf1/templates/chat/defenses.hbs", templateData),
@@ -4074,8 +4071,9 @@ export class ActorPF extends ActorBasePF {
   /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
-   * @param {string|Handlebars.SafeString} context - The context to draw from.
+   * @param {string} context - The context to draw from.
    * @param {boolean} [all=true] - Retrieve notes meant for all.
+   * @returns {Array<ItemContextNotes>}
    */
   getContextNotes(context, all = true) {
     if (context.string) context = context.string;
@@ -4193,48 +4191,48 @@ export class ActorPF extends ActorBasePF {
    * @param {string} context - The context to draw notes from.
    * @param {object} [options] Additional options
    * @param {boolean} [options.roll=true] Whether to roll inline rolls or not.
-   * @returns {string[]} The resulting notes, already parsed.
+   * @param {boolean} [options.all] - Option to pass to {@link getContextNotes}
+   * @returns {Promise<Array<ParsedContextNoteEntry>>} The resulting notes, already parsed.
    */
-  getContextNotesParsed(context, { roll = true } = {}) {
-    const noteObjects = this.getContextNotes(context);
+  async getContextNotesParsed(context, { all, roll = true, rollData } = {}) {
+    rollData ??= this.getRollData();
 
-    return noteObjects.reduce((cur, o) => {
-      for (const note of o.notes) {
-        const enrichOptions = {
-          rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
-          rolls: roll,
-          relativeTo: this,
-        };
-        cur.push(enrichHTMLUnrolled(note, enrichOptions));
-      }
+    const noteObjects = this.getContextNotes(context, all);
+    await this.enrichContextNotes(noteObjects, rollData, { roll });
 
-      return cur;
+    return noteObjects.reduce((all, o) => {
+      all.push(...o.enriched.map((text) => ({ text, source: o.item?.name })));
+      return all;
     }, []);
   }
 
   /**
-   * @param notes
-   * @param rollData
-   * @param root0
-   * @param root0.roll
-   * @returns {Array<string>}
+   * Enrich context notes with item specific roll data.
+   *
+   * Adds `enriched` array to each note object.
+   *
+   * @param {ItemContextNotes} notes
+   * @param {object} [rollData] - Roll data instance
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.roll=true] - Handle rolls
    */
-  formatContextNotes(notes, rollData, { roll = true } = {}) {
-    const result = [];
+  async enrichContextNotes(notes, rollData, { roll = true } = {}) {
     rollData ??= this.getRollData();
     for (const noteObj of notes) {
       rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
+      if (noteObj.item) rollData = noteObj.item.getRollData();
 
+      const enriched = [];
       for (const note of noteObj.notes) {
-        result.push(
+        enriched.push(
           ...note
             .split(/[\n\r]+/)
             .map((subnote) => enrichHTMLUnrolled(subnote, { rollData, rolls: roll, relativeTo: this }))
         );
       }
+
+      noteObj.enriched = await Promise.all(enriched);
     }
-    return result;
   }
 
   /**
@@ -5048,4 +5046,17 @@ export class ActorPF extends ActorBasePF {
  * @property {string} type - Arbitrary type
  * @property {number} value - Change value
  * @property {ItemChange} change - Parent change
+ */
+
+/**
+ * @typedef {object} ItemContextNotes
+ * @property {Item} item - Item from which the notes are from
+ * @property {Array<string>} notes - Note strings
+ * @property {Array<string>} enriched - Enriched note things
+ */
+
+/**
+ * @typedef {object} ParsedContextNoteEntry
+ * @property {string} text - Enriched note text
+ * @property {string|undefined} source - Source label if any
  */

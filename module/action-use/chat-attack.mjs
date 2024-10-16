@@ -101,17 +101,16 @@ export class ChatAttack {
       return;
     }
 
-    const rollData = this.rollData;
-    const enrichOptions = {
-      rollData,
-      relativeTo: this.action.actor,
-    };
-
     const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
       notes: this.effectNotes,
       css: "effect-notes",
-      title: "PF1.EffectNotes",
+      header: game.i18n.localize("PF1.EffectNotes"),
     });
+
+    const enrichOptions = {
+      rollData: this.rollData,
+      relativeTo: this.action.actor,
+    };
 
     this.effectNotesHTML = await TextEditor.enrichHTML(content, enrichOptions);
   }
@@ -248,7 +247,7 @@ export class ChatAttack {
     data.total = totalDamage;
   }
 
-  async addEffectNotes() {
+  async addEffectNotes({ rollData } = {}) {
     this.effectNotes = [];
 
     const item = this.action.item;
@@ -261,19 +260,17 @@ export class ChatAttack {
       if (item.type === "spell") noteSources.push("spell.effect"); // Spell specific notes
 
       for (const source of noteSources) {
-        actor.getContextNotes(source).forEach((ns) => {
-          for (const note of ns.notes) this.effectNotes.push(...note.split(/[\n\r]+/));
-        });
+        this.effectNotes.push(...(await actor.getContextNotesParsed(source, { rollData })));
       }
     }
 
     // Add item notes
     if (item.system.effectNotes?.length) {
-      this.effectNotes.push(...item.system.effectNotes);
+      this.effectNotes.push(...item.system.effectNotes.map((text) => ({ text })));
     }
     // Add action notes
     if (this.action.data.effectNotes?.length) {
-      this.effectNotes.push(...this.action.data.effectNotes);
+      this.effectNotes.push(...this.action.data.effectNotes.map((text) => ({ text })));
     }
 
     // Misfire
@@ -286,7 +283,7 @@ export class ChatAttack {
           pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
         label += ` (${radius} ${unit})`;
       }
-      this.effectNotes.push(label);
+      this.effectNotes.push({ text: label });
     }
 
     await this.setEffectNotesHTML();

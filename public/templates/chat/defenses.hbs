@@ -21,16 +21,7 @@
     </div>
   </div>
 
-  {{#if notes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.ACNotes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each notes}}
-      <span class="tag">{{{this}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
+  {{> "systems/pf1/templates/chat/parts/item-notes.hbs" header=(localize "PF1.ACNotes") notes=notes}}
   {{/with}}
 
   {{#if (or cmd misc.sr)}}
@@ -53,40 +44,13 @@
     {{/if}}
   </div>
 
-  {{#if cmd.notes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.CMDNotes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each cmd.notes}}
-      <span class="tag">{{{this}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
+  {{> "systems/pf1/templates/chat/parts/item-notes.hbs" header=(localize "PF1.CMDNotes") notes=cmd.notes}}
   {{/if}}
 
-  {{#if misc.srNotes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.SpellResistanceNotes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each misc.srNotes}}
-      <span class="tag">{{{this}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
+  {{> "systems/pf1/templates/chat/parts/item-notes.hbs" header=(localize "PF1.SRNotes") notes=misc.srNotes}}
 
-  {{#if misc.drNotes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.DamRed"}}</label>
-    <div class="flexrow tag-list">
-      {{#each misc.drNotes}}
-      <span class="tag">{{{this}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
-  
+  {{> "systems/pf1/templates/chat/parts/item-notes.hbs" header=(localize "PF1.DRNotes") notes=misc.drNotes}}
+
   {{#if misc.hardness}}
   <div class="flexcol property-group">
     <label>{{localize "PF1.Hardness"}}</label>
@@ -138,15 +102,6 @@
   </div>
 
   {{#with saves}}
-  {{#if notes}}
-  <div class="flexcol property-group">
-    <label>{{localize "PF1.SaveNotes"}}</label>
-    <div class="flexrow tag-list">
-      {{#each notes}}
-      <span class="tag">{{{this}}}</span>
-      {{/each}}
-    </div>
-  </div>
-  {{/if}}
+  {{> "systems/pf1/templates/chat/parts/item-notes.hbs" header=(localize "PF1.SaveNotes") notes=notes}}
   {{/with}}
 </div>

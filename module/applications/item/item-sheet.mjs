@@ -2,7 +2,7 @@ import {
   adjustNumberByStringCommand,
   getBuffTargetDictionary,
   getBuffTargets,
-  enrichHTMLUnrolledAsync,
+  enrichHTMLUnrolled,
   naturalSort,
 } from "@utils";
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
@@ -838,10 +838,10 @@ export class ItemSheetPF extends ItemSheet {
       rollData: rollData,
       relativeTo: this.actor,
     };
-    const pIdentDesc = description ? enrichHTMLUnrolledAsync(description, enrichOptions) : Promise.resolve();
+    const pIdentDesc = description ? enrichHTMLUnrolled(description, enrichOptions) : Promise.resolve();
     pIdentDesc.then((html) => (context.descriptionHTML.identified = html));
     const unidentDesc = itemData.description?.unidentified;
-    const pUnidentDesc = unidentDesc ? enrichHTMLUnrolledAsync(unidentDesc, enrichOptions) : Promise.resolve();
+    const pUnidentDesc = unidentDesc ? enrichHTMLUnrolled(unidentDesc, enrichOptions) : Promise.resolve();
     pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
 
     const pTopDesc = topDescription

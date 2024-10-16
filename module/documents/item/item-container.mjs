@@ -6,12 +6,11 @@ import { ItemPhysicalPF } from "./item-physical.mjs";
  * Bags, backpacks, chests, etc.
  */
 export class ItemContainerPF extends ItemPhysicalPF {
-  /**
-   * @override
-   */
+  /** @override */
   static system = Object.freeze({
     ...super.system,
     hasIdentifier: true,
+    hasActions: false,
   });
 
   constructor(...args) {

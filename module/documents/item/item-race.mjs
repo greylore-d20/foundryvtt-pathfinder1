@@ -10,6 +10,7 @@ export class ItemRacePF extends ItemPF {
   static system = Object.freeze({
     ...super.system,
     hasIdentifier: false,
+    hasActions: false,
   });
 
   /**

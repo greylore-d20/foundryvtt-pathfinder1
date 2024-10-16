@@ -1,19 +1,95 @@
 /**
  * Script Call
  */
-export class ItemScriptCall {
-  constructor(data, parent) {
-    this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
-    this.parent = parent;
+export class ItemScriptCall extends foundry.abstract.DataModel {
+  constructor(data, options) {
+    if (options instanceof foundry.abstract.DataModel) {
+      foundry.utils.logCompatibilityWarning("ItemScriptCall second constructor parameter is no longer plain parent.", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+      options = { parent: options };
+    }
+    super(data, options);
+  }
 
-    this.prepareData();
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      _id: new fields.StringField({
+        required: true,
+        blank: false,
+        readonly: true,
+        initial: () => foundry.utils.randomID(8),
+      }),
+      name: new fields.StringField({ required: true, initial: () => game.i18n.localize("PF1.ScriptCalls.NewName") }),
+      img: new fields.FilePathField({ required: false, blank: false, categories: ["IMAGE"] }),
+      type: new fields.StringField({
+        required: true,
+        blank: false,
+        nullable: false,
+        initial: "script",
+        choices: ["script", "macro"],
+      }),
+      value: new fields.StringField({ required: true, nullable: false, blank: true }),
+      category: new fields.StringField({ required: false }),
+      hidden: new fields.BooleanField({ initial: false, required: false }),
+    };
+  }
+
+  static migrateData(data) {
+    if (data.type == "macro") {
+      data.name = "";
+      data.img = "";
+    }
+  }
+
+  /** @deprecated */
+  get data() {
+    foundry.utils.logCompatibilityWarning(
+      "ItemScriptCall.data is deprecated in favor of directly accessing the data.",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+    return this;
+  }
+
+  /** @deprecated */
+  static get defaultData() {
+    foundry.utils.logCompatibilityWarning("ItemScriptCall.defaultData is deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    return new this().toObject();
+  }
+
+  /** @override */
+  _initialize(options = {}) {
+    super._initialize(options);
+
+    this._safePrepareData();
+  }
+
+  /**
+   * Safely prepare data
+   *
+   * @internal
+   */
+  _safePrepareData() {
+    try {
+      this.prepareData();
+    } catch (err) {
+      console.error(err, this, { parent: this.parent });
+    }
   }
 
   prepareData() {
     if (this.type === "macro") {
       const macro = fromUuidSync(this.value);
-      this.data.name = macro?.name || `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
-      this.data.img = macro?.img || "icons/svg/hazard.svg";
+      this.name = macro?.name || `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
+      this.img = macro?.img || "icons/svg/hazard.svg";
     }
   }
 
@@ -28,67 +104,26 @@ export class ItemScriptCall {
   static async create(data, context) {
     const { parent } = context;
 
-    if (parent instanceof pf1.documents.item.ItemPF) {
-      // Prepare data
-      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
-      const newScriptCallData = parent.toObject().system.scriptCalls || [];
-      newScriptCallData.push(...data);
+    if (!(parent instanceof pf1.documents.item.ItemPF))
+      throw new Error("Can not create script calls outside of items.");
 
-      // Update parent
-      await parent.update({ "system.scriptCalls": newScriptCallData });
+    // Prepare data
+    data = data.map((dataObj) => new ItemScriptCall(dataObj, { parent }).toObject());
+    const newScriptCallData = parent.toObject().system.scriptCalls || [];
+    newScriptCallData.push(...data);
 
-      // Return results
-      return data.map((o) => parent.scriptCalls.get(o._id));
-    }
+    // TODO: Ensure new script calls don't have ID conflicts
 
-    return [];
-  }
+    // Update parent
+    await parent.update({ "system.scriptCalls": newScriptCallData });
 
-  static get defaultData() {
-    return {
-      _id: foundry.utils.randomID(16),
-      name: game.i18n.localize("PF1.ScriptCalls.NewName"),
-      img: "icons/svg/dice-target.svg",
-      type: "script",
-      value: "",
-      category: "",
-      hidden: false,
-    };
+    // Return results
+    return data.map((o) => parent.scriptCalls.get(o._id));
   }
 
   /** @type {string} */
   get id() {
-    return this.data._id;
-  }
-
-  /** @type {string} */
-  get type() {
-    return this.data.type;
-  }
-
-  /** @type {string} */
-  get value() {
-    return this.data.value;
-  }
-
-  /** @type {string} */
-  get category() {
-    return this.data.category;
-  }
-
-  /** @type {string} */
-  get name() {
-    return this.data.name;
-  }
-
-  /** @type {string} */
-  get img() {
-    return this.data.img;
-  }
-
-  /** @type {boolean} */
-  get hidden() {
-    return this.data.hidden;
+    return this._id;
   }
 
   /** @type {boolean} */
@@ -115,8 +150,7 @@ export class ItemScriptCall {
 
   async update(data, options = {}) {
     if (this.parent != null) {
-      const rawChange = this.parent.system.scriptCalls.find((o) => o._id === this.id);
-      const idx = this.parent.system.scriptCalls.indexOf(rawChange);
+      const idx = this.parent.system.scriptCalls.findIndex((o) => o._id === this.id);
       if (idx >= 0) {
         data = Object.entries(data).reduce((cur, o) => {
           cur[`system.scriptCalls.${idx}.${o[0]}`] = o[1];

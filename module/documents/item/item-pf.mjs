@@ -11,24 +11,33 @@ import { getSkipActionPrompt } from "@documents/settings.mjs";
  * Override and extend the basic :class:`Item` implementation
  */
 export class ItemPF extends ItemBasePF {
-  constructor(...args) {
-    super(...args);
+  /**
+   * Configure item before data preparation.
+   *
+   * @override
+   * @param {object} options
+   */
+  _configure(options = {}) {
+    super._configure(options);
 
     /**
      * An object containing links to other items.
      *
      * @type {Record<string, ItemPF>}
      */
-    this.links ??= {};
+    this.links = {};
 
-    if (Array.isArray(this.system.actions)) {
+    if (this.hasActions) {
       /**
        * A {@link Collection} of {@link ItemAction}s.
        *
-       * @type {Collection<ItemAction>}
+       * @type {Collection<string, ItemAction>}
        */
-      this.actions ??= new Collection();
+      this.actions = new Collection();
     }
+
+    /** @type {Collection<string, pf1.components.ItemScriptCall>} */
+    this.scriptCalls = new Collection();
   }
 
   /**
@@ -51,6 +60,10 @@ export class ItemPF extends ItemBasePF {
      * Whether this item has changes and change flags.
      */
     hasChanges: true,
+    /**
+     * Whether this item has actions.
+     */
+    hasActions: true,
   });
 
   /**
@@ -213,11 +226,7 @@ export class ItemPF extends ItemBasePF {
     return ["quantity", "level"];
   }
 
-  /**
-   * Whether this item is physical.
-   *
-   * @type {boolean}
-   */
+  /** @type {boolean} - Whether this item is physical. */
   static get isPhysical() {
     return this.system.isPhysical;
   }
@@ -234,6 +243,15 @@ export class ItemPF extends ItemBasePF {
   /** {@inheritDoc ItemPF.isPhysical:getter} */
   get hasChanges() {
     return this.constructor.hasChanges;
+  }
+
+  static get hasActions() {
+    return this.system.hasChanges;
+  }
+
+  /** {@inheritDoc ItemPF.hasActions:getter} */
+  get hasActions() {
+    return this.constructor.hasActions;
   }
 
   /**
@@ -927,24 +945,25 @@ export class ItemPF extends ItemBasePF {
    * @internal
    */
   _prepareScriptCalls() {
-    const scriptCalls = this.system.scriptCalls;
-    if (!scriptCalls) return;
+    if (!this.scriptCalls) return;
 
-    // TODO: Remove constant re-creation of the collection to retain the reference.
-    const prior = this.scriptCalls;
-    const collection = new Collection();
+    const prior = new Collection([...this.scriptCalls]);
+    this.scriptCalls.clear(); // TODO: Remove specific entries after the loop instead of full clear here
+
+    const scriptCalls = this.system.scriptCalls;
+    if (!scriptCalls?.length) return;
+
     for (const s of scriptCalls) {
       const sid = s._id;
-      let scriptCall = prior?.get(sid);
-      if (scriptCall) scriptCall.data = s;
-      else scriptCall = new pf1.components.ItemScriptCall(s, this);
-      scriptCall.prepareData();
-
-      collection.set(sid, scriptCall);
+      let script = null;
+      if (prior && prior.has(sid)) {
+        script = prior.get(sid);
+        const updateData = { ...s };
+        script.updateSource(updateData, { recursive: false });
+        script.prepareData();
+      } else script = new pf1.components.ItemScriptCall(s, { parent: this });
+      this.scriptCalls.set(sid, script);
     }
-
-    /** @type {Collection<string,pf1.components.ItemScriptCall>} */
-    this.scriptCalls = collection;
   }
 
   /**

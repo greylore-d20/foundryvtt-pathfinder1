@@ -5,12 +5,10 @@ import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, 
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
-import { ItemPF } from "@item/item-pf.mjs";
 import { LevelUpForm } from "@app/level-up.mjs";
 import { CurrencyTransfer } from "@app/currency-transfer.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
-import { getItem } from "@utils/dialog.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -4036,10 +4034,16 @@ export class ActorSheetPF extends ActorSheet {
             actor: this.actor,
             empty: true,
             items: classes,
-            selected: classes[0]?._id,
+            selected: classes[0]?.id, // Default to highest level class
           };
 
-          const clsId = await getItem(options);
+          // Test if there's more appropriate default class
+          if (classes.length > 1) {
+            const cls = classes.find((cls) => itemData.system?.associations?.classes?.includes(cls.name));
+            if (cls) options.selected = cls.id;
+          }
+
+          const clsId = await pf1.utils.dialog.getItem(options);
           if (clsId) {
             const cls = this.actor.items.get(clsId);
             itemData.system.class = cls.system.tag;

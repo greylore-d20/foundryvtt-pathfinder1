@@ -39,10 +39,11 @@ class SquareHighlight {
     this.clear();
 
     // Highlight squares
+    const ig = canvas.interface.grid;
     for (const s of this._squares) {
       const x = Math.floor(this.origin.x - s.x) * gridSize;
       const y = Math.floor(this.origin.y - s.y) * gridSize;
-      grid.grid.highlightGridPosition(hl, { x: x, y: y, border: this.borderColor, color: this.fillColor });
+      ig.highlightPosition(hl.name, { x, y, border: this.borderColor, color: this.fillColor });
     }
   }
 }

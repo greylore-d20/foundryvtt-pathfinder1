@@ -703,7 +703,7 @@ export class ItemSpellPF extends ItemPF {
     const spell = new Item.implementation(origData);
     spell.reset();
     // TODO: Make range and duration appear as inline rolls that scale on item CL?
-    const desc = spell.getDescription({ charcard: false, header: true, body: true, rollData });
+    const desc = await spell.getDescription({ charcard: false, header: true, body: true, rollData });
     itemData.system.description.value = this._replaceConsumableConversionString(desc, rollData);
 
     // Create and return synthetic item data
@@ -806,11 +806,11 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
+  async getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
     const headerContent = header
       ? renderCachedTemplate("systems/pf1/templates/items/headers/spell-header.hbs", {
           ...data,
-          ...this.getDescriptionData({ rollData, isolated }),
+          ...(await this.getDescriptionData({ rollData, isolated })),
           chatcard: chatcard === true,
         })
       : "";
@@ -825,8 +825,8 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getDescriptionData({ rollData, isolated = false } = {}) {
-    const result = super.getDescriptionData({ rollData, isolated });
+  async getDescriptionData({ rollData, isolated = false } = {}) {
+    const result = await super.getDescriptionData({ rollData, isolated });
 
     const system = this.system;
     result.system = system;
@@ -846,10 +846,11 @@ export class ItemSpellPF extends ItemPF {
     // Set information about when the spell is learned
     result.learnedAt = {};
     if (system.learnedAt) {
+      const classNames = await pf1.utils.packs.getClassIDMap();
       ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach((category) =>
         pf1.utils.i18n.join(
           (result.learnedAt[category] = Object.entries(system.learnedAt[category]).map(([classId, level]) => {
-            classId = pf1.config.classNames[classId] || classId;
+            classId = classNames[classId] || classId;
             return `${classId} ${level}`;
           }))
         )

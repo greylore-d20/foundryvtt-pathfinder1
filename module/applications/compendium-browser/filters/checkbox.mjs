@@ -79,8 +79,8 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
   }
 
   /** @inheritDoc */
-  setup() {
-    super.setup();
+  async setup() {
+    await super.setup();
     this.prepareBooleanOperator();
   }
 

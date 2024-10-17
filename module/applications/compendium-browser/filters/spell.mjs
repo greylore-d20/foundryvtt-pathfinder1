@@ -17,8 +17,8 @@ export class SpellSubschoolFilter extends CheckboxFilter {
   static type = "spell";
 
   /** @inheritDoc */
-  prepareChoices() {
-    super.prepareChoices();
+  async prepareChoices() {
+    await super.prepareChoices();
     const choices = this.choices;
 
     // this changes the value (the UI visible choice) to the translation from the config for pre-defined descriptors
@@ -34,8 +34,8 @@ export class SpellDescriptorFilter extends CheckboxFilter {
   static type = "spell";
 
   /** @inheritDoc */
-  prepareChoices() {
-    super.prepareChoices();
+  async prepareChoices() {
+    await super.prepareChoices();
     const choices = this.choices;
 
     // this changes the value (the UI visible choice) to the translation from the config for pre-defined descriptors
@@ -53,12 +53,14 @@ export class SpellLearnedByClassFilter extends CheckboxFilter {
   static type = "spell";
 
   /** @inheritDoc */
-  prepareChoices() {
-    super.prepareChoices();
+  async prepareChoices() {
+    await super.prepareChoices();
+
     const choices = this.choices;
 
     // Display human readable name instead of the class identifier
-    const configChoices = this.constructor.getChoicesFromConfig(pf1.config.classNames);
+    const classNames = await pf1.utils.packs.getClassIDMap();
+    const configChoices = this.constructor.getChoicesFromConfig(classNames);
     for (const choice of configChoices) {
       if (choices.has(choice.key)) {
         choices.set(choice.key, choice);

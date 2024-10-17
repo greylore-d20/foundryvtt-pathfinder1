@@ -619,7 +619,7 @@ export class ItemSheetPF extends ItemSheet {
 
       topDescription = renderCachedTemplate(
         "systems/pf1/templates/items/headers/spell-header.hbs",
-        item.getDescriptionData({ rollData })
+        await item.getDescriptionData({ rollData })
       );
 
       // Reverse mapping of pf1.config.divineFocus for readability
@@ -827,7 +827,7 @@ export class ItemSheetPF extends ItemSheet {
     // Trailing async awaits to ensure they're all awaited in one go instead of sequentially
 
     // Add descriptions
-    const description = context.showIdentified ? this.item.getDescription({ rollData, header: false }) : null;
+    const description = context.showIdentified ? await this.item.getDescription({ rollData, header: false }) : null;
 
     context.descriptionHTML = {
       identified: null,

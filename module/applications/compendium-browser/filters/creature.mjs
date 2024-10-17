@@ -7,8 +7,9 @@ export class CreatureCRFilter extends CheckboxFilter {
   static types = ["character", "npc"];
 
   /** @override */
-  prepareChoices() {
-    super.prepareChoices();
+  async prepareChoices() {
+    await super.prepareChoices();
+
     const choices = this.choices.contents
       .map((choice) => Number(choice.key))
       .sort((a, b) => a - b)

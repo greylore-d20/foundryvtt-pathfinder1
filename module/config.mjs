@@ -3066,23 +3066,6 @@ export const sheetSections = {
   },
 };
 
-/** @type {Record<string,string>} - Class ID to name mappings */
-export const classNames = {};
-
-// Update classNames with pack contents, leave any other mapping filling to modules and content owners
-Hooks.once("ready", async () => {
-  const index = await game.packs.get("pf1.classes").getIndex({ fields: ["system.tag", "system.subType"] });
-
-  index.forEach((e) => {
-    if (e.system?.subType && !["base", "npc"].includes(e.system?.subType)) return;
-
-    const tag = e.system?.tag;
-    if (!tag) return;
-
-    pf1.config.classNames[tag] = e.name;
-  });
-});
-
 // Prepare sheet sections with data available later
 // ... allowing module modification also.
 Hooks.once("setup", () => {

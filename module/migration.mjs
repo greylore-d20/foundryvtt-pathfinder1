@@ -872,7 +872,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateSpellCosts(itemData, updateData);
   _migrateSpellPreparation(itemData, updateData, { item });
   _migrateLootEquip(itemData, updateData);
-  _migrateItemLinks(itemData, updateData, { item, actor });
+  await _migrateItemLinks(itemData, updateData, { item, actor });
   _migrateItemProficiencies(itemData, updateData);
   _migrateItemNotes(itemData, updateData);
   _migrateScriptCalls(itemData, updateData);
@@ -1997,7 +1997,7 @@ const _migrateUnchainedActionEconomy = (action, item) => {
   }
 };
 
-const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
+const _migrateItemLinks = async function (itemData, updateData, { item, actor }) {
   const linkData = itemData.system.links ?? {};
   for (const [linkType, oldLinks] of Object.entries(linkData)) {
     let updated = false;
@@ -2030,7 +2030,7 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
       }
 
       if (actor && link.uuid) {
-        let linked = fromUuidSync(link.uuid, { relative: actor });
+        let linked = await fromUuid(link.uuid, { relative: actor });
         // Attempt to recover bad links to other actors
         if (linked?.actor) {
           // Attempt to adjust owned item

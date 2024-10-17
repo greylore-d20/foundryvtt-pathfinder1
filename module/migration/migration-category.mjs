@@ -117,7 +117,10 @@ export class MigrationCategory {
     if (!current) return null;
 
     if (current instanceof foundry.abstract.Document) return current.name;
-    if (current instanceof CompendiumCollection) return current.metadata.label;
+    if (current instanceof CompendiumCollection) {
+      if (game.i18n.has(current.metadata.label)) return game.i18n.localize(current.metadata.label);
+      return current.metadata.label;
+    }
     return null;
   }
 

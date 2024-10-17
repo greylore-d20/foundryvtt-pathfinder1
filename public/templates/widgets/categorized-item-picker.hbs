@@ -1,9 +1,9 @@
-<div class="widget categorized-item-picker">
+<section class="widget-content">
   <div class="item-picker-categories">
     {{#each categories}}
-      <div class="category {{#if validity.valid}}valid{{else}}invalid{{/if}}"
+      <div class="category {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{key}}"
         {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
-        <a data-category="{{key}}"><h2>{{label}}</h2></a>
+        {{label}}
         {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
       </div>
     {{/each}}
@@ -11,11 +11,11 @@
 
   <div class="item-picker-items">
     {{#each items}}
-      <span class="item hidden {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}" data-value="{{key}}"
+      <div class="item hidden {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}" data-value="{{key}}"
         {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
-        <h4>{{label}}</h4>
+        {{label}}
         {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
-      </span>
+      </div>
     {{/each}}
   </div>
-</div>
+</section>

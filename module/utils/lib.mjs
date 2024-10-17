@@ -90,17 +90,34 @@ export const fractionalToString = (v) => {
   return rv.join(" ");
 };
 
-export const CR = {
-  fromString(value) {
+/**
+ * Challenge Rating helper functions.
+ */
+export class CR {
+  /**
+   * Parse CR string to produce a numeric representation
+   *
+   * Parses 1/8, 1/6, 1/4, 1/3, and 1/2 as exact decimals. Everything else is treated as regular number string and passed through parseFloat().
+   *
+   * @param {string} value
+   * @returns {number}
+   */
+  static fromString(value) {
     if (value === "1/8") return 0.125;
     if (value === "1/6") return 0.1625;
     if (value === "1/4") return 0.25;
     if (value === "1/3") return 0.3375;
     if (value === "1/2") return 0.5;
     return parseFloat(value);
-  },
+  }
 
-  fromNumber(value = 0) {
+  /**
+   * Convert number to string representation.
+   *
+   * @param {number} value
+   * @returns {string}
+   */
+  static fromNumber(value = 0) {
     if (value === 0.125) return "1/8";
     if (value === 0.1625) return "1/6";
     if (value === 0.25) return "1/4";
@@ -108,8 +125,8 @@ export const CR = {
     if (value === 0.5) return "1/2";
     if (!Number.isNumeric(value)) return "0";
     return value?.toString() ?? "";
-  },
-};
+  }
+}
 
 /**
  * Converts feet to what the world is using as a measurement unit.

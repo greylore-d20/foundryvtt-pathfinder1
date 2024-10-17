@@ -38,4 +38,5 @@ export {
   sortArrayByName,
   swapDistance,
   swapWeight,
+  CR,
 } from "./lib.mjs";

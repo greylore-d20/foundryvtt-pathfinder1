@@ -1,7 +1,7 @@
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { DamageResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolled, naturalSort } from "@utils";
+import { adjustNumberByStringCommand, openJournal, enrichHTMLUnrolled, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
@@ -1273,7 +1273,7 @@ export class ActorSheetPF extends ActorSheet {
           paths.push({ path: "@details.level.value", value: lazy.rollData.details?.level?.value ?? NaN });
         }
         const cr = lazy.rollData.details?.cr?.total ?? NaN;
-        if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
+        if (cr > 0) paths.push({ path: "@details.cr.total", value: pf1.utils.CR.fromNumber(cr) });
         break;
       }
       case "hit-points": {
@@ -4183,11 +4183,6 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _updateObject(event, formData) {
-    // Translate CR
-    const cr = formData["system.details.cr.base"];
-    if (typeof cr === "string") formData["system.details.cr.base"] = CR.fromString(cr);
-
-    // Update from elements with 'data-name'
     {
       const elems = this.element.find("*[data-name]");
       const changedData = {};

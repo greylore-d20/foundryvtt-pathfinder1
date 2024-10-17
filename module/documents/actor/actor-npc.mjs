@@ -27,6 +27,15 @@ export class ActorNPCPF extends ActorPF {
     }
   }
 
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
+    if (!changed.system) return;
+
+    const cr = changed.system?.details?.cr?.base;
+    if (typeof cr === "string") changed.system.details.cr.base = pf1.utils.CR.fromString(cr);
+  }
+
   /**
    * @protected
    * @override

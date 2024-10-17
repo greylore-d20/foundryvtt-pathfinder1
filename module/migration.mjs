@@ -421,15 +421,27 @@ export async function migrateModules({ unlock = true, state, dialog = {} } = {})
  * @param {string} marker - string to look for
  */
 function clearCoreMessages(marker) {
-  const testActiveMsg = (el, marker) => {
-    if (el instanceof jQuery) el = el[0];
-    return el.textContent.includes(marker);
+  const clearMatchingMessages = (entry) => {
+    let id;
+    // Jquery (active message)
+    if (entry instanceof jQuery) {
+      if (!entry[0].textContent.includes(marker)) return;
+      id = entry.data("id");
+    }
+    // Future proofing non-jquery active messages
+    else if (entry instanceof Element) {
+      if (!entry.textContent.includes(marker)) return;
+      id = entry.dataset.id;
+    }
+    // Queued messages
+    else {
+      if (!entry.message.includes(marker)) return;
+      id = entry.id;
+    }
+    ui.notifications.remove(id);
   };
-  // Queue has special objects
-  ui.notifications.queue = ui.notifications.queue.filter((msg) => !msg.message.includes(marker));
-  // Active has jQuery elements
-  ui.notifications.active = ui.notifications.active.filter((msg) => !testActiveMsg(msg));
-  ui.notifications.fetch();
+  ui.notifications.queue.forEach(clearMatchingMessages);
+  ui.notifications.active.forEach(clearMatchingMessages);
 }
 
 /**
@@ -872,7 +884,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateSpellCosts(itemData, updateData);
   _migrateSpellPreparation(itemData, updateData, { item });
   _migrateLootEquip(itemData, updateData);
-  _migrateItemLinks(itemData, updateData, { item, actor });
+  await _migrateItemLinks(itemData, updateData, { item, actor });
   _migrateItemProficiencies(itemData, updateData);
   _migrateItemNotes(itemData, updateData);
   _migrateScriptCalls(itemData, updateData);
@@ -1997,7 +2009,7 @@ const _migrateUnchainedActionEconomy = (action, item) => {
   }
 };
 
-const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
+const _migrateItemLinks = async function (itemData, updateData, { item, actor }) {
   const linkData = itemData.system.links ?? {};
   for (const [linkType, oldLinks] of Object.entries(linkData)) {
     let updated = false;
@@ -2030,7 +2042,7 @@ const _migrateItemLinks = function (itemData, updateData, { item, actor }) {
       }
 
       if (actor && link.uuid) {
-        let linked = fromUuidSync(link.uuid, { relative: actor });
+        let linked = await fromUuid(link.uuid, { relative: actor });
         // Attempt to recover bad links to other actors
         if (linked?.actor) {
           // Attempt to adjust owned item

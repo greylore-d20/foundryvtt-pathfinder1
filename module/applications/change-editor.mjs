@@ -19,7 +19,7 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     classes: ["pf1-v2", "change-editor"],
     window: {
       minimizable: false,
-      resizable: false,
+      resizable: true,
     },
     position: {
       width: 460,

@@ -421,15 +421,27 @@ export async function migrateModules({ unlock = true, state, dialog = {} } = {})
  * @param {string} marker - string to look for
  */
 function clearCoreMessages(marker) {
-  const testActiveMsg = (el, marker) => {
-    if (el instanceof jQuery) el = el[0];
-    return el.textContent.includes(marker);
+  const clearMatchingMessages = (entry) => {
+    let id;
+    // Jquery (active message)
+    if (entry instanceof jQuery) {
+      if (!entry[0].textContent.includes(marker)) return;
+      id = entry.data("id");
+    }
+    // Future proofing non-jquery active messages
+    else if (entry instanceof Element) {
+      if (!entry.textContent.includes(marker)) return;
+      id = entry.dataset.id;
+    }
+    // Queued messages
+    else {
+      if (!entry.message.includes(marker)) return;
+      id = entry.id;
+    }
+    ui.notifications.remove(id);
   };
-  // Queue has special objects
-  ui.notifications.queue = ui.notifications.queue.filter((msg) => !msg.message.includes(marker));
-  // Active has jQuery elements
-  ui.notifications.active = ui.notifications.active.filter((msg) => !testActiveMsg(msg));
-  ui.notifications.fetch();
+  ui.notifications.queue.forEach(clearMatchingMessages);
+  ui.notifications.active.forEach(clearMatchingMessages);
 }
 
 /**

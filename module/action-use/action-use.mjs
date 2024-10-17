@@ -759,9 +759,9 @@ export class ActionUse {
     const notes = [];
     // Add actor notes for attacks
     if (this.actor && isAttack) {
-      notes.push(...(await actor.getContextNotesParsed("attacks.attack", { rollData })));
+      notes.push(...(await actor.getContextNotesParsed("attack", { rollData })));
       for (const subTarget of typeMap[type]) {
-        notes.push(...(await actor.getContextNotesParsed(`attacks.${subTarget}`, { rollData })));
+        notes.push(...(await actor.getContextNotesParsed(subTarget, { rollData })));
       }
     }
     // Add item notes
@@ -775,12 +775,12 @@ export class ActionUse {
 
     // Add CMB notes
     if (this.action.isCombatManeuver) {
-      notes.push(...((await actor?.getContextNotesParsed("misc.cmb", { rollData })) ?? []));
+      notes.push(...((await actor?.getContextNotesParsed("cmb", { rollData })) ?? []));
     }
 
     if (isAttack) {
       const hasCritConfirm = this.shared.attacks.some((atk) => !!atk.chatAttack?.hasCritConfirm);
-      if (hasCritConfirm) notes.push(...((await actor?.getContextNotesParsed("attacks.critical", { rollData })) ?? []));
+      if (hasCritConfirm) notes.push(...((await actor?.getContextNotesParsed("critical", { rollData })) ?? []));
     }
 
     this.shared.templateData.footnotes = notes;

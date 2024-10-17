@@ -1384,7 +1384,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.ac.${detail}.total`),
         });
 
-        notes = await getNotes("misc.ac");
+        notes = await getNotes("ac");
         break;
       }
       case "cmd":
@@ -1397,7 +1397,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.cmd.${detail}`),
         });
 
-        notes = await getNotes(`misc.cmd`);
+        notes = await getNotes("cmd");
         break;
       case "save": {
         const save = system.attributes.savingThrows[detail];
@@ -1429,7 +1429,7 @@ export class ActorSheetPF extends ActorSheet {
           untyped: true,
         });
 
-        notes = await getNotes("misc.sr");
+        notes = await getNotes("sr");
         break;
       case "bab": {
         const bab = system.attributes.bab;
@@ -1480,11 +1480,7 @@ export class ActorSheetPF extends ActorSheet {
           { sources: getSource("system.attributes.attack.shared") }
         );
 
-        notes = [
-          ...(await getNotes("attacks.attack")),
-          ...(await getNotes("attacks.melee")),
-          ...(await getNotes("misc.cmb")),
-        ];
+        notes = [...(await getNotes("attack")), ...(await getNotes("melee")), ...(await getNotes("cmb"))];
         break;
       case "init": {
         const init = system.attributes.init;
@@ -1498,7 +1494,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource("system.attributes.init.total"),
         });
 
-        notes = await getNotes("misc.init");
+        notes = await getNotes("init");
         break;
       }
       case "abilityScore": {
@@ -2220,7 +2216,7 @@ export class ActorSheetPF extends ActorSheet {
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
 
-            notes = [...(await getNotes("attacks.attack")), ...(await getNotes(`attacks.${subTarget}`))];
+            notes = [...(await getNotes("attack")), ...(await getNotes(subTarget))];
 
             break;
           }

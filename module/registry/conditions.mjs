@@ -3,6 +3,36 @@ import { Registry, RegistryEntry } from "./base-registry.mjs";
 const fields = foundry.data.fields;
 
 /**
+ * Condition's status HUD behaviour configuration.
+ *
+ * @group Conditions
+ */
+export class StatusHudModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    return {
+      show: new fields.BooleanField({ required: false, initial: true, label: "Show in token status HUD" }),
+      include: new fields.SetField(new fields.StringField({ choices: () => Object.keys(game.model.Actor) }), {
+        initial: [],
+        required: false,
+        label: "Required actor types.",
+      }),
+      exclude: new fields.SetField(new fields.StringField({ choices: () => Object.keys(game.model.Actor) }), {
+        initial: [],
+        required: false,
+        label: "Excluded actor types. Has no effect if include list is populated.",
+      }),
+    };
+  }
+
+  /** @type {Array<string>|undefined} - Allowed actor types or undefined if no limitations are present */
+  get actorTypes() {
+    if (this.include.size) return [...this.include];
+    if (this.exclude.size) return Object.keys(game.model.Actor).filter((type) => !this.exclude.has(type));
+    return undefined;
+  }
+}
+
+/**
  * A single condition entry in the {@link Condition} registry.
  *
  * @group Conditions
@@ -42,6 +72,21 @@ export class Condition extends RegistryEntry {
       showInDefense: new fields.BooleanField({ required: false, initial: true }),
       showInAction: new fields.BooleanField({ required: false, initial: true }),
       showInBuffsTab: new fields.BooleanField({ required: false, initial: true }),
+      hud: new fields.EmbeddedDataField(StatusHudModel),
+    };
+  }
+
+  /**
+   * Convert condition to format expected by `CONFIG.statusEffects`.
+   *
+   * @returns {object}
+   */
+  toStatusEffect() {
+    return {
+      id: this.id,
+      name: this.name,
+      img: this.texture,
+      hud: this.hud.show ? this.hud : false,
     };
   }
 }
@@ -75,6 +120,10 @@ export class Conditions extends Registry {
     continuous: true,
   };
 
+  static HUD_EXCLUDE_INANIMATE = {
+    exclude: ["haunt", "trap", "vehicle"],
+  };
+
   /** @inheritdoc */
   static _defaultData = [
     {
@@ -84,6 +133,9 @@ export class Conditions extends Registry {
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.L6DTocj1PbOtuspU",
       showInAction: false,
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "blind",
@@ -100,6 +152,9 @@ export class Conditions extends Registry {
         ],
         flags: ["loseDexToAC"],
       },
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "confused",
@@ -107,6 +162,9 @@ export class Conditions extends Registry {
       texture: "systems/pf1/icons/conditions/confused.svg",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.J2yma0xciBKRUh9t",
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "cowering",
@@ -124,6 +182,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "dazed",
@@ -131,6 +192,9 @@ export class Conditions extends Registry {
       texture: "systems/pf1/icons/conditions/dazed.svg",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.2A6Gk60pLDKR2zT0",
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "dazzled",
@@ -148,6 +212,9 @@ export class Conditions extends Registry {
       },
       showInDefense: false,
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "dead",
@@ -172,6 +239,9 @@ export class Conditions extends Registry {
         ],
       },
       showInAction: false, // TODO: Add configuraton that this is to be true for spells only
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "disabled",
@@ -197,6 +267,9 @@ export class Conditions extends Registry {
       },
       track: "dying",
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "entangled",
@@ -239,6 +312,9 @@ export class Conditions extends Registry {
       },
       track: "lethargy",
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "fatigued",
@@ -261,6 +337,9 @@ export class Conditions extends Registry {
       },
       track: "lethargy",
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "flatFooted",
@@ -271,6 +350,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "frightened",
@@ -303,6 +385,9 @@ export class Conditions extends Registry {
       },
       track: "fear",
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "grappled",
@@ -323,6 +408,9 @@ export class Conditions extends Registry {
           },
         ],
       },
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "helpless",
@@ -339,6 +427,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "incorporeal",
@@ -377,6 +468,9 @@ export class Conditions extends Registry {
       name: "PF1.Condition.nauseated",
       texture: "systems/pf1/icons/conditions/nauseated.svg",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.ySiyyK1BMAyKPY4I",
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "panicked",
@@ -408,6 +502,9 @@ export class Conditions extends Registry {
         ],
       },
       track: "fear",
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "paralyzed",
@@ -428,6 +525,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "petrified",
@@ -475,6 +575,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "prone",
@@ -489,6 +592,9 @@ export class Conditions extends Registry {
             type: "untyped",
           },
         ],
+      },
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
       },
     },
     {
@@ -523,6 +629,9 @@ export class Conditions extends Registry {
       track: "fear",
       showInAction: false,
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "sickened",
@@ -560,6 +669,9 @@ export class Conditions extends Registry {
       },
       showInAction: false,
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "sleep",
@@ -576,6 +688,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "squeezing",
@@ -596,6 +711,9 @@ export class Conditions extends Registry {
           },
         ],
       },
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "stable",
@@ -614,12 +732,18 @@ export class Conditions extends Registry {
       track: "dying",
       showInAction: false,
       showInDefense: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "staggered",
       name: "PF1.Condition.staggered",
       texture: "systems/pf1/icons/conditions/staggered.svg",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.TTp8q9Vb2PNAujWu",
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "stunned",
@@ -637,6 +761,9 @@ export class Conditions extends Registry {
         flags: ["loseDexToAC"],
       },
       showInAction: false,
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
+      },
     },
     {
       _id: "unconscious",
@@ -651,6 +778,9 @@ export class Conditions extends Registry {
           },
         ],
         flags: ["loseDexToAC"],
+      },
+      hud: {
+        ...foundry.utils.deepClone(this.HUD_EXCLUDE_INANIMATE),
       },
     },
   ];

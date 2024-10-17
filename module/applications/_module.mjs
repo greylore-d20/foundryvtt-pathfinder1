@@ -39,6 +39,7 @@ export { Troubleshooter } from "./troubleshooter.mjs";
 
 export { ActorSelector } from "./actor-selector.mjs";
 export { SplitStack } from "./split-stack.mjs";
+export { TextEditor } from "./text-editor.mjs";
 
 /**
  * {@link CompendiumBrowser}s for the various compendiums.

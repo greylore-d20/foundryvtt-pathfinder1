@@ -843,14 +843,11 @@ export class ItemSheetPF extends ItemSheet {
     const unidentDesc = itemData.description?.unidentified;
     const pUnidentDesc = unidentDesc ? enrichHTMLUnrolled(unidentDesc, enrichOptions) : Promise.resolve();
     pUnidentDesc.then((html) => (context.descriptionHTML.unidentified = html));
-
-    const pTopDesc = topDescription
-      ? TextEditor.enrichHTML(topDescription, {
-          rollData,
-          relativeTo: this.actor,
-        })
-      : Promise.resolve();
+    const pTopDesc = topDescription ? TextEditor.enrichHTML(topDescription, enrichOptions) : Promise.resolve();
     pTopDesc.then((html) => (context.topDescription = html));
+    const instrDesc = itemData.description?.instructions;
+    const pInstrDesc = instrDesc ? enrichHTMLUnrolledAsync(instrDesc, enrichOptions) : Promise.resolve();
+    pInstrDesc.then((html) => (context.descriptionHTML.instructions = html));
 
     // Add script calls
     const pScripts = this._prepareScriptCalls(context);
@@ -858,7 +855,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add links
     const pLinks = await this._prepareLinks(context);
 
-    await Promise.all([pIdentDesc, pUnidentDesc, pTopDesc, pScripts, pLinks]);
+    await Promise.all([pIdentDesc, pUnidentDesc, pTopDesc, pInstrDesc, pScripts, pLinks]);
 
     return context;
   }
@@ -1260,6 +1257,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Action control
     html.find(".actions .action-controls a").on("click", this._onActionControl.bind(this));
+
+    // Instructions control
+    html.find(".tab.description .instructions .controls a.text-editor").on("click", this._onOpenTextEditor.bind(this));
 
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
@@ -2039,6 +2039,17 @@ export class ItemSheetPF extends ItemSheet {
 
     const li = event.target.closest(".item[data-action-id]");
     this.item.actions.get(li.dataset.actionId).sheet.render(true);
+  }
+
+  /**
+   * @internal
+   * @param {Event} event
+   */
+  async _onOpenTextEditor(event) {
+    event.preventDefault();
+
+    const app = new pf1.applications.TextEditor(this.item, { path: event.target.dataset.path });
+    app?.render(true, { focus: true });
   }
 
   async _onOpenChangeMenu(event) {

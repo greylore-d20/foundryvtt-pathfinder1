@@ -1448,7 +1448,7 @@ export class ItemPF extends ItemBasePF {
    * @param {TokenDocument} [token] Token this action is for, if any.
    * @param {UseOptions} [options={}] Additional use options
    * @throws {Error} - On some invalid inputs.
-   * @returns {Promise<SharedActionData | void | ChatMessage>}
+   * @returns {Promise<ActionUse | SharedActionData | void>} - Action use, shared data, or nothing.
    */
   async use({
     actionId = "",

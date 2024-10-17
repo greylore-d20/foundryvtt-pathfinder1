@@ -1544,8 +1544,20 @@ export class ItemPF extends ItemBasePF {
 
       if (shared.hideChat !== true && chatMessage) {
         shared.descriptionOnly = true;
-        shared.chatCard = await this.displayCard({ rollMode });
+        Object.defineProperty(shared, "chatCard", {
+          get() {
+            foundry.utils.logCompatibilityWarning("shared.chatCard is deprecated in favor of shared.message", {
+              since: "PF1 vNEXT",
+              until: "PF1 vNEXT+1",
+            });
+
+            return this.message;
+          },
+        });
+        shared.message = await this.displayCard({ rollMode });
       }
+
+      await this.executeScriptCalls("postUse", {}, shared);
 
       return shared;
     }

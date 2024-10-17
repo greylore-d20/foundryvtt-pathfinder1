@@ -10,9 +10,6 @@ export function initializeModuleIntegration() {
   // Drag Ruler <https://foundryvtt.com/packages/drag-ruler>
   if (game.modules.get("drag-ruler")?.active && integration.dragRuler) {
     Hooks.once("dragRuler.ready", (SpeedProvider) => {
-      // TODO: Disable enhanced terrain layer support until the module is fixed or support for it is removed
-      const enhancedTerrain = false; // game.modules.get("enhanced-terrain-layer")?.active && integration.enhancedTerrainLayer;
-
       class Pf1SpeedProvider extends SpeedProvider {
         get colors() {
           return [
@@ -46,16 +43,6 @@ export function initializeModuleIntegration() {
             const flySpeed = speeds.fly.total;
             if (flySpeed > 0) {
               return flySpeed;
-            }
-          }
-
-          if (
-            enhancedTerrain &&
-            canvas.terrain.terrainFromGrid(x, y).some((terrain) => terrain.data.environment === "water")
-          ) {
-            const swimSpeed = speeds.swim.total;
-            if (swimSpeed > 0) {
-              return swimSpeed;
             }
           }
 

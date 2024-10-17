@@ -6,7 +6,6 @@ export class IntegrationModel extends foundry.abstract.DataModel {
     return {
       diceSoNice: new fields.BooleanField({ initial: true }),
       dragRuler: new fields.BooleanField({ initial: true }),
-      enhancedTerrainLayer: new fields.BooleanField({ initial: true }),
     };
   }
 }

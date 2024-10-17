@@ -907,15 +907,23 @@ export class ItemAction {
       case "year":
         if (duration.value) {
           const unit = pf1.config.timePeriods[duration.units];
-          const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
-          const value = roll.total;
-          if (!roll.err) {
-            labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
-          } else {
-            console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
-          }
           labels.durationFormula = duration.value;
           labels.variableDuration = /@\w/.test(duration.value);
+          const roll = new RollPF(duration.value, rollData);
+          let value;
+          try {
+            if (roll.isDeterministic) {
+              roll.evaluateSync();
+              value = roll.total;
+            } else {
+              let formula = pf1.utils.formula.unflair(duration.value);
+              formula = RollPF.replaceFormulaData(formula, rollData);
+              value = pf1.utils.formula.compress(pf1.utils.formula.simplify(formula));
+            }
+            labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+          } catch (err) {
+            console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
+          }
         }
         break;
     }

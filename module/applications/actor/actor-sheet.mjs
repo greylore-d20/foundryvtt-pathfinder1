@@ -4183,28 +4183,6 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _updateObject(event, formData) {
-    {
-      const elems = this.element.find("*[data-name]");
-      const changedData = {};
-      for (const el of elems) {
-        const name = el.dataset.name;
-        let value;
-        if (el.nodeName === "INPUT") value = el.value;
-        else if (el.nodeName === "SELECT") value = el.options[el.selectedIndex].value;
-
-        if (el.dataset.dtype === "Number") value = Number(value);
-        else if (el.dataset.dtype === "Boolean") value = Boolean(value);
-
-        if (foundry.utils.getProperty(this.actor.system, name) !== value) {
-          changedData[name] = value;
-        }
-      }
-
-      for (const [k, v] of Object.entries(changedData)) {
-        formData[k] = v;
-      }
-    }
-
     this.searchRefresh = true;
 
     return super._updateObject(event, formData);

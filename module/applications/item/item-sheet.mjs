@@ -265,7 +265,8 @@ export class ItemSheetPF extends ItemSheet {
     if (context.isPhysical) {
       // Add quantity
       context.descriptionAttributes.push({
-        isNumber: true,
+        isNumber: false,
+        isRelative: true,
         name: "system.quantity",
         label: game.i18n.localize("PF1.Quantity"),
         value: itemData.quantity || 0,
@@ -279,7 +280,8 @@ export class ItemSheetPF extends ItemSheet {
 
       // Add weight
       context.descriptionAttributes.push({
-        isNumber: true,
+        isNumber: false,
+        isRelative: true,
         name: "system.weight.value",
         label: game.i18n.localize("PF1.Weight"),
         value: itemData.weight.converted.total,
@@ -298,7 +300,8 @@ export class ItemSheetPF extends ItemSheet {
       if (context.isGM) {
         context.descriptionAttributes.push(
           {
-            isNumber: true,
+            isNumber: false,
+            isRelative: true,
             name: "system.price",
             label: game.i18n.localize("PF1.Price"),
             value: item.getValue({ sellValue: 1 }),
@@ -311,11 +314,13 @@ export class ItemSheetPF extends ItemSheet {
             },
           },
           {
-            isNumber: true,
+            isNumber: false,
+            isRelative: true,
             name: "system.unidentified.price",
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: item.getValue({ sellValue: 1, forceUnidentified: true }),
             decimals: 2,
+            tooltip: "unidprice",
             id: "data-unidentifiedPrice",
             constraints: {
               min: 0,
@@ -357,10 +362,11 @@ export class ItemSheetPF extends ItemSheet {
       // Add hit points
       if (!context.isImplant) {
         context.descriptionAttributes.push({
-          isNumber: true,
+          isNumber: false,
+          isRelative: true,
           isRange: true,
           label: game.i18n.localize("PF1.HPShort"),
-          value: {
+          current: {
             name: "system.hp.value",
             value: itemData.hp?.value || 0,
             constraints: {
@@ -380,7 +386,8 @@ export class ItemSheetPF extends ItemSheet {
 
         // Add hardness
         context.descriptionAttributes.push({
-          isNumber: true,
+          isNumber: false,
+          isRelative: true,
           label: game.i18n.localize("PF1.Hardness"),
           name: "system.hardness",
           decimals: 0,
@@ -1075,11 +1082,12 @@ export class ItemSheetPF extends ItemSheet {
   async _updateObject(event, formData) {
     formData = foundry.utils.expandObject(formData);
 
+    const oldData = this.item.toObject();
     const system = formData.system;
     const links = system.links;
 
     if (links) {
-      const oldLinks = this.item.system?.links ?? {};
+      const oldLinks = oldData.system?.links ?? {};
       // Handle links arrays
       for (const [linkType, typedLinks] of Object.entries(links)) {
         if (Array.isArray(typedLinks)) continue; // Already handled by something else
@@ -1092,46 +1100,102 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Ensure values are stored as lbs
-    if (system.weight) {
-      if (system.weight?.value !== undefined) {
-        const wmult = this.item.getWeightMultiplier();
-        system.weight.value = pf1.utils.convertWeightBack(system.weight.value / wmult);
-      }
-      if (system.weight.reduction?.value !== undefined) {
-        system.weight.reduction.value = pf1.utils.convertWeightBack(system.weight.reduction.value);
-      }
-    }
+    const target = event.target.name;
 
-    // Change currencies with relative values
-    // @TODO: Create a common relative input handler.
-    const relativeKeys = ["currency.pp", "currency.gp", "currency.sp", "currency.cp"];
-    for (const key of relativeKeys) {
-      const value = foundry.utils.getProperty(system, key);
-      if (typeof value !== "string") continue;
+    // Handle relative input
+    function relativeInput(key, { min = -Infinity, max = Infinity, current, quantity = false, decimals = 0 } = {}) {
+      let value = foundry.utils.getProperty(system, key);
+      if (value === undefined) return null;
+
+      value = value.normalize("NFKD");
+
+      // Not editing, unset value to prevent absurd changes
+      if (target !== `system.${key}`) {
+        foundry.utils.setProperty(system, key, undefined);
+        return null;
+      }
 
       // Add or subtract values
       let newValue;
+
+      // Relative input
       if (value.match(/(\+|-)(\d+)/)) {
         const operator = RegExp.$1;
         let value = parseInt(RegExp.$2);
         if (operator === "-") value = -value;
-        const originalValue = foundry.utils.getProperty(this.item.system, key);
-        newValue = originalValue + value;
-      } else if (value.match(/^[0-9]+$/)) {
-        newValue = parseInt(value);
-      } else if (value === "") {
+        current ??= foundry.utils.getProperty(oldData.system, key);
+        newValue = current + value;
+      }
+      // Exact value
+      else if (value.match(/^=?-?\d+(\.\d+)?$/)) {
+        newValue = parseInt(value.replace(/^=/, ""));
+      }
+      // Cleared
+      else if (value === "") {
         newValue = 0;
-      } else {
-        // Invalid strings
+      }
+      // Reset on invalid value
+      else {
         newValue = 0;
         // Trigger warning for bad value
-        if (event.target.name === `system.${key}`) {
-          event.target.setCustomValidity(game.i18n.localize("PF1.Warning.InvalidInput"));
+        event.target.setCustomValidity(game.i18n.localize("PF1.Warning.InvalidInput"));
+      }
+
+      foundry.utils.setProperty(system, key, pf1.utils.limitPrecision(Math.clamp(newValue, min, max), decimals));
+      return newValue;
+    }
+
+    if (this.item.isPhysical) {
+      // Ensure values are stored as lbs
+      if (system.weight) {
+        if (system.weight?.value !== undefined) {
+          const current = pf1.utils.convertWeight(oldData.system.weight?.value ?? 0);
+          const value = relativeInput("weight.value", { current, decimals: 2, quantity: true });
+          if (value === null) {
+            system.weight.value = undefined;
+          } else {
+            system.weight.value = pf1.utils.convertWeightBack(system.weight.value / this.item.getWeightMultiplier());
+          }
+        }
+
+        if (system.weight?.reduction?.value !== undefined) {
+          const current = pf1.utils.convertWeight(oldData.system.weight?.reduction?.value ?? 0);
+          const value = relativeInput("weight.reduction.value", { min: 0, decimals: 2, current });
+          if (value === null) {
+            system.weight.reduction.value = undefined;
+          } else {
+            system.weight.reduction.value = pf1.utils.convertWeightBack(system.weight.reduction.value);
+          }
         }
       }
 
-      foundry.utils.setProperty(system, key, Math.max(0, newValue));
+      // Change currencies with relative values
+      const relativeKeys = ["currency.pp", "currency.gp", "currency.sp", "currency.cp", "quantity"];
+      for (const key of relativeKeys) {
+        relativeInput(key, { min: 0 });
+      }
+
+      // Adjust with quantity
+      relativeInput("price", { min: 0, quantity: true, decimals: 2 });
+      relativeInput("unidentified.price", { min: 0, quantity: true, decimals: 2 });
+
+      // Adjust current and max HP relatively
+      relativeInput("hp.value", { min: 0 });
+      relativeInput("hp.max", { min: 1 });
+      relativeInput("hardness", { min: 0 });
+
+      // Adjust current or max HP if adjusting the other would break logical constraints
+      const nHpVal = system.hp?.value;
+      const hpVal = nHpVal ?? oldData.system.hp?.value ?? 0;
+      const nHpMax = system.hp?.max;
+      const hpMax = Math.max(1, nHpMax ?? oldData.system.hp?.max ?? 1);
+      // Adjust only if the relevant field was edited
+      const targetName = event.target.name;
+      if (targetName === "system.hp.value") {
+        if (Number.isFinite(nHpVal) && hpVal > hpMax) foundry.utils.setProperty(system, "hp.max", hpVal);
+      } else if (targetName === "system.hp.max") {
+        if (Number.isFinite(nHpMax) && hpMax < hpVal) foundry.utils.setProperty(system, "hp.value", hpMax);
+      }
     }
 
     // Adjust Material Addons
@@ -1161,6 +1225,9 @@ export class ItemSheetPF extends ItemSheet {
       case "price":
         this._onHoverPriceTooltip(event, content);
         break;
+      case "unidprice":
+        this._onHoverPriceTooltip(event, content, false);
+        break;
     }
     return content.join("<br>");
   }
@@ -1173,8 +1240,13 @@ export class ItemSheetPF extends ItemSheet {
     content.push(game.i18n.format("PF1.StackDetails.Base", { value: mValue }));
   }
 
-  _onHoverPriceTooltip(event, content) {
-    const cp = this.item.getValue({ sellValue: 1, single: true, inLowestDenomination: true });
+  _onHoverPriceTooltip(event, content, identified = true) {
+    const cp = this.item.getValue({
+      sellValue: 1,
+      single: true,
+      inLowestDenomination: true,
+      forceUnidentified: !identified,
+    });
     const c = pf1.utils.currency.split(cp);
     const inline = [];
     Object.entries(c).forEach(([key, value]) => {

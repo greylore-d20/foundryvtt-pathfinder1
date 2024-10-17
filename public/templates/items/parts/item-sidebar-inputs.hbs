@@ -10,36 +10,41 @@
       <span>{{label}}</span>
 
       {{!-- Value --}}
-      <input data-action="input-text" class="select-on-click" name="{{value.name}}"
-        {{#with value.constraints}}
+      <input data-action="input-text" class="select-on-click{{#if isRelative}} relative{{/if}}" name="{{current.name}}"
+        {{#with current.constraints}}
         min="{{min}}" step="{{step}}" max="{{max}}"
         {{/with}}
-        type="number" data-dtype="Number" value="{{value.value}}" {{disabled disabled}} readonly>
+        {{#if isNumber}}type="number"{{else}}type="text"{{/if}}
+        value="{{current.value}}" {{disabled disabled}} readonly>
     </label>
     <span class="separator">/</span>
     {{!-- Max --}}
-    <input data-action="input-text" class="select-on-click" name="{{max.name}}"
+    <input data-action="input-text" class="select-on-click{{#if isRelative}} relative{{/if}}" name="{{max.name}}"
         {{#with max.constraints}}
         min="{{min}}" step="{{step}}" max="{{max}}"
         {{/with}}
-      type="number" data-dtype="Number" value="{{max.value}}" {{disabled disabled}} readonly>
+        {{#if isNumber}}type="number"{{else}}type="text"{{/if}}
+        value="{{max.value}}" {{disabled disabled}} readonly>
   </div>
   {{else if isNumber}}
   <label class="descriptor">
     <span>{{label}}</span>
     <input data-action="input-text" name="{{name}}"
-      class="select-on-click{{#if tooltip}} details-tooptip{{/if}}"
+      class="select-on-click{{#if tooltip}} details-tooptip{{/if}}{{#if isRelative}} relative{{/if}}"
       {{#with constraints}}
       min="{{min}}" step="{{step}}" max="{{max}}"
       {{/with}}
       value="{{numberFormat value decimals=decimals}}"{{#if tooltip}} data-tooltip-type="{{tooltip}}"{{/if}}
       {{#if fakeValue}}data-input-value="{{inputValue}}"{{/if}}
-      type="number" data-dtype="Number" {{disabled disabled}} readonly>
+      type="number" {{disabled disabled}} readonly>
   </label>
-  {{else if isString}}
+  {{else}}
   <label class="descriptor">
     <span>{{label}}</span>
     <input data-action="input-text" name="{{name}}"
+      class="select-on-click{{#if tooltip}} details-tooptip{{/if}}{{#if isRelative}} relative{{/if}}"
+      {{#if tooltip}}data-tooltip-type="{{tooltip}}"{{/if}}
+      {{#if fakeValue}}data-input-value="{{inputValue}}"{{/if}}
       type="text" value="{{value}}" {{disabled disabled}} readonly>
   </label>
   {{/if}}

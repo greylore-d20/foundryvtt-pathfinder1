@@ -1,5 +1,6 @@
 import { getBuffTargetDictionary, getBuffTargets } from "@utils";
 import { Widget_CategorizedItemPicker } from "./categorized-item-picker.mjs";
+
 const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -24,6 +25,12 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     position: {
       width: 460,
     },
+    actions: {
+      copyUuid: {
+        ...DocumentSheetV2.DEFAULT_OPTIONS.actions.copyUuid,
+        handler: ChangeEditor.#onCopyUuid,
+      },
+    },
     sheetConfig: false,
   };
 
@@ -41,34 +48,48 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     this.change = change;
   }
 
+  /* -------------------------------------------- */
+
   /**
-   * Replace ID link creation.
+   * Copy the UUID of the current item to the clipboard
    *
-   * Synchronized with Foundry v11.315
-   *
-   * @override
+   * @param {Event} event
+   * @internal
+   * @this {ChangeEditor&DocumentSheetV2}
+   * @static
    */
-  _createDocumentIdLink(html) {
-    const title = html.find(".window-title");
+  static #onCopyUuid(event) {
+    console.log(event);
+    event.preventDefault();
+    game.clipboard.copyPlainText(this.item.id);
     const label = game.i18n.localize("PF1.Change");
-    const idLink = document.createElement("a");
-    idLink.classList.add("document-id-link");
-    idLink.setAttribute("alt", game.i18n.localize("PF1.Application.ChangeEditor.CopyId"));
-    idLink.dataset.tooltip = `${label}: ${this.change.id}`;
-    idLink.dataset.tooltipDirection = "UP";
-    idLink.innerHTML = '<i class="fa-solid fa-passport"></i>';
-    idLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      game.clipboard.copyPlainText(this.item.id);
-      ui.notifications.info(game.i18n.format("DOCUMENT.IdCopiedClipboard", { label, type: "id", id: this.change.id }));
-    });
-    title.append(idLink);
+    ui.notifications.info(game.i18n.format("DOCUMENT.IdCopiedClipboard", { label, type: "id", id: this.change.id }));
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @type {ActorPF}
+   */
+  get actor() {
+    return this.item.actor;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * @type {ItemPF}
+   */
   get item() {
     return this.document;
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @override
+   * @type {string}
+   */
   get title() {
     let title = game.i18n.localize("PF1.Application.ChangeEditor.Label");
     title += ": " + this.item.name;
@@ -76,6 +97,12 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     return title;
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @override
+   * @type {string}
+   */
   get id() {
     return super.id + "-Change-" + this.change.id;
   }
@@ -110,6 +137,12 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     };
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @internal
+   * @param {Event} event
+   */
   _onChangeTargetControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
@@ -142,12 +175,22 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     w.render(true);
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Show the help browser
+   *
+   * @internal
+   * @param {Event} event
+   */
   _openHelpBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
 
     pf1.applications.helpBrowser.openUrl(a.dataset.url);
   }
+
+  /* -------------------------------------------- */
 
   /**
    * Validate input formula for basic errors.
@@ -203,15 +246,21 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
     this.element.reportValidity();
   }
 
+  /* -------------------------------------------- */
+
   /**
    * @param {ItemChange} change - Change to modify
    * @param {object} options - Application options
    * @returns {Promise<void|ChangeEditor>} - Promise that resolves when the app is closed. Returns application instance if no new instance was created.
    */
   static async wait(change, options = {}) {
-    const old = Object.values(ui.windows).find((app) => app.change === change && app instanceof this);
+    const old = Object.values(foundry.applications.instances).find(
+      (app) => app.change === change && app instanceof this
+    );
+
     if (old) {
-      old.render(true, { focus: true });
+      old.render(true);
+      old.bringToFront();
       return old;
     }
 
@@ -219,14 +268,21 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
       options.document = change.parent;
       const app = new this(change, options);
       app.resolve = resolve;
-      app.render(true, { focus: true });
+      app.render(true);
     });
   }
 
+  /* -------------------------------------------- */
+
   /**
-   * @override
-   * @param {Event} event
-   * @param {object} formData
+   * Update the object with the new change data from the form.
+   *
+   * @this {ChangeEditor&DocumentSheetV2}
+   * @param {SubmitEvent} event                   The originating form submission event
+   * @param {HTMLFormElement} form                The form element that was submitted
+   * @param {FormDataExtended} formData           Processed data for the submitted form
+   * @returns {Promise<void>}
+   * @private
    */
   static _updateObject(event, form, formData) {
     formData = formData.object;

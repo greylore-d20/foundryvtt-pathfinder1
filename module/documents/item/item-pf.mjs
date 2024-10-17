@@ -615,7 +615,7 @@ export class ItemPF extends ItemBasePF {
    * @param {boolean} [options.isolated] - Passed to {@link getDescriptionData}
    * @returns {string} - Full description.
    */
-  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
+  async getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
     if (body) return this.system.description.value;
     return "";
   }
@@ -628,7 +628,7 @@ export class ItemPF extends ItemBasePF {
    * @param {boolean} [options.isolated] - Include extra data to reflect it not being so easily available in context.
    * @returns {object} - Description context data
    */
-  getDescriptionData({ rollData, isolated = false } = {}) {
+  async getDescriptionData({ rollData, isolated = false } = {}) {
     const context = {};
 
     const action = this.defaultAction;
@@ -1345,7 +1345,7 @@ export class ItemPF extends ItemBasePF {
     const labels = this.getLabels({ actionId, rollData });
 
     // Rich text descriptions
-    data.identifiedDescription = this.getDescription({ chatcard, rollData, isolated: extended });
+    data.identifiedDescription = await this.getDescription({ chatcard, rollData, isolated: extended });
 
     data.unidentifiedDescription = this.system.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;

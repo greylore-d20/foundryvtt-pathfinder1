@@ -161,8 +161,8 @@ export class BaseFilter {
    * Prepare the filter for use.
    * This step expects the compendium browser to have gathered its entries.
    */
-  setup() {
-    this.prepareChoices();
+  async setup() {
+    await this.prepareChoices();
   }
 
   /**

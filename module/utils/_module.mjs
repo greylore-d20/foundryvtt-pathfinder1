@@ -10,6 +10,7 @@ export * as init from "./initialization.mjs";
 export * as traits from "./traits.mjs";
 export * as rollData from "./roll-data.mjs";
 export * as i18n from "./i18n.mjs";
+export * as packs from "./packs.mjs";
 
 export {
   binarySearch,

@@ -278,7 +278,7 @@ export class CompendiumBrowser extends Application {
     await CompendiumBrowser.getIndexes(this.packs.map((pack) => pack.collection));
     const unorderedEntries = await Promise.all(this.packs.map((pack) => this.loadPackIndex(pack)));
     naturalSort(unorderedEntries.flat(), "name").forEach((entry) => this.entries.set(`${entry.__uuid}`, entry));
-    this.filters.forEach((filter) => filter.setup());
+    await Promise.all(this.filters.map((filter) => filter.setup()));
     this.#setup = true;
   }
 

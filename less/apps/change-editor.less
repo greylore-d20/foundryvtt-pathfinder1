@@ -3,10 +3,6 @@
     flex: 3;
   }
 
-  select {
-    text-align: center;
-  }
-
   .formula {
     label {
       line-height: var(--input-height);
@@ -31,10 +27,6 @@
         border-bottom-left-radius: 0;
       }
     }
-  }
-
-  .change-priority {
-    text-align: center;
   }
 
   :is(.radio, .change-target) {
@@ -75,25 +67,7 @@
     text-align: center;
   }
 
-  .formula {
-    h3 {
-      all: inherit;
-      font-weight: bold;
-    }
-  }
-
-  .priority {
-    input {
-      text-align: center;
-    }
-  }
-
-  .buttons {
-    display: flex;
-    flex-flow: row nowrap;
-  }
-
-  .instructions {
+  :is(select, .instructions, .priority input) {
     text-align: center;
   }
 }

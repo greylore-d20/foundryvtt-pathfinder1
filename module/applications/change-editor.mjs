@@ -59,7 +59,6 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
    * @static
    */
   static #onCopyUuid(event) {
-    console.log(event);
     event.preventDefault();
     game.clipboard.copyPlainText(this.item.id);
     const label = game.i18n.localize("PF1.Change");
@@ -145,8 +144,6 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
    */
   _onChangeTargetControl(event) {
     event.preventDefault();
-    const a = event.currentTarget;
-
     // Prepare categories and changes to display
     const categories = getBuffTargetDictionary("buffs", { actor: this.item.actor, item: this.item });
 
@@ -286,8 +283,6 @@ export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
    */
   static _updateObject(event, form, formData) {
     formData = formData.object;
-
-    //if (!this.form.checkValidity()) return;
     const updateData = foundry.utils.expandObject(formData).change;
     this.change.update(updateData);
   }

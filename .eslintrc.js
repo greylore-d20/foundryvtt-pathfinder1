@@ -496,6 +496,8 @@ module.exports = {
     VisionSource: "readonly",
     Color: "readonly",
     JournalEntryPage: "readonly",
+    SidebarTour: "readonly",
+    Tour: "readonly",
     pf1: "readonly",
     DetectionMode: "readonly",
     DetectionModeInvisibility: "readonly",

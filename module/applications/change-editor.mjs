@@ -1,67 +1,94 @@
 import { getBuffTargetDictionary, getBuffTargets } from "@utils";
 import { Widget_CategorizedItemPicker } from "./categorized-item-picker.mjs";
 
+const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Change Editor
  *
  * @since PF1 v10
  */
-export class ChangeEditor extends ItemSheet {
+export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: ChangeEditor._updateObject,
+      submitOnChange: true,
+      submitOnClose: true,
+      closeOnSubmit: false,
+    },
+    classes: ["pf1-v2", "change-editor"],
+    window: {
+      minimizable: false,
+      resizable: true,
+    },
+    position: {
+      width: 460,
+    },
+    actions: {
+      copyUuid: {
+        ...DocumentSheetV2.DEFAULT_OPTIONS.actions.copyUuid,
+        handler: ChangeEditor.#onCopyUuid,
+      },
+    },
+    sheetConfig: false,
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/change-editor.hbs",
+    },
+  };
+
   /** @type {ItemChange} */
   change;
 
   constructor(change, options) {
-    super(change.parent, options);
+    super(options);
     this.change = change;
   }
 
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
-      classes: [...options.classes, "pf1", "change-editor"],
-      template: "systems/pf1/templates/apps/change-editor.hbs",
-      submitOnChange: true,
-      submitOnClose: true,
-      closeOnSubmit: false,
-      sheetConfig: false,
-      width: 460,
-      height: "auto",
-    };
-  }
+  /* -------------------------------------------- */
 
   /**
-   * @remarks Remove all header buttons except for close
-   * @override
-   */
-  _getHeaderButtons() {
-    return super._getHeaderButtons().filter((b) => b.class === "close");
-  }
-
-  /**
-   * Replace ID link creation.
+   * Copy the UUID of the current item to the clipboard
    *
-   * Synchronized with Foundry v11.315
-   *
-   * @override
+   * @param {Event} event
+   * @internal
+   * @this {ChangeEditor&DocumentSheetV2}
+   * @static
    */
-  _createDocumentIdLink(html) {
-    const title = html.find(".window-title");
+  static #onCopyUuid(event) {
+    event.preventDefault();
+    game.clipboard.copyPlainText(this.item.id);
     const label = game.i18n.localize("PF1.Change");
-    const idLink = document.createElement("a");
-    idLink.classList.add("document-id-link");
-    idLink.setAttribute("alt", game.i18n.localize("PF1.Application.ChangeEditor.CopyId"));
-    idLink.dataset.tooltip = `${label}: ${this.change.id}`;
-    idLink.dataset.tooltipDirection = "UP";
-    idLink.innerHTML = '<i class="fa-solid fa-passport"></i>';
-    idLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      game.clipboard.copyPlainText(this.item.id);
-      ui.notifications.info(game.i18n.format("DOCUMENT.IdCopiedClipboard", { label, type: "id", id: this.change.id }));
-    });
-    title.append(idLink);
+    ui.notifications.info(game.i18n.format("DOCUMENT.IdCopiedClipboard", { label, type: "id", id: this.change.id }));
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @type {ActorPF}
+   */
+  get actor() {
+    return this.item.actor;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * @type {ItemPF}
+   */
+  get item() {
+    return this.document;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * @override
+   * @type {string}
+   */
   get title() {
     let title = game.i18n.localize("PF1.Application.ChangeEditor.Label");
     title += ": " + this.item.name;
@@ -69,11 +96,24 @@ export class ChangeEditor extends ItemSheet {
     return title;
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @override
+   * @type {string}
+   */
   get id() {
     return super.id + "-Change-" + this.change.id;
   }
 
-  getData() {
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     const change = this.change,
       actor = this.actor,
       item = this.item;
@@ -81,7 +121,7 @@ export class ChangeEditor extends ItemSheet {
     const buffTargets = getBuffTargets("buffs", { actor, item });
     const target = buffTargets[change.target];
 
-    const context = {
+    return {
       config: pf1.config,
       actor,
       item,
@@ -94,14 +134,16 @@ export class ChangeEditor extends ItemSheet {
       isDeferred: change.isDeferred,
       label: target?.label || change.target,
     };
-
-    return context;
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @internal
+   * @param {Event} event
+   */
   _onChangeTargetControl(event) {
     event.preventDefault();
-    const a = event.currentTarget;
-
     // Prepare categories and changes to display
     const categories = getBuffTargetDictionary("buffs", { actor: this.item.actor, item: this.item });
 
@@ -130,12 +172,22 @@ export class ChangeEditor extends ItemSheet {
     w.render(true);
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Show the help browser
+   *
+   * @internal
+   * @param {Event} event
+   */
   _openHelpBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
 
     pf1.applications.helpBrowser.openUrl(a.dataset.url);
   }
+
+  /* -------------------------------------------- */
 
   /**
    * Validate input formula for basic errors.
@@ -167,47 +219,70 @@ export class ChangeEditor extends ItemSheet {
     }
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
+  /* -------------------------------------------- */
 
+  /**
+   * Attach event listeners to the rendered application form.
+   *
+   * @param {ApplicationRenderContext} context      Prepared context data
+   * @param {RenderOptions} options                 Provided render options
+   * @protected
+   */
+  _onRender(context, options) {
     // Modify changes
-    html.find(".target .change-target").click(this._onChangeTargetControl.bind(this));
+    this.element
+      .querySelector(".target .change-target")
+      .addEventListener("click", this._onChangeTargetControl.bind(this));
 
     // Open help browser
-    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+    this.element.querySelector("a.help-browser[data-url]").addEventListener("click", this._openHelpBrowser.bind(this));
 
     // Add warning about formulas
-    html.find("input.formula").each(async (_, el) => this._validateFormula(el));
+    this.element.querySelectorAll("input.formula").forEach(async (_, el) => this._validateFormula(el));
 
-    this.form.reportValidity();
+    this.element.reportValidity();
   }
+
+  /* -------------------------------------------- */
 
   /**
    * @param {ItemChange} change - Change to modify
    * @param {object} options - Application options
    * @returns {Promise<void|ChangeEditor>} - Promise that resolves when the app is closed. Returns application instance if no new instance was created.
    */
-  static async wait(change, options) {
-    const old = Object.values(ui.windows).find((app) => app.change === change && app instanceof this);
+  static async wait(change, options = {}) {
+    const old = Object.values(foundry.applications.instances).find(
+      (app) => app.change === change && app instanceof this
+    );
+
     if (old) {
-      old.render(true, { focus: true });
+      old.render(true);
+      old.bringToFront();
       return old;
     }
 
     return new Promise((resolve) => {
+      options.document = change.parent;
       const app = new this(change, options);
       app.resolve = resolve;
-      app.render(true, { focus: true });
+      app.render(true);
     });
   }
 
+  /* -------------------------------------------- */
+
   /**
-   * @override
-   * @param {Event} event
-   * @param {object} formData
+   * Update the object with the new change data from the form.
+   *
+   * @this {ChangeEditor&DocumentSheetV2}
+   * @param {SubmitEvent} event                   The originating form submission event
+   * @param {HTMLFormElement} form                The form element that was submitted
+   * @param {FormDataExtended} formData           Processed data for the submitted form
+   * @returns {Promise<void>}
+   * @private
    */
-  _updateObject(event, formData) {
-    //if (!this.form.checkValidity()) return;
+  static _updateObject(event, form, formData) {
+    formData = formData.object;
     const updateData = foundry.utils.expandObject(formData).change;
     this.change.update(updateData);
   }

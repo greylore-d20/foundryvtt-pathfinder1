@@ -178,7 +178,8 @@ export class ItemScriptCall extends foundry.abstract.DataModel {
         parent: this.parent,
         script: this.id,
         scriptCall: true,
-      }).render(true, { editable });
+      });
+      scriptEditor.render(true);
 
       const result = await scriptEditor.awaitResult();
       if (result) {

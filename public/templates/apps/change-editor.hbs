@@ -61,9 +61,9 @@
 
   {{! Type }}
   <div class="form-group type">
-    <label>{{localize "PF1.Type"}}</label>
+    <label for="change-type-{{change.id}}">{{localize "PF1.Type"}}</label>
     <div class="form-fields">
-      <select class="change-type" name="change.type">
+      <select id="change-type-{{change.id}}" class="change-type" name="change.type">
         {{selectOptions @root.config.bonusTypes selected=change.type}}
       </select>
     </div>
@@ -71,9 +71,9 @@
 
   {{! Priority }}
   <div class="form-group priority">
-    <label>{{localize "PF1.Priority"}}</label>
+    <label for="change-priority-{{change.id}}">{{localize "PF1.Priority"}}</label>
     <div class="form-fields">
-      <input type="number" value="{{change.priority}}" placeholder="0"
+      <input id="change-priority-{{change.id}}" type="number" value="{{change.priority}}" placeholder="0"
              name="change.priority">
     </div>
   </div>

@@ -257,7 +257,7 @@ export class ChatAttack {
 
     if (actor) {
       const noteSources = ["attacks.effect"];
-      if (item.type === "spell") noteSources.push("spell.effect"); // Spell specific notes
+      if (item.type === "spell") noteSources.push("spellEffect"); // Spell specific notes
 
       for (const source of noteSources) {
         this.effectNotes.push(...(await actor.getContextNotesParsed(source, { rollData })));

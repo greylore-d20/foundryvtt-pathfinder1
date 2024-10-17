@@ -3008,7 +3008,7 @@ export class ActorPF extends ActorBasePF {
    * @returns
    */
   getInitiativeContextNotes() {
-    const notes = this.getContextNotes("misc.init").reduce((arr, o) => {
+    const notes = this.getContextNotes("init").reduce((arr, o) => {
       for (const n of o.notes) arr.push(...n.split(/[\n\r]+/));
       return arr;
     }, []);
@@ -3277,15 +3277,15 @@ export class ActorPF extends ActorBasePF {
     const formatTextNotes = (notes) => acNotes?.split(/[\n\r]+/).map((text) => ({ text })) ?? [];
 
     // Add contextual AC notes
-    const acNotes = await this.getContextNotesParsed("misc.ac", { rollData });
+    const acNotes = await this.getContextNotesParsed("ac", { rollData });
     if (this.system.attributes.acNotes) acNotes.push(...formatTextNotes(this.system.attributes.acNotes));
 
     // Add contextual CMD notes
-    const cmdNotes = await this.getContextNotesParsed("misc.cmd", { rollData });
+    const cmdNotes = await this.getContextNotesParsed("cmd", { rollData });
     if (this.system.attributes.cmdNotes) cmdNotes.push(...formatTextNotes(this.system.attributes.cmdNotes));
 
     // Add contextual SR notes
-    const srNotes = await this.getContextNotesParsed("misc.sr", { rollData });
+    const srNotes = await this.getContextNotesParsed("sr", { rollData });
     if (this.system.attributes.srNotes) srNotes.push(...formatTextNotes(this.system.attributes.srNotes));
 
     // BUG: No specific saving throw notes are included
@@ -4072,109 +4072,101 @@ export class ActorPF extends ActorBasePF {
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
    * @param {string} context - The context to draw from.
-   * @param {boolean} [all=true] - Retrieve notes meant for all.
+   * @param {boolean} [all=true] - Retrieve notes meant for all, such as notes targeting all skills.
    * @returns {Array<ItemContextNotes>}
    */
   getContextNotes(context, all = true) {
-    if (context.string) context = context.string;
+    if (context.string) {
+      foundry.utils.logCompatibilityWarning(
+        "ActorPF.getcontextNotes() first parameter must be a string, support for anything else is deprecated.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      context = context.string;
+    }
+
     const result = this.allNotes;
 
-    // Attacks
-    if (context.match(/^attacks\.(.+)/)) {
-      const key = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes.filter((o) => o.target === key).map((o) => o.text);
+    const parts = context.split(".");
+    const mainId = parts.shift();
+
+    // Special contexts that retrieve additional targets.
+    switch (mainId) {
+      // skill.*
+      case "skill": {
+        const skillKey = parts.shift();
+        const skill = this.getSkillInfo(skillKey);
+        const ability = skill.ability;
+        for (const noteSource of result) {
+          noteSource.notes = noteSource.notes
+            .filter((n) => [context, `${ability}Skills`].includes(n.target) || (all && n.target === "skills"))
+            .map((n) => n.text);
+        }
+
+        return result;
       }
+      // savingThrow.*
+      case "savingThrow": {
+        const saveKey = parts.shift();
+        for (const noteSource of result) {
+          noteSource.notes = noteSource.notes
+            .filter((n) => [saveKey, "allSavingThrows"].includes(n.target))
+            .map((n) => n.text);
+        }
 
-      return result;
-    }
+        if (this.system.attributes?.saveNotes) {
+          result.push({ notes: [this.system.attributes.saveNotes], item: null });
+        }
 
-    // Skill
-    if (context.match(/^skill\.(.+)/)) {
-      const skillKey = RegExp.$1;
-      const skill = this.getSkillInfo(skillKey);
-      const ability = skill.ability;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes
-          .filter((n) => [context, `${ability}Skills`].includes(n.target) || (all && n.target === "skills"))
-          .map((n) => n.text);
+        return result;
       }
+      // abilityChecks.*
+      case "abilityChecks": {
+        const ablKey = parts.shift();
+        for (const noteSource of result) {
+          noteSource.notes = noteSource.notes
+            .filter((n) => [`${ablKey}Checks`, "allChecks"].includes(n.target))
+            .map((n) => n.text);
+        }
 
-      return result;
-    }
-
-    // Saving throws
-    if (context.match(/^savingThrow\.(.+)/)) {
-      const saveKey = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes
-          .filter((n) => [saveKey, "allSavingThrows"].includes(n.target))
-          .map((n) => n.text);
+        return result;
       }
+      // spell.*
+      case "spell": {
+        const subId = parts.shift();
+        // spell.concentration.*
+        if (subId === "concentration") {
+          const bookId = parts.shift();
+          for (const noteSource of result) {
+            noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
+          }
 
-      if (this.system.attributes.saveNotes != null && this.system.attributes.saveNotes !== "") {
-        result.push({ notes: [this.system.attributes.saveNotes], item: null });
+          const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.concentrationNotes;
+          if (spellbookNotes?.length) {
+            result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+          }
+
+          return result;
+        }
+        // spell.cl.*
+        if (subId == "cl") {
+          const bookId = parts.shift();
+          for (const noteSource of result) {
+            noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
+          }
+
+          const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.clNotes;
+          if (spellbookNotes?.length) {
+            result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+          }
+
+          return result;
+        }
+
+        return [];
       }
-
-      return result;
-    }
-
-    // Ability checks
-    if (context.match(/^abilityChecks\.(.+)/)) {
-      const ablKey = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes
-          .filter((n) => [`${ablKey}Checks`, "allChecks"].includes(n.target))
-          .map((n) => n.text);
-      }
-
-      return result;
-    }
-
-    // Misc
-    if (context.match(/^misc\.(.+)/)) {
-      const miscKey = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === miscKey).map((n) => n.text);
-      }
-
-      return result;
-    }
-
-    if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
-      const bookId = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
-      }
-
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.concentrationNotes;
-      if (spellbookNotes?.length) {
-        result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
-      }
-
-      return result;
-    }
-
-    if (context.match(/^spell\.cl\.([a-z]+)$/)) {
-      const bookId = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
-      }
-
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.clNotes;
-      if (spellbookNotes?.length) {
-        result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
-      }
-
-      return result;
-    }
-
-    if (context.match(/^spell\.effect$/)) {
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === "spellEffect").map((n) => n.text);
-      }
-
-      return result;
     }
 
     // Otherwise return notes if they directly match context

@@ -53,7 +53,7 @@ class FormulaPart {
 
     const f = this.terms
       .map((t) => {
-        if (t instanceof CONFIG.Dice.termTypes.FunctionTerm) return `${t.simplify || t.expression}`;
+        if (t instanceof foundry.dice.terms.FunctionTerm) return `${t.simplify || t.expression}`;
         else if (t.isDeterministic) return `${t.total}`;
         // Dice eat up prefix parentheticals in v12
         else if (
@@ -200,7 +200,7 @@ class TernaryTerm {
 
   get formula() {
     if (this.condition.isDeterministic) {
-      this.condition.evaluateSync();
+      this.condition.evaluateSync({ minimize: true });
       if (this.condition.total) {
         return this.ifTrue.formula;
       } else {
@@ -212,32 +212,6 @@ class TernaryTerm {
   get total() {
     throw new Error("TernaryTerm.total called");
   }
-}
-
-/**
- * Convert ternaries into {@link TernaryTerm}s
- *
- * @param {AnyTerm[]} terms - Terms to look ternaries from.
- * @returns {AnyTerm[]} - Product
- */
-function ternaryTerms(terms) {
-  const tterms = [];
-  while (terms.length) {
-    let term = terms.shift();
-    if (term instanceof foundry.dice.terms.OperatorTerm && term.operator === "?") {
-      const cond = tterms.pop();
-      const ifTrue = [];
-      while (terms.length) {
-        term = terms.shift();
-        const endTern = term instanceof foundry.dice.terms.OperatorTerm && term.operator === ":";
-        if (endTern) break;
-        ifTrue.push(term);
-      }
-      const ifFalse = terms.shift();
-      tterms.push(new TernaryTerm(cond, ifTrue, ifFalse));
-    } else tterms.push(term);
-  }
-  return tterms;
 }
 
 /**
@@ -303,8 +277,6 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
   terms = triTermOps(terms, ["+", "-"], true);
   // String terms
   terms = stringTerms(terms);
-  // Ternaries
-  terms = ternaryTerms(terms);
 
   // Make final pass
   const final = new FormulaPart(terms, undefined, false);

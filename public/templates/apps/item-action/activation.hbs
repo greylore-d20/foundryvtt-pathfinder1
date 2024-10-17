@@ -154,9 +154,9 @@
   </label>
   <div class="form-fields" data-tooltip="PF1.ChargeCostActionFormulaHint">
     {{#if usesSpellPoints}}
-    <input class="formula" type="text" name="uses.spellPointCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.spellPointCost}}">
+    <input class="formula roll" type="text" name="uses.spellPointCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.spellPointCost}}">
     {{else}}
-    <input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.autoDeductChargesCost}}">
+    <input class="formula roll" type="text" name="uses.autoDeductChargesCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.autoDeductChargesCost}}">
     {{/if}}
     {{#unless isSpell}}
     <label class="checkbox">

@@ -1,119 +1,151 @@
-.pf1.sheet.change-editor {
-  min-height: 160px;
-  //min-width: 620px;
+.pf1-v2.sheet.change-editor {
+  input {
+    flex: 3;
+  }
 
-  form {
+  select {
+    text-align: center;
+  }
+
+  .formula {
+    .formula-container {
+      display: flex;
+      align-items: center;
+
+      .formula-type {
+        border: 1px solid transparent;
+        padding: 0 0.5rem;
+        height: var(--input-height);
+        line-height: var(--input-height);
+        font-size: var(--font-size-14);
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+
+      input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
+  .change-priority {
+    text-align: center;
+  }
+
+  :is(.radio, .change-target) {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    height: var(--input-height);
+    line-height: var(--input-height);
+    font-size: var(--font-size-14);
+    cursor: pointer;
+  }
+
+  .radio {
+    display: flex;
+    gap: 0;
+    flex: 0;
+    flex-flow: row nowrap;
+
     input {
-      flex: 3;
-      border: 1px solid var(--pf1-tan);
-      background: var(--pf1-bg-dark-0);
-      height: 24px;
+      display: none;
     }
 
-    select {
-      background: var(--pf1-bg-dark-0);
+    label {
+      padding: 0 0.5rem;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      height: var(--input-height);
+      line-height: var(--input-height);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+
+  .change-target {
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .formula {
+    h3 {
+      all: inherit;
+      font-weight: bold;
+    }
+  }
+
+  .priority {
+    input {
       text-align: center;
     }
+  }
 
-    input[type="text"]:invalid {
-      border: var(--pf1-invalid-input-border);
-      background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
-      background-size: contain;
+  .buttons {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  .instructions {
+    text-align: center;
+  }
+}
+
+.theme-light {
+  .pf1-v2.sheet.change-editor {
+    :is(.change-target, .formula-type, .radio) {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-color: var(--color-dark-6);
     }
 
-    select:invalid {
-      border: var(--pf1-invalid-input-border);
-      background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% var(--pf1-bg-dark-0);
-      background-size: contain;
-    }
-
-    .formula-type {
-      display: flex;
-      flex-flow: row nowrap;
+    :is(.change-target.invalid, :invalid) {
+      border-color: var(--color-level-error-border);
     }
 
     .radio {
-      flex: 0;
-      gap: 0.5em;
-      display: flex;
-      flex-flow: row nowrap;
-
-      > label {
-        display: inline-flex;
-        flex-flow: row nowrap;
-        gap: 0 0.3em;
-        line-height: 1.5;
-        font-weight: normal;
-
-        &.disabled {
-          color: var(--pf1-olive);
-          opacity: 0.8;
-        }
-
-        > input {
-          flex: 0 16px;
-          height: 16px;
-          flex: unset;
-          top: unset;
-          margin: unset;
-        }
-      }
-    }
-
-    .change-priority {
-      text-align: center;
-    }
-
-    .change-target {
-      border: 1px solid var(--pf1-tan);
-      background: var(--pf1-bg-dark-0);
-      white-space: nowrap;
-      overflow: hidden;
-      height: 24px;
-      line-height: 24px;
-      border-radius: 4px;
-      text-align: center;
-      cursor: pointer;
-      font-size: var(--font-size-12);
-
-      &:hover {
-        box-shadow: 0 0 8px var(--pf1-red);
-      }
-
-      &.invalid {
-        border: var(--pf1-invalid-input-border);
-        background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% var(--pf1-bg-dark-0);
+      input:checked + label {
+        background-color: var(--color-warm-1);
+        border-top-color: var(--color-dark-6);
+        border-bottom-color: var(--color-dark-6);
+        color: var(--color-dark-1);
       }
     }
 
     .formula {
-      h3 {
-        all: inherit;
-        font-weight: bold;
-        color: var(--pf1-olive);
+      .formula-container {
+        .formula-type {
+          border-color: var(--color-dark-6);
+        }
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.sheet.change-editor {
+    :is(.radio, .change-target, .formula-type) {
+      background-color: var(--color-cool-4);
+    }
+
+    :is(.change-target.invalid, :invalid) {
+      border-color: var(--color-level-error-border);
+    }
+
+    .radio {
+      input:checked + label {
+        background-color: var(--color-warm-1);
+        color: var(--color-dark-1);
       }
     }
 
-    .priority {
-      input {
-        text-align: center;
-      }
-    }
-
-    .buttons {
-      display: flex;
-      flex-flow: row nowrap;
-    }
-
-    .instructions {
-      text-align: center;
-    }
-
-    .target {
-      .value.invalid {
-        color: var(--pf1-color-text-error);
-        border: var(--pf1-invalid-input-border);
-        background: url(icons/misc/hazard-sign.svg) no-repeat 99% 50% var(--pf1-bg-dark-0);
+    .formula {
+      .formula-container {
+        .formula-type {
+          border-right-color: rgba(0, 0, 0, 0.5);
+        }
       }
     }
   }

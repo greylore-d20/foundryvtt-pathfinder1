@@ -1,41 +1,44 @@
 import { getBuffTargetDictionary, getBuffTargets } from "@utils";
 import { Widget_CategorizedItemPicker } from "./categorized-item-picker.mjs";
+const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
  * Change Editor
  *
  * @since PF1 v10
  */
-export class ChangeEditor extends ItemSheet {
+export class ChangeEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: ChangeEditor._updateObject,
+      submitOnChange: true,
+      submitOnClose: true,
+      closeOnSubmit: false,
+    },
+    classes: ["pf1-v2", "change-editor"],
+    window: {
+      minimizable: false,
+      resizable: false,
+    },
+    position: {
+      width: 460,
+    },
+    sheetConfig: false,
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/change-editor.hbs",
+    },
+  };
+
   /** @type {ItemChange} */
   change;
 
   constructor(change, options) {
-    super(change.parent, options);
+    super(options);
     this.change = change;
-  }
-
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
-      classes: [...options.classes, "pf1", "change-editor"],
-      template: "systems/pf1/templates/apps/change-editor.hbs",
-      submitOnChange: true,
-      submitOnClose: true,
-      closeOnSubmit: false,
-      sheetConfig: false,
-      width: 460,
-      height: "auto",
-    };
-  }
-
-  /**
-   * @remarks Remove all header buttons except for close
-   * @override
-   */
-  _getHeaderButtons() {
-    return super._getHeaderButtons().filter((b) => b.class === "close");
   }
 
   /**
@@ -62,6 +65,10 @@ export class ChangeEditor extends ItemSheet {
     title.append(idLink);
   }
 
+  get item() {
+    return this.document;
+  }
+
   get title() {
     let title = game.i18n.localize("PF1.Application.ChangeEditor.Label");
     title += ": " + this.item.name;
@@ -73,7 +80,14 @@ export class ChangeEditor extends ItemSheet {
     return super.id + "-Change-" + this.change.id;
   }
 
-  getData() {
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     const change = this.change,
       actor = this.actor,
       item = this.item;
@@ -81,7 +95,7 @@ export class ChangeEditor extends ItemSheet {
     const buffTargets = getBuffTargets("buffs", { actor, item });
     const target = buffTargets[change.target];
 
-    const context = {
+    return {
       config: pf1.config,
       actor,
       item,
@@ -94,8 +108,6 @@ export class ChangeEditor extends ItemSheet {
       isDeferred: change.isDeferred,
       label: target?.label || change.target,
     };
-
-    return context;
   }
 
   _onChangeTargetControl(event) {
@@ -167,19 +179,28 @@ export class ChangeEditor extends ItemSheet {
     }
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
+  /* -------------------------------------------- */
 
+  /**
+   * Attach event listeners to the rendered application form.
+   *
+   * @param {ApplicationRenderContext} context      Prepared context data
+   * @param {RenderOptions} options                 Provided render options
+   * @protected
+   */
+  _onRender(context, options) {
     // Modify changes
-    html.find(".target .change-target").click(this._onChangeTargetControl.bind(this));
+    this.element
+      .querySelector(".target .change-target")
+      .addEventListener("click", this._onChangeTargetControl.bind(this));
 
     // Open help browser
-    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+    this.element.querySelector("a.help-browser[data-url]").addEventListener("click", this._openHelpBrowser.bind(this));
 
     // Add warning about formulas
-    html.find("input.formula").each(async (_, el) => this._validateFormula(el));
+    this.element.querySelectorAll("input.formula").forEach(async (_, el) => this._validateFormula(el));
 
-    this.form.reportValidity();
+    this.element.reportValidity();
   }
 
   /**
@@ -187,7 +208,7 @@ export class ChangeEditor extends ItemSheet {
    * @param {object} options - Application options
    * @returns {Promise<void|ChangeEditor>} - Promise that resolves when the app is closed. Returns application instance if no new instance was created.
    */
-  static async wait(change, options) {
+  static async wait(change, options = {}) {
     const old = Object.values(ui.windows).find((app) => app.change === change && app instanceof this);
     if (old) {
       old.render(true, { focus: true });
@@ -195,6 +216,7 @@ export class ChangeEditor extends ItemSheet {
     }
 
     return new Promise((resolve) => {
+      options.document = change.parent;
       const app = new this(change, options);
       app.resolve = resolve;
       app.render(true, { focus: true });
@@ -206,7 +228,9 @@ export class ChangeEditor extends ItemSheet {
    * @param {Event} event
    * @param {object} formData
    */
-  _updateObject(event, formData) {
+  static _updateObject(event, form, formData) {
+    formData = formData.object;
+
     //if (!this.form.checkValidity()) return;
     const updateData = foundry.utils.expandObject(formData).change;
     this.change.update(updateData);

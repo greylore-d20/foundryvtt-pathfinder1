@@ -1507,7 +1507,7 @@ export class ActionUse {
    *
    * @param {object} [options] - Additional options
    * @param {boolean} [options.skipDialog=false] - Skip dialog
-   * @returns {Promise<ChatMessage|SharedActionData|void>}
+   * @returns {Promise<ActionUse | SharedActionData | void>}
    */
   async process({ skipDialog = false } = {}) {
     const shared = this.shared;
@@ -1547,7 +1547,7 @@ export class ActionUse {
       shared.attacks = shared.attacks.filter((o) => o.hasAmmo);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));
-        return;
+        return { err: pf1.actionUse.ERR_REQUIREMENT, code: pf1.actionUse.ERR_REQUIREMENT.INSUFFICIENT_AMMO };
       }
     }
 
@@ -1572,7 +1572,7 @@ export class ActionUse {
       shared.attacks = shared.attacks.filter((o) => o.chargeCost !== null);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.ChargesDepleted"));
-        return;
+        return { err: pf1.actionUse.ERR_REQUIREMENT, code: pf1.actionUse.ERR_REQUIREMENT.INSUFFICIENT_CHARGES };
       }
     }
 
@@ -1654,7 +1654,7 @@ export class ActionUse {
 
     Hooks.callAll("pf1PostActionUse", this, this.shared.message ?? null);
 
-    return result;
+    return this;
   }
 }
 

@@ -1559,18 +1559,19 @@ export class ItemPF extends ItemBasePF {
 
     /** @type {ItemAction | undefined} */
     let action;
-    if (this.system.actions.length > 0) {
-      if (actionId) {
-        action = this.actions.get(actionId);
-        if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
-      } else if (this.system.actions.length > 1 && skipDialog !== true) {
-        return pf1.applications.ActionSelector.open(this, { ev, chatMessage, dice, rollMode, token });
-      } else {
-        action = this.defaultAction;
-      }
+    if (actionId) {
+      action = this.actions.get(actionId);
+      if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
+    } else if (this.system.actions.length > 1 && skipDialog !== true) {
+      const actionId = await pf1.applications.ActionSelector.open({ item: this });
+      action = this.actions.get(actionId);
     } else {
-      console.error("This item does not have an action associated with it.");
-      return;
+      action = this.defaultAction;
+    }
+
+    if (!action) {
+      console.debug(`PF1 | Cancelled use of "${this.name}"`);
+      return null; // No action chosen
     }
 
     // Prevent reassigning the ActionUse's action

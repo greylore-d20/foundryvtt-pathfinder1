@@ -1911,8 +1911,9 @@ export class ItemSheetPF extends ItemSheet {
 
     let sourceType,
       uuid = data.uuid;
+
     // Import from same actor
-    if (targetItem.actor === this.item.actor) {
+    if (this.item.actor && targetItem.actor === this.item.actor) {
       sourceType = "data";
       uuid = targetItem.getRelativeUUID(this.actor);
     }

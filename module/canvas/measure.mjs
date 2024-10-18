@@ -112,7 +112,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     if (!(isCircle || isCone) || !game.settings.get("pf1", "measureStyle")) {
       return super._getGridHighlightPositions();
     }
-    const isRay = templateType === "ray";
 
     const grid = canvas.grid;
     const { x: ox, y: oy } = this.document;
@@ -124,22 +123,21 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     const radius = this.document.distance;
     const direction = this.document.direction;
 
-    let isCentered = false;
-
     // Shift origin of a cone towards nearest edge or corner
-    if (isCone || isCircle) {
-      const edgeSnapMode = CONST.GRID_SNAPPING_MODES.SIDE_MIDPOINT | CONST.GRID_SNAPPING_MODES.CORNER;
-      const snapped = canvas.grid.getSnappedPoint(origin, { mode: edgeSnapMode | CONST.GRID_SNAPPING_MODES.CENTER });
-      const centered = canvas.grid.getSnappedPoint(origin, { mode: CONST.GRID_SNAPPING_MODES.CENTER });
-      if (snapped.x == centered.x && snapped.y === centered.y) {
-        isCentered = true;
-        origin = centered;
-      }
-      if (isCentered && isCone) {
-        const ray = Ray.fromAngle(centered.x, centered.y, direction, canvas.dimensions.distancePixels / 2 + 25);
-        origin = canvas.grid.getSnappedPoint(ray.B, { mode: edgeSnapMode });
-        console.log("CenterToEdge", { ...origin });
-      }
+    const edgeSnapMode = CONST.GRID_SNAPPING_MODES.SIDE_MIDPOINT | CONST.GRID_SNAPPING_MODES.CORNER;
+    const snapped = canvas.grid.getSnappedPoint(origin, { mode: edgeSnapMode | CONST.GRID_SNAPPING_MODES.CENTER });
+    const centered = canvas.grid.getSnappedPoint(origin, { mode: CONST.GRID_SNAPPING_MODES.CENTER });
+
+    let isCentered = false;
+    if (snapped.x == centered.x && snapped.y === centered.y) {
+      isCentered = true;
+      origin = centered;
+    }
+    // Shift cone origin towards direction of the cone if centered, snapping to nearest corner or side midpoint.
+    if (isCentered && isCone) {
+      const ray = Ray.fromAngle(centered.x, centered.y, direction, canvas.dimensions.distancePixels / 2 + 25);
+      origin = canvas.grid.getSnappedPoint(ray.B, { mode: edgeSnapMode });
+      console.log("CenterToEdge", { ...origin });
     }
 
     // Adjust bounds

@@ -594,11 +594,6 @@ export class ItemPF extends ItemBasePF {
     return super.uuid;
   }
 
-  testUserPermission(user, permission, { exact = false } = {}) {
-    if (this.isEmbedded) return this.parent.testUserPermission(user, permission, { exact });
-    return super.testUserPermission(user, permission, { exact });
-  }
-
   get fullDescription() {
     return this.system.description.value;
   }

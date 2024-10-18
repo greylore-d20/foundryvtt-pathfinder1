@@ -1225,6 +1225,9 @@ export class ActorPF extends ActorBasePF {
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
     this._rollData = null;
 
+    // Setup links
+    this.prepareItemLinks();
+
     // Update dependant data and resources
     this.items.forEach((item) => {
       item._prepareDependentData(false);
@@ -1243,9 +1246,6 @@ export class ActorPF extends ActorBasePF {
 
     // Prepare CMB total
     this.prepareCMB();
-
-    // Setup links
-    this.prepareItemLinks();
 
     this._prepareOverlandSpeeds();
 
@@ -2485,6 +2485,7 @@ export class ActorPF extends ActorBasePF {
 
   updateItemResources(item, { warnOnDuplicate = true } = {}) {
     if (item.type === "spell") return false;
+    if (item.links?.charges) return false; // Don't create resource for items that are inheriting charges
     if (!item.isCharged) return false;
     if (item.isSingleUse) return false;
     if (item.isPhysical) return false;

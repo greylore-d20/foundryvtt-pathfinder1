@@ -15,6 +15,8 @@ export const moved = {
   "Compendium.pf1.class-abilities.4bcGnKYf9beV0nfa": "Compendium.pf1.class-abilities.Item.sTlu3zgAEDdJnER5",
   // Fast Movement (v10)
   "Compendium.pf1.class-abilities.dvQdP8QfrDA9Lxzk": "Compendium.pf1.class-abilities.Item.9EX00obqhGHcrOdp",
+  // A Thousand Faces (v11)
+  "Compendium.pf1.class-abilities.cBwQdqQ4KmVBck3t": "Compendium.pf1.class-abilities.Item.MXj2WoyW7vLxiVYw",
 };
 
 /**

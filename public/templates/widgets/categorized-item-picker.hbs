@@ -1,20 +1,26 @@
 <section class="widget-content">
-  <div class="item-picker-categories">
+  <div class="item-picker-categories tabs" data-group="primary">
     {{#each categories}}
-      <div class="category {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{key}}"
-        {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
+      <a class="category {{#if active}}active{{/if}} {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-group="primary" data-tab="{{key}}"
+         data-action="tab"
+           {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
         {{label}}
         {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
-      </div>
+      </a>
     {{/each}}
   </div>
 
   <div class="item-picker-items">
     {{#each items}}
-      <div class="item hidden {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}" data-value="{{key}}"
-        {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
-        {{label}}
-        {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
+      <div class="tab {{#if active}}active{{/if}}" data-group="primary" data-tab="{{category}}">
+        {{#each items}}
+          <div class="item {{#if active}}pre-selected{{/if}} {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}"
+               data-value="{{key}}"
+               {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
+            {{label}}
+            {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
+          </div>
+        {{/each}}
       </div>
     {{/each}}
   </div>

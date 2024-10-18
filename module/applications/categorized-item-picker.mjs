@@ -39,9 +39,6 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
   };
 
   constructor(options, categories, callback, selected) {
-    const classes = options.classes;
-    delete options.classes;
-
     super(options);
 
     /**
@@ -74,10 +71,6 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
      * @type {Object<string, string>}
      */
     this._hiddenElems = {};
-
-    if (classes?.length) {
-      this.options.classes.push(...classes);
-    }
   }
 
   /* -------------------------------------------- */
@@ -88,15 +81,15 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
    * @async
    */
   async _prepareContext() {
-    const context = {};
-
-    context.categories = this.categories;
-    context.items = [];
+    const categories = [];
+    const items = [];
 
     for (const cat of this.categories) {
       cat.hidden = cat.validity.item === false;
       if (cat.hidden) continue;
+      cat.active = cat.key === this.selected?.category;
 
+      const categoryItems = [];
       for (const item of cat.items) {
         if (item.validity.item === false) continue;
 
@@ -106,20 +99,31 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
           item.validity.valid = false;
         }
 
-        context.items.push({
+        categoryItems.push({
           category: cat.key,
+          active: this.selected?.item === item.key,
           ...item,
         });
       }
 
       // Has any valid choices
-      cat.hasChoices = context.items.some((i) => i.category === cat.key && i.validity.valid);
-      cat.hasVisibleChoices = context.items.some((i) => i.category === cat.key && i.validity.item !== false);
+      cat.hasChoices = categoryItems.some((i) => i.validity.valid);
+      cat.hasVisibleChoices = categoryItems.some((i) => i.validity.item !== false);
+
+      if (!cat.hasVisibleChoices || !cat.hasChoices) continue;
+
+      items.push({
+        category: cat.key,
+        active: cat.active,
+        items: categoryItems,
+      });
+      categories.push(cat);
     }
 
-    context.categories = context.categories.filter((cat) => !cat.hidden && cat.hasVisibleChoices);
-
-    return context;
+    return {
+      categories,
+      items,
+    };
   }
 
   /* -------------------------------------------- */
@@ -134,21 +138,6 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
   _onRender(context, options) {
     // Click an item
     this.element.querySelectorAll(".item").forEach((el) => el.addEventListener("click", this._onClickItem.bind(this)));
-
-    // Expand/minimize category
-    this.element
-      .querySelectorAll(".category")
-      .forEach((el) => el.addEventListener("click", this._onClickCategory.bind(this)));
-
-    // Pre-select old category
-    if (this.selected?.category) {
-      this.element.querySelector(`.category[data-category="${this.selected.category}"]`).click();
-      if (this.selected?.item) {
-        this.element
-          .querySelector(`.item[data-category="${this.selected.category}"][data-value="${this.selected.item}"]`)
-          .classList.add("pre-select");
-      }
-    }
 
     // Cancel widget
     window.setTimeout(() => {
@@ -173,33 +162,6 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
     const result = a.dataset.value;
     this.callback(result);
     this.close();
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Handle click on a category.
-   *
-   * @param {Event} event
-   * @private
-   */
-  _onClickCategory(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-
-    // Deactivate all categories
-    [...this.element.querySelector(".item-picker-categories").children].forEach((el) => el.classList.remove("active"));
-
-    // Activate clicked category
-    a.closest(".category").classList.add("active");
-
-    // Hide all items
-    [...this.element.querySelector(".item-picker-items").children].forEach((el) => el.classList.add("hidden"));
-
-    // Show items
-    this.element
-      .querySelectorAll(`.item-picker-items .item[data-category="${a.dataset.category}"]`)
-      .forEach((el) => el.classList.remove("hidden"));
   }
 
   /* -------------------------------------------- */

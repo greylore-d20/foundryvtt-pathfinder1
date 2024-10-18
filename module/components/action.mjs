@@ -776,7 +776,7 @@ export class ItemAction {
    * @returns {Item} - Updated parent item document.
    */
   async delete() {
-    const actions = foundry.utils.deepClone(this.item.system.actions);
+    const actions = this.item.toObject().system.actions;
     actions.findSplice((a) => a._id == this.id);
 
     // Pre-emptively close applications

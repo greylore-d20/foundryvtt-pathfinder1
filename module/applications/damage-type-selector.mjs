@@ -31,11 +31,6 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
 
   /**
    * @internal
-   * @type {string}
-   */
-  path;
-  /**
-   * @internal
    * @type {DamageTypes}
    */
   damage;
@@ -47,16 +42,26 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
    * @param {object} options - Application options
    */
   constructor(object, path, data, options = {}) {
+    options.object = object;
+    options.path = path;
     super(options);
-    this.object = object;
-    this.path = path;
     this.damage = foundry.utils.deepClone(data) || { values: [] };
   }
 
   /* -------------------------------------------- */
 
-  get id() {
-    return `damage-types-${this.object.id}-${this.path.replaceAll(".", "_")}`;
+  /**
+   * Initialize the configuration for this application. Override the default ID to be unique to this
+   * entry selector instance based on document and attribute that is being edited.
+   *
+   * @override
+   * @param {ApplicationConfiguration} options    The provided configuration options for the Application
+   * @returns {ApplicationConfiguration}           The final configuration values for the application
+   */
+  _initializeApplicationOptions(options) {
+    options = super._initializeApplicationOptions(options);
+    options.id = `DamageTypeSelector-${options.object.id}-${options.path.replaceAll(".", "_")}`;
+    return options;
   }
 
   /* -------------------------------------------- */
@@ -179,7 +184,7 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
    * @param {object} formData
    */
   static async _updateObject(event, formData) {
-    return this.object.update({ [this.path]: this.damage });
+    return this.options.object.update({ [this.options.path]: this.damage });
   }
 }
 

@@ -18,13 +18,21 @@
       text-align: center;
       text-shadow: unset;
       font-size: var(--font-size-14);
+
+      tr {
+        &.drag-over {
+          th {
+            border-bottom-width: 3px;
+          }
+        }
+      }
     }
 
     tbody {
       tr {
         border-top: 1px solid transparent;
 
-        &.dragging {
+        &.is-dragged {
           opacity: 0.25;
         }
 
@@ -87,13 +95,17 @@
     table {
       thead {
         color: var(--color-dark-1);
+
+        tr.drag-over {
+          th {
+            border-bottom-color: var(--color-warm-2);
+          }
+        }
       }
 
       tbody {
-        tr {
-          &.drag-over {
-            border-top-color: var(--color-warm-2);
-          }
+        tr.drag-over {
+          border-top-color: var(--color-warm-2);
         }
       }
     }
@@ -105,13 +117,17 @@
     table {
       thead {
         color: var(--color-light-1);
+
+        tr.drag-over {
+          th {
+            border-bottom-color: var(--color-warm-1);
+          }
+        }
       }
 
       tbody {
-        tr {
-          &.drag-over {
-            border-top-color: var(--color-warm-1);
-          }
+        tr.drag-over {
+          border-top-color: var(--color-warm-1);
         }
       }
     }

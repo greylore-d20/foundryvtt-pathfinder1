@@ -1,11 +1,13 @@
 <section class="form-body">
   <table>
     <thead>
-    <th class="drag-control"></th>
-    {{#each fields as |value|}}
-      <th>{{value}}</th>
-    {{/each}}
-    <th class="entry-control"></th>
+    <tr data-drop="true" data-index="0">
+      <th class="drag-control"></th>
+      {{#each fields as |value|}}
+        <th>{{value}}</th>
+      {{/each}}
+      <th class="entry-control"></th>
+    </tr>
     </thead>
     <tbody>
     {{#each entries as |entry index|}}
@@ -37,7 +39,8 @@
           </select>
         </td>
         <td class="entry-control">
-          <button type="button" data-action="deleteEntry" class="entry-control delete-entry"><i class="fas fa-trash"></i></button>
+          <button type="button" data-action="deleteEntry" class="entry-control delete-entry"><i
+            class="fas fa-trash"></i></button>
         </td>
       </tr>
     {{/each}}

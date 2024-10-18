@@ -85,6 +85,13 @@ Hooks.once("init", function () {
     error: (msg, opts = {}) => (opts.console !== false ? console.error(msg) : undefined),
   };
 
+  // Temp store
+  Object.defineProperty(pf1, "_temp", {
+    value: {},
+    enumerable: false,
+    writable: false,
+  });
+
   // Global exports
   globalThis.RollPF = dice.RollPF;
 

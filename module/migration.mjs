@@ -17,6 +17,9 @@ export const moved = {
   "Compendium.pf1.class-abilities.dvQdP8QfrDA9Lxzk": "Compendium.pf1.class-abilities.Item.9EX00obqhGHcrOdp",
   // A Thousand Faces (v11)
   "Compendium.pf1.class-abilities.cBwQdqQ4KmVBck3t": "Compendium.pf1.class-abilities.Item.MXj2WoyW7vLxiVYw",
+  // Poison Use (v11)
+  "Compendium.pf1.class-abilities.kKaz5A6XbuxgVvhO": "Compendium.pf1.class-abilities.Item.A54sLfcyoR5HGNbP",
+  "Compendium.pf1.class-abilities.AmsnoKelAxLttUbj": "Compendium.pf1.class-abilities.Item.A54sLfcyoR5HGNbP",
 };
 
 /**

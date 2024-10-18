@@ -1100,7 +1100,8 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    const target = event.target.name;
+    // Target for relative input handling
+    const targetName = event.target?.name;
 
     // Handle relative input
     function relativeInput(key, { min = -Infinity, max = Infinity, current, quantity = false, decimals = 0 } = {}) {
@@ -1110,7 +1111,7 @@ export class ItemSheetPF extends ItemSheet {
       value = value.normalize("NFKD");
 
       // Not editing, unset value to prevent absurd changes
-      if (target !== `system.${key}`) {
+      if (targetName !== `system.${key}`) {
         foundry.utils.setProperty(system, key, undefined);
         return null;
       }
@@ -1169,6 +1170,9 @@ export class ItemSheetPF extends ItemSheet {
         }
       }
 
+      // Relative input handling, which also cancels updates if no relative input happened.
+      // Avoids value drift caused by displayed value not agreeing with base value
+
       // Change currencies with relative values
       const relativeKeys = ["currency.pp", "currency.gp", "currency.sp", "currency.cp", "quantity"];
       for (const key of relativeKeys) {
@@ -1189,8 +1193,8 @@ export class ItemSheetPF extends ItemSheet {
       const hpVal = nHpVal ?? oldData.system.hp?.value ?? 0;
       const nHpMax = system.hp?.max;
       const hpMax = Math.max(1, nHpMax ?? oldData.system.hp?.max ?? 1);
+
       // Adjust only if the relevant field was edited
-      const targetName = event.target.name;
       if (targetName === "system.hp.value") {
         if (Number.isFinite(nHpVal) && hpVal > hpMax) foundry.utils.setProperty(system, "hp.max", hpVal);
       } else if (targetName === "system.hp.max") {

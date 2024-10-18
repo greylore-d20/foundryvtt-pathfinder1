@@ -1,4 +1,33 @@
-export class ScriptEditor extends FormApplication {
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+export class ScriptEditor extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: ScriptEditor._updateObject,
+      closeOnSubmit: true,
+    },
+    classes: ["pf1-v2", "script-editor"],
+    window: {
+      minimizable: false,
+      resizable: true,
+    },
+    position: {
+      width: 640,
+      height: 560,
+    },
+    sheetConfig: false,
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/script-editor.hbs",
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
+
   constructor(options = {}) {
     super(options);
 
@@ -8,19 +37,42 @@ export class ScriptEditor extends FormApplication {
     this.parent = options.parent;
     this.script = options.script;
 
-    // Add editor title
-    if (this.name) this.options.title = this.parent ? `${this.parent.name}: ${this.name}` : this.name;
-    else this.options.title = this.parent?.name ?? game.i18n.localize("PF1.Unknown");
-
     this._promises = {
       submit: [],
     };
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Get the window title
+   *
+   * @returns {string}
+   */
+  get title() {
+    return this.name
+      ? this.parent
+        ? `${this.parent.name}: ${this.name}`
+        : this.name
+      : this.parent?.name ?? game.i18n.localize("PF1.Unknown");
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   *
+   * @returns {string}
+   */
   get id() {
     return `script-call-${this.parent.uuid.replaceAll(".", "-")}-id-${this.script}`;
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   *
+   * @returns {boolean}
+   */
   get isEditable() {
     const item = this.parent;
     let editable = this.options.editable && item.isOwner;
@@ -28,24 +80,27 @@ export class ScriptEditor extends FormApplication {
     return editable;
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["pf1", "script-editor"],
-      template: "systems/pf1/templates/apps/script-editor.hbs",
-      width: 640,
-      height: 560,
-    });
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
+    return {
+      command: this.command || "",
+      name: this.name,
+      buttons: [{ type: "submit", label: "PF1.Save", icon: "far fa-save" }],
+    };
   }
 
-  getData() {
-    const data = {};
+  /* -------------------------------------------- */
 
-    data.command = this.command || "";
-    data.name = this.name;
-
-    return data;
-  }
-
+  /**
+   *
+   * @returns {Promise<unknown>}
+   */
   awaitResult() {
     let callback;
     const promise = new Promise((resolve) => {
@@ -55,18 +110,49 @@ export class ScriptEditor extends FormApplication {
     return promise;
   }
 
-  activateListeners(html) {
+  /* -------------------------------------------- */
+
+  /**
+   * Attach event listeners to the rendered application form.
+   *
+   * @param {ApplicationRenderContext} context      Prepared context data
+   * @param {RenderOptions} options                 Provided render options
+   * @protected
+   */
+  _onRender(context, options) {
     // Open help browser
-    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+    this.element.querySelector("a.help-browser[data-url]").addEventListener("click", this._openHelpBrowser.bind(this));
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Open the help browser to the specified URL.
+   *
+   * @param {Event} event
+   * @private
+   */
   _openHelpBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
     pf1.applications.helpBrowser.openUrl(a.dataset.url);
   }
 
-  _updateObject(event, formData) {
+  /* -------------------------------------------- */
+
+  /**
+   * Update the object with the new change data from the form.
+   *
+   * @this {ScriptEditor&ApplicationV2}
+   * @param {SubmitEvent} event                   The originating form submission event
+   * @param {HTMLFormElement} form                The form element that was submitted
+   * @param {FormDataExtended} formData           Processed data for the submitted form
+   * @returns {Promise<void>}
+   * @private
+   */
+  static _updateObject(event, form, formData) {
+    formData = formData.object;
+
     this.command = formData["command"];
     this.name = formData["name"] || null;
 
@@ -78,6 +164,14 @@ export class ScriptEditor extends FormApplication {
     this.resolvePromises("submit", result);
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Resolve all promises of the given type with the given result.
+   *
+   * @param type
+   * @param result
+   */
   resolvePromises(type, result) {
     for (const p of this._promises[type]) {
       if (!p.resolved) {
@@ -87,6 +181,14 @@ export class ScriptEditor extends FormApplication {
     }
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Close the application and resolve any pending submit promises.
+   *
+   * @param args
+   * @returns {Promise<void>}
+   */
   async close(...args) {
     super.close(...args);
 

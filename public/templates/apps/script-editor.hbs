@@ -1,11 +1,9 @@
-<form class="flexcol" autocomplete="off" data-tooltip-class="pf1">
+<section class="form-content" data-tooltip-class="pf1">
   <header>
-    <h1>
-      <input name="name" type="text" value="{{name}}" placeholder="{{localize "PF1.Name"}}" data-tooltip="Name">
-    </h1>
+    <input name="name" type="text" value="{{name}}" placeholder="{{localize "PF1.Name"}}" data-tooltip="Name">
   </header>
 
-  <div class="form-group stacked command">
+  <div class="command">
     <label>
       {{localize "PF1.Command"}}
       <a class="help-browser" data-url="Help/Items/Script-Calls">
@@ -14,11 +12,4 @@
     </label>
     <textarea name="command" spellcheck="false">{{command}}</textarea>
   </div>
-
-  <footer class="sheet-footer flexrow">
-    <button type="submit">
-      <i class="fas fa-save"></i>
-      {{localize "PF1.Save"}}
-    </button>
-  </footer>
-</form>
+</section>

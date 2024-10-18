@@ -121,20 +121,23 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
     this.element
       .querySelectorAll(`.damage-type`)
       .forEach((el) => el.addEventListener("click", this._toggleDamageType.bind(this)));
-    this.element
-      .querySelectorAll(`*[name]`)
-      .forEach((el) => el.addEventListener("click", this._onChangeData.bind(this)));
   }
 
   /* -------------------------------------------- */
 
   /**
+   * Update internal data snapshot on form change
+   *
+   * @param formConfig
+   * @param event
+   * @override
    * @internal
-   * @param {Event} event
+   * @this {DamageTypeSelector&AbstractListSelector}
+   * @returns {Promise<void>}
    */
-  _onChangeData(event) {
+  async _onChangeForm(formConfig, event) {
     event.preventDefault();
-    const elem = event.currentTarget;
+    const elem = event.target;
     const dataPath = elem.name;
 
     let value = elem.value;

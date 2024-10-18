@@ -1,29 +1,29 @@
 {{#*inline "damagetype"}}
-<div class="damage-type{{#if enabled}} toggled{{/if}}" data-id="{{id}}">
-  {{!-- Icon --}}
-  {{#if icon}}
-  <i class="{{icon}} icon-pf" style="color: {{color}}"></i>
-  {{else}}
-  <img class="icon" src="{{img}}">
-  {{/if}}
-  {{!-- Name --}}
-  <span class="name">{{name}}</span>
-  <input type="checkbox" {{checked enabled}}>
-</div>
+  <div class="damage-type{{#if enabled}} toggled{{/if}}" data-id="{{id}}">
+    {{!-- Icon --}}
+    {{#if icon}}
+      <i class="{{icon}} icon-pf" style="color: {{color}}"></i>
+    {{else}}
+      <img class="icon" src="{{img}}">
+    {{/if}}
+    {{!-- Name --}}
+    <span class="name">{{name}}</span>
+    <input type="checkbox" {{checked enabled}}>
+  </div>
 {{/inline}}
 
 <section class="form-body">
   <div class="damage-type-container">
     <div class="damage-type-categories">
       {{#each damageCategories as |category categoryKey|}}
-      <div class="damage-types" data-category="{{categoryKey}}">
-        <label>{{localize category.label}}</label>
-        <div class="icon-row">
-          {{#each category.types}}
-          {{> "damagetype"}}
-          {{/each}}
+        <div class="damage-types" data-category="{{categoryKey}}">
+          <label>{{localize category.label}}</label>
+          <div class="icon-row">
+            {{#each category.types}}
+              {{> "damagetype"}}
+            {{/each}}
+          </div>
         </div>
-      </div>
       {{/each}}
     </div>
 
@@ -31,7 +31,7 @@
       <label>{{localize "PF1.DamageModifiers"}}</label>
       <div class="icon-row">
         {{#each damageModifiers}}
-        {{> "damagetype"}}
+          {{> "damagetype"}}
         {{/each}}
       </div>
     </div>

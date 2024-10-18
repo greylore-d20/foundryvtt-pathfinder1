@@ -25,16 +25,4 @@ export const registerSystemControls = () => {
       pf1.skipConfirmPrompt = false;
     },
   });
-
-  game.keybindings.register("pf1", "forceShowItem", {
-    name: "PF1.KEYBINDINGS.ForceShowItem.Name",
-    hint: "PF1.KEYBINDINGS.ForceShowItem.Hint",
-    uneditable: CTRL_KEYS,
-    onDown: () => {
-      pf1.forceShowItem = true;
-    },
-    onUp: () => {
-      pf1.forceShowItem = false;
-    },
-  });
 };

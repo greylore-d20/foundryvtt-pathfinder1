@@ -1468,6 +1468,8 @@ export class ItemAction {
 
     const exAtkCfg = pf1.config.extraAttacks[actionData.extraAttacks?.type] ?? {};
 
+    const bonusToAll = exAtkCfg.modToAll;
+
     /**
      * Counter for unnamed or other numbered attacks, to be incremented with each usage.
      * Starts at 1 to account for the base attack.
@@ -1479,8 +1481,10 @@ export class ItemAction {
       let label = name;
       while (unnamedAttackNames.has(label) || !label) {
         unnamedAttack += 1;
-        if (template) label = template.replace("{0}", unnamedAttack);
-        else label = game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttack });
+        if (template) {
+          if (game.i18n.has(template)) label = game.i18n.format(template, { 0: unnamedAttack });
+          else label = template.replace("{0}", unnamedAttack);
+        } else label = game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttack });
       }
       unnamedAttackNames.add(label);
       return label;
@@ -1488,9 +1492,26 @@ export class ItemAction {
 
     rollData.attackCount = 0;
 
+    // Replace roll data that won't be available after
+    const replaceSpecificRollData = (formula, data) => {
+      return formula.replace(/@\w+\b/, (m) => {
+        const p = m.slice(1);
+        if (p in data) return data[p];
+        return m;
+      });
+    };
+
+    const _rollData = {
+      attackCount: 0,
+      attackSetCount: 0,
+      formulaicAttack: 0,
+    };
+
     const flavor = game.i18n.localize(exAtkCfg.flavor || "");
-    const formula = flavor ? `(${exAtkCfg.bonus || "0"})[${flavor}]` : exAtkCfg.bonus;
-    const attacks = [{ bonus: formula, label: getUniqueName(actionData.attackName) }];
+    const formula = `(${exAtkCfg.bonus || "0"} + ${bonusToAll || "0"})` + (flavor ? `[${flavor}]` : "");
+    const attacks = [
+      { bonus: replaceSpecificRollData(formula, _rollData), label: getUniqueName(actionData.attackName) },
+    ];
 
     // Extra attacks
     if (full) {
@@ -1499,38 +1520,38 @@ export class ItemAction {
 
       let attackCount = 0;
 
-      const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
-        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
+      const parseAttacks = async (countFormula, bonusFormula = "0", label, bonusLabel) => {
+        const exAtkCount =
+          RollPF.safeRollSync(countFormula, rollData, undefined, undefined, { minized: true })?.total ?? 0;
         if (exAtkCount <= 0) return;
 
         try {
           for (let i = 0; i < exAtkCount; i++) {
-            rollData.attackCount = attackCount += 1;
-            rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRollSync(
-              bonusFormula || "0",
-              rollData,
-              { formula: bonusFormula, action: this },
-              undefined,
-              {
-                minimize: true,
-              }
-            ).total;
+            const _rollData = {
+              attackCount: (attackCount += 1),
+              attackSetCount: i,
+              formulaicAttack: i + 1, // Add and update attack counter
+            };
+
+            let formula = bonusFormula;
+            if (bonusToAll) formula += ` + ${bonusToAll}`;
+            formula = replaceSpecificRollData(formula, _rollData);
+
+            const alabel = game.i18n.has(label) ? game.i18n.format(label, { 0: i + 1 }) : label?.replace("{0}", i + 1);
 
             attacks.push({
-              bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
+              bonus: bonusLabel ? `(${formula})[${bonusLabel}]` : `(${formula})`,
+              formula,
+              flavor: bonusLabel,
               // Continue counting if similar to initial attack name
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
-              label: getUniqueName(label?.replace("{0}", i + 1), label),
+              label: getUniqueName(alabel, label),
+              rollData: _rollData,
             });
           }
         } catch (err) {
           console.error(err);
         }
-
-        // Cleanup roll data
-        delete rollData.attackCount;
-        delete rollData.formulaicAttack;
       };
 
       if (exAtkCfg.iteratives && !unchainedEconomy) {
@@ -1543,7 +1564,9 @@ export class ItemAction {
       }
 
       // Add attacks defined by configuration
-      if (exAtkCfg.count) parseAttacks(exAtkCfg.count, exAtkCfg.bonus, null, flavor);
+      if (exAtkCfg.count) {
+        parseAttacks(exAtkCfg.count, exAtkCfg.bonus, exAtkCfg.attackName, flavor);
+      }
 
       // Add manually entered explicit extra attacks
       if (exAtkCfg.manual) {

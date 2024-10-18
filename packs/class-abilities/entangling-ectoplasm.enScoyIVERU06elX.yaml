@@ -6,6 +6,9 @@ system:
   abilityType: sp
   actions:
     - _id: 79h1eutxb65gk3ap
+      ability:
+        attack: dex
+      actionType: twak
       activation:
         type: standard
         unchained:
@@ -18,8 +21,13 @@ system:
       range:
         units: spec
         value: '30'
+      save:
+        dc: '15'
+        description: Reflex partial (see tanglefoot bag)
+        type: ref
       target:
         value: one creature
+      touch: true
   associations:
     classes:
       - Sorcerer
@@ -31,8 +39,14 @@ system:
 
       <p>The ectoplasm dissipates within 1d3 rounds. You can use this ability a
       number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>
+  sources:
+    - id: PZO1132
+      pages: '124'
   subType: classFeat
   tag: classFeat_entanglingEctoplasm
+  tags:
+    - Bloodline Power
+    - Ectoplasm Bloodline
   uses:
     maxFormula: 3 + @abilities.cha.mod
     per: day

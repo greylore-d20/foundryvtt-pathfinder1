@@ -26,7 +26,7 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      attackBonus: 11[Hand's Strength] - 1[Large]
+      attackBonus: 11[Hand's Strength] - 1[Large] - @sizeBonus[Caster Sizebonus]
       attackNotes:
         - Stunned for 1 round on failed Fortitude save.
       bab: '@cl'
@@ -52,9 +52,7 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      attackBonus: 11[Hand's Strength] + 1[Large]
-      attackNotes:
-        - Stunned for 1 round on failed Fortitude save.
+      attackBonus: 11[Hand's Strength] + 1[Large] - @sizeBonus[Caster Sizebonus]
       bab: '@cl'
       duration:
         units: inst

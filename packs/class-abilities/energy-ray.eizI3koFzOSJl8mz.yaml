@@ -20,10 +20,89 @@ system:
             type:
               custom: ''
               values:
-                - untyped
+                - acid
       duration:
         units: inst
-      name: Use
+      img: icons/magic/acid/projectile-smoke-glowing.webp
+      name: Acid Ray
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+      touch: true
+    - _id: tcrKQX5WPEoE7UkZ
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - cold
+      duration:
+        units: inst
+      img: icons/magic/water/projectile-icecicle-glowing.webp
+      name: Cold Ray
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+      touch: true
+    - _id: 3lLgm3PpTQuAEDQO
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - electric
+      duration:
+        units: inst
+      img: icons/magic/lightning/bolt-beam-strike-blue.webp
+      name: Electricity Ray
+      range:
+        units: ft
+        value: '30'
+      target:
+        value: one creature
+      touch: true
+    - _id: PykVxNTNBYkuJl2R
+      ability:
+        attack: dex
+      actionType: rsak
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      damage:
+        parts:
+          - formula: (ceil(@class.level / 2))d6
+            type:
+              custom: ''
+              values:
+                - fire
+      duration:
+        units: inst
+      img: icons/magic/fire/beam-jet-stream-embers.webp
+      name: Fire Ray
       range:
         units: ft
         value: '30'
@@ -36,14 +115,16 @@ system:
   description:
     value: >-
       <p>As a standard action that provokes attacks of opportunity, you can
-      expend 1 point of mental focus to unleash a ray of pure energy as a ranged
-      touch attack. This ray has a range of 30 feet. The ray deals an amount of
-      energy damage equal to 1d6 points + 1d6 points for every 2 occultist
-      levels you possess beyond 1st (2d6 at 3rd level, 3d6 at 5th, and so on, to
-      a maximum of 10d6 at 19th level).</p>
-
-      <p>When you unleash an energy ray, you must decide what type of damage it
-      deals (acid, cold, electricity, or fire).</p>
+      expend 1 point of
+      @UUID[Compendium.pf1.class-abilities.Item.dv8TDGs9c7h4awY2]{mental focus}
+      to unleash a ray of pure energy as a ranged touch attack. This ray has a
+      range of 30 feet. The ray deals an amount of energy damage equal to 1d6
+      points + 1d6 points for every 2 occultist levels you possess beyond 1st
+      (2d6 at 3rd level, 3d6 at 5th, and so on, to a maximum of 10d6 at 19th
+      level).</p><p>When you unleash an energy ray, you must decide what type of
+      damage it deals (acid, cold, electricity, or fire).</p><hr
+      /><p><strong>Usage</strong>: link charges to <em>mental focus</em> class
+      feature</p>
   sources:
     - id: PZO1132
       pages: '54'

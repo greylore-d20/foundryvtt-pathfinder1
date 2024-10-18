@@ -2,6 +2,7 @@
   <table>
     {{#if (gt fields.length 1)}}
       <thead>
+      <th class="drag-control"></th>
       {{#each fields}}
         <th>{{localize this}}</th>
       {{/each}}
@@ -10,7 +11,10 @@
     {{/if}}
     <tbody>
     {{#each entries as |entry index|}}
-      <tr class="entry" data-index="{{index}}">
+      <tr class="entry" data-drop="true" data-index="{{index}}">
+        <td class="drag-control" data-drag="true">
+          <i class="fas fa-bars"></i>
+        </td>
         {{#if @root.isFlat}}
           <td>
             <input type="text" class="textarea" data-index="{{index}}"

@@ -1,3 +1,5 @@
+import { DragDropApplicationMixin } from "@app/mixins/drag-drop.mjs";
+
 const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -6,7 +8,7 @@ const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api
  * @augments {DocumentSheetV2&HandlebarsApplicationMixin}
  * @abstract
  */
-export class AbstractListSelector extends HandlebarsApplicationMixin(DocumentSheetV2) {
+export class AbstractListSelector extends DragDropApplicationMixin(HandlebarsApplicationMixin(DocumentSheetV2)) {
   static DEFAULT_OPTIONS = {
     tag: "form",
     form: {
@@ -27,7 +29,62 @@ export class AbstractListSelector extends HandlebarsApplicationMixin(DocumentShe
       width: 600,
     },
     sheetConfig: false,
+    dragDrop: [{ dragSelector: "[data-drag]", dropSelector: "[data-drop]" }],
   };
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare drag-drop data and highlight dragged element
+   *
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  _onDragStart(event) {
+    const el = event.currentTarget;
+    if ("link" in event.target.dataset) return;
+
+    // Extract the data you need
+    const row = el.closest("[data-index]");
+    const dragData = row?.dataset?.index;
+    if (!row || !dragData) return;
+    row.classList.add("dragging");
+
+    // Set data transfer
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    event.dataTransfer.setDragImage(row, 0, 0);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Highlight position that the element will be inserted to on drop
+   *
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  _onDragOver(event) {
+    this.element.querySelectorAll("[data-drop]").forEach((el) => el.classList.remove("drag-over"));
+    event.target.closest("[data-drop]").classList.add("drag-over");
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Inject dragged element into its new position
+   *
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  async _onDrop(event) {
+    this.element.querySelectorAll("[data-drop]").forEach((el) => el.classList.remove("drag-over", "dragging"));
+    const movedId = TextEditor.getDragEventData(event);
+    const moveToBeforeId = event.target.closest("[data-index]").dataset.index;
+
+    const movedElement = this.entries.splice(movedId, 1)[0];
+    this.entries.splice(moveToBeforeId, 0, movedElement);
+    this.render();
+  }
 
   /* -------------------------------------------- */
 

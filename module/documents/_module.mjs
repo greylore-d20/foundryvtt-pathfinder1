@@ -1,5 +1,5 @@
 export { ActiveEffectPF } from "./active-effect.mjs";
-export { ChatMessagePF, customRolls } from "./chat-message.mjs";
+export { ChatMessagePF } from "./chat-message.mjs";
 export { CombatPF } from "./combat.mjs";
 export { CombatantPF } from "./combatant.mjs";
 export * as controls from "./controls.mjs";

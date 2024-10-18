@@ -1865,9 +1865,7 @@ export class ItemSheetPF extends ItemSheet {
       case "Item": {
         // Add drop handler to link tabs
         const linksTab = event.target.closest(".tab.links .tab[data-group='links']");
-        if (linksTab) {
-          this._onLinksDrop(event, data);
-        }
+        if (linksTab) this._onLinksDrop(event, data);
         break;
       }
       case "pf1ContentSourceEntry": {
@@ -1897,10 +1895,7 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onLinksDrop(event, data) {
     const elem = event.target;
-    let category = elem.closest("[data-tab]").dataset.tab;
-
-    // Default selection for dropping on tab instead of body
-    if (category === "links") category = "children";
+    const category = elem.closest("[data-tab]").dataset.tab;
 
     // Try to extract the data
     if (!data.type) throw new Error("Invalid drop data received");
@@ -1908,23 +1903,6 @@ export class ItemSheetPF extends ItemSheet {
     const targetItem = await fromUuid(data.uuid);
     if (!targetItem || !(targetItem instanceof Item))
       throw new Error(`UUID did not resolve to valid item: ${data.uuid}`);
-
-    let sourceType,
-      uuid = data.uuid;
-
-    // Import from same actor
-    if (this.item.actor && targetItem.actor === this.item.actor) {
-      sourceType = "data";
-      uuid = targetItem.getRelativeUUID(this.actor);
-    }
-    // Import from a Compendium pack
-    else if (targetItem.pack) {
-      sourceType = "compendium";
-    }
-    // Import from World Document
-    else {
-      sourceType = "world";
-    }
 
     // Add extra data
     const extraData = {};
@@ -1936,7 +1914,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    await this.item.createItemLink(category, sourceType, targetItem, uuid, extraData);
+    await this.item.createItemLink(category, targetItem, extraData);
   }
 
   /**
@@ -2308,25 +2286,25 @@ export class ItemSheetPF extends ItemSheet {
 
     await this._onSubmit(event, { preventRender: true });
 
-    const sourceItem = this.item;
+    const item = this.item;
 
-    const attackItem = pf1.documents.item.ItemAttackPF.fromItem(sourceItem);
+    const attackItem = pf1.documents.item.ItemAttackPF.fromItem(item);
 
     // Show in quickbar only if if the original item is there
-    attackItem.system.showInQuickbar = sourceItem.system.showInQuickbar;
+    attackItem.system.showInQuickbar = item.system.showInQuickbar;
 
     // Create attack
-    const newItem = await Item.implementation.create(attackItem, { parent: this.actor });
-    if (!newItem) throw new Error("Failed to create attack from weapon");
+    const newAttack = await Item.implementation.create(attackItem, { parent: this.actor });
+    if (!newAttack) throw new Error("Failed to create attack from weapon");
 
     // Disable quick use of weapon
-    await sourceItem.update({ "system.showInQuickbar": false });
+    await item.update({ "system.showInQuickbar": false });
 
     // Create link
-    await sourceItem.createItemLink("children", "data", newItem, newItem.getRelativeUUID(this.actor));
+    await item.createItemLink("children", newAttack, newAttack.getRelativeUUID(this.actor));
 
     // Notify user
-    ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: sourceItem.name }));
+    ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: item.name }));
   }
 
   async _createSpellbook(event) {

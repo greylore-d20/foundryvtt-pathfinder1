@@ -1878,86 +1878,120 @@ export class ItemPF extends ItemBasePF {
   /**
    * Test if specified link can be created.
    *
-   * @param {string} linkType - The type of link.
-   * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {object} targetItem - The target item to link to.
-   * @param {string} itemLink - The link identifier for the item.
+   * @internal
+   * @param {string} type - The type of link.
+   * @param {Item} item - The target item to link to.
+   * @param {string} uuid - The link identifier for the item.
    * @returns {boolean} Whether a link to the item is possible here.
    */
-  canCreateItemLink(linkType, dataType, targetItem, itemLink) {
-    const actor = this.actor;
-    const sameActor = actor && targetItem.actor && targetItem.actor.id === actor.id;
+  async _canCreateItemLink(type, item) {
+    if (!(item instanceof Item)) throw new Error("Item must be instance of Item document");
 
-    // Link happens between items on same actor?
-    const linkOnActor = ["children", "charges", "ammunition"].includes(linkType);
-    if (linkOnActor && !actor) return false;
+    if (!["charges", "children", "supplements", "classAssociations"].includes(type))
+      throw new Error(`Invalid link type: "${type}"`);
 
     // Don't create link to self
-    if (itemLink === this.id) return false;
+    if (item === this) return false;
+
+    const sameActor = this.actor && item.actor === this.actor;
+
+    // Link happens between items on same actor?
+    const linkOnActor = ["children", "charges"].includes(type);
+    if (linkOnActor && !sameActor) {
+      ui.notifications.warn("PF1.Warning.LinkOwnerMismatch", { localize: true });
+      return false;
+    }
 
     // Don't re-create existing links
-    const links = this.system.links?.[linkType] || [];
-    if (links.some((o) => o.id === itemLink || o.uuid === itemLink)) return false;
+    const links = this.system.links?.[type] || [];
+    for (const link of links) {
+      // Use slow matching method to ensure old style links aren't ignored
+      const ti = await fromUuid(link.uuid, { relative: this.actor });
+      if (ti === item) {
+        ui.notifications.warn("PF1.Warning.NoMultiLink", { localize: true });
+        return false;
+      }
+    }
 
-    const targetLinks = targetItem.system.links?.[linkType] ?? [];
-    if (linkOnActor && sameActor) {
-      if (linkType === "charges") {
-        // Prevent the closing of charge link loops
-        if (targetLinks.length > 0) {
-          ui.notifications.warn(
-            game.i18n.format("PF1.Warning.CannotCreateChargeLink", { source: this.name, target: targetItem.name })
-          );
-          return false;
-        } else if (targetItem.links.charges != null) {
-          // Prevent the linking of one item to multiple resource pools
+    switch (type) {
+      // Charge link requirements
+      case "charges": {
+        // Prevent item from inheriting charges from multiple sources
+        if (item.links?.charges) {
           ui.notifications.warn(
             game.i18n.format("PF1.Warning.CannotCreateChargeLink2", {
               source: this.name,
-              target: targetItem.name,
-              deeptarget: targetItem.links.charges.name,
+              target: item.name,
+              deeptarget: item.links.charges.name,
             })
           );
           return false;
         }
+        // Target is already sharing charges itself
+        const targetLinks = item.system.links?.charges ?? [];
+        if (targetLinks.length > 0) {
+          ui.notifications.warn(
+            game.i18n.format("PF1.Warning.CannotCreateChargeLink", { source: this.name, target: item.name })
+          );
+          return false;
+        }
+        if (this.links?.charges) {
+          ui.notifications.warn(
+            game.i18n.format("PF1.Warning.CannotCreateChargeLink2", {
+              source: item.name,
+              target: this.name,
+              deeptarget: this.links.charges.name,
+            })
+          );
+          return false;
+        }
+        return true;
       }
-      return true;
-    }
-
-    // Allow class association links only from compendiums
-    if (linkType === "classAssociations" && dataType === "compendium") return true;
-    if (linkType === "supplements") {
-      // Allow supplement links only if not from an actor
-      if (!targetItem.actor) return true;
-      else ui.notifications.error(game.i18n.localize("PF1.LinkErrorNoActorSource"));
+      // Class association link requirements
+      case "classAssociations":
+        // Item must not be on actor and must be in compendium
+        if (item.actor) {
+          ui.notifications.error("PF1.Warning.LinkOnlyUnowned", { localize: true });
+          return false;
+        }
+        if (!item.pack) {
+          ui.notifications.error("PF1.Warning.LinkOnlyCompendium", { localize: true });
+          return false;
+        }
+        return true;
+      case "supplements": {
+        // Must NOT be on actor
+        if (!item.actor) return true;
+        else ui.notifications.error("PF1.Warning.LinkOnlyUnowned", { localize: true });
+      }
     }
 
     return false;
   }
 
   /**
-   * @param {string} category - The type of link.
+   * @internal
+   * @param {string} type - The type of link.
    * @param {string} sourceType - Either "compendium", "data" or "world".
-   * @param {object} targetItem - The target item to link to.
+   * @param {object} item - The target item to link to.
    * @param {string} uuid - The link identifier for the item.
    * @param {object} extraData - Additional data
    * @returns {Array} An array to insert into this item's link data.
    */
-  generateInitialLinkData(category, sourceType, targetItem, uuid, extraData = {}) {
+  _generateLinkData(type, item, uuid) {
     const result = {
-      name: targetItem.name,
+      name: item.name,
       uuid,
     };
 
-    if (category === "classAssociations") {
-      result.level = 1;
-    }
-
     // Remove name for various links
-    switch (category) {
+    switch (type) {
       case "classAssociations":
+        result.level = 1;
+      // eslint-disable-next-line no-fallthrough
       case "supplements":
         // System packs are assumed static
-        if (game.packs.get(targetItem.pack)?.metadata.packageType === "system") {
+        if (game.packs.get(item.pack)?.metadata.packageType === "system") {
           delete result.name;
         }
         break;
@@ -1968,63 +2002,50 @@ export class ItemPF extends ItemBasePF {
         break;
     }
 
-    // Merge in extra data
-    foundry.utils.mergeObject(result, extraData);
-
     return result;
   }
 
   /**
    * Creates a link to another item.
    *
-   * @param {string} category - The type of link.
-   * e.g. "children", "charges", "classAssociations" or "ammunition".
-   * @param {string} sourceType - Either "compendium", "data" or "world".
-   * @param {object} targetItem - The target item to link to.
-   * @param {string} uuid - The link identifier for the item.
-   * e.g. UUID for items external to the actor, and item ID for same actor items.
+   * @param {"children"|"charges"|"supplement"|"classAssociatons"} type - The type of link.
+   * @param {Item} item - The target item to link into this.
+   * @param {string} uuid - UUID for the new item.
    * @param {object} [extraData] - Additional data to store int he link
-   * @returns {boolean} Whether a link was created.
+   * @returns {boolean} - Whether a link was created.
    */
-  async createItemLink(category, sourceType, targetItem, uuid, extraData) {
-    if (this.canCreateItemLink(category, sourceType, targetItem, uuid)) {
-      const links = this.toObject().system.links?.[category] ?? [];
-      const linkData = this.generateInitialLinkData(category, sourceType, targetItem, uuid, extraData);
-      links.push(linkData);
-      const itemUpdate = { _id: this.id, [`system.links.${category}`]: links };
+  async createItemLink(type, item, extraData) {
+    if (!(await this._canCreateItemLink(type, item))) return false;
 
-      // Clear value, maxFormula and per from link target to avoid odd behaviour
-      const itemUpdates = [];
-      if (category === "charges") {
-        itemUpdates.push({
-          _id: targetItem.id,
-          system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null, "-=rechargeFormula": null } },
-        });
-      }
+    const links = this.toObject().system.links?.[type] ?? [];
 
-      if (this.actor && itemUpdates.length > 0) {
-        await this.actor.updateEmbeddedDocuments("Item", [itemUpdate, ...itemUpdates]);
-      } else {
-        await this.update(itemUpdate);
-      }
+    const uuid = item.getRelativeUUID(this.actor);
 
-      // Call link creation hook
-      Hooks.callAll("pf1CreateItemLink", this, linkData, category);
+    const linkData = this._generateLinkData(type, item, uuid);
+    if (extraData) foundry.utils.mergeObject(linkData, extraData);
+    links.push(linkData);
 
-      return true;
-    } else if (category === "children" && sourceType !== "data") {
-      const itemData = targetItem.toObject();
+    const itemUpdate = { _id: this.id, [`system.links.${type}`]: links };
 
-      // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
-      if (itemData.type === "spell") itemData.system.spellbook = "spelllike";
-
-      const [newItem] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
-
-      const itemUuid = newItem.getRelativeUUID(this.actor);
-      await this.createItemLink("children", "data", newItem, itemUuid);
+    // Clear value, maxFormula and per from link target to avoid odd behaviour
+    const itemUpdates = [];
+    if (type === "charges") {
+      itemUpdates.push({
+        _id: item.id,
+        system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null, "-=rechargeFormula": null } },
+      });
     }
 
-    return false;
+    if (this.actor && itemUpdates.length > 0) {
+      await this.actor.updateEmbeddedDocuments("Item", [itemUpdate, ...itemUpdates]);
+    } else {
+      await this.update(itemUpdate);
+    }
+
+    // Call link creation hook
+    Hooks.callAll("pf1CreateItemLink", this, linkData, type);
+
+    return true;
   }
 
   /**

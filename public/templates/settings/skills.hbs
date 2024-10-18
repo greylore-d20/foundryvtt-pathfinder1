@@ -1,0 +1,84 @@
+<form autocomplete="off">
+  {{!-- Preset Selection --}}
+  <h3>{{localize "PF1.SkillPresetConfig.Presets.Title"}}</h3>
+  <ul class="presets">
+    {{#each presets}}
+    <li class="preset" data-preset="{{@key}}">
+      <label>
+        <input type="radio" name="preset" value="{{@key}}" {{checked (eq @key @root.preset)}}>
+        {{localize label}}
+      </label>
+    </li>
+    {{/each}}
+    <li class="preset" data-preset="custom">
+      <label>
+        <input type="radio" name="preset" value="custom" {{checked (eq "custom" @root.preset)}}>
+        {{localize "PF1.SkillPresetConfig.Presets.Custom"}}
+      </label>
+    </li>
+  </ul>
+
+  {{!-- Skill Options --}}
+  <h3>{{localize "PF1.Options"}}</h3>
+  <div class="options">
+    <label class="checkbox">
+      <input type="checkbox" name="background" {{checked @root.background}} {{disabled @root.builtin}}>
+      {{localize "SETTINGS.pf1BackgroundSkillsN"}}
+    </label>
+  </div>
+
+  <h3>{{localize "PF1.SkillPresetConfig.Packs"}}</h3>
+  <ul class="packs">
+    <li class="header">
+      <h4 class='name'>{{localize "PF1.Name"}}</h4>
+      <h4 class='source'>{{localize "PF1.Source"}}</h4>
+      <span class='controls'> </span>
+    </li>
+    {{#each packs}}
+    <li class="pack" data-pack="{{id}}">
+      <input type='hidden' name='packs.{{@key}}' value='{{id}}'>
+      <h4 class='name'>{{label}}</h4>
+      <label class='source' data-tooltip='{{packageType}}'>{{sourceLabel}}</label>
+      <div class="controls">
+        {{#unless @root.builtin}}
+        <a data-action="remove">
+          <i class="fa-solid fa-trash-can"></i>
+        </a>
+        {{/unless}}
+      </div>
+    </li>
+    {{/each}}
+    {{#if (eq packs.length 0)}}
+    <p class="warning">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      {{localize "PF1.SkillPresetConfig.NoConfig"}}
+    </p>
+    {{/if}}
+  </ul>
+
+  {{#unless @root.builtin}}
+  <div class="form-group">
+    <label>{{localize "PF1.SkillPresetConfig.AddPack"}}</label>
+    <div class="form-fields">
+      <select name='packs.{{packs.length}}' {{disabled (eq packOptions.length 0)}}>
+        <option>{{#unless packOptions.length}}{{localize "PF1.SkillPresetConfig.NoPacksFound"}}{{/unless}}</option>
+        {{#each packOptions}}
+        <option value="{{id}}">{{label}} ({{sourceLabel}})</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  {{/unless}}
+
+  <p class="warning">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    {{localize "PF1.SkillPresetConfig.Warning"}}
+  </p>
+
+  <div class="buttons">
+    <button type="button" data-action="save">
+      <i class="fas fa-save"></i>
+      {{localize "PF1.Save"}}
+    </button>
+  </div>
+</form>

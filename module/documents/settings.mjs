@@ -5,6 +5,7 @@ import {
   TokenTooltipWorldConfigModel,
   TokenTooltipConfigModel,
 } from "../applications/settings/tooltip.mjs";
+import { SkillPresetConfig, SkillPresetConfigModel } from "module/applications/settings/skills.mjs";
 import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
 import { PerformanceConfig, PerformanceModel } from "module/applications/settings/performance.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
@@ -81,6 +82,23 @@ export const registerSystemSettings = function () {
     type: ExperienceConfigModel,
     config: false,
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
+  });
+
+  // Rules
+
+  game.settings.register("pf1", "skills", {
+    type: SkillPresetConfigModel,
+    default: new SkillPresetConfigModel(),
+    config: false,
+  });
+
+  game.settings.registerMenu("pf1", "skills", {
+    name: "PF1.SkillPresetConfig.Title",
+    label: "PF1.SkillPresetConfig.Button",
+    hint: "PF1.SkillPresetConfig.Hint",
+    icon: "fas fa-book",
+    type: SkillPresetConfig,
+    restricted: false,
   });
 
   // Tooltip configuration
@@ -253,10 +271,8 @@ export const registerSystemSettings = function () {
    * Option to allow the background skills optional ruleset.
    */
   game.settings.register("pf1", "allowBackgroundSkills", {
-    name: "PF1.SETTINGS.VariantRules.BackgroundSkills",
-    hint: "PF1.SETTINGS.VariantRules.BackgroundSkillsHint",
     scope: "world",
-    config: true,
+    config: false,
     default: false,
     type: Boolean,
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),

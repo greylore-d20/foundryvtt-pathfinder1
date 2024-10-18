@@ -1,0 +1,111 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  {{!-- Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" data-edit="img" />
+
+    <div class="header-details flexrow">
+      <div class="item-name flexcol">
+        <h1>
+          <input name="name" type="text" value="{{item._source.name}}" placeholder="{{localize 'PF1.ItemName'}}" required>
+        </h1>
+      </div>
+
+      <div class="full-identifier">
+        <label>{{localize "PF1.FullID"}}:</label>
+        <span class="selectable">{{fullID}}</span>
+      </div>
+
+      <ul class="summary">
+        <li class="rank">
+          <label>{{localize "PF1.Rank"}}</label>
+          <input type="number" name="system.rank" min="0" step="1" value="{{system.rank}}" placeholder="0">
+        </li>
+        {{#if actor}}
+        <li class="modifier">
+          <label>{{localize "PF1.Modifier"}}</label>
+          <span class="value">{{numberFormat system.modifier sign=true}}</span>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+  </header>
+
+  {{!-- Sidepanel --}}
+  <section class="sidepanel">
+    <h3>{{localize "PF1.Skill"}}</h3>
+
+    <label class="checkbox">
+      {{localize "PF1.CSTooltip"}}
+      <input type="checkbox" {{checked isClassSkill}} disabled>
+    </label>
+
+    <label class="checkbox">
+      {{localize "PF1.RTTooltip"}}
+      <input type="checkbox" name="system.requiresTraining" {{checked system.requiresTraining}}>
+    </label>
+
+    <label class="checkbox">
+      {{localize "PF1.ACP"}}
+      <input type="checkbox" name="system.acp" {{checked system.acp}}>
+    </label>
+  </section>
+
+  {{!-- Body --}}
+  <section class="primary-body">
+    <div class="form-group reference">
+      <label>{{localize "PF1.Reference"}}</label>
+      <div class="form-fields">
+        {{#if reference}}
+        <a class="link" data-action="open" data-link="{{reference.uuid}}">
+          <i class="fas fa-file-lines"></i>
+          {{reference.name}}
+        </a>
+        <div class="controls">
+          <a data-action="delete" data-target="reference" data-tooltip="PF1.SkillRemoveReference">
+            <i class="fa-solid fa-trash-can"></i>
+          </a>
+        </div>
+        {{else}}
+        <p class="info">{{localize "PF1.SkillReferenceHint"}}</p>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="form-group identifier">
+      <label>{{localize "PF1.Identifier"}}</label>
+      <div class="form-fields">
+        <input type="text" name="system.identifier" value="{{item._source.system.identifier}}" placeholder="{{localize "PF1.SkillIdentifierHint"}}" required>
+      </div>
+    </div>
+    <div class="form-group grouping">
+      <label>{{localize "PF1.SkillGrouping"}}</label>
+      <div class="form-fields">
+        <input type="text" name="system.grouping" value="{{system.grouping}}" placeholder="{{localize "PF1.SkillGroupingHint"}}">
+      </div>
+      <div class="source">
+        <span class="spacer"></span>
+        {{#if grouping}}
+        <span class="name">{{grouping.name}}</span>
+        {{else if actor}}
+        <p class="info">{{localize "PF1.SkillGroupingMissing"}}</p>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="form-group ability">
+      <label>{{localize "PF1.AbilityScore"}}</label>
+      <div class="form-fields">
+        <select name="system.ability">
+          {{selectOptions @root.config.abilities selected=system.ability blank=""}}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group background">
+      <label>{{localize "PF1.BackgroundSkill"}}</label>
+      <div class="form-fields">
+        <input type="checkbox" name="system.background" value="{{system.background}}">
+      </div>
+    </div>
+  </section>
+</form>

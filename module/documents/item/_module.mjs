@@ -13,3 +13,4 @@ export { ItemRacePF } from "./item-race.mjs";
 export { ItemSpellPF } from "./item-spell.mjs";
 export { ItemWeaponPF } from "./item-weapon.mjs";
 export { ItemImplantPF } from "./item-implant.mjs";
+export { ItemSkillPF } from "./item-skill.mjs";

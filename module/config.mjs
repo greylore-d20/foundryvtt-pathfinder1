@@ -1649,6 +1649,27 @@ export const senses = {
 /* -------------------------------------------- */
 
 /**
+ * Skill set presets
+ */
+export const skillPresets = {
+  core: {
+    label: "PF1.SkillPresetConfig.Presets.Core",
+    packs: ["pf1.skills-core"],
+    background: false,
+  },
+  background: {
+    label: "PF1.SkillPresetConfig.Presets.Background",
+    packs: ["pf1.skills-core", "pf1.skills-background"],
+    background: true,
+  },
+  consolidated: {
+    label: "PF1.SkillPresetConfig.Presets.Consolidated",
+    packs: ["pf1.skills-consolidated"],
+    background: false,
+  },
+};
+
+/**
  * The set of skill which can be trained in PF1
  */
 export const skills = {
@@ -2690,6 +2711,7 @@ export const traitSelector = {
 
 export const defaultIcons = {
   items: {
+    skill: "icons/svg/light.svg",
     attack: "icons/svg/explosion.svg",
     buff: "icons/svg/ice-aura.svg",
     class: "icons/svg/paralysis.svg",

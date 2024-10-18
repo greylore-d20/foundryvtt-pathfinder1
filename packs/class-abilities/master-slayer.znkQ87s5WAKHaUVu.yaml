@@ -14,7 +14,7 @@ system:
           type: action
       name: Secondary effect
       save:
-        dc: 10 + @floor(@class.level / 2) + @abilities.int.mod
+        dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates secondary effect
         type: fort
   associations:

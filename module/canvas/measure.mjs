@@ -25,51 +25,50 @@ const withinRect = (point, rect) => {
  */
 export class TemplateLayerPF extends TemplateLayer {
   /**
-   * Foundry does not allow snapping template drag.
+   * Override to provide snapped drag for cone template direction.
    *
    * @override
    * @param {Event} event
+   * Synced with Foundry v12.331
    */
   _onDragLeftMove(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 
     const interaction = event.interactionData;
-    const { destination, layerDragState, preview, origin } = interaction;
-    if (layerDragState === 0) return;
 
     // Snap the destination to the grid
     const snapToGrid = !event.shiftKey;
     if (snapToGrid) {
       const snapMode =
         CONST.GRID_SNAPPING_MODES.CENTER | CONST.GRID_SNAPPING_MODES.EDGE_MIDPOINT | CONST.GRID_SNAPPING_MODES.CORNER;
-      interaction.destination = canvas.grid.getSnappedPoint(destination, { mode: snapMode });
+      interaction.destination = this.getSnappedPoint(interaction.destination, { mode: snapMode });
     }
 
     // Compute the ray
+    const { origin, destination, preview } = interaction;
     const ray = new Ray(origin, destination);
-    const ratio = canvas.dimensions.distancePixels;
+    let distance;
 
-    // Update the preview object
-    const baseDistance = ray.distance / ratio;
-    preview.document.distance = baseDistance;
-
-    const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
-    preview.document.direction = baseDirection;
-
-    if (snapToGrid) {
-      switch (preview.document.t) {
-        case "cone": {
-          const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
-          preview.document.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
-          break;
-        }
-      }
+    // Grid type
+    if (game.settings.get("core", "gridTemplates")) {
+      distance = canvas.grid.measurePath([origin, destination]).distance;
+    }
+    // Euclidean type
+    else {
+      const ratio = canvas.dimensions.size / canvas.dimensions.distance;
+      distance = ray.distance / ratio;
     }
 
+    // Update the preview object
+    if (snapToGrid && preview.document.t === "cone") {
+      const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
+      const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+      preview.document.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
+    } else {
+      preview.document.direction = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+    }
+    preview.document.distance = distance;
     preview.renderFlags.set({ refreshShape: true });
-
-    // Confirm the creation state
-    interaction.layerDragState = 2;
   }
 }
 

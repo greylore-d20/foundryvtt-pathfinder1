@@ -1,7 +1,7 @@
 _id: aoov6nqfm195txdb
 _key: '!items!aoov6nqfm195txdb'
 folder: NE0tEwSvcr71GnPC
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/magic/unholy/hand-claw-fire-blue.webp
 name: Forceful Hand
 system:
   actions:
@@ -14,10 +14,42 @@ system:
       duration:
         units: round
         value: '@cl'
+      img: icons/magic/unholy/hand-claw-fire-blue.webp
       name: Use
       range:
         units: medium
       spellEffect: 10-ft. hand
+    - _id: BogZf3J9xicvsR2P
+      actionType: mcman
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      attackBonus: 8[Hand's Strength] + 1[Large] - @sizeBonus[Caster Sizebonus]
+      attackName: Bull Rush
+      bab: '@cl'
+      duration:
+        units: inst
+      img: icons/magic/unholy/hand-claw-fire-blue.webp
+      name: Bull Rush
+      range:
+        units: melee
+      target:
+        value: One Creature
+    - _id: qDDvUpC9EetA2u5m
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      name: Redirect Hand
+      range:
+        units: none
+      target:
+        value: One Creature
+      uses:
+        autoDeductChargesCost: '0'
   components:
     focus: true
     somatic: true

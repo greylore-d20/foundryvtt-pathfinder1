@@ -1398,13 +1398,15 @@ export class ItemAction {
     // Add subtargets affecting effects
     if (target === "effect") {
       if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
-      if (this.item?.type === "spell") result["cl"] = game.i18n.localize("PF1.CasterLevelAbbr");
     }
     // Add misc subtargets
     if (target === "misc") {
       // Add charges subTarget with specific label
-      if (this.isCharged && this.type !== "spell") result["charges"] = game.i18n.localize("PF1.ChargeCost");
+      if (this.isCharged) result["charges"] = game.i18n.localize("PF1.ChargeCost");
     }
+
+    this.item?.getConditionalTargets?.(target, result);
+
     return result;
   }
 

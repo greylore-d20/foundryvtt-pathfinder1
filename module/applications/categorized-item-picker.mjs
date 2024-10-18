@@ -82,7 +82,6 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
    */
   async _prepareContext() {
     const categories = [];
-    const items = [];
 
     for (const cat of this.categories) {
       cat.hidden = cat.validity.item === false;
@@ -112,17 +111,12 @@ export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(App
 
       if (!cat.hasVisibleChoices || !cat.hasChoices) continue;
 
-      items.push({
-        category: cat.key,
-        active: cat.active,
-        items: categoryItems,
-      });
+      cat.items = categoryItems;
       categories.push(cat);
     }
 
     return {
       categories,
-      items,
     };
   }
 

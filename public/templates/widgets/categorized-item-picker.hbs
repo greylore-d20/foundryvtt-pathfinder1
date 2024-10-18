@@ -11,8 +11,8 @@
   </div>
 
   <div class="item-picker-items">
-    {{#each items}}
-      <div class="tab {{#if active}}active{{/if}}" data-group="primary" data-tab="{{category}}">
+    {{#each categories}}
+      <div class="tab {{#if active}}active{{/if}}" data-group="primary" data-tab="{{key}}">
         {{#each items}}
           <div class="item {{#if active}}pre-selected{{/if}} {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}"
                data-value="{{key}}"

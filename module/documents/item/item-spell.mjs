@@ -192,21 +192,19 @@ export class ItemSpellPF extends ItemPF {
     return result;
   }
 
-  getConditionalSubTargets(target) {
-    const result = super.getConditionalSubTargets(target);
+  /** @override */
+  getConditionalTargets(target, result) {
+    super.getConditionalTargets(target, result);
 
-    // Add subtargets affecting effects
     if (target === "effect") {
       result["cl"] = game.i18n.localize("PF1.CasterLevel");
     }
 
     // Add misc subtargets
     if (target === "misc") {
-      // Add charges subTarget with specific label
-      if (this.type === "spell" && this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
+      if (this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
+      else delete result["charges"]; // Non-spellpoint spells do not use charges
     }
-
-    return result;
   }
 
   /** @inheritDoc */

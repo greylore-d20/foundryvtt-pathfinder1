@@ -1598,6 +1598,15 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Item specific conditional targets.
+   *
+   * @abstract
+   * @param {string} target - Conditional target
+   * @param {Record<string, string>} result - Result key to label mapping.
+   */
+  getConditionalTargets(target, result) {}
+
+  /**
    * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
    *
    * @remarks - Always returns empty array if no actor is present.

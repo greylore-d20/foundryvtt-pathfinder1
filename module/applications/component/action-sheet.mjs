@@ -639,10 +639,13 @@ export class ItemActionSheet extends FormApplication {
     return this.action.update(formData);
   }
 
-  async close(options) {
+  async close(options = {}) {
     delete this.item.apps[this.appId];
     delete this.action.apps[this.appId];
     if (this.action._sheet === this) this.action._sheet = null;
+
+    if (options.force && this._state <= Application.RENDER_STATES.NONE) return; // HACK: already closed, would error without
+
     return super.close(options);
   }
 }

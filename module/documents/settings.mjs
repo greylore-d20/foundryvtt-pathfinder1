@@ -125,22 +125,6 @@ export const registerSystemSettings = function () {
   });
 
   /**
-   * Register diagonal movement rule setting
-   */
-  game.settings.register("pf1", "diagonalMovement", {
-    name: "PF1.SETTINGS.DiagonalRule.Label",
-    hint: "PF1.SETTINGS.DiagonalRule.Hint",
-    scope: "world",
-    config: true,
-    default: "5105",
-    type: String,
-    choices: {
-      5105: "PF1.SETTINGS.DiagonalRule.Options.Core",
-      555: "PF1.SETTINGS.DiagonalRule.Options.Simple",
-    },
-  });
-
-  /**
    * System of Units
    */
   game.settings.register("pf1", "units", {

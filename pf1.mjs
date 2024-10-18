@@ -66,8 +66,6 @@ globalThis.pf1 = moduleToObject({
   models,
   migrations,
   registry,
-  /** @type {TooltipPF|null} */
-  tooltip: null,
   utils,
   chat,
   // Initialize skip confirm prompt value
@@ -476,15 +474,6 @@ Hooks.once("setup", () => {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function () {
-  // Create tooltip
-  const ttconf = game.settings.get("pf1", "tooltipConfig");
-  const ttwconf = game.settings.get("pf1", "tooltipWorldConfig");
-  if (!ttconf.disable && !ttwconf.disable) pf1.applications.TooltipPF.toggle(true);
-
-  window.addEventListener("resize", () => {
-    pf1.tooltip?.setPosition();
-  });
-
   // Migrate data
   const NEEDS_MIGRATION_VERSION = "10.5";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
@@ -587,10 +576,6 @@ Hooks.on("renderChatLog", (_, html) => _canvas.attackReach.addReachListeners(htm
 
 Hooks.on("renderChatPopout", (_, html) => documents.item.ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => documents.actor.ActorPF.chatListeners(html));
-
-// Hide token tooltip on token update or deletion
-Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
-Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));
 
 Hooks.on("chatMessage", (log, message, chatData) => {
   const result = documents.customRolls(message, chatData.speaker);

@@ -99,9 +99,6 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/internal/token-config_vision.hbs",
   "systems/pf1/templates/internal/damage-type-visual.hbs",
 
-  // Tooltip
-  "systems/pf1/templates/hud/tooltip.hbs",
-
   "systems/pf1/templates/hud/quick-actions.hbs",
 
   // Level Up sections

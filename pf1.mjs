@@ -253,8 +253,26 @@ Hooks.once("init", function () {
     pf1.registry[registryName] = new registryClass();
   }
 
+  Object.defineProperty(pf1.documents, "customRolls", {
+    value: function (message, speaker, rollData) {
+      foundry.utils.logCompatibilityWarning(
+        "pf1.documents.customRolls() is deprecated in favor of pf1.chat.command()",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+
+      const re = /^\/(?<command>h|heal|d|damage)\s+(?<formula>.*?)(\s*#\s*(?<comment>.*))?$/i.exec(message);
+      if (!re) throw new Error(`Failed to parse message: ${message}`);
+
+      const { command, formula, comment } = re.groups;
+      return pf1.chat.command(command, formula, comment, { speaker, rollData });
+    },
+  });
+
   Object.defineProperty(pf1.registry, "materialTypes", {
-    get: () => {
+    get() {
       foundry.utils.logCompatibilityWarning("pf1.registry.materialTypes has been moved to pf1.registry.materials.", {
         since: "PF1 vNEXT",
         until: "PF1 vNEXT+1",
@@ -576,11 +594,6 @@ Hooks.on("renderChatLog", (_, html) => _canvas.attackReach.addReachListeners(htm
 
 Hooks.on("renderChatPopout", (_, html) => documents.item.ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => documents.actor.ActorPF.chatListeners(html));
-
-Hooks.on("chatMessage", (log, message, chatData) => {
-  const result = documents.customRolls(message, chatData.speaker);
-  return !result;
-});
 
 Hooks.on("renderActorDirectory", (app, html, data) => {
   html.find("li.actor").each((i, li) => {

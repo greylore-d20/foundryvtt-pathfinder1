@@ -1,0 +1,179 @@
+.pf1-v2.damage-type-selector {
+  .form-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-bottom: 0.5rem;
+
+    .damage-type-container {
+      display: flex;
+      gap: 1rem;
+
+      :is(.damage-type-categories, .damage-modifiers) {
+        overflow-y: auto;
+        .scrollbar();
+        max-height: 100%;
+
+        .icon-row {
+          padding: 0.5rem 0;
+        }
+      }
+
+      .damage-type-categories {
+        flex: 2;
+      }
+
+      .damage-modifiers {
+        border-left: 1px solid transparent;
+        padding-left: 0.5rem;
+
+        .icon-row {
+          justify-content: center;
+        }
+      }
+
+      :is(.damage-types, .damage-modifiers) {
+        label {
+          width: 100%;
+          text-align: center;
+          font-weight: bold;
+          font-size: var(--font-size-24);
+
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          &:before,
+          &:after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            border-top: 1px solid transparent;
+          }
+        }
+
+        .icon-pf {
+          font-size: var(--pf1-damage-icon-size);
+          text-shadow: 0 0 4px black;
+          background: none;
+          width: 64px;
+          height: 64px;
+        }
+      }
+    }
+
+    .misc-container {
+      padding-top: 0.5rem;
+    }
+
+    .icon-row {
+      display: grid;
+      flex-flow: row wrap;
+      grid-template-columns: repeat(auto-fit, 80px);
+      grid-gap: 0.4rem;
+
+      .damage-type {
+        cursor: pointer;
+        width: 80px;
+        padding: 0.25rem;
+        align-items: center;
+        position: relative;
+        border: 1px solid transparent;
+
+        display: grid;
+        justify-items: center;
+        grid-row-gap: 2px;
+
+        input[type="checkbox"] {
+          position: absolute;
+          top: 0.25rem;
+          right: 0.25rem;
+        }
+
+        img {
+          height: 72px;
+          width: 72px;
+          object-fit: cover;
+          object-position: 50% 0;
+          border: none;
+        }
+
+        span {
+          overflow: hidden;
+          text-align: center;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
+
+.theme-light {
+  .pf1-v2.damage-type-selector {
+    .form-body {
+      .damage-type-container {
+        .damage-modifiers {
+          border-color: var(--color-form-hint);
+        }
+
+        :is(.damage-types, .damage-modifiers) {
+          label {
+            &:before,
+            &:after {
+              border-top-color: var(--color-form-hint);
+            }
+          }
+        }
+
+        .icon-row {
+          .damage-type {
+            &.toggled {
+              border-color: var(--color-warm-2);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.damage-type-selector {
+    .form-body {
+      .damage-type-container {
+        .damage-modifiers {
+          border-color: var(--color-form-hint);
+        }
+
+        :is(.damage-types, .damage-modifiers) {
+          label {
+            &:before,
+            &:after {
+              border-top-color: var(--color-form-hint);
+            }
+          }
+        }
+
+        .icon-row {
+          .damage-type {
+            &.toggled {
+              border-color: var(--color-warm-1);
+            }
+          }
+        }
+      }
+
+      .icon-row {
+        .damage-type {
+          .icon-pf {
+            &:is(.ra-archery-target, .ra-hand, .ra-uncertainty) {
+              &:before {
+                color: var(--color-light-1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

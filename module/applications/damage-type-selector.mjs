@@ -1,4 +1,34 @@
-export class DamageTypeSelector extends FormApplication {
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: DamageTypeSelector._updateObject,
+      closeOnSubmit: true,
+    },
+    classes: ["pf1-v2", "damage-type-selector"],
+    window: {
+      title: "PF1.DamageType",
+      minimizable: true,
+      resizable: false,
+    },
+    position: {
+      width: 720,
+    },
+    sheetConfig: false,
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/damage-type-selector.hbs",
+      scrollable: [".damage-type-categories", ".damage-modifiers"],
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
+
   /**
    * @internal
    * @type {string}
@@ -17,41 +47,39 @@ export class DamageTypeSelector extends FormApplication {
    * @param {object} options - Application options
    */
   constructor(object, path, data, options = {}) {
-    super(object, options);
+    super(options);
+    this.object = object;
     this.path = path;
     this.damage = foundry.utils.deepClone(data) || { values: [] };
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 720,
-      height: 590,
-      template: "systems/pf1/templates/apps/damage-type-selector.hbs",
-      scrollY: [".damage-type-categories", ".damage-modifiers"],
-      closeOnSubmit: true,
-    });
-  }
-
-  get title() {
-    return game.i18n.localize("PF1.DamageType");
-  }
+  /* -------------------------------------------- */
 
   get id() {
     return `damage-types-${this.object.id}-${this.path.replaceAll(".", "_")}`;
   }
 
+  /* -------------------------------------------- */
+
   get damageCategorySortOrder() {
     return ["physical", "energy", "misc"];
   }
 
-  async getData() {
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     const damageTypes = pf1.registry.damageTypes
       .filter((damageType) => !damageType.isModifier)
       .map((dt) => ({ ...dt, id: dt.id, enabled: this.damage.values.includes(dt.id) }));
 
     const sortOrder = this.damageCategorySortOrder;
 
-    const context = {
+    return {
       damage: this.damage,
       damageTypes,
       damageModifiers: pf1.registry.damageTypes
@@ -77,19 +105,28 @@ export class DamageTypeSelector extends FormApplication {
           if (idxA < idxB) return -1;
           return 0;
         }),
+      buttons: [{ type: "submit", label: "PF1.Save", icon: "far fa-save" }],
     };
-
-    return context;
   }
+  /* -------------------------------------------- */
 
   /**
-   * @override
-   * @param {JQuery<HTMLElement>} html
+   * Attach event listeners to the rendered application form.
+   *
+   * @param {ApplicationRenderContext} context      Prepared context data
+   * @param {RenderOptions} options                 Provided render options
+   * @protected
    */
-  activateListeners(html) {
-    html.find(`.damage-type`).on("click", this._toggleDamageType.bind(this));
-    html.find(`*[name]`).on("change", this._onChangeData.bind(this));
+  _onRender(context, options) {
+    this.element
+      .querySelectorAll(`.damage-type`)
+      .forEach((el) => el.addEventListener("click", this._toggleDamageType.bind(this)));
+    this.element
+      .querySelectorAll(`*[name]`)
+      .forEach((el) => el.addEventListener("click", this._onChangeData.bind(this)));
   }
+
+  /* -------------------------------------------- */
 
   /**
    * @internal
@@ -115,6 +152,8 @@ export class DamageTypeSelector extends FormApplication {
     foundry.utils.setProperty(this.damage, dataPath, value);
   }
 
+  /* -------------------------------------------- */
+
   /**
    * @internal
    * @param {Event} event
@@ -129,12 +168,14 @@ export class DamageTypeSelector extends FormApplication {
     this.render();
   }
 
+  /* -------------------------------------------- */
+
   /**
    * @override
    * @param {Event} event
    * @param {object} formData
    */
-  async _updateObject(event, formData) {
+  static async _updateObject(event, formData) {
     return this.object.update({ [this.path]: this.damage });
   }
 }

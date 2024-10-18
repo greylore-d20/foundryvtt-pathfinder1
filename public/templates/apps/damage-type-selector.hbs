@@ -12,9 +12,9 @@
 </div>
 {{/inline}}
 
-<form class="pf1 damage-type-selector" data-tooltip-class="pf1" autocomplete="off">
-  <div class="flexrow damage-type-container">
-    <div class="flexcol damage-type-categories">
+<section class="form-body">
+  <div class="damage-type-container">
+    <div class="damage-type-categories">
       {{#each damageCategories as |category categoryKey|}}
       <div class="damage-types" data-category="{{categoryKey}}">
         <label>{{localize category.label}}</label>
@@ -37,15 +37,10 @@
     </div>
   </div>
 
-  <div class="flexrow misc-container">
+  <div class="misc-container">
     <div class="form-group custom">
       <label>{{localize "PF1.Custom"}}</label>
       <input type="text" name="custom" value="{{@root.damage.custom}}">
     </div>
   </div>
-
-  <button type="submit" name="submit">
-    <i class="far fa-save"></i>
-    {{localize "Save"}}
-  </button>
-</form>
+</section>

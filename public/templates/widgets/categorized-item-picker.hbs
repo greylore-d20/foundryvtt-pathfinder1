@@ -1,21 +1,27 @@
-<div class="widget categorized-item-picker">
-  <div class="item-picker-categories">
+<section class="widget-content">
+  <div class="item-picker-categories tabs" data-group="primary">
     {{#each categories}}
-      <div class="category {{#if validity.valid}}valid{{else}}invalid{{/if}}"
-        {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
-        <a data-category="{{key}}"><h2>{{label}}</h2></a>
+      <a class="category {{#if active}}active{{/if}} {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-group="primary" data-tab="{{key}}"
+         data-action="tab"
+           {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
+        {{label}}
         {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
-      </div>
+      </a>
     {{/each}}
   </div>
 
   <div class="item-picker-items">
-    {{#each items}}
-      <span class="item hidden {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}" data-value="{{key}}"
-        {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
-        <h4>{{label}}</h4>
-        {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
-      </span>
+    {{#each categories}}
+      <div class="tab {{#if active}}active{{/if}}" data-group="primary" data-tab="{{key}}">
+        {{#each items}}
+          <div class="item {{#if active}}pre-selected{{/if}} {{#if validity.valid}}valid{{else}}invalid{{/if}}" data-category="{{category}}"
+               data-value="{{key}}"
+               {{#unless validity.valid}}data-tooltip="PF1.Application.ChangeTargetSelector.InvalidChoice"{{/unless}}>
+            {{label}}
+            {{#unless validity.valid}}<i class="warning fa-solid fa-triangle-exclamation"></i>{{/unless}}
+          </div>
+        {{/each}}
+      </div>
     {{/each}}
   </div>
-</div>
+</section>

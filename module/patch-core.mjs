@@ -70,8 +70,8 @@
  * Stop releasing modifiers on HTMLButtonElement. Check again on proper support of popouts. How blur is handled will have to be reevaluated
  *
  * Introduced Foundry VTT v10.291
+ * Still needed with v12.331
  */
-
 {
   const original_onFocusIn = KeyboardManager.prototype._onFocusIn;
   KeyboardManager.prototype._onFocusIn = function (event) {

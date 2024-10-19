@@ -114,6 +114,7 @@ The key is damage formula instead.
 #### Special Options
 
 - `nonlethal` - Adds nonlethal damage.
+- `card` - Generates a card for use instead of applying directly. No targeting is required.
 
 ### `@Draw`
 
@@ -147,6 +148,7 @@ The key is heal formula instead.
 
 - `nonlethal` - Heals nonlethal damage.
 - `dual` - Heals both normal health and nonlethal.
+- `card` - Generates a card for use instead of applying directly. No targeting is required.
 
 ### `@Save`
 

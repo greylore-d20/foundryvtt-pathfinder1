@@ -2019,7 +2019,7 @@ export class ItemPF extends ItemBasePF {
 
     const links = this.toObject().system.links?.[type] ?? [];
 
-    const uuid = item.getRelativeUUID(this.actor);
+    const uuid = this.actor ? item.getRelativeUUID(this.actor) : item.uuid;
 
     const linkData = this._generateLinkData(type, item, uuid);
     if (extraData) foundry.utils.mergeObject(linkData, extraData);

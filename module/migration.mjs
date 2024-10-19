@@ -20,6 +20,8 @@ export const moved = {
   // Poison Use (v11)
   "Compendium.pf1.class-abilities.kKaz5A6XbuxgVvhO": "Compendium.pf1.class-abilities.Item.A54sLfcyoR5HGNbP",
   "Compendium.pf1.class-abilities.AmsnoKelAxLttUbj": "Compendium.pf1.class-abilities.Item.A54sLfcyoR5HGNbP",
+  // Trap Sense (V11)
+  "Compendium.pf1.class-abilities.KbhRBQE5ZyYedJo6": "Compendium.pf1.class-abilities.Item.BoEkMviJrW0PKmhj",
 };
 
 /**

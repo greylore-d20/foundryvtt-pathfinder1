@@ -1,29 +1,43 @@
-export class Troubleshooter extends Application {
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+export class Troubleshooter extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: "pf1-troubleshooter",
+    classes: ["pf1-v2", "troubleshooter"],
+    window: {
+      title: "PF1.Troubleshooter.Title",
+      minimizable: false,
+      resizable: false,
+    },
+    position: {
+      width: 460,
+    },
+    actions: {
+      migrate: Troubleshooter._runMigration,
+      help: Troubleshooter._openHelp,
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/troubleshooter.hbs",
+    },
+  };
+
   // Are packs to be unlocked?
   unlock = false;
 
   // Migration state
   migrating = { world: false, modules: false };
 
-  get title() {
-    return game.i18n.localize("PF1.Troubleshooter.Title");
-  }
+  /* -------------------------------------------- */
 
-  get template() {
-    return "systems/pf1/templates/apps/troubleshooter.hbs";
-  }
-
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
-      classes: [...options.classes, "pf1", "troubleshooter"],
-      id: "pf1-troubleshooter",
-      width: 460,
-    };
-  }
-
-  getData() {
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     return {
       isGM: game.user.isGM,
       unlockPacks: this.unlock,
@@ -44,14 +58,17 @@ export class Troubleshooter extends Application {
     };
   }
 
+  /* -------------------------------------------- */
+
   /**
+   * @static
    * @param {Event} event
    */
-  async _runMigration(event) {
+  static async _runMigration(event) {
     const unlock = this.unlock ?? false;
 
     /** @type {Element} */
-    const el = event.target;
+    const el = event.target.closest("[data-action]");
     if (el.disabled) return;
 
     el.classList.remove("finished");
@@ -67,39 +84,61 @@ export class Troubleshooter extends Application {
         await pf1.migrations.migrateWorld({ unlock, dialog: { top } });
         this.migrating.world = false;
         break;
+
       case "modules":
         this.migrating.modules = true;
         await pf1.migrations.migrateModules({ unlock, dialog: { top } });
         this.migrating.modules = false;
         break;
+
       default:
         throw new Error(`Unrecognized migration target: "${target}"`);
     }
 
-    this.element[0].querySelector("form").classList.remove("migrating");
+    this.element.querySelector(".form-body").classList.remove("migrating");
     el.disabled = false;
     el.classList.remove("active");
     el.classList.add("finished");
   }
 
-  _openHelp(event) {
-    pf1.applications.helpBrowser.openUrl("Help/Home");
-  }
+  /* -------------------------------------------- */
 
   /**
-   * @param {JQuery} jq
-   * @override
+   * @static
+   * @param {Event} event
    */
-  activateListeners(jq) {
-    super.activateListeners(jq);
+  static _openHelp(event) {
+    pf1.applications.helpBrowser.openUrl("Help/Home");
+  }
+  /* -------------------------------------------- */
 
-    const [html] = jq;
+  /**
+   * The event handler for changes to form input elements
+   *
+   * @internal
+   * @param {ApplicationFormConfiguration} formConfig   The configuration of the form being changed
+   * @param {Event} event                               The triggering event
+   * @returns {void}
+   */
+  _onChangeForm(formConfig, event) {
+    const target = event.target;
 
-    const migrationButtons = html.querySelectorAll("button[data-action='migrate']");
-
-    for (const button of migrationButtons) {
-      button.addEventListener("click", this._runMigration.bind(this));
+    if (target.matches("input[name='unlock']")) {
+      this.unlock = target.checked;
     }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Attach event listeners to the rendered application form.
+   *
+   * @param {ApplicationRenderContext} context      Prepared context data
+   * @param {RenderOptions} options                 Provided render options
+   * @protected
+   */
+  _onRender(context, options) {
+    const migrationButtons = this.element.querySelectorAll("button[data-action='migrate']");
 
     // React to external migration to minimal degree
     if (pf1.migrations.isMigrating) {
@@ -118,15 +157,14 @@ export class Troubleshooter extends Application {
         }
       });
     }
-
-    html
-      .querySelector("input[name='unlock']")
-      .addEventListener("change", (event) => (this.unlock = event.target.checked));
-
-    html.querySelector("a[data-action='help']").addEventListener("click", this._openHelp.bind(this));
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * @static
+   */
   static open() {
-    new Troubleshooter().render(true, { focus: true });
+    new Troubleshooter().render(true);
   }
 }

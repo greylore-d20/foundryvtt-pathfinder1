@@ -82,8 +82,13 @@
       }
     }
 
-    :is(h2, h3, h4, h5) {
+    :is(h1, h2, h3, h4, h5) {
       margin: 1rem 0 0.5rem;
+      text-shadow: none;
+    }
+
+    h1 {
+      margin-top: unset;
     }
   }
 }
@@ -92,6 +97,16 @@
   .pf1-v2.help-browser {
     a {
       color: var(--color-warm-2);
+    }
+
+    .top-bar {
+      border-bottom-color: var(--color-cool-4);
+    }
+
+    .content {
+      :is(h1, h2, h3, h4, h5) {
+        color: var(--color-text-dark-1);
+      }
     }
   }
 }

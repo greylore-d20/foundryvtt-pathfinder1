@@ -214,9 +214,10 @@ function getSheetActor(target) {
  * Get relevant actors based on the enriched element data.
  *
  * @param {HTMLElement} button - Clicked element.
+ * @param {boolean} required - Error if no actors are found.
  * @returns {Set<ActorPF>} - Relevant actors
  */
-export function getRelevantActors(button) {
+export function getRelevantActors(button, required = true) {
   const actors = [];
 
   const as = button.dataset.as || (button.dataset.speaker ? "speaker" : null);
@@ -250,7 +251,7 @@ export function getRelevantActors(button) {
     }
   }
 
-  if (actors.length == 0) {
+  if (required && actors.length == 0) {
     ui.notifications.error(game.i18n.localize("PF1.EnrichedText.Errors.NoActors"));
     throw new Error("No valid actors found.");
   }
@@ -479,7 +480,7 @@ export function onAction(event, target) {
 export async function onHealth(event, target) {
   const { command, formula, speaker, nonlethal, vars, dual, card } = target.dataset;
 
-  const actors = !card ? getRelevantActors(target) : null;
+  const actors = getRelevantActors(target, false);
 
   // Add additional options
   const options = {};
@@ -497,8 +498,7 @@ export async function onHealth(event, target) {
   const isHeal = command === "heal";
 
   // Generate card
-  if (card) {
-    ChatMessage.getSpeaker({ actor: speakerActor });
+  if (card && actors.size == 0) {
     // TODO: Make card flavor better
     pf1.chat.command(command, formula, undefined, { rollData, speaker: speakerData });
     return;
@@ -507,10 +507,21 @@ export async function onHealth(event, target) {
   // Apply directly
   for (const actor of actors) {
     if (targetRolldata) rollData = actor.getRollData();
-    const roll = await RollPF.safeRoll(formula, rollData);
-    let value = roll.total;
-    if (isHeal) value = -value;
-    actor.applyDamage(value, { ...options, event, element: target });
+    // Roll card
+    if (card) {
+      const tname = actor.token?.name ?? actor.name;
+      pf1.chat.command(command, formula, game.i18n.format("PF1.EnrichedText.Subject", { name: tname }), {
+        rollData,
+        speaker: speakerData,
+      });
+    }
+    // Apply directly
+    else {
+      const roll = await RollPF.safeRoll(formula, rollData);
+      let value = roll.total;
+      if (isHeal) value = -value;
+      actor.applyDamage(value, { ...options, event, element: target });
+    }
   }
 }
 

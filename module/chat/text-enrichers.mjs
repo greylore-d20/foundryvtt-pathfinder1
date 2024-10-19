@@ -175,16 +175,28 @@ export function createElement({ label, icon, click = false, drag = false, handle
 }
 
 /**
- * Get cards speaker
+ * Get card's speaker actor
  *
  * @param {Element} target
  * @returns {Actor|undefined}
  */
 function getSpeaker(target) {
+  const speaker = getSpeakerData(target);
+  if (!speaker) return;
+  return ChatMessage.getSpeakerActor(speaker);
+}
+
+/**
+ * Get card's speaker data
+ *
+ * @param {Element} target - Element to search message card from.
+ * @returns {object|undefined} - Message's speaker data or undefined
+ */
+function getSpeakerData(target) {
   const messageId = target.closest("[data-message-id]")?.dataset.messageId;
   const message = game.messages.get(messageId);
   if (!message) return;
-  return ChatMessage.getSpeakerActor(message.speaker);
+  return message.speaker;
 }
 
 /**
@@ -202,9 +214,10 @@ function getSheetActor(target) {
  * Get relevant actors based on the enriched element data.
  *
  * @param {HTMLElement} button - Clicked element.
+ * @param {boolean} required - Error if no actors are found.
  * @returns {Set<ActorPF>} - Relevant actors
  */
-export function getRelevantActors(button) {
+export function getRelevantActors(button, required = true) {
   const actors = [];
 
   const as = button.dataset.as || (button.dataset.speaker ? "speaker" : null);
@@ -238,7 +251,7 @@ export function getRelevantActors(button) {
     }
   }
 
-  if (actors.length == 0) {
+  if (required && actors.length == 0) {
     ui.notifications.error(game.i18n.localize("PF1.EnrichedText.Errors.NoActors"));
     throw new Error("No valid actors found.");
   }
@@ -250,9 +263,10 @@ export function getRelevantActors(button) {
  * Add tooltip to enriched element.
  *
  * @param {Element} el Target element
+ * @param {object} allowed -
  */
-export function generateTooltip(el) {
-  const { roll, formula, bonus, speaker, name, level } = el.dataset;
+export function generateTooltip(el, allowed = {}) {
+  const { roll, formula, bonus, speaker, name, level, as, card } = el.dataset;
 
   const tooltip = [];
   if (name) tooltip.push(name);
@@ -264,7 +278,11 @@ export function generateTooltip(el) {
   }
   if (level) tooltip.push(game.i18n.localize("PF1.Level") + `: ${level}`);
   if (bonus) tooltip.push(game.i18n.localize("PF1.Bonus") + `: ${bonus}`);
-  if (speaker) tooltip.push(game.i18n.localize("PF1.EnrichedText.AsSpeaker"));
+  if (speaker || as === "speaker") tooltip.push(game.i18n.localize("PF1.EnrichedText.AsSpeaker"));
+  if (allowed.card) {
+    if (card) tooltip.push(game.i18n.localize("PF1.EnrichedText.AsCard"));
+    else tooltip.push(game.i18n.localize("PF1.EnrichedText.Direct"));
+  }
 
   el.dataset.tooltip = tooltip.join("<br>");
 }
@@ -460,9 +478,9 @@ export function onAction(event, target) {
  * @param {HTMLElement} target - Triggered element
  */
 export async function onHealth(event, target) {
-  const { command, formula, speaker, nonlethal, vars, dual } = target.dataset;
+  const { command, formula, speaker, nonlethal, vars, dual, card } = target.dataset;
 
-  const actors = getRelevantActors(target);
+  const actors = getRelevantActors(target, false);
 
   // Add additional options
   const options = {};
@@ -471,15 +489,39 @@ export async function onHealth(event, target) {
 
   const targetRolldata = vars === "target";
 
-  let rollData;
-  if (!targetRolldata) rollData = getSpeaker(target)?.getRollData();
+  const speakerData = getSpeakerData(target);
+  const speakerActor = speakerData ? ChatMessage.getSpeakerActor(speakerData) : null;
 
+  let rollData;
+  if (!targetRolldata) rollData = speakerActor?.getRollData();
+
+  const isHeal = command === "heal";
+
+  // Generate card
+  if (card && actors.size == 0) {
+    // TODO: Make card flavor better
+    pf1.chat.command(command, formula, undefined, { rollData, speaker: speakerData });
+    return;
+  }
+
+  // Apply directly
   for (const actor of actors) {
     if (targetRolldata) rollData = actor.getRollData();
-    const roll = await RollPF.safeRoll(formula, rollData);
-    let value = roll.total;
-    if (command === "heal") value = -value;
-    actor.applyDamage(value, { ...options, event, element: target });
+    // Roll card
+    if (card) {
+      const tname = actor.token?.name ?? actor.name;
+      pf1.chat.command(command, formula, game.i18n.format("PF1.EnrichedText.Subject", { name: tname }), {
+        rollData,
+        speaker: speakerData,
+      });
+    }
+    // Apply directly
+    else {
+      const roll = await RollPF.safeRoll(formula, rollData);
+      let value = roll.total;
+      if (isHeal) value = -value;
+      actor.applyDamage(value, { ...options, event, element: target });
+    }
   }
 }
 
@@ -757,7 +799,7 @@ export const enrichers = [
         })
       );
 
-      generateTooltip(a);
+      generateTooltip(a, { card: true });
 
       if (a.dataset.command === "heal") setIcon(a, "fa-solid fa-heart-pulse");
       else setIcon(a, "fa-solid fa-heart-crack");

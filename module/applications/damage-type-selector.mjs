@@ -16,6 +16,9 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
     position: {
       width: 720,
     },
+    actions: {
+      toggleDamageType: DamageTypeSelector._toggleDamageType,
+    },
     sheetConfig: false,
   };
 
@@ -113,20 +116,6 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
       buttons: [{ type: "submit", label: "PF1.Save", icon: "far fa-save" }],
     };
   }
-  /* -------------------------------------------- */
-
-  /**
-   * Attach event listeners to the rendered application form.
-   *
-   * @param {ApplicationRenderContext} context      Prepared context data
-   * @param {RenderOptions} options                 Provided render options
-   * @protected
-   */
-  _onRender(context, options) {
-    this.element
-      .querySelectorAll(`.damage-type`)
-      .forEach((el) => el.addEventListener("click", this._toggleDamageType.bind(this)));
-  }
 
   /* -------------------------------------------- */
 
@@ -166,9 +155,9 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
    * @internal
    * @param {Event} event
    */
-  _toggleDamageType(event) {
+  static _toggleDamageType(event) {
     event.preventDefault();
-    const a = event.currentTarget;
+    const a = event.target.closest("[data-action]");
     const dt = a.dataset.id;
 
     if (this.damage.values.includes(dt)) this.damage.values.splice(this.damage.values.indexOf(dt), 1);

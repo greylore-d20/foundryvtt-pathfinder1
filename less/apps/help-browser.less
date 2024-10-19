@@ -1,95 +1,115 @@
-.pf1.help-browser {
+.pf1-v2.help-browser {
   min-height: 420px;
   min-width: 540px;
 
   section.window-content {
     padding: 0;
+  }
 
-    a {
-      color: var(--color-text-hyperlink);
-      text-decoration: underline;
+  section.form-body {
+    height: 100%;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  [data-url="helphome"] ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    line-height: 1.5rem;
+    column-gap: 1rem;
+    padding: 0;
+
+    > li {
+      margin: 0;
+    }
+  }
+
+  .top-bar {
+    padding: 0.5rem 1rem;
+    flex: 0 0 43px;
+    border-bottom: 1px solid transparent;
+
+    > * {
+      margin-right: 8px;
     }
 
-    [data-url="helphome"] ul {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      line-height: 1.5rem;
-      column-gap: 1rem;
-      padding: 0;
+    i {
+      font-size: var(--font-size-24);
+    }
 
-      > li {
-        margin: 0;
+    i.gray {
+      color: gray;
+    }
+  }
+
+  .primary {
+    height: calc(100% - 43px);
+  }
+
+  .content {
+    height: 100%;
+    overflow: auto;
+    padding: 0.5rem 1rem 0;
+    .scrollbar();
+
+    * {
+      user-select: text;
+    }
+
+    code {
+      padding: 0 0.25rem;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    table {
+      width: unset;
+      margin: 0;
+
+      border: 1px solid transparent;
+
+      th {
+        code {
+          text-shadow: none;
+        }
       }
+
+      :is(th, td) {
+        padding: 0.25rem 0.5rem;
+      }
+    }
+
+    :is(h2, h3, h4, h5) {
+      margin: 1rem 0 0.5rem;
+    }
+  }
+}
+
+.theme-light {
+  .pf1-v2.help-browser {
+    a {
+      color: var(--color-warm-2);
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.help-browser {
+    a {
+      color: var(--color-warm-1);
     }
 
     .top-bar {
-      padding: 6px;
-      flex: 0 0 39px;
-      border-bottom: var(--pf1-border-groove);
-
-      > * {
-        margin-right: 8px;
-      }
-
-      i {
-        font-size: var(--font-size-24);
-      }
-      i.gray {
-        color: gray;
-      }
-    }
-
-    .primary {
-      height: calc(100% - 39px);
+      border-bottom-color: var(--color-cool-4);
     }
 
     .content {
-      height: 100%;
-      overflow: auto;
-      .scrollbar();
-
-      padding-bottom: 32px;
-      padding-left: 0.4em;
-      padding-right: 0.4em;
-
-      * {
-        user-select: text;
-      }
-
       code {
-        padding: 0 3px;
-        background: var(--pf1-bg-light-1);
-        color: var(--color-text-dark-1);
-        border: 1px solid var(--color-border-light-secondary);
-        border-radius: 3px;
-      }
-
-      table {
-        width: unset;
-
-        border: 1px solid var(--color-border-light-tertiary);
-
-        th {
-          code {
-            // Fix Foundry's styling on header code blocks
-            text-shadow: 1px 1px var(--color-text-light-2);
-          }
-        }
-        :is(th, td) {
-          padding: 0.3em 0.3em;
-        }
-      }
-
-      img {
-        margin-left: 8px;
-      }
-
-      h2,
-      h3,
-      h4,
-      h5 {
-        margin-top: 1em;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--color-text-light-1);
       }
     }
   }

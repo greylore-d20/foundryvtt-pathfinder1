@@ -1,21 +1,23 @@
-<nav class="top-bar">
+<section class="form-body">
+  <nav class="top-bar">
     {{#if hasHistoryBack}}
-    <a class="history-back"><i class="fas fa-arrow-left"></i></a>
+      <a class="history-back" data-action="back" data-tooltip="PF1.Help.GoBack"><i class="fas fa-arrow-left"></i></a>
     {{else}}
-    <i class="fas fa-arrow-left gray"></i>
+      <i class="fas fa-arrow-left gray"></i>
     {{/if}}
 
-    <a class="history-home"><i class="fas fa-home"></i></a>
+    <a class="history-home" data-action="home" data-tooltip="PF1.Help.GoHome"><i class="fas fa-home"></i></a>
 
     {{#if hasHistoryForward}}
-    <a class="history-forward"><i class="fas fa-arrow-right"></i></a>
+      <a class="history-forward" data-action="forward" data-tooltip="PF1.Help.GoForward"><i class="fas fa-arrow-right"></i></a>
     {{else}}
-    <i class="fas fa-arrow-right gray"></i>
+      <i class="fas fa-arrow-right gray"></i>
     {{/if}}
-</nav>
+  </nav>
 
-<div class="primary flexrow">
+  <div class="primary flexrow">
     <section class="content" data-url="{{url}}">
-        {{{pageContent}}}
+      {{{pageContent}}}
     </section>
-</div>
+  </div>
+</section>

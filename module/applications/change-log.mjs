@@ -1,9 +1,38 @@
 import { SemanticVersion } from "@utils/semver.mjs";
 
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Changelog Dialog
  */
-export class ChangeLogWindow extends FormApplication {
+export class ChangeLogWindow extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: "changelog",
+    tag: "form",
+    form: {
+      handler: ChangeLogWindow._updateObject,
+      submitOnChange: true,
+      closeOnSubmit: false,
+    },
+    classes: ["pf1-v2", "changelog"],
+    window: {
+      minimizable: true,
+      resizable: true,
+    },
+    position: {
+      width: 500,
+      height: 680,
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/changelog.hbs",
+    },
+  };
+
+  _cache;
+
   /**
    * @param {boolean} lastVersion - Display only latest version, legacy versions are to be omitted.
    * @param {boolean} autoDisplay - Is the dialog being shown without prompting?
@@ -15,36 +44,26 @@ export class ChangeLogWindow extends FormApplication {
     this.autoDisplay = autoDisplay;
   }
 
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
-      id: "changelog",
-      classes: [...options.classes, "pf1", "changelog"],
-      template: "systems/pf1/templates/apps/changelog.hbs",
-      tabs: [
-        {
-          initial: "latest",
-          navSelector: "nav.tabs[data-group='primary']",
-          contentSelector: "section.content",
-          group: "primary",
-        },
-      ],
-      width: 500,
-      height: 680,
-      submitOnChange: true,
-      closeOnSubmit: false,
-    };
-  }
+  /* -------------------------------------------- */
 
+  /**
+   * @inheritDoc
+   * @override
+   * @returns {string}
+   */
   get title() {
     return `${game.i18n.localize("PF1.Title")} ~ ${game.i18n.localize("PF1.Application.Changelog.Title")}`;
   }
 
-  _cache;
+  /* -------------------------------------------- */
 
-  async getData() {
-    const context = await super.getData();
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
+    const context = {};
 
     context.dontShowAgain = game.settings.get("pf1", "dontShowChangelog");
     context.autoDisplay = this.autoDisplay;
@@ -78,6 +97,8 @@ export class ChangeLogWindow extends FormApplication {
 
     return context;
   }
+
+  /* -------------------------------------------- */
 
   /**
    * @internal
@@ -131,7 +152,21 @@ export class ChangeLogWindow extends FormApplication {
     };
   }
 
-  async _updateObject(event, formData) {
+  /* -------------------------------------------- */
+
+  /**
+   * Cancel distribution and close dialog
+   *
+   * @param {SubmitEvent} event                   The originating form submission event
+   * @param {HTMLFormElement} form                The form element that was submitted
+   * @param {FormDataExtended} formData           Processed data for the submitted form
+   * @static
+   * @internal
+   * @this {ApplicationV2&ChangeLogWindow}
+   * @returns {Promise<void>}
+   */
+  static async _updateObject(event, form, formData) {
+    formData = formData.object;
     if (formData.dontShowAgain != null) {
       await game.settings.set("pf1", "dontShowChangelog", formData.dontShowAgain);
     }

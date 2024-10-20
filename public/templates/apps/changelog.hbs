@@ -1,45 +1,41 @@
-<form autocomplete="off" data-tooltip-class="pf1">
-  <header>
-    <a href="{{{link}}}" target="_blank">{{localize "PF1.Application.Changelog.OpenInBrowser"}}</a>
-  </header>
-
+<section class="form-body">
   <nav class="tabs" data-group="primary">
     {{#with changelog}}
-    <a class="item" data-tab="latest">{{localize "PF1.Application.Changelog.Latest" version=version}}</a>
-    <a class="item" data-tab="major">{{localize "PF1.Application.Changelog.Major" major=version.major}}</a>
-    {{#if legacy.content}}
-    <a class="item" data-tab="legacy">{{localize "PF1.Application.Changelog.Legacy"}}</a>
-    {{/if}}
+      <a class="item active" data-action="tab" data-group="primary" data-tab="latest">{{localize "PF1.Application.Changelog.Latest" version=version}}</a>
+      <a class="item" data-action="tab" data-group="primary" data-tab="major">{{localize "PF1.Application.Changelog.Major" major=version.major}}</a>
+      {{#if legacy.content}}
+        <a class="item" data-action="tab" data-group="primary" data-tab="legacy">{{localize "PF1.Application.Changelog.Legacy"}}</a>
+      {{/if}}
     {{else}}
-    <a class="item" data-tab="error">{{localize "Error"}}</a>
+      <a class="item active" data-action="tab" data-group="primary" data-tab="error">{{localize "Error"}}</a>
     {{/with}}
   </nav>
 
   <section class="content">
     {{#with changelog}}
-    <div class="tab latest" data-group="primary" data-tab="latest">
-      {{{latest.content}}}
-    </div>
-    <div class="tab major" data-group="primary" data-tab="major">
-      {{{latest.content}}}
-      {{{major.content}}}
-    </div>
-    {{#if legacy.content}}
-    <div class="tab legacy" data-group="primary" data-tab="legacy">
-      {{{legacy.content}}}
-    </div>
-    {{/if}}
+      <div class="tab latest active" data-group="primary" data-tab="latest">
+        {{{latest.content}}}
+      </div>
+      <div class="tab major" data-group="primary" data-tab="major">
+        {{{latest.content}}}
+        {{{major.content}}}
+      </div>
+      {{#if legacy.content}}
+        <div class="tab legacy" data-group="primary" data-tab="legacy">
+          {{{legacy.content}}}
+        </div>
+      {{/if}}
     {{else}}
-    {{#if error}}
-    <div class="tab error">
-      <h2>
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span class='status-code'>{{error.number}}</span>
-        <span class='message'>{{error.message}}</span>
-      </h2>
-      <label class='url'>{{error.url}}</label>
-    </div>
-    {{/if}}
+      {{#if error}}
+        <div class="tab error active">
+          <h2>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span class='status-code'>{{error.number}}</span>
+            <span class='message'>{{error.message}}</span>
+          </h2>
+          <label class='url'>{{error.url}}</label>
+        </div>
+      {{/if}}
     {{/with}}
   </section>
 
@@ -48,5 +44,10 @@
       <input type="checkbox" name="dontShowAgain" {{checked dontShowAgain}}>
       {{localize "PF1.Application.Changelog.DontShowAgain"}}
     </label>
+
+    <a href="{{{link}}}" target="_blank">
+      <i class="fas fa-up-right-from-square"></i>
+      {{localize "PF1.Application.Changelog.OpenInBrowser"}}
+    </a>
   </footer>
-</form>
+</section>

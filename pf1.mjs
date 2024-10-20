@@ -249,6 +249,7 @@ Hooks.once("init", function () {
     ["conditions", registry.Conditions],
     ["sources", registry.Sources],
   ]);
+
   for (const [registryName, registryClass] of registries) {
     pf1.registry[registryName] = new registryClass();
   }
@@ -283,6 +284,9 @@ Hooks.once("init", function () {
 
   //Calculate conditions for world
   CONFIG.statusEffects = pf1.utils.init.getConditions();
+
+  // Register controls
+  documents.controls.registerSystemControls();
 
   // Call post-init hook
   Hooks.callAll("pf1PostInit");
@@ -469,20 +473,17 @@ Hooks.once("i18nInit", function () {
 
   // Point buy data
   doLocalizeKeys(pf1.config.pointBuy, ["label"]);
+
+  // Localize registry data
+  for (const registry of Object.values(pf1.registry)) {
+    if (registry instanceof pf1.registry.Registry) registry.localize();
+  }
 });
 
 /**
  * This function runs after game data has been requested and loaded from the servers, so documents exist
  */
 Hooks.once("setup", () => {
-  // Prepare registry data
-  for (const registry of Object.values(pf1.registry)) {
-    if (registry instanceof pf1.registry.Registry) registry.setup();
-  }
-
-  // Register controls
-  documents.controls.registerSystemControls();
-
   Hooks.callAll("pf1PostSetup");
 });
 

@@ -1,53 +1,38 @@
-.app.pf1.troubleshooter {
-  form {
+.pf1-v2.troubleshooter {
+  .form-body {
     &.migrating {
       > * {
         pointer-events: none;
       }
     }
 
-    h3 {
-      margin: 0;
+    h2 {
+      margin: 0 0 0.5rem;
+      text-shadow: none;
     }
 
     a {
-      color: var(--color-text-hyperlink);
+      text-decoration: underline;
     }
 
-    li > ul {
-      // Reduce Foundry's margin
-      margin-top: 0.2em;
+    label {
+      cursor: pointer;
+      margin-bottom: 0.25rem;
     }
 
     button {
       display: flex;
       flex-flow: row nowrap;
-      gap: 0.3rem;
+      gap: 0.25rem;
       align-items: center;
       justify-content: center;
-
-      > * {
-        // Prevent click handlers for button children
-        pointer-events: none;
-      }
 
       .progress {
         visibility: hidden;
         flex: 0 24px;
+        margin: 0;
 
         &.spinner {
-          color: gray;
-
-          @keyframes pf1-constant-spin {
-            from {
-              transform: rotate(0deg);
-            }
-
-            to {
-              transform: rotate(360deg);
-            }
-          }
-
           animation: pf1-constant-spin 2.5s infinite linear;
         }
       }
@@ -56,21 +41,10 @@
         &.spinner {
           visibility: hidden;
         }
+
         &.check {
           visibility: visible;
-          color: darkgreen;
         }
-      }
-    }
-
-    .hint {
-      padding: 0 10%;
-    }
-
-    .options {
-      label.checkbox {
-        // Undo generic styling
-        white-space: unset;
       }
     }
 
@@ -78,6 +52,62 @@
       button {
         .progress.spinner {
           visibility: visible;
+        }
+      }
+    }
+  }
+}
+
+.theme-light {
+  .pf1-v2.troubleshooter {
+    .form-body {
+      h2 {
+        color: var(--color-dark-1);
+      }
+
+      a {
+        color: var(--color-warm-2);
+      }
+
+      button {
+        .progress.spinner {
+          color: var(--color-dark-1);
+        }
+
+        .progress.check {
+          color: var(--color-level-success);
+        }
+
+        &:hover {
+          :is(.progress.spinner, .progress.check) {
+            color: var(--color-light-1);
+          }
+        }
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.troubleshooter {
+    .form-body {
+      a {
+        color: var(--color-warm-1);
+      }
+
+      button {
+        .progress.spinner {
+          color: var(--color-light-5);
+        }
+
+        .progress.check {
+          color: var(--color-level-success);
+        }
+
+        &:hover {
+          :is(.progress.spinner, .progress.check) {
+            color: var(--color-light-1);
+          }
         }
       }
     }

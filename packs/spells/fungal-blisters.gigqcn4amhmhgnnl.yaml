@@ -18,7 +18,7 @@ system:
       name: Use
       range:
         units: personal
-      spellEffect: Creates [[floor(@cl / 2)d2 + floor(@cl / 2)]]
+      spellEffect: Creates [[(floor(@cl / 2))d2 + floor(@cl / 2)]]
       target:
         value: you
     - _id: aXgxNdpBfTr4QcQo
@@ -29,7 +29,7 @@ system:
       area: 5-foot-radius burst centered on you
       damage:
         parts:
-          - formula: floor(@cl / 2)d2 + floor(@cl / 2)
+          - formula: (floor(@cl / 2))d2 + floor(@cl / 2)
             type:
               custom: ''
               values:

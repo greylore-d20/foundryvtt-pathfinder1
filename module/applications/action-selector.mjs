@@ -1,25 +1,29 @@
-import { getSkipActionPrompt } from "@documents/settings.mjs";
+const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-export class ActionSelector extends Application {
-  /**
-   * @param {object} options - Application options
-   * @param {ItemPF} optikons.item - The item for which to choose an action
-   */
-  constructor(options = {}) {
-    if (!(options.item instanceof Item)) throw new Error("Must provide item as part of options.");
-    super(options);
+export class ActionSelector extends HandlebarsApplicationMixin(DocumentSheetV2) {
+  static DEFAULT_OPTIONS = {
+    classes: ["pf1-v2", "action-selector"],
+    window: {
+      minimizable: false,
+      resizable: false,
+    },
+    actions: {
+      click: ActionSelector._onClickAction,
+    },
+    position: {
+      width: 390,
+    },
+    sheetConfig: false,
+  };
 
-    this.item = options.item;
-  }
-
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
+  static PARTS = {
+    form: {
       template: "systems/pf1/templates/apps/action-select.hbs",
-      classes: [...options.classes, "pf1", "action-selector"],
-      width: 400,
-    };
+    },
+  };
+
+  get item() {
+    return this.document;
   }
 
   get title() {
@@ -29,22 +33,17 @@ export class ActionSelector extends Application {
     });
   }
 
-  async getData() {
+  async _prepareContext() {
     return {
       actions: this.item.actions,
     };
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    html.find(".action").on("click", this._onClickAction.bind(this));
-  }
-
-  _onClickAction(event) {
+  static _onClickAction(event) {
     event.preventDefault();
 
-    this.resolve(event.currentTarget.dataset?.action);
+    const target = event.target.closest("[data-action]");
+    this.resolve(target.dataset?.id);
     this.close();
   }
 
@@ -55,15 +54,15 @@ export class ActionSelector extends Application {
 
   /**
    * @param {object} options - Options
-   * @param {ItemPF} options.item - Item to select action for.
+   * @param {ItemPF} options.document - Item to select action for.
    * @param {object} renderOptions - Options passed to application rendering
    * @returns {Promise<ChatMessage|object|undefined>} - Result of ItemPF.use() for selected action
    */
-  static async open(options = {}, renderOptions = {}) {
+  static async open(options) {
     return new Promise((resolve) => {
       const selector = new this(options);
       selector.resolve = resolve;
-      selector.render(true, { focus: true, ...renderOptions });
+      selector.render(true);
     });
   }
 }

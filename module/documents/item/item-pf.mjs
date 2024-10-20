@@ -1563,7 +1563,7 @@ export class ItemPF extends ItemBasePF {
       action = this.actions.get(actionId);
       if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
     } else if (this.system.actions.length > 1 && skipDialog !== true) {
-      const actionId = await pf1.applications.ActionSelector.open({ item: this });
+      const actionId = await pf1.applications.ActionSelector.open({ document: this });
       action = this.actions.get(actionId);
     } else {
       action = this.defaultAction;

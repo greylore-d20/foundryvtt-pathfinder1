@@ -113,17 +113,6 @@ export class DamageResistanceSelector extends AbstractListSelector {
   /* -------------------------------------------- */
 
   /**
-   * Return the dragdrop element type for this application
-   *
-   * @returns {string}
-   */
-  get dragDropType() {
-    return this.isDR ? "dr-entry" : "er-entry";
-  }
-
-  /* -------------------------------------------- */
-
-  /**
    * Initialize the configuration for this application. Override the default ID to be unique to this
    * entry selector instance based on document and attribute that is being edited.
    *

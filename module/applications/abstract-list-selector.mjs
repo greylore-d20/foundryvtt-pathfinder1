@@ -45,7 +45,7 @@ export class AbstractListSelector extends DragDropApplicationMixin(HandlebarsApp
    * @returns {string}
    */
   get dragDropType() {
-    return "list-entry";
+    return "pf1Entry-" + this.options.name;
   }
 
   /* -------------------------------------------- */

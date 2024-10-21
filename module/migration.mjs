@@ -347,7 +347,7 @@ export async function migrateCompendiums(
     if (!unlock && pack.locked) tracker?.ignoreEntry(pack);
 
     try {
-      await migrateCompendium(pack, { unlock, noHooks: true });
+      await migrateCompendium(pack, { unlock, noHooks: true, tracker });
     } catch (error) {
       console.error(`PF1 | Migration | Pack: ${pack.collection} | Error`, error);
     }
@@ -458,10 +458,11 @@ function clearCoreMessages(marker) {
  * @param {object} [options={}] - Additional options
  * @param {boolean} [options.unlock=false] - If false, locked compendium will be ignored.
  * @param options.noHooks
+ * @param options.tracker
  * @returns {Promise<void>} - Promise that resolves once migration is complete.
  * @throws {Error} - If defined pack is not found.
  */
-export async function migrateCompendium(pack, { unlock = false, noHooks = false } = {}) {
+export async function migrateCompendium(pack, { unlock = false, noHooks = false, tracker } = {}) {
   if (typeof pack === "string") {
     pack = game.packs.get(pack);
     if (!pack) throw new Error(`Compendium "${pack}" not found.`);
@@ -515,6 +516,7 @@ export async function migrateCompendium(pack, { unlock = false, noHooks = false 
         updates.push(updateData);
       }
     } catch (err) {
+      tracker?.recordError(document, err);
       console.error(`PF1 | Migration | Pack: ${pack.collection} | Error!`, err);
     }
   }

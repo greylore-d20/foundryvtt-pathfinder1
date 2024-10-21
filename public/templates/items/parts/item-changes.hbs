@@ -1,23 +1,27 @@
 {{!-- Flags --}}
 <div class="item-groups-list changeflags-list">
   <div class="item-list-header flexrow">
-    <div class="item-name flag-name flexrow">
-      <h3>{{localize "PF1.CheckFlags"}}</h3>
+    <h3>{{localize "PF1.ActiveCheckFlags"}}</h3>
 
-      <a class="flag-selector" data-title="PF1.CheckFlags"
+    <div class="controls flexrow">
+      <a class="control flag-selector" data-title="PF1.CheckFlags"
          data-options="changeFlagTargets" data-for="system.changeFlags">
-        <i class="fas fa-edit"></i>
+        <i class="fas fa-edit"></i> {{localize "PF1.Edit"}}
       </a>
     </div>
   </div>
 
-  <ul class="traits-list tag-list">
+  <ol class="item-list">
     {{#each config.changeFlagTargets as |label key|}}
       {{#if (lookup ../system.changeFlags key)}}
-        <li class="tag {{key}}">{{label}}</li>
+        <li class="item change-flag flexrow">
+          <div class="item-name flag-name flexrow {{key}}">
+            <h4>{{label}}</h4>
+          </div>
+        </li>
       {{/if}}
     {{/each}}
-  </ul>
+  </ol>
 </div>
 
 {{!-- Changes --}}

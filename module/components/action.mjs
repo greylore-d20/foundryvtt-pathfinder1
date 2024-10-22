@@ -868,7 +868,7 @@ export class ItemAction extends foundry.abstract.DataModel {
     const item = this.item;
     const result = item?.getRollData() ?? {};
 
-    result.action = foundry.utils.deepClone(this); // BUG: Needs custom clone function to not provide itself as reference
+    result.action = pf1.utils.deepClone(this);
     result.dc = this.hasSave ? this.getDC(result) : 0;
 
     if (item?.type === "spell") {

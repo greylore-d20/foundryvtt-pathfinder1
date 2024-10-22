@@ -289,6 +289,31 @@ export class ChatAttack {
     await this.setEffectNotesHTML();
   }
 
+  _createInlineRoll(roll, d20 = false, critical = false) {
+    const el = roll.toAnchor();
+    el.classList.add("inline-dsn-hidden");
+    if (d20) {
+      if (critical && roll.armorAsDR) el.classList.add("defense-dc");
+      if (roll.isNat20) el.classList.add("natural-20", "success");
+      if (roll.isNat1) el.classList.add("natural-1", "failure");
+      if (!critical && roll.isCrit) el.classList.add("critical-threat");
+    }
+    return el;
+  }
+
+  /**
+   * Generate inline rolls
+   */
+  _createInlineRolls() {
+    if (this.attack) this.attack.inlineRoll = this._createInlineRoll(this.attack, true);
+    if (this.critConfirm) this.critConfirm.inlineRoll = this._createInlineRoll(this.critConfirm, true, true);
+
+    for (const row of this.damageRows) {
+      if (row.normal) row.normal.inlineRoll = this._createInlineRoll(row.normal);
+      if (row.crit) row.crit.inlineRoll = this._createInlineRoll(row.crit);
+    }
+  }
+
   finalize() {
     this.hasCards = Object.keys(this.cards).length > 0;
 
@@ -303,6 +328,8 @@ export class ChatAttack {
     for (let a = 0; a < this.critDamage.rolls.length; a++) {
       this.damageRows[a].crit = this.critDamage.rolls[a];
     }
+
+    this._createInlineRolls();
 
     return this;
   }

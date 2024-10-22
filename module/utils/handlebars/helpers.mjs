@@ -34,26 +34,16 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("actionDamage", actionDamage);
 
   /**
-   * Fetches ability mod value based on ability key.
-   * Avoids contaminating rollData or item data with excess strings.
+   * Alt numberFormat helper to provide non-fixed point decimals and pretty fractionals
    *
-   * @deprecated Remove for v10
+   * @example
+   * ```hbs
+   * {{numberFormatAlt 5.52 decimals=1}} -> 5.5
+   * {{numberFormatAlt 5.5 fraction=true}} -> 5 1/2
+   * ```
    */
-  Handlebars.registerHelper("abilityMod", (abl, rollData, multiplier) => {
-    return Math.floor(rollData.abilities[abl]?.mod * multiplier ?? 1);
-  });
-
-  Handlebars.registerHelper("json-string", (obj) => {
-    return new Handlebars.SafeString(escape(JSON.stringify(obj)));
-  });
-
-  // Alt numberFormat helper
   Handlebars.registerHelper("numberFormatAlt", (number, { hash } = {}) => {
     if (hash.fraction) return fractionalToString(number);
     else return pf1.utils.limitPrecision(number, hash.decimals);
-  });
-
-  Handlebars.registerHelper("isNumber", (number) => {
-    return Number.isFinite(number);
   });
 };

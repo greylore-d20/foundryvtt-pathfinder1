@@ -13,10 +13,6 @@ system:
           type: action
       attackBonus: '15'
       attackName: Gravity Bomb Trip
-      attackNotes:
-        - >-
-          Creatures damaged by a gravity grenade are automatically subjected to
-          a trip attack (grenade's CMB = +15).
       damage:
         parts:
           - formula: 5d6
@@ -28,6 +24,11 @@ system:
         size: '20'
         type: circle
       name: Use
+      notes:
+        footer:
+          - >-
+            Creatures damaged by a gravity grenade are automatically subjected
+            to a trip attack (grenade's CMB = +15).
       save:
         dc: '15'
         description: Half

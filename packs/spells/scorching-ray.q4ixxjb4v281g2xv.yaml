@@ -24,6 +24,7 @@ system:
                 - fire
       duration:
         units: inst
+      effect: one or more rays
       extraAttacks:
         formula:
           count: clamp(floor((@cl - 3) / 4), 0, 2)
@@ -32,7 +33,6 @@ system:
       name: Use
       range:
         units: close
-      spellEffect: one or more rays
       touch: true
   components:
     somatic: true

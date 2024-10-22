@@ -13,8 +13,6 @@ system:
           cost: 2
           type: action
       area: 10-ft.-radius burst
-      attackNotes:
-        - Staggered for [[1d4]] rounds on failed save
       damage:
         parts:
           - formula: (min(15, @cl))d6
@@ -28,6 +26,9 @@ system:
         size: '10'
         type: circle
       name: Use
+      notes:
+        footer:
+          - Staggered for [[1d4]] rounds on failed save
       range:
         units: close
       save:

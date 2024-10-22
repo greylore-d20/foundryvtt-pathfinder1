@@ -16,12 +16,13 @@ system:
       duration:
         units: round
         value: 1 round/level
-      effectNotes:
-        - Affected creature is entangled.
       measureTemplate:
         size: '15'
         type: cone
       name: Use
+      notes:
+        effect:
+          - Affected creature is entangled.
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex negates

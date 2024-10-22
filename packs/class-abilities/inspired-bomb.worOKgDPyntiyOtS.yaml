@@ -31,13 +31,14 @@ system:
                 - fire
       duration:
         units: inst
-      effectNotes:
-        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
       img: systems/pf1/icons/items/inventory/bomb.jpg
       measureTemplate:
         size: '5'
         type: circle
       name: Throw
+      notes:
+        effect:
+          - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
       range:
         units: ft
         value: '20'

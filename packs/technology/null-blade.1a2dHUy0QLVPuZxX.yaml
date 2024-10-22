@@ -110,7 +110,6 @@ system:
         critMultiplier: null
         damageBonus: null
       range:
-        maxIncrements: null
         units: personal
     - _id: 6P6KLkafruEOsiYp
       activation:
@@ -119,12 +118,13 @@ system:
           type: nonaction
       duration:
         units: inst
-      effectNotes:
-        - >-
-          Roll d20+11 as
-          @UUID[Compendium.pf1.spells.Item.gmgwyjfpeuuc4t4o]{Dispel Magic} check
-          against the target.
       name: Dispel Magic / Discharge
+      notes:
+        effect:
+          - >-
+            Roll d20+11 as
+            @UUID[Compendium.pf1.spells.Item.gmgwyjfpeuuc4t4o]{Dispel Magic}
+            check against the target.
       range:
         units: melee
       save:

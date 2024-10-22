@@ -11,18 +11,19 @@ system:
         unchained:
           cost: 2
           type: action
-      effectNotes:
-        - >-
-          All creatures in this area of effect must succeed at a DC 14 Fortitude
-          save or become nauseated. This condition lasts as long as the creature
-          is in the cloud and for 1d4+1 rounds after it leaves. The gas created
-          lingers in the area for 5 rounds, and any creature that succeeds at
-          its initial save but remains in the cloud must continue to save each
-          round on its turn.
       measureTemplate:
         size: '20'
         type: circle
       name: Use
+      notes:
+        effect:
+          - >-
+            All creatures in this area of effect must succeed at a DC 14
+            Fortitude save or become nauseated. This condition lasts as long as
+            the creature is in the cloud and for 1d4+1 rounds after it leaves.
+            The gas created lingers in the area for 5 rounds, and any creature
+            that succeeds at its initial save but remains in the cloud must
+            continue to save each round on its turn.
       save:
         dc: '14'
         type: fort

@@ -26,8 +26,6 @@ system:
         type: attack
         unchained:
           type: nonaction
-      attackNotes:
-        - 50% chance of igniting successfully.
       damage:
         parts:
           - formula: 1d6
@@ -42,6 +40,9 @@ system:
         size: '5'
         type: circle
       name: Throw
+      notes:
+        footer:
+          - 50% chance of igniting successfully.
       range:
         maxIncrements: 5
         units: ft
@@ -53,13 +54,14 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      attackNotes:
-        - If lit the oil burns 2 rounds and deals 1d3 points of fire damage.
       measureTemplate:
         color: '#ff9500'
         size: '5'
         type: rect
       name: Pour
+      notes:
+        footer:
+          - If lit the oil burns 2 rounds and deals 1d3 points of fire damage.
       range:
         units: ft
         value: '5'

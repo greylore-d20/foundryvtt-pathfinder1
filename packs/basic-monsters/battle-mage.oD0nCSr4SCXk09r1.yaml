@@ -1000,9 +1000,10 @@ items:
           duration:
             units: spec
             value: 1 min./level
-          effectNotes:
-            - '[[min(8, (1d4 + floor(@item.cl / 3)))]] Images'
           name: Use
+          notes:
+            effect:
+              - '[[min(8, (1d4 + floor(@item.cl / 3)))]] Images'
           range:
             units: personal
           target:
@@ -1039,11 +1040,11 @@ items:
           duration:
             units: spec
             value: 1 min./level
+          effect: cloud spreads in 20-ft. radius from you, 20 ft. high
           name: Use
           range:
             units: ft
             value: '20'
-          spellEffect: cloud spreads in 20-ft. radius from you, 20 ft. high
       aura:
         school: con
       cl: 1
@@ -1128,6 +1129,7 @@ items:
                     - fire
           duration:
             units: inst
+          effect: one or more rays
           extraAttacks:
             formula:
               count: clamped(floor((@item.cl - 3) / 4), 0, 2)
@@ -1137,7 +1139,6 @@ items:
           range:
             units: ft
             value: 30[Close]
-          spellEffect: one or more rays
           touch: true
       aura:
         school: evo
@@ -1278,9 +1279,10 @@ items:
           duration:
             units: spec
             value: 1 min./level
-          effectNotes:
-            - '[[min(8, (1d4 + floor(@cl / 3)))]] Images'
           name: Use
+          notes:
+            effect:
+              - '[[min(8, (1d4 + floor(@cl / 3)))]] Images'
           range:
             units: personal
           target:
@@ -1364,6 +1366,7 @@ items:
                     - fire
           duration:
             units: inst
+          effect: one or more rays
           extraAttacks:
             formula:
               count: clamped(floor((@cl - 3) / 4), 0, 2)
@@ -1372,7 +1375,6 @@ items:
           name: Use
           range:
             units: close
-          spellEffect: one or more rays
           touch: true
       components:
         somatic: true

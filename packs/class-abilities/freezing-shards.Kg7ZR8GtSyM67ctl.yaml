@@ -27,14 +27,15 @@ system:
                 - cold
       duration:
         units: inst
-      effectNotes:
-        - >-
-          Affected area is difficult terrain (except for the caster) for one
-          round.
       measureTemplate:
         size: '5'
         type: circle
       name: Use
+      notes:
+        effect:
+          - >-
+            Affected area is difficult terrain (except for the caster) for one
+            round.
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex negates piercing and halfs cold

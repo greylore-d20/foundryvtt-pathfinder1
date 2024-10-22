@@ -23,12 +23,13 @@ system:
       duration:
         units: spec
         value: instantaneous and 2 rounds; see text
-      effectNotes:
-        - '@Action[Followup Damage]'
       measureTemplate:
         size: '30'
         type: circle
       name: Use
+      notes:
+        effect:
+          - '@Action[Followup Damage]'
       range:
         units: ft
         value: '30'
@@ -50,8 +51,6 @@ system:
                 - acid
       duration:
         units: inst
-      measureTemplate:
-        size: '30'
       name: Followup Damage
       save:
         description: Reflex half (see text)

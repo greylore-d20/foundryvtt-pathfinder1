@@ -17,13 +17,14 @@ system:
       duration:
         units: minute
         value: '1'
-      effectNotes:
-        - >-
-          Creature takes [[@abilities.int.mod]] cold damage at the beginning of
-          its turn. The creature can try to free itself with a DC [[10 +
-          floor(@class.level / 2) + @abilities.int.mod]] strength check as a
-          standard action. 
       name: Use
+      notes:
+        effect:
+          - >-
+            Creature takes [[@abilities.int.mod]] cold damage at the beginning
+            of its turn. The creature can try to free itself with a DC [[10 +
+            floor(@class.level / 2) + @abilities.int.mod]] strength check as a
+            standard action.
       range:
         units: touch
       target:

@@ -16,13 +16,14 @@ system:
           type: action
       duration:
         units: inst
-      effectNotes:
-        - 'Low damage: [[(min(7, ceil(@cl / 2)))d6]]'
-        - 'High damage: [[(min(15, @cl))d6]]'
+      effect: ray
       name: Use
+      notes:
+        effect:
+          - 'Low damage: [[(min(7, ceil(@cl / 2)))d6]]'
+          - 'High damage: [[(min(15, @cl))d6]]'
       range:
         units: close
-      spellEffect: ray
   components:
     divineFocus: 1
     somatic: true

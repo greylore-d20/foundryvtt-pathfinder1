@@ -690,11 +690,11 @@ items:
           duration:
             units: spec
             value: 1 min./level
+          effect: cloud spreads in 20-ft. radius from you, 20 ft. high
           name: Use
           range:
             units: ft
             value: '20'
-          spellEffect: cloud spreads in 20-ft. radius from you, 20 ft. high
       aura:
         school: con
       cl: 1
@@ -844,15 +844,16 @@ items:
               type: attack
           duration:
             units: inst
-          effectNotes:
-            - >-
-              <b>Save Fail</b>
-              @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}
-              for 1 hour
           measureTemplate:
             size: '10'
             type: circle
           name: Attack
+          notes:
+            effect:
+              - >-
+                <b>Save Fail</b>
+                @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}
+                for 1 hour
           range:
             maxIncrements: 5
             units: ft
@@ -1671,10 +1672,10 @@ items:
           duration:
             units: minute
             value: '1'
+          effect: Up to four lights, all within a 10-ft.-radius area
           name: Use
           range:
             units: medium
-          spellEffect: Up to four lights, all within a 10-ft.-radius area
       components:
         somatic: true
         verbal: true
@@ -1741,13 +1742,13 @@ items:
           duration:
             units: spec
             value: 1 round/level
+          effect: illusory sounds
           name: Use
           range:
             units: close
           save:
             description: Will disbelief
             type: will
-          spellEffect: illusory sounds
       components:
         material: true
         somatic: true
@@ -1917,10 +1918,10 @@ items:
           duration:
             units: minute
             value: '1'
+          effect: Up to four lights, all within a 10-ft.-radius area
           name: Use
           range:
             units: medium
-          spellEffect: Up to four lights, all within a 10-ft.-radius area
       components:
         somatic: true
         verbal: true
@@ -1987,13 +1988,13 @@ items:
           duration:
             units: spec
             value: 1 round/level
+          effect: illusory sounds
           name: Use
           range:
             units: close
           save:
             description: Will disbelief
             type: will
-          spellEffect: illusory sounds
       components:
         material: true
         somatic: true
@@ -2062,13 +2063,13 @@ items:
           duration:
             units: hour
             value: '1'
+          effect: see text
           name: Use
           range:
             units: ft
             value: '10'
           save:
             description: see text
-          spellEffect: see text
           target:
             value: see text
       components:

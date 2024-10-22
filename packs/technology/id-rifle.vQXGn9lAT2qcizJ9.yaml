@@ -22,9 +22,10 @@ system:
               values: []
       duration:
         units: inst
-      effectNotes:
-        - Victim takes 1d4 intelligence damage for 6 round, fortitude negates.
       name: Attack
+      notes:
+        effect:
+          - Victim takes 1d4 intelligence damage for 6 round, fortitude negates.
       range:
         maxIncrements: 10
         units: ft
@@ -42,11 +43,12 @@ system:
       duration:
         units: seeText
         value: '5'
-      effectNotes:
-        - >-
-          Creature follows the command, as if under the effect of a suggestion
-          spell.
       name: Suggestion
+      notes:
+        effect:
+          - >-
+            Creature follows the command, as if under the effect of a suggestion
+            spell.
       range:
         units: ft
         value: '50'

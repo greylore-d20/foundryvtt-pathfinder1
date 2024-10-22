@@ -30,6 +30,7 @@ system:
                 - cold
       duration:
         units: inst
+      effect: 1 ice spear/4 levels
       extraAttacks:
         formula:
           count: floor(@cl / 4) - 1
@@ -44,7 +45,6 @@ system:
       save:
         description: Reflex half and see below
         type: ref
-      spellEffect: 1 ice spear/4 levels
     - _id: iHyUmzP8XzXlU7fo
       ability:
         critMult: null
@@ -57,11 +57,12 @@ system:
       attackBonus: '@ablMod[Caster Ability Mod]'
       attackName: Trip
       bab: '@cl'
-      effectNotes:
-        - >-
-          Each additional ice spear beyond the first that strikes a single foe
-          grants a +10 bonus on this combat maneuver check.
       name: Trip
+      notes:
+        effect:
+          - >-
+            Each additional ice spear beyond the first that strikes a single foe
+            grants a +10 bonus on this combat maneuver check.
       uses:
         autoDeductChargesCost: '0'
   components:

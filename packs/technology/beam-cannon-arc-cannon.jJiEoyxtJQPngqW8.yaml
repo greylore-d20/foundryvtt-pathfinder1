@@ -13,10 +13,6 @@ system:
         type: attack
         unchained:
           type: attack
-      attackNotes:
-        - >-
-          +2 circumstance bonus to hit metallic targets or creatures wearing
-          medium or heavy armor
       damage:
         parts:
           - formula: sizeRoll(3, 6, @size)
@@ -29,6 +25,11 @@ system:
       extraAttacks:
         type: standard
       name: Attack
+      notes:
+        footer:
+          - >-
+            +2 circumstance bonus to hit metallic targets or creatures wearing
+            medium or heavy armor
       range:
         maxIncrements: 10
         units: ft
@@ -52,14 +53,15 @@ system:
                 - electric
       duration:
         units: inst
-      effectNotes:
-        - >-
-          +2 DC against metallic targets or creatures wearing medium or heavy
-          armor
       measureTemplate:
         size: '20'
         type: circle
       name: Blast
+      notes:
+        effect:
+          - >-
+            +2 DC against metallic targets or creatures wearing medium or heavy
+            armor
       range:
         units: ft
         value: '300'

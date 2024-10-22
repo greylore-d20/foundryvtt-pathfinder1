@@ -31,14 +31,15 @@ system:
                 - fire
       duration:
         units: inst
-      effectNotes:
-        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
       img: systems/pf1/icons/items/inventory/bomb.jpg
       measureTemplate:
         color: '#eb7100'
         size: '40'
         type: ray
       name: Throw
+      notes:
+        effect:
+          - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
       range:
         units: ft
         value: '40'
@@ -74,13 +75,14 @@ system:
                 - fire
       duration:
         units: inst
-      effectNotes:
-        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
       measureTemplate:
         color: '#eb7100'
         size: '80'
         type: ray
       name: Throw (Explosive)
+      notes:
+        effect:
+          - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
       range:
         units: ft
         value: '80'

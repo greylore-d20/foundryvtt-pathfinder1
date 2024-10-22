@@ -16,10 +16,6 @@ system:
           cost: 3
           type: action
       attackBonus: '-2'
-      attackNotes:
-        - >-
-          When a scatter weapon attacks all creatures within a cone, it makes a
-          separate attack roll against each creature within the cone.
       damage:
         parts:
           - formula: sizeRoll(4, 6, @size)
@@ -30,14 +26,19 @@ system:
                 - electric
       duration:
         units: inst
-      effectNotes:
-        - >-
-          Effects that grant concealment, such as fog or smoke, or the blur,
-          invisibility, or mirror image spells, do not foil a scatter attack.
       measureTemplate:
         size: '60'
         type: cone
       name: Scattering
+      notes:
+        effect:
+          - >-
+            Effects that grant concealment, such as fog or smoke, or the blur,
+            invisibility, or mirror image spells, do not foil a scatter attack.
+        footer:
+          - >-
+            When a scatter weapon attacks all creatures within a cone, it makes
+            a separate attack roll against each creature within the cone.
       range:
         maxIncrements: 10
         units: ft
@@ -54,11 +55,6 @@ system:
           cost: 3
           type: action
       attackBonus: '-2'
-      attackNotes:
-        - >-
-          When using an automatic weapon to attack all creatures in a line, the
-          wielder makes a separate attack roll against each creature in the
-          line.
       damage:
         parts:
           - formula: sizeRoll(4, 6, @size)
@@ -69,14 +65,20 @@ system:
                 - electric
       duration:
         units: inst
-      effectNotes:
-        - >-
-          Effects that grant concealment, such as fog or smoke, or the blur,
-          invisibility, or mirror image spells, do not foil a scatter attack.
       measureTemplate:
         size: '60'
         type: ray
       name: Automatic
+      notes:
+        effect:
+          - >-
+            Effects that grant concealment, such as fog or smoke, or the blur,
+            invisibility, or mirror image spells, do not foil a scatter attack.
+        footer:
+          - >-
+            When using an automatic weapon to attack all creatures in a line,
+            the wielder makes a separate attack roll against each creature in
+            the line.
       range:
         units: ft
         value: '60'

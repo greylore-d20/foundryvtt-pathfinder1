@@ -5,6 +5,10 @@ import { DamageRoll } from "../dice/damage-roll.mjs";
 
 import { DocumentLikeModel } from "@models/abstract/document-like-model.mjs";
 import { CompactingMixin } from "@models/abstract/compacting-mixin.mjs";
+import { DamagePartModel } from "@models/action/damage-part-model.mjs";
+import { ExtraAttackModel } from "@models/action/extra-attack-mode.mjs";
+
+import { IDField } from "@datafields/id-field.mjs";
 
 /**
  * Action pseudo-document
@@ -98,13 +102,13 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
       attackBonus: new fields.StringField(), // Formula
       critConfirmBonus: new fields.StringField(), // Formula,
       damage: new fields.SchemaField({
-        parts: new fields.ArrayField(new fields.ObjectField()),
-        critParts: new fields.ArrayField(new fields.ObjectField()),
-        nonCritParts: new fields.ArrayField(new fields.ObjectField()),
+        parts: new fields.ArrayField(new fields.EmbeddedDataField(DamagePartModel)),
+        critParts: new fields.ArrayField(new fields.EmbeddedDataField(DamagePartModel)),
+        nonCritParts: new fields.ArrayField(new fields.EmbeddedDataField(DamagePartModel)),
       }),
       extraAttacks: new fields.SchemaField({
         type: new fields.StringField(), // pf1.config.extraAttacks
-        manual: new fields.ArrayField(new fields.ObjectField()), // TODO
+        manual: new fields.ArrayField(new fields.EmbeddedDataField(ExtraAttackModel)),
         formula: new fields.SchemaField({
           count: new fields.StringField(), // Formula
           bonus: new fields.StringField(), // Formula
@@ -397,10 +401,12 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
   }
 
   static get defaultDamageType() {
-    return {
-      values: [],
-      custom: "",
-    };
+    foundry.utils.logCompatibilityWarning("ItemAction.defaultDamageType is deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return { values: [], custom: "" };
   }
 
   /** @type {ItemPF|undefined} - Parent item */
@@ -1876,6 +1882,22 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
     const diff = foundry.utils.diffObject(defaults, data);
     if (!diff.naturalAttack) delete data.naturalAttack;
     if (!diff.alignments) delete data.alignments;
+
+    // Prune child models
+    // HACK: .toObject() only clones _source and thus never calls .toObject() on the child models
+    if (data.damage) {
+      for (const parts of Object.values(data.damage)) {
+        for (const part of parts) {
+          DamagePartModel.pruneData(part);
+        }
+      }
+    }
+
+    if (data.extraAttacks?.manual?.length) {
+      for (const exAtk of data.extraAttacks.manual) {
+        ExtraAttackModel.pruneData(exAtk);
+      }
+    }
   }
 
   /**

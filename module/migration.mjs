@@ -2442,14 +2442,14 @@ const _migrateActionDamageType = function (action, itemData) {
       // Convert damage types
       const damageType = damagePart.type;
       if (typeof damageType === "string") {
-        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
+        const damageTypeData = { values: [] };
         damageTypeData.values = _Action_ConvertDamageType(damageType);
         if (damageTypeData.values.length === 0) damageTypeData.custom = damageType;
         damagePart.type = damageTypeData;
       }
       // Convert array to object
       else if (damageType instanceof Array) {
-        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
+        const damageTypeData = { values: [] };
         damageTypeData.values = damageType;
         damagePart.type = damageTypeData;
       }
@@ -2491,7 +2491,7 @@ const _migrateActionConditionals = function (action, itemData) {
 
       // Convert modifier damage type
       if (modifier.target === "damage" && !modifier.damageType) {
-        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
+        const damageTypeData = { values: [], custom: "" };
         damageTypeData.values = _Action_ConvertDamageType(modifier.type);
         if (damageTypeData.values.length === 0) damageTypeData.custom = modifier.type;
         modifier.damageType = damageTypeData;

@@ -78,7 +78,7 @@ export class ItemActionSheet extends FormApplication {
       item,
       actor,
       img: action.img,
-      tag: pf1.utils.createTag(action.name), // Tag placeholder
+      tag: action._source.tag, // True tag
       damageTypes: pf1.registry.damageTypes.toObject(),
       rollData: action.getRollData(),
     };

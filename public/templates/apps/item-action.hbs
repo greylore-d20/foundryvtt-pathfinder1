@@ -22,7 +22,7 @@
     <div class="tab description" data-group="primary" data-tab="description">
       <div class="form-group">
         <label>{{localize "PF1.Tag"}}</label>
-        <input type="text" placeholder="{{tag}}" value="{{data.tag}}" name="tag">
+        <input type="text" placeholder="{{data.tag}}" value="{{@root.tag}}" name="tag">
       </div>
       {{editor descriptionHTML target="description" button=true editable=owner engine="prosemirror" collaborate=false}}
     </div>

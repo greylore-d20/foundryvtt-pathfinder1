@@ -371,17 +371,36 @@ function sanitizePackEntry(entry, documentType = "", { childDocument = false } =
     "_key",
     "folder",
   ];
-  if (["Actor", "Item"].includes(documentType)) {
-    for (const key of Object.keys(entry)) {
-      if (!allowedCoreFields.includes(key)) delete entry[key];
-    }
-  }
-  if (documentType === "JournalEntry") {
-    const disallowedPageFields = ["_stats", "ownership", "video"];
-    for (const page of entry.pages) {
-      for (const key of Object.keys(page)) {
-        if (disallowedPageFields.includes(key)) delete page[key];
+
+  switch (documentType) {
+    case "Actor":
+    case "Item": {
+      for (const key of Object.keys(entry)) {
+        if (!allowedCoreFields.includes(key)) delete entry[key];
       }
+      break;
+    }
+    case "JournalEntry": {
+      const disallowedPageFields = ["_stats", "ownership", "video"];
+      for (const page of entry.pages) {
+        for (const key of Object.keys(page)) {
+          if (disallowedPageFields.includes(key)) delete page[key];
+        }
+      }
+
+      if (entry.pages?.length > 0) {
+        entry.pages = entry.pages.map((i) => sanitizePackEntry(i, "JournalEntryPage", { childDocument: true }));
+      }
+
+      break;
+    }
+    case "JournalEntryPage": {
+      if (utils.isEmpty(entry.image)) delete entry.image;
+      if (utils.isEmpty(entry.system)) delete entry.system;
+      if (entry.src === null) delete entry.src;
+      if (!entry.text?.markdown) delete entry.text?.markdown;
+      if (!entry.text?.content) delete entry.text?.content;
+      break;
     }
   }
 

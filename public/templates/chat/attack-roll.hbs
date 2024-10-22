@@ -21,7 +21,7 @@
       <td class="roll damage normal">
         {{{inlineRoll.outerHTML}}}
       </td>
-      <td class="damage-types">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType damageTypes=@root.damageTypes}}</td>
+      <td class="damage-types">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" types=damageType}}</td>
     {{else}}
       <td></td>
       <td></td>
@@ -32,7 +32,7 @@
       <td class="roll damage critical">
         {{{inlineRoll.outerHTML}}}
       </td>
-      <td class="damage-type">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType damageTypes=@root.damageTypes}}</td>
+      <td class="damage-type">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" types=damageType}}</td>
     {{else}}
       <td></td>
       <td></td>

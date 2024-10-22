@@ -67,9 +67,9 @@
   {{#if action.conditionals}}
   <div class="form-group stacked conditionals">
     <label>{{localize "PF1.Conditionals"}}</label>
-    {{#each action.conditionals as |conditional a|}}
+    {{#each conditionals}}
     <label class="checkbox">
-      <input type="checkbox" data-dtype="Boolean" name="conditional.{{a}}" class="conditional" {{checked (lookup ../conditionals (concat "conditional." a))}}> {{lookup this "name"}}
+      <input type="checkbox" data-dtype="Boolean" name="conditional.{{conditional.id}}" class="conditional" {{checked enabled}}> {{conditional.name}}
     </label>
     {{/each}}
   </div>

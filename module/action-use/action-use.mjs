@@ -243,14 +243,14 @@ export class ActionUse {
     const { conditional: conditionals } = foundry.utils.expandObject(formData);
     if (conditionals) {
       this.shared.conditionals = [];
-      Object.entries(conditionals).forEach(([idx, value]) => {
-        if (value) this.shared.conditionals.push(parseInt(idx));
+      Object.entries(conditionals).forEach(([condId, value]) => {
+        if (value) this.shared.conditionals.push(condId);
       });
     }
     // Conditional defaults for fast-forwarding
     if (!this.shared.conditionals) {
-      this.shared.conditionals = this.shared.action.conditionals?.reduce((arr, con, i) => {
-        if (con.default) arr.push(i);
+      this.shared.conditionals = this.shared.action.conditionals?.reduce((arr, con) => {
+        if (con.default) arr.push(con.id);
         return arr;
       }, []);
     }
@@ -454,8 +454,8 @@ export class ActionUse {
   async handleConditionals() {
     if (this.shared.conditionals) {
       const conditionalData = {};
-      for (const i of this.shared.conditionals) {
-        const conditional = this.shared.action.conditionals[i];
+      for (const condId of this.shared.conditionals) {
+        const conditional = this.shared.action.conditionals.get(condId);
         const tag = pf1.utils.createTag(conditional.name);
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
@@ -1271,7 +1271,7 @@ export class ActionUse {
     // Add conditionals info
     if (this.shared.conditionals?.length) {
       this.shared.conditionals.forEach((c) => {
-        properties.push(this.shared.action.conditionals[c].name);
+        properties.push(this.shared.action.conditionals.get(c).name);
       });
     }
 

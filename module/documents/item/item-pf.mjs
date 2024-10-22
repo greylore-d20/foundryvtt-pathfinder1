@@ -545,7 +545,7 @@ export class ItemPF extends ItemBasePF {
     let changedActions = false;
     for (const actionData of actions) {
       const action = this.actions.get(actionData._id);
-      const max = action.data.uses?.self?.max ?? 0;
+      const max = action.uses?.self?.max ?? 0;
       if (!(max > 0)) continue;
 
       const uses = actionData.uses?.self;
@@ -635,11 +635,11 @@ export class ItemPF extends ItemBasePF {
 
     // Attack data, for attacks and weapons primarily
     if (!action) return context;
-    const actionData = action?.data ?? {};
+
     if (action?.hasAttack) {
       context.action = {};
       if (action.hasDamage) {
-        const firstDamage = actionData.damage?.parts?.[0]?.formula;
+        const firstDamage = action.damage?.parts?.[0]?.formula;
         // Spoof sizeRoll() to work based on weapon size insteead of actor size
         const sizeKey = pf1.config.sizeChart[this.system.size || "med"] || "M";
         const sizeIndex = Object.values(pf1.config.sizeChart).indexOf(sizeKey);
@@ -647,7 +647,7 @@ export class ItemPF extends ItemBasePF {
           ...rollData,
           size: sizeIndex,
         });
-        const critMult = actionData?.ability?.critMult || 1;
+        const critMult = action?.ability?.critMult || 1;
         if (critMult > 1) {
           const critRange = action.critRange || 20;
           if (critRange === 20) context.action.critical = `×${critMult}`;
@@ -661,22 +661,20 @@ export class ItemPF extends ItemBasePF {
             ...(t.type?.custom.split(";") ?? []),
           ].filter((t) => !!t);
 
-        const types = fullInfo
-          ? actionData.damage?.parts?.map(getTypes).flat()
-          : getTypes(actionData.damage?.parts?.[0]);
+        const types = fullInfo ? action.damage?.parts?.map(getTypes).flat() : getTypes(action.damage?.parts?.[0]);
 
         context.action.type = types.join(", ");
       }
 
       // Range
-      if (["melee", "reach"].includes(actionData.range?.units)) context.action.range = "–";
-      else if (["ft"].includes(actionData.range?.units)) {
+      if (["melee", "reach"].includes(action.range?.units)) context.action.range = "–";
+      else if (["ft"].includes(action.range?.units)) {
         context.action.range = action.range;
         context.action.unit =
           pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
       }
 
-      if (action.ammoType && action.ammoCost) {
+      if (action.ammo.type && action.ammo.cost) {
         const misfire = action.misfire;
         const capacity = this.system.ammo?.capacity ?? 0;
         context.action.ammo = {
@@ -707,7 +705,7 @@ export class ItemPF extends ItemBasePF {
    * @type {string[]}
    */
   get actionTypes() {
-    const actionTypes = this.actions?.map((action) => action.data.actionType).filter(Boolean) ?? [];
+    const actionTypes = this.actions?.map((action) => action.actionType).filter(Boolean) ?? [];
     return [...new Set(actionTypes)];
   }
 
@@ -912,14 +910,15 @@ export class ItemPF extends ItemBasePF {
 
     const prior = this.actions;
     const collection = new Collection();
-    for (const o of actions) {
+    for (const actionData of actions) {
       let action = null;
-      if (prior && prior.has(o._id)) {
-        action = prior.get(o._id);
-        action.data = foundry.utils.mergeObject(ItemAction.defaultData, o);
-        action.prepareData();
-      } else action = new pf1.components.ItemAction(o, this);
-      collection.set(o._id || action.data._id, action);
+      if (prior && prior.has(actionData._id)) {
+        action = prior.get(actionData._id);
+        action.updateSource(actionData, { recursive: false });
+      } else {
+        action = new pf1.components.ItemAction(actionData, { parent: this });
+      }
+      collection.set(action.id, action);
     }
 
     /** @type {Map<string, pf1.components.ItemAction>} */
@@ -1335,7 +1334,7 @@ export class ItemPF extends ItemBasePF {
     const action = actionId ? this.actions.get(actionId) : this.defaultAction;
 
     rollData ??= action ? action.getRollData() : this.getRollData();
-    const actionData = rollData.action ?? action?.data ?? {};
+    const actionData = rollData.action ?? action ?? {};
 
     const labels = this.getLabels({ actionId, rollData });
 
@@ -1580,7 +1579,7 @@ export class ItemPF extends ItemBasePF {
     });
 
     if (shared.useOptions.ammo) {
-      if (action.data.usesAmmo) {
+      if (action.usesAmmo) {
         await this.setFlag("pf1", "defaultAmmo", shared.useOptions.ammo);
       } else {
         console.error("Attempted to set ammo for action that does not use ammo");
@@ -2337,10 +2336,9 @@ export class ItemPF extends ItemBasePF {
     const sources = [];
 
     const actorData = this.actor?.system,
-      itemData = this.system,
-      actionData = action.data;
+      itemData = this.system;
 
-    if (!actorData || !actionData) return sources;
+    if (!actorData) return sources;
     rollData ??= action.getRollData();
 
     const describePart = (value, name, modifier, sort = 0) => {
@@ -2364,20 +2362,20 @@ export class ItemPF extends ItemBasePF {
     effectiveChanges.forEach((ic) => {
       let value = ic.value;
       // BAB override
-      if (actionData.bab && ic._id === "_bab") {
+      if (action.bab && ic._id === "_bab") {
         value = RollPF.safeRollSync(ic.formula, rollData).total || 0;
       }
       describePart(value, ic.flavor, ic.type, -800);
     });
 
-    if (actionData.ability.attack) {
-      const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;
-      describePart(ablMod, pf1.config.abilities[actionData.ability.attack], "untyped", -50);
+    if (action.ability.attack) {
+      const ablMod = actorData.abilities?.[action.ability.attack]?.mod ?? 0;
+      describePart(ablMod, pf1.config.abilities[action.ability.attack], "untyped", -50);
     }
 
     // Attack bonus formula
     // TODO: Don't pre-eval
-    const bonusRoll = RollPF.safeRollSync(actionData.attackBonus || "0", rollData, undefined, undefined, {
+    const bonusRoll = RollPF.safeRollSync(action.attackBonus || "0", rollData, undefined, undefined, {
       minimuze: true,
     });
     if (bonusRoll.total != 0)
@@ -2409,14 +2407,14 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Add secondary natural attack penalty
-    if (actionData.naturalAttack.primaryAttack !== true && itemData.subType === "natural") {
-      const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
+    if (action.naturalAttack.primary !== true && itemData.subType === "natural") {
+      const attackBonus = action.naturalAttack?.secondary?.attackBonus || "-5";
       const secondaryModifier = RollPF.safeRollSync(`${attackBonus}`, rollData).total ?? 0;
       describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), "untyped", -400);
     }
 
     // Conditional modifiers
-    actionData.conditionals
+    action.conditionals
       .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
       .forEach((c) => {
         c.modifiers.forEach((cc) => {

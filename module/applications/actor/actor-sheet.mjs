@@ -434,7 +434,7 @@ export class ActorSheetPF extends ActorSheet {
       result.hasEffect = defaultAction.hasEffect;
       if (this._canShowRange(item)) {
         result.range = foundry.utils.mergeObject(
-          defaultAction?.data?.range ?? {},
+          defaultAction?.range ?? {},
           {
             min: defaultAction?.getRange({ type: "min", rollData }),
             max: defaultAction?.getRange({ type: "max", rollData }),
@@ -1740,7 +1740,6 @@ export class ActorSheetPF extends ActorSheet {
             const action = item.defaultAction;
             if (!action?.hasDamage) return;
 
-            const actionData = action.data;
             const rollData = action.getRollData();
 
             const dmgformula = pf1.utils.formula.actionDamage(action, { strict: false });
@@ -1751,7 +1750,7 @@ export class ActorSheetPF extends ActorSheet {
 
             subHeader = game.i18n.localize("PF1.Details");
 
-            const damage = action.data.damage;
+            const damage = action.damage;
             for (const { formula, type } of damage.parts ?? []) {
               dmgSources.push({
                 name: formula,
@@ -1771,11 +1770,11 @@ export class ActorSheetPF extends ActorSheet {
 
             const held = rollData.action?.held || rollData.item?.held || "normal";
 
-            const abl = actionData.ability?.damage;
+            const abl = action.ability?.damage;
             if (abl) {
-              const max = actionData.ability?.max ?? Infinity;
+              const max = action.ability?.max ?? Infinity;
               const mod = Math.min(rollData.abilities[abl]?.mod ?? 0, max);
-              const mult = actionData.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
+              const mult = action.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
               dmgSources.push({
                 value: mod >= 0 ? Math.floor(mod * mult) : mod,
                 type: pf1.config.abilities[abl],
@@ -1792,32 +1791,36 @@ export class ActorSheetPF extends ActorSheet {
               })),
             });
 
-            const hasOptionalConditionals = action?.data.conditionals.find((c) => !c.default);
+            /*
+            const hasOptionalConditionals = action?.conditionals.find((c) => !c.default);
             if (hasOptionalConditionals) {
               // <span class="span3">+ {{localize "PF1.Conditionals"}}</span>
             }
+            */
 
+            /*
             if (damage.critParts?.length) {
               // <span class="span3">+ {{localize "PF1.OnCritBonusFormula"}}</span>
             }
+            */
             break;
           }
           case "range": {
             const action = item.defaultAction;
             if (!action?.hasRange) return;
 
-            const maxIncr = action.data.range?.maxIncrements ?? 1;
+            const maxIncr = action.range?.maxIncrements ?? 1;
             if (maxIncr <= 1) return;
 
             details.push({
               key: game.i18n.localize("PF1.MaximumRangeIncrements"),
-              value: action.data.range.maxIncrements,
+              value: action.range.maxIncrements,
               left: true,
             });
 
             const rollData = action.getRollData();
             const range = {
-              ...(action.data.range ?? {}),
+              ...(action.range ?? {}),
               min: action.getRange({ type: "min", rollData }),
               max: action.getRange({ type: "max", rollData }),
             };
@@ -2161,7 +2164,7 @@ export class ActorSheetPF extends ActorSheet {
 
             if (action?.hasDamage) {
               const types =
-                action.data.damage?.parts
+                action.damage?.parts
                   ?.map((d) => d.type)
                   .map(damageTypes)
                   .flat() ?? [];

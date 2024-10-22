@@ -11,8 +11,8 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("actionRange", (action, rollData) => {
     if (!action?.hasRange) return null;
 
-    const range = action.data.range.value;
-    const rangeType = action.data.range.units;
+    const range = action.range.value;
+    const rangeType = action.range.units;
 
     if (!rangeType) return null;
     if (rangeType === "spec") return null; // Special is its own thing

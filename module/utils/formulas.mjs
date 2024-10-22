@@ -297,8 +297,7 @@ export function simplify(formula, rollData = {}, { strict = true } = {}) {
 export function actionDamage(action, { simplify = true, strict = true } = {}) {
   const actor = action.actor,
     item = action.item,
-    actorData = actor?.system,
-    actionData = action.data;
+    actorData = actor?.system;
 
   const parts = [];
 
@@ -335,20 +334,20 @@ export function actionDamage(action, { simplify = true, strict = true } = {}) {
   const handleParts = (parts) => parts.forEach(({ formula }) => handleFormula(formula));
 
   // Normal damage parts
-  handleParts(actionData.damage.parts);
+  handleParts(action.damage.parts);
 
   const isNatural = action.item.subType === "natural";
 
   // Include ability score only if the string isn't too long yet
-  const dmgAbl = actionData.ability.damage;
+  const dmgAbl = action.ability.damage;
   if (dmgAbl) {
-    const ablMax = actionData.ability?.max ?? Infinity;
+    const ablMax = action.ability?.max ?? Infinity;
     const dmgAblBaseMod = Math.min(actorData?.abilities[dmgAbl]?.mod ?? 0, ablMax);
-    const held = action.data?.held || item?.system.held || "normal";
+    const held = action.held || item?.system.held || "normal";
     let ablDmgMult =
-      actionData.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
-    if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
-      ablDmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
+      action.ability.damageMult ?? (isNatural ? null : pf1.config.abilityDamageHeldMultipliers[held]) ?? 1;
+    if (isNatural && !(action.naturalAttack?.primary ?? true)) {
+      ablDmgMult = action.naturalAttack?.secondary?.damageMult ?? 0.5;
     }
 
     const dmgAblMod = dmgAblBaseMod >= 0 ? Math.floor(dmgAblBaseMod * ablDmgMult) : dmgAblBaseMod;
@@ -356,7 +355,7 @@ export function actionDamage(action, { simplify = true, strict = true } = {}) {
   }
 
   // Include damage parts that don't happen on crits
-  handleParts(actionData.damage.nonCritParts);
+  handleParts(action.damage.nonCritParts);
 
   // Include general sources. Item enhancement bonus is among these.
   action.allDamageSources.forEach((s) => handleFormula(s.formula, s));

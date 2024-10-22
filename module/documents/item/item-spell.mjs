@@ -585,7 +585,7 @@ export class ItemSpellPF extends ItemPF {
 
     // Initialize default action
     if (itemData.system.actions.length == 0) itemData.system.actions.push(defaultAction);
-    const defaultAction = itemData.system.actions[0] ?? pf1.components.ItemAction.defaultData;
+    const defaultAction = itemData.system.actions[0] ?? pf1.components.ItemAction({}, { parent: this }).toObject();
     defaultAction.range ??= {};
 
     // Prepare new action copying over with old data if present
@@ -630,9 +630,11 @@ export class ItemSpellPF extends ItemPF {
       itemData.system.price = Math.max(0.5, level) * cl * 25 + materialPrice;
     }
 
-    const convertNotes = (data) => {
+    const convertNotes = (data, keys = []) => {
+      if (!data) return;
+
       // Replace attack and effect formula data
-      for (const arrKey of ["attackNotes", "effectNotes"]) {
+      for (const arrKey of keys) {
         const arr = data[arrKey];
         if (!arr) continue;
         for (let idx = 0; idx < arr.length; idx++) {
@@ -692,10 +694,10 @@ export class ItemSpellPF extends ItemPF {
         if (oldSaveDC?.length) action.save.dc += ` + (${oldSaveDC})[${game.i18n.localize("PF1.DCOffset")}]`;
       }
 
-      convertNotes(action);
+      convertNotes(action.notes, ["effect", "footer"]);
     }
 
-    convertNotes(itemData.system);
+    convertNotes(itemData.system, ["attackNotes", "effectNotes"]);
 
     // Set description
     const spell = new Item.implementation(origData);
@@ -830,7 +832,7 @@ export class ItemSpellPF extends ItemPF {
     result.system = system;
 
     const defaultAction = this.defaultAction;
-    const actionData = defaultAction?.data ?? {};
+    const action = defaultAction ?? {};
 
     rollData ??= defaultAction?.getRollData() ?? this.getRollData();
 
@@ -859,23 +861,21 @@ export class ItemSpellPF extends ItemPF {
     labels.components = pf1.utils.i18n.join(this.getSpellComponents());
 
     // Set effect label
-    {
-      const effect = actionData.spellEffect;
-      if (effect) labels.effect = effect;
-    }
+    const effect = action.effect;
+    if (effect) labels.effect = effect;
 
     // Set DC and SR
     {
-      const savingThrowDescription = actionData.save?.description;
+      const savingThrowDescription = action.save?.description;
       labels.savingThrow = savingThrowDescription || game.i18n.localize("PF1.None");
 
       const sr = system.sr;
       labels.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
 
-      if (actionData.range?.units !== "personal") result.useDCandSR = true;
+      if (action.range?.units !== "personal") result.useDCandSR = true;
     }
 
-    const harmless = actionData.save?.harmless ?? false;
+    const harmless = action.save?.harmless ?? false;
     if (harmless) labels.harmless = game.i18n.localize("PF1.Yes").toLowerCase();
 
     return result;

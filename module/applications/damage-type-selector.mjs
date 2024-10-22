@@ -42,7 +42,8 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
    * @param {object} object - Parent object
    * @param {string} path - Path to damage data in object
    * @param {DamageTypes} data - Damage data
-   * @param {object} options - Application options
+   * @param {object} options - Options
+   * @param {Function} options.updateCallback - Update callback
    */
   constructor(object, path, data, options = {}) {
     options.object = object;
@@ -173,7 +174,7 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
    * @param {object} formData
    */
   static async _updateObject(event, formData) {
-    return this.options.object.update({ [this.options.path]: this.damage });
+    return this.options.updateCallback(this.damage);
   }
 }
 

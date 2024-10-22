@@ -167,7 +167,6 @@ export const registerActorItemAttackTests = () => {
       describe("attack with natural attack", function () {
         const items = {};
         before(async () => {
-          const rawActionData = pf1.components.ItemAction.defaultData;
           items.bite = (
             await actor.createEmbeddedDocuments("Item", {
               type: "attack",
@@ -176,7 +175,7 @@ export const registerActorItemAttackTests = () => {
                 subType: "natural",
                 primaryAttack: true,
                 actions: [
-                  foundry.utils.mergeObject(rawActionData, {
+                  new pf1.components.ItemAction({
                     name: "Bite",
                     actionType: "mwak",
                     damage: {
@@ -192,7 +191,7 @@ export const registerActorItemAttackTests = () => {
                       damage: "str",
                       damageMult: 1.5,
                     },
-                  }),
+                  }).toObject(),
                 ],
               },
             })

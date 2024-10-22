@@ -415,7 +415,7 @@ export function onUse(event, target) {
       const actionName = !actionTag && !actionId ? actionIdent : null;
       itemAction = item.actions.find((act) => {
         if (actionId) return act.id === actionId;
-        if (actionTag) return act.data.tag === actionTag;
+        if (actionTag) return act.tag === actionTag;
         return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
       });
 
@@ -460,7 +460,7 @@ export function onAction(event, target) {
 
   const action = item.actions.find((act) => {
     if (actionId) return act.id === actionId;
-    if (actionTag) return act.data.tag === actionTag;
+    if (actionTag) return act.tag === actionTag;
     return act.name.localeCompare(actionName, undefined, { usage: "search" }) == 0;
   });
 

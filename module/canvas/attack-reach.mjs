@@ -111,7 +111,7 @@ class GridlessHighlight extends AttackHighlightBase {
     const rollData = action.getRollData();
 
     // Determine whether reach
-    const rangeKey = action.data.range.units;
+    const rangeKey = action.range.units;
     if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
     const isReach = rangeKey === "reach";
 
@@ -123,7 +123,7 @@ class GridlessHighlight extends AttackHighlightBase {
 
     if (rangeKey === "ft") {
       // Add range increments
-      const rangeIncrements = action.data.range.maxIncrements;
+      const rangeIncrements = action.range.maxIncrements;
       for (let a = 1; a < rangeIncrements; a++) {
         rangeMeasurements.push((a + 1) * r);
       }
@@ -214,7 +214,7 @@ class SquareGridHighlight extends AttackHighlightBase {
     const rollData = action.getRollData();
 
     // Determine whether reach
-    const rangeKey = action.data.range.units;
+    const rangeKey = action.range.units;
     if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
     const isReach = rangeKey === "reach";
     const isFeet = rangeKey === "ft";
@@ -244,7 +244,7 @@ class SquareGridHighlight extends AttackHighlightBase {
           canvas.dimensions.height / canvas.dimensions.distancePixels
         ) + ftDistance
       );
-      const rangeIncrements = action.data.range.maxIncrements;
+      const rangeIncrements = action.range.maxIncrements;
       for (let a = 1; a < rangeIncrements; a++) {
         if ((a + 1) * ftDistance <= maxSquareRange) {
           squares.extra.push(this.#getReachSquares(token, (a + 1) * r, a * r, { useReachRule }));

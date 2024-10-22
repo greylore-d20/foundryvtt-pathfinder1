@@ -84,124 +84,93 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
    */
   _getGridHighlightPositions() {
     const templateType = this.document.t;
-    if (!this.ray || !game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(templateType)) {
+    // In case this is not initialized, not circle or cone, or system measure templates are disabled, let Foundry handle it.
+    // Foundry's handling of Ray is perfectly usable even if slightly wrong, so no override needed.
+    if (!["circle", "cone"].includes(templateType) || !game.settings.get("pf1", "measureStyle")) {
       return super._getGridHighlightPositions();
     }
 
-    const isCone = templateType === "cone",
-      isRay = templateType === "ray";
+    const grid = canvas.grid;
+    let { x: ox, y: oy } = this.document;
 
-    const grid = canvas.grid,
-      // Size of each cell in pixels
-      gridSizePxBase = canvas.dimensions.size,
-      // Offset for uneven grids
-      gridSizePxOffset = gridSizePxBase % 2,
-      // Final grid size
-      gridSizePx = gridSizePxBase + gridSizePxOffset,
-      gridSizeUnits = canvas.dimensions.distance; // feet, meters, etc.
+    // Snap cones to the closest corner or vertex based on their direction
+    if (templateType === "cone") {
+      const angle = this.document.direction;
+      const closestAngle = Math.round(angle / 45) * 45;
 
-    const { direction, angle: docAngle, distance } = this.document;
-    // If angle is 0, swap to default angle. Constrain it to 359 degrees, too. Angle of 360 is same as 0 for Foundry.
-    const angle = Math.min(Math.abs(docAngle || CONFIG.MeasuredTemplate.defaults.angle), 359);
+      switch (closestAngle) {
+        case 0:
+        case 45:
+        case 315:
+          ox = Math.ceil(ox / grid.size) * grid.size;
+          break;
 
-    // Parse rays as per Bresenham's algorithm
-    if (isRay) {
-      const result = [];
+        case 135:
+        case 225:
+        case 180:
+          ox = Math.floor(ox / grid.size) * grid.size;
+          break;
+      }
 
-      const line = (x0, y0, x1, y1) => {
-        x0 = Math.floor(x0 / gridSizePx);
-        x1 = Math.floor(x1 / gridSizePx);
-        y0 = Math.floor(y0 / gridSizePx);
-        y1 = Math.floor(y1 / gridSizePx);
+      switch (closestAngle) {
+        case 45:
+        case 135:
+        case 90:
+          oy = Math.ceil(oy / grid.size) * grid.size;
+          break;
 
-        const dx = Math.abs(x1 - x0);
-        const dy = Math.abs(y1 - y0);
-        const sx = x0 < x1 ? 1 : -1;
-        const sy = y0 < y1 ? 1 : -1;
-        let err = dx - dy;
-
-        while (!(x0 === x1 && y0 === y1)) {
-          result.push({ x: x0 * gridSizePx, y: y0 * gridSizePx });
-          const e2 = err << 1;
-          if (e2 > -dy) {
-            err -= dy;
-            x0 += sx;
-          }
-          if (e2 < dx) {
-            err += dx;
-            y0 += sy;
-          }
-        }
-      };
-
-      // Extend ray by half a square for better highlight calculation
-      const ray = Ray.fromAngle(this.ray.A.x, this.ray.A.y, this.ray.angle, this.ray.distance + gridSizePx / 2);
-
-      // Get resulting squares
-      line(ray.A.x, ray.A.y, ray.B.x, ray.B.y);
-
-      return result;
-    }
-
-    // Get number of rows and columns
-    const nr = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.sizeY)),
-      nc = Math.ceil((distance * 1.5) / gridSizeUnits / (gridSizePx / grid.sizeX));
-
-    // Get the center of the grid position occupied by the template
-    const { x, y } = this.document;
-
-    const { x: cx, y: cy } = grid.getCenterPoint({ x, y }),
-      { j: col0, i: row0 } = grid.getOffset({ x: cx, y: cy }),
-      minAngle = Math.normalizeDegrees(direction - angle / 2),
-      maxAngle = Math.normalizeDegrees(direction + angle / 2);
-
-    // Origin offset multiplier
-    const offsetMult = { x: 0, y: 0 };
-    // Offset measurement for cones
-    // Offset is to ensure that cones only start measuring from cell borders, as in https://www.d20pfsrd.com/magic/#Aiming_a_Spell
-    if (isCone) {
-      // Degrees anticlockwise from pointing right. In 45-degree increments from 0 to 360
-      const dir = (direction >= 0 ? 360 - direction : -direction) % 360;
-      // If we're not on a border for X, offset by 0.5 or -0.5 to the border of the cell in the direction we're looking on X axis
-      // /2 turns from 1/0/-1 to 0.5/0/-0.5
-      offsetMult.x = x % gridSizePxBase != 0 ? Math.sign(Math.round(Math.cos(Math.toRadians(dir)))) / 2 : 0;
-      // Same for Y, but cos Y goes down on screens, we invert
-      offsetMult.y = y % gridSizePxBase != 0 ? -Math.sign(Math.round(Math.sin(Math.toRadians(dir)))) / 2 : 0;
-    }
-
-    // Determine point of origin
-    const origin = {
-      x: x + offsetMult.x * gridSizePxBase,
-      y: y + offsetMult.y * gridSizePxBase,
-    };
-
-    const result = [];
-    for (let a = -nc; a < nc; a++) {
-      for (let b = -nr; b < nr; b++) {
-        // Position of cell's top-left corner, in pixels
-        const { x: gx, y: gy } = canvas.grid.getTopLeftPoint({ j: col0 + a, i: row0 + b });
-
-        // Determine point we're measuring the distance to - always in the center of a grid square
-        const destination = { x: gx + gridSizePx * 0.5, y: gy + gridSizePx * 0.5 };
-
-        const ray = new Ray(origin, destination);
-        if (isCone && ray.distance > 0) {
-          const rayAngle = Math.normalizeDegrees(ray.angle / (Math.PI / 180));
-          if (!withinAngle(minAngle, maxAngle, rayAngle)) {
-            continue;
-          }
-        }
-
-        // Check distance, add 1 pixel to avoid rounding issues
-        // TODO: Chekc if the result of measurePath() can be used to replace above Ray creation
-        const cdistance = canvas.grid.measurePath([ray.A, ray.B]).distance;
-        if (cdistance <= distance + 1) {
-          result.push({ x: gx, y: gy });
-        }
+        case 225:
+        case 315:
+        case 270:
+          oy = Math.floor(oy / grid.size) * grid.size;
+          break;
       }
     }
 
-    return result;
+    const originInCenter = ox % grid.size === grid.size / 2 && oy % grid.size === grid.size / 2;
+
+    const shape = this.shape;
+    const bounds = shape.getBounds();
+    bounds.x += ox;
+    bounds.y += oy;
+    bounds.fit(canvas.dimensions.rect);
+    bounds.pad(1);
+
+    // Identify grid space that have their center points covered by the template shape
+    const positions = [];
+    const [i0, j0, i1, j1] = grid.getOffsetRange(bounds);
+    for (let i = i0; i < i1; i++) {
+      for (let j = j0; j < j1; j++) {
+        const offset = { i, j };
+        const { x: cx, y: cy } = grid.getCenterPoint(offset);
+
+        const distance = grid.measurePath([
+          { x: cx, y: cy },
+          { x: ox, y: oy },
+        ]).distance;
+
+        switch (templateType) {
+          case "cone": {
+            // Include all squares that are within the correct distance and within 45 degrees of the cone direction
+            const angle = (Math.atan2(cy - oy, cx - ox) * 180) / Math.PI;
+            const angleDiff = Math.abs(angle - this.document.direction) % 360;
+
+            if (distance < this.document.distance && (angleDiff <= 45 || angleDiff >= 315)) {
+              positions.push(grid.getTopLeftPoint(offset));
+            }
+            break;
+          }
+
+          case "circle":
+            // If template origin lies in grid center, include all squares that have their center within the distance, otherwise only those that are strictly within
+            if (originInCenter ? distance <= this.document.distance : distance < this.document.distance) {
+              positions.push(grid.getTopLeftPoint(offset));
+            }
+            break;
+        }
+      }
+    }
+    return positions;
   }
 
   /**

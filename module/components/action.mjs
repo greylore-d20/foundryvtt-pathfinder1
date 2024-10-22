@@ -3,10 +3,13 @@ import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 
+import { DocumentLikeModel } from "@models/abstract/document-like-model.mjs";
+import { CompactingMixin } from "@models/abstract/compacting-mixin.mjs";
+
 /**
  * Action pseudo-document
  */
-export class ItemAction extends foundry.abstract.DataModel {
+export class ItemAction extends CompactingMixin(DocumentLikeModel) {
   /**
    * @internal
    * @type {pf1.applications.component.ItemActionSheet}
@@ -32,17 +35,6 @@ export class ItemAction extends foundry.abstract.DataModel {
     super(data, options);
   }
 
-  /**
-   * @override
-   * @protected
-   * @param {object} options - Constructor options
-   */
-  _initialize(options = {}) {
-    super._initialize(options);
-
-    this.prepareData();
-  }
-
   _configure(options) {
     super._configure(options);
 
@@ -55,11 +47,9 @@ export class ItemAction extends foundry.abstract.DataModel {
 
   static defineSchema() {
     const fields = foundry.data.fields;
-    const mustFill = { required: true, blank: false, nullable: false };
     const blankToNull = { nullable: true, blank: false };
     return {
-      _id: new fields.StringField({ ...mustFill, initial: () => foundry.utils.randomID(16), readonly: true }),
-      name: new fields.StringField({ ...mustFill, initial: () => game.i18n.localize("PF1.Action") }),
+      ...super.defineSchema({ name: () => game.i18n.localize("PF1.Action") }),
       img: new fields.FilePathField({ categories: ["IMAGE"], initial: null, blank: false }),
       description: new fields.HTMLField(),
       tag: new fields.StringField({ blank: false, nullable: true }), // TODO: slug field
@@ -1814,12 +1804,13 @@ export class ItemAction extends foundry.abstract.DataModel {
     return this.ammo.cost;
   }
 
-  /** @override */
-  toObject(source = true, clean = true) {
-    const data = super.toObject(source);
-
-    if (!clean) return data;
-
+  /**
+   * Prune data
+   *
+   * @internal
+   * @param {object} data - Raw data (e.g. product of {@link toObject()})
+   */
+  static pruneData(data) {
     // Aggressive data size reduction
 
     if (!data.img) delete data.img;
@@ -1881,12 +1872,10 @@ export class ItemAction extends foundry.abstract.DataModel {
     }
 
     // Diff based cleanup (don't do this for everything, to avoid defaults changing causing problems)
-    const defaults = new this.constructor().toObject(true, false);
+    const defaults = new this().toObject(true, false);
     const diff = foundry.utils.diffObject(defaults, data);
     if (!diff.naturalAttack) delete data.naturalAttack;
     if (!diff.alignments) delete data.alignments;
-
-    return data;
   }
 
   /**

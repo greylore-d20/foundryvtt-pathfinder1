@@ -183,40 +183,40 @@ export class ItemAction extends foundry.abstract.DataModel {
     };
   }
 
-  static migrateData(data) {
-    if (typeof data !== "object") return;
+  static migrateData(source) {
+    if (typeof source !== "object") return;
 
     // Added with v?
     // .unchainedAction.activation to .activation.unchained
-    if (data.unchainedAction?.activation) {
-      data.activation ??= {};
-      data.activation.unchained = data.unchainedAction.activation;
+    if (source.unchainedAction?.activation) {
+      source.activation ??= {};
+      source.activation.unchained = source.unchainedAction.activation;
     }
 
-    if (data.enh !== undefined) {
-      if (typeof data.enh !== "object") {
-        data.enh = { value: data.enh ?? null };
+    if (source.enh !== undefined) {
+      if (typeof source.enh !== "object") {
+        source.enh = { value: source.enh ?? null };
       }
       // Set to null if disabled.
-      if (data.enh.override === false) {
-        data.enh.value = null;
+      if (source.enh.override === false) {
+        source.enh.value = null;
       }
       // Reset odd values to null, too.
-      else if (data.enh.value !== null && typeof data.enh.value !== "number") {
-        data.enh.value = null;
+      else if (source.enh.value !== null && typeof source.enh.value !== "number") {
+        source.enh.value = null;
       }
     }
 
-    if (data.uses?.autoDeductCharges === false) {
-      data.uses.autoDeductChargesCost = "0";
-    } else if (data.uses?.autoDeductCharges === true) {
-      data.uses.autoDeductChargesCost = "1";
+    if (source.uses?.autoDeductCharges === false) {
+      source.uses.autoDeductChargesCost = "0";
+    } else if (source.uses?.autoDeductCharges === true) {
+      source.uses.autoDeductChargesCost = "1";
     }
 
     // Added with v9
-    if (data.damage) {
+    if (source.damage) {
       for (const part of ["parts", "critParts", "nonCritParts"]) {
-        const category = data.damage[part];
+        const category = source.damage[part];
         if (!category || category.length == 0) continue;
 
         category.forEach((damage, index) => {
@@ -229,34 +229,36 @@ export class ItemAction extends foundry.abstract.DataModel {
     }
 
     // Added with v10
-    data.actionType ||= "other";
-    data.area ||= data.spellArea;
+    source.actionType ||= "other";
+    source.area ||= source.spellArea;
 
     // Migrate unlimited to empty selection, as the two are identical in meaning
-    if (data.uses?.self?.per === "unlimited") {
-      delete data.uses.self.per;
+    if (source.uses?.self?.per === "unlimited") {
+      delete source.uses.self.per;
     }
 
-    const mt = data.measureTemplate;
+    const mt = source.measureTemplate;
     if (mt) {
       mt.color ||= mt.customColor;
       mt.texture ||= mt.customTexture;
     }
 
     // Added with v11
-    if (data.range?.maxIncrements === null || data.range?.maxIncrements < 1) data.range.maxIncrements = 1;
-    if (data.spellEffect && !data.effect) data.effect = data.spellEffect;
-    if (data.naturalAttack?.primaryAttack !== undefined && data.naturalAttack?.primary === undefined) {
-      data.naturalAttack.primary = data.naturalAttack?.primaryAttack;
+    if (source.range?.maxIncrements === null || source.range?.maxIncrements < 1) source.range.maxIncrements = 1;
+    if (source.spellEffect && !source.effect) source.effect = source.spellEffect;
+    if (source.naturalAttack?.primaryAttack !== undefined && source.naturalAttack?.primary === undefined) {
+      source.naturalAttack.primary = source.naturalAttack?.primaryAttack;
     }
-    data.notes ??= {};
-    if (data.effectNotes && !data.notes.effect) data.notes.effect = data.effectNotes;
-    if (data.attackNotes && !data.notes.footer) data.notes.footer = data.attackNotes;
+    source.notes ??= {};
+    if (source.effectNotes && !source.notes.effect) source.notes.effect = source.effectNotes;
+    if (source.attackNotes && !source.notes.footer) source.notes.footer = source.attackNotes;
 
-    if (data.range?.units === "none") delete data.range.units;
+    if (source.range?.units === "none") delete source.range.units;
 
     //if (data.ability?.critMult === null) data.ability.critMult = 1;
     //if (data.ability?.critRange === null) data.ability.critRange = 0;
+
+    return super.migrateData(source);
   }
 
   static get defaultData() {

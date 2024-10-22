@@ -22,5 +22,7 @@ export class ContextNote extends foundry.abstract.DataModel {
         source.target = source.subTarget;
       }
     }
+
+    return super.migrateData(source);
   }
 }

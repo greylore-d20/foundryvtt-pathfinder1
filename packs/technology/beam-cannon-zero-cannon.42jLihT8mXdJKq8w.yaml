@@ -22,13 +22,14 @@ system:
                 - cold
       duration:
         units: inst
-      effectNotes:
-        - >-
-          A creature that is critically hit by a zero cannon must succeed at a
-          DC 15 Fortitude saving throw or become staggered for 1 round
       extraAttacks:
         type: standard
       name: Attack
+      notes:
+        effect:
+          - >-
+            A creature that is critically hit by a zero cannon must succeed at a
+            DC 15 Fortitude saving throw or become staggered for 1 round
       range:
         maxIncrements: 10
         units: ft
@@ -52,15 +53,16 @@ system:
                 - cold
       duration:
         units: inst
-      effectNotes:
-        - >-
-          A creature that fails its saving throw against the cannon's blast must
-          succeed at a DC 15 Fortitude saving throw or become staggered for 1
-          round
       measureTemplate:
         size: '20'
         type: circle
       name: Blast
+      notes:
+        effect:
+          - >-
+            A creature that fails its saving throw against the cannon's blast
+            must succeed at a DC 15 Fortitude saving throw or become staggered
+            for 1 round
       range:
         units: ft
         value: '300'

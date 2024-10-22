@@ -22,13 +22,15 @@ system:
                 - electric
       duration:
         units: inst
-      effectNotes:
-        - >-
-          A creature that takes damage from a critical hit by an EMP cannon must
-          succeed at a DC 15 Fortitude save or be staggered for 1d4 rounds
       extraAttacks:
         type: standard
       name: Attack
+      notes:
+        effect:
+          - >-
+            A creature that takes damage from a critical hit by an EMP cannon
+            must succeed at a DC 15 Fortitude save or be staggered for 1d4
+            rounds
       range:
         maxIncrements: 10
         units: ft
@@ -54,12 +56,13 @@ system:
                 - electric
       duration:
         units: inst
-      effectNotes:
-        - Androids and creatures with cybernetics take half damage
       measureTemplate:
         size: '20'
         type: circle
       name: Blast
+      notes:
+        effect:
+          - Androids and creatures with cybernetics take half damage
       range:
         units: ft
         value: '300'

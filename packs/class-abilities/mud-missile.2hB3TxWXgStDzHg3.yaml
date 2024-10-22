@@ -21,12 +21,13 @@ system:
               custom: ''
               values:
                 - bludgeoning
-      effectNotes:
-        - >-
-          Target creature is blinded for [[1d4]] rounds. The mud can be removed
-          with a successful strength check (DC [[10 + floor(@caster.wizard.level
-          / 2)]]).
       name: Use
+      notes:
+        effect:
+          - >-
+            Target creature is blinded for [[1d4]] rounds. The mud can be
+            removed with a successful strength check (DC [[10 +
+            floor(@caster.wizard.level / 2)]]).
       range:
         units: ft
         value: '30'

@@ -13,11 +13,12 @@ system:
           type: action
       duration:
         units: inst
-      effectNotes:
-        - >-
-          Make a single melee attack with +[[max(1, floor(@class.level / 2))]]
-          moral bonus.
       name: Use
+      notes:
+        effect:
+          - >-
+            Make a single melee attack with +[[max(1, floor(@class.level / 2))]]
+            moral bonus.
       range:
         units: seeText
       target:

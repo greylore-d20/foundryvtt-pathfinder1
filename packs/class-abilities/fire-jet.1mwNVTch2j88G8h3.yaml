@@ -20,14 +20,15 @@ system:
               custom: ''
               values:
                 - fire
-      effectNotes:
-        - >-
-          Creatures that fail their saving throw catch fire and take 1d6 points
-          of fire damage on the following round.
       measureTemplate:
         size: '20'
         type: ray
       name: Line of Fire
+      notes:
+        effect:
+          - >-
+            Creatures that fail their saving throw catch fire and take 1d6
+            points of fire damage on the following round.
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex no ignition

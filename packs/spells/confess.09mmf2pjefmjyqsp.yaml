@@ -12,8 +12,6 @@ system:
         unchained:
           cost: 2
           type: action
-      attackNotes:
-        - Sickened for [[2d4]] rounds
       damage:
         parts:
           - formula: (min(5, floor(@cl / 2)))d6
@@ -25,6 +23,9 @@ system:
         units: round
         value: '1'
       name: Lied/Unanswered
+      notes:
+        footer:
+          - Sickened for [[2d4]] rounds
       range:
         units: close
       save:

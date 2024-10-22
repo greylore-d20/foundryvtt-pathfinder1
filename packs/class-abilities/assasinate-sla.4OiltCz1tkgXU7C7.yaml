@@ -21,9 +21,10 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      effectNotes:
-        - If the target fails it's save, it dies.
       name: Assasinate
+      notes:
+        effect:
+          - If the target fails it's save, it dies.
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Fortitude negates

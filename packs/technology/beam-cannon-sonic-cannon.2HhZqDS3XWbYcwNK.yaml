@@ -22,13 +22,14 @@ system:
                 - sonic
       duration:
         units: inst
-      effectNotes:
-        - >-
-          A creature that is critically hit by a sonic cannon must succeed at a
-          DC 15 Fortitude saving throw or be permanently deafened
       extraAttacks:
         type: standard
       name: Attack
+      notes:
+        effect:
+          - >-
+            A creature that is critically hit by a sonic cannon must succeed at
+            a DC 15 Fortitude saving throw or be permanently deafened
       range:
         maxIncrements: 10
         units: ft
@@ -52,14 +53,16 @@ system:
                 - sonic
       duration:
         units: inst
-      effectNotes:
-        - >-
-          A creature that fails its saving throw against the cannon's blast must
-          succeed at a DC 15 Fortitude saving throw or be permanently deafened
       measureTemplate:
         size: '20'
         type: circle
       name: Blast
+      notes:
+        effect:
+          - >-
+            A creature that fails its saving throw against the cannon's blast
+            must succeed at a DC 15 Fortitude saving throw or be permanently
+            deafened
       range:
         units: ft
         value: '300'

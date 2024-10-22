@@ -20,12 +20,13 @@ system:
               custom: ''
               values:
                 - electric
-      effectNotes:
-        - Target is dazzled for [[1d4]] rounds.
       measureTemplate:
         size: '5'
         type: circle
       name: Use
+      notes:
+        effect:
+          - Target is dazzled for [[1d4]] rounds.
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex half and not dazzled

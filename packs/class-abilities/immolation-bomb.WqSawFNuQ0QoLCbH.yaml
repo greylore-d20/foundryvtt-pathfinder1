@@ -25,13 +25,14 @@ system:
       duration:
         units: round
         value: ceil(@class.level / 2)
-      effectNotes:
-        - '[[1 + @abilities.int.mod]] Splash Damage'
       img: systems/pf1/icons/items/inventory/bomb.jpg
       measureTemplate:
         size: '5'
         type: circle
       name: Throw
+      notes:
+        effect:
+          - '[[1 + @abilities.int.mod]] Splash Damage'
       range:
         units: ft
         value: '20'
@@ -61,12 +62,13 @@ system:
                 - fire
       duration:
         units: inst
-      effectNotes:
-        - '[[1 + @abilities.int.mod]] Splash Damage'
       measureTemplate:
         size: '5'
         type: circle
       name: Continuos fire damage
+      notes:
+        effect:
+          - '[[1 + @abilities.int.mod]] Splash Damage'
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.int.mod
         description: Reflex halves splash damage

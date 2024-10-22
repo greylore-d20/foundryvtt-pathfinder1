@@ -11,14 +11,15 @@ system:
         unchained:
           cost: 2
           type: action
-      effectNotes:
-        - >-
-          Command Undead: as if under the effects of
-          @Compendium[pf1.spells.wkp8u7xl1dgpk362]{Control Undead}.
       measureTemplate:
         size: '30'
         type: circle
       name: Use
+      notes:
+        effect:
+          - >-
+            Command Undead: as if under the effects of
+            @Compendium[pf1.spells.wkp8u7xl1dgpk362]{Control Undead}.
       save:
         dc: 10 + floor( @classes.cleric.level / 2) + @abilities.cha.mod
         description: Will negates

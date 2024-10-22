@@ -31,14 +31,15 @@ system:
                 - piercing
       duration:
         units: inst
-      effectNotes:
-        - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
-        - '[[ceil(@class.level / 2) - 1]] Bleeding Damage on direct target'
       img: systems/pf1/icons/items/inventory/bomb.jpg
       measureTemplate:
         size: '5'
         type: circle
       name: Throw
+      notes:
+        effect:
+          - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
+          - '[[ceil(@class.level / 2) - 1]] Bleeding Damage on direct target'
       range:
         units: ft
         value: '20'

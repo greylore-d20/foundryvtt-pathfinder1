@@ -24,12 +24,13 @@ system:
       duration:
         units: spec
         value: 1 round + 1 round/3 levels
-      effectNotes:
-        - Lasts [[min(6, floor(@cl / 3))]] Rounds
+      effect: one arrow of acid
       name: Use
+      notes:
+        effect:
+          - Lasts [[min(6, floor(@cl / 3))]] Rounds
       range:
         units: long
-      spellEffect: one arrow of acid
       touch: true
   components:
     focus: true

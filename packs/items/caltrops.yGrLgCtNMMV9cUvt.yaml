@@ -12,10 +12,6 @@ system:
         unchained:
           type: nonaction
       attackBonus: '-@size[Size]'
-      attackNotes:
-        - >-
-          If the creature is wearing shoes or other footwear, it gets a +2 armor
-          bonus to AC.
       bab: '0'
       damage:
         parts:
@@ -25,6 +21,11 @@ system:
               values:
                 - untyped
       name: Attack
+      notes:
+        footer:
+          - >-
+            If the creature is wearing shoes or other footwear, it gets a +2
+            armor bonus to AC.
       uses:
         autoDeductChargesCost: '0'
     - _id: FbzhZuexuXZwf7h0

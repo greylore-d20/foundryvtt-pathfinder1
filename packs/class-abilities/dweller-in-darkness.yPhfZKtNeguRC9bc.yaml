@@ -11,8 +11,6 @@ system:
         unchained:
           cost: 2
           type: action
-      attackNotes:
-        - Damage roll in case save is succesfull.
       damage:
         parts:
           - formula: 3d6
@@ -24,6 +22,9 @@ system:
         units: inst
       img: icons/magic/death/skull-energy-light-purple.webp
       name: Use
+      notes:
+        footer:
+          - Damage roll in case save is succesfull.
       save:
         dc: 10 + floor(@class.level / 2) + @abilities.cha.mod
         description: Will disbelief, then Fortitude partial; see text

@@ -304,6 +304,13 @@ function sanitizeActiveEffects(effects) {
   }
 }
 
+function sanitizeFolder(folder) {
+  if (!folder.description) delete folder.description;
+  if (!folder.color) delete folder.color;
+  if (!folder.folder) delete folder.folder;
+  if (utils.isEmpty(folder.flags)) delete folder.flags;
+}
+
 /**
  * Santize pack entry.
  *
@@ -337,8 +344,11 @@ function sanitizePackEntry(entry, documentType = "", { childDocument = false } =
     else sanitizeActiveEffects(entry.effects);
   }
 
-  // Ignore folders; not present on inventoryItems
-  if (entry._key?.startsWith("!folders")) return entry;
+  // Special handling for folders
+  if (entry._key?.startsWith("!folders")) {
+    sanitizeFolder(entry);
+    return entry;
+  }
 
   // Always delete system migration marker
   delete entry.flags?.pf1?.migration;

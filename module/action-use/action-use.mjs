@@ -769,8 +769,8 @@ export class ActionUse {
       notes.push(...this.item.system.attackNotes.map((text) => ({ text })));
     }
     // Add action notes
-    if (this.action.attackNotes) {
-      notes.push(...this.action.attackNotes.map((text) => ({ text })));
+    if (this.action.notes.footer) {
+      notes.push(...this.action.notes.footer.map((text) => ({ text })));
     }
 
     // Add CMB notes
@@ -906,12 +906,12 @@ export class ActionUse {
 
       for (const atk of this.shared.chatAttacks) {
         // Create PoolTerm for attack and damage rolls
-        const attackPool = new PoolTerm();
+        const attackPool = new foundry.dice.terms.PoolTerm();
         if (atk.attack) attackPool.rolls.push(atk.attack);
         attackPool.rolls.push(...(atk.damage?.rolls ?? []));
 
         // Create PoolTerm for crit confirmation and crit damage rolls
-        const critPool = new PoolTerm();
+        const critPool = new foundry.dice.terms.PoolTerm();
         if (atk.chatAttack?.hasCritConfirm) critPool.rolls.push(atk.chatAttack.critConfirm);
         critPool.rolls.push(...(atk.critDamage?.rolls ?? []));
 

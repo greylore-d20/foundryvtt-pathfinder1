@@ -941,7 +941,7 @@ export class ItemPF extends ItemBasePF {
   _prepareScriptCalls() {
     if (!this.scriptCalls) return;
 
-    const prior = new Collection([...this.scriptCalls]);
+    const prior = new Collection(this.scriptCalls.entries());
     this.scriptCalls.clear(); // TODO: Remove specific entries after the loop instead of full clear here
 
     const scriptCalls = this.system.scriptCalls;

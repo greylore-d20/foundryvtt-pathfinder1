@@ -900,7 +900,7 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
    */
   _prepareConditionals() {
     const collection = this._conditionals;
-    const prior = new Collection([...collection]);
+    const prior = new Collection(collection.entries());
     collection.clear(); // TODO: Remove specific entries after the loop instead of full clear here
 
     const conditionals = this._source.conditionals;

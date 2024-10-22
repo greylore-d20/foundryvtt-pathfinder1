@@ -27,11 +27,11 @@ export class ItemConditional {
     if (parent instanceof pf1.components.ItemAction) {
       // Prepare data
       data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
-      const newConditionalData = foundry.utils.deepClone(parent.data.conditionals || []);
-      newConditionalData.push(...data);
+      const conditionals = parent.toObject().conditionals || [];
+      conditionals.push(...data);
 
       // Update parent
-      await parent.update({ conditionals: newConditionalData });
+      await parent.update({ conditionals });
 
       // Return results
       return data.map((o) => parent.conditionals.get(o._id));
@@ -96,19 +96,19 @@ export class ItemConditional {
    * @param {object} options
    */
   async update(updateData, options = {}) {
-    const idx = this.parent.data.conditionals.indexOf(this.data);
-    const prevData = foundry.utils.deepClone(this.data);
-    const newUpdateData = foundry.utils.mergeObject(prevData, updateData);
+    const conditionals = this.parent.toObject().conditionals || [];
+    const old = conditionals.find((c) => c._id === this.id);
+    const newUpdateData = foundry.utils.mergeObject(old, updateData);
 
     // Make sure modifiers remain in an array
     keepUpdateArray(this.data, newUpdateData, "modifiers");
 
     if (options.dryRun) return newUpdateData;
-    await this.parent.update({ [`conditionals.${idx}`]: newUpdateData });
+    await this.parent.update({ [`conditionals.${old}`]: newUpdateData });
   }
 
   async delete() {
-    const conditionals = foundry.utils.deepClone(this.parent.data.conditionals);
+    const conditionals = this.parent.toObject().conditionals || [];
     conditionals.findSplice((c) => c._id === this.id);
     return this.parent.update({ conditionals });
   }

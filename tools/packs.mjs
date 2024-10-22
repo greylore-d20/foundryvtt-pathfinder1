@@ -311,6 +311,12 @@ function sanitizeFolder(folder) {
   if (utils.isEmpty(folder.flags)) delete folder.flags;
 }
 
+function sanitizeActiveEffect(ae) {
+  delete ae._stats;
+
+  return ae;
+}
+
 /**
  * Santize pack entry.
  *
@@ -435,6 +441,11 @@ function sanitizePackEntry(entry, documentType = "", { childDocument = false } =
       }
       if (entry.prototypeToken) {
         entry.prototypeToken = sanitizePackEntry(entry.prototypeToken, "Token", { childDocument: true });
+      }
+    }
+    if (["Actor", "Item"].includes(documentType)) {
+      if (entry.effects?.length > 0) {
+        entry.effects = entry.effects.map((ae) => sanitizeActiveEffect(ae));
       }
     }
     if (documentType === "Item" && entry.system.items && Object.keys(entry.system.items).length > 0) {

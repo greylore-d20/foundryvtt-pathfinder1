@@ -37,11 +37,13 @@ export class ItemScriptCall extends foundry.abstract.DataModel {
     };
   }
 
-  static migrateData(data) {
-    if (data.type == "macro") {
-      data.name = "";
-      data.img = "";
+  static migrateData(source) {
+    if (source.type == "macro") {
+      source.name = "";
+      source.img = "";
     }
+
+    return super.migrateData(source);
   }
 
   /** @deprecated */

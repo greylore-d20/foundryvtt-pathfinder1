@@ -14,12 +14,12 @@ export class ExperienceConfigModel extends foundry.abstract.DataModel {
     };
   }
 
-  static migrateData(data) {
-    super.migrateData(data);
+  static migrateData(source) {
+    source.disable ??= source.disableExperienceTracking;
+    if (source.track === "customFormula") source.track = "custom";
+    source.openDistributor ??= source.openXpDistributor;
 
-    data.disable ??= data.disableExperienceTracking;
-    if (data.track === "customFormula") data.track = "custom";
-    data.openDistributor ??= data.openXpDistributor;
+    return super.migrateData(source);
   }
 }
 

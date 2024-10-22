@@ -55,10 +55,12 @@ export class HealthConfigModel extends foundry.abstract.DataModel {
     }
   }
 
-  static migrateData(data) {
-    if (data.continuity) {
-      data.continuous = data.continuity === "continuous";
+  static migrateData(source) {
+    if (source.continuity) {
+      source.continuous = source.continuity === "continuous";
     }
+
+    return super.migrateData(source);
   }
 
   static get woundThesholdOptions() {

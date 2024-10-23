@@ -14,14 +14,6 @@ import { IDField } from "@datafields/id-field.mjs";
  * Action pseudo-document
  */
 export class ItemAction extends CompactingMixin(DocumentLikeModel) {
-  /**
-   * @internal
-   * @type {pf1.applications.component.ItemActionSheet}
-   */
-  _sheet = null;
-  /** @type {Record<number,Application>} */
-  apps = {};
-
   static FALLBACK_IMAGE = "systems/pf1/icons/skills/gray_04.jpg";
 
   constructor(data, options) {
@@ -42,10 +34,26 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
   _configure(options) {
     super._configure(options);
 
-    Object.defineProperty(this, "_conditionals", {
-      value: new Collection(),
-      writable: false,
-      enumerable: false,
+    // Following prevent these definitions being lost on model reset()
+    Object.defineProperties(this, {
+      // Apps
+      apps: {
+        value: {},
+        writable: false,
+        enumerable: false,
+      },
+      // Sheet cache
+      _sheet: {
+        value: null,
+        writable: true,
+        enumerable: false,
+      },
+      // Conditionals collection cache to avoid conflicts with stored array
+      _conditionals: {
+        value: new Collection(),
+        writable: false,
+        enumerable: false,
+      },
     });
   }
 
@@ -322,12 +330,12 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
       this.activation = this.activation.unchained;
     }
 
-    if (!this.item) return; // Nohing more if there's no parent. Temporary Action?
+    this._prepareConditionals();
+
+    // Nothing more if there's no parent. Temporary Action?
+    if (!this.item) return;
 
     const rollData = this.getRollData();
-
-    // Update conditionals
-    this._prepareConditionals();
 
     // Prepare max personal charges
     if (this.uses.self?.per) {
@@ -346,11 +354,6 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
       let canHold = this.item.isPhysical || this.item.isQuasiPhysical || false;
       if (!this.hasAttack) canHold = false;
       if (!canHold) this.ability.damageMult = 1;
-    }
-
-    // TODO: Set as initial data
-    if (this.naturalAttack.secondary?.damageMult === undefined) {
-      foundry.utils.setProperty(this, "naturalAttack.secondary.damageMult", 0.5);
     }
   }
 
@@ -896,6 +899,8 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
   }
 
   /**
+   * Replace conditionals array with collection
+   *
    * @internal
    */
   _prepareConditionals() {
@@ -903,10 +908,7 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
     const prior = new Collection(collection.entries());
     collection.clear(); // TODO: Remove specific entries after the loop instead of full clear here
 
-    const conditionals = this._source.conditionals;
-    if (!conditionals?.length) return;
-
-    for (const o of conditionals) {
+    for (const o of this.conditionals) {
       let conditional = null;
       if (prior && prior.has(o._id)) {
         conditional = prior.get(o._id);

@@ -86,7 +86,10 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     const templateType = this.document.t;
     // In case this is not initialized, not circle or cone, or system measure templates are disabled, let Foundry handle it.
     // Foundry's handling of Ray is perfectly usable even if slightly wrong, so no override needed.
-    if (!["circle", "cone"].includes(templateType) || !game.settings.get("pf1", "measureStyle")) {
+    if (
+      !game.settings.get("pf1", "measureStyle") ||
+      (templateType !== "circle" && (templateType !== "cone" || canvas.grid.isHexagonal))
+    ) {
       return super._getGridHighlightPositions();
     }
 

@@ -163,7 +163,8 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
           case "circle":
             // If template origin lies in grid center, include all squares that have their center within the distance, otherwise only those that are strictly within
-            if (originInCenter ? distance <= this.document.distance : distance < this.document.distance) {
+            // Centered circles get a 2% grace margin in distance calculation to deal with uneven grid sizes
+            if (originInCenter ? distance <= this.document.distance : distance < this.document.distance * 1.02) {
               positions.push(grid.getTopLeftPoint(offset));
             }
             break;

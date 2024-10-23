@@ -127,20 +127,15 @@ export class SpellRanges {
 export class SpellbookMode {
   raw;
 
-  get isHybrid() {
-    return this.raw === "hybrid";
-  }
-
-  get isPrestige() {
-    return this.raw === "prestige";
-  }
+  #spontaneous = false;
+  #prepared = false;
 
   get isSpontaneous() {
-    return this.raw === "spontaneous";
+    return this.#spontaneous || false;
   }
 
   get isPrepared() {
-    return this.raw === "prepared";
+    return this.#prepared || false;
   }
 
   get usesSpellpoints() {
@@ -148,17 +143,20 @@ export class SpellbookMode {
   }
 
   get isSemiSpontaneous() {
-    return this.isSpontaneous || this.isHybrid || this.isPrestige || this.usesSpellpoints || false;
+    return this.isSpontaneous || this.usesSpellpoints || false;
   }
 
   constructor(book) {
     this.book = book;
 
     let mode = book.spellPreparationMode;
-
     // Shunt invalid mode
-    if (!mode) mode = book.spellPreparationMode = "spontaneous";
+    mode ||= book.spellPreparationMode = "spontaneous";
 
     this.raw = mode;
+
+    const preparation = pf1.config.caster.type[this.raw];
+    this.#spontaneous = preparation.spontaneous;
+    this.#prepared = preparation.prepared;
   }
 }

@@ -96,34 +96,17 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     // Snap cones to the closest corner or vertex based on their direction
     if (templateType === "cone") {
       const angle = this.document.direction;
-      const closestAngle = Math.round(angle / 45) * 45;
 
-      switch (closestAngle) {
-        case 0:
-        case 45:
-        case 315:
-          ox = Math.ceil(ox / grid.size) * grid.size;
-          break;
-
-        case 135:
-        case 225:
-        case 180:
-          ox = Math.floor(ox / grid.size) * grid.size;
-          break;
+      if (angle <= 45 || angle >= 315) {
+        ox = Math.ceil(ox / grid.size) * grid.size;
+      } else if (angle >= 135 && angle <= 225) {
+        ox = Math.floor(ox / grid.size) * grid.size;
       }
 
-      switch (closestAngle) {
-        case 45:
-        case 135:
-        case 90:
-          oy = Math.ceil(oy / grid.size) * grid.size;
-          break;
-
-        case 225:
-        case 315:
-        case 270:
-          oy = Math.floor(oy / grid.size) * grid.size;
-          break;
+      if (angle >= 45 && angle <= 135) {
+        oy = Math.ceil(oy / grid.size) * grid.size;
+      } else if (angle >= 225 && angle <= 315) {
+        oy = Math.floor(oy / grid.size) * grid.size;
       }
     }
 

@@ -26,24 +26,33 @@ export class ItemSpellPF extends ItemPF {
    */
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
-    this._assignLevelOnCreate(data, options);
 
-    // Handle preparation data creation
-    {
-      const prep = data.system.preparation ?? {};
-      const prepUpdate = {};
+    // Following is only if the item is added on actor
+    if (!this.actor) return;
 
-      // Add preparation
-      if (this.actor && prepUpdate.value === undefined) {
-        // Only spontaneous casters auto-prepare new spells
-        if (this.spellbook?.spellPreparationMode === "spontaneous") {
-          prepUpdate.value ??= 1;
-          prepUpdate.max ??= 1;
-        }
+    this.constructor._adjustNewItem(this, data, false);
+  }
+
+  /** @inheritDoc */
+  static _adjustNewItem(item, data, override = false) {
+    if (!item.actor) return;
+
+    // Assign level if undefined
+    if (!Number.isFinite(data?.system?.level) || override) {
+      const book = item.system.spellbook;
+      const cls = item.actor.system.attributes?.spells?.spellbooks?.[book]?.class;
+      const level = item.system.learnedAt?.class?.[cls];
+      if (Number.isFinite(level)) {
+        foundry.utils.setProperty(item._source, "system.level", Math.clamp(level, 0, 9));
       }
+    }
 
-      if (!foundry.utils.isEmpty(prepUpdate)) {
-        this.updateSource({ system: { preparation: prepUpdate } });
+    // Prepare if undefined
+    if (!Number.isFinite(data?.system?.preparation?.value) || override) {
+      // Only spontaneous casters auto-prepare new spells
+      if (item.spellbook?.spellPreparationMode === "spontaneous") {
+        foundry.utils.setProperty(item._source, "system.preparation.value", 1);
+        foundry.utils.setProperty(item._source, "system.preparation.max", 1);
       }
     }
   }
@@ -89,21 +98,6 @@ export class ItemSpellPF extends ItemPF {
     // TODO: Remove following once DataModel is implemented with relevant constraints
     if (prep.max < 0) prep.max = 0;
     if (prep.value < 0) prep.value = 0;
-  }
-
-  /**
-   * Assign spell level according to spellbook class if present.
-   *
-   * @protected
-   * @param {object} data Item data
-   * @param {object} options Creation options
-   */
-  _assignLevelOnCreate(data, options) {
-    const actor = this.actor;
-    const book = this.system.spellbook;
-    const cls = actor?.system.attributes?.spells?.spellbooks?.[book]?.class;
-    const level = this.system.learnedAt?.class?.[cls];
-    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamp(level, 0, 9) });
   }
 
   /** @inheritDoc */

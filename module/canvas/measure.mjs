@@ -288,35 +288,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     return Array.from(results);
   }
 
-  // Highlight grid in PF1 style
-  highlightGrid() {
-    if (
-      !game.settings.get("pf1", "measureStyle") ||
-      !["circle", "cone", "ray"].includes(this.document.t) ||
-      canvas.grid.type !== CONST.GRID_TYPES.SQUARE
-    )
-      return super.highlightGrid();
-
-    // Only highlight for objects which have a defined shape
-    if (!this.id || !this.shape) return;
-
-    // Clear existing highlight
-    const hl = this.getHighlightLayer();
-    hl.clear();
-    if (!this.isVisible) return;
-
-    const grid = canvas.interface.grid,
-      bc = this.document.borderColor,
-      fc = this.document.fillColor;
-
-    // Get grid squares to highlight
-    const highlightSquares = this._getGridHighlightPositions();
-
-    for (const s of highlightSquares) {
-      grid.highlightPosition(hl.name, { x: s.x, y: s.y, color: fc, border: bc });
-    }
-  }
-
   getHighlightLayer() {
     return canvas.interface.grid.getHighlightLayer(this.highlightId);
   }

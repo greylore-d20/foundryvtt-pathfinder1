@@ -20,8 +20,8 @@ export class ItemLootPF extends ItemPhysicalPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     // Reset loot extra type when loot subtype is changed
     if (

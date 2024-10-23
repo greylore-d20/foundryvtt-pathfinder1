@@ -29,8 +29,8 @@ export class ActorNPCPF extends ActorPF {
 
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     const cr = changed.system?.details?.cr?.base;
     if (typeof cr === "string") changed.system.details.cr.base = pf1.utils.CR.fromString(cr);

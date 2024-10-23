@@ -170,7 +170,7 @@ export class ItemChange extends foundry.abstract.DataModel {
   }
 
   _preUpdate(data) {
-    data = new this.constructor(data).toObject();
+    data = this.constructor.cleanData(data);
 
     // Make sure sub-target is valid
     /*

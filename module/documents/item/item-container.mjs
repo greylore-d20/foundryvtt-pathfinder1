@@ -28,10 +28,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    // No system updates
     if (!changed.system) return;
-
     if (context.recursive === false || context.diff === false) return;
 
     // Ensure contained item updates adhere to reason

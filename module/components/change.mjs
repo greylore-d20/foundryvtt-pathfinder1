@@ -170,8 +170,6 @@ export class ItemChange extends foundry.abstract.DataModel {
   }
 
   _preUpdate(data) {
-    data = this.constructor.cleanData(data);
-
     // Make sure sub-target is valid
     /*
     // BUG: This does not work reliably for much anything but skills
@@ -185,8 +183,6 @@ export class ItemChange extends foundry.abstract.DataModel {
       }
     }
     */
-
-    return data;
   }
 
   /**
@@ -214,7 +210,7 @@ export class ItemChange extends foundry.abstract.DataModel {
 
     this.updateTime = new Date();
 
-    data = this._preUpdate(data);
+    this._preUpdate(data);
     // Prevent ID alterations
     if (data._id) delete data._id;
 

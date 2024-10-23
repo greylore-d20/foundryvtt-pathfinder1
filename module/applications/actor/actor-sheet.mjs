@@ -4001,10 +4001,19 @@ export class ActorSheetPF extends ActorSheet {
       .sort((a, b) => b.sort - a.sort);
 
     if (oldItems.length) {
-      item.updateSource({
-        sort: oldItems[0].sort + CONST.SORT_INTEGER_DENSITY,
-      });
+      item._source.sort = oldItems[0].sort + CONST.SORT_INTEGER_DENSITY;
     }
+  }
+
+  /**
+   * Adjust item before addition, overriding data
+   *
+   * @internal
+   * @param data
+   * @param {ItemPF} item - Temporary item document before creation
+   */
+  _adjustNewItem(item, data) {
+    item.constructor._adjustNewItem?.(item, data, true);
   }
 
   async _onDropItemCreate(itemData) {
@@ -4072,8 +4081,9 @@ export class ActorSheetPF extends ActorSheet {
         // else continue with regular spell creation
       }
 
-      const newItem = new Item.implementation(itemData);
+      const newItem = new Item.implementation(itemData, { parent: this.actor });
       this._sortNewItem(newItem);
+      this._adjustNewItem(newItem, itemData);
 
       // Choose how to import class
       if (itemData.type === "class") {

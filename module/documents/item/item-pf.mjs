@@ -94,6 +94,17 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Adjust temporary item before creation
+   *
+   * @abstract
+   * @protected
+   * @param {ItemPF} [item] - Temporary document
+   * @param {object} [data] - Creation data
+   * @param {boolean} [override=false] - Override values even if defined
+   */
+  static _adjustNewItem(item, data, override = false) {}
+
+  /**
    * Meant to be overridden.
    *
    * {@inheritDoc _preCreate}

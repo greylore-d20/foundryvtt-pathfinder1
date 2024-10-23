@@ -1,3 +1,5 @@
+import { DragDropApplicationMixin } from "@app/mixins/drag-drop.mjs";
+
 const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -6,7 +8,7 @@ const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api
  * @augments {DocumentSheetV2&HandlebarsApplicationMixin}
  * @abstract
  */
-export class AbstractListSelector extends HandlebarsApplicationMixin(DocumentSheetV2) {
+export class AbstractListSelector extends DragDropApplicationMixin(HandlebarsApplicationMixin(DocumentSheetV2)) {
   static DEFAULT_OPTIONS = {
     tag: "form",
     form: {
@@ -27,7 +29,106 @@ export class AbstractListSelector extends HandlebarsApplicationMixin(DocumentShe
       width: 600,
     },
     sheetConfig: false,
+    dragDrop: [{ dragSelector: "[data-drag]", dropSelector: "[data-drop]" }],
   };
+
+  constructor(options = {}) {
+    super(options);
+    this.dragDropHighlightTimeout = null;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Return the dragdrop element type for this application
+   *
+   * @returns {string}
+   */
+  get dragDropType() {
+    return "pf1Entry-" + this.options.name;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare drag-drop data and highlight dragged element
+   *
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  _onDragStart(event) {
+    const el = event.currentTarget;
+    if ("link" in event.target.dataset) return;
+
+    // Extract the data you need
+    const row = el.closest("[data-index]");
+    const dragData = {
+      type: this.dragDropType,
+      index: row?.dataset?.index,
+      appId: this.id,
+      entry: this.entries[parseInt(row.dataset.index)],
+    };
+    if (!row || !dragData.index) return;
+    row.classList.add("is-dragged");
+
+    // Set data transfer
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    event.dataTransfer.setDragImage(row, 0, 0);
+
+    pf1._temp.dragDropData = dragData;
+    event.target.addEventListener("dragend", () => delete pf1._temp.dragDropData);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Highlight position that the element will be inserted to on drop
+   *
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  _onDragOver(event) {
+    this.clearDragHighlights();
+
+    if (pf1._temp?.dragDropData?.type !== this.dragDropType) return;
+    event.target.closest("[data-drop]").classList.add("drag-over");
+
+    clearTimeout(this.dragDropHighlightTimeout);
+    this.dragDropHighlightTimeout = setTimeout(() => this.clearDragHighlights(), 150);
+  }
+
+  /* -------------------------------------------- */
+
+  clearDragHighlights() {
+    this.element.querySelectorAll("[data-drop]").forEach((el) => el.classList.remove("drag-over", "is-dragged"));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Inject dragged element into its new position
+   *
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  async _onDrop(event) {
+    const dragEventData = TextEditor.getDragEventData(event);
+    const moveToBeforeId = event.target.closest("[data-index]").dataset.index;
+
+    this.clearDragHighlights();
+    if (dragEventData?.type !== this.dragDropType) return;
+
+    const movedId = dragEventData?.index;
+    if (!movedId) return;
+
+    let entry = dragEventData?.entry;
+    if (dragEventData?.appId === this.id) {
+      entry = this.entries.splice(dragEventData.index, 1)[0];
+    }
+
+    this.entries.splice(moveToBeforeId, 0, entry);
+    this.render();
+  }
 
   /* -------------------------------------------- */
 

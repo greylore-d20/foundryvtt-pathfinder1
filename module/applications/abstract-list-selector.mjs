@@ -94,7 +94,7 @@ export class AbstractListSelector extends DragDropApplicationMixin(HandlebarsApp
     event.target.closest("[data-drop]").classList.add("drag-over");
 
     clearTimeout(this.dragDropHighlightTimeout);
-    this.dragDropHighlightTimeout = window.setTimeout(() => this.clearDragHighlights(), 150);
+    this.dragDropHighlightTimeout = setTimeout(() => this.clearDragHighlights(), 150);
   }
 
   /* -------------------------------------------- */

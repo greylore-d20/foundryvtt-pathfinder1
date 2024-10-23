@@ -118,7 +118,7 @@ export class HelpBrowserPF extends HandlebarsApplicationMixin(ApplicationV2) {
       this._forwardHistory.splice(0, this._forwardHistory.length);
     }
     this._currentPage = { url };
-    this.render(true, { header: header });
+    this.render({ header, force: true });
   }
 
   /* -------------------------------------------- */
@@ -151,7 +151,7 @@ export class HelpBrowserPF extends HandlebarsApplicationMixin(ApplicationV2) {
    * @returns {HistoryEntry} The current state
    */
   getCurrentHistoryObject() {
-    const elem = this.element.querySelector(".content");
+    const elem = this.element?.querySelector(".content");
     const scrollTop = elem?.scrollTop ?? 0;
     return {
       url: this.currentUrl,

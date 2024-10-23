@@ -194,8 +194,9 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
             // Include all squares that are within "walking distance"" and within 45 degrees of the cone direction
             const angle = (Math.atan2(cy - oy, cx - ox) * 180) / Math.PI;
             const angleDiff = Math.abs(angle - this.document.direction) % 360;
+            const docAngle = this.document.angle / 2;
 
-            if (distance < this.document.distance && (angleDiff <= 45 || angleDiff >= 315)) {
+            if (distance < this.document.distance && (angleDiff <= docAngle || angleDiff >= 360 - docAngle)) {
               positions.push(grid.getTopLeftPoint(offset));
             }
             break;

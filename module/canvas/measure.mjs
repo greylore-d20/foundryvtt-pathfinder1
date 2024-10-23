@@ -110,6 +110,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       }
     }
 
+    // Test if template origin is in the center of a grid space. Apply a grace margin for odd grid sizes
     const originInCenter = ox % grid.size === Math.ceil(grid.size / 2) && oy % grid.size === Math.ceil(grid.size / 2);
 
     const shape = this.shape;
@@ -119,7 +120,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     bounds.fit(canvas.dimensions.rect);
     bounds.pad(1);
 
-    // Identify grid space that have their center points covered by the template shape
+    // Identify grid spaces that are in "walking distance" of the template origin
     const positions = [];
     const [i0, j0, i1, j1] = grid.getOffsetRange(bounds);
     for (let i = i0; i < i1; i++) {
@@ -134,7 +135,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
         switch (templateType) {
           case "cone": {
-            // Include all squares that are within the correct distance and within 45 degrees of the cone direction
+            // Include all squares that are within "walking distance"" and within 45 degrees of the cone direction
             const angle = (Math.atan2(cy - oy, cx - ox) * 180) / Math.PI;
             const angleDiff = Math.abs(angle - this.document.direction) % 360;
 

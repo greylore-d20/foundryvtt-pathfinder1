@@ -211,6 +211,7 @@ export class CombatPF extends Combat {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     if ("turn" in changed || "round" in changed) {
       // Record origin turn and round

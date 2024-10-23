@@ -15,8 +15,8 @@ export class ItemAttackPF extends ItemPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     // Remove held option if type changed to natural attack
     if (changed.system.subType === "natural") {

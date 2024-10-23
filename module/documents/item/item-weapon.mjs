@@ -13,8 +13,8 @@ export class ItemWeaponPF extends ItemPhysicalPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     // Set weapon subtype if not present
     const newWeaponType = changed.system?.subType;

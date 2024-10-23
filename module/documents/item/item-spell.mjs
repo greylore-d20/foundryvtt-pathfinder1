@@ -61,13 +61,13 @@ export class ItemSpellPF extends ItemPF {
    * @internal
    * @override
    * @param {object} changed
-   * @param {object} options
+   * @param {object} context
    * @param {User} user
    */
-  async _preUpdate(changed, options, user) {
-    await super._preUpdate(changed, options, user);
-
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     this._preparationPreUpdate(changed);
   }

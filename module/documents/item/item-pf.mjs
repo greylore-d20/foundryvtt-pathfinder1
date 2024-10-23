@@ -147,9 +147,8 @@ export class ItemPF extends ItemBasePF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    // No system data changes
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     this._preUpdateNumericValueGuard(changed.system);
 

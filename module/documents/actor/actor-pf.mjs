@@ -2113,10 +2113,8 @@ export class ActorPF extends ActorBasePF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
-
     if (!changed.system) return; // No system updates.
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     const oldData = this.system;
 
@@ -2177,9 +2175,6 @@ export class ActorPF extends ActorBasePF {
     if (energyDrain !== undefined) {
       changed.system.attributes.energyDrain = Math.abs(energyDrain);
     }
-
-    // Backwards compatibility
-    const conditions = changed.system.attributes?.conditions;
 
     // Never allow updates to the new condtions location
     if (changed.system.conditions !== undefined) {

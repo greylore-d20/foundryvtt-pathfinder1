@@ -75,11 +75,11 @@
       "earth": "Erde",
       "electricity": "Elektrizität",
       "emotion": "Gefühl",
-      "evil": "Böse",
+      "evil": "Böses",
       "fear": "Furcht",
       "fire": "Feuer",
       "force": "Energie",
-      "good": "Gut",
+      "good": "Gutes",
       "languageDependent": "Sprachabhängig",
       "lawful": "Ordnung",
       "light": "Licht",
@@ -1528,7 +1528,66 @@
         "Silver": "Silber",
         "BlightQuartz": "Todesquarz",
         "NexavarianSteel": "Nexavar-Stahl",
-        "NexavaranSteel": "Nexavar Stahl"
+        "NexavaranSteel": "Nexavar Stahl",
+        "adamantine": "Adamant",
+        "alchemicalSilver": "Alchemistensilber",
+        "angelSkin": "Engelhaut",
+        "aszite": "Aszit",
+        "blightQuartz": "Todesquarz",
+        "bloodCrystal": "Blutkristall",
+        "abysium": "Abysium",
+        "blackwood": "Schwarzholz",
+        "buletteArmor": "Landhaifellrüstung",
+        "caphorite": "Caphorit",
+        "cloth": "Stoff",
+        "coldIron": "Kalteisen",
+        "cryptstone": "Gruftstein",
+        "darkleafCloth": "Schwarzblattstoff",
+        "darkwood": "Dunkelholz",
+        "dragonhide": "Drachenhaut",
+        "druchite": "Druchit",
+        "eelHide": "Aalhaut",
+        "elysianBronze": "Elysische Bronze",
+        "frostForgedSteel": "Eisgeschmiedeter Stahl",
+        "fireForgedSteel": "Feuergeschmiedeter Stahl",
+        "glaucite": "Glauzit",
+        "greenwood": "Grünholz",
+        "griffonMane": "Greifenmähne",
+        "heatstonePlating": "Hitzsteinpanzerung",
+        "horacalcum": "Horacalcum",
+        "inubrix": "Inubrix",
+        "irespanbasalt": "Zornspannbasalt",
+        "lazurite": "Lazurit",
+        "leather": "Leder",
+        "liquidGlass": "Flüssiges Glas",
+        "livingSteel": "Lebendstahl",
+        "mithral": "Mithral",
+        "nexavaranSteel": "Nexavar Stahl",
+        "noqual": "Noqual",
+        "paueliel": "Paueliel",
+        "pyresteel": "Pyrstahl",
+        "siccatite": "Siccatit",
+        "silver": "Silber",
+        "silversheen": "Silberschein",
+        "singingSteel": "Singender Stahl",
+        "spireSteel": "Turmstahl",
+        "steel": "Stahl",
+        "sunsilk": "Sonnenseide",
+        "sunsilver": "Sonnensilber",
+        "throneglass": "Thronglas",
+        "viridium": "Viridium",
+        "voidglass": "Leereglas",
+        "whipwood": "Peitschenholz",
+        "wyroot": "Trauerwurz",
+        "bone": "Knochen",
+        "bronze": "Bronze",
+        "glass": "Glas",
+        "gold": "Gold",
+        "obsidian": "Obsidian",
+        "stone": "Stein",
+        "wood": "Holz",
+        "magic": "Magie",
+        "epic": "Episch"
       },
       "Base": "Ausgangsmaterial",
       "Normal": "Material",
@@ -1833,6 +1892,15 @@
           },
           "exotic": {
             "Single": "Exotisch"
+          },
+          "firearm": {
+            "Single": "Feuerwaffe"
+          },
+          "siege": {
+            "Single": "Belagerung"
+          },
+          "heavy": {
+            "Single": "Schwer"
           }
         }
       }
@@ -1846,7 +1914,8 @@
         "week": "Pro Woche",
         "charges": "Ladungen",
         "round": "Pro Runde",
-        "hour": "Pro Stunde"
+        "hour": "Pro Stunde",
+        "minute": "Pro Minute"
       }
     },
     "ActorSize": {
@@ -2097,6 +2166,10 @@
         "Disable": "Erfahrungspunktefortschritt deaktivieren",
         "Distributor": "Öffne EP Verteiler",
         "DistributorHint": "Öffnet den EP Verteiler am Ende des Kampfes, es sei den Shift wird gedrückt wenn der Kampf beendet wird."
+      },
+      "DisableLLV": {
+        "Hint": "Verhindert, dass der Radius dieser Lichtquelle von Dämmersicht beeinflusst wird.",
+        "Label": "Deaktiviere Dämmersicht"
       }
     },
     "TotalItemValue": "Gesamtwert aller Gegenstände: {gp} GM, {sp} SM, {cp} KM",
@@ -2175,7 +2248,7 @@
       "ill": "Illusion",
       "nec": "Nekromantie",
       "tra": "Verwandlung",
-      "uni": "Universell"
+      "uni": "Allgemein"
     },
     "AllRangedDamage": "Aller Fernkampfschaden",
     "Harmless": "Harmlos",
@@ -2557,7 +2630,10 @@
       "Weapon": {
         "LabelPlural": "Umgang mit Waffen",
         "simple": "Einfache Waffen",
-        "martial": "Kriegswaffen"
+        "martial": "Kriegswaffen",
+        "firearm": "Feuerwaffen",
+        "siege": "Belagerungswaffen",
+        "heavy": "Schwere Waffen"
       },
       "Granted": "Gewährte Kenntnisse",
       "Penalty": "Eingebüßte Kenntnisse"
@@ -2758,7 +2834,31 @@
     "BuffTarWeaponAttack": "Waffenangriffswürfe",
     "MaxRangeNote": "Max. Reichweite: {distance} {units}",
     "CustomSkill": "Benutzerdefinierter Skill",
-    "NoCastingAbilityLimit": "Ignoriere Attributslimit"
+    "NoCastingAbilityLimit": "Ignoriere Attributslimit",
+    "WeaponSubtypeAssault": "Nahangriff",
+    "SpellSubschools": {
+      "calling": "Herbeizauberung",
+      "charm": "Bezauberung",
+      "compulsion": "Zwang",
+      "creation": "Erschaffung",
+      "figment": "Einbildung",
+      "glamer": "Fehlgefühl",
+      "haunted": "Spuk",
+      "healing": "Heilung",
+      "shadow": "Schatten",
+      "summoning": "Beschwörung",
+      "teleportation": "Teleportation",
+      "scrying": "Ausspähung",
+      "polymorph": "Gestaltwechsel",
+      "phantasm": "Phantom",
+      "pattern": "Täuschung"
+    },
+    "WeaponSubtypeDirect": "Direkter Beschuss",
+    "WeaponSubtypeIndirect": "Indirekter Beschuss",
+    "JoinOr": "oder",
+    "SubschoolExample": "z.B. Beschwörung, Zwang",
+    "JoinAnd": "und",
+    "Subschool": "Unterschule"
   },
   "TOKEN": {
     "VisionLowLight": "Dämmersicht",
